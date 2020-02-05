@@ -70,7 +70,7 @@ const docSlugFromPath = parsedFilePath => {
   }
 }
 
-exports.createPages = ({ graphql, actions, reporter }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
   redirects.forEach(redirect => {
@@ -85,432 +85,418 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     })
   })
 
-  return new Promise((resolve, reject) => {
-    const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
-    const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
-    const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
-    const tagTemplate = path.resolve(`src/templates/tags.js`)
-    const contributorPageTemplate = path.resolve(
-      `src/templates/template-contributor-page.js`
-    )
-    const localPackageTemplate = path.resolve(
-      `src/templates/template-docs-local-packages.js`
-    )
-    const remotePackageTemplate = path.resolve(
-      `src/templates/template-docs-remote-packages.js`
-    )
-    const showcaseTemplate = path.resolve(
-      `src/templates/template-showcase-details.js`
-    )
-    const creatorPageTemplate = path.resolve(
-      `src/templates/template-creator-details.js`
-    )
-    const featureComparisonPageTemplate = path.resolve(
-      `src/templates/template-feature-comparison.js`
-    )
+  const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
+  const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
+  const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
+  const tagTemplate = path.resolve(`src/templates/tags.js`)
+  const contributorPageTemplate = path.resolve(
+    `src/templates/template-contributor-page.js`
+  )
+  const localPackageTemplate = path.resolve(
+    `src/templates/template-docs-local-packages.js`
+  )
+  const remotePackageTemplate = path.resolve(
+    `src/templates/template-docs-remote-packages.js`
+  )
+  const showcaseTemplate = path.resolve(
+    `src/templates/template-showcase-details.js`
+  )
+  const creatorPageTemplate = path.resolve(
+    `src/templates/template-creator-details.js`
+  )
+  const featureComparisonPageTemplate = path.resolve(
+    `src/templates/template-feature-comparison.js`
+  )
 
-    // Query for markdown nodes to use in creating pages.
-    graphql(`
-      query {
-        allMdx(
-          sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
-          limit: 10000
-          filter: { fileAbsolutePath: { ne: null } }
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-                locale
-                package
-                released
-              }
-              frontmatter {
-                title
-                draft
-                canonicalLink
-                publishedAt
-                issue
-                tags
-              }
+  // Query for markdown nodes to use in creating pages.
+  const result = await graphql(`
+    query {
+      allMdx(
+        sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
+        limit: 10000
+        filter: { fileAbsolutePath: { ne: null } }
+      ) {
+        edges {
+          node {
+            fields {
+              slug
+              locale
+              package
+              released
             }
-          }
-        }
-        allAuthorYaml {
-          edges {
-            node {
-              fields {
-                slug
-              }
-            }
-          }
-        }
-        allCreatorsYaml {
-          edges {
-            node {
-              fields {
-                slug
-              }
-            }
-          }
-        }
-        allSitesYaml(filter: { main_url: { ne: null } }) {
-          edges {
-            node {
-              main_url
-              fields {
-                slug
-                hasScreenshot
-              }
-            }
-          }
-        }
-        allStartersYaml {
-          edges {
-            node {
-              id
-              fields {
-                starterShowcase {
-                  slug
-                  stub
-                }
-                hasScreenshot
-              }
-              url
-              repo
-            }
-          }
-        }
-        allNpmPackage {
-          edges {
-            node {
-              id
+            frontmatter {
               title
+              draft
+              canonicalLink
+              publishedAt
+              issue
+              tags
+            }
+          }
+        }
+      }
+      allAuthorYaml {
+        edges {
+          node {
+            fields {
               slug
             }
           }
         }
-        allEcosystemYaml {
-          edges {
-            node {
-              starters
-              plugins
+      }
+      allCreatorsYaml {
+        edges {
+          node {
+            fields {
+              slug
             }
           }
         }
       }
-    `).then(result => {
-      if (result.errors) {
-        return reject(result.errors)
-      }
-
-      const blogPosts = _.filter(result.data.allMdx.edges, edge => {
-        const slug = _.get(edge, `node.fields.slug`)
-        const draft = _.get(edge, `node.frontmatter.draft`)
-        if (!slug) return undefined
-
-        if (_.includes(slug, `/blog/`) && !draft) {
-          return edge
-        }
-
-        return undefined
-      })
-
-      const releasedBlogPosts = blogPosts.filter(post =>
-        _.get(post, `node.fields.released`)
-      )
-
-      // Create blog-list pages.
-      const postsPerPage = 8
-      const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
-
-      Array.from({
-        length: numPages,
-      }).forEach((_, i) => {
-        createPage({
-          path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
-          component: slash(blogListTemplate),
-          context: {
-            limit: postsPerPage,
-            skip: i * postsPerPage,
-            numPages,
-            currentPage: i + 1,
-          },
-        })
-      })
-
-      // Create blog-post pages.
-      blogPosts.forEach((edge, index) => {
-        let next = index === 0 ? null : blogPosts[index - 1].node
-        if (next && !_.get(next, `fields.released`)) next = null
-
-        const prev =
-          index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
-
-        createPage({
-          path: `${edge.node.fields.slug}`, // required
-          component: slash(blogPostTemplate),
-          context: {
-            slug: edge.node.fields.slug,
-            prev,
-            next,
-          },
-        })
-      })
-
-      const makeSlugTag = tag => _.kebabCase(tag.toLowerCase())
-
-      // Collect all tags and group them by their kebab-case so that
-      // hyphenated and spaced tags are treated the same. e.g
-      // `case-study` -> [`case-study`, `case study`]. The hyphenated
-      // version will be used for the slug, and the spaced version
-      // will be used for human readability (see templates/tags)
-      const tagGroups = _(releasedBlogPosts)
-        .map(post => _.get(post, `node.frontmatter.tags`))
-        .filter()
-        .flatten()
-        .uniq()
-        .groupBy(makeSlugTag)
-
-      tagGroups.forEach((tags, tagSlug) => {
-        createPage({
-          path: `/blog/tags/${tagSlug}/`,
-          component: tagTemplate,
-          context: {
-            tags,
-          },
-        })
-      })
-
-      // Create starter pages.
-      const starters = _.filter(result.data.allStartersYaml.edges, edge => {
-        const slug = _.get(edge, `node.fields.starterShowcase.slug`)
-        if (!slug) {
-          return null
-        } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
-          reporter.warn(
-            `Starter showcase entry "${edge.node.repo}" seems offline. Skipping.`
-          )
-          return null
-        } else {
-          return edge
-        }
-      })
-
-      const starterTemplate = path.resolve(
-        `src/templates/template-starter-page.js`
-      )
-
-      starters.forEach((edge, index) => {
-        createPage({
-          path: `/starters${edge.node.fields.starterShowcase.slug}`,
-          component: slash(starterTemplate),
-          context: {
-            slug: edge.node.fields.starterShowcase.slug,
-            stub: edge.node.fields.starterShowcase.stub,
-          },
-        })
-      })
-
-      // Create contributor pages.
-      result.data.allAuthorYaml.edges.forEach(edge => {
-        createPage({
-          path: `${edge.node.fields.slug}`,
-          component: slash(contributorPageTemplate),
-          context: {
-            slug: edge.node.fields.slug,
-          },
-        })
-      })
-
-      result.data.allCreatorsYaml.edges.forEach(edge => {
-        if (!edge.node.fields) return
-        if (!edge.node.fields.slug) return
-        createPage({
-          path: `${edge.node.fields.slug}`,
-          component: slash(creatorPageTemplate),
-          context: {
-            slug: edge.node.fields.slug,
-          },
-        })
-      })
-
-      result.data.allSitesYaml.edges.forEach(edge => {
-        if (!edge.node.fields) return
-        if (!edge.node.fields.slug) return
-        if (!edge.node.fields.hasScreenshot) {
-          reporter.warn(
-            `Site showcase entry "${edge.node.main_url}" seems offline. Skipping.`
-          )
-          return
-        }
-        createPage({
-          path: `${edge.node.fields.slug}`,
-          component: slash(showcaseTemplate),
-          context: {
-            slug: edge.node.fields.slug,
-          },
-        })
-      })
-
-      // Create docs pages.
-      const docPages = result.data.allMdx.edges
-      const docLinks = docLinksData[0].items
-      const tutorialLinks = tutorialLinksData[0].items
-      const contributingLinks = contributingLinksData[0].items
-
-      // flatten sidebar links trees for easier next/prev link calculation
-      function flattenList(itemList) {
-        return itemList.reduce((reducer, { items, ...rest }) => {
-          reducer.push(rest)
-          if (items) reducer.push(...flattenList(items))
-          return reducer
-        }, [])
-      }
-
-      const flattenedDocs = flattenList(docLinks)
-      const flattenedTutorials = flattenList(tutorialLinks)
-      const flattenedContributing = flattenList(contributingLinks)
-
-      // with flattened tree object finding next and prev is just getting the next index
-      function getSibling(index, list, direction) {
-        if (direction === `next`) {
-          const next = index === list.length - 1 ? null : list[index + 1]
-          // for tutorial links that use subheadings on the same page skip the link and try the next item
-          if (next && next.link && next.link.includes(`#`)) {
-            return getSibling(index + 1, list, `next`)
+      allSitesYaml(filter: { main_url: { ne: null } }) {
+        edges {
+          node {
+            main_url
+            fields {
+              slug
+              hasScreenshot
+            }
           }
-          return next
-        } else if (direction === `prev`) {
-          const prev = index === 0 ? null : list[index - 1]
-          if (prev && prev.link && prev.link.includes(`#`)) {
-            return getSibling(index - 1, list, `prev`)
-          }
-          return prev
-        } else {
-          reporter.warn(
-            `Did not provide direction to sibling function for building next and prev links`
-          )
-          return null
         }
       }
+      allStartersYaml {
+        edges {
+          node {
+            id
+            fields {
+              starterShowcase {
+                slug
+                stub
+              }
+              hasScreenshot
+            }
+            url
+            repo
+          }
+        }
+      }
+      allNpmPackage {
+        edges {
+          node {
+            id
+            title
+            slug
+          }
+        }
+      }
+      allEcosystemYaml {
+        edges {
+          node {
+            starters
+            plugins
+          }
+        }
+      }
+    }
+  `)
+  if (result.errors) {
+    throw result.errors
+    // return reject(result.errors)
+  }
 
-      function findDoc(doc) {
-        if (!doc.link) return null
-        return (
-          doc.link === this.link ||
-          doc.link === this.link.substring(0, this.link.length - 1)
+  const blogPosts = _.filter(result.data.allMdx.edges, edge => {
+    const slug = _.get(edge, `node.fields.slug`)
+    const draft = _.get(edge, `node.frontmatter.draft`)
+    if (!slug) return undefined
+
+    if (_.includes(slug, `/blog/`) && !draft) {
+      return edge
+    }
+
+    return undefined
+  })
+
+  const releasedBlogPosts = blogPosts.filter(post =>
+    _.get(post, `node.fields.released`)
+  )
+
+  // Create blog-list pages.
+  const postsPerPage = 8
+  const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
+
+  Array.from({
+    length: numPages,
+  }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
+      component: slash(blogListTemplate),
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
+      },
+    })
+  })
+
+  // Create blog-post pages.
+  blogPosts.forEach((edge, index) => {
+    let next = index === 0 ? null : blogPosts[index - 1].node
+    if (next && !_.get(next, `fields.released`)) next = null
+
+    const prev =
+      index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
+
+    createPage({
+      path: `${edge.node.fields.slug}`, // required
+      component: slash(blogPostTemplate),
+      context: {
+        slug: edge.node.fields.slug,
+        prev,
+        next,
+      },
+    })
+  })
+
+  const makeSlugTag = tag => _.kebabCase(tag.toLowerCase())
+
+  // Collect all tags and group them by their kebab-case so that
+  // hyphenated and spaced tags are treated the same. e.g
+  // `case-study` -> [`case-study`, `case study`]. The hyphenated
+  // version will be used for the slug, and the spaced version
+  // will be used for human readability (see templates/tags)
+  const tagGroups = _(releasedBlogPosts)
+    .map(post => _.get(post, `node.frontmatter.tags`))
+    .filter()
+    .flatten()
+    .uniq()
+    .groupBy(makeSlugTag)
+
+  tagGroups.forEach((tags, tagSlug) => {
+    createPage({
+      path: `/blog/tags/${tagSlug}/`,
+      component: tagTemplate,
+      context: {
+        tags,
+      },
+    })
+  })
+
+  // Create starter pages.
+  const starters = _.filter(result.data.allStartersYaml.edges, edge => {
+    const slug = _.get(edge, `node.fields.starterShowcase.slug`)
+    if (!slug) {
+      return null
+    } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
+      reporter.warn(
+        `Starter showcase entry "${edge.node.repo}" seems offline. Skipping.`
+      )
+      return null
+    } else {
+      return edge
+    }
+  })
+
+  const starterTemplate = path.resolve(`src/templates/template-starter-page.js`)
+
+  starters.forEach((edge, index) => {
+    createPage({
+      path: `/starters${edge.node.fields.starterShowcase.slug}`,
+      component: slash(starterTemplate),
+      context: {
+        slug: edge.node.fields.starterShowcase.slug,
+        stub: edge.node.fields.starterShowcase.stub,
+      },
+    })
+  })
+
+  // Create contributor pages.
+  result.data.allAuthorYaml.edges.forEach(edge => {
+    createPage({
+      path: `${edge.node.fields.slug}`,
+      component: slash(contributorPageTemplate),
+      context: {
+        slug: edge.node.fields.slug,
+      },
+    })
+  })
+
+  result.data.allCreatorsYaml.edges.forEach(edge => {
+    if (!edge.node.fields) return
+    if (!edge.node.fields.slug) return
+    createPage({
+      path: `${edge.node.fields.slug}`,
+      component: slash(creatorPageTemplate),
+      context: {
+        slug: edge.node.fields.slug,
+      },
+    })
+  })
+
+  result.data.allSitesYaml.edges.forEach(edge => {
+    if (!edge.node.fields) return
+    if (!edge.node.fields.slug) return
+    if (!edge.node.fields.hasScreenshot) {
+      reporter.warn(
+        `Site showcase entry "${edge.node.main_url}" seems offline. Skipping.`
+      )
+      return
+    }
+    createPage({
+      path: `${edge.node.fields.slug}`,
+      component: slash(showcaseTemplate),
+      context: {
+        slug: edge.node.fields.slug,
+      },
+    })
+  })
+
+  // Create docs pages.
+  const docPages = result.data.allMdx.edges
+  const docLinks = docLinksData[0].items
+  const tutorialLinks = tutorialLinksData[0].items
+  const contributingLinks = contributingLinksData[0].items
+
+  // flatten sidebar links trees for easier next/prev link calculation
+  function flattenList(itemList) {
+    return itemList.reduce((reducer, { items, ...rest }) => {
+      reducer.push(rest)
+      if (items) reducer.push(...flattenList(items))
+      return reducer
+    }, [])
+  }
+
+  const flattenedDocs = flattenList(docLinks)
+  const flattenedTutorials = flattenList(tutorialLinks)
+  const flattenedContributing = flattenList(contributingLinks)
+
+  // with flattened tree object finding next and prev is just getting the next index
+  function getSibling(index, list, direction) {
+    if (direction === `next`) {
+      const next = index === list.length - 1 ? null : list[index + 1]
+      // for tutorial links that use subheadings on the same page skip the link and try the next item
+      if (next && next.link && next.link.includes(`#`)) {
+        return getSibling(index + 1, list, `next`)
+      }
+      return next
+    } else if (direction === `prev`) {
+      const prev = index === 0 ? null : list[index - 1]
+      if (prev && prev.link && prev.link.includes(`#`)) {
+        return getSibling(index - 1, list, `prev`)
+      }
+      return prev
+    } else {
+      reporter.warn(
+        `Did not provide direction to sibling function for building next and prev links`
+      )
+      return null
+    }
+  }
+
+  function findDoc(doc) {
+    if (!doc.link) return null
+    return (
+      doc.link === this.link ||
+      doc.link === this.link.substring(0, this.link.length - 1)
+    )
+  }
+
+  docPages.forEach(({ node }) => {
+    const slug = _.get(node, `fields.slug`)
+    const locale = _.get(node, `fields.locale`)
+    if (!slug) return
+
+    if (!_.includes(slug, `/blog/`)) {
+      const docIndex = flattenedDocs.findIndex(findDoc, {
+        link: slug,
+      })
+      const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
+        link: slug,
+      })
+      const contributingIndex = flattenedContributing.findIndex(findDoc, {
+        link: slug,
+      })
+
+      // add values to page context for next and prev page
+      let nextAndPrev = {}
+      if (docIndex > -1) {
+        nextAndPrev.prev = getSibling(docIndex, flattenedDocs, `prev`)
+        nextAndPrev.next = getSibling(docIndex, flattenedDocs, `next`)
+      }
+      if (tutorialIndex > -1) {
+        nextAndPrev.prev = getSibling(tutorialIndex, flattenedTutorials, `prev`)
+        nextAndPrev.next = getSibling(tutorialIndex, flattenedTutorials, `next`)
+      }
+      if (contributingIndex > -1) {
+        nextAndPrev.prev = getSibling(
+          contributingIndex,
+          flattenedContributing,
+          `prev`
+        )
+        nextAndPrev.next = getSibling(
+          contributingIndex,
+          flattenedContributing,
+          `next`
         )
       }
 
-      docPages.forEach(({ node }) => {
-        const slug = _.get(node, `fields.slug`)
-        const locale = _.get(node, `fields.locale`)
-        if (!slug) return
-
-        if (!_.includes(slug, `/blog/`)) {
-          const docIndex = flattenedDocs.findIndex(findDoc, {
-            link: slug,
-          })
-          const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
-            link: slug,
-          })
-          const contributingIndex = flattenedContributing.findIndex(findDoc, {
-            link: slug,
-          })
-
-          // add values to page context for next and prev page
-          let nextAndPrev = {}
-          if (docIndex > -1) {
-            nextAndPrev.prev = getSibling(docIndex, flattenedDocs, `prev`)
-            nextAndPrev.next = getSibling(docIndex, flattenedDocs, `next`)
-          }
-          if (tutorialIndex > -1) {
-            nextAndPrev.prev = getSibling(
-              tutorialIndex,
-              flattenedTutorials,
-              `prev`
-            )
-            nextAndPrev.next = getSibling(
-              tutorialIndex,
-              flattenedTutorials,
-              `next`
-            )
-          }
-          if (contributingIndex > -1) {
-            nextAndPrev.prev = getSibling(
-              contributingIndex,
-              flattenedContributing,
-              `prev`
-            )
-            nextAndPrev.next = getSibling(
-              contributingIndex,
-              flattenedContributing,
-              `next`
-            )
-          }
-
-          createPage({
-            path: localizedPath(locale, node.fields.slug),
-            component: slash(
-              node.fields.package ? localPackageTemplate : docsTemplate
-            ),
-            context: {
-              slug: node.fields.slug,
-              locale,
-              ...nextAndPrev,
-            },
-          })
-        }
+      createPage({
+        path: localizedPath(locale, node.fields.slug),
+        component: slash(
+          node.fields.package ? localPackageTemplate : docsTemplate
+        ),
+        context: {
+          slug: node.fields.slug,
+          locale,
+          ...nextAndPrev,
+        },
       })
-
-      const allPackages = result.data.allNpmPackage.edges
-      // Create package readme
-      allPackages.forEach(edge => {
-        if (_.includes(localPackagesArr, edge.node.title)) {
-          createPage({
-            path: edge.node.slug,
-            component: slash(localPackageTemplate),
-            context: {
-              slug: edge.node.slug,
-              id: edge.node.id,
-              layout: `plugins`,
-            },
-          })
-        } else {
-          createPage({
-            path: edge.node.slug,
-            component: slash(remotePackageTemplate),
-            context: {
-              slug: edge.node.slug,
-              id: edge.node.id,
-              layout: `plugins`,
-            },
-          })
-        }
-      })
-
-      // Create feature comparison pages
-      const jamstackPages = generateComparisonPageSet(`jamstack`)
-      const cmsPages = generateComparisonPageSet(`cms`)
-      const comparisonPages = [...jamstackPages, ...cmsPages]
-      for (const { path, options, featureType } of comparisonPages) {
-        createPage({
-          path,
-          component: slash(featureComparisonPageTemplate),
-          context: {
-            options,
-            featureType,
-          },
-        })
-      }
-
-      // Read featured starters and plugins for Ecosystem
-      ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
-
-      return resolve()
-    })
+    }
   })
+
+  const allPackages = result.data.allNpmPackage.edges
+  // Create package readme
+  allPackages.forEach(edge => {
+    if (_.includes(localPackagesArr, edge.node.title)) {
+      createPage({
+        path: edge.node.slug,
+        component: slash(localPackageTemplate),
+        context: {
+          slug: edge.node.slug,
+          id: edge.node.id,
+          layout: `plugins`,
+        },
+      })
+    } else {
+      createPage({
+        path: edge.node.slug,
+        component: slash(remotePackageTemplate),
+        context: {
+          slug: edge.node.slug,
+          id: edge.node.id,
+          layout: `plugins`,
+        },
+      })
+    }
+  })
+
+  // Create feature comparison pages
+  const jamstackPages = generateComparisonPageSet(`jamstack`)
+  const cmsPages = generateComparisonPageSet(`cms`)
+  const comparisonPages = [...jamstackPages, ...cmsPages]
+  for (const { path, options, featureType } of comparisonPages) {
+    createPage({
+      path,
+      component: slash(featureComparisonPageTemplate),
+      context: {
+        options,
+        featureType,
+      },
+    })
+  }
+
+  // Read featured starters and plugins for Ecosystem
+  ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
 }
 
 // Create slugs for files, set released status for blog posts.
