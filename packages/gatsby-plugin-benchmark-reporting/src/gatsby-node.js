@@ -51,7 +51,7 @@ class BenchMeta {
 
     return {
       time: this.localTime,
-      sessionId: process.gatsbyTelemetrySessionId,
+      sessionId: process.gatsbyTelemetrySessionId || uuidv4(),
       pageCount,
       timestamps: this.timestamps,
     }
