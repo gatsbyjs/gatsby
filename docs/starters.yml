@@ -5178,9 +5178,8 @@
   description: A simple Gatsby blog for planning, documentation
   tags:
     - Blog
-    - Planning
+    - Markdown
     - Netlify
-    - Google Analytics
     - Disqus
   features:
     - Emoji
@@ -5189,3 +5188,4 @@
     - Disqus
     - Resume
     - Place plan on the top
+    
