@@ -5185,3 +5185,18 @@
     - React Bootstrap
     - Responsive webpage
     - TypeWriter Effect
+- url: https://answer.netlify.com/
+  repo: https://github.com/passwd10/gatsby-starter-answer
+  description: A simple Gatsby blog for planning, documentation
+  tags:
+    - Blog
+    - Markdown
+    - Netlify
+    - Disqus
+  features:
+    - Emoji
+    - Social Icon(fontawesome)
+    - Google Analytics
+    - Disqus
+    - Resume
+    - Place plan on the top
