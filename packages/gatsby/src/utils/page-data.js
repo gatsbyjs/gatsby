@@ -44,7 +44,6 @@ const getChangedPageDataKeys = (store, cacheData) =>
         if (!cacheData.pageData.has(key)) {
           pageKeys.push(key)
         } else {
-          console.log(value)
           const newPageData = JSON.stringify(value)
           const previousPageData = JSON.stringify(cacheData.pageData.get(key))
 

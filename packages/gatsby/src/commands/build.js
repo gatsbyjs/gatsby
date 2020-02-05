@@ -21,7 +21,8 @@ const {
   waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
 } = require(`../utils/jobs-manager`)
 const pageDataUtil = require(`../utils/page-data`)
-const incrementalBuild = true
+const pageBuildPerformance =
+  process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES === `true` || false
 type BuildArgs = {
   directory: string,
   sitePackageJson: object,
@@ -142,7 +143,7 @@ module.exports = async function build(program: BuildArgs) {
 
   await waitUntilAllJobsComplete()
 
-  const pagePaths = incrementalBuild
+  const pagePaths = pageBuildPerformance
     ? await pageDataUtil.getChangedPageDataKeys(store.getState(), readState())
     : [...store.getState().pages.keys()]
   activity = report.createProgress(
@@ -184,6 +185,18 @@ module.exports = async function build(program: BuildArgs) {
   }
   activity.done()
 
+  let deletedPageKeys = []
+  if (pageBuildPerformance) {
+    activity = report.activityTimer(`Delete previous page data`)
+    activity.start()
+    deletedPageKeys = await pageDataUtil.removePreviousPageData(
+      program.directory,
+      store.getState(),
+      readState()
+    )
+    activity.end()
+  }
+
   await apiRunnerNode(`onPostBuild`, {
     graphql: graphqlRunner,
     parentSpan: buildSpan,
@@ -199,7 +212,7 @@ module.exports = async function build(program: BuildArgs) {
   workerPool.end()
   buildActivity.end()
 
-  if (incrementalBuild && process.argv.indexOf(`--log-pages`) > -1) {
+  if (pageBuildPerformance && process.argv.indexOf(`--log-pages`) > -1) {
     if (pagePaths.length) {
       report.info(
         `Incremental build pages:\n${pagePaths.map(
@@ -207,36 +220,36 @@ module.exports = async function build(program: BuildArgs) {
         )}`.replace(/,/g, ``)
       )
     }
-    // if (deletedPageKeys.length) {
-    //   report.info(
-    //     `Incremental build deleted pages:\n${deletedPageKeys.map(
-    //       path => `Deleted page: ${path}\n`
-    //     )}`.replace(/,/g, ``)
-    //   )
-    // }
+    if (typeof deletedPageKeys !== `undefined` && deletedPageKeys.length) {
+      report.info(
+        `Incremental build deleted pages:\n${deletedPageKeys.map(
+          path => `Deleted page: ${path}\n`
+        )}`.replace(/,/g, ``)
+      )
+    }
   }
 
-  if (incrementalBuild && process.argv.indexOf(`--write-to-file`) > -1) {
+  if (pageBuildPerformance && process.argv.indexOf(`--write-to-file`) > -1) {
     const createdFilesPath = path.resolve(
       `${program.directory}/.cache`,
       `newPages.txt`
     )
-    // const deletedFilesPath = path.resolve(
-    //   `${program.directory}/.cache`,
-    //   `deletedPages.txt`
-    // )
+    const deletedFilesPath = path.resolve(
+      `${program.directory}/.cache`,
+      `deletedPages.txt`
+    )
 
     if (pagePaths.length) {
       fs.writeFileSync(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
       report.info(`newPages.txt created`)
     }
-    // if (deletedPageKeys.length) {
-    //   fs.writeFileSync(
-    //     deletedFilesPath,
-    //     `${deletedPageKeys.join(`\n`)}\n`,
-    //     `utf8`
-    //   )
-    //   report.info(`deletedPages.txt created`)
-    // }
+    if (deletedPageKeys.length) {
+      fs.writeFileSync(
+        deletedFilesPath,
+        `${deletedPageKeys.join(`\n`)}\n`,
+        `utf8`
+      )
+      report.info(`deletedPages.txt created`)
+    }
   }
 }
