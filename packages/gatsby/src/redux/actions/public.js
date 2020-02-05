@@ -1412,4 +1412,11 @@ actions.setPageData = data => {
   }
 }
 
+actions.removePageData = data => {
+  return {
+    type: `DELETE_PAGE_DATA`,
+    payload: data,
+  }
+}
+
 module.exports = { actions }

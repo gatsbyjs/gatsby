@@ -214,14 +214,14 @@ module.exports = async function build(program: BuildArgs) {
   if (pageBuildPerformance && process.argv.indexOf(`--log-pages`) > -1) {
     if (pagePaths.length) {
       report.info(
-        `Incremental build pages:\n${pagePaths.map(
+        `Built pages:\n${pagePaths.map(
           path => `Updated page: ${path}\n`
         )}`.replace(/,/g, ``)
       )
     }
     if (typeof deletedPageKeys !== `undefined` && deletedPageKeys.length) {
       report.info(
-        `Incremental build deleted pages:\n${deletedPageKeys.map(
+        `Deleted pages:\n${deletedPageKeys.map(
           path => `Deleted page: ${path}\n`
         )}`.replace(/,/g, ``)
       )

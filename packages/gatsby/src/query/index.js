@@ -3,7 +3,7 @@
 const _ = require(`lodash`)
 const Queue = require(`better-queue`)
 // const convertHrtime = require(`convert-hrtime`)
-const { store, emitter } = require(`../redux`)
+const { store, emitter, readState } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
@@ -160,7 +160,16 @@ const groupQueryIds = queryIds => {
 
 const processQueries = async (queryJobs, activity) => {
   const queue = queryQueue.createBuildQueue()
+  const { pages } = store.getState()
   await queryQueue.processBatch(queue, queryJobs, activity)
+
+  readState().pageData.forEach((value, key) => {
+    if (!pages.has(key)) {
+      boundActionCreators.removePageData({
+        id: key,
+      })
+    }
+  })
 }
 
 const createStaticQueryJob = (state, queryId) => {

@@ -39,14 +39,10 @@ const write = async ({ publicDir }, page, result) => {
 
 const getChangedPageDataKeys = (store, cacheData) =>
   new Promise(resolve => {
-    if (
-      cacheData.webpackCompilationHash !==
-      store.getState().webpackCompilationHash
-    ) {
+    if (cacheData.webpackCompilationHash !== store.webpackCompilationHash) {
       resolve([...store.pages.keys()])
       return
     }
-
     if (cacheData.pageData && store.pageData) {
       const pageKeys = []
       store.pageData.forEach((value, key) => {
@@ -75,8 +71,13 @@ const removePreviousPageData = (directory, store, cacheData) =>
       cacheData.pageData.forEach((value, key) => {
         if (!store.pageData.has(key)) {
           deletedPageKeys.push(key)
-          fs.removeSync(`${directory}/public${key}`)
-          fs.removeSync(`${directory}/public/page-data${key}`)
+          if (key === `/`) {
+            fs.removeSync(`${directory}/public/index.html`)
+            fs.removeSync(`${directory}/public/page-data/index`)
+          } else {
+            fs.removeSync(`${directory}/public${key}`)
+            fs.removeSync(`${directory}/public/page-data${key}`)
+          }
         }
       })
       resolve(deletedPageKeys)
