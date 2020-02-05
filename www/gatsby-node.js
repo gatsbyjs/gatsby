@@ -5,72 +5,27 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
 const slugify = require(`slugify`)
-const url = require(`url`)
-const getpkgjson = require(`get-package-json-from-github`)
-const parseGHUrl = require(`parse-github-url`)
-const { GraphQLClient } = require(`@jamo/graphql-request`)
-const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
-const langs = require("./i18n.json")
 const {
   generateComparisonPageSet,
 } = require(`./src/utils/generate-comparison-page-set.js`)
 const { getPrevAndNext } = require(`./src/utils/get-prev-and-next.js`)
 const { localizedPath } = require(`./src/utils/i18n.js`)
 const yaml = require(`js-yaml`)
-const docLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
-)
-const tutorialLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/tutorial-links.yaml`)
-)
-const contributingLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
-)
-const ecosystemFeaturedItems = yaml.load(
-  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
-)
 const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
 
-if (
-  process.env.gatsby_executing_command === `build` &&
-  !process.env.GITHUB_API_TOKEN
-) {
-  throw new Error(
-    `A GitHub token is required to build the site. Check the README.`
-  )
-}
-
-// used to gather repo data on starters
-const githubApiClient = process.env.GITHUB_API_TOKEN
-  ? new GraphQLClient(`https://api.github.com/graphql`, {
-      headers: {
-        authorization: `Bearer ${process.env.GITHUB_API_TOKEN}`,
-      },
-    })
-  : null
+const docs = require(`./src/utils/node/docs.js`)
+const showcase = require(`./src/utils/node/showcase.js`)
+const starters = require(`./src/utils/node/starters.js`)
+const creators = require(`./src/utils/node/creators.js`)
+const packages = require(`./src/utils/node/packages.js`)
+const sections = [docs, showcase, starters, creators, packages]
 
 const localPackages = `../packages`
 const localPackagesArr = []
 fs.readdirSync(localPackages).forEach(file => {
   localPackagesArr.push(file)
 })
-// convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
-const slugToAnchor = slug =>
-  slug
-    .split(`/`) // split on dir separators
-    .filter(item => item !== ``) // remove empty values
-    .pop() // take last item
-
-const docSlugFromPath = parsedFilePath => {
-  if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-    return `/${parsedFilePath.dir}/${parsedFilePath.name}/`
-  } else if (parsedFilePath.dir === ``) {
-    return `/${parsedFilePath.name}/`
-  } else {
-    return `/${parsedFilePath.dir}/`
-  }
-}
 
 exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
@@ -419,242 +374,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 }
 
 // Create slugs for files, set released status for blog posts.
-exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
+exports.onCreateNode = helpers => {
+  sections.forEach(section => section.onCreateNode(helpers))
+
+  const { node, actions } = helpers
   const { createNodeField } = actions
   let slug
-  let locale
-  if (node.internal.type === `File`) {
-    const parsedFilePath = path.parse(node.relativePath)
-    // TODO add locale data for non-MDX files
-    if (node.sourceInstanceName === `docs`) {
-      slug = docSlugFromPath(parsedFilePath)
-    }
-    if (slug) {
-      createNodeField({ node, name: `slug`, value: slug })
-    }
-  } else if (
-    [`MarkdownRemark`, `Mdx`].includes(node.internal.type) &&
-    getNode(node.parent).internal.type === `File`
-  ) {
-    const fileNode = getNode(node.parent)
-    const parsedFilePath = path.parse(fileNode.relativePath)
-    // Add slugs for docs pages
-    if (fileNode.sourceInstanceName === `docs`) {
-      slug = docSlugFromPath(parsedFilePath)
-      locale = "en"
-
-      // Set released status and `published at` for blog posts.
-      if (_.includes(parsedFilePath.dir, `blog`)) {
-        let released = false
-        const date = _.get(node, `frontmatter.date`)
-        if (date) {
-          released = moment.utc().isSameOrAfter(moment.utc(date))
-        }
-        createNodeField({ node, name: `released`, value: released })
-
-        const canonicalLink = _.get(node, `frontmatter.canonicalLink`)
-        const publishedAt = _.get(node, `frontmatter.publishedAt`)
-
-        createNodeField({
-          node,
-          name: `publishedAt`,
-          value: canonicalLink
-            ? publishedAt || url.parse(canonicalLink).hostname
-            : null,
-        })
-      }
-    }
-
-    for (let { code } of langs) {
-      if (fileNode.sourceInstanceName === `docs-${code}`) {
-        // have to remove the beginning "/docs" path because of the way
-        // gatsby-source-filesystem and gatsby-source-git differ
-        slug = docSlugFromPath(path.parse(fileNode.relativePath.substring(5)))
-        locale = code
-      }
-    }
-
-    // Add slugs for package READMEs.
-    if (
-      fileNode.sourceInstanceName === `packages` &&
-      parsedFilePath.name === `README`
-    ) {
-      slug = `/packages/${parsedFilePath.dir}/`
-      createNodeField({
-        node,
-        name: `title`,
-        value: parsedFilePath.dir,
-      })
-      createNodeField({ node, name: `package`, value: true })
-    }
-    if (slug) {
-      createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
-      createNodeField({ node, name: `slug`, value: slug })
-    }
-    if (locale) {
-      createNodeField({ node, name: `locale`, value: locale })
-    }
-  } else if (node.internal.type === `AuthorYaml`) {
+  if (node.internal.type === `AuthorYaml`) {
     slug = `/contributors/${slugify(node.id, {
       lower: true,
     })}/`
     createNodeField({ node, name: `slug`, value: slug })
-  } else if (node.internal.type === `SitesYaml` && node.main_url) {
-    const parsed = url.parse(node.main_url)
-    const cleaned = parsed.hostname + parsed.pathname
-    slug = `/showcase/${slugify(cleaned)}`
-    createNodeField({ node, name: `slug`, value: slug })
-
-    // determine if screenshot is available
-    const screenshotNode = node.children
-      .map(childID => getNode(childID))
-      .find(node => node.internal.type === `Screenshot`)
-
-    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
-  } else if (node.internal.type === `NPMPackage`) {
-    if (ecosystemFeaturedItems.plugins.includes(node.name)) {
-      createNodeField({ node, name: `featured`, value: true })
-    }
-  } else if (node.internal.type === `StartersYaml` && node.repo) {
-    // To develop on the starter showcase, you'll need a GitHub
-    // personal access token. Check the `www` README for details.
-    // Default fields are to avoid graphql errors.
-    const { owner, name: repoStub } = parseGHUrl(node.repo)
-
-    // mark if it's a featured starter
-    if (ecosystemFeaturedItems.starters.includes(`/${owner}/${repoStub}/`)) {
-      createNodeField({ node, name: `featured`, value: true })
-    }
-
-    const defaultFields = {
-      slug: `/${owner}/${repoStub}/`,
-      stub: repoStub,
-      name: ``,
-      description: ``,
-      stars: 0,
-      lastUpdated: ``,
-      owner: ``,
-      githubFullName: ``,
-      gatsbyMajorVersion: [[`no data`, `0`]],
-      allDependencies: [[`no data`, `0`]],
-      gatsbyDependencies: [[`no data`, `0`]],
-      miscDependencies: [[`no data`, `0`]],
-    }
-
-    // determine if screenshot is available
-    const screenshotNode = node.children
-      .map(childID => getNode(childID))
-      .find(node => node.internal.type === `Screenshot`)
-
-    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
-
-    if (!process.env.GITHUB_API_TOKEN) {
-      return createNodeField({
-        node,
-        name: `starterShowcase`,
-        value: {
-          ...defaultFields,
-        },
-      })
-    } else {
-      return Promise.all([
-        getpkgjson(node.repo),
-        githubApiClient.request(`
-            query {
-              repository(owner:"${owner}", name:"${repoStub}") {
-                name
-                stargazers {
-                  totalCount
-                }
-                createdAt
-                pushedAt
-                owner {
-                  login
-                }
-                nameWithOwner
-              }
-            }
-          `),
-      ])
-        .then(results => {
-          const [pkgjson, githubData] = results
-          const {
-            stargazers: { totalCount: stars },
-            pushedAt: lastUpdated,
-            owner: { login: owner },
-            name,
-            nameWithOwner: githubFullName,
-          } = githubData.repository
-
-          const { dependencies = [], devDependencies = [] } = pkgjson
-          const allDependencies = Object.entries(dependencies).concat(
-            Object.entries(devDependencies)
-          )
-
-          const gatsbyMajorVersion = allDependencies
-            .filter(([key, _]) => key === `gatsby`)
-            .map(version => {
-              let [gatsby, versionNum] = version
-              if (versionNum === `latest` || versionNum === `next`) {
-                return [gatsby, `2`]
-              }
-              return [gatsby, versionNum.replace(/\D/g, ``).charAt(0)]
-            })
-
-          // If a new field is added here, make sure a corresponding
-          // change is made to "defaultFields" to not break DX
-          const starterShowcaseFields = {
-            slug: `/${owner}/${repoStub}/`,
-            stub: repoStub,
-            name,
-            description: pkgjson.description,
-            stars,
-            lastUpdated,
-            owner,
-            githubFullName,
-            gatsbyMajorVersion,
-            allDependencies,
-            gatsbyDependencies: allDependencies
-              .filter(
-                ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
-              )
-              .filter(([key, _]) => key.includes(`gatsby`)),
-            miscDependencies: allDependencies.filter(
-              ([key, _]) => !key.includes(`gatsby`)
-            ),
-          }
-          createNodeField({
-            node,
-            name: `starterShowcase`,
-            value: starterShowcaseFields,
-          })
-        })
-        .catch(err => {
-          reporter.panicOnBuild(
-            `Error getting repo data for starter "${repoStub}":\n
-            ${err.message}`
-          )
-        })
-    }
-  } else if (node.internal.type === `CreatorsYaml`) {
-    // Creator pages
-    const validTypes = {
-      individual: `people`,
-      agency: `agencies`,
-      company: `companies`,
-    }
-
-    if (!validTypes[node.type]) {
-      throw new Error(
-        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${node.type}” was provided for ${node.name}.`
-      )
-    }
-    slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
-      lower: true,
-    })}`
-    createNodeField({ node, name: `slug`, value: slug })
   }
-  // end Creator pages
   return null
 }
 
