@@ -431,7 +431,7 @@ const determineUsedFragmentsForDefinition = (
   definition,
   definitionsByName,
   fragmentsUsedByFragment,
-  visitedFragmentDefinitions = new Set()
+  traversalPath = []
 ) => {
   const { def, name, isFragment, filePath } = definition
   const cachedUsedFragments = fragmentsUsedByFragment.get(name)
@@ -444,11 +444,13 @@ const determineUsedFragmentsForDefinition = (
       [Kind.FRAGMENT_SPREAD]: node => {
         const name = node.name.value
         const fragmentDefinition = definitionsByName.get(name)
-        if (visitedFragmentDefinitions.has(fragmentDefinition)) {
-          return
-        }
-        visitedFragmentDefinitions.add(fragmentDefinition)
         if (fragmentDefinition) {
+          if (traversalPath.includes(name)) {
+            // Already visited this fragment during current traversal.
+            //   Visiting it again will cause a stack overflow
+            return
+          }
+          traversalPath.push(name)
           usedFragments.add(name)
           const {
             usedFragments: usedFragmentsForFragment,
@@ -457,8 +459,9 @@ const determineUsedFragmentsForDefinition = (
             fragmentDefinition,
             definitionsByName,
             fragmentsUsedByFragment,
-            visitedFragmentDefinitions
+            traversalPath
           )
+          traversalPath.pop()
           usedFragmentsForFragment.forEach(fragmentName =>
             usedFragments.add(fragmentName)
           )
@@ -500,10 +503,13 @@ const addExtraFields = (document, schema) => {
         // Entering a field of the current selection-set:
         //   mark which fields already exist in this selection set to avoid duplicates
         const context = contextStack[contextStack.length - 1]
-        if (node.name.value === `__typename`) {
+        if (
+          node.name.value === `__typename` ||
+          node?.alias?.value === `__typename`
+        ) {
           context.hasTypename = true
         }
-        if (node.name.value === `id`) {
+        if (node.name.value === `id` || node?.alias?.value === `id`) {
           context.hasId = true
         }
       },

@@ -272,6 +272,6 @@ Getting a development server running in the cloud solves the issue of accessing 
 
 ## Summary
 
-These are just some simple steps to get up and running with Tina, the possibilities don't end here. Make sure to check out [Tina Starter Grande](https://github.com/tinacms/tina-starter-grande) to see a more advacned implementation of Tina on a Gatsby website.
+These are just some simple steps to get up and running with Tina, the possibilities don't end here. Make sure to check out [Tina Starter Grande](https://github.com/tinacms/tina-starter-grande) to see a more advanced implementation of Tina on a Gatsby website.
 
 Hopefully you've found this introduction to TinaCMS useful. Feel free to tweet at [Tina 🦙](https://twitter.com/tina_cms) with feedback or questions. If you want to learn more, checkout the [documentation](https://tinacms.org/docs/getting-started/introduction). TinaCMS is open source; feel free to dig into the [source code](https://github.com/tinacms/tinacms). If you're interested in getting involved with the project, join our [community slack](https://join.slack.com/t/tinacms/shared_invite/enQtNzgxNDY1OTA3ODI3LTNkNWEwYjQyYTA2ZDZjZGQ2YmI5Y2ZlOWVmMjlkYmYxMzVmNjM0YTk2MWM2MTIzMmMxMDg3NWIxN2EzOWQ0NDM). If you get stuck, don't hesitate to ask questions on the [Tina Forum](https://community.tinacms.org/).

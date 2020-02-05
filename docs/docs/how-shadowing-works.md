@@ -16,10 +16,7 @@ It's important to begin discussing how the composition of themes works. An end u
 
 ```js:title=gatsby-config.js
 module.exports = {
-  plugins: [
-    "gatsby-theme-tomato-blog",
-    "gatsby-theme-tomato-portfolio",
-  ],
+  plugins: ["gatsby-theme-tomato-blog", "gatsby-theme-tomato-portfolio"],
 }
 ```
 

@@ -3,9 +3,10 @@ import { jsx } from "theme-ui"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
-import { NetlifyIcon } from "../../assets/vendor-logos/netlify.svg"
+import CodesandboxIcon from "../../assets/vendor-logos/codesandbox.svg"
+import NetlifyIcon from "../../assets/vendor-logos/netlify.svg"
 
-const Source = ({ startersYaml, repoUrl }) => (
+const Source = ({ startersYaml, repoUrl, starter }) => (
   <div
     sx={{
       display: `flex`,
@@ -66,6 +67,17 @@ const Source = ({ startersYaml, repoUrl }) => (
       >
         Try this starter
       </span>
+      <a
+        href={`https://codesandbox.io/s/github/${starter.owner}/${starter.stub}`}
+        sx={{
+          "&&": {
+            borderBottom: 0,
+            marginRight: t => t.space[4]
+          },
+        }}
+      >
+        <TechWithIcon icon={CodesandboxIcon}>CodeSandbox</TechWithIcon>
+      </a> &nbsp; 
       <a
         href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
         sx={{
