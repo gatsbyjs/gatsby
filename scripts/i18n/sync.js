@@ -87,6 +87,8 @@ async function syncTranslationRepo(code) {
   shell.exec(`git remote add source ${sourceRepoGitUrl}`)
   shell.exec(`git fetch source master`)
 
+  // TODO don't run the sync script if there is a current PR from the bot
+
   // Compare these changes
   // TODO exit early if this fails
   const baseHash = shell
@@ -141,9 +143,9 @@ async function syncTranslationRepo(code) {
     line => line.replace(`CONFLICT (modify/delete): `, ``).split(` `)[0]
   )
   shell.exec(`git rm ${removedFiles.join(` `)}`)
-  // shell.exec(`git reset --hard`)
 
   // If no conflicts, merge directly into master
+  // TODO handle committing removed files
   // TODO does gatsby-bot have merge permissions?
   // if (conflictFiles.length === 0) {
   //   logger.info(`No conflicts found. Committing directly to master.`)
