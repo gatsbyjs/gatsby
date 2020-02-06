@@ -88,12 +88,15 @@ async function syncTranslationRepo(code) {
   shell.exec(`git fetch source master`)
 
   // Compare these changes
+  // TODO exit early if this fails
   const baseHash = shell
     .exec(`git merge-base origin/master source/master`)
     .stdout.replace(`\n`, ``)
   const shortBaseHash = getShortHash(baseHash)
 
-  const hash = shell.exec(`git rev-parse source/master`).stdout
+  const hash = shell
+    .exec(`git rev-parse source/master`)
+    .stdout.replace(`\n`, ``)
   const shortHash = getShortHash(hash)
 
   const comparisonUrl = `${sourceRepoUrl}/compare/${shortBaseHash}..${shortHash}`
