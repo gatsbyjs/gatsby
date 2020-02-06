@@ -60,7 +60,7 @@ If you want to run Cypress in Continuous Integration (CI) you have to use `cypre
 
 Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to setup Travis or GitLab with Cypress.
 
-You can also implement basic CI directly in Github using a [Github action](https://github.com/cypress-io/github-action) to automate your tests.
+You can also implement basic CI directly in Github using an official [Cypress Github action](https://github.com/cypress-io/github-action) to automate your tests.
 
 ```yml
 name: End-to-end tests
@@ -76,7 +76,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v1
         with:
-          start: gatsby develop
+          start: npm develop
           wait-on: "http://localhost:8000"
           wait-on-timeout: 120
 ```
