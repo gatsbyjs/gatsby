@@ -39,8 +39,6 @@
           link: /contributing/translation/style-guide/
         - title: Keeping Translations Up-to-date
           link: /contributing/translation/sync-guide/
-    - title: Gatsby Docs Translation Guide
-      link: /contributing/gatsby-docs-translation-guide/
     - title: How to Contribute
       link: /contributing/how-to-contribute/
       items:
