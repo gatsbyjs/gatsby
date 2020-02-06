@@ -102,6 +102,11 @@ type ActionOptions = {
   followsSpan: ?Object,
 }
 
+type PageData = {
+  id: string,
+  result: ?Object,
+}
+
 /**
  * Delete a page
  * @param {Object} page a page object
@@ -1405,17 +1410,30 @@ actions.createPageDependency = (
   }
 }
 
-actions.setPageData = data => {
+/**
+ * Set page data in the store, saving the pages content data and context.
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the path to the page.
+ * @param {string} $0.result object of the pages data and context.
+ */
+actions.setPageData = (pageData: PageData) => {
   return {
-    type: `CREATE_PAGE_DATA`,
-    payload: data,
+    type: `SET_PAGE_DATA`,
+    payload: pageData,
   }
 }
 
-actions.removePageData = data => {
+/**
+ * Remove page data from the store.
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the path to the page.
+ */
+actions.removePageData = (id: PageData) => {
   return {
-    type: `DELETE_PAGE_DATA`,
-    payload: data,
+    type: `REMOVE_PAGE_DATA`,
+    payload: id,
   }
 }
 
