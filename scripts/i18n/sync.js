@@ -117,7 +117,11 @@ async function syncTranslationRepo(code) {
 
   // find all merge conflicts
   // FIXME deal with deleted file conflicts
-  const conflictLines = lines.filter(line => line.startsWith(`CONFLICT`))
+  const conflictLines = lines.filter(line =>
+    line.startsWith(`CONFLICT (content)`)
+  )
+  // Message is of the form:
+  // CONFLICT (content): Merge conflict in {file path}
   const conflictFiles = conflictLines.map(line =>
     line.substr(line.lastIndexOf(` `) + 1)
   )
@@ -125,6 +129,18 @@ async function syncTranslationRepo(code) {
   for (let file of conflictFiles) {
     lineNumbers[file] = getLineNumber(file)
   }
+  // Add all the conflicts
+  shell.exec(`git add ${conflictFiles.join(` `)}`)
+
+  const removedLines = lines.filter(line =>
+    line.startsWith(`CONFLICT (modify/delete)`)
+  )
+  // Deleted message format:
+  // CONFLICT (modify/delete): {file path} deleted in {hash} and modified in HEAD. Version HEAD of {file path} left in tree.
+  const removedFiles = removedLines.map(
+    line => line.replace(`CONFLICT (modify/delete): `, ``).split(` `)[0]
+  )
+  shell.exec(`git rm ${removedFiles.join(` `)}`)
   // shell.exec(`git reset --hard`)
 
   // If no conflicts, merge directly into master
@@ -139,7 +155,6 @@ async function syncTranslationRepo(code) {
 
   // Do a soft reset and add the conflict files as-is
   // shell.exec(`git reset`)
-  shell.exec(`git add ${conflictFiles.join(` `)}`)
   // // clean out the rest of the changed files
   // shell.exec(`git checkout -- .`)
   // shell.exec(`git clean -fd`)
