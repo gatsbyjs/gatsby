@@ -99,7 +99,7 @@ Note: Note the gatsby src system path
    }
 ```
 
-Note: The relative path is the path that you config in gatsby src system.
+Note: The relative path is the image path that you configured in `gatsby-config.js`.
 
 3. Next import image from "gatsby-image" line at the top
 
