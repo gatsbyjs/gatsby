@@ -59,7 +59,7 @@ export const query = graphql`
 
 ### Prerequisites
 
-- A Gatsby site with `gatsby-config.js` and an `index.js` page
+- A [Gatsby site](/docs/quick-start) with `gatsby-config.js` and an `index.js` page
 - The `gatsby-transformer-sharp` plugin installed
 - The `gatsby-plugin-sharp` plugin installed
 - A source plugin installed, such as `gatsby-source-filesystem`
