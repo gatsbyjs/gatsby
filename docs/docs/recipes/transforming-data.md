@@ -114,5 +114,5 @@ Note: `gatsby-image` is not a plugin. It gets installed but is just a component 
 ### Additional resources
 
 - [API docs, including grayscale and duotone query tips](/docs/gatsby-image/#shared-query-parameters)
-- [Gatsby Image docs](/packages/gatsby-image/)
+- [Gatsby Image docs](/docs/gatsby-image/)
 - [Image processing examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing)
