@@ -63,7 +63,7 @@ export const query = graphql`
 - The `gatsby-transformer-sharp` plugin installed
 - The `gatsby-plugin-sharp` plugin installed
 - A source plugin installed, such as `gatsby-source-filesystem`
-- An image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `src` folder
+- An image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `src/images` folder
 
 ### Directions
 
