@@ -249,6 +249,8 @@ const Form = () => (
 )
 ```
 
+Then from the receiving page you can access the `location` state as demonstrated in [Pass state as props to the linked page](#pass-state-as-props-to-the-linked-page).
+
 ### Replace history during programmatic navigation
 
 If the navigation should replace history instead of pushing a new entry into the navigation history, add the `replace` prop with a value of `true` to the `options` argument of `navigate`.
@@ -390,4 +392,5 @@ onClick = () => {
 ## Additional resources
 
 - [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)
+- [Routing: Getting Location Data from Props](/docs/location-data-from-props/)
 - [`gatsby-plugin-catch-links`](https://www.gatsbyjs.org/packages/gatsby-plugin-catch-links/) to automatically intercept local links in Markdown files for `gatsby-link` like behavior

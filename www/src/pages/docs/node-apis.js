@@ -9,7 +9,6 @@ import APIReference from "../../components/api-reference"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import Link from "../../components/localized-link"
-import { itemListDocs } from "../../utils/sidebar/item-list"
 import normalizeGatsbyApiCall from "../../utils/normalize-gatsby-api-call"
 
 class NodeAPIDocs extends React.Component {
@@ -29,7 +28,7 @@ class NodeAPIDocs extends React.Component {
     })
 
     return (
-      <Layout location={this.props.location} itemList={itemListDocs}>
+      <Layout location={this.props.location}>
         <Container>
           <Helmet>
             <title>Node APIs</title>

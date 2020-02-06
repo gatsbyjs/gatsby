@@ -9,7 +9,6 @@ import APIReference from "../../components/api-reference"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import Link from "../../components/localized-link"
-import { itemListDocs } from "../../utils/sidebar/item-list"
 
 class NodeAPIHelperDocs extends React.Component {
   render() {
@@ -18,7 +17,7 @@ class NodeAPIHelperDocs extends React.Component {
       docs => docs.name
     )
     return (
-      <Layout location={this.props.location} itemList={itemListDocs}>
+      <Layout location={this.props.location}>
         <Container>
           <Helmet>
             <title>Node API helpers</title>
