@@ -408,7 +408,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     {categories.map((c, i) => (
                       <Fragment key={c}>
                         <Link
-                          to={`/showcase?${qs.stringify({ filters: [c] })}`}
+                          to={`/showcase/?${qs.stringify({ filters: [c] })}`}
                           state={{ isModal: true }}
                           sx={styles.link}
                         >

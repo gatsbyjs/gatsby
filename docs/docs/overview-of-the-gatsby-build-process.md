@@ -2,8 +2,6 @@
 title: Overview of the Gatsby Build Process
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-
 <!-- written at the time of commit e85278c to bootstrap/index.js and commit f8cae16 to build.js -->
 
 _This is a high-level overview about the steps in the Gatsby build process. For more detailed information about specific steps, check out the [Gatsby Internals](/docs/gatsby-internals) section of the docs._
@@ -271,7 +269,7 @@ An internal Gatsby utility adds code for redirects, like implemented with [`crea
 
 20. `Build manifest and related icons` - (from `gatsby-plugin-manifest`)
 
-This step is activated by `gatsby-plugin-manifest` in the `gatsby-default-starter` and is not a part of the built-in Gatsby functionality, demonstrating how plugins are able to tap into the lifecycle.
+This step is activated by `gatsby-plugin-manifest` in the `gatsby-default-starter` and is not a part of the built-in Gatsby functionality, demonstrating how plugins are able to tap into the lifecycle. The plugin adds a `manifest.json` file with the specified configurations and icons.
 
 21. `onPostBootstrap`
 

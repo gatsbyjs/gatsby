@@ -54,7 +54,7 @@ module.exports = {
 
 ### 2. The starter scaffolds out example blog posts.
 
-```md:title=/content/posts/hello-world.mdx
+```mdx:title=/content/posts/hello-world.mdx
 ---
 title: Hello, world!
 path: /hello-world

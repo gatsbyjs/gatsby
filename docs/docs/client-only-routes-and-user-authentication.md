@@ -22,7 +22,7 @@ Gatsby uses [@reach/router](https://reach.tech/router/) under the hood, and it i
 
 You first need to set up routes on a page that is built by Gatsby:
 
-```javascript:title=src/pages/app.js
+```jsx:title=src/pages/app.js
 import React from "react"
 import { Router } from "@reach/router" // highlight-line
 import Layout from "../components/Layout"
@@ -55,7 +55,7 @@ With routes nested under the `<Router />` from Reach Router, it will [render the
 
 With [authentication set up](/docs/building-a-site-with-authentication) on your site, you can create a component like a `<PrivateRoute/>` to extend the example above and gate content:
 
-```javascript:title=src/pages/app.js
+```jsx:title=src/pages/app.js
 import React from "react"
 import { Router } from "@reach/router"
 import Layout from "../components/Layout"

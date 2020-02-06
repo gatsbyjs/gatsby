@@ -7,11 +7,6 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 import Layout from "../components/layout"
-import {
-  itemListDocs,
-  itemListTutorial,
-  itemListContributing,
-} from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 import TableOfContents from "../components/docs-table-of-contents"
@@ -31,20 +26,9 @@ const containerStyles = {
   px: 9,
 }
 
-const getDocsData = location => {
-  const [urlSegment] = location.pathname.split(`/`).slice(1)
-  const itemListLookup = {
-    docs: itemListDocs,
-    contributing: itemListContributing,
-    tutorial: itemListTutorial,
-  }
-
-  return [urlSegment, itemListLookup[urlSegment]]
-}
-
 function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const page = data.mdx
-  const [urlSegment, itemList] = getDocsData(location)
+  const [urlSegment] = page.fields.slug.split(`/`).slice(1)
   const toc =
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
@@ -62,7 +46,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
       </Helmet>
       <Layout
         location={location}
-        itemList={itemList}
+        locale={page.fields.locale}
         enableScrollSync={urlSegment === `docs` ? false : true}
       >
         <DocSearchContent>
@@ -77,7 +61,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
               },
             }}
           >
-            <Breadcrumb location={location} itemList={itemList} />
+            <Breadcrumb location={location} />
             <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
               {page.frontmatter.title}
             </h1>
@@ -134,8 +118,8 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
                     See the issue relating to this stub on GitHub
                   </a>
                 )}
-                <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
                 <MarkdownPageFooter page={page} />
+                <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
               </div>
             </div>
           </Container>
@@ -149,14 +133,15 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
 export default DocsTemplate
 
 export const pageQuery = graphql`
-  query($path: String!) {
-    mdx(fields: { slug: { eq: $path } }) {
+  query($slug: String!, $locale: String!) {
+    mdx(fields: { slug: { eq: $slug }, locale: { eq: $locale } }) {
       body
       excerpt
       timeToRead
       tableOfContents
       fields {
         slug
+        locale
         anchor
       }
       frontmatter {

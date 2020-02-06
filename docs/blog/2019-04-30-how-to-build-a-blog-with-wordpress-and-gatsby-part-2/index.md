@@ -18,12 +18,7 @@ In the last post, I covered setting up [WordPress for use with Gatsby](/blog/201
 
 I have set up a WordPress site for you to use with the plugins mentioned in the last post as well as some dummy content to use. If you're curious, my favorite lorem generator is [Fillerama](http://fillerama.io/) which offers random content from Futurama, Monty Python, Star Wars, and more. This is where the content came from.
 
-<figure>
-  <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/sDcfxFDozb3bO/giphy.mp4"/>
-  </video>
-  <figcaption>Shut up and take my money!</figcaption>
-</figure>
+https://giphy.com/gifs/french-week-sDcfxFDozb3bO
 
 ## Gatsby.js starter
 
@@ -62,8 +57,7 @@ Now that you have your project created, let's take a look inside. You will see a
 
 These files will be present in all Gatsby starters you use, so it's worth your time to have at least a basic level of understanding with each one. Let's take a look and see what dependencies and plugins you have by default. Open up the `package.json` file and scroll down to dependencies. This will tell you what packages you already have. Mine looks like this:
 
-```json
-// package.json
+```json:title=package.json
 {
   "name": "gatsby-starter-default",
   "private": true,
@@ -114,12 +108,7 @@ You can see there are several dependencies installed right off the bat. I'll jus
 
 Whew! That was a mouthful.
 
-<figure>
-  <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/eb3WAhXzlUAFi/giphy.mp4"/>
-  </video>
-  <figcaption>Get on with it!</figcaption>
-</figure>
+https://giphy.com/gifs/monty-python-and-the-holy-grail-eb3WAhXzlUAFi
 
 ### Running the site
 
@@ -149,8 +138,7 @@ npm install gatsby-source-wordpress gatsby-plugin-sitemap
 
 Looking at your `package.json` file will reveal that each of these packages have been added to the project, but this isn't enough to start using the gatsby-plugin files. You first need to add them to the `gatsby-config.js` file. Luckily, the docs for these plugins are awesome and do a good job explaining all of this. I'd recommend you take a look at them to find out what each of the settings does, but I'll provide the code for the `gatsby-config.js` file after adding all of these plugins to your site:
 
-```javascript
-// gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -250,8 +238,7 @@ Unless there is some special functionality needed for blog posts, you can just [
 
 Below is the code I'm using for the template starter. This is just to make sure things are working after you finish setting up your `gatsby-node.js` logic. Once you know the page is being created, you will update the template to display correctly.
 
-```javascript
-// src/templates/BlogPost.js
+```jsx:title=src/templates/BlogPost.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -270,18 +257,11 @@ Now let's talk about `gatsby-node.js` a bit more. Let's start off by discussing 
 
 The gatsby-node.js file allows you to pull in a template file, then query your data using GraphQL. Then you can loop through the appropriate data and programmatically create a page for each piece of data, in this case blog posts and pages. This template will be universal so all content of that type will look the same. You can also use different templates for different content types so your pages and blog posts don't have to look the same.
 
-<figure>
-  <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4"/>
-  </video>
-  <figcaption>Yes!!!</figcaption>
-</figure>
+https://giphy.com/gifs/excited-the-office-yes-t3Mzdx0SA3Eis
 
 The code below pulls in the data for blog posts from WordPress and creates a page for each one using the createPage API provided by Gatsby. It is also much easier to pull in templates in this file using the path package, so I installed it using `npm install path`.
 
-```javascript
-// gatsby-node.js
-
+```javascript:title=gatsby-node.js
 /**
  * Implement Gatsby's Node APIs in this file.
  *
@@ -337,8 +317,7 @@ You can now see all of the pages available and clicking on one should take you t
 
 Now that you have pages being created at the desired locations, you should update your blog post template to display the appropriate data. Although you need to make some changes, you will keep it as a stateless functional component. The code below will create your template. I would like to point out that you are using GraphQL to query the information which is then used as a prop called data.
 
-```javascript
-// src/templates/BlogPostTemplate.js
+```jsx:title=src/templates/BlogPostTemplate.js
 import React from "react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
@@ -408,12 +387,7 @@ Here's what your completed Blog Post looks like after you update the template:
 
 You're about half-way done with the actual Gatsby.js build. In this post I covered how to import blog posts from WordPress into your Gatsby application and create pages automatically for each post. Honestly, this is the hardest part about making sites in Gatsby. If you're still keeping up, great job! If you're struggling, don't be too hard on yourself. This stuff is hard. If you need to, you can reach out to me on Twitter [@iam_timsmith](https://www.twitter.com/iam_timsmith) and I'll be happy to help you.
 
-<figure>
-  <video autoplay muted loop width="300">
-    <source src="https://media.giphy.com/media/rY93u9tQbybks/giphy.mp4"/>
-  </video>
-  <figcaption>Obligatory Great Gatsby meme</figcaption>
-</figure>
+https://giphy.com/gifs/great-dicaprio-leonardo-rY93u9tQbybks
 
 The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Gitub.
 

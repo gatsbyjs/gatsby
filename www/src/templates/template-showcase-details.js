@@ -66,9 +66,9 @@ class ShowcaseTemplate extends React.Component {
       const queryString = qs.stringify({
         filters: this.props.location.state.filters,
       })
-      return `/showcase?${queryString}`
+      return `/showcase/?${queryString}`
     } else {
-      return `/showcase`
+      return `/showcase/`
     }
   }
 

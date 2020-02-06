@@ -85,7 +85,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   // doesn't support this.
   let contentTypes
   try {
-    contentTypes = await pagedGet(client, `getContentTypes`)
+    const pageLimit = pluginConfig.get(`pageLimit`)
+
+    contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
     console.log(`error fetching content types`, e)
   }
@@ -93,33 +95,12 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 
   let contentTypeItems = contentTypes.items
 
-  // Fix IDs on entries and assets, created/updated and deleted.
-  contentTypeItems = contentTypeItems.map(c => normalize.fixIds(c))
-
-  currentSyncData.entries = currentSyncData.entries.map(e => {
-    if (e) {
-      return normalize.fixIds(e)
-    }
-    return null
-  })
-  currentSyncData.assets = currentSyncData.assets.map(a => {
-    if (a) {
-      return normalize.fixIds(a)
-    }
-    return null
-  })
-  currentSyncData.deletedEntries = currentSyncData.deletedEntries.map(e => {
-    if (e) {
-      return normalize.fixIds(e)
-    }
-    return null
-  })
-  currentSyncData.deletedAssets = currentSyncData.deletedAssets.map(a => {
-    if (a) {
-      return normalize.fixIds(a)
-    }
-    return null
-  })
+  // Fix IDs (inline) on entries and assets, created/updated and deleted.
+  contentTypeItems.forEach(normalize.fixIds)
+  currentSyncData.entries.forEach(normalize.fixIds)
+  currentSyncData.assets.forEach(normalize.fixIds)
+  currentSyncData.deletedEntries.forEach(normalize.fixIds)
+  currentSyncData.deletedAssets.forEach(normalize.fixIds)
 
   const result = {
     currentSyncData,
@@ -140,9 +121,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 function pagedGet(
   client,
   method,
+  pageLimit,
   query = {},
   skip = 0,
-  pageLimit = 1000,
   aggregatedResponse = null
 ) {
   return client[method]({
@@ -160,9 +141,9 @@ function pagedGet(
       return pagedGet(
         client,
         method,
+        pageLimit,
         query,
         skip + pageLimit,
-        pageLimit,
         aggregatedResponse
       )
     }
