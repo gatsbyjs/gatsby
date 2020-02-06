@@ -84,14 +84,15 @@ async function syncTranslationRepo(code) {
   }
   cloneOrUpdateRepo(transRepoName, transRepoUrl)
 
+  shell.exec(`git remote add source ${sourceRepoGitUrl}`)
+  shell.exec(`git fetch source master`)
+
   // Compare these changes
   const baseHash = shell
     .exec(`git merge-base origin/master source/master`)
     .stdout.replace(`\n`, ``)
   const shortBaseHash = getShortHash(baseHash)
 
-  shell.exec(`git fetch source master`)
-  // FIXME this fails the first time a repo is downloaded
   const hash = shell.exec(`git rev-parse source/master`).stdout
   const shortHash = getShortHash(hash)
 
@@ -104,7 +105,6 @@ async function syncTranslationRepo(code) {
   }
 
   // pull from the source
-  shell.exec(`git remote add source ${sourceRepoGitUrl}`)
   const output = shell.exec(`git pull source master`).stdout
   if (output.includes(`Already up to date.`)) {
     logger.info(`We are already up to date with source.`)
