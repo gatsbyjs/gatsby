@@ -76,6 +76,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v1
         with:
+          # Command to run 'gatsby develop', can also use workspaces with 'yarn workspace site develop'
           start: npm develop
           wait-on: "http://localhost:8000"
           wait-on-timeout: 120
