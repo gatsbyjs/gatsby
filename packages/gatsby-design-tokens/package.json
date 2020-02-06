@@ -19,13 +19,10 @@
   "scripts": {
     "build": "npm run build:tokens && npm run build:theme && npm run build:theme-gatsbyjs-org",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "npm run watch:tokens && npm run watch:theme && npm run watch:theme-gatsbyjs-org",
+    "watch": "microbundle watch {src/index.js,src/theme.js,src/theme-gatsbyjs-org.js} --sourcemap=false -f es,cjs",
     "build:tokens": "(microbundle build --sourcemap=false -f es,cjs && agadoo dist/index.esm.js) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\"",
-    "watch:tokens": "microbundle watch --sourcemap=false -f es,cjs",
     "build:theme": "(microbundle build src/theme.js -o dist/theme.js --sourcemap=false -f es,cjs) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\"",
-    "watch:theme": "microbundle watch src/theme.js -o dist/theme.js --sourcemap=false -f es,cjs",
-    "build:theme-gatsbyjs-org": "(microbundle build src/theme-gatsbyjs-org.js -o dist/theme-gatsbyjs-org.js --sourcemap=false -f es,cjs) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\"",
-    "watch:theme-gatsbyjs-org": "microbundle watch src/theme-gatsbyjs-org.js -o dist/theme-gatsbyjs-org.js --sourcemap=false -f es,cjs"
+    "build:theme-gatsbyjs-org": "(microbundle build src/theme-gatsbyjs-org.js -o dist/theme-gatsbyjs-org.js --sourcemap=false -f es,cjs) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\""
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-design-tokens#readme",
   "dependencies": {
