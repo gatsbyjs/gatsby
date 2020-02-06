@@ -191,7 +191,7 @@ module.exports = async (args: BootstrapArgs) => {
   // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
   if (
-    process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES &&
+    !process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES &&
     process.env.NODE_ENV === `production`
   ) {
     activity = report.activityTimer(
