@@ -60,6 +60,27 @@ If you want to run Cypress in Continuous Integration (CI) you have to use `cypre
 
 Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to setup Travis or GitLab with Cypress.
 
+You can also implement basic CI directly in Github using a [Github action](https://github.com/cypress-io/github-action) to automate your tests.
+
+```yml
+name: End-to-end tests
+on: [push]
+jobs:
+  cypress-run:
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v1
+        with:
+          start: gatsby develop
+          wait-on: "http://localhost:8000"
+          wait-on-timeout: 120
+```
+
 ## Writing tests
 
 A good use case for writing automated end-to-end tests is asserting **accessibility** with [cypress-axe](https://github.com/avanslaars/cypress-axe), a Cypress plugin that incorporates the [axe](https://deque.com/axe) accessibility testing API. While some [manual testing](https://www.smashingmagazine.com/2018/09/importance-manual-accessibility-testing/) is still required to ensure good web accessibility, automation can ease the burden on human testers.
