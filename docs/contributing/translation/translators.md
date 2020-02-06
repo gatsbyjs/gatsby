@@ -2,11 +2,11 @@
 title: Contributing to a Translation
 ---
 
-## Contributing to a translation
-
 Once a language repository is created and someone on the Gatsby team has assigned codeowners, contributions can begin. It is up to the discretion of the contributor how exactly they want to work, but it's recommended to limit the scope of PRs to 1 doc at a time to aid with code reviewing.
 
 > ⚠️ Note: All contributors are expected to follow the [Gatsby Code of Conduct](/contributing/code-of-conduct/) and work professionally with fellow contributors. For issues with conduct, if you are unable to work things out amicably amongst yourselves (perhaps after filing a public issue or having a discussion on Discord), you can contact the Gatsby team at [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com) with details about the situation.
+
+## Contributing translations
 
 ## Translation Tips
 
@@ -20,7 +20,7 @@ Changes to the meaning of a text or code example should be done in the main [Eng
 
 Some pages are very long and difficult to translate for a single contributor. Feel free to split these pages up into sections and work on them together!
 
-In addition, sometimes a contributor cannot continue a PR for whatever reason. It may help to ask them if they need assistance and to bring someone else on to complete the work in a timely fashion.
+In addition, if you cannot continue a PR for whatever reason, please let maintainers know so that they can assign the translation for someone else to finish.
 
 ### Check "allow edits from maintainers"
 
@@ -31,3 +31,14 @@ Contributors should check "allow edits from maintainers" when making Pull Reques
 Translation contributions must be opened as pull requests to provide time for review and comments. If actionable feedback is given on a PR review, the author must acknowledge the review and make changes with their discretion. Ignoring review feedback completely is not allowed (see response templates below for help with this).
 
 ## Becoming a maintainer
+
+If you would like to be a maintainer of an existing translation repo, submit a PR to the repo editing the `CODEOWNERS` file of that repo adding your GitHub username. In the PR description, include the following information:
+
+- Why you would like to be a maintainer
+- A summary of your contributions to the translation repo so far
+- Your experience with open source and translation
+- How much time per week you'll be able to commit to being a translation maintainer
+
+## When a contributor will be removed
+
+Consistent with the [Code of Conduct](/docs/code-of-conduct/) the Gatsby team reserves the right to remove a contributor (including translation maintainers) from the Gatsby organization if necessary. Some reasons for being removed include spammy comments, closing PRs or issues without action or productive dialogue, or generally harmful or abusive behavior inconsistent with Gatsby's policies.

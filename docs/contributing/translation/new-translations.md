@@ -8,7 +8,7 @@ This page lists the steps to take to create a a new Gatsbyjs.org translation.
 
 ### Read the maintainer guide
 
-Before requesting a new translation, make sure to read the [maintainer guide](/contributing/translation/maintainers/) to affirm that you accept the responsibilities of being a translation maintainer.
+Before requesting a new translation, make sure to read the [maintainer responsibilities](/contributing/translation/maintainers/#maintainer-responsibilities) to affirm that you accept the responsibilities of being a translation maintainer.
 
 ### Check other issues
 
@@ -24,4 +24,14 @@ For a new translation, open an issue with information about your intended langua
 
 ## Criteria for translation approval
 
-## Once the translation repo is created
+The Gatsby team will choose to approve a translation request based on the following criteria:
+
+- Are there at least two maintainers listed?
+- Do at least one of the maintainers have previous open-source experience and experience working with GitHub and git?
+- Are the maintainers fluent speakers? Maintainers do not need to have experience translating, but must be fluent enough in the language to be able to translate technical writing.
+
+## After approval
+
+Once the translation request is approved, a member of the gatsby team will run the an automated script to create your repository and set everything up.
+
+At this point, you and your co-maintainers should read the rest of the [maintainer guide](/contributing/translation/maintainers/) for more information on how to manage your translation repository. You can also check out the [translation contributor guide](/contributing/translation/translators/) for information on contributing translations to your own repo, and start working on your translation [style guide](/contributing/translation/style-guide/).

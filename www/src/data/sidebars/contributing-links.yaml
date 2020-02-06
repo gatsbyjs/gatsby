@@ -35,10 +35,10 @@
           link: /contributing/translation/translators/
         - title: Translation Maintainer Guide
           link: /contributing/translation/maintainers/
-        - title: Translation Style Guide
-          link: /contributing/translation/style-guide/
         - title: Keeping Translations Up-to-date
           link: /contributing/translation/sync-guide/
+        - title: Translation Style Guide
+          link: /contributing/translation/style-guide/
     - title: How to Contribute
       link: /contributing/how-to-contribute/
       items:

@@ -28,6 +28,14 @@ As codeowners, you have the freedom and responsibility to decide what your revie
 
 You have the ability to install any plugin or automation tool that will make your life easier as codeowners. Is there a text linter that works well in your language? Is there any automation that you can add? If you feel that these improvements would be beneficial to other languages as well, create an issue or PR for it in the main Gatsby repository.
 
+### Prioritize pages
+
+The repo creation script will create a progress issue listing the list of [core pages to translate](https://github.com/gatsbyjs/gatsby/blob/master/scripts/i18n/pages.json). These are some of the most-used pages in Gatsby. Once these core pages are done, make to update the issue or create a new one in order to schedule work for the rest of the docs.
+
+The Gatsby learning team is in charge of determining priorities for which docs should be translated. Refer to the [i18n page spreadsheet](https://docs.google.com/spreadsheets/d/1u2amGnqFLKxJuL5h9UrDblUueFgg0EBt7xbau4n8iTM/edit) to get the most up-to-date priority list, which includes frequently-visited pages in the Gatsby docs, tutorial, recipes, and other important pages.
+
+[Reference guide overview pages](/contributing/docs-templates/#reference-guide-overview) are also worth translating to establish a fully translated path to a frequently visited [reference guide](/contributing/docs-templates/#reference-guides), though they are listed at a lower priority.
+
 ### Ask for help
 
 Don't be afraid to ask for help! If you're not sure about something, you can post in the `#localization` channel on the [Gatsby Discord](https://gatsby.dev/discord) or create an issue in the Gatsby repo.
@@ -36,13 +44,13 @@ If it feels like there is too much work and you need help, you have the ability 
 
 We also understand that life sometimes gets in the way. If you find that you are no longer able to satisfy your codeowner duties, let the Gatsby team know so we can figure out the best path forward.
 
+### Don't let translations stall
+
+Check in periodically with contributors to make sure translations are being done promptly. If it's been a while since a page was assigned without any progress, check in with the contributor and ask for a status update. If the contributor is unresponsive, you may need to free up the page for someone else to work on.
+
 ### Spread the word!
 
 If you're finding it hard to find people to help translate, spread the word about your translation effort! If you use social media like Twitter, tag the [gatsby Twitter account](https://twitter.com/gatsbyjs) and we'll share it. Ask people in local Gatsby or React meetups if they would be interested in contributing.
-
-## When a maintainer or contributor will be removed
-
-Consistent with the [Code of Conduct](/docs/code-of-conduct/) the Gatsby team reserves the right to remove a maintainer (or contributor) from the Gatsby organization if necessary. Some reasons for being removed include spammy comments, closing PRs or issues without action or productive dialogue,or generally harmful or abusive behavior inconsistent with Gatsby's policies.
 
 ## Template responses for closing PRs
 
