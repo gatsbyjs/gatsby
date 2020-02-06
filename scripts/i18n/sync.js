@@ -91,6 +91,7 @@ async function syncTranslationRepo(code) {
   const shortBaseHash = getShortHash(baseHash)
 
   shell.exec(`git fetch source master`)
+  // FIXME this fails the first time a repo is downloaded
   const hash = shell.exec(`git rev-parse source/master`).stdout
   const shortHash = getShortHash(hash)
 
@@ -111,7 +112,8 @@ async function syncTranslationRepo(code) {
   }
   const lines = output.split(`\n`)
 
-  // // find all merge conflicts
+  // find all merge conflicts
+  // FIXME deal with deleted file conflicts
   const conflictLines = lines.filter(line => line.startsWith(`CONFLICT`))
   const conflictFiles = conflictLines.map(line =>
     line.substr(line.lastIndexOf(` `) + 1)
