@@ -46,40 +46,6 @@ For the purposes of an accessible document outline, content headings should go i
      > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
 3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
 
-### Converting a document from a stub
-
-If you wrote a new document that was [previously a stub](/contributing/how-to-write-a-stub/), there are two things you need to update.
-
-1. Remove the frontmatter that links to the issue
-
-```diff:title=docs/docs/example-doc.md
-  ...
-    title: Example Document
-- - issue: https://github.com/gatsbyjs/gatsby/issues/00000
-+ -
-  ...
-```
-
-2. Edit `www/src/data/sidebars/doc-links.yaml` by removing the asterisk behind the document's title:
-
-```diff:title=www/src/data/sidebars/doc-links.yaml
-  ...
-- - title: Example Document*
-+ - title: Example Document
-    link: /docs/example-document/
-  ...
-```
-
-3. (Optional) if the name of the title seems long, consider adding a `breadcrumbTitle` to the entry in the `doc-links.yaml` file that is a shorter version of the title, and will show up in the breadcrumb on the docs page instead.
-
-```diff:title=www/src/data/sidebars/doc-links.yaml
-  ...
-  - title: Really, Really Long Example Document or Guide Title
-    link: /docs/example-document/
-+   breadcrumbTitle: Shorter Title to Display
-  ...
-```
-
 ## Docs site setup instructions
 
 After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
@@ -107,16 +73,30 @@ It can be necessary to change a heading within the docs. It's important to note 
 
 The docs include custom built components to aid with navigation. In order to customize the navigation experience, these components allow some configurations without changing any of the React code.
 
+### Adjusting navigation titles
+
+Gatsbyjs.org displays the title of a page in the sidebar, the `<GuideList />` component on overview pages, and the "Previous" and "Next" links at the bottom of the page. To use a different title in these places (for example, if the full page title is too long), use the `navTitle` key in the document's frontmatter:
+
+```markdown
+---
+title: Gatsby Contributor Covenant Code of Conduct
+navTitle: Code of Conduct
+---
+
+## Our Pledge
+```
+
 ### Adjusting breadcrumb titles
 
 The `<Breadcrumb />` component is used in layout files to display the hierarchy of pages a user is currently browsing on at the top of each doc.
 
-To alter the title of a doc that is displayed in the Breadcrumb component, `breadcrumbTitle` is supported as a key in the [sidebar YAML files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars). It is commonly used to provide an abbreviated version of a doc's title when displayed next to its parent page title, e.g. shortening "Adding a Custom webpack Config" to "webpack Config".
+To alter the title of a doc that is displayed in the Breadcrumb component, `breadcrumbTitle` is supported as a key in the document's frontmatter. It is commonly used to provide an abbreviated version of a doc's title when displayed next to its parent page title, e.g. shortening "Adding a Custom Webpack Config" in the section "Custom Configuration" to "webpack Config".
 
-```yaml
-- title: Adding Page Transitions
-  link: /docs/adding-page-transitions/
-  breadcrumbTitle: Page Transitions # highlight-line
+```markdown
+---
+title: Adding a Custom Webpack Config
+breadcrumbTitle: Webpack Config
+---
 ```
 
 ### Disabling or shortening Table of Contents
