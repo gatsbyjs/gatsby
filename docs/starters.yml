@@ -5187,7 +5187,7 @@
     - TypeWriter Effect
 - url: https://answer.netlify.com/
   repo: https://github.com/passwd10/gatsby-starter-answer
-  description: A simple Gatsby blog for planning, documentation
+  description: A simple Gatsby blog to show your Future Action on top of the page
   tags:
     - Blog
     - Markdown
