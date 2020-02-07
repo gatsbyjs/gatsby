@@ -155,8 +155,8 @@ const c = {
       },
       code: {
         // ui
-        background: `#1b191f`, // another meh
-        backgroundInline: darkBorder,
+        bg: `#1b191f`, // another meh
+        bgInline: darkBorder,
         border: colorsTokens.grey[90],
         lineHighlightBackground: hex2rgba(colorsTokens.purple[90], 0.25),
         lineHighlightBorder: colorsTokens.purple[90],
