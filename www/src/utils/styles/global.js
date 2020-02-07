@@ -218,7 +218,7 @@ export const globalStyles = t => {
       textDecoration: `none`,
     },
     h1: {
-      fontWeight: t.fontWeights.headingPrimary,
+      fontWeight: t.fontWeights.extraBold,
     },
     "h1, h2, h3, h4, h5, h6": {
       color: t.colors.heading,
