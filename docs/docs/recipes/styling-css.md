@@ -450,7 +450,7 @@ const IndexPage = () => (
 export default IndexPage
 ```
 
-> This example imports a specific icon and uses it for improved performance. As an alternative you can [import the icons and build a library](https://github.com/FortAwesome/react-fontawesome#build-a-library-to-reference-icons-throughout-your-app-more-conveniently).
+> This example imports a single, specific icon and uses it for improved performance. As an alternative, you can [import the icons and build a library](https://github.com/FortAwesome/react-fontawesome#build-a-library-to-reference-icons-throughout-your-app-more-conveniently).
 
 ### Additional resources
 
