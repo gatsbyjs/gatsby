@@ -64,6 +64,36 @@ module.exports = schema => {
         "jsx-a11y/scope": `warn`,
         "jsx-a11y/tabindex-no-positive": `warn`,
       },
+      overrides: [
+        {
+          files: [`src/pages/*.js`],
+          rules: {
+            "react/forbid-elements": [
+              `warn`,
+              {
+                forbid: [
+                  {
+                    element: `React.Suspense`,
+                    message: `Suspense is not allowed in Gatsby pages`,
+                  },
+                ],
+              },
+            ],
+            "no-restricted-imports": [
+              `warn`,
+              {
+                paths: [
+                  {
+                    name: `react`,
+                    importNames: [`Suspense`],
+                    message: `Suspense is not allowed in Gatsby pages`,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
     },
   }
 }
