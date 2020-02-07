@@ -3,7 +3,6 @@ const fetch = require(`node-fetch`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
-const slugify = require(`slugify`)
 const startersRedirects = require(`./starter-redirects.json`)
 const {
   generateComparisonPageSet,
@@ -35,77 +34,34 @@ exports.createPages = helpers => {
   })
 
   return new Promise((resolve, reject) => {
-    const contributorPageTemplate = path.resolve(
-      `src/templates/template-contributor-page.js`
-    )
     const featureComparisonPageTemplate = path.resolve(
       `src/templates/template-feature-comparison.js`
     )
 
-    // Query for markdown nodes to use in creating pages.
-    graphql(`
-      query {
-        allAuthorYaml {
-          edges {
-            node {
-              fields {
-                slug
-              }
-            }
-          }
-        }
-      }
-    `).then(result => {
-      if (result.errors) {
-        return reject(result.errors)
-      }
+    Promise.all(sections.map(section => section.createPages(helpers)))
 
-      Promise.all(sections.map(section => section.createPages(helpers)))
-
-      // Create contributor pages.
-      result.data.allAuthorYaml.edges.forEach(edge => {
-        createPage({
-          path: `${edge.node.fields.slug}`,
-          component: slash(contributorPageTemplate),
-          context: {
-            slug: edge.node.fields.slug,
-          },
-        })
+    // Create feature comparison pages
+    const jamstackPages = generateComparisonPageSet(`jamstack`)
+    const cmsPages = generateComparisonPageSet(`cms`)
+    const comparisonPages = [...jamstackPages, ...cmsPages]
+    for (const { path, options, featureType } of comparisonPages) {
+      createPage({
+        path,
+        component: slash(featureComparisonPageTemplate),
+        context: {
+          options,
+          featureType,
+        },
       })
+    }
 
-      // Create feature comparison pages
-      const jamstackPages = generateComparisonPageSet(`jamstack`)
-      const cmsPages = generateComparisonPageSet(`cms`)
-      const comparisonPages = [...jamstackPages, ...cmsPages]
-      for (const { path, options, featureType } of comparisonPages) {
-        createPage({
-          path,
-          component: slash(featureComparisonPageTemplate),
-          context: {
-            options,
-            featureType,
-          },
-        })
-      }
-
-      return resolve()
-    })
+    return resolve()
   })
 }
 
 // Create slugs for files, set released status for blog posts.
 exports.onCreateNode = helpers => {
   sections.forEach(section => section.onCreateNode(helpers))
-
-  const { node, actions } = helpers
-  const { createNodeField } = actions
-  let slug
-  if (node.internal.type === `AuthorYaml`) {
-    slug = `/contributors/${slugify(node.id, {
-      lower: true,
-    })}/`
-    createNodeField({ node, name: `slug`, value: slug })
-  }
   return null
 }
 

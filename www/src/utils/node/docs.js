@@ -2,6 +2,7 @@ const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const path = require(`path`)
 const slash = require(`slash`)
+const slugify = require(`slugify`)
 const url = require(`url`)
 const moment = require(`moment`)
 const langs = require(`../../../i18n.json`)
@@ -33,6 +34,9 @@ exports.createPages = ({ graphql, actions }) => {
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
     const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
     const tagTemplate = path.resolve(`src/templates/tags.js`)
+    const contributorPageTemplate = path.resolve(
+      `src/templates/template-contributor-page.js`
+    )
     const localPackageTemplate = path.resolve(
       `src/templates/template-docs-local-packages.js`
     )
@@ -59,6 +63,15 @@ exports.createPages = ({ graphql, actions }) => {
                 publishedAt
                 issue
                 tags
+              }
+            }
+          }
+        }
+        allAuthorYaml {
+          edges {
+            node {
+              fields {
+                slug
               }
             }
           }
@@ -143,6 +156,17 @@ exports.createPages = ({ graphql, actions }) => {
           component: tagTemplate,
           context: {
             tags,
+          },
+        })
+      })
+
+      // Create contributor pages.
+      result.data.allAuthorYaml.edges.forEach(edge => {
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(contributorPageTemplate),
+          context: {
+            slug: edge.node.fields.slug,
           },
         })
       })
@@ -250,5 +274,10 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     if (locale) {
       createNodeField({ node, name: `locale`, value: locale })
     }
+  } else if (node.internal.type === `AuthorYaml`) {
+    slug = `/contributors/${slugify(node.id, {
+      lower: true,
+    })}/`
+    createNodeField({ node, name: `slug`, value: slug })
   }
 }
