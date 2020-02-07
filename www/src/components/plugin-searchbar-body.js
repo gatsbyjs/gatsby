@@ -172,7 +172,7 @@ const searchBoxStyles = t => css`
   .ais-InfiniteHits-loadMore {
     background-color: ${t.colors.gatsby};
     border: 0;
-    border-radius: ${t.radii[1]}px;
+    border-radius: ${t.radii[1]};
     color: ${t.colors.white};
     cursor: pointer;
     width: calc(100% - (${space[6]} * 2));
