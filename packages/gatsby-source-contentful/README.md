@@ -77,8 +77,7 @@ module.exports = {
 
 Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the common fields of the `gatsby-source-filesystem` `File` node. This is not a Contentful node, so usage for `gatsby-image` is different:
 
-```GraphQL
-graphql`
+```graphql
   query MyQuery {
     # Example is for a `ContentType` with a `ContentfulAsset` field
     # You could also query an asset directly via
@@ -109,7 +108,6 @@ graphql`
       }
     }
   }
-`
 ```
 
 Note: This feature downloads any file from a `ContentfulAsset` node that `gatsby-source-contentful` provides. They are all copied over from `./cache/gatsby-source-filesystem/` to the sites build location `./public/static/`.
@@ -160,6 +158,20 @@ Prevents the use of sync tokens when accessing the Contentful API.
 
 Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.
 
+**`useNameForId`** [boolean][optional] [default: `true`]
+
+Use the content's `name` when generating the GraphQL schema e.g. a Content Type called `[Component] Navigation bar` will be named `contentfulComponentNavigationBar`.
+
+When set to `false`, the content's internal ID will be used instead e.g. a Content Type with the ID `navigationBar` will be called `contentfulNavigationBar`.
+
+Using the ID is a much more stable property to work with as it will change less often. However, in some scenarios, Content Types' IDs will be auto-generated (e.g. when creating a new Content Type without specifying an ID) which means the name in the GraphQL schema will be something like `contentfulC6XwpTaSiiI2Ak2Ww0oi6qa`. This won't change and will still function perfectly as a valid field name but it is obviously pretty ugly to work with.
+
+If you are confident your Content Types will have natural-language IDs (e.g. `blogPost`), then you should set this option to `false`. If you are unable to ensure this, then you should leave this option set to `true` (the default).
+
+**`pageLimit`** [number][optional] [default: `1000`]
+
+Number of entries to retrieve from Contentful at a time. This can be adjusted to fix issues related to "Response size too big" error.
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
@@ -203,7 +215,7 @@ You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https:
 
 To query for a single `image` asset with the title 'foo' and a width of 1600px:
 
-```
+```javascript
 export const assetQuery = graphql`
   {
     contentfulAsset(filter: { title: { eq: 'foo' } }) {
@@ -237,22 +249,41 @@ You might query for a **single** node inside a component in your `src/components
 
 #### A note about LongText fields
 
-If you include fields with a `LongText` type in your Contentful `ContentType`, their returned value will be **an object not a string**. This is because Contentful LongText fields are Markdown by default. In order to handle the Markdown content properly, this field type is created as a child node so Gatsby can transform it to HTML.
-
-`ShortText` type fields will be returned as strings.
-
-Querying a **single** `CaseStudy` node with the ShortText properties `title` and `subtitle` and LongText property `body` requires formatting the LongText fields as an object with the _child node containing the exact same field name as the parent_:
+On Contentful, a "Long text" field uses Markdown by default. The field is exposed as an object, while the raw Markdown is exposed as a child node.
 
 ```graphql
 {
   contentfulCaseStudy {
-    title
-    subtitle
     body {
       body
     }
   }
 }
+```
+
+Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a childMarkdownRemark on the "Long text" field and expose the generated html as a child node:
+
+```graphql
+{
+  contentfulCaseStudy {
+    body {
+      childMarkdownRemark {
+        html
+      }
+    }
+  }
+}
+```
+
+You can then insert the returned HTML inline in your JSX:
+
+```
+  <div
+  className="body"
+  dangerouslySetInnerHTML={{
+       __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
+     }}
+   />
 ```
 
 #### Duplicated entries

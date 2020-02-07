@@ -142,7 +142,7 @@ class FeaturedSites extends Component {
               Want to get featured?
             </div>
             <Button
-              to="https://gatsbyjs.org/contributing/site-showcase-submissions/"
+              to="https://www.gatsbyjs.org/contributing/site-showcase-submissions/"
               tag="href"
               target="_blank"
               rel="noopener noreferrer"

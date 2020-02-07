@@ -133,7 +133,7 @@ The [`sx` prop][] is used to style elements by referencing values from the theme
 
 [`sx` prop]: https://theme-ui.com/sx-prop
 
-```js:title=src/components/header.js
+```jsx:title=src/components/header.js
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 

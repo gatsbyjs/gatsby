@@ -63,7 +63,7 @@ backend:
   name: test-repo
 
 media_folder: static/assets
-public_folder: assets
+public_folder: /assets
 
 collections:
   - name: blog

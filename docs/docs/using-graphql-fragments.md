@@ -78,5 +78,5 @@ When compiling your site, Gatsby preprocesses all GraphQL queries it finds. Ther
 
 ## Further reading
 
-- [Querying Data with GraphQL - Fragments](/docs/querying-with-graphql/#fragments)
+- [Querying Data with GraphQL - Fragments](/docs/graphql-concepts/#fragments)
 - [GraphQL Docs - Fragments](https://graphql.org/learn/queries/#fragments)

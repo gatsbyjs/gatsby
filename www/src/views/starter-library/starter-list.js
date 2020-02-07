@@ -89,7 +89,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 />
                 <div sx={meta}>
                   <div
-                    css={{ display: `flex`, justifyContent: `space-between` }}
+                    css={{ display: `flex`, justifyContent: `space-between`, alignItems: `start` }}
                   >
                     <span
                       sx={{
@@ -103,34 +103,36 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                       {owner} /
                     </span>
                     <span css={{ display: `flex` }}>
-                      {gatsbyMajorVersion[0][1] === `2` && (
-                        <span
-                          sx={{
-                            alignItems: `center`,
-                            bg: `muted`,
-                            display: `flex`,
-                            borderRadius: 5,
-                            fontSize: 0,
-                            lineHeight: `solid`,
-                            px: `2px`,
-                            pr: 2,
-                            py: `2px`,
-                            mr: 2,
-                          }}
-                        >
+                      {gatsbyMajorVersion &&
+                        gatsbyMajorVersion[0] &&
+                        gatsbyMajorVersion[0][1] === `2` && (
                           <span
-                            dangerouslySetInnerHTML={{ __html: V2Icon }}
                             sx={{
-                              color: `textMuted`,
-                              mb: 0,
+                              alignItems: `center`,
+                              bg: `muted`,
+                              display: `flex`,
+                              borderRadius: 5,
+                              fontSize: 0,
+                              lineHeight: `solid`,
+                              px: `2px`,
+                              pr: 2,
+                              py: `2px`,
                               mr: 2,
-                              "& svg": { height: 12, width: 12 },
                             }}
-                          />
-                          {` `}
-                          v2
-                        </span>
-                      )}
+                          >
+                            <span
+                              dangerouslySetInnerHTML={{ __html: V2Icon }}
+                              sx={{
+                                color: `textMuted`,
+                                mb: 0,
+                                mr: 2,
+                                "& svg": { height: 12, width: 12 },
+                              }}
+                            />
+                            {` `}
+                            v2
+                          </span>
+                        )}
                       <div
                         sx={{
                           alignItems: `center`,
@@ -178,6 +180,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                           ...shortcutIcon,
                           svg: { verticalAlign: `text-top !important` },
                         }}
+                        aria-label={`Open source code for ${name}`}
                       >
                         <GithubIcon />
                       </a>
@@ -190,6 +193,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                           ...shortcutIcon,
                           svg: { verticalAlign: `text-top !important` },
                         }}
+                        aria-label={`Open demo for ${name}`}
                       >
                         <LaunchDemoIcon />
                       </a>

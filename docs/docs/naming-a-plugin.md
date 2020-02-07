@@ -4,7 +4,7 @@ title: Naming a Plugin
 
 ## Plugin title naming conventions
 
-There are four standard plugin naming conventions for Gatsby:
+There are five standard plugin naming conventions for Gatsby:
 
 - **`gatsby-source-*`** — a source plugin loads data from a given source (e.g. WordPress, MongoDB, the file system). Use this plugin type if you are connecting a new source of data to Gatsby.
   - Example: [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful)
@@ -14,6 +14,9 @@ There are four standard plugin naming conventions for Gatsby:
   - Docs: [creating a transformer plugin](/docs/creating-a-transformer-plugin/)
 - **`gatsby-[plugin-name]-*`** — if a plugin is a plugin for another plugin 😅, it should be prefixed with the name of the plugin it extends (e.g. if it adds emoji to the output of `gatsby-transformer-remark`, call it `gatsby-remark-add-emoji`). Use this naming convention whenever your plugin will be included as a plugin in the `options` object of another plugin.
   - Example: [`gatsby-remark-images`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images)
-- **`gatsby-theme-*`** — this naming convention must be used for [Gatsby themes](/docs/themes/), which are a type of plugin.
+  - Docs: [creating a remark plugin](/docs/remark-plugin-tutorial/)
+- **`gatsby-theme-*`** — this naming convention **must** be used for [Gatsby themes](/docs/themes/), which are a type of plugin. Without following this naming convention, the plugin will not be recognized as a theme and it will not be able to utilize the powerful [shadowing](/docs/themes/shadowing/) feature of themes.
+  - Example: [`gatsby-theme-blog`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog)
+  - Docs: [creating a theme](/tutorial/building-a-theme/)
 - **`gatsby-plugin-*`** — this is the most general plugin type. Use this naming convention if your plugin doesn’t meet the requirements of any other plugin types.
   - Example: [`gatsby-plugin-sharp`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp)

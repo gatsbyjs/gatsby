@@ -48,13 +48,13 @@ npm install --save gsap
 
 Then, import the AniLink component:
 
-```javascript
+```jsx
 import AniLink from "gatsby-plugin-transition-link/AniLink"
 ```
 
 Finally, make sure you provide your desired animation's name as a blank prop to `AniLink`:
 
-```javascript
+```jsx
 <AniLink paintDrip to="page-4">
   Go to Page 4
 </AniLink>
@@ -75,7 +75,7 @@ Additionally, you can specify a number of props and options on the `TransitionLi
 
 You can specify a `trigger` function that will handle the animation. This is useful for _imperative_ animation libraries like [animejs](https://animejs.com/) or [GSAP](https://greensock.com/gsap) that specify animations with function calls.
 
-```javascript
+```jsx
 <TransitionLink
   exit={{
     length: length,
@@ -99,7 +99,7 @@ You can specify a `trigger` function that will handle the animation. This is use
 
 The exiting and entering pages/templates involved in the transition will receive props indicating the current transition status, as well as the `exit` or `enter` props defined on the `TransitionLink`.
 
-```javascript
+```jsx
 const PageOrTemplate = ({ children, transitionStatus, entry, exit }) => {
   console.log(transitionStatus, entry, exit)
   return <div className={transitionStatus}>{children}</div>
@@ -112,7 +112,7 @@ If you want to access these props in one of your components instead of a page/te
 
 Here's an example using `TransitionState` and `react-pose` to trigger enter/exit transitions for a `Box` component.
 
-```javascript
+```jsx
 import { TransitionState } from "gatsby-plugin-transition-link"
 
 const Box = posed.div({
@@ -121,15 +121,16 @@ const Box = posed.div({
 })
 
 <TransitionState>
-      {({ transitionStatus, exit, enter }) => {
-        console.log('exit object is', exit)
-        console.log('enter object is', enter)
+      {({ transitionStatus, exit, enter, mount }) => {
+        console.log("current page's transition status is", transitionStatus)
+        console.log("exit object is", exit)
+        console.log("enter object is", enter)
 
         return (
             <Box
               className="box"
               pose={
-                ['entering', 'entered'].includes(transitionStatus)
+                mount // this is true while the page is mounting or has mounted
                   ? 'visible'
                   : 'hidden'
               }
@@ -139,26 +140,26 @@ const Box = posed.div({
 </TransitionState>
 ```
 
-Now, the `Box` component will be aware of the transition status of the page it's a child of, and it will fade in/out accordingly.
+Now, the `Box` component will be aware of whether the page it's a child of is mounting or unmounting, and it will fade in/out accordingly.
 
 ## Excluding elements from page transitions
 
-You may want to have elements on a page that persist throughout the page transition (_ex. a site-wide header_). This can be accomplished by wrapping elements in the `TransitionPortal` component.
+You may want to have elements on a page that persist throughout the page transition (_ex. a site-wide header_). This can be accomplished by wrapping elements in a persistent layout component by using the following plugin option in your `gatsby-config.js`.
 
 ```javascript
-import { TransitionPortal } from "gatsby-plugin-transition-link"
+module.exports = {
+    plugins: [
+       {
+          resolve: "gatsby-plugin-transition-link",
+          options: {
+              layout: require.resolve(`./src/components/Layout.js`)
+            }
+       }
+    ]
+];
 ```
 
-```javascript
-<TransitionPortal>
-  <SomeComponent>
-    This component will sit on top of both pages, and persist through page
-    transitions.
-  </SomeComponent>
-</TransitionPortal>
-```
-
-As always, check out [the `TransitionPortal` docs](https://transitionlink.tylerbarnes.ca/docs/transitionportal/) for more information about `TransitionPortal`.
+As always, check out [the installation docs](https://transitionlink.tylerbarnes.ca/docs/transitionportal/) for more information.
 
 ## Further reading
 

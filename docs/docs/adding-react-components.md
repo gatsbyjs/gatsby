@@ -65,7 +65,7 @@ Since Gatsby uses Server-Side Rendering (SSR) to generate your site's pages, the
 
 Some components or code reference browser globals such as `window`, `document` or `localStorage`. These objects are not available at [build](/docs/glossary#build) time and can result in a webpack error when compiling:
 
-```
+```text
 WebpackError: ReferenceError: window is not defined
 ```
 

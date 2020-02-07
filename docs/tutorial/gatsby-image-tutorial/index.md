@@ -99,7 +99,7 @@ You might expect the relative path to be relative to the file the code sits in, 
 
 ### Image fragments
 
-Another thing to note about this query is how it uses the fragment `GatsbyImageSharpFixed` to return a fixed width and height image. You could also use the fragment `GatsbyImageSharpFluid` which produces scalable images that fill their container instead of fitting specific dimensions. In `gatsby-image`, _fluid_ images are meant for images that don’t have a finite size depending on the screen, where as other images are _fixed_.
+Another thing to note about this query is how it uses the fragment `GatsbyImageSharpFixed` to return a fixed width and height image. You could also use the fragment `GatsbyImageSharpFluid` which produces scalable images that fill their container instead of fitting specific dimensions. In `gatsby-image`, _fluid_ images are meant for images that don’t have a finite size depending on the screen, whereas other images are _fixed_.
 
 The query will return a data object including the processed image in a format usable by the `gatsby-image` component. The returned result will be automatically passed into the component and attached to the `data` prop. You can then display the image using JSX to automatically output responsive, highly performant HTML.
 
@@ -187,7 +187,7 @@ In order to reference your images in YAML make sure that the relative paths are 
 
 The inside of the YAML file would look something like this:
 
-```
+```yaml
 - image: speaking/kcdc.jpg
 ```
 
@@ -225,7 +225,7 @@ Since the images are stored as part of an array, they can be accessed using the 
 
 If your query is part of a reusable component you may want to use a Static Query hook. The code necessary to do this is almost the same as the single image use case above.
 
-```javascript:title=src/components/header-image.js
+```jsx:title=src/components/header-image.js
 export default () => {
   const data = useStaticQuery(graphql`
     query {
