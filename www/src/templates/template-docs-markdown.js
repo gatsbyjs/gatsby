@@ -6,6 +6,7 @@ import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
+import usePrevAndNext from "../utils/use-prev-and-next"
 import Layout from "../components/layout"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
@@ -26,11 +27,12 @@ const containerStyles = {
   px: 9,
 }
 
-function DocsTemplate({ data, location, pageContext: { next, prev } }) {
+function DocsTemplate({ data, location }) {
   const page = data.mdx
   const [urlSegment] = page.fields.slug.split(`/`).slice(1)
   const toc =
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
+  const { prev, next } = usePrevAndNext(location.pathname)
 
   return (
     <React.Fragment>
