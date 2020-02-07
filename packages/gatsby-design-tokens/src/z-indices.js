@@ -1,4 +1,4 @@
-export default {
+export const zIndices = {
   widget: 2,
   navigation: 5,
   banner: 10,

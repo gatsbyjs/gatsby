@@ -4,7 +4,7 @@ import preval from "preval.macro"
 // using syntaxes like const x = { ...var } adds side-effects to the export
 // preval precompiles it so we just return a single object.
 
-export default preval`
+export const colors = preval`
   const palette = {
     purple: {
       90: '#362066',
@@ -157,6 +157,8 @@ export default preval`
     },
     // role-based tokens
     // this is merely a humble start, lots to do here
+    // TODO TBD gatsby-interface now has TONES, IMO worth to discuss
+    // moving them here
     ui: {
       background: palette.grey[5],
       hover: palette.purple[5],

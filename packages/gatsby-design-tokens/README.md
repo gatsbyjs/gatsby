@@ -15,7 +15,7 @@ They also are a work-in-progress but we _do_ follow the [Semantic Versioning](ht
 - Major design changes will be released as minor versions
 - _Breaking_ public API changes will be released in a major versions only
 
-So to prevent your site from breaking due to a breaking change or looking dramatically different due to a minor version bump, we recommend the [~](https://docs.npmjs.com/misc/semver#tilde-ranges-123-12-1) comparator when using this package
+So to prevent your site from breaking due to a breaking change or looking dramatically different due to a minor version bump, we recommend the [~](https://docs.npmjs.com/misc/semver#tilde-ranges-123-12-1) comparator when using this package.
 
 ## Installation
 
