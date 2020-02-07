@@ -2,15 +2,15 @@
 title: Maintaining a Plugin
 ---
 
-The Gatsby community thrives on the power of plugins, you often find that there is a plugin for almost everything ranging from source plugins to transformer plugins to plugins that are plugins for other plugin . There is a guide to for the [naming convention for plugins](https://www.gatsbyjs.org/docs/naming-a-plugin/) check it out to learn more .
+The Gatsby community thrives on the power of plugins, you often find that there is a plugin for almost everything ranging from source plugins, to transformer plugins, to plugins that are plugins for other plugin. There is a guide on the [naming conventions for plugins](https://www.gatsbyjs.org/docs/naming-a-plugin/), check it out to learn more.
 
-> Wondering how to [Creating a plugin](https://www.gatsbyjs.org/docs/creating-plugins/) ? Look no further . Start contributing .
+> Wondering how to [Create a plugin](/docs/creating-plugins) Look no further. Start contributing.
 
-## What is a Plugin ?
+## What is a plugin?
 
-Gatsby plugins are Node.js packages that implement Gatsby APIs. [Learn more about Plugins](https://www.gatsbyjs.org/docs/plugins/) in this part of the Gatsby documentation.
+Gatsby plugins are Node.js packages that implement Gatsby APIs. [Learn more about plugins](/docs/plugins/)in this part of the Gatsby documentation.
 
-The bulk of the work is during the development phase. However, there’s still a need to take a look at the dependencies and security features from time to time. Keeping Plugins up to date becomes really tasking and can sometimes become really complicated since updating dependencies could potentially break your apps.
+The bulk of the work is during the development phase. However, there’s still a need to take a look at the dependencies and security features from time to time. Keeping Plugins up to date becomes really tasking and it is important to be careful when updating dependencies seeing as this could potentially break your apps.
 
 However, the effects of not updating and maintaining can bring a huge security issue to your apps and we don't want that. Let's look at some tips to apply when maintaining plugins:
 
