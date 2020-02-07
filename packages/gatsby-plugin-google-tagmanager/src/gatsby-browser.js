@@ -2,7 +2,7 @@ exports.onRouteUpdate = ({ location, prevLocation }, pluginOptions) => {
   if (
     (process.env.NODE_ENV === `production` ||
       pluginOptions.includeInDevelopment) &&
-    prevLocation·&&·prevLocation.pathname·!==·location.pathname
+    prevLocation && prevLocation.pathname !== location.pathname
   ) {
     // wrap inside a timeout to ensure the title has properly been changed
     setTimeout(() => {
