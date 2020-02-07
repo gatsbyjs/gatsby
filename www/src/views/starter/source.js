@@ -11,7 +11,7 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
     sx={{
       display: `flex`,
       borderTop: t => `1px solid ${t.colors.ui.border}`,
-      fontFamily: `header`,
+      fontFamily: `heading`,
       mx: 6,
       [mediaQueries.sm]: { borderTop: 0 },
       [mediaQueries.lg]: { mx: 8 },

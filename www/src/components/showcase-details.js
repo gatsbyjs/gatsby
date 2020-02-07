@@ -28,7 +28,7 @@ const styles = {
   },
   prevNextLink: {
     color: `lilac`,
-    fontFamily: `header`,
+    fontFamily: `heading`,
     px: [6, null, null, 0],
   },
   prevNextLinkSiteTitle: {
@@ -348,7 +348,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 sx={{
                   alignItems: `center`,
                   display: `flex`,
-                  fontFamily: `header`,
+                  fontFamily: `heading`,
                   mx: gutter,
                   py: 4,
                   [mediaQueries.lg]: {

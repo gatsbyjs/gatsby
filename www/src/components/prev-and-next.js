@@ -12,7 +12,7 @@ const prevNextLinkStyles = {
     borderBottom: 0,
   },
   color: `gatsby`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   fontSize: 3,
   fontWeight: `bold`,
   lineHeight: `dense`,

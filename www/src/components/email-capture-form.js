@@ -284,7 +284,7 @@ class EmailCaptureForm extends React.Component {
                 color: `newsletter.heading`,
                 fontWeight: `bold`,
                 fontSize: 3,
-                fontFamily: `header`,
+                fontFamily: `heading`,
                 lineHeight: `dense`,
               }}
             >

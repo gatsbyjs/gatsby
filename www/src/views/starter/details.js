@@ -102,7 +102,7 @@ const styles = {
     border: 0,
     borderRadius: 1,
     cursor: `pointer`,
-    fontFamily: `header`,
+    fontFamily: `heading`,
     fontWeight: `bold`,
     py: 1,
     px: 4,

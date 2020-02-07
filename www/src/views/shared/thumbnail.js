@@ -27,7 +27,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
       sx={{
         ...withTitleHover,
         lineHeight: `dense`,
-        fontFamily: `header`,
+        fontFamily: `heading`,
         "&&": {
           borderBottom: `none`,
           color: `heading`,

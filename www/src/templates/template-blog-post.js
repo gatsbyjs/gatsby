@@ -26,7 +26,7 @@ class BlogPostTemplate extends React.Component {
       <p
         sx={{
           color: `textMuted`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           lineHeight: `dense`,
           m: 0,
         }}

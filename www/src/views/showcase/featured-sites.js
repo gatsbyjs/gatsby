@@ -88,7 +88,7 @@ class FeaturedSites extends Component {
         >
           <h1
             sx={{
-              fontFamily: `header`,
+              fontFamily: `heading`,
               fontSize: 4,
               fontWeight: `bold`,
               ml: 1,
@@ -177,7 +177,7 @@ class FeaturedSites extends Component {
                     "&&": {
                       borderBottom: `none`,
                       color: `heading`,
-                      fontFamily: `header`,
+                      fontFamily: `heading`,
                       fontSize: 3,
                       fontWeight: `bold`,
                       transition: t =>
@@ -214,7 +214,7 @@ class FeaturedSites extends Component {
                 >
                   {node.built_by && (
                     <div
-                      sx={{ color: `text`, fontFamily: `header`, fontSize: 2 }}
+                      sx={{ color: `text`, fontFamily: `heading`, fontSize: 2 }}
                     >
                       Built by {node.built_by}
                     </div>

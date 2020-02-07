@@ -117,7 +117,7 @@ const Navigation = ({ pathname }) => {
         sx={{
           alignItems: `center`,
           display: `flex`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           height: `100%`,
           margin: `0 auto`,
           px: 6,

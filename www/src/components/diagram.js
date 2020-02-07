@@ -218,7 +218,7 @@ const Diagram = () => (
         className="Diagram"
         sx={{
           flex: `1 1 100%`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           p: 6,
           textAlign: `center`,
         }}

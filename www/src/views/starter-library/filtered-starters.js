@@ -195,7 +195,7 @@ export default class FilteredStarterLibrary extends Component {
                     border: 0,
                     borderRadius: 2,
                     color: `gatsby`,
-                    fontFamily: `header`,
+                    fontFamily: `heading`,
                     py: 1,
                     pr: 1,
                     width: `10rem`,

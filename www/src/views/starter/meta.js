@@ -13,7 +13,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       display: `flex`,
       flexDirection: `column-reverse`,
       flexWrap: `wrap`,
-      fontFamily: `header`,
+      fontFamily: `heading`,
       minWidth: `320px`,
       p: 6,
       pt: 0,
@@ -89,7 +89,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
               borderBottom: 0,
               color: `lilac`,
               cursor: `pointer`,
-              fontFamily: `header`,
+              fontFamily: `heading`,
               "&:hover": {
                 color: `gatsby`,
               },
