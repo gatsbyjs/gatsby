@@ -8,7 +8,7 @@ export const transition = {
     faster: `50ms`,
     fast: `100ms`,
     default: `250ms`,
-    slow: `350ms`,
+    slow: `500ms`,
     slower: `1000ms`,
   },
 }
