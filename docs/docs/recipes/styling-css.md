@@ -435,7 +435,7 @@ npm install @fortawesome/fontawesome-svg-core  @fortawesome/free-brands-svg-icon
 
 > Note that there are multiple icon libraries within `react-fontawesome`. You may also be interested in `free-regular-svg-icons` and `free-solid-svg-icons` which you would install the same way.
 
-2. Import the `FontAwesomeIcon` component and the icon you want to use. Then use the icon as a component directly in your JSX.
+2. Import the `FontAwesomeIcon` component and the icon you want to use. Then use the icon as a component directly in your JSX files:
 
 ```jsx:title=index.js
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
