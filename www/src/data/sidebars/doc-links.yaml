@@ -659,6 +659,8 @@
           title: GraphQL
         - link: /docs/glossary/headless-cms/
           title: Headless CMS
+        - link: /docs/glossary/headless-wordpress/
+          title: Headless Wordpress
         - link: /docs/glossary/jamstack
           title: JAMStack
         - link: /docs/glossary/node
