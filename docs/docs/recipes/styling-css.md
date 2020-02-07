@@ -422,8 +422,8 @@ Using [FontAwesome](https://fontawesome.com/) gives you access to thousands of i
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start)
 - The [Gatsby CLI](/docs/gatsby-cli/) installed
+- A [Gatsby site](/docs/quick-start)
 
 ### Directions
 
