@@ -427,7 +427,7 @@ Using [FontAwesome](https://fontawesome.com/) gives you access to thousands of i
 
 ### Directions
 
-1. Install the react-fontawesome dependencies.
+1. Install the `react-fontawesome` dependencies.
 
 ```shell
 npm install @fortawesome/fontawesome-svg-core  @fortawesome/free-brands-svg-icons @fortawesome/react-fontawesome
