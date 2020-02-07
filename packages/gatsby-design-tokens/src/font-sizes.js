@@ -9,11 +9,13 @@ const fs = preval`
 
   // get rid of 8 and 10px font sizes
   scale.splice(0, 2)
-  // rem
+
+  const scalePx = scale.map(t => t + "px")
   const scaleRem = scale.map(t => t / 16 + "rem")
 
-  module.exports = { scale, scaleRem }
+  module.exports = { scale, scalePx, scaleRem }
 `
 
 export const fontSizes = fs.scale
+export const fontSizesPx = fs.scalePx
 export const fontSizesRem = fs.scaleRem
