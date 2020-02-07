@@ -24,11 +24,11 @@ Version 1.0.0 should be released when the plugin's API is considered stable. Ver
 
 > Consider a version format of X.Y.Z (Major.Minor.Patch). Bug fixes not affecting the API increment the patch version, backwards compatible API additions/changes increment the minor version, and backwards incompatible API changes increment the major version.
 
-## Update ReadMe and Use cases
+## Update READMe and document use cases
 
-Every major version update should also be reflexed in the READme of the Plugin and also in the use case examples.
+Every major version update should also be reflected in the README of the plugin and also in the use case examples.
 
-It would be great for users to be able reference several versions of the plugin with the updated examples to see if they want to keep the current version or upgrade and also to understand what the new version offers. Although this is good:
+It would be great for users to be able to reference several versions of the plugin with the updated examples to see if they want to keep the current version or upgrade and also to understand what the new version offers. Although this is good:
 
 - Try to not clog your release repository with older versions of the plugin as you update, as they’re not often needed. Instead, simply keep the last few in place.
 
@@ -45,6 +45,6 @@ Keeping Plugins up to date becomes really tasking and can sometimes it can becom
 - install by running `npm i -g npm-check-updates`
 - Running `ncu -u`
 
-## Community supporting content and feedback.
+## Community supporting content and feedback
 
 A lot of use cases for using the created plugin would be a great way to get users to have knowledge on implementations. Also creating forums where users of your plugins have a way to get answers to questions and help with issues, whether that’s from you or from other community members.
