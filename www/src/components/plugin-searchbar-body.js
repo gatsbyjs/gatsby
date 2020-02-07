@@ -383,7 +383,7 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? `navigation.linkColor` : `text`,
             display: `flex`,
-            fontFamily: `system`,
+            fontFamily: `body`,
             fontSize: 1,
             fontWeight: `bold`,
             my: 0,

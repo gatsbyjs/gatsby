@@ -144,7 +144,7 @@ const ItemDescription = ({ children, color }) => (
     sx={{
       color: color ? color : `textMuted`,
       display: `block`,
-      fontFamily: `system`,
+      fontFamily: `body`,
       fontSize: 1,
       lineHeight: `dense`,
     }}
