@@ -12,7 +12,7 @@ Gatsby plugins are Node.js packages that implement Gatsby APIs. [Learn more abou
 
 The bulk of the work is during the development phase. However, there’s still a need to take a look at the dependencies and security features from time to time. Keeping Plugins up to date becomes really tasking and it is important to be careful when updating dependencies seeing as this could potentially break your apps.
 
-However, the effects of not updating and maintaining can bring a huge security issue to your apps and we don't want that. Let's look at some tips to apply when maintaining plugins:
+However, the effects of not updating and maintaining can bring a huge security issue to your apps that you don't want . Let's look at some tips to apply when maintaining plugins:
 
 ## Handling patches and improvements
 
