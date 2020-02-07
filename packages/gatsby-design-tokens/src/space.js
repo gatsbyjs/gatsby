@@ -9,6 +9,6 @@ const s = preval`
   module.exports = { space, spacePx, spaceRem }
 `
 
-export const space = s.space
+export const space = s.spaceRem
 export const spacePx = s.spacePx
-export const spaceRem = s.spaceRem
+export const spaceRaw = s.space

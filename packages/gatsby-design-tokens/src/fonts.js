@@ -41,5 +41,5 @@ const f = preval`
   module.exports = { fonts, fontsStrings }
 `
 
-export const fonts = f.fonts
-export const fontsStrings = f.fontsStrings
+export const fonts = f.fontsStrings
+export const fontsLists = f.fonts

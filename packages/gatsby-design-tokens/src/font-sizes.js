@@ -16,6 +16,6 @@ const fs = preval`
   module.exports = { scale, scalePx, scaleRem }
 `
 
-export const fontSizes = fs.scale
+export const fontSizes = fs.scaleRem
 export const fontSizesPx = fs.scalePx
-export const fontSizesRem = fs.scaleRem
+export const fontSizesRaw = fs.scale
