@@ -9,7 +9,7 @@ import EmailCaptureForm100Days from "../../../www/src/components/email-capture-f
 
 ### If you're looking for a fun way to explore how to build blazing fast websites with Gatsby, our #100DaysOfGatsby challenge is for you!
 
-![alt text](/100daysofgatsby.png "100 Days of Gatsby")
+![alt text](./100daysofgatsby.png "100 Days of Gatsby")
 
 We’re kicking off this “100 Days” challenge on January 1st, so why not start the year with a Gatsby project?
 

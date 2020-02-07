@@ -1,5 +1,5 @@
 ---
-title: "Gatsby E-Commerce Tutorial"
+title: "Gatsby e-commerce Tutorial"
 ---
 
 # Table of Contents
@@ -65,9 +65,35 @@ Open the root site directory in a text editor and navigate to `gatsby-config.js`
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: "Gatsby E-Commerce Starter",
+    title: `Gatsby e-Commerce Starter`,
+    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
+    author: `@gatsbyjs`,
   },
-  plugins: ["gatsby-plugin-react-helmet", "gatsby-plugin-stripe"],
+  plugins: [
+    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `gatsby-starter-default`,
+        short_name: `starter`,
+        start_url: `/`,
+        background_color: `#663399`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    `gatsby-plugin-stripe`,
+  ],
 }
 ```
 
@@ -87,7 +113,7 @@ Stripe provides a JavaScript library the allows you to securely redirect your cu
 
 to the end of the `<body>` tag across all of your pages. This helps facilitate Stripe's [fraud detection](https://stripe.com/docs/stripe-js/reference#including-stripejs).
 
-If you want to further customise the checkout process or pull Stripe data into your site, check out [Gatsby's plugin library for more Stripe plugins](https://www.gatsbyjs.org/plugins/?=stripe).
+If you want to further customize the checkout process or pull Stripe data into your site, check out [Gatsby's plugin library for more Stripe plugins](https://www.gatsbyjs.org/plugins/?=stripe).
 
 ### Getting your Stripe test keys
 
@@ -185,11 +211,11 @@ export default Checkout
 
 #### What did you just do?
 
-You imported React, added a button with some styles, and introduced some React functions. The `componentDidMount()` and `redirectToCheckout()` functions are most important for the Stripe functionality. The `componentDidMount()` function is a React lifecycle method that launches when the component is first mounted to the DOM, making it a good place to initialise the Stripe.js client. It looks like this:
+You imported React, added a button with some styles, and introduced some React functions. The `componentDidMount()` and `redirectToCheckout()` functions are most important for the Stripe functionality. The `componentDidMount()` function is a React lifecycle method that launches when the component is first mounted to the DOM, making it a good place to initialize the Stripe.js client. It looks like this:
 
 ```jsx:title=src/components/checkout.js
   componentDidMount() {
-    this.stripe = window.Stripe('pk_test_jG9s3XMdSjZF9Kdm5g59zlYd')
+    this.stripe = window.Stripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd")
   }
 ```
 
@@ -199,13 +225,13 @@ This identifies you with the Stripe platform, validates the checkout request aga
   async redirectToCheckout(event) {
     event.preventDefault()
     const { error } = await this.stripe.redirectToCheckout({
-      items: [{ sku: 'sku_DjQJN2HJ1kkvI3', quantity: 1 }],
+      items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
       successUrl: `http://localhost:8000/page-2/`,
       cancelUrl: `http://localhost:8000/`,
     })
 
     if (error) {
-      console.warn('Error:', error)
+      console.warn("Error:", error)
     }
   }
 ```
@@ -229,7 +255,7 @@ The `render()` function applies your styles to the button and binds the `redirec
 
 #### Importing the checkout component into the homepage
 
-Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look like similar to this:
+Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look similar to this:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -277,7 +303,7 @@ Now you can add the plugin configuration in your `gatsby-config` file:
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby E-Commerce Starter`,
+    title: `Gatsby e-commerce Starter`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -363,7 +389,6 @@ Once you're happy with your query, create a new page where you can import the ne
 
 ```jsx:title=src/pages/advanced.js
 import React from "react"
-import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -463,16 +488,16 @@ This component renders a neat card for each individual SKU, with the SKU name, n
 Lastly, you need to refactor your `Skus` component to initialize the Stripe.js client, and render `SkuCards` while handing down the Stripe.js client in the `props`:
 
 ```jsx:title=src/components/Products/Skus.js
-import React, { Component } from 'react'
-import { graphql, StaticQuery } from 'gatsby'
-import SkuCard from './SkuCard' // highlight-line
+import React, { Component } from "react"
+import { graphql, StaticQuery } from "gatsby"
+import SkuCard from "./SkuCard" // highlight-line
 
 const containerStyles = {
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
-  padding: '1rem 0 1rem 0',
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  justifyContent: "space-between",
+  padding: "1rem 0 1rem 0",
 }
 
 class Skus extends Component {
