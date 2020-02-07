@@ -6,8 +6,6 @@ Once a language repository is created and someone on the Gatsby team has assigne
 
 > ⚠️ Note: All contributors are expected to follow the [Gatsby Code of Conduct](/contributing/code-of-conduct/) and work professionally with fellow contributors. For issues with conduct, if you are unable to work things out amicably amongst yourselves (perhaps after filing a public issue or having a discussion on Discord), you can contact the Gatsby team at [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com) with details about the situation.
 
-## Contributing translations
-
 ## Translation Tips
 
 ### Use English as the source
