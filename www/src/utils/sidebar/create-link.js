@@ -61,12 +61,12 @@ const createLink = ({
             }),
             ...(isActive && {
               color: `link.color`,
-              fontWeight: `medium`,
+              fontWeight: `semiBold`,
             }),
             ...(isParentOfActiveItem && {
               bg: `sidebar.itemBackgroundActive`,
               color: `link.color`,
-              fontWeight: `medium`,
+              fontWeight: `semiBold`,
             }),
             "&:hover": {
               bg: `sidebar.itemHoverBackground`,
