@@ -41,7 +41,6 @@ const CodeBlock = ({
       : children,
     className
   )
-  console.log({ content })
 
   return (
     <LazyHighlight code={content} language={language} theme={undefined}>

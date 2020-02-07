@@ -12,7 +12,7 @@ To include a component from another library (this example uses [the message comp
 
 ```mdx
 ---
-title: Importing Components Guide
+title: Importing Components Example
 ---
 
 import { Message } from "theme-ui" // highlight-line
@@ -49,10 +49,10 @@ Now, you can include components in your MDX without importing them:
 
 ```mdx
 ---
-title: Importing Components
+title: Importing Components Example
 ---
 
-You can import your own components. The message component
+You can import your own components.
 
 <Message>MDX gives you JSX in Mardown!</Message> // highlight-line
 
