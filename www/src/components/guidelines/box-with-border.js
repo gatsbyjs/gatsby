@@ -8,7 +8,7 @@ const BoxWithBorder = styled(Box)(
     props.withBorder && {
       ":after": {
         border: `1px solid ${themeGet(`colors.blackFade.10`)(props)}`,
-        borderRadius: `${themeGet(`radii.1`)(props)}px`,
+        borderRadius: `${themeGet(`radii.1`)(props)}`,
         bottom: 0,
         content: `" "`,
         left: 0,

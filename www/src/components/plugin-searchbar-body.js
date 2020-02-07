@@ -58,7 +58,7 @@ const searchBoxStyles = t => css`
     appearance: none;
     -webkit-appearance: none;
     background: ${t.colors.themedInput.background};
-    border-radius: ${t.radii[2]}px;
+    border-radius: ${t.radii[2]};
     border: 0;
     color: ${t.colors.text};
     display: inline-block;
@@ -113,7 +113,7 @@ const searchBoxStyles = t => css`
     top: ${searchInputWrapperMargin};
     right: inherit;
     left: ${searchInputWrapperMargin};
-    border-radius: ${t.radii[2]}px 0 0 ${t.radii[2]}px;
+    border-radius: ${t.radii[2]} 0 0 ${t.radii[2]};
     display: inline-flex;
     align-items: center;
     justify-content: center;

@@ -67,7 +67,7 @@ const WrapperDiv = styled(`div`)`
   ${mediaQueries.lg} {
     box-shadow: ${p => p.theme.shadows.overlay};
     border: 0;
-    border-radius: ${p => p.theme.radii[2]}px;
+    border-radius: ${p => p.theme.radii[2]};
     height: 100%;
     padding: ${p => p.theme.space[7]} ${p => p.theme.space[6]};
     transform: scale(0);

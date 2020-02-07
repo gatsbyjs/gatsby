@@ -107,7 +107,7 @@ export const formInputFocus = {
 export const formInput = {
   backgroundColor: colors.white,
   border: `1px solid ${colors.input.border}`,
-  borderRadius: `${radii[2]}px`,
+  borderRadius: `${radii[2]}`,
   display: `block`,
   fontFamily: fonts.system,
   fontSize: fontSizes[2],

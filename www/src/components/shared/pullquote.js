@@ -7,7 +7,7 @@ import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid ${p => p.theme.colors.pullquote.borderColor};
-  border-radius: ${p => p.theme.radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   color: ${p => p.theme.colors.pullquote.color};
   font-family: ${p => p.theme.fonts.heading};
   font-size: ${p => p.theme.fontSizes[3]};

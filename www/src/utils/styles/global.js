@@ -67,7 +67,7 @@ const gatsbyHighlightLanguageBadges = t => {
     },
     ".gatsby-highlight pre[class*='language-']::before": {
       background: t.colors.grey[30],
-      borderRadius: `0 0 ${t.radii[2]}px ${t.radii[2]}px`,
+      borderRadius: `0 0 ${t.radii[2]} ${t.radii[2]}`,
       color: t.colors.grey[90],
       fontSize: t.fontSizes[0],
       fontFamily: t.fonts.monospace,
@@ -332,7 +332,7 @@ export const globalStyles = t => {
       marginRight: `-${t.space[6]}`,
     },
     ".gatsby-resp-image-link": {
-      borderRadius: `${t.radii[1]}px`,
+      borderRadius: `${t.radii[1]}`,
       overflow: `hidden`,
     },
     // gatsby-remark-code-titles styles
@@ -366,13 +366,13 @@ export const globalStyles = t => {
       ".gatsby-highlight, .gatsby-resp-image-link, .gatsby-code-title": {
         marginLeft: 0,
         marginRight: 0,
-        borderRadius: `${t.radii[2]}px`,
+        borderRadius: `${t.radii[2]}`,
       },
       ".gatsby-code-title": {
-        borderRadius: `${t.radii[2]}px ${t.radii[2]}px 0 0`,
+        borderRadius: `${t.radii[2]} ${t.radii[2]} 0 0`,
       },
       ".gatsby-code-title + .gatsby-highlight": {
-        borderRadius: `0 0 ${t.radii[2]}px ${t.radii[2]}px`,
+        borderRadius: `0 0 ${t.radii[2]} ${t.radii[2]}`,
       },
     },
   }
