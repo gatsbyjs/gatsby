@@ -5184,3 +5184,30 @@
     - React Bootstrap
     - Responsive webpage
     - TypeWriter Effect
+- url: https://gatsby-starter-wilde-creations.netlify.com/
+  repo: https://github.com/georgewilde/gatsby-starter-wilde-creations
+  description: Barebones starter with a minimal number of components to kick off a TypeScript and Styled Components project.
+  tags:
+    - Styling:CSS-in-JS
+    - PWA
+    - Testing
+    - Linting
+    - Language:TypeScript
+  features:
+    - ✔️ Gatsby
+    - ✔️ TypeScript
+    - ✔️ Styled Components
+    - ✔️ Helmet
+    - ✔️ Storybook
+    - ✔️ Jest
+    - ✔️ ESLint
+    - ✔️ Husky
+    - ✔️ Prettier
+    - ✔️ React Testing Library
+    - ✔️ Stylelint
+    - ✔️ Offline support
+    - ✔️ PWA ready
+    - ✔️ SEO
+    - ✔️ Responsive design
+    - ✔️ Netlify Deployment Friendly
+    - ✔️ Highly optimized (Lighthouse score 4 x 100)
