@@ -36,7 +36,7 @@ It would be great for users to be able to reference several versions of the plug
 
 ## Tools for dependency version maintenance
 
-Keeping Plugins up to date becomes really tasking and can sometimes it can become really complicated since updating dependencies could potentially break your apps. There are a couple of useful tools that can help out.
+There are a couple of useful tools that can help out with keeping dependences up to date.
 
 1. [Version Lens](https://marketplace.visualstudio.com/items?itemName=pflannery.vscode-versionlens) enables you to update your dependencies from your `package.json` by allowing you see the exact numbers right above each package in dependencies or devDependencies.
 
