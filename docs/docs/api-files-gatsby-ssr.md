@@ -1,5 +1,6 @@
 ---
 title: The gatsby-ssr.js API file
+navTitle: gatsby-ssr.js
 ---
 
 The file `gatsby-ssr.js` lets you alter the content of static HTML files as they are being Server-Side Rendered (SSR) by Gatsby and Node.js. To use the [Gatsby SSR APIs](/docs/ssr-apis/), create a file called `gatsby-ssr.js` in the root of your site. Export any of the APIs you wish to use in this file.

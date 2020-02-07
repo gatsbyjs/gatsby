@@ -1,5 +1,6 @@
 ---
 title: Going Gatsby-Only
+navTitle: Why Agencies Go Gatsby-Only
 ---
 
 Some agencies and freelancers have decided that in order to unify their business, they will _only_ build sites on Gatsby and turn down clients or projects where it's not possible to use Gatsby.

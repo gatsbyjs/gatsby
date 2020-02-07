@@ -1,5 +1,6 @@
 ---
-title: "Winning Over Content Creators"
+title: Winning Over Content Creators
+navTitle: Content Creators
 ---
 
 If you spend much time building marketing and other informational sites, you're probably used to leaving the day-to-day updates and maintenance of the site to content creators. For this reason, content creators are highly influential stakeholders in any decision around changes to content management tools and the frameworks/tech stack that interacts with those tools. The performance advantages of Gatsby and ability to pull content from any source are certainly enough to get them interested, but here are some talking points and resources to help convince them that Gatsby is right for their site.

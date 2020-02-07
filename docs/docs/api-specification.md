@@ -1,5 +1,6 @@
 ---
 title: API Specification
+navTitle: API Philosophy
 ---
 
 Gatsby's APIs are tailored conceptually to some extent after React.js to improve the coherence between the two systems.

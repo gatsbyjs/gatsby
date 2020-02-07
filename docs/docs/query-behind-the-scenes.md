@@ -1,5 +1,6 @@
 ---
 title: How Queries Work
+navTitle: Queries
 ---
 
 > This documentation isn't up to date with the latest version of Gatsby.

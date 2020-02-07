@@ -1,5 +1,6 @@
 ---
 title: Creating Component Libraries
+navTitle: Component Libraries
 ---
 
 Component libraries are often used in component-based UI systems like React and Vue. They are typically versioned repositories of components.

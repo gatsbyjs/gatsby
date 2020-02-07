@@ -1,5 +1,6 @@
 ---
 title: Static vs Normal Queries
+navTitle: Normal vs StaticQueries
 ---
 
 Gatsby handles three varieties of GraphQL queries: Page queries (sometimes for simplicity referred to as "normal queries"), static queries using the `<StaticQuery />` component, and static queries using the `useStaticQuery` hook.

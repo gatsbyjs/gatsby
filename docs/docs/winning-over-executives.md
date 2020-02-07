@@ -1,5 +1,6 @@
 ---
 title: Winning Over Executives
+navTitle: Executives
 ---
 
 Before you speak to executives about Gatsby, make sure you understand their strategic goals, and align your argument for Gatsby with those specific goals. Focus on the results of Gatsby's features rather than the specifics of how they work. If some of the big ideas behind Gatsby fit in with the executive's strategic goals, don't be afraid to include them in your conversation.

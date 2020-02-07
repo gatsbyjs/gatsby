@@ -1,5 +1,6 @@
 ---
 title: Gatsby API Reference
+navTitle: Gatsby API
 overview: true
 ---
 

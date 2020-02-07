@@ -1,5 +1,7 @@
 ---
 title: Building with Gatsby in the Enterprise
+navTitle: Inside an Enterprise (Large Company)
+breadcrumbTitle: Inside an Enterprise
 ---
 
 Some Gatsby advocates may be working inside “enterprise” software development organizations. Others may work at agencies which work closely with such organizations.

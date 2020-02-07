@@ -1,5 +1,6 @@
 ---
 title: Themes API Reference
+navTitle: Gatsby Themes
 ---
 
 ## Core Gatsby APIs

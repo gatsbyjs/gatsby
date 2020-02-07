@@ -1,5 +1,7 @@
 ---
 title: Convincing Others
+navTitle: Introduction - Convincing Others to Use Gatsby
+breadcrumbTitle: Convincing Others to Use Gatsby
 ---
 
 This section of the documentation has a slightly different tenor than the rest of the docs.

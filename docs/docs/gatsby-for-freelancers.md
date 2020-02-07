@@ -1,5 +1,6 @@
 ---
 title: Gatsby for Freelancers
+navTitle: As a Freelancer
 issue: https://github.com/gatsbyjs/gatsby/issues/21069
 ---
 

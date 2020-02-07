@@ -1,5 +1,6 @@
 ---
 title: GraphQL Node Types Creation
+navTitle: Building the GqlType
 ---
 
 > This documentation isn't up to date with the latest [schema customization changes](/docs/schema-customization).

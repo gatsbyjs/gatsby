@@ -440,200 +440,115 @@
     - link: /docs/api-reference/
       title: Gatsby API
       items:
-        - link: /docs/theme-api/
-          title: Gatsby Themes
-        - link: /docs/gatsby-link/
-          title: Gatsby Link
-        - link: /docs/gatsby-image/
-          title: Gatsby Image
-        - link: /docs/gatsby-config/
-          title: Gatsby Config
+        - /docs/theme-api/
+        - /docs/gatsby-link/
+        - /docs/gatsby-image/
+        - /docs/gatsby-config/
         - link: /docs/browser-apis/
           title: Gatsby Browser APIs
         - link: /docs/ssr-apis/
           title: Gatsby SSR APIs
         - link: /docs/api-files/
-          title: API Files
           items:
-            - link: /docs/api-files-gatsby-config/
-              title: gatsby-config.js
-            - link: /docs/api-files-gatsby-browser/
-              title: gatsby-browser.js
-            - link: /docs/api-files-gatsby-node/
-              title: gatsby-node.js
-            - link: /docs/api-files-gatsby-ssr/
-              title: gatsby-ssr.js
+            - /docs/api-files-gatsby-config/
+            - /docs/api-files-gatsby-browser/
+            - /docs/api-files-gatsby-node/
+            - /docs/api-files-gatsby-ssr/
         - link: /docs/actions/
           title: Actions
-        - link: /docs/graphql-api/
-          title: GraphQL API
+        - /docs/graphql-api/
         - link: /docs/node-apis/
           title: Gatsby Node APIs
         - link: /docs/node-api-helpers/
           title: Gatsby Node Helpers
         - link: /docs/node-model/
           title: Node Model
-        - link: /docs/node-interface/
-          title: Node Interface
-        - link: /docs/schema-customization/
-          title: Customizing the GraphQL Schema
-        - link: /docs/api-specification/
-          title: API Philosophy
+        - /docs/node-interface/
+        - /docs/schema-customization/
+        - /docs/api-specification/
     - link: /docs/releases-and-migration/
-      title: Releases & Migration
       items:
-        - link: /docs/v2-release-notes/
-          title: v2 Release Notes
-        - link: /docs/v1-release-notes/
-          title: v1 Release Notes
-        - link: /docs/migrating-from-v1-to-v2/
-          title: Migrating from v1 to v2
-        - link: /docs/migrating-from-v0-to-v1/
-          title: Migrating from v0 to v1
-        - link: /docs/upgrade-gatsby-and-dependencies/
-          title: Upgrade for Minor or Patch Releases
-          breadcrumbTitle: Minor or Patch Releases
+        - /docs/v2-release-notes/
+        - /docs/v1-release-notes/
+        - /docs/migrating-from-v1-to-v2/
+        - /docs/migrating-from-v0-to-v1/
+        - /docs/upgrade-gatsby-and-dependencies/
     - link: /docs/conceptual-guide/
-      title: Conceptual Guide
       items:
-        - link: /docs/gatsby-core-philosophy/
-          title: The Gatsby Core Philosophy
-        - link: /docs/gatsby-project-structure/
-          title: Gatsby Project Structure
-        - link: /docs/plugins-themes-and-starters/
-          title: Plugins, Themes, & Starters
-        - link: /docs/overview-of-the-gatsby-build-process/
-          title: Overview of the Gatsby Build Process
-        - link: /docs/building-with-components/
-          title: Building with Components
-        - link: /docs/gatsby-lifecycle-apis/
-          title: Lifecycle APIs
-        - link: /docs/gatsby-magic
-          title: Gatsby Magic
-        - link: /docs/react-hydration
-          title: React Hydration
-        - link: /docs/prpl-pattern/
-          title: PRPL Pattern
-        - link: /docs/graphql-concepts/
-          title: GraphQL Concepts
-        - link: /docs/security-in-gatsby/
-        - link: /docs/how-shadowing-works
-          title: Theme Shadowing
+        - /docs/gatsby-core-philosophy/
+        - /docs/gatsby-project-structure/
+        - /docs/plugins-themes-and-starters/
+        - /docs/overview-of-the-gatsby-build-process/
+        - /docs/building-with-components/
+        - /docs/gatsby-lifecycle-apis/
+        - /docs/gatsby-magic
+        - /docs/react-hydration
+        - /docs/prpl-pattern/
+        - /docs/graphql-concepts/
+        - /docs/security-in-gatsby/
+        - /docs/how-shadowing-works
     - link: /docs/gatsby-internals/
-      title: Gatsby Internals
       items:
-        - link: /docs/how-plugins-apis-are-run/
-          title: How APIs/Plugins Are Run
-        - link: /docs/node-creation/
-          title: Node Creation
+        - /docs/how-plugins-apis-are-run/
+        - /docs/node-creation/
         - link: /docs/schema-generation/
-          title: Schema Generation
           items:
-            - link: /docs/schema-gql-type/
-              title: Building the GqlType
-            - link: /docs/schema-input-gql/
-              title: Building the Input Filters
-            - link: /docs/schema-sift/
-              title: Querying with Sift
-            - link: /docs/schema-connections/
-              title: Connections
-        - link: /docs/page-creation/
-          title: Page Creation
-        - link: /docs/page-node-dependencies/
-          title: Page -> Node Dependencies
-        - link: /docs/node-tracking/
-          title: Node Tracking
-        - link: /docs/internal-data-bridge/
-          title: Internal Data Bridge
+            - /docs/schema-gql-type/
+            - /docs/schema-input-gql/
+            - /docs/schema-sift/
+            - /docs/schema-connections/
+        - /docs/page-creation/
+        - /docs/page-node-dependencies/
+        - /docs/node-tracking/
+        - /docs/internal-data-bridge/
         - link: /docs/query-behind-the-scenes/
-          title: Queries
           items:
-            - link: /docs/query-extraction/
-              title: Query Extraction
-            - link: /docs/query-execution/
-              title: Query Execution
-            - link: /docs/static-vs-normal-queries/
-              title: Normal vs StaticQueries
-        - link: /docs/write-pages/
-          title: Write out Pages
+            - /docs/query-extraction/
+            - /docs/query-execution/
+            - /docs/static-vs-normal-queries/
+        - /docs/write-pages/
         - link: /docs/webpack-and-ssr/
-          title: Webpack & SSR
           items:
-            - link: /docs/production-app/
-              title: Building the JavaScript App
-            - link: /docs/html-generation/
-              title: Page HTML Generation
-            - link: /docs/how-code-splitting-works/
-              title: Code Splitting and Prefetching
-        - link: /docs/resource-handling-and-service-workers/
-          title: Resource Handling & Service Workers
-        - link: /docs/data-storage-redux/
-          title: Data Storage (Redux)*
-        - link: /docs/build-caching/
-          title: Build Caching
-        - link: /docs/gatsby-internals-terminology/
-          title: Terminology
+            - /docs/production-app/
+            - /docs/html-generation/
+            - /docs/how-code-splitting-works/
+        - /docs/resource-handling-and-service-workers/
+        - /docs/data-storage-redux/
+        - /docs/build-caching/
+        - /docs/gatsby-internals-terminology/
     - link: /docs/using-gatsby-professionally/
-      title: Using Gatsby Professionally
       items:
-        - link: /docs/convincing-others/
-          title: Introduction - Convincing Others to Use Gatsby
-          breadcrumbTitle: Convincing Others to Use Gatsby
-        - link: /docs/first-professional-project/
-          title: Your First Professional Project
+        - /docs/convincing-others/
+        - /docs/first-professional-project/
         - link: /docs/winning-over-stakeholders/
-          title: Winning Over Different Stakeholders
-          breadcrumbTitle: Winning Over Stakeholders
           items:
-            - link: /docs/winning-over-developers/
-              title: Developers
-            - link: /docs/winning-over-engineering-leaders/
-              title: Engineering Leaders
-            - link: /docs/winning-over-marketers/
-              title: Marketers
-            - link: /docs/winning-over-executives/
-              title: Executives
-            - link: /docs/winning-over-clients/
-            - link: /docs/winning-over-content-creators/
-              title: Content Creators
+            - /docs/winning-over-developers/
+            - /docs/winning-over-engineering-leaders/
+            - /docs/winning-over-marketers/
+            - /docs/winning-over-executives/
+            - /docs/winning-over-clients/
+            - /docs/winning-over-content-creators/
         - link: /docs/different-organization-types/
-          title: Spreading Gatsby In Different Types of Organizations
-          breadcrumbTitle: Spreading Gatsby
           items:
-            - link: /docs/gatsby-for-freelancers/
-              title: As a Freelancer*
+            - /docs/gatsby-for-freelancers/
             - link: /docs/gatsby-for-agencies/
-              title: Inside an Agency
               items:
-                - link: /docs/lower-bids-more-profit/
-                  title: Lower Bids, More Profit
-                - link: /docs/faster-recruiting/
-                  title: Faster Recruiting
-                - link: /docs/sanitize-your-stack/
-                  title: Sanitize Your Stack
-                - link: /docs/going-gatsby-only/
-                  title: Why Agencies Go Gatsby-Only
-            - link: /docs/gatsby-for-companies/
-              title: Inside a Company
+                - /docs/lower-bids-more-profit/
+                - /docs/faster-recruiting/
+                - /docs/sanitize-your-stack/
+                - /docs/going-gatsby-only/
+            - /docs/gatsby-for-companies/
             - link: /docs/gatsby-in-the-enterprise/
-              title: Inside an Enterprise (Large Company)
-              breadcrumbTitle: Inside an Enterprise
               items:
-                - link: /docs/answering-it-security/
-                  title: Answering IT/Security Questions
-                - link: /docs/setting-up-gatsby-without-gatsby-new/
-                  title: Setting Up Gatsby Without Gatsby New
+                - /docs/answering-it-security/
+                - /docs/setting-up-gatsby-without-gatsby-new/
         - link: /docs/best-practices-for-orgs/
           items:
             - link: /docs/sharing-components-across-websites/
-              title: Sharing Components Across Websites
-              breadcrumbTitle: Sharing Components
               items:
-                - link: /docs/component-libraries/
-                  title: Component Libraries
-                - link: /docs/making-components-discoverable/
-        - link: /docs/how-gatsby-boosts-career/
-          title: How Gatsby Boosts Your Career
+                - /docs/component-libraries/
+                - /docs/making-components-discoverable/
+        - /docs/how-gatsby-boosts-career/
     - link: /contributing/
       title: Contributing
       items:
@@ -642,36 +557,20 @@
         - link: /contributing/how-to-contribute/
           title: How to Contribute
     - link: /docs/partnering-with-gatsby/
-      title: Partnering With Gatsby
       items:
-        - link: /docs/gatsby-vendor-partnership/
-          title: Integrating & Partnering For Vendors
-        - link: /docs/gatsby-agency-partnership/
-          title: Agency Partnership Program
-    - link: /docs/gatsby-cli/
-      title: Commands (Gatsby CLI)
-    - link: /docs/cheat-sheet/
-      title: Cheat Sheet
+        - /docs/gatsby-vendor-partnership/
+        - /docs/gatsby-agency-partnership/
+    - /docs/gatsby-cli/
+    - /docs/cheat-sheet/
     - link: /docs/glossary/
-      title: Glossary
       items:
-        - link: /docs/glossary/graphql
-          title: GraphQL
-        - link: /docs/glossary/headless-cms/
-          title: Headless CMS
-        - link: /docs/glossary/headless-wordpress/
-          title: Headless Wordpress
-        - link: /docs/glossary/jamstack
-          title: JAMStack
-        - link: /docs/glossary/node
-          title: Node.js
-        - link: /docs/glossary/react
-          title: React
-        - link: /docs/glossary/static-site-generator
-          title: Static Site Generator
-        - link: /docs/glossary/webpack
-          title: webpack
-    - link: /docs/telemetry/
-      title: Gatsby Telemetry
-    - link: /docs/gatsby-repl/
-      title: Gatsby REPL
+        - /docs/glossary/graphql
+        - /docs/glossary/headless-cms/
+        - /docs/glossary/headless-wordpress/
+        - /docs/glossary/jamstack
+        - /docs/glossary/node
+        - /docs/glossary/react
+        - /docs/glossary/static-site-generator
+        - /docs/glossary/webpack
+    - /docs/telemetry/
+    - /docs/gatsby-repl/

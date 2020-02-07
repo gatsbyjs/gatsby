@@ -1,5 +1,6 @@
 ---
 title: Winning Over Engineering Leaders
+navTitle: Engineering Leaders
 ---
 
 Engineering leaders and managers typically make decisions about how to build the sites and products that fall under their ownership. These decisions are based on things like cost, complexity, team needs, business requirements, and the success metrics they are accountable for.

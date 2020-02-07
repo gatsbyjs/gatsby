@@ -1,5 +1,6 @@
 ---
 title: Answering IT & Security Questions
+navTitle: Answering IT/Security Questions
 ---
 
 At larger companies, such as the Fortune 500, there are Security teams that audit new technologies being used inside the company.
