@@ -418,7 +418,7 @@ _NOTE: So for the above example, the relevant CSS declaration would be `font-fam
 
 ## Using FontAwesome
 
-Using [FontAwesome](https://fontawesome.com/) gives you access to thousands of icons for use on your site. Since Gatsby sites are React sites, we recommend you use the [react-fontawesome](https://github.com/FortAwesome/react-fontawesome) SVG library.
+Using [FontAwesome](https://fontawesome.com/) gives you access to thousands of icons for use on your site. Since Gatsby sites are React sites, it's recommended to use the [react-fontawesome](https://github.com/FortAwesome/react-fontawesome) SVG library.
 
 ### Prerequisites
 
