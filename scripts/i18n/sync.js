@@ -1,5 +1,3 @@
-const fs = require(`fs`)
-const fetch = require(`node-fetch`)
 const log4js = require(`log4js`)
 const shell = require(`shelljs`)
 const { graphql } = require(`@octokit/graphql`)
@@ -16,11 +14,6 @@ const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${host}/${owner}/${sourceRepo}`
 const sourceRepoGitUrl = `${sourceRepoUrl}.git`
-
-function getLineNumber(filePath) {
-  const contents = fs.readFileSync(filePath, `utf-8`).split(`\n`)
-  return contents.findIndex(line => line.includes(`<<<<<<<`))
-}
 
 // get the git short hash
 function getShortHash(hash) {
@@ -59,20 +52,6 @@ async function getRepository(owner, name) {
   return repository
 }
 
-// TODO make this more robust
-async function getFileHashes(comparisonUrl) {
-  const response = await fetch(comparisonUrl)
-  const text = await response.text()
-  const regex = /<a href="(#diff-[a-f0-9]+)">(.+)<\/a>/g
-  const result = {}
-  let match
-  while ((match = regex.exec(text)) !== null) {
-    const [, href, filename] = match
-    result[filename] = href
-  }
-  return result
-}
-
 async function syncTranslationRepo(code) {
   logger = log4js.getLogger(`sync:` + code)
   const transRepoName = `${repoBase}-${code}`
@@ -89,8 +68,8 @@ async function syncTranslationRepo(code) {
 
   // TODO don't run the sync script if there is a current PR from the bot
 
-  // Compare these changes
   // TODO exit early if this fails
+  // Compare these changes
   const baseHash = shell
     .exec(`git merge-base origin/master source/master`)
     .stdout.replace(`\n`, ``)
@@ -127,10 +106,6 @@ async function syncTranslationRepo(code) {
   const conflictFiles = conflictLines.map(line =>
     line.substr(line.lastIndexOf(` `) + 1)
   )
-  const lineNumbers = {}
-  for (let file of conflictFiles) {
-    lineNumbers[file] = getLineNumber(file)
-  }
   // Add all the conflicts
   shell.exec(`git add ${conflictFiles.join(` `)}`)
 
@@ -182,15 +157,13 @@ ${conflictFiles.map(file => `* ${file}`).join(`\n`)}
 
 Once all the commits have been fixed, mark this pull request as "Ready for review" and merge it in!
 
-Refer to the comments made by @gatsbybot or see all changes since the last sync here:
+See all changes since the last sync here:
 
 ${comparisonUrl}
   `
 
   // create a new draft PR
-  const {
-    createPullRequest: { pullRequest },
-  } = await graphql(
+  await graphql(
     `
       mutation($input: CreatePullRequestInput!) {
         createPullRequest(input: $input) {
@@ -213,45 +186,6 @@ ${comparisonUrl}
         body,
         maintainerCanModify: true,
         draft: true,
-      },
-    }
-  )
-  const hashes = await getFileHashes(comparisonUrl)
-
-  const threads = conflictFiles.map(file => {
-    const hash = hashes[file]
-    const body = `
-Compare changes for this file:
-
-${comparisonUrl}${hash}
-    `
-    return {
-      path: file,
-      body,
-      line: lineNumbers[file],
-      side: `RIGHT`,
-    }
-  })
-
-  // publish the review
-  // for each file, link to the changes in the English version for that file
-  await graphql(
-    `
-      mutation($input: AddPullRequestReviewInput!) {
-        addPullRequestReview(input: $input) {
-          clientMutationId
-        }
-      }
-    `,
-    {
-      headers: {
-        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
-        accept: `application/vnd.github.comfort-fade-preview+json`,
-      },
-      input: {
-        pullRequestId: pullRequest.id,
-        event: `COMMENT`,
-        threads,
       },
     }
   )
