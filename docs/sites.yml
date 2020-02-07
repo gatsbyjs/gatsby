@@ -9625,3 +9625,16 @@
     - Freelance
     - Web Development
   featured: true
+- title: Viraj Chavan | Full Stack Software Engineer
+  url: http://virajc.tech
+  main_url: http://virajc.tech
+  source_url: https://github.com/virajvchavan/portfolio
+  description: >
+    Portfolio and blog of a full stack software engineer from India
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Viraj V Chavan
+  built_by_url: https://twitter.com/VirajVChavan
+  featured: false
