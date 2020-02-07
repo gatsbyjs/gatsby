@@ -179,7 +179,7 @@ const searchBoxStyles = t => css`
     margin: ${t.space[6]};
     height: ${t.space[9]};
     outline: none;
-    transition: all ${t.transition.speed.default} ${t.transition.curve.default};
+    transition: ${t.transition.default};
     font-family: ${t.fonts.heading};
     font-weight: bold;
   }

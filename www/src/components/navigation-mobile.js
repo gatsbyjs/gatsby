@@ -104,8 +104,7 @@ const styles = {
         mt: 0,
         mx: `auto`,
         "& path, & line, & polygon": {
-          transition: t =>
-            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+          transition: `default`,
         },
       },
       ":hover": {

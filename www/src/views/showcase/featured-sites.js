@@ -236,8 +236,7 @@ class FeaturedSites extends Component {
                   textAlign: `center`,
                   "&&": {
                     border: 0,
-                    transition: t =>
-                      `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+                    transition: `default`,
                     "&:hover": {
                       transform: t => `translateY(-${t.space[1]})`,
                       boxShadow: `overlay`,
