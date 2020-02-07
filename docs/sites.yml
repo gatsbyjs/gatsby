@@ -9625,3 +9625,15 @@
     - Freelance
     - Web Development
   featured: true
+  - title: Villa
+  description: >
+    App Design & web development with Gatsby
+  main_url: "https://villaruralpaquete.com/"
+  url: "https://villaruralpaquete.com/"
+  categories:
+    - Agency
+    - Design
+    - Web Development
+  built_by: App Design
+  built_by_url: "https://appdesign.dev/"
+  featured: true
