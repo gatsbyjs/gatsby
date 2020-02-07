@@ -1,5 +1,6 @@
 ---
 title: Adding Search with JS Search
+navTitle: Adding Search with js-search
 ---
 
 ## Prerequisites

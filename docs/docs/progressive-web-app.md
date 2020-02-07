@@ -1,5 +1,7 @@
 ---
 title: Progressive Web Apps (PWAs)
+navTitle: Supporting Progressive Web Apps (PWAs)
+breadcrumbTitle: Supporting PWAs
 ---
 
 ## What is a Progressive Web App?

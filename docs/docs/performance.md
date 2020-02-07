@@ -1,5 +1,6 @@
 ---
 title: Performance
+navTitle: Improving Performance
 overview: true
 ---
 

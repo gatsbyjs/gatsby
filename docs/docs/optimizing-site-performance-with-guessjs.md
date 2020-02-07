@@ -1,5 +1,6 @@
 ---
 title: Optimizing Site Performance with Guess.js
+breadcrumbTitle: Guess.js
 ---
 
 Preloading resources is a great way to improve application performance. However, preloading everything on a page can waste bandwidth. This is especially true for mobile phone users who may have limited data and bandwidth. So how do you know which resources to preload? Is it just a guessing game? Not anymore.

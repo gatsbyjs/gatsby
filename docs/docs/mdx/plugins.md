@@ -1,5 +1,6 @@
 ---
 title: MDX Plugins
+navTitle: Using MDX Plugins
 ---
 
 ## Gatsby remark plugins

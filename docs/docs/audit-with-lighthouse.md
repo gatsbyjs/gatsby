@@ -1,5 +1,6 @@
 ---
 title: Audit with Lighthouse
+navTitle: Auditing with Lighthouse
 ---
 
 Quoting from the [Lighthouse website](https://developers.google.com/web/tools/lighthouse/):

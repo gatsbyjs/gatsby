@@ -275,170 +275,86 @@
                 - link: /docs/theme-ui/
                   title: Using Theme UI
         - link: /docs/mdx/
-          title: Adding Components to Markdown with MDX
-          breadcrumbTitle: MDX
           items:
-            - link: /docs/mdx/getting-started/
-            - link: /docs/mdx/writing-pages/
-              title: Writing Pages
-            - link: /docs/mdx/customizing-components/
-            - link: /docs/mdx/programmatically-creating-pages/
-            - link: /docs/mdx/plugins/
-              title: Using MDX Plugins
-            - link: /docs/mdx/markdown-syntax/
+            - /docs/mdx/getting-started/
+            - /docs/mdx/writing-pages/
+            - /docs/mdx/customizing-components/
+            - /docs/mdx/programmatically-creating-pages/
+            - /docs/mdx/plugins/
+            - /docs/mdx/markdown-syntax/
         - link: /docs/testing/
           items:
-            - link: /docs/unit-testing/
-            - link: /docs/testing-components-with-graphql/
-            - link: /docs/end-to-end-testing/
-              title: End-to-end Testing
-            - link: /docs/testing-css-in-js/
-            - link: /docs/testing-react-components/
-            - link: /docs/visual-testing-with-storybook/
+            - /docs/unit-testing/
+            - /docs/testing-components-with-graphql/
+            - /docs/end-to-end-testing/
+            - /docs/testing-css-in-js/
+            - /docs/testing-react-components/
+            - /docs/visual-testing-with-storybook/
         - link: /docs/debugging/
-          title: Debugging Gatsby
-          breadcrumbTitle: Debugging
           items:
-            - link: /docs/debugging-html-builds/
-              title: Debugging HTML Builds
-              breadcrumbTitle: HTML Builds
-            - link: /docs/debugging-replace-renderer-api/
-              title: Debugging Replace Renderer API
-              breadcrumbTitle: Replace Renderer API
-            - link: /docs/debugging-the-build-process/
-              title: Debugging the Build Process
-              breadcrumbTitle: The Build Process
-            - link: /docs/debugging-cache-issues/
-              title: Debugging Cache Issues
-              breadcrumbTitle: Cache Issues
-            - link: /docs/performance-tracing/
-              title: Tracing Gatsby Builds
-            - link: /docs/debugging-async-lifecycles/
-              title: Debugging Async Lifecycles
-              breadcrumbTitle: Async Lifecycles
-            - link: /docs/troubleshooting-common-errors/
+            - /docs/debugging-html-builds/
+            - /docs/debugging-replace-renderer-api/
+            - /docs/debugging-the-build-process/
+            - /docs/debugging-cache-issues/
+            - /docs/performance-tracing/
+            - /docs/debugging-async-lifecycles/
+            - /docs/troubleshooting-common-errors/
         - link: /docs/adding-app-and-website-functionality/
           items:
-            - link: /docs/linking-between-pages/
+            - /docs/linking-between-pages/
             - link: /docs/adding-search/
-              title: Adding Search
-              breadcrumbTitle: Search
               items:
-                - link: /docs/adding-search-with-algolia/
-                - link: /docs/adding-search-with-elasticlunr/
-                  title: Adding Search with elasticlunr*
-                - link: /docs/adding-search-with-js-search/
-                  title: Adding Search with js-search
-            - link: /docs/adding-analytics/
-              title: Adding Analytics
-              breadcrumbTitle: Analytics
-            - link: /docs/building-a-site-with-authentication/
-              title: Adding Authentication
-              breadcrumbTitle: Authentication
-            - link: /docs/adding-forms/
-              title: Adding Forms
-              breadcrumbTitle: Forms
-            - link: /docs/adding-react-components/
-              title: Adding React Components
-              breadcrumbTitle: React Components
-            - link: /docs/building-a-contact-form/
-            - link: /docs/add-404-page/
-              title: Adding a 404 Page
-              breadcrumbTitle: 404 Page
-            - link: /docs/add-seo-component/
-              title: Adding an SEO Component
-              breadcrumbTitle: SEO Component
-            - link: /docs/adding-tags-and-categories-to-blog-posts/
-              title: Adding Tags & Categories to Blog Posts
-              breadcrumbTitle: Blog Tags and Categories
-            - link: /docs/adding-pagination/
-              title: Adding Pagination
-              breadcrumbTitle: Pagination
-            - link: /docs/adding-comments/
-              title: Adding Comments
-              breadcrumbTitle: Comments
-            - link: /docs/creating-a-sitemap/
-              title: Creating a Sitemap
-            - link: /docs/adding-an-rss-feed/
-              title: Adding an RSS Feed
-              breadcrumbTitle: RSS Feed
+                - /docs/adding-search-with-algolia/
+                - /docs/adding-search-with-elasticlunr/
+                - /docs/adding-search-with-js-search/
+            - /docs/adding-analytics/
+            - /docs/building-a-site-with-authentication/
+            - /docs/adding-forms/
+            - /docs/adding-react-components/
+            - /docs/building-a-contact-form/
+            - /docs/add-404-page/
+            - /docs/add-seo-component/
+            - /docs/adding-tags-and-categories-to-blog-posts/
+            - /docs/adding-pagination/
+            - /docs/adding-comments/
+            - /docs/creating-a-sitemap/
+            - /docs/adding-an-rss-feed/
             - link: /docs/adding-page-transitions/
-              title: Adding Page Transitions
-              breadcrumbTitle: Page Transitions
               items:
-                - link: /docs/adding-page-transitions-with-plugin-transition-link/
-                  title: Adding Page Transitions with gatsby-plugin-transition-link
-                  breadcrumbTitle: gatsby-plugin-transition-link
-            - link: /docs/making-your-site-accessible/
-              title: Making Your Site Accessible
+                - /docs/adding-page-transitions-with-plugin-transition-link/
+            - /docs/making-your-site-accessible/
             - link: /docs/routing/
-              title: Routing
               items:
-                - link: /docs/reach-router-and-gatsby/
-                  title: "@reach/router and Gatsby"
-                - link: /docs/location-data-from-props/
-                  title: Location Data from Props
-                - link: /docs/creating-dynamic-navigation/
-                  title: Creating Dynamic Navigation
-                - link: /docs/client-only-routes-and-user-authentication/
-                  title: Client-only Routes & User Authentication
-                  breadcrumbTitle: Client Routes & User Auth
-            - link: /docs/data-fetching/
-              title: Build Time and Client-side Data Fetching
-            - link: /docs/using-client-side-only-packages/
-              title: Using Client-Side Only Packages
+                - /docs/reach-router-and-gatsby/
+                - /docs/location-data-from-props/
+                - /docs/creating-dynamic-navigation/
+                - /docs/client-only-routes-and-user-authentication/
+            - /docs/data-fetching/
+            - /docs/using-client-side-only-packages/
             - link: /docs/building-an-e-commerce-site/
-              title: Building an E-commerce Site
               items:
-                - link: /docs/building-an-ecommerce-site-with-shopify/
-                  title: Building an E-commerce Site with Shopify
-                - link: /docs/processing-payments-with-stripe/
-                  title: Processing Payments with Stripe
+                - /docs/building-an-ecommerce-site-with-shopify/
+                - /docs/processing-payments-with-stripe/
         - link: /docs/performance/
-          title: Improving Performance
           items:
-            - link: /docs/progressive-web-app/
-              title: Supporting Progressive Web Apps (PWAs)
-              breadcrumbTitle: Supporting PWAs
-            - link: /docs/caching/
-              title: Caching
-            - link: /docs/local-https/
-              title: Using Local HTTPS
-            - link: /docs/audit-with-lighthouse/
-              title: Auditing with Lighthouse
-            - link: /docs/add-a-manifest-file/
-              title: Adding a Manifest File
-            - link: /docs/add-offline-support-with-a-service-worker/
-              title: Adding Offline Support with a Service Worker
-              breadcrumbTitle: Offline Support with Service Worker
-            - link: /docs/add-page-metadata/
-              title: Adding Page Metadata
-            - link: /docs/seo/
-              title: Search Engine Optimization (SEO)
-              breadcrumbTitle: SEO
-            - link: /docs/optimizing-site-performance-with-guessjs/
-              title: Optimizing Site Performance with Guess.js
-              breadcrumbTitle: Guess.js
-            - link: /docs/scaling-issues/
-              title: Scaling Issues
+            - /docs/progressive-web-app/
+            - /docs/caching/
+            - /docs/local-https/
+            - /docs/audit-with-lighthouse/
+            - /docs/add-a-manifest-file/
+            - /docs/add-offline-support-with-a-service-worker/
+            - /docs/add-page-metadata/
+            - /docs/seo/
+            - /docs/optimizing-site-performance-with-guessjs/
+            - /docs/scaling-issues/
         - link: /docs/localization-i18n/
-          title: Localization & Internationalization with Gatsby
-          breadcrumbTitle: Localization
           items:
-            - link: /docs/creating-prefixed-404-pages-for-different-languages/
-              title: Creating Prefixed 404 Pages for Different Languages
-              breadcrumbTitle: Creating Prefixed 404 Pages
+            - /docs/creating-prefixed-404-pages-for-different-languages/
         - link: /docs/porting-to-gatsby/
-          title: Porting to Gatsby
           items:
-            - link: /docs/porting-from-create-react-app-to-gatsby/
-              title: Porting from Create React App to Gatsby
-              breadcrumbTitle: Create React App to Gatsby
-            - link: /docs/porting-an-html-site-to-gatsby/
-              title: Porting an HTML Site to Gatsby
-              breadcrumbTitle: HTML to Gatsby
+            - /docs/porting-from-create-react-app-to-gatsby/
+            - /docs/porting-an-html-site-to-gatsby/
     - link: /docs/api-reference/
-      title: Gatsby API
       items:
         - /docs/theme-api/
         - /docs/gatsby-link/

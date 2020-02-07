@@ -1,5 +1,6 @@
 ---
 title: Client-only Routes & User Authentication
+breadcrumbTitle: Client Routes & User Auth
 ---
 
 Often you want to create a site with client-only portions, which allows you to gate them by authentication or load different content based on URL parameters.

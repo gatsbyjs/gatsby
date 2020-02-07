@@ -1,5 +1,7 @@
 ---
 title: Localization and Internationalization with Gatsby (i18n)
+navTitle: Localization & Internationalization with Gatsby
+breadcrumbTitle: Localization
 ---
 
 Serving users content in a way that is adapted to their language & culture is part of a great user experience. When you make an effort to adapt web content to a user's location, that practice is called internationalization (i18n).

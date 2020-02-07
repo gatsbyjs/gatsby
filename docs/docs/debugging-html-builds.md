@@ -1,5 +1,6 @@
 ---
 title: Debugging HTML Builds
+breadcrumbTitle: HTML Builds
 ---
 
 Errors while building static HTML files generally happen for one of the following reasons:

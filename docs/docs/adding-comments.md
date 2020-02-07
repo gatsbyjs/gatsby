@@ -1,5 +1,6 @@
 ---
 title: Adding Comments
+breadcrumbTitle: Comments
 ---
 
 If you're using Gatsby to run a blog and you've started adding some content to it, the next thing to think about is how to increase engagement among your visitors. A great way to do that is to allow them to ask questions and express their views on what you've written. This will make your blog seem much more lively to anyone visiting it.

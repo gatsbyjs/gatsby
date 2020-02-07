@@ -1,5 +1,6 @@
 ---
 title: Adding Page Transitions with gatsby-plugin-transition-link
+breadcrumbTitle: gatsby-plugin-transition-link
 ---
 
 This guide will cover how to use `gatsby-plugin-transition-link` to animate transitions between pages on your Gatsby site.

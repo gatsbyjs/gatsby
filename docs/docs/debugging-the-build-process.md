@@ -1,5 +1,6 @@
 ---
 title: Debugging the Build Process
+breadcrumbTitle: The Build Process
 ---
 
 Gatsby's `build` and `develop` steps run as a Node.js application which you can debug using standard tools for Node.js applications.

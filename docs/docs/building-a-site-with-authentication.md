@@ -1,5 +1,7 @@
 ---
 title: Building a Site with Authentication
+navTitle: Adding Authentication
+breadcrumbTitle: Authentication
 ---
 
 Many sites require users to be authenticated in order to protect private data.

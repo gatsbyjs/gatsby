@@ -1,5 +1,6 @@
 ---
 title: Adding Search
+breadcrumbTitle: Search
 overview: true
 ---
 

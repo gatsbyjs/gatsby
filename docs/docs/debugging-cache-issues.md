@@ -1,5 +1,6 @@
 ---
 title: Debugging Cache Issues
+breadcrumbTitle: Cache Issues
 ---
 
 There can be certain scenarios in which the Gatsby caching mechanism appears to fail, which can lead to issues like:
