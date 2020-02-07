@@ -17,7 +17,10 @@ import AlgoliaLogo from "../assets/vendor-logos/algolia.svg"
 import GatsbyIcon from "../components/gatsby-monogram"
 import { debounce, unescape } from "lodash-es"
 
-import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
+import {
+  space,
+  mediaQueries,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import removeMD from "remove-markdown"

@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import { Component } from "react"
 import { navigate } from "gatsby"
 
-import { space } from "../gatsby-plugin-theme-ui"
+import { space } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import SearchIcon from "./search-icon"
 import { themedInput } from "../utils/styles"
 

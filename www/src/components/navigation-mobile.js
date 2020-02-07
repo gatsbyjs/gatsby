@@ -9,7 +9,7 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/icons"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../utils/styles"
 
 const getProps = ({ isPartiallyCurrent }) => {

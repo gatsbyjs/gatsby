@@ -7,7 +7,7 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 import Button from "../components/button"

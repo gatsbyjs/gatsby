@@ -7,7 +7,7 @@ import {
   fontSizes,
   radii,
   space,
-} from "../../gatsby-plugin-theme-ui"
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { formInputFocus, focusStyle } from "../../utils/styles"
 
 const rotation = keyframes`

@@ -5,7 +5,7 @@ import styled from "@emotion/styled"
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const EcosystemSectionRoot = styled(`section`)`
   background: ${p => p.theme.colors.card.background};

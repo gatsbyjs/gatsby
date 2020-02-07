@@ -4,7 +4,7 @@ import React from "react"
 import { Link } from "gatsby"
 import MdLoop from "react-icons/lib/md/loop"
 
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // Components for building sections used in the model
 const LayerContentWrapper = ({ index, children }) => (

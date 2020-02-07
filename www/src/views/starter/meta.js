@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
 
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import ShareMenu from "../../components/share-menu"
 import Button from "../../components/button"
 

@@ -8,7 +8,7 @@ import {
   fontSizes,
   fontWeights,
   fonts,
-} from "../../gatsby-plugin-theme-ui"
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },

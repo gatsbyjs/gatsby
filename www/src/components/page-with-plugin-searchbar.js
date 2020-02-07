@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
   <Fragment>

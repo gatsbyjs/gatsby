@@ -27,7 +27,7 @@ import {
   fontWeights,
   letterSpacings,
   lineHeights,
-} from "../../gatsby-plugin-theme-ui"
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import {
   Box,
   Button,

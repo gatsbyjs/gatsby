@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid ${p => p.theme.colors.pullquote.borderColor};

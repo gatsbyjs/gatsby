@@ -14,7 +14,7 @@ import {
 } from "../shared/horizontal-scroller"
 import { EcosystemIcon } from "../../assets/icons"
 import { PluginsIcon, StartersIcon } from "../../assets/icons/ecosystem-icons"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const Sections = styled(`div`)`

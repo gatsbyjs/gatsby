@@ -7,7 +7,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Avatar from "../avatar"
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const HomepageBlogPostRoot = styled(
   HorizontalScrollerItem.withComponent(`article`)

@@ -14,7 +14,7 @@ import {
   space,
   zIndices,
   mediaQueries,
-} from "../gatsby-plugin-theme-ui"
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
 import withColorMode from "../components/with-color-mode"
