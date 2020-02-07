@@ -50,13 +50,13 @@ export const theme = {
   colors: c,
   fonts: fonts,
   fontSizes: fontSizes,
-  space: space,
   fontWeights: fontWeights,
   letterSpacings: letterSpacings,
   lineHeights: lineHeights,
   mediaQueries: mediaQueries,
   radii: radii,
   shadows: shadows,
+  space: space,
   transition: transition,
 }
 
