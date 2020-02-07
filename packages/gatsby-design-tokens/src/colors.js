@@ -183,8 +183,8 @@ export const colors = preval`
       focusBoxShadow: palette.orange[20],
     },
     code: {
-      backgroundInline: "#fbf2e9",
-      background: "#fdfaf6",
+      bgInline: "#fbf2e9",
+      bg: "#fdfaf6",
       border: "#faede5",
       text: "#866c5b",
       remove: palette.red[70],
