@@ -11,7 +11,6 @@ import {
   radii,
   transition,
   shadows,
-  zIndices,
 } from "./index"
 
 // gatsby-theme-ui-theme-default
@@ -59,7 +58,6 @@ export const theme = {
   radii: radii,
   shadows: shadows,
   transition: transition,
-  zIndices: zIndices,
 }
 
 export {
@@ -75,5 +73,4 @@ export {
   shadows,
   space,
   transition,
-  zIndices,
 }

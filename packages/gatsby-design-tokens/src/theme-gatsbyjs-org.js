@@ -274,12 +274,23 @@ const s = {
   avatar: spaceTokens[7],
 }
 
+const zIndices = {
+  widget: 2,
+  navigation: 5,
+  banner: 10,
+  modal: 10,
+  sidebar: 10,
+  floatingActionButton: 20,
+  skipLink: 100,
+}
+
 const newTheme = {
   ...defaultTheme,
   initialColorMode: `light`,
   useColorSchemeMediaQuery: true,
   colors: c,
   sizes: s,
+  zIndices: zIndices,
   buttons: {
     large: {
       fontSize: 4,
@@ -322,11 +333,10 @@ export {
   shadows,
   space,
   transition,
-  zIndices,
 } from "./theme"
 
 // individual exports
 // colors extended with theme-ui required values
-export { c as colors, s as sizes }
+export { c as colors, s as sizes, zIndices }
 
 export const theme = newTheme
