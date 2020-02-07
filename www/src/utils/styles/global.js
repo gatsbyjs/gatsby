@@ -167,7 +167,7 @@ const gatsbyHighlight = t => {
   return {
     // gatsby-remark-prismjs styles
     ".gatsby-highlight": {
-      background: t.colors.code.background,
+      background: t.colors.code.bg,
       color: t.colors.text,
       position: `relative`,
       WebkitOverflowScrolling: `touch`,
@@ -257,7 +257,7 @@ export const globalStyles = t => {
       fontSize: `82.5%`,
     },
     "tt, code, kbd": {
-      background: t.colors.code.backgroundInline,
+      background: t.colors.code.bgInline,
       paddingTop: `0.2em`,
       paddingBottom: `0.2em`,
     },
@@ -338,7 +338,7 @@ export const globalStyles = t => {
     // gatsby-remark-code-titles styles
     // https://www.gatsbyjs.org/packages/gatsby-remark-code-titles/
     ".gatsby-code-title": {
-      background: t.colors.code.background,
+      background: t.colors.code.bg,
       borderBottom: `1px solid ${t.colors.code.border}`,
       color: t.colors.code.text,
       padding: `${t.space[5]} ${t.space[6]} ${t.space[4]}`,
