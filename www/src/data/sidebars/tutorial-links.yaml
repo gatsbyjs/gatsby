@@ -112,16 +112,16 @@
           link: /tutorial/part-eight/#keep-making-it-better
     - link: /tutorial/theme-tutorials/
       items:
-        - link: /tutorial/using-a-theme/
-        - link: /tutorial/using-multiple-themes-together/
-        - link: /tutorial/building-a-theme/
+        - /tutorial/using-a-theme/
+        - /tutorial/using-multiple-themes-together/
+        - /tutorial/building-a-theme/
     - link: /tutorial/additional-tutorials/
       items:
-        - link: /tutorial/gatsby-image-tutorial/
-        - link: /tutorial/authentication-tutorial/
-        - link: /tutorial/ecommerce-tutorial/
-        - link: /tutorial/wordpress-source-plugin-tutorial/
-        - link: /tutorial/wordpress-image-tutorial/
-        - link: /tutorial/prismic-source-graphql-tutorial/
-        - link: /tutorial/writing-documentation-with-docz/
-        - link: /tutorial/blog-netlify-cms-tutorial/
+        - /tutorial/gatsby-image-tutorial/
+        - /tutorial/authentication-tutorial/
+        - /tutorial/ecommerce-tutorial/
+        - /tutorial/wordpress-source-plugin-tutorial/
+        - /tutorial/wordpress-image-tutorial/
+        - /tutorial/prismic-source-graphql-tutorial/
+        - /tutorial/writing-documentation-with-docz/
+        - /tutorial/blog-netlify-cms-tutorial/

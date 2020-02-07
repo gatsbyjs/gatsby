@@ -1,45 +1,45 @@
 - title: Contributing
   key: contributing
   items:
-    - link: /contributing/
+    - /contributing/
     - link: /contributing/community/
       items:
-        - link: /contributing/why-contribute-to-gatsby/
-        - link: /contributing/contributor-swag/
-        - link: /contributing/pair-programming/
+        - /contributing/why-contribute-to-gatsby/
+        - /contributing/contributor-swag/
+        - /contributing/pair-programming/
         - link: /contributing/events/
           title: Gatsby Community Events
-        - link: /contributing/where-to-participate/
-        - link: /contributing/organize-a-gatsby-event/
-        - link: /contributing/how-to-run-a-gatsby-workshop/
-        - link: /contributing/how-to-pitch-gatsby/
-    - link: /contributing/code-of-conduct/
-    - link: /contributing/gatsby-style-guide/
-    - link: /contributing/gatsby-docs-translation-guide/
+        - /contributing/where-to-participate/
+        - /contributing/organize-a-gatsby-event/
+        - /contributing/how-to-run-a-gatsby-workshop/
+        - /contributing/how-to-pitch-gatsby/
+    - /contributing/code-of-conduct/
+    - /contributing/gatsby-style-guide/
+    - /contributing/gatsby-docs-translation-guide/
     - link: /contributing/how-to-contribute/
       items:
-        - link: /contributing/how-to-file-an-issue/
-        - link: /contributing/how-to-make-a-reproducible-test-case/
-        - link: /contributing/how-to-open-a-pull-request/
-        - link: /contributing/how-to-label-an-issue/
-        - link: /contributing/triaging-github-issues/
-        - link: /contributing/managing-pull-requests/
+        - /contributing/how-to-file-an-issue/
+        - /contributing/how-to-make-a-reproducible-test-case/
+        - /contributing/how-to-open-a-pull-request/
+        - /contributing/how-to-label-an-issue/
+        - /contributing/triaging-github-issues/
+        - /contributing/managing-pull-requests/
         - link: /contributing/docs-contributions/
           items:
-            - link: /contributing/docs-templates/
-            - link: /contributing/how-to-write-a-stub/
+            - /contributing/docs-templates/
+            - /contributing/how-to-write-a-stub/
             - link: /contributing/stub-list/
               title: Stub List
-        - link: /contributing/blog-and-website-contributions/
-        - link: /contributing/code-contributions/
-        - link: /contributing/setting-up-your-local-dev-environment/
-        - link: /contributing/docs-and-website-components/
+        - /contributing/blog-and-website-contributions/
+        - /contributing/code-contributions/
+        - /contributing/setting-up-your-local-dev-environment/
+        - /contributing/docs-and-website-components/
         - link: /contributing/community-contributions/
           items:
-            - link: /contributing/site-showcase-submissions/
-            - link: /contributing/submit-to-creator-showcase/
-            - link: /contributing/submit-to-starter-library/
-            - link: /contributing/submit-to-plugin-library/
+            - /contributing/site-showcase-submissions/
+            - /contributing/submit-to-creator-showcase/
+            - /contributing/submit-to-starter-library/
+            - /contributing/submit-to-plugin-library/
     - title: Gatsby Brand Guidelines
       items:
         - link: /guidelines/color/
@@ -50,5 +50,5 @@
           title: Typography
         - link: /guidelines/design-tokens/
           title: Design Tokens
-    - link: /contributing/rfc-process/
-    - link: /contributing/gatsby-governance-model/
+    - /contributing/rfc-process/
+    - /contributing/gatsby-governance-model/

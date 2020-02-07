@@ -44,7 +44,6 @@ function usePages() {
       # }
     }
   `)
-  // TODO maybe turn into an object
   return allMdx.nodes
 }
 
@@ -56,6 +55,9 @@ const createHash = link => {
 
 const extendItems = (items, pages, level = 0, parentTitle) => {
   return items.map(_item => {
+    if (typeof _item === "string") {
+      _item = { link: _item }
+    }
     const item = {
       ..._item,
       hash: createHash(_item.link),
@@ -97,7 +99,6 @@ const extendSidebarData = (item, pages) => {
 }
 
 function useItemLists() {
-  // const locale = "en" // FIXME get from useIntl()
   const locale = useContext(LocaleContext)
   const pages = usePages()
   const localPages = pages.filter(page => page.fields.locale === locale)
