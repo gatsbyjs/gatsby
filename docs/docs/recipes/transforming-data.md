@@ -60,14 +60,15 @@ export const query = graphql`
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start) with `gatsby-config.js` and an `index.js` page
-- The `gatsby-transformer-sharp` plugin installed
-- The `gatsby-plugin-sharp` plugin installed
+- The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
 - A source plugin installed, such as `gatsby-source-filesystem`
 - An image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `src/images` folder
 
 ### Directions
 
 1. Make sure that the config file has the correct information.
+
+Edit your gatsby-config.js file to source images and configure plugins for Gatsby's GraphQL data layer. A common approach is to source them from an images directory using the gatsby-source-filesystem plugin:
 
 ```JavaScript:title=gatsby-config.js
 
