@@ -83,8 +83,8 @@ If the Linux distribution you are using is not listed here, please find instruct
 When nvm is installed, it does not default to a particular node version. You’ll need to install the version you want and give nvm instructions to use it. This example uses the latest release of version 10, but more recent version numbers can be used instead.
 
 ```shell
-nvm install 10
-nvm use 10
+npm install 10
+npm use 10
 ```
 
 To confirm that this worked, you can run `npm --version` and `node --version`. The output should look similar to the screenshot below, showing version numbers in response to the commands.
