@@ -260,7 +260,7 @@
                   link: /docs/pixabay-source-plugin-tutorial/
                 - title: Remark Plugin Tutorial
                   link: /docs/remark-plugin-tutorial/
-                - title: Maintaining a Plugin*
+                - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Themes
           link: /docs/themes/
@@ -389,7 +389,7 @@
               items:
                 - title: Adding Search with Algolia
                   link: /docs/adding-search-with-algolia/
-                - title: Adding Search with elasticlunr*
+                - title: Adding Search with elasticlunr
                   link: /docs/adding-search-with-elasticlunr/
                 - title: Adding Search with js-search
                   link: /docs/adding-search-with-js-search/
@@ -581,7 +581,7 @@
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
           link: /docs/graphql-concepts/
-        - title: Security in Gatsby*
+        - title: Security in Gatsby
           link: /docs/security-in-gatsby/
         - title: Theme Shadowing
           link: /docs/how-shadowing-works
@@ -633,7 +633,7 @@
               link: /docs/how-code-splitting-works/
         - title: Resource Handling & Service Workers
           link: /docs/resource-handling-and-service-workers/
-        - title: Data Storage (Redux)*
+        - title: Data Storage (Redux)
           link: /docs/data-storage-redux/
         - title: Build Caching
           link: /docs/build-caching/
@@ -659,7 +659,7 @@
               link: /docs/winning-over-marketers/
             - title: Executives
               link: /docs/winning-over-executives/
-            - title: Clients*
+            - title: Clients
               link: /docs/winning-over-clients/
             - title: Content Creators
               link: /docs/winning-over-content-creators/
@@ -667,7 +667,7 @@
           link: /docs/different-organization-types/
           breadcrumbTitle: Spreading Gatsby
           items:
-            - title: As a Freelancer*
+            - title: As a Freelancer
               link: /docs/gatsby-for-freelancers/
             - title: Inside an Agency
               link: /docs/gatsby-for-agencies/
@@ -690,7 +690,7 @@
                   link: /docs/answering-it-security/
                 - title: Setting Up Gatsby Without Gatsby New
                   link: /docs/setting-up-gatsby-without-gatsby-new/
-        - title: Best Practices for Orgs*
+        - title: Best Practices for Orgs
           link: /docs/best-practices-for-orgs/
           items:
             - title: Sharing Components Across Websites
@@ -699,7 +699,7 @@
               items:
                 - title: Component Libraries
                   link: /docs/component-libraries/
-                - title: Making Components Discoverable*
+                - title: Making Components Discoverable
                   link: /docs/making-components-discoverable/
         - title: How Gatsby Boosts Your Career
           link: /docs/how-gatsby-boosts-career/
