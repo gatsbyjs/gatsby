@@ -18,7 +18,7 @@ const packages = require(`./src/utils/node/packages.js`)
 const sections = [docs, showcase, starters, creators, packages]
 
 exports.createPages = helpers => {
-  const { graphql, actions } = helpers
+  const { actions } = helpers
   const { createPage, createRedirect } = actions
 
   redirects.forEach(redirect => {
@@ -33,7 +33,7 @@ exports.createPages = helpers => {
     })
   })
 
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     const featureComparisonPageTemplate = path.resolve(
       `src/templates/template-feature-comparison.js`
     )

@@ -15,13 +15,11 @@ exports.createPages = ({ graphql, actions }) => {
     graphql(`
       query {
         allSitesYaml(filter: { main_url: { ne: null } }) {
-          edges {
-            node {
-              main_url
-              fields {
-                slug
-                hasScreenshot
-              }
+          nodes {
+            main_url
+            fields {
+              slug
+              hasScreenshot
             }
           }
         }
@@ -31,20 +29,20 @@ exports.createPages = ({ graphql, actions }) => {
         return reject(result.errors)
       }
 
-      result.data.allSitesYaml.edges.forEach(edge => {
-        if (!edge.node.fields) return
-        if (!edge.node.fields.slug) return
-        if (!edge.node.fields.hasScreenshot) {
+      result.data.allSitesYaml.nodes.forEach(node => {
+        if (!node.fields) return
+        if (!node.fields.slug) return
+        if (!node.fields.hasScreenshot) {
           reporter.warn(
-            `Site showcase entry "${edge.node.main_url}" seems offline. Skipping.`
+            `Site showcase entry "${node.main_url}" seems offline. Skipping.`
           )
           return
         }
         createPage({
-          path: `${edge.node.fields.slug}`,
+          path: `${node.fields.slug}`,
           component: slash(showcaseTemplate),
           context: {
-            slug: edge.node.fields.slug,
+            slug: node.fields.slug,
           },
         })
       })

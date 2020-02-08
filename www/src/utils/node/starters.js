@@ -40,19 +40,17 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     graphql(`
       query {
         allStartersYaml {
-          edges {
-            node {
-              id
-              fields {
-                starterShowcase {
-                  slug
-                  stub
-                }
-                hasScreenshot
+          nodes {
+            id
+            fields {
+              starterShowcase {
+                slug
+                stub
               }
-              url
-              repo
+              hasScreenshot
             }
+            url
+            repo
           }
         }
       }
@@ -62,27 +60,27 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       }
 
       // Create starter pages.
-      const starters = _.filter(result.data.allStartersYaml.edges, edge => {
-        const slug = _.get(edge, `node.fields.starterShowcase.slug`)
+      const starters = _.filter(result.data.allStartersYaml.nodes, node => {
+        const slug = _.get(node, `fields.starterShowcase.slug`)
         if (!slug) {
           return null
-        } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
+        } else if (!_.get(node, `fields.hasScreenshot`)) {
           reporter.warn(
-            `Starter showcase entry "${edge.node.repo}" seems offline. Skipping.`
+            `Starter showcase entry "${node.repo}" seems offline. Skipping.`
           )
           return null
         } else {
-          return edge
+          return node
         }
       })
 
-      starters.forEach((edge, index) => {
+      starters.forEach((node, index) => {
         createPage({
-          path: `/starters${edge.node.fields.starterShowcase.slug}`,
+          path: `/starters${node.fields.starterShowcase.slug}`,
           component: slash(starterTemplate),
           context: {
-            slug: edge.node.fields.starterShowcase.slug,
-            stub: edge.node.fields.starterShowcase.stub,
+            slug: node.fields.starterShowcase.slug,
+            stub: node.fields.starterShowcase.stub,
           },
         })
       })

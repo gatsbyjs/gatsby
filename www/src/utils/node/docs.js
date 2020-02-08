@@ -48,31 +48,27 @@ exports.createPages = ({ graphql, actions }) => {
           limit: 10000
           filter: { fileAbsolutePath: { ne: null } }
         ) {
-          edges {
-            node {
-              fields {
-                slug
-                locale
-                package
-                released
-              }
-              frontmatter {
-                title
-                draft
-                canonicalLink
-                publishedAt
-                issue
-                tags
-              }
+          nodes {
+            fields {
+              slug
+              locale
+              package
+              released
+            }
+            frontmatter {
+              title
+              draft
+              canonicalLink
+              publishedAt
+              issue
+              tags
             }
           }
         }
         allAuthorYaml {
-          edges {
-            node {
-              fields {
-                slug
-              }
+          nodes {
+            fields {
+              slug
             }
           }
         }
@@ -82,20 +78,20 @@ exports.createPages = ({ graphql, actions }) => {
         return reject(result.errors)
       }
 
-      const blogPosts = _.filter(result.data.allMdx.edges, edge => {
-        const slug = _.get(edge, `node.fields.slug`)
-        const draft = _.get(edge, `node.frontmatter.draft`)
+      const blogPosts = _.filter(result.data.allMdx.nodes, node => {
+        const slug = _.get(node, `fields.slug`)
+        const draft = _.get(node, `frontmatter.draft`)
         if (!slug) return undefined
 
         if (_.includes(slug, `/blog/`) && !draft) {
-          return edge
+          return node
         }
 
         return undefined
       })
 
       const releasedBlogPosts = blogPosts.filter(post =>
-        _.get(post, `node.fields.released`)
+        _.get(post, `fields.released`)
       )
 
       // Create blog-list pages.
@@ -118,18 +114,18 @@ exports.createPages = ({ graphql, actions }) => {
       })
 
       // Create blog-post pages.
-      blogPosts.forEach((edge, index) => {
-        let next = index === 0 ? null : blogPosts[index - 1].node
+      blogPosts.forEach((node, index) => {
+        let next = index === 0 ? null : blogPosts[index - 1]
         if (next && !_.get(next, `fields.released`)) next = null
 
         const prev =
-          index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
+          index === blogPosts.length - 1 ? null : blogPosts[index + 1]
 
         createPage({
-          path: `${edge.node.fields.slug}`, // required
+          path: `${node.fields.slug}`, // required
           component: slash(blogPostTemplate),
           context: {
-            slug: edge.node.fields.slug,
+            slug: node.fields.slug,
             prev,
             next,
           },
@@ -144,7 +140,7 @@ exports.createPages = ({ graphql, actions }) => {
       // version will be used for the slug, and the spaced version
       // will be used for human readability (see templates/tags)
       const tagGroups = _(releasedBlogPosts)
-        .map(post => _.get(post, `node.frontmatter.tags`))
+        .map(post => _.get(post, `frontmatter.tags`))
         .filter()
         .flatten()
         .uniq()
@@ -161,20 +157,19 @@ exports.createPages = ({ graphql, actions }) => {
       })
 
       // Create contributor pages.
-      result.data.allAuthorYaml.edges.forEach(edge => {
+      result.data.allAuthorYaml.nodes.forEach(node => {
         createPage({
-          path: `${edge.node.fields.slug}`,
+          path: `${node.fields.slug}`,
           component: slash(contributorPageTemplate),
           context: {
-            slug: edge.node.fields.slug,
+            slug: node.fields.slug,
           },
         })
       })
 
       // Create docs pages.
-      const docPages = result.data.allMdx.edges
-
-      docPages.forEach(({ node }) => {
+      const docPages = result.data.allMdx.nodes
+      docPages.forEach(node => {
         const slug = _.get(node, `fields.slug`)
         const locale = _.get(node, `fields.locale`)
         if (!slug) return

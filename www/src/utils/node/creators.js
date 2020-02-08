@@ -14,12 +14,10 @@ exports.createPages = ({ graphql, actions }) => {
     graphql(`
       query {
         allCreatorsYaml {
-          edges {
-            node {
-              name
-              fields {
-                slug
-              }
+          nodes {
+            name
+            fields {
+              slug
             }
           }
         }
@@ -29,15 +27,15 @@ exports.createPages = ({ graphql, actions }) => {
         return reject(result.errors)
       }
 
-      result.data.allCreatorsYaml.edges.forEach(edge => {
-        if (!edge.node.fields) return
-        if (!edge.node.fields.slug) return
+      result.data.allCreatorsYaml.nodes.forEach(node => {
+        if (!node.fields) return
+        if (!node.fields.slug) return
         createPage({
-          path: `${edge.node.fields.slug}`,
+          path: `${node.fields.slug}`,
           component: slash(creatorPageTemplate),
           context: {
-            slug: edge.node.fields.slug,
-            name: edge.node.name,
+            slug: node.fields.slug,
+            name: node.name,
           },
         })
       })

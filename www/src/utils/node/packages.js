@@ -28,12 +28,10 @@ exports.createPages = ({ graphql, actions }) => {
     graphql(`
       query {
         allNpmPackage {
-          edges {
-            node {
-              id
-              title
-              slug
-            }
+          nodes {
+            id
+            title
+            slug
           }
         }
       }
@@ -42,26 +40,26 @@ exports.createPages = ({ graphql, actions }) => {
         return reject(result.errors)
       }
 
-      const allPackages = result.data.allNpmPackage.edges
+      const allPackages = result.data.allNpmPackage.nodes
       // Create package readme
-      allPackages.forEach(edge => {
-        if (_.includes(localPackagesArr, edge.node.title)) {
+      allPackages.forEach(node => {
+        if (_.includes(localPackagesArr, node.title)) {
           createPage({
-            path: edge.node.slug,
+            path: node.slug,
             component: slash(localPackageTemplate),
             context: {
-              slug: edge.node.slug,
-              id: edge.node.id,
+              slug: node.slug,
+              id: node.id,
               layout: `plugins`,
             },
           })
         } else {
           createPage({
-            path: edge.node.slug,
+            path: node.slug,
             component: slash(remotePackageTemplate),
             context: {
-              slug: edge.node.slug,
-              id: edge.node.id,
+              slug: node.slug,
+              id: node.id,
               layout: `plugins`,
             },
           })
