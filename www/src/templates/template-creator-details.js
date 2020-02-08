@@ -65,12 +65,7 @@ class CreatorTemplate extends Component {
     const isAgencyOrCompany =
       creator.type === `agency` || creator.type === `company`
 
-    let sites = []
-    data.allSitesYaml.edges.map(site => {
-      if (site.node.built_by === creator.name) {
-        sites.push(site)
-      }
-    })
+    const sites = data.allSitesYaml.edges
 
     return (
       <Layout location={location}>
@@ -246,7 +241,7 @@ class CreatorTemplate extends Component {
 export default CreatorTemplate
 
 export const pageQuery = graphql`
-  query($slug: String!) {
+  query($slug: String!, $name: String!) {
     creatorsYaml(fields: { slug: { eq: $slug } }) {
       name
       description
@@ -268,10 +263,14 @@ export const pageQuery = graphql`
         slug
       }
     }
-    allSitesYaml(filter: { fields: { hasScreenshot: { eq: true } } }) {
+    allSitesYaml(
+      filter: {
+        built_by: { eq: $name }
+        fields: { hasScreenshot: { eq: true } }
+      }
+    ) {
       edges {
         node {
-          built_by
           url
           title
           childScreenshot {
