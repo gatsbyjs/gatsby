@@ -22,26 +22,11 @@ function usePages() {
           frontmatter {
             title
             navTitle
-            breadcrumbTitle
+            # breadcrumbTitle // Add back in when docs are converted
             issue
           }
         }
       }
-      # tutorialHeadings: allMdx(
-      #   limit: 10000
-      #   filter: { fields: { slug: { glob: "/tutorial/part-*" } } }
-      # ) {
-      #   nodes {
-      #     fields {
-      #       locale
-      #       slug
-      #     }
-      #     headings {
-      #       depth
-      #       value
-      #     }
-      #   }
-      # }
     }
   `)
   return allMdx.nodes
