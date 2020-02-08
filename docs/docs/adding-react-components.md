@@ -62,7 +62,7 @@ export default () => (
     <p>This is my super awesome page made with Gatsby!</p>
 
     {/* use my fancy third-party component */}
-    <Button>Fancy button!</Button>
+    <Button variant="contained">Fancy button!</Button>
   </div>
 )
 ```
