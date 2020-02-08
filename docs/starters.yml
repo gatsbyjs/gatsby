@@ -5204,7 +5204,9 @@
   description: A simple Gatsby portfolio starter
   tags:
     - Netlify
-    - Styled components
+    - Styling: CSS-in-JS
+    - Onepage
+    - Portfolio
   features:
     - Styled components style
     - Responsive webpage
