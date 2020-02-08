@@ -5199,3 +5199,14 @@
     - Disqus
     - Resume
     - Place plan on the top
+- url: https://wp-graphql-gatsby-starter.netlify.com/
+  repo: https://github.com/n8finch/wp-graphql-gatsby-starter
+  description: A super simple, bare-bone starter that uses the WP GraphQL plugin to pull posts, pages, categories, tags, and a menu from your WordPress site.
+  tags:
+    - Blog
+    - CMS:WordPress
+  features:
+    - WP GraphQL plugin integration
+    - Light/Dark Mode
+    - React Helmet for SEO
+    - Integrated navigation
