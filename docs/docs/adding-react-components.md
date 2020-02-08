@@ -8,7 +8,7 @@ This guide covers how to add React components, including those from third-party 
 
 React components are prebuilt elements or groups of elements that can be used to split your user interface (UI) into independent, reusable pieces. There are multiple types of components you can write but this guide covers functional components. For more in-depth information on writing React components, including classes, check out the [React documentation](https://reactjs.org/docs/components-and-props.html).
 
-Components can also be customized using inputs, better known as "props" (properties). Props can be of any JavaScript data type, such as Boolean, String, Object, or Array.
+Components can also be customized using inputs, better known as "props" (properties). Props can be of any JavaScript data type, such as Boolean, String, or Object.
 
 For example, you could use a component for Buttons on your site. This would enable them to be used multiple times across pages with different labels or actions each time.
 
@@ -34,6 +34,8 @@ Just like React, Gatsby also supports third-party components and libraries. You 
 Here's an example of adding a third-party component to your site.
 
 First, you have to install the component or library's package via a package manager. It's recommended not to mix package managers, so if you use npm, don't use another and vice versa. If there's a relevant Gatsby plugin, you should install and use that plugin.
+
+In this example, you'll install both a plugin and the library it depends on:
 
 ```shell
 npm install gatsby-plugin-material-ui @material-ui/core 
