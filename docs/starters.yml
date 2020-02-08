@@ -5199,3 +5199,12 @@
     - Disqus
     - Resume
     - Place plan on the top
+- url: https://gatsby-portfolio-starter.netlify.com/
+  repo: https://github.com/Judionit/gatsby-portfolio-starter
+  description: A simple Gatsby portfolio starter
+  tags:
+    - Netlify
+    - Styled components
+  features:
+    - Styled components style
+    - Responsive webpage
