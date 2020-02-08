@@ -5211,3 +5211,18 @@
     - ✔️ Responsive design
     - ✔️ Netlify Deployment Friendly
     - ✔️ Highly optimized (Lighthouse score 4 x 100)
+- url: https://answer.netlify.com/
+  repo: https://github.com/passwd10/gatsby-starter-answer
+  description: A simple Gatsby blog to show your Future Action on top of the page
+  tags:
+    - Blog
+    - Markdown
+    - Netlify
+    - Disqus
+  features:
+    - Emoji
+    - Social Icon(fontawesome)
+    - Google Analytics
+    - Disqus
+    - Resume
+    - Place plan on the top
