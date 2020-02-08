@@ -1,6 +1,5 @@
 ---
 title: Shadowing in Gatsby Themes
-navTitle: Shadowing
 ---
 
 Gatsby themes introduce a concept called "shadowing". This feature allows users to replace a file in the `src` directory that is included in the webpack bundle with their own implementation. This works for React components, pages in `src/pages`, JSON files, TypeScript files, as well as any other imported file (such as `.css`) in your site.

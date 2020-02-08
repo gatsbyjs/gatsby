@@ -1,6 +1,5 @@
 ---
 title: PostCSS
-navTitle: Using PostCSS
 ---
 
 PostCSS transforms extended syntaxes and features into modern, browser-friendly CSS. This guide will show you how to get started with Gatsby and PostCSS.

@@ -1,6 +1,5 @@
 ---
 title: Sharing Components Across Websites
-breadcrumbTitle: Sharing Components
 issue: https://github.com/gatsbyjs/gatsby/issues/14042
 ---
 

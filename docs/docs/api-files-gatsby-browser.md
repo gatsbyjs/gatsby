@@ -1,6 +1,5 @@
 ---
 title: The gatsby-browser.js API file
-navTitle: gatsby-browser.js
 ---
 
 The file `gatsby-browser.js` lets you respond to actions within the browser, and wrap your site in additional components. The [Gatsby Browser API](/docs/browser-apis) gives you many options for interacting with the [client-side](/docs/glossary#client-side) of Gatsby.

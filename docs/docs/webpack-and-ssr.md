@@ -1,6 +1,5 @@
 ---
 title: Webpack and SSR
-navTitle: Webpack & SSR
 ---
 
 Bootstrap is finished! And we've [written the resulting pages](/docs/write-pages/) to disk. The next step is to render each page to HTML. And, we must build a JavaScript runtime that takes over once the HTML has loaded so that future page navigations load instantly.

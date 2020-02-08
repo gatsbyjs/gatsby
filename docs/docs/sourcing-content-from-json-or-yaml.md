@@ -1,6 +1,5 @@
 ---
 title: Sourcing Content from JSON or YAML
-breadcrumbTitle: JSON or YAML
 ---
 
 As you work with Gatsby, you might want to source data from a JSON or YAML file directly into a page or component. This guide will cover approaches for those techniques, as well as architecting a Gatsby site from a YAML file.

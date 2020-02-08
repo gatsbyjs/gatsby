@@ -1,6 +1,5 @@
 ---
 title: Working with GIFs
-breadcrumbTitle: GIFs in Gatsby
 ---
 
 If you're building a blog with Gatsby, chances are you'll want to include some animated GIFs: who wouldn't want to include a dancing otter or cat GIF?

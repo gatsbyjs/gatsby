@@ -1,6 +1,5 @@
 ---
 title: Winning Over Marketers
-navTitle: Marketers
 ---
 
 Some things that marketers care about include:

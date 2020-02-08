@@ -1,6 +1,5 @@
 ---
 title: Deploying to Surge
-breadcrumbTitle: Surge
 ---
 
 In this guide, you will learn how to deploy your Gatsby site to Surge.

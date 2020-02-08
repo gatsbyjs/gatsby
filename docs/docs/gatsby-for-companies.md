@@ -1,6 +1,5 @@
 ---
 title: Spreading Gatsby in Companies
-navTitle: Inside a Company
 ---
 
 Broadly speaking, in terms of overall Gatsby usage, there are two types of organizations which have high receptivity to using Gatsby across the organization.

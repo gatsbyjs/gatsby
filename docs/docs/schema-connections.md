@@ -1,6 +1,5 @@
 ---
 title: Schema Connections
-navTitle: Connections
 ---
 
 > This documentation isn't up to date with the latest [schema customization changes](/docs/schema-customization).

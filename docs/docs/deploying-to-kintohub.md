@@ -1,6 +1,5 @@
 ---
 title: Deploying to KintoHub
-breadcrumbTitle: KintoHub Hosting
 ---
 
 [KintoHub](https://www.kintohub.com) is a next-gen cloud package manager. Making it easy to host and manage websites, backend APIs, cron jobs, databases and more in a production grade fashion for all your apps.

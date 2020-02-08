@@ -1,6 +1,5 @@
 ---
 title: Deploying to GitLab Pages
-breadcrumbTitle: GitLab Pages
 ---
 
 GitLab Pages are very similar to GitHub Pages. GitLab Pages also supports custom domain names and SSL certificates and includes a continuous integration platform.

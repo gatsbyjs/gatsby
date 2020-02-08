@@ -1,6 +1,5 @@
 ---
 title: Gatsby.js Documentation
-navTitle: Introduction
 disableTableOfContents: true
 ---
 

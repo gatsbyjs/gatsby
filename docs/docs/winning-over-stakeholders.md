@@ -1,7 +1,5 @@
 ---
 title: Winning Over Stakeholders
-navTitle: Winning Over Different Stakeholders
-breadcrumbTitle: Winning Over Stakeholders
 ---
 
 Any website project has multiple stakeholders, such as developers, marketers, content creators, engineering leaders, executives, and clients.

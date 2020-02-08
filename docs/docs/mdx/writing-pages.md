@@ -1,6 +1,5 @@
 ---
 title: Writing Pages in MDX
-navTitle: Writing Pages
 ---
 
 After [installing](/docs/mdx/getting-started) `gatsby-plugin-mdx`, MDX files

@@ -1,6 +1,5 @@
 ---
 title: Adding React Components
-breadcrumbTitle: React Components
 ---
 
 This guide covers how to add React components to your Gatsby site.

@@ -1,6 +1,5 @@
 ---
 title: Gatsby Lifecycle APIs
-navTitle: Lifecycle APIs
 ---
 
 Gatsby provides a rich set of lifecycle APIs to hook into its bootstrap,

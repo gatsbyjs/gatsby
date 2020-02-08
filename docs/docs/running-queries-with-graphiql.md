@@ -1,6 +1,5 @@
 ---
 title: Introducing GraphiQL
-navTitle: Running Queries with the GraphiQL UI
 ---
 
 In this guide, you'll be learning to use something called GraphiQL, a tool that helps you structure GraphQL queries correctly.

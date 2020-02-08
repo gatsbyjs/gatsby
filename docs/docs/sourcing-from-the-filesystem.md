@@ -1,6 +1,5 @@
 ---
 title: Sourcing from the Filesystem
-breadcrumbTitle: From the Filesystem
 ---
 
 This guide will walk you through sourcing data from the filesystem.

@@ -1,6 +1,5 @@
 ---
 title: Working with Video
-breadcrumbTitle: Videos in Gatsby
 ---
 
 - [Sourcing video from a host](#sourcing-video-from-a-host)

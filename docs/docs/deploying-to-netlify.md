@@ -1,6 +1,5 @@
 ---
 title: Deploying to Netlify
-breadcrumbTitle: Netlify
 ---
 
 This guide walks through how to deploy and host your next Gatsby site on [Netlify](https://www.netlify.com/).

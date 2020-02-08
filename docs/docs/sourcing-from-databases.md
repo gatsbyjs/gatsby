@@ -1,6 +1,5 @@
 ---
 title: Sourcing from Databases
-breadcrumbTitle: From Databases
 ---
 
 The Gatsby ecosystem includes built-in connectors to several database systems. These include:

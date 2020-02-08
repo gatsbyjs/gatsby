@@ -1,6 +1,5 @@
 ---
 title: Working with Images in Gatsby
-breadcrumbTitle: Images in Gatsby
 ---
 
 Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily, Gatsby has several useful [plugins](/docs/plugins/) that work together to do that for images on [page components](/docs/building-with-components/#page-components).

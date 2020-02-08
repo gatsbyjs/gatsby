@@ -1,6 +1,5 @@
 ---
 title: Sourcing from Prismic
-breadcrumbTitle: Prismic
 ---
 
 In this guide, you'll set up a site with content management using [Prismic](https://prismic.io/).

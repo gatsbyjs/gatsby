@@ -1,6 +1,5 @@
 ---
 title: Standard Styling with Global CSS Files
-navTitle: Standard, Global CSS Files
 ---
 
 Traditionally, websites are styled using global CSS files.

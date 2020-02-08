@@ -1,7 +1,5 @@
 ---
 title: Debugging replaceRenderer API
-navTitle: Debugging Replace Renderer API
-breadcrumbTitle: Replace Renderer API
 ---
 
 ## Prerequisites

@@ -1,6 +1,5 @@
 ---
 title: Adding an Asset Prefix
-navTitle: Asset Prefix
 ---
 
 Gatsby produces static content that can be hosted _anywhere_ at scale in a cost-effective manner. This static content is comprised of HTML files, JavaScript, CSS, images, and more that power your great Gatsby application.

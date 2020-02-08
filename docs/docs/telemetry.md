@@ -1,6 +1,5 @@
 ---
 title: Telemetry
-navTitle: Gatsby Telemetry
 ---
 
 Gatsby contains a telemetry feature that collects anonymous usage information that is used to help improve Gatsby for all users.

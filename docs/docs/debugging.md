@@ -1,7 +1,5 @@
 ---
 title: Debugging
-navTitle: Debugging Gatsby
-breadcrumbTitle: Debugging
 overview: true
 ---
 

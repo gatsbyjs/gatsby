@@ -1,6 +1,5 @@
 ---
 title: "Recipes: Querying Data"
-navTitle: Querying Data
 ---
 
 Gatsby lets you access your data across all sources using a single GraphQL interface.

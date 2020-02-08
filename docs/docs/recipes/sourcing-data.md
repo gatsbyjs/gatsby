@@ -1,6 +1,5 @@
 ---
 title: "Recipes: Sourcing Data"
-navTitle: Sourcing Data
 ---
 
 Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc). You can also source the data yourself.

@@ -1,6 +1,5 @@
 ---
 title: Adding an RSS Feed
-breadcrumbTitle: RSS Feed
 ---
 
 ## What is an RSS feed?

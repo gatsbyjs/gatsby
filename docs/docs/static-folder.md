@@ -1,6 +1,5 @@
 ---
 title: Using the Static Folder
-breadcrumbTitle: Static Folder
 ---
 
 In general, every website needs assets: images, stylesheets, scripts, etc. When using Gatsby, we recommend

@@ -1,6 +1,5 @@
 ---
 title: Theme UI
-navTitle: Using Theme UI
 ---
 
 [Theme UI][] is a library for styling React apps with user-configurable design constraints.

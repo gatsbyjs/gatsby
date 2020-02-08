@@ -1,6 +1,5 @@
 ---
 title: Sourcing from Netlify CMS
-breadcrumbTitle: Netlify CMS
 ---
 
 In this guide, you'll set up a site with content management using [Netlify

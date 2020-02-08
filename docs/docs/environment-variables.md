@@ -1,7 +1,5 @@
 ---
 title: Environment Variables
-navTitle: Using Environment Variables
-breadcrumbTitle: Environment Variables
 ---
 
 ## Environments and Environment Variables

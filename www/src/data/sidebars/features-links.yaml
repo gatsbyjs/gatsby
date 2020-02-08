@@ -3,22 +3,22 @@
   disableAccordions: true
   disableExpandAll: true
   items:
-    - link: /features/
-      title: Overview
-    - link: /features/jamstack/
-      title: Gatsby vs JAMstack frameworks
+    - title: Overview
+      link: /features/
+    - title: Gatsby vs JAMstack frameworks
+      link: /features/jamstack/
       items:
         # some common comparisons people also looked at on npmtrends.com
-        - link: /features/jamstack/gatsby-vs-nextjs/
-          title: Gatsby vs Next
-        - link: /features/jamstack/gatsby-vs-jekyll-vs-hugo/
-          title: Gatsby vs Jekyll vs Hugo
-        - link: /features/jamstack/gatsby-vs-nuxtjs/
-          title: Gatsby vs Nuxt
-    - link: /features/cms/
-      title: Gatsby vs Traditional CMS
+        - title: Gatsby vs Next
+          link: /features/jamstack/gatsby-vs-nextjs/
+        - title: Gatsby vs Jekyll vs Hugo
+          link: /features/jamstack/gatsby-vs-jekyll-vs-hugo/
+        - title: Gatsby vs Nuxt
+          link: /features/jamstack/gatsby-vs-nuxtjs/
+    - title: Gatsby vs Traditional CMS
+      link: /features/cms/
       items:
-        - link: /features/cms/gatsby-vs-wordpress/
-          title: Gatsby vs WordPress
-        - link: /features/cms/gatsby-vs-drupal/
-          title: Gatsby vs Drupal
+        - title: Gatsby vs WordPress
+          link: /features/cms/gatsby-vs-wordpress/
+        - title: Gatsby vs Drupal
+          link: /features/cms/gatsby-vs-drupal/

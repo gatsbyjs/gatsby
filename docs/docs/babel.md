@@ -1,7 +1,5 @@
 ---
 title: Babel
-navTitle: Customizing Babel.js Config
-breadcrumbTitle: Babel.js Config
 ---
 
 Gatsby uses the phenomenal project [Babel](https://babeljs.io/) to enable support for writing modern JavaScript — while still supporting older browsers.

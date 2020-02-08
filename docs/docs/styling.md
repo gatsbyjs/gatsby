@@ -1,7 +1,5 @@
 ---
 title: Styling
-navTitle: Styling Your Site
-breadcrumbTitle: Styling
 overview: true
 ---
 

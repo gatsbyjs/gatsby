@@ -1,7 +1,5 @@
 ---
 title: SEO with Gatsby
-navTitle: Search Engine Optimization (SEO)
-breadcrumbTitle: SEO
 ---
 
 Gatsby can help your site rank and perform better in search engines. Using Gatsby makes your site fast and efficient for search engine crawlers, like Googlebot, to crawl your site and index your pages. Some advantages, like speed, come out of the box and others require configuration.

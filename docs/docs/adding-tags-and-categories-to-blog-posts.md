@@ -1,7 +1,5 @@
 ---
 title: Creating Tags Pages for Blog Posts
-navTitle: Adding Tags & Categories to Blog Posts
-breadcrumbTitle: Blog Tags and Categories
 ---
 
 Creating tag pages for your blog post is a way to let visitors browse related content.

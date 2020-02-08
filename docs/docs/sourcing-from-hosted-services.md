@@ -1,6 +1,5 @@
 ---
 title: Sourcing from Hosted Services
-breadcrumbTitle: From Hosted Services
 ---
 
 There are many Gatsby plugins that integrate with hosted cloud services, also known as SaaS (Software as a Service). You can search for [Gatsby plugins](/plugins/) as well as [Gatsby starters](/starters/) that integrate with hosted services to source content and functionality. Some examples include:

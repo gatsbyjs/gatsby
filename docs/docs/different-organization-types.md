@@ -1,7 +1,5 @@
 ---
 title: Different Organization Types
-navTitle: Spreading Gatsby In Different Types of Organizations
-breadcrumbTitle: Spreading Gatsby
 ---
 
 Using Gatsby more is a different kind of problem depending on the type of organization you work in.

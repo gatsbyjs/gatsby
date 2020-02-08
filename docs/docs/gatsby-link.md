@@ -1,6 +1,5 @@
 ---
 title: Gatsby Link API
-navTitle: Gatsby Link
 ---
 
 For internal navigation, Gatsby includes a built-in `<Link>` component as well as a `navigate` function which is used for programmatic navigation.

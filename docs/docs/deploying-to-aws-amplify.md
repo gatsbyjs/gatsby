@@ -1,6 +1,5 @@
 ---
 title: Deploying to AWS Amplify
-breadcrumbTitle: AWS Amplify
 ---
 
 In this guide you'll walk through how to deploy and host your Gatsby site using the [AWS Amplify Console](https://console.amplify.aws).

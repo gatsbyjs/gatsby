@@ -1,7 +1,5 @@
 ---
 title: Headless CMS
-navTitle: Sourcing from (Headless) CMSs
-breadcrumbTitle: From CMSs
 disableTableOfContents: true
 ---
 

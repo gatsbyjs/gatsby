@@ -1,6 +1,5 @@
 ---
 title: Preparing a Site for Deployment
-breadcrumbTitle: Preparing for Deployment
 ---
 
 ## Create new Gatsby project

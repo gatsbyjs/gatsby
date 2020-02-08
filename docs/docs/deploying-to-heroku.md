@@ -1,6 +1,5 @@
 ---
 title: Deploying to Heroku
-breadcrumbTitle: Heroku
 ---
 
 You can use the [heroku buildpack static](https://github.com/heroku/heroku-buildpack-static) to handle the static files of your site.

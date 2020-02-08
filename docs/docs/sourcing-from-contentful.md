@@ -1,6 +1,5 @@
 ---
 title: Sourcing from Contentful
-breadcrumbTitle: Contentful
 ---
 
 ## What is Contentful? Why choose it?

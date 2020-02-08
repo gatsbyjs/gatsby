@@ -1,6 +1,5 @@
 ---
 title: How Shadowing Works
-navTitle: Theme Shadowing
 ---
 
 Shadowing is a powerful feature that allows theme users to override components, objects, and anything else in a theme's `src` directory.

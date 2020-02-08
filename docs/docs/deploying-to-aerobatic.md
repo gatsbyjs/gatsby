@@ -1,6 +1,5 @@
 ---
 title: Deploying to Aerobatic
-breadcrumbTitle: Aerobatic
 ---
 
 [Aerobatic](https://www.aerobatic.com) is a specialized static site host. You can easily deploy your Gatsby site to Aerobatic with the following steps:

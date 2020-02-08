@@ -1,6 +1,5 @@
 ---
 title: Preoptimizing Your Images
-breadcrumbTitle: Preoptimizing Images
 ---
 
 Gatsby ships with excellent image optimization capabilities (see the [image tutorial](/tutorial/image-tutorial/) for more info). However, this image optimization can come with a cost. It can be fairly CPU intensive, and in some cases may lead to long build times. As a means of debugging and perhaps improving your overall build performance, it _may_ be helpful to pre-optimize your (extremely large) images.

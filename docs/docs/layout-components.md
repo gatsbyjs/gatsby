@@ -1,6 +1,5 @@
 ---
 title: Layout Components
-navTitle: Using Layout Components
 ---
 
 In this guide, you'll learn Gatsby's approach to layouts, how to create and use layout components, and how to prevent layout components from unmounting.

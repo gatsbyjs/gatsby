@@ -1,6 +1,5 @@
 ---
 title: Build Time and Client Runtime Data Fetching
-navTitle: Build Time and Client-side Data Fetching
 ---
 
 import BuildDataExample from "../../www/src/components/build-data-example.js"

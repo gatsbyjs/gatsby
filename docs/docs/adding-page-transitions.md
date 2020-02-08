@@ -1,6 +1,5 @@
 ---
 title: Adding Page Transitions
-breadcrumbTitle: Page Transitions
 overview: true
 ---
 

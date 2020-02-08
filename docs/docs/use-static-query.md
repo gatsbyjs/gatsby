@@ -1,6 +1,5 @@
 ---
 title: Querying Data in Components with the useStaticQuery Hook
-breadcrumbTitle: The useStaticQuery Hook
 ---
 
 Gatsby v2.1.0 introduces `useStaticQuery`, a new Gatsby feature that provides the ability to use a [React Hook](https://reactjs.org/docs/hooks-intro.html) to query with GraphQL at _build time_.

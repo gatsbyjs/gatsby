@@ -1,6 +1,5 @@
 ---
 title: Integrating and Partnering with Gatsby (for Vendors)
-navTitle: Integrating & Partnering For Vendors
 ---
 
 If you've a vendor in the website space -- whether that's content management, analytics, forms, e-commerce, or so on, you may have considered whether integrating or partnering with Gatsby makes sense.

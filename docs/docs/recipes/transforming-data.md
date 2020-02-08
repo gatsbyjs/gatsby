@@ -1,6 +1,5 @@
 ---
 title: "Recipes: Transforming Data"
-navTitle: Transforming Data
 ---
 
 Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more).

@@ -1,6 +1,5 @@
 ---
 title: How Gatsby Can Boost Your Career
-navTitle: How Gatsby Boosts Your Career
 ---
 
 If you're a developer, and you've come to this section looking for tips about spreading Gatsby in your organization, your main motive is probably the ability to work more with a tool you love.

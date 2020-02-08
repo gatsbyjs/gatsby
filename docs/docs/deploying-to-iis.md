@@ -1,7 +1,5 @@
 ---
 title: Deploying to Microsoft Internet Information Server (IIS)
-navTitle: Deploying to IIS
-breadcrumbTitle: IIS
 ---
 
 Deploying to Microsoft IIS is mostly copy &amp; paste.

@@ -1,6 +1,5 @@
 ---
 title: Adding Analytics
-breadcrumbTitle: Analytics
 ---
 
 ## Why use analytics?

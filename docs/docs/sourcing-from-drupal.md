@@ -1,6 +1,5 @@
 ---
 title: Sourcing from Drupal
-breadcrumbTitle: Drupal
 ---
 
 ## Why use Drupal + Gatsby together?

@@ -1,6 +1,5 @@
 ---
 title: Deploying to Render
-breadcrumbTitle: Render
 ---
 
 [Render](https://render.com) is a fully-managed cloud platform where you can host static sites, backend APIs, databases, cron jobs, and all your other apps in one place.

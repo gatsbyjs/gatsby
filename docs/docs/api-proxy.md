@@ -1,6 +1,5 @@
 ---
 title: Proxying API Requests in Development
-navTitle: Proxying API Requests
 ---
 
 ## Resources
