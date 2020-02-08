@@ -1,5 +1,6 @@
 ---
 title: Gatsby Starters
+navTitle: Starters
 ---
 
 The Gatsby CLI tool lets you install **starters**, which are boilerplate Gatsby sites maintained by the community and intended for jump-starting development quickly.

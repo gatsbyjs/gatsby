@@ -1,5 +1,7 @@
 ---
 title: Working with Images in Markdown Posts and Pages
+navTitle: Working with Images in Markdown
+breadcrumbTitle: Images in Markdown
 ---
 
 When building Gatsby sites composed primarily of Markdown pages or posts, insertion of images can enhance the content. You can add images in multiple ways.

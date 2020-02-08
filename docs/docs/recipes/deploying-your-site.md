@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Deploying Your Site"
+navTitle: Deploying Your Site
 ---
 
 Showtime. Once you are happy with your site, you are ready to go live with it!

@@ -1,5 +1,6 @@
 ---
 title: Getting Started with Gatsby Themes
+navTitle: Getting Started
 ---
 
 The quickest way to get started using a Gatsby theme is to use a starter that's configured to use the theme.

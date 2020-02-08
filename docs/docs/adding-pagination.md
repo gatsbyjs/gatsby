@@ -1,5 +1,6 @@
 ---
 title: Adding Pagination
+breadcrumbTitle: Pagination
 ---
 
 A page displaying a list of content gets longer as the amount of content grows.

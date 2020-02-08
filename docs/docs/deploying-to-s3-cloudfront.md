@@ -1,5 +1,7 @@
 ---
 title: Deploying to S3/Cloudfront
+navTitle: Deploying to S3 & CloudFront
+breadcrumbTitle: S3 & CloudFront
 ---
 
 This guide walks through how to host and publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/).

@@ -1,5 +1,6 @@
 ---
 title: Customizing html.js
+breadcrumbTitle: html.js
 ---
 
 Gatsby uses a React component to server render the `<head>` and other parts of

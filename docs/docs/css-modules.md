@@ -1,5 +1,6 @@
 ---
 title: Component-Scoped Styles with CSS Modules
+navTitle: Component-Scoped CSS Modules
 ---
 
 Component-scoped CSS allows you to write traditional, portable CSS with minimal side-effects: gone are the worries of selector name collisions or affecting other components' styles.

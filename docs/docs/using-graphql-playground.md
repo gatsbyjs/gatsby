@@ -1,5 +1,6 @@
 ---
 title: Using the GraphQL Playground
+navTitle: Using GraphQL Playground
 ---
 
 ## Intro

@@ -1,5 +1,6 @@
 ---
 title: Using Babel Plugin Macros
+breadcrumbTitle: Babel Plugin Macros
 ---
 
 Gatsby includes a powerful new way of applying compile-time code transformations, [Babel macros](https://github.com/kentcdodds/babel-plugin-macros)! Macros are like Babel plugins, but instead of adding them to your `.babelrc`, you import them in the file you want to use them. This has two big advantages:

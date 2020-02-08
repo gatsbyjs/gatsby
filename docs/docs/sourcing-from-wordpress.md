@@ -1,5 +1,6 @@
 ---
 title: Sourcing from WordPress
+breadcrumbTitle: WordPress
 ---
 
 This guide will walk you through the process of using [Gatsby](/) with [WordPress Rest Api](https://developer.wordpress.org/rest-api/reference/).

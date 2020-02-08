@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Pages and Layouts"
+navTitle: Pages and Layouts
 ---
 
 Add pages to your Gatsby site, and use layouts to manage common page elements.

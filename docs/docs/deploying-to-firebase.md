@@ -1,5 +1,6 @@
 ---
 title: Deploying to Firebase Hosting
+breadcrumbTitle: Firebase Hosting
 ---
 
 In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting.

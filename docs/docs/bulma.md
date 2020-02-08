@@ -1,5 +1,6 @@
 ---
 title: Bulma
+navTitle: Using Bulma
 ---
 
 [Bulma](https://bulma.io) is a free, open source CSS framework based on Flexbox. This guide will show you how to get started with Gatsby and Bulma.

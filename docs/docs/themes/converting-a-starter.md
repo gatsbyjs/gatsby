@@ -1,5 +1,6 @@
 ---
 title: Converting a Starter to a Theme
+navTitle: Converting a Starter
 ---
 
 Gatsby themes are designed to be easy to create from an existing starter. This guide will walk you through the main steps of converting your starter to a theme.

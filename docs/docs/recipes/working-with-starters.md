@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Working with Starters"
+navTitle: Working with Starters
 ---
 
 [Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.

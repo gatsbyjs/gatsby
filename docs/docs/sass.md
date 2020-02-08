@@ -1,5 +1,6 @@
 ---
 title: Using Sass in Gatsby
+navTitle: Using Sass
 ---
 
 [Sass](https://sass-lang.com) is an extension of CSS, adding nested rules, variables, mixins, selector inheritance, and more. In Gatsby, Sass code can be translated to well-formatted, standard CSS using a plugin.

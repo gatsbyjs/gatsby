@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Styling with CSS"
+navTitle: Styling with CSS
 ---
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.

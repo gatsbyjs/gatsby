@@ -1,5 +1,6 @@
 ---
 title: Themes Conventions
+navTitle: Conventions
 ---
 
 As methodologies for building Gatsby Themes begin to formalize and standardize, documentation will be added here. These aren't intended to be the only way to solve things, but are recommended approaches. If you have other ideas and best practices please open up a PR to update this page.

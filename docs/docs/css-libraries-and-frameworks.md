@@ -1,5 +1,6 @@
 ---
 title: CSS Libraries and Frameworks
+navTitle: CSS Libraries & Frameworks
 overview: true
 ---
 

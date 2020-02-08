@@ -1,5 +1,6 @@
 ---
 title: Tailwind CSS
+navTitle: Using TailwindCSS
 ---
 
 Tailwind is a utility-first CSS framework for rapidly building custom user interfaces. This guide will show you how to get started with Gatsby and [Tailwind CSS](https://tailwindcss.com/).

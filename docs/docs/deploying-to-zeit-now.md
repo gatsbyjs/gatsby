@@ -1,5 +1,6 @@
 ---
 title: Deploying to ZEIT Now
+breadcrumbTitle: ZEIT Now
 ---
 
 [ZEIT Now](https://zeit.co/now) is a cloud platform for websites and serverless APIs, that you can use to deploy your Gatsby projects to your personal domain (or a free `.now.sh` suffixed URL).

@@ -1,5 +1,6 @@
 ---
 title: Sourcing from Private APIs
+breadcrumbTitle: From Private APIs
 ---
 
 Gatsby allows you to pull data from headless CMSs, databases, SaaS services, public API, and your private APIs.
