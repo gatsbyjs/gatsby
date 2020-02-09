@@ -1,47 +1,41 @@
-const Promise = require(`bluebird`)
 const path = require(`path`)
 const slash = require(`slash`)
 const slugify = require(`slugify`)
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    const creatorPageTemplate = path.resolve(
-      `src/templates/template-creator-details.js`
-    )
+  const creatorPageTemplate = path.resolve(
+    `src/templates/template-creator-details.js`
+  )
 
-    graphql(`
-      query {
-        allCreatorsYaml {
-          nodes {
-            name
-            fields {
-              slug
-            }
+  const result = await graphql(`
+    query {
+      allCreatorsYaml {
+        nodes {
+          name
+          fields {
+            slug
           }
         }
       }
-    `).then(result => {
-      if (result.errors) {
-        return reject(result.errors)
-      }
+    }
+  `)
+  if (result.errors) {
+    throw result.errors
+  }
 
-      result.data.allCreatorsYaml.nodes.forEach(node => {
-        if (!node.fields) return
-        if (!node.fields.slug) return
-        createPage({
-          path: `${node.fields.slug}`,
-          component: slash(creatorPageTemplate),
-          context: {
-            slug: node.fields.slug,
-            name: node.name,
-          },
-        })
-      })
+  result.data.allCreatorsYaml.nodes.forEach(node => {
+    if (!node.fields) return
+    if (!node.fields.slug) return
+    createPage({
+      path: `${node.fields.slug}`,
+      component: slash(creatorPageTemplate),
+      context: {
+        slug: node.fields.slug,
+        name: node.name,
+      },
     })
-
-    return resolve()
   })
 }
 

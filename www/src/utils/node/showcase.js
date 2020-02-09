@@ -1,54 +1,48 @@
-const Promise = require(`bluebird`)
 const path = require(`path`)
 const slash = require(`slash`)
 const slugify = require(`slugify`)
 const url = require(`url`)
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    const showcaseTemplate = path.resolve(
-      `src/templates/template-showcase-details.js`
-    )
+  const showcaseTemplate = path.resolve(
+    `src/templates/template-showcase-details.js`
+  )
 
-    graphql(`
-      query {
-        allSitesYaml(filter: { main_url: { ne: null } }) {
-          nodes {
-            main_url
-            fields {
-              slug
-              hasScreenshot
-            }
+  const result = await graphql(`
+    query {
+      allSitesYaml(filter: { main_url: { ne: null } }) {
+        nodes {
+          main_url
+          fields {
+            slug
+            hasScreenshot
           }
         }
       }
-    `).then(result => {
-      if (result.errors) {
-        return reject(result.errors)
-      }
+    }
+  `)
+  if (result.errors) {
+    throw result.errors
+  }
 
-      result.data.allSitesYaml.nodes.forEach(node => {
-        if (!node.fields) return
-        if (!node.fields.slug) return
-        if (!node.fields.hasScreenshot) {
-          reporter.warn(
-            `Site showcase entry "${node.main_url}" seems offline. Skipping.`
-          )
-          return
-        }
-        createPage({
-          path: `${node.fields.slug}`,
-          component: slash(showcaseTemplate),
-          context: {
-            slug: node.fields.slug,
-          },
-        })
-      })
+  result.data.allSitesYaml.nodes.forEach(node => {
+    if (!node.fields) return
+    if (!node.fields.slug) return
+    if (!node.fields.hasScreenshot) {
+      reporter.warn(
+        `Site showcase entry "${node.main_url}" seems offline. Skipping.`
+      )
+      return
+    }
+    createPage({
+      path: `${node.fields.slug}`,
+      component: slash(showcaseTemplate),
+      context: {
+        slug: node.fields.slug,
+      },
     })
-
-    return resolve()
   })
 }
 

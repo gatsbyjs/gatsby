@@ -29,64 +29,57 @@ const githubApiClient = process.env.GITHUB_API_TOKEN
     })
   : null
 
-exports.createPages = ({ graphql, actions, reporter }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    const starterTemplate = path.resolve(
-      `src/templates/template-starter-page.js`
-    )
+  const starterTemplate = path.resolve(`src/templates/template-starter-page.js`)
 
-    graphql(`
-      query {
-        allStartersYaml {
-          nodes {
-            id
-            fields {
-              starterShowcase {
-                slug
-                stub
-              }
-              hasScreenshot
+  const result = await graphql(`
+    query {
+      allStartersYaml {
+        nodes {
+          id
+          fields {
+            starterShowcase {
+              slug
+              stub
             }
-            url
-            repo
+            hasScreenshot
           }
+          url
+          repo
         }
       }
-    `).then(result => {
-      if (result.errors) {
-        return reject(result.errors)
-      }
+    }
+  `)
+  if (result.errors) {
+    throw result.errors
+  }
 
-      // Create starter pages.
-      const starters = _.filter(result.data.allStartersYaml.nodes, node => {
-        const slug = _.get(node, `fields.starterShowcase.slug`)
-        if (!slug) {
-          return null
-        } else if (!_.get(node, `fields.hasScreenshot`)) {
-          reporter.warn(
-            `Starter showcase entry "${node.repo}" seems offline. Skipping.`
-          )
-          return null
-        } else {
-          return node
-        }
-      })
+  // Create starter pages.
+  const starters = _.filter(result.data.allStartersYaml.nodes, node => {
+    const slug = _.get(node, `fields.starterShowcase.slug`)
+    if (!slug) {
+      return null
+    } else if (!_.get(node, `fields.hasScreenshot`)) {
+      reporter.warn(
+        `Starter showcase entry "${node.repo}" seems offline. Skipping.`
+      )
+      return null
+    } else {
+      return node
+    }
+  })
 
-      starters.forEach((node, index) => {
-        createPage({
-          path: `/starters${node.fields.starterShowcase.slug}`,
-          component: slash(starterTemplate),
-          context: {
-            slug: node.fields.starterShowcase.slug,
-            stub: node.fields.starterShowcase.stub,
-          },
-        })
-      })
+  starters.forEach((node, index) => {
+    createPage({
+      path: `/starters${node.fields.starterShowcase.slug}`,
+      component: slash(starterTemplate),
+      context: {
+        slug: node.fields.starterShowcase.slug,
+        stub: node.fields.starterShowcase.stub,
+      },
     })
-
-    return resolve()
   })
 }
 

@@ -17,7 +17,7 @@ const creators = require(`./src/utils/node/creators.js`)
 const packages = require(`./src/utils/node/packages.js`)
 const sections = [docs, showcase, starters, creators, packages]
 
-exports.createPages = helpers => {
+exports.createPages = async helpers => {
   const { actions } = helpers
   const { createPage, createRedirect } = actions
 
@@ -33,30 +33,26 @@ exports.createPages = helpers => {
     })
   })
 
-  return new Promise(resolve => {
-    const featureComparisonPageTemplate = path.resolve(
-      `src/templates/template-feature-comparison.js`
-    )
+  const featureComparisonPageTemplate = path.resolve(
+    `src/templates/template-feature-comparison.js`
+  )
 
-    Promise.all(sections.map(section => section.createPages(helpers)))
+  // Create feature comparison pages
+  const jamstackPages = generateComparisonPageSet(`jamstack`)
+  const cmsPages = generateComparisonPageSet(`cms`)
+  const comparisonPages = [...jamstackPages, ...cmsPages]
+  for (const { path, options, featureType } of comparisonPages) {
+    createPage({
+      path,
+      component: slash(featureComparisonPageTemplate),
+      context: {
+        options,
+        featureType,
+      },
+    })
+  }
 
-    // Create feature comparison pages
-    const jamstackPages = generateComparisonPageSet(`jamstack`)
-    const cmsPages = generateComparisonPageSet(`cms`)
-    const comparisonPages = [...jamstackPages, ...cmsPages]
-    for (const { path, options, featureType } of comparisonPages) {
-      createPage({
-        path,
-        component: slash(featureComparisonPageTemplate),
-        context: {
-          options,
-          featureType,
-        },
-      })
-    }
-
-    return resolve()
-  })
+  await Promise.all(sections.map(section => section.createPages(helpers)))
 }
 
 // Create slugs for files, set released status for blog posts.
