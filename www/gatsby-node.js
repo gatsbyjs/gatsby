@@ -148,6 +148,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         allCreatorsYaml {
           edges {
             node {
+              name
               fields {
                 slug
               }
@@ -331,6 +332,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           component: slash(creatorPageTemplate),
           context: {
             slug: edge.node.fields.slug,
+            name: edge.node.name,
           },
         })
       })
