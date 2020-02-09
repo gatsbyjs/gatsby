@@ -5212,5 +5212,5 @@
     - Light/Dark Mode
     - React Helmet for SEO
     - Integrated navigation
-    - Verbose (i.e., not D.R.Y.) GraphQL queries to get data from 
+    - Verbose (i.e., not D.R.Y.) GraphQL queries to get data from
     - Includes plugins for offline support out of the box
