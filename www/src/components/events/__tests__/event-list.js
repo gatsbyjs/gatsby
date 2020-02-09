@@ -1,7 +1,7 @@
 import React from "react"
 import { render } from "@testing-library/react"
 
-import Events from "../events"
+import Events from "../event-list"
 
 const toEvent = (date, id) => {
   return {
