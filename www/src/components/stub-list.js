@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
-import { useItemLists } from "../../utils/sidebar/item-list"
+import { useItemLists } from "../utils/sidebar/item-list"
 
 const findStubs = pages =>
   pages.filter(page => page.link !== undefined && page.stub)

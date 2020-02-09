@@ -15,18 +15,8 @@ const langs = require("./i18n.json")
 const {
   generateComparisonPageSet,
 } = require(`./src/utils/generate-comparison-page-set.js`)
-const { getPrevAndNext } = require(`./src/utils/get-prev-and-next.js`)
 const { localizedPath } = require(`./src/utils/i18n.js`)
 const yaml = require(`js-yaml`)
-const docLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
-)
-const tutorialLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/tutorial-links.yaml`)
-)
-const contributingLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
-)
 const ecosystemFeaturedItems = yaml.load(
   fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
 )
