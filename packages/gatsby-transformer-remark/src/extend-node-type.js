@@ -609,6 +609,7 @@ module.exports = (
             const pureText = sanitizeHTML(html, { allowTags: [] })
             const avgWPM = 265
 
+            // Unicode ranges for Han (Chinese) and Hiragana/Katakana (Japanese) characters
             const cjRanges = [
               [11904, 11930], // Han
               [11931, 12020],
@@ -659,8 +660,10 @@ module.exports = (
               }
             }
 
+            // Multiply non-latin character string length by 0.56, because
+            // on average one word consists of 2 characters in both Chinese and Japanese
             const wordCount =
-              _.words(latinChars.join(``)).length + cjChars.length * 0.595
+              _.words(latinChars.join(``)).length + cjChars.length * 0.56
 
             timeToRead = Math.round(wordCount / avgWPM)
             if (timeToRead === 0) {
