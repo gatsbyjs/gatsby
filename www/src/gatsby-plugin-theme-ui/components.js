@@ -12,6 +12,7 @@ import CodeBlock from "../components/code-block"
 import MdxLink from "../components/mdx-link"
 import Breakout from "../components/breakout"
 import VisuallyHidden from "../components/visually-hidden"
+import Events from "../components/events/events"
 import StubList from "../components/stub-list"
 
 export default {
@@ -25,6 +26,7 @@ export default {
   HorizontalNavList,
   Breakout,
   VisuallyHidden,
+  Events,
   StubList,
   a: MdxLink,
   pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
