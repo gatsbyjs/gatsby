@@ -325,7 +325,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 5. Run `gatsby-develop` to see the newly generated pages and navigate through them.
 
-6. Open the `GraphiQL IDE` at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
+6. Open the `GraphiQL IDE` at `http://localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
 
 The dynamic pages created above in `gatsby-node.js` have unique paths for navigating to particular posts, using a template component for the posts and a sample GraphQL query to source WordPress post content.
 
@@ -400,7 +400,7 @@ plugins: [
 
 7. Run `gatsby develop` and make sure the site compiled successfully.
 
-8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at <https://localhost:8000/___graphql>. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
+8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `http://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
 
 ![the graphql interface, with a sample query outlined below](../images/recipe-sourcing-contentful-graphql.png)
 
