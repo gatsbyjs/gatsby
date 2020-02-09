@@ -5113,7 +5113,7 @@
     - Based on Gatsby Theme Catalyst series of themes
     - MDX
     - Theme-UI integration for easy to change design tokens
-    - SEO optimized to include social media images and twitter handles
+    - SEO optimized to include social media images and Twitter handles
     - Tight integration with SANITY.io including a predefined content studio.
     - A full tutorial is available in the docs.
 - url: https://rocketdocs.netlify.com/
@@ -5157,10 +5157,9 @@
     - Theme-UI integration for easy to change design tokens
     - Developer friendly, includes basic starting styles from Tailwind that can be used as a base to enable you to focus on other design elements
     - Color mode switching available by default
-    - SEO optimized to include social media images and twitter handles
+    - SEO optimized to include social media images and Twitter handles
     - React Scroll for one page, anchor based navigation is available
     - Code highlighting
-    - SEO optimized to include social media images and twitter handles
 - url: https://gatsby-starter-default-dark-mode.netlify.com/
   repo: https://github.com/alexandreramosdev/gatsby-starter-default-dark-mode
   description: A simple starter to get developing quickly with Gatsby, dark mode, and styled-components.
@@ -5173,3 +5172,30 @@
     - Styled Components
     - Comes with React Helmet for adding site meta tags
     - Includes plugins for offline support out of the box
+- url: https://eager-memento.netlify.com/
+  repo: https://github.com/Mr404Found/gatsby-memento-blogpost
+  description: A responsive gatsby portfolio starter to show off or to flex your skills in a single page
+  tags:
+    - Netlify
+    - Markdown
+    - Blog
+    - Styling:Bootstrap
+  features:
+    - React Bootstrap
+    - Responsive webpage
+    - TypeWriter Effect
+- url: https://answer.netlify.com/
+  repo: https://github.com/passwd10/gatsby-starter-answer
+  description: A simple Gatsby blog to show your Future Action on top of the page
+  tags:
+    - Blog
+    - Markdown
+    - Netlify
+    - Disqus
+  features:
+    - Emoji
+    - Social Icon(fontawesome)
+    - Google Analytics
+    - Disqus
+    - Resume
+    - Place plan on the top

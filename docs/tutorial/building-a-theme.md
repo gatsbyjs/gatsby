@@ -512,7 +512,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 ```
 
 - You'll default the `basePath` to the root path (`"/"`)
-- Then you'll set up the call to the `createPage` action to create the a page at the base path.
+- Then you'll set up the call to the `createPage` action to create a page at the base path.
   - _Note that the component listed doesn't exist yet -- you'll create that shortly._
 
 ### Query for events
@@ -1206,7 +1206,7 @@ export default theme
 
 To use the theme you've defined, you'll need to use component shadowing to override the default theme in `gatsby-plugin-theme-ui`.
 
-> 💡 "Component shadowing" is a mechanism to override default provided by a Gatsby theme. To dig deeper on component shadowing, check out [this blog post on the subject](/blog/2019-04-29-component-shadowing/).
+> 💡 "Component shadowing" is a mechanism to override the default rendering provided by a Gatsby theme. To dig deeper on component shadowing, check out [this blog post on the subject](/blog/2019-04-29-component-shadowing/).
 
 You'll use component shadowing to activate the custom theme defined in the previous step.
 
