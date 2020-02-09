@@ -143,12 +143,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             }
           }
         }
-      }
-      allCreatorsYaml {
-        edges {
-          node {
-            fields {
-              slug
+        allCreatorsYaml {
+          edges {
+            node {
+              name
+              fields {
+                slug
+              }
             }
           }
         }
@@ -309,16 +310,18 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     })
   })
 
-  // Create contributor pages.
-  result.data.allAuthorYaml.edges.forEach(edge => {
-    createPage({
-      path: `${edge.node.fields.slug}`,
-      component: slash(contributorPageTemplate),
-      context: {
-        slug: edge.node.fields.slug,
-      },
-    })
-  })
+      result.data.allCreatorsYaml.edges.forEach(edge => {
+        if (!edge.node.fields) return
+        if (!edge.node.fields.slug) return
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(creatorPageTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+            name: edge.node.name,
+          },
+        })
+      })
 
   result.data.allCreatorsYaml.edges.forEach(edge => {
     if (!edge.node.fields) return

@@ -26,6 +26,10 @@ Gatsby structures its content as collections of `nodes`, which are connected to 
 
 Try using the editor's autocomplete (`Ctrl + Space`) to get extended details from the `packageJson` nodes.
 
+If you're using Gatsby version `2.2.0` or later, you can remove `edges` and `node` from your query and replace it with `nodes`. The query will still work and the returned object will reflect the `nodes` structure.
+
+<iframe title="A longer query with nodes" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePlugin%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20nodes%20%7B%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20version%0A%20%20%20%20%20%20%20%20packageJson%20%7B%0A%20%20%20%20%20%20%20%20%20%20description%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D&explorerIsOpen=false" width="600" height="400"></iframe>
+
 ## Limit
 
 There are several ways to reduce the number of results from a query. Here `totalCount` tells you there's 8 results, but `limit` is used to show only the first three.
