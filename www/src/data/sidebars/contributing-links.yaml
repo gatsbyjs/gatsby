@@ -7,8 +7,7 @@
         - /contributing/why-contribute-to-gatsby/
         - /contributing/contributor-swag/
         - /contributing/pair-programming/
-        - link: /contributing/events/
-          title: Gatsby Community Events
+        - /contributing/events/
         - /contributing/where-to-participate/
         - /contributing/organize-a-gatsby-event/
         - /contributing/how-to-run-a-gatsby-workshop/
@@ -28,8 +27,7 @@
           items:
             - /contributing/docs-templates/
             - /contributing/how-to-write-a-stub/
-            - link: /contributing/stub-list/
-              title: Stub List
+            - /contributing/stub-list/
         - /contributing/blog-and-website-contributions/
         - /contributing/code-contributions/
         - /contributing/setting-up-your-local-dev-environment/
