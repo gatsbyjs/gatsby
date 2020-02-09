@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.40...gatsby-plugin-manifest@2.2.41) (2020-02-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** Only reassign start_url if it already exists ([#21012](https://github.com/gatsbyjs/gatsby/issues/21012)) ([dd96604](https://github.com/gatsbyjs/gatsby/commit/dd96604))
+
 ## [2.2.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.39...gatsby-plugin-manifest@2.2.40) (2020-01-29)
 
 **Note:** Version bump only for package gatsby-plugin-manifest
