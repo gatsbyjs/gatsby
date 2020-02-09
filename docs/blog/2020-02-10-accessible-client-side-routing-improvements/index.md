@@ -1,6 +1,6 @@
 ---
 title: "Accessibility Improvements to Client Side Routing in Gatsby - Available in 2.19.8"
-date: 2020-02-05
+date: 2020-02-10
 author: "Madalyn Parker"
 excerpt: "We recently released accessibility improvements to client side routing, enabling screen reader users to successfully navigate sites built with Gatsby."
 tags: ["accessibility, client-side-routing, diversity-and-inclusion"]
