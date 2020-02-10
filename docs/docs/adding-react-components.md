@@ -51,7 +51,7 @@ module.exports = {
 
 Import and use the library in your page's source:
 
-```jsx:title=index.jsx
+```jsx:title=index.js
 import React from "react"
 
 // import my fancy third-party component
