@@ -9,8 +9,8 @@ import { mediaQueries } from "../gatsby-plugin-theme-ui"
 // API Rendering Stuff
 import { sortBy } from "lodash-es"
 
+import usePrevAndNext from "../utils/use-prev-and-next"
 import Layout from "../components/layout"
-import { itemListDocs } from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 import FooterLinks from "../components/shared/footer-links"
@@ -77,12 +77,12 @@ const mergeFunctions = (data, context) => {
 }
 
 export default function APITemplate({ data, location, pageContext }) {
-  const { next, prev } = pageContext
   const page = data.mdx
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
   const description = page.frontmatter.description || page.excerpt
+  const { prev, next } = usePrevAndNext(location.pathname)
 
   return (
     <React.Fragment>
@@ -96,7 +96,7 @@ export default function APITemplate({ data, location, pageContext }) {
         <meta name="twitter.label1" content="Reading time" />
         <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
       </Helmet>
-      <Layout location={location} itemList={itemListDocs}>
+      <Layout location={location}>
         <DocSearchContent>
           <Container
             overrideCSS={{
@@ -106,7 +106,7 @@ export default function APITemplate({ data, location, pageContext }) {
               },
             }}
           >
-            <Breadcrumb location={location} itemList={itemListDocs} />
+            <Breadcrumb location={location} />
             <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
               {page.frontmatter.title}
             </h1>
