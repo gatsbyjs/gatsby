@@ -27,71 +27,312 @@ This process is broken into two steps:
 1. Generate a single-use token called a nonce.
 2. Charge whatever payment source the user has provided (this could be a credit card, gift card, etc.) using the nonce.
 
-To add a Square payment form to your Gatsby site, you'll need to load the JavaScript that runs Square's payment form into the `<head>` of your website. You can do this by calling `setHeadComponents()` in `gatsby-ssr.js`:
+To add a Square payment form to your Gatsby site, you'll need to load the JavaScript that runs Square's payment form into the `<head>` of your website. You can do this by creating a `<script>` element and appending it to the `<head>`. Wrapping this up into a function (such as `loadSquareSdk` in the following example) will allow you to load this script only when it's required (that is, only when you want to use the payment form).
 
-```js:title=gatsby-ssr.js
-import React from "react";
-
-export const onRenderBody = ({ setHeadComponents }) => {
-  setHeadComponents([
-    <script src='https://js.squareup.com/v2/paymentform'></script>
-  ]);
-};
-
+```js:title=paymentForm.js
+export const loadSquareSdk = () => {
+  return new Promise((resolve, reject) => {
+    const sqPaymentScript = document.createElement("script")
+    sqPaymentScript.src = "https://js.squareup.com/v2/paymentform"
+    sqPaymentScript.crossorigin = "anonymous"
+    sqPaymentScript.onload = () => {
+      resolve()
+    }
+    sqPaymentScript.onerror = () => {
+      reject(`Failed to load ${sqPaymentScript.src}`)
+    }
+    document.getElementsByTagName("head")[0].appendChild(sqPaymentScript)
+  })
+}
 ```
 
 You'll also need to create some variation of a `PaymentForm` component. Square maintains a few [payment form templates](https://github.com/square/connect-api-examples/tree/master/templates/web-ui/payment-form) you can base your component on. Try starting with the ["basic" JavaScript file](https://github.com/square/connect-api-examples/blob/master/templates/web-ui/payment-form/basic/sqpaymentform-basic.js). They also provide a [running example](https://codesandbox.io/s/4zjrv7kry9?from-embed) using their "basic-digital-wallet" template with React.
 
-Once that's done, you can use the `SqPaymentForm` object available on the `window` (you get this from the Square JS you called in the `<head>`) and pass it in via props whenever you want the form to show up! In the example below, the `PaymentForm` has been added to the `Layout` component from the [default starter](/starters/gatsbyjs/gatsby-starter-default/).
+```js:title=paymentForm.js
+import React, { Component } from "react"
+import "./paymentForm.css"
 
-```js:title=layout.js
-import React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
+const styles = {
+  name: {
+    verticalAlign: "top",
+    display: "none",
+    margin: 0,
+    border: "none",
+    fontSize: "16px",
+    fontFamily: "Helvetica Neue",
+    padding: "16px",
+    color: "#373F4A",
+    backgroundColor: "transparent",
+    lineHeight: "1.15em",
+    placeholderColor: "#000",
+    _webkitFontSmoothing: "antialiased",
+    _mozOsxFontSmoothing: "grayscale",
+  },
+  leftCenter: {
+    float: "left",
+    textAlign: "center",
+  },
+  blockRight: {
+    display: "block",
+    float: "right",
+  },
+  center: {
+    textAlign: "center",
+  },
+}
 
-import Header from "./header"
-import "./layout.css"
-
-import PaymentForm from './paymentForm';
-
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
+export default class PaymentForm extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      cardBrand: "",
+      nonce: undefined,
+      googlePay: false,
+      applePay: false,
+      masterpass: false,
     }
-  `)
+    this.requestCardNonce = this.requestCardNonce.bind(this)
+  }
+
+  requestCardNonce() {
+    this.paymentForm.requestCardNonce()
+  }
+
+  componentDidMount() {
+    const config = {
+      applicationId: "sq0idp-rARHLPiahkGtp6mMz2OeCA",
+      locationId: "GMT96A77XABR1",
+      inputClass: "sq-input",
+      autoBuild: false,
+      inputStyles: [
+        {
+          fontSize: "16px",
+          fontFamily: "Helvetica Neue",
+          padding: "16px",
+          color: "#373F4A",
+          backgroundColor: "transparent",
+          lineHeight: "1.15em",
+          placeholderColor: "#000",
+          _webkitFontSmoothing: "antialiased",
+          _mozOsxFontSmoothing: "grayscale",
+        },
+      ],
+      applePay: {
+        elementId: "sq-apple-pay",
+      },
+      masterpass: {
+        elementId: "sq-masterpass",
+      },
+      googlePay: {
+        elementId: "sq-google-pay",
+      },
+      cardNumber: {
+        elementId: "sq-card-number",
+        placeholder: "• • • •  • • • •  • • • •  • • • •",
+      },
+      cvv: {
+        elementId: "sq-cvv",
+        placeholder: "CVV",
+      },
+      expirationDate: {
+        elementId: "sq-expiration-date",
+        placeholder: "MM/YY",
+      },
+      postalCode: {
+        elementId: "sq-postal-code",
+        placeholder: "Zip",
+      },
+      callbacks: {
+        methodsSupported: methods => {
+          console.log(methods)
+          if (methods.googlePay) {
+            this.setState({
+              googlePay: methods.googlePay,
+            })
+          }
+          if (methods.applePay) {
+            this.setState({
+              applePay: methods.applePay,
+            })
+          }
+          if (methods.masterpass) {
+            this.setState({
+              masterpass: methods.masterpass,
+            })
+          }
+          return
+        },
+        createPaymentRequest: () => {
+          return {
+            requestShippingAddress: false,
+            requestBillingInfo: true,
+            currencyCode: "USD",
+            countryCode: "US",
+            total: {
+              label: "MERCHANT NAME",
+              amount: "100",
+              pending: false,
+            },
+            lineItems: [
+              {
+                label: "Subtotal",
+                amount: "100",
+                pending: false,
+              },
+            ],
+          }
+        },
+        cardNonceResponseReceived: (errors, nonce, cardData) => {
+          if (errors) {
+            // Log errors from nonce generation to the Javascript console
+            console.log("Encountered errors:")
+            errors.forEach(function(error) {
+              console.log("  " + error.message)
+            })
+            return
+          }
+          this.setState({
+            nonce: nonce,
+          })
+          console.log(nonce)
+        },
+        unsupportedBrowserDetected: () => {},
+        inputEventReceived: inputEvent => {
+          switch (inputEvent.eventType) {
+            case "focusClassAdded":
+              break
+            case "focusClassRemoved":
+              break
+            case "errorClassAdded":
+              document.getElementById("error").innerHTML =
+                "Please fix card information errors before continuing."
+              break
+            case "errorClassRemoved":
+              document.getElementById("error").style.display = "none"
+              break
+            case "cardBrandChanged":
+              if (inputEvent.cardBrand !== "unknown") {
+                this.setState({
+                  cardBrand: inputEvent.cardBrand,
+                })
+              } else {
+                this.setState({
+                  cardBrand: "",
+                })
+              }
+              break
+            case "postalCodeChanged":
+              break
+            default:
+              break
+          }
+        },
+        paymentFormLoaded: function() {
+          document.getElementById("name").style.display = "inline-flex"
+        },
+      },
+    }
+    this.paymentForm = new this.props.paymentForm(config)
+    this.paymentForm.build()
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <div id="form-container">
+          <div id="sq-walletbox">
+            <button
+              style={{ display: this.state.applePay ? "inherit" : "none" }}
+              className="wallet-button"
+              id="sq-apple-pay"
+            />
+            <button
+              style={{ display: this.state.masterpass ? "block" : "none" }}
+              className="wallet-button"
+              id="sq-masterpass"
+            />
+            <button
+              style={{ display: this.state.googlePay ? "inherit" : "none" }}
+              className="wallet-button"
+              id="sq-google-pay"
+            />
+            <hr />
+          </div>
+
+          <div id="sq-ccbox">
+            <p>
+              <span style={styles.leftCenter}>Enter Card Info Below </span>
+              <span style={styles.blockRight}>
+                {this.state.cardBrand.toUpperCase()}
+              </span>
+            </p>
+            <div id="cc-field-wrapper">
+              <label>Card Number<div id="sq-card-number" /></label>
+              <input type="hidden" id="card-nonce" name="nonce" />
+              <label>Expiration Date<div id="sq-expiration-date" /></label>
+              <label>CVV<div id="sq-cvv" /></label>
+            </div>
+            <label>Name
+              <input
+                id="name"
+                style={styles.name}
+                type="text"
+                placeholder="Name"
+              />
+            </label>
+            <label>Postal Code<div id="sq-postal-code" /></label>
+          </div>
+          <button
+            className="button-credit-card"
+            onClick={this.requestCardNonce}
+          >
+            Pay
+          </button>
+        </div>
+        <p style={styles.center} id="error" />
+      </div>
+    )
+  }
+}
+```
+
+Once that's done, you can use the `SqPaymentForm` object available on the `window` (you get this from the Square JS you called in the `<head>`) and pass it in via props whenever you want the form to show up! In the example below, the `PaymentForm` has been added to the homepage from the [default starter](/starters/gatsbyjs/gatsby-starter-default/).
+
+```js:title=index.js
+import React, { useEffect, useState } from "react"
+import { Link } from "gatsby"
+
+import Layout from "../components/layout"
+import SEO from "../components/seo"
+import PaymentForm, { loadSquareSdk } from "../components/paymentForm"
+
+const IndexPage = () => {
+  const [squareStatus, setSquareStatus] = useState(null)
+
+  useEffect(() => {
+    loadSquareSdk()
+      .then(() => {
+        setSquareStatus("SUCCESS")
+      })
+      .catch(() => setSquareStatus("ERROR"))
+  }, []) // on mount, add the js script dynamically
 
   return (
-    <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
-        <main>{children}</main>
-        <PaymentForm paymentForm={ window.SqPaymentForm } />
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
-      </div>
-    </>
+    <Layout>
+      <SEO title="Home" />
+
+      {squareStatus === "ERROR" &&
+        "Failed to load SquareSDK. Please refresh the page."}
+      {squareStatus === "SUCCESS" && (
+        <PaymentForm paymentForm={window.SqPaymentForm} />
+      )}
+
+      <Link to="/page-2/">Go to page 2</Link>
+    </Layout>
   )
 }
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
-
-export default Layout
+export default IndexPage
 ```
 
 ## The Square sandbox
@@ -103,4 +344,3 @@ You can test your setup [using the Square sandbox](https://developer.squareup.co
 - [`SqPaymentForm` documentation](https://developer.squareup.com/docs/api/paymentform#navsection-paymentform)
 - [Square's tutorial for online payment options](https://developer.squareup.com/docs/online-payment-options)
 - Square's blog post on [Online Payments with React + Square](https://developer.squareup.com/blog/online-payments-form-react/)
-- [`gatsby-plugin-square-payment-form`](/packages/gatsby-plugin-square-payment-form/)
