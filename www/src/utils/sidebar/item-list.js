@@ -13,7 +13,11 @@ import { getLocaleAndBasePath } from "../i18n"
 function usePages() {
   const { allMdx } = useStaticQuery(graphql`
     query {
-      allMdx(limit: 10000, filter: { fileAbsolutePath: { ne: null } }) {
+      allMdx(
+        filter: {
+          fields: { section: { in: ["docs", "contributing", "tutorial"] } }
+        }
+      ) {
         nodes {
           fields {
             locale
