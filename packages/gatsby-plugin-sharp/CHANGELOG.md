@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.4...gatsby-plugin-sharp@2.4.5) (2020-02-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** throw error when not added to gatsby-config ([#21045](https://github.com/gatsbyjs/gatsby/issues/21045)) ([3487e48](https://github.com/gatsbyjs/gatsby/commit/3487e48))
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.3...gatsby-plugin-sharp@2.4.4) (2020-01-29)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.2...gatsby-plugin-sharp@2.4.3) (2020-01-27)
 
 ### Bug Fixes

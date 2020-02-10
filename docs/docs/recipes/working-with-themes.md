@@ -48,9 +48,6 @@ module.exports = {
         - mdx defaults to `true`
         */
         basePath: `/blog`,
-        contentPath: `content/blogPosts`,
-        assetPath: `content/blogAssets`,
-        mdx: false,
       },
     },
   ],

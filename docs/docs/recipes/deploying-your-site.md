@@ -74,7 +74,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 6. Change the deploy path to `public/`
 
-7. Make sure that everything looks fine before deploying to production using `netlify deploy --prod`
+7. Make sure that everything looks fine before deploying to production using `netlify deploy -d . --prod`
 
 ### Additional resources
 

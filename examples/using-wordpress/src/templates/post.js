@@ -31,7 +31,7 @@ export const postQuery = graphql`
     site {
       siteMetadata {
         title
-        subtitle
+        description
       }
     }
   }

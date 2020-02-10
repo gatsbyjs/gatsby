@@ -148,7 +148,7 @@ exports.sourceNodes = async (
     downloadingFilesActivity.start()
     await asyncPool(concurrentFileRequests, fileNodes, async node => {
       await downloadFile(
-        { node, store, cache, createNode, createNodeId },
+        { node, store, cache, createNode, createNodeId, reporter },
         pluginOptions
       )
     })

@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.13...gatsby@2.19.14) (2020-02-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.12...gatsby@2.19.13) (2020-02-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.11...gatsby@2.19.12) (2020-02-02)
+
+### Bug Fixes
+
+- **gatsby:** Pin reach since they do not pass in location.href… ([#21144](https://github.com/gatsbyjs/gatsby/issues/21144)) ([f7d2f03](https://github.com/gatsbyjs/gatsby/commit/f7d2f03))
+
+## [2.19.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.10...gatsby@2.19.11) (2020-02-01)
+
+### Bug Fixes
+
+- **gatsby:** Fix invalid algorithm of fragment cycles detection ([#21128](https://github.com/gatsbyjs/gatsby/issues/21128)) ([f570db3](https://github.com/gatsbyjs/gatsby/commit/f570db3))
+- **gatsby:** fix onCreatePage typings ([#20871](https://github.com/gatsbyjs/gatsby/issues/20871)) ([26e0cbc](https://github.com/gatsbyjs/gatsby/commit/26e0cbc))
+
+## [2.19.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.9...gatsby@2.19.10) (2020-01-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** support yarn PnP ([#20638](https://github.com/gatsbyjs/gatsby/issues/20638)) ([6375ba9](https://github.com/gatsbyjs/gatsby/commit/6375ba9))
+
+## [2.19.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.8...gatsby@2.19.9) (2020-01-29)
+
+### Bug Fixes
+
+- **gatsby:** Do not add field `id` to the query when `id` alias exists ([#20980](https://github.com/gatsbyjs/gatsby/issues/20980)) ([acf2c35](https://github.com/gatsbyjs/gatsby/commit/acf2c35))
+- **gatsby:** Fix potential issue in fragment cycles detection ([#20953](https://github.com/gatsbyjs/gatsby/issues/20953)) ([c6f4c62](https://github.com/gatsbyjs/gatsby/commit/c6f4c62))
+
 ## [2.19.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.7...gatsby@2.19.8) (2020-01-28)
 
 ### Bug Fixes

@@ -25,6 +25,7 @@ let _excludedRoutes
 let _normalizer
 let _normalizers
 let _keepMediaSizes
+let _restApiRoutePrefix
 
 exports.sourceNodes = async (
   {
@@ -53,6 +54,7 @@ exports.sourceNodes = async (
     normalizer,
     normalizers,
     keepMediaSizes = false,
+    restApiRoutePrefix = `wp-json`,
   }
 ) => {
   const { createNode, touchNode } = actions
@@ -70,6 +72,7 @@ exports.sourceNodes = async (
   _includedRoutes = includedRoutes
   _excludedRoutes = excludedRoutes
   _keepMediaSizes = keepMediaSizes
+  _restApiRoutePrefix = restApiRoutePrefix
   _normalizer = normalizer
   _normalizers = normalizers
 
@@ -87,6 +90,7 @@ exports.sourceNodes = async (
     _includedRoutes,
     _excludedRoutes,
     _keepMediaSizes,
+    _restApiRoutePrefix,
     typePrefix,
     refactoredEntityTypes,
   })
@@ -240,6 +244,7 @@ exports.sourceNodes = async (
     concurrentRequests,
     excludedRoutes,
     keepMediaSizes,
+    restApiRoutePrefix,
   }
 
   // apply custom normalizer
