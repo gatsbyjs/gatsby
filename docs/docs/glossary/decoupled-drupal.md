@@ -32,4 +32,4 @@ A decoupled Drupal architecture lets you use the full power of Drupal's content 
 
 - Watch [Kyle Mathews’ presentation on Gatsby + Drupal](https://2017.badcamp.net/session/coding-development/beginner/headless-drupal-building-blazing-fast-websites-reactgatsbyjs)
 - Documentation for the [GraphQL Drupal module](https://drupal-graphql.gitbook.io/graphql/)
-- [Sourcing from Drupal](https://www.gatsbyjs.org/docs/sourcing-from-drupal/) in the Gatsby docs
+- [Sourcing from Drupal](/docs/sourcing-from-drupal/) in the Gatsby docs
