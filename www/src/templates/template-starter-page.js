@@ -48,7 +48,7 @@ class StarterTemplate extends React.Component {
     // TODO enable modal view
     const repoName = starterShowcase.name
     return (
-      <Layout location={this.props.location} modalBackgroundPath="/showcase">
+      <Layout location={this.props.location}>
         <div
           css={{
             alignItems: `center`,
