@@ -9638,3 +9638,22 @@
   built_by: Viraj V Chavan
   built_by_url: https://twitter.com/VirajVChavan
   featured: false
+-title: Nexweave
+  url: nexweave.com
+  main_url: nexweave.com
+  source_url: https://github.com/Indusved-Products/nexweave-gatsby-frontend-v2
+  description: >
+    Interactive Content Personalization Delivered at Scale
+  categories:
+    - Video
+    - API
+    - User Experience
+    - Marketing
+    - Design
+    - Data
+    - Technology
+    - Media
+    - Consulting
+  built_by: Kashaf S
+  built_by_url: https://www.linkedin.com/in/kashaf-shaikh-925117178
+  featured: false
