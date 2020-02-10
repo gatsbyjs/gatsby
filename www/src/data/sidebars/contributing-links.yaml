@@ -29,8 +29,9 @@
             - /contributing/how-to-write-a-stub/
             - /contributing/stub-list/
         - /contributing/blog-and-website-contributions/
-        - /contributing/code-contributions/
-        - /contributing/setting-up-your-local-dev-environment/
+        - link: /contributing/code-contributions/
+          items:
+            - /contributing/setting-up-your-local-dev-environment/
         - /contributing/docs-and-website-components/
         - link: /contributing/community-contributions/
           items:
