@@ -3,7 +3,7 @@ const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const slugify = require(`slugify`)
 const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
@@ -18,15 +18,6 @@ const {
 const { getPrevAndNext } = require(`./src/utils/get-prev-and-next.js`)
 const { localizedPath } = require(`./src/utils/i18n.js`)
 const yaml = require(`js-yaml`)
-const docLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
-)
-const tutorialLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/tutorial-links.yaml`)
-)
-const contributingLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
-)
 const ecosystemFeaturedItems = yaml.load(
   fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
 )
@@ -89,6 +80,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
+    const apiTemplate = path.resolve(`src/templates/template-api-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
     const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
     const tagTemplate = path.resolve(`src/templates/tags.js`)
@@ -134,6 +126,8 @@ exports.createPages = ({ graphql, actions, reporter }) => {
                 publishedAt
                 issue
                 tags
+                jsdoc
+                apiCalls
               }
             }
           }
@@ -358,17 +352,41 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         if (!slug) return
 
         if (!_.includes(slug, `/blog/`)) {
-          createPage({
-            path: localizedPath(locale, node.fields.slug),
-            component: slash(
-              node.fields.package ? localPackageTemplate : docsTemplate
-            ),
-            context: {
-              slug: node.fields.slug,
-              locale,
-              ...getPrevAndNext(node.fields.slug),
-            },
-          })
+          const prevAndNext = getPrevAndNext(node.fields.slug)
+
+          if (node.frontmatter.jsdoc) {
+            // API template
+            createPage({
+              path: localizedPath(locale, node.fields.slug),
+              component: slash(apiTemplate),
+              context: {
+                slug: node.fields.slug,
+                jsdoc: node.frontmatter.jsdoc,
+                apiCalls: node.frontmatter.apiCalls,
+                ...prevAndNext,
+              },
+            })
+          } else if (node.fields.package) {
+            // Local package template
+            createPage({
+              path: `${node.fields.slug}`,
+              component: slash(localPackageTemplate),
+              context: {
+                slug: node.fields.slug,
+              },
+            })
+          } else {
+            // Docs template
+            createPage({
+              path: localizedPath(locale, node.fields.slug),
+              component: slash(docsTemplate),
+              context: {
+                slug: node.fields.slug,
+                locale,
+                ...prevAndNext,
+              },
+            })
+          }
         }
       })
 
@@ -382,7 +400,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
-              layout: `plugins`,
             },
           })
         } else {
@@ -392,7 +409,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
-              layout: `plugins`,
             },
           })
         }
@@ -656,17 +672,6 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   }
   // end Creator pages
   return null
-}
-
-exports.onCreatePage = ({ page, actions }) => {
-  if (page.path === `/plugins/`) {
-    const { createPage, deletePage } = actions
-    const oldPage = Object.assign({}, page)
-
-    page.context.layout = `plugins`
-    deletePage(oldPage)
-    createPage(page)
-  }
 }
 
 exports.onPostBuild = () => {

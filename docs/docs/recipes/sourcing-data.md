@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Sourcing Data"
+tableOfContentsDepth: 1
 ---
 
 Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc). You can also source the data yourself.
@@ -287,7 +288,7 @@ export const pageQuery = graphql`
 
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
