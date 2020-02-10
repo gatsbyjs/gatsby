@@ -14,5 +14,4 @@ package-lock.json
 
 /*.js
 !index.js
-yarn.lock
 scripts

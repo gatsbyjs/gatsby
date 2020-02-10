@@ -18,12 +18,7 @@ In the last post, I covered setting up [WordPress for use with Gatsby](/blog/201
 
 I have set up a WordPress site for you to use with the plugins mentioned in the last post as well as some dummy content to use. If you're curious, my favorite lorem generator is [Fillerama](http://fillerama.io/) which offers random content from Futurama, Monty Python, Star Wars, and more. This is where the content came from.
 
-<figure>
-  <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/sDcfxFDozb3bO/giphy.mp4"/>
-  </video>
-  <figcaption>Shut up and take my money!</figcaption>
-</figure>
+https://giphy.com/gifs/french-week-sDcfxFDozb3bO
 
 ## Gatsby.js starter
 
@@ -113,12 +108,7 @@ You can see there are several dependencies installed right off the bat. I'll jus
 
 Whew! That was a mouthful.
 
-<figure>
-  <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/eb3WAhXzlUAFi/giphy.mp4"/>
-  </video>
-  <figcaption>Get on with it!</figcaption>
-</figure>
+https://giphy.com/gifs/monty-python-and-the-holy-grail-eb3WAhXzlUAFi
 
 ### Running the site
 
@@ -130,7 +120,7 @@ To do this, run the following command in the terminal and it will build the site
 gatsby develop
 ```
 
-After running that command, you can visit [localhost:8000](http://localhost:8000) in the browser and you should see the site pictured below:
+After running that command, you can visit `http://localhost:8000` in the browser and you should see the site pictured below:
 
 ![Initial appearance of Gatsby.js starter](./images/gatsby1.png)
 
@@ -224,7 +214,7 @@ module.exports = {
 
 If the Gatsby site is currently running, you need to stop it and restart it so it pulls in the new content from WordPress. It's important to know that while you can choose what information goes on what pages after your app is built, it will only pull content when it is initially run so changes in the source require a rebuild.
 
-Once you've restarted your server, you can visit [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql) to use the "graphical" playground. Here, you can use GraphQL to query your data for testing purposes. You should create opening and closing curly braces and then you can use shift+space (or ctrl+space on windows) to get suggestions. Once you have the data you want, you will be able to paste the query into your components, pages, and templates so you can use the information available. Here's what my query looks like for now:
+Once you've restarted your server, you can visit `http://localhost:8000/___graphql` to use the "graphical" playground. Here, you can use GraphQL to query your data for testing purposes. You should create opening and closing curly braces and then you can use shift+space (or ctrl+space on windows) to get suggestions. Once you have the data you want, you will be able to paste the query into your components, pages, and templates so you can use the information available. Here's what my query looks like for now:
 
 ![GraphQL query tests](./images/gatsby2.png)
 
@@ -267,12 +257,7 @@ Now let's talk about `gatsby-node.js` a bit more. Let's start off by discussing 
 
 The gatsby-node.js file allows you to pull in a template file, then query your data using GraphQL. Then you can loop through the appropriate data and programmatically create a page for each piece of data, in this case blog posts and pages. This template will be universal so all content of that type will look the same. You can also use different templates for different content types so your pages and blog posts don't have to look the same.
 
-<figure>
-  <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4"/>
-  </video>
-  <figcaption>Yes!!!</figcaption>
-</figure>
+https://giphy.com/gifs/excited-the-office-yes-t3Mzdx0SA3Eis
 
 The code below pulls in the data for blog posts from WordPress and creates a page for each one using the createPage API provided by Gatsby. It is also much easier to pull in templates in this file using the path package, so I installed it using `npm install path`.
 
@@ -322,7 +307,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 ```
 
-Just like before, you will need to restart your development server to see these changes take place. Go ahead and do that so you can make sure your logic is working correctly. The easiest way I've found (in development) to see a list of pages is to go to a route that doesn't exist, such as [http://localhost:8000/stuff](http://localhost:8000/stuff).
+Just like before, you will need to restart your development server to see these changes take place. Go ahead and do that so you can make sure your logic is working correctly. The easiest way I've found (in development) to see a list of pages is to go to a route that doesn't exist, such as `http://localhost:8000/stuff`.
 
 You can now see all of the pages available and clicking on one should take you to the blog post template you created earlier that just shows Hello World. If this is what you're seeing, congrats! You're ready to move to the next section.
 
@@ -402,12 +387,7 @@ Here's what your completed Blog Post looks like after you update the template:
 
 You're about half-way done with the actual Gatsby.js build. In this post I covered how to import blog posts from WordPress into your Gatsby application and create pages automatically for each post. Honestly, this is the hardest part about making sites in Gatsby. If you're still keeping up, great job! If you're struggling, don't be too hard on yourself. This stuff is hard. If you need to, you can reach out to me on Twitter [@iam_timsmith](https://www.twitter.com/iam_timsmith) and I'll be happy to help you.
 
-<figure>
-  <video autoplay muted loop width="300">
-    <source src="https://media.giphy.com/media/rY93u9tQbybks/giphy.mp4"/>
-  </video>
-  <figcaption>Obligatory Great Gatsby meme</figcaption>
-</figure>
+https://giphy.com/gifs/great-dicaprio-leonardo-rY93u9tQbybks
 
 The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Gitub.
 

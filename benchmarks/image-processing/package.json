@@ -5,26 +5,24 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "async-sema": "^3.0.0",
-    "gatsby": "^2.18.25",
-    "gatsby-image": "^2.2.8",
-    "gatsby-plugin-manifest": "^2.2.37",
+    "async-sema": "^3.1.0",
+    "gatsby": "^2.19.5",
+    "gatsby-image": "^2.2.39",
+    "gatsby-plugin-manifest": "^2.2.38",
     "gatsby-plugin-offline": "^3.0.32",
     "gatsby-plugin-react-helmet": "^3.1.21",
-    "gatsby-plugin-sharp": "^2.3.13",
+    "gatsby-plugin-sharp": "^2.4.0",
     "gatsby-source-filesystem": "^2.1.46",
     "gatsby-transformer-sharp": "^2.3.13",
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
     "prop-types": "^15.7.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-helmet": "^5.2.1",
-    "unsplash-js": "^5.0.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "gatsby-plugin-benchmark-reporting": "*",
-    "prettier": "^1.18.2"
+    "gatsby-plugin-benchmark-reporting": "*"
   },
   "keywords": [
     "gatsby"
@@ -34,7 +32,6 @@
     "bench": "set -x; gatsby clean; NUM_PAGES=${NUM_PAGES:-2000} gatsby build",
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""

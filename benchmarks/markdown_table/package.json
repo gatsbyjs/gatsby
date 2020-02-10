@@ -9,14 +9,14 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "^2.18.25",
+    "gatsby": "^2.19.5",
     "gatsby-transformer-remark": "^2.6.48",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
     "faker": "^4.1.0",
     "gatsby-plugin-benchmark-reporting": "*",
-    "gray-matter": "^4.0.1"
+    "gray-matter": "^4.0.2"
   }
 }

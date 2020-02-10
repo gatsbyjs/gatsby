@@ -112,6 +112,10 @@ Some pages are very long and difficult to translate for a single contributor. Fe
 
 In addition, sometimes a contributor cannot continue a PR for whatever reason. It may help to ask them if they need assistance and to bring someone else on to complete the work in a timely fashion.
 
+#### Check "allow edits from maintainers"
+
+Contributors should check "allow edits from maintainers" when making Pull Requests (PRs). This will [allow maintainers to make changes](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/allowing-changes-to-a-pull-request-branch-created-from-a-fork) directly to a PR branch created from a fork. Maintainers can add these instructions to a PR template to serve as a reminder to contributors.
+
 #### Set up a review process
 
 As codeowners, you have the freedom and responsibility to decide what your review process will be like. You can decide how many reviewers you'd like. If your team is small, one reviewer may be enough. But if you have lots of contributors and enough codeowners, you may want to require two reviewers for additional quality.

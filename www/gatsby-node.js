@@ -11,9 +11,12 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
+const langs = require("./i18n.json")
 const {
   generateComparisonPageSet,
 } = require(`./src/utils/generate-comparison-page-set.js`)
+const { getPrevAndNext } = require(`./src/utils/get-prev-and-next.js`)
+const { localizedPath } = require(`./src/utils/i18n.js`)
 const yaml = require(`js-yaml`)
 const docLinksData = yaml.load(
   fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
@@ -24,9 +27,10 @@ const tutorialLinksData = yaml.load(
 const contributingLinksData = yaml.load(
   fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
 )
+const ecosystemFeaturedItems = yaml.load(
+  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
+)
 const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
-
-let ecosystemFeaturedItems
 
 if (
   process.env.gatsby_executing_command === `build` &&
@@ -57,6 +61,16 @@ const slugToAnchor = slug =>
     .split(`/`) // split on dir separators
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
+
+const docSlugFromPath = parsedFilePath => {
+  if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
+    return `/${parsedFilePath.dir}/${parsedFilePath.name}/`
+  } else if (parsedFilePath.dir === ``) {
+    return `/${parsedFilePath.name}/`
+  } else {
+    return `/${parsedFilePath.dir}/`
+  }
+}
 
 exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
@@ -109,6 +123,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             node {
               fields {
                 slug
+                locale
                 package
                 released
               }
@@ -135,6 +150,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         allCreatorsYaml {
           edges {
             node {
+              name
               fields {
                 slug
               }
@@ -174,21 +190,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
               id
               title
               slug
-              readme {
-                id
-                childMarkdownRemark {
-                  id
-                  html
-                }
-              }
-            }
-          }
-        }
-        allEcosystemYaml {
-          edges {
-            node {
-              starters
-              plugins
             }
           }
         }
@@ -325,6 +326,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           component: slash(creatorPageTemplate),
           context: {
             slug: edge.node.fields.slug,
+            name: edge.node.name,
           },
         })
       })
@@ -349,108 +351,22 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
       // Create docs pages.
       const docPages = result.data.allMdx.edges
-      const docLinks = docLinksData[0].items
-      const tutorialLinks = tutorialLinksData[0].items
-      const contributingLinks = contributingLinksData[0].items
-
-      // flatten sidebar links trees for easier next/prev link calculation
-      function flattenList(itemList) {
-        return itemList.reduce((reducer, { items, ...rest }) => {
-          reducer.push(rest)
-          if (items) reducer.push(...flattenList(items))
-          return reducer
-        }, [])
-      }
-
-      const flattenedDocs = flattenList(docLinks)
-      const flattenedTutorials = flattenList(tutorialLinks)
-      const flattenedContributing = flattenList(contributingLinks)
-
-      // with flattened tree object finding next and prev is just getting the next index
-      function getSibling(index, list, direction) {
-        if (direction === `next`) {
-          const next = index === list.length - 1 ? null : list[index + 1]
-          // for tutorial links that use subheadings on the same page skip the link and try the next item
-          if (next && next.link && next.link.includes(`#`)) {
-            return getSibling(index + 1, list, `next`)
-          }
-          return next
-        } else if (direction === `prev`) {
-          const prev = index === 0 ? null : list[index - 1]
-          if (prev && prev.link && prev.link.includes(`#`)) {
-            return getSibling(index - 1, list, `prev`)
-          }
-          return prev
-        } else {
-          reporter.warn(
-            `Did not provide direction to sibling function for building next and prev links`
-          )
-          return null
-        }
-      }
-
-      function findDoc(doc) {
-        if (!doc.link) return null
-        return (
-          doc.link === this.link ||
-          doc.link === this.link.substring(0, this.link.length - 1)
-        )
-      }
 
       docPages.forEach(({ node }) => {
         const slug = _.get(node, `fields.slug`)
+        const locale = _.get(node, `fields.locale`)
         if (!slug) return
 
         if (!_.includes(slug, `/blog/`)) {
-          const docIndex = flattenedDocs.findIndex(findDoc, {
-            link: slug,
-          })
-          const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
-            link: slug,
-          })
-          const contributingIndex = flattenedContributing.findIndex(findDoc, {
-            link: slug,
-          })
-
-          // add values to page context for next and prev page
-          let nextAndPrev = {}
-          if (docIndex > -1) {
-            nextAndPrev.prev = getSibling(docIndex, flattenedDocs, `prev`)
-            nextAndPrev.next = getSibling(docIndex, flattenedDocs, `next`)
-          }
-          if (tutorialIndex > -1) {
-            nextAndPrev.prev = getSibling(
-              tutorialIndex,
-              flattenedTutorials,
-              `prev`
-            )
-            nextAndPrev.next = getSibling(
-              tutorialIndex,
-              flattenedTutorials,
-              `next`
-            )
-          }
-          if (contributingIndex > -1) {
-            nextAndPrev.prev = getSibling(
-              contributingIndex,
-              flattenedContributing,
-              `prev`
-            )
-            nextAndPrev.next = getSibling(
-              contributingIndex,
-              flattenedContributing,
-              `next`
-            )
-          }
-
           createPage({
-            path: `${node.fields.slug}`, // required
+            path: localizedPath(locale, node.fields.slug),
             component: slash(
               node.fields.package ? localPackageTemplate : docsTemplate
             ),
             context: {
               slug: node.fields.slug,
-              ...nextAndPrev,
+              locale,
+              ...getPrevAndNext(node.fields.slug),
             },
           })
         }
@@ -497,9 +413,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         })
       }
 
-      // Read featured starters and plugins for Ecosystem
-      ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
-
       return resolve()
     })
   })
@@ -509,16 +422,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
+  let locale
   if (node.internal.type === `File`) {
     const parsedFilePath = path.parse(node.relativePath)
+    // TODO add locale data for non-MDX files
     if (node.sourceInstanceName === `docs`) {
-      if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-        slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
-      } else if (parsedFilePath.dir === ``) {
-        slug = `/${parsedFilePath.name}/`
-      } else {
-        slug = `/${parsedFilePath.dir}/`
-      }
+      slug = docSlugFromPath(parsedFilePath)
     }
     if (slug) {
       createNodeField({ node, name: `slug`, value: slug })
@@ -531,13 +440,8 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     const parsedFilePath = path.parse(fileNode.relativePath)
     // Add slugs for docs pages
     if (fileNode.sourceInstanceName === `docs`) {
-      if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-        slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
-      } else if (parsedFilePath.dir === ``) {
-        slug = `/${parsedFilePath.name}/`
-      } else {
-        slug = `/${parsedFilePath.dir}/`
-      }
+      slug = docSlugFromPath(parsedFilePath)
+      locale = "en"
 
       // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
@@ -560,6 +464,16 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         })
       }
     }
+
+    for (let { code } of langs) {
+      if (fileNode.sourceInstanceName === `docs-${code}`) {
+        // have to remove the beginning "/docs" path because of the way
+        // gatsby-source-filesystem and gatsby-source-git differ
+        slug = docSlugFromPath(path.parse(fileNode.relativePath.substring(5)))
+        locale = code
+      }
+    }
+
     // Add slugs for package READMEs.
     if (
       fileNode.sourceInstanceName === `packages` &&
@@ -576,6 +490,9 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
+    }
+    if (locale) {
+      createNodeField({ node, name: `locale`, value: locale })
     }
   } else if (node.internal.type === `AuthorYaml`) {
     slug = `/contributors/${slugify(node.id, {
@@ -594,11 +511,21 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       .find(node => node.internal.type === `Screenshot`)
 
     createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
+  } else if (node.internal.type === `NPMPackage`) {
+    if (ecosystemFeaturedItems.plugins.includes(node.name)) {
+      createNodeField({ node, name: `featured`, value: true })
+    }
   } else if (node.internal.type === `StartersYaml` && node.repo) {
     // To develop on the starter showcase, you'll need a GitHub
     // personal access token. Check the `www` README for details.
     // Default fields are to avoid graphql errors.
     const { owner, name: repoStub } = parseGHUrl(node.repo)
+
+    // mark if it's a featured starter
+    if (ecosystemFeaturedItems.starters.includes(`/${owner}/${repoStub}/`)) {
+      createNodeField({ node, name: `featured`, value: true })
+    }
+
     const defaultFields = {
       slug: `/${owner}/${repoStub}/`,
       stub: repoStub,
@@ -732,18 +659,6 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 }
 
 exports.onCreatePage = ({ page, actions }) => {
-  // add lists of featured items to Ecosystem page
-  if (page.path === `/ecosystem/` || page.path === `/`) {
-    const { createPage, deletePage } = actions
-    const oldPage = Object.assign({}, page)
-
-    page.context.featuredStarters = ecosystemFeaturedItems.starters
-    page.context.featuredPlugins = ecosystemFeaturedItems.plugins
-
-    deletePage(oldPage)
-    createPage(page)
-  }
-
   if (page.path === `/plugins/`) {
     const { createPage, deletePage } = actions
     const oldPage = Object.assign({}, page)

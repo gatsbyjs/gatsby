@@ -904,6 +904,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob file name works w
         "outputDir": "<PROJECT_ROOT>/public/static/1234",
       },
       Object {},
+      undefined,
     ],
   ],
   "results": Array [
@@ -945,6 +946,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob should round heig
         "outputDir": "<PROJECT_ROOT>/public/static/1234",
       },
       Object {},
+      undefined,
     ],
   ],
   "results": Array [

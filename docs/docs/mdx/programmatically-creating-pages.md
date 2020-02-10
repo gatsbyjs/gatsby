@@ -129,8 +129,8 @@ to set up our page. `/blog${value}` is a [template
 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 that will result in:
 
-- blog-1.mdx => localhost:8000/blog/blog-1/
-- blog-2.mdx => localhost:8000/blog/blog-2/
+- blog-1.mdx => http://localhost:8000/blog/blog-1/
+- blog-2.mdx => http://localhost:8000/blog/blog-2/
 
 [`createFilePath`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=gatsby-source#createfilepath)
 is a function from `gatsby-source-filesystem` that translates file
@@ -147,7 +147,7 @@ to construct a query that finds all MDX nodes and pulls out
 the `slug` field added earlier.
 
 > **Note**: You can open up a GraphiQL console for query testing
-> in your browser at <http://localhost:8000/___graphql>
+> in your browser at `http://localhost:8000/___graphql`
 
 ```graphql
 query {
