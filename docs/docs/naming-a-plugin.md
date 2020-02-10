@@ -15,7 +15,7 @@ There are five standard plugin naming conventions for Gatsby:
 - **`gatsby-[plugin-name]-*`** — if a plugin is a plugin for another plugin 😅, it should be prefixed with the name of the plugin it extends (e.g. if it adds emoji to the output of `gatsby-transformer-remark`, call it `gatsby-remark-add-emoji`). Use this naming convention whenever your plugin will be included as a plugin in the `options` object of another plugin.
   - Example: [`gatsby-remark-images`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images)
   - Docs: [creating a remark plugin](/docs/remark-plugin-tutorial/)
-- **`gatsby-theme-*`** — this naming convention **must** be used for [Gatsby themes](/docs/themes/), which are a type of plugin. Without following this naming convention, the plugin will not be recognized as a theme and it will not be able to utilize the powerful [shadowing](/docs/themes/shadowing/) feature of themes.
+- **`gatsby-theme-*`** — this naming convention is used for [Gatsby themes](/docs/themes/), which are a type of plugin. This naming convention is used for plugins that own a section, a page, or part of a page on a site or expose files and components for [shadowing](/docs/themes/shadowing/).
   - Example: [`gatsby-theme-blog`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog)
   - Docs: [creating a theme](/tutorial/building-a-theme/)
 - **`gatsby-plugin-*`** — this is the most general plugin type. Use this naming convention if your plugin doesn’t meet the requirements of any other plugin types.

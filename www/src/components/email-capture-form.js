@@ -253,13 +253,13 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, isHomepage, className } = this.props
+    const { formId, signupMessage, isHomepage, className } = this.props
 
     const FormComponent = props => (
       <Form
         onSuccess={this.onSuccess}
         portalId="4731712"
-        formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
+        formId={formId}
         sfdcCampaignId="701f4000000Us7pAAC"
         {...props}
       />
@@ -307,6 +307,7 @@ class EmailCaptureForm extends React.Component {
 }
 
 EmailCaptureForm.defaultProps = {
+  formId: "089352d8-a617-4cba-ba46-6e52de5b6a1d",
   signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
   confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
   isHomepage: false,

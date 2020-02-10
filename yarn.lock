@@ -4606,11 +4606,12 @@ after@0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
 
-agadoo@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/agadoo/-/agadoo-1.1.0.tgz#04bc872e0da3a5e3ea6d019361083ba57a4726b8"
-  integrity sha512-MiTXQ3As5jARRXa0eZF+ObtzsseQurCXOc1RB19NOGDsimEvoT8DB8iQiC0zAGTfsF/nBhzEle+eV9UpXyWnbw==
+agadoo@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/agadoo/-/agadoo-2.0.0.tgz#1fbbcf429ce5e71df3d93855a915252b277667ed"
+  integrity sha512-68aFhseH51ZBKYKkQNxwDi1hJwTnywBjHWg068qFnMkpXShhOazNzJUPRvaLQjrqhT3EOUth5G9mt1A0/dGhOw==
   dependencies:
+    acorn "^7.1.0"
     rollup "^1"
     rollup-plugin-virtual "^1.0.1"
 
@@ -11817,6 +11818,11 @@ header-case@^1.0.0:
 hex-color-regex@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
+
+hex2rgba@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/hex2rgba/-/hex2rgba-0.0.1.tgz#8701ba1c6ec02c204504158407c1c4b47a9336ed"
+  integrity sha1-hwG6HG7ALCBFBBWEB8HEtHqTNu0=
 
 highlight.js@^9.15.5:
   version "9.15.6"

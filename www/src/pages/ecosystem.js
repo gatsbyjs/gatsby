@@ -66,16 +66,10 @@ class EcosystemPage extends Component {
 export default EcosystemPage
 
 export const ecosystemQuery = graphql`
-  query EcosystemQuery(
-    $featuredStarters: [String]!
-    $featuredPlugins: [String]!
-  ) {
+  query EcosystemQuery {
     allStartersYaml(
       filter: {
-        fields: {
-          starterShowcase: { slug: { in: $featuredStarters } }
-          hasScreenshot: { eq: true }
-        }
+        fields: { featured: { eq: true }, hasScreenshot: { eq: true } }
       }
     ) {
       edges {
@@ -100,7 +94,7 @@ export const ecosystemQuery = graphql`
         }
       }
     }
-    allNpmPackage(filter: { name: { in: $featuredPlugins } }) {
+    allNpmPackage(filter: { fields: { featured: { eq: true } } }) {
       edges {
         node {
           slug
