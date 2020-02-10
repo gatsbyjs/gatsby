@@ -382,7 +382,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
-              layout: `plugins`,
             },
           })
         } else {
@@ -392,7 +391,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
-              layout: `plugins`,
             },
           })
         }
@@ -656,17 +654,6 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   }
   // end Creator pages
   return null
-}
-
-exports.onCreatePage = ({ page, actions }) => {
-  if (page.path === `/plugins/`) {
-    const { createPage, deletePage } = actions
-    const oldPage = Object.assign({}, page)
-
-    page.context.layout = `plugins`
-    deletePage(oldPage)
-    createPage(page)
-  }
 }
 
 exports.onPostBuild = () => {
