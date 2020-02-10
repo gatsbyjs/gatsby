@@ -5,6 +5,18 @@ import { graphql } from "gatsby"
 
 import DocBlock from "./doc-block"
 
+const APIContents = ({ docs }) => (
+  <ul>
+    {docs.map(node => (
+      <li key={`function list ${node.name}`}>
+        <a href={`#${node.name}`}>{node.name}</a>
+      </li>
+    ))}
+  </ul>
+)
+
+export { APIContents }
+
 export default ({
   docs,
   relativeFilePath = null,

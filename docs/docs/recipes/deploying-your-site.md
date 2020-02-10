@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Deploying Your Site"
+tableOfContentsDepth: 1
 ---
 
 Showtime. Once you are happy with your site, you are ready to go live with it!
