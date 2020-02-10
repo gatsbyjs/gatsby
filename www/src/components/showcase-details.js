@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Fragment } from "react"
+import React, { Fragment } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import url from "url"
@@ -92,35 +92,68 @@ const SourceLink = ({ ...props }) => (
   </a>
 )
 
-function ShowcaseModal({ children, parent, allSitesYaml }) {
-  const nextSite = parent.getNext(allSitesYaml)
-  const previousSite = parent.getPrevious(allSitesYaml)
-  const { filters } = parent.props.location.state || {}
+function usePrevAndNextSite(item) {
+  const { allSitesYaml } = useStaticQuery(graphql`
+    query {
+      allSitesYaml(
+        filter: {
+          featured: { eq: true }
+          main_url: { ne: null }
+          fields: { hasScreenshot: { eq: true } }
+        }
+      ) {
+        nodes {
+          id
+          url
+          title
+          fields {
+            slug
+          }
+          childScreenshot {
+            screenshotFile {
+              childImageSharp {
+                resize(width: 200, height: 200) {
+                  src
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  const sites = allSitesYaml.nodes
+  const currentIndex = sites.findIndex(node => node.fields.slug === item)
+  const nextSite = sites[(currentIndex + 1) % sites.length]
+  const previousSite =
+    sites[currentIndex === 0 ? sites.length - 1 : currentIndex - 1]
+  return { nextSite, previousSite }
+}
+
+/**
+ * @returns {string} - the URI that should be navigated to when the showcase details modal is closed
+ */
+function getExitLocation(filters = {}) {
+  if (Object.keys(filters).length) {
+    const queryString = qs.stringify({ filters })
+    return `/showcase/?${queryString}`
+  } else {
+    return `/showcase/`
+  }
+}
+
+function ShowcaseModal({ children, location }) {
+  const { previousSite, nextSite } = usePrevAndNextSite(location.pathname)
+  const { filters } = location.state || {}
   return (
     <Modal
-      modalBackgroundPath={parent.getExitLocation()}
-      modalNext={() => parent.next(allSitesYaml)}
-      modalPrevious={() => parent.previous(allSitesYaml)}
+      modalBackgroundPath={getExitLocation(filters)}
+      next={nextSite.fields.slug}
+      previous={previousSite.fields.slug}
+      filters={filters}
       modalNextLink={
-        <Link
-          to={nextSite.fields.slug}
-          state={{
-            isModal: true,
-            filters,
-          }}
-          sx={{
-            order: 2,
-            m: 6,
-            mt: 0,
-            position: `relative`,
-            display: `flex`,
-            [mediaQueries.md]: {
-              mt: 6,
-              display: `block`,
-              top: `110px`,
-            },
-          }}
-        >
+        <>
           <Img
             key={nextSite.id}
             sx={styles.prevNextImage}
@@ -160,29 +193,10 @@ function ShowcaseModal({ children, parent, allSitesYaml }) {
             <div> Next Site in Showcase </div>
             <div sx={styles.prevNextLinkSiteTitle}>{nextSite.title}</div>
           </div>
-        </Link>
+        </>
       }
       modalPreviousLink={
-        <Link
-          to={previousSite.fields.slug}
-          state={{
-            isModal: true,
-            filters,
-          }}
-          sx={{
-            order: 1,
-            position: `relative`,
-            width: `100%`,
-            m: 6,
-            display: `flex`,
-            [mediaQueries.md]: {
-              display: `block`,
-              order: 0,
-              top: `110px`,
-              width: `auto`,
-            },
-          }}
-        >
+        <>
           <Img
             key={previousSite.id}
             sx={styles.prevNextImage}
@@ -223,7 +237,7 @@ function ShowcaseModal({ children, parent, allSitesYaml }) {
             <div> Previous Site in Showcase </div>
             <div sx={styles.prevNextLinkSiteTitle}>{previousSite.title}</div>
           </div>
-        </Link>
+        </>
       }
     >
       {children}
@@ -231,48 +245,12 @@ function ShowcaseModal({ children, parent, allSitesYaml }) {
   )
 }
 
-const ShowcaseDetails = ({ parent, data, isModal, categories }) => {
-  const { allSitesYaml } = useStaticQuery(graphql`
-    query {
-      allSitesYaml(
-        filter: {
-          featured: { eq: true }
-          main_url: { ne: null }
-          fields: { hasScreenshot: { eq: true } }
-        }
-      ) {
-        edges {
-          node {
-            id
-            url
-            title
-            fields {
-              slug
-            }
-            childScreenshot {
-              screenshotFile {
-                childImageSharp {
-                  resize(width: 200, height: 200) {
-                    src
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `)
-  const screenshotFile =
-    data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+const ShowcaseDetails = ({ location, site, isModal, categories }) => {
+  const screenshotFile = site.childScreenshot.screenshotFile.childImageSharp
 
   const PageLayout = isModal ? ShowcaseModal : Layout
   return (
-    <PageLayout
-      parent={parent}
-      location={parent.props.location}
-      allSitesYaml={allSitesYaml}
-    >
+    <PageLayout location={location}>
       <div
         sx={{
           display: `flex`,
@@ -285,7 +263,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => {
       >
         <div css={{ width: `100%` }}>
           <Helmet titleTemplate="%s | GatsbyJS">
-            <title>{`${data.sitesYaml.title}: Showcase`}</title>
+            <title>{`${site.title}: Showcase`}</title>
             <meta
               property="og:image"
               content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
@@ -297,7 +275,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => {
             <meta name="twitter:card" content="summary_large_image" />
             <meta
               name="og:title"
-              value={`${data.sitesYaml.title}: Showcase | GatsbyJS`}
+              value={`${site.title}: Showcase | GatsbyJS`}
             />
             <meta
               property="og:image:width"
@@ -309,11 +287,11 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => {
             />
             <meta
               property="og:description"
-              content={data.sitesYaml.description || data.sitesYaml.main_url}
+              content={site.description || site.main_url}
             />
             <meta
               name="twitter:description"
-              content={data.sitesYaml.description || data.sitesYaml.main_url}
+              content={site.description || site.main_url}
             />
           </Helmet>
           <div
@@ -326,20 +304,20 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => {
               },
             }}
           >
-            <h1 sx={{ m: 0 }}>{data.sitesYaml.title}</h1>
-            <a href={data.sitesYaml.main_url} sx={styles.link}>
-              {cleanUrl(data.sitesYaml.main_url)}
+            <h1 sx={{ m: 0 }}>{site.title}</h1>
+            <a href={site.main_url} sx={styles.link}>
+              {cleanUrl(site.main_url)}
             </a>
-            {data.sitesYaml.built_by && (
+            {site.built_by && (
               <span sx={{ color: `textMuted` }}>
                 <span sx={{ px: 2 }}>/</span>
                 Built by {` `}
-                {data.sitesYaml.built_by_url ? (
-                  <a href={data.sitesYaml.built_by_url} sx={{ ...styles.link }}>
-                    {data.sitesYaml.built_by}
+                {site.built_by_url ? (
+                  <a href={site.built_by_url} sx={{ ...styles.link }}>
+                    {site.built_by}
                   </a>
                 ) : (
-                  data.sitesYaml.built_by
+                  site.built_by
                 )}
               </span>
             )}
@@ -356,10 +334,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => {
               },
             }}
           >
-            {data.sitesYaml.featured && <Featured />}
-            {data.sitesYaml.source_url && (
-              <SourceLink href={data.sitesYaml.source_url} />
-            )}
+            {site.featured && <Featured />}
+            {site.source_url && <SourceLink href={site.source_url} />}
             <div
               sx={{
                 alignSelf: `center`,
@@ -377,23 +353,23 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => {
                   icon={<MdLink />}
                   overrideCSS={{ mr: 2 }}
                   tag="href"
-                  to={data.sitesYaml.main_url}
+                  to={site.main_url}
                 >
                   Visit site
                 </Button>
                 <ShareMenu
                   image={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
-                  title={data.sitesYaml.title}
-                  url={data.sitesYaml.main_url}
+                  title={site.title}
+                  url={site.main_url}
                 />
               </div>
             </div>
           </div>
           <Screenshot
-            alt={`Screenshot of ${data.sitesYaml.title}`}
+            alt={`Screenshot of ${site.title}`}
             boxShadow={!isModal}
             imageSharp={screenshotFile.fluid}
-            key={data.sitesYaml.id}
+            key={site.id}
           />
           <div
             sx={{
@@ -401,7 +377,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => {
               [mediaQueries.lg]: { p: gutterDesktop },
             }}
           >
-            <p>{data.sitesYaml.description}</p>
+            <p>{site.description}</p>
             <div sx={{ display: `flex` }}>
               <div sx={{ color: `textMuted`, pr: 5 }}>Categories</div>
               <div>
