@@ -382,6 +382,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
               component: slash(docsTemplate),
               context: {
                 slug: node.fields.slug,
+                locale,
                 ...prevAndNext,
               },
             })
