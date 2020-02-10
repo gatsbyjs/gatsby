@@ -9,9 +9,7 @@ Gatsby exposes its internal data store and query capabilities to GraphQL field r
 
 ## Example Usage
 
-### gatsby-node.js
-
-```javascript
+```javascript:title=gatsby-node.js
 createResolvers({
   Query: {
     mood: {
