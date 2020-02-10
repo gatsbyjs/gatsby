@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.61](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.60...gatsby-source-wordpress@3.1.61) (2020-02-10)
+
+### Features
+
+- **gatsby-source-wordpress:** Ability to set a custom rest api route prefix ([#20998](https://github.com/gatsbyjs/gatsby/issues/20998)) ([789fb1c](https://github.com/gatsbyjs/gatsby/commit/789fb1c))
+
 ## [3.1.60](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.59...gatsby-source-wordpress@3.1.60) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-source-wordpress
