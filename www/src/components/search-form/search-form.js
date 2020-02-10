@@ -13,7 +13,7 @@ import { Global } from "@emotion/core"
 
 import algoliaStyles from "./algolia-styles"
 
-function SearchForm() {
+export default function SearchForm() {
   const [focused, setFocus] = React.useState(false)
   const [isInit, setInit] = React.useState(false)
   const searchInput = React.useRef(null)
@@ -156,5 +156,3 @@ function SearchForm() {
     </form>
   )
 }
-
-export default SearchForm
