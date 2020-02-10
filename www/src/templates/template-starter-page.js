@@ -45,7 +45,7 @@ class StarterTemplate extends React.Component {
     const showMore =
       !this.state.showAllDeps && allDeps.length - shownDeps.length > 0
 
-    // plug for now
+    // TODO enable modal view
     const repoName = starterShowcase.name
     return (
       <Layout location={this.props.location} modalBackgroundPath="/showcase">
