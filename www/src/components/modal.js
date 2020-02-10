@@ -1,5 +1,7 @@
 import React from "react"
 import { navigate, PageRenderer } from "gatsby"
+import { useColorMode } from "theme-ui"
+import { Global } from "@emotion/core"
 import mousetrap from "mousetrap"
 import MdClose from "react-icons/lib/md/close"
 import {
