@@ -7,7 +7,6 @@ import MdClose from "react-icons/lib/md/close"
 
 import { Global } from "@emotion/core"
 
-import { getItemList } from "../utils/sidebar/item-list"
 import { globalStyles } from "../utils/styles/global"
 import {
   colors,
@@ -20,7 +19,6 @@ import Banner from "../components/banner"
 import withColorMode from "../components/with-color-mode"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
-import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
 import SkipNavLink from "../components/skip-nav-link"
 import "../assets/fonts/futura"
@@ -62,9 +60,6 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const itemList = getItemList(this.props.location.pathname)
-    // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
-    const isSidebarDisabled = this.props.isSidebarDisabled || !itemList
     let isModal = false
     if (!windowWidth && typeof window !== `undefined`) {
       windowWidth = window.innerWidth
@@ -192,13 +187,7 @@ class DefaultLayout extends React.Component {
             },
           }}
         >
-          <PageWithSidebar
-            disable={isSidebarDisabled}
-            itemList={itemList}
-            location={this.props.location}
-            enableScrollSync={this.props.enableScrollSync}
-            renderContent={() => this.props.children}
-          />
+          {this.props.children}
         </div>
         <MobileNavigation />
       </LocaleContext.Provider>
