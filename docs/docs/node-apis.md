@@ -1,5 +1,6 @@
 ---
 title: Gatsby Node APIs
+description: Documentation on Node APIs used in Gatsby build process for common uses like creating pages
 jsdoc: ["gatsby/src/utils/api-node-docs.js"]
 apiCalls: NodeAPI
 ---
