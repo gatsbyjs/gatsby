@@ -151,7 +151,7 @@ the site's
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
 const slug = require(`slug`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
