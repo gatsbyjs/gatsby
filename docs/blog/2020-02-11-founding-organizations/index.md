@@ -2,7 +2,7 @@
 title: "Founding Organizations: Creating a Company That Sustains Our Open-Source Community"
 date: 2020-02-11
 author: Sam Bhagwat
-excerpt: "Introducing the Community Investment Commitment -  a commitment by founding organizations to have an open source headcount proportion of at least 10% -- in other words, to dedicate at least one-tenth of their organization to observable open source contributions."
+excerpt: "Like governments, open-source founding organizations have a responsibility to their communities: to keep them thriving and on the cutting edge. They must create a successful business model and continue to invest in open source as they grow."
 tags:
   - open-source
   - gatsby-cloud
