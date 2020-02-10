@@ -5,7 +5,7 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 
 import Link from "../components/localized-link"
-import SearchForm from "../components/search-form"
+import SearchForm from "./search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../assets/logo.svg"
 import logoInverted from "../assets/logo-inverted.svg"
