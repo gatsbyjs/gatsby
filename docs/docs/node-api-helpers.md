@@ -27,4 +27,4 @@ exports.createPages = ({ actions, reporter }) => {
 
 ## Note
 
-Some APIs provide additional helpers. For example `createPages` provides `graphql` function. Check documentation of specific APIs in (Gatsby Node APIs)[/docs/node-apis/] for details.
+Some APIs provide additional helpers. For example `createPages` provides `graphql` function. Check documentation of specific APIs in [Gatsby Node APIs](/docs/node-apis/) for details.
