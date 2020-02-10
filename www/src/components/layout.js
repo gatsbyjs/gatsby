@@ -17,9 +17,6 @@ import { defaultLang } from "../utils/i18n"
 export const LocaleContext = React.createContext(defaultLang)
 
 export default function DefaultLayout({ location, locale, children }) {
-  const itemList = getItemList(location.pathname)
-  const isSidebarDisabled = !itemList
-
   return (
     <LocaleContext.Provider value={locale || defaultLang}>
       <Global styles={globalStyles} />
