@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { navigate, PageRenderer } from "gatsby"
 import { useColorMode } from "theme-ui"
@@ -10,6 +12,7 @@ import {
   zIndices,
   mediaQueries,
 } from "../gatsby-plugin-theme-ui"
+import "../assets/fonts/futura"
 import LazyModal from "./lazy-modal"
 import { globalStyles } from "../utils/styles/global"
 
