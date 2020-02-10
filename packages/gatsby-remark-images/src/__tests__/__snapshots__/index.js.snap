@@ -359,7 +359,7 @@ exports[`it uses tracedSVG placeholder when enabled 1`] = `
 `;
 
 exports[`markdownCaptions display title in markdown as caption when showCaptions === true && markdownCaptions === true 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
@@ -392,7 +392,7 @@ exports[`markdownCaptions display title in markdown as caption when showCaptions
 `;
 
 exports[`markdownCaptions display title in text as caption when showCaptions === true && markdownCaptions === false 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
@@ -425,7 +425,7 @@ exports[`markdownCaptions display title in text as caption when showCaptions ===
 `;
 
 exports[`showCaptions display alt as caption if specified first in showCaptions array 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
@@ -458,7 +458,7 @@ exports[`showCaptions display alt as caption if specified first in showCaptions 
 `;
 
 exports[`showCaptions display alt as caption if specified in showCaptions array 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
@@ -491,7 +491,7 @@ exports[`showCaptions display alt as caption if specified in showCaptions array 
 `;
 
 exports[`showCaptions display alt as caption if specified in showCaptions array, even if it matches filename 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
@@ -524,7 +524,7 @@ exports[`showCaptions display alt as caption if specified in showCaptions array,
 `;
 
 exports[`showCaptions display alt as caption if title was not found and showCaptions === true 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
@@ -557,7 +557,7 @@ exports[`showCaptions display alt as caption if title was not found and showCapt
 `;
 
 exports[`showCaptions display title as caption if specified first in showCaptions array 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
@@ -590,7 +590,7 @@ exports[`showCaptions display title as caption if specified first in showCaption
 `;
 
 exports[`showCaptions display title as caption if specified in showCaptions array 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
@@ -623,7 +623,7 @@ exports[`showCaptions display title as caption if specified in showCaptions arra
 `;
 
 exports[`showCaptions display title as caption when showCaptions === true 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
@@ -656,7 +656,7 @@ exports[`showCaptions display title as caption when showCaptions === true 1`] = 
 `;
 
 exports[`showCaptions fallback to alt as caption if specified second in showCaptions array 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
@@ -689,7 +689,7 @@ exports[`showCaptions fallback to alt as caption if specified second in showCapt
 `;
 
 exports[`showCaptions fallback to title as caption if specified second in showCaptions array 1`] = `
-"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\" max-width: 300px;\\">
     <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"

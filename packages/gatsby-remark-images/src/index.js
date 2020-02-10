@@ -343,7 +343,7 @@ module.exports = (
     // Wrap in figure and use title as caption
     if (imageCaption) {
       rawHTML = `
-  <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
+  <figure class="gatsby-resp-image-figure" style="${wrapperStyle} max-width: ${presentationWidth}px;">
     ${rawHTML}
     <figcaption class="gatsby-resp-image-figcaption">${imageCaption}</figcaption>
   </figure>
