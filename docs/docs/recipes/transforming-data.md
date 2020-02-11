@@ -59,7 +59,7 @@ export const query = graphql`
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start) with `gatsby-config.js` and an `index.js` page
+- A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file and an `index.js` page
 - The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed
 - A source plugin installed, such as `gatsby-source-filesystem`
 - An image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `src/images` folder
