@@ -46,7 +46,7 @@ const FooterLinks = props => (
       }}
     >
       {footerLinks.map(({ id, to }) => (
-        <li>
+        <li key={id}>
           <Link to={to}>
             <FormattedMessage id={`footer.links.${id}`} />
           </Link>
