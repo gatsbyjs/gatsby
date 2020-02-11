@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Working with Images"
+tableOfContentsDepth: 1
 ---
 
 Access images as static resources, or automate the process of optimizing them through powerful plugins.
