@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const yaml = require(`js-yaml`)
 const ecosystemFeaturedItems = yaml.load(
   fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
@@ -23,7 +23,7 @@ exports.createPages = async ({ graphql, actions }) => {
     `src/templates/template-docs-remote-packages.js`
   )
 
-  const result = await graphql(`
+  const { data, errors } = await graphql(`
     query {
       allNpmPackage {
         nodes {
@@ -34,11 +34,9 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
-  if (result.errors) {
-    throw result.errors
-  }
+  if (errors) throw errors
 
-  const allPackages = result.data.allNpmPackage.nodes
+  const allPackages = data.allNpmPackage.nodes
   // Create package readme
   allPackages.forEach(node => {
     if (_.includes(localPackagesArr, node.title)) {

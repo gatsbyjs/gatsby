@@ -2,7 +2,7 @@ const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
@@ -34,7 +34,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const starterTemplate = path.resolve(`src/templates/template-starter-page.js`)
 
-  const result = await graphql(`
+  const { data, errors } = await graphql(`
     query {
       allStartersYaml {
         nodes {
@@ -52,12 +52,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
     }
   `)
-  if (result.errors) {
-    throw result.errors
-  }
+  if (errors) throw errors
 
   // Create starter pages.
-  const starters = _.filter(result.data.allStartersYaml.nodes, node => {
+  const starters = _.filter(data.allStartersYaml.nodes, node => {
     const slug = _.get(node, `fields.starterShowcase.slug`)
     if (!slug) {
       return null

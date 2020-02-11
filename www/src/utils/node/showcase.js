@@ -1,5 +1,5 @@
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const slugify = require(`slugify`)
 const url = require(`url`)
 
@@ -10,7 +10,7 @@ exports.createPages = async ({ graphql, actions }) => {
     `src/templates/template-showcase-details.js`
   )
 
-  const result = await graphql(`
+  const { data, errors } = await graphql(`
     query {
       allSitesYaml(filter: { main_url: { ne: null } }) {
         nodes {
@@ -23,11 +23,9 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
-  if (result.errors) {
-    throw result.errors
-  }
+  if (errors) throw errors
 
-  result.data.allSitesYaml.nodes.forEach(node => {
+  data.allSitesYaml.nodes.forEach(node => {
     if (!node.fields) return
     if (!node.fields.slug) return
     if (!node.fields.hasScreenshot) {

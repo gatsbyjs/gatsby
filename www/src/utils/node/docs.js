@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const slugify = require(`slugify`)
 const url = require(`url`)
 const moment = require(`moment`)
@@ -40,7 +40,7 @@ exports.createPages = async ({ graphql, actions }) => {
     `src/templates/template-docs-local-packages.js`
   )
 
-  const result = await graphql(`
+  const { data, errors } = await graphql(`
     query {
       allMdx(
         sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
@@ -75,11 +75,9 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
-  if (result.errors) {
-    throw result.errors
-  }
+  if (errors) throw errors
 
-  const blogPosts = _.filter(result.data.allMdx.nodes, node => {
+  const blogPosts = _.filter(data.allMdx.nodes, node => {
     const slug = _.get(node, `fields.slug`)
     const draft = _.get(node, `frontmatter.draft`)
     if (!slug) return undefined
@@ -157,7 +155,7 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 
   // Create contributor pages.
-  result.data.allAuthorYaml.nodes.forEach(node => {
+  data.allAuthorYaml.nodes.forEach(node => {
     createPage({
       path: `${node.fields.slug}`,
       component: slash(contributorPageTemplate),
@@ -168,7 +166,7 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 
   // Create docs pages.
-  const docPages = result.data.allMdx.nodes
+  const docPages = data.allMdx.nodes
   docPages.forEach(node => {
     const slug = _.get(node, `fields.slug`)
     const locale = _.get(node, `fields.locale`)

@@ -1,5 +1,5 @@
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const slugify = require(`slugify`)
 
 exports.createPages = async ({ graphql, actions }) => {
@@ -9,7 +9,7 @@ exports.createPages = async ({ graphql, actions }) => {
     `src/templates/template-creator-details.js`
   )
 
-  const result = await graphql(`
+  const { data, errors } = await graphql(`
     query {
       allCreatorsYaml {
         nodes {
@@ -21,11 +21,9 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
-  if (result.errors) {
-    throw result.errors
-  }
+  if (errors) throw errors
 
-  result.data.allCreatorsYaml.nodes.forEach(node => {
+  data.allCreatorsYaml.nodes.forEach(node => {
     if (!node.fields) return
     if (!node.fields.slug) return
     createPage({
