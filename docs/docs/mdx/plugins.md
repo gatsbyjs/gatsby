@@ -19,14 +19,15 @@ yarn add gatsby-plugin-sharp gatsby-remark-images
 If you don't have `gatsby-source-filesystem` installed, also install that.
 
 Then configure the plugins. `gatsby-source-filesystem` needs to be
-pointed at wherever you have your images on disk,
-`gatsby-remark-images` needs to be a sub-plugin of `gatsby-plugin-mdx`, and
-`gatsby-plugin-sharp` can be included on its own.
+pointed at wherever you have your images on disk, `gatsby-remark-images`
+needs to be both a sub-plugin of `gatsby-plugin-mdx`and a string entry in
+the plugins array, and `gatsby-plugin-sharp` can be included on its own.
 
-```javascript=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-sharp`,
+    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -65,7 +66,7 @@ directly if there are transformations you'd like to make on your
 MDX documents. This can do anything from adding emoji support to
 enforcing a particular title capitalization format.
 
-```javascript=gatsby-config.js
+```javascript:title=gatsby-config.js
 const capitalize = require(`remark-capitalize`)
 const emoji = require(`remark-emoji`)
 

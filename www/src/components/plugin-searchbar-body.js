@@ -17,7 +17,10 @@ import AlgoliaLogo from "../assets/vendor-logos/algolia.svg"
 import GatsbyIcon from "../components/gatsby-monogram"
 import { debounce, unescape } from "lodash-es"
 
-import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
+import {
+  space,
+  mediaQueries,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import removeMD from "remove-markdown"
@@ -58,7 +61,7 @@ const searchBoxStyles = t => css`
     appearance: none;
     -webkit-appearance: none;
     background: ${t.colors.themedInput.background};
-    border-radius: ${t.radii[2]}px;
+    border-radius: ${t.radii[2]};
     border: 0;
     color: ${t.colors.text};
     display: inline-block;
@@ -113,7 +116,7 @@ const searchBoxStyles = t => css`
     top: ${searchInputWrapperMargin};
     right: inherit;
     left: ${searchInputWrapperMargin};
-    border-radius: ${t.radii[2]}px 0 0 ${t.radii[2]}px;
+    border-radius: ${t.radii[2]} 0 0 ${t.radii[2]};
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -169,14 +172,14 @@ const searchBoxStyles = t => css`
   .ais-InfiniteHits-loadMore {
     background-color: ${t.colors.gatsby};
     border: 0;
-    border-radius: ${t.radii[1]}px;
+    border-radius: ${t.radii[1]};
     color: ${t.colors.white};
     cursor: pointer;
     width: calc(100% - (${space[6]} * 2));
     margin: ${t.space[6]};
     height: ${t.space[9]};
     outline: none;
-    transition: all ${t.transition.speed.default} ${t.transition.curve.default};
+    transition: ${t.transition.default};
     font-family: ${t.fonts.heading};
     font-weight: bold;
   }
@@ -380,7 +383,7 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? `navigation.linkColor` : `text`,
             display: `flex`,
-            fontFamily: `system`,
+            fontFamily: `body`,
             fontSize: 1,
             fontWeight: `bold`,
             my: 0,

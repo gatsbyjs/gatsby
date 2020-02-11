@@ -1,15 +1,15 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { useColorMode } from "theme-ui"
-import { Link } from "gatsby"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 
-import SearchForm from "../components/search-form"
+import Link from "../components/localized-link"
+import SearchForm from "./search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../assets/logo.svg"
 import logoInverted from "../assets/logo-inverted.svg"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { breakpointGutter } from "../utils/styles"
 import DarkModeToggle from "../components/dark-mode-toggle"
 
@@ -117,7 +117,7 @@ const Navigation = ({ pathname }) => {
         sx={{
           alignItems: `center`,
           display: `flex`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           height: `100%`,
           margin: `0 auto`,
           px: 6,
@@ -188,9 +188,7 @@ const Navigation = ({ pathname }) => {
                 listStyle: `none`,
                 m: 0,
                 maskImage: t =>
-                  `linear-gradient(to right, transparent, white ${
-                    t.space[1]
-                  }, white 98%, transparent)`,
+                  `linear-gradient(to right, transparent, white ${t.space[1]}, white 98%, transparent)`,
                 overflowX: `auto`,
               },
             }}

@@ -23,6 +23,7 @@ const handlerP = fn => (...args) => {
 
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
+  const defaultPort = `8000`
   const directory = path.resolve(`.`)
 
   // 'not dead' query not available in browserslist used in Gatsby v1
@@ -116,8 +117,10 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`p`, {
           alias: `port`,
           type: `string`,
-          default: `8000`,
-          describe: `Set port. Defaults to 8000`,
+          default: process.env.PORT || defaultPort,
+          describe: process.env.PORT
+            ? `Set port. Defaults to ${process.env.PORT} (set by env.PORT) (otherwise defaults ${defaultPort})`
+            : `Set port. Defaults to ${defaultPort}`,
         })
         .option(`o`, {
           alias: `open`,

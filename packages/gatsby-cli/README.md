@@ -32,7 +32,7 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
-```
+```bash
 gatsby new [<site-name> [<starter-url>]]
 ```
 
@@ -45,7 +45,7 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Examples
 
-- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
+- Create a Gatsby site named `my-awesome-site`, using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default):
 
 ```bash
 gatsby new my-awesome-site
@@ -78,12 +78,12 @@ development server.
 
 #### Options
 
-|     Option      | Description                                     |   Default   |
-| :-------------: | ----------------------------------------------- | :---------: |
-| `-H`, `--host`  | Set host.                                       | `localhost` |
-| `-p`, `--port`  | Set port.                                       |   `8000`    |
-| `-o`, `--open`  | Open the site in your (default) browser for you |             |
-| `-S`, `--https` | Use HTTPS                                       |             |
+|     Option      | Description                                     |       Default        |
+| :-------------: | ----------------------------------------------- | :------------------: |
+| `-H`, `--host`  | Set host.                                       |     `localhost`      |
+| `-p`, `--port`  | Set port.                                       | `env.PORT` or `8000` |
+| `-o`, `--open`  | Open the site in your (default) browser for you |                      |
+| `-S`, `--https` | Use HTTPS                                       |                      |
 
 Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.

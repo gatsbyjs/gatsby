@@ -3,7 +3,7 @@ title: Customizing html.js
 ---
 
 Gatsby uses a React component to server render the `<head>` and other parts of
-the HTML outside of the core Gatsby application. Gatsby also sets a default value for the `<noscript>` tag there.
+the HTML outside of the core Gatsby application.
 
 Most sites should use the default `html.js` shipped with Gatsby. But if you need
 to customize your site's html.js, copy the default one into your source
@@ -16,6 +16,9 @@ cp .cache/default-html.js src/html.js
 And then make modifications as needed.
 
 If you need to insert custom html into the `<head>` or `<footer>` of each page on your site, you can use `html.js`.
+
+> Customizing `html.js` is a workaround solution for when the use of the appropriate APIs is not available in `gatsby-ssr.js`. Consider using [`onRenderBody`](/docs/ssr-apis/#onRenderBody) or [`onPreRenderHTML`](/docs/ssr-apis/#onPreRenderHTML) instead of the method above.
+> As a further consideration, customizing `html.js` is not supported within a Gatsby Theme. Use the API methods mentioned instead.
 
 ## Required props
 

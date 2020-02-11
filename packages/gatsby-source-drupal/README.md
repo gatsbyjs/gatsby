@@ -144,7 +144,7 @@ module.exports = {
 
 ## Concurrent File Requests
 
-You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however to many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.
+You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however too many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.
 
 ```javascript
 // In your gatsby-config.js
@@ -156,6 +156,26 @@ module.exports = {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         apiBase: `api`, // optional, defaults to `jsonapi`
         concurrentFileRequests: 60, // optional, defaults to `20`
+      },
+    },
+  ],
+}
+```
+
+## Disallowed Link Types
+
+You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self` and `describedby` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        // skip the action--action resource type.
+        disallowedLinkTypes: [`self`, `describedby`, `action--action`],
       },
     },
   ],

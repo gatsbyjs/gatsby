@@ -78,7 +78,7 @@ For example, find an excerpt of the demo `gatsby-node.js` below.
 
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -120,7 +120,7 @@ A [Gatsby page is defined](/docs/api-specification/#concepts) as "a site page wi
 
 When you restart your server with the `gatsby develop` command, you'll be able to navigate to the new pages created for each of your posts at their respective paths.
 
-In the GraphiQL IDE at [localhost:8000/\_\_graphql](http://localhost:8000/__graphql) you should now see queryable fields for `allWordpressPosts` in the docs or explorer sidebar.
+In the GraphiQL IDE at `http://localhost:8000/__graphql` you should now see queryable fields for `allWordpressPosts` in the docs or explorer sidebar.
 
 ## Wrapping up
 
