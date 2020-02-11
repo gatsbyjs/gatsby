@@ -50,21 +50,21 @@ Let's walk through the steps:
     "develop": "gatsby develop",
     "start": "run-p start:**",
     "start:app": "npm run develop",
-    "start:lambda": "netlify-lambda serve src/lambda",
-    "build": "gatsby build && netlify-lambda build src/lambda",
+    "start:lambda": "netlify-lambda serve src/functions",
+    "build": "gatsby build && netlify-lambda build src/functions",
     "build:app": "gatsby build",
-    "build:lambda": "netlify-lambda build src/lambda",
+    "build:lambda": "netlify-lambda build src/functions",
   },
 ```
 
-When deploying to Netlify, `gatsby build` must be run before `netlify-lambda build src/lambda` or else your Netlify function builds will fail. To avoid this, do not set your build script command to `"build": "run-p build:**"` when you replace `scripts` in `package.json`. Doing so will run all build scripts in parallel. This will make it possible for `netlify-lambda build src/lambda` to run before `gatsby build`.
+When deploying to Netlify, `gatsby build` must be run before `netlify-lambda build src/functions` or else your Netlify function builds will fail. To avoid this, do not set your build script command to `"build": "run-p build:**"` when you replace `scripts` in `package.json`. Doing so will run all build scripts in parallel. This will make it possible for `netlify-lambda build src/functions` to run before `gatsby build`.
 
-3. **Configure your Netlify build**: When serving your site on Netlify, `netlify-lambda` will now build each JavaScript/TypeScript file in your `src/lambda` folder as a standalone Netlify function (with a path corresponding to the filename). Make sure you have a Functions path in a `netlify.toml` file at root of your repository:
+3. **Configure your Netlify build**: When serving your site on Netlify, `netlify-lambda` will now build each JavaScript/TypeScript file in your `src/functions` folder as a standalone Netlify function (with a path corresponding to the filename). Make sure you have a Functions path in a `netlify.toml` file at root of your repository:
 
 ```toml
 [build]
   command = "npm run build"
-  functions = "lambda"
+  functions = "functions"
   publish = "public"
 ```
 
@@ -95,7 +95,7 @@ module.exports = {
 }
 ```
 
-5. **Write your functions**: Make a `src/lambda` folder and write as many functions as you need. The only requirement is that each function must export a `handler`, although `netlify-lambda` helps you use webpack to bundle modules or you can [zip the functions yourself](https://www.netlify.com/blog/2018/09/14/forms-and-functions/#optional-zip-the-function-to-manage-dependencies). For example you can write `src/lambda/hello.js`:
+5. **Write your functions**: Make a `src/functions` folder and write as many functions as you need. The only requirement is that each function must export a `handler`, although `netlify-lambda` helps you use webpack to bundle modules or you can [zip the functions yourself](https://www.netlify.com/blog/2018/09/14/forms-and-functions/#optional-zip-the-function-to-manage-dependencies). For example you can write `src/functions/hello.js`:
 
 ```js
 // For more info, check https://www.netlify.com/docs/functions/#javascript-lambda-functions

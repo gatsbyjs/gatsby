@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@2.2.24...gatsby-transformer-yaml@2.2.25) (2020-02-10)
+
+### Bug Fixes
+
+- **docs:** fix links to localhost on docs/blog/tutorials ... ([#21179](https://github.com/gatsbyjs/gatsby/issues/21179)) ([c9b0fa3](https://github.com/gatsbyjs/gatsby/commit/c9b0fa3))
+
 ## [2.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@2.2.23...gatsby-transformer-yaml@2.2.24) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-transformer-yaml
