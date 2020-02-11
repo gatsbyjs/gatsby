@@ -14,6 +14,7 @@ import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 
 class Plugins extends Component {
   render() {
+    const { location } = this.props
     return (
       <Layout location={location}>
         <PageWithPluginSearchBar location={location} isPluginsIndex={true}>
