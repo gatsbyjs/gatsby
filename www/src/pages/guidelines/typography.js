@@ -27,7 +27,7 @@ import {
   fontWeights,
   letterSpacings,
   lineHeights,
-} from "../../gatsby-plugin-theme-ui"
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import {
   Box,
   Button,
@@ -219,11 +219,11 @@ const Typography = ({ location }) => (
           <SectionSubheading mt={0}>Font Weights</SectionSubheading>
           <Flex flexWrap="wrap" flexDirection="row">
             <Box maxWidth={{ xl: `40%` }} mr={{ xl: 6 }}>
-              <Weight fontFamily="heading" fontWeight="headingPrimary">
-                {fontWeights.headingPrimary}
+              <Weight fontFamily="heading" fontWeight="extraBold">
+                {fontWeights.extraBold}
               </Weight>
               <Box pb={4}>
-                <code>fontWeights.headingPrimary</code>
+                <code>fontWeights.extraBold</code>
                 <Text as="p" pt={4}>
                   Use this for the main headline, set in Futura PT Bold, only.
                 </Text>

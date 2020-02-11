@@ -9,6 +9,7 @@ import PackageReadme from "../components/package-readme"
 class DocsLocalPackagesTemplate extends React.Component {
   render() {
     const {
+      location,
       data: { npmPackage, markdownRemark },
     } = this.props
     const npmPackageNotFound = {
