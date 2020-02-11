@@ -73,7 +73,7 @@ Before I jump into the topic of content and “data”, I want to briefly say th
 building a static site template with React-based architecture and hot module
 reloading is just plain fun. Gatsby’s CLI gets you going so quickly. It really
 is a joy to use. Judging from all the
-[twitter comments](https://twitter.com/gatsbyjs) saying the same thing, I think
+[Twitter comments](https://twitter.com/gatsbyjs) saying the same thing, I think
 that’s a common consensus.
 
 Okay, now back to some static hurdles.
