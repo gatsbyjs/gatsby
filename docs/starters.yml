@@ -5199,3 +5199,18 @@
     - Disqus
     - Resume
     - Place plan on the top
+- url: https://wp-graphql-gatsby-starter.netlify.com/
+  repo: https://github.com/n8finch/wp-graphql-gatsby-starter
+  description: A super simple, bare-bone starter based on the Gatsby Starter for the front end and the WP GraphQL plugin on your WordPress install. This is a basic "headless CMS" setup. This starter will pull posts, pages, categories, tags, and a menu from your WordPress site. You should use either the TwentyNineteen or TwentyTwenty WordPress themes on your WordPress install. See the starter repo for more detailed instructions on getting set up. The example here uses the WordPress Theme Unit Test Data for post and page dummy content. Find something wrong? Issues are welcome on the starter reository.
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:WordPress
+    - Netlify
+  features:
+    - WP GraphQL plugin integration
+    - Light/Dark Mode
+    - React Helmet for SEO
+    - Integrated navigation
+    - Verbose (i.e., not D.R.Y.) GraphQL queries to get data from
+    - Includes plugins for offline support out of the box
