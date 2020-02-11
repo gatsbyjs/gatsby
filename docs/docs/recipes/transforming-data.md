@@ -101,7 +101,7 @@ The `relativePath` is relative to the path you configured in `gatsby-source-file
 
 Note: You can find these and other parameters in your GraphQL playground located at `http://localhost:8000/__graphql`
 
-3. Next import component for displaying the image from the "gatsby-image" line listed below than return the image in the layout.
+3. Next import the `Img` component from  "gatsby-image". You'll use this inside your JSX to display the image.
 
 ```JavaScript:title=src/pages/my-dogs.js
 
