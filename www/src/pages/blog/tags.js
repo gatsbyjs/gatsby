@@ -14,7 +14,7 @@ import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import { themedInput } from "../../utils/styles"
-import { colors, space, mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { colors, space, mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const POPULAR_TAGS = [
   `themes`,

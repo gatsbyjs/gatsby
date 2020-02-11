@@ -1,6 +1,7 @@
 ---
 title: Contributing to Gatsby.js
 navTitle: Introduction
+description: Learn about contributing to one of the most welcoming communities helping develop the future of the web
 disableTableOfContents: true
 ---
 

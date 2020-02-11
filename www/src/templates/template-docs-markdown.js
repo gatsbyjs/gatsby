@@ -4,7 +4,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 import usePrevAndNext from "../utils/use-prev-and-next"
 import Layout from "../components/layout"
@@ -34,15 +34,17 @@ function DocsTemplate({ data, location }) {
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
   const { prev, next } = usePrevAndNext(location.pathname)
 
+  const description = page.frontmatter.description || page.excerpt
+
   return (
     <React.Fragment>
       <Helmet>
         <title>{page.frontmatter.title}</title>
-        <meta name="description" content={page.excerpt} />
-        <meta property="og:description" content={page.excerpt} />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
         <meta property="og:title" content={page.frontmatter.title} />
         <meta property="og:type" content="article" />
-        <meta name="twitter:description" content={page.excerpt} />
+        <meta name="twitter:description" content={description} />
         <meta name="twitter.label1" content="Reading time" />
         <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
       </Helmet>
@@ -148,6 +150,7 @@ export const pageQuery = graphql`
       }
       frontmatter {
         title
+        description
         overview
         issue
         disableTableOfContents

@@ -4,7 +4,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import theme from "../gatsby-plugin-theme-ui"
 
 // API Rendering Stuff
 import { sortBy } from "lodash-es"
@@ -101,7 +101,7 @@ export default function APITemplate({ data, location, pageContext }) {
           <Container
             overrideCSS={{
               pb: 0,
-              [mediaQueries.lg]: {
+              [theme.mediaQueries.lg]: {
                 pt: 9,
               },
             }}
@@ -115,7 +115,7 @@ export default function APITemplate({ data, location, pageContext }) {
             overrideCSS={{
               pt: 0,
               position: `static`,
-              [mediaQueries.lg]: {
+              [theme.mediaQueries.lg]: {
                 pb: 9,
               },
             }}
