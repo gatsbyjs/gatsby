@@ -97,6 +97,12 @@ exports.sourceNodes = async (
           }
         }
         data = data.concat(d.data.data)
+        // Add support for includes. Includes allow entity data to be expanded
+        // based on relationships.
+        // See https://www.drupal.org/docs/8/modules/jsonapi/includes
+        if (d.data.included) {
+          data = data.concat(d.data.included);
+        }
         if (d.data.links && d.data.links.next) {
           data = await getNext(d.data.links.next, data)
         }
