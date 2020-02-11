@@ -824,7 +824,7 @@
     - Markdown
   features:
     - TypeScript
-    - TSLint (with custom TSLint rules)
+    - ESLint (with custom ESLint rules)
     - Markdown rendering with Remark
     - Basic component structure
     - Styling with emotion
