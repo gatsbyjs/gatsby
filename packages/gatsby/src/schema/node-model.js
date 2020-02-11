@@ -85,7 +85,7 @@ class LocalNodeModel {
    *   cached instead of a Set of Nodes.
    */
   replaceTypeKeyValueCache(map = new Map()) {
-    this._typedKeyValueIndexes = new Map() // See redux/nodes.js for usage
+    this._typedKeyValueIndexes = map // See redux/nodes.js for usage
   }
 
   withContext(context) {
