@@ -26,7 +26,6 @@ Object {
   "text": "query mockFileQuery {
   allDirectory {
     nodes {
-      id
       contents {
         __typename
         ... on File {
@@ -92,15 +91,12 @@ Object {
   "text": "query mockFileQuery {
   allDirectory {
     nodes {
-      id
       contents {
         __typename
         ... on Directory {
-          id
           contents {
             __typename
             ... on Directory {
-              id
               contents {
                 __typename
                 ... on Directory {
@@ -117,16 +113,13 @@ Object {
       }
       children {
         __typename
-        id
         children {
           __typename
-          id
           children {
             __typename
             id
           }
           ... on Directory {
-            id
             contents {
               __typename
               ... on File {
@@ -170,7 +163,6 @@ Object {
     ",
   "path": "mockFile",
   "text": "fragment DirectoryContents on Directory {
-  id
   contents {
     __typename
     ... on File {
@@ -186,7 +178,6 @@ Object {
 query mockFileQuery {
   allDirectory {
     nodes {
-      id
       ...DirectoryContents
     }
   }
@@ -223,9 +214,7 @@ Object {
   "text": "query mockFileQuery {
   allDirectory {
     nodes {
-      id
       ... on Directory {
-        id
         contents {
           __typename
           ... on File {
@@ -263,7 +252,6 @@ Object {
   "text": "query mockFileQuery {
   allDirectory {
     nodes {
-      id
       __typename
     }
   }
@@ -320,23 +308,18 @@ Object {
   "text": "query mockFileQuery {
   allDirectory {
     nodes {
-      id
       contents {
         __typename
         ... on Directory {
-          id
           contents {
             __typename
             ... on Directory {
-              id
               contents {
                 __typename
                 ... on File {
-                  id
                   __typename
                 }
                 ... on Directory {
-                  id
                   __typename
                 }
               }
@@ -346,20 +329,15 @@ Object {
       }
       children {
         __typename
-        id
         children {
           __typename
-          id
           children {
-            id
             __typename
           }
           ... on Directory {
-            id
             contents {
               __typename
               ... on File {
-                id
                 __typename
               }
             }
@@ -394,14 +372,12 @@ Object {
     ",
   "path": "mockFile",
   "text": "fragment Directory on Directory {
-  id
   __typename
 }
 
 query mockFileQuery {
   allDirectory {
     nodes {
-      id
       ...Directory
     }
   }
@@ -431,9 +407,7 @@ Object {
   "text": "query mockFileQuery {
   allDirectory {
     nodes {
-      id
       ... on Directory {
-        id
         __typename
       }
     }
@@ -500,17 +474,14 @@ Object {
 }
 
 fragment Node on Node {
-  id
   __typename
 }
 
 fragment DirectoryContents on Directory {
-  id
   contents {
     __typename
   }
   children {
-    id
     __typename
   }
 }
@@ -518,7 +489,6 @@ fragment DirectoryContents on Directory {
 query mockFileQuery {
   allDirectory {
     nodes {
-      id
       contents {
         __typename
         ... on File {
@@ -527,17 +497,14 @@ query mockFileQuery {
         ...FileOrDirectory
       }
       children {
-        id
         __typename
         ...Node
       }
       ... on Directory {
-        id
         contents {
           __typename
         }
         children {
-          id
           __typename
         }
       }
@@ -595,7 +562,6 @@ Object {
 }
 
 fragment DirectoryContents on Directory {
-  id
   children {
     __typename: id
   }
@@ -616,7 +582,6 @@ query mockFileQuery {
         ...Node
       }
       ... on Directory {
-        id
         children {
           __typename: id
         }
@@ -688,7 +653,6 @@ Object {
 }
 
 fragment DirectoryContents on Directory {
-  id
   contents {
     __typename
     ... on File {
@@ -776,7 +740,6 @@ Object {
     ",
   "path": "mockFile",
   "text": "fragment DirectoryContents on Directory {
-  id
   contents {
     __typename
     ... on File {
@@ -791,7 +754,6 @@ Object {
 query mockFileQuery {
   allDirectory {
     nodes {
-      id
       contents {
         __typename
         ... on File {
@@ -838,7 +800,6 @@ Map {
 query mockFileQuery {
   allPostsJson {
     nodes {
-      id
       ...PostsJsonFragment
     }
   }
@@ -869,7 +830,6 @@ Object {
 query mockFileQuery {
   allPostsJson {
     nodes {
-      id
       ...PostsJsonFragment
     }
   }
@@ -903,7 +863,6 @@ Object {
 query mockFileQuery {
   allPostsJson {
     nodes {
-      id
       ...PostsJsonFragment
     }
   }
@@ -1050,14 +1009,12 @@ Object {
 }
 
 fragment AnotherPostsJsonFragment on PostsJson {
-  id
   text
 }
 
 query mockFileQuery {
   allPostsJson {
     nodes {
-      id
       ...PostsJsonFragment
     }
   }
@@ -1095,7 +1052,6 @@ Object {
 query mockFileQuery {
   allPostsJson {
     nodes {
-      id
       ...PostsJsonFragment
     }
   }

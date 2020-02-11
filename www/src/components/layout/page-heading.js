@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../../utils/styles"
 
 const PageHeadingContainer = styled(`header`)`
@@ -19,6 +19,7 @@ const PageHeadingContainer = styled(`header`)`
 
 const H1 = styled(`h1`)`
   align-items: center;
+  font-weight: bold;
   color: ${p => p.theme.colors.heading};
   display: flex;
   font-size: ${p => p.theme.fontSizes[4]};
