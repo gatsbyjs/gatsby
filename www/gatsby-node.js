@@ -37,17 +37,6 @@ exports.onCreateNode = helpers => {
   sections.forEach(section => section.onCreateNode(helpers))
 }
 
-exports.onCreatePage = ({ page, actions }) => {
-  if (page.path === `/plugins/`) {
-    const { createPage, deletePage } = actions
-    const oldPage = Object.assign({}, page)
-
-    page.context.layout = `plugins`
-    deletePage(oldPage)
-    createPage(page)
-  }
-}
-
 exports.onPostBuild = () => {
   fs.copySync(
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,

@@ -29,6 +29,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
+  const apiTemplate = path.resolve(`src/templates/template-api-markdown.js`)
   const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
   const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
   const tagTemplate = path.resolve(`src/templates/tags.js`)
@@ -60,6 +61,8 @@ exports.createPages = async ({ graphql, actions }) => {
             publishedAt
             issue
             tags
+            jsdoc
+            apiCalls
           }
         }
       }
@@ -172,17 +175,40 @@ exports.createPages = async ({ graphql, actions }) => {
     if (!slug) return
 
     if (!_.includes(slug, `/blog/`)) {
-      createPage({
-        path: localizedPath(locale, node.fields.slug),
-        component: slash(
-          node.fields.package ? localPackageTemplate : docsTemplate
-        ),
-        context: {
-          slug: node.fields.slug,
-          locale,
-          ...getPrevAndNext(node.fields.slug),
-        },
-      })
+      const prevAndNext = getPrevAndNext(node.fields.slug)
+      if (node.frontmatter.jsdoc) {
+        // API template
+        createPage({
+          path: localizedPath(locale, node.fields.slug),
+          component: slash(apiTemplate),
+          context: {
+            slug: node.fields.slug,
+            jsdoc: node.frontmatter.jsdoc,
+            apiCalls: node.frontmatter.apiCalls,
+            ...prevAndNext,
+          },
+        })
+      } else if (node.fields.package) {
+        // Local package template
+        createPage({
+          path: `${node.fields.slug}`,
+          component: slash(localPackageTemplate),
+          context: {
+            slug: node.fields.slug,
+          },
+        })
+      } else {
+        // Docs template
+        createPage({
+          path: localizedPath(locale, node.fields.slug),
+          component: slash(docsTemplate),
+          context: {
+            slug: node.fields.slug,
+            locale,
+            ...prevAndNext,
+          },
+        })
+      }
     }
   })
 }

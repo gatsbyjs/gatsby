@@ -48,7 +48,6 @@ exports.createPages = async ({ graphql, actions }) => {
         context: {
           slug: node.slug,
           id: node.id,
-          layout: `plugins`,
         },
       })
     } else {
@@ -58,7 +57,6 @@ exports.createPages = async ({ graphql, actions }) => {
         context: {
           slug: node.slug,
           id: node.id,
-          layout: `plugins`,
         },
       })
     }
