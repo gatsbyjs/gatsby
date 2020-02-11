@@ -3,7 +3,7 @@ const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const slugify = require(`slugify`)
 const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
@@ -15,20 +15,13 @@ const langs = require("./i18n.json")
 const {
   generateComparisonPageSet,
 } = require(`./src/utils/generate-comparison-page-set.js`)
+const { getPrevAndNext } = require(`./src/utils/get-prev-and-next.js`)
 const { localizedPath } = require(`./src/utils/i18n.js`)
 const yaml = require(`js-yaml`)
-const docLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
-)
-const tutorialLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/tutorial-links.yaml`)
-)
-const contributingLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
+const ecosystemFeaturedItems = yaml.load(
+  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
 )
 const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
-
-let ecosystemFeaturedItems
 
 if (
   process.env.gatsby_executing_command === `build` &&
@@ -87,6 +80,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
+    const apiTemplate = path.resolve(`src/templates/template-api-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
     const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
     const tagTemplate = path.resolve(`src/templates/tags.js`)
@@ -132,6 +126,8 @@ exports.createPages = ({ graphql, actions, reporter }) => {
                 publishedAt
                 issue
                 tags
+                jsdoc
+                apiCalls
               }
             }
           }
@@ -148,6 +144,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         allCreatorsYaml {
           edges {
             node {
+              name
               fields {
                 slug
               }
@@ -187,21 +184,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
               id
               title
               slug
-              readme {
-                id
-                childMarkdownRemark {
-                  id
-                  html
-                }
-              }
-            }
-          }
-        }
-        allEcosystemYaml {
-          edges {
-            node {
-              starters
-              plugins
             }
           }
         }
@@ -338,6 +320,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           component: slash(creatorPageTemplate),
           context: {
             slug: edge.node.fields.slug,
+            name: edge.node.name,
           },
         })
       })
@@ -362,53 +345,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
       // Create docs pages.
       const docPages = result.data.allMdx.edges
-      const docLinks = docLinksData[0].items
-      const tutorialLinks = tutorialLinksData[0].items
-      const contributingLinks = contributingLinksData[0].items
-
-      // flatten sidebar links trees for easier next/prev link calculation
-      function flattenList(itemList) {
-        return itemList.reduce((reducer, { items, ...rest }) => {
-          reducer.push(rest)
-          if (items) reducer.push(...flattenList(items))
-          return reducer
-        }, [])
-      }
-
-      const flattenedDocs = flattenList(docLinks)
-      const flattenedTutorials = flattenList(tutorialLinks)
-      const flattenedContributing = flattenList(contributingLinks)
-
-      // with flattened tree object finding next and prev is just getting the next index
-      function getSibling(index, list, direction) {
-        if (direction === `next`) {
-          const next = index === list.length - 1 ? null : list[index + 1]
-          // for tutorial links that use subheadings on the same page skip the link and try the next item
-          if (next && next.link && next.link.includes(`#`)) {
-            return getSibling(index + 1, list, `next`)
-          }
-          return next
-        } else if (direction === `prev`) {
-          const prev = index === 0 ? null : list[index - 1]
-          if (prev && prev.link && prev.link.includes(`#`)) {
-            return getSibling(index - 1, list, `prev`)
-          }
-          return prev
-        } else {
-          reporter.warn(
-            `Did not provide direction to sibling function for building next and prev links`
-          )
-          return null
-        }
-      }
-
-      function findDoc(doc) {
-        if (!doc.link) return null
-        return (
-          doc.link === this.link ||
-          doc.link === this.link.substring(0, this.link.length - 1)
-        )
-      }
 
       docPages.forEach(({ node }) => {
         const slug = _.get(node, `fields.slug`)
@@ -416,58 +352,41 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         if (!slug) return
 
         if (!_.includes(slug, `/blog/`)) {
-          const docIndex = flattenedDocs.findIndex(findDoc, {
-            link: slug,
-          })
-          const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
-            link: slug,
-          })
-          const contributingIndex = flattenedContributing.findIndex(findDoc, {
-            link: slug,
-          })
+          const prevAndNext = getPrevAndNext(node.fields.slug)
 
-          // add values to page context for next and prev page
-          let nextAndPrev = {}
-          if (docIndex > -1) {
-            nextAndPrev.prev = getSibling(docIndex, flattenedDocs, `prev`)
-            nextAndPrev.next = getSibling(docIndex, flattenedDocs, `next`)
+          if (node.frontmatter.jsdoc) {
+            // API template
+            createPage({
+              path: localizedPath(locale, node.fields.slug),
+              component: slash(apiTemplate),
+              context: {
+                slug: node.fields.slug,
+                jsdoc: node.frontmatter.jsdoc,
+                apiCalls: node.frontmatter.apiCalls,
+                ...prevAndNext,
+              },
+            })
+          } else if (node.fields.package) {
+            // Local package template
+            createPage({
+              path: `${node.fields.slug}`,
+              component: slash(localPackageTemplate),
+              context: {
+                slug: node.fields.slug,
+              },
+            })
+          } else {
+            // Docs template
+            createPage({
+              path: localizedPath(locale, node.fields.slug),
+              component: slash(docsTemplate),
+              context: {
+                slug: node.fields.slug,
+                locale,
+                ...prevAndNext,
+              },
+            })
           }
-          if (tutorialIndex > -1) {
-            nextAndPrev.prev = getSibling(
-              tutorialIndex,
-              flattenedTutorials,
-              `prev`
-            )
-            nextAndPrev.next = getSibling(
-              tutorialIndex,
-              flattenedTutorials,
-              `next`
-            )
-          }
-          if (contributingIndex > -1) {
-            nextAndPrev.prev = getSibling(
-              contributingIndex,
-              flattenedContributing,
-              `prev`
-            )
-            nextAndPrev.next = getSibling(
-              contributingIndex,
-              flattenedContributing,
-              `next`
-            )
-          }
-
-          createPage({
-            path: localizedPath(locale, node.fields.slug),
-            component: slash(
-              node.fields.package ? localPackageTemplate : docsTemplate
-            ),
-            context: {
-              slug: node.fields.slug,
-              locale,
-              ...nextAndPrev,
-            },
-          })
         }
       })
 
@@ -481,7 +400,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
-              layout: `plugins`,
             },
           })
         } else {
@@ -491,7 +409,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
-              layout: `plugins`,
             },
           })
         }
@@ -511,9 +428,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           },
         })
       }
-
-      // Read featured starters and plugins for Ecosystem
-      ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
 
       return resolve()
     })
@@ -613,11 +527,21 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       .find(node => node.internal.type === `Screenshot`)
 
     createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
+  } else if (node.internal.type === `NPMPackage`) {
+    if (ecosystemFeaturedItems.plugins.includes(node.name)) {
+      createNodeField({ node, name: `featured`, value: true })
+    }
   } else if (node.internal.type === `StartersYaml` && node.repo) {
     // To develop on the starter showcase, you'll need a GitHub
     // personal access token. Check the `www` README for details.
     // Default fields are to avoid graphql errors.
     const { owner, name: repoStub } = parseGHUrl(node.repo)
+
+    // mark if it's a featured starter
+    if (ecosystemFeaturedItems.starters.includes(`/${owner}/${repoStub}/`)) {
+      createNodeField({ node, name: `featured`, value: true })
+    }
+
     const defaultFields = {
       slug: `/${owner}/${repoStub}/`,
       stub: repoStub,
@@ -748,29 +672,6 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   }
   // end Creator pages
   return null
-}
-
-exports.onCreatePage = ({ page, actions }) => {
-  // add lists of featured items to Ecosystem page
-  if (page.path === `/ecosystem/` || page.path === `/`) {
-    const { createPage, deletePage } = actions
-    const oldPage = Object.assign({}, page)
-
-    page.context.featuredStarters = ecosystemFeaturedItems.starters
-    page.context.featuredPlugins = ecosystemFeaturedItems.plugins
-
-    deletePage(oldPage)
-    createPage(page)
-  }
-
-  if (page.path === `/plugins/`) {
-    const { createPage, deletePage } = actions
-    const oldPage = Object.assign({}, page)
-
-    page.context.layout = `plugins`
-    deletePage(oldPage)
-    createPage(page)
-  }
 }
 
 exports.onPostBuild = () => {

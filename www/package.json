@@ -22,6 +22,7 @@
     "email-validator": "^1.2.3",
     "fuse.js": "^3.4.6",
     "gatsby": "^2.18.8",
+    "gatsby-core-utils": "^1.0.28",
     "gatsby-design-tokens": "~1.0.10",
     "gatsby-image": "^2.2.34",
     "gatsby-plugin-canonical-urls": "^2.1.16",

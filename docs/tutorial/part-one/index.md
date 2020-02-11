@@ -165,7 +165,7 @@ export default () => (
 )
 ```
 
-2.  Navigate to http://localhost:8000/about/.
+2.  Navigate to `http://localhost:8000/about/`
 
 ![New about page](05-about-page.png)
 

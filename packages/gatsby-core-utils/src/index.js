@@ -6,3 +6,4 @@ exports.cpuCoreCount = require(`./cpu-core-count`)
 exports.urlResolve = require(`./url`).resolve
 exports.isCI = require(`./ci`).isCI
 exports.getCIName = require(`./ci`).getCIName
+exports.createRequireFromPath = require(`./create-require-from-path`)

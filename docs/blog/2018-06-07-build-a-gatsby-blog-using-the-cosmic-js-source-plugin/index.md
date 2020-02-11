@@ -54,7 +54,7 @@ Start the server:
 npm run develop
 ```
 
-At this point, you can access your Gatsby website by visiting [http://localhost:8000](http://localhost:8000).
+At this point, you can access your Gatsby website by visiting `http://localhost:8000`.
 
 ## Install the Cosmic JS Source Plugin
 

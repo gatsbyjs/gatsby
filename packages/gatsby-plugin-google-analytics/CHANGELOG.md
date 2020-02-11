@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.34...gatsby-plugin-google-analytics@2.1.35) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
 ## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.33...gatsby-plugin-google-analytics@2.1.34) (2020-01-23)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
