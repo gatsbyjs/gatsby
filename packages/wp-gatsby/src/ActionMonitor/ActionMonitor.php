@@ -132,6 +132,23 @@ class ActionMonitor
         add_action( 'profile_update', [ $this, 'updateUser' ], 10 );
 
         add_action( 'delete_user', [ $this, 'deleteUser' ], 10, 2 );
+
+        // Post meta updates
+        $meta_types = ['user', 'post', 'page'];
+
+        foreach( $meta_types as $type ) {
+          add_action( "updated_{$type}_meta", [ $this, 'addOrUpdateMeta' ], 10, 3 );
+        }
+
+        add_action( "added_post_meta", [ $this, 'addOrUpdateMeta' ], 10, 3 );
+    }
+
+    function addOrUpdateMeta( $meta_id, $object_id, $meta_key ) {
+      if ( $meta_key === '_edit_lock' ) {
+        return;
+      }
+
+      $this->savePost( $object_id );
     }
 
     function deleteUser( $user_id, $reassigned_user_id ) {
