@@ -85,7 +85,7 @@ Edit your gatsby-config.js file to source images and configure plugins for Gatsb
  ],
 ```
 
-2. You would then need to create a query for your image that specifies all parameters that the gatsby image requires
+2. Query your image using GraphQL.
 
 Note the `gatsby-source-filesystem` path pointing to the location of images in your project.
 
