@@ -73,12 +73,12 @@ class ActionMonitor
           \update_post_meta(
               $action_monitor_post_id,
               'referenced_node_single_name',
-              $args['graphql_single_name']
+              graphql_format_field_name( $args['graphql_single_name'] )
           );
           \update_post_meta(
               $action_monitor_post_id,
               'referenced_node_plural_name',
-              $args['graphql_plural_name']
+              graphql_format_field_name( $args['graphql_plural_name'] )
           );
 
           \wp_update_post( [
@@ -98,12 +98,12 @@ class ActionMonitor
         add_action('pre_post_update', [$this, 'preSavePost'], 10, 2);
 
         // Menu actions
-        add_action( 'wp_update_nav_menu', function( $menu_id ) { 
-          $this->saveMenu( $menu_id, 'UPDATE' ); 
+        add_action( 'wp_update_nav_menu', function( $menu_id ) {
+          $this->saveMenu( $menu_id, 'UPDATE' );
         } );
 
-        add_action( 'wp_create_nav_menu', function( $menu_id ) { 
-          $this->saveMenu( $menu_id, 'CREATE' ); 
+        add_action( 'wp_create_nav_menu', function( $menu_id ) {
+          $this->saveMenu( $menu_id, 'CREATE' );
         } );
 
         add_action( 'wp_delete_nav_menu', [ $this, 'deleteMenu' ], 10, 1 );
@@ -138,7 +138,7 @@ class ActionMonitor
       $this->updateUser( $user_id, 'DELETE', 'private ');
 
       if ($reassigned_user_id) {
-        // get all their posts that are 
+        // get all their posts that are
         // available in wpgraphql and update each of them
         $post_types = get_post_types( [ 'show_in_graphql' => true ] );
 
@@ -199,7 +199,7 @@ class ActionMonitor
       $post_types = get_post_types( [ 'show_in_graphql' => true ] );
 
       $user_is_public = false;
-      
+
       foreach ($post_types as $post_type) {
         // action monitor doesn't count
         if ($post_type === 'action_monitor') {
@@ -233,7 +233,7 @@ class ActionMonitor
       $user_was_public = \get_user_meta( $user_id, 'gatsby_user_is_public', true);
 
       if (
-        ($user_is_public && $user_was_public) || 
+        ($user_is_public && $user_was_public) ||
         (!$user_is_public && !$user_was_public) ||
         $user_is_public === $user_was_public
       ) {
@@ -241,12 +241,12 @@ class ActionMonitor
         return;
       }
 
-      // else a change in privacy has happened. 
+      // else a change in privacy has happened.
       // we need to record that in WP and Gatsby
 
       \update_user_meta( $user_id, 'gatsby_user_is_public', $user_is_public );
 
-      $title = $user_is_public && isset($current_user->data->user_nicename) 
+      $title = $user_is_public && isset($current_user->data->user_nicename)
           ? $current_user->data->user_nicename
           : "User";
 
@@ -303,7 +303,7 @@ class ActionMonitor
       return $term_info;
     }
 
-    function deleteTerm( 
+    function deleteTerm(
       $term_id,
       $taxonomy_id,
       $taxonomy,
@@ -409,7 +409,7 @@ class ActionMonitor
      */
     function saveMenu( $menu_id, $action_type ) {
       if (
-        did_action('wp_update_nav_menu') > 1 || 
+        did_action('wp_update_nav_menu') > 1 ||
         did_action('wp_create_nav_menu') > 1
       ) {
         return $menu_id;
@@ -493,7 +493,7 @@ class ActionMonitor
             absint($post_id)
         );
 
-        $referenced_node_single_name 
+        $referenced_node_single_name
           = $post_type_object->graphql_single_name ?? null;
         $referenced_node_plural_name
           = $post_type_object->graphql_plural_name ?? null;
@@ -528,7 +528,7 @@ class ActionMonitor
         if ($post->post_status === 'trash' && !$update) {
             // this post has already been trashed, Gutenberg just fires post_save 2x on trash. It happens in separate threads so did_action('post_save') doesn't increment. :(
             return $post_id;
-        } 
+        }
 
         if ($post->post_status === 'trash') {
             $action_type = 'DELETE';
@@ -560,7 +560,7 @@ class ActionMonitor
         $previous_post_parent = $this->post_object_before_update->post_parent ?? 0;
         $potentially_new_post_parent = $post->post_parent ?? 0;
 
-        // @todo also move this logic Gatsby-side so it works 
+        // @todo also move this logic Gatsby-side so it works
         // for all 2-way relationships
         if (
           $previous_post_parent !== $potentially_new_post_parent &&
@@ -579,7 +579,7 @@ class ActionMonitor
           }
         }
 
-        // update the author node so that this node is recorded as a child 
+        // update the author node so that this node is recorded as a child
         // @todo move this logic Gatsby-side so that it works for all 2-way relationships
         $previous_author = $this->post_object_before_update->post_author ?? 0;
         $new_author = $post->post_author ?? 0;
