@@ -19,15 +19,3 @@ docs.tableOfContents: Table of Contents
 docs.guideList: "In this section:"
 docs.previous: Previous
 docs.next: Next
-feedback.title: Was this doc helpful to you?
-feedback.legend: Rate your experience
-feedback.textLabel: Your comments <span>(optional):</span>
-feedback.cancel: Cancel <sronly>this widget</sronly>
-feedback.sending: Sending, wait {icon}
-feedback.send: Send feedback {icon}
-feedback.ratings.1.ratingText: poor
-feedback.ratings.1.iconLabel: frowning face
-feedback.ratings.2.ratingText: fine
-feedback.ratings.2.iconLabel: neutral face
-feedback.ratings.3.ratingText: great
-feedback.ratings.3.iconLabel: smiling face

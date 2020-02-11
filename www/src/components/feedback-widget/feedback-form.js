@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import { Fragment } from "react"
 import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
 import { SubmitButton, CloseButton } from "./buttons"
@@ -11,7 +12,6 @@ import MdSentimentNeutral from "react-icons/lib/md/sentiment-neutral"
 import MdSentimentVerySatisfied from "react-icons/lib/md/sentiment-very-satisfied"
 import MdSend from "react-icons/lib/md/send"
 import MdRefresh from "react-icons/lib/md/refresh"
-import { useIntl, FormattedMessage } from "react-intl"
 
 const Form = styled(`form`)`
   margin-bottom: 0;
@@ -77,21 +77,6 @@ const textareaStyles = {
   overflowY: `scroll`,
 }
 
-const ratingOptions = [
-  {
-    ratingValue: 1,
-    icon: MdSentimentDissatisfied,
-  },
-  {
-    ratingValue: 2,
-    icon: MdSentimentNeutral,
-  },
-  {
-    ratingValue: 3,
-    icon: MdSentimentVerySatisfied,
-  },
-]
-
 const FeedbackForm = ({
   handleSubmit,
   handleClose,
@@ -101,91 +86,77 @@ const FeedbackForm = ({
   rating,
   comment,
   submitting,
-}) => {
-  const { formatMessage } = useIntl()
-
-  return (
-    <WidgetWrapper id="feedback-widget" handleClose={handleClose}>
-      <Form
-        onSubmit={handleSubmit}
-        className={`${submitting ? `submitting` : ``}`}
-      >
-        <Title ref={titleRef} tabIndex="-1">
-          <FormattedMessage id="feedback.title" />
-        </Title>
-        <Fieldset className="ratings" disabled={submitting}>
-          <Legend>
-            <FormattedMessage id="feedback.legend" />
-          </Legend>
-          <Rating>
-            {ratingOptions.map(option => (
-              <RatingOption
-                {...option}
-                ratingText={formatMessage({
-                  id: `feedback.ratings.${option.ratingValue}.ratingText`,
-                })}
-                iconLabel={formatMessage({
-                  id: `feedback.ratings.${option.ratingValue}.iconLabel`,
-                })}
-                key={option.ratingValue}
-                checked={rating === option.ratingValue}
-                handleChange={handleChange}
-              />
-            ))}
-          </Rating>
-        </Fieldset>
-        <TextareaLabel className={`textarea ${submitting ? `disabled` : ``}`}>
-          <FormattedMessage
-            id="feedback.textLabel"
-            values={{
-              span: (...chunks) => <span>{chunks}</span>,
-            }}
+}) => (
+  <WidgetWrapper id="feedback-widget" handleClose={handleClose}>
+    <Form
+      onSubmit={handleSubmit}
+      className={`${submitting ? `submitting` : ``}`}
+    >
+      <Title ref={titleRef} tabIndex="-1">
+        Was this doc helpful to you?
+      </Title>
+      <Fieldset className="ratings" disabled={submitting}>
+        <Legend>Rate your experience</Legend>
+        <Rating>
+          <RatingOption
+            iconLabel="frowning face"
+            icon={MdSentimentDissatisfied}
+            ratingText="poor"
+            ratingValue="1"
+            checked={rating === 1}
+            handleChange={handleChange}
           />
-          <textarea
-            sx={textareaStyles}
-            value={comment}
-            onChange={handleCommentChange}
-            disabled={submitting}
+          <RatingOption
+            iconLabel="neutral face"
+            icon={MdSentimentNeutral}
+            ratingText="fine"
+            ratingValue="2"
+            checked={rating === 2}
+            handleChange={handleChange}
           />
-        </TextareaLabel>
-        <Actions>
-          <CloseButton
-            onClick={handleClose}
-            disabled={submitting}
-            type="button"
-          >
-            <FormattedMessage
-              id="feedback.cancel"
-              values={{
-                sronly: (...chunks) => (
-                  <ScreenReaderText className="sr-only">
-                    {chunks}
-                  </ScreenReaderText>
-                ),
-              }}
-            />
-          </CloseButton>
-          <SubmitButton
-            type="submit"
-            className={submitting && `submitting`}
-            disabled={submitting}
-          >
-            {submitting ? (
-              <FormattedMessage
-                id="feedback.sending"
-                values={{ icon: <MdRefresh /> }}
-              />
-            ) : (
-              <FormattedMessage
-                id="feedback.send"
-                values={{ icon: <MdSend /> }}
-              />
-            )}
-          </SubmitButton>
-        </Actions>
-      </Form>
-    </WidgetWrapper>
-  )
-}
+          <RatingOption
+            iconLabel="smiling face"
+            icon={MdSentimentVerySatisfied}
+            ratingText="great"
+            ratingValue="3"
+            checked={rating === 3}
+            handleChange={handleChange}
+          />
+        </Rating>
+      </Fieldset>
+      <TextareaLabel className={`textarea ${submitting ? `disabled` : ``}`}>
+        Your comments <span>(optional):</span>
+        <textarea
+          sx={textareaStyles}
+          value={comment}
+          onChange={handleCommentChange}
+          disabled={submitting}
+        />
+      </TextareaLabel>
+      <Actions>
+        <CloseButton onClick={handleClose} disabled={submitting} type="button">
+          Cancel{` `}
+          <ScreenReaderText className="sr-only">this widget</ScreenReaderText>
+        </CloseButton>
+        <SubmitButton
+          type="submit"
+          className={submitting && `submitting`}
+          disabled={submitting}
+        >
+          {submitting ? (
+            <Fragment>
+              Sending, wait <MdRefresh />
+            </Fragment>
+          ) : (
+            <Fragment>
+              Send feedback
+              <MdSend />
+            </Fragment>
+          )}
+        </SubmitButton>
+      </Actions>
+    </Form>
+  </WidgetWrapper>
+)
 
 export default FeedbackForm
