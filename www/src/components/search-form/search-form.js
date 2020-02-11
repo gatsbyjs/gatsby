@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
+import { useIntl } from "react-intl"
 import { navigate } from "gatsby"
 
 import SearchIcon from "../search-icon"
@@ -17,6 +18,7 @@ export default function SearchForm() {
   const [focused, setFocus] = React.useState(false)
   const [isInit, setInit] = React.useState(false)
   const searchInput = React.useRef(null)
+  const { formatMessage } = useIntl()
   /**
    * Replace the default selection event, allowing us to do client-side
    * navigation thus avoiding a full page refresh.
@@ -144,9 +146,9 @@ export default function SearchForm() {
               `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
           }}
           type="search"
-          placeholder={`Search gatsbyjs.org`}
-          aria-label="Search gatsbyjs.org"
-          title="Hit 's' to search docs"
+          placeholder={formatMessage({ id: "search.label" })}
+          aria-label={formatMessage({ id: "search.label" })}
+          title={formatMessage({ id: "search.title" })}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           ref={searchInput}
