@@ -85,11 +85,14 @@ Edit your gatsby-config.js file to source images and configure plugins for Gatsb
  ],
 ```
 
-2. You would then want to create a query for your image that specifies all options and pass that data into the Img component:
+2. You would then need to create a query for your image that specifies all parameters that the gatsby image requires
+
+Note: You can find these and other parameters in your GraphQL playground located at `http://localhost:8000/__graphql`
 
 ```query {
      file(relativePath: { eq: "gatsby-astronaut.png" }) {
        childImageSharp {
+         // highlight-next-line
          fluid(grayscale: true) {
            ...GatsbyImageSharpFluid
          }
@@ -100,11 +103,42 @@ Edit your gatsby-config.js file to source images and configure plugins for Gatsb
 
 Note: The relative path is the image path that you configured in `gatsby-config.js`.
 
-3. Next import the image from the "gatsby-image" line at the top
+3. Next import the image from the "gatsby-image" line listed below
 
- <Img fluid={data.file.childImageSharp.fluid}/>
+```JavaScript:title=src/pages/my-dogs.js
 
-Note: `gatsby-image` is not a plugin. It gets installed but is just a component that you import. `transformer-sharp` and `plugin-sharp` have to be included as plugins.
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import Layout from "../components/layout"
+// highlight-next-line
+import Img from "gatsby-image"
+
+export default () => {
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      file(relativePath: { eq: "images/corgi.jpg" }) {
+        childImageSharp {
+          # Specify the image processing specifications right in the query.
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  `)
+  return (
+    <Layout>
+      <h1>I love my corgi!</h1>
+      // highlight-start
+      <Img
+        fluid={data.file.childImageSharp.fluid}
+        alt="A corgi smiling happily"
+      />
+      // highlight-end
+    </Layout>
+  )
+}
+```
 
 4. Run `gatsby develop` to start the development server.
 
