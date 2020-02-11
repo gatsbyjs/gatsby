@@ -62,6 +62,9 @@ describe(`Formatting plugin options for CLI`, () => {
     expect(lines.find(line => line.includes(`downloadLocal`))).toContain(
       `default value`
     )
+    expect(lines.find(line => line.includes(`useNameForId`))).toContain(
+      `default value`
+    )
     expect(lines.find(line => line.includes(`environment`))).toContain(
       `default value`
     )
@@ -166,6 +169,8 @@ describe(`Options validation`, () => {
         spaceId: {},
         localeFilter: `yup`,
         downloadLocal: 5,
+        useNameForId: 5,
+        pageLimit: `fifty`,
       }
     )
 
@@ -191,6 +196,12 @@ describe(`Options validation`, () => {
     )
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(`"downloadLocal" must be a boolean`)
+    )
+    expect(reporter.panic).toBeCalledWith(
+      expect.stringContaining(`"useNameForId" must be a boolean`)
+    )
+    expect(reporter.panic).toBeCalledWith(
+      expect.stringContaining(`"pageLimit" must be a number`)
     )
   })
 

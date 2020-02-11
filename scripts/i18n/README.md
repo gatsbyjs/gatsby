@@ -21,7 +21,7 @@ These scripts require the following variables to be defined in the environment, 
 
 Usage:
 
-```
+```shell
 yarn run update-source
 ```
 
@@ -31,7 +31,7 @@ The `update-source` script updates the contents of `gatsby-i18n-source` based on
 
 Usage:
 
-```
+```shell
 yarn run create [issue #]
 ```
 

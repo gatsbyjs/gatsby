@@ -54,7 +54,7 @@ class ContributorPageTemplate extends React.Component {
                 <h1 sx={{ mt: 0, mb: 3 }}>{contributor.id}</h1>
                 <p
                   sx={{
-                    fontFamily: `header`,
+                    fontFamily: `heading`,
                     fontSize: 3,
                     maxWidth: `28rem`,
                     mx: `auto`,

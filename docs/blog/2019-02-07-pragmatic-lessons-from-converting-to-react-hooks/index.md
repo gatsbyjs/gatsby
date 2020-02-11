@@ -15,7 +15,7 @@ Last week I decided to install the React 16.8 alpha on a branch and experiment w
 
 The [Hooks documentation](https://reactjs.org/docs/hooks-intro.html) is well presented and an excellent resource to getting started with hooks. I previously championed the render props pattern for reusable logic and composability. However, the extra syntax often comes with tradeoffs in clarity. These concerns include: "wrapper hell" and more mental overhead to parse nested JSX structure within the component. Adding a second render prop component or ternary operator further compounds these concerns. These additional wrappers also display in the React devTools and can get out of hand. The possibility of cleaning up this syntax and providing clearer code is alluring.
 
-```javascript
+```jsx
 export const PureRandomQuote = ({
   data: {
     contentfulSlideshow: { slides },

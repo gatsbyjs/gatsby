@@ -28,7 +28,7 @@ The entry point to webpack (`production-app.js`) [references ./async-requires.js
 
 Great! You've told webpack where you want to code split. But how will these be named on disk? Webpack gives you the ability to customize this via the [chunkFilename](https://webpack.js.org/configuration/output/#output-chunkfilename) configuration in the [output](https://webpack.js.org/configuration/output/) section, which is set by Gatsby in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L135) as:
 
-```
+```text
 [name]-[contenthash].js
 ```
 

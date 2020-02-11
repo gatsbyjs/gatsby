@@ -75,6 +75,7 @@ module.exports = (
               loader: path.join(`gatsby-plugin-mdx`, `loaders`, `mdx-loader`),
               options: {
                 cache: cache,
+                actions: actions,
                 ...other,
                 pluginOptions: options,
               },
