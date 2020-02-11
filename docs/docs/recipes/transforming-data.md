@@ -87,7 +87,7 @@ Edit your gatsby-config.js file to source images and configure plugins for Gatsb
 
 2. Query your image using GraphQL.
 
-Note the `gatsby-source-filesystem` path pointing to the location of images in your project.
+The `relativePath` is relative to the path you configured in `gatsby-source-filesystem`.
 
 Note: You can find these and other parameters in your GraphQL playground located at `http://localhost:8000/__graphql`
 
