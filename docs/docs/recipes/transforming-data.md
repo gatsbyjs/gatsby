@@ -85,9 +85,7 @@ Edit your gatsby-config.js file to source images and configure plugins for Gatsb
  ],
 ```
 
-Note: Note the gatsby src system path
-
-2.
+2. You would then want to create a query for your image that specifies all options and pass that data into the Img component:
 
 ```query {
      file(relativePath: { eq: "gatsby-astronaut.png" }) {
@@ -102,7 +100,7 @@ Note: Note the gatsby src system path
 
 Note: The relative path is the image path that you configured in `gatsby-config.js`.
 
-3. Next import image from "gatsby-image" line at the top
+3. Next import the image from the "gatsby-image" line at the top
 
  <Img fluid={data.file.childImageSharp.fluid}/>
 
