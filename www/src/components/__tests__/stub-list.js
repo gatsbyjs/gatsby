@@ -1,4 +1,4 @@
-jest.mock(`../../../utils/sidebar/item-list`, () => {
+jest.mock(`../../utils/sidebar/item-list`, () => {
   return {
     itemListContributing: {
       title: `Contributing`,
@@ -22,66 +22,18 @@ jest.mock(`../../../utils/sidebar/item-list`, () => {
         },
       ],
     },
-    getItemList: jest.fn(),
   }
-})
-jest.mock(`react-modal`, () => {
-  const modal = jest.fn().mockImplementation(({ children }) => children)
-  modal.setAppElement = jest.fn()
-  return modal
 })
 import React from "react"
-import { useStaticQuery } from "gatsby"
 import { render } from "@testing-library/react"
-import { ThemeProvider } from "theme-ui"
 
-import theme from "../../../../src/gatsby-plugin-theme-ui"
 import StubList from "../stub-list"
 
-let location
-beforeEach(() => {
-  useStaticQuery.mockReturnValueOnce({
-    site: {
-      siteMetadata: {
-        title: `GatsbyJS`,
-      },
-    },
-  })
-  location = {
-    pathname: `/contributing/stub-list`,
-  }
-})
-
 describe(`StubList`, () => {
-  it(`shows a title`, () => {
-    const { getByText } = render(
-      <ThemeProvider theme={theme}>
-        <StubList location={location} />
-      </ThemeProvider>
-    )
-    const element = getByText(`Stub List`)
-
-    expect(element).toBeVisible()
-  })
-
-  it(`shows a call to action to edit stubs`, () => {
-    const { getByText } = render(
-      <ThemeProvider theme={theme}>
-        <StubList location={location} />
-      </ThemeProvider>
-    )
-
-    expect(getByText(`How to Write a Stub`)).toBeVisible()
-  })
-
   describe(`stubs`, () => {
     let stubs
     beforeEach(() => {
-      const { getByTestId } = render(
-        <ThemeProvider theme={theme}>
-          <StubList location={location} />
-        </ThemeProvider>
-      )
+      const { getByTestId } = render(<StubList />)
       stubs = getByTestId(`list-of-stubs`).querySelectorAll(`li`)
     })
 
