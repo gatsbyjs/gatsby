@@ -258,71 +258,71 @@ module.exports = {
         allowLinker: true,
       },
     },
-    {
-      resolve: `gatsby-plugin-feed`,
-      options: {
-        feeds: [
-          {
-            title: `GatsbyJS`,
-            query: `
-              {
-                allMdx(
-                  sort: { order: DESC, fields: [frontmatter___date] }
-                  limit: 10,
-                  filter: {
-                    frontmatter: { draft: { ne: true } }
-                    fileAbsolutePath: { regex: "/docs.blog/" }
-                  }
-                ) {
-                  edges {
-                    node {
-                      excerpt
-                      html
-                      frontmatter {
-                        title
-                        date
-                        excerpt
-                        author {
-                          id
-                        }
-                      }
-                      fields {
-                        slug
-                      }
-                    }
-                  }
-                }
-              }
-            `,
-            output: `/blog/rss.xml`,
-            setup: ({
-              query: {
-                site: { siteMetadata },
-              },
-            }) => {
-              return {
-                title: siteMetadata.title,
-                description: siteMetadata.description,
-                feed_url: siteMetadata.siteUrl + `/blog/rss.xml`,
-                site_url: siteMetadata.siteUrl,
-                generator: `GatsbyJS`,
-              }
-            },
-            serialize: ({ query: { site, allMdx } }) =>
-              allMdx.edges.map(({ node }) => {
-                return {
-                  title: node.frontmatter.title,
-                  description: node.frontmatter.excerpt || node.excerpt,
-                  url: site.siteMetadata.siteUrl + node.fields.slug,
-                  guid: site.siteMetadata.siteUrl + node.fields.slug,
-                  custom_elements: [{ "content:encoded": node.html }],
-                  author: node.frontmatter.author.id,
-                }
-              }),
-          },
-        ],
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-feed`,
+    //   options: {
+    //     feeds: [
+    //       {
+    //         title: `GatsbyJS`,
+    //         query: `
+    //           {
+    //             allMdx(
+    //               sort: { order: DESC, fields: [frontmatter___date] }
+    //               limit: 10,
+    //               filter: {
+    //                 frontmatter: { draft: { ne: true } }
+    //                 fileAbsolutePath: { regex: "/docs.blog/" }
+    //               }
+    //             ) {
+    //               edges {
+    //                 node {
+    //                   excerpt
+    //                   html
+    //                   frontmatter {
+    //                     title
+    //                     date
+    //                     excerpt
+    //                     author {
+    //                       id
+    //                     }
+    //                   }
+    //                   fields {
+    //                     slug
+    //                   }
+    //                 }
+    //               }
+    //             }
+    //           }
+    //         `,
+    //         output: `/blog/rss.xml`,
+    //         setup: ({
+    //           query: {
+    //             site: { siteMetadata },
+    //           },
+    //         }) => {
+    //           return {
+    //             title: siteMetadata.title,
+    //             description: siteMetadata.description,
+    //             feed_url: siteMetadata.siteUrl + `/blog/rss.xml`,
+    //             site_url: siteMetadata.siteUrl,
+    //             generator: `GatsbyJS`,
+    //           }
+    //         },
+    //         serialize: ({ query: { site, allMdx } }) =>
+    //           allMdx.edges.map(({ node }) => {
+    //             return {
+    //               title: node.frontmatter.title,
+    //               description: node.frontmatter.excerpt || node.excerpt,
+    //               url: site.siteMetadata.siteUrl + node.fields.slug,
+    //               guid: site.siteMetadata.siteUrl + node.fields.slug,
+    //               custom_elements: [{ "content:encoded": node.html }],
+    //               author: node.frontmatter.author.id,
+    //             }
+    //           }),
+    //       },
+    //     ],
+    //   },
+    // },
     {
       resolve: `gatsby-plugin-netlify`,
       options: {

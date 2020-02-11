@@ -1,4 +1,11 @@
 jest.mock(`../../components/layout`, () => jest.fn(({ children }) => children))
+jest.mock(`react-intl`, () => {
+  return {
+    FormattedMessage({ id }) {
+      return id
+    },
+  }
+})
 import React from "react"
 import { render } from "@testing-library/react"
 import { ThemeProvider } from "theme-ui"
