@@ -56,14 +56,30 @@ function getLocaleAndBasePath(path) {
   return { locale: defaultLang, basePath: path }
 }
 
+function flattenKeys(obj) {
+  const result = {}
+  for (let key of Object.keys(obj)) {
+    const value = obj[key]
+    if (typeof value === "object") {
+      const flattenedVal = flattenKeys(value)
+      for (let key2 of Object.keys(flattenedVal)) {
+        result[`${key}.${key2}`] = flattenedVal[key2]
+      }
+    } else {
+      result[key] = value
+    }
+  }
+  return result
+}
+
 /**
  * Get the messages for the given locale, filling in the default language's messages
  * @param {string} locale the locale whose messages to get
  */
 function getMessages(locale) {
-  const defaultMsgs = require(`../data/intl/${defaultLang}.yaml`)
+  const defaultMsgs = flattenKeys(require(`../data/intl/${defaultLang}.yaml`))
   try {
-    const msgs = require(`../data/intl/${locale}.yaml`)
+    const msgs = flattenKeys(require(`../data/intl/${locale}.yaml`))
     // Replace missing messages with defaultLang ones
     return { ...defaultMsgs, ...msgs }
   } catch {

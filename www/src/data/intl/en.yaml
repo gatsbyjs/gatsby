@@ -1,21 +1,27 @@
 skipNav: Skip to main content
-nav.links.docs: Docs
-nav.links.tutorial: Tutorials
-nav.links.plugins: Plugins
-nav.links.features: Features
-nav.links.blog: Blog
-nav.links.showcase: Showcase
-nav.links.contributing: Contributing
-nav.search.label: Search gatsbyjs.org
-nav.search.title: Hit 's' to search docs
-footer.links.accessibility: Accessibility Statement
-footer.links.codeOfConduct: Code of Conduct
-footer.links.logoAndAssets: Logo & Assets
-sidebar.expandAll: Expand All
-sidebar.collapseAll: Collapse All
-docs.markdownPageFooter: "{icon} Edit this page on GitHub"
-docs.stubIssue: See the issue relating to this stub on GitHub
-docs.tableOfContents: Table of Contents
-docs.guideList: "In this section:"
-docs.previous: Previous
-docs.next: Next
+nav:
+  search:
+    label: Search gatsbyjs.org
+    title: Hit 's' to search docs
+  links:
+    docs: Docs
+    tutorial: Tutorials
+    plugins: Plugins
+    features: Features
+    blog: Blog
+    showcase: Showcase
+    contributing: Contributing
+footer.links:
+  accessibility: Accessibility Statement
+  codeOfConduct: Code of Conduct
+  logoAndAssets: Logo & Assets
+sidebar:
+  expandAll: Expand All
+  collapseAll: Collapse All
+docs:
+  markdownPageFooter: "{icon} Edit this page on GitHub"
+  stubIssue: See the issue relating to this stub on GitHub
+  tableOfContents: Table of Contents
+  guideList: "In this section:"
+  previous: Previous
+  next: Next

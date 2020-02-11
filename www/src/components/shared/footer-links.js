@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
+import { FormattedMessage } from "react-intl"
 
 const footerLinks = [
   { id: "accessibility", to: "/accessibility-statement/" },
