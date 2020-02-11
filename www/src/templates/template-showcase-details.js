@@ -73,10 +73,10 @@ class ShowcaseTemplate extends React.Component {
   }
 
   render() {
-    let { data } = this.props
+    let { data, location } = this.props
 
     const isModal =
-      this.props.location.state && this.props.location.state.isModal
+      location.state && location.state.isModal && window.innerWidth > 750
 
     const categories = data.sitesYaml.categories || []
 

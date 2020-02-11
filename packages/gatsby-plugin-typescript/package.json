@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-typescript",
   "description": "Adds TypeScript support to Gatsby",
-  "version": "2.1.26",
+  "version": "2.1.27",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -16,12 +16,12 @@
     "@babel/plugin-proposal-optional-chaining": "^7.7.5",
     "@babel/preset-typescript": "^7.7.4",
     "@babel/runtime": "^7.7.6",
-    "babel-plugin-remove-graphql-queries": "^2.7.22"
+    "babel-plugin-remove-graphql-queries": "^2.7.23"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.15",
+    "babel-preset-gatsby-package": "^0.2.16",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript#readme",

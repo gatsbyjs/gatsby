@@ -431,7 +431,7 @@ const determineUsedFragmentsForDefinition = (
   definition,
   definitionsByName,
   fragmentsUsedByFragment,
-  visitedFragments = new Set()
+  traversalPath = []
 ) => {
   const { def, name, isFragment, filePath } = definition
   const cachedUsedFragments = fragmentsUsedByFragment.get(name)
@@ -447,10 +447,12 @@ const determineUsedFragmentsForDefinition = (
         const name = node.name.value
         const fragmentDefinition = definitionsByName.get(name)
         if (fragmentDefinition) {
-          if (visitedFragments.has(name)) {
+          if (traversalPath.includes(name)) {
+            // Already visited this fragment during current traversal.
+            //   Visiting it again will cause a stack overflow
             return
           }
-          visitedFragments.add(name)
+          traversalPath.push(name)
           usedFragments.add(name)
           const {
             usedFragments: usedFragmentsForFragment,
@@ -459,8 +461,9 @@ const determineUsedFragmentsForDefinition = (
             fragmentDefinition,
             definitionsByName,
             fragmentsUsedByFragment,
-            visitedFragments
+            traversalPath
           )
+          traversalPath.pop()
           usedFragmentsForFragment.forEach(fragmentName =>
             usedFragments.add(fragmentName)
           )
