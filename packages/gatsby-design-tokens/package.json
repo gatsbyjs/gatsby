@@ -14,7 +14,7 @@
     "directory": "packages/gatsby-design-tokens"
   },
   "files": [
-    "./dist/**/*"
+    "dist/**/*"
   ],
   "scripts": {
     "build": "npm run build:tokens && npm run build:theme && npm run build:theme-gatsbyjs-org",
