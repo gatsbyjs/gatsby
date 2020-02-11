@@ -56,8 +56,9 @@
           link: /contributing/blog-and-website-contributions/
         - title: Code Contributions
           link: /contributing/code-contributions/
-        - title: Setting Up Your Local Dev Environment
-          link: /contributing/setting-up-your-local-dev-environment/
+          items:
+            - title: Setting Up Your Local Dev Environment
+              link: /contributing/setting-up-your-local-dev-environment/
         - title: Docs and Website Components
           link: /contributing/docs-and-website-components/
         - title: Community Contributions
