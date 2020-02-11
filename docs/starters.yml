@@ -5235,6 +5235,18 @@
     - Disqus
     - Resume
     - Place plan on the top
+- url: https://gatsby-portfolio-starter.netlify.com/
+  repo: https://github.com/Judionit/gatsby-portfolio-starter
+  description: A simple Gatsby portfolio starter
+  tags:
+    - Netlify
+    - Styling:CSS-in-JS
+    - Onepage
+    - Portfolio
+  features:
+    - Styled components
+    - Responsive webpage
+    - Portfolio
 - url: https://wp-graphql-gatsby-starter.netlify.com/
   repo: https://github.com/n8finch/wp-graphql-gatsby-starter
   description: A super simple, bare-bone starter based on the Gatsby Starter for the front end and the WP GraphQL plugin on your WordPress install. This is a basic "headless CMS" setup. This starter will pull posts, pages, categories, tags, and a menu from your WordPress site. You should use either the TwentyNineteen or TwentyTwenty WordPress themes on your WordPress install. See the starter repo for more detailed instructions on getting set up. The example here uses the WordPress Theme Unit Test Data for post and page dummy content. Find something wrong? Issues are welcome on the starter reository.
