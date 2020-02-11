@@ -32,6 +32,10 @@ Above is the minimal configuration required to begin working. Additional
 customization of the parsing process is possible using the parameters listed in
 [csvtojson](https://github.com/Keyang/node-csvtojson#parameters).
 
+### Configuration
+
+For example, to pass the `noheader` option, you can configure like so:
+
 ```javascript
 // In your gatsby-config.js
 module.exports = {
@@ -47,6 +51,32 @@ module.exports = {
       resolve: `gatsby-transformer-csv`,
       options: {
         noheader: true,
+      },
+    },
+  ];
+}
+```
+
+By default, files that do not have a `.csv` extension will not be parsed, but this can be configured using the `extensions` option which takes an array of strings.
+
+For example, if you need to parse TSV files, you can configure the plugin like so:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+      },
+    },
+    {
+      resolve: `gatsby-transformer-csv`,
+      options: {
+        extensions: [`tsv`],
+        delimiter: '\t'
       },
     },
   ];
@@ -265,29 +295,3 @@ Which would return:
 ```
 
 ## TSV Files
-
-If you need to parse TSV files, you can configure the plugin like so:
-
-```javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `data`,
-        path: `${__dirname}/src/data/`,
-      },
-    },
-    {
-      resolve: `gatsby-transformer-csv`,
-      options: {
-        tsv: true,
-      },
-    },
-  ];
-}
-```
-
-This will automatically configure csv2json to use a tab character as the delimiter, and the typenames
-will be suffixed with `Tsv` instead of `Csv`.

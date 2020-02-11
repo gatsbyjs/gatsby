@@ -23,17 +23,14 @@ async function onCreateNode(
   const { createNode, createParentChildLink } = actions
 
   // Destructure out our custom options
-  const { typeName, nodePerFile, tsv, ...options } = pluginOptions || {}
-  if (tsv) {
-    const tab = String.fromCharCode(0x9)
-    options.delimiter = options.delimiter ? `${options.delimiter}${tab}` : tab
-  }
+  const { typeName, nodePerFile, extensions, ...options } = pluginOptions || {}
 
   // Filter out unwanted content
-  const filterExtension = tsv ? `tsv` : `csv`
-  if (node.extension !== filterExtension) {
+  const filterExtensions = extensions ?? [`csv`]
+  if (!filterExtensions.includes(node.extension)) {
     return
   }
+
   // Load file contents
   const content = await loadNodeContent(node)
 
@@ -57,7 +54,7 @@ async function onCreateNode(
       ...obj,
       id: obj.id
         ? obj.id
-        : createNodeId(`${node.id} [${i}] >>> ${tsv ? `TSV` : `CSV`}`),
+        : createNodeId(`${node.id} [${i}] >>> ${node.extension.toUpperCase()}`),
       children: [],
       parent: node.id,
       internal: {
