@@ -99,9 +99,9 @@ module.exports = {
 
 ### See your site hot reload in the browser!
 
-Run `npm run develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to [localhost:8000](http://localhost:8000/) and you should see a default homepage.
+Run `npm run develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to `http://localhost:8000/` and you should see a default homepage.
 
-> **NOTE**: If you have already started your Gatsby development server using `npm run develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `npm run develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](http://localhost:8000/)
+> **NOTE**: If you have already started your Gatsby development server using `npm run develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `npm run develop` again to see changes in your `gatsby-config.js` reflected on `http://localhost:8000/`
 
 ### How does the StripeJS plugin work?
 
@@ -284,7 +284,7 @@ const IndexPage = () => (
 export default IndexPage
 ```
 
-If you go back to [localhost:8000](http://localhost:8000/) in your browser and you have `npm run develop` running, you should now see a big, enticing "BUY MY BOOK" button. C'mon and give it a click!
+If you go back to `http://localhost:8000/` in your browser and you have `npm run develop` running, you should now see a big, enticing "BUY MY BOOK" button. C'mon and give it a click!
 
 ### Advanced: Import SKUs via source plugin
 
@@ -383,7 +383,7 @@ export default props => (
 )
 ```
 
-You can validate your query and see what data is being returned in GraphiQL, which is available at http://localhost:8000/___graphql when running `npm run develop`.
+You can validate your query and see what data is being returned in GraphiQL, which is available at `http://localhost:8000/___graphql` when running `npm run develop`.
 
 Once you're happy with your query, create a new page where you can import the newly created Sku component:
 
@@ -406,7 +406,7 @@ const AdvancedExamplePage = () => (
 export default AdvancedExamplePage
 ```
 
-When navigating to http://localhost:8000/advanced/ you should now see a list of paragraphs with your SKU names.
+When navigating to `http://localhost:8000/advanced/` you should now see a list of paragraphs with your SKU names.
 
 #### Create a component that presents a single SKU
 

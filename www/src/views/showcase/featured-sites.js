@@ -10,7 +10,7 @@ import { screenshot, screenshotHover, withTitleHover } from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { ShowcaseIcon } from "../../assets/icons"
-import { mediaQueries, colors } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries, colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -88,7 +88,7 @@ class FeaturedSites extends Component {
         >
           <h1
             sx={{
-              fontFamily: `header`,
+              fontFamily: `heading`,
               fontSize: 4,
               fontWeight: `bold`,
               ml: 1,
@@ -177,7 +177,7 @@ class FeaturedSites extends Component {
                     "&&": {
                       borderBottom: `none`,
                       color: `heading`,
-                      fontFamily: `header`,
+                      fontFamily: `heading`,
                       fontSize: 3,
                       fontWeight: `bold`,
                       transition: t =>
@@ -214,7 +214,7 @@ class FeaturedSites extends Component {
                 >
                   {node.built_by && (
                     <div
-                      sx={{ color: `text`, fontFamily: `header`, fontSize: 2 }}
+                      sx={{ color: `text`, fontFamily: `heading`, fontSize: 2 }}
                     >
                       Built by {node.built_by}
                     </div>
@@ -236,8 +236,7 @@ class FeaturedSites extends Component {
                   textAlign: `center`,
                   "&&": {
                     border: 0,
-                    transition: t =>
-                      `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+                    transition: `default`,
                     "&:hover": {
                       transform: t => `translateY(-${t.space[1]})`,
                       boxShadow: `overlay`,
