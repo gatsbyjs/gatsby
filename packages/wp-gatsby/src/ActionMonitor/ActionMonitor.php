@@ -137,13 +137,14 @@ class ActionMonitor
         $meta_types = ['user', 'post', 'page'];
 
         foreach( $meta_types as $type ) {
-          add_action( "updated_{$type}_meta", [ $this, 'addOrUpdateMeta' ], 10, 3 );
+          add_action( "updated_{$type}_meta", [ $this, 'modifyMeta' ], 10, 3 );
+          add_action( "added_{$type}_meta", [ $this, 'modifyMeta' ], 10, 3 );
+          add_action( "deleted_{$type}_meta", [ $this, 'modifyMeta' ], 10, 3 );
         }
 
-        add_action( "added_post_meta", [ $this, 'addOrUpdateMeta' ], 10, 3 );
     }
 
-    function addOrUpdateMeta( $meta_id, $object_id, $meta_key ) {
+    function modifyMeta( $meta_id, $object_id, $meta_key ) {
       if ( $meta_key === '_edit_lock' ) {
         return;
       }
