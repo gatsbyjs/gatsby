@@ -342,10 +342,8 @@ describe(`actual compiling`, () => {
       }
 
       fragment Bar on Directory {
-        id
         parent {
           __typename
-          id
           ...Foo
         }
       }
@@ -353,7 +351,6 @@ describe(`actual compiling`, () => {
       query mockFileQuery1 {
         allDirectory {
           nodes {
-            id
             ...Foo
             ...Bar
           }
@@ -377,10 +374,8 @@ describe(`actual compiling`, () => {
               }",
         "path": "mockFile2",
         "text": "fragment Bar on Directory {
-        id
         parent {
           __typename
-          id
           ...Foo
         }
       }
@@ -392,7 +387,6 @@ describe(`actual compiling`, () => {
       query mockFileQuery2 {
         allDirectory {
           nodes {
-            id
             ...Bar
           }
         }
