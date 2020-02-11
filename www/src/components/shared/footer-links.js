@@ -2,6 +2,11 @@
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
 
+const footerLinks = [
+  { id: "accessibility", to: "/accessibility-statement/" },
+  { id: "codeOfConduct", to: "/contributing/code-of-conduct/" },
+  { id: "logoAndAssets", to: "/guidelines/logo/" },
+]
 const FooterLinks = props => (
   <footer>
     <ul
@@ -40,15 +45,13 @@ const FooterLinks = props => (
         },
       }}
     >
-      <li>
-        <Link to="/accessibility-statement">Accessibility Statement</Link>
-      </li>
-      <li>
-        <Link to="/contributing/code-of-conduct/">Code of Conduct</Link>
-      </li>
-      <li>
-        <a href="/guidelines/logo/">Logo &amp; Assets</a>
-      </li>
+      {footerLinks.map(({ id, to }) => (
+        <li>
+          <Link to={to}>
+            <FormattedMessage id={`footer.links.${id}`} />
+          </Link>
+        </li>
+      ))}
       <li>
         <a href="https://www.gatsbyjs.com">Gatsbyjs.com</a>
       </li>

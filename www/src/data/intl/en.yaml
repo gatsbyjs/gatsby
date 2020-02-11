@@ -8,9 +8,9 @@ nav.links.showcase: Showcase
 nav.links.contributing: Contributing
 nav.search.label: Search gatsbyjs.org
 nav.search.title: Hit 's' to search docs
+footer.links.accessibility: Accessibility Statement
 footer.links.codeOfConduct: Code of Conduct
 footer.links.logoAndAssets: Logo & Assets
-footer.links.dotCom: Gatsbyjs.com
 sidebar.expandAll: Expand All
 sidebar.collapseAll: Collapse All
 docs.markdownPageFooter: "{icon} Edit this page on GitHub"
