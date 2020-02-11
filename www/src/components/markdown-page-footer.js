@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
+import { FormattedMessage } from "react-intl"
 import { graphql } from "gatsby"
 import EditIcon from "react-icons/lib/md/create"
 
@@ -20,9 +21,12 @@ export default class MarkdownPageFooter extends React.Component {
               this.props.packagePage ? `packages` : `docs`
             }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
           >
-            <EditIcon sx={{ marginRight: 2 }} />
-            {` `}
-            Edit this page on GitHub
+            <FormattedMessage
+              id="docs.markdownPageFooter"
+              values={{
+                icon: <EditIcon sx={{ marginRight: 2 }} />,
+              }}
+            />
           </a>
         )}
       </>

@@ -1,6 +1,4 @@
-docs.tableOfContents: Table of Contents
-docs.previous: Previous
-docs.next: Next
+skipNav: Skip to main content
 nav.links.docs: Docs
 nav.links.tutorial: Tutorials
 nav.links.plugins: Plugins
@@ -10,8 +8,17 @@ nav.links.showcase: Showcase
 nav.links.contributing: Contributing
 nav.search.label: Search gatsbyjs.org
 nav.search.title: Hit 's' to search docs
+footer.links.codeOfConduct: Code of Conduct
+footer.links.logoAndAssets: Logo & Assets
+footer.links.dotCom: Gatsbyjs.com
 sidebar.expandAll: Expand All
 sidebar.collapseAll: Collapse All
+docs.markdownPageFooter: "{icon} Edit this page on GitHub"
+docs.stubIssue: See the issue relating to this stub on GitHub
+docs.tableOfContents: Table of Contents
+docs.guideList: "In this section:"
+docs.previous: Previous
+docs.next: Next
 feedback.title: Was this doc helpful to you?
 feedback.legend: Rate your experience
 feedback.textLabel: Your comments <span>(optional):</span>

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
+import { FormattedMessage } from "react-intl"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
@@ -116,7 +117,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    See the issue relating to this stub on GitHub
+                    <FormattedMessage id="docs.stubIssue" />
                   </a>
                 )}
                 <MarkdownPageFooter page={page} />

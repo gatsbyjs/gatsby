@@ -1,5 +1,6 @@
 import React from "react"
 
+import { FormattedMessage } from "react-intl"
 import docsHierarchy from "../data/sidebars/doc-links.yaml"
 import tutorialHierarchy from "../data/sidebars/tutorial-links.yaml"
 import contributingHierarchy from "../data/sidebars/contributing-links.yaml"
@@ -42,7 +43,9 @@ const GuideList = ({ slug }) => {
   ))
   const toc = subitemList.length ? (
     <>
-      <h2>In this section:</h2>
+      <h2>
+        <FormattedMessage id="docs.guideList" />
+      </h2>
       <ul>{subitemList}</ul>
     </>
   ) : null

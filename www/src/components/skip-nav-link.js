@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import { FormattedMessage } from "react-intl"
 import { SkipNavLink } from "@reach/skip-nav"
 
 import { visuallyHidden } from "../utils/styles"
@@ -27,7 +28,7 @@ const Link = () => (
       },
     }}
   >
-    Skip to main content
+    <FormattedMessage id="skipNav" />
   </SkipNavLink>
 )
 
