@@ -11,9 +11,6 @@ import { Box } from "./system"
 import Header from "./header"
 import Footer from "../shared/footer-links"
 
-// Import Futura PT typeface
-import "../../assets/fonts/futura"
-
 const Layout = ({ children, background, location, pageTitle }) => (
   <BaseLayout location={location}>
     <Global
@@ -35,9 +32,7 @@ const Layout = ({ children, background, location, pageTitle }) => (
     />
     <Global styles={globalStyles} />
     <Helmet>
-      <title>
-        {pageTitle ? `${pageTitle} | Guidelines | GatsbyJS` : `GatsbyJS`}
-      </title>
+      <title>{pageTitle ? `${pageTitle} | Guidelines` : `Guidelines`}</title>
     </Helmet>
     <Box bg="background" position="relative">
       {background && background}
