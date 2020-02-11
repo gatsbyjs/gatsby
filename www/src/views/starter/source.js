@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
 import CodesandboxIcon from "../../assets/vendor-logos/codesandbox.svg"
@@ -11,7 +11,7 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
     sx={{
       display: `flex`,
       borderTop: t => `1px solid ${t.colors.ui.border}`,
-      fontFamily: `header`,
+      fontFamily: `heading`,
       mx: 6,
       [mediaQueries.sm]: { borderTop: 0 },
       [mediaQueries.lg]: { mx: 8 },

@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 import PageHeading from "./page-heading"
 import BaseLayout from "../layout"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const LayoutWithHeading = props => {
   const { children, location, pageTitle = ``, pageIcon } = props

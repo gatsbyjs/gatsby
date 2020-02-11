@@ -5,7 +5,7 @@ import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { themedInput, formInputFocus, buttonStyles } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 
@@ -13,7 +13,7 @@ const Container = styled(`div`)`
   background: ${p => p.theme.colors.newsletter.background};
   box-shadow: ${p => p.theme.shadows.floating},
     inset 0 0 0 1px ${p => p.theme.colors.newsletter.border};
-  border-radius: ${p => p.theme.radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   margin-top: ${p => p.theme.space[8]};
   padding: calc(${p => p.theme.space[6]} * 1.2);
   padding-bottom: calc(
@@ -22,7 +22,7 @@ const Container = styled(`div`)`
   position: relative;
 
   :after {
-    border-radius: 0 0 ${p => p.theme.radii[2]}px ${p => p.theme.radii[2]}px;
+    border-radius: 0 0 ${p => p.theme.radii[2]} ${p => p.theme.radii[2]};
     background: ${p => p.theme.colors.newsletter.background}
       repeating-linear-gradient(
         135deg,
