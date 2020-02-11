@@ -4,7 +4,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import theme from "../gatsby-plugin-theme-ui"
 
 // API Rendering Stuff
 import { sortBy } from "lodash-es"
@@ -98,6 +98,7 @@ export default function APITemplate({ data, location, pageContext }) {
         <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
       </Helmet>
       <Layout location={location} itemList={itemListDocs}>
+<<<<<<< HEAD
         <PageWithSidebar location={location}>
           <DocSearchContent>
             <Container
@@ -140,6 +141,46 @@ export default function APITemplate({ data, location, pageContext }) {
           </DocSearchContent>
           <FooterLinks />
         </PageWithSidebar>
+=======
+        <DocSearchContent>
+          <Container
+            overrideCSS={{
+              pb: 0,
+              [theme.mediaQueries.lg]: {
+                pt: 9,
+              },
+            }}
+          >
+            <Breadcrumb location={location} itemList={itemListDocs} />
+            <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
+              {page.frontmatter.title}
+            </h1>
+          </Container>
+          <Container
+            overrideCSS={{
+              pt: 0,
+              position: `static`,
+              [theme.mediaQueries.lg]: {
+                pb: 9,
+              },
+            }}
+          >
+            <div>
+              <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
+              <h2>{page.frontmatter.contentsHeading || "APIs"}</h2>
+              <APIContents docs={mergedFuncs} />
+              <h2>Reference</h2>
+              <APIReference
+                docs={mergedFuncs}
+                showTopLevelSignatures={page.frontmatter.showTopLevelSignatures}
+              />
+              <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
+              <MarkdownPageFooter page={page} />
+            </div>
+          </Container>
+        </DocSearchContent>
+        <FooterLinks />
+>>>>>>> master
       </Layout>
     </React.Fragment>
   )

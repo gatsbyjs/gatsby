@@ -6,7 +6,7 @@ import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { loadMoreButton } from "../shared/styles"
 import LHSFilter from "./lhs-filter"
 import StarterList from "./starter-list"
@@ -195,7 +195,7 @@ export default class FilteredStarterLibrary extends Component {
                     border: 0,
                     borderRadius: 2,
                     color: `gatsby`,
-                    fontFamily: `header`,
+                    fontFamily: `heading`,
                     py: 1,
                     pr: 1,
                     width: `10rem`,

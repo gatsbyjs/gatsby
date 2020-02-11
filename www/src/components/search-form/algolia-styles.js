@@ -1,6 +1,5 @@
 /** @jsx jsx */
-
-import { space } from "../../gatsby-plugin-theme-ui"
+import { space } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { css } from "@emotion/core"
 
 // Override default search result styles (docsearch.css)
