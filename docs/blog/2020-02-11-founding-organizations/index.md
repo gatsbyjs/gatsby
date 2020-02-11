@@ -152,7 +152,7 @@ We wrote this piece, among other reasons, to share our deep commitment to open s
 
 What that means to us:
 
-- **Open-source staffing level.** We have 25 people in our roughly 55-person organization — over 45% by headcount — writing open-source code and documentation.  We’ll continue to report this figure periodically over time.
+- **Open-source staffing level.** We have 25 people in our roughly 55-person organization — over 45% by headcount — writing open-source code and documentation. We’ll continue to report this figure periodically over time.
 - **Continued development.** In the last few months, we’ve shipped [themes](/blog/2019-07-03-announcing-stable-release-gatsby-themes/), [MDX 1.0](https://mdxjs.com/blog/v1), [better offline support](https://twitter.com/gatsbyjs/status/1175063002015514626), [better site performance for large sites](/blog/2019-06-12-performance-improvements-for-large-sites/), [schema snapshotting](/packages/gatsby-plugin-schema-snapshot/), [UI improvements to documentation](/blog/2019-08-07-gazette-august/#learning), [structured logging](https://github.com/gatsbyjs/gatsby/pull/14973), [asset prefixing](/docs/asset-prefix/), and a long list of other features and research initiatives.
 - **Commercialization**. We’re building a sustainable revenue base via the [recently launched Gatsby Cloud](/blog/2019-11-14-announcing-gatsby-cloud/) with features like Preview and Builds.
 
