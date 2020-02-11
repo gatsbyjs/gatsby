@@ -5,7 +5,6 @@ const slugify = require(`slugify`)
 const url = require(`url`)
 const moment = require(`moment`)
 const langs = require(`../../../i18n.json`)
-const { getPrevAndNext } = require(`../get-prev-and-next.js`)
 const { localizedPath } = require(`../i18n.js`)
 
 // convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
@@ -173,7 +172,6 @@ exports.createPages = async ({ graphql, actions }) => {
     if (!slug) return
 
     if (!_.includes(slug, `/blog/`)) {
-      const prevAndNext = getPrevAndNext(node.fields.slug)
       if (node.frontmatter.jsdoc) {
         // API template
         createPage({
@@ -183,7 +181,6 @@ exports.createPages = async ({ graphql, actions }) => {
             slug: node.fields.slug,
             jsdoc: node.frontmatter.jsdoc,
             apiCalls: node.frontmatter.apiCalls,
-            ...prevAndNext,
           },
         })
       } else if (node.fields.package) {
@@ -203,7 +200,6 @@ exports.createPages = async ({ graphql, actions }) => {
           context: {
             slug: node.fields.slug,
             locale,
-            ...prevAndNext,
           },
         })
       }
@@ -215,6 +211,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
   let slug
   let locale
+  let section
   if (node.internal.type === `File`) {
     const parsedFilePath = path.parse(node.relativePath)
     // TODO add locale data for non-MDX files
@@ -234,6 +231,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     if (fileNode.sourceInstanceName === `docs`) {
       slug = docSlugFromPath(parsedFilePath)
       locale = "en"
+      section = slug.split("/")[1]
 
       // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
@@ -262,6 +260,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         // have to remove the beginning "/docs" path because of the way
         // gatsby-source-filesystem and gatsby-source-git differ
         slug = docSlugFromPath(path.parse(fileNode.relativePath.substring(5)))
+        section = slug.split("/")[1]
         locale = code
       }
     }
@@ -285,6 +284,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     }
     if (locale) {
       createNodeField({ node, name: `locale`, value: locale })
+    }
+    if (section) {
+      createNodeField({ node, name: "section", value: section })
     }
   } else if (node.internal.type === `AuthorYaml`) {
     slug = `/contributors/${slugify(node.id, {
