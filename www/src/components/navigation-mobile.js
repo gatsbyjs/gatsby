@@ -11,6 +11,7 @@ import {
 } from "../assets/icons"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import { svgStyles } from "../utils/styles"
+import { FormattedMessage } from "react-intl"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {
@@ -22,7 +23,7 @@ const getProps = ({ isPartiallyCurrent }) => {
   }
 }
 
-const MobileNavItem = ({ linkTo, label, icon }) => (
+const MobileNavItem = ({ linkTo, id, icon }) => (
   <Link
     sx={{
       ...styles.link.default,
@@ -36,9 +37,19 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
     to={linkTo}
   >
     <span dangerouslySetInnerHTML={{ __html: icon }} />
-    <div>{label}</div>
+    <div>
+      <FormattedMessage id={`nav.links.${id}`} />
+    </div>
   </Link>
 )
+
+const mobileNavLinks = [
+  { id: "docs", icon: DocsIcon },
+  { id: "tutorial", icon: TutorialIcon },
+  { id: "plugins", icon: PluginsIcon },
+  { id: "blog", icon: BlogIcon },
+  { id: "showcase", icon: ShowcaseIcon },
+]
 
 const MobileNavigation = () => (
   <div
@@ -62,11 +73,9 @@ const MobileNavigation = () => (
       },
     }}
   >
-    <MobileNavItem linkTo="/docs/" label="Docs" icon={DocsIcon} />
-    <MobileNavItem linkTo="/tutorial/" label="Tutorials" icon={TutorialIcon} />
-    <MobileNavItem linkTo="/plugins/" label="Plugins" icon={PluginsIcon} />
-    <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
-    <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
+    {mobileNavLinks.map(({ id, icon }) => (
+      <MobileNavItem key={id} linkTo={`/${id}/`} id={id} icon={icon} />
+    ))}
   </div>
 )
 

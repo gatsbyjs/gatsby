@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { useColorMode } from "theme-ui"
+import { FormattedMessage } from "react-intl"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 
@@ -79,6 +80,16 @@ const SocialNavItem = ({ href, title, children }) => (
     {children}
   </a>
 )
+
+const navLinks = [
+  "docs",
+  "tutorial",
+  "plugins",
+  "features",
+  "blog",
+  "showcase",
+  "contributing",
+]
 
 const Navigation = ({ pathname }) => {
   const [colorMode] = useColorMode()
@@ -193,14 +204,11 @@ const Navigation = ({ pathname }) => {
               },
             }}
           >
-            <NavItem linkTo="/docs/">Docs</NavItem>
-            <NavItem linkTo="/tutorial/">Tutorials</NavItem>
-            <NavItem linkTo="/plugins/">Plugins</NavItem>
-            <NavItem linkTo="/features/">Features</NavItem>
-            <NavItem linkTo="/blog/">Blog</NavItem>
-            <NavItem linkTo="/showcase/">Showcase</NavItem>
-            <NavItem linkTo="/contributing/">Contributing</NavItem>
-            {/* <NavItem linkTo="/starters/">Starters</NavItem> */}
+            {navLinks.map(link => (
+              <NavItem key={link} linkTo={`/${link}/`}>
+                <FormattedMessage id={`nav.links.${link}`} />
+              </NavItem>
+            ))}
           </ul>
         </nav>
         <SearchForm key="SearchForm" offsetVertical={navItemTopOffset} />

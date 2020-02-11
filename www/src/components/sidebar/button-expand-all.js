@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
+import { FormattedMessage } from "react-intl"
 import GoFold from "react-icons/lib/go/fold"
 import GoUnfold from "react-icons/lib/go/unfold"
 
@@ -33,18 +34,23 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
     }}
   >
     {expandAll ? (
+      // TODO may need to pass in the icon to the formatted message when we do RTL
       <React.Fragment>
         <span sx={iconStyles}>
           <GoFold />
         </span>
-        <span>Collapse All</span>
+        <span>
+          <FormattedMessage id="sidebar.collapseAll" />
+        </span>
       </React.Fragment>
     ) : (
       <React.Fragment>
         <span sx={iconStyles}>
           <GoUnfold />
         </span>
-        <span>Expand All</span>
+        <span>
+          <FormattedMessage id="sidebar.expandAll" />
+        </span>
       </React.Fragment>
     )}
   </button>

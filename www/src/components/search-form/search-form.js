@@ -146,9 +146,9 @@ export default function SearchForm() {
               `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
           }}
           type="search"
-          placeholder={formatMessage({ id: "search.label" })}
-          aria-label={formatMessage({ id: "search.label" })}
-          title={formatMessage({ id: "search.title" })}
+          placeholder={formatMessage({ id: "nav.search.label" })}
+          aria-label={formatMessage({ id: "nav.search.label" })}
+          title={formatMessage({ id: "nav.search.title" })}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           ref={searchInput}
