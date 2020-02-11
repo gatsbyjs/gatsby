@@ -103,6 +103,25 @@ It can be necessary to change a heading within the docs. It's important to note 
 - Determine the URL you're looking for. `Changing headers` is linked with a URL ending in `changing-headers`, `Docs renaming instructions` becomes `docs-renaming-instructions`, etc.
 - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
 
+## Adding a description
+
+The site automatically creates description tags in order to boost SEO:
+
+```html
+<meta name="description" content="Documentation of Gatsby" />
+<meta property="og:description" content="Documentation of Gatsby" />
+<meta name="twitter:description" content="Documentation of Gatsby" />
+```
+
+By default, this description is generated from the `page.excerpt`. If you would like to add a custom description, you can use the `description` frontmatter tag:
+
+```markdown
+---
+title: Gatsby Community Events
+description: Learn about other events happening around the globe to connect with other members of the Gatsby community
+---
+```
+
 ## Configuring site navigation
 
 The docs include custom built components to aid with navigation. In order to customize the navigation experience, these components allow some configurations without changing any of the React code.
