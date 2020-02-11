@@ -263,17 +263,23 @@ exports.createResolvers = ({
             return fileNode
           }
 
-          return createRemoteFileNode({
-            url: source.url,
-            parentNodeId: source.id,
-            name: source.name,
-            ext: source.ext,
-            store,
-            cache,
-            createNode,
-            createNodeId,
-            reporter,
-          })
+          try {
+            const result = await createRemoteFileNode({
+              url: source.url,
+              parentNodeId: source.id,
+              name: source.name,
+              ext: source.ext,
+              store,
+              cache,
+              createNode,
+              createNodeId,
+              reporter,
+            })
+
+            return result
+          } catch (e) {
+            return null
+          }
         },
       },
     },
