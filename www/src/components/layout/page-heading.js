@@ -19,6 +19,7 @@ const PageHeadingContainer = styled(`header`)`
 
 const H1 = styled(`h1`)`
   align-items: center;
+  font-weight: bold;
   color: ${p => p.theme.colors.heading};
   display: flex;
   font-size: ${p => p.theme.fontSizes[4]};
