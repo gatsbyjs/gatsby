@@ -85,11 +85,9 @@ Edit your gatsby-config.js file to source images and configure plugins for Gatsb
  ],
 ```
 
-<<<<<<< HEAD
+2. You would then need to create a query for your image that specifies all parameters that the gatsby image requires
 
-2. # You would then need to create a query for your image that specifies all parameters that the gatsby image requires
-   Note the `gatsby-source-filesystem` path pointing to the location of images in your project.
-   > > > > > > > 0b3ead08aff4a07d51b1004e2df81783e8a9da74
+Note the `gatsby-source-filesystem` path pointing to the location of images in your project.
 
 Note: You can find these and other parameters in your GraphQL playground located at `http://localhost:8000/__graphql`
 
@@ -105,7 +103,26 @@ Note: You can find these and other parameters in your GraphQL playground located
    }
 ```
 
-Note: The relative path is the image path that you configured in `gatsby-config.js`.
+Note: The relative path is the image path that you configured in `gatsby-source-filesystem`.
+
+```JavaScript
+module.exports = {
+  siteMetadata: {
+    title: `Your Site Name`,
+  },
+  plugins: [
+    //highlight-start
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `src`,
+        path: `${__dirname}/src/`,
+      },
+    },
+    //highlight-end
+  ],
+}
+```
 
 3. Next import the image from the "gatsby-image" line listed below
 
