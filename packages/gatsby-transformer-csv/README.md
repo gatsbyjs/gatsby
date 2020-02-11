@@ -293,5 +293,3 @@ Which would return:
   }
 }
 ```
-
-## TSV Files
