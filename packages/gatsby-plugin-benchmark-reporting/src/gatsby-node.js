@@ -3,6 +3,8 @@ const { performance } = require(`perf_hooks`)
 const { sync: glob } = require(`fast-glob`)
 const nodeFetch = require(`node-fetch`)
 const uuidv4 = require(`uuid/v4`)
+const { execSync } = require(`child_process`)
+const fs = require(`fs`)
 
 const bootstrapTime = performance.now()
 
@@ -40,9 +42,59 @@ class BenchMeta {
   }
 
   getData() {
+    // Get memory usage snapshot first (just in case)
+    const memory = process.memoryUsage()
+
     for (const key in this.timestamps) {
       this.timestamps[key] = Math.floor(this.timestamps[key])
     }
+
+    // For the time being, our target benchmarks are part of the main repo
+    // And we will want to know what version of the repo we're testing with
+    const gitHash = execSync(`git rev-parse HEAD`, { encoding: `utf8` }).trim()
+
+    const nodeVersion = execSync(`node --version`, {
+      encoding: `utf8`,
+    }).trim()
+
+    const gatsbyCliVersion = execSync(`gatsby --version`, {
+      encoding: `utf8`,
+    }).trim()
+
+    const gatsbyVersion = require(`gatsby/package.json`).version
+
+    const sharpVersion = fs.existsSync(`node_modules/sharp/package.json`)
+      ? require(`sharp/package.json`).version
+      : `none`
+
+    const webpackVersion = execSync(`node_modules/.bin/webpack --version`, {
+      encoding: `utf8`,
+    }).trim()
+
+    const publicJsSize = execSync(
+      `echo "0 $(find public -maxdepth 1 -iname "*.js" -printf " + %s")" | bc`,
+      { encoding: `utf8` }
+    ).trim()
+
+    const jpgCount = execSync(
+      `find public .cache  -type f -iname "*.jpg" -or -iname "*.jpeg" | wc -l`,
+      { encoding: `utf8` }
+    ).trim()
+
+    const pngCount = execSync(
+      `find public .cache  -type f -iname "*.png" | wc -l`,
+      { encoding: `utf8` }
+    ).trim()
+
+    const gifCount = execSync(
+      `find public .cache  -type f -iname "*.gif" | wc -l`,
+      { encoding: `utf8` }
+    ).trim()
+
+    const rndCount = execSync(
+      `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`,
+      { encoding: `utf8` }
+    ).trim()
 
     const pageCount = glob(`**/**.json`, {
       cwd: `./public/page-data`,
@@ -52,8 +104,23 @@ class BenchMeta {
     return {
       time: this.localTime,
       sessionId: process.gatsbyTelemetrySessionId || uuidv4(),
-      pageCount,
       timestamps: this.timestamps,
+      gitHash,
+      ci: process.env.CI || false,
+      ciName: process.env.CI_NAME || `local`,
+      telemetryTags: process.env.GATSBY_TELEMETRY_TAGS,
+      nodeVersion,
+      gatsbyVersion,
+      gatsbyCliVersion,
+      sharpVersion,
+      webpackVersion,
+      memory,
+      publicJsSize,
+      pageCount,
+      jpgCount,
+      pngCount,
+      gifCount,
+      rndCount,
     }
   }
 
@@ -95,46 +162,46 @@ class BenchMeta {
 
   async flush() {
     const data = this.getData()
-    const json = JSON.stringify(data)
+    const json = JSON.stringify(data, null, 2)
 
-    reportInfo(`Submitting data: ` + json)
+    if (!BENCHMARK_REPORTING_URL) {
+      reportInfo(`Gathered data: ` + json)
+      reportInfo(`BENCHMARK_REPORTING_URL not set, not submitting data`)
 
-    if (BENCHMARK_REPORTING_URL) {
-      reportInfo(`Flushing benchmark data to remote server...`)
-
-      let lastStatus = 0
-      this.flushing = nodeFetch(`${BENCHMARK_REPORTING_URL}`, {
-        method: `POST`,
-        headers: {
-          "content-type": `application/json`,
-          // "user-agent": this.getUserAgent(),
-        },
-        body: json,
-      }).then(res => {
-        lastStatus = res.status
-        if (lastStatus === 500) {
-          reportError(
-            `Response error`,
-            new Error(`Server responded with a 500 error`)
-          )
-          process.exit(1)
-        }
-        this.flushed = true
-        // Note: res.text returns a promise
-        return res.text()
-      })
-
-      this.flushing.then(text =>
-        reportInfo(`Server response: ${lastStatus}: ${text}`)
-      )
-
-      return this.flushing
+      this.flushed = true
+      return (this.flushing = Promise.resolve())
     }
 
-    // ENV var had no reporting end point
+    reportInfo(`Gathered data: ` + json)
+    reportInfo(`Flushing benchmark data to remote server...`)
 
-    this.flushed = true
-    return (this.flushing = Promise.resolve())
+    let lastStatus = 0
+    this.flushing = nodeFetch(`${BENCHMARK_REPORTING_URL}`, {
+      method: `POST`,
+      headers: {
+        "content-type": `application/json`,
+        // "user-agent": this.getUserAgent(),
+      },
+      body: json,
+    }).then(res => {
+      lastStatus = res.status
+      if (lastStatus === 500) {
+        reportError(
+          `Response error`,
+          new Error(`Server responded with a 500 error`)
+        )
+        process.exit(1)
+      }
+      this.flushed = true
+      // Note: res.text returns a promise
+      return res.text()
+    })
+
+    this.flushing.then(text =>
+      reportInfo(`Server response: ${lastStatus}: ${text}`)
+    )
+
+    return this.flushing
   }
 }
 
