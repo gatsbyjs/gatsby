@@ -65,4 +65,4 @@ cd ../../
 gatsby develop
 ```
 
-And that's it! You should now have your initial page running on `localhost:8000` with a GraphiQL IDE running on `localhost:8000/___graphql`. From here, you can follow the rest of the [Gatsby tutorial](/tutorial/part-zero/#set-up-a-code-editor) starting with setting up a code editor to get the full experience of what Gatsby can offer.
+And that's it! You should now have your initial page running on `http://localhost:8000` with a GraphiQL IDE running on `http://localhost:8000/___graphql`. From here, you can follow the rest of the [Gatsby tutorial](/tutorial/part-zero/#set-up-a-code-editor) starting with setting up a code editor to get the full experience of what Gatsby can offer.

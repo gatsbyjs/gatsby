@@ -5196,6 +5196,7 @@
 - title: Kenneth Kwakye-Gyamfi Portfolio Site
   url: https://www.kwakye-gyamfi.com
   main_url: https://www.kwakye-gyamfi.com
+  source_url: https://www.github.com/cross19xx/cross-site
   description: >
     Personal portfolio site for Kenneth Kwakye-Gyamfi, a mobile and web full stack applications developer currently based in Accra, Ghana.
   categories:
@@ -9610,4 +9611,49 @@
     - Web Development
   built_by: Chris Otto
   built_by_url: https://github.com/chrisotto6
+  featured: false
+- title: Roboto Studio
+  url: https://roboto.studio
+  main_url: https://roboto.studio
+  description: >
+    Faster than a speeding bullet Website Development based in sunny old Nottingham
+  categories:
+    - Agency
+    - Blog
+    - Business
+    - Design
+    - Featured
+    - Freelance
+    - Web Development
+  featured: true
+- title: Viraj Chavan | Full Stack Software Engineer
+  url: http://virajc.tech
+  main_url: http://virajc.tech
+  source_url: https://github.com/virajvchavan/portfolio
+  description: >
+    Portfolio and blog of a full stack software engineer from India
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Viraj V Chavan
+  built_by_url: https://twitter.com/VirajVChavan
+  featured: false
+- title: Nexweave
+  url: https://www.nexweave.com
+  main_url: https://www.nexweave.com
+  description: >
+    Nexweave is a SaaS platform built by a team of experienced product, design & technology professionals in India. Nexweave allows brands to create personalized & interactive video experiences at scale. We would love for our site to be featured at the gatsby showcase since we have long been appreciating the flexibility and speed of the sites we have created using the same.
+  categories:
+    - Video
+    - API
+    - User Experience
+    - Marketing
+    - Design
+    - Data
+    - Technology
+    - Media
+    - Consulting
+  built_by: Kashaf S
+  built_by_url: https://www.linkedin.com/in/kashaf-shaikh-925117178
   featured: false

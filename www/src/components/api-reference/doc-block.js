@@ -34,7 +34,7 @@ const Deprecated = ({ definition }) => {
           "p:before": {
             color: `#e8bd36`,
             content: `(deprecated) `,
-            fontFamily: `header`,
+            fontFamily: `heading`,
           },
         }}
       >
