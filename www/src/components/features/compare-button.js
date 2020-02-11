@@ -6,7 +6,7 @@ import logoDictionary from "./logo-dictionary"
 const compareButtonStyles = {
   display: `flex`,
   flexDirection: `column`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   alignItems: `center`,
   justifyContent: `center`,
   borderRadius: 1,

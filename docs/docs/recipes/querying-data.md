@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Querying Data"
+tableOfContentsDepth: 1
 ---
 
 Gatsby lets you access your data across all sources using a single GraphQL interface.
