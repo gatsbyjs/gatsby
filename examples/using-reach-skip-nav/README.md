@@ -7,7 +7,6 @@ Demonstrates the usage of [@reach/skip-nav](https://reacttraining.com/reach-ui/s
 ```javascript:layout.js
 import { SkipNavLink, SkipNavContent } from "@reach/skip-nav"
 import "@reach/skip-nav/styles.css" //this will show/hide the link on focus
-
 ;<>
   <SkipNavLink /> //put the link at the very top of your page
   <Navigation />
