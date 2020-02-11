@@ -103,7 +103,6 @@ Note: You can find these and other parameters in your GraphQL playground located
    }
 ```
 
-Note: The relative path is the image path that you configured in `gatsby-source-filesystem`.
 
 ```JavaScript
 module.exports = {
