@@ -8,6 +8,7 @@
     "babel-plugin-lodash": "^3.2.11",
     "es6-object-assign": "^1.1.0",
     "gatsby": "^2.3.24",
+    "gatsby-core-utils": "^1.0.28",
     "gatsby-image": "^2.0.39",
     "gatsby-plugin-catch-links": "^2.0.13",
     "gatsby-plugin-glamor": "^2.0.9",

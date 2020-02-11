@@ -14,7 +14,7 @@ import {
 } from "../shared/horizontal-scroller"
 import { EcosystemIcon } from "../../assets/icons"
 import { PluginsIcon, StartersIcon } from "../../assets/icons/ecosystem-icons"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const Sections = styled(`div`)`
@@ -29,7 +29,7 @@ const Sections = styled(`div`)`
 
 const Section = styled(EcosystemSection)`
   box-shadow: ${p => p.theme.shadows.raised};
-  border-radius: ${p => p.theme.radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   margin-bottom: ${p => p.theme.space[6]};
   padding: ${p => p.theme.space[6]};
 
@@ -99,7 +99,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     box-shadow: ${p => p.theme.shadows.raised};
 
     ${mediaQueries.md} {
-      border-radius: ${p => p.theme.radii[2]}px;
+      border-radius: ${p => p.theme.radii[2]};
     }
 
     ${mediaQueries.lg} {
@@ -113,8 +113,8 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
         props.item.type === `Starter`
           ? props.theme.colors.card.starterLabelBackground
           : props.theme.colors.card.pluginLabelBackground};
-      border-radius: ${p => p.theme.radii[2]}px 0 0 ${props =>
-  props.theme.radii[2]}px;
+      border-radius: ${p => p.theme.radii[2]} 0 0 ${props =>
+  props.theme.radii[2]};
       bottom: 0;
       content: "";
       left: 0;

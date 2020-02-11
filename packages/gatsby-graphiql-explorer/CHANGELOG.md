@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.33...gatsby-graphiql-explorer@0.2.34) (2020-02-10)
+
+### Bug Fixes
+
+- **docs:** fix links to localhost on docs/blog/tutorials ... ([#21179](https://github.com/gatsbyjs/gatsby/issues/21179)) ([c9b0fa3](https://github.com/gatsbyjs/gatsby/commit/c9b0fa3))
+- **gatsby-graphiql-explorer:** Allow graphiql to set initial query variables from query string ([#21158](https://github.com/gatsbyjs/gatsby/issues/21158)) ([daaa3a8](https://github.com/gatsbyjs/gatsby/commit/daaa3a8))
+
 ## [0.2.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.32...gatsby-graphiql-explorer@0.2.33) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-graphiql-explorer
