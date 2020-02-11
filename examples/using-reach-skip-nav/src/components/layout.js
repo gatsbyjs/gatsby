@@ -6,7 +6,6 @@
  */
 
 import React from "react"
-import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { SkipNavLink, SkipNavContent } from "@reach/skip-nav"
 
