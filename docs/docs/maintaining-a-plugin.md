@@ -2,9 +2,9 @@
 title: Maintaining a Plugin
 ---
 
-The Gatsby community thrives on the power of plugins, you often find that there is a plugin for almost everything ranging from source plugins, to transformer plugins, to plugins that are plugins for other plugin. There is a guide on the [naming conventions for plugins](https://www.gatsbyjs.org/docs/naming-a-plugin/), check it out to learn more.
+The Gatsby community thrives on the power of plugins, you often find that there is a plugin for almost everything ranging from source plugins, to transformer plugins, to plugins that are plugins for other plugin. There is a guide on the [naming conventions for plugins](/docs/naming-a-plugin/), check it out to learn more.
 
-> Wondering how to [Create a plugin](/docs/creating-plugins) Look no further. Start contributing.
+> Wondering how to [create a plugin](/docs/creating-plugins) Look no further. Start contributing.
 
 ## What is a plugin?
 
@@ -24,7 +24,7 @@ Version 1.0.0 should be released when the plugin's API is considered stable. Ver
 
 > Consider a version format of X.Y.Z (Major.Minor.Patch). Bug fixes not affecting the API increment the patch version, backwards compatible API additions/changes increment the minor version, and backwards incompatible API changes increment the major version.
 
-## Update READMe and document use cases
+## Update README and document use cases
 
 Every major version update should also be reflected in the README of the plugin and also in the use case examples.
 
