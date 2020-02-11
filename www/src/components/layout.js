@@ -44,7 +44,6 @@ export default function DefaultLayout({
         }}
       >
         <PageWithSidebar
-          disable={isSidebarDisabled}
           location={location}
           enableScrollSync={enableScrollSync}
           renderContent={() => children}
