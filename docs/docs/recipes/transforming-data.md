@@ -85,7 +85,7 @@ Edit your gatsby-config.js file to source images and configure plugins for Gatsb
  ],
 ```
 
-Note: Note the gatsby src system path
+Note the `gatsby-source-filesystem` path pointing to the location of images in your project.
 
 2.
 
