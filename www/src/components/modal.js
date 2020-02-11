@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { navigate, PageRenderer } from "gatsby"
+import { Link, navigate, PageRenderer } from "gatsby"
 import { useColorMode } from "theme-ui"
 import { Global } from "@emotion/core"
 import mousetrap from "mousetrap"
@@ -19,9 +19,10 @@ import { globalStyles } from "../utils/styles/global"
 export default function Modal({
   modalBackgroundPath,
   children,
-  modalPrevious,
+  next,
+  previous,
+  filters,
   modalPreviousLink,
-  modalNext,
   modalNextLink,
 }) {
   const colorMode = useColorMode()
@@ -34,8 +35,20 @@ export default function Modal({
     }
   }, [])
 
+  function modalPrev() {
+    navigate(previous, {
+      state: { isModal: true, filters },
+    })
+  }
+
+  function modalNext() {
+    navigate(next, {
+      state: { isModal: true, filters },
+    })
+  }
+
   React.useEffect(() => {
-    mousetrap.bind(`left`, modalPrevious)
+    mousetrap.bind(`left`, modalPrev)
     mousetrap.bind(`right`, modalNext)
     mousetrap.bind(`spacebar`, modalNext)
 
@@ -44,7 +57,7 @@ export default function Modal({
       mousetrap.unbind(`right`)
       mousetrap.unbind(`spacebar`)
     }
-  }, [modalPrevious, modalNext])
+  }, [previous, next])
   return (
     <>
       <Global styles={globalStyles} />
@@ -128,8 +141,49 @@ export default function Modal({
             </button>
             {children}
           </div>
-          {modalPreviousLink}
-          {modalNextLink}
+          <Link
+            to={previous}
+            state={{
+              isModal: true,
+              filters,
+            }}
+            sx={{
+              order: 1,
+              position: `relative`,
+              width: `100%`,
+              m: 6,
+              display: `flex`,
+              [mediaQueries.md]: {
+                display: `block`,
+                order: 0,
+                top: `110px`,
+                width: `auto`,
+              },
+            }}
+          >
+            {modalPreviousLink}
+          </Link>
+          <Link
+            to={next}
+            state={{
+              isModal: true,
+              filters,
+            }}
+            sx={{
+              order: 2,
+              m: 6,
+              mt: 0,
+              position: `relative`,
+              display: `flex`,
+              [mediaQueries.md]: {
+                mt: 6,
+                display: `block`,
+                top: `110px`,
+              },
+            }}
+          >
+            {modalNextLink}
+          </Link>
         </div>
       </LazyModal>
     </>
