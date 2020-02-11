@@ -32,7 +32,7 @@ function createFileNode(pathToFile, createNodeId, mimeType = null) {
     // people will use the id for that and ids shouldn't be treated as
     // useful information.
     ...parsedSlashed,
-    id: createNodeId(pathToFile),
+    id: createNodeId(relativePath),
     relativeDirectory: slash(path.relative(cwd, parsedSlashed.dir)),
     relativePath,
     children: [],
