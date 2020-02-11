@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
 import loadable from "@loadable/component"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const PluginSearchBar = loadable(() => import("./plugin-searchbar-body"))
 

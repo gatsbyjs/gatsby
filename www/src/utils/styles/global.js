@@ -1,4 +1,4 @@
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const prismToken = t => {
   return {
@@ -67,7 +67,7 @@ const gatsbyHighlightLanguageBadges = t => {
     },
     ".gatsby-highlight pre[class*='language-']::before": {
       background: t.colors.grey[30],
-      borderRadius: `0 0 ${t.radii[2]}px ${t.radii[2]}px`,
+      borderRadius: `0 0 ${t.radii[2]} ${t.radii[2]}`,
       color: t.colors.grey[90],
       fontSize: t.fontSizes[0],
       fontFamily: t.fonts.monospace,
@@ -167,7 +167,7 @@ const gatsbyHighlight = t => {
   return {
     // gatsby-remark-prismjs styles
     ".gatsby-highlight": {
-      background: t.colors.code.background,
+      background: t.colors.code.bg,
       color: t.colors.text,
       position: `relative`,
       WebkitOverflowScrolling: `touch`,
@@ -218,7 +218,7 @@ export const globalStyles = t => {
       textDecoration: `none`,
     },
     h1: {
-      fontWeight: t.fontWeights.headingPrimary,
+      fontWeight: t.fontWeights.extraBold,
     },
     "h1, h2, h3, h4, h5, h6": {
       color: t.colors.heading,
@@ -257,7 +257,7 @@ export const globalStyles = t => {
       fontSize: `82.5%`,
     },
     "tt, code, kbd": {
-      background: t.colors.code.backgroundInline,
+      background: t.colors.code.bgInline,
       paddingTop: `0.2em`,
       paddingBottom: `0.2em`,
     },
@@ -332,13 +332,13 @@ export const globalStyles = t => {
       marginRight: `-${t.space[6]}`,
     },
     ".gatsby-resp-image-link": {
-      borderRadius: `${t.radii[1]}px`,
+      borderRadius: `${t.radii[1]}`,
       overflow: `hidden`,
     },
     // gatsby-remark-code-titles styles
     // https://www.gatsbyjs.org/packages/gatsby-remark-code-titles/
     ".gatsby-code-title": {
-      background: t.colors.code.background,
+      background: t.colors.code.bg,
       borderBottom: `1px solid ${t.colors.code.border}`,
       color: t.colors.code.text,
       padding: `${t.space[5]} ${t.space[6]} ${t.space[4]}`,
@@ -366,13 +366,13 @@ export const globalStyles = t => {
       ".gatsby-highlight, .gatsby-resp-image-link, .gatsby-code-title": {
         marginLeft: 0,
         marginRight: 0,
-        borderRadius: `${t.radii[2]}px`,
+        borderRadius: `${t.radii[2]}`,
       },
       ".gatsby-code-title": {
-        borderRadius: `${t.radii[2]}px ${t.radii[2]}px 0 0`,
+        borderRadius: `${t.radii[2]} ${t.radii[2]} 0 0`,
       },
       ".gatsby-code-title + .gatsby-highlight": {
-        borderRadius: `0 0 ${t.radii[2]}px ${t.radii[2]}px`,
+        borderRadius: `0 0 ${t.radii[2]} ${t.radii[2]}`,
       },
     },
   }

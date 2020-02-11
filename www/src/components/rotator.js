@@ -130,7 +130,7 @@ class Rotator extends Component {
           <p
             sx={{
               fontSize: 4,
-              fontFamily: `header`,
+              fontFamily: `heading`,
               textAlign: `center`,
               mb: 0,
             }}

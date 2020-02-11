@@ -3,9 +3,9 @@ import { jsx } from "theme-ui"
 import Link from "./localized-link"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
-
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import { FormattedMessage } from "react-intl"
+
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const prevNextLinkStyles = {
   // bump specificity to override the border applied to Link's by default
@@ -13,7 +13,7 @@ const prevNextLinkStyles = {
     borderBottom: 0,
   },
   color: `gatsby`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   fontSize: 3,
   fontWeight: `bold`,
   lineHeight: `dense`,

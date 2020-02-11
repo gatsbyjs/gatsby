@@ -13,7 +13,7 @@ import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
 import FooterLinks from "../components/shared/footer-links"
 
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { pullIntoGutter, breakpointGutter } from "../utils/styles"
 
 class BlogPostsIndex extends React.Component {
@@ -70,7 +70,7 @@ class BlogPostsIndex extends React.Component {
                     mb: 6,
                     mx: 0,
                     transition: t =>
-                      `transform ${t.transition.speed.default} ${t.transition.curve.default},  box-shadow ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
+                      `transform ${t.transition.default},  box-shadow ${t.transition.default}, padding ${t.transition.default}`,
                     "&:hover": {
                       transform: t => `translateY(-${t.space[1]})`,
                       boxShadow: `overlay`,
