@@ -2,13 +2,13 @@
 title: Adding React Components
 ---
 
-This guide covers how to add React components to your Gatsby site.
+This guide covers how to add React components, including those from third-party component libraries, to your Gatsby site.
 
 ## React components
 
-React components are prebuilt elements or groups of elements that can be used to split your User Interface (UI) into independent, reusable pieces. There are multiple types of components you can write: this guide covers functional components. For more in-depth information on writing React components including classes, check out the [React documentation](https://reactjs.org/docs/components-and-props.html).
+React components are prebuilt elements or groups of elements that can be used to split your user interface (UI) into independent, reusable pieces. There are multiple types of components you can write but this guide covers functional components. For more in-depth information on writing React components, including classes, check out the [React documentation](https://reactjs.org/docs/components-and-props.html).
 
-Components also offer the ability to be customized using inputs, better known as "props" (properties). Props can be of any JavaScript type, such as Boolean, String, Object, Array or almost anything you can think of.
+Components can also be customized using inputs, better known as "props" (properties). Props can be of any JavaScript data type, such as Boolean, String, or Object.
 
 For example, you could use a component for Buttons on your site. This would enable them to be used multiple times across pages with different labels or actions each time.
 
@@ -29,19 +29,29 @@ export default () => (
 
 ### Importing third-party components
 
-Just like React, Gatsby also supports third-party components and libraries. You can install a third-party component or library via your package manager. We tend to favour and use npm and we will reflect this in our examples.
+Just like React, Gatsby also supports third-party components and libraries. You can install a third-party component or library via your package manager. We tend to favor and use npm and we will reflect this in our examples.
 
 Here's an example of adding a third-party component to your site.
 
-First, you have to install the component or library's package via a package manager. It's recommended not to mix package managers, so if you use npm, don't use another and vice versa.
+First, you have to install the component or library's package via a package manager. It's recommended not to mix package managers, so if you use npm, don't use another and vice versa. If there's a relevant Gatsby plugin, you should install and use that plugin.
+
+In this example, you'll install both a plugin and the library it depends on:
 
 ```shell
-npm install @material-ui/core
+npm install gatsby-plugin-material-ui @material-ui/core
 ```
 
-After you've installed a package, import and use it in your page's source:
+After installation, add any necessary plugins to the plugins array in `gatsby-config.js`:
 
-```jsx:title=my-page.jsx
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-material-ui`],
+}
+```
+
+Import and use the library in your page's source:
+
+```jsx:title=index.js
 import React from "react"
 
 // import my fancy third-party component
@@ -52,14 +62,14 @@ export default () => (
     <p>This is my super awesome page made with Gatsby!</p>
 
     {/* use my fancy third-party component */}
-    <Button>Fancy button!</Button>
+    <Button variant="contained">Fancy button!</Button>
   </div>
 )
 ```
 
 ## Things to watch out for
 
-Since Gatsby uses Server-Side Rendering (SSR) to generate your site's pages, the JSX code you write is usually compiled before the browser loads the page. Because of this, certain features are not available at compile time and can cause a build error.
+Since Gatsby uses server-side rendering (SSR) to generate your site's pages, the JSX code you write is usually compiled before the browser loads the page. Because of this, certain features are not available at compile time and can cause a build error.
 
 ### Use of browser globals
 
@@ -69,7 +79,7 @@ Some components or code reference browser globals such as `window`, `document` o
 WebpackError: ReferenceError: window is not defined
 ```
 
-To learn more about solutions for supporting SSR and client-side libraries, check out the related section on the [Porting from Create React App documentation](/docs/porting-from-create-react-app-to-gatsby#server-side-rendering-and-browser-apis).
+To learn more about solutions for supporting SSR and client-side libraries, check out the related documentation section on [Porting from Create React App](/docs/porting-from-create-react-app-to-gatsby#server-side-rendering-and-browser-apis).
 
 #### Fixing third-party modules
 
