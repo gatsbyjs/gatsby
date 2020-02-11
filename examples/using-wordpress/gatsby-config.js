@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `An example to learn how to source data from WordPress`,
-    subtitle: `Sourcing data from WordPress`,
+    description: `Sourcing data from WordPress`,
   },
   plugins: [
     {
