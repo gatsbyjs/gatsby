@@ -38,7 +38,7 @@ First, you have to install the component or library's package via a package mana
 In this example, you'll install both a plugin and the library it depends on:
 
 ```shell
-npm install gatsby-plugin-material-ui @material-ui/core 
+npm install gatsby-plugin-material-ui @material-ui/core
 ```
 
 After installation, add any necessary plugins to the plugins array in `gatsby-config.js`:
@@ -46,7 +46,7 @@ After installation, add any necessary plugins to the plugins array in `gatsby-co
 ```js:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-plugin-material-ui`],
-};
+}
 ```
 
 Import and use the library in your page's source:
