@@ -43,21 +43,22 @@ export default ({ children }) => (
 )
 ```
 
-All MDX components passed into the `components` prop of the `MDXProvider` will be made available to MDX files that are nested under the provider. The `MDXProvider` in this example is in a layout component that wraps all MDX pages, you can read about this pattern in [the layout section of the `gatsby-plugin-mdx` README](/packages/gatsby-plugin-mdx/#default-layouts).
+All MDX components passed into the `components` prop of the `MDXProvider` will be made available to MDX documents that are nested under the provider. The `MDXProvider` in this example is in a layout component that wraps all MDX pages, you can read about this pattern in [the layout section of the `gatsby-plugin-mdx` README](/packages/gatsby-plugin-mdx/#default-layouts).
 
 Now, you can include components in your MDX without importing them:
 
 ```mdx
 ---
-title: Importing Components Example
+title: Shortcode Components Example
 ---
 
+Now, if you want to include the Message component, it's available in all MDX documents!
 
 <Message>MDX gives you JSX in Markdown!</Message> // highlight-line
 
-If you want to include a Chart it's now available in all MDX files!
+The Chart is also available since it was passed into the MDXProvider:
 
 <Chart /> // highlight-line
 ```
 
-Because the `<Message />` and `<Chart />` components were passed into the provider, they are imported for you.
+Because the `<Message />` and `<Chart />` components were passed into the provider, they are imported for you at the top of all MDX documents.
