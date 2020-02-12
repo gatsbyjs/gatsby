@@ -23,7 +23,7 @@ const NavLink = styled(ActiveLink, { shouldForwardProp })(
 
 NavLink.defaultProps = {
   color: `navigation.linkDefault`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   fontSize: 3,
   fontWeight: `body`,
   mr: 4,

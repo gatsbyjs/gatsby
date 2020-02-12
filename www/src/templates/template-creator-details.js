@@ -8,7 +8,7 @@ import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
 import FooterLinks from "../components/shared/footer-links"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
@@ -212,8 +212,7 @@ class CreatorTemplate extends Component {
                           mb: 6,
                           borderBottom: `none`,
                           lineHeight: 0,
-                          transition: t =>
-                            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+                          transition: `default`,
                         },
                       }}
                       to={site.node.fields.slug}
