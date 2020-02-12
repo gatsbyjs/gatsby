@@ -83,7 +83,7 @@ export const query = graphql`
  ],
 ```
 
-2. Query your image using GraphQL.
+2. Query your image using GraphQL. The `relativePath` should be relative to the path you configured in `gatsby-source-filesystem`.
 
 ```query {
      file(relativePath: { eq: "gatsby-astronaut.png" }) {
@@ -96,8 +96,6 @@ export const query = graphql`
      }
    }
 ```
-
-The `relativePath` is relative to the path you configured in `gatsby-source-filesystem`.
 
 Note: You can find these and other parameters in your GraphQL playground located at `http://localhost:8000/__graphql`
 
@@ -140,7 +138,7 @@ export default () => {
 
 4. Run `gatsby develop` to start the development server.
 
-5. View your image in the browser: `http://localhost:8000/`
+5. View your image in the browser: `http://localhost:8000/my-dogs`
 
 ### Additional resources
 
