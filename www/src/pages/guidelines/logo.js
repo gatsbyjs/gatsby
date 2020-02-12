@@ -168,7 +168,7 @@ const Logo = ({ data, location }) => {
   const isDark = colorMode === `dark`
 
   return (
-    <Layout pathname={location.pathname} pageTitle="Logo">
+    <Layout location={location} pageTitle="Logo">
       <Container>
         <PageHeading>Logo</PageHeading>
         <Intro>

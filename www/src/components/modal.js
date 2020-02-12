@@ -11,7 +11,7 @@ import {
   space,
   zIndices,
   mediaQueries,
-} from "../gatsby-plugin-theme-ui"
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import "../assets/fonts/futura"
 import LazyModal from "./lazy-modal"
 import { globalStyles } from "../utils/styles/global"
