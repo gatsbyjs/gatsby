@@ -53,7 +53,6 @@ const navigate = (to, options = {}) => {
   }
 
   let { pathname } = parsePath(to)
-
   const redirect = redirectMap[pathname]
 
   // If we're redirecting, just replace the passed in pathname
