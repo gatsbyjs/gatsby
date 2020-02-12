@@ -36,7 +36,7 @@ const NavItem = props => (
       "&&": {
         border: 0,
         color: `navigation.linkDefault`,
-        fontFamily: `header`,
+        fontFamily: `heading`,
         fontSize: 3,
         fontWeight: `body`,
         mr: 4,
