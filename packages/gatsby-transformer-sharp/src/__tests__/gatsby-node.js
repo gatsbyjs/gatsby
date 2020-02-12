@@ -8,6 +8,7 @@ describe(`Process image nodes correctly`, () => {
       children: [],
       internal: {
         contentDigest: `whatever`,
+        type: `File`,
       },
     }
     const createNode = jest.fn()

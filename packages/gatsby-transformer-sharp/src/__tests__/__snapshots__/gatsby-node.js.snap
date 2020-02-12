@@ -35,6 +35,7 @@ Array [
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
+          "type": "File",
         },
       },
     },
