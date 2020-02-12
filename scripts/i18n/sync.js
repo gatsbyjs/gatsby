@@ -201,6 +201,7 @@ async function syncTranslationRepo(code) {
 
   const repository = await getRepository(owner, transRepoName)
 
+  // FIXME this number doesn't work
   const { number } = await createPullRequest({
     repositoryId: repository.id,
     baseRefName: `master`,
