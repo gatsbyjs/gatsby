@@ -1,5 +1,6 @@
 const mockFS = {
   existsSync: jest.fn(() => true),
+  read: jest.fn(),
 }
 
 jest.mock(`fs`, () => mockFS)
