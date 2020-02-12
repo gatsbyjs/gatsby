@@ -35,7 +35,7 @@ class DevLoader extends BaseLoader {
     return Promise.resolve(require(`./socketIo`).getPageData(pagePath))
   }
 
-  isPageExist(rawPath) {
+  __internal__doesPageExist(rawPath) {
     const pagePath = findPath(rawPath)
     const page = this.pageDb.get(pagePath)
     return !!page && page.notFound !== true

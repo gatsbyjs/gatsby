@@ -13,12 +13,16 @@ const redirectMap = redirects.reduce((map, redirect) => {
   return map
 }, {})
 
+console.log(redirectMap)
+
 function maybeRedirect(pathname) {
   const redirect = redirectMap[pathname]
+  console.log({ pathname, redirect })
+  // loader.test(pathname)
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      if (loader.isPageExist(pathname)) {
+      if (loader.__internal__doesPageExist(pathname)) {
         console.error(
           `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
         )
@@ -53,7 +57,11 @@ const navigate = (to, options = {}) => {
   }
 
   let { pathname } = parsePath(to)
+
   const redirect = redirectMap[pathname]
+
+  console.log({ pathname, redirect })
+  // loader.test(pathname)
 
   // If we're redirecting, just replace the passed in pathname
   // to the one we want to redirect to.

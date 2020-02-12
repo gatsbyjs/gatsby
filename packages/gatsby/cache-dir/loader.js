@@ -420,7 +420,8 @@ export const publicLoader = {
 
 if (process.env.NODE_ENV !== `production`) {
   // this function is only used in development for dev-only messages
-  publicLoader.isPageExist = rawPath => instance.isPageExist(rawPath)
+  publicLoader.__internal__doesPageExist = rawPath =>
+    instance.__internal__doesPageExist(rawPath)
 }
 
 export default publicLoader
