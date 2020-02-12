@@ -400,7 +400,7 @@ import { Link } from "gatsby"
 
 export default () => (
   {/* highlight-start */}
-  <Layout breadcrumbs={["Who We Are", "Ella"}}>
+  <Layout breadcrumbs={["Who We Are", "Ella"]}>
   {/* highlight-end */}
     <h1>Ella - Arborist</h1>
     <h2>Ella is an excellent Arborist. We guarantee it.</h2>

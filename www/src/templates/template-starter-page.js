@@ -45,22 +45,17 @@ class StarterTemplate extends React.Component {
     const showMore =
       !this.state.showAllDeps && allDeps.length - shownDeps.length > 0
 
-    // plug for now
-    const isModal = false
+    // TODO enable modal view
     const repoName = starterShowcase.name
     return (
-      <Layout
-        location={this.props.location}
-        isModal={isModal}
-        modalBackgroundPath="/showcase"
-      >
+      <Layout location={this.props.location}>
         <div
           css={{
             alignItems: `center`,
             display: `flex`,
             flexDirection: `column`,
-            margin: isModal ? false : `0 auto`,
-            maxWidth: isModal ? false : 1080,
+            margin: `0 auto`,
+            maxWidth: 1080,
           }}
         >
           <div css={{ width: `100%` }}>
@@ -111,7 +106,11 @@ class StarterTemplate extends React.Component {
                 alt={`Screenshot of ${repoName}`}
               />
             </div>
-            <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} starter={starterShowcase} />
+            <StarterSource
+              repoUrl={repoUrl}
+              startersYaml={startersYaml}
+              starter={starterShowcase}
+            />
             <StarterInstallation repoName={repoName} repoUrl={repoUrl} />
             <StarterDetails
               startersYaml={startersYaml}

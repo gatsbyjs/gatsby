@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import { Link } from "gatsby"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
 
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { withTitleHover } from "../shared/styles"
 
 const Header = ({ stub }) => (

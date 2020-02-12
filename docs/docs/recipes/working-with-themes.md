@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Working with Themes"
+tableOfContentsDepth: 1
 ---
 
 A [Gatsby theme](/docs/themes/what-are-gatsby-themes) abstracts Gatsby configuration (shared functionality, data sourcing, design) into an installable package. This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.

@@ -150,10 +150,7 @@ class IndexRoute extends React.Component {
 export default IndexRoute
 
 export const pageQuery = graphql`
-  query IndexRouteQuery(
-    $featuredStarters: [String]!
-    $featuredPlugins: [String]!
-  ) {
+  query IndexRouteQuery {
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
         fluid(maxWidth: 870) {
@@ -180,10 +177,7 @@ export const pageQuery = graphql`
     }
     allStartersYaml(
       filter: {
-        fields: {
-          starterShowcase: { slug: { in: $featuredStarters } }
-          hasScreenshot: { eq: true }
-        }
+        fields: { featured: { eq: true }, hasScreenshot: { eq: true } }
       }
       sort: { order: DESC, fields: [fields___starterShowcase___stars] }
     ) {
@@ -209,7 +203,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allNpmPackage(filter: { name: { in: $featuredPlugins } }) {
+    allNpmPackage(filter: { fields: { featured: { eq: true } } }) {
       edges {
         node {
           slug
