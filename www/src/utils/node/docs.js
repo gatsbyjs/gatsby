@@ -25,6 +25,7 @@ const docSlugFromPath = parsedFilePath => {
   }
 }
 
+// FIXME I think this breaks accessibility-statement.md
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -42,27 +43,50 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const { data, errors } = await graphql(`
     query {
-      allMdx(
+      blogPosts: allMdx(
         sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
+        filter: {
+          fields: { section: { eq: "blog" } }
+          frontmatter: { draft: { eq: false } }
+        }
         limit: 10000
-        filter: { fileAbsolutePath: { ne: null } }
+      ) {
+        nodes {
+          fields {
+            slug
+            released
+          }
+          frontmatter {
+            title
+            canonicalLink
+            publishedAt
+            tags
+          }
+        }
+      }
+      docPages: allMdx(
+        limit: 10000
+        filter: {
+          fields: { section: { in: ["docs", "contributing", "tutorial"] } }
+        }
       ) {
         nodes {
           fields {
             slug
             locale
-            package
-            released
           }
           frontmatter {
             title
-            draft
-            canonicalLink
-            publishedAt
             issue
-            tags
             jsdoc
             apiCalls
+          }
+        }
+      }
+      packages: allMdx(filter: { fields: { section: { eq: "packages" } } }) {
+        nodes {
+          fields {
+            slug
           }
         }
       }
@@ -77,19 +101,9 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
   if (errors) throw errors
 
-  const blogPosts = _.filter(data.allMdx.nodes, node => {
-    const slug = _.get(node, `fields.slug`)
-    const draft = _.get(node, `frontmatter.draft`)
-    if (!slug) return undefined
+  const { blogPosts, docPages, packages } = data
 
-    if (_.includes(slug, `/blog/`) && !draft) {
-      return node
-    }
-
-    return undefined
-  })
-
-  const releasedBlogPosts = blogPosts.filter(post =>
+  const releasedBlogPosts = blogPosts.nodes.filter(post =>
     _.get(post, `fields.released`)
   )
 
@@ -113,11 +127,12 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 
   // Create blog-post pages.
-  blogPosts.forEach((node, index) => {
+  blogPosts.nodes.forEach((node, index) => {
     let next = index === 0 ? null : blogPosts[index - 1]
     if (next && !_.get(next, `fields.released`)) next = null
 
-    const prev = index === blogPosts.length - 1 ? null : blogPosts[index + 1]
+    const prev =
+      index === blogPosts.nodes.length - 1 ? null : blogPosts.nodes[index + 1]
 
     createPage({
       path: `${node.fields.slug}`, // required
@@ -165,48 +180,46 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
+  packages.nodes.forEach(node => {
+    createPage({
+      path: `${node.fields.slug}`,
+      component: slash(localPackageTemplate),
+      context: {
+        slug: node.fields.slug,
+      },
+    })
+  })
+
   // Create docs pages.
-  const docPages = data.allMdx.nodes
-  docPages.forEach(node => {
+  docPages.nodes.forEach(node => {
     const slug = _.get(node, `fields.slug`)
     const locale = _.get(node, `fields.locale`)
     if (!slug) return
 
-    if (!_.includes(slug, `/blog/`)) {
-      const prevAndNext = getPrevAndNext(node.fields.slug)
-      if (node.frontmatter.jsdoc) {
-        // API template
-        createPage({
-          path: localizedPath(locale, node.fields.slug),
-          component: slash(apiTemplate),
-          context: {
-            slug: node.fields.slug,
-            jsdoc: node.frontmatter.jsdoc,
-            apiCalls: node.frontmatter.apiCalls,
-            ...prevAndNext,
-          },
-        })
-      } else if (node.fields.package) {
-        // Local package template
-        createPage({
-          path: `${node.fields.slug}`,
-          component: slash(localPackageTemplate),
-          context: {
-            slug: node.fields.slug,
-          },
-        })
-      } else {
-        // Docs template
-        createPage({
-          path: localizedPath(locale, node.fields.slug),
-          component: slash(docsTemplate),
-          context: {
-            slug: node.fields.slug,
-            locale,
-            ...prevAndNext,
-          },
-        })
-      }
+    const prevAndNext = getPrevAndNext(node.fields.slug)
+    if (node.frontmatter.jsdoc) {
+      // API template
+      createPage({
+        path: localizedPath(locale, node.fields.slug),
+        component: slash(apiTemplate),
+        context: {
+          slug: node.fields.slug,
+          jsdoc: node.frontmatter.jsdoc,
+          apiCalls: node.frontmatter.apiCalls,
+          ...prevAndNext,
+        },
+      })
+    } else {
+      // Docs template
+      createPage({
+        path: localizedPath(locale, node.fields.slug),
+        component: slash(docsTemplate),
+        context: {
+          slug: node.fields.slug,
+          locale,
+          ...prevAndNext,
+        },
+      })
     }
   })
 }
@@ -215,6 +228,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
   let slug
   let locale
+  let section
   if (node.internal.type === `File`) {
     const parsedFilePath = path.parse(node.relativePath)
     // TODO add locale data for non-MDX files
@@ -234,9 +248,10 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     if (fileNode.sourceInstanceName === `docs`) {
       slug = docSlugFromPath(parsedFilePath)
       locale = "en"
+      section = slug.split("/")[1]
 
       // Set released status and `published at` for blog posts.
-      if (_.includes(parsedFilePath.dir, `blog`)) {
+      if (section === "blog") {
         let released = false
         const date = _.get(node, `frontmatter.date`)
         if (date) {
@@ -263,6 +278,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         // gatsby-source-filesystem and gatsby-source-git differ
         slug = docSlugFromPath(path.parse(fileNode.relativePath.substring(5)))
         locale = code
+        section = slug.split("/")[1]
       }
     }
 
@@ -277,7 +293,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         name: `title`,
         value: parsedFilePath.dir,
       })
-      createNodeField({ node, name: `package`, value: true })
+      createNodeField({ node, name: `section`, value: `packages` })
     }
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
@@ -285,6 +301,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     }
     if (locale) {
       createNodeField({ node, name: `locale`, value: locale })
+    }
+    if (section) {
+      createNodeField({ node, name: "section", value: section })
     }
   } else if (node.internal.type === `AuthorYaml`) {
     slug = `/contributors/${slugify(node.id, {

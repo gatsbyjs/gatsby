@@ -14,7 +14,11 @@ import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import { themedInput } from "../../utils/styles"
-import { colors, space, mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import {
+  colors,
+  space,
+  mediaQueries,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const POPULAR_TAGS = [
   `themes`,
@@ -222,10 +226,7 @@ export const pageQuery = graphql`
   query {
     allMdx(
       limit: 2000
-      filter: {
-        fields: { released: { eq: true } }
-        fileAbsolutePath: { regex: "/docs.blog/" }
-      }
+      filter: { fields: { section: { eq: "blog" }, released: { eq: true } } }
     ) {
       group(field: frontmatter___tags) {
         fieldValue

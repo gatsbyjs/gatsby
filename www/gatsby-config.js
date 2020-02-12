@@ -269,10 +269,7 @@ module.exports = {
                 allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] }
                   limit: 10,
-                  filter: {
-                    frontmatter: { draft: { ne: true } }
-                    fileAbsolutePath: { regex: "/docs.blog/" }
-                  }
+                  filter: { fields: { section: { eq: "blog" }, draft: { ne: true } } }
                 ) {
                   edges {
                     node {
