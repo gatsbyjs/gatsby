@@ -2,7 +2,7 @@ const withDefaults = require(`./utils/default-options`)
 
 module.exports = themeOptions => {
   const options = withDefaults(themeOptions)
-  const { mdx = true } = themeOptions
+  const { mdxOtherwiseConfigured = false } = themeOptions
   return {
     siteMetadata: {
       title: `Blog Title Placeholder`,
@@ -20,7 +20,7 @@ module.exports = themeOptions => {
       ],
     },
     plugins: [
-      mdx && {
+      !mdxOtherwiseConfigured && {
         resolve: `gatsby-plugin-mdx`,
         options: {
           extensions: [`.mdx`, `.md`],

@@ -1,5 +1,5 @@
 module.exports = options => {
-  const { mdx = true, mdxLayouts = {} } = options
+  const { mdxOtherwiseConfigured = false, mdxLayouts = {} } = options
 
   return {
     siteMetadata: {
@@ -8,7 +8,7 @@ module.exports = options => {
       siteUrl: `http://example.com/`,
     },
     plugins: [
-      mdx && {
+      !mdxOtherwiseConfigured && {
         resolve: `gatsby-plugin-mdx`,
         options: {
           extensions: [`.md`, `.mdx`],
