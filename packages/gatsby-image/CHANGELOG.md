@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.39...gatsby-image@2.2.40) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-image
+
 ## [2.2.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.38...gatsby-image@2.2.39) (2020-01-17)
 
 ### Bug Fixes

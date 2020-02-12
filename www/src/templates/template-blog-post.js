@@ -7,7 +7,7 @@ import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Layout from "../components/layout"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
@@ -26,7 +26,7 @@ class BlogPostTemplate extends React.Component {
       <p
         sx={{
           color: `textMuted`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           lineHeight: `dense`,
           m: 0,
         }}

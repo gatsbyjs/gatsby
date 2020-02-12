@@ -144,7 +144,7 @@ const ItemDescription = ({ children, color }) => (
     sx={{
       color: color ? color : `textMuted`,
       display: `block`,
-      fontFamily: `system`,
+      fontFamily: `body`,
       fontSize: 1,
       lineHeight: `dense`,
     }}
@@ -218,7 +218,7 @@ const Diagram = () => (
         className="Diagram"
         sx={{
           flex: `1 1 100%`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           p: 6,
           textAlign: `center`,
         }}
