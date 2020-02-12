@@ -14,6 +14,7 @@ const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
+const fileExtensionRegEx = /.+\..+$/g
 
 onExit(() => {
   telemetry.trackCli(`SERVE_STOP`)
@@ -41,17 +42,22 @@ const readMatchPaths = async program => {
 }
 
 /**
- * Express middleware that adds url trailing slash in order to
- * trick static middleware and thus preventing redirect
- * This needs to be used before express static middleware
+ * Adds trailing slash to request.url, in order to deceive static middleware
+ * into getting a directory request, thus preventing redirect.
+ * This is an express middleware to be used before static middleware
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
 const directoryRedirectPrevention = (req, res, next) => {
-  if (req.url == `/` || req.url.indexOf(`.`) || req.url.slice(-1) !== `/`)
-    return next()
+  // url is home page
+  if (req.url === `/`) return next()
+  // url has trailing slash, no need to intervene
+  if (req.url.slice(-1) === `/`) return next()
+  // url is a file request, no need for trailing slash
+  if (fileExtensionRegEx.test(req.url)) return next()
 
+  // turning /slug into /slug/
   req.originalUrl += `/` // https://expressjs.com/en/api.html#req.originalUrl
   req.url += `/`
 
