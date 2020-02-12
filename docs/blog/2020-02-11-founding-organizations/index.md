@@ -56,7 +56,7 @@ Of course, with great power comes great responsibility. Founding organizations a
 
 We believe founding organizations have a responsibility to provide public goods and infrastructure to their communities to contribute to the community’s health and long-term success.
 
-### Founding organizations\*\* \*\*provide public goods for their communities
+### Founding organizations provide public goods for their communities
 
 As Dries Buytaert, the founder of Drupal and Acquia [put it](https://dri.es/balancing-makers-and-takers-to-scale-and-sustain-open-source):
 
@@ -101,7 +101,7 @@ We believe founding organizations’ responsibility to the community extends to 
 - When a technology stays at the cutting edge, the founding organization has fulfilled its social contract.
 - Conversely, when a technology begins to fall behind the times, fails to invest in important public goods or keep up with changing development standards, the community should hold the founding organization largely responsible.
 
-### Staying on the cutting edge requires adequate investment from\*\* \*\*founding organizations
+### Staying on the cutting edge requires adequate investment from founding organizations
 
 Keeping an open-source tool on the cutting edge doesn’t typically require technological breakthroughs. More often, it requires steady, methodological, persistent engineering work—and lots of it.
 
