@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Styling with CSS"
+tableOfContentsDepth: 1
 ---
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
@@ -27,7 +28,7 @@ p {
 
 2. Import the global CSS file in the `gatsby-browser.js` file such as the following:
 
-```javascript:gatsby-browser.js
+```javascript:title=gatsby-browser.js
 import "./src/styles/global.css"
 ```
 
@@ -211,9 +212,9 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 
 Sass is an extension of CSS that gives you more advanced features like nested rules, variables, mixins, and more.
 
-Sass has 2 syntaxes. The most commonly used syntax is "SCSS", and is a superset of CSS. That means all valid CSS syntax, is valid SCSS syntax. SCSS files use the extension .scss
+Sass has 2 syntaxes. The most commonly used syntax is "SCSS", and is a superset of CSS. That means all valid CSS syntax, is valid SCSS syntax. SCSS files use the extension `.scss`
 
-Sass will compile .scss and .sass files to .css files for you, so you can write your stylesheets with more advanced features.
+Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can write your stylesheets with more advanced features.
 
 ### Prerequisites
 
@@ -257,7 +258,7 @@ import "./styles.scss"
 import "./styles.sass"
 ```
 
-_Note: You can use Sass/SCSS files as modules too, like mentioned in the previous recipe about CSS modules, with the difference that instead of .css the extensions have to be .scss or .sass_
+_Note: You can use Sass/SCSS files as modules too, like mentioned in the previous recipe about CSS modules, with the difference that instead of `.css` the extensions have to be `.scss` or `.sass`_
 
 ### Additional resources
 
@@ -276,7 +277,7 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
 
-```
+```text
 src/fonts/fontname.woff2
 ```
 

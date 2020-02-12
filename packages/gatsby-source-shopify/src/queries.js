@@ -1,54 +1,52 @@
 export const ARTICLES_QUERY = `
   query GetArticles($first: Int!, $after: String) {
-    shop {
-      articles(first: $first, after: $after) {
-        pageInfo {
-          hasNextPage
-        }
-        edges {
-          cursor
-          node {
-            author {
-              bio
-              email
-              firstName
-              lastName
-              name
-            }
-            blog {
-              id
-            }
-            comments(first: 250) {
-              edges {
-                node {
-                  author {
-                    email
-                    name
-                  }
-                  content
-                  contentHtml
-                  id
+    articles(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          author {
+            bio
+            email
+            firstName
+            lastName
+            name
+          }
+          blog {
+            id
+          }
+          comments(first: 250) {
+            edges {
+              node {
+                author {
+                  email
+                  name
                 }
+                content
+                contentHtml
+                id
               }
             }
-            content
-            contentHtml
-            excerpt
-            excerptHtml
+          }
+          content
+          contentHtml
+          excerpt
+          excerptHtml
+          id
+          image {
+            altText
             id
-            image {
-              altText
-              id
-              src
-            }
-            publishedAt
-            tags
+            src
+          }
+          publishedAt
+          tags
+          title
+          url
+          seo {
             title
-            url
-            seo {
-              title
-              description
-            }
+            description
           }
         }
       }
@@ -58,18 +56,16 @@ export const ARTICLES_QUERY = `
 
 export const BLOGS_QUERY = `
   query GetBlogs($first: Int!, $after: String) {
-    shop {
-      blogs(first: $first, after: $after) {
-        pageInfo {
-          hasNextPage
-        }
-        edges {
-          cursor
-          node {
-            id
-            title
-            url
-          }
+    blogs(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          id
+          title
+          url
         }
       }
     }
@@ -78,33 +74,31 @@ export const BLOGS_QUERY = `
 
 export const COLLECTIONS_QUERY = `
   query GetCollections($first: Int!, $after: String) {
-    shop {
-      collections(first: $first, after: $after) {
-        pageInfo {
-          hasNextPage
-        }
-        edges {
-          cursor
-          node {
-            description
-            descriptionHtml
-            handle
+    collections(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          description
+          descriptionHtml
+          handle
+          id
+          image {
+            altText
             id
-            image {
-              altText
-              id
-              src
-            }
-            products(first: 250) {
-              edges {
-                node {
-                  id
-                }
+            src
+          }
+          products(first: 250) {
+            edges {
+              node {
+                id
               }
             }
-            title
-            updatedAt
           }
+          title
+          updatedAt
         }
       }
     }
@@ -113,113 +107,120 @@ export const COLLECTIONS_QUERY = `
 
 export const PRODUCTS_QUERY = `
   query GetProducts($first: Int!, $after: String) {
-    shop {
-      products(first: $first, after: $after) {
-        pageInfo {
-          hasNextPage
-        }
-        edges {
-          cursor
-          node {
-            availableForSale
-            createdAt
-            description
-            descriptionHtml
-            handle
+    products(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          availableForSale
+          createdAt
+          description
+          descriptionHtml
+          handle
+          id
+          images(first: 250) {
+            edges {
+              node {
+                id
+                altText
+                originalSrc
+              }
+            }
+          }
+          metafields(first: 250) {
+            edges {
+              node {
+                description
+                id
+                key
+                namespace
+                value
+                valueType
+              }
+            }
+          }
+          onlineStoreUrl
+          options {
             id
-            images(first: 250) {
-              edges {
-                node {
-                  id
+            name
+            values
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          productType
+          publishedAt
+          tags
+          title
+          updatedAt
+          variants(first: 250) {
+            edges {
+              node {
+                availableForSale
+                compareAtPrice
+                compareAtPriceV2 {
+                  amount
+                  currencyCode
+                }
+                id
+                image {
                   altText
+                  id
                   originalSrc
                 }
-              }
-            }
-            metafields(first: 250) {
-              edges {
-                node {
-                  description
-                  id
-                  key
-                  namespace
+                metafields(first: 250) {
+                  edges {
+                    node {
+                      description
+                      id
+                      key
+                      namespace
+                      value
+                      valueType
+                    }
+                  }
+                }
+                price
+                priceV2 {
+                  amount
+                  currencyCode
+                }
+                requiresShipping
+                selectedOptions {
+                  name
                   value
-                  valueType
                 }
-              }
-            }
-            onlineStoreUrl
-            options {
-              id
-              name
-              values
-            }
-            priceRange {
-              minVariantPrice {
-                amount
-                currencyCode
-              }
-              maxVariantPrice {
-                amount
-                currencyCode
-              }
-            }
-            productType
-            publishedAt
-            tags
-            title
-            updatedAt
-            variants(first: 250) {
-              edges {
-                node {
-                  availableForSale
-                  compareAtPrice
-                  id
-                  image {
-                    altText
-                    id
-                    originalSrc
-                  }
-                  metafields(first: 250) {
-                    edges {
-                      node {
-                        description
-                        id
-                        key
-                        namespace
-                        value
-                        valueType
+                sku
+                title
+                weight
+                weightUnit
+                presentmentPrices(first: 250) {
+                  edges {
+                    node {
+                      price {
+                        amount
+                        currencyCode
                       }
-                    }
-                  }
-                  price
-                  selectedOptions {
-                    name
-                    value
-                  }
-                  sku
-                  title
-                  weight
-                  weightUnit
-                  presentmentPrices(first: 250) {
-                    edges {
-                      node {
-                        price {
-                          amount
-                          currencyCode
-                        }
-                        compareAtPrice {
-                          amount
-                          currencyCode
-                        }
+                      compareAtPrice {
+                        amount
+                        currencyCode
                       }
                     }
                   }
                 }
               }
             }
-            vendor
           }
+          vendor
         }
       }
     }

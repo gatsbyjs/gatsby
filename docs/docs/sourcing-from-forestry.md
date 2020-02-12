@@ -91,7 +91,7 @@ _Note_: The `forestry:preview` script can be named anything, but it must match t
 
 Now you can set up a content collection. Create the file `.forestry/front_matter/blog.yml` and paste in the following:
 
-```yml:title=.forestry/front_matter/blog.yml
+```yaml:title=.forestry/front_matter/blog.yml
 ---
 label: Blog
 hide_body: false
@@ -116,7 +116,7 @@ fields:
 
 Next, link the frontmatter collection in `.forestry/settings.yml`. This adds a template in the Forestry dashboard that allows you to add new Blog posts with the configured fields in the CMS.
 
-```yml:title=.forestry/settings.yml
+```yaml:title=.forestry/settings.yml
 ---
 new_page_extension: md
 auto_deploy: false
@@ -145,7 +145,7 @@ sections:
   - blog
 ```
 
-Because Forestry's `admin.html` file is in the `/static` directory, this page will only be available once your Gatsby site is built. Run `gatsby build && gatsby serve`. Once the server is running, it will print the address to open for viewing. It's typically localhost:8000. Now navigate to /admin - so if your site is at localhost:8000, go to localhost:8000/admin.
+Because Forestry's `admin.html` file is in the `/static` directory, this page will only be available once your Gatsby site is built. Run `gatsby build && gatsby serve`. Once the server is running, it will print the address to open for viewing. It's typically `http://localhost:8000`. Now navigate to `/admin` - so if your site is at `http://localhost:8000`, go to `http://localhost:8000/admin`
 
 You should now be viewing your Forestry login page. Login to view your dashboard. If you don't have a user yet, create one on the Forestry Dashboard. This will allow you to login on the Gatsby site admin login page. On the left side of your dashboard you will see "Posts". If you click on it you can add a new post. When you save your post, Forestry will push the change directly to your GitHub repo.
 

@@ -33,7 +33,7 @@ This is a [Real page](https://google.com)
 
 Remark would translate this into an AST made available to `gatsby-transformer-remark` plugins. The AST would appear as the following:
 
-```JSON
+```json
 {
   "type": "root",
   "children": [
@@ -206,7 +206,7 @@ Next, by visiting all heading nodes and passing them into a transformer function
 
 Looking again at the AST node for heading:
 
-```JSON
+```json
 {
   "type": "heading",
   "depth": 1,

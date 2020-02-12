@@ -7,14 +7,14 @@ import EmailCaptureForm from "../../components/email-capture-form"
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
 import { rhythm } from "../../utils/typography"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const stripedBorderHeight = 1
 
 const Container = styled(`div`)`
   background: ${p => p.theme.colors.newsletter.background};
   border: 1px solid ${p => p.theme.colors.newsletter.border};
-  border-radius: ${p => p.theme.radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   display: flex;
   flex-direction: column;
   margin-bottom: ${p => p.theme.space[8]};
@@ -26,7 +26,7 @@ const Container = styled(`div`)`
   position: relative;
 
   :after {
-    border-radius: 0 0 ${p => p.theme.radii[2]}px ${p => p.theme.radii[2]}px;
+    border-radius: 0 0 ${p => p.theme.radii[2]} ${p => p.theme.radii[2]};
     background: ${p => p.theme.colors.newsletter.background}
       repeating-linear-gradient(
         135deg,

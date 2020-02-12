@@ -24,20 +24,27 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 
 ## Table of contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Configuration](#configuration)
-    - [Extensions](#extensions)
-    - [Default layouts](#default-layouts)
-    - [Imports](#imports)
-    - [Shortcodes](#shortcodes)
-    - [Gatsby remark plugins](#gatsby-remark-plugins)
-    - [Markdown plugins](#remark-plugins)
-    - [HAST plugins](#rehype-plugins)
-    - [Media types](#media-types)
-  - [Components](#components)
-    - [MDXProvider](#mdxprovider)
-    - [MDXRenderer](#mdxrenderer)
+- [What’s MDX?](#whats-mdx)
+  - [Why MDX?](#why-mdx)
+    - [Read more about MDX](#read-more-about-mdx)
+  - [Table of contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Configuration](#configuration)
+      - [Extensions](#extensions)
+      - [Default layouts](#default-layouts)
+      - [Imports](#imports)
+      - [Shortcodes](#shortcodes)
+      - [Gatsby remark plugins](#gatsby-remark-plugins)
+      - [MD plugins](#md-plugins)
+      - [HAST plugins](#hast-plugins)
+      - [Media types](#media-types)
+        - [Explanation](#explanation)
+    - [Components](#components)
+      - [MDXProvider](#mdxprovider)
+        - [Related](#related)
+      - [MDXRenderer](#mdxrenderer)
+  - [License](#license)
 
 ## Installation
 
@@ -271,6 +278,8 @@ Here's a color picker!
 <SketchPicker />
 ```
 
+_**Note:** You should rerun your Gatsby development environment to update imports in MDX files. Otherwise, you'll get a `ReferenceError` for new imports. You can use the shortcodes approach if that is an issue for you._
+
 #### Shortcodes
 
 If you want to allow usage of a component from anywhere (often referred to as a
@@ -281,16 +290,17 @@ shortcode), you can pass it to the
 // src/components/layout.js
 import React from "react"
 import { MDXProvider } from "@mdx-js/react"
+import { Link } from "gatsby"
 import { YouTube, Twitter, TomatoBox } from "./ui"
 
-const shortcodes = { YouTube, Twitter, TomatoBox }
+const shortcodes = { Link, YouTube, Twitter, TomatoBox }
 
 export default ({ children }) => (
   <MDXProvider components={shortcodes}>{children}</MDXProvider>
 )
 ```
 
-Then, in any MDX file, you can render `YouTube`, `Twitter`, and `TomatoBox` without
+Then, in any MDX file, you can navigate using `Link` and render `YouTube`, `Twitter`, and `TomatoBox` components without
 an import.
 
 ```mdx
@@ -432,7 +442,7 @@ that can be replaced too: `inlineCode` and `wrapper`. `inlineCode` is
 for inline `<code>` and `wrapper` is the special element that wraps
 all of the MDX content.
 
-```js
+```jsx
 import { MDXProvider } from "@mdx-js/react"
 
 const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />
@@ -498,13 +508,13 @@ from a GraphQL page query or `StaticQuery`.
 `MDXRenderer` takes any prop and passes it on to your MDX content,
 just like a normal React component.
 
-```js
+```jsx
 <MDXRenderer title="My Stuff!">{mdx.body}</MDXRenderer>
 ```
 
 Using a page query:
 
-```js
+```jsx
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default class MyPageLayout {

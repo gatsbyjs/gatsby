@@ -22,12 +22,7 @@ One such drawback is the difficulties faced when trying to rank for SEO, because
 
 In this series of blog posts, I'll be talking about how to build a Gatsby.js site with a WordPress backend. The aim of the setup is to allow non-developer users to make changes on their website while allowing developers to use a fast, modern, and enjoyable tool to build with.
 
-<figure>
-  <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/3o7ZeTmU77UlPyeR2w/giphy.mp4"/>
-  </video>
-  <figcaption>Kylo Ren Approves!</figcaption>
-</figure>
+https://giphy.com/gifs/justin-g-thumbs-up-kylo-ren-approval-3o7ZeTmU77UlPyeR2w
 
 ## Why use Gatsby.js with WordPress at all?
 
@@ -39,12 +34,7 @@ First, it really allows a lot of customization for the developer to choose tools
 
 Second, I believe that plugins are a double-edged sword. They allow some cool functionality which otherwise wouldn't exist for non-coders, but people get slap-happy with them and start putting them on unnecessarily. I've seen sites with more than 60 plugins activated at once and they wondered why their site was so slow! Having 60 different plugins could mean having a ridiculous amount of HTTP requests being sent because each plugin is loading a new library. Using a separate frontend means the developer is in control of this. It does mean that the client will have to pay to have some changes made, but at the same time it will ensure that the site is staying optimized and that a developer can make the change without adding a bunch of unnecessary junk.
 
-<figure>
-  <video autoplay muted loop width="400">
-    <source src='https://media.giphy.com/media/CBFgxojcXwac/giphy.mp4'/>
-  </video>
-  <figcaption>Unbelievable</figcaption>
-</figure>
+https://giphy.com/gifs/random-explosions-unnecessary-CBFgxojcXwac
 
 Third, I've seen cases where the developer and designer create an amazing site for a client and then the client decides to start poking around trying to change something minute like font-size from 12px to 14px and ends up taking the whole site down. This is an extreme example, but it definitely happens. If the frontend is a totally separate entity, then the client doesn't have the ability to do so.
 
@@ -60,12 +50,7 @@ As a matter of fact, [my portfolio site](https://www.iamtimsmith.com) is built u
 
 Now let's get down to business...
 
-<figure>
-  <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/xUOwGmsFStnxzIGC2s/giphy.mp4"/>
-  </video>
-  <figcaption>Let's get down to business</figcaption>
-</figure>
+https://giphy.com/gifs/cbc-funny-reaction-xUOwGmsFStnxzIGC2s
 
 ## Setting up WordPress
 
@@ -117,12 +102,7 @@ When I build a Gatsby website, I like to use Netlify to handle the deployment of
 
 Netlify has the ability to create webhooks that you can grab to say, "Hey, there's new content so you need to rebuild". I built [WP Trigger Netlify Build](https://github.com/iamtimsmith/wp-trigger-netlify-build) to make this super easy to integrate with WordPress. Simply drop in the necessary information and it will tell Netlify to rebuild when changes are made. It even shows a badge with the status of the build on the dashboard.
 
-<figure>
-<video autoplay muted loop>
-  <source src="https://media.giphy.com/media/qyX9oq2ZmsPwk/giphy.mp4"/>
-</video>
-<figcaption>We gon' have lots of fixins</figcaption>
-</figure>
+https://giphy.com/gifs/qyX9oq2ZmsPwk
 
 ## You have themes and plugins, now what?
 

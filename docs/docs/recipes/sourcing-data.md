@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Sourcing Data"
+tableOfContentsDepth: 1
 ---
 
 Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc). You can also source the data yourself.
@@ -248,7 +249,7 @@ module.exports = {
 
 3. Create a template component such as `src/templates/post.js` with the following code in it:
 
-```javascript:title=post.js
+```jsx:title=post.js
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
@@ -287,7 +288,7 @@ export const pageQuery = graphql`
 
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -325,7 +326,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 5. Run `gatsby-develop` to see the newly generated pages and navigate through them.
 
-6. Open the `GraphiQL IDE` at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
+6. Open the `GraphiQL IDE` at `http://localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
 
 The dynamic pages created above in `gatsby-node.js` have unique paths for navigating to particular posts, using a template component for the posts and a sample GraphQL query to source WordPress post content.
 
@@ -400,7 +401,7 @@ plugins: [
 
 7. Run `gatsby develop` and make sure the site compiled successfully.
 
-8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at <https://localhost:8000/___graphql>. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
+8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `http://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
 
 ![the graphql interface, with a sample query outlined below](../images/recipe-sourcing-contentful-graphql.png)
 
@@ -507,7 +508,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
 2. Create a template to display Pokémon on the homepage:
 
-```js:title=src/templates/all-pokemon.js
+```jsx:title=src/templates/all-pokemon.js
 import React from "react"
 
 export default ({ pageContext: { allPokemon } }) => (
@@ -546,7 +547,7 @@ export default ({ pageContext: { allPokemon } }) => (
 
 1. Install the `gatsby-source-drupal` plugin.
 
-```
+```shell
 npm install --save gatsby-source-drupal
 ```
 

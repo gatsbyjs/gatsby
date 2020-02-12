@@ -50,7 +50,7 @@ npm install --save-dev dotenv
 
 Create a file called `.env.development` at the root of your project with the following content:
 
-```
+```text
 API_KEY=paste-your-secret-access-token-here-wou7evoh0eexuf
 ```
 
@@ -79,7 +79,7 @@ module.exports = {
 }
 ```
 
-The best way to create your queries now is to first develop them in _GraphiQL_ at <http://localhost:8000/___graphql> and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
+The best way to create your queries now is to first develop them in _GraphiQL_ at `http://localhost:8000/___graphql` and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
 
 ![Prismic Index Query](./images/prismic-index-query.jpg)
 

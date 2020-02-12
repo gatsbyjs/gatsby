@@ -38,7 +38,7 @@ module.exports = {
 
 At this point you can choose to (and probably should) [set up a GraphQL API](https://www.sanity.io/help/graphql-beta) for your Sanity dataset, if you have not done so already. This will help the plugin in knowing which types and fields exists, so you can query for them even without them being present in any current documents.
 
-Go through <http://localhost:8000/___graphql> after running `gatsby develop` to understand the created data. Create a new query and check available collections and fields by using the autocomplete (`CTRL + SPACE`).
+Go through `http://localhost:8000/___graphql` after running `gatsby develop` to understand the created data. Create a new query and check available collections and fields by using the autocomplete (`CTRL + SPACE`).
 
 ## Options
 
@@ -212,7 +212,7 @@ The above query will fetch all projects that have a `slug.current` field set, an
 
 Most [Gatsby starters](/starters/?v=2) have some example of building pages, which you should be able to modify to your needs.
 
-Remember to use the GraphiQL interface to help write the queries you need - it's usually running at <http://localhost:8000/___graphql> while running `gatsby develop`.
+Remember to use the GraphiQL interface to help write the queries you need - it's usually running at `http://localhost:8000/___graphql` while running `gatsby develop`.
 
 ## "Raw" fields
 
@@ -230,13 +230,13 @@ You can install [block-content-to-react](https://www.npmjs.com/package/@sanity/b
 
 If you don't want to attach your Sanity project's ID to the repo, you can easily store it in .env files by doing the following:
 
-```js
-// In your .env file
+```text:title=.env
 SANITY_PROJECT_ID = abc123
 SANITY_DATASET = production
 SANITY_TOKEN = my-super-secret-token
+```
 
-// In your gatsby-config.js file
+```js:title=gatsby-config.js
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`
 })

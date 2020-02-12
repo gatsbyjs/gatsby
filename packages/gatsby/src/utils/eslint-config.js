@@ -3,13 +3,14 @@ import { printSchema } from "graphql"
 module.exports = schema => {
   return {
     useEslintrc: false,
+    resolvePluginsRelativeTo: __dirname,
     baseConfig: {
       globals: {
         graphql: true,
         __PATH_PREFIX__: true,
         __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
       },
-      extends: [`react-app`],
+      extends: [require.resolve(`eslint-config-react-app`)],
       plugins: [`graphql`],
       rules: {
         "import/no-webpack-loader-syntax": [0],
