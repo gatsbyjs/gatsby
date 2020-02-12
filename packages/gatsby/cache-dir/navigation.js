@@ -13,12 +13,8 @@ const redirectMap = redirects.reduce((map, redirect) => {
   return map
 }, {})
 
-console.log(redirectMap)
-
 function maybeRedirect(pathname) {
   const redirect = redirectMap[pathname]
-  console.log({ pathname, redirect })
-  // loader.test(pathname)
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
@@ -59,9 +55,6 @@ const navigate = (to, options = {}) => {
   let { pathname } = parsePath(to)
 
   const redirect = redirectMap[pathname]
-
-  console.log({ pathname, redirect })
-  // loader.test(pathname)
 
   // If we're redirecting, just replace the passed in pathname
   // to the one we want to redirect to.
