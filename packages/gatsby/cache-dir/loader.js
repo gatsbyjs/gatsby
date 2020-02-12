@@ -315,16 +315,6 @@ export class BaseLoader {
     return page && page.notFound === true
   }
 
-  isPageExist(rawPath) {
-    const pagePath = findPath(rawPath)
-    const page = this.pageDb.get(pagePath)
-    return (
-      page &&
-      stripSurroundingSlashes(page.payload.page.path) ===
-        stripSurroundingSlashes(rawPath)
-    )
-  }
-
   loadAppData(retries = 0) {
     return doFetch(`${__PATH_PREFIX__}/page-data/app-data.json`).then(req => {
       const { status, responseText } = req
@@ -424,9 +414,13 @@ export const publicLoader = {
   loadPageSync: rawPath => instance.loadPageSync(rawPath),
   prefetch: rawPath => instance.prefetch(rawPath),
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),
-  isPageExist: rawPath => instance.isPageExist(rawPath),
   hovering: rawPath => instance.hovering(rawPath),
   loadAppData: () => instance.loadAppData(),
+}
+
+if (process.env.NODE_ENV !== `production`) {
+  // this function is only used in development for dev-only messages
+  publicLoader.isPageExist = rawPath => instance.isPageExist(rawPath)
 }
 
 export default publicLoader
