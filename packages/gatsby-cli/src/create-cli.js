@@ -4,7 +4,11 @@ const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const { setStore } = require(`./reporter/redux`)
 const didYouMean = require(`./did-you-mean`)
-const { getLocalGatsbyVersion } = require(`./util/version`)
+const {
+  getCurrentCliVersion,
+  getLocalGatsbyVersion,
+  getCurrentNodeVersion,
+} = require(`./util/version`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 const clipboardy = require(`clipboardy`)
@@ -82,6 +86,15 @@ function buildLocalCommands(cli, isLocalSite) {
     }
   }
 
+  function showVersionHeader() {
+    const isGatsbySite = isLocalGatsbySite()
+    const cliVersion = getCurrentCliVersion() ?? `unknown`
+    const gatsbyVersion = (isGatsbySite && getLocalGatsbyVersion()) || `unknown`
+    report.info(
+      `Using: gatsby-cli@${cliVersion}, gatsby@${gatsbyVersion}, nodejs@${getCurrentNodeVersion()}`
+    )
+  }
+
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
@@ -150,6 +163,7 @@ function buildLocalCommands(cli, isLocalSite) {
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
+        showVersionHeader()
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
         cmd(args)
         // Return an empty promise to prevent handlerP from exiting early.
@@ -180,6 +194,7 @@ function buildLocalCommands(cli, isLocalSite) {
         }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
+        showVersionHeader()
         process.env.NODE_ENV = `production`
         return cmd(args)
       })
@@ -288,22 +303,22 @@ function isLocalGatsbySite() {
   return !!inGatsbySite
 }
 
-function getVersionInfo() {
-  const { version } = require(`../package.json`)
+function getVersionInfo(cliVersion) {
+  const nodeVersion = getCurrentNodeVersion() ?? `unknown`
   const isGatsbySite = isLocalGatsbySite()
   if (isGatsbySite) {
     // we need to get the version from node_modules
-    let gatsbyVersion = getLocalGatsbyVersion()
+    const gatsbyVersion = getLocalGatsbyVersion() ?? `unknown`
 
-    if (!gatsbyVersion) {
-      gatsbyVersion = `unknown`
-    }
-
-    return `Gatsby CLI version: ${version}
-Gatsby version: ${gatsbyVersion}
-  Note: this is the Gatsby version for the site at: ${process.cwd()}`
+    return `Current call:
+  Gatsby CLI version: ${cliVersion}
+  NodeJS version: ${nodeVersion}
+For the site at: ${process.cwd().replace(/^\/home\/[^/]+/, `~`)}
+  Gatsby version: ${gatsbyVersion}`
   } else {
-    return `Gatsby CLI version: ${version}`
+    return `Gatsby CLI version: ${cliVersion}
+Current NodeJS version: ${nodeVersion}
+`
   }
 }
 
@@ -339,13 +354,13 @@ module.exports = argv => {
   buildLocalCommands(cli, isLocalSite)
 
   try {
-    const { version } = require(`../package.json`)
+    const cliVersion = getCurrentCliVersion() ?? `unknown`
     cli.version(
       `version`,
       `Show the version of the Gatsby CLI and the Gatsby package in the current project`,
-      getVersionInfo()
+      getVersionInfo(cliVersion)
     )
-    setDefaultTags({ gatsbyCliVersion: version })
+    setDefaultTags({ gatsbyCliVersion: cliVersion })
   } catch (e) {
     // ignore
   }
