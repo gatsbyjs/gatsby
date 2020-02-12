@@ -52,6 +52,6 @@ I wish I'd have started my journey with [create-guten-block](https://github.com/
 
 I'm excited that I am now learning React not just to extend an editing experience for one CMS, but to build general websites and apps. A Gatsby project is a React project, so the React ecosystem can be used on a Gatsby site. Mastery of Gatsby gives you transferable skills - you are not confined to just one framework. 
 
-If you'd like to join me and thousands of others in learning JavaScript, React, NodeJs, and GraphQL through Gatsby, register for #100DaysOfGatsby. You will receive weekly prompts that stair-step you into an increasingly powerful Gatsby project. 
+If you'd like to join me and thousands of others in learning JavaScript, React, Node.js, and GraphQL through Gatsby, [register for #100DaysOfGatsby](/blog/100days). You will receive weekly prompts that stair-step you into an increasingly powerful Gatsby project. 
 
 
