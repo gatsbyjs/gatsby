@@ -1,6 +1,6 @@
 let spy
 Cypress.on(`window:before:load`, win => {
-  spy = cy.spy(win.console, `error`).as(`spyWinConsoleError`) // can be other methods - log, warn, etc
+  spy = cy.spy(win.console, `error`).as(`spyWinConsoleError`)
 })
 
 describe(`redirect`, () => {
