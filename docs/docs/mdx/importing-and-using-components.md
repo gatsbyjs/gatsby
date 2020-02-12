@@ -2,13 +2,13 @@
 title: Importing and Using Components in MDX
 ---
 
-You can import your components from other third party libraries that come with components included, like [`theme-ui`](https://theme-ui.com/components). Use cases for external libraries could be charting libraries for adding rich data visualizations, form components for adding email signups, styled portions of content like pullquotes, or buttons for calls to action throughout the content in your pages. You can also import and resuse _your own_ React components and MDX documents.
+You can import your components from other third party libraries, like [`theme-ui`](https://theme-ui.com/components). Use cases for external libraries could be charting libraries for adding rich data visualizations, form components for adding email signups, styled portions of content like pullquotes, or call to action buttons throughout your pages. You can also import and reuse _your own_ React components and MDX documents.
 
 ## Import components for use from another library
 
 Components imported from other libraries can be rendered inline with your markdown content, allowing you to include rich media like charts, interactive buttons, or styled messages. Components are imported at the top of your MDX files—in the same syntax they are imported in JavaScript files—and then added using opening and closing brackets like normal JSX elements.
 
-To include a component from another library (this example uses [the message component from `theme-ui`](https://theme-ui.com/components/message)), you need import it at the top of your MDX file:
+To include a component from another library (this example uses [the message component from `theme-ui`](https://theme-ui.com/components/message)), you need to import it at the top of your MDX file:
 
 ```mdx
 ---
@@ -19,7 +19,7 @@ import { Message } from "theme-ui" // highlight-line
 
 You can import your own components.
 
-<Message>MDX gives you JSX in Mardown!</Message> // highlight-line
+<Message>MDX gives you JSX in Markdown!</Message> // highlight-line
 ```
 
 **Note**: steps for importing custom components or MDX documents from a relative location in your project are also covered in the [Writing Pages in MDX guide](/docs/mdx/writing-pages/).
@@ -43,7 +43,7 @@ export default ({ children }) => (
 )
 ```
 
-All MDX components passed into the `components` prop of the `MDXProvider` will be made available to MDX files that are nested under the provider. The `MDXProvider` in this example is in a layout component that would be used to wrap all MDX pages, you can read about this pattern in [the layout section of the `gatsby-plugin-mdx` README](/packages/gatsby-plugin-mdx/#default-layouts).
+All MDX components passed into the `components` prop of the `MDXProvider` will be made available to MDX files that are nested under the provider. The `MDXProvider` in this example is in a layout component that wraps all MDX pages, you can read about this pattern in [the layout section of the `gatsby-plugin-mdx` README](/packages/gatsby-plugin-mdx/#default-layouts).
 
 Now, you can include components in your MDX without importing them:
 
@@ -52,7 +52,6 @@ Now, you can include components in your MDX without importing them:
 title: Importing Components Example
 ---
 
-You can import your own components.
 
 <Message>MDX gives you JSX in Mardown!</Message> // highlight-line
 
