@@ -16,7 +16,7 @@ You'll need a few plugins for this:
 - [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp) powers the connections between Sharp and Gatsby Plugins
 - [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) allows you to create multiples images of the right sizes and resolutions with a query
 
-If the final image is of a fixed size, optimization relies on having multiple resolutions of the image. If it is responsive, that is it stretches to fill a container or page, optimization relies on having different sizes of the same image. See the [Gatsby Image documentation for more information](/packages/gatsby-image/#two-types-of-responsive-images).
+If the final image is of a fixed size, optimization relies on having multiple resolutions of the image. If it is responsive, meaning it stretches to fill a container or page, optimization relies on having different sizes of the same image. See the [Gatsby Image documentation for more information](/packages/gatsby-image/#two-types-of-responsive-images).
 
 You can also use arguments in your query to specify exact, minimum, and maximum dimensions. See the [Gatsby Image documentation for complete options](/packages/gatsby-image/#two-types-of-responsive-images).
 

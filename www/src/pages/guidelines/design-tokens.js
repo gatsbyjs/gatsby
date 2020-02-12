@@ -69,7 +69,7 @@ const ColorExample = ({ hex, token }) => (
 )
 
 const DesignTokens = ({ location }) => (
-  <Layout pathname={location.pathname} pageTitle="Design Tokens">
+  <Layout location={location} pageTitle="Design Tokens">
     <Container>
       <div css={{ position: `relative`, zIndex: 1 }}>
         <PageHeading>Design Tokens</PageHeading>
