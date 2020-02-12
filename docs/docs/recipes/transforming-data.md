@@ -68,7 +68,7 @@ export const query = graphql`
 
 1.
 
-Edit your gatsby-config.js file to source images and configure plugins for Gatsby's GraphQL data layer. A common approach is to source them from an images directory using the gatsby-source-filesystem plugin:
+Edit your `gatsby-config.js` file to source images and configure plugins for Gatsby's GraphQL data layer. A common approach is to source them from an images directory using the `gatsby-source-filesystem` plugin:
 
 ```JavaScript:title=gatsby-config.js
 
@@ -87,10 +87,6 @@ Edit your gatsby-config.js file to source images and configure plugins for Gatsb
 
 2. Query your image using GraphQL.
 
-The `relativePath` is relative to the path you configured in `gatsby-source-filesystem`.
-
-Note: You can find these and other parameters in your GraphQL playground located at `http://localhost:8000/__graphql`
-
 ```query {
      file(relativePath: { eq: "gatsby-astronaut.png" }) {
        childImageSharp {
@@ -103,27 +99,11 @@ Note: You can find these and other parameters in your GraphQL playground located
    }
 ```
 
+The `relativePath` is relative to the path you configured in `gatsby-source-filesystem`.
 
-```JavaScript
-module.exports = {
-  siteMetadata: {
-    title: `Your Site Name`,
-  },
-  plugins: [
-    //highlight-start
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `src`,
-        path: `${__dirname}/src/`,
-      },
-    },
-    //highlight-end
-  ],
-}
-```
+Note: You can find these and other parameters in your GraphQL playground located at `http://localhost:8000/__graphql`
 
-3. Next import the image from the "gatsby-image" line listed below
+3. Next import component for displaying the image from the "gatsby-image" line listed below than return the image in the layout.
 
 ```JavaScript:title=src/pages/my-dogs.js
 
