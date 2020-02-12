@@ -71,7 +71,7 @@ async function createPullRequest(input) {
       input,
     }
   )
-  return createPullRequest
+  return createPullRequest.pullRequest
 }
 
 function conflictPRBody(conflictFiles, comparisonUrl) {
@@ -153,7 +153,6 @@ async function syncTranslationRepo(code) {
   const lines = output.split(`\n`)
 
   // find all merge conflicts
-  // FIXME deal with deleted file conflicts
   const conflictLines = lines.filter(line =>
     line.startsWith(`CONFLICT (content)`)
   )
@@ -201,7 +200,6 @@ async function syncTranslationRepo(code) {
 
   const repository = await getRepository(owner, transRepoName)
 
-  // FIXME this number doesn't work
   const { number } = await createPullRequest({
     repositoryId: repository.id,
     baseRefName: `master`,
