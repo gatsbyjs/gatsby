@@ -34,7 +34,7 @@ customization of the parsing process is possible using the parameters listed in
 
 ### Configuration
 
-For example, to pass the `noheader` option, you can configure like so:
+For example, to pass the `noheader` option, you can configure the plugin in `gatsby-config.js` as follows:
 
 ```javascript
 // In your gatsby-config.js
