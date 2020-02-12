@@ -461,7 +461,7 @@ out-of-the-box extension, so resolving a field to a default value (instead of
 tag to every blog post:
 
 ```js:title=gatsby-node.js
-exports.createSchemaCustomization = ({ action, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
