@@ -184,9 +184,9 @@ module.exports = {
 
 _NOTES_:
 
-When using [includes](https://www.drupal.org/docs/8/modules/jsonapi/includes) in your JSON:API calls the included data will be automatically become available to query, even if the link types are skipped using `disallowedLinkTypes`.
+When using [includes](https://www.drupal.org/docs/8/modules/jsonapi/includes) in your JSON:API calls the included data will automatically become available to query, even if the link types are skipped using `disallowedLinkTypes`.
 
-This enables you to only fetch the data you need at build time, instead of all data of a certain entity type or bundle.
+This enables you to fetch only the data you need at build time, instead of all data of a certain entity type or bundle.
 
 ## Gatsby Preview (experimental)
 
