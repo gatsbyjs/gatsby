@@ -16,7 +16,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 You may have been introduced to Gatsby as a [“static site generator”](/docs/glossary/static-site-generator/). And it’s true - a Gatsby project [is built into a set of static assets](/docs/overview-of-the-gatsby-build-process/) that can be hosted on a [low cost CDN](/docs/winning-over-engineering-leaders/#lower-costs), for _by-default_ security and blazing fast speed.
 
-But Gatsby is best understood as a Progressive Web App generator, because with Gatsby you can produce websites with native mobile app capabilities. A Progressive Web App (PWA) is a new class of website that takes advantage of the web browser’s access to mobile device APIs, to provide features traditionally only associated with native apps. 
+But Gatsby is best understood as a Progressive Web App generator, because with Gatsby you can produce websites with native mobile app capabilities. A Progressive Web App (PWA) is a new class of website that takes advantage of the web browser’s access to mobile device APIs, to provide features traditionally only associated with native apps.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/z2JgN6Ae-Bo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
