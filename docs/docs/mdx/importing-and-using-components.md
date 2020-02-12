@@ -53,7 +53,7 @@ title: Importing Components Example
 ---
 
 
-<Message>MDX gives you JSX in Mardown!</Message> // highlight-line
+<Message>MDX gives you JSX in Markdown!</Message> // highlight-line
 
 If you want to include a Chart it's now available in all MDX files!
 
