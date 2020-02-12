@@ -11,7 +11,6 @@ import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import SimpleEvaluationTable from "../components/features/simple-evaluation-table"
-import { itemListFeatures } from "../utils/sidebar/item-list"
 
 const FeaturesHeader = () => (
   <section>
@@ -49,7 +48,7 @@ const FeaturesHeader = () => (
         you’ve added. These files can be cached and served from a CDN.
         <br />
         <p sx={{ mt: 2 }}>Coming from the JAMstack world?</p>
-        <Button to="/features/jamstack" secondary>
+        <Button to="/features/jamstack/" secondary>
           Compare Gatsby vs JAMstack
         </Button>
       </li>
@@ -78,7 +77,7 @@ const FeaturesHeader = () => (
         provider.
         <br />
         <p sx={{ mt: 2 }}>Coming from the CMS world?</p>
-        <Button to="/features/cms" secondary>
+        <Button to="/features/cms/" secondary>
           Compare Gatsby vs CMS
         </Button>
       </li>
@@ -105,11 +104,7 @@ const FeaturesHeader = () => (
 class FeaturesPage extends Component {
   render() {
     return (
-      <Layout
-        location={this.props.location}
-        itemList={itemListFeatures}
-        enableScrollSync={true}
-      >
+      <Layout location={this.props.location} enableScrollSync={true}>
         <Helmet>
           <title>Features</title>
           <meta

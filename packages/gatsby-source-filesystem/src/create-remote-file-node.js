@@ -61,6 +61,11 @@ let totalJobs = 0
 
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
+const STALL_RETRY_LIMIT = 3
+const STALL_TIMEOUT = 30000
+
+const CONNECTION_RETRY_LIMIT = 5
+const CONNECTION_TIMEOUT = 30000
 
 /********************
  * Queue Management *
@@ -124,31 +129,65 @@ async function pushToQueue(task, cb) {
  * @param  {Headers}  headers
  * @param  {String}   tmpFilename
  * @param  {Object}   httpOpts
+ * @param  {number}   attempt
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
-const requestRemoteNode = (url, headers, tmpFilename, httpOpts) =>
+const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
   new Promise((resolve, reject) => {
-    const opts = Object.assign({}, { timeout: 30000, retries: 5 }, httpOpts)
+    let timeout
+
+    // Called if we stall for 30s without receiving any data
+    const handleTimeout = async () => {
+      fsWriteStream.close()
+      fs.removeSync(tmpFilename)
+      if (attempt < STALL_RETRY_LIMIT) {
+        // Retry by calling ourself recursively
+        resolve(
+          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
+        )
+      } else {
+        reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
+      }
+    }
+
+    const resetTimeout = () => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+      timeout = setTimeout(handleTimeout, STALL_TIMEOUT)
+    }
     const responseStream = got.stream(url, {
       headers,
-      ...opts,
+      timeout: CONNECTION_TIMEOUT,
+      retries: CONNECTION_RETRY_LIMIT,
+      ...httpOpts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
-    responseStream.on(`downloadProgress`, pro => console.log(pro))
 
     // If there's a 400/500 response or other error.
-    responseStream.on(`error`, (error, body, response) => {
+    responseStream.on(`error`, error => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
       fs.removeSync(tmpFilename)
       reject(error)
     })
 
     fsWriteStream.on(`error`, error => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
       reject(error)
     })
 
     responseStream.on(`response`, response => {
+      resetTimeout()
+
       fsWriteStream.on(`finish`, () => {
+        if (timeout) {
+          clearTimeout(timeout)
+        }
         resolve(response)
       })
     })

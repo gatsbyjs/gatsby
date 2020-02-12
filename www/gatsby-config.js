@@ -104,13 +104,6 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `ecosystem`,
-        path: `${__dirname}/src/data/ecosystem/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
         name: `guidelines`,
         path: `${__dirname}/src/data/guidelines/`,
       },
