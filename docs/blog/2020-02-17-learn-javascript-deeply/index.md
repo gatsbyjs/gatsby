@@ -14,7 +14,7 @@ tags:
 
 
 
-Using a Gatsby site is the most productive way to learn and master JavaScript, React, NodeJS, and GraphQL. That's because Gatsby gives you a high performance car to test drive, before you learn how to build one yourself.
+Using a Gatsby site is the most productive way to learn and master JavaScript, [React](/docs/glossary/react/), [Node.js](/docs/glossary/node), and [GraphQL](/docs/glossary/graphql). That's because Gatsby gives you a high performance car to test drive, before you learn how to build one yourself.
 
 I've discovered first hand a counterintuitive truth - the best way to learn web development is abstractions on down, not core primitives on up.   
 
