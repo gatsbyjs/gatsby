@@ -74,7 +74,7 @@ async function createPullRequest(input) {
   return createPullRequest.pullRequest
 }
 
-function conflictPRBody(conflictFiles, comparisonUrl) {
+function conflictPRBody(conflictFiles, comparisonUrl, prNumber) {
   return `
 Sync conflicts with the source repo. Please update the translations based on updated source content.
 
@@ -92,17 +92,17 @@ See all changes since the last sync here:
 
 ${comparisonUrl}
 
-NOTE: Do *NOT* squash-merge this pull request. The sync script requires a ref to the source repo in order to work correctly.
+NOTE: Do **NOT** squash-merge this pull request. The sync script requires a ref to the source repo in order to work correctly.
+
+## Related PRs
+
+#${prNumber} PR for syncing non-conflicting files
   `
 }
 
-function syncPRBody(conflictPRNumber) {
+function syncPRBody() {
   return `
-Sync all non-conflicting files with the source repo.
-This PR contains all updates that do not cause any conflicts and can be merged immediately.
-
-Pull Request #${conflictPRNumber} was created to resolve conflicts during merge.
-Please resolve the conflicts in that PR and merge it in as well.
+Sync all non-conflicting files with the source repo. This PR contains all updates that do not cause any conflicts and can be merged immediately.
 
 NOTE: Do *NOT* squash-merge this pull request. The sync script requires a ref to the source repo in order to work correctly.
   `
@@ -136,6 +136,35 @@ async function syncTranslationRepo(code) {
     .stdout.replace(`\n`, ``)
   const shortHash = getShortHash(hash)
 
+  const syncBranch = `sync-${shortHash}`
+  if (shell.exec(`git checkout ${syncBranch}`).code !== 0) {
+    shell.exec(`git checkout -b ${syncBranch}`)
+  }
+  // FIXME doesn't deal with deleted files
+  shell.exec(`git pull source master --no-edit --strategy-option ours`)
+
+  // Remove files that are deleted by upstream
+  // https://stackoverflow.com/a/54232519
+  shell.exec(`git diff --name-only --diff-filter=U | xargs git rm`)
+  shell.exec(`git ci --no-edit`)
+
+  shell.exec(`git push -u origin ${syncBranch}`)
+
+  const repository = await getRepository(owner, transRepoName)
+
+  // TODO if there is already an existing PR, don't create a new one and exit early
+  const { number: syncPRNumber } = await createPullRequest({
+    repositoryId: repository.id,
+    baseRefName: `master`,
+    headRefName: syncBranch,
+    title: `(sync) Sync with ${sourceRepo} @ ${shortHash}`,
+    body: syncPRBody(),
+    maintainerCanModify: true,
+  })
+
+  // if we successfully publish the PR, pull again and create a new PR --
+  shell.exec(`git checkout master`)
+
   const comparisonUrl = `${sourceRepoUrl}/compare/${shortBaseHash}..${shortHash}`
 
   // Check out a new branch
@@ -156,6 +185,13 @@ async function syncTranslationRepo(code) {
   const conflictLines = lines.filter(line =>
     line.startsWith(`CONFLICT (content)`)
   )
+
+  // If no conflicts, exit early
+  if (conflictLines.length === 0) {
+    logger.info(`No conflicting files found. Exiting...`)
+    process.exit(0)
+  }
+
   // Message is of the form:
   // CONFLICT (content): Merge conflict in {file path}
   const conflictFiles = conflictLines.map(line =>
@@ -177,17 +213,6 @@ async function syncTranslationRepo(code) {
   )
   shell.exec(`git rm ${removedFiles.join(` `)}`)
 
-  // If no conflicts, merge directly into master
-  // TODO handle committing removed files
-  // TODO does gatsby-bot have merge permissions?
-  // if (conflictFiles.length === 0) {
-  //   logger.info(`No conflicts found. Committing directly to master.`)
-  //   shell.exec(`git checkout master`)
-  //   shell.exec(`git merge ${conflictBranch}`)
-  //   shell.exec(`git push origin master`)
-  //   process.exit(0)
-  // }
-
   // clean out the rest of the changed files
   shell.exec(`git checkout -- .`)
   shell.exec(`git clean -fd`)
@@ -196,40 +221,15 @@ async function syncTranslationRepo(code) {
   shell.exec(`git commit -m "Commit git conflicts"`)
   shell.exec(`git push -u origin ${conflictBranch}`)
 
-  // TODO if there is already an existing PR, don't create a new one
-
-  const repository = await getRepository(owner, transRepoName)
-
-  const { number } = await createPullRequest({
+  await createPullRequest({
     repositoryId: repository.id,
     baseRefName: `master`,
     headRefName: conflictBranch,
     title: `(sync) Resolve conflicts with ${sourceRepo} @ ${shortHash}`,
-    body: conflictPRBody(conflictFiles, comparisonUrl),
+    body: conflictPRBody(conflictFiles, comparisonUrl, syncPRNumber),
     maintainerCanModify: true,
     draft: true,
   })
-
-  // if we successfully publish the PR, pull again and create a new PR --
-  // this time taking *only* the non-conflicting files
-  shell.exec(`git checkout master`)
-
-  const syncBranch = `sync-${shortHash}`
-  if (shell.exec(`git checkout ${syncBranch}`).code !== 0) {
-    shell.exec(`git checkout -b ${syncBranch}`)
-  }
-  shell.exec(`git pull source master --no-edit --strategy-option ours`)
-  shell.exec(`git push -u origin ${syncBranch}`)
-
-  await createPullRequest({
-    repositoryId: repository.id,
-    baseRefName: `master`,
-    headRefName: syncBranch,
-    title: `(sync) Sync with ${sourceRepo} @ ${shortHash}`,
-    body: syncPRBody(number),
-    maintainerCanModify: true,
-  })
-  // shell.exec(`git push origin master`)
 }
 
 const [langCode] = process.argv.slice(2)
