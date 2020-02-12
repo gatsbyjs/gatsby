@@ -52,9 +52,9 @@ async function onCreateNode(
   function transformObject(obj, i) {
     const csvNode = {
       ...obj,
-      id: obj.id
-        ? obj.id
-        : createNodeId(`${node.id} [${i}] >>> ${node.extension.toUpperCase()}`),
+      id:
+        obj.id ??
+        createNodeId(`${node.id} [${i}] >>> ${node.extension.toUpperCase()}`),
       children: [],
       parent: node.id,
       internal: {
