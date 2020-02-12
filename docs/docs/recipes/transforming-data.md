@@ -83,7 +83,7 @@ export const query = graphql`
  ],
 ```
 
-2. Query your image using GraphQL.
+2. Query your image using GraphQL and apply a grayscale transformation to the image inline.
 
 ```query {
      file(relativePath: { eq: "gatsby-astronaut.png" }) {
