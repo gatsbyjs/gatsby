@@ -213,7 +213,7 @@ module.exports = {
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
           // convert images using http to https in plugin library READMEs
-          `gatsby-remark-http-to-https`
+          `gatsby-remark-http-to-https`,
         ],
       },
     },
@@ -271,7 +271,10 @@ module.exports = {
                 allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] }
                   limit: 10,
-                  filter: { fields: { section: { eq: "blog" }, draft: { ne: true } } }
+                  filter: {
+                    fields: { section: { eq: "blog" } }
+                    frontmatter: { draft: { ne: true } }
+                  }
                 ) {
                   edges {
                     node {
