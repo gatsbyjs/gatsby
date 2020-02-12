@@ -9657,3 +9657,18 @@
   built_by: Kashaf S
   built_by_url: https://www.linkedin.com/in/kashaf-shaikh-925117178
   featured: false
+  - title: Daniel Balloch
+  url: https://danielballoch.com
+  main_url: https://danielballoch.com
+  source_url: https://github.com/danielballoch/danielballoch
+  description: >
+    A web developer who's always learning and building. I'm based in Hamilton, New Zealand but can work remotely and am currently looking for new projects to work on or employment.
+  categories:
+    - Portfolio
+    - Business
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Daniel Balloch
+  built_by_url: https://danielballoch.com
+  featured: false
