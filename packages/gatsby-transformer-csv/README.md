@@ -28,13 +28,14 @@ module.exports = {
 }
 ```
 
-Above is the minimal configuration required to begin working. Additional
-customization of the parsing process is possible using the parameters listed in
-[csvtojson](https://github.com/Keyang/node-csvtojson#parameters).
-
 ### Configuration
 
-For example, to pass the `noheader` option, you can configure the plugin in `gatsby-config.js` as follows:
+The example above is the minimal configuration required to begin working. Additional
+customization of the parsing process is possible using the parameters listed in
+[csvtojson](https://github.com/Keyang/node-csvtojson#parameters). Any parameter listed on that page
+can be passed directly to the library using the plugin options.
+
+For example, to pass the `noheader` option, you can configure like so:
 
 ```javascript
 // In your gatsby-config.js
