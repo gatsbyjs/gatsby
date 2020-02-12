@@ -16,7 +16,6 @@ import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
-import HomepageSection from "../components/homepage/homepage-section"
 import FooterLinks from "../components/shared/footer-links"
 import {
   setupScrollersObserver,
@@ -141,13 +140,6 @@ class IndexRoute extends React.Component {
           <HomepageBlog posts={posts} />
 
           <HomepageNewsletter />
-
-          <HomepageSection
-            css={{
-              paddingTop: `0 !important`,
-              paddingBottom: `0 !important`,
-            }}
-          />
         </main>
         <FooterLinks />
       </Layout>
@@ -158,10 +150,7 @@ class IndexRoute extends React.Component {
 export default IndexRoute
 
 export const pageQuery = graphql`
-  query IndexRouteQuery(
-    $featuredStarters: [String]!
-    $featuredPlugins: [String]!
-  ) {
+  query IndexRouteQuery {
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
         fluid(maxWidth: 870) {
@@ -188,10 +177,7 @@ export const pageQuery = graphql`
     }
     allStartersYaml(
       filter: {
-        fields: {
-          starterShowcase: { slug: { in: $featuredStarters } }
-          hasScreenshot: { eq: true }
-        }
+        fields: { featured: { eq: true }, hasScreenshot: { eq: true } }
       }
       sort: { order: DESC, fields: [fields___starterShowcase___stars] }
     ) {
@@ -217,7 +203,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allNpmPackage(filter: { name: { in: $featuredPlugins } }) {
+    allNpmPackage(filter: { fields: { featured: { eq: true } } }) {
       edges {
         node {
           slug

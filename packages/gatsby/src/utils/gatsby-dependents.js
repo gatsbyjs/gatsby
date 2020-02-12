@@ -1,7 +1,7 @@
 import { store } from "../redux"
 import { memoize } from "lodash"
 
-const createRequireFromPath = require(`./create-require-from-path`)
+const { createRequireFromPath } = require(`gatsby-core-utils`)
 const { join, dirname } = require(`path`)
 
 const fs = require(`fs`)

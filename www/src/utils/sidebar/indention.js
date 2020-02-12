@@ -1,4 +1,4 @@
-import { space } from "../../gatsby-plugin-theme-ui"
+import { space } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // :)
 const remToPx = rem => parseFloat(rem) * 16

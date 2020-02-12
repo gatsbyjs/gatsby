@@ -5,8 +5,8 @@ const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
 const { getValueAt } = require(`../../utils/get-value-at`)
 
-const isFile = (nodeStore, field, relativePath) => {
-  const filePath = getFilePath(nodeStore, field, relativePath)
+const isFile = (nodeStore, fieldPath, relativePath) => {
+  const filePath = getFilePath(nodeStore, fieldPath, relativePath)
   if (!filePath) return false
   const filePathExists = nodeStore
     .getNodesByType(`File`)
@@ -26,8 +26,10 @@ const getFirstValueAt = (node, selector) => {
   return value
 }
 
-const getFilePath = (nodeStore, field, relativePath) => {
-  const [typeName, ...selector] = field.split(`.`)
+const getFilePath = (nodeStore, fieldPath, relativePath) => {
+  const [typeName, ...selector] = Array.isArray(fieldPath)
+    ? fieldPath
+    : fieldPath.split(`.`)
 
   if (typeName === `File`) return null
 

@@ -7,8 +7,8 @@ You can use the [heroku buildpack static](https://github.com/heroku/heroku-build
 Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application.
 
 ```shell
-$ heroku buildpacks:set heroku/nodejs
-$ heroku buildpacks:add https://github.com/heroku/heroku-buildpack-static.git
+heroku buildpacks:set heroku/nodejs
+heroku buildpacks:add https://github.com/heroku/heroku-buildpack-static.git
 ```
 
 You can optionally add the buildpacks to `app.json` if you want to take advantage of the [heroku platform api](https://devcenter.heroku.com/articles/setting-up-apps-using-the-heroku-platform-api)

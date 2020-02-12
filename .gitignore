@@ -52,6 +52,7 @@ node_modules/
 
 # misc
 .serverless/
+.eslintcache
 
 # lock files
 yarn.lock

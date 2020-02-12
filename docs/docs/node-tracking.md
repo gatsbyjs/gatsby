@@ -2,6 +2,14 @@
 title: Node Tracking
 ---
 
+> This documentation isn't up to date with the latest version of Gatsby.
+>
+> Outdated areas are:
+>
+> - _links to source files_ need to be updated
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+
 ## Track Nodes
 
 You may see calls to `trackInlineObjectsInRootNode()` and `findRootNodeAncestor()` in some parts of the code. These are both defined in schema/node-tracking.js. Node tracking is the tracking of relationships between a node's object values (not children), and the node's ID. E.g. Take, the following node:
