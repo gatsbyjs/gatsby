@@ -66,9 +66,7 @@ export const query = graphql`
 
 ### Directions
 
-1.
-
-Edit your `gatsby-config.js` file to source images and configure plugins for Gatsby's GraphQL data layer. A common approach is to source them from an images directory using the `gatsby-source-filesystem` plugin:
+1. Edit your `gatsby-config.js` file to source images and configure plugins for Gatsby's GraphQL data layer. A common approach is to source them from an images directory using the `gatsby-source-filesystem` plugin:
 
 ```JavaScript:title=gatsby-config.js
 
