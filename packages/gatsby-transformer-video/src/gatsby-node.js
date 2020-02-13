@@ -200,7 +200,7 @@ exports.createResolvers = (
       args: {
         ...DEFAULT_ARGS,
         crf: { type: GraphQLInt, defaultValue: 36 },
-        preset: { type: GraphQLString, defaultValue: `slow` },
+        preset: { type: GraphQLString, defaultValue: `fast` },
         maxRate: { type: GraphQLInt },
         bufSize: { type: GraphQLInt },
       },
