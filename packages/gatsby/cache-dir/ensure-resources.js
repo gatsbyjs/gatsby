@@ -40,12 +40,6 @@ class EnsureResources extends React.Component {
     })
   }
 
-  componentDidMount() {
-    if (!this.state.pageResources) {
-      this.loadResources(this.props.location.pathname)
-    }
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     // Always return false if we're missing resources.
     if (!nextState.pageResources) {
@@ -80,6 +74,16 @@ class EnsureResources extends React.Component {
   }
 
   render() {
+    if (!this.state.pageResources) {
+      console.warn(
+        `EnsureResources was not able to find resources for path: "${this.props.location.pathname}"`,
+        `This typically means that an issue occurred building components for that path`
+      )
+      throw new Error(
+        `EnsureResources was not able to find resources for path: "${this.props.location.pathname}"`
+      )
+    }
+
     return this.props.children(this.state)
   }
 }

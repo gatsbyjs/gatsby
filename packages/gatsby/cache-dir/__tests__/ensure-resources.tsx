@@ -14,7 +14,7 @@ jest.mock("../loader", () => ({
 afterAll(cleanup)
 
 describe("EnsureResources", () => {
-  it("works", () => {
+  it("loads pages synchronously", () => {
     const location = {
       pathname: "/",
     }
@@ -23,7 +23,6 @@ describe("EnsureResources", () => {
         {data => JSON.stringify(data.pageResources)}
       </EnsureResources>
     )
-    console.log(container)
 
     expect(getNodeText(container)).toMatchInlineSnapshot(
       `"{\\"loadPageSync\\":true,\\"path\\":\\"/\\"}"`
