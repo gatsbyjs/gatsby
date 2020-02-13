@@ -221,6 +221,7 @@ async function syncTranslationRepo(code) {
   shell.exec(`git commit -m "Commit git conflicts"`)
   shell.exec(`git push -u origin ${conflictBranch}`)
 
+  // TODO assign codeowners as reviewers
   await createPullRequest({
     repositoryId: repository.id,
     baseRefName: `master`,
