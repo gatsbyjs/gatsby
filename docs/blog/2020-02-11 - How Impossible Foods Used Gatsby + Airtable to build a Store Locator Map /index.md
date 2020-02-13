@@ -7,6 +7,7 @@ tags:
   - case-studies
   - ecommerce
 ---
+
 In 2018, one of the most promising options in alternative meat, Impossible Foods, was scaling exponentially, but its website was not keeping up. They turned to Gatsby to give their users a beautiful store locator map that helped them solve their most pressing problem i.e., finding an Impossible Burger at a location near them.
 
 ## The old website: Failing to help users find an Impossible Burger
@@ -29,7 +30,7 @@ Geo had been thinking about a website redesign for a while anyway. The team only
 
 The store locator problem was the final straw. As a result, they decided to create a new website -- ImpossibleFoods.com 2.0 -- that would be easy to update, scale to the needs of the company, and provide users with the one key experience they really needed, i.e., finding an Impossible Burger at a location near them.
 
-![Old site](if-old-site.png)
+![Old site](./if-old-site.png)
 
 ## A New Store Locator: The Discovery Phase
 
@@ -43,13 +44,13 @@ As David Fonnegra, an engineering leader at Matter Supply who leads the Impossib
 
 Fonnegra lists a whole host of usability challenges when building a store locator experience:
 
-> "How do you navigate usually? Do you search for addresses? For places? For zipcodes? For cities? For locations? What does the map pin stands for? Where are you? How do you identify the place you want to go? Is the distance useful for you? Does seeing the actual path help? Or is it the distance that's helping you? Is a list of places more useful for you than the actual map?
+> "How do you navigate usually? Do you search for addresses? For places? For zipcodes? For cities? For locations? What does the map pin stands for? Where are you? How do you identify the place you want to go? Is the distance useful for you? Does seeing the actual path help? Or is it the distance that's helping you? Is a list of places more useful for you than the actual map?"
 
 > “We had a lot of questions to start with,” Fonnegra said, “but zero answers."
 
 ## Iterating Towards the Right Answer
 
-For Fonegra and Impossible Foods, the way out was through: "The only great way to start answering those questions was releasing a nice experience for the people."
+For Fonnegra and Impossible Foods, the way out was through: "The only great way to start answering those questions was releasing a nice experience for the people."
 
 That meant building a rich application, with a whole host of technologies, i.e., **React** and **Gatsby** on the front-end, plus **Mapbox** for visualization; **Airtable** to enter store location data, **Elastic** for natural language search and geolocation filtering.
 
@@ -59,7 +60,7 @@ The content management strategy which Impossible Foods adopted through Airtable 
 
 "Content-wise, a store locator is very simple,” says CMS guru Deane Barker, the author of the O’Reilly guide to content management. “It's tabular data, which means it can be easily managed via a spreadsheet through rows and columns. To manage the store locator, you often have a different group of people than the marketing editorial team. So, it needs to be a simple interface. You don't want to train them on a larger CMS. They just have to maintain the store locator."
 
-The store locator is a use-case, Barker concludes, that calls for more *"simple and direct content management."*
+The store locator is a use-case, Barker concludes, that calls for more _"simple and direct content management."_
 
 That squares with Fonnegra and Impossible's experience. The Impossible Foods’ customer service representatives use Airtable for a wide variety of operational tasks, including tracking new launches of the Impossible Burger and, relevantly, for the store locator, tracking information for all restaurants selling Impossible products, as well as new launches of the Impossible Burger. Airtable is the center of the CSRs workflow, and the [native Gatsby integration](https://www.gatsbyjs.org/packages/gatsby-source-airtable/?=gatsby-source) allows them to work in the system they're used to.
 
@@ -69,13 +70,15 @@ At the end of the day, this helps not only the content creators’, the CSRs exp
 
 But it’s not just up-to-date data that the new site provided; it offers a dynamic, interactive experience for users as well.
 
-GIF
+<video autoplay loop muted playsinline>
+  <source src="new-maps.mp4" type="video/mp4">
+</video>
 
 The new store locator combines natural language searches, geolocation filtering, and an interactive map to help the end-user find the closest location where they can get the Impossible Burger.
 
 The new interactive map application reduced the number of steps for an end-user to find their Impossible Burger from five or six, including tedious scanning and off-site searching on Google Maps to one or two by simply entering in their location.
 
-![Maps](if-maps.png)
+![Maps](./if-maps.png)
 
 And because their website was on Gatsby, the user experience was always blazing fast.
 
@@ -95,7 +98,7 @@ The new site had bounce rate reductions of **30-40%** on both the store locator 
 - An incredibly fast **turnaround for campaign pages** around Impossible Food’s partnerships with Burger King and Little Caesars.
 - Partnerships that were widely covered by media and rocketed Impossible Foods’ brand outreach into millions of households across the US.
 
-![Results](results.png)
+![Results](./results.png)
 
 ## Conclusion
 
@@ -105,4 +108,4 @@ Ultimately, Geo credits Impossible Foods' choice of technologies as key in enabl
 
 > "We are changing and scaling quickly.,” Geo says. “That's why our current tech stack is awesome."
 
-*Ashley Geo and David Fonnegra highlighted the Impossible Foods / Matter Supply partnership in [ImpossibleFoods.com: Combining Gatsby + Contentful for Speed, Scale, and Flexibility](https://www.gatsbyjs.com/impossible-foods-webinar/). Deane Barker highlighted the store locator use-case [in a March 2019 podcast](https://www.ingeniux.com/company/podcast/content-matters-podcast-headless-content-management-with-deane-barker).*
+_Ashley Geo and David Fonnegra highlighted the Impossible Foods / Matter Supply partnership in [ImpossibleFoods.com: Combining Gatsby + Contentful for Speed, Scale, and Flexibility](https://www.gatsbyjs.com/impossible-foods-webinar/). Deane Barker highlighted the store locator use-case [in a March 2019 podcast](https://www.ingeniux.com/company/podcast/content-matters-podcast-headless-content-management-with-deane-barker)._
