@@ -3,6 +3,8 @@ const { performance } = require(`perf_hooks`)
 const { sync: glob } = require(`fast-glob`)
 const nodeFetch = require(`node-fetch`)
 const uuidv4 = require(`uuid/v4`)
+const { execSync } = require(`child_process`)
+const fs = require(`fs`)
 
 const bootstrapTime = performance.now()
 
@@ -18,6 +20,20 @@ function reportInfo(...args) {
 }
 function reportError(...args) {
   ;(lastApi ? lastApi.reporter : console).error(...args)
+}
+
+function execToStr(cmd) {
+  return String(
+    execSync(cmd, {
+      encoding: `utf8`,
+    }) ?? ``
+  ).trim()
+}
+function execToInt(cmd) {
+  // `parseInt` can return `NaN` for unexpected args
+  // `Number` can return undefined for unexpected args
+  // `0 | x` (bitwise or) will always return 0 for unexpected args, or 32bit int
+  return execToStr(cmd) | 0
 }
 
 class BenchMeta {
@@ -40,20 +56,97 @@ class BenchMeta {
   }
 
   getData() {
+    // Get memory usage snapshot first (just in case)
+    const { rss, heapTotal, heapUsed, external } = process.memoryUsage()
+    const memory = {
+      rss: rss ?? 0,
+      heapTotal: heapTotal ?? 0,
+      heapUsed: heapUsed ?? 0,
+      external: external ?? 0,
+    }
+
     for (const key in this.timestamps) {
       this.timestamps[key] = Math.floor(this.timestamps[key])
     }
+
+    // For the time being, our target benchmarks are part of the main repo
+    // And we will want to know what version of the repo we're testing with
+    const gitHash = execToStr(`git rev-parse HEAD`)
+
+    const nodejsVersion = process.version
+
+    const gatsbyCliVersion = execToStr(`gatsby --version`)
+
+    const gatsbyVersion = require(`gatsby/package.json`).version
+
+    const sharpVersion = fs.existsSync(`node_modules/sharp/package.json`)
+      ? require(`sharp/package.json`).version
+      : `none`
+
+    const webpackVersion = execToStr(`node_modules/.bin/webpack --version`)
+
+    const publicJsSize = execToInt(
+      `echo "0 $(find public -maxdepth 1 -iname "*.js" -printf " + %s")" | bc`
+    )
+
+    const jpgCount = execToInt(
+      `find public .cache  -type f -iname "*.jpg" -or -iname "*.jpeg" | wc -l`
+    )
+
+    const pngCount = execToInt(
+      `find public .cache  -type f -iname "*.png" | wc -l`
+    )
+
+    const gifCount = execToInt(
+      `find public .cache  -type f -iname "*.gif" | wc -l`
+    )
+
+    const otherCount = execToInt(
+      `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`
+    )
 
     const pageCount = glob(`**/**.json`, {
       cwd: `./public/page-data`,
       nocase: true,
     }).length
 
+    let siteId = ``
+    try {
+      // The tags ought to be a json string, but we try/catch it just in case it's not, or not a valid json string
+      siteId =
+        JSON.parse(process.env?.GATSBY_TELEMETRY_TAGS ?? `{}`)?.siteId ?? `` // Set by server
+    } catch (e) {
+      siteId = `error`
+      reportInfo(
+        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
+      )
+    }
+
     return {
       time: this.localTime,
       sessionId: process.gatsbyTelemetrySessionId || uuidv4(),
-      pageCount,
+      siteId,
+      cwd: process.cwd() ?? ``,
       timestamps: this.timestamps,
+      gitHash,
+      ci: process.env.CI || false,
+      ciName: process.env.CI_NAME || `local`,
+      versions: {
+        nodejs: nodejsVersion,
+        gatsby: gatsbyVersion,
+        gatsbyCli: gatsbyCliVersion,
+        sharp: sharpVersion,
+        webpack: webpackVersion,
+      },
+      counts: {
+        pages: pageCount,
+        jpgs: jpgCount,
+        pngs: pngCount,
+        gifs: gifCount,
+        other: otherCount,
+      },
+      memory,
+      publicJsSize,
     }
   }
 
@@ -95,46 +188,49 @@ class BenchMeta {
 
   async flush() {
     const data = this.getData()
-    const json = JSON.stringify(data)
+    const json = JSON.stringify(data, null, 2)
 
-    reportInfo(`Submitting data: ` + json)
+    if (!BENCHMARK_REPORTING_URL) {
+      reportInfo(`Gathered data: ` + json)
+      reportInfo(`BENCHMARK_REPORTING_URL not set, not submitting data`)
 
-    if (BENCHMARK_REPORTING_URL) {
-      reportInfo(`Flushing benchmark data to remote server...`)
-
-      let lastStatus = 0
-      this.flushing = nodeFetch(`${BENCHMARK_REPORTING_URL}`, {
-        method: `POST`,
-        headers: {
-          "content-type": `application/json`,
-          // "user-agent": this.getUserAgent(),
-        },
-        body: json,
-      }).then(res => {
-        lastStatus = res.status
-        if (lastStatus === 500) {
-          reportError(
-            `Response error`,
-            new Error(`Server responded with a 500 error`)
-          )
-          process.exit(1)
-        }
-        this.flushed = true
-        // Note: res.text returns a promise
-        return res.text()
-      })
-
-      this.flushing.then(text =>
-        reportInfo(`Server response: ${lastStatus}: ${text}`)
-      )
-
-      return this.flushing
+      this.flushed = true
+      return (this.flushing = Promise.resolve())
     }
 
-    // ENV var had no reporting end point
+    reportInfo(`Gathered data: ` + json)
+    reportInfo(`Flushing benchmark data to remote server...`)
 
-    this.flushed = true
-    return (this.flushing = Promise.resolve())
+    let lastStatus = 0
+    this.flushing = nodeFetch(`${BENCHMARK_REPORTING_URL}`, {
+      method: `POST`,
+      headers: {
+        "content-type": `application/json`,
+        // "user-agent": this.getUserAgent(),
+      },
+      body: json,
+    }).then(res => {
+      lastStatus = res.status
+      if (lastStatus === 500) {
+        reportInfo(`Got 500 response, waiting for text`)
+        res.text().then(content => {
+          reportError(
+            `Response error`,
+            new Error(`Server responded with a 500 error: ${content}`)
+          )
+          process.exit(1)
+        })
+      }
+      this.flushed = true
+      // Note: res.text returns a promise
+      return res.text()
+    })
+
+    this.flushing.then(text =>
+      reportInfo(`Server response: ${lastStatus}: ${text}`)
+    )
+
+    return this.flushing
   }
 }
 

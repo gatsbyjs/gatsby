@@ -9684,4 +9684,16 @@
     - Web Development
   built_by: Workers who work at Cloudflare
   built_by_url: https://github.com/cloudflare/built-with-workers/graphs/contributors
+- title: WebAnaya Solutions
+  url: https://www.webanaya.com
+  main_url: https://www.webanaya.com
+  description: >
+    Full Stack Web Solutions Provider.
+  categories:
+    - Agency
+    - Web Development
+    - API
+    - Blog
+  built_by: Durgesh Gupta
+  built_by_url: https://durgeshgupta.com
   featured: false
