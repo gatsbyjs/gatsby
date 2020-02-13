@@ -22,6 +22,20 @@ function reportError(...args) {
   ;(lastApi ? lastApi.reporter : console).error(...args)
 }
 
+function execToStr(cmd) {
+  return String(
+    execSync(cmd, {
+      encoding: `utf8`,
+    }) ?? ``
+  ).trim()
+}
+function execToInt(cmd) {
+  // `parseInt` can return `NaN` for unexpected args
+  // `Number` can return undefined for unexpected args
+  // `0 | x` (bitwise or) will always return 0 for unexpected args, or 32bit int
+  return execToStr(cmd) | 0
+}
+
 class BenchMeta {
   constructor() {
     this.flushing = undefined // Promise of flushing if that has started
@@ -43,7 +57,13 @@ class BenchMeta {
 
   getData() {
     // Get memory usage snapshot first (just in case)
-    const memory = process.memoryUsage()
+    const { rss, heapTotal, heapUsed, external } = process.memoryUsage()
+    const memory = {
+      rss: rss ?? 0,
+      heapTotal: heapTotal ?? 0,
+      heapUsed: heapUsed ?? 0,
+      external: external ?? 0,
+    }
 
     for (const key in this.timestamps) {
       this.timestamps[key] = Math.floor(this.timestamps[key])
@@ -51,15 +71,11 @@ class BenchMeta {
 
     // For the time being, our target benchmarks are part of the main repo
     // And we will want to know what version of the repo we're testing with
-    const gitHash = execSync(`git rev-parse HEAD`, { encoding: `utf8` }).trim()
+    const gitHash = execToStr(`git rev-parse HEAD`)
 
-    const nodeVersion = execSync(`node --version`, {
-      encoding: `utf8`,
-    }).trim()
+    const nodejsVersion = process.version
 
-    const gatsbyCliVersion = execSync(`gatsby --version`, {
-      encoding: `utf8`,
-    }).trim()
+    const gatsbyCliVersion = execToStr(`gatsby --version`)
 
     const gatsbyVersion = require(`gatsby/package.json`).version
 
@@ -67,60 +83,70 @@ class BenchMeta {
       ? require(`sharp/package.json`).version
       : `none`
 
-    const webpackVersion = execSync(`node_modules/.bin/webpack --version`, {
-      encoding: `utf8`,
-    }).trim()
+    const webpackVersion = execToStr(`node_modules/.bin/webpack --version`)
 
-    const publicJsSize = execSync(
-      `echo "0 $(find public -maxdepth 1 -iname "*.js" -printf " + %s")" | bc`,
-      { encoding: `utf8` }
-    ).trim()
+    const publicJsSize = execToInt(
+      `echo "0 $(find public -maxdepth 1 -iname "*.js" -printf " + %s")" | bc`
+    )
 
-    const jpgCount = execSync(
-      `find public .cache  -type f -iname "*.jpg" -or -iname "*.jpeg" | wc -l`,
-      { encoding: `utf8` }
-    ).trim()
+    const jpgCount = execToInt(
+      `find public .cache  -type f -iname "*.jpg" -or -iname "*.jpeg" | wc -l`
+    )
 
-    const pngCount = execSync(
-      `find public .cache  -type f -iname "*.png" | wc -l`,
-      { encoding: `utf8` }
-    ).trim()
+    const pngCount = execToInt(
+      `find public .cache  -type f -iname "*.png" | wc -l`
+    )
 
-    const gifCount = execSync(
-      `find public .cache  -type f -iname "*.gif" | wc -l`,
-      { encoding: `utf8` }
-    ).trim()
+    const gifCount = execToInt(
+      `find public .cache  -type f -iname "*.gif" | wc -l`
+    )
 
-    const rndCount = execSync(
-      `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`,
-      { encoding: `utf8` }
-    ).trim()
+    const otherCount = execToInt(
+      `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`
+    )
 
     const pageCount = glob(`**/**.json`, {
       cwd: `./public/page-data`,
       nocase: true,
     }).length
 
+    let siteId = ``
+    try {
+      // The tags ought to be a json string, but we try/catch it just in case it's not, or not a valid json string
+      siteId =
+        JSON.parse(process.env?.GATSBY_TELEMETRY_TAGS ?? `{}`)?.siteId ?? `` // Set by server
+    } catch (e) {
+      siteId = `error`
+      reportInfo(
+        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
+      )
+    }
+
     return {
       time: this.localTime,
       sessionId: process.gatsbyTelemetrySessionId || uuidv4(),
+      siteId,
+      cwd: process.cwd() ?? ``,
       timestamps: this.timestamps,
       gitHash,
       ci: process.env.CI || false,
       ciName: process.env.CI_NAME || `local`,
-      telemetryTags: process.env.GATSBY_TELEMETRY_TAGS,
-      nodeVersion,
-      gatsbyVersion,
-      gatsbyCliVersion,
-      sharpVersion,
-      webpackVersion,
+      versions: {
+        nodejs: nodejsVersion,
+        gatsby: gatsbyVersion,
+        gatsbyCli: gatsbyCliVersion,
+        sharp: sharpVersion,
+        webpack: webpackVersion,
+      },
+      counts: {
+        pages: pageCount,
+        jpgs: jpgCount,
+        pngs: pngCount,
+        gifs: gifCount,
+        other: otherCount,
+      },
       memory,
       publicJsSize,
-      pageCount,
-      jpgCount,
-      pngCount,
-      gifCount,
-      rndCount,
     }
   }
 
@@ -186,11 +212,14 @@ class BenchMeta {
     }).then(res => {
       lastStatus = res.status
       if (lastStatus === 500) {
-        reportError(
-          `Response error`,
-          new Error(`Server responded with a 500 error`)
-        )
-        process.exit(1)
+        reportInfo(`Got 500 response, waiting for text`)
+        res.text().then(content => {
+          reportError(
+            `Response error`,
+            new Error(`Server responded with a 500 error: ${content}`)
+          )
+          process.exit(1)
+        })
       }
       this.flushed = true
       // Note: res.text returns a promise
