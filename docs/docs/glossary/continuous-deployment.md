@@ -9,11 +9,11 @@ Continuous deployment is the automation of code deployments. In a continuous dep
 
 You'll most likely use a service to create your continuous deployment pipeline. Services such as [Netlify](http://netlify.com/), [AWS Amplify](https://aws.amazon.com/amplify/), [Azure](https://azure.microsoft.com/en-us/), and [Zeit](https://zeit.co/) are popular with Gatsby users. Or you can use [Gatsby Builds](https://www.gatsbyjs.org/blog/2020-01-27-announcing-gatsby-builds-and-reports/), a feature of the [Gatsby Cloud](https://www.gatsbyjs.com/) service.
 
-A continuous deployment pipeline begins with a [Git](https://git-scm.com/) repository. Git is source control management software, and you use it to manage changes to your site's code. Most continuous deployment services require a hosted Git service such as [GitHub](https://github.com/) or [GitLab](https://about.gitlab.com/) or [Bitbucket](https://bitbucket.org/).
+A continuous deployment pipeline begins with a [Git](https://git-scm.com/) repository. Git is source control management software, and you use it to manage changes to your site's code. Most continuous deployment services require a hosted Git service such as [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/), or [Bitbucket](https://bitbucket.org/).
 
-Your continuous deployment pipeline also requires a configuration file. [Gatsby Builds](https://www.gatsbyjs.org/blog/2020-01-27-announcing-gatsby-builds-and-reports/), for example, uses the `package.json`. This configuration file contains the list of packages that your project requires, and what tests it should run. It also ensures that your test, staging, and production environments stay in sync.
+Your continuous deployment pipeline also requires a configuration file. [Gatsby Builds](https://www.gatsbyjs.org/blog/2020-01-27-announcing-gatsby-builds-and-reports/), for example, uses `package.json`. This configuration file contains the list of packages that your project requires, and what tests it should run. It also ensures that your test, staging, and production environments stay in sync.
 
-Committing a change to your Git repository triggers the build and test process. Your continuous deployment service will download and install packages listed in your configuration file. Once that's complete, it will run your test suite.
+Committing a change to your Git repository triggers the build and test process. Your continuous deployment service will download and install the packages listed in your configuration file. Once that's complete, it will run your test suite.
 
 If your changes pass the tests, they'll be published to your production environment. If any of your test fail, they won't.
 
