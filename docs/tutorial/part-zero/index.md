@@ -25,16 +25,16 @@ To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](http
 #### How to install or verify Homebrew on your computer:
 
 1. Open your Terminal.
-1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
-1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation).
-1. Once you've installed Homebrew, repeat step 2 to verify.
+2. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
+3. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation).
+4. Once you've installed Homebrew, repeat step 2 to verify.
 
 #### Install Xcode Command Line Tools:
 
 1. Open your Terminal.
-1. Install Xcode Command line tools by running `xcode-select --install`.
+2. Install Xcode Command line tools by running `xcode-select --install`.
    - If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account
-1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
+3. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
 #### Install Node
 
@@ -155,15 +155,15 @@ gatsby develop
 
 ### View your site locally
 
-Open up a new tab in your browser and navigate to [**http://localhost:8000**](http://localhost:8000/).
+Open up a new tab in your browser and navigate to `http://localhost:8000/`
 
 ![Check homepage](04-home-page.png)
 
 Congrats! This is the beginning of your very first Gatsby site! 🎉
 
-You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. That’s the process you started by running the `gatsby develop` command. To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
+You’ll be able to visit the site locally at `http://localhost:8000/` for as long as your development server is running. That’s the process you started by running the `gatsby develop` command. To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
 
-**Note:** If you are using VM setup like `vagrant` and/or would like to listen on your local IP address, run `gatsby develop --host=0.0.0.0`. Now, the development server listens on both 'localhost' and your local IP.
+**Note:** If you are using VM setup like `vagrant` and/or would like to listen on your local IP address, run `gatsby develop --host=0.0.0.0`. Now, the development server listens on both `http://localhost` and your local IP.
 
 ## Set up a code editor
 

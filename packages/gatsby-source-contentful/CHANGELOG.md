@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.86](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.85...gatsby-source-contentful@2.1.86) (2020-02-13)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Remove whitespace from default long text value ([#21412](https://github.com/gatsbyjs/gatsby/issues/21412)) ([bed3684](https://github.com/gatsbyjs/gatsby/commit/bed3684))
+
 ## [2.1.85](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.84...gatsby-source-contentful@2.1.85) (2020-02-01)
 
 ### Features
