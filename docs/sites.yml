@@ -9639,3 +9639,73 @@
   built_by: Viraj V Chavan
   built_by_url: https://twitter.com/VirajVChavan
   featured: false
+- title: Nexweave
+  url: https://www.nexweave.com
+  main_url: https://www.nexweave.com
+  description: >
+    Nexweave is a SaaS platform built by a team of experienced product, design & technology professionals in India. Nexweave allows brands to create personalized & interactive video experiences at scale. We would love for our site to be featured at the gatsby showcase since we have long been appreciating the flexibility and speed of the sites we have created using the same.
+  categories:
+    - Video
+    - API
+    - User Experience
+    - Marketing
+    - Design
+    - Data
+    - Technology
+    - Media
+    - Consulting
+  built_by: Kashaf S
+  built_by_url: https://www.linkedin.com/in/kashaf-shaikh-925117178
+  featured: false
+- title: Daniel Balloch
+  url: https://danielballoch.com
+  main_url: https://danielballoch.com
+  source_url: https://github.com/danielballoch/danielballoch
+  description: >
+    Hey, I'm Daniel and this is my portfolio site. Made with Gatsby, React, GraphQL, Styled Emotion & Netlify. Install & local host instructions: 1. git clone https://github.com/danielballoch/danielballoch.git 2. npm install. 3. gatsby develop. Keep in mind I'm still learning myself, so these may not be best practises. If anyone's curious as to how something works flick me a message or if you have advice for me I'd love to hear it, otherwise happy coding!
+  categories:
+    - Portfolio
+    - Business
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Daniel Balloch
+  built_by_url: https://danielballoch.com
+- title: The Rift Metz
+  url: http://theriftmetz.com/
+  main_url: http://theriftmetz.com/
+  description: >
+    The Rift is a gaming bar based in Metz (France).
+  categories:
+    - Landing Page
+    - Entertainment
+    - Design
+    - Blog
+    - Food
+  built_by: Hugo Torzuoli
+  built_by_url: https://github.com/HZooly
+  featured: false
+- title: Built with Workers
+  url: https://workers.cloudflare.com/built-with/
+  main_url: https://workers.cloudflare.com/built-with/
+  description: >
+    Showcasing websites & projects built with Cloudflare Workers
+  categories:
+    - Portfolio
+    - JavaScript
+    - Web Development
+  built_by: Workers who work at Cloudflare
+  built_by_url: https://github.com/cloudflare/built-with-workers/graphs/contributors
+- title: WebAnaya Solutions
+  url: https://www.webanaya.com
+  main_url: https://www.webanaya.com
+  description: >
+    Full Stack Web Solutions Provider.
+  categories:
+    - Agency
+    - Web Development
+    - API
+    - Blog
+  built_by: Durgesh Gupta
+  built_by_url: https://durgeshgupta.com
+  featured: false

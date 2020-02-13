@@ -49,6 +49,7 @@
     "gatsby-remark-copy-linked-files": "^2.1.31",
     "gatsby-remark-embedder": "^1.11.0",
     "gatsby-remark-graphviz": "^1.1.18",
+    "gatsby-remark-http-to-https": "^1.0.2",
     "gatsby-remark-images": "^3.1.35",
     "gatsby-remark-normalize-paths": "^1.0.0",
     "gatsby-remark-prismjs": "^3.3.25",
