@@ -1,18 +1,20 @@
 import crypto from "crypto"
-import http from "http"
 import { tmpdir } from "os"
 import { resolve, parse } from "path"
 
-import { pathExists, createWriteStream, ensureDir, unlink } from "fs-extra"
+import { createRemoteFileNode } from "gatsby-source-filesystem"
+import { pathExists } from "fs-extra"
 import ffmpeg from "fluent-ffmpeg"
 import imagemin from "imagemin"
 import imageminGiflossy from "imagemin-giflossy"
 import PQueue from "p-queue"
 
 export default class FFMPEG {
-  constructor({ cacheDir, rootDir, ffmpegPath, ffprobePath }) {
+  constructor({ rootDir, ffmpegPath, ffprobePath }) {
     this.queue = new PQueue({ concurrency: 1 })
-    this.cacheDir = cacheDir
+    this.cacheDir = resolve(
+      `${rootDir}/node_modules/.cache/gatsby-transformer-video/`
+    )
     this.rootDir = rootDir
 
     if (ffmpegPath) {
@@ -23,53 +25,15 @@ export default class FFMPEG {
     }
   }
 
-  cacheContentfulVideo = async ({
-    id,
-    contentful_id: cid,
-    file: { url, fileName },
-    internal: { contentDigest },
+  analyzeVideo = async ({
+    video,
+    fieldArgs,
+    type,
+    store,
+    cache,
+    createNode,
+    createNodeId,
   }) => {
-    await ensureDir(this.cacheDir)
-
-    const { name, ext } = parse(fileName)
-    const absolutePath = resolve(
-      this.cacheDir,
-      `${name}-${contentDigest}${ext}`
-    )
-
-    const alreadyExists = await pathExists(absolutePath)
-
-    if (!alreadyExists) {
-      const previewUrl = `http:${url}`
-
-      console.log(`Downloading ${fileName} (${cid || id}) from ${previewUrl}`)
-
-      try {
-        await new Promise((resolve, reject) => {
-          const file = createWriteStream(absolutePath)
-          http
-            .get(previewUrl, function(response) {
-              response.pipe(file)
-              file.on(`finish`, function() {
-                file.close(resolve)
-              })
-            })
-            .on(`error`, function(err) {
-              reject(err)
-            })
-        })
-      } catch (err) {
-        await unlink(absolutePath)
-        throw err
-      }
-
-      console.log(`Finished downloading ${fileName} (${cid || id})`)
-    }
-
-    return absolutePath
-  }
-
-  analyzeVideo = async ({ video, fieldArgs, type }) => {
     let path
 
     if (type === `File`) {
@@ -77,7 +41,22 @@ export default class FFMPEG {
     }
 
     if (type === `ContentfulAsset`) {
-      path = await this.queue.add(() => this.cacheContentfulVideo(video))
+      const {
+        file: { url, fileName },
+      } = video
+      const { ext } = parse(fileName)
+      // Download video from Contentful for further processing
+      path = await this.queue.add(async () => {
+        const fileNode = await createRemoteFileNode({
+          url: `https:${url}`,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+          ext,
+        })
+        return fileNode.absolutePath
+      })
     }
 
     if (!path) {
@@ -93,15 +72,18 @@ export default class FFMPEG {
 
     const filename = `${video.internal.contentDigest}-${optionsHash}`
 
-    const info = await new Promise((resolve, reject) => {
+    const info = await this.executeFfprobe(path)
+
+    return { path, filename, info }
+  }
+
+  executeFfprobe = path =>
+    new Promise((resolve, reject) => {
       ffmpeg(path).ffprobe(function(err, data) {
         if (err) reject(err)
         resolve(data)
       })
     })
-
-    return { path, filename, info }
-  }
 
   executeFfmpeg = async (ffmpegSession, publicPath) => {
     let lastLoggedPercent = -10
@@ -132,24 +114,37 @@ export default class FFMPEG {
     })
   }
 
-  createPreviewFilters = ({
-    fieldArgs: { maxWidth, maxHeight, duration, fps },
-    info,
-  }) => {
-    const { duration: sourceDuration } = info.streams[0]
-    const previewFilters = [
-      `setpts=${(duration / sourceDuration).toFixed(6)}*PTS`,
-      `fps=${fps}`,
-      `scale=${this.generateScaleFilter({ maxWidth, maxHeight })}`,
-    ]
-
-    return previewFilters
-  }
-
-  createCustomFilters = ({
-    fieldArgs: { saturation, overlay, overlayX, overlayY, overlayPadding },
-  }) => {
+  // Generate ffmpeg filters based on field args
+  createFilters = ({ fieldArgs, info }) => {
+    const {
+      maxWidth,
+      maxHeight,
+      duration,
+      fps,
+      saturation,
+      overlay,
+      overlayX,
+      overlayY,
+      overlayPadding,
+    } = fieldArgs
     const filters = []
+    const { duration: sourceDuration } = info.streams[0]
+
+    if (duration) {
+      filters.push(`setpts=${(duration / sourceDuration).toFixed(6)}*PTS`)
+    }
+
+    if (fps) {
+      filters.push(`fps=${fps}`)
+    }
+
+    if (maxWidth || maxHeight) {
+      filters.push(`scale=${this.generateScaleFilter({ maxWidth, maxHeight })}`)
+    }
+
+    if (saturation !== 1) {
+      filters.push(`eq=saturation=${saturation}`)
+    }
 
     if (overlay) {
       const padding = overlayPadding === undefined ? 10 : overlayPadding
@@ -179,91 +174,138 @@ export default class FFMPEG {
       filters.push(`overlay=x=${x}:y=${y}`)
     }
 
-    if (saturation !== 1) {
-      filters.push(`eq=saturation=${saturation}`)
-    }
-
     return filters
   }
 
-  enhanceFfmpegForFilters = ({ fieldArgs: { overlay }, ffmpegSession }) => {
+  // Apply required changes from some filters to the fluent-ffmpeg session
+  enhanceFfmpegForFilters = ({
+    fieldArgs: { overlay, duration },
+    ffmpegSession,
+  }) => {
+    if (duration) {
+      ffmpegSession.duration(duration).noAudio()
+    }
     if (overlay) {
       const path = resolve(this.rootDir, overlay)
       ffmpegSession.input(path)
     }
   }
 
-  createPreviewMp4 = (...args) =>
-    this.queue.add(() => this.convertToPreviewMp4(...args))
-  convertToPreviewMp4 = async ({
-    publicDir,
-    path,
-    filename,
-    fieldArgs,
-    info,
-  }) => {
-    const { duration, h264Crf, h264Preset } = fieldArgs
+  createH264 = (...args) => this.queue.add(() => this.convertToH264(...args))
+  convertToH264 = async ({ publicDir, path, filename, fieldArgs, info }) => {
+    const { crf, preset, maxRate, bufSize } = fieldArgs
 
-    const publicPath = resolve(publicDir, `${filename}-preview.mp4`)
+    const publicPath = resolve(publicDir, `${filename}-h264.mp4`)
+
     const alreadyExists = await pathExists(publicPath)
     if (!alreadyExists) {
-      console.log(`[MP4] Converting ${path} (${filename})`)
-      const filters = [
-        ...this.createPreviewFilters({ fieldArgs, info }),
-        ...this.createCustomFilters({ fieldArgs }),
-      ].join(`,`)
+      console.log(`[H264] Converting ${path} (${filename})`)
+
+      const filters = this.createFilters({ fieldArgs, info }).join(`,`)
 
       console.log(`Applied complex filter: ${filters}`)
+
+      const outputOptions = [
+        crf && `-crf ${crf}`,
+        preset && `-preset ${preset}`,
+        maxRate && `-maxrate ${maxRate}`,
+        bufSize && `-bufsize ${bufSize}`,
+        `-pix_fmt yuv420p`,
+      ].filter(Boolean)
+
+      console.log(
+        `ffmpeg command:\n\nffmpeg -i ${path} -vf "${filters}" -c:v libx264 ${outputOptions.join(
+          ` `
+        )} ${publicPath} \n\n`
+      )
 
       const ffmpegSession = ffmpeg()
         .input(path)
         .videoCodec(`libx264`)
-        .duration(duration)
         .complexFilter([filters])
-        .outputOptions([
-          `-c:v libx264`,
-          `-crf ${h264Crf}`,
-          `-preset ${h264Preset}`,
-          `-pix_fmt yuv420p`,
-        ])
+        .outputOptions(outputOptions)
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
 
-      console.log(`[MP4] Done`)
+      console.log(`[H264] Done`)
     }
 
-    return publicPath.replace(`${this.rootDir}/public`, ``)
+    return publicPath
   }
 
-  createPreviewWebp = (...args) =>
-    this.queue.add(() => this.convertToPreviewWebp(...args))
-  convertToPreviewWebp = async ({
-    publicDir,
-    path,
-    filename,
-    fieldArgs,
-    info,
-  }) => {
-    const { duration } = fieldArgs
+  createH265 = (...args) => this.queue.add(() => this.convertToH265(...args))
+  convertToH265 = async ({ publicDir, path, filename, fieldArgs, info }) => {
+    const { crf, preset, maxRate, bufSize } = fieldArgs
 
-    const publicPath = resolve(publicDir, `${filename}-preview.webp`)
+    const publicPath = resolve(publicDir, `${filename}-h265.mp4`)
     const alreadyExists = await pathExists(publicPath)
     if (!alreadyExists) {
-      console.log(`[WEBP] Converting ${path} (${filename})`)
-      const filters = [
-        ...this.createPreviewFilters({ fieldArgs, info }),
-        ...this.createCustomFilters({ fieldArgs }),
-      ].join(`,`)
+      console.log(`[H265] Converting ${path} (${filename})`)
+
+      const filters = this.createFilters({ fieldArgs, info }).join(`,`)
 
       console.log(`Applied complex filter: ${filters}`)
 
+      const outputOptions = [
+        crf && `-crf ${crf}`,
+        preset && `-preset ${preset}`,
+        maxRate &&
+          bufSize &&
+          `-x265-params vbv-maxrate=${maxRate}:vbv-bufsize=${bufSize}`,
+        `-pix_fmt yuv420p`,
+      ].filter(Boolean)
+
+      console.log(
+        `ffmpeg command:\n\nffmpeg -i ${path} -vf "${filters}" -c:v libx265 ${outputOptions.join(
+          ` `
+        )} ${publicPath} \n\n`
+      )
+
       const ffmpegSession = ffmpeg()
         .input(path)
-        .duration(duration)
+        .videoCodec(`libx265`)
+        .complexFilter([filters])
+        .outputOptions(outputOptions)
+
+      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
+      await this.executeFfmpeg(ffmpegSession, publicPath)
+
+      console.log(`[H265] Done`)
+    }
+
+    return publicPath
+  }
+
+  createWebP = (...args) => this.queue.add(() => this.convertToWebP(...args))
+  convertToWebP = async ({ publicDir, path, filename, fieldArgs, info }) => {
+    const publicPath = resolve(publicDir, `${filename}.webp`)
+    const alreadyExists = await pathExists(publicPath)
+
+    if (!alreadyExists) {
+      console.log(`[WEBP] Converting ${path} (${filename})`)
+
+      const filters = this.createFilters({ fieldArgs, info }).join(`,`)
+
+      console.log(`Applied complex filter: ${filters}`)
+
+      const outputOptions = [
+        `-preset picture`,
+        `-compression_level 6`,
+        `-loop 0`,
+      ].filter(Boolean)
+
+      console.log(
+        `ffmpeg command:\n\nffmpeg -i ${path} -vf "${filters}" -c:v libwebp ${outputOptions.join(
+          ` `
+        )} ${publicPath} \n\n`
+      )
+
+      const ffmpegSession = ffmpeg()
+        .input(path)
         .videoCodec(`libwebp`)
         .complexFilter([filters])
-        .outputOptions([`-preset picture`, `-compression_level 6`, `-loop 0`])
+        .outputOptions(outputOptions)
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
@@ -271,39 +313,34 @@ export default class FFMPEG {
       console.log(`[WEBP] Done`)
     }
 
-    return publicPath.replace(`${this.rootDir}/public`, ``)
+    return publicPath
   }
 
-  createPreviewGif = (...args) =>
-    this.queue.add(() => this.convertToPreviewGif(...args))
-  convertToPreviewGif = async ({
-    publicDir,
-    path,
-    filename,
-    fieldArgs,
-    info,
-  }) => {
-    const { duration } = fieldArgs
-
-    const publicPath = resolve(publicDir, `${filename}-preview.gif`)
+  createGif = (...args) => this.queue.add(() => this.convertToGif(...args))
+  convertToGif = async ({ publicDir, path, filename, fieldArgs, info }) => {
+    const publicPath = resolve(publicDir, `${filename}.gif`)
     const alreadyExists = await pathExists(publicPath)
-    if (!alreadyExists) {
-      const tmpPath = resolve(tmpdir(), `${filename}-preview.gif`)
 
+    if (!alreadyExists) {
       console.log(`[GIF] Converting ${path} (${filename})`)
 
+      const tmpPath = resolve(tmpdir(), `${filename}.gif`)
       const filters = [
-        ...this.createPreviewFilters({ fieldArgs, info }),
-        ...this.createCustomFilters({ fieldArgs }),
+        ...this.createFilters({ fieldArgs, info }),
         // High quality gif: https://engineering.giphy.com/how-to-make-gifs-wit g/
         `split [a][b]`,
         `[a] palettegen [p]`,
         `[b][p] paletteuse`,
       ].join(`,`)
 
+      console.log(`Applied complex filter: ${filters}`)
+
+      console.log(
+        `ffmpeg command:\n\nffmpeg -i ${path} -vf "${filters}" ${publicPath} \n\n`
+      )
+
       const ffmpegSession = ffmpeg()
         .input(path)
-        .duration(duration)
         .complexFilter([filters])
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
@@ -326,102 +363,10 @@ export default class FFMPEG {
       console.log(`[GIF] Done`)
     }
 
-    return publicPath.replace(`${this.rootDir}/public`, ``)
+    return publicPath
   }
 
-  createH264 = (...args) => this.queue.add(() => this.convertToH264(...args))
-  convertToH264 = async ({ publicDir, path, filename, fieldArgs }) => {
-    const {
-      maxWidth,
-      maxHeight,
-      h264Crf,
-      h264Preset,
-      h264MaxRate,
-      h264BufSize,
-    } = fieldArgs
-
-    const publicPath = resolve(publicDir, `${filename}-h264.mp4`)
-    const alreadyExists = await pathExists(publicPath)
-    if (!alreadyExists) {
-      console.log(`[H264] Converting ${path} (${filename})`)
-
-      const filters = [
-        `scale=${this.generateScaleFilter({ maxWidth, maxHeight })}`,
-        ...this.createCustomFilters({ fieldArgs }),
-      ].join(`,`)
-
-      console.log(`Applied complex filter: ${filters}`)
-
-      const ffmpegSession = ffmpeg()
-        .input(path)
-        .videoCodec(`libx264`)
-        .complexFilter([filters])
-        .outputOptions(
-          [
-            h264Crf && `-crf ${h264Crf}`,
-            h264Preset && `-preset ${h264Preset}`,
-            h264MaxRate && `-maxrate ${h264MaxRate}`,
-            h264BufSize && `-bufsize ${h264BufSize}`,
-            `-pix_fmt yuv420p`,
-          ].filter(Boolean)
-        )
-
-      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
-      await this.executeFfmpeg(ffmpegSession, publicPath)
-
-      console.log(`[H264] Done`)
-    }
-
-    return publicPath.replace(`${this.rootDir}/public`, ``)
-  }
-
-  createH265 = (...args) => this.queue.add(() => this.convertToH265(...args))
-  convertToH265 = async ({ publicDir, path, filename, fieldArgs }) => {
-    const {
-      maxWidth,
-      maxHeight,
-      h265Crf,
-      h265Preset,
-      h265MaxRate,
-      h265BufSize,
-    } = fieldArgs
-
-    const publicPath = resolve(publicDir, `${filename}-h265.mp4`)
-    const alreadyExists = await pathExists(publicPath)
-    if (!alreadyExists) {
-      console.log(`[H265] Converting ${path} (${filename})`)
-
-      const filters = [
-        `scale=${this.generateScaleFilter({ maxWidth, maxHeight })}`,
-        ...this.createCustomFilters({ fieldArgs }),
-      ].join(`,`)
-
-      console.log(`Applied complex filter: ${filters}`)
-
-      const ffmpegSession = ffmpeg()
-        .input(path)
-        .videoCodec(`libx265`)
-        .complexFilter([filters])
-        .outputOptions(
-          [
-            h265Crf && `-crf ${h265Crf}`,
-            h265Preset && `-preset ${h265Preset}`,
-            h265MaxRate &&
-              h265BufSize &&
-              `-x265-params vbv-maxrate=${h265MaxRate}:vbv-bufsize=${h265BufSize}`,
-            `-pix_fmt yuv420p`,
-          ].filter(Boolean)
-        )
-
-      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
-      await this.executeFfmpeg(ffmpegSession, publicPath)
-
-      console.log(`[H265] Done`)
-    }
-
-    return publicPath.replace(`${this.rootDir}/public`, ``)
-  }
-
+  // Helper functions
   generateScaleFilter({ maxWidth, maxHeight }) {
     if (!maxHeight) {
       return `'min(${maxWidth},iw)':-2:flags=lanczos`
