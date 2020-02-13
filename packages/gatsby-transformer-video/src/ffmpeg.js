@@ -202,11 +202,22 @@ export default class FFMPEG {
 
       console.log(`Applied complex filter: ${filters}`)
 
+      const currentFps = parseInt(
+        info.streams
+          .find(stream => stream.codec_type === `video`)
+          .r_frame_rate.split(`/`)[0]
+      )
+
       const outputOptions = [
         crf && `-crf ${crf}`,
         preset && `-preset ${preset}`,
-        maxRate && `-maxrate ${maxRate}`,
-        bufSize && `-bufsize ${bufSize}`,
+        !crf && maxRate && `-maxrate ${maxRate}`,
+        !crf && bufSize && `-bufsize ${bufSize}`,
+        `-movflags +faststart`,
+        `-profile:v high`,
+        `-bf 2	`,
+        `-g ${Math.floor((fieldArgs.fps || currentFps) / 2)}`,
+        `-coder 1`,
         `-pix_fmt yuv420p`,
       ].filter(Boolean)
 
@@ -244,12 +255,22 @@ export default class FFMPEG {
 
       console.log(`Applied complex filter: ${filters}`)
 
+      const currentFps = parseInt(
+        info.streams
+          .find(stream => stream.codec_type === `video`)
+          .r_frame_rate.split(`/`)[0]
+      )
+
       const outputOptions = [
         crf && `-crf ${crf}`,
         preset && `-preset ${preset}`,
-        maxRate &&
+        !crf &&
+          maxRate &&
           bufSize &&
           `-x265-params vbv-maxrate=${maxRate}:vbv-bufsize=${bufSize}`,
+        `-movflags +faststart`,
+        `-bf 2`,
+        `-g ${Math.floor((fieldArgs.fps || currentFps) / 2)}`,
         `-pix_fmt yuv420p`,
       ].filter(Boolean)
 

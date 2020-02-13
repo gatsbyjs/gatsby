@@ -185,10 +185,10 @@ exports.createResolvers = (
       type: `GatsbyVideo`,
       args: {
         ...DEFAULT_ARGS,
-        crf: { type: GraphQLInt, defaultValue: 34 },
-        preset: { type: GraphQLString, defaultValue: `veryslow` },
-        maxRate: { type: GraphQLString, defaultValue: `2M` },
-        bufSize: { type: GraphQLString, defaultValue: `4M` },
+        crf: { type: GraphQLInt, defaultValue: 31 },
+        preset: { type: GraphQLString, defaultValue: `slow` },
+        maxRate: { type: GraphQLString },
+        bufSize: { type: GraphQLString },
       },
       resolve: transformVideo({
         transformer: ffmpeg.createH264,
@@ -199,10 +199,10 @@ exports.createResolvers = (
       type: `GatsbyVideo`,
       args: {
         ...DEFAULT_ARGS,
-        crf: { type: GraphQLInt, defaultValue: null },
-        preset: { type: GraphQLString, defaultValue: `veryslow` },
-        maxRate: { type: GraphQLInt, defaultValue: 1000 },
-        bufSize: { type: GraphQLInt, defaultValue: 2000 },
+        crf: { type: GraphQLInt, defaultValue: 36 },
+        preset: { type: GraphQLString, defaultValue: `slow` },
+        maxRate: { type: GraphQLInt },
+        bufSize: { type: GraphQLInt },
       },
       resolve: transformVideo({
         transformer: ffmpeg.createH265,
