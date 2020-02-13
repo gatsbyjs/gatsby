@@ -41,6 +41,6 @@ Follow this tutorial that explains how to [add images to your markdown-based pag
 
 ### How to Get Help
 
-Depending on your experience with Gatsby and React, this may be the hardest challenge we've given you. So, if you get stuck, please ask for help from the [Gatsby community](/contributing/community/) and the [ASKGatsbyJS](https://twitter.com/AskGatsbyJS) twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
+Depending on your experience with Gatsby and React, this may be the hardest challenge we've given you. So, if you get stuck, please ask for help from the [Gatsby community](/contributing/community/) and the [ASKGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
 
 Have fun! We can't wait to see what you build!

@@ -7,7 +7,7 @@ import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
@@ -25,7 +25,7 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 
 export const BlockLink = styled(Link)`
   background: ${p => p.theme.colors.card.background};
-  border-radius: ${p => p.theme.radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   box-shadow: ${p => p.theme.shadows.raised};
   display: flex;
   flex-direction: column;
