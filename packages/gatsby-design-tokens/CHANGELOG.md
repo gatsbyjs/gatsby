@@ -19,7 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Tokens
 
-This update moves the rudimentary tokens even closer to our current sole target, CSS. This e.g. means that instead of exporting an array of integers for `fontSizes` or `space`, we now provide `rem` values instead (while still making the v1 variants available — but we do have "soft" preferences irt default units for CSS, which are emphasized by these breaking changes).  
+This update moves the rudimentary tokens even closer to our current sole target, CSS. This e.g. means that instead of exporting an array of integers for `fontSizes` or `space`, we now provide `rem` values instead (while still making the v1 variants available — but we do have "soft" preferences regarding default units for CSS, which are emphasized by these breaking changes).  
 We currently only consume these tokens in the context of CSS, so let's make things a bit easier there:
 
 - `fontsSizes` exports `rem` values now; old values available at `fontSizesRaw`
@@ -32,10 +32,10 @@ The update also embraces `theme-ui` a bit more directly by partially adopting an
 Regarding the discussion in https://github.com/gatsby-inc/gatsby-interface/issues/181, everything but the `space` scale has been adjusted to hopefully "just work", or work easier than before. The update to v2 of `gatsby-design-tokens` should require almost no refactoring of values in `gatsby-interface` —
 
 - the `transition` properties partially follow a different naming convention
-- `fonts.header` changed to `fonts.headling`
+- `fonts.header` changed to `fonts.heading`
 - `radii` values now come with the `px` unit, so the latter is not needed anymore in template literals
 
-— and apart from that should be solved by removing the transformation of `fontSizes` and `spaces` `to`rem`, and the`join`of`fonts` stacks. (cc @amberleyromo @greglobinski @Elanhant — please also see the "Infamous last words" section at the end).
+— and apart from that should be solved by removing the transformation of `fontSizes` and `spaces` `to`rem`, and the`join`of`fonts` stacks.
 
 Here's all changes listed by "token group":
 
