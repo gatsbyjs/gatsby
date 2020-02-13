@@ -180,57 +180,60 @@ exports.createResolvers = (
     }
   }
 
-  const resolvers = {
-    ContentfulAsset: {
-      videoH264: {
-        type: `GatsbyVideo`,
-        args: {
-          ...DEFAULT_ARGS,
-          crf: { type: GraphQLInt, defaultValue: 34 },
-          preset: { type: GraphQLString, defaultValue: `veryslow` },
-          maxRate: { type: GraphQLString, defaultValue: `2M` },
-          bufSize: { type: GraphQLString, defaultValue: `4M` },
-        },
-        resolve: transformVideo({
-          transformer: ffmpeg.createH264,
-          codec: `h264`,
-        }),
+  const videoFields = {
+    videoH264: {
+      type: `GatsbyVideo`,
+      args: {
+        ...DEFAULT_ARGS,
+        crf: { type: GraphQLInt, defaultValue: 34 },
+        preset: { type: GraphQLString, defaultValue: `veryslow` },
+        maxRate: { type: GraphQLString, defaultValue: `2M` },
+        bufSize: { type: GraphQLString, defaultValue: `4M` },
       },
-      videoH265: {
-        type: `GatsbyVideo`,
-        args: {
-          ...DEFAULT_ARGS,
-          crf: { type: GraphQLInt, defaultValue: null },
-          preset: { type: GraphQLString, defaultValue: `veryslow` },
-          maxRate: { type: GraphQLInt, defaultValue: 1000 },
-          bufSize: { type: GraphQLInt, defaultValue: 2000 },
-        },
-        resolve: transformVideo({
-          transformer: ffmpeg.createH265,
-          codec: `h265`,
-        }),
-      },
-      videoWebP: {
-        type: `GatsbyVideo`,
-        args: {
-          ...DEFAULT_ARGS,
-        },
-        resolve: transformVideo({
-          transformer: ffmpeg.createWebP,
-          codec: `webP`,
-        }),
-      },
-      videoGif: {
-        type: `GatsbyVideo`,
-        args: {
-          ...DEFAULT_ARGS,
-        },
-        resolve: transformVideo({
-          transformer: ffmpeg.createGif,
-          codec: `gif`,
-        }),
-      },
+      resolve: transformVideo({
+        transformer: ffmpeg.createH264,
+        codec: `h264`,
+      }),
     },
+    videoH265: {
+      type: `GatsbyVideo`,
+      args: {
+        ...DEFAULT_ARGS,
+        crf: { type: GraphQLInt, defaultValue: null },
+        preset: { type: GraphQLString, defaultValue: `veryslow` },
+        maxRate: { type: GraphQLInt, defaultValue: 1000 },
+        bufSize: { type: GraphQLInt, defaultValue: 2000 },
+      },
+      resolve: transformVideo({
+        transformer: ffmpeg.createH265,
+        codec: `h265`,
+      }),
+    },
+    videoWebP: {
+      type: `GatsbyVideo`,
+      args: {
+        ...DEFAULT_ARGS,
+      },
+      resolve: transformVideo({
+        transformer: ffmpeg.createWebP,
+        codec: `webP`,
+      }),
+    },
+    videoGif: {
+      type: `GatsbyVideo`,
+      args: {
+        ...DEFAULT_ARGS,
+      },
+      resolve: transformVideo({
+        transformer: ffmpeg.createGif,
+        codec: `gif`,
+      }),
+    },
+  }
+
+  const resolvers = {
+    ContentfulAsset: videoFields,
+    File: videoFields,
   }
   createResolvers(resolvers)
 }
