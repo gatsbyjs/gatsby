@@ -9674,12 +9674,10 @@
 - title: Built with Workers
   url: https://workers.cloudflare.com/built-with/
   main_url: https://workers.cloudflare.com/built-with/
-  source_url: https://github.com/cloudflare/built-with-workers
   description: >
     Showcasing websites & projects built with Cloudflare Workers
   categories:
     - Portfolio
-    - Official
     - JavaScript
     - Web Development
   built_by: Workers who work at Cloudflare
