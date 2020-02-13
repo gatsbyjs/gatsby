@@ -21,7 +21,7 @@ To access this experimental feature utilizing GraphQL Playground with Gatsby, ad
 If you are on **Windows** then you should use:
 
 ```
-"develop": "cross-env GATSBY_GRAPHQL_IDE=playground&gatsby develop",
+"develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
 ```
 
 If you haven't installed **cross-env**, you can do it with:
