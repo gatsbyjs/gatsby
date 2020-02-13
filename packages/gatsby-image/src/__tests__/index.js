@@ -45,7 +45,7 @@ const fixedImagesShapeMock = [
 
 const fluidImagesShapeMock = [
   {
-    aspectRatio: 1.5,
+    aspectRatio: 2,
     src: `test_image.jpg`,
     srcSet: `some srcSet`,
     srcSetWebp: `some srcSetWebp`,
@@ -53,7 +53,7 @@ const fluidImagesShapeMock = [
     base64: `string_of_base64`,
   },
   {
-    aspectRatio: 2,
+    aspectRatio: 3,
     src: `test_image_2.jpg`,
     srcSet: `some other srcSet`,
     srcSetWebp: `some other srcSetWebp`,
@@ -298,7 +298,7 @@ describe(`<Image />`, () => {
     )
     const aspectPreserver = container.querySelector(`div div div`)
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
-      expect.stringMatching(/padding-bottom: 75%/)
+      expect.stringMatching(/padding-bottom: 50%/)
     )
   })
 

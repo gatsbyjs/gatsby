@@ -100,6 +100,7 @@ const getCurrentSrcData = currentData => {
       return currentData[noMedia]
     }
   }
+  // Else return the first image.
   return currentData[0]
 }
 
