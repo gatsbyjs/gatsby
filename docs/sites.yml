@@ -9662,7 +9662,7 @@
   main_url: https://danielballoch.com
   source_url: https://github.com/danielballoch/danielballoch
   description: >
-    Hey, I'm Daniel and this is my portfolio site. Made with Gatsby, React, GraphQL, Styled Emotion & Netlify. Install & local host instructions: 1. git clone https://github.com/danielballoch/danielballoch.git 2. npm install. 3. gatsby develop. Keep in mind I'm still learning myself, so these may not be best practises. If anyones curious as to how something works flick me a message or if you have advice for me I'd love to hear it, otherwise happy coding! 
+    Hey, I'm Daniel and this is my portfolio site. Made with Gatsby, React, GraphQL, Styled Emotion & Netlify. Install & local host instructions: 1. git clone https://github.com/danielballoch/danielballoch.git 2. npm install. 3. gatsby develop. Keep in mind I'm still learning myself, so these may not be best practises. If anyone's curious as to how something works flick me a message or if you have advice for me I'd love to hear it, otherwise happy coding! 
   categories:
     - Portfolio
     - Business
