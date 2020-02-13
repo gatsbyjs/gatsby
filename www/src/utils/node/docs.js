@@ -55,11 +55,9 @@ exports.createPages = async ({ graphql, actions }) => {
             released
           }
           frontmatter {
-            title
             draft
             canonicalLink
             publishedAt
-            issue
             tags
             jsdoc
             apiCalls
