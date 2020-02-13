@@ -25,16 +25,16 @@ To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](http
 #### How to install or verify Homebrew on your computer:
 
 1. Open your Terminal.
-1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
-1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation).
-1. Once you've installed Homebrew, repeat step 2 to verify.
+2. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
+3. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation).
+4. Once you've installed Homebrew, repeat step 2 to verify.
 
 #### Install Xcode Command Line Tools:
 
 1. Open your Terminal.
-1. Install Xcode Command line tools by running `xcode-select --install`.
+2. Install Xcode Command line tools by running `xcode-select --install`.
    - If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account
-1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
+3. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
 #### Install Node
 
