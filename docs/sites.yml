@@ -9657,7 +9657,7 @@
   built_by: Kashaf S
   built_by_url: https://www.linkedin.com/in/kashaf-shaikh-925117178
   featured: false
-- title: The Rift Metz
+- title: WebAnaya Soilut
   url: http://theriftmetz.com/
   main_url: http://theriftmetz.com/
   description: >
@@ -9670,4 +9670,17 @@
     - Food
   built_by: Hugo Torzuoli
   built_by_url: https://github.com/HZooly
+  featured: false
+- title: WebAnaya Solutions
+  url: https://www.webanaya.com
+  main_url: https://www.webanaya.com
+  description: >
+    Full Stack Web Solutions Provider.
+  categories:
+    - Agency
+    - Web Development
+    - API
+    - Blog
+  built_by: Durgesh Gupta
+  built_by_url: durgeshgupta.com
   featured: false
