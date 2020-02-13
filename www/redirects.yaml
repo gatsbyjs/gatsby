@@ -135,3 +135,5 @@
   # redirecting cypress-gatsby => gatsby-cypress
 - fromPath: /packages/cypress-gatsby/
   toPath: /packages/gatsby-cypress/
+- fromPath: /contributing/gatsby-docs-translation-guide/
+  toPath: /contributing/translation/

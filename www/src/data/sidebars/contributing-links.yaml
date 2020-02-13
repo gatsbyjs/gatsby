@@ -14,7 +14,13 @@
         - /contributing/how-to-pitch-gatsby/
     - /contributing/code-of-conduct/
     - /contributing/gatsby-style-guide/
-    - /contributing/gatsby-docs-translation-guide/
+    - link: /contributing/translation
+      items:
+        - /contributing/translation/new-translations/
+        - /contributing/translation/translators/
+        - /contributing/translation/maintainers/
+        - /contributing/translation/sync-guide/
+        - /contributing/translation/style-guide/
     - link: /contributing/how-to-contribute/
       items:
         - /contributing/how-to-file-an-issue/
