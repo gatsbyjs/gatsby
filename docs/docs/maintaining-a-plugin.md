@@ -2,31 +2,33 @@
 title: Maintaining a Plugin
 ---
 
-The Gatsby community thrives on the power of plugins, you often find that there is a plugin for almost everything ranging from source plugins, to transformer plugins, to plugins that are plugins for other plugin. There is a guide on the [naming conventions for plugins](/docs/naming-a-plugin/), check it out to learn more.
+The Gatsby community thrives on the power of plugins. You often find that there is a plugin for almost everything ranging from source plugins to transformer plugins. A useful way of understanding the purpose of a plugin at a glance is by its name. Check out the [guide to naming conventions for plugins](/docs/naming-a-plugin/) to learn more.
 
-> Wondering how to [create a plugin](/docs/creating-plugins) Look no further. Start contributing.
+> Wondering how to [create a plugin](/docs/creating-plugins)? Look no further. Start contributing.
 
 ## What is a plugin?
 
-Gatsby plugins are Node.js packages that implement Gatsby APIs. [Learn more about plugins](/docs/plugins/)in this part of the Gatsby documentation.
+Gatsby plugins are Node.js packages that implement Gatsby APIs. To learn more take a look at the [plugin documentation](/docs/plugins/).
 
-The bulk of the work is during the development phase. However, there’s still a need to take a look at the dependencies and security features from time to time. Keeping Plugins up to date becomes really tasking and it is important to be careful when updating dependencies seeing as this could potentially break your apps.
+In creating plugins, the bulk of the work is during the development phase. However, there’s still a need to take a look at the dependencies and security features from time to time. Keeping Plugins up to date becomes really tasking and it is important to be careful when updating dependencies seeing as this could potentially break your apps.
 
-However, the effects of not updating and maintaining can bring a huge security issue to your apps that you don't want . Let's look at some tips to apply when maintaining plugins:
+However, the consequences of not updating and maintaining a plugin can introduce security issues to your apps. The following are some recommendations for maintaining plugins:
 
 ## Handling patches and improvements
 
 Most plugins generally follow [Semantic Versioning](https://semver.org/) to determine how many releases to do and the type of releases.
 
-The first public release of a plugin is 0.1.0 or 1.0.0. From there, bugs are fixed in patch releases (e.g. 0.1.1) features are added or changed in minor releases (e.g. 0.2.0).
+The first public release of a plugin is 0.1.0 or 1.0.0. From there, bugs are fixed in patch releases (e.g. 0.1.1) and features are added or changed in minor releases (e.g. 0.2.0).
 
 Version 1.0.0 should be released when the plugin's API is considered stable. Version 2.0.0 (and subsequent major releases) would introduce breaking API changes.
 
 > Consider a version format of X.Y.Z (Major.Minor.Patch). Bug fixes not affecting the API increment the patch version, backwards compatible API additions/changes increment the minor version, and backwards incompatible API changes increment the major version.
 
+Read more about this concept [in this paper on semantic versioning ](https://semver.org/).
+
 ## Update README and document use cases
 
-Every major version update should also be reflected in the README of the plugin and also in the use case examples.
+Every major version update should also be reflected in the README of the plugin as well as the use case examples.
 
 It would be great for users to be able to reference several versions of the plugin with the updated examples to see if they want to keep the current version or upgrade and also to understand what the new version offers. Although this is good:
 
@@ -36,15 +38,24 @@ It would be great for users to be able to reference several versions of the plug
 
 ## Tools for dependency version maintenance
 
-There are a couple of useful tools that can help out with keeping dependences up to date.
+There are a couple of useful tools that can help with keeping dependencies up to date.
 
-1. [Version Lens](https://marketplace.visualstudio.com/items?itemName=pflannery.vscode-versionlens) enables you to update your dependencies from your `package.json` by allowing you see the exact numbers right above each package in dependencies or devDependencies.
+1. [Version Lens](https://marketplace.visualstudio.com/items?itemName=pflannery.vscode-versionlens) enables you to update your dependencies from your `package.json` by allowing you see the available version number the package can be updated to, right above the current version each package in dependencies or devDependencies uses.
 
-2. The [npm check updates](https://www.npmjs.com/package/npm-check-updates) command line tool helps to check for outdated dependencies and updating in theses steps
+2. The [npm check updates](https://www.npmjs.com/package/npm-check-updates) command line tool helps to check for outdated dependencies. You can also use this tool to update those dependencies by following these steps:
 
-- install by running `npm i -g npm-check-updates`
-- Running `ncu -u`
+3. Install the tool
+
+```shell
+ npm i -g npm-check-updates
+```
+
+2.  Run the command to update dependencies
+
+```shell
+ncu -u
+```
 
 ## Community supporting content and feedback
 
-A lot of use cases for using the created plugin would be a great way to get users to have knowledge on implementations. Also creating forums where users of your plugins have a way to get answers to questions and help with issues, whether that’s from you or from other community members.
+Having example repos and support forums on Discord, Twitter or Reddit is a great was to offer community support for your plugin. This would offer a pool of resources for users to get more information on implementations and contribute.
