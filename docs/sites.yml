@@ -9671,3 +9671,16 @@
   built_by: Hugo Torzuoli
   built_by_url: https://github.com/HZooly
   featured: false
+- title: WebAnaya Solutions
+  url: https://www.webanaya.com
+  main_url: https://www.webanaya.com
+  description: >
+    Full Stack Web Solutions Provider.
+  categories:
+    - Agency
+    - Web Development
+    - API
+    - Blog
+  built_by: Durgesh Gupta
+  built_by_url: https://durgeshgupta.com
+  featured: false
