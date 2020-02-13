@@ -2,7 +2,7 @@
 title: Challenge 7 - Turn Your Gatsby Site into a Progressive Web App
 date: 2020-02-12
 author: "Hashim Warren"
-excerpt: "Learn how to use a new class of services that pair well with your Gatsby site"
+excerpt: "Learn how to make your Gatsby site work poor internet service and offline"
 tags: ["learning-to-code", "contest", "100-Days-of-Gatsby"]
 ---
 
