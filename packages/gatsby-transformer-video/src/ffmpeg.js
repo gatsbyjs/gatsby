@@ -1,7 +1,7 @@
-import crypto from "crypto"
 import { tmpdir } from "os"
 import { resolve, parse } from "path"
 
+import { createContentDigest } from "gatsby-core-utils"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 import { pathExists } from "fs-extra"
 import ffmpeg from "fluent-ffmpeg"
@@ -65,10 +65,7 @@ export default class FFMPEG {
       )
     }
 
-    const optionsHash = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(fieldArgs))
-      .digest(`hex`)
+    const optionsHash = createContentDigest(fieldArgs)
 
     const filename = `${video.internal.contentDigest}-${optionsHash}`
 
