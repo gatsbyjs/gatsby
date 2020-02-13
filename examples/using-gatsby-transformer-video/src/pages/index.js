@@ -3,7 +3,10 @@ import { graphql } from "gatsby"
 
 import "./styles.css"
 
-function Video({ video: { video, videoPreview }, ...props }) {
+function Video({
+  video: { videoH264, videoH265, previewH264, previewWebP, previewGif },
+  ...props
+}) {
   return (
     <div {...props}>
       <h3>
@@ -14,14 +17,14 @@ function Video({ video: { video, videoPreview }, ...props }) {
         :
       </h3>
       <picture>
-        <source type="video/mp4" srcSet={videoPreview.mp4} />
-        <source type="image/webp" srcSet={videoPreview.webp} />
-        <img src={videoPreview.gif} />
+        <source type="video/mp4" srcSet={previewH264.path} />
+        <source type="image/webp" srcSet={previewWebP.path} />
+        <img src={previewGif.path} />
       </picture>
       <h3>Video as optimized h264 &amp; h265:</h3>
       <video playsInline preload="auto" controls>
-        <source src={video.h265} type="video/mp4; codecs=hevc" />
-        <source src={video.h264} type="video/mp4; codecs=avc1" />
+        <source src={videoH265.path} type="video/mp4; codecs=hevc" />
+        <source src={videoH264.path} type="video/mp4; codecs=avc1" />
       </video>
     </div>
   )
@@ -50,19 +53,30 @@ export const query = graphql`
       edges {
         node {
           id
-          videoPreview(duration: 2, fps: 3, maxWidth: 600) {
-            gif
-            mp4
-            webp
-          }
-          video(
+          videoH264(
             overlay: "gatsby.png"
             overlayX: "end"
             overlayY: "start"
             overlayPadding: 25
           ) {
-            h264
-            h265
+            path
+          }
+          videoH265(
+            overlay: "gatsby.png"
+            overlayX: "end"
+            overlayY: "start"
+            overlayPadding: 25
+          ) {
+            path
+          }
+          previewH264: videoH264(maxWidth: 600, fps: 4, duration: 2) {
+            path
+          }
+          previewWebP: videoWebP(maxWidth: 600, fps: 4, duration: 2) {
+            path
+          }
+          previewGif: videoGif(maxWidth: 300, fps: 4, duration: 2) {
+            path
           }
         }
       }
