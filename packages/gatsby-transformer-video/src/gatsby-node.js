@@ -209,6 +209,17 @@ exports.createResolvers = (
         codec: `h265`,
       }),
     },
+    videoVP9: {
+      type: `GatsbyVideo`,
+      args: {
+        ...DEFAULT_ARGS,
+        crf: { type: GraphQLInt, defaultValue: 39 },
+      },
+      resolve: transformVideo({
+        transformer: ffmpeg.createVP9,
+        codec: `vp9`,
+      }),
+    },
     videoWebP: {
       type: `GatsbyVideo`,
       args: {

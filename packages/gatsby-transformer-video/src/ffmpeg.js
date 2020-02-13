@@ -295,6 +295,55 @@ export default class FFMPEG {
     return publicPath
   }
 
+  createVP9 = (...args) => this.queue.add(() => this.convertToVP9(...args))
+  convertToVP9 = async ({ publicDir, path, filename, fieldArgs, info }) => {
+    const { crf } = fieldArgs
+
+    const publicPath = resolve(publicDir, `${filename}.webm`)
+    const alreadyExists = await pathExists(publicPath)
+
+    if (!alreadyExists) {
+      console.log(`[VP9] Converting ${path} (${filename})`)
+
+      const filters = this.createFilters({ fieldArgs, info }).join(`,`)
+
+      console.log(`Applied complex filter: ${filters}`)
+
+      const currentFps = parseInt(
+        info.streams
+          .find(stream => stream.codec_type === `video`)
+          .r_frame_rate.split(`/`)[0]
+      )
+
+      const outputOptions = [
+        crf && `-crf ${crf}`,
+        `-b:v 0`,
+        `-cpu-used 1`,
+        `-g ${Math.floor((fieldArgs.fps || currentFps) / 2)}`,
+        `-pix_fmt yuv420p`,
+      ].filter(Boolean)
+
+      console.log(
+        `ffmpeg command:\n\nffmpeg -i ${path} -vf "${filters}" -c:v libvpx-vp9 ${outputOptions.join(
+          ` `
+        )} ${publicPath} \n\n`
+      )
+
+      const ffmpegSession = ffmpeg()
+        .input(path)
+        .videoCodec(`libvpx-vp9`)
+        .complexFilter([filters])
+        .outputOptions(outputOptions)
+
+      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
+      await this.executeFfmpeg(ffmpegSession, publicPath)
+
+      console.log(`[VP9] Done`)
+    }
+
+    return publicPath
+  }
+
   createWebP = (...args) => this.queue.add(() => this.convertToWebP(...args))
   convertToWebP = async ({ publicDir, path, filename, fieldArgs, info }) => {
     const publicPath = resolve(publicDir, `${filename}.webp`)
