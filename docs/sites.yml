@@ -9671,4 +9671,17 @@
     - Web Development
   built_by: Daniel Balloch
   built_by_url: https://danielballoch.com
+- title: The Rift Metz
+  url: http://theriftmetz.com/
+  main_url: http://theriftmetz.com/
+  description: >
+    The Rift is a gaming bar based in Metz (France).
+  categories:
+    - Landing Page
+    - Entertainment
+    - Design
+    - Blog
+    - Food
+  built_by: Hugo Torzuoli
+  built_by_url: https://github.com/HZooly
   featured: false
