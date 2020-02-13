@@ -213,7 +213,11 @@ exports.createResolvers = (
       type: `GatsbyVideo`,
       args: {
         ...DEFAULT_ARGS,
-        crf: { type: GraphQLInt, defaultValue: 39 },
+        crf: { type: GraphQLInt, defaultValue: 31 },
+        bitrate: { type: GraphQLString },
+        minrate: { type: GraphQLString },
+        maxrate: { type: GraphQLString },
+        cpuUsed: { type: GraphQLInt, defaultValue: 1 },
       },
       resolve: transformVideo({
         transformer: ffmpeg.createVP9,
