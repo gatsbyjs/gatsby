@@ -197,7 +197,7 @@ module.exports = (
 
       if (basePath) {
         // Ensure relative links include `pathPrefix`
-        visit(markdownAST, [`link`, `definition`], node => {
+        visit(markdownAST, [`link`, `definition`, `image`], node => {
           if (
             node.url &&
             node.url.startsWith(`/`) &&
