@@ -9685,6 +9685,17 @@
   built_by: Hugo Torzuoli
   built_by_url: https://github.com/HZooly
   featured: false
+- title: Built with Workers
+  url: https://workers.cloudflare.com/built-with/
+  main_url: https://workers.cloudflare.com/built-with/
+  description: >
+    Showcasing websites & projects built with Cloudflare Workers
+  categories:
+    - Portfolio
+    - JavaScript
+    - Web Development
+  built_by: Workers who work at Cloudflare
+  built_by_url: https://github.com/cloudflare/built-with-workers/graphs/contributors
 - title: WebAnaya Solutions
   url: https://www.webanaya.com
   main_url: https://www.webanaya.com
