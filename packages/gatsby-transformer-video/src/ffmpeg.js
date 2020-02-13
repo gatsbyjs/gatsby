@@ -232,6 +232,10 @@ export default class FFMPEG {
         .videoCodec(`libx264`)
         .complexFilter([filters])
         .outputOptions(outputOptions)
+        .audioCodec(`aac`)
+        .audioQuality(5)
+        // Apple devices support aac only with stereo
+        .audioChannels(2)
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
@@ -285,6 +289,10 @@ export default class FFMPEG {
         .videoCodec(`libx265`)
         .complexFilter([filters])
         .outputOptions(outputOptions)
+        .audioCodec(`aac`)
+        .audioQuality(5)
+        // Apple devices support aac only with stereo
+        .audioChannels(2)
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
@@ -334,6 +342,7 @@ export default class FFMPEG {
         .videoCodec(`libvpx-vp9`)
         .complexFilter([filters])
         .outputOptions(outputOptions)
+        .audioCodec(`libopus`)
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
@@ -373,6 +382,7 @@ export default class FFMPEG {
         .videoCodec(`libwebp`)
         .complexFilter([filters])
         .outputOptions(outputOptions)
+        .noAudio()
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
@@ -409,6 +419,7 @@ export default class FFMPEG {
       const ffmpegSession = ffmpeg()
         .input(path)
         .complexFilter([filters])
+        .noAudio()
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, tmpPath)
