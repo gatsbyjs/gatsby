@@ -267,12 +267,22 @@ export default class PaymentForm extends Component {
               </span>
             </p>
             <div id="cc-field-wrapper">
-              <label>Card Number<div id="sq-card-number" /></label>
+              <label>
+                Card Number
+                <div id="sq-card-number" />
+              </label>
               <input type="hidden" id="card-nonce" name="nonce" />
-              <label>Expiration Date<div id="sq-expiration-date" /></label>
-              <label>CVV<div id="sq-cvv" /></label>
+              <label>
+                Expiration Date
+                <div id="sq-expiration-date" />
+              </label>
+              <label>
+                CVV
+                <div id="sq-cvv" />
+              </label>
             </div>
-            <label>Name
+            <label>
+              Name
               <input
                 id="name"
                 style={styles.name}
@@ -280,7 +290,10 @@ export default class PaymentForm extends Component {
                 placeholder="Name"
               />
             </label>
-            <label>Postal Code<div id="sq-postal-code" /></label>
+            <label>
+              Postal Code
+              <div id="sq-postal-code" />
+            </label>
           </div>
           <button
             className="button-credit-card"
