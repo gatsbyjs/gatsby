@@ -7,6 +7,9 @@ import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
 
 export default ({ children, enableScrollSync, location }) => {
   const itemList = getItemList(location.pathname)
+  if (!itemList) {
+    return children
+  }
   return (
     <Fragment>
       <div
