@@ -44,14 +44,11 @@ export default class FFMPEG {
   executeFfmpeg = async ({ ffmpegSession, cachePath, loggingPrefix }) => {
     let startTime
     let lastLoggedPercent = 0.1
-    const filename = parse(cachePath).base
 
     return new Promise((resolve, reject) => {
       ffmpegSession
         .on(`start`, commandLine => {
-          console.log(
-            `${loggingPrefix} Converting ${filename} via:\n\n${commandLine}\n`
-          )
+          console.log(`${loggingPrefix} Executing:\n\n${commandLine}\n`)
           startTime = performance.now()
         })
         .on(`progress`, progress => {
@@ -65,7 +62,7 @@ export default class FFMPEG {
             const loggedTimeLeft =
               estTimeLeft !== Infinity && ` (~${estTimeLeft}s)`
 
-            console.log(`${loggingPrefix} ${percent}% ${loggedTimeLeft}`)
+            console.log(`${loggingPrefix} ${percent}%${loggedTimeLeft}`)
             lastLoggedPercent = progress.percent
           }
         })
