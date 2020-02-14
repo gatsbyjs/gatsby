@@ -478,3 +478,14 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: App Design
+  type: agency
+  description: >-
+    My name is Oliver. I´m a web developer specialized in React JS, Gatsby, Netlify and Wordpress CMS.
+  location: "Madrid, Spain"
+  website: "https://appdesign.dev/"
+  github: null
+  image: images/app-design-dev.jpeg
+  for_hire: false
+  hiring: true
+  portfolio: false

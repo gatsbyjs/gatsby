@@ -37,7 +37,7 @@ cd gatsby-site
 gatsby develop
 ```
 
-Gatsby will start a hot-reloading development environment accessible by default at `localhost:8000`.
+Gatsby will start a hot-reloading development environment accessible by default at `http://localhost:8000`.
 
 Try editing the JavaScript pages in `src/pages`. Saved changes will live reload in the browser.
 
