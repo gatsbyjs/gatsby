@@ -406,7 +406,7 @@ wording.
 
 ### Referencing Gatsby Cloud
 
-While Gatsby Cloud is hosted on a separate site [gatsbyjs.com](https://www.gatsbyjs.com/), it is part of the Gatsby [founding organization](/blog/2018-05-24-launching-new-gatsby-company/) and focused specifically on Gatsby sites. There are various parts of the OSS documentation that may benefit from pointing to Gatsby Cloud as a potential platform to explore.
+While Gatsby Cloud is hosted on a separate site, [gatsbyjs.com](https://www.gatsbyjs.com/), it is part of the Gatsby [founding organization](/blog/2018-05-24-launching-new-gatsby-company/) and focused specifically on Gatsby sites. There are various parts of the OSS documentation that may benefit from pointing to Gatsby Cloud as a potential platform to explore.
 
 The guidelines for doing so are as follows:
 
