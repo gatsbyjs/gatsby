@@ -453,7 +453,7 @@
               link: /docs/building-an-e-commerce-site/
               items:
                 - title: Building an E-commerce Site with Shopify
-                  link: /docs/building-an-ecommerce-site-with-shopify/
+                  link: /docs/building-an-e-commerce-site-with-shopify/
                 - title: Processing Payments with Stripe
                   link: /docs/processing-payments-with-stripe/
         - title: Improving Performance
