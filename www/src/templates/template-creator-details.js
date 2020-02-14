@@ -2,7 +2,6 @@
 import { jsx } from "theme-ui"
 import { Component } from "react"
 import { graphql, Link } from "gatsby"
-import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
@@ -68,7 +67,7 @@ class CreatorTemplate extends Component {
     const sites = data.allSitesYaml.edges
 
     return (
-      <Layout location={location}>
+      <>
         <Helmet>
           <title>{`${creator.name} - Creator`}</title>
         </Helmet>
@@ -232,7 +231,7 @@ class CreatorTemplate extends Component {
           </div>
         </main>
         <FooterLinks />
-      </Layout>
+      </>
     )
   }
 }
