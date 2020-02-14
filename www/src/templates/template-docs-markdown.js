@@ -50,7 +50,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
       <Layout location={location} locale={page.fields.locale}>
         <PageWithSidebar
           location={location}
-          enableScrollSync={urlSegment === "docs" ? false : true}
+          enableScrollSync={urlSegment === "tutorial"}
         >
           <DocSearchContent>
             <Container

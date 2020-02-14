@@ -106,7 +106,7 @@ class FeaturesPage extends Component {
   render() {
     return (
       <Layout location={this.props.location}>
-        <PageWithSidebar location={this.props.location} enableScrollSync={true}>
+        <PageWithSidebar location={this.props.location}>
           <Helmet>
             <title>Features</title>
             <meta

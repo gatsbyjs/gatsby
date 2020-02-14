@@ -37,7 +37,7 @@ const CmsFeaturesPage = ({ data, location }) => {
 
   return (
     <Layout location={location}>
-      <PageWithSidebar location={location} enableScrollSync={true}>
+      <PageWithSidebar location={location}>
         <Container>
           <main id={`reach-skip-nav`}>
             <Breadcrumb location={location} />
