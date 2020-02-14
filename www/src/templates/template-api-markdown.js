@@ -11,7 +11,6 @@ import { sortBy } from "lodash-es"
 
 import Layout from "../components/layout"
 import PageWithSidebar from "../components/page-with-sidebar"
-import { itemListDocs } from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 import FooterLinks from "../components/shared/footer-links"
@@ -108,7 +107,7 @@ export default function APITemplate({ data, location, pageContext }) {
                 },
               }}
             >
-              <Breadcrumb location={location} itemList={itemListDocs} />
+              <Breadcrumb location={location} />
               <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
                 {page.frontmatter.title}
               </h1>
