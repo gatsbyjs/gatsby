@@ -23,7 +23,7 @@ const preferSpacedTag = tags => {
   return tags[0]
 }
 
-const Tags = ({ pageContext, data, location }) => {
+const Tags = ({ pageContext, data }) => {
   const { tags } = pageContext
   const { edges, totalCount } = data.allMdx
   const tagHeader = `${totalCount} post${

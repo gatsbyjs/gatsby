@@ -59,7 +59,7 @@ const MetaSection = ({ children, background, last, first }) => (
 
 class CreatorTemplate extends Component {
   render() {
-    const { data, location } = this.props
+    const { data } = this.props
     const creator = data.creatorsYaml
     const isAgencyOrCompany =
       creator.type === `agency` || creator.type === `company`

@@ -85,7 +85,6 @@ class TagsPage extends React.Component {
       data: {
         allMdx: { group },
       },
-      location,
     } = this.props
     const { filterQuery } = this.state
     const uniqGroup = group
