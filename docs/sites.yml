@@ -9709,3 +9709,16 @@
   built_by: Durgesh Gupta
   built_by_url: https://durgeshgupta.com
   featured: false
+- title: adam.ai
+  url: https://adam.ai/
+  main_url: https://adam.ai/
+  description: >
+    Are you ready to make your meetings more productive? Our intelligent meeting management tool can help!
+  categories:
+    - Business
+    - Landing Page
+    - Productivity
+    - Technology
+  built_by: Hazem Osama
+  built_by_url: https://github.com/hazem3500
+  featured: false

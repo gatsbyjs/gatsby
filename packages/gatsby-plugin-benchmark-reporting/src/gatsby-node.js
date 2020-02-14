@@ -85,8 +85,9 @@ class BenchMeta {
 
     const webpackVersion = execToStr(`node_modules/.bin/webpack --version`)
 
-    const publicJsSize = execToInt(
-      `echo "0 $(find public -maxdepth 1 -iname "*.js" -printf " + %s")" | bc`
+    const publicJsSize = glob(`public/*.js`).reduce(
+      (t, file) => t + fs.statSync(file).size,
+      0
     )
 
     const jpgCount = execToInt(
