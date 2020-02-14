@@ -57,7 +57,7 @@ const Details = ({
       >
         {shownDeps &&
           shownDeps.map(dep =>
-            /^gatsby-/.test(dep) ? (
+            /^gatsby-/.test(dep) && dep !== `gatsby-cypress` ? (
               <div key={dep}>
                 <Link to={`/packages/${dep}`}>{dep}</Link>
               </div>
