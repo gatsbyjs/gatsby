@@ -20,11 +20,11 @@ npm i gatsby-transformer-video
 
 ## Prerequisites
 
-You will need to install `ffmpeg` and `ffprobe` as well. Your FFMPEG version should be compiled with all flags enabled to ensure full support for this plugin.
+You will need to install `ffmpeg` and `ffprobe` as well. Your FFMPEG version should be compiled with at least the following flags enabled:
 
-Go to https://ffmpeg.org/download.html and download either a shared or static version of the library.
+`--enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libvpx --enable-libwebp --enable-libfdk-aac --enable-libopus`
 
-Some operating systems may provide these packages via a package manager. Some may **not provide** `ffprobe` when installing `ffmpeg`.
+Some operating systems may provide these FFMPEG via a package manager. Some may **not include** `ffprobe` when installing `ffmpeg`.
 
 If you can't find a way to get ffmpeg with all requirements for your system, you can always compile it on your own: https://trac.ffmpeg.org/wiki/CompilationGuide
 
@@ -46,7 +46,7 @@ If you got [brew](https://brew.sh/) installed, you can get FFMPEG including FFPR
 
 ```sh
 brew tap homebrew-ffmpeg/ffmpeg
-brew install homebrew-ffmpeg/ffmpeg/ffmpeg
+brew install homebrew-ffmpeg/ffmpeg/ffmpeg --with-fdk-aac --with-webp
 ```
 
 <sub>(Source: https://trac.ffmpeg.org/wiki/CompilationGuide/macOS#ffmpegthroughHomebrew)</sub>
@@ -83,19 +83,26 @@ query {
     edges {
       node {
         id
-        videoPreview(duration: 2, fps: 3, maxWidth: 600) {
-          gif
-          mp4
-          webp
+        videoGif(duration: 2, fps: 3, maxWidth: 300) {
+          path
         }
-        video(
+        videoH264(
           overlay: "gatsby.png"
           overlayX: "end"
           overlayY: "start"
           overlayPadding: 25
         ) {
-          h264
-          h265
+          path #String
+          absolutePath #String
+          name #String
+          ext #String
+          codec #String
+          formatName #String
+          formatLongName #String
+          startTime #Float
+          duration #Float
+          size #Int
+          bitRate #Int
         }
       }
     }
