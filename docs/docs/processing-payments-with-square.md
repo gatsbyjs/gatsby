@@ -18,6 +18,8 @@ You've got two options for integrating Square payments: redirecting to a hosted 
 
 Redirecting to a Square-hosted page takes some of the pressure off since you don't need to build a checkout page. However, getting that functionality "for free" does come with some restrictions. You will not be able to customize the UI of the page users are sent to once they're ready to checkout. Square only recommends this option for situations where accepting payments on your own site isn't feasible.
 
+To use the Square [Checkout API](https://developer.squareup.com/docs/checkout-api-overview), you'll need to send a request that includes the relevant order information. In response, you'll get a URL with the format `https://connect.squareup.com/v2/checkout?c={{CHECKOUT_ID}}&l={{LOCATION_ID}}` which you'll redirect your user to. From there, Square handles the payment form UI and processing.
+
 ### Accepting Square payments
 
 Square recommends using the Payments API instead because it offers much greater flexibility. You can customize not only the look and feel of the checkout process but also the checkout process itself, such as customizing the payment methods available.
