@@ -49,24 +49,51 @@ const fixId = id => {
 }
 exports.fixId = fixId
 
-const fixIds = object =>
-  _.mapValues(object, (val, key) => {
-    if (key === `sys`) {
-      val = {
-        ...val,
-        id: fixId(val.id),
-        contentful_id: val.id,
-      }
+const shouldBeSkipped = (object, alreadyWalkedObjectRefs) =>
+  !object || typeof object !== `object` || alreadyWalkedObjectRefs.has(object)
+
+// Walk the object model and find any property named `sys`. If it
+// contains an `id` then make sure the id is a string and if it starts with a
+// number, prefix it with (an arbitrarily chosen) `c`, for "contentful".
+// The `front` tracks which objects have been visited to prevent infinite
+// recursion on cyclic structures.
+const fixIds = object => {
+  if (!object || typeof object !== `object`) return
+
+  const objectsToProcess = [object]
+  const alreadyWalkedObjectRefs = new Set(objectsToProcess)
+
+  while (objectsToProcess.length !== 0) {
+    const current = objectsToProcess.pop()
+
+    if (Array.isArray(current)) {
+      current.forEach(item => {
+        if (shouldBeSkipped(item, alreadyWalkedObjectRefs)) return
+
+        objectsToProcess.push(item)
+        alreadyWalkedObjectRefs.add(item)
+      })
+      continue
     }
 
-    if (_.isArray(val)) {
-      return _.toArray(fixIds(val))
-    }
-    if (_.isPlainObject(val)) {
-      return fixIds(val)
-    }
-    return val
-  })
+    Object.keys(current).forEach(key => {
+      const currentProp = current[key]
+      if (shouldBeSkipped(currentProp, alreadyWalkedObjectRefs)) return
+
+      // The `contentful_id` is ours and we want to make sure we don't visit the
+      // same node twice (this is possible if the same node appears in two
+      // separate branches while sharing a common ancestor). This check makes
+      // sure we keep the original `id` preserved in `contentful_id`.
+      if (key === `sys` && !currentProp.contentful_id) {
+        currentProp.contentful_id = currentProp.id
+        currentProp.id = fixId(currentProp.id)
+      }
+
+      objectsToProcess.push(currentProp)
+      alreadyWalkedObjectRefs.add(currentProp)
+    })
+  }
+}
 exports.fixIds = fixIds
 
 const makeId = ({ spaceId, id, currentLocale, defaultLocale }) =>
@@ -194,7 +221,7 @@ exports.buildForeignReferenceMap = ({
 }
 
 function prepareTextNode(node, key, text, createNodeId) {
-  const str = _.isString(text) ? text : ` `
+  const str = _.isString(text) ? text : ``
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
     parent: node.id,

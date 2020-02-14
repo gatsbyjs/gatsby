@@ -16,6 +16,10 @@ Object {
       "query": "",
     },
   },
+  "jobsV2": Object {
+    "complete": Map {},
+    "incomplete": Map {},
+  },
   "pageDataStats": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
