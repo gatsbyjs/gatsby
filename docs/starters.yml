@@ -5262,3 +5262,13 @@
     - Integrated navigation
     - Verbose (i.e., not D.R.Y.) GraphQL queries to get data from
     - Includes plugins for offline support out of the box
+- url: https://gatsby-starter-docz-netlifycms.netlify.com/
+  repo: https://github.com/colbyfayock/gatsby-starter-docz-netlifycms
+  description: Quickly deploy Docz documentation powered by Netlify CMS!
+  tags:
+    - CMS:Netlify
+    - Documentation
+    - Netlify
+  features:
+    - Docz documentation powered by Gatsby
+    - Netlify CMS to manage content
