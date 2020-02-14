@@ -4,11 +4,20 @@ import { graphql } from "gatsby"
 import "./styles.css"
 
 function Video({
-  video: { videoH264, videoH265, previewH264, previewWebP, previewGif },
+  video: {
+    name,
+    videoH264,
+    videoH265,
+    previewH264,
+    previewWebP,
+    previewGif,
+    videoSepia,
+  },
   ...props
 }) {
   return (
     <div {...props}>
+      <h2>{name}</h2>
       <h3>
         Performant animated preview via{` `}
         <a href="https://css-tricks.com/fallbacks-videos-images/">
@@ -25,6 +34,10 @@ function Video({
       <video playsInline preload="auto" controls>
         <source src={videoH265.path} type="video/mp4; codecs=hevc" />
         <source src={videoH264.path} type="video/mp4; codecs=avc1" />
+      </video>
+      <h3>Custom video converter:</h3>
+      <video playsInline preload="auto" controls>
+        <source src={videoSepia.path} type="video/mp4; codecs=avc1" />
       </video>
     </div>
   )
@@ -53,6 +66,7 @@ export const query = graphql`
       edges {
         node {
           id
+          name
           videoH264(
             overlay: "gatsby.png"
             overlayX: "end"
@@ -67,6 +81,9 @@ export const query = graphql`
             overlayY: "start"
             overlayPadding: 25
           ) {
+            path
+          }
+          videoSepia: videoProfile(profile: "sepia", maxWidth: 800) {
             path
           }
           previewH264: videoH264(maxWidth: 600, fps: 4, duration: 2) {

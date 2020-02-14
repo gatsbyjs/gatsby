@@ -10,7 +10,7 @@
 - Defaults optimized for small files with decent quality and quick and seamless streaming
 - Supported codecs: h264, h265, VP9, WebP & gif
 - Several parameters to tweak the output: maxWidth/maxHeight, overlay, saturation, duration, fps, ...
-- Soon: Create video conversion profiles. Create a converter function using `fluent-ffmpeg` to unlock all FFMPEG features.
+- Create video conversion profiles. Create a converter function using `fluent-ffmpeg` to unlock all FFMPEG features.
 
 ## Installation
 
@@ -71,6 +71,15 @@ module.exports = {
         // * ...
         ffmpegPath: resolve(__dirname, "bin", platform(), "ffmpeg"),
         ffprobePath: resolve(__dirname, "bin", platform(), "ffprobe"),
+
+        // Optional profiles for full fluent-ffmpeg access
+        profiles: {
+          sepia: {
+            extension: `mp4`,
+            converter: function({ ffmpegSession, videoStreamMetadata }) {
+              // Example:
+              // https://github.com/gatsbyjs/gatsby/blob/gatsby-transformer-video/examples/using-gatsby-transformer-video/gatsby-config.js
+            }
       },
     },
   ],
@@ -104,22 +113,16 @@ query {
           size #Int
           bitRate #Int
         }
+        videoProfile(profile: "yourProfileName") {
+          path
+        }
       }
     }
   }
   allContentfulAsset {
     edges {
       node {
-        id
-        videoPreview(width: 600, fps: 4, duration: 3) {
-          mp4
-          webp
-          gif
-        }
-        video {
-          h264
-          h265
-        }
+        # Same fields available as above
       }
     }
   }

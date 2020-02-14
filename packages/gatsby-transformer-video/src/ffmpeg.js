@@ -16,10 +16,11 @@ import profileWebP from "./profiles/webp"
 import profileGif from "./profiles/gif"
 
 export default class FFMPEG {
-  constructor({ rootDir, cacheDir, ffmpegPath, ffprobePath }) {
+  constructor({ rootDir, cacheDir, ffmpegPath, ffprobePath, profiles }) {
     this.queue = new PQueue({ concurrency: 1 })
     this.cacheDir = cacheDir
     this.rootDir = rootDir
+    this.profiles = profiles
     this.totalVideos = 0
     this.currentVideo = 0
 
@@ -149,7 +150,6 @@ export default class FFMPEG {
   // Converts a video based on a given profile, populates cache and public dir
   queuedConvertVideo = async ({
     profile,
-    codec,
     sourcePath,
     cachePath,
     publicPath,
@@ -160,7 +160,7 @@ export default class FFMPEG {
 
     if (!alreadyExists) {
       this.currentVideo++
-      const loggingPrefix = `[FFMPEG - ${codec} - ${this.currentVideo}/${this.totalVideos}]`
+      const loggingPrefix = `[FFMPEG - ${this.currentVideo}/${this.totalVideos}]`
       const ffmpegSession = ffmpeg().input(sourcePath)
       const filters = this.createFilters({ fieldArgs, info }).join(`,`)
       const videoStreamMetadata = this.parseVideoStream(info.streams)
@@ -194,6 +194,40 @@ export default class FFMPEG {
     return publicPath
   }
 
+  createFromProfile = async ({ publicDir, path, name, fieldArgs, info }) => {
+    const profileName = fieldArgs.profile
+    const profile = this.profiles[profileName]
+
+    if (!profile) {
+      throw new Error(`Unable to locate FFMPEG profile ${profileName}`)
+    }
+
+    if (!profile.extension) {
+      throw new Error(
+        `FFMPEG profile ${profileName} has no extension specified`
+      )
+    }
+
+    if (!profile.converter) {
+      throw new Error(
+        `FFMPEG profile ${profileName} has no converter function specified`
+      )
+    }
+
+    const filename = `${name}-${profileName}.${profile.extension}`
+    const cachePath = resolve(this.cacheDir, filename)
+    const publicPath = resolve(publicDir, filename)
+
+    return this.convertVideo({
+      profile: profile.converter,
+      sourcePath: path,
+      cachePath,
+      publicPath,
+      fieldArgs,
+      info,
+    })
+  }
+
   createH264 = async ({ publicDir, path, name, fieldArgs, info }) => {
     const filename = `${name}-h264.mp4`
     const cachePath = resolve(this.cacheDir, filename)
@@ -201,7 +235,6 @@ export default class FFMPEG {
 
     return this.convertVideo({
       profile: profileH264,
-      codec: `h264`,
       sourcePath: path,
       cachePath,
       publicPath,
@@ -217,7 +250,6 @@ export default class FFMPEG {
 
     return this.convertVideo({
       profile: profileH265,
-      codec: `h265`,
       sourcePath: path,
       cachePath,
       publicPath,
@@ -233,7 +265,6 @@ export default class FFMPEG {
 
     return this.convertVideo({
       profile: profileVP9,
-      codec: `VP9`,
       sourcePath: path,
       cachePath,
       publicPath,
@@ -249,7 +280,6 @@ export default class FFMPEG {
 
     return this.convertVideo({
       profile: profileWebP,
-      codec: `webP`,
       sourcePath: path,
       cachePath,
       publicPath,
@@ -265,7 +295,6 @@ export default class FFMPEG {
 
     const absolutePath = await this.convertVideo({
       profile: profileGif,
-      codec: `gif`,
       sourcePath: path,
       cachePath,
       publicPath,

@@ -15,7 +15,7 @@ video {
 }
 
 .grid > * {
-  flex: 0 1 280px;
+  flex: 0 1 320px;
   padding: 10px;
   overflow: hidden;
 }

@@ -50,7 +50,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
 exports.createResolvers = async (
   { createResolvers, store, cache, createNodeId, actions },
-  { ffmpegPath, ffprobePath }
+  { ffmpegPath, ffprobePath, profiles = {} }
 ) => {
   const { createNode } = actions
 
@@ -58,7 +58,14 @@ exports.createResolvers = async (
   const rootDir = program.directory
   const cacheDir = resolve(rootDir, `.cache`, `gatsby-transformer-video`)
   await ensureDir(cacheDir)
-  const ffmpeg = new FFMPEG({ rootDir, cacheDir, ffmpegPath, ffprobePath })
+
+  const ffmpeg = new FFMPEG({
+    rootDir,
+    cacheDir,
+    ffmpegPath,
+    ffprobePath,
+    profiles,
+  })
 
   // Get source videos metadata and download the file if required
   async function prepareAndAnalyzeVideo({ video, fieldArgs }) {
@@ -144,7 +151,7 @@ exports.createResolvers = async (
   }
 
   // Transform video with a given transformer & codec
-  function transformVideo({ transformer, codec }) {
+  function transformVideo({ transformer }) {
     return async (video, fieldArgs) => {
       try {
         const { publicDir, path, name, info } = await prepareAndAnalyzeVideo({
@@ -160,12 +167,7 @@ exports.createResolvers = async (
           info,
         })
 
-        const fieldResult = await processResult(absolutePath)
-
-        return {
-          ...fieldResult,
-          codec,
-        }
+        return await processResult(absolutePath)
       } catch (err) {
         if (!(err instanceof WrongFileTypeError)) {
           throw err
@@ -188,7 +190,6 @@ exports.createResolvers = async (
       },
       resolve: transformVideo({
         transformer: ffmpeg.createH264,
-        codec: `h264`,
       }),
     },
     videoH265: {
@@ -202,7 +203,6 @@ exports.createResolvers = async (
       },
       resolve: transformVideo({
         transformer: ffmpeg.createH265,
-        codec: `h265`,
       }),
     },
     videoVP9: {
@@ -217,7 +217,6 @@ exports.createResolvers = async (
       },
       resolve: transformVideo({
         transformer: ffmpeg.createVP9,
-        codec: `vp9`,
       }),
     },
     videoWebP: {
@@ -227,7 +226,6 @@ exports.createResolvers = async (
       },
       resolve: transformVideo({
         transformer: ffmpeg.createWebP,
-        codec: `webP`,
       }),
     },
     videoGif: {
@@ -237,7 +235,16 @@ exports.createResolvers = async (
       },
       resolve: transformVideo({
         transformer: ffmpeg.createGif,
-        codec: `gif`,
+      }),
+    },
+    videoProfile: {
+      type: `GatsbyVideo`,
+      args: {
+        profile: { type: GraphQLString },
+        ...DEFAULT_ARGS,
+      },
+      resolve: transformVideo({
+        transformer: ffmpeg.createFromProfile,
       }),
     },
   }
