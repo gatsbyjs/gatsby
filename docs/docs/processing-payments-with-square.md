@@ -60,7 +60,7 @@ import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import PaymentForm, { loadSquareSdk } from "../components/paymentForm"
+import PaymentForm, { loadSquareSdk } from "../components/paymentForm" //highlight-line
 
 const IndexPage = () => {
   const [squareStatus, setSquareStatus] = useState(null)
@@ -80,7 +80,7 @@ const IndexPage = () => {
       {squareStatus === "ERROR" &&
         "Failed to load SquareSDK. Please refresh the page."}
       {squareStatus === "SUCCESS" && (
-        <PaymentForm paymentForm={window.SqPaymentForm} />
+        <PaymentForm paymentForm={window.SqPaymentForm} /> //highlight-line
       )}
 
       <Link to="/page-2/">Go to page 2</Link>
