@@ -97,7 +97,6 @@ function usePrevAndNextSite(item) {
     query {
       allSitesYaml(
         filter: {
-          featured: { eq: true }
           main_url: { ne: null }
           fields: { hasScreenshot: { eq: true } }
         }
