@@ -42,7 +42,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           fields {
             starterShowcase {
               slug
-              stub
             }
             hasScreenshot
           }
@@ -75,7 +74,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       component: slash(starterTemplate),
       context: {
         slug: node.fields.starterShowcase.slug,
-        stub: node.fields.starterShowcase.stub,
       },
     })
   })
