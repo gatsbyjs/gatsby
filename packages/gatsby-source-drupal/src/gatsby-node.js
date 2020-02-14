@@ -102,7 +102,7 @@ exports.sourceNodes = async (
         // in the JSON API response.
         // See https://www.drupal.org/docs/8/modules/jsonapi/includes
         if (d.data.included) {
-          data = data.concat(d.data.included);
+          data = data.concat(d.data.included)
         }
         if (d.data.links && d.data.links.next) {
           data = await getNext(d.data.links.next, data)
