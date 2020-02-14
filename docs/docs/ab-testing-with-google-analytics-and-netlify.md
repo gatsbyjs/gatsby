@@ -8,38 +8,31 @@ Learn how to create an A/B test (otherwise known as a split test) with Google An
 
 An A/B test compares changes on a web page. If you are creating an A/B test with Netlify, you can [use multiple Git branches containing variations of your site](https://docs.netlify.com/site-deploys/split-testing/#run-a-branch-based-test). If you are not familiar with Git branches, visit the [Git Guide](http://rogerdudler.github.io/git-guide/), which explains Git in detail.
 
-Let’s say you read on Twitter that readers spend more time on a webpage with a blue header. You have a hunch that this might be correct, but you want some data to verify this claim.
+Let’s say you read on Twitter that readers spend more time on webpages with blue headers. You have a hunch that this might be correct, but you want some data to verify this claim.
 
 You can use an A/B test to see if changing your header to blue actually increases page engagement.
 
-Start this project by creating a new Gatsby site. The following example creates a new site based on [Gatsby's default starter](https://github.com/gatsbyjs/gatsby-starter-default).
+The following example changes the color of the header for a site using [Gatsby's default starter](https://github.com/gatsbyjs/gatsby-starter-default) to another shade of purple (`#5B3284`).
 
-```bash
-gatsby new gatsby-ab-test
+```javascript:title=src/components/header.js
+<header
+  style={{
+    background: `#5B3284`, // highlight-line
+    marginBottom: `1.45rem`,
+  }}
+>
 ```
 
-In your code editor, type `cd gatsby-ab-test`. You have the option of changing the background color or leaving it `rebeccapurple`. In this example, the header is another shade of purple `#5B3284`.
-
-```javascript:title=src/component/header.js
-const Header = ({ siteTitle }) => (
- <header
-   style={{
-     background: `#5B3284`,
-     marginBottom: `1.45rem`,
-   }}
- >
-```
-
-You are now finished with your first variation. Commit your changes to `master`, [create a new remote repository on GitHub](https://help.github.com/en/github/getting-started-with-github/create-a-repo), and push your changes.
+Once you're finished with your first variation, commit your changes to `master`, [create a new remote repository on GitHub](https://help.github.com/en/github/getting-started-with-github/create-a-repo) if you don't have one already, and push your changes.
 
 ```bash
-git add src/component/header.js
+git add src/components/header.js
 git commit -m "Change header background color"
 git remote add origin [your remote repo URL]
 git push -u origin master
 ```
 
-Now it is time to create your second variation. Create a new branch.
+To create your second variation, create a new branch.
 
 ```bash
 git checkout -b heading-variation
@@ -47,25 +40,24 @@ git checkout -b heading-variation
 
 After you have made the new branch, go to `header.js` and change the background color to blue.
 
-```javascript:title=src/component/header.js
-const Header = ({ siteTitle }) => (
- <header
-   style={{
-     background: `#1f618d`,
-     marginBottom: `1.45rem`,
-   }}
- >
+```javascript:title=src/components/header.js
+<header
+  style={{
+    background: `#1f618d`, // highlight-line
+    marginBottom: `1.45rem`,
+  }}
+>
 ```
 
 Commit your changes and push your `heading-variation` branch to GitHub.
 
 ## Deploying your site with Netlify
 
-You have created your two variations: you have a purple header on the `master` branch and a blue header on the `header-variation` branch. Time to [deploy your site to Netlify](/docs/deploying-to-netlify/)!
+When you have created your two variations, it's time to [deploy your site to Netlify](/docs/deploying-to-netlify/)!
 
 After you have deployed your website, set up a [split test on Netlify](https://docs.netlify.com/site-deploys/split-testing/).
 
-When you are setting up your split test on Netlify, navigate to the homepage of your project. In the example, the home page is https://app.netlify.com/sites/gatsby-header-variation/overview. Scroll down to 'Active Split Testing'. Choose 'Start a Split Test'. On the next page pick which branch you would like to include in the split test. In the example, we'll chose the 'master' and 'heading-variation' branch. Save your changes.
+When you are setting up your split test on Netlify, navigate to the homepage of your project. Scroll down to 'Active Split Test'. Choose 'Start a Split Test'. On the next page, pick which branches you would like to include in the split test. Save your changes.
 
 ![Activate split test feature in Netlify](./images/start-split-test.gif)
 
@@ -77,7 +69,7 @@ Go to [analytics.google.com](https://analytics.google.com). If you have not alre
 
 After you've created an account, you'll need to create a custom dimension. Head over to the bottom left navigation panel and choose "Admin". On the next page, under Admin, you will see three columns: "Account", "Property", and "View". Go to "Property" and select "Custom Dimension". A submenu will appear. Choose "Custom Dimension" again. On the next page, select "+ New Custom Dimension" and create a new custom dimension.
 
-![Instructions on how to create a custom dimension in Google Analytics](./images/create-custom-dimension.gif)
+![Create a custom dimension in Google Analytics](./images/create-custom-dimension.gif)
 
 ## Injecting your Google Analytics script
 
@@ -86,7 +78,8 @@ After you have set up your custom dimension on Google Analytics, go to your site
 Choose "Build & Deploy" and scroll down to "Post Processing". Post Processing is where you are going to add your Google Analytics (GA) script to Netlify. Your GA script is located in the Google Analytics Admin.
 
 When you have pasted the GA Script into Post Processing, be sure to add your custom dimension, and set it to the name of your branch. Let’s say you have two custom dimensions, and you want to use `gatsby`.
-![An example of two custom dimensions created in Google Analytics](./images/custom-dimensions-screenshot.png)
+
+![Two custom dimensions created in Google Analytics](./images/custom-dimensions-screenshot.png)
 
 ```javascript
 ga("send", "pageview", {
@@ -94,11 +87,11 @@ ga("send", "pageview", {
 })
 ```
 
-‘{{ BRANCH }}’ is the name of the two branches we deployed. In our case, this variable references the `master` and the `heading-variation`.
+‘{{ BRANCH }}’ is the name of the two branches you deployed. In the example case, this variable references the `master` and `heading-variation` branches.
 
 Notice our variable is `dimension2` and not `Gatsby`. It is important that the variable expresses the index of your custom dimension name and not the actual name itself.
 
-This is the final result::
+The final result should be similar to the following:
 
 ```javascript
 <script>
@@ -118,9 +111,9 @@ ga('send', 'pageview', {
 
 ## Checking your results on Google Analytics
 
-It takes some time for Google Analytics to record the results of the A/B test. Wait about half a day and then log into your Google Analytics account. Go to the navigation on the left-hand side of the page and select Behavior. From the submenu choose "Site Content", and from there select "All Pages".
+It takes some time for Google Analytics to record the results of the A/B test. Wait about half a day and then log into your Google Analytics account. Go to the navigation on the left-hand side of the page and select "Behavior". From the submenu, choose "Site Content" and, from there, select "All Pages".
 
-On "All Page" you will see a line graph. Below the line graph on the left-hand side there is a "Secondary dimension" button. Select the "Secondary dimension" button and select "Custom Dimensions". Choose the custom dimension that you created earlier and you should see the names of the branches you created in Netlify. In this example, the `master` and `heading-variation` branches are displayed in the table.
+You should see a line graph under "All Pages". Below the line graph on the left-hand side, there is a "Secondary dimension" button. Select the "Secondary dimension" button and select "Custom Dimensions". Choose the custom dimension that you created earlier and you should see the names of the branches you created in Netlify. In this example, the `master` and `heading-variation` branches are displayed in the table.
 
 ![Check to see if custom dimension appears on Google Analytics platform](./images/checking-custom-dimension.gif)
 
