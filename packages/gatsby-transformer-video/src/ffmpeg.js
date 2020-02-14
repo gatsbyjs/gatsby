@@ -1,21 +1,27 @@
-import { tmpdir } from "os"
 import { resolve, parse } from "path"
+import { performance } from "perf_hooks"
 
 import { createContentDigest } from "gatsby-core-utils"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
-import { pathExists } from "fs-extra"
+import { pathExists, stat, copy } from "fs-extra"
 import ffmpeg from "fluent-ffmpeg"
 import imagemin from "imagemin"
 import imageminGiflossy from "imagemin-giflossy"
 import PQueue from "p-queue"
 
+import profileH264 from "./profiles/h264"
+import profileH265 from "./profiles/h265"
+import profileVP9 from "./profiles/vp9"
+import profileWebP from "./profiles/webp"
+import profileGif from "./profiles/gif"
+
 export default class FFMPEG {
-  constructor({ rootDir, ffmpegPath, ffprobePath }) {
+  constructor({ rootDir, cacheDir, ffmpegPath, ffprobePath }) {
     this.queue = new PQueue({ concurrency: 1 })
-    this.cacheDir = resolve(
-      `${rootDir}/node_modules/.cache/gatsby-transformer-video/`
-    )
+    this.cacheDir = cacheDir
     this.rootDir = rootDir
+    this.totalVideos = 0
+    this.currentVideo = 0
 
     if (ffmpegPath) {
       ffmpeg.setFfmpegPath(ffmpegPath)
@@ -25,6 +31,59 @@ export default class FFMPEG {
     }
   }
 
+  // Execute FFPROBE and return metadata
+  executeFfprobe = path =>
+    new Promise((resolve, reject) => {
+      ffmpeg(path).ffprobe((err, data) => {
+        if (err) reject(err)
+        resolve(data)
+      })
+    })
+
+  // Execute FFMMPEG and log progress
+  executeFfmpeg = async ({ ffmpegSession, cachePath, loggingPrefix }) => {
+    let startTime
+    let lastLoggedPercent = 0.1
+    const filename = parse(cachePath).base
+
+    return new Promise((resolve, reject) => {
+      ffmpegSession
+        .on(`start`, commandLine => {
+          console.log(
+            `${loggingPrefix} Converting ${filename} via:\n\n${commandLine}\n`
+          )
+          startTime = performance.now()
+        })
+        .on(`progress`, progress => {
+          if (progress.percent > lastLoggedPercent + 10) {
+            const percent = Math.floor(progress.percent)
+            const elapsedTime = Math.ceil(
+              (performance.now() - startTime) / 1000
+            )
+            const estTotalTime = (100 / percent) * elapsedTime
+            const estTimeLeft = Math.ceil(estTotalTime - elapsedTime)
+            const loggedTimeLeft =
+              estTimeLeft !== Infinity && ` (~${estTimeLeft}s)`
+
+            console.log(`${loggingPrefix} ${percent}% ${loggedTimeLeft}`)
+            lastLoggedPercent = progress.percent
+          }
+        })
+        .on(`error`, (err, stdout, stderr) => {
+          console.log(`\n---\n`, stdout, stderr, `\n---\n`)
+          console.log(`${loggingPrefix} An error occurred:`)
+          console.error(err)
+          reject(err)
+        })
+        .on(`end`, () => {
+          console.log(`${loggingPrefix} 100%`)
+          resolve()
+        })
+        .save(cachePath)
+    })
+  }
+
+  // Analyze video and download if neccessary
   analyzeVideo = async ({
     video,
     fieldArgs,
@@ -74,41 +133,162 @@ export default class FFMPEG {
     return { path, filename, info }
   }
 
-  executeFfprobe = path =>
-    new Promise((resolve, reject) => {
-      ffmpeg(path).ffprobe(function(err, data) {
-        if (err) reject(err)
-        resolve(data)
-      })
+  // Queue video for conversion
+  convertVideo = async (...args) => {
+    this.totalVideos++
+
+    const publicPath = await this.queue.add(() =>
+      this.queuedConvertVideo(...args)
+    )
+
+    if (this.currentVideo === this.totalVideos) {
+      this.totalVideos = 0
+      this.currentVideo = 0
+    }
+
+    return publicPath
+  }
+
+  // Converts a video based on a given profile, populates cache and public dir
+  queuedConvertVideo = async ({
+    profile,
+    codec,
+    sourcePath,
+    cachePath,
+    publicPath,
+    fieldArgs,
+    info,
+  }) => {
+    const alreadyExists = await pathExists(cachePath)
+
+    if (!alreadyExists) {
+      this.currentVideo++
+      const loggingPrefix = `[FFMPEG - ${codec} - ${this.currentVideo}/${this.totalVideos}]`
+      const ffmpegSession = ffmpeg().input(sourcePath)
+      const filters = this.createFilters({ fieldArgs, info }).join(`,`)
+      const videoStreamMetadata = this.parseVideoStream(info.streams)
+
+      profile({ ffmpegSession, filters, fieldArgs, videoStreamMetadata })
+
+      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
+      await this.executeFfmpeg({ ffmpegSession, cachePath, loggingPrefix })
+    }
+
+    // If public file does not exist, copy cached file
+    const publicExists = await pathExists(publicPath)
+
+    if (!publicExists) {
+      await copy(cachePath, publicPath)
+
+      return publicPath
+    }
+
+    // Check if public and cache file vary in size
+    const cacheFileStats = await stat(cachePath)
+    const publicFileStats = await stat(publicPath)
+
+    if (cacheFileStats.size !== publicFileStats.size) {
+      await copy(cachePath, publicPath, { overwrite: true })
+
+      return publicPath
+    }
+
+    // Public and cache file are the same
+    return publicPath
+  }
+
+  createH264 = async ({ publicDir, path, name, fieldArgs, info }) => {
+    const filename = `${name}-h264.mp4`
+    const cachePath = resolve(this.cacheDir, filename)
+    const publicPath = resolve(publicDir, filename)
+
+    return this.convertVideo({
+      profile: profileH264,
+      codec: `h264`,
+      sourcePath: path,
+      cachePath,
+      publicPath,
+      fieldArgs,
+      info,
+    })
+  }
+
+  createH265 = async ({ publicDir, path, name, fieldArgs, info }) => {
+    const filename = `${name}-h265.mp4`
+    const cachePath = resolve(this.cacheDir, filename)
+    const publicPath = resolve(publicDir, filename)
+
+    return this.convertVideo({
+      profile: profileH265,
+      codec: `h265`,
+      sourcePath: path,
+      cachePath,
+      publicPath,
+      fieldArgs,
+      info,
+    })
+  }
+
+  createVP9 = async ({ publicDir, path, name, fieldArgs, info }) => {
+    const filename = `${name}-vp9.webm`
+    const cachePath = resolve(this.cacheDir, filename)
+    const publicPath = resolve(publicDir, filename)
+
+    return this.convertVideo({
+      profile: profileVP9,
+      codec: `VP9`,
+      sourcePath: path,
+      cachePath,
+      publicPath,
+      fieldArgs,
+      info,
+    })
+  }
+
+  createWebP = async ({ publicDir, path, name, fieldArgs, info }) => {
+    const filename = `${name}-webp.webp`
+    const cachePath = resolve(this.cacheDir, filename)
+    const publicPath = resolve(publicDir, filename)
+
+    return this.convertVideo({
+      profile: profileWebP,
+      codec: `webP`,
+      sourcePath: path,
+      cachePath,
+      publicPath,
+      fieldArgs,
+      info,
+    })
+  }
+
+  createGif = async ({ publicDir, path, name, fieldArgs, info }) => {
+    const filename = `${name}-gif.gif`
+    const cachePath = resolve(this.cacheDir, filename)
+    const publicPath = resolve(publicDir, filename)
+
+    const absolutePath = await this.convertVideo({
+      profile: profileGif,
+      codec: `gif`,
+      sourcePath: path,
+      cachePath,
+      publicPath,
+      fieldArgs,
+      info,
     })
 
-  executeFfmpeg = async (ffmpegSession, publicPath) => {
-    let lastLoggedPercent = -10
-    return new Promise((resolve, reject) => {
-      ffmpegSession
-        .on(`start`, function() {
-          console.log(`[FFMPEG] Spawned`)
-        })
-        .on(`progress`, function(progress) {
-          if (progress.percent > lastLoggedPercent + 10) {
-            console.log(
-              `[FFMPEG] frames: ${progress.frames} - ${progress.percent}%`
-            )
-            lastLoggedPercent = progress.percent
-          }
-        })
-        .on(`error`, function(err, stdout, stderr) {
-          console.log(`\n---\n`, stdout, stderr, `\n---\n`)
-          console.log(`[FFMPEG] An error occurred: ` + err.message)
-          reject(err)
-        })
-        .on(`end`, function(stdout, stderr) {
-          console.log(`\n---\n`, stdout, stderr, `\n---\n`)
-          console.log(`[FFMPEG] Finished`)
-          resolve()
-        })
-        .save(publicPath)
+    await imagemin([publicPath], {
+      destination: publicDir,
+      plugins: [
+        imageminGiflossy({
+          optimizationLevel: 3,
+          lossy: 120,
+          noLogicalScreen: true,
+          optimize: `3`,
+        }),
+      ],
     })
+
+    return absolutePath
   }
 
   // Generate ffmpeg filters based on field args
@@ -188,321 +368,19 @@ export default class FFMPEG {
     }
   }
 
-  createH264 = (...args) => this.queue.add(() => this.convertToH264(...args))
-  convertToH264 = async ({ publicDir, path, filename, fieldArgs, info }) => {
-    const { crf, preset, maxRate, bufSize } = fieldArgs
-
-    const publicPath = resolve(publicDir, `${filename}-h264.mp4`)
-
-    const alreadyExists = await pathExists(publicPath)
-    if (!alreadyExists) {
-      console.log(`[H264] Converting ${path} (${filename})`)
-
-      const filters = this.createFilters({ fieldArgs, info }).join(`,`)
-
-      console.log(`Applied complex filter: ${filters}`)
-
-      const currentFps = parseInt(
-        info.streams
-          .find(stream => stream.codec_type === `video`)
-          .r_frame_rate.split(`/`)[0]
-      )
-
-      const outputOptions = [
-        crf && `-crf ${crf}`,
-        preset && `-preset ${preset}`,
-        !crf && maxRate && `-maxrate ${maxRate}`,
-        !crf && bufSize && `-bufsize ${bufSize}`,
-        `-movflags +faststart`,
-        `-profile:v high`,
-        `-bf 2	`,
-        `-g ${Math.floor((fieldArgs.fps || currentFps) / 2)}`,
-        `-coder 1`,
-        `-pix_fmt yuv420p`,
-      ].filter(Boolean)
-
-      console.log(
-        `ffmpeg command:\n\nffmpeg -i ${path} -vf "${filters}" -c:v libx264 ${outputOptions.join(
-          ` `
-        )} ${publicPath} \n\n`
-      )
-
-      const ffmpegSession = ffmpeg()
-        .input(path)
-        .videoCodec(`libx264`)
-        .complexFilter([filters])
-        .outputOptions(outputOptions)
-        .audioCodec(`aac`)
-        .audioQuality(5)
-        // Apple devices support aac only with stereo
-        .audioChannels(2)
-
-      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
-      await this.executeFfmpeg(ffmpegSession, publicPath)
-
-      console.log(`[H264] Done`)
-    }
-
-    return publicPath
-  }
-
-  createH265 = (...args) => this.queue.add(() => this.convertToH265(...args))
-  convertToH265 = async ({ publicDir, path, filename, fieldArgs, info }) => {
-    const { crf, preset, maxRate, bufSize } = fieldArgs
-
-    const publicPath = resolve(publicDir, `${filename}-h265.mp4`)
-    const alreadyExists = await pathExists(publicPath)
-    if (!alreadyExists) {
-      console.log(`[H265] Converting ${path} (${filename})`)
-
-      const filters = this.createFilters({ fieldArgs, info }).join(`,`)
-
-      console.log(`Applied complex filter: ${filters}`)
-
-      const currentFps = parseInt(
-        info.streams
-          .find(stream => stream.codec_type === `video`)
-          .r_frame_rate.split(`/`)[0]
-      )
-
-      const outputOptions = [
-        crf && `-crf ${crf}`,
-        preset && `-preset ${preset}`,
-        !crf &&
-          maxRate &&
-          bufSize &&
-          `-x265-params vbv-maxrate=${maxRate}:vbv-bufsize=${bufSize}`,
-        `-movflags +faststart`,
-        `-bf 2`,
-        `-g ${Math.floor((fieldArgs.fps || currentFps) / 2)}`,
-        `-pix_fmt yuv420p`,
-      ].filter(Boolean)
-
-      console.log(
-        `ffmpeg command:\n\nffmpeg -i ${path} -vf "${filters}" -c:v libx265 ${outputOptions.join(
-          ` `
-        )} ${publicPath} \n\n`
-      )
-
-      const ffmpegSession = ffmpeg()
-        .input(path)
-        .videoCodec(`libx265`)
-        .complexFilter([filters])
-        .outputOptions(outputOptions)
-        .audioCodec(`aac`)
-        .audioQuality(5)
-        // Apple devices support aac only with stereo
-        .audioChannels(2)
-
-      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
-      await this.executeFfmpeg(ffmpegSession, publicPath)
-
-      console.log(`[H265] Done`)
-    }
-
-    return publicPath
-  }
-
-  createVP9 = (...args) => this.queue.add(() => this.convertToVP9(...args))
-  convertToVP9 = async ({ publicDir, path, filename, fieldArgs, info }) => {
-    const { crf, bitrate, minrate, maxrate, cpuUsed } = fieldArgs
-
-    const publicPath = resolve(publicDir, `${filename}.webm`)
-    const alreadyExists = await pathExists(publicPath)
-
-    if (!alreadyExists) {
-      console.log(`[VP9] Converting ${path} (${filename})`)
-
-      const filters = this.createFilters({ fieldArgs, info }).join(`,`)
-
-      console.log(`Applied complex filter: ${filters}`)
-
-      const videoStream = info.streams.find(
-        stream => stream.codec_type === `video`
-      )
-
-      const currentFps = parseInt(videoStream.r_frame_rate.split(`/`)[0])
-
-      // Automatically determine fitting bitrates, based on:
-      // https://developers.google.com/media/vp9/settings/vod/#bitrate
-      const bitrateMap = {
-        240: {
-          30: [`150k`, `75k`, `218k`],
-        },
-        360: {
-          30: [`276k`, `138k`, `400k`],
-        },
-        480: {
-          30: [`750k`, `375k`, `1088k`],
-        },
-        720: {
-          30: [`1024k`, `512k`, `1485k`],
-          60: [`1800k`, `900k`, `2610k`],
-        },
-        1080: {
-          30: [`1800k`, `900k`, `2610k`],
-          60: [`3000k`, `1500k`, `4350k`],
-        },
-        1440: {
-          30: [`6000k`, `3000k`, `8700k`],
-          60: [`9000k`, `4500k`, `13050k`],
-        },
-        2160: {
-          30: [`12000k`, `6000k`, `17400k`],
-          60: [`18000k`, `9000k`, `26100k`],
-        },
-      }
-
-      const dimensionMin = Math.min(videoStream.width, videoStream.height)
-      const appliedFps = fieldArgs.fps || currentFps
-
-      const closestResolution = Object.keys(bitrateMap).reduce((prev, curr) =>
-        Math.abs(curr - dimensionMin) < Math.abs(prev - dimensionMin)
-          ? curr
-          : prev
-      )
-
-      const closestFps = Object.keys(
-        bitrateMap[closestResolution]
-      ).reduce((prev, curr) =>
-        Math.abs(curr - appliedFps) < Math.abs(prev - appliedFps) ? curr : prev
-      )
-
-      const appliedBitrate =
-        bitrate || bitrateMap[closestResolution][closestFps][0]
-      const appliedMinrate =
-        minrate || bitrateMap[closestResolution][closestFps][1]
-      const appliedMaxrate =
-        maxrate || bitrateMap[closestResolution][closestFps][2]
-
-      const outputOptions = [
-        crf && `-crf ${crf}`,
-        `-b:v ${appliedBitrate}`,
-        `-minrate ${appliedMinrate}`,
-        `-maxrate ${appliedMaxrate}`,
-        `-cpu-used ${cpuUsed}`,
-        `-g ${appliedFps * 8}`,
-        `-pix_fmt yuv420p`,
-      ].filter(Boolean)
-
-      console.log(
-        `ffmpeg command:\n\nffmpeg -i ${path} -vf "${filters}" -c:v libvpx-vp9 ${outputOptions.join(
-          ` `
-        )} ${publicPath} \n\n`
-      )
-
-      const ffmpegSession = ffmpeg()
-        .input(path)
-        .videoCodec(`libvpx-vp9`)
-        .complexFilter([filters])
-        .outputOptions(outputOptions)
-        .audioCodec(`libopus`)
-
-      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
-      await this.executeFfmpeg(ffmpegSession, publicPath)
-
-      console.log(`[VP9] Done`)
-    }
-
-    return publicPath
-  }
-
-  createWebP = (...args) => this.queue.add(() => this.convertToWebP(...args))
-  convertToWebP = async ({ publicDir, path, filename, fieldArgs, info }) => {
-    const publicPath = resolve(publicDir, `${filename}.webp`)
-    const alreadyExists = await pathExists(publicPath)
-
-    if (!alreadyExists) {
-      console.log(`[WEBP] Converting ${path} (${filename})`)
-
-      const filters = this.createFilters({ fieldArgs, info }).join(`,`)
-
-      console.log(`Applied complex filter: ${filters}`)
-
-      const outputOptions = [
-        `-preset picture`,
-        `-compression_level 6`,
-        `-loop 0`,
-      ].filter(Boolean)
-
-      console.log(
-        `ffmpeg command:\n\nffmpeg -i ${path} -vf "${filters}" -c:v libwebp ${outputOptions.join(
-          ` `
-        )} ${publicPath} \n\n`
-      )
-
-      const ffmpegSession = ffmpeg()
-        .input(path)
-        .videoCodec(`libwebp`)
-        .complexFilter([filters])
-        .outputOptions(outputOptions)
-        .noAudio()
-
-      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
-      await this.executeFfmpeg(ffmpegSession, publicPath)
-
-      console.log(`[WEBP] Done`)
-    }
-
-    return publicPath
-  }
-
-  createGif = (...args) => this.queue.add(() => this.convertToGif(...args))
-  convertToGif = async ({ publicDir, path, filename, fieldArgs, info }) => {
-    const publicPath = resolve(publicDir, `${filename}.gif`)
-    const alreadyExists = await pathExists(publicPath)
-
-    if (!alreadyExists) {
-      console.log(`[GIF] Converting ${path} (${filename})`)
-
-      const tmpPath = resolve(tmpdir(), `${filename}.gif`)
-      const filters = [
-        ...this.createFilters({ fieldArgs, info }),
-        // High quality gif: https://engineering.giphy.com/how-to-make-gifs-wit g/
-        `split [a][b]`,
-        `[a] palettegen [p]`,
-        `[b][p] paletteuse`,
-      ].join(`,`)
-
-      console.log(`Applied complex filter: ${filters}`)
-
-      console.log(
-        `ffmpeg command:\n\nffmpeg -i ${path} -vf "${filters}" ${publicPath} \n\n`
-      )
-
-      const ffmpegSession = ffmpeg()
-        .input(path)
-        .complexFilter([filters])
-        .noAudio()
-
-      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
-      await this.executeFfmpeg(ffmpegSession, tmpPath)
-
-      console.log(`[GIF] Optimizing`)
-
-      await imagemin([tmpPath], {
-        destination: publicDir,
-        plugins: [
-          imageminGiflossy({
-            optimizationLevel: 3,
-            lossy: 120,
-            noLogicalScreen: true,
-            optimize: `3`,
-          }),
-        ],
-      })
-
-      console.log(`[GIF] Done`)
-    }
-
-    return publicPath
-  }
-
-  // Helper functions
+  // Create scale filter based on given field args
   generateScaleFilter({ maxWidth, maxHeight }) {
     if (!maxHeight) {
       return `'min(${maxWidth},iw)':-2:flags=lanczos`
     }
     return `'min(iw*min(1\\,min(${maxWidth}/iw\\,${maxHeight}/ih)), iw)':-2:flags=lanczos`
+  }
+
+  // Locates video stream and returns metadata
+  parseVideoStream = streams => {
+    const videoStream = streams.find(stream => stream.codec_type === `video`)
+
+    const currentFps = parseInt(videoStream.r_frame_rate.split(`/`)[0])
+    return { videoStream, currentFps }
   }
 }

@@ -1,3 +1,4 @@
 /*.js
+/profiles/*.js
 !index.js
 yarn.lock

@@ -1,4 +1,4 @@
-import { join, parse } from "path"
+import { resolve, parse } from "path"
 
 import { GraphQLString, GraphQLInt, GraphQLFloat } from "gatsby/graphql"
 import { ensureDir } from "fs-extra"
@@ -48,7 +48,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
   createTypes(typeDefs)
 }
 
-exports.createResolvers = (
+exports.createResolvers = async (
   { createResolvers, store, cache, createNodeId, actions },
   { ffmpegPath, ffprobePath }
 ) => {
@@ -56,8 +56,9 @@ exports.createResolvers = (
 
   const program = store.getState().program
   const rootDir = program.directory
-
-  const ffmpeg = new FFMPEG({ rootDir, ffmpegPath, ffprobePath })
+  const cacheDir = resolve(rootDir, `.cache`, `gatsby-transformer-video`)
+  await ensureDir(cacheDir)
+  const ffmpeg = new FFMPEG({ rootDir, cacheDir, ffmpegPath, ffprobePath })
 
   // Get source videos metadata and download the file if required
   async function prepareAndAnalyzeVideo({ video, fieldArgs }) {
@@ -98,15 +99,15 @@ exports.createResolvers = (
       )
     }
 
-    const { path, filename, info } = metadata
-    const publicDir = join(rootDir, `public`, fieldArgs.publicPath)
+    const { path, filename: name, info } = metadata
+    const publicDir = resolve(rootDir, `public`, fieldArgs.publicPath)
 
     await ensureDir(publicDir)
 
     return {
       publicDir,
       path,
-      filename,
+      name,
       info,
     }
   }
@@ -124,7 +125,7 @@ exports.createResolvers = (
       bit_rate: bitRate,
     } = result.format
 
-    const path = absolutePath.replace(join(rootDir, `public`), ``)
+    const path = absolutePath.replace(resolve(rootDir, `public`), ``)
 
     const { name, ext } = parse(absolutePath)
 
@@ -146,12 +147,7 @@ exports.createResolvers = (
   function transformVideo({ transformer, codec }) {
     return async (video, fieldArgs) => {
       try {
-        const {
-          publicDir,
-          path,
-          filename,
-          info,
-        } = await prepareAndAnalyzeVideo({
+        const { publicDir, path, name, info } = await prepareAndAnalyzeVideo({
           video,
           fieldArgs,
         })
@@ -159,7 +155,7 @@ exports.createResolvers = (
         const absolutePath = await transformer({
           publicDir,
           path,
-          filename,
+          name,
           fieldArgs,
           info,
         })
