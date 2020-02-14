@@ -3,11 +3,14 @@ import { performance } from "perf_hooks"
 
 import { createContentDigest } from "gatsby-core-utils"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
-import { pathExists, stat, copy } from "fs-extra"
+import { pathExists, stat, copy, writeFile } from "fs-extra"
 import ffmpeg from "fluent-ffmpeg"
+import fg from "fast-glob"
 import imagemin from "imagemin"
 import imageminGiflossy from "imagemin-giflossy"
+import imageminMozjpeg from "imagemin-mozjpeg"
 import PQueue from "p-queue"
+import sharp from "sharp"
 
 import profileH264 from "./profiles/h264"
 import profileH265 from "./profiles/h265"
@@ -135,7 +138,7 @@ export default class FFMPEG {
   convertVideo = async (...args) => {
     this.totalVideos++
 
-    const publicPath = await this.queue.add(() =>
+    const videoData = await this.queue.add(() =>
       this.queuedConvertVideo(...args)
     )
 
@@ -144,7 +147,7 @@ export default class FFMPEG {
       this.currentVideo = 0
     }
 
-    return publicPath
+    return videoData
   }
 
   // Converts a video based on a given profile, populates cache and public dir
@@ -176,22 +179,99 @@ export default class FFMPEG {
 
     if (!publicExists) {
       await copy(cachePath, publicPath)
-
-      return publicPath
     }
 
     // Check if public and cache file vary in size
     const cacheFileStats = await stat(cachePath)
     const publicFileStats = await stat(publicPath)
 
-    if (cacheFileStats.size !== publicFileStats.size) {
+    if (publicExists && cacheFileStats.size !== publicFileStats.size) {
       await copy(cachePath, publicPath, { overwrite: true })
-
-      return publicPath
     }
 
-    // Public and cache file are the same
-    return publicPath
+    // Take screenshots
+    const screenshots = await this.takeScreenshots({ fieldArgs, publicPath })
+
+    return { screenshots, publicPath }
+  }
+
+  takeScreenshots = async ({ fieldArgs, publicPath }) => {
+    const { screenshots, screenshotWidth } = fieldArgs
+
+    if (!screenshots) {
+      return null
+    }
+
+    const { dir: publicDir, name } = parse(publicPath)
+
+    const screenshotPatternCache = resolve(
+      this.cacheDir,
+      `${name}-screenshot-*.png`
+    )
+    const screenshotPatternPublic = resolve(
+      publicDir,
+      `${name}-screenshot-*.jpg`
+    )
+
+    const screenshotsCache = await fg([screenshotPatternCache])
+    const screenshotsPublic = await fg([screenshotPatternPublic])
+
+    if (!screenshotsCache.length) {
+      const timestamps = screenshots.split(`,`)
+
+      await new Promise((resolve, reject) => {
+        ffmpeg(publicPath)
+          .on(`filenames`, function(filenames) {
+            console.log(`[FFMPEG] Taking ${filenames.length} screenshots`)
+          })
+          .on(`error`, (err, stdout, stderr) => {
+            console.log(`[FFMPEG] Failed to take screenshots:`)
+            console.error(err)
+            reject(err)
+          })
+          .on(`end`, () => {
+            resolve()
+          })
+          .screenshots({
+            timestamps,
+            filename: `${name}-screenshot-%ss.png`,
+            folder: this.cacheDir,
+            size: `${screenshotWidth}x?`,
+          })
+      })
+    }
+
+    if (!screenshotsPublic.length) {
+      const screenshotsLatest = await fg([screenshotPatternCache])
+      for (const rawScreenshotPath of screenshotsLatest) {
+        const { name: screenshotName } = parse(rawScreenshotPath)
+        const publicScreenshotPath = resolve(publicDir, `${screenshotName}.jpg`)
+
+        const jpgBuffer = await sharp(rawScreenshotPath)
+          .jpeg({
+            quality: 60,
+            progressive: true,
+          })
+          .toBuffer()
+
+        const optimizedBuffer = await imagemin.buffer(jpgBuffer, {
+          plugins: [imageminMozjpeg()],
+        })
+
+        await writeFile(publicScreenshotPath, optimizedBuffer)
+      }
+    }
+
+    console.log(`[FFMPEG] Finished taking screenshots`)
+
+    const latestFiles = await fg([screenshotPatternPublic])
+
+    return latestFiles.map(absolutePath => {
+      return {
+        absolutePath,
+        path: absolutePath.replace(resolve(this.rootDir, `public`), ``),
+      }
+    })
   }
 
   createFromProfile = async ({ publicDir, path, name, fieldArgs, info }) => {

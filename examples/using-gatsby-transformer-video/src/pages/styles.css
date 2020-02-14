@@ -15,7 +15,15 @@ video {
 }
 
 .grid > * {
-  flex: 0 1 320px;
+  flex: 0 1 420px;
   padding: 10px;
   overflow: hidden;
+}
+
+.screenshots {
+  display: flex;
+  justify-content: space-between;
+}
+.screenshots > * {
+  flex: 0 1 30%;
 }

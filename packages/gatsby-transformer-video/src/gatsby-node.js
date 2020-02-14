@@ -21,6 +21,8 @@ const DEFAULT_ARGS = {
     type: GraphQLString,
     defaultValue: `assets/videos`,
   },
+  screenshots: { type: GraphQLString },
+  screenshotWidth: { type: GraphQLInt, defaultValue: 600 },
 }
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
@@ -41,6 +43,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         duration: GraphQLFloat,
         size: GraphQLInt,
         bitRate: GraphQLInt,
+        screenshots: `[GatsbyVideoScreenshot]`,
+      },
+    }),
+    schema.buildObjectType({
+      name: `GatsbyVideoScreenshot`,
+      fields: {
+        path: GraphQLString,
+        absolutePath: GraphQLString,
       },
     }),
   ]
@@ -120,8 +130,8 @@ exports.createResolvers = async (
   }
 
   // Analyze the resulting video and prepare field return values
-  async function processResult(absolutePath) {
-    const result = await ffmpeg.executeFfprobe(absolutePath)
+  async function processResult({ publicPath, screenshots }) {
+    const result = await ffmpeg.executeFfprobe(publicPath)
 
     const {
       format_name: formatName,
@@ -132,13 +142,13 @@ exports.createResolvers = async (
       bit_rate: bitRate,
     } = result.format
 
-    const path = absolutePath.replace(resolve(rootDir, `public`), ``)
+    const path = publicPath.replace(resolve(rootDir, `public`), ``)
 
-    const { name, ext } = parse(absolutePath)
+    const { name, ext } = parse(publicPath)
 
     return {
       path,
-      absolutePath,
+      absolutePath: publicPath,
       name,
       ext,
       formatName,
@@ -147,6 +157,7 @@ exports.createResolvers = async (
       duration: duration === `N/A` ? null : duration,
       size: size === `N/A` ? null : size,
       bitRate: bitRate === `N/A` ? null : bitRate,
+      screenshots,
     }
   }
 
@@ -159,7 +170,7 @@ exports.createResolvers = async (
           fieldArgs,
         })
 
-        const absolutePath = await transformer({
+        const videoData = await transformer({
           publicDir,
           path,
           name,
@@ -167,7 +178,7 @@ exports.createResolvers = async (
           info,
         })
 
-        return await processResult(absolutePath)
+        return await processResult(videoData)
       } catch (err) {
         if (!(err instanceof WrongFileTypeError)) {
           throw err

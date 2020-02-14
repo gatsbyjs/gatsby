@@ -11,6 +11,7 @@
 - Supported codecs: h264, h265, VP9, WebP & gif
 - Several parameters to tweak the output: maxWidth/maxHeight, overlay, saturation, duration, fps, ...
 - Create video conversion profiles. Create a converter function using `fluent-ffmpeg` to unlock all FFMPEG features.
+- Take screenshots at any position of the video
 
 ## Installation
 
@@ -100,6 +101,7 @@ query {
           overlayX: "end"
           overlayY: "start"
           overlayPadding: 25
+          screenshots: "0,50%" (See: https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#screenshotsoptions-dirname-generate-thumbnails)
         ) {
           path #String
           absolutePath #String
@@ -112,6 +114,7 @@ query {
           duration #Float
           size #Int
           bitRate #Int
+          screenshots #String
         }
         videoProfile(profile: "yourProfileName") {
           path

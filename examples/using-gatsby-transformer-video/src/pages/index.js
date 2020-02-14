@@ -17,9 +17,17 @@ function Video({
 }) {
   return (
     <div {...props}>
-      <h2>{name}</h2>
+      <h2>Example: {name.substring(0, 1).toUpperCase() + name.substring(1)}</h2>
+      <h3>Screenshots at 1s, 50% and 99%:</h3>
+      <div className="screenshots">
+        {videoH264.screenshots.map(({ path }) => (
+          <div key="path">
+            <img src={path} />
+          </div>
+        ))}
+      </div>
       <h3>
-        Performant animated preview via{` `}
+        Animated preview via{` `}
         <a href="https://css-tricks.com/fallbacks-videos-images/">
           picture element
         </a>
@@ -72,8 +80,12 @@ export const query = graphql`
             overlayX: "end"
             overlayY: "start"
             overlayPadding: 25
+            screenshots: "1,50%,99%"
           ) {
             path
+            screenshots {
+              path
+            }
           }
           videoH265(
             overlay: "gatsby.png"
