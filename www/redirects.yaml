@@ -138,5 +138,5 @@
 - fromPath: /contributing/gatsby-docs-translation-guide/
   toPath: /contributing/translation/
   # redirecting gatsby-source-filesystem Programmatic Import to plugin README
-  fromPath: /docs/gatsby-source-filesystem-programmatic-import/
+- fromPath: /docs/gatsby-source-filesystem-programmatic-import/
   toPath: /packages/gatsby-source-filesystem/
