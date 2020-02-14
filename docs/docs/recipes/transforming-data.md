@@ -68,7 +68,7 @@ export const query = graphql`
 
 1. Edit your `gatsby-config.js` file to source images and configure plugins for Gatsby's GraphQL data layer. A common approach is to source them from an images directory using the `gatsby-source-filesystem` plugin:
 
-```JavaScript:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 
  plugins: [
    {
@@ -83,14 +83,11 @@ export const query = graphql`
  ],
 ```
 
-<<<<<<< HEAD
+2.  Query your image using GraphQL and apply a grayscale transformation to the image inline. The `relativePath` should be relative to the path you configured in `gatsby-source-filesystem`.
 
-2. # Query your image using GraphQL. The `relativePath` should be relative to the path you configured in `gatsby-source-filesystem`.
-3. Query your image using GraphQL and apply a grayscale transformation to the image inline.
-   > > > > > > > b6ed635bdf5a3d2c94678a231cd3d8e3ace2adc2
-
-```query {
-     file(relativePath: { eq: "gatsby-astronaut.png" }) {
+```graphql
+  query {
+     file(relativePath: { eq: "corgi.jpg" }) {
        childImageSharp {
          // highlight-next-line
          fluid(grayscale: true) {
@@ -105,8 +102,7 @@ Note: You can find these and other parameters in your GraphQL playground located
 
 3. Next import the `Img` component from "gatsby-image". You'll use this inside your JSX to display the image.
 
-```JavaScript:title=src/pages/my-dogs.js
-
+```jsx:title=src/pages/index.js
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -115,16 +111,16 @@ import Img from "gatsby-image"
 
 export default () => {
   const data = useStaticQuery(graphql`
-    query MyQuery {
-      file(relativePath: { eq: "images/corgi.jpg" }) {
-        childImageSharp {
-          # Specify the image processing specifications right in the query.
-          fluid {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
+    query {
+     file(relativePath: { eq: "corgi.jpg" }) {
+       childImageSharp {
+         // highlight-next-line
+         fluid(grayscale: true) {
+           ...GatsbyImageSharpFluid
+         }
+       }
+     }
+   }
   `)
   return (
     <Layout>
@@ -142,7 +138,7 @@ export default () => {
 
 4. Run `gatsby develop` to start the development server.
 
-5. View your image in the browser: `http://localhost:8000/my-dogs`
+5. View your image in the browser: `http://localhost:8000/`
 
 ### Additional resources
 
