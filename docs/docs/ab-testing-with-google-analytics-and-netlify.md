@@ -4,13 +4,7 @@ title: A/B Testing with Google Analytics and Netlify
 
 Learn how to create an A/B test (otherwise known as a split test) with Google Analytics and Netlify. Note that Netlify uses the term "split test".
 
-To follow along with a ready-made project, you can grab the code for the tutorial by running the following in your terminal:
-
-```bash
-git clone https://github.com/pkafei/Gatsby-Split-Test.git
-```
-
-## Creating an A/B test wtih Netlify
+## Creating an A/B test with Netlify
 
 An A/B test compares changes on a web page. If you are creating an A/B test with Netlify, you can [use multiple Git branches containing variations of your site](https://docs.netlify.com/site-deploys/split-testing/#run-a-branch-based-test). If you are not familiar with Git branches, visit the [Git Guide](http://rogerdudler.github.io/git-guide/), which explains Git in detail.
 
@@ -124,7 +118,7 @@ ga('send', 'pageview', {
 
 ## Checking your results on Google Analytics
 
-It takes some time for Google Analytics to record the results of the A/B test. Wait about half a day and then log into your Google Analytics account. Go to the navation on the lefthand side of the page and select Behavior. From the submenu choose "Site Content", and from there select "All Pages".
+It takes some time for Google Analytics to record the results of the A/B test. Wait about half a day and then log into your Google Analytics account. Go to the navigation on the left-hand side of the page and select Behavior. From the submenu choose "Site Content", and from there select "All Pages".
 
 On "All Page" you will see a line graph. Below the line graph on the left-hand side there is a "Secondary dimension" button. Select the "Secondary dimension" button and select "Custom Dimensions". Choose the custom dimension that you created earlier and you should see the names of the branches you created in Netlify. In this example, the `master` and `heading-variation` branches are displayed in the table.
 
