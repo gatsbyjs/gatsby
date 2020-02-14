@@ -49,9 +49,18 @@ exports.sourceNodes = async (
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
     process.env.NODE_ENV !== `production`
   ) {
-    getNodes()
-      .filter(n => n.internal.owner === `gatsby-source-contentful`)
-      .forEach(n => touchNode({ nodeId: n.id }))
+    let contentfulNodes = getNodes().filter(
+      n => n.internal.owner === `gatsby-source-contentful`
+    )
+    contentfulNodes.forEach(n =>
+      touchNode({
+        nodeId: n.id,
+      })
+    )
+    contentfulNodes
+      .map(n => n.localFile___NODE)
+      .filter(id => id)
+      .forEach(id => touchNode({ nodeId: id }))
 
     console.log(`Using Contentful Offline cache ⚠️`)
     console.log(
