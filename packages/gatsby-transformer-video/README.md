@@ -1,17 +1,16 @@
 # gatsby-transformer-video
 
-Convert videos into well supported formats via FFMPEG. Supports generating previews as well.
+> Convert videos via FFMPEG. Easily convert & host **small** videos on your own.
 
-:warning: Converting videos might take a lot of time. Make sure to have a effective caching mechanism in place. See [caching](#caching)
+:warning: Converting videos might take a lot of time. Make sure to have an effective caching mechanism in place. See [caching](#caching)
 
 ## Features
 
-- Supports file nodes & Contentful assets
-- Defaults optimized for small files with high visual quality
-- Convert videos to h264 and h265
-- Create animated previews as mp4, animated webp and animated gif.
-- Add watermarks to you videos
-- More?
+- Source: Works with nodes from `gatsby-source-filesystem` and `gatsby-source-contentful`
+- Defaults optimized for small files with decent quality and quick and seamless streaming
+- Supported codecs: h264, h265, VP9, WebP & gif
+- Several parameters to tweak the output: maxWidth/maxHeight, overlay, saturation, duration, fps, ...
+- Soon: Create video conversion profiles. Create a converter function using `fluent-ffmpeg` to unlock all FFMPEG features.
 
 ## Installation
 
@@ -21,13 +20,15 @@ npm i gatsby-transformer-video
 
 ## Prerequisites
 
-You will need to install `ffmpeg` and `ffprobe` as well.
+You will need to install `ffmpeg` and `ffprobe` as well. Your FFMPEG version should be compiled with all flags enabled to ensure full support for this plugin.
 
 Go to https://ffmpeg.org/download.html and download either a shared or static version of the library.
 
-Some operating systems may provide these packages via package manager. Some may **not provide** `ffprobe` when installing `ffmpeg`.
+Some operating systems may provide these packages via a package manager. Some may **not provide** `ffprobe` when installing `ffmpeg`.
 
-You can either:
+If you can't find a way to get ffmpeg with all requirements for your system, you can always compile it on your own: https://trac.ffmpeg.org/wiki/CompilationGuide
+
+**How to link ffmpeg to this plugin:**
 
 - Provide the path to ffmpeg && ffprobe via GatsbyJS plugin configuration
 - Set an environment variable -> https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#ffmpeg-and-ffprobe
@@ -41,7 +42,14 @@ Make sure you have `ffprobe` installed as well.
 
 ### OSX
 
-I could not figure out how to use `brew` to install ffprobe as well
+If you got [brew](https://brew.sh/) installed, you can get FFMPEG including FFPROBE via:
+
+```sh
+brew tap homebrew-ffmpeg/ffmpeg
+brew install homebrew-ffmpeg/ffmpeg/ffmpeg
+```
+
+<sub>(Source: https://trac.ffmpeg.org/wiki/CompilationGuide/macOS#ffmpegthroughHomebrew)</sub>
 
 ## Usage
 
@@ -113,7 +121,7 @@ query {
 
 ## Caching
 
-Generating videos take time. A lot. You should cache your results, otherwise you might not even be able to publish on your hosting platform.
+Generating videos take time. A lot. You should cache your results. Otherwise, you might not even be able to publish on your hosting platform.
 
 Here is a list of plugins that can help you:
 
