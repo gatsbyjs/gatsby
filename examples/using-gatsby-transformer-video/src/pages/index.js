@@ -19,7 +19,7 @@ function Video({
       <picture>
         <source type="video/mp4" srcSet={previewH264.path} />
         <source type="image/webp" srcSet={previewWebP.path} />
-        <img src={previewGif.path} />
+        <img loading="lazy" src={previewGif.path} alt="" />
       </picture>
       <h3>Video as optimized h264 &amp; h265:</h3>
       <video playsInline preload="auto" controls>
