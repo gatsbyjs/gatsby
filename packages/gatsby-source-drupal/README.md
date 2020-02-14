@@ -214,7 +214,7 @@ module.exports = {
 }
 ```
 
-## Gatsby Preview
+## Gatsby Preview (experimental)
 
 You will need to have the Drupal module installed, more information on that here: https://www.drupal.org/project/gatsby
 
