@@ -25,7 +25,7 @@ export default function profileH265({
       .videoCodec(`libx265`)
       .complexFilter([filters])
       .outputOptions(outputOptions)
-      .audioCodec(`libfdk_aac`)
+      .audioCodec(`aac`)
       .audioQuality(5)
       // Apple devices support aac only with stereo
       .audioChannels(2)

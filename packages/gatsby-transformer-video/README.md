@@ -23,7 +23,7 @@ npm i gatsby-transformer-video
 
 You will need to install `ffmpeg` and `ffprobe` as well. Your FFMPEG version should be compiled with at least the following flags enabled:
 
-`--enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libvpx --enable-libwebp --enable-libfdk-aac --enable-libopus`
+`--enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libvpx --enable-libwebp --enable-libopus`
 
 Some operating systems may provide these FFMPEG via a package manager. Some may **not include** `ffprobe` when installing `ffmpeg`.
 
