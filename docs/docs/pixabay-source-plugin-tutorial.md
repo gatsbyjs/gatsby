@@ -356,11 +356,7 @@ Your plugin is ready. Restart `npm run develop` and open a browser at `http://lo
 }
 ```
 
-Or open the query from this link:
-
-```text
-http://localhost:8000/___graphql?query=%7B%0A%20%20allPixabayPhoto(limit%3A%2010)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20largeImageURL%0A%20%20%20%20%20%20%20%20pageURL%0A%20%20%20%20%20%20%20%20tags%0A%20%20%20%20%20%20%20%20user%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A
-```
+Or [open the query from this link](<http://localhost:8000/___graphql?query=%7B%0A%20%20allPixabayPhoto(limit%3A%2010)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20largeImageURL%0A%20%20%20%20%20%20%20%20pageURL%0A%20%20%20%20%20%20%20%20tags%0A%20%20%20%20%20%20%20%20user%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A>).
 
 Experiment with different options in your `gatsby-config.js` file to see how that affects your query results. The [Pixabay API docs](https://pixabay.com/api/docs/#api_search_images) might be a useful reference.
 
