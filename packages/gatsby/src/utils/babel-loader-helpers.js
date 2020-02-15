@@ -44,11 +44,11 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   }
 
   if (stage === `develop`) {
-    requiredPlugins.push(
-      babel.createConfigItem([resolve(`react-hot-loader/babel`)], {
-        type: `plugin`,
-      })
-    )
+    // requiredPlugins.push(
+    //   babel.createConfigItem([], {
+    //     type: `plugin`,
+    //   })
+    // )
   }
 
   // Fallback preset

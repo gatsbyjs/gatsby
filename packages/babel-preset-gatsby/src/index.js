@@ -70,6 +70,7 @@ module.exports = function preset(_, options = {}) {
       ],
     ],
     plugins: [
+      resolve(`react-refresh/babel`),
       [
         resolve(`@babel/plugin-proposal-class-properties`),
         {

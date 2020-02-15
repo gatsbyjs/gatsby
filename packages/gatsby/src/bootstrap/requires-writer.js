@@ -145,7 +145,7 @@ const writeAll = async state => {
   lastHash = newHash
 
   // Create file with sync requires of components/json files.
-  let syncRequires = `const { hot } = require("react-hot-loader/root")
+  let syncRequires = `
 
 // prefer default export if available
 const preferDefault = m => m && m.default || m
@@ -153,7 +153,7 @@ const preferDefault = m => m && m.default || m
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": hot(preferDefault(require("${joinPath(
+        `  "${c.componentChunkName}": (preferDefault(require("${joinPath(
           c.component
         )}")))`
     )

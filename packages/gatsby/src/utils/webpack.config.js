@@ -160,7 +160,7 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`event-source-polyfill`),
-            `${require.resolve(`webpack-hot-middleware/client`)}`,
+            require.resolve(`webpack-hot-middleware/client`),
             directoryPath(`.cache/app`),
           ],
         }
@@ -314,13 +314,13 @@ module.exports = async (
 
         // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
         // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
-        configRules.push({
-          include: /node_modules\/react-dom/,
-          test: /\.jsx?$/,
-          use: {
-            loader: require.resolve(`./webpack-hmr-hooks-patch`),
-          },
-        })
+        // configRules.push({
+        //   include: /node_modules\/react-dom/,
+        //   test: /\.jsx?$/,
+        //   use: {
+        //     loader: require.resolve(`./webpack-hmr-hooks-patch`),
+        //   },
+        // })
 
         break
       }

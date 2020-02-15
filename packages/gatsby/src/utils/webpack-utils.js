@@ -260,7 +260,6 @@ module.exports = async ({
       return {
         options: {
           stage,
-          plugins: [require.resolve(`react-refresh/babel`)],
           ...options,
         },
         loader: require.resolve(`./babel-loader`),
@@ -611,10 +610,7 @@ module.exports = async ({
     }
   ) => new OptimizeCssAssetsPlugin(options)
 
-  plugins.fastRefresh = () =>
-    new ReactRefreshWebpackPlugin({
-      disableRefreshCheck: true,
-    })
+  plugins.fastRefresh = () => new ReactRefreshWebpackPlugin()
 
   /**
    * Extracts css requires into a single file;
