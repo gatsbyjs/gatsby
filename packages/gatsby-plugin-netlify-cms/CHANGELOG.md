@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.39...gatsby-plugin-netlify-cms@4.1.40) (2020-02-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** Prevent injected CSS clashes ([#21134](https://github.com/gatsbyjs/gatsby/issues/21134)) ([ee833b9](https://github.com/gatsbyjs/gatsby/commit/ee833b9))
+
 ## [4.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.38...gatsby-plugin-netlify-cms@4.1.39) (2020-02-10)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms
