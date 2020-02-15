@@ -4,7 +4,7 @@ import BaseLayout from "../components/layout"
 import { getLocaleAndBasePath } from "../utils/i18n"
 
 export default function Layout({ location, children }) {
-  if (location.state.isModal) {
+  if (location.state && location.state.isModal) {
     return children
   }
   const { locale } = getLocaleAndBasePath(location.pathname)
