@@ -2,7 +2,7 @@
 title: Styled Components
 ---
 
-In this guide, you will learn how to set up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
+In this guide, you will learn how to set up a site with the CSS-in-JS library [Styled Components](https://styled-components.com/).
 
 Styled Components lets you use actual CSS syntax inside your components. Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 
@@ -112,7 +112,29 @@ export default () => (
 )
 ```
 
-### Enabling user stylesheets with a stable class name
+## Creating Global Styles
+
+Styled-components are primarily used for a single CSS class that is isolated from other components. In some cases, you want to override global styling — for example, the default margins of your `body` element. Styled-components has your back. You can use the `createGlobalStyle` to accomplish this. It's advised to use `createGlobalStyle` in [Layout components](/docs/layout-components/), which are shared over multiple pages rather than using it on a single page.
+
+The example below shows how to create a `GlobalStyle` (which is a StyledComponent) for the color purple by importing `createGlobalStyle` from `styled-components`.
+
+```jsx:title=src/components/layout.js
+import React from "react"
+import { createGlobalStyle } from "styled-components"
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    color: ${props => (props.theme === "purple" ? "purple" : "white")};
+  }
+`
+export default ({ children }) => (
+  <React.Fragment>
+    <GlobalStyle theme="purple" />
+  </React.Fragment>
+)
+```
+
+## Enabling user stylesheets with a stable class name
 
 Adding a persistent CSS `className` to your styled components can make it easier for end users of your website to take advantage of [user stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
 

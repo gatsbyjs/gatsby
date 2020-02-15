@@ -15,7 +15,7 @@ In this tutorial, you'll be learning about how to pull data into your Gatsby sit
 GraphiQL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool you'll use often while building Gatsby websites.
 
 You can access it when your site's development server is running—normally at
-<http://localhost:8000/___graphql>.
+`http://localhost:8000/___graphql`.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/graphiql-explore.mp4"></source>
@@ -93,7 +93,7 @@ Alternatively, you can add fields by using the autocomplete shortcut (<kbd>Ctrl 
 
 ![filesystem-autocomplete](filesystem-autocomplete.png)
 
-Try adding a number of fields to your query, pressing <kbd>Ctrl + Enter</kbd>
+Try adding a number of fields to your query, press <kbd>Ctrl + Enter</kbd>
 each time to re-run the query. You'll see the updated query results:
 
 ![allfile-query](allfile-query.png)
@@ -209,7 +209,7 @@ export const query = graphql`
 `
 ```
 
-And now visit [http://localhost:8000/my-files](http://localhost:8000/my-files)… 😲
+And now visit `http://localhost:8000/my-files`… 😲
 
 ![my-files-page](my-files-page.png)
 

@@ -29,8 +29,7 @@ const PreferWebp = ({ data, location }) => (
       The <strong>WebP</strong> technique is similar to other gatsby-image
       techniques in that it can be applied in image queries with GraphQL. To
       specify that an image should be loaded in the WebP format in supporting
-      browsers, use a fragment with
-      <code>withWebp</code> at the end.
+      browsers, use a fragment with <code>withWebp</code> at the end.
     </p>
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}

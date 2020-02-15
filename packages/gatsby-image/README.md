@@ -413,8 +413,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 | `fluid`                | `object` / `array`  | Data returned from the `fluid` query. When prop is an array it has to be combined with `media` keys, allows for art directing `fluid` images. |
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                                       |
 | `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                                                 |
-| `title`                | `string`            | Passed to the `img` element                                                                                                                   |
-| `onClick`              | `func`              | Passed to the `img` element                                                                                                                   |
+| `title`                | `string`            | Passed to the `img` element                                                                                                                   |  |
 | `alt`                  | `string`            | Passed to the `img` element. Defaults to an empty string `alt=""`                                                                             |
 | `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                                   |
 | `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                                  |
@@ -431,8 +430,6 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 | `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.                          |
 | `loading`              | `string`            | Set the browser's native lazy loading attribute. One of `lazy`, `eager` or `auto`. Defaults to `lazy`.                                        |
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`. Deprecated, use `loading` instead.                                                     |
-| `fixedImages`          | `array`             | An array of objects returned from `fixed` queries. When combined with `media` keys, allows for art directing `fixed` images.                  |
-| `fluidImages`          | `array`             | An array of objects returned from `fluid` queries. When combined with `media` keys, allows for art directing `fluid` images.                  |
 | `draggable`            | `bool`              | Set the img tag draggable to either `false`, `true`                                                                                           |
 | `itemProp`             | `string`            | Add an [`itemprop` schema.org structured data attribute](https://schema.org/docs/gs.html#microdata_itemprop) on the image.                    |
 

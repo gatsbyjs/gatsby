@@ -1,4 +1,4 @@
-const { joinPath } = require(`../path`)
+const { joinPath, isNodeInternalModulePath, slash } = require(`../path`)
 const os = require(`os`)
 
 describe(`paths`, () => {
@@ -20,5 +20,34 @@ describe(`paths`, () => {
         expect(actual).toBe(expected)
       })
     }
+  })
+  describe(`isNodePath`, () => {
+    it(`Matches common node files`, () => {
+      expect(isNodeInternalModulePath(`console.js`)).toBe(true)
+      expect(isNodeInternalModulePath(`http.js`)).toBe(true)
+      expect(isNodeInternalModulePath(`internal/foo`)).toBe(true)
+      const modulePath = `/Users/username/dev/project/node_modules/package-name/index.js`
+      expect(isNodeInternalModulePath(modulePath)).toBe(false)
+    })
+  })
+
+  describe(`slash path`, () => {
+    it(`can correctly slash path`, () => {
+      ;[
+        [`foo\\bar`, `foo/bar`],
+        [`foo/bar`, `foo/bar`],
+        [`foo\\中文`, `foo/中文`],
+        [`foo/中文`, `foo/中文`],
+        [`foo/жä`, `foo/жä`],
+        [`foo\\жä`, `foo/жä`],
+      ].forEach(([path, expectRes]) => {
+        expect(slash(path)).toBe(expectRes)
+      })
+    })
+
+    it(`does not modify extended length paths`, () => {
+      const extended = `\\\\?\\some\\path`
+      expect(slash(extended)).toBe(extended)
+    })
   })
 })

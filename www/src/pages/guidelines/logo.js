@@ -34,7 +34,7 @@ import PartnershipLockups from "!raw-loader!../../assets/guidelines/partnership-
 import ColorSwatch from "../../components/guidelines/color/card"
 
 import { Box, Button, Flex, Text } from "../../components/guidelines/system"
-import theme from "../../gatsby-plugin-theme-ui"
+import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import palette from "../../utils/guidelines/extend-palette-info"
 
 const List = styled(`ul`)`
@@ -168,7 +168,7 @@ const Logo = ({ data, location }) => {
   const isDark = colorMode === `dark`
 
   return (
-    <Layout pathname={location.pathname} pageTitle="Logo">
+    <Layout location={location} pageTitle="Logo">
       <Container>
         <PageHeading>Logo</PageHeading>
         <Intro>
@@ -194,14 +194,14 @@ const Logo = ({ data, location }) => {
               contains everything you need.
             </p>
             <Box
-              bg="yellow.10"
+              bg="highlightedBox.background"
               py={3}
               px={4}
               my={4}
               fontSize={1}
               borderRadius={2}
               maxWidth="30rem"
-              color="grey.80"
+              color="highlightedBox.color"
             >
               Please{` `}
               <a href="https://github.com/gatsbyjs/gatsby/issues">

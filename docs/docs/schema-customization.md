@@ -415,24 +415,24 @@ To add an extension to a field you can either use a directive in SDL, or the
 `extensions` property when using Gatsby Type Builders:
 
 ```js:title=gatsby-node.js
-exports.createSchemaCustomization = ({ action, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
     `type Frontmatter {
       publishedAt: Date @dateformat(formatString: "DD-MM-YYYY")
-    }`
+    }`,
     schema.buildObjectType({
-      name: 'AuthorJson',
+      name: "AuthorJson",
       fields: {
         joinedAt: {
-          type: 'Date',
+          type: "Date",
           extensions: {
-            dateformat: {}
-          }
-        }
-      }
-    })
+            dateformat: {},
+          },
+        },
+      },
+    }),
   ]
   createTypes(typeDefs)
 }
@@ -461,7 +461,7 @@ out-of-the-box extension, so resolving a field to a default value (instead of
 tag to every blog post:
 
 ```js:title=gatsby-node.js
-exports.createSchemaCustomization = ({ action, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",

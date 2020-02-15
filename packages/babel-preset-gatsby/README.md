@@ -13,6 +13,8 @@ For more information on how to customize the Babel configuration of your Gatsby 
 - [`@babel/plugin-transform-runtime`](https://babeljs.io/docs/en/babel-plugin-transform-runtime#docsNav)
 - [`babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros)
 - [`babel-plugin-transform-react-remove-prop-types`](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types)
+- [`@babel/plugin-proposal-nullish-coalescing-operator`](https://babeljs.io/docs/en/babel-plugin-proposal-nullish-coalescing-operator)
+- [`@babel/plugin-proposal-optional-chaining`](https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining)
 
 ## Usage
 

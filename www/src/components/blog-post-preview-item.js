@@ -43,7 +43,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
       <div
         sx={{
           display: `inline-block`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           color: `card.color`,
         }}
       >

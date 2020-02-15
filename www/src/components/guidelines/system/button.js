@@ -7,10 +7,7 @@ import Box from "./box"
 
 const buttonPropTypes = { ...propTypes.border, ...propTypes.typography }
 
-const styleProps = compose(
-  border,
-  typography
-)
+const styleProps = compose(border, typography)
 
 const Button = styled(Box)(
   props => {
@@ -59,7 +56,7 @@ Button.defaultProps = {
   border: 0,
   borderRadius: 2,
   color: `white`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   fontSize: { xxs: 4, md: 5 },
   fontWeight: `bold`,
   px: 4,

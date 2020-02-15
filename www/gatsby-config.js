@@ -1,5 +1,5 @@
 const path = require(`path`)
-const git = require(`git-rev-sync`)
+const langs = require(`./i18n.json`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -53,6 +53,20 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
+if (process.env.ENABLE_LOCALIZATIONS) {
+  dynamicPlugins.push(
+    ...langs.map(({ code }) => ({
+      resolve: `gatsby-source-git`,
+      options: {
+        name: `docs-${code}`,
+        remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
+        branch: `master`,
+        patterns: `docs/tutorial/**`,
+      },
+    }))
+  )
+}
+
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
@@ -85,13 +99,6 @@ module.exports = {
         name: `packages`,
         path: `${__dirname}/../packages/`,
         ignore: [`**/dist/**`],
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `ecosystem`,
-        path: `${__dirname}/src/data/ecosystem/`,
       },
     },
     {
@@ -134,8 +141,8 @@ module.exports = {
           )
         },
         gatsbyRemarkPlugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -149,7 +156,12 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 104,
+            },
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
@@ -159,8 +171,8 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
@@ -175,7 +187,12 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 104,
+            },
+          },
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
@@ -195,6 +212,8 @@ module.exports = {
           },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
+          // convert images using http to https in plugin library READMEs
+          `gatsby-remark-http-to-https`
         ],
       },
     },
@@ -306,7 +325,14 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        headers: {
+          "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+        },
+      },
+    },
     `gatsby-plugin-netlify-cache`,
     {
       resolve: `gatsby-plugin-mailchimp`,
@@ -318,16 +344,6 @@ module.exports = {
       resolve: `gatsby-transformer-screenshot`,
       options: {
         nodeTypes: [`StartersYaml`],
-      },
-    },
-    {
-      resolve: `gatsby-plugin-sentry`,
-      options: {
-        dsn: `https://2904ad31b1744c688ae19b627f51a5de@sentry.io/1471074`,
-        release: git.long(),
-        environment: process.env.NODE_ENV,
-        enabled: (() =>
-          [`production`, `stage`].indexOf(process.env.NODE_ENV) !== -1)(),
       },
     },
     // `gatsby-plugin-subfont`,
