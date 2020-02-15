@@ -7,11 +7,22 @@ const _ = require(`lodash`)
 const { createContentDigest, slash } = require(`gatsby-core-utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
+const MESSAGE_TYPES = {
+  JOB_CREATED: `JOB_CREATED`,
+  JOB_COMPLETED: `JOB_COMPLETED`,
+  JOB_FAILED: `JOB_FAILED`,
+  JOB_NOT_WHITELISTED: `JOB_NOT_WHITELISTED`,
+}
+
 let activityForJobs = null
 let activeJobs = 0
+let isListeningForMessages = false
+let hasShownIPCDisabledWarning = false
 
 /** @type {Map<string, {id: string, deferred: pDefer.DeferredPromise<any>}>} */
 const jobsInProcess = new Map()
+/** @type {Map<string, {job: InternalJob, deferred: pDefer.DeferredPromise<any>}>} */
+const externalJobsMap = new Map()
 
 /**
  * We want to use absolute paths to make sure they are on the filesystem
@@ -57,6 +68,10 @@ const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
 /** @type {pDefer.DeferredPromise<void>|null} */
 let hasActiveJobs = null
 
+const hasExternalJobsEnabled = () =>
+  process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
+  process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
+
 /**
  * Get the local worker function and execute it on the user's machine
  *
@@ -81,10 +96,58 @@ const runLocalWorker = async (workerFn, job) => {
           })
         )
       } catch (err) {
-        reject(err)
+        reject(new WorkerError(err))
       }
     })
   })
+}
+
+const listenForJobMessages = () => {
+  process.on(`message`, msg => {
+    if (
+      msg &&
+      msg.type &&
+      msg.payload &&
+      msg.payload.id &&
+      externalJobsMap.has(msg.payload.id)
+    ) {
+      const { job, deferred } = externalJobsMap.get(msg.payload.id)
+      switch (msg.type) {
+        case MESSAGE_TYPES.JOB_COMPLETED: {
+          deferred.resolve(msg.payload.result)
+          break
+        }
+        case MESSAGE_TYPES.JOB_FAILED: {
+          deferred.reject(new WorkerError(msg.payload.error))
+          break
+        }
+        case MESSAGE_TYPES.JOB_NOT_WHITELISTED: {
+          deferred.resolve(runJob(job, true))
+          break
+        }
+      }
+
+      externalJobsMap.delete(msg.payload.id)
+    }
+  })
+}
+
+/**
+ * @param {InternalJob} job
+ */
+const runExternalWorker = job => {
+  const deferred = pDefer()
+  externalJobsMap.set(job.id, {
+    job,
+    deferred,
+  })
+
+  process.send({
+    type: MESSAGE_TYPES.JOB_CREATED,
+    payload: job,
+  })
+
+  return deferred.promise
 }
 
 /**
@@ -95,7 +158,7 @@ const runLocalWorker = async (workerFn, job) => {
  * @param {InternalJob} job
  * @return {Promise<object>}
  */
-const runJob = job => {
+const runJob = (job, forceLocal = false) => {
   const { plugin } = job
   try {
     const worker = require(path.posix.join(plugin.resolve, `gatsby-worker.js`))
@@ -103,6 +166,24 @@ const runJob = job => {
       throw new Error(`No worker function found for ${job.name}`)
     }
 
+    if (!forceLocal && !job.plugin.isLocal && hasExternalJobsEnabled()) {
+      if (process.send) {
+        if (!isListeningForMessages) {
+          isListeningForMessages = true
+          listenForJobMessages()
+        }
+
+        return runExternalWorker(job)
+      } else {
+        // only show the offloading warning once
+        if (!hasShownIPCDisabledWarning) {
+          hasShownIPCDisabledWarning = true
+          reporter.warn(
+            `Offloading of a job failed as IPC could not be detected. Running job locally.`
+          )
+        }
+      }
+    }
     return runLocalWorker(worker[job.name], job)
   } catch (err) {
     throw new Error(

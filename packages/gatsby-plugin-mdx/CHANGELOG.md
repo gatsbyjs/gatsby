@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.73](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.72...gatsby-plugin-mdx@1.0.73) (2020-02-14)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.72](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.71...gatsby-plugin-mdx@1.0.72) (2020-02-13)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.71](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.70...gatsby-plugin-mdx@1.0.71) (2020-02-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Pass node API helpers through mdx-loader to remark plugins ([#21211](https://github.com/gatsbyjs/gatsby/issues/21211)) ([247a183](https://github.com/gatsbyjs/gatsby/commit/247a183))
+
+## [1.0.70](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.69...gatsby-plugin-mdx@1.0.70) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.69](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.68...gatsby-plugin-mdx@1.0.69) (2020-01-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** support yarn PnP ([#20638](https://github.com/gatsbyjs/gatsby/issues/20638)) ([6375ba9](https://github.com/gatsbyjs/gatsby/commit/6375ba9))
+
+## [1.0.68](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.67...gatsby-plugin-mdx@1.0.68) (2020-01-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Pass node API helpers from onCreateNode and sourceNodes to remark plugins ([#20879](https://github.com/gatsbyjs/gatsby/issues/20879)) ([cd150b5](https://github.com/gatsbyjs/gatsby/commit/cd150b5))
+
 ## [1.0.67](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.66...gatsby-plugin-mdx@1.0.67) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

@@ -128,7 +128,7 @@ Additional information can be found in the [Official Strapi documentation](https
 
 #### Create your first User
 
-Add your first user from the [registration page](http://localhost:1337/admin/plugins/users-permissions/auth/register). This will be the **_root admin user_**.
+Add your first user from the registration page: `http://localhost:1337/admin/plugins/users-permissions/auth/register`. This will be the **_root admin user_**.
 
 ![Strapi registration page](create-first-user.png)
 
@@ -148,7 +148,7 @@ From `cms/`, launch the Strapi server:
 strapi start
 ```
 
-Starting here, you should be able to visit the admin panel of your project: http://localhost:1337/admin. You will now be directed to a login screen. Login using your **_admin root user_** or other user you have already created.
+Starting here, you should be able to visit the admin panel of your project: `http://localhost:1337/admin`. You will now be directed to a login screen. Login using your **_admin root user_** or other user you have already created.
 
 ### 3. Content Types
 
@@ -162,7 +162,7 @@ _Important links from Video:_
 
 Strapi CMS projects are based on a data structure called Content Types (equivalent to models in frameworks and Content Types in WordPress).
 
-[Create a Content Type](http://localhost:1337/admin/plugins/content-type-builder/) named `article` with four fields:
+Create a Content Type:`http://localhost:1337/admin/plugins/content-type-builder/` named `article` with four fields:
 
 - `title` (type `string`)
 - `content` (type `text`)
@@ -179,7 +179,7 @@ After creating your fields, as above, save your new content type and wait for St
 
 Add some articles in the database. To do so, follow these instructions:
 
-1.  Visit the [articles list page](http://localhost:1337/admin/plugins/content-manager/article).
+1.  Visit the articles list page: `http://localhost:1337/admin/plugins/content-manager/article`.
 2.  Click on `Add New Article`.
 3.  Insert values, link to an author and submit the form.
 4.  Create two other articles.
@@ -194,7 +194,7 @@ https://youtu.be/1jev6QRwcSo
 
 #### Allow access to Article
 
-For security reasons, [API access](http://localhost:1337/articles) is, by default, restricted. To allow access, visit the [Auth and Permissions section for Public role](http://localhost:1337/admin/plugins/users-permissions/roles), click on `Public`, select the `Article - find` action and save. At this point, you should be able to [request the list of articles](http://localhost:1337/articles).
+For security reasons, API access `http://localhost:1337/articles` is, by default, restricted. To allow access, visit the Auth and Permissions section for Public role at `http://localhost:1337/admin/plugins/users-permissions/roles`, click on `Public`, select the `Article - find` action and save. At this point, you should be able to request the list of articles with `http://localhost:1337/articles`.
 
 ![Strapi Roles and Permissions View](roles-and-permissions.png)
 
@@ -241,7 +241,7 @@ Start the server:
 gatsby develop
 ```
 
-At this point, you should already be able to get access to your Gatsby website at this address: http://localhost:8000.
+At this point, you should already be able to get access to your Gatsby website at this address: `http://localhost:8000`.
 
 #### Install the Strapi source plugin
 
@@ -312,7 +312,7 @@ module.exports = {
 
 Remember, when we created the content type we created a relation between User and Articles.
 
-Like `Article`,`User`, [link](http://localhost:1337/articles) is likewise, by default, restricted. But Gatsby needs access, so to allow access, visit the [Auth and Permissions section for Public role](http://localhost:1337/admin/plugins/users-permissions/roles), click on `Public`, select the `User - find` action and save. After saving; Gatsby will have access to all the necessary content types managed by Strapi (for this tutorial).
+Like `Article`,`User`, link `http://localhost:1337/articles` is likewise, by default, restricted. But Gatsby needs access, so to allow access, visit the Auth and Permissions section for Public role at `http://localhost:1337/admin/plugins/users-permissions/roles`, click on `Public`, select the `User - find` action and save. After saving; Gatsby will have access to all the necessary content types managed by Strapi (for this tutorial).
 
 Restart Strapi from the command line, inside the `cms` folder - first by `Ctrl`+ `C` to stop the server; and then typing `strapi start`, to restart it.
 
@@ -324,7 +324,7 @@ https://youtu.be/UaFgCubwRD8
 
 _Important links from Video:_
 
-- [The graphQL interface from your local host](http://localhost:8000/___graphql)
+- The graphQL interface from your local host: `http://localhost:8000/___graphql`
 
 #### Articles list
 
@@ -381,7 +381,7 @@ Then, we pass the `{ data }` destructured object as parameter of `IndexPage` and
 
 ##### Tip: generate your GraphQL query in seconds!
 
-Gatsby includes a useful GraphiQL interface. It makes GraphQL queries development way easier and intuitive. [Take look at it](http://localhost:8000/___graphql) and try to create some queries.
+Gatsby includes a useful GraphiQL interface. It makes GraphQL queries development way easier and intuitive. Take look at it on `http://localhost:8000/___graphql` and try to create some queries.
 
 ##### Adding images
 

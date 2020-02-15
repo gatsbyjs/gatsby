@@ -112,7 +112,7 @@ Run:
 gatsby develop
 ```
 
-In your browser, open localhost:8000 to see your site, and open localhost:8000/\_\_\_graphql so that you can create your GraphQL queries.
+In your browser, open `http://localhost:8000` to see your site, and open `http://localhost:8000/___graphql` so that you can create your GraphQL queries.
 
 As an exercise, try re-creating the following queries in your GraphiQL explorer. This first query will pull in the blogpost content from WordPress:
 
@@ -194,7 +194,7 @@ export const pageQuery = graphql`
 //highlight-end
 ```
 
-Save these changes and look at localhost:8000 to see your new homepage with a list of sorted blog posts!
+Save these changes and look at `http://localhost:8000` to see your new homepage with a list of sorted blog posts!
 
 ![WordPress home after query](./images/wordpress-source-plugin-home.jpg)
 
@@ -322,7 +322,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 ```
 
-You will need to stop and start your environment again using `gatsby develop`. When you do, you will not see a change on the index page of the site, but if you navigate to a 404 page, like [http://localhost:8000/asdf](http://localhost:8000/asdf), you should see the two sample posts created and be able to click on them to go to the sample posts:
+You will need to stop and start your environment again using `gatsby develop`. When you do, you will not see a change on the index page of the site, but if you navigate to a 404 page, like `http://localhost:8000/asdf`, you should see the two sample posts created and be able to click on them to go to the sample posts:
 
 ![Sample post links](./images/wordpress-source-plugin-sample-post-links.gif)
 

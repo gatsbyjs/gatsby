@@ -129,8 +129,8 @@ to set up our page. `/blog${value}` is a [template
 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 that will result in:
 
-- blog-1.mdx => localhost:8000/blog/blog-1/
-- blog-2.mdx => localhost:8000/blog/blog-2/
+- blog-1.mdx => http://localhost:8000/blog/blog-1/
+- blog-2.mdx => http://localhost:8000/blog/blog-2/
 
 [`createFilePath`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=gatsby-source#createfilepath)
 is a function from `gatsby-source-filesystem` that translates file
@@ -147,7 +147,7 @@ to construct a query that finds all MDX nodes and pulls out
 the `slug` field added earlier.
 
 > **Note**: You can open up a GraphiQL console for query testing
-> in your browser at <http://localhost:8000/___graphql>
+> in your browser at `http://localhost:8000/___graphql`
 
 ```graphql
 query {
@@ -224,19 +224,27 @@ will be rendered as the template for all posts. There's a component,
 `MDXRenderer` which is used by `gatsby-plugin-mdx` that will be used to render any
 programmatically accessed MDX content.
 
+For now, to update imports within .mdx files, you should rerun your Gatsby development environment. Otherwise, it will raise a `ReferenceError`. To import things dynamically, you can use the `MDXProvider` component and provide it all the common components you'll be using, such as `Link`.
+
 First, create a component that accepts the queried MDX data (which will be
 added in the next step).
 
 ```jsx:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
+import { MDXProvider } from "@mdx-js/react"
 import { MDXRenderer } from "gatsby-plugin-mdx"
+import { Link } from "gatsby"
+
+const shortcodes = { Link } // Provide common components here
 
 export default function PageTemplate({ data: { mdx } }) {
   return (
     <div>
       <h1>{mdx.frontmatter.title}</h1>
-      <MDXRenderer>{mdx.body}</MDXRenderer>
+      <MDXProvider components={shortcodes}>
+        <MDXRenderer>{mdx.body}</MDXRenderer>
+      </MDXProvider>
     </div>
   )
 }
