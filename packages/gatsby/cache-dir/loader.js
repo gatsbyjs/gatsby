@@ -414,7 +414,7 @@ export class ProdLoader extends BaseLoader {
               // page truly doesn't exist
               return data
             } else {
-              console.log(`[prod-loader] something else???`, req.status)
+              console.log(`[prod-loader] something else?`, req.status)
             }
 
             return data
