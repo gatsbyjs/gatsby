@@ -6,14 +6,33 @@
       link: /docs/
     - title: Quick Start
       link: /docs/quick-start/
-    - title: Recipes
-      link: /docs/recipes/
     - title: Plugin Library
       link: /plugins/
     - title: Starter Library
       link: /starters/
     - title: Awesome Gatsby Resources
       link: /docs/awesome-gatsby-resources/
+    - title: Recipes
+      link: /docs/recipes/
+      items:
+        - title: Pages and Layouts
+          link: /docs/recipes/pages-layouts
+        - title: Styling with CSS
+          link: /docs/recipes/styling-css
+        - title: Working with Starters
+          link: /docs/recipes/working-with-starters
+        - title: Working with Themes
+          link: /docs/recipes/working-with-themes
+        - title: Sourcing Data
+          link: /docs/recipes/sourcing-data
+        - title: Querying Data
+          link: /docs/recipes/querying-data
+        - title: Working with Images
+          link: /docs/recipes/working-with-images
+        - title: Transforming Data
+          link: /docs/recipes/transforming-data
+        - title: Deploying Your Site
+          link: /docs/recipes/deploying-your-site
     - title: Reference Guides
       link: /docs/guides/
       items:
@@ -28,6 +47,11 @@
               link: /docs/gatsby-on-linux/
             - title: Configuring CA Certificates
               link: /docs/configuring-ca-certificates/
+        - title: A/B Testing
+          link: /docs/ab-testing/
+          items:
+            - title: A/B Testing with Google Analytics & Netlify
+              link: /docs/ab-testing-with-google-analytics-and-netlify/
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
@@ -67,6 +91,9 @@
             - title: Deploying to Firebase Hosting
               link: /docs/deploying-to-firebase/
               breadcrumbTitle: Firebase Hosting
+            - title: Deploying to KintoHub
+              link: /docs/deploying-to-kintohub/
+              breadcrumbTitle: KintoHub Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -426,8 +453,8 @@
                 - title: Client-only Routes & User Authentication
                   link: /docs/client-only-routes-and-user-authentication/
                   breadcrumbTitle: Client Routes & User Auth
-            - title: Client Data Fetching
-              link: /docs/client-data-fetching/
+            - title: Build Time and Client-side Data Fetching
+              link: /docs/data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages/
             - title: Building an E-commerce Site
@@ -435,6 +462,8 @@
               items:
                 - title: Building an E-commerce Site with Shopify
                   link: /docs/building-an-ecommerce-site-with-shopify/
+                - title: Processing Payments with Stripe
+                  link: /docs/processing-payments-with-stripe/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -549,6 +578,8 @@
           link: /docs/building-with-components/
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
+        - title: Gatsby Magic
+          link: /docs/gatsby-magic
         - title: React Hydration
           link: /docs/react-hydration
         - title: PRPL Pattern
@@ -698,10 +729,22 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: GraphQL
+          link: /docs/glossary/graphql
+        - title: Headless CMS
+          link: /docs/glossary/headless-cms/
+        - title: Headless WordPress
+          link: /docs/glossary/headless-wordpress/
+        - title: JAMStack
+          link: /docs/glossary/jamstack
         - title: Node.js
           link: /docs/glossary/node
         - title: React
           link: /docs/glossary/react
+        - title: Static Site Generator
+          link: /docs/glossary/static-site-generator
+        - title: webpack
+          link: /docs/glossary/webpack
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby REPL

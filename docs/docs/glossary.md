@@ -3,8 +3,6 @@ title: Glossary
 disableTableOfContents: true
 ---
 
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
-
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 <HorizontalNavList
@@ -140,7 +138,7 @@ The [public-facing](#public) interface for your website or app, delivered using 
 
 Gatsby is a modern website framework that builds performance into every website or app by leveraging the latest web technologies such as [React](#react), [GraphQL](#graphql), and modern [JavaScript](#javascript). Gatsby makes it easy to create blazing fast, compelling web experiences without needing to become a performance expert.
 
-### GraphQL
+### [GraphQL](/docs/glossary/graphql)
 
 A [query](#query) language that allows you to pull data into your website or app. It’s the [interface that Gatsby uses](/docs/graphql/) for managing site data.
 
@@ -150,9 +148,13 @@ A [query](#query) language that allows you to pull data into your website or app
 
 A markup language that every web browser is able to understand. It stands for Hypertext Markup Language. [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) gives your web content a universal informational structure, defining things like headings, paragraphs, and more. It is also key to providing an accessible website.
 
-### Headless CMS
+### [Headless CMS](/docs/glossary/headless-cms)
 
 A [CMS](#cms) that only handles the [backend](#backend) content management instead of handling both the backend and [frontend](#frontend). This type of setup is also referred to as [Decoupled](#decoupled).
+
+### [Headless WordPress](/docs/glossary/headless-wordpress)
+
+The practice of using JSON returned from the WordPress REST API as a [headless CMS](#headless-cms). It allows you to use WordPress to write and edit content that can be consumed by any client capable of parsing JSON.
 
 ### Hosting
 
@@ -170,11 +172,11 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 
 ### Inference
 
-As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, Wordpress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
+As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
 
 ## J
 
-### JAMStack
+### [JAMStack](/docs/glossary/jamstack)
 
 JAMStack refers to a modern web architecture using [JavaScript](#javascript), [APIs](#api), and ([HTML](#html)) markup. From [JAMStack.org](https://jamstack.org): "It’s a new way of building websites and apps that delivers better performance, higher security, lower cost of scaling, and a better developer experience."
 
@@ -306,6 +308,10 @@ Gatsby [builds](#build) static versions of your page that can be easily [hosted]
 
 It also refers to the `/static` folder which is automatically copied into `/public` on each [build](#build) for files that don't need to be processed by Gatsby but do need to exist in [public](#public).
 
+### [Static Site Generator](/docs/glossary/static-site-generator)
+
+A software application that creates HTML pages from templates or [components](#component) and a given content source.
+
 ## T
 
 ### Template
@@ -330,7 +336,7 @@ A UI refers to a User Interface. In the field of human-computer interaction, a U
 
 ## W
 
-### Webpack
+### [webpack](/docs/glossary/webpack)
 
 A [JavaScript](#javascript) application that Gatsby uses to bundle your website's code up. This happens automatically on [build](#build).
 

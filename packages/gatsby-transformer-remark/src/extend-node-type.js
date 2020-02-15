@@ -1,6 +1,5 @@
 const Remark = require(`remark`)
 const select = require(`unist-util-select`)
-const sanitizeHTML = require(`sanitize-html`)
 const _ = require(`lodash`)
 const visit = require(`unist-util-visit`)
 const toHAST = require(`mdast-util-to-hast`)
@@ -22,6 +21,7 @@ const {
   findLastTextNode,
 } = require(`./hast-processing`)
 const codeHandler = require(`./code-handler`)
+const { timeToRead } = require(`./utils/time-to-read`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -214,8 +214,15 @@ module.exports = (
       // Use Bluebird's Promise function "each" to run remark plugins serially.
       await Promise.each(pluginOptions.plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
-        if (_.isFunction(requiredPlugin)) {
-          return requiredPlugin(
+        // Allow both exports = function(), and exports.default = function()
+        const defaultFunction = _.isFunction(requiredPlugin)
+          ? requiredPlugin
+          : _.isFunction(requiredPlugin.default)
+          ? requiredPlugin.default
+          : undefined
+
+        if (defaultFunction) {
+          return defaultFunction(
             {
               markdownAST,
               markdownNode,
@@ -305,7 +312,9 @@ module.exports = (
             tocAst.map = addSlugToUrl(tocAst.map)
           }
 
-          toc = hastToHTML(toHAST(tocAst.map))
+          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
+            allowDangerousHTML: true,
+          })
         } else {
           toc = ``
         }
@@ -595,20 +604,7 @@ module.exports = (
       timeToRead: {
         type: `Int`,
         resolve(markdownNode) {
-          return getHTML(markdownNode).then(html => {
-            let timeToRead = 0
-            const pureText = sanitizeHTML(html, { allowTags: [] })
-            const avgWPM = 265
-            const wordCount =
-              _.words(pureText).length +
-              _.words(pureText, /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu)
-                .length
-            timeToRead = Math.round(wordCount / avgWPM)
-            if (timeToRead === 0) {
-              timeToRead = 1
-            }
-            return timeToRead
-          })
+          return getHTML(markdownNode).then(timeToRead)
         },
       },
       tableOfContents: {

@@ -12,6 +12,8 @@ Here are some things to keep in mind when deciding where to contribute to Gatsby
 - [Recipes](#recipes) add concise, discoverable, and easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
 - [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
 
+When writing (or reviewing) learning materials that show Gatsby users how to complete tasks, you are expected to **test out any code examples or steps to ensure they work**. This can also help with writing in your own words, rather than copying from other sources. If you have a demo project or code example that strengthens docs and you don't know where to put it, mention it to the Gatsby Learning team in a PR.
+
 ### Why use templates?
 
 Here are templates (models) to follow when contributing to Gatsby docs to ensure that the docs accomplish their purpose. If you have a good reason to deviate from the following template structures, mention those reasons in the PR so others can give proper feedback.
@@ -192,12 +194,13 @@ Assume the reader has basic programming knowledge such as the command line, code
 
 ## Recipes
 
-[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. They live on the [Recipes page](/docs/recipes/) in the docs, the source of which can be found in [`docs/docs/recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md) in the GitHub repo.
+[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. They live in the [Recipes section](/docs/recipes/) in the docs, the source of which can be found in the [`docs/docs/recipes.md` landing page](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md) and [`docs/docs/recipes/*` folder](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes/) in the GitHub repo.
 
 A recipe should list requirements and include a few short instructions to complete a task. It should omit boilerplate and list only directly related, actionable instructions inline. Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however the content should be consolidated in the Recipes section for discoverability. If a recipe is recorded as a video, it should be less than five or ten minutes long.
 
 The components of a recipe are:
 
+- Overview link on [`recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md)
 - The name of the recipe, which should describe a single task
 - A 1-2 sentence description motivating what the recipe is for
 - Prerequisites and requirements
@@ -232,6 +235,10 @@ Here's a template for a new recipe category:
 ```
 
 ### Recipe parts
+
+#### Overview link
+
+To make sure your recipe is linked from the overview page, you must add it to the appropriate category in [`recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md). Otherwise, it will be difficult for Gatsby users to find it, which isn't good for anyone!
 
 #### Title and description
 

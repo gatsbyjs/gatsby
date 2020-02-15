@@ -25,22 +25,22 @@ To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](http
 #### How to install or verify Homebrew on your computer:
 
 1. Open your Terminal.
-1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
-1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation).
-1. Once you've installed Homebrew, repeat step 2 to verify.
+2. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
+3. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation).
+4. Once you've installed Homebrew, repeat step 2 to verify.
 
 #### Install Xcode Command Line Tools:
 
 1. Open your Terminal.
-1. Install Xcode Command line tools by running `xcode-select --install`.
+2. Install Xcode Command line tools by running `xcode-select --install`.
    - If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account
-1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
+3. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
 #### Install Node
 
 1. Open your Terminal
 2. Run `brew install node`
-   - If you don't want to install it through homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
+   - If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
 
 ### Windows Instructions
 
@@ -128,7 +128,7 @@ Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. U
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./03-create-site.mp4" />
-  <p>Sorry! You browser doesn't support this video.</p>
+  <p>Sorry! Your browser doesn't support this video.</p>
 </video>
 
 What just happened?
@@ -155,15 +155,15 @@ gatsby develop
 
 ### View your site locally
 
-Open up a new tab in your browser and navigate to [**http://localhost:8000**](http://localhost:8000/).
+Open up a new tab in your browser and navigate to `http://localhost:8000/`
 
 ![Check homepage](04-home-page.png)
 
 Congrats! This is the beginning of your very first Gatsby site! 🎉
 
-You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. That’s the process you started by running the `gatsby develop` command. To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
+You’ll be able to visit the site locally at `http://localhost:8000/` for as long as your development server is running. That’s the process you started by running the `gatsby develop` command. To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
 
-**Note:** If you are using VM setup like `vagrant` and/or would like to listen on your local IP address, run `gatsby develop -- --host=0.0.0.0`. Now, the development server listens on both 'localhost' and your local IP.
+**Note:** If you are using VM setup like `vagrant` and/or would like to listen on your local IP address, run `gatsby develop --host=0.0.0.0`. Now, the development server listens on both `http://localhost` and your local IP.
 
 ## Set up a code editor
 
@@ -181,7 +181,7 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 
 1.  Open the extensions view on VS Code (View => Extensions).
 2.  Search for "Prettier - Code formatter".
-3.  Click "Install". (After installation you'll be prompted to restart VS Code to enable the extension. Newer versions of VS Code will automatically enable the extension after download.)
+3.  Click "Install". (After installation, you'll be prompted to restart VS Code to enable the extension. Newer versions of VS Code will automatically enable the extension after download.)
 
 > 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
 
