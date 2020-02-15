@@ -394,7 +394,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </ShowcaseModal>
   )
 }
 
