@@ -2,25 +2,27 @@ import React from "react"
 import EnsureResources from "../ensure-resources"
 import { render, getNodeText, cleanup } from "@testing-library/react"
 
-jest.mock("../loader", () => ({
-  loadPageSync(path) {
-    return { loadPageSync: true, path }
-  },
-  loadPage(path) {
-    return Promise.resolve({ loadPage: true, path })
-  },
-}))
+jest.mock(`../loader`, () => {
+  return {
+    loadPageSync(path: string): { loadPageSync: boolean; path: string } {
+      return { loadPageSync: true, path }
+    },
+    loadPage(path: string): Promise<{ loadPage: boolean; path: string }> {
+      return Promise.resolve({ loadPage: true, path })
+    },
+  }
+})
 
 afterAll(cleanup)
 
-describe("EnsureResources", () => {
-  it("loads pages synchronously", () => {
+describe(`EnsureResources`, () => {
+  it(`loads pages synchronously`, () => {
     const location = {
-      pathname: "/",
+      pathname: `/`,
     }
     const { container } = render(
       <EnsureResources location={location}>
-        {data => JSON.stringify(data.pageResources)}
+        {(data: any): string => JSON.stringify(data.pageResources)}
       </EnsureResources>
     )
 
