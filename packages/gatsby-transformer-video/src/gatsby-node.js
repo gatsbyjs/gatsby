@@ -66,7 +66,12 @@ exports.createResolvers = async (
 
   const program = store.getState().program
   const rootDir = program.directory
-  const cacheDir = resolve(rootDir, `.cache`, `gatsby-transformer-video`)
+  const cacheDir = resolve(
+    rootDir,
+    `node_modules`,
+    `.cache`,
+    `gatsby-transformer-video`
+  )
   await ensureDir(cacheDir)
 
   const ffmpeg = new FFMPEG({
