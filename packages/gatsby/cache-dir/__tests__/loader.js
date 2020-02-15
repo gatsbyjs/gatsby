@@ -161,7 +161,7 @@ describe(`Production loader`, () => {
       expect(xhrCount).toBe(2)
     })
 
-    it(`should return a failure when status is 404 and 404 page is fetched`, async () => {
+    it.skip(`should return a failure when status is 404 and 404 page is fetched`, async () => {
       const prodLoader = new ProdLoader(null, [])
 
       mockPageData(`/unknown-page`, 404)
