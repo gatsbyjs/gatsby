@@ -55,7 +55,7 @@ const loadPageDataJson = loadObj => {
       // If the request was for a 404 page and it doesn't exist, we're done
       if (pagePath === `/404.html`) {
         return Object.assign(loadObj, {
-          status: `failure`,
+          status: `error`,
         })
       }
 
@@ -291,7 +291,7 @@ export class BaseLoader {
   }
 
   hovering(rawPath) {
-    this.loadPage(rawPath)
+    // this.loadPage(rawPath)
   }
 
   getResourceURLsForPathname(rawPath) {
@@ -353,7 +353,12 @@ const createComponentUrls = componentChunkName =>
 export class ProdLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
     const loadComponent = chunkName =>
-      asyncRequires.components[chunkName]().then(preferDefault)
+      asyncRequires.components[chunkName]()
+        .then(preferDefault)
+        .catch(() => {
+          console.log(`failed to load component but not an unhandled exception`)
+          return null
+        })
 
     super(loadComponent, matchPaths)
   }
@@ -379,6 +384,47 @@ export class ProdLoader extends BaseLoader {
         return Promise.all(componentUrls.map(prefetchHelper)).then(
           () => pageData
         )
+      })
+  }
+
+  loadPageDataJson(rawPath) {
+    return super
+      .loadPageDataJson(rawPath)
+      .then(data => {
+        if (data.notFound) {
+          // check if html file exist using HEAD request:
+          // if it does we should navigate to it instead of showing 404
+          console.log(`[prod-loader] checking if html file exist`, rawPath, {
+            ...data,
+          })
+
+          return doFetch(rawPath, `HEAD`).then(req => {
+            console.log(
+              `[prod-loader] html check result`,
+              rawPath,
+              { status: req.status },
+              { ...req }
+            )
+            if (req.status === 200) {
+              // page actually exist (or we asked for 404 )
+              return {
+                status: `error`,
+              }
+            } else if (req.status === 404) {
+              // page truly doesn't exist
+              return data
+            } else {
+              console.log(`[prod-loader] something else???`, req.status)
+            }
+
+            return data
+          })
+        }
+        console.log(`[prod-loader] loadPageDataJson data`, rawPath, data)
+        return data
+      })
+      .catch(e => {
+        console.warn(`[prod-loader] loadPageDataJson error`, rawPath, e)
       })
   }
 }
