@@ -1,4 +1,5 @@
 const TSEslint = require("@typescript-eslint/eslint-plugin")
+const path = require(`path`)
 
 module.exports = {
   parser: "babel-eslint",
@@ -129,6 +130,27 @@ module.exports = {
           "backtick",
           {
             avoidEscape: true,
+          },
+        ],
+      },
+    },
+    {
+      files: [`packages/gatsby-cli/src/**/*.js`],
+      plugins: [`gatsby-dev`],
+      rules: {
+        "gatsby-dev/no-direct-react-imports": [
+          "error",
+          {
+            replacementImportLocation: path.join(
+              __dirname,
+              `packages`,
+              `gatsby-cli`,
+              `src`,
+              `reporter`,
+              `loggers`,
+              `ink`,
+              `react`
+            ),
           },
         ],
       },

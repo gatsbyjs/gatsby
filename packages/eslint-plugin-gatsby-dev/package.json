@@ -1,0 +1,36 @@
+{
+  "name": "eslint-plugin-gatsby-dev",
+  "description": "Set of rules specific to gatsbyjs/gatsby monorepo",
+  "version": "0.0.0",
+  "author": "Michal Piechowiak <misiek.piechowiak@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.7.6",
+    "@typescript-eslint/experimental-utils": "^2.17.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "babel-preset-gatsby-package": "^0.2.15",
+    "cross-env": "^5.2.1"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/eslint-plugin-gatsby-dev#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/eslint-plugin-gatsby-dev"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"  --extensions \".ts,.js\" --verbose",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"  --extensions \".ts,.js\" --verbose"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
