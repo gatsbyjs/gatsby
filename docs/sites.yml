@@ -9722,3 +9722,26 @@
   built_by: Hazem Osama
   built_by_url: https://github.com/hazem3500
   featured: false
+- title: Alexandra Thomas
+  main_url: "https://alexandracthomas.com/"
+  url: "https://alexandracthomas.com/"
+  description: >
+    A portfolio site for Alexandra Thomas, a front-end developer with creative super powers based in Charlotte, NC.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  featured: false
+- title: Storto Productions
+  main_url: "https://www.storto-productions.com/"
+  url: "https://www.storto-productions.com/about/"
+  featured: false
+  description: >
+    A portfolio site for a video production company based out of Phoenix, AZ.
+  categories:
+    - Video
+    - Blog
+    - Portfolio
+    - Business
+  built_by: Alexandra Thomas
+  built_by_url: "https://alexandracthomas.com/"
