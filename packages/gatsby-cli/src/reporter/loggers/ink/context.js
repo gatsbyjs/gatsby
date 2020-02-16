@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "./react"
+import React, { useState, useEffect, createContext } from "react"
 
 import { getStore, onLogAction } from "../../redux/index"
 
