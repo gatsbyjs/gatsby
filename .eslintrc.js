@@ -1,5 +1,7 @@
 const TSEslint = require("@typescript-eslint/eslint-plugin")
 
+const gatsbyCLILocalReactImportPath = `packages/gatsby-cli/src/reporter/loggers/ink/react-instance-used-by-ink`
+
 module.exports = {
   parser: "babel-eslint",
   extends: [
@@ -129,6 +131,33 @@ module.exports = {
           "backtick",
           {
             avoidEscape: true,
+          },
+        ],
+      },
+    },
+    {
+      files: [`packages/gatsby-cli/src/**/*.js`],
+      rules: {
+        "no-restricted-imports": [
+          "error",
+          {
+            paths: [
+              {
+                name: "react",
+                message: `Please import React from ${gatsbyCLILocalReactImportPath} (using relative local path) instead.`,
+              },
+            ],
+          },
+        ],
+        "no-restricted-modules": [
+          "error",
+          {
+            paths: [
+              {
+                name: "react",
+                message: `Please import React from ${gatsbyCLILocalReactImportPath} (using relative local path) instead.`,
+              },
+            ],
           },
         ],
       },
