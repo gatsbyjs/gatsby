@@ -78,7 +78,7 @@ The configuration file, `gatsby-config.js` tells Gatsby information about your w
 
 ### [Continuous Deployment](/docs/glossary/continuous-deployment)
 
-Continuous deployment automates the process of releasing changes to your project. A continuous deployment workflow automatically builds and tests your project, and publishes your changes only when they pass the required tests.
+Continuous deployment (CD) automates the process of releasing changes to your project. A continuous deployment workflow automatically builds and tests your project, and publishes your changes only when they pass the required tests.
 
 ### CSS
 
