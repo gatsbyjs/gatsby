@@ -57,6 +57,8 @@ gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-defau
 cd source-tutorial-site
 ```
 
+> **NOTE:** This tutorial assumes you have [Gatsby CLI installed](https://www.gatsbyjs.org/docs/quick-start/). If you do not have the CLI installed, you can use `npx`, e.g., `npx gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default`.
+
 You're going to build your plugin as a "local" plugin that only exists for your project. Later on you'll learn how to publish a plugin to [npm](https://npmjs.com) so anyone can use it, but for now create a `plugins` directory and change into that directory:
 
 ```shell
