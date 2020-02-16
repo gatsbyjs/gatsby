@@ -11,7 +11,7 @@ You'll most likely use a service to create your continuous deployment pipeline. 
 
 A continuous deployment pipeline begins with a [Git](https://git-scm.com/) repository. Git is source control management software, and you use it to manage changes to your site's code. Most continuous deployment services require a hosted Git service such as [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/), or [Bitbucket](https://bitbucket.org/).
 
-Your continuous deployment pipeline also requires a configuration file. [Gatsby Builds](https://www.gatsbyjs.org/blog/2020-01-27-announcing-gatsby-builds-and-reports/), for example, uses `package.json`. This configuration file contains the list of packages that your software project requires, and which tests it should run. It also ensures that your test, staging, and production environments stay in sync.
+Your continuous deployment pipeline also requires a configuration file. Gatsby Builds, for example, uses `package.json`. This configuration file contains the list of packages that your software project requires, and which tests it should run. It also ensures that your test, staging, and production environments stay in sync.
 
 Committing a change to your Git repository triggers the build and test process. Your continuous deployment service will download and install the packages listed in your configuration file. Once that's complete, it will run your test suite.
 
