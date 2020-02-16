@@ -147,6 +147,8 @@ module.exports = {
                 message: `Please import React from ${gatsbyCLILocalReactImportPath} (using relative local path) instead.`,
               },
             ],
+            // disallow 3rd party ink components
+            patterns: ["ink-*"],
           },
         ],
         "no-restricted-modules": [
@@ -158,6 +160,8 @@ module.exports = {
                 message: `Please import React from ${gatsbyCLILocalReactImportPath} (using relative local path) instead.`,
               },
             ],
+            // disallow 3rd party ink components
+            patterns: ["ink-*"],
           },
         ],
       },
