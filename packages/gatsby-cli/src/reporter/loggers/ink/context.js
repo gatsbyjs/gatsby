@@ -1,4 +1,8 @@
-import React, { useState, useEffect, createContext } from "./react"
+import React, {
+  useState,
+  useEffect,
+  createContext,
+} from "./react-instance-used-by-ink"
 
 import { getStore, onLogAction } from "../../redux/index"
 

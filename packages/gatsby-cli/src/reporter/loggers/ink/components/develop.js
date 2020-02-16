@@ -1,4 +1,8 @@
-import React, { useContext, useState, useEffect } from "../react"
+import React, {
+  useContext,
+  useState,
+  useEffect,
+} from "../react-instance-used-by-ink"
 import { Box, Color, StdoutContext } from "ink"
 import StoreStateContext from "../context"
 

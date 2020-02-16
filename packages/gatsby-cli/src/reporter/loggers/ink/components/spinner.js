@@ -1,4 +1,4 @@
-import React from "../react"
+import React from "../react-instance-used-by-ink"
 import { Box } from "ink"
 import Spinner from "ink-spinner"
 

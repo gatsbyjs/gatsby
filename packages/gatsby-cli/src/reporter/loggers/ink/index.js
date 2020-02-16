@@ -1,4 +1,4 @@
-import React, { useContext } from "./react"
+import React, { useContext } from "./react-instance-used-by-ink"
 import { render } from "ink"
 import StoreStateContext, { StoreStateProvider } from "./context"
 

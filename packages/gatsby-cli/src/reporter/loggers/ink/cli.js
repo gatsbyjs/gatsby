@@ -1,4 +1,4 @@
-import React from "./react"
+import React from "./react-instance-used-by-ink"
 import { Box, Static } from "ink"
 import isTTY from "../../../util/is-tty"
 import { trackBuildError } from "gatsby-telemetry"
