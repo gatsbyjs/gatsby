@@ -7,32 +7,32 @@ const ruleTester = new RuleTester()
 
 const options = [
   {
-    replacementImportLocation: path.posix.join(__dirname, "local-react"),
+    replacementImportLocation: path.posix.join(__dirname, `local-react`),
   },
 ]
 
 const ESMerrors = [
   {
-    messageId: "directReactImport",
-    type: "ImportDeclaration",
+    messageId: `directReactImport`,
+    type: `ImportDeclaration`,
   },
 ]
 
 const CJSerrors = [
   {
-    messageId: "directReactImport",
-    type: "CallExpression",
+    messageId: `directReactImport`,
+    type: `CallExpression`,
   },
 ]
 
-const inSameDir = path.posix.join(__dirname, "test.js")
-const inDifferentDir = path.posix.join(__dirname, "dir1", "dir2", "test.js")
+const inSameDir = path.posix.join(__dirname, `test.js`)
+const inDifferentDir = path.posix.join(__dirname, `dir1`, `dir2`, `test.js`)
 
-ruleTester.run("no-direct-react-imports", Rule, {
+ruleTester.run(`no-direct-react-imports`, Rule, {
   valid: [
     {
       code: `import React from "not-react"`,
-      parserOptions: { ecmaVersion: 6, sourceType: "module" },
+      parserOptions: { ecmaVersion: 6, sourceType: `module` },
     },
     {
       code: `const React = require("not-react")`,
@@ -53,7 +53,7 @@ ruleTester.run("no-direct-react-imports", Rule, {
       output: `import ReactInSameDir from "./local-react"`,
       options,
       filename: inSameDir,
-      parserOptions: { ecmaVersion: 6, sourceType: "module" },
+      parserOptions: { ecmaVersion: 6, sourceType: `module` },
       errors: ESMerrors,
     },
     {
@@ -61,7 +61,7 @@ ruleTester.run("no-direct-react-imports", Rule, {
       output: `import ReactInDifferentDir from "../../local-react"`,
       options,
       filename: inDifferentDir,
-      parserOptions: { ecmaVersion: 6, sourceType: "module" },
+      parserOptions: { ecmaVersion: 6, sourceType: `module` },
       errors: ESMerrors,
     },
     {

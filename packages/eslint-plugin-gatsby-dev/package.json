@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/eslint-plugin-gatsby-dev#readme",
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "private": true,
   "repository": {
     "type": "git",
@@ -26,9 +26,9 @@
     "directory": "packages/eslint-plugin-gatsby-dev"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"  --extensions \".ts,.js\" --verbose",
+    "build": "babel src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js\" --verbose",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"  --extensions \".ts,.js\" --verbose"
+    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js\" --verbose"
   },
   "engines": {
     "node": ">=8.0.0"
