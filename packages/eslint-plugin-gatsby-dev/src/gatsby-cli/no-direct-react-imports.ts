@@ -32,11 +32,11 @@ export default createRule({
     type: `problem`,
     docs: {
       category: `Best Practices`,
-      description: `Don't use that, use something else`,
+      description: `Don't use direct "react" imports. It can lead to multiple "react" versions being used in single root causing CLI to crash with very confusing error.`,
       recommended: `error`,
     },
     messages: {
-      directReactImport: `Don't use direct "react" imports. Import local "react" to make sure multiple versions of "react" are not used for single root.`,
+      directReactImport: `Don't use direct "react" imports. Use {{ localImport }} to make sure multiple versions of "react" are not used for single root.`,
     },
     schema: [
       {
@@ -56,10 +56,14 @@ export default createRule({
     return {
       ImportDeclaration: function(node): void {
         if (node.source.value === `react`) {
+          const localImport = adjust(context, `"`)
           context.report({
             node,
             messageId: `directReactImport`,
-            fix: fixer => fixer.replaceText(node.source, adjust(context, `"`)),
+            data: {
+              localImport,
+            },
+            fix: fixer => fixer.replaceText(node.source, localImport),
           })
         }
       },
@@ -74,21 +78,27 @@ export default createRule({
             node.arguments[0].value === `react`
           ) {
             const quotes = node.arguments[0].raw[0]
+            const localImport = adjust(context, quotes)
             context.report({
               node,
               messageId: `directReactImport`,
-              fix: fixer =>
-                fixer.replaceText(node.arguments[0], adjust(context, quotes)),
+              data: {
+                localImport,
+              },
+              fix: fixer => fixer.replaceText(node.arguments[0], localImport),
             })
           } else if (
             node.arguments[0].type === AST_NODE_TYPES.TemplateLiteral &&
             node.arguments[0].quasis[0].value.raw === `react`
           ) {
+            const localImport = adjust(context, `\``)
             context.report({
               node,
               messageId: `directReactImport`,
-              fix: fixer =>
-                fixer.replaceText(node.arguments[0], adjust(context, `\``)),
+              data: {
+                localImport,
+              },
+              fix: fixer => fixer.replaceText(node.arguments[0], localImport),
             })
           }
         }
