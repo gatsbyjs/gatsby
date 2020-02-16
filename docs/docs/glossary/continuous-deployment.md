@@ -15,7 +15,7 @@ Your continuous deployment pipeline also requires a configuration file. [Gatsby 
 
 Committing a change to your Git repository triggers the build and test process. Your continuous deployment service will download and install the packages listed in your configuration file. Once that's complete, it will run your test suite.
 
-If your changes pass the tests, they'll be published to your production environment. If any of your test fail, they won't.
+If your changes pass the tests, they'll be published to your production environment. If any of your tests fail, the changes won't be published.
 
 ### <q>Continuous deployment</q> versus <q>continuous delivery</q>
 
