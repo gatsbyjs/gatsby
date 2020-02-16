@@ -1,4 +1,4 @@
-import React from "react"
+import React from "../react"
 import path from "path"
 import { Color, Box } from "ink"
 import { get } from "lodash"
