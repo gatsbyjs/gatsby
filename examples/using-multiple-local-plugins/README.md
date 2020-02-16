@@ -18,11 +18,13 @@ You'll need to install dependencies for the site by running:
 npm install
 ```
 
-Then run `gatsby develop`:
+Then run `npm start`:
 
 ```sh
-gatsby develop
+npm start
 ```
+
+This will run the `gatsby develop` command from the scripts included in the `package.json`. Alternatively, if you have Gatsby cli installed globally, you can run `gatsby develop` directly.
 
 In your command line output, you should then see the text listed below. This text is showing how the code for each plugin is run sequentially thanks to the Node API implemented.
 
