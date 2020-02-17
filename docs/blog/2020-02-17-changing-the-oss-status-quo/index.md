@@ -1,5 +1,5 @@
 ---
-title: "Changing the OSS Status Quo"
+title: "Changing the Open Source Status Quo"
 date: 2020-02-17
 author: Aisha Blake
 excerpt: "How can we increase the diversity of open source contributors? As maintainers, we need to listen to a diverse group of community members and make thoughtful changes to create a truly inclusive project."
@@ -8,7 +8,7 @@ tags:
   - community
 ---
 
-In business and in our individual careers, so many of us rely heavily on open source software. We need it but open source isn't as open as it's often made out to be. Too many projects are unfriendly, even openly hostile, to new contributors. This effect, combined with the intersection of many underrepresented identities in tech effectively shuts people out of the process. Black, indigenous, and people of color (BIPOC) and women are at some of the most visible of these intersections. Consider _who_ contributes to open source.
+In business and in our individual careers, so many of us rely heavily on open source software. We need it but open source isn't as open as it's often made out to be. Too many projects are unfriendly, even openly hostile, to new contributors. This effect, combined with the intersection of many underrepresented identities in tech effectively shuts people out of the process. Black, indigenous, and people of color (BIPOC) and women are at some of the most visible of these intersections. There are many more. Consider _who_ contributes to open source.
 
 The status quo is made and remade every time we as maintainers add to our documentation. Every time we, as maintainers, engage with the community via social media, issue queues, and our documentation, we help decide who contributes. We contribute to their safety and their productivity. Right now, barriers to contribution are severely limiting our capacity to create and sustain open source projects.
 
