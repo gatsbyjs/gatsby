@@ -18,7 +18,11 @@ When you work with multiple languages, each content piece needs to be flagged wi
 
 Why?
 
-Let me tell you a story about a Zoo in Brno, my hometown. It's not a particularly special one. It's normal in size, there is not really anything that would attract visitors from long distances. So they try to get creative with marketing. You can always find signs near exposures presenting the displayed animal including some facts about its life. They translated those signs into a local dialect and even though no one really speaks that dialect anymore, a lot of people understand it and consider it funny. This led to a very positive reaction from their visitors. Of course, I don't know if that caused better conversions regarding ticket sales, but I'm trying to focus on the lingual part here. There is no language code for the local dialect they used. So if they decided to put the translations online, they'd have to store them under *something*. A codename.
+Let me tell you a story about a Zoo in Brno, my hometown. It's not a particularly special one. It's normal in size, there is not really anything that would attract visitors from long distances. So they try to get creative with marketing. You can always find signs near exposures presenting the displayed animal including some facts about its life. They translated those signs into a local dialect and even though no one really speaks that dialect anymore, a lot of people understand it and consider it funny.
+
+![Zoo sign](./images/zoo-sign.jpg)
+
+This led to a very positive reaction from their visitors. Of course, I don't know if that caused better conversions regarding ticket sales, but I'm trying to focus on the lingual part here. There is no language code for the local dialect they used. So if they decided to put the translations online, they'd have to store them under *something*. A codename.
 
 ## Language Fallbacks
 
