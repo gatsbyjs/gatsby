@@ -237,7 +237,8 @@ module.exports = async function build(program: BuildArgs) {
           .join(`\n`)}`
       )
     }
-    if (deletedPageKeys?.length) {
+
+    if (deletedPageKeys.length) {
       report.info(
         `Deleted pages:\n${deletedPageKeys
           .map(path => `Deleted page: ${path}`)

@@ -163,7 +163,6 @@ const processQueries = async (queryJobs, activity, cacheData) => {
   await queryQueue.processBatch(queue, queryJobs, activity)
   if (process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES) {
     const { pages } = store.getState()
-
     if (cacheData && cacheData.pageData) {
       cacheData.pageData.forEach((_value, key) => {
         if (!pages.has(key)) {
@@ -228,7 +227,8 @@ const processPageQueries = async (queryIds, { state, activity }, cacheData) => {
   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
   await processQueries(
     pages.map(page => createPageQueryJob(state, page)),
-    activity
+    activity,
+    cacheData
   )
 }
 
