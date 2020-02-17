@@ -30,7 +30,7 @@ Geo had been thinking about a website redesign for a while anyway. The team only
 
 The store locator problem was the final straw. As a result, they decided to create a new website -- ImpossibleFoods.com 2.0 -- that would be easy to update, scale to the needs of the company, and provide users with the one key experience they really needed, i.e., finding an Impossible Burger at a location near them.
 
-![Old site](./if-old-site.png)
+![Old site](./if-old-site.jpg)
 
 ## A New Store Locator: The Discovery Phase
 
@@ -82,7 +82,7 @@ The new store locator combines natural language searches, geolocation filtering,
 
 The new interactive map application reduced the number of steps for an end-user to find their Impossible Burger from five or six, including tedious scanning and off-site searching on Google Maps to one or two by simply entering in their location.
 
-![Maps](./if-maps.png)
+![Maps](./if-maps.jpg)
 
 And because their website was on Gatsby, the user experience was always blazing fast.
 
@@ -102,7 +102,7 @@ The new site had bounce rate reductions of **30-40%** on both the store locator 
 - An incredibly fast **turnaround for campaign pages** around Impossible Food’s partnerships with Burger King and Little Caesars.
 - Partnerships that were widely covered by media and rocketed Impossible Foods’ brand outreach into millions of households across the US.
 
-![Results](./results.png)
+![Results](./results.jpg)
 
 ## Conclusion
 
