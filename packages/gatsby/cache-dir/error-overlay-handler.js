@@ -14,11 +14,11 @@ const ErrorOverlay = {
 
 if (process.env.HOT_LOADER !== `fast-refresh`) {
   // Report runtime errors
-  ErrorOverlay.startReportingRuntimeErrors({
+  ReactErrorOverlay.startReportingRuntimeErrors({
     onError: () => {},
     filename: `/commons.js`,
   })
-  ErrorOverlay.setEditorHandler(errorLocation =>
+  ReactErrorOverlay.setEditorHandler(errorLocation =>
     window.fetch(
       `/__open-stack-frame-in-editor?fileName=` +
         window.encodeURIComponent(errorLocation.fileName) +

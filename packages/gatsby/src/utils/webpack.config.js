@@ -162,7 +162,7 @@ module.exports = async (
             require.resolve(`event-source-polyfill`),
             `${require.resolve(
               `webpack-hot-middleware/client`
-            )}}?path=${getHmrPath()}`,
+            )}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
           ],
         }
