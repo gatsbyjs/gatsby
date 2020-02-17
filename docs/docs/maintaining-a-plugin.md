@@ -10,9 +10,9 @@ The Gatsby community thrives on the power of plugins. You often find that there 
 
 Gatsby plugins are Node.js packages that implement Gatsby APIs. To learn more take a look at the [plugin documentation](/docs/plugins/).
 
-In creating plugins, the bulk of the work is during the development phase. However, there’s still a need to take a look at the dependencies and security features from time to time. Keeping Plugins up to date becomes really tasking and it is important to be careful when updating dependencies seeing as this could potentially break your apps.
+In creating plugins, the bulk of the work is during the development phase. However, there’s still a need to take a look at the dependencies and security features from time to time. Keeping plugins up to date can become really tasking and it is important to be careful when updating dependencies, seeing as this could potentially break users' apps.
 
-However, the consequences of not updating and maintaining a plugin can introduce security issues to your apps. The following are some recommendations for maintaining plugins:
+However, the consequences of not updating and maintaining a plugin can introduce security issues to your users. The following are some recommendations for maintaining plugins:
 
 ## Handling patches and improvements
 
@@ -40,17 +40,17 @@ It would be great for users to be able to reference several versions of the plug
 
 There are a couple of useful tools that can help with keeping dependencies up to date.
 
-1. [Version Lens](https://marketplace.visualstudio.com/items?itemName=pflannery.vscode-versionlens) enables you to update your dependencies from your `package.json` by allowing you see the available version number the package can be updated to, right above the current version each package in dependencies or devDependencies uses.
+- [Version Lens](https://marketplace.visualstudio.com/items?itemName=pflannery.vscode-versionlens) enables you to update your dependencies from your `package.json` by allowing you see the available version number the package can be updated to, right above the current version each package in dependencies or devDependencies uses.
 
-2. The [npm check updates](https://www.npmjs.com/package/npm-check-updates) command line tool helps to check for outdated dependencies. You can also use this tool to update those dependencies by following these steps:
+- The [npm check updates](https://www.npmjs.com/package/npm-check-updates) command line tool helps to check for outdated dependencies. You can also use this tool to update those dependencies by following these steps:
 
-3. Install the tool
+1. Install the tool
 
 ```shell
  npm i -g npm-check-updates
 ```
 
-2.  Run the command to update dependencies
+2. Run the command to update dependencies
 
 ```shell
 ncu -u
@@ -58,4 +58,4 @@ ncu -u
 
 ## Community supporting content and feedback
 
-Having example repos and support forums on Discord, Twitter or Reddit is a great was to offer community support for your plugin. This would offer a pool of resources for users to get more information on implementations and contribute.
+Having example repos and support forums on Discord, Twitter or Reddit are great ways to offer community support for your plugin. This would offer a pool of resources for users to get more information on implementations and contribute.
