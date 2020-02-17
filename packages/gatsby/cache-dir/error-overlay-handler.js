@@ -1,18 +1,18 @@
-import * as ErrorOverlay from "react-error-overlay"
+import * as ErrorOverlay from "@pmmmwh/react-refresh-webpack-plugin/src/overlay"
 
 // Report runtime errors
-ErrorOverlay.startReportingRuntimeErrors({
-  onError: () => {},
-  filename: `/commons.js`,
-})
-ErrorOverlay.setEditorHandler(errorLocation =>
-  window.fetch(
-    `/__open-stack-frame-in-editor?fileName=` +
-      window.encodeURIComponent(errorLocation.fileName) +
-      `&lineNumber=` +
-      window.encodeURIComponent(errorLocation.lineNumber || 1)
-  )
-)
+// ErrorOverlay.startReportingRuntimeErrors({
+//   onError: () => {},
+//   filename: `/commons.js`,
+// })
+// ErrorOverlay.setEditorHandler(errorLocation =>
+//   window.fetch(
+//     `/__open-stack-frame-in-editor?fileName=` +
+//       window.encodeURIComponent(errorLocation.fileName) +
+//       `&lineNumber=` +
+//       window.encodeURIComponent(errorLocation.lineNumber || 1)
+//   )
+// )
 
 const errorMap = {}
 
@@ -43,10 +43,12 @@ const handleErrorOverlay = () => {
       .filter(Boolean)
   }
 
+  console.log(errorStringsToDisplay)
+
   if (errorStringsToDisplay.length > 0) {
-    ErrorOverlay.reportBuildError(errorStringsToDisplay.join(`\n\n`))
+    ErrorOverlay.showCompileError(errorStringsToDisplay.join(`\n\n`))
   } else {
-    ErrorOverlay.dismissBuildError()
+    ErrorOverlay.clearCompileError()
   }
 }
 
@@ -61,5 +63,8 @@ export const reportError = (errorID, error) => {
   }
   handleErrorOverlay()
 }
+
+window.reportError = reportError
+window.clearError = clearError
 
 export { errorMap }

@@ -12,24 +12,26 @@ import loader from "./loader"
 import { PageQueryStore, StaticQueryStore } from "./query-result-store"
 import EnsureResources from "./ensure-resources"
 
-import { reportError, clearError } from "./error-overlay-handler"
+// import { reportError, clearError } from "./error-overlay-handler"
 
-if (window.__webpack_hot_middleware_reporter__ !== undefined) {
-  const overlayErrorID = `webpack`
-  // Report build errors
-  window.__webpack_hot_middleware_reporter__.useCustomOverlay({
-    showProblems(type, obj) {
-      if (type !== `errors`) {
-        clearError(overlayErrorID)
-        return
-      }
-      reportError(overlayErrorID, obj[0])
-    },
-    clear() {
-      clearError(overlayErrorID)
-    },
-  })
-}
+// if (window.__webpack_hot_middleware_reporter__ !== undefined) {
+// const overlayErrorID = `webpack`
+// Report build errors
+// TODO: I think we can get rid of this? Or at least maybe we can turn it off when fast-refresh
+// is enabled. And then remove in V3?
+// window.__webpack_hot_middleware_reporter__.useCustomOverlay({
+//   showProblems(type, obj) {
+//     if (type !== `errors`) {
+//       clearError(overlayErrorID)
+//       return
+//     }
+//     reportError(overlayErrorID, obj[0])
+//   },
+//   clear() {
+//     clearError(overlayErrorID)
+//   },
+// })
+// }
 
 navigationInit()
 
