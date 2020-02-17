@@ -32,7 +32,7 @@
     "imagemin-giflossy": "^5.1.10",
     "imagemin-mozjpeg": "^8.0.0",
     "p-queue": "^6.0.2",
-    "sharp": "^0.24.0"
+    "gatsby-plugin-sharp": "^2.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
