@@ -11,6 +11,7 @@ import TiArrowRight from "react-icons/lib/ti/arrow-right"
 import Button from "../../components/button"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
+import FooterLinks from "../../components/shared/footer-links"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import { themedInput } from "../../utils/styles"
 import {
@@ -211,6 +212,7 @@ class TagsPage extends React.Component {
             )}
           </ul>
         </div>
+        <FooterLinks />
       </Container>
     )
   }

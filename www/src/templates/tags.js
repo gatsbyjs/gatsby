@@ -9,6 +9,7 @@ import TiArrowRight from "react-icons/lib/ti/arrow-right"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Button from "../components/button"
 import Container from "../components/container"
+import FooterLinks from "../components/shared/footer-links"
 import { TAGS_AND_DOCS } from "../data/tags-docs"
 
 // Select first tag with whitespace instead of hyphens for
@@ -70,6 +71,7 @@ const Tags = ({ pageContext, data }) => {
           sx={{ my: 9 }}
         />
       ))}
+      <FooterLinks />
     </Container>
   )
 }
