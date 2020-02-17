@@ -5271,11 +5271,9 @@
     - CMS:Headless
     - CMS:WordPress
     - Contentful
-    - Cypress
     - Portfolio
   features:
     - Styled components
     - Responsive webpage
     - Portfolio
-    - Cypress
     - Blog
