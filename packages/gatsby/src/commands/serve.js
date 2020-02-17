@@ -81,13 +81,35 @@ const matchPathRouter = (matchPaths, options) => (req, res, next) => {
   return next()
 }
 
+const isPageDataRequest = path => path.startsWith(`/page-data`)
+
 const truncatedPathRouter = (truncatedPaths, options) => (req, res, next) => {
-  const { path } = req
+  const { path: reqPath } = req
   if (req.accepts(`html`)) {
-    const fullPath = path in Object.keys(truncatedPaths)
-    if (fullPath) {
+    const pathExists = Object.keys(truncatedPaths).includes(reqPath)
+    if (pathExists) {
       return res.sendFile(
-        path.join(truncatedPaths[path], `index.html`),
+        path.join(truncatedPaths[reqPath], `index.html`),
+        options,
+        err => {
+          if (err) {
+            console.log(err)
+            next()
+          }
+        }
+      )
+    }
+  }
+  if (isPageDataRequest(reqPath)) {
+    const [, , ...pageDataPath] = reqPath.split(`/`)
+    const longPath = pageDataPath.join(`/`)
+    const prefixedPath = path.dirname(`/${longPath}`)
+
+    const pathExists = Object.keys(truncatedPaths).includes(prefixedPath)
+
+    if (pathExists) {
+      return res.sendFile(
+        path.join(`page-data`, truncatedPaths[prefixedPath], `page-data.json`),
         options,
         err => {
           if (err) {
