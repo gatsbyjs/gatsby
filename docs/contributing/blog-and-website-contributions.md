@@ -26,11 +26,11 @@ If you have any questions about the process or your submission, please email [ma
 
 ### Content guidelines for submitting a blog post proposal
 
-As a Gatsby community member, you have unique insight into the ins and outs of learning Gatsby, building with Gatsby, and contributing to Gatsby’s open source community. Contributing to the Gatsby blog is a great way to share your experiences and insights. Here are some guidelines for what kind of content is and isn’t a good fit for the Gatsby blog.
+As a Gatsby community member, you have a unique insight into the ins and outs of learning Gatsby, building with Gatsby, and contributing to Gatsby’s open source community. Contributing to the Gatsby blog is a great way to share your experiences and insights. Here are some guidelines for what kind of content is and isn’t a good fit for the Gatsby blog.
 
 Things we’re looking for in Gatsby blog content:
 
-- Information to help others overcome challenges you’ve faced while working with Gatsby
+- Information to help others overcome the challenges you’ve faced while working with Gatsby
 - Stories about how Gatsby helped you overcome different challenges on work and personal projects
 - Gatsby case studies
 - Showcasing a tool, fix, or other content you or someone else have contributed to Gatsby’s open source community
