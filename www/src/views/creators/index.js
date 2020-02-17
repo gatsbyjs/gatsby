@@ -3,11 +3,12 @@ import { jsx } from "theme-ui"
 import { Component } from "react"
 import { Helmet } from "react-helmet"
 import Layout from "../../components/layout"
+import FooterLinks from "../../components/shared/footer-links"
 import CreatorsHeader from "./creators-header"
 import Badge from "./badge"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import qs from "qs"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
@@ -182,6 +183,7 @@ class CreatorsView extends Component {
             {creators.length && <EmptyGridItems styles={styles.creatorCard} />}
           </div>
         </main>
+        <FooterLinks />
       </Layout>
     )
   }

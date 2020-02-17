@@ -2082,7 +2082,7 @@
   main_url: "https://madecomfy.com.au/"
   url: "https://madecomfy.com.au/"
   description: >
-    Short term rental management startup, using Contentful + Gatsby + CicleCI
+    Short term rental management startup, using Contentful + Gatsby + CircleCI
   featured: false
   categories:
     - Travel
@@ -4593,7 +4593,7 @@
   main_url: https://morello.dev
   source_url: https://gitlab.com/dennismorello/dev-blog
   description: >
-    morello.dev is a development and techology blog written by Dennis Morello.
+    morello.dev is a development and technology blog written by Dennis Morello.
   categories:
     - Blog
     - Education
@@ -5121,7 +5121,7 @@
   main_url: https://peter.macinkovic.id.au/
   source_url: https://github.com/inkovic/peter-macinkovic-static-site
   description: >
-    Personal Website and Blog of eCommerce SEO Specilaist and Digital Marketer Peter Macinkovic.
+    Personal Website and Blog of eCommerce SEO Specialist and Digital Marketer Peter Macinkovic.
   categories:
     - SEO
     - Marketing
@@ -5196,6 +5196,7 @@
 - title: Kenneth Kwakye-Gyamfi Portfolio Site
   url: https://www.kwakye-gyamfi.com
   main_url: https://www.kwakye-gyamfi.com
+  source_url: https://www.github.com/cross19xx/cross-site
   description: >
     Personal portfolio site for Kenneth Kwakye-Gyamfi, a mobile and web full stack applications developer currently based in Accra, Ghana.
   categories:
@@ -5209,7 +5210,7 @@
   main_url: https://www.garethweaver.com/
   source_url: https://github.com/garethweaver/public-site-react
   description: >
-    A personal portofolio of a London based frontend developer built with Gatsby 2, Redux and Sass
+    A personal portfolio of a London based frontend developer built with Gatsby 2, Redux and Sass
   categories:
     - Portfolio
     - Web Development
@@ -5558,7 +5559,7 @@
   main_url: https://hiteshvaghasiya.com/
   url: https://hiteshvaghasiya.com/
   description: >
-    This is Hitesh Vaghasiya's blog. This blog is help you an E-Commerce like Magento, Shopify, and BigCommece.
+    This is Hitesh Vaghasiya's blog. This blog is help you an E-Commerce like Magento, Shopify, and BigCommerce.
   categories:
     - Blog
     - Programming
@@ -6056,7 +6057,7 @@
   main_url: https://apisyouwonthate.com
   source_url: https://github.com/apisyouwonthate/apisyouwonthate.com
   description: >
-    API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can erradicate APIs we hate.
+    API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can eradicate APIs we hate.
   categories:
     - Blog
     - Education
@@ -7012,7 +7013,7 @@
   main_url: https://taverasmisael.com
   source_url: https://github.com/taverasmisael/taverasmisael
   description: >
-    Personal site and bloging about learning FrontEnd web development in spanish.
+    Personal site and blogging about learning FrontEnd web development in spanish.
   categories:
     - Portfolio
     - Open Source
@@ -7215,7 +7216,7 @@
   main_url: https://gatsbyfinds.netlify.com
   url: https://gatsbyfinds.netlify.com
   description: >
-    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved GatsbyJS.
+    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the latest projects made with the beloved GatsbyJS.
   categories:
     - Portfolio
     - Gallery
@@ -8020,7 +8021,7 @@
   main_url: https://diff001a.netlify.com/
   url: https://diff001a.netlify.com/
   description: >
-    This is diff001a's blog which contains blogs realted to programming.
+    This is diff001a's blog which contains blogs related to programming.
   categories:
     - Blog
   built_by: diff001a
@@ -8028,7 +8029,7 @@
   main_url: http://rockwong.com/blog/
   url: http://rockwong.com/blog/
   description: >
-    Rockwong is a techncal blog containing content realted to various web technologies.
+    Rockwong is a technical blog containing content related to various web technologies.
   categories:
     - Technology
     - Education
@@ -8325,7 +8326,7 @@
   url: https://quemalabs.com/
   main_url: https://quemalabs.com/
   description: >
-    WordPress themes for these moedern times
+    WordPress themes for these modern times
   categories:
     - Blog
     - Web Development
@@ -9594,3 +9595,153 @@
   built_by: Bold Oak Design
   built_by_url: https://boldoak.design/
   featured: false
+- title: Chris Otto
+  url: https://chrisotto.dev/
+  main_url: https://chrisotto.dev/
+  source_url: https://github.com/chrisotto6/chrisottodev
+  description: >
+    Blog, portfolio and website for Chris Otto.
+  categories:
+    - Blog
+    - JavaScript
+    - Landing Page
+    - Portfolio
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Chris Otto
+  built_by_url: https://github.com/chrisotto6
+  featured: false
+- title: Roboto Studio
+  url: https://roboto.studio
+  main_url: https://roboto.studio
+  description: >
+    Faster than a speeding bullet Website Development based in sunny old Nottingham
+  categories:
+    - Agency
+    - Blog
+    - Business
+    - Design
+    - Featured
+    - Freelance
+    - Web Development
+  featured: true
+- title: Viraj Chavan | Full Stack Software Engineer
+  url: http://virajc.tech
+  main_url: http://virajc.tech
+  source_url: https://github.com/virajvchavan/portfolio
+  description: >
+    Portfolio and blog of a full stack software engineer from India
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Viraj V Chavan
+  built_by_url: https://twitter.com/VirajVChavan
+  featured: false
+- title: Nexweave
+  url: https://www.nexweave.com
+  main_url: https://www.nexweave.com
+  description: >
+    Nexweave is a SaaS platform built by a team of experienced product, design & technology professionals in India. Nexweave allows brands to create personalized & interactive video experiences at scale. We would love for our site to be featured at the gatsby showcase since we have long been appreciating the flexibility and speed of the sites we have created using the same.
+  categories:
+    - Video
+    - API
+    - User Experience
+    - Marketing
+    - Design
+    - Data
+    - Technology
+    - Media
+    - Consulting
+  built_by: Kashaf S
+  built_by_url: https://www.linkedin.com/in/kashaf-shaikh-925117178
+  featured: false
+- title: Daniel Balloch
+  url: https://danielballoch.com
+  main_url: https://danielballoch.com
+  source_url: https://github.com/danielballoch/danielballoch
+  description: >
+    Hey, I'm Daniel and this is my portfolio site. Made with Gatsby, React, GraphQL, Styled Emotion & Netlify. Install & local host instructions: 1. git clone https://github.com/danielballoch/danielballoch.git 2. npm install. 3. gatsby develop. Keep in mind I'm still learning myself, so these may not be best practises. If anyone's curious as to how something works flick me a message or if you have advice for me I'd love to hear it, otherwise happy coding!
+  categories:
+    - Portfolio
+    - Business
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Daniel Balloch
+  built_by_url: https://danielballoch.com
+- title: The Rift Metz
+  url: http://theriftmetz.com/
+  main_url: http://theriftmetz.com/
+  description: >
+    The Rift is a gaming bar based in Metz (France).
+  categories:
+    - Landing Page
+    - Entertainment
+    - Design
+    - Blog
+    - Food
+  built_by: Hugo Torzuoli
+  built_by_url: https://github.com/HZooly
+  featured: false
+- title: Built with Workers
+  url: https://workers.cloudflare.com/built-with/
+  main_url: https://workers.cloudflare.com/built-with/
+  description: >
+    Showcasing websites & projects built with Cloudflare Workers
+  categories:
+    - Portfolio
+    - JavaScript
+    - Web Development
+  built_by: Workers who work at Cloudflare
+  built_by_url: https://github.com/cloudflare/built-with-workers/graphs/contributors
+- title: WebAnaya Solutions
+  url: https://www.webanaya.com
+  main_url: https://www.webanaya.com
+  description: >
+    Full Stack Web Solutions Provider.
+  categories:
+    - Agency
+    - Web Development
+    - API
+    - Blog
+  built_by: Durgesh Gupta
+  built_by_url: https://durgeshgupta.com
+  featured: false
+- title: adam.ai
+  url: https://adam.ai/
+  main_url: https://adam.ai/
+  description: >
+    Are you ready to make your meetings more productive? Our intelligent meeting management tool can help!
+  categories:
+    - Business
+    - Landing Page
+    - Productivity
+    - Technology
+  built_by: Hazem Osama
+  built_by_url: https://github.com/hazem3500
+  featured: false
+- title: Alexandra Thomas
+  main_url: "https://alexandracthomas.com/"
+  url: "https://alexandracthomas.com/"
+  description: >
+    A portfolio site for Alexandra Thomas, a front-end developer with creative super powers based in Charlotte, NC.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  featured: false
+- title: Storto Productions
+  main_url: "https://www.storto-productions.com/"
+  url: "https://www.storto-productions.com/about/"
+  featured: false
+  description: >
+    A portfolio site for a video production company based out of Phoenix, AZ.
+  categories:
+    - Video
+    - Blog
+    - Portfolio
+    - Business
+  built_by: Alexandra Thomas
+  built_by_url: "https://alexandracthomas.com/"

@@ -47,6 +47,11 @@
               link: /docs/gatsby-on-linux/
             - title: Configuring CA Certificates
               link: /docs/configuring-ca-certificates/
+        - title: A/B Testing
+          link: /docs/ab-testing/
+          items:
+            - title: A/B Testing with Google Analytics & Netlify
+              link: /docs/ab-testing-with-google-analytics-and-netlify/
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:

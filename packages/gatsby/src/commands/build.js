@@ -195,10 +195,13 @@ module.exports = async function build(program: BuildArgs) {
     activity.end()
   }
 
+  activity = report.activityTimer(`onPostBuild`, { parentSpan: buildSpan })
+  activity.start()
   await apiRunnerNode(`onPostBuild`, {
     graphql: graphqlRunner,
     parentSpan: buildSpan,
   })
+  activity.end()
 
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()

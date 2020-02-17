@@ -2,22 +2,6 @@
 title: "Gatsby e-commerce Tutorial"
 ---
 
-# Table of Contents
-
-- [Table of Contents](#table-of-contents)
-- [Why use Gatsby for an e-commerce site?](#why-use-gatsby-for-an-e-commerce-site)
-- [Prerequisites](#prerequisites)
-  - [How does Gatsby work with Stripe?](#how-does-gatsby-work-with-stripe)
-- [Setting up a Gatsby site](#setting-up-a-gatsby-site)
-- [Installing the StripeJS plugin](#installing-the-stripejs-plugin)
-  - [See your site hot reload in the browser!](#see-your-site-hot-reload-in-the-browser)
-  - [How does the StripeJS plugin work?](#how-does-the-stripejs-plugin-work)
-  - [Getting your Stripe test keys](#getting-your-stripe-test-keys)
-- [Examples](#examples)
-  - [Easy: One Button](#easy-one-button)
-  - [Advanced: Import SKUs via source plugin](#advanced-import-skus-via-source-plugin)
-- [Testing Payments](#testing-payments)
-
 In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments.
 
 ## Why use Gatsby for an e-commerce site?
@@ -43,7 +27,7 @@ There are alternatives to Stripe, like Square and Braintree, and their setup is 
 
 Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby site. If you're selling multiple products, you can use the [Stripe source plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve all SKUs at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks/) when a new product or SKU is added.
 
-# Setting up a Gatsby site
+## Setting up a Gatsby site
 
 Create a new Gatsby project by running the `gatsby new` command in the terminal and change directories into the new project you just started:
 
@@ -99,9 +83,9 @@ module.exports = {
 
 ### See your site hot reload in the browser!
 
-Run `npm run develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to [localhost:8000](http://localhost:8000/) and you should see a default homepage.
+Run `npm run develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to `http://localhost:8000/` and you should see a default homepage.
 
-> **NOTE**: If you have already started your Gatsby development server using `npm run develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `npm run develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](http://localhost:8000/)
+> **NOTE**: If you have already started your Gatsby development server using `npm run develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `npm run develop` again to see changes in your `gatsby-config.js` reflected on `http://localhost:8000/`
 
 ### How does the StripeJS plugin work?
 
@@ -255,7 +239,7 @@ The `render()` function applies your styles to the button and binds the `redirec
 
 #### Importing the checkout component into the homepage
 
-Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look like similar to this:
+Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look similar to this:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -284,7 +268,7 @@ const IndexPage = () => (
 export default IndexPage
 ```
 
-If you go back to [localhost:8000](http://localhost:8000/) in your browser and you have `npm run develop` running, you should now see a big, enticing "BUY MY BOOK" button. C'mon and give it a click!
+If you go back to `http://localhost:8000/` in your browser and you have `npm run develop` running, you should now see a big, enticing "BUY MY BOOK" button. C'mon and give it a click!
 
 ### Advanced: Import SKUs via source plugin
 
@@ -383,7 +367,7 @@ export default props => (
 )
 ```
 
-You can validate your query and see what data is being returned in GraphiQL, which is available at http://localhost:8000/___graphql when running `npm run develop`.
+You can validate your query and see what data is being returned in GraphiQL, which is available at `http://localhost:8000/___graphql` when running `npm run develop`.
 
 Once you're happy with your query, create a new page where you can import the newly created Sku component:
 
@@ -406,7 +390,7 @@ const AdvancedExamplePage = () => (
 export default AdvancedExamplePage
 ```
 
-When navigating to http://localhost:8000/advanced/ you should now see a list of paragraphs with your SKU names.
+When navigating to `http://localhost:8000/advanced/` you should now see a list of paragraphs with your SKU names.
 
 #### Create a component that presents a single SKU
 
@@ -553,6 +537,6 @@ export default Skus
 
 You can call `redirectToCheckout()` providing an array of SKUs and their quantities to charge for multiple items at the same time. Instead of each "BUY ME" button redirecting to the checkout page, you can therefore provide a central "GO TO CHECKOUT" button that uses the state of a cart component. You can see the necessary changes for this example [on GitHub](https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial/tree/cart-example).
 
-# Testing Payments
+## Testing Payments
 
 In test mode (when using the API key that includes _test_) Stripe provides [test cards](https://stripe.com/docs/testing#cards) for you to test different checkout scenarios.
