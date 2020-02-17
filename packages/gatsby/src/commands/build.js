@@ -22,6 +22,8 @@ const {
 } = require(`../utils/jobs-manager`)
 const pageDataUtil = require(`../utils/page-data`)
 
+const previousState = readState()
+
 type BuildArgs = {
   directory: string,
   sitePackageJson: object,
@@ -142,7 +144,7 @@ module.exports = async function build(program: BuildArgs) {
   await waitUntilAllJobsComplete()
 
   const pagePaths = process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES
-    ? await pageDataUtil.getChangedPageDataKeys(store.getState(), readState())
+    ? await pageDataUtil.getChangedPageDataKeys(store.getState(), previousState)
     : [...store.getState().pages.keys()]
   activity = report.createProgress(
     `Building static HTML for pages`,
@@ -190,7 +192,7 @@ module.exports = async function build(program: BuildArgs) {
     deletedPageKeys = await pageDataUtil.removePreviousPageData(
       program.directory,
       store.getState(),
-      readState()
+      previousState
     )
     activity.end()
   }
@@ -215,27 +217,27 @@ module.exports = async function build(program: BuildArgs) {
 
   if (
     process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES &&
-    process.argv.indexOf(`--log-pages`) > -1
+    process.argv.includes(`--log-pages`)
   ) {
     if (pagePaths.length) {
       report.info(
-        `Built pages:\n${pagePaths.map(
-          path => `Updated page: ${path}\n`
-        )}`.replace(/,/g, ``)
+        `Built pages:\n${pagePaths
+          .map(path => `Updated page: ${path}`)
+          .join(`\n`)}`
       )
     }
-    if (typeof deletedPageKeys !== `undefined` && deletedPageKeys.length) {
+    if (deletedPageKeys?.length) {
       report.info(
-        `Deleted pages:\n${deletedPageKeys.map(
-          path => `Deleted page: ${path}\n`
-        )}`.replace(/,/g, ``)
+        `Deleted pages:\n${deletedPageKeys
+          .map(path => `Deleted page: ${path}`)
+          .join(`\n`)}`
       )
     }
   }
 
   if (
     process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES &&
-    process.argv.indexOf(`--write-to-file`) > -1
+    process.argv.includes(`--write-to-file`)
   ) {
     const createdFilesPath = path.resolve(
       `${program.directory}/.cache`,

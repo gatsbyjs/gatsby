@@ -166,7 +166,7 @@ const processQueries = async (queryJobs, activity) => {
     const { pageData } = readState()
 
     if (pageData) {
-      readState().pageData.forEach((value, key) => {
+      pageData.forEach((_value, key) => {
         if (!pages.has(key)) {
           boundActionCreators.removePageData({
             id: key,
