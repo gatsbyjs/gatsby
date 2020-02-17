@@ -94,12 +94,12 @@ exports.createResolvers = async (
     ffmpegPath = resolve(
       rootDir,
       CACHE_FOLDER_BIN,
-      `ffmpeg${platform === `win32` && `.exe`}`
+      `ffmpeg${platform === `win32` ? `.exe` : ``}`
     )
     ffprobePath = resolve(
       rootDir,
       CACHE_FOLDER_BIN,
-      `ffprobe${platform === `win32` && `.exe`}`
+      `ffprobe${platform === `win32` ? `.exe` : ``}`
     )
   }
 
