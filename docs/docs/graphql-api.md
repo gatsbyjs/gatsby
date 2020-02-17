@@ -231,33 +231,10 @@ For more information, check out the docs guide on [using fragments in Gatsby](/d
 
 Some fragments come included in Gatsby plugins, such as fragments for returning optimized image data in various formats with `gatsby-image` and `gatsby-transformer-sharp`, or data fragments with `gatsby-source-contentful`.
 
-#### Image sharp fragments
+Documentation on these fragments can be found in these pages:
 
-The following fragments are available in any site with `gatsby-transformer-sharp` installed and included in your `gatsby-config.js`.
-
-Information on querying with these fragments is also listed in-depth in the [Gatsby image API docs](/docs/gatsby-image/), including options like resizing and recoloring.
-
-<GraphqlApiQuery>
-  {data => (
-    <APIReference
-      relativeFilePath={data.transformerSharp.nodes[0].relativePath}
-      docs={data.transformerSharp.nodes[0].childrenDocumentationJs}
-    />
-  )}
-</GraphqlApiQuery>
-
-#### Contentful fragments
-
-The following fragments are available in any site with `gatsby-source-contentful` installed and included in your `gatsby-config.js`. These fragments generally mirror the fragments outlined in the `gatsby-transformer-sharp` package.
-
-<GraphqlApiQuery>
-  {data => (
-    <APIReference
-      relativeFilePath={data.contentfulFragments.nodes[0].relativePath}
-      docs={data.contentfulFragments.nodes[0].childrenDocumentationJs}
-    />
-  )}
-</GraphqlApiQuery>
+- [Image Sharp Fragments](/docs/image-sharp-fragments/)
+- [Contentful Fragments](/docs/contentful-fragments/)
 
 **Note**: the above fragments are from officially maintained Gatsby starters; other plugins like `gatsby-source-datocms` and `gatsby-source-sanity` ship with fragments of their own. A list of those fragments can be found in the [`gatsby-image` README](/packages/gatsby-image#fragments).
 

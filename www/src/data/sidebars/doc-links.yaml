@@ -537,6 +537,11 @@
           link: /docs/actions/
         - title: GraphQL API
           link: /docs/graphql-api/
+          items:
+            - title: Image Sharp Fragments
+              link: /docs/image-sharp-fragments/
+            - title: Contentful Fragments
+              link: /docs/contentful-fragments/
         - title: Gatsby Node APIs
           link: /docs/node-apis/
         - title: Gatsby Node Helpers
