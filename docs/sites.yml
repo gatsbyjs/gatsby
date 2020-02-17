@@ -9745,3 +9745,13 @@
     - Business
   built_by: Alexandra Thomas
   built_by_url: "https://alexandracthomas.com/"
+- title: Zatsuzen Blog
+  url: https://blog.zatsuzen.com
+  main_url: https://blog.zatsuzen.com
+  description: >
+    Web developer's tech blog
+  categories:
+    - Blog
+  built_by: Akane
+  built_by_url: https://twitter.com/akanewz
+  featured: false
