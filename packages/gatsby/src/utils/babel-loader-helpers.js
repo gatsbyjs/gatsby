@@ -43,12 +43,13 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     )
   }
 
-  if (stage === `develop`) {
-    // requiredPlugins.push(
-    //   babel.createConfigItem([], {
-    //     type: `plugin`,
-    //   })
-    // )
+  // TODO: Remove entire block when we make fast-refresh the default
+  if (stage === `develop` && process.env.HOT_LOADER !== `fast-refresh`) {
+    requiredPlugins.push(
+      babel.createConfigItem([resolve(`react-hot-loader/babel`)], {
+        type: `plugin`,
+      })
+    )
   }
 
   // Fallback preset

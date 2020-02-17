@@ -144,8 +144,15 @@ const writeAll = async state => {
 
   lastHash = newHash
 
+  // TODO: Remove all "hot" references in this `syncRequires` variable when fast-refresh is the default
+  const hotImport =
+    process.env.HOT_LOADER !== `fast-refresh`
+      ? `const { hot } = require("react-hot-loader/root")`
+      : ``
+  const hotMethod = process.env.HOT_LOADER !== `fast-refresh` ? `hot` : ``
+
   // Create file with sync requires of components/json files.
-  let syncRequires = `
+  let syncRequires = `${hotImport}
 
 // prefer default export if available
 const preferDefault = m => m && m.default || m
@@ -153,9 +160,9 @@ const preferDefault = m => m && m.default || m
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": (preferDefault(require("${joinPath(
-          c.component
-        )}")))`
+        `  "${
+          c.componentChunkName
+        }": ${hotMethod}((preferDefault(require("${joinPath(c.component)}"))))`
     )
     .join(`,\n`)}
 }\n\n`
