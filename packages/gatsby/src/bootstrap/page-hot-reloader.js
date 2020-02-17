@@ -1,7 +1,11 @@
 const { emitter, store } = require(`../redux`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { boundActionCreators } = require(`../redux/actions`)
-const { deletePage, deleteComponentsDependencies } = boundActionCreators
+const {
+  deletePage,
+  deleteComponentsDependencies,
+  removePageData,
+} = boundActionCreators
 const report = require(`gatsby-cli/lib/reporter`)
 
 let pagesDirty = false
@@ -34,6 +38,7 @@ const runCreatePages = async () => {
       page.path !== `/404.html`
     ) {
       deleteComponentsDependencies([page.path])
+      removePageData(page.path)
       deletePage(page)
     }
   })
