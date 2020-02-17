@@ -64,12 +64,26 @@ module.exports = {
     {
       resolve: `gatsby-transformer-video`,
       options: {
-        // Assumes you store your binaries in the following pattern:
-        // * ./bin/darwin/ffmpeg
-        // * ./bin/darwin/ffprobe
-        // * ./bin/linux/ffmpeg
-        // * ./bin/linux/ffprobe
-        // * ...
+        /**
+         * Set if FFMPEG & FFPROBE should be downloaded if they are not found locally.
+         *
+         * Downloaded binaries are stored in `node_modules/.cache/gatsby-transformer-video-bins/`
+         *
+         * Default: true
+         */
+        downloadBinaries: false,
+        /**
+         * Optional: Pass your own binaries
+         *
+         * Assumes you store your binaries in the following pattern:
+         * ./bin/darwin/ffmpeg
+         * ./bin/darwin/ffprobe
+         * ./bin/linux/ffmpeg
+         * ./bin/linux/ffprobe
+         * ...
+         *
+         * Default: null
+         */
         ffmpegPath: resolve(__dirname, "bin", platform(), "ffmpeg"),
         ffprobePath: resolve(__dirname, "bin", platform(), "ffprobe"),
 
@@ -80,7 +94,9 @@ module.exports = {
             converter: function({ ffmpegSession, videoStreamMetadata }) {
               // Example:
               // https://github.com/gatsbyjs/gatsby/blob/gatsby-transformer-video/examples/using-gatsby-transformer-video/gatsby-config.js
-            }
+            },
+          },
+        },
       },
     },
   ],
