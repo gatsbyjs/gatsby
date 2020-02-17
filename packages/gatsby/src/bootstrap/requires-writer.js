@@ -162,7 +162,7 @@ const preferDefault = m => m && m.default || m
       c =>
         `  "${
           c.componentChunkName
-        }": ${hotMethod}((preferDefault(require("${joinPath(c.component)}"))))`
+        }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
     )
     .join(`,\n`)}
 }\n\n`
