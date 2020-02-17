@@ -1,7 +1,11 @@
-const langs = require("../../i18n.json")
+const allLangs = require("../../i18n.json")
 const defaultLang = "en"
 
-const langCodes = langs.map(lang => lang.code)
+// Only allow languages defined in the LOCALES env variable
+// This allows us to test only languages that are "complete" or test only
+// a single language
+const langCodes = process.env.LOCALES ? process.env.LOCALES.split(" ") : []
+const langs = allLangs.filter(lang => langCodes.includes(lang.code))
 
 const localizedSections = ["tutorial"]
 
@@ -56,4 +60,10 @@ function getLocaleAndBasePath(path) {
   return { locale: defaultLang, basePath: path }
 }
 
-module.exports = { defaultLang, localizedPath, getLocaleAndBasePath }
+module.exports = {
+  langCodes,
+  langs,
+  defaultLang,
+  localizedPath,
+  getLocaleAndBasePath,
+}

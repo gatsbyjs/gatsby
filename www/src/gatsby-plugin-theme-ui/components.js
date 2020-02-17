@@ -14,6 +14,7 @@ import Breakout from "../components/breakout"
 import VisuallyHidden from "../components/visually-hidden"
 import Events from "../components/events/events"
 import StubList from "../components/stub-list"
+import LangList from "../components/lang-list"
 
 export default {
   GuideList,
@@ -28,6 +29,7 @@ export default {
   VisuallyHidden,
   Events,
   StubList,
+  LangList,
   a: MdxLink,
   pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
 }

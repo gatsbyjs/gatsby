@@ -1,8 +1,8 @@
 const path = require(`path`)
-const langs = require(`./i18n.json`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
+const { langCodes } = require(`./src/utils/i18n`)
 
 const GA = {
   identifier: `UA-93349937-5`,
@@ -53,9 +53,9 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
-if (process.env.ENABLE_LOCALIZATIONS) {
+if (langCodes.length > 0) {
   dynamicPlugins.push(
-    ...langs.map(({ code }) => ({
+    ...langCodes.map(code => ({
       resolve: `gatsby-source-git`,
       options: {
         name: `docs-${code}`,
@@ -213,7 +213,7 @@ module.exports = {
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
           // convert images using http to https in plugin library READMEs
-          `gatsby-remark-http-to-https`
+          `gatsby-remark-http-to-https`,
         ],
       },
     },
