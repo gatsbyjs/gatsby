@@ -4,6 +4,7 @@ import { Component } from "react"
 import { Helmet } from "react-helmet"
 import { css } from "@emotion/core"
 import Layout from "../components/layout"
+import PageWithSidebar from "../components/page-with-sidebar"
 import FooterLinks from "../components/shared/footer-links"
 import Container from "../components/container"
 import EvaluationTable from "../components/features/evaluation-table"
@@ -33,44 +34,46 @@ class FeatureComparison extends Component {
 
     return (
       <Layout location={location}>
-        <Helmet>
-          <title>{titleString}</title>
-        </Helmet>
-        <Container>
-          <main>
-            <Breadcrumb location={location} />
-            <h1>{titleString}</h1>
-            {options.map(o => (
-              <section key={o.key} sx={{ mb: 6 }}>
-                <h2
-                  css={css`
-                    display: flex;
-                    align-items: center;
-                  `}
-                >
-                  <img
-                    src={LogoDictionary[o.key]}
+        <PageWithSidebar location={location}>
+          <Helmet>
+            <title>{titleString}</title>
+          </Helmet>
+          <Container>
+            <main>
+              <Breadcrumb location={location} />
+              <h1>{titleString}</h1>
+              {options.map(o => (
+                <section key={o.key} sx={{ mb: 6 }}>
+                  <h2
                     css={css`
-                      height: 25px;
-                      margin-bottom: 0;
-                      margin-right: 10px;
+                      display: flex;
+                      align-items: center;
                     `}
-                  />
-                  {o.display}
-                </h2>
-                {o.description}
-              </section>
-            ))}
-            <LegendTable />
-            <EvaluationTable
-              options={options}
-              sections={sections}
-              sectionHeaders={sectionHeaders}
-            />
-          </main>
-          <FeaturesFooter />
-          <FooterLinks />
-        </Container>
+                  >
+                    <img
+                      src={LogoDictionary[o.key]}
+                      css={css`
+                        height: 25px;
+                        margin-bottom: 0;
+                        margin-right: 10px;
+                      `}
+                    />
+                    {o.display}
+                  </h2>
+                  {o.description}
+                </section>
+              ))}
+              <LegendTable />
+              <EvaluationTable
+                options={options}
+                sections={sections}
+                sectionHeaders={sectionHeaders}
+              />
+            </main>
+            <FeaturesFooter />
+            <FooterLinks />
+          </Container>
+        </PageWithSidebar>
       </Layout>
     )
   }

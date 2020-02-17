@@ -37,7 +37,7 @@
     "pretty-error": "^2.1.1",
     "progress": "^2.0.3",
     "prompts": "^2.3.0",
-    "react": "^16.12.0",
+    "react": "^16.8.0",
     "redux": "^4.0.4",
     "resolve-cwd": "^2.0.0",
     "semver": "^6.3.0",

@@ -14,6 +14,7 @@ import CompareButton from "../../components/features/compare-button"
 import Breadcrumb from "../../components/docs-breadcrumb"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
 import useComparisonState from "../../hooks/use-comparison-state"
+import PageWithSidebar from "../../components/page-with-sidebar"
 
 const FeaturesHeader = () => (
   <section>
@@ -38,58 +39,60 @@ const JamstackFeaturesPage = ({ data, location }) => {
   )
 
   return (
-    <Layout location={location} enableScrollSync={true}>
-      <Container>
-        <main id={`reach-skip-nav`}>
-          <Breadcrumb location={location} />
-          <FeaturesHeader />
-          <h3>Comparison</h3>
-          <p>
-            To see a filtered view of Gatsby with specific JAMstack
-            technologies, choose the technologies to compare and then press
-            Compare:
-          </p>
+    <Layout location={location}>
+      <PageWithSidebar location={location}>
+        <Container>
+          <main id={`reach-skip-nav`}>
+            <Breadcrumb location={location} />
+            <FeaturesHeader />
+            <h3>Comparison</h3>
+            <p>
+              To see a filtered view of Gatsby with specific JAMstack
+              technologies, choose the technologies to compare and then press
+              Compare:
+            </p>
 
-          <div
-            sx={{
-              display: `grid`,
-              gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
-              gridAutoRows: `1fr`,
-              gridGap: 2,
-              pb: 4,
-            }}
-          >
-            {featureComparisonOptions.jamstack.map(
-              ({ key: optionKey, display }) => (
-                <CompareButton
-                  key={optionKey}
-                  optionKey={optionKey}
-                  selected={selected[optionKey]}
-                  setSelected={setSelected}
-                >
-                  {display}
-                </CompareButton>
-              )
-            )}
-          </div>
-          <Button
-            to={
-              hasSelected
-                ? `/features/jamstack/gatsby-vs-${comparators.join(`-vs-`)}`
-                : location.pathname
-            }
-          >
-            Compare with Gatsby
-          </Button>
-          <EvaluationTable
-            options={featureComparisonOptions.jamstack}
-            sections={sections}
-            sectionHeaders={sectionHeaders}
-          />
-          <FeaturesFooter />
-        </main>
-        <FooterLinks />
-      </Container>
+            <div
+              sx={{
+                display: `grid`,
+                gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
+                gridAutoRows: `1fr`,
+                gridGap: 2,
+                pb: 4,
+              }}
+            >
+              {featureComparisonOptions.jamstack.map(
+                ({ key: optionKey, display }) => (
+                  <CompareButton
+                    key={optionKey}
+                    optionKey={optionKey}
+                    selected={selected[optionKey]}
+                    setSelected={setSelected}
+                  >
+                    {display}
+                  </CompareButton>
+                )
+              )}
+            </div>
+            <Button
+              to={
+                hasSelected
+                  ? `/features/jamstack/gatsby-vs-${comparators.join(`-vs-`)}`
+                  : location.pathname
+              }
+            >
+              Compare with Gatsby
+            </Button>
+            <EvaluationTable
+              options={featureComparisonOptions.jamstack}
+              sections={sections}
+              sectionHeaders={sectionHeaders}
+            />
+            <FeaturesFooter />
+          </main>
+          <FooterLinks />
+        </Container>
+      </PageWithSidebar>
     </Layout>
   )
 }
