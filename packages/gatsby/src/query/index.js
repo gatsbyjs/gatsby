@@ -3,7 +3,7 @@
 const _ = require(`lodash`)
 const Queue = require(`better-queue`)
 // const convertHrtime = require(`convert-hrtime`)
-const { store, emitter, readState } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
