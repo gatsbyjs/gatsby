@@ -20,11 +20,11 @@ During this time, they found that their website was failing to help excited pros
 
 While this worked at some level, it was difficult for users to find store locations nearby them because they had to scan a long and growing list of locations, sorted alphabetically rather geographically, and then use other tools like Google Maps to figure out their closest location. Many users simply gave up rather than going through this complicated process, causing Impossible Foods to lose excited potential customers.
 
-> “Our product would be in certain places, and people wouldn't know. It wouldn’t be in other places, and people would guess that it was there” -- Ashley Geo, Head of Brand Marketing Communications, Impossible Foods.
+<Pullquote>
+“Our product would be in certain places, and people wouldn't know. It wouldn’t be in other places, and people would guess that it was there” -- Ashley Geo, Head of Brand Marketing Communications, Impossible Foods.
+</Pullquote>
 
-<video autoplay loop muted playsinline>
-  <source src="old-maps.mp4" type="video/mp4">
-</video>
+![Old Maps](./old-maps.gif)
 
 Geo had been thinking about a website redesign for a while anyway. The team only had one person to oversee the website, who was handling requests from all over the company — recruiting, sales, other parts of marketing — to add new information to the website. Their old website had significant turnaround time for making any sort of updates (design, copy, or code) because they had to reach out to a contractor to make changes, so updates often accumulated in a backlog.
 
@@ -40,13 +40,19 @@ However, the prime reason was to create a new, rich map experience, that is not 
 
 As David Fonnegra, an engineering leader at Matter Supply who leads the Impossible Foods redesign, points out, map locators are one of the most common complicated experiences right now on the web.
 
-> "It's really difficult to make a cartography experience that appeals to everybody."
+<Pullquote>
+"It's really difficult to make a cartography experience that appeals to everybody."
+</Pullquote>
 
 Fonnegra lists a whole host of usability challenges when building a store locator experience:
 
-> "How do you navigate usually? Do you search for addresses? For places? For zipcodes? For cities? For locations? What does the map pin stands for? Where are you? How do you identify the place you want to go? Is the distance useful for you? Does seeing the actual path help? Or is it the distance that's helping you? Is a list of places more useful for you than the actual map?"
+<Pullquote>
+"How do you navigate usually? Do you search for addresses? For places? For zipcodes? For cities? For locations? What does the map pin stands for? Where are you? How do you identify the place you want to go? Is the distance useful for you? Does seeing the actual path help? Or is it the distance that's helping you? Is a list of places more useful for you than the actual map?"
+</Pullquote>
 
-> “We had a lot of questions to start with,” Fonnegra said, “but zero answers."
+<Pullquote>
+ “We had a lot of questions to start with,” Fonnegra said, “but zero answers."
+</Pullquote>
 
 ## Iterating Towards the Right Answer
 
@@ -70,9 +76,7 @@ At the end of the day, this helps not only the content creators’, the CSRs exp
 
 But it’s not just up-to-date data that the new site provided; it offers a dynamic, interactive experience for users as well.
 
-<video autoplay loop muted playsinline>
-  <source src="new-maps.mp4" type="video/mp4">
-</video>
+![New Maps](./new-maps.gif)
 
 The new store locator combines natural language searches, geolocation filtering, and an interactive map to help the end-user find the closest location where they can get the Impossible Burger.
 
@@ -106,6 +110,6 @@ When Impossible Foods moved their website from a static single-page to a dynamic
 
 Ultimately, Geo credits Impossible Foods' choice of technologies as key in enabling the company’s growth.
 
-> "We are changing and scaling quickly.,” Geo says. “That's why our current tech stack is awesome."
+<Pullquote>"We are changing and scaling quickly.,” Geo says. “That's why our current tech stack is awesome."</Pullquote>
 
 _Ashley Geo and David Fonnegra highlighted the Impossible Foods / Matter Supply partnership in [ImpossibleFoods.com: Combining Gatsby + Contentful for Speed, Scale, and Flexibility](https://www.gatsbyjs.com/impossible-foods-webinar/). Deane Barker highlighted the store locator use-case [in a March 2019 podcast](https://www.ingeniux.com/company/podcast/content-matters-podcast-headless-content-management-with-deane-barker)._
