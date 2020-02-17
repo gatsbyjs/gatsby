@@ -1,11 +1,16 @@
 import { resolve, parse } from "path"
 import os from "os"
 
-import execa from "execa"
-import { access, ensureDir } from "fs-extra"
+import { ensureDir } from "fs-extra"
 import { GraphQLString, GraphQLInt, GraphQLFloat } from "gatsby/graphql"
 
 import FFMPEG from "./ffmpeg"
+
+import {
+  libsAlreadyInstalled,
+  libsAlreadyDownloaded,
+  downloadLibs,
+} from "./download-binaries"
 
 class WrongFileTypeError extends Error {}
 
@@ -274,133 +279,19 @@ exports.createResolvers = async (
   createResolvers(resolvers)
 }
 
-async function libsAlreadyInstalled({ platform }) {
-  const isInstalledCommand = platform === `win32` ? `WHERE` : `command`
-  const isInstalledParams = platform === `win32` ? [] : [`-v`]
-  await execa(isInstalledCommand, [...isInstalledParams, `ffmpeg`])
-  await execa(isInstalledCommand, [...isInstalledParams, `ffprobe`])
-}
-
-async function libsAlreadyDownloaded({ binariesDir }) {
-  await access(resolve(binariesDir, `ffmpeg`))
-  await access(resolve(binariesDir, `ffprobe`))
-}
-
-async function downloadLibs({ binariesDir, platform }) {
-  const execaConfig = {
-    cwd: binariesDir,
-    stdout: `inherit`,
-    stderr: `inherit`,
-  }
-
-  switch (platform) {
-    case `win32`:
-      await execa(`mkdir`, [binariesDir], {
-        stdout: `inherit`,
-        stderr: `inherit`,
-      })
-
-      console.log(
-        `Downloading FFMPEG && FFPROBE (Note: This script is not yet tested on windows)`
-      )
-      await execa(
-        `curl`,
-        [
-          `-L`,
-          `-o`,
-          `ffmpeg.zip`,
-          `https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-latest-win64-static.zip`,
-        ],
-        execaConfig
-      )
-
-      console.log(`Unzipping FFMPEG && FFPROBE`)
-      await execa(`tar`, [`-xf`, `ffmpeg.zip`], execaConfig)
-
-      console.log(`Cleanup`)
-      await execa(`mv`, [`bin/*`, `.`], execaConfig)
-      await execa(`rm`, [`-rf`, `ffmpeg-latest-win64-static`], execaConfig)
-      break
-    case `linux`:
-      await execa(`mkdir`, [`-p`, binariesDir], {
-        stdout: `inherit`,
-        stderr: `inherit`,
-      })
-
-      console.log(`Downloading FFMPEG && FFPROBE`)
-      await execa(
-        `wget`,
-        [
-          `-O`,
-          `ffmpeg.zip`,
-          `https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz`,
-        ],
-        execaConfig
-      )
-
-      console.log(`Unzipping FFMPEG && FFPROBE`)
-      await execa(`tar`, [`-xf`, `ffmpeg.zip`, `--strip`, `1`], execaConfig)
-
-      console.log(`Cleanup`)
-      await execa(`rm`, [`ffmpeg.zip`, `ffmpeg-*`], execaConfig)
-      break
-    case `darwin`:
-      await execa(`mkdir`, [`-p`, binariesDir], {
-        stdout: `inherit`,
-        stderr: `inherit`,
-      })
-
-      console.log(`Downloading FFMPEG`)
-
-      await execa(
-        `curl`,
-        [
-          `-L`,
-          `-J`,
-          `-o`,
-          `ffmpeg.zip`,
-          `https://evermeet.cx/ffmpeg/getrelease/zip`,
-        ],
-        execaConfig
-      )
-
-      console.log(`Downloading FFPROBE`)
-      await execa(
-        `curl`,
-        [
-          `-L`,
-          `-o`,
-          `ffprobe.zip`,
-          `https://evermeet.cx/ffmpeg/getrelease/ffprobe/zip`,
-        ],
-        execaConfig
-      )
-
-      console.log(`Unzipping...`)
-      await execa(`unzip`, [`-o`, `ffmpeg.zip`], execaConfig)
-      await execa(`unzip`, [`-o`, `ffprobe.zip`], execaConfig)
-
-      console.log(`Cleanup...`)
-      await execa(`rm`, [`ffmpeg.zip`, `ffprobe.zip`], execaConfig)
-      break
-    default:
-      throw new Error(`Downloading FFMPEG for ${platform} is not supported`)
-  }
-}
-
 exports.onPreInit = async ({ store }, { downloadBinaries = true }) => {
   if (!downloadBinaries) {
     console.log(`Skipped download of FFMPEG & FFPROBE binaries`)
     return
   }
 
-  const arch = os.arch()
   const platform = os.platform()
 
   try {
     await libsAlreadyInstalled({ platform })
     console.log(`FFMPEG && FFPROBE are already available on this machine`)
   } catch {
+    const arch = os.arch()
     const program = store.getState().program
     const rootDirectory = program.directory
 
@@ -409,12 +300,10 @@ exports.onPreInit = async ({ store }, { downloadBinaries = true }) => {
       `node_modules`,
       `.cache`,
       `gatsby-transformer-video-bins`,
-      arch,
-      platform
+      `${platform}-${arch}`
     )
 
     try {
-      // Check if binaries already downloaded
       await libsAlreadyDownloaded({ binariesDir })
 
       console.log(`FFMPEG & FFPROBE binaries already downloaded`)
