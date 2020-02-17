@@ -78,7 +78,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
 exports.createResolvers = async (
   { createResolvers, store, cache, createNodeId, actions },
-  { ffmpegPath, ffprobePath, downloadBinaries, profiles = {} }
+  { ffmpegPath, ffprobePath, downloadBinaries = true, profiles = {} }
 ) => {
   const { createNode } = actions
 
