@@ -143,8 +143,9 @@ module.exports = async function build(program: BuildArgs) {
 
   // we need to save it again to make sure our latest state has been saved
   await db.saveState()
-
-  const pagePaths = [...store.getState().pages.keys()]
+  const pagePaths = [...store.getState().pages.values()].map(
+    page => page.truncatedPath
+  )
   activity = report.createProgress(
     `Building static HTML for pages`,
     pagePaths.length,

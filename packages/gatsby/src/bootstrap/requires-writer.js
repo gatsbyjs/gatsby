@@ -123,7 +123,7 @@ const getMatchPaths = pages => {
 const getTruncatedPaths = pages => {
   const pathMap = Object.create(null)
   for (const page of pages) {
-    pathMap[page.truncatedPath] = page.path
+    pathMap[page.path] = page.truncatedPath
   }
   return pathMap
 }

@@ -367,7 +367,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   const truncatedPath =
     page.path.length > 200
-      ? page.path.slice(0, 100) + strhash(path.path.slice(100))
+      ? page.path.slice(0, 100) + strhash(page.path.slice(100))
       : page.path
 
   const internalPage: Page = {
