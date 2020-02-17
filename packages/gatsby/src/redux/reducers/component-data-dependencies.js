@@ -1,5 +1,5 @@
 module.exports = (
-  state = { nodes: new Map(), connections: new Map(), pageData: new Map() },
+  state = { nodes: new Map(), connections: new Map() },
   action
 ) => {
   switch (action.type) {
@@ -46,12 +46,6 @@ module.exports = (
           val.delete(path)
         }
       })
-
-      if (state.pageData) {
-        for (const path of action.payload.paths) {
-          state.pageData.delete(path)
-        }
-      }
 
       return state
     // Don't delete data dependencies as we're now deleting transformed nodes
