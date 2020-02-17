@@ -11,6 +11,7 @@ import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import SimpleEvaluationTable from "../components/features/simple-evaluation-table"
+import PageWithSidebar from "../components/page-with-sidebar"
 
 const FeaturesHeader = () => (
   <section>
@@ -104,34 +105,36 @@ const FeaturesHeader = () => (
 class FeaturesPage extends Component {
   render() {
     return (
-      <Layout location={this.props.location} enableScrollSync={true}>
-        <Helmet>
-          <title>Features</title>
-          <meta
-            name="description"
-            content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
-          />
-        </Helmet>
-        <Container>
-          <main id={`reach-skip-nav`}>
-            <FeaturesHeader />
-            <SimpleEvaluationTable
-              title="Feature Comparison"
-              headers={[
-                { display: `Category`, nodeFieldProperty: `Category` },
-                { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
-                {
-                  display: `JAMstack frameworks`,
-                  nodeFieldProperty: `Jamstack`,
-                },
-                { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
-              ]}
-              data={this.props.data.allGatsbyFeaturesSpecsCsv.edges}
+      <Layout location={this.props.location}>
+        <PageWithSidebar location={this.props.location}>
+          <Helmet>
+            <title>Features</title>
+            <meta
+              name="description"
+              content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
             />
-            <FeaturesFooter />
-          </main>
-          <FooterLinks />
-        </Container>
+          </Helmet>
+          <Container>
+            <main id={`reach-skip-nav`}>
+              <FeaturesHeader />
+              <SimpleEvaluationTable
+                title="Feature Comparison"
+                headers={[
+                  { display: `Category`, nodeFieldProperty: `Category` },
+                  { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
+                  {
+                    display: `JAMstack frameworks`,
+                    nodeFieldProperty: `Jamstack`,
+                  },
+                  { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
+                ]}
+                data={this.props.data.allGatsbyFeaturesSpecsCsv.edges}
+              />
+              <FeaturesFooter />
+            </main>
+            <FooterLinks />
+          </Container>
+        </PageWithSidebar>
       </Layout>
     )
   }
