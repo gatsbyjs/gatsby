@@ -136,6 +136,8 @@ query {
 
 Generating videos take time. A lot. You should cache your results. Otherwise, you might not even be able to publish on your hosting platform.
 
+This plugin stores all converted files in `node_modules/.cache/gatsby-transformer-video/`
+
 Here is a list of plugins that can help you:
 
 - Netlify: https://www.gatsbyjs.org/packages/gatsby-plugin-netlify-cache/
