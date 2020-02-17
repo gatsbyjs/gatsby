@@ -57,6 +57,7 @@ Map {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "truncatedPath": "/hi/",
     "updatedAt": 1482363367071,
   },
   "/hi/pizza/" => Object {
@@ -69,6 +70,7 @@ Map {
     "path": "/hi/pizza/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "truncatedPath": "/hi/pizza/",
     "updatedAt": 1482363367071,
   },
 }
@@ -87,6 +89,7 @@ Object {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "truncatedPath": "/hi/",
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
@@ -109,6 +112,7 @@ Map {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "truncatedPath": "/hi/",
     "updatedAt": 1482363367071,
   },
 }
@@ -129,6 +133,7 @@ Object {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "truncatedPath": "/hi/",
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
@@ -153,6 +158,7 @@ Map {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "truncatedPath": "/hi/",
     "updatedAt": 1482363367071,
   },
 }
@@ -171,6 +177,7 @@ Object {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "truncatedPath": "/hi/",
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
@@ -193,6 +200,7 @@ Map {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "truncatedPath": "/hi/",
     "updatedAt": 1482363367071,
   },
 }
@@ -212,6 +220,7 @@ Map {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "truncatedPath": "/hi/",
     "updatedAt": 1482363367071,
   },
 }
