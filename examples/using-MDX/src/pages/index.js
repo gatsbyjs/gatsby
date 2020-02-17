@@ -6,8 +6,8 @@ import Layout from "../components/layout"
 const IndexPage = () => (
   <Layout>
     <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby blog with Markdown pages.</p>
-    <Link to="/blog/my-first-post/">Go to my first Markdown blog post</Link>
+    <p>Welcome to your new Gatsby blog with MDX.</p>
+    <Link to="/hello-world">Go to my first MDX page</Link>
   </Layout>
 )
 

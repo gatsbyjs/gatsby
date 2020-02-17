@@ -1,18 +1,18 @@
 module.exports = {
   siteMetadata: {
-    title: `gatsby-example-using-markdown-pages`,
-    description: `Start your new blog using markdown files`,
+    title: `gatsby-example-using-MDX`,
+    description: `Start your new blog using MDX`,
     author: `@gatsbyjs`,
   },
   plugins: [
+    `gatsby-plugin-mdx`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `markdown-pages`,
-        path: `${__dirname}/src/markdown-pages`,
+        name: `MDX-pages`,
+        path: `${__dirname}/src/MDX-pages`,
       },
     },
-    `gatsby-transformer-remark`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,

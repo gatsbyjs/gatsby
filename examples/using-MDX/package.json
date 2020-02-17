@@ -5,9 +5,13 @@
   "version": "0.1.0",
   "author": "@gatsbyjs",
   "dependencies": {
+    "@mdx-js/mdx": "^1.5.5",
+    "@mdx-js/react": "^1.5.5",
+    "fs": "0.0.1-security",
     "gatsby": "^2.3.34",
     "gatsby-image": "^2.0.41",
     "gatsby-plugin-manifest": "^2.0.29",
+    "gatsby-plugin-mdx": "^1.0.71",
     "gatsby-plugin-offline": "^2.0.25",
     "gatsby-plugin-react-helmet": "^3.0.12",
     "gatsby-plugin-sharp": "^2.0.35",
@@ -16,6 +20,7 @@
     "gatsby-transformer-sharp": "^2.1.18",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-color": "^2.18.0",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1"
   },
