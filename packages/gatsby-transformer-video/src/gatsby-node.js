@@ -6,11 +6,22 @@ import { GraphQLString, GraphQLInt, GraphQLFloat } from "gatsby/graphql"
 
 import FFMPEG from "./ffmpeg"
 
-import {
-  libsAlreadyInstalled,
-  libsAlreadyDownloaded,
-  downloadLibs,
-} from "./download-binaries"
+import { libsInstalled, libsAlreadyDownloaded, downloadLibs } from "./binaries"
+
+const platform = os.platform()
+const arch = os.arch()
+
+const CACHE_FOLDER_BIN = resolve(
+  `node_modules`,
+  `.cache`,
+  `gatsby-transformer-video-bin`,
+  `${platform}-${arch}`
+)
+const CACHE_FOLDER_VIDEOS = resolve(
+  `node_modules`,
+  `.cache`,
+  `gatsby-transformer-video`
+)
 
 class WrongFileTypeError extends Error {}
 
@@ -67,19 +78,30 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
 exports.createResolvers = async (
   { createResolvers, store, cache, createNodeId, actions },
-  { ffmpegPath, ffprobePath, profiles = {} }
+  { ffmpegPath, ffprobePath, downloadBinaries, profiles = {} }
 ) => {
   const { createNode } = actions
 
   const program = store.getState().program
   const rootDir = program.directory
-  const cacheDir = resolve(
-    rootDir,
-    `node_modules`,
-    `.cache`,
-    `gatsby-transformer-video`
-  )
+  const cacheDir = resolve(rootDir, CACHE_FOLDER_VIDEOS)
   await ensureDir(cacheDir)
+
+  const alreadyInstalled = await libsInstalled({ platform })
+
+  // Set paths to our own binaries
+  if (!alreadyInstalled && downloadBinaries && (!ffmpegPath || !ffprobePath)) {
+    ffmpegPath = resolve(
+      rootDir,
+      CACHE_FOLDER_BIN,
+      `ffmpeg${platform === `win32` && `.exe`}`
+    )
+    ffprobePath = resolve(
+      rootDir,
+      CACHE_FOLDER_BIN,
+      `ffprobe${platform === `win32` && `.exe`}`
+    )
+  }
 
   const ffmpeg = new FFMPEG({
     rootDir,
@@ -285,40 +307,33 @@ exports.onPreInit = async ({ store }, { downloadBinaries = true }) => {
     return
   }
 
-  const platform = os.platform()
+  const alreadyInstalled = await libsInstalled({ platform })
+
+  if (alreadyInstalled) {
+    console.log(`FFMPEG && FFPROBE are already available on this machine`)
+    return
+  }
+
+  const arch = os.arch()
+  const program = store.getState().program
+  const rootDir = program.directory
+  const binariesDir = resolve(rootDir, CACHE_FOLDER_BIN)
 
   try {
-    await libsAlreadyInstalled({ platform })
-    console.log(`FFMPEG && FFPROBE are already available on this machine`)
+    await libsAlreadyDownloaded({ binariesDir })
+
+    console.log(`FFMPEG & FFPROBE binaries already downloaded`)
   } catch {
-    const arch = os.arch()
-    const program = store.getState().program
-    const rootDirectory = program.directory
-
-    const binariesDir = resolve(
-      rootDirectory,
-      `node_modules`,
-      `.cache`,
-      `gatsby-transformer-video-bins`,
-      `${platform}-${arch}`
-    )
-
     try {
-      await libsAlreadyDownloaded({ binariesDir })
+      console.log(`FFMPEG & FFPROBE getting binaries for ${platform}@${arch}`)
 
-      console.log(`FFMPEG & FFPROBE binaries already downloaded`)
-    } catch {
-      try {
-        console.log(`FFMPEG & FFPROBE getting binaries for ${platform}@${arch}`)
+      await downloadLibs({ binariesDir, platform })
 
-        await downloadLibs({ binariesDir, platform })
-
-        console.log(
-          `Finished. This system is ready to convert videos with GatsbyJS`
-        )
-      } catch (err) {
-        throw err
-      }
+      console.log(
+        `Finished. This system is ready to convert videos with GatsbyJS`
+      )
+    } catch (err) {
+      throw err
     }
   }
 }

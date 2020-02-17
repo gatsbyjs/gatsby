@@ -3,11 +3,16 @@ import { resolve } from "path"
 import execa from "execa"
 import { access, ensureDir } from "fs-extra"
 
-export async function libsAlreadyInstalled({ platform }) {
-  const isInstalledCommand = platform === `win32` ? `WHERE` : `command`
-  const isInstalledParams = platform === `win32` ? [] : [`-v`]
-  await execa(isInstalledCommand, [...isInstalledParams, `ffmpeg`])
-  await execa(isInstalledCommand, [...isInstalledParams, `ffprobe`])
+export async function libsInstalled({ platform }) {
+  try {
+    const isInstalledCommand = platform === `win32` ? `WHERE` : `command`
+    const isInstalledParams = platform === `win32` ? [] : [`-v`]
+    await execa(isInstalledCommand, [...isInstalledParams, `ffmpeg`])
+    await execa(isInstalledCommand, [...isInstalledParams, `ffprobe`])
+    return true
+  } catch {
+    return false
+  }
 }
 
 export async function libsAlreadyDownloaded({ binariesDir }) {
