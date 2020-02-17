@@ -20,6 +20,7 @@ const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+const strhash = require(`string-hash`)
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -364,9 +365,15 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
+  const truncatedPath =
+    page.path.length > 200
+      ? page.path.slice(0, 100) + strhash(path.path.slice(100))
+      : page.path
+
   const internalPage: Page = {
     internalComponentName,
     path: page.path,
+    truncatedPath,
     matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
