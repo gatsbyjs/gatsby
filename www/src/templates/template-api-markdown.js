@@ -39,12 +39,14 @@ const normalizeGatsbyApiCall = array =>
     return { name: entry.name, codeLocation }
   })
 
-const mergeFunctions = (data, context) => {
+const mergeFunctions = (data, context, includeTopLevel) => {
   const normalized = normalizeGatsbyApiCall(data.nodeAPIs.group)
 
   const docs = data.jsdoc.nodes.reduce((acc, node) => {
     const doc = node.childrenDocumentationJs
-      .filter(def => def.kind !== `typedef` && def.memberof)
+      .filter(
+        def => def.kind !== `typedef` && (includeTopLevel || def.memberof)
+      )
       .map(def => {
         if (!context.apiCalls) {
           // When an api call list is not available, the line numbers from jsdoc
@@ -81,7 +83,11 @@ export default function APITemplate({ data, location, pageContext }) {
   const page = data.mdx
 
   // Cleanup graphql data for usage with API rendering components
-  const mergedFuncs = mergeFunctions(data, pageContext)
+  const mergedFuncs = mergeFunctions(
+    data,
+    pageContext,
+    page.frontmatter.includeTopLevel
+  )
   const description = page.frontmatter.description || page.excerpt
 
   return (
@@ -159,6 +165,7 @@ export const pageQuery = graphql`
         description
         contentsHeading
         showTopLevelSignatures
+        includeTopLevel
       }
       ...MarkdownPageFooterMdx
     }

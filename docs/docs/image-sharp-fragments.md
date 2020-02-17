@@ -2,6 +2,7 @@
 title: Image Sharp Fragments
 jsdoc: ["gatsby-transformer-sharp/src/fragments.js"]
 contentsHeading: Fragments
+includeTopLevel: true
 ---
 
 The following fragments are available in any site with `gatsby-transformer-sharp` installed and included in your `gatsby-config.js`.
