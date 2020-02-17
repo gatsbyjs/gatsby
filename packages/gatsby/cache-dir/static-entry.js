@@ -64,6 +64,12 @@ const getPageDataFile = pagePath => {
   return join(process.cwd(), `public`, pageDataPath)
 }
 
+const appDataPath = join(`page-data`, `app-data.json`)
+
+const getAppDataUrl = () => `${__PATH_PREFIX__}/${appDataPath}`
+
+const getAppDataFile = () => join(process.cwd(), `public`, appDataPath)
+
 const loadPageDataSync = pagePath => {
   const pageDataPath = getPageDataPath(pagePath)
   const pageDataFile = join(process.cwd(), `public`, pageDataPath)
@@ -168,8 +174,13 @@ export default (pagePath, callback) => {
   }
 
   const pageDataRaw = fs.readFileSync(getPageDataFile(pagePath))
-  const pageData = JSON.parse(pageDataRaw)
+  const pageData = JSON.parse(pageDataRaw.toString())
   const pageDataUrl = getPageDataUrl(pagePath)
+
+  const appDataRaw = fs.readFileSync(getAppDataFile())
+  const appData = JSON.parse(appDataRaw.toString())
+  const appDataUrl = getAppDataUrl()
+
   const { componentChunkName } = pageData
 
   class RouteHandler extends React.Component {
@@ -251,7 +262,7 @@ export default (pagePath, callback) => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
-      let namedChunkGroups = get(stats, `namedChunkGroups`)
+      const namedChunkGroups = get(stats, `namedChunkGroups`)
 
       if (!chunks) {
         return null
@@ -330,6 +341,17 @@ export default (pagePath, callback) => {
         rel="preload"
         key={pageDataUrl}
         href={pageDataUrl}
+        crossOrigin="anonymous"
+      />
+    )
+  }
+  if (appData) {
+    headComponents.push(
+      <link
+        as="fetch"
+        rel="preload"
+        key={appDataUrl}
+        href={appDataUrl}
         crossOrigin="anonymous"
       />
     )
