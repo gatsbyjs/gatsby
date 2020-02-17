@@ -47,6 +47,14 @@ module.exports = (
         }
       })
 
+      // if (state.pageData) {
+      //   state.pageData.forEach((val, _key) => {
+      //     for (const path of action.payload.paths) {
+      //       val.delete(path)
+      //     }
+      //   })
+      // }
+
       return state
     // Don't delete data dependencies as we're now deleting transformed nodes
     // when their parent is changed. WIth the code below as stands, this

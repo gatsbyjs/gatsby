@@ -126,5 +126,12 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
     isPage: queryJob.isPage,
   })
 
+  if (process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES && queryJob.isPage) {
+    boundActionCreators.setPageData({
+      id: queryJob.id,
+      result: { resultHash },
+    })
+  }
+
   return result
 }

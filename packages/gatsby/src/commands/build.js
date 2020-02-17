@@ -22,7 +22,7 @@ const {
 } = require(`../utils/jobs-manager`)
 const pageDataUtil = require(`../utils/page-data`)
 
-const previousState = readState()
+const cacheData = readState()
 
 type BuildArgs = {
   directory: string,
@@ -74,6 +74,7 @@ module.exports = async function build(program: BuildArgs) {
     processStaticQueries,
   } = queryUtil.getInitialQueryProcessors({
     parentSpan: buildSpan,
+    cacheData,
   })
 
   await processStaticQueries()
@@ -144,7 +145,7 @@ module.exports = async function build(program: BuildArgs) {
   await waitUntilAllJobsComplete()
 
   const pagePaths = process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES
-    ? await pageDataUtil.getChangedPageDataKeys(store.getState(), previousState)
+    ? pageDataUtil.getChangedPageDataKeys(store.getState(), cacheData)
     : [...store.getState().pages.keys()]
   activity = report.createProgress(
     `Building static HTML for pages`,
@@ -189,11 +190,21 @@ module.exports = async function build(program: BuildArgs) {
   if (process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES) {
     activity = report.activityTimer(`Delete previous page data`)
     activity.start()
-    deletedPageKeys = await pageDataUtil.removePreviousPageData(
-      program.directory,
+    deletedPageKeys = pageDataUtil.removePreviousPageData(
       store.getState(),
-      previousState
+      cacheData
     )
+
+    deletedPageKeys.forEach(value => {
+      if (value === `/`) {
+        fs.removeSync(`${program.directory}/public/index.html`)
+        fs.removeSync(`${program.directory}/public/page-data/index`)
+      } else {
+        fs.removeSync(`${program.directory}/public${value}`)
+        fs.removeSync(`${program.directory}/public/page-data${value}`)
+      }
+    })
+
     activity.end()
   }
 

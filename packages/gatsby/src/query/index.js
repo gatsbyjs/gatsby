@@ -158,15 +158,14 @@ const groupQueryIds = queryIds => {
   }
 }
 
-const processQueries = async (queryJobs, activity) => {
+const processQueries = async (queryJobs, activity, cacheData) => {
   const queue = queryQueue.createBuildQueue()
   await queryQueue.processBatch(queue, queryJobs, activity)
   if (process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES) {
     const { pages } = store.getState()
-    const { pageData } = readState()
 
-    if (pageData) {
-      pageData.forEach((_value, key) => {
+    if (cacheData && cacheData.pageData) {
+      cacheData.pageData.forEach((_value, key) => {
         if (!pages.has(key)) {
           boundActionCreators.removePageData({
             id: key,
@@ -220,7 +219,7 @@ const processStaticQueries = async (queryIds, { state, activity }) => {
   )
 }
 
-const processPageQueries = async (queryIds, { state, activity }) => {
+const processPageQueries = async (queryIds, { state, activity }, cacheData) => {
   state = state || store.getState()
   // Make sure we filter out pages that don't exist. An example is
   // /dev-404-page/, whose SitePage node is created via
@@ -233,7 +232,7 @@ const processPageQueries = async (queryIds, { state, activity }) => {
   )
 }
 
-const getInitialQueryProcessors = ({ parentSpan } = {}) => {
+const getInitialQueryProcessors = ({ parentSpan, cacheData } = {}) => {
   const state = store.getState()
   const queryIds = calcInitialDirtyQueryIds(state)
   const { staticQueryIds, pageQueryIds } = groupQueryIds(queryIds)
@@ -244,12 +243,12 @@ const getInitialQueryProcessors = ({ parentSpan } = {}) => {
 
   let activity = null
   let processedQueuesCount = 0
-  const createProcessor = (fn, queryIds) => async () => {
+  const createProcessor = (fn, queryIds, cacheData) => async () => {
     if (!activity) {
       activity = createQueryRunningActivity(queryjobsCount, parentSpan)
     }
 
-    await fn(queryIds, { state, activity })
+    await fn(queryIds, { state, activity }, cacheData)
 
     processedQueuesCount++
     // if both page and static queries are done, finish activity
@@ -260,7 +259,11 @@ const getInitialQueryProcessors = ({ parentSpan } = {}) => {
 
   return {
     processStaticQueries: createProcessor(processStaticQueries, staticQueryIds),
-    processPageQueries: createProcessor(processPageQueries, pageQueryIds),
+    processPageQueries: createProcessor(
+      processPageQueries,
+      pageQueryIds,
+      cacheData
+    ),
     pageQueryIds,
   }
 }
