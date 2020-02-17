@@ -196,8 +196,6 @@ const preferDefault = m => m && m.default || m
       .then(() => fs.move(tmp, destination, { overwrite: true }))
   }
 
-  console.log(truncatedPaths)
-
   await Promise.all([
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
