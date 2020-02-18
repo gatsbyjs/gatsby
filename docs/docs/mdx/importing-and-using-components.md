@@ -61,4 +61,4 @@ The Chart is also available since it was passed into the MDXProvider:
 <Chart /> // highlight-line
 ```
 
-Because the `<Message />` and `<Chart />` components were passed into the provider, they are imported for you at the top of all MDX documents.
+Because the `<Message />` and `<Chart />` components were passed into the provider, they are available for use in all MDX documents.
