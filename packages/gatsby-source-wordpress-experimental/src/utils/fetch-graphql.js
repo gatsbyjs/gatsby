@@ -29,6 +29,15 @@ const handleGraphQLErrors = async ({
     return
   }
 
+  // if we have json data, the error wasn't critical.
+  if (
+    json &&
+    json.data &&
+    pluginOptions.debug.graphql.onlyReportCriticalErrors
+  ) {
+    return
+  }
+
   for (const error of errors) {
     const errorWasMapped =
       errorMap &&

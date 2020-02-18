@@ -10,6 +10,7 @@ const defaultPluginOptions = {
       showQueryVarsOnError: false,
       copyQueryOnError: false,
       panicOnError: false,
+      onlyReportCriticalErrors: true,
     },
   },
   develop: {
