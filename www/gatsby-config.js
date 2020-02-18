@@ -213,7 +213,7 @@ module.exports = {
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
           // convert images using http to https in plugin library READMEs
-          `gatsby-remark-http-to-https`
+          `gatsby-remark-http-to-https`,
         ],
       },
     },
@@ -344,6 +344,12 @@ module.exports = {
       resolve: `gatsby-transformer-screenshot`,
       options: {
         nodeTypes: [`StartersYaml`],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-i18n`,
+      options: {
+        languages: langs.map(lang => lang.code),
       },
     },
     // `gatsby-plugin-subfont`,
