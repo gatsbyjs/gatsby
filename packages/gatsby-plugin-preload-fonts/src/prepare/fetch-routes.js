@@ -36,7 +36,10 @@ ${red(`err`)} could not establish a connection with the dev server
   }
 
   const routesHash = createContentDigest(routes)
+  // We can't detect all new routes so to make sure we are up to date
+  // we ask the user if he wants to recrawl or not.
   if (cache.hash === routesHash) {
+    // In CI we can't ask the user anything so we will bail as if the user said no.
     if (isCI()) {
       process.exit(0)
     }
@@ -52,7 +55,9 @@ ${red(`err`)} could not establish a connection with the dev server
          - ${dim(`route hash`)} ${bold(cache.hash)}
 
 `)
-    if (!ok) process.exit(0)
+    if (!ok) {
+      process.exit(0)
+    }
   }
 
   return routes
