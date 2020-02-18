@@ -1,6 +1,7 @@
 import gqlPrettier from "graphql-prettier"
 import axios from "axios"
 import rateLimit from "axios-rate-limit"
+import chalk from "chalk"
 import { formatLogMessage } from "./format-log-message"
 import store from "~/store"
 import { getPluginOptions } from "./get-gatsby-api"
@@ -18,7 +19,6 @@ const handleGraphQLErrors = async ({
   errorMap,
   panicOnError,
   reporter,
-  url,
 }) => {
   const pluginOptions = getPluginOptions()
 
@@ -84,7 +84,9 @@ ${
 
 // @todo add a link to docs page for debugging
 const genericError = ({ url }) =>
-  `"${url}" isn't responding.\n\n Take a moment to check that \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress site`
+  `GraphQL request to ${chalk.bold(url)} failed.\n\n ${chalk.bold(
+    `Please ensure the following statements are true`
+  )} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress backend`
 
 const handleFetchErrors = ({ e, reporter, url }) => {
   if (e.message.includes(`timeout of ${timeout}ms exceeded`)) {
