@@ -489,3 +489,13 @@
   for_hire: false
   hiring: true
   portfolio: false
+- name: Ahmad Awais
+  type: individual
+  description: >-
+    Ahmad Awais is an award-winning open-source engineer and a Google Developers Expert. As a principal developer advocate, he cares deeply about developers and developer experience. Author of various open-source dev-tools and software libraries used by millions of developers worldwide. Like the Shades of Purple code-theme. He’s known for his open-source community contributions in the Node.js Community Committee as well as a decade of that in the WordPress Core software (which empowers 1/3rd of the web). He’s a TEDx Speaker, a member of SmashingMagazine Experts Panel, featured/published author at CSS-Tricks, Tuts+, Scotch.io, SitePoint, and a self-confessed tech-comedian. You can find Awais most active on Twitter @MrAhmadAwais, where he tweets #OneDevMinute dev tips and cracks silly tech jokes in the JavaScript web and cloud communities.
+  location: Canada
+  website: "https://ahmadawais.com/"
+  github: "https://github.com/ahmadawais"
+  image: images/ahmad-awais.jpg
+  for_hire: true
+  portfolio: true
