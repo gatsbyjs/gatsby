@@ -33,16 +33,20 @@ configure(require.context("../src", true, /\.stories\.js$/), module)
 
 // highlight-start
 // Gatsby's Link overrides:
-// Gatsby defines a global called ___loader to prevent its method calls from creating console errors you override it here
+// Gatsby defines a global variable called ___loader to prevent its method
+// calls from creating console errors. This overrides those method calls.
 global.___loader = {
   enqueue: () => {},
   hovering: () => {},
 }
 
-// Gatsby internal mocking to prevent unnecessary errors in storybook testing environment
+// Gatsby internal mocking to prevent unnecessary errors in the Storybook
+// testing environment
 global.__PATH_PREFIX__ = ""
 
-// This is to utilized to override the window.___navigate method Gatsby defines and uses to report what path a Link would be taking us to if it wasn't inside a storybook
+// Gatsby defines and uses a window.___navigate method to report what path
+// a Link would be take in a traditional Gatsby-based website. This overrides
+// that method when rendering within Storybook.
 window.___navigate = pathname => {
   action("NavigateTo:")(pathname)
 }
