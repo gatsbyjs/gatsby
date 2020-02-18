@@ -337,7 +337,10 @@
               link: /docs/mdx/getting-started/
             - title: Writing Pages
               link: /docs/mdx/writing-pages/
-            - title: Customizing Components
+            - title: Importing and Using Components in MDX
+              link: /docs/mdx/importing-and-using-components/
+              breadcrumbTitle: Importing and Using Components
+            - title: Customizing Markdown Components
               link: /docs/mdx/customizing-components/
             - title: Programmatically Creating Pages
               link: /docs/mdx/programmatically-creating-pages/
