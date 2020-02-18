@@ -9722,6 +9722,17 @@
   built_by: Hazem Osama
   built_by_url: https://github.com/hazem3500
   featured: false
+- title: Indra Kusuma Profile Page
+  url: https://indrakusuma.web.id/me/
+  main_url: https://indrakusuma.web.id/me/
+  description: >
+    Hi! I'm Indra Kusuma. I am an optimistic and type of person of learn by doing who have an interest in Software Engineering, specifically about Web Development.
+  categories:
+    - Landing Page
+    - Blog
+  built_by: Indra Kusuma
+  built_by_url: https://github.com/idindrakusuma/me
+  featured: false
 - title: Lukas Horak
   main_url: https://lukashorak.com
   url: https://lukashorak.com
