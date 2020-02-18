@@ -28,7 +28,7 @@ You may want to retrieve a list of the pages that were built. For example, if yo
 
 To list the paths in the build assets (`public`) folder, you can use one (or both) of the following arguments in your `build` command.
 
-- `--log-pages` outputs the updated paths to the console at the end of the build
+- `--log-pages` parameter will output all the file paths that were updated or deleted at the end of the build stage.
 
 ```bash
 success Building production JavaScript and CSS bundles - 82.198s
@@ -51,23 +51,6 @@ Done in 154.501 sec
   - `deletedPages.txt` will contain a list of paths that have been deleted
 
 If there are no changed or deleted paths, then the relevant files will not be created in the `.cache` folder.
-
-The `--log-pages` parameter will output all the file paths that were updated or deleted at the end of the build stage.
-
-```bash
-success Building production JavaScript and CSS bundles - 82.198s
-success run queries - 82.762s - 4/4 0.05/s
-success Building static HTML for pages - 19.386s - 2/2 0.10/s
-+ success Delete previous page data - 1.512s
-info Done building in 152.084 sec
-+ info Built pages:
-+ Updated page: /about
-+ Updated page: /accounts/example
-+ info Deleted pages:
-+ Deleted page: /test
-
-Done in 154.501 sec
-```
 
 ## More information
 
