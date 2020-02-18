@@ -209,7 +209,7 @@ export const query = graphql`
 `
 ```
 
-And now visit [http://localhost:8000/my-files](http://localhost:8000/my-files)… 😲
+And now visit `http://localhost:8000/my-files`… 😲
 
 ![my-files-page](my-files-page.png)
 

@@ -22,7 +22,7 @@ your site.
    gatsby develop
    ```
 
-1. **Open the site** running at http://localhost:8000
+1. **Open the site** running at `http://localhost:8000`
 
 1. **Update the MDX content** by opening the `my-mdx-starter` directory
    in your code editor of choice and edit `src/pages/index.mdx`.
