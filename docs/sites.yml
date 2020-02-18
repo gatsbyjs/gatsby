@@ -9789,3 +9789,16 @@
   built_by: Taskade
   built_by_url: https://github.com/taskade
   featured: false
+- title: PWD
+  url: https://pwd.com.au
+  main_url: https://pwd.com.au
+  description: >
+    PWD is a full service web marketing, design, and development agency in Perth, Western Australia.
+  categories:
+    - Blog
+    - Portfolio
+    - WordPress
+    - Business
+  built_by: Alex Moon
+  built_by_url: https://moonmeister.net
+  featured: false
