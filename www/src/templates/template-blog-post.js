@@ -226,20 +226,7 @@ class BlogPostTemplate extends React.Component {
           }}
         >
           <Container>
-            <PrevAndNext
-              prev={
-                prev && {
-                  title: prev.frontmatter.title,
-                  link: prev.fields.slug,
-                }
-              }
-              next={
-                next && {
-                  title: next.frontmatter.title,
-                  link: next.fields.slug,
-                }
-              }
-            />
+            <PrevAndNext prev={prev} next={next} />
           </Container>
           <FooterLinks />
         </div>
