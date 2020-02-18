@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.17...gatsby@2.19.18) (2020-02-17)
+
+### Bug Fixes
+
+- **gatsby:** Fix an edge case with sift queries using index ([#21458](https://github.com/gatsbyjs/gatsby/issues/21458)) ([b7e6bb1](https://github.com/gatsbyjs/gatsby/commit/b7e6bb1))
+
 ## [2.19.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.16...gatsby@2.19.17) (2020-02-13)
 
 ### Bug Fixes
