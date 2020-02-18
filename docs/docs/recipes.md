@@ -107,6 +107,7 @@ Access images as static resources, or automate the process of optimizing them th
 Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more).
 
 - [Transforming Markdown into HTML](/docs/recipes/transforming-data#transforming-markdown-into-html)
+- [Transforming images into grayscale using GraphQL](/docs/recipes/transforming-data#transforming-images-into-grayscale-using-graphql)
 
 ## [9. Deploying your site](/docs/recipes/deploying-your-site)
 

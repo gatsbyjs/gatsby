@@ -47,6 +47,11 @@
               link: /docs/gatsby-on-linux/
             - title: Configuring CA Certificates
               link: /docs/configuring-ca-certificates/
+        - title: A/B Testing
+          link: /docs/ab-testing/
+          items:
+            - title: A/B Testing with Google Analytics & Netlify
+              link: /docs/ab-testing-with-google-analytics-and-netlify/
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
@@ -332,7 +337,10 @@
               link: /docs/mdx/getting-started/
             - title: Writing Pages
               link: /docs/mdx/writing-pages/
-            - title: Customizing Components
+            - title: Importing and Using Components in MDX
+              link: /docs/mdx/importing-and-using-components/
+              breadcrumbTitle: Importing and Using Components
+            - title: Customizing Markdown Components
               link: /docs/mdx/customizing-components/
             - title: Programmatically Creating Pages
               link: /docs/mdx/programmatically-creating-pages/
@@ -459,6 +467,8 @@
                   link: /docs/building-an-ecommerce-site-with-shopify/
                 - title: Processing Payments with Stripe
                   link: /docs/processing-payments-with-stripe/
+                - title: Processing Payments with Square
+                  link: /docs/processing-payments-with-square/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -724,6 +734,10 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: Continuous Deployment
+          link: /docs/glossary/continuous-deployment
+        - title: Decoupled Drupal
+          link: /docs/glossary/decoupled-drupal
         - title: GraphQL
           link: /docs/glossary/graphql
         - title: Headless CMS

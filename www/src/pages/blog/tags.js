@@ -12,6 +12,7 @@ import Button from "../../components/button"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
+import FooterLinks from "../../components/shared/footer-links"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import { themedInput } from "../../utils/styles"
 import { colors, space, mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -211,6 +212,7 @@ class TagsPage extends React.Component {
             </ul>
           </div>
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }

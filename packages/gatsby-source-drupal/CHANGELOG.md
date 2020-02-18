@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.18...gatsby-source-drupal@3.3.19) (2020-02-14)
+
+### Features
+
+- **gatsby-source-drupal:** Add Drupal JSON:API Includes support ([#21380](https://github.com/gatsbyjs/gatsby/issues/21380)) ([ba3502e](https://github.com/gatsbyjs/gatsby/commit/ba3502e))
+
 ## [3.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.17...gatsby-source-drupal@3.3.18) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-source-drupal
