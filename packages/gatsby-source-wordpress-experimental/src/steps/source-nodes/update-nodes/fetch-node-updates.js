@@ -1,4 +1,4 @@
-import { CREATED_NODE_IDS } from "~/constants"
+import { CREATED_NODE_IDS, LAST_COMPLETED_SOURCE_TIME } from "~/constants"
 import { fetchAndRunWpActions } from "./wp-actions"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
@@ -22,6 +22,10 @@ const fetchAndApplyNodeUpdates = async ({ since, intervalRefetching }) => {
       formatLogMessage(`pull updates since last build`)
     )
     activity.start()
+  }
+
+  if (!since) {
+    since = await cache.get(LAST_COMPLETED_SOURCE_TIME)
   }
 
   // Check with WPGQL to create, delete, or update cached WP nodes

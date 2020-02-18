@@ -1,22 +1,13 @@
-import { LAST_COMPLETED_SOURCE_TIME } from "~/constants"
 import fetchAndApplyNodeUpdates from "./fetch-node-updates"
 import { formatLogMessage } from "~/utils/format-log-message"
 import store from "~/store"
 
-const refetcher = async api => {
-  const { cache, helpers, pluginOptions, msRefetchInterval } = api
-  const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
+const refetcher = async msRefetchInterval => {
+  await fetchAndApplyNodeUpdates({
+    intervalRefetching: true,
+  })
 
-  await fetchAndApplyNodeUpdates(
-    {
-      since: lastCompletedSourceTime,
-      intervalRefetching: true,
-    },
-    helpers,
-    pluginOptions
-  )
-
-  setTimeout(() => refetcher(api), msRefetchInterval)
+  setTimeout(() => refetcher(msRefetchInterval), msRefetchInterval)
 }
 
 /**
@@ -24,7 +15,6 @@ const refetcher = async api => {
  * so we can update Gatsby nodes when data changes
  */
 const startPollingForContentUpdates = (helpers, pluginOptions) => {
-  const { cache } = helpers
   const { verbose } = store.getState().gatsbyApi.pluginOptions
 
   const msRefetchInterval =
@@ -39,7 +29,7 @@ const startPollingForContentUpdates = (helpers, pluginOptions) => {
     helpers.reporter.info(formatLogMessage`Watching for WordPress changes`)
   }
 
-  refetcher({ cache, helpers, pluginOptions, msRefetchInterval })
+  refetcher(msRefetchInterval)
 }
 
 export { startPollingForContentUpdates }
