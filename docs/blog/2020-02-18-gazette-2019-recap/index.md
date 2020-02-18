@@ -36,13 +36,13 @@ The `useStaticQuery` hook was the first minor release in 2019. [Sid Chatterjee](
 
 #### [2019-03-19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.39...gatsby@2.2.0)
 
-This was a huge milestone in the development of Gatsby's GraphQL data layer. Built by [Mikhail Novikov](https://twitter.com/freiksenet) and [Stefan Probst](https://github.com/stefanprobst), this enabled users to declare their own custom GraphQL schema. Before this, your site's schema was exclusively inferred by Gatsby leading to a dependency on data and making it brittle. Read more about [Schema Customization](https://www.gatsbyjs.org/blog/2019-03-18-releasing-new-schema-customization/) in the release blog post.
+This was a huge milestone in the development of Gatsby's GraphQL data layer. Built by [Mikhail Novikov](https://twitter.com/freiksenet) and [Stefan Probst](https://github.com/stefanprobst), this enabled users to declare their own custom GraphQL schema. Before this, your site's schema was exclusively inferred by Gatsby leading to a dependency on data and making it brittle. Read more about [Schema Customization](/blog/2019-03-18-releasing-new-schema-customization/) in the release blog post.
 
 ### 2.3.0: Telemetry
 
 #### [2019-03-26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.13...gatsby@2.3.0)
 
-Gatsby 2.3.0 marked the release of telemetry in Gatsby. Built by [Jarmo Isotalo](https://twitter.com/JarmoIsotalo), Telemetry is [anonymous analytics data](https://www.gatsbyjs.org/docs/telemetry/) that we send back to Gatsby to better understand the way our users interact with Gatsby CLI. This makes common errors _visible_ to the team and enables them to fix them even sooner.
+Gatsby 2.3.0 marked the release of telemetry in Gatsby. Built by [Jarmo Isotalo](https://twitter.com/JarmoIsotalo), Telemetry is [anonymous analytics data](/docs/telemetry/) that we send back to Gatsby to better understand the way our users interact with Gatsby CLI. This makes common errors _visible_ to the team and enables them to fix them even sooner.
 
 ### 2.4.0: Asset Prefix
 
@@ -78,7 +78,7 @@ Another release by [Stefan Probst](https://github.com/stefanprobst), this added 
 
 #### [2019-06-11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.8.8...gatsby@2.9.0)
 
-This release by [Anthony Marcar](https://github.com/moocar) was a _fundamental_ change to the Gatsby runtime, changing how page data is stored and fetched. Not only did this enable building larger Gatsby sites than before (we're talking in the order of thousands of pages) but also reduced the overhead of loading Gatsby pages from a linearly growing metric to constant. Read more about this in the [Per Page Manifest release blog post](https://www.gatsbyjs.org/blog/2019-06-12-performance-improvements-for-large-sites/).
+This release by [Anthony Marcar](https://github.com/moocar) was a _fundamental_ change to the Gatsby runtime, changing how page data is stored and fetched. Not only did this enable building larger Gatsby sites than before (we're talking in the order of thousands of pages) but also reduced the overhead of loading Gatsby pages from a linearly growing metric to constant. Read more about this in the [Per Page Manifest release blog post](/blog/2019-06-12-performance-improvements-for-large-sites/).
 
 ### 2.10.0: Drop Node 6
 
@@ -138,7 +138,7 @@ There’s a _lot_ more that’s not included here including error message upgrad
 
 ## 2020
 
-We started off this year on a solid note with the release of [Gatsby Builds](https://www.gatsbyjs.org/blog/2020-01-27-announcing-gatsby-builds-and-reports/), the _fastest_ way to build your Gatsby sites in the cloud. In OSS land, we've done plenty already as well.
+We started off this year on a solid note with the release of [Gatsby Builds](/blog/2020-01-27-announcing-gatsby-builds-and-reports/), the _fastest_ way to build your Gatsby sites in the cloud. In OSS land, we've done plenty already as well.
 
 ### Internationalizing Gatsby Docs
 
@@ -146,7 +146,7 @@ We started off this year on a solid note with the release of [Gatsby Builds](htt
 
 ### Accessible routing
 
-[Madalyn Parker](https://twitter.com/madalynrose) released [Accessible Client Side Routing](https://www.gatsbyjs.org/blog/2020-02-10-accessible-client-side-routing-improvements/) in Gatsby in 2.19.8. These improvements enable people relying on screen readers to successfully navigate sites built with Gatsby.
+[Madalyn Parker](https://twitter.com/madalynrose) released [Accessible Client Side Routing](/blog/2020-02-10-accessible-client-side-routing-improvements/) in Gatsby in 2.19.8. These improvements enable people relying on screen readers to successfully navigate sites built with Gatsby.
 
 ### Build performance
 
