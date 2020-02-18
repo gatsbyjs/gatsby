@@ -9745,3 +9745,15 @@
     - Business
   built_by: Alexandra Thomas
   built_by_url: "https://alexandracthomas.com/"
+- title: Taskade
+  main_url: https://taskade.com
+  url: https://taskade.com
+  description: >
+    Taskade is the unified workspace for distributed teams. Collaborate and organize in real-time to get things done, faster and smarter.
+  categories:
+    - App
+    - Business
+    - Productivity
+  built_by: Taskade
+  built_by_url: https://github.com/taskade
+  featured: false
