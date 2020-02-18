@@ -48,11 +48,12 @@ const ensureWindowsDriveIsUppercase = filePath => {
     : filePath
 }
 
-const truncatePath = path => {
+export const truncatePath = path => {
   if (path === `/`) return path
   const pathParts = path.split(`/`).filter(Boolean)
   const truncatedParts = pathParts.map(pathPart => {
-    if (pathPart.length > 200) {
+    // OS limit is 255 characters
+    if (pathPart.length > 255) {
       return pathPart.slice(0, 100) + strhash(pathPart.slice(100))
     }
     return pathPart
