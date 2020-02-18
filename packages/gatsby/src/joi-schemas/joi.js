@@ -10,6 +10,7 @@ const addLeadingSlash = chain =>
 export const gatsbyConfigSchema = Joi.object()
   .keys({
     __experimentalThemes: Joi.array(),
+    truncateLongPaths: Joi.boolean().default(false),
     polyfill: Joi.boolean().default(true),
     assetPrefix: stripTrailingSlash(
       Joi.string().uri({

@@ -48,6 +48,18 @@ const ensureWindowsDriveIsUppercase = filePath => {
     : filePath
 }
 
+const truncatePath = path => {
+  if (path === `/`) return path
+  const pathParts = path.split(`/`).filter(Boolean)
+  const truncatedParts = pathParts.map(pathPart => {
+    if (pathPart.length > 200) {
+      return pathPart.slice(0, 100) + strhash(pathPart.slice(100))
+    }
+    return pathPart
+  })
+  return `/${truncatedParts.join(``)}`
+}
+
 const findChildren = initialChildren => {
   const children = [...initialChildren]
   const queue = [...initialChildren]
@@ -365,15 +377,25 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
-  const truncatedPath =
-    page.path.length > 200
-      ? page.path.slice(0, 100) + strhash(page.path.slice(100))
-      : page.path
+  const truncateLongPaths = store.getState().config.truncateLongPaths
+  const pagePath = truncateLongPaths ? truncatePath(page.path) : page.path
+
+  if (pagePath.length > 200) {
+    report.panic({
+      id: `11331`,
+      context: {
+        pluginName: name,
+        api: `createPages`,
+        message: chalk.bold.yellow(
+          `This path contains directory/file names that exceed OS character limit`
+        ),
+      },
+    })
+  }
 
   const internalPage: Page = {
     internalComponentName,
     path: page.path,
-    truncatedPath,
     matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
