@@ -9709,6 +9709,21 @@
   built_by: Durgesh Gupta
   built_by_url: https://durgeshgupta.com
   featured: false
+- title: Artem Sapegin’s Blog
+  description: >
+    Blog of a Berlin based coffee first frontend engineer who works at Omio, makes photos and hangs out with his dogs.
+  main_url: https://blog.sapegin.me/
+  url: https://blog.sapegin.me/
+  source_url: https://github.com/sapegin/blog.sapegin.me
+  categories:
+    - Blog
+    - Open Source
+    - Web Development
+    - JavaScript
+    - Programming
+    - Technology
+  built_by: Artem Sapegin
+  built_by_url: https://github.com/sapegin
 - title: adam.ai
   url: https://adam.ai/
   main_url: https://adam.ai/
@@ -9788,4 +9803,17 @@
     - Productivity
   built_by: Taskade
   built_by_url: https://github.com/taskade
+  featured: false
+- title: PWD
+  url: https://pwd.com.au
+  main_url: https://pwd.com.au
+  description: >
+    PWD is a full service web marketing, design, and development agency in Perth, Western Australia.
+  categories:
+    - Blog
+    - Portfolio
+    - WordPress
+    - Business
+  built_by: Alex Moon
+  built_by_url: https://moonmeister.net
   featured: false
