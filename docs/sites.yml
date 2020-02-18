@@ -9709,6 +9709,21 @@
   built_by: Durgesh Gupta
   built_by_url: https://durgeshgupta.com
   featured: false
+- title: Artem Sapegin’s Blog
+  description: >
+    Blog of a Berlin based coffee first frontend engineer who works at Omio, makes photos and hangs out with his dogs.
+  main_url: https://blog.sapegin.me/
+  url: https://blog.sapegin.me/
+  source_url: https://github.com/sapegin/blog.sapegin.me
+  categories:
+    - Blog
+    - Open Source
+    - Web Development
+    - JavaScript
+    - Programming
+    - Technology
+  built_by: Artem Sapegin
+  built_by_url: https://github.com/sapegin
 - title: adam.ai
   url: https://adam.ai/
   main_url: https://adam.ai/
