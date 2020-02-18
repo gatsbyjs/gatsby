@@ -464,6 +464,8 @@
                   link: /docs/building-an-ecommerce-site-with-shopify/
                 - title: Processing Payments with Stripe
                   link: /docs/processing-payments-with-stripe/
+                - title: Processing Payments with Square
+                  link: /docs/processing-payments-with-square/
         - title: Improving Performance
           link: /docs/performance/
           items:
