@@ -174,5 +174,4 @@ This includes
 
 We're really looking forward to making Gatsby even better than it is! Thank you for reading and until next time.
 
-❤️,
-Sid and the Gatsby core team
+❤️
