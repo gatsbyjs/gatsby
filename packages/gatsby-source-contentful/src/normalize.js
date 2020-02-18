@@ -221,7 +221,7 @@ exports.buildForeignReferenceMap = ({
 }
 
 function prepareTextNode(node, key, text, createNodeId) {
-  const str = _.isString(text) ? text : ` `
+  const str = _.isString(text) ? text : ``
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
     parent: node.id,

@@ -12,6 +12,10 @@ export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
   partiallyActive?: boolean
   /** Used to declare that this link replaces the current URL in history with the target */
   replace?: boolean
+  /** Used to pass state data to the linked page.
+   * The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
+   */
+  state?: TState
   /** The URL you want to link to */
   to: string
 }

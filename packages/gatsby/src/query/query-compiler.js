@@ -18,8 +18,6 @@ const {
   visitWithTypeInfo,
   TypeInfo,
   isAbstractType,
-  isObjectType,
-  isInterfaceType,
   Kind,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
@@ -431,7 +429,7 @@ const determineUsedFragmentsForDefinition = (
   definition,
   definitionsByName,
   fragmentsUsedByFragment,
-  visitedFragments = new Set()
+  traversalPath = []
 ) => {
   const { def, name, isFragment, filePath } = definition
   const cachedUsedFragments = fragmentsUsedByFragment.get(name)
@@ -445,10 +443,12 @@ const determineUsedFragmentsForDefinition = (
         const name = node.name.value
         const fragmentDefinition = definitionsByName.get(name)
         if (fragmentDefinition) {
-          if (visitedFragments.has(name)) {
+          if (traversalPath.includes(name)) {
+            // Already visited this fragment during current traversal.
+            //   Visiting it again will cause a stack overflow
             return
           }
-          visitedFragments.add(name)
+          traversalPath.push(name)
           usedFragments.add(name)
           const {
             usedFragments: usedFragmentsForFragment,
@@ -457,8 +457,9 @@ const determineUsedFragmentsForDefinition = (
             fragmentDefinition,
             definitionsByName,
             fragmentsUsedByFragment,
-            visitedFragments
+            traversalPath
           )
+          traversalPath.pop()
           usedFragmentsForFragment.forEach(fragmentName =>
             usedFragments.add(fragmentName)
           )
@@ -494,7 +495,7 @@ const addExtraFields = (document, schema) => {
       [Kind.SELECTION_SET]: node => {
         // Entering selection set:
         //   selection sets can be nested, so keeping their metadata stacked
-        contextStack.push({ hasTypename: false, hasId: false })
+        contextStack.push({ hasTypename: false })
       },
       [Kind.FIELD]: node => {
         // Entering a field of the current selection-set:
@@ -505,9 +506,6 @@ const addExtraFields = (document, schema) => {
           node?.alias?.value === `__typename`
         ) {
           context.hasTypename = true
-        }
-        if (node.name.value === `id` || node?.alias?.value === `id`) {
-          context.hasId = true
         }
       },
     },
@@ -525,16 +523,6 @@ const addExtraFields = (document, schema) => {
             name: { kind: Kind.NAME, value: `__typename` },
           })
         }
-        if (
-          !context.hasId &&
-          (isObjectType(parentType) || isInterfaceType(parentType)) &&
-          hasIdField(parentType)
-        ) {
-          extraFields.push({
-            kind: Kind.FIELD,
-            name: { kind: Kind.NAME, value: `id` },
-          })
-        }
         return extraFields.length > 0
           ? { ...node, selections: [...extraFields, ...node.selections] }
           : undefined
@@ -543,10 +531,4 @@ const addExtraFields = (document, schema) => {
   })
 
   return visit(document, transformer)
-}
-
-const hasIdField = type => {
-  const idField = type.getFields()[`id`]
-  const fieldType = idField ? String(idField.type) : ``
-  return fieldType === `ID` || fieldType === `ID!`
 }
