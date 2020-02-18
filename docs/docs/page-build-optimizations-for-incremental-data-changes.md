@@ -75,6 +75,6 @@ Done in 154.501 sec
 
 - To enable this build option you will need to set an environment variable, so you will need access to set variables in your build environment
 
-- At the end of each build, gatsby creates a `redux.state` file in `/.cache` that containing the all previous build data. You will need to persist the `.cache/redux.state` between builds, allowing for comparison, if there is no `redux.state` file located in the `/.cache` the folder then a full build will be triggered
+- At the end of each build, gatsby creates a `redux.state` file in `/.cache` that contains the all previous build data. You will need to persist the `.cache/redux.state` between builds, allowing for comparison, if there is no `redux.state` file located in the `/.cache` folder then a full build will be triggered
 
 - Any code or static query changes (templates, components, source handling, new plugins etc) creates a new webpack compilation hash and triggers a full build
