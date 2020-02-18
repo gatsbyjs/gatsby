@@ -381,7 +381,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const truncateLongPaths = store.getState().config.truncateLongPaths
   const pagePath = truncateLongPaths ? truncatePath(page.path) : page.path
 
-  if (pagePath.length > 200) {
+  if (pagePath.length > 255) {
     report.panic({
       id: `11331`,
       context: {
