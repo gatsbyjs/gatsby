@@ -24,7 +24,7 @@ As a Gatsby Developer, you want to ensure that everyone can access your work, in
 
 #### Images
 
-Become familiar with [eslint-plugin-jsx-a11y](/docs/making-your-site-accessible/#linting-with-eslint-plugin-jsx-a11y). Gatsby ships with the eslint-plugin-jsx-a11y package and warnings for all of its rules enabled by default. eslint-plugin-jsx-a11y is an accessibility linting tool for your code, and encourages you to include alternative text for image tags.
+Become familiar with [eslint-plugin-jsx-a11y](/docs/making-your-site-accessible/#linting-with-eslint-plugin-jsx-a11y). Gatsby ships with the`eslint-plugin-jsx-a11y` package and warnings for all of its rules enabled by default. `eslint-plugin-jsx-a11y` is an accessibility linting tool for your code, and encourages you to include alternative text for image tags.
 
 #### Forms
 
