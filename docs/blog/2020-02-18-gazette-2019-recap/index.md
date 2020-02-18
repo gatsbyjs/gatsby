@@ -26,7 +26,7 @@ That's a 29% increase from 2018 (4364) and a 153% increase from 2017 (2236).
 
 We released Gatsby 467 times in 2019. 😱 (Run `npm view gatsby time` to display the full list)
 
-Out of these, 18 were minor releases.
+Out of these, 18 were minor releases adding significant functionality to the Gatsby project we want to highlight below:
 
 ### 2.1.0: useStaticQuery hook
 
@@ -35,7 +35,7 @@ Out of these, 18 were minor releases.
 
 The `useStaticQuery` hook was the first minor release in 2019. The author of this post built this just in time for the first stable release of React Hooks.
 
-### 2.2.0: Schema Customisation
+### 2.2.0: Schema Customization
 
 (2019-03-19)
 (https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.39...gatsby@2.2.0)
@@ -68,14 +68,14 @@ This release by Mikhail added controls to opt out of schema inference using Grap
 (2019-05-21)
 (https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.7...gatsby@2.6.0)
 
-Ward refactored Gatsby CLI to use Ink in this release. Ink is a library that enables writing CLIs in React. This was a _hugely_ foundational release and enabled big improvements in the CLI. More about this coming soon :wink:
+Ward refactored Gatsby CLI to use Ink in this release. [Ink](https://github.com/vadimdemedes/ink) is a library that enables writing CLIs in React. This was a _hugely_ foundational release and enabled big improvements in the CLI. More about this coming soon :wink:
 
 ### 2.7.0: Merge user-defined types with plugin-defined types
 
 (2019-05-23)
 (https://github.com/gatsbyjs/gatsby/compare/gatsby@2.6.4...gatsby@2.7.0)
 
-This was follow up work to the Schema Customisation feature, enabling users to extend types already defined by plugins. Stefan also enabled support for merging different GraphQL schema definition types including SDL, typeBuilder and graphql-js.
+This was follow up work to the Schema Customization feature, enabling users to extend types already defined by plugins. Stefan also enabled support for merging different GraphQL schema definition types including SDL, typeBuilder and graphql-js.
 
 ### 2.8.0: Allow sorting resolved fields
 
