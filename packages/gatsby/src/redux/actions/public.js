@@ -57,7 +57,7 @@ const truncatePath = path => {
     }
     return pathPart
   })
-  return `/${truncatedParts.join(``)}`
+  return truncatedParts.join(`/`)
 }
 
 const findChildren = initialChildren => {
@@ -376,10 +376,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   } else {
     internalComponentName = `Component${pascalCase(page.path)}`
   }
-
+  console.log(`page.path length`, page.path.length)
   const truncateLongPaths = store.getState().config.truncateLongPaths
   const pagePath = truncateLongPaths ? truncatePath(page.path) : page.path
-
+  console.log(`pagePath length`, pagePath.length)
   if (pagePath.length > 200) {
     report.panic({
       id: `11331`,
@@ -395,7 +395,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   const internalPage: Page = {
     internalComponentName,
-    path: page.path,
+    path: pagePath,
     matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
