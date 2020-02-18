@@ -20,6 +20,7 @@ Object {
     "complete": Map {},
     "incomplete": Map {},
   },
+  "pageData": Map {},
   "pageDataStats": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
