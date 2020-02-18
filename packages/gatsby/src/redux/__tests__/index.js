@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const path = require(`path`)
 
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const { saveState, store, readState } = require(`../index`)
@@ -8,12 +9,40 @@ const {
 } = require(`../actions`)
 
 const mockWrittenContent = new Map()
+const mockCompatiblePath = path
 jest.mock(`fs-extra`, () => {
   return {
     writeFileSync: jest.fn((file, content) =>
       mockWrittenContent.set(file, content)
     ),
     readFileSync: jest.fn(file => mockWrittenContent.get(file)),
+    renameSync: jest.fn((from, to) => {
+      // This will only work for folders if they are always the full prefix
+      // of the file... (that goes for both input dirs). That's the case here.
+      if (mockWrittenContent.has(to)) {
+        throw new Error(`File/folder exists`)
+      }
+
+      // Move all files in this folder as well ... :/
+      mockWrittenContent.forEach((value, key) => {
+        if (key.startsWith(from)) {
+          // rename('foo/bar', 'a/b/c') => foo/bar/ding.js -> a/b/c/ding.js
+          // (.replace with string arg will only replace the first occurrence)
+          mockWrittenContent.set(
+            key.replace(from, to),
+            mockWrittenContent.get(key)
+          )
+          mockWrittenContent.delete(key)
+        }
+      })
+    }),
+    existsSync: jest.fn(target => mockWrittenContent.has(target)),
+    mkdtempSync: jest.fn(suffix => {
+      let dir = mockCompatiblePath.join(`some`, `tmp` + suffix + Math.random())
+      mockWrittenContent.set(dir, Buffer(`empty dir`))
+      return dir
+    }),
+    removeSync: jest.fn(file => mockWrittenContent.delete(file)),
   }
 })
 
@@ -41,11 +70,9 @@ describe(`redux db`, () => {
     mockWrittenContent.clear()
   })
 
-  it(`expect components state to be empty initially`, () => {
-    expect(initialComponentsState).toEqual(new Map())
-  })
-
   it(`should write cache to disk`, async () => {
+    expect(initialComponentsState).toEqual(new Map())
+
     await saveState()
 
     expect(writeToCache).toBeCalled()
@@ -65,5 +92,19 @@ describe(`redux db`, () => {
 
     // yuck - loki and redux will have different shape of redux state (nodes and nodesByType)
     expect(_.omit(data, [`nodes`, `nodesByType`])).toMatchSnapshot()
+  })
+
+  it(`should drop legacy file if exists`, async () => {
+    expect(initialComponentsState).toEqual(new Map())
+
+    const legacyLocation = path.join(process.cwd(), `.cache/redux.state`)
+    mockWrittenContent.set(
+      legacyLocation,
+      Buffer.from(`legacy location for cache`)
+    )
+
+    await saveState()
+
+    expect(mockWrittenContent.has(legacyLocation)).toBe(false)
   })
 })

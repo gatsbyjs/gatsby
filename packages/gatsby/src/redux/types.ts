@@ -3,7 +3,7 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
-export type IReduxNode = {
+export interface IReduxNode {
   id: string
   internal: {
     type: string
