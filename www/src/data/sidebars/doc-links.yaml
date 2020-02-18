@@ -729,6 +729,8 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: Continuous Deployment
+          link: /docs/glossary/continuous-deployment
         - title: GraphQL
           link: /docs/glossary/graphql
         - title: Headless CMS
