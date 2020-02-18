@@ -1,6 +1,6 @@
 ![Logo](./img/gatsby-mdx.png)
 
-> gatsby-plugin-mdx is the official integration for using [MDX](https://mdxjs.com)
+> `gatsby-plugin-mdx` is the official integration for using [MDX](https://mdxjs.com)
 > with [Gatsby](https://www.gatsbyjs.org/).
 
 # What’s MDX?
@@ -62,7 +62,7 @@ yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 
 ## Usage
 
-After installing gatsby-plugin-mdx you can add it to your plugins list in your
+After installing `gatsby-plugin-mdx` you can add it to your plugins list in your
 `gatsby-config.js`.
 
 ```js
@@ -84,7 +84,7 @@ By default, this configuration will allow you to automatically create pages
 with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
 
-Note that gatsby-plugin-mdx requires gatsby-source-filesystem to be present
+Note that `gatsby-plugin-mdx` requires gatsby-source-filesystem to be present
 and configured to process local markdown files in order to
 generate the resulting Gatsby nodes.
 
@@ -114,18 +114,18 @@ module.exports = {
 
 ### Configuration
 
-gatsby-plugin-mdx exposes a configuration API that can be used similarly to
+`gatsby-plugin-mdx` exposes a configuration API that can be used similarly to
 any other Gatsby plugin. You can define MDX extensions, layouts, global
 scope, and more.
 
-| Key                                             | Default                                | Description                                                       |
-| ----------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------- |
-| [`extensions`](#extensions)                     | `[".mdx"]`                             | Configure the file extensions that gatsby-plugin-mdx will process |
-| [`defaultLayouts`](#default-layouts)            | `{}`                                   | Set the layout components for MDX source types                    |
-| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`                                   | Use Gatsby-specific remark plugins                                |
-| [`remarkPlugins`](#remark-plugins)              | `[]`                                   | Specify remark plugins                                            |
-| [`rehypePlugins`](#rehype-plugins)              | `[]`                                   | Specify rehype plugins                                            |
-| [`mediaTypes`](#media-types)                    | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                  |
+| Key                                             | Default                                | Description                                                         |
+| ----------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------- |
+| [`extensions`](#extensions)                     | `[".mdx"]`                             | Configure the file extensions that `gatsby-plugin-mdx` will process |
+| [`defaultLayouts`](#default-layouts)            | `{}`                                   | Set the layout components for MDX source types                      |
+| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`                                   | Use Gatsby-specific remark plugins                                  |
+| [`remarkPlugins`](#remark-plugins)              | `[]`                                   | Specify remark plugins                                              |
+| [`rehypePlugins`](#rehype-plugins)              | `[]`                                   | Specify rehype plugins                                              |
+| [`mediaTypes`](#media-types)                    | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                    |
 
 #### Extensions
 
@@ -402,7 +402,7 @@ module.exports = {
 
 #### Media types
 
-Deciding what content gets processed by gatsby-plugin-mdx. This is an
+Deciding what content gets processed by `gatsby-plugin-mdx`. This is an
 advanced option that is useful for dealing with specialized generated
 content. It is not intended to be configured for most users.
 
@@ -429,7 +429,7 @@ choose which nodes to process by looking at the media type.
 
 ### Components
 
-MDX and gatsby-plugin-mdx use components for different things like rendering
+MDX and `gatsby-plugin-mdx` use components for different things like rendering
 and component mappings.
 
 #### MDXProvider

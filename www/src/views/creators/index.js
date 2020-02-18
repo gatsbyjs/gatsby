@@ -3,6 +3,7 @@ import { jsx } from "theme-ui"
 import { Component } from "react"
 import { Helmet } from "react-helmet"
 import Layout from "../../components/layout"
+import FooterLinks from "../../components/shared/footer-links"
 import CreatorsHeader from "./creators-header"
 import Badge from "./badge"
 import GithubIcon from "react-icons/lib/go/mark-github"
@@ -182,6 +183,7 @@ class CreatorsView extends Component {
             {creators.length && <EmptyGridItems styles={styles.creatorCard} />}
           </div>
         </main>
+        <FooterLinks />
       </Layout>
     )
   }
