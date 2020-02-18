@@ -2,7 +2,7 @@
 title: Page Build Optimizations for Incremental Data Changes
 ---
 
-Gatsby sources data from multiple sources (CMS, static files - like Markdown, databases, APIs, etc) and creates an aggregated dataset in GraphQL. Currently, each gatsby build uses the GraphQL dataset and queries to do a complete rebuild of the whole app - ready for deployment - including static assets like HTML, JavaScript, JSON, media files, etc.
+Gatsby sources data from multiple sources (CMS, static files - like Markdown, databases, APIs, etc) and creates an aggregated dataset in GraphQL. Currently, each Gatsby build uses the GraphQL dataset and queries to do a complete rebuild of the whole app - ready for deployment - including static assets like HTML, JavaScript, JSON, media files, etc.
 
 Projects that have a small (10s to 100s) to medium (100s to 1000s) amount of content, deploying these sites don't present a problem.
 
