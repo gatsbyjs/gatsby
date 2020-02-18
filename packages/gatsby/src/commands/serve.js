@@ -19,26 +19,6 @@ onExit(() => {
   telemetry.trackCli(`SERVE_STOP`)
 })
 
-const readTruncatedPaths = async program => {
-  const filePath = path.join(
-    program.directory,
-    `.cache`,
-    `truncated-paths.json`
-  )
-  let rawJSON = `{}`
-  try {
-    rawJSON = await fs.readFile(filePath)
-  } catch (error) {
-    report.warn(error)
-    report.warn(
-      `Could not read ${chalk.bold(
-        `truncated-paths.json`
-      )} from the .cache directory`
-    )
-  }
-  return JSON.parse(rawJSON)
-}
-
 const readMatchPaths = async program => {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
   let rawJSON = `[]`
@@ -81,48 +61,6 @@ const matchPathRouter = (matchPaths, options) => (req, res, next) => {
   return next()
 }
 
-const isPageDataRequest = path => path.startsWith(`/page-data`)
-
-const truncatedPathRouter = (truncatedPaths, options) => (req, res, next) => {
-  const { path: reqPath } = req
-  if (req.accepts(`html`)) {
-    const pathExists = Object.keys(truncatedPaths).includes(reqPath)
-    if (pathExists) {
-      return res.sendFile(
-        path.join(truncatedPaths[reqPath], `index.html`),
-        options,
-        err => {
-          if (err) {
-            console.log(err)
-            next()
-          }
-        }
-      )
-    }
-  }
-  if (isPageDataRequest(reqPath)) {
-    const [, , ...pageDataPath] = reqPath.split(`/`)
-    const longPath = pageDataPath.join(`/`)
-    const prefixedPath = path.dirname(`/${longPath}`)
-
-    const pathExists = Object.keys(truncatedPaths).includes(prefixedPath)
-
-    if (pathExists) {
-      return res.sendFile(
-        path.join(`page-data`, truncatedPaths[prefixedPath], `page-data.json`),
-        options,
-        err => {
-          if (err) {
-            console.log(err)
-            next()
-          }
-        }
-      )
-    }
-  }
-  return next()
-}
-
 module.exports = async program => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
@@ -149,8 +87,6 @@ module.exports = async program => {
   router.use(compression())
   router.use(express.static(`public`))
   const matchPaths = await readMatchPaths(program)
-  const truncatedPaths = await readTruncatedPaths(program)
-  router.use(truncatedPathRouter(truncatedPaths, { root }))
   router.use(matchPathRouter(matchPaths, { root }))
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {

@@ -120,14 +120,6 @@ const getMatchPaths = pages => {
     })
 }
 
-const getTruncatedPaths = pages => {
-  const pathMap = Object.create(null)
-  for (const page of pages) {
-    pathMap[page.path] = page.truncatedPath
-  }
-  return pathMap
-}
-
 const createHash = (matchPaths, components) =>
   crypto
     .createHash(`md5`)
@@ -141,7 +133,6 @@ const writeAll = async state => {
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
   const components = getComponents(pages)
-  const truncatedPaths = getTruncatedPaths(pages)
 
   const newHash = createHash(matchPaths, components)
 
@@ -200,10 +191,6 @@ const preferDefault = m => m && m.default || m
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
     writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4)),
-    writeAndMove(
-      `truncated-paths.json`,
-      JSON.stringify(truncatedPaths, null, 4)
-    ),
   ])
 
   return true

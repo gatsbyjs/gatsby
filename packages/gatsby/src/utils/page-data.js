@@ -13,11 +13,10 @@ const read = async ({ publicDir }, pagePath) => {
 }
 
 const write = async ({ publicDir }, page, result) => {
-  const filePath = getFilePath({ publicDir }, page.truncatedPath)
+  const filePath = getFilePath({ publicDir }, page.path)
   const body = {
     componentChunkName: page.componentChunkName,
     path: page.path,
-    truncatedPath: page.truncatedPath,
     matchPath: page.matchPath,
     result,
   }
