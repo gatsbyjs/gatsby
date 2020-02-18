@@ -158,7 +158,7 @@ We started off this year on a solid note with the release of [Gatsby Builds](/bl
 
 ### New RFC Process
 
-[Dustin Schau](https://twitter.com/SchauDustin) proposed a new RFC process late last year. The main difference is that we'll be creating a new, top-level rfcs folder within the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) monorepo and deprecate the old [gatsbyjs/rfcs](https://github.com/gatsbyjs/rfcs) repo.
+[Dustin Schau](https://twitter.com/SchauDustin) proposed a new RFC process late last year. The main difference is that we'll be creating a new, top-level `rfcs` folder within the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) monorepo and deprecate the old [gatsbyjs/rfcs](https://github.com/gatsbyjs/rfcs) repo.
 
 The main goal is to improve visibility and encourage more community engagement. Read more about [the new RFC process](https://github.com/gatsbyjs/rfcs/blob/master/text/0011-move-rfcs-to-monorepo.md) in its RFC. 😉
 
