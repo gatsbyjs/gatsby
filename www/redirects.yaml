@@ -102,8 +102,6 @@
   toPath: /docs/gatsby-internals/
 - fromPath: /docs/behind-the-scenes-terminology/
   toPath: /docs/gatsby-internals-terminology/
-- fromPath: /docs/themes/getting-started
-  toPath: /docs/themes/using-a-gatsby-theme
 - fromPath: /docs/themes/introduction
   toPath: /docs/themes/what-are-gatsby-themes
 - fromPath: /docs/hosting-on-netlify/
