@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { writeFile, existsSync } from "fs-extra"
-import { parse } from "path"
+import { parse, posix } from "path"
 import kebabHash from "kebab-hash"
 import { HEADER_COMMENT, IMMUTABLE_CACHING_HEADER } from "./constants"
 
@@ -10,6 +10,7 @@ import {
   CACHING_HEADERS,
   LINK_REGEX,
   NETLIFY_HEADERS_FILENAME,
+  PAGE_DATA_DIR,
 } from "./constants"
 
 function getHeaderName(header) {
@@ -44,7 +45,9 @@ function validHeaders(headers, reporter) {
 }
 
 function linkTemplate(assetPath, type = `script`) {
-  return `Link: <${assetPath}>; rel=preload; as=${type}`
+  return `Link: <${assetPath}>; rel=preload; as=${type}${
+    type === `fetch` ? `; crossorigin` : ``
+  }; nopush`
 }
 
 function pathChunkName(path) {
@@ -52,33 +55,38 @@ function pathChunkName(path) {
   return `path---${name}`
 }
 
-function createScriptHeaderGenerator(manifest, pathPrefix) {
-  return script => {
-    const chunk = manifest[script]
-
-    if (!chunk) {
-      return null
-    }
-
-    // convert to array if it's not already
-    const chunks = _.isArray(chunk) ? chunk : [chunk]
-
-    return chunks
-      .filter(script => {
-        const parsed = parse(script)
-        // handle only .js, .css content is inlined already
-        // and doesn't need to be pushed
-        return parsed.ext === `.js`
-      })
-      .map(script => linkTemplate(`${pathPrefix}/${script}`))
-      .join(`\n  `)
-  }
+function getPageDataPath(path) {
+  const fixedPagePath = path === `/` ? `index` : path
+  return posix.join(`page-data`, fixedPagePath, `page-data.json`)
 }
 
-function linkHeaders(scripts, manifest, pathPrefix) {
-  return _.compact(
-    scripts.map(createScriptHeaderGenerator(manifest, pathPrefix))
-  )
+function getScriptPath(file, manifest) {
+  const chunk = manifest[file]
+
+  if (!chunk) {
+    return []
+  }
+
+  // convert to array if it's not already
+  const chunks = _.isArray(chunk) ? chunk : [chunk]
+
+  return chunks.filter(script => {
+    const parsed = parse(script)
+    // handle only .js, .css content is inlined already
+    // and doesn't need to be pushed
+    return parsed.ext === `.js`
+  })
+}
+
+function linkHeaders(files, pathPrefix) {
+  const linkHeaders = []
+  for (const resourceType in files) {
+    files[resourceType].forEach(file => {
+      linkHeaders.push(linkTemplate(`${pathPrefix}/${file}`, resourceType))
+    })
+  }
+
+  return linkHeaders
 }
 
 function headersPath(pathPrefix, path) {
@@ -89,15 +97,24 @@ function preloadHeadersByPage(pages, manifest, pathPrefix) {
   let linksByPage = {}
 
   pages.forEach(page => {
-    const scripts = [
-      ...COMMON_BUNDLES,
-      pathChunkName(page.path),
-      page.componentChunkName,
+    const scripts = _.flatMap(COMMON_BUNDLES, file =>
+      getScriptPath(file, manifest)
+    )
+    scripts.push(...getScriptPath(pathChunkName(page.path), manifest))
+    scripts.push(...getScriptPath(page.componentChunkName, manifest))
+
+    const json = [
+      posix.join(PAGE_DATA_DIR, `app-data.json`),
+      getPageDataPath(page.path),
     ]
 
-    const pathKey = headersPath(pathPrefix, page.path)
+    const filesByResourceType = {
+      script: scripts.filter(Boolean),
+      fetch: json,
+    }
 
-    linksByPage[pathKey] = linkHeaders(scripts, manifest, pathPrefix)
+    const pathKey = headersPath(pathPrefix, page.path)
+    linksByPage[pathKey] = linkHeaders(filesByResourceType, pathPrefix)
   })
 
   return linksByPage
