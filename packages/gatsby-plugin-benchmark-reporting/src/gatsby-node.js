@@ -71,7 +71,11 @@ class BenchMeta {
 
     // For the time being, our target benchmarks are part of the main repo
     // And we will want to know what version of the repo we're testing with
+    // This won't work as intended when running a site not in our repo (!)
     const gitHash = execToStr(`git rev-parse HEAD`)
+    // Git only supports UTC tz through env var, but the unix time stamp is UTC
+    const unixStamp = execToStr(`git show --quiet --date=unix --format="%cd"`)
+    const commitTime = new Date(parseInt(unixStamp, 10) * 1000).toISOString()
 
     const nodejsVersion = process.version
 
@@ -130,6 +134,7 @@ class BenchMeta {
       cwd: process.cwd() ?? ``,
       timestamps: this.timestamps,
       gitHash,
+      commitTime,
       ci: process.env.CI || false,
       ciName: process.env.CI_NAME || `local`,
       versions: {
