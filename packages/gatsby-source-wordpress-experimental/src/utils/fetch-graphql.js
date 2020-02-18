@@ -18,6 +18,7 @@ const handleGraphQLErrors = async ({
   errorMap,
   panicOnError,
   reporter,
+  url,
 }) => {
   const pluginOptions = getPluginOptions()
 
@@ -82,7 +83,8 @@ ${
 }
 
 // @todo add a link to docs page for debugging
-const genericError = `Take a moment to check that \n  - your WordPress URL is correct in gatsby-config.js \n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress site`
+const genericError = ({ url }) =>
+  `"${url}" isn't responding.\n\n Take a moment to check that \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress site`
 
 const handleFetchErrors = ({ e, reporter, url }) => {
   if (e.message.includes(`timeout of ${timeout}ms exceeded`)) {
@@ -90,7 +92,7 @@ const handleFetchErrors = ({ e, reporter, url }) => {
     reporter.panic(
       formatLogMessage(
         `It took too long for ${url} to respond (longer than ${timeout /
-          1000} seconds). \n${genericError}`,
+          1000} seconds). \n${genericError({ url })}`,
         { useVerboseStyle: true }
       )
     )
@@ -99,7 +101,7 @@ const handleFetchErrors = ({ e, reporter, url }) => {
     e.message === `Request failed with status code 405`
   ) {
     reporter.panic(
-      formatLogMessage(`${e.message} \n\n${genericError}`, {
+      formatLogMessage(`${e.message} \n\n${genericError({ url })}`, {
         useVerboseStyle: true,
       })
     )
@@ -129,7 +131,9 @@ const fetchGraphql = async ({
     const contentType = response.headers[`content-type`]
 
     if (!contentType.includes(`application/json;`)) {
-      throw new Error(`Unable to connect to WPGraphQL. \n\n${genericError}`)
+      throw new Error(
+        `Unable to connect to WPGraphQL. \n\n${genericError({ url })}`
+      )
     }
   } catch (e) {
     handleFetchErrors({ e, reporter, url })
@@ -143,6 +147,7 @@ const fetchGraphql = async ({
       errorMap,
       panicOnError,
       reporter,
+      url,
     })
   }
 
