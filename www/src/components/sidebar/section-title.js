@@ -216,7 +216,7 @@ const styles = {
     width: `100%`,
   },
   level0: {
-    fontFamily: `header`,
+    fontFamily: `heading`,
     letterSpacing: `tracked`,
     textTransform: `uppercase`,
     fontSize: 1,

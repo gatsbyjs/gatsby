@@ -32,7 +32,7 @@ export default AboutPage;
 In Markdown posts and pages, including an animated GIF is the same as a static image:
 
 ```markdown
-![otter dancing with a fish](./images/dancing-ofter.gif)
+![otter dancing with a fish](./images/dancing-otter.gif)
 ```
 
 ![otter dancing with a fish](./images/dancing-otter.gif)

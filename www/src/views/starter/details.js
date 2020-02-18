@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import { Link } from "gatsby"
 import MdLaunch from "react-icons/lib/md/launch"
 
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const Details = ({
   allDeps,
@@ -102,7 +102,7 @@ const styles = {
     border: 0,
     borderRadius: 1,
     cursor: `pointer`,
-    fontFamily: `header`,
+    fontFamily: `heading`,
     fontWeight: `bold`,
     py: 1,
     px: 4,

@@ -47,6 +47,11 @@
               link: /docs/gatsby-on-linux/
             - title: Configuring CA Certificates
               link: /docs/configuring-ca-certificates/
+        - title: A/B Testing
+          link: /docs/ab-testing/
+          items:
+            - title: A/B Testing with Google Analytics & Netlify
+              link: /docs/ab-testing-with-google-analytics-and-netlify/
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
@@ -86,6 +91,9 @@
             - title: Deploying to Firebase Hosting
               link: /docs/deploying-to-firebase/
               breadcrumbTitle: Firebase Hosting
+            - title: Deploying to KintoHub
+              link: /docs/deploying-to-kintohub/
+              breadcrumbTitle: KintoHub Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -723,14 +731,22 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: Continuous Deployment
+          link: /docs/glossary/continuous-deployment
         - title: GraphQL
           link: /docs/glossary/graphql
+        - title: Headless CMS
+          link: /docs/glossary/headless-cms/
+        - title: Headless WordPress
+          link: /docs/glossary/headless-wordpress/
         - title: JAMStack
           link: /docs/glossary/jamstack
         - title: Node.js
           link: /docs/glossary/node
         - title: React
           link: /docs/glossary/react
+        - title: Static Site Generator
+          link: /docs/glossary/static-site-generator
         - title: webpack
           link: /docs/glossary/webpack
     - title: Gatsby Telemetry
