@@ -16,6 +16,11 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       string: `foo`,
       slog: `abc`,
       deep: { flat: { search: { chain: 123 } } },
+      elemList: [
+        {
+          foo: `bar`,
+        },
+      ],
       internal: {
         type: `notTest`,
         contentDigest: `0`,
@@ -25,6 +30,11 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       id: `id_2`,
       string: `bar`,
       slog: `def`,
+      elemList: [
+        {
+          foo: `baz`,
+        },
+      ],
       deep: { flat: { search: { chain: 500 } } },
       internal: {
         type: `test`,
@@ -35,6 +45,14 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       id: `id_3`,
       slog: `abc`,
       string: `baz`,
+      elemList: [
+        {
+          foo: `bar`,
+        },
+        {
+          foo: `baz`,
+        },
+      ],
       deep: { flat: { search: { chain: 300 } } },
       internal: {
         type: `test`,
@@ -335,6 +353,27 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           })
 
           expect(resultMany).toBe(null)
+        })
+
+        it(`elemMatch on array of objects`, async () => {
+          const queryArgs = {
+            filter: {
+              elemList: {
+                elemMatch: { foo: { eq: `baz` } },
+              },
+            },
+          }
+
+          const resultMany = await runSift({
+            gqlType,
+            queryArgs,
+            firstOnly: false,
+            nodeTypeNames: [gqlType.name],
+            typedKeyValueIndexes: createIndexCache(),
+          })
+
+          expect(Array.isArray(resultMany)).toBe(true)
+          expect(resultMany.map(({ id }) => id)).toEqual([`id_2`, `id_3`])
         })
       })
     })

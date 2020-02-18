@@ -8,6 +8,9 @@ const {
   toDottedFields,
   objectToDottedField,
   liftResolvedFields,
+  createDbQueriesFromObject,
+  prefixResolvedFields,
+  dbQueryToSiftQuery,
 } = require(`../db/common/query`)
 const {
   ensureIndexByTypedChain,
@@ -89,55 +92,6 @@ function handleMany(siftArgs, nodes) {
       )
 
   return result?.length ? result : null
-}
-
-/**
- * Given an object, assert that it has exactly one leaf property and that this
- * leaf is a number, string, or boolean. Additionally confirms that the path
- * does not contain the special cased `$elemMatch` name.
- * Returns undefined if not a flat path, if it contains `$elemMatch`, or if the
- * leaf value was not a bool, number, or string.
- * If array, it contains the property path followed by the leaf value.
- * Returns `undefined` if any condition is not met
- *
- * Example: `{a: {b: {c: "x"}}}` is flat with a chain of `['a', 'b', 'c', 'x']`
- * Example: `{a: {b: "x", c: "y"}}` is not flat because x and y are 2 leafs
- *
- * @param {Object} obj
- * @returns {Array<string | number | boolean>|undefined}
- */
-const getFlatPropertyChain = obj => {
-  if (!obj) {
-    return undefined
-  }
-
-  let chain = []
-  let props = Object.getOwnPropertyNames(obj)
-  let next = obj
-  while (props.length === 1) {
-    const prop = props[0]
-    if (prop === `$elemMatch`) {
-      // TODO: Support handling this special case without sift as well
-      return undefined
-    }
-    chain.push(prop)
-    next = next[prop]
-    if (
-      typeof next === `string` ||
-      typeof next === `number` ||
-      typeof next === `boolean`
-    ) {
-      chain.push(next)
-      return chain
-    }
-    if (!next) {
-      return undefined
-    }
-    props = Object.getOwnPropertyNames(next)
-  }
-
-  // This means at least one object in the chain had more than one property
-  return undefined
 }
 
 /**
@@ -247,16 +201,20 @@ const applyFilters = (
   resolvedFields
 ) => {
   const filter = filterFields
-    ? getFilters(
-        liftResolvedFields(
-          toDottedFields(prepareQueryArgs(filterFields)),
-          resolvedFields
-        )
+    ? prefixResolvedFields(
+        createDbQueriesFromObject(prepareQueryArgs(filterFields)),
+        resolvedFields
       )
     : []
 
   let result
-  if (typedKeyValueIndexes && filter.length === 1) {
+  // Filters are flattened, so single filter will always be a chain with needle
+  // unless it's an elemmatch
+  if (
+    typedKeyValueIndexes &&
+    filter.length === 1 &&
+    filter[0].type !== `elemMatch`
+  ) {
     result = filterWithoutSift(filter[0], nodeTypeNames, typedKeyValueIndexes)
     if (result) {
       if (firstOnly) {
@@ -266,7 +224,12 @@ const applyFilters = (
     }
   }
 
-  return filterWithSift(filter, firstOnly, nodeTypeNames, resolvedFields)
+  return filterWithSift(
+    filter.map(f => dbQueryToSiftQuery(f)),
+    firstOnly,
+    nodeTypeNames,
+    resolvedFields
+  )
 }
 
 /**
@@ -280,30 +243,14 @@ const applyFilters = (
  * @returns {Array|undefined} Collection of results
  */
 const filterWithoutSift = (filter, nodeTypeNames, typedKeyValueIndexes) => {
-  // Filter can be any struct like {a: {b: {$eq: "x"}}} and we want to confirm
-  // there is exactly one leaf in this structure and that this leaf is `$eq`.
-  // The actual names are irrelevant, they are a chain of props on a Node.
-
-  let chainWithNeedle = getFlatPropertyChain(filter)
-  if (!chainWithNeedle) {
-    return undefined
-  }
-
-  // `chainWithNeedle` should now be like:
-  //   `filter = {this: {is: {the: {chain: {$eq: needle}}}}}`
-  //  ->
-  //   `['this', 'is', 'the', 'chain', '$eq', needle]`
-  let targetValue = chainWithNeedle.pop()
-  let lastPath = chainWithNeedle.pop()
-
   // This can also be `$ne`, `$in` or any other grapqhl comparison op
-  if (lastPath !== `$eq`) {
+  if (filter.query.comparator !== `$eq`) {
     return undefined
   }
 
   return runFlatFilterWithoutSift(
-    chainWithNeedle,
-    targetValue,
+    filter.path.concat([filter.query.comparator]),
+    filter.query.value,
     nodeTypeNames,
     typedKeyValueIndexes
   )
