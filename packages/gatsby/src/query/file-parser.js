@@ -366,6 +366,9 @@ async function findGraphQLTags(
         // Look for exported page queries
         traverse(ast, {
           ExportNamedDeclaration(path, state) {
+            if (path.node.source) {
+              return
+            }
             path.traverse({
               TaggedTemplateExpression,
               ExportSpecifier(path) {
