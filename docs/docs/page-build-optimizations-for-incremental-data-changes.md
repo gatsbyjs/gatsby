@@ -24,7 +24,7 @@ This will run the Gatsby build process, but only build pages that have data chan
 
 ### Reporting what has been built
 
-You might need to get a list of the pages that have been built for example, if you want to perform a sync action in your CI/CD pipeline.
+You may want to retrieve a list of the pages that were built. For example, if you want to perform a sync action in your CI/CD pipeline.
 
 To list the paths in the build assets (`public`) folder, you can use one (or both) of the following arguments in your `build` command.
 
