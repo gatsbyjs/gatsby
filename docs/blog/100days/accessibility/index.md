@@ -14,7 +14,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 ## Challenge 8: Enhance Your Site With Accessible Forms and Images
 
-Web Developers love Gatsby because a Gatsby site gives you rock solid performance, SEO, and accessibility - _by default_. However as you continue to develop your project, and your editors begin adding content to the site, all three of those site features may suffer.
+Web Developers love Gatsby because a Gatsby site gives you rock solid performance, SEO, and sets you up for success in building an accessible site. However as you continue to develop your project, and your editors begin adding content to the site, all three of those site features may suffer.
 
 Over the next three challenges, we’ll ask you to enhance your site’s performance, SEO, and accessibility, starting with the accessibility of your forms and images.
 
