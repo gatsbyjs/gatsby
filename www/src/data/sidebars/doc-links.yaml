@@ -736,6 +736,8 @@
       items:
         - title: Continuous Deployment
           link: /docs/glossary/continuous-deployment
+        - title: Decoupled Drupal
+          link: /docs/glossary/decoupled-drupal
         - title: GraphQL
           link: /docs/glossary/graphql
         - title: Headless CMS
