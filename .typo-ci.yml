@@ -27,7 +27,8 @@ excluded_files:
   - "packages/**/.npmignore"
   - "**/*.js"
   - "**/*.ts"
-
+  - "**/*.jsx"
+  - "**/*.tsx"
 # Any typos we should ignore?
 excluded_words:
   - typoci
