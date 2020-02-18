@@ -28,6 +28,7 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
   } else {
     // if the repo already exists, pull from it
     shell.cd(repoName)
+    shell.exec(`git checkout master`)
     shell.exec(`git pull origin master`)
   }
 }
