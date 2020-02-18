@@ -102,8 +102,6 @@
   toPath: /docs/gatsby-internals/
 - fromPath: /docs/behind-the-scenes-terminology/
   toPath: /docs/gatsby-internals-terminology/
-- fromPath: /docs/themes/getting-started
-  toPath: /docs/themes/using-a-gatsby-theme
 - fromPath: /docs/themes/introduction
   toPath: /docs/themes/what-are-gatsby-themes
 - fromPath: /docs/hosting-on-netlify/
@@ -135,3 +133,8 @@
   # redirecting cypress-gatsby => gatsby-cypress
 - fromPath: /packages/cypress-gatsby/
   toPath: /packages/gatsby-cypress/
+- fromPath: /contributing/gatsby-docs-translation-guide/
+  toPath: /contributing/translation/
+  # redirecting gatsby-source-filesystem Programmatic Import to plugin README
+- fromPath: /docs/gatsby-source-filesystem-programmatic-import/
+  toPath: /packages/gatsby-source-filesystem/

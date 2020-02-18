@@ -104,13 +104,6 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `ecosystem`,
-        path: `${__dirname}/src/data/ecosystem/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
         name: `guidelines`,
         path: `${__dirname}/src/data/guidelines/`,
       },
@@ -219,6 +212,8 @@ module.exports = {
           },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
+          // convert images using http to https in plugin library READMEs
+          `gatsby-remark-http-to-https`
         ],
       },
     },

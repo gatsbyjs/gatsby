@@ -1,4 +1,4 @@
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 const cleanNodeModules = dir => {
   const x = dir.split(`node_modules/`)
