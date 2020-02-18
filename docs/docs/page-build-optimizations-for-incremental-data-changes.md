@@ -6,7 +6,7 @@ Gatsby sources data from multiple sources (CMS, static files - like Markdown, da
 
 For projects that have a small (10s to 100s) to medium (100s to 1000s) amount of content, deployment is not a challenge.
 
-Building sites with large amounts of content (10,000s upwards) are already relatively fast with Gatsby. However, some projects might start to experience issues when adopting CI/CD principles - continuously building and deploying. Gatsby rebuilds the complete app which means the complete app also needs to be deployed. Doing this each time a small data change occurs unnecessarily increases demand on CPU, memory, and bandwidth.
+Even building sites with large amounts of content (10,000s upwards) are relatively fast with Gatsby. However, some projects might start to experience issues when adopting CI/CD principles - continuously building and deploying. Gatsby rebuilds the complete app which means the complete app also needs to be deployed. Doing this each time a small data change occurs unnecessarily increases demand on CPU, memory, and bandwidth.
 
 One solution to these problems might be to use [Gatsby Cloud's Build features](https://www.gatsbyjs.com/cloud/).
 
