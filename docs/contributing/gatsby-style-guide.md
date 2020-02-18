@@ -413,7 +413,7 @@ The guidelines for doing so are as follows:
 - If possible, Gatsby Cloud should be accompanied by other relevant technologies
 - If Gatsby Cloud does something by default, the docs should still include instructions for accessing that functionality manually
 
-The spirit of these guidelines is to ensure that users are aware of multiple options for running their Gatsby site. With the exception of gatsby-cli, the open source documentation should generally preclude assumptions about technology choices.
+The spirit of these guidelines is to ensure that users are aware of multiple options for running their Gatsby site. With the exception of `gatsby-cli`, the open-source documentation should generally preclude assumptions about technology choices.
 
 ### Support software versions
 
