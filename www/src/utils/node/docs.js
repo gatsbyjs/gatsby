@@ -55,7 +55,7 @@ exports.createPages = async ({ graphql, actions }) => {
             released
           }
           frontmatter {
-            title # used for prevAndNext
+            title
             draft
             canonicalLink
             publishedAt
