@@ -25,6 +25,8 @@ excluded_files:
   - ".typo-ci.yml"
   - ".npmignore"
   - "packages/**/.npmignore"
+  - "**/*.js"
+  - "**/*.ts"
 
 # Any typos we should ignore?
 excluded_words:
