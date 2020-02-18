@@ -54,25 +54,23 @@ We'd also like to make the changes outlined in the section titled below, called 
 A related RFC is the [Error surveying & improvement RFC](https://github.com/gatsbyjs/rfcs/pull/37)
 
 ## Make these statements come true
-The CLI:
-- [x] suggests the correct spellings for misspelled Gatsby commands so people save time.
-- [x] When people type the wrong thing in the browser (e.g. “localhost:8000/_ _ graphiql), we could either redirect to "correct" one or just support multiple different cases. This will help them spend less time looking for the right link.
-- [x] Accepts shorter input for starter URL's (users can omit the https://www part of the starter URL)
-- [x] Gives options of starters in the CLI. See PR https://github.com/gatsbyjs/gatsby/pull/14097
-- [x] accepts shortened input needed for starting a new project: you can take away the  before the starter name and it still works
-- [ ] dogfoods and runs the correct commands just like Google search does when you mispell something (requires us to update the did-you-mean file)
-- [ ] Includes createPages page count in output to help users optimize for speed and catch errors faster''
-- [ ] notifies user they might need to hit `r` if they’ve changed package.json, gatsby node, etc. when `gatsby develop` is running
-- [ ] omits peer dependency warnings that people can ignore
-- [ ] offers to restart & clear cache when a user is developing a local plugin, so the plugin will take effect
-- [ ] Clears irrelevant output by omitting erroneously repeated error reports
-- [ ] Only shows stack traces for _user errors_ instead of stack traces for babel parsing, for example
-- [ ] Prioritizes status changes that are relevant to a user, e.g. success of a process or failure of a user initiated action
-- [ ] Enables users to set aliases for commands, e.g. `gd` for `gatsby develop` 
-- [ ] helps users choose between yarn and npm
-- [ ] Make auxiliary actions observable by showing what items were deleted, which gives users a chance to confirm that the actions were correct or, if not, reverse the last action
-- [ ] Opens localhost automatically when `gatsby develop` succeeds (or, other options: Make sure that links to development site / graphiql are easily discoverable in some way, which will also help make sure users can find the links without much scrolling. The problem is that errors / recompiling notices are getting appended endlessly so users need to scroll very far sometimes to get to those links. Possible solutions: If we would clear older errors / notices so the links are few lines away would fix it as well. Another option is for `gatsby develop` to be interactive (like `jest --watch`) where you can use commands while it's running and we could have a command to open the browser with development site / graphiql as part of the available commands. With Ink we can make sure we don't add too much info at the bottom.)
-- [ ] Gives users warnings when they commit something that could affect build time, such as a large number of image files (since Gatsby Cloud will do this, too, I wonder if it’d be redundant and less specific to do this in the CLI also. It’d just be a general warning with no specific metrics)
+The user can:
+- [x] get suggestions for the correct spellings for misspelled Gatsby commands
+- [x] enter shorter input for starter URL's (users can omit the https://www part of the starter URL)
+- [x] select a starter in the CLI without needing a URL. See PR https://github.com/gatsbyjs/gatsby/pull/14097
+- [ ] be redirected to the correct URL when typing in “localhost:8000/_ _ graphiql incorrectly (we could either redirect to "correct" one or just support multiple different cases)
+- [ ] mispell a Gatsby command and the CLI will run the correct command anyway just like Google search does when you mispell something (requires us to update the did-you-mean file)
+- [ ] get createPages page count in output to help users optimize for speed and catch errors faster''
+- [ ] get notified that they might need to hit `r` if they’ve changed package.json, gatsby node, etc. when `gatsby develop` is running
+- [ ] see only relevant warnings; e.g. omission of peer dependency warnings that they can ignore
+- [ ] gets notification to restart & clear cache when they are developing a local plugin, so the plugin will take effect
+- [ ] gets only relevant error reports, e.g. omission of erroneously repeated error reports
+- [ ] Only gets stack traces for _user errors_ instead of stack traces for babel parsing, for example
+- [ ] set aliases for commands, e.g. `gd` for `gatsby develop` 
+- [ ] know when to choose between yarn and npm
+- [ ] see what items were deleted, which gives them a chance to confirm that the actions were correct or, if not, reverse the last action
+- [ ] see localhost open automatically when `gatsby develop` succeeds (or, other options: Make sure that links to development site / graphiql are easily discoverable in some way, which will also help make sure users can find the links without much scrolling. The problem is that errors / recompiling notices are getting appended endlessly so users need to scroll very far sometimes to get to those links. Possible solutions: If we would clear older errors / notices so the links are few lines away would fix it as well. Another option is for `gatsby develop` to be interactive (like `jest --watch`) where you can use commands while it's running and we could have a command to open the browser with development site / graphiql as part of the available commands. With Ink we can make sure we don't add too much info at the bottom.)
+- [ ] get warned when they commit something that could affect build time, such as a large number of image files (since Gatsby Cloud will do this, too, I wonder if it’d be redundant and less specific to do this in the CLI also. It’d just be a general warning with no specific metrics)
 
 
 
