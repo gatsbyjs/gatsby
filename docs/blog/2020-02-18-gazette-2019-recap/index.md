@@ -156,6 +156,12 @@ We started off this year on a solid note with the release of [Gatsby Builds](/bl
 
 [Ward Peeters](https://twitter.com/wardpeet) built the new Gatsby Jobs API which enables Gatsby to better distribute CPU intensive work like image processing and HTML generation to workers on local machines and the Cloud.
 
+### New RFC Process
+
+[Dustin Schau](https://twitter.com/SchauDustin) proposed a new RFC process late last year. The main difference is that we'll be creating a new, top-level `rfcs` folder within the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) monorepo and deprecate the old [gatsbyjs/rfcs](https://github.com/gatsbyjs/rfcs) repo.
+
+The main goal is to improve visibility and encourage more community engagement. Read more about [the new RFC process](https://github.com/gatsbyjs/rfcs/blob/master/text/0011-move-rfcs-to-monorepo.md) in its RFC. 😉
+
 ## What's next?
 
 You might've noticed a trend in our work last year. Lots of it focussed on foundational improvements to Gatsby unlocking even bigger DX wins and new features that were just _not_ possible before.
