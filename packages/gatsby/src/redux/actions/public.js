@@ -48,7 +48,7 @@ const ensureWindowsDriveIsUppercase = filePath => {
     : filePath
 }
 
-export const truncatePath = path => {
+const truncatePath = path => {
   if (path === `/`) return path
   const pathParts = path.split(`/`).filter(Boolean)
   const truncatedParts = pathParts.map(pathPart => {
@@ -377,10 +377,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   } else {
     internalComponentName = `Component${pascalCase(page.path)}`
   }
-  console.log(`page.path length`, page.path.length)
+
   const truncateLongPaths = store.getState().config.truncateLongPaths
   const pagePath = truncateLongPaths ? truncatePath(page.path) : page.path
-  console.log(`pagePath length`, pagePath.length)
+
   if (pagePath.length > 200) {
     report.panic({
       id: `11331`,
@@ -1440,4 +1440,4 @@ actions.createPageDependency = (
   }
 }
 
-module.exports = { actions }
+module.exports = { actions, truncatePath }

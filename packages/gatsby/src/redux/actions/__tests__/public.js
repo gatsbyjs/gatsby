@@ -8,13 +8,15 @@ afterEach(() => {
   report.error.mockClear()
 })
 
-const VERY_LONG_PATH = `/` + `hello-world/`.repeat(100)
+const VERY_LONG_PATH = `/` + `hello-world-`.repeat(100) + `/post`
 const SHORT_PATH = `/hello-world`
 
 describe(`Public actions`, () => {
   it(`Truncates long paths correctly`, () => {
     const truncatedPath = truncatePath(VERY_LONG_PATH)
-    expect(truncatedPath).toBeLessThanOrEqual(255)
+    for (const part of truncatedPath) {
+      expect(part.length).toBeLessThanOrEqual(255)
+    }
     expect(report.warn).not.toHaveBeenCalled()
     expect(report.error).not.toHaveBeenCalled()
   })
