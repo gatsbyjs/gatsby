@@ -52,7 +52,7 @@ Done in 154.501 sec
 
 If there are no changed or deleted paths, then the relevant files will not be created in the `.cache` folder.
 
-The `--log-pages` parameter will output all the file paths that have been updated or deleted at the end of the build stage.
+The `--log-pages` parameter will output all the file paths that were updated or deleted at the end of the build stage.
 
 ```bash
 success Building production JavaScript and CSS bundles - 82.198s
