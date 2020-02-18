@@ -53,16 +53,20 @@ const handleGraphQLErrors = async ({
 
     if (error.debugMessage) {
       reporter.error(
-        formatLogMessage(`Error category: ${error.category}
-${error.message}
-${
-  error.debugMessage
-    ? error.debugMessage
-    : `If you haven't already, try adding define("GRAPHQL_DEBUG", true); to your wp-config.php for more detailed error messages.`
-}`)
+        formatLogMessage(
+          `Error category: ${error.category} \n\nError: \n  ${error.message} \n\n Debug message: \n  ${error.debugMessage}`
+        )
       )
     } else {
-      reporter.error(formatLogMessage(`${error.message} (${error.category})`))
+      reporter.error(
+        formatLogMessage(
+          `${error.message} (${
+            error.category
+          }) \n\n If you haven't already, try adding ${chalk.bold(
+            `define( 'GRAPHQL_DEBUG', true );`
+          )} to your wp-config.php for more detailed error messages.`
+        )
+      )
     }
   }
 
