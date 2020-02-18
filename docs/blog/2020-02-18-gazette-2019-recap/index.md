@@ -144,19 +144,19 @@ We started off this year on a solid note with the release of [Gatsby Builds](htt
 
 ### Internationalizing Gatsby Docs
 
-Nat resumed her effort of helping internationalize the Gatsby documentation. We want Gatsby to be the most accessible way to build for the web. If you're interested in contributing translations in a language of your choice, go check out the translation contribution guidelines!
+[Nat Alison](https://twitter.com/tesseralis) resumed her effort of helping internationalize the Gatsby documentation. We want Gatsby to be the most accessible way to build for the web. If you're interested in contributing translations in a language of your choice, go check out the translation contribution guidelines!
 
 ### Accessible routing
 
-Madalyn released [Accessible Client Side Routing](https://www.gatsbyjs.org/blog/2020-02-10-accessible-client-side-routing-improvements/) in Gatsby in 2.19.8. These improvements enable people relying on screen readers to successfully navigate sites built with Gatsby.
+[Madalyn Parker](https://twitter.com/madalynrose) released [Accessible Client Side Routing](https://www.gatsbyjs.org/blog/2020-02-10-accessible-client-side-routing-improvements/) in Gatsby in 2.19.8. These improvements enable people relying on screen readers to successfully navigate sites built with Gatsby.
 
 ### Build performance
 
-Peter has been working hard on making Gatsby faster. He's already done some improvements which have made a big impact on speeding up Gatsby builds for large sites. On some sites, we've seen hour long builds dropping down to under 5 minutes.
+[Peter van der Zee](https://twitter.com/kuvos) has been working hard on making Gatsby faster. He's already done some improvements which have made a big impact on speeding up Gatsby builds for large sites. On some sites, we've seen hour long builds dropping down to under 5 minutes.
 
 ### Jobs API
 
-Ward built the new Gatsby Jobs API which enables Gatsby to better distribute CPU intensive work like image processing and HTML generation to workers on local machines and the Cloud.
+[Ward Peeters](https://twitter.com/wardpeet) built the new Gatsby Jobs API which enables Gatsby to better distribute CPU intensive work like image processing and HTML generation to workers on local machines and the Cloud.
 
 ## What's next?
 
