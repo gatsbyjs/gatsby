@@ -5262,6 +5262,22 @@
     - Integrated navigation
     - Verbose (i.e., not D.R.Y.) GraphQL queries to get data from
     - Includes plugins for offline support out of the box
+- url: https://keanu-pattern.netlify.com/
+  repo: https://github.com/Mr404Found/gatsby-keanu-blog
+  description: A responsive and super simple gatsby portfolio starter and extendable for blog also used yaml parsing
+  tags:
+    - Netlify
+    - SEO
+    - Blog
+    - Landing Page
+    - Styling:Other
+  features:
+    - Attractive Design
+    - Responsive webpage
+    - Responsive Card Design
+    - Gatsby
+    - yaml parsing
+    - Automatic page Generation by adding content
 - url: https://gatsby-contentful-portfolio-blog.netlify.com/
   repo: https://github.com/escapemanuele/gatsby-contentful-blog-portfolio
   description: Simple gatsby starter for integration with Contentful. The result is a clean and nice website for businesses or freelancers with a blog and a portfolio.
