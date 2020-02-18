@@ -20,9 +20,7 @@ Let's get into it then.
 
 1348 folks started contributing to Gatsby in 2019.
 
-Together, we made 5657 commits to Gatsby in 2019.
-
-That's a 29% increase from 2018 (4364) and a 153% increase from 2017 (2236).
+Together, we made 5657 commits to Gatsby in 2019. That's a 29% increase from 2018 (4364) and a 153% increase from 2017 (2236).
 
 We released Gatsby 467 times in 2019. 😱 (Run `npm view gatsby time` to display the full list)
 
