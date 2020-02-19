@@ -2,11 +2,7 @@
 title: Page Build Optimizations for Incremental Data Changes
 ---
 
-Gatsby sources data from multiple sources (CMS, static files - like Markdown, databases, APIs, etc) and creates an aggregated dataset in GraphQL. Currently, each Gatsby build uses the GraphQL dataset and queries to do a complete rebuild of the whole app - ready for deployment - including static assets like HTML, JavaScript, JSON, media files, etc.
-
-For projects that have a small (10s to 100s) to medium (100s to 1000s) amount of content, deployment is not a challenge.
-
-Even building sites with large amounts of content (10,000s upwards) are relatively fast with Gatsby. However, some projects might start to experience issues when adopting CI/CD principles - continuously building and deploying. Gatsby rebuilds the complete app which means the complete app also needs to be deployed. Doing this each time a small data change occurs unnecessarily increases demand on CPU, memory, and bandwidth.
+Building sites with large amounts of content (10,000s nodes upwards) is relatively fast with Gatsby. However, some projects might start to experience issues when adopting CI/CD principles - continuously building and deploying. Gatsby rebuilds the complete app on each `gatsby build` which means the complete app also needs to be deployed. Doing this each time a small data change occurs unnecessarily increases demand on CPU, memory, and bandwidth.
 
 One solution to these problems might be to use [Gatsby Cloud's Build features](https://www.gatsbyjs.com/cloud/).
 
