@@ -58,9 +58,11 @@ cd source-tutorial-site
 ```
 
 > **NOTE:** This tutorial assumes you have [Gatsby CLI installed](https://www.gatsbyjs.org/docs/quick-start/). If you do not, you may see an error:
+>
 > ```shell
 > command not found: gatsby
 > ```
+>
 > Return to the [quick start](https://www.gatsbyjs.org/docs/quick-start/) for help on installing the Gatsby CLI.
 
 You're going to build your plugin as a "local" plugin that only exists for your project. Later on you'll learn how to publish a plugin to [npm](https://npmjs.com) so anyone can use it, but for now create a `plugins` directory and change into that directory:
