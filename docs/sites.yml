@@ -9709,6 +9709,21 @@
   built_by: Durgesh Gupta
   built_by_url: https://durgeshgupta.com
   featured: false
+- title: Artem Sapegin’s Blog
+  description: >
+    Blog of a Berlin based coffee first frontend engineer who works at Omio, makes photos and hangs out with his dogs.
+  main_url: https://blog.sapegin.me/
+  url: https://blog.sapegin.me/
+  source_url: https://github.com/sapegin/blog.sapegin.me
+  categories:
+    - Blog
+    - Open Source
+    - Web Development
+    - JavaScript
+    - Programming
+    - Technology
+  built_by: Artem Sapegin
+  built_by_url: https://github.com/sapegin
 - title: adam.ai
   url: https://adam.ai/
   main_url: https://adam.ai/
@@ -9721,6 +9736,29 @@
     - Technology
   built_by: Hazem Osama
   built_by_url: https://github.com/hazem3500
+  featured: false
+- title: Indra Kusuma Profile Page
+  url: https://indrakusuma.web.id/me/
+  main_url: https://indrakusuma.web.id/me/
+  description: >
+    Hi! I'm Indra Kusuma. I am an optimistic and type of person of learn by doing who have an interest in Software Engineering, specifically about Web Development.
+  categories:
+    - Landing Page
+    - Blog
+  built_by: Indra Kusuma
+  built_by_url: https://github.com/idindrakusuma/me
+  featured: false
+- title: Lukas Horak
+  main_url: https://lukashorak.com
+  url: https://lukashorak.com
+  description: >
+    Lukas Horak's personal website. Full stack JavaScript Developer, working in React on front end and Node.js on back end.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Lukas Horak
+  built_by_url: https://github.com/lhorak
   featured: false
 - title: Alexandra Thomas
   main_url: "https://alexandracthomas.com/"
@@ -9745,3 +9783,56 @@
     - Business
   built_by: Alexandra Thomas
   built_by_url: "https://alexandracthomas.com/"
+- title: Zatsuzen Blog
+  url: https://blog.zatsuzen.com
+  main_url: https://blog.zatsuzen.com
+  description: >
+    Web developer's tech blog
+  categories:
+    - Blog
+  built_by: Akane
+  built_by_url: https://twitter.com/akanewz
+- title: Matthew Mesa
+  url: "https://matthewmesa.com"
+  main_url: "https://matthewmesa.com"
+  description: >
+    Portfolio website for freelance digital specialist Matthew Mesa.
+  categories:
+    - Portfolio
+  built_by: Matthew Mesa
+  built_by_url: "https://matthewmesa.com"
+- title: Taskade
+  main_url: https://taskade.com
+  url: https://taskade.com
+  description: >
+    Taskade is the unified workspace for distributed teams. Collaborate and organize in real-time to get things done, faster and smarter.
+  categories:
+    - App
+    - Business
+    - Productivity
+  built_by: Taskade
+  built_by_url: https://github.com/taskade
+  featured: false
+- title: PWD
+  url: https://pwd.com.au
+  main_url: https://pwd.com.au
+  description: >
+    PWD is a full service web marketing, design, and development agency in Perth, Western Australia.
+  categories:
+    - Blog
+    - Portfolio
+    - WordPress
+    - Business
+  built_by: Alex Moon
+  built_by_url: https://moonmeister.net
+  featured: false
+- title: Health Pro Fitness
+  url: https://healthprofitness.com/
+  main_url: https://healthprofitness.com/
+  description: >
+    Health Pro Fitness is a lifestyle blog built with Gatsby and static Markdown content.
+  categories:
+    - Blog
+  built_by: Botox For Hair And co.
+  built_by_url: https://www.botoxforhair.net/
+  featured: false
