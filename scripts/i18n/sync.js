@@ -113,6 +113,7 @@ NOTE: Do *NOT* squash-merge this pull request. The sync script requires a ref to
 
 async function syncTranslationRepo(code) {
   logger = log4js.getLogger(`sync:` + code)
+  logger.level = `info`
   const transRepoName = `${repoBase}-${code}`
   const transRepoUrl = `${host}/${owner}/${transRepoName}`
   if (shell.cd(cacheDir).code !== 0) {
@@ -130,17 +131,18 @@ async function syncTranslationRepo(code) {
   // TODO exit early if this fails
   // Compare these changes
   const baseHash = shell
-    .exec(`git merge-base origin/master source/master`)
+    .exec(`git merge-base origin/master source/master`, { silent: true })
     .stdout.replace(`\n`, ``)
   const shortBaseHash = getShortHash(baseHash)
 
   const hash = shell
-    .exec(`git rev-parse source/master`)
+    .exec(`git rev-parse source/master`, { silent: true })
     .stdout.replace(`\n`, ``)
   const shortHash = getShortHash(hash)
 
+  logger.info(`Syncing with source (no conflicts)...`)
   const syncBranch = `sync-${shortHash}`
-  if (shell.exec(`git checkout ${syncBranch}`).code !== 0) {
+  if (shell.exec(`git checkout ${syncBranch}`, { silent: true }).code !== 0) {
     shell.exec(`git checkout -b ${syncBranch}`)
   }
   shell.exec(`git pull source master --no-edit --strategy-option ours`, {
@@ -156,6 +158,7 @@ async function syncTranslationRepo(code) {
 
   const repository = await getRepository(owner, transRepoName)
 
+  logger.info(`Creating sync pull request`)
   // TODO if there is already an existing PR, don't create a new one and exit early
   const { number: syncPRNumber } = await createPullRequest({
     repositoryId: repository.id,
@@ -172,8 +175,11 @@ async function syncTranslationRepo(code) {
   const comparisonUrl = `${sourceRepoUrl}/compare/${shortBaseHash}..${shortHash}`
 
   // Check out a new branch
+  logger.info(`Finding conflicts with source...`)
   const conflictBranch = `conflicts-${shortHash}`
-  if (shell.exec(`git checkout ${conflictBranch}`).code !== 0) {
+  if (
+    shell.exec(`git checkout ${conflictBranch}`, { silent: true }).code !== 0
+  ) {
     shell.exec(`git checkout -b ${conflictBranch}`)
   }
 
@@ -227,6 +233,7 @@ async function syncTranslationRepo(code) {
   shell.exec(`git commit -m "Commit git conflicts"`)
   shell.exec(`git push -u origin ${conflictBranch}`)
 
+  logger.info(`Creating conflicts pull request`)
   // TODO assign codeowners as reviewers
   await createPullRequest({
     repositoryId: repository.id,
