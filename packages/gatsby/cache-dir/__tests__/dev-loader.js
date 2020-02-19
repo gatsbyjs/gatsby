@@ -167,7 +167,7 @@ describe(`Dev loader`, () => {
       expect(xhrCount).toBe(2)
     })
 
-    it.skip(`should return the dev-404-page when no 404 page can be found`, async () => {
+    it(`should return the dev-404-page when no 404 page can be found`, async () => {
       const devLoader = new DevLoader(null, [])
 
       const payload = { ...defaultPayload, path: `/dev-404-page/` }
