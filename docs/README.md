@@ -1,7 +1,8 @@
 # Read docs at https://www.gatsbyjs.org/docs
 
-We intend the docs to be read on gatsbyjs.org — You can read them here of course
-:-) Just be warned that links won't often work and other things will be missing
+We intend the docs to be read on [gatsbyjs.org](https://gatsby.org) — You can read them here of course
+:-)  
+Just be warned that links won't often work and other things will be missing
 or less than optimal.
 
 Go forth and build cool stuff.
