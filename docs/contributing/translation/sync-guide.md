@@ -1,6 +1,5 @@
 ---
 title: Keeping Translations Up-to-date
-issue: https://github.com/gatsbyjs/gatsby/issues/21250
 ---
 
 Periodically, gatsbybot will update your translation repo to be up-to-date with the current English repo. If there is an update to a page that is already translated, gatsbybot will create a pull request listing the conflicts between translation and the new English content. Resolving these conflicts and merging these pull requests is essential to keeping your translation repo up-to-date. See the next section for instructions on how to resolve and merge sync PRs.
@@ -26,15 +25,32 @@ Fix all [merge conflicts](https://help.github.com/en/github/collaborating-with-i
 
 ### Typos fixes
 
-Sometimes there is a typo or a grammatical change in the English source that gets fixed in an update. Since these typos most likely don't exist in the translated version, you can most likely use the translated version as-is.
+Sometimes there is a typo or grammatical error in the English source that gets fixed in an update.
+
+```diff
+- Let's all use Gabsty!
++ Let's all use Gatsby!
+```
+
+```diff
+- Gatsby is awesome framework!
++ Gatsby is an awesome framework!
+```
+
+Since these typos most likely don't exist in the translated version, you can most likely use the translated version as-is.
 
 ### Formatting changes
 
-Sometimes the only difference is a change in formatting, like, such as adding back-ticks to annotate something as code, or emphasizing certain words:
+Sometimes the only difference is a change in formatting, such as adding back-ticks to annotate something as code, or changing the level of headings:
 
 ```diff
 - Sass files have the extension .scss.
 + Sass files have the extension `.scss`.
+```
+
+```diff
+- #### Formatting changes
++ ### Formatting changes
 ```
 
 The only necessary change is to ensure the translated content carries over these formatting updates.
@@ -48,8 +64,26 @@ These changes involve updating the URL of a link:
 + Please see our [plugins page](/plugins).
 ```
 
+```diff
+- Check out our [GitHub](http://github.com/gatsbyjs/gatsby)
++ Check out our [GitHub](https://github.com/gatsbyjs/gatsby)
+```
+
 Resolve these changes by updating the link.
 
 ### Content changes
 
 Sometimes, the content of the source page is actually updated and needs a translation. Make sure to read the change carefully and change the translation to match its meaning.
+
+### Content additions
+
+Sometimes pages is updated with additional paragraphs, lists, or other content.
+
+```diff
+-In English, your articles should use the second person ("you") to provide a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
+
++In English, your articles should use the second person ("you") to provide a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
++For other languages, refer to each translation's guidelines (if applicable) for consistent phrasing. When appropriate, we suggest starting with the informal "you" to keep a conversational tone.
+```
+
+In this case, the new content should be translated as with any other content. If there is a significant amount of new content, you may want to create a separate pull request to translate it.
