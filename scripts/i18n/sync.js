@@ -143,7 +143,6 @@ async function syncTranslationRepo(code) {
   if (shell.exec(`git checkout ${syncBranch}`).code !== 0) {
     shell.exec(`git checkout -b ${syncBranch}`)
   }
-  // FIXME doesn't deal with deleted files
   shell.exec(`git pull source master --no-edit --strategy-option ours`, {
     silent: true,
   })
