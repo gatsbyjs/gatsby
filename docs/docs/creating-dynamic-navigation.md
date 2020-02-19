@@ -42,7 +42,7 @@ module.exports = {
 
 GraphQL can be used to query for information contained in the `siteMetadata` object located in your project's `gatsby-config.js`. In order to test this out, you can start the `default-starter-project` in development mode by running `npm run develop`.
 
-Navigate to <http://localhost:8000/___graphql> in your browser to view the GraphiQL editor, which enables you to test GraphQL queries on the underlying APIs. Using the documentation explorer you can view the current GraphQL schema for your project, which is an invaluable resource during development.
+Navigate to `http://localhost:8000/___graphql` in your browser to view the GraphiQL editor, which enables you to test GraphQL queries on the underlying APIs. Using the documentation explorer you can view the current GraphQL schema for your project, which is an invaluable resource during development.
 
 Examining the available types in GraphQL you will notice that you can query `site`. This GraphQL type further returns the `siteMetadata` which needs to be accessed to create the dynamic navigation. At this point, it is useful if you know a little GraphQL in order to extract the menu links. If you are unfamiliar with GraphQL, there is some excellent documentation available at GraphQL's official website found [here](https://graphql.org/learn/) that you can use to brush up on your skills! The query below will return the menu links.
 
@@ -263,7 +263,7 @@ Header.defaultProps = {
 export default Header
 ```
 
-Starting the development server by running `npm run develop` and navigating to <http://localhost:8000> you should now see some dynamically generated menu links on your page.
+Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically generated menu links on your page.
 
 If you have made it this far, good job! You can now add new site links to your website dynamically by adding entries to the `gatsby-config.js` file.
 

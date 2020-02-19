@@ -18,7 +18,6 @@ const {
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
-const { createProgress } = require(`./utils`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -36,52 +35,12 @@ const getImageSize = file => {
   }
 }
 
-let progressBar
-let pendingImagesCounter = 0
-let firstPass = true
-const createOrGetProgressBar = reporter => {
-  if (!progressBar) {
-    progressBar = createProgress(`Generating image thumbnails`, reporter)
-
-    const originalDoneFn = progressBar.done
-
-    // TODO this logic should be moved to the reporter.
-    // when done is called we remove the progressbar instance and reset all the things
-    // this will be called onPostBuild or when devserver is created
-    progressBar.done = () => {
-      originalDoneFn.call(progressBar)
-      progressBar = null
-      pendingImagesCounter = 0
-    }
-
-    // when we create a progressBar for the second time so when .done() has been called before
-    // we create a modified tick function that automatically stops the progressbar when total is reached
-    // this is used for development as we're watching for changes
-    if (!firstPass) {
-      let progressBarCurrentValue = 0
-      const originalTickFn = progressBar.tick
-      progressBar.tick = (ticks = 1) => {
-        originalTickFn.call(progressBar, ticks)
-        progressBarCurrentValue += ticks
-
-        if (progressBarCurrentValue === pendingImagesCounter) {
-          progressBar.done()
-        }
-      }
-    }
-    firstPass = false
-  }
-
-  return progressBar
-}
-exports.getProgressBar = () => progressBar
-
 // Bound action creators should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let { boundActionCreators } = require(`gatsby/dist/redux/actions`)
+let boundActionCreators
 exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
@@ -148,15 +107,11 @@ function prepareQueue({ file, args }) {
 }
 
 function createJob(job, { reporter }) {
-  const progressBar = createOrGetProgressBar(reporter)
-
-  if (pendingImagesCounter === 0) {
-    progressBar.start()
+  if (!boundActionCreators) {
+    reporter.panic(
+      `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
+    )
   }
-
-  const transformsCount = job.args.operations.length
-  pendingImagesCounter += transformsCount
-  progressBar.total = pendingImagesCounter
 
   // Jobs can be duplicates and usually are long running tasks.
   // Because of that we shouldn't use async/await and instead opt to use
@@ -169,16 +124,12 @@ function createJob(job, { reporter }) {
   if (boundActionCreators.createJobV2) {
     promise = boundActionCreators.createJobV2(job)
   } else {
-    promise = scheduleJob(job, boundActionCreators)
+    promise = scheduleJob(job, boundActionCreators, reporter)
   }
 
-  promise
-    .catch(err => {
-      reporter.panic(err)
-    })
-    .then(() => {
-      progressBar.tick(transformsCount)
-    })
+  promise.catch(err => {
+    reporter.panic(err)
+  })
 
   return promise
 }

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@3.0.18...gatsby-plugin-less@3.0.19) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
 ## [3.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@3.0.17...gatsby-plugin-less@3.0.18) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-plugin-less

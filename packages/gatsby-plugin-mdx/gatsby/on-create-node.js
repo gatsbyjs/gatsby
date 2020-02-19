@@ -21,6 +21,7 @@ module.exports = async (
     reporter,
     cache,
     pathPrefix,
+    ...helpers
   },
   pluginOptions
 ) => {
@@ -64,6 +65,10 @@ module.exports = async (
       cache,
       pathPrefix,
       options,
+      loadNodeContent,
+      actions,
+      createNodeId,
+      ...helpers,
     },
     { forceDisableCache: true }
   )
