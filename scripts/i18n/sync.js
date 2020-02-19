@@ -142,7 +142,9 @@ async function syncTranslationRepo(code) {
     shell.exec(`git checkout -b ${syncBranch}`)
   }
   // FIXME doesn't deal with deleted files
-  shell.exec(`git pull source master --no-edit --strategy-option ours`)
+  shell.exec(`git pull source master --no-edit --strategy-option ours`, {
+    silent: true,
+  })
 
   // Remove files that are deleted by upstream
   // https://stackoverflow.com/a/54232519
@@ -175,7 +177,7 @@ async function syncTranslationRepo(code) {
   }
 
   // pull from the source
-  const output = shell.exec(`git pull source master`).stdout
+  const output = shell.exec(`git pull source master`, { silent: true }).stdout
   if (output.includes(`Already up to date.`)) {
     logger.info(`We are already up to date with source.`)
     process.exit(0)
@@ -199,7 +201,7 @@ async function syncTranslationRepo(code) {
     line.substr(line.lastIndexOf(` `) + 1)
   )
   // Do a soft reset and unstage non-conflicted files
-  shell.exec(`git reset`)
+  shell.exec(`git reset`, { silent: true })
 
   // Add all the conflicts as-is
   shell.exec(`git add ${conflictFiles.join(` `)}`)
@@ -212,11 +214,13 @@ async function syncTranslationRepo(code) {
   const removedFiles = removedLines.map(
     line => line.replace(`CONFLICT (modify/delete): `, ``).split(` `)[0]
   )
-  shell.exec(`git rm ${removedFiles.join(` `)}`)
+  if (removedFiles.length > 0) {
+    shell.exec(`git rm ${removedFiles.join(` `)}`)
+  }
 
   // clean out the rest of the changed files
   shell.exec(`git checkout -- .`)
-  shell.exec(`git clean -fd`)
+  shell.exec(`git clean -fd`, { silent: true })
 
   // Commit the conflicts into the new branch and push it
   shell.exec(`git commit -m "Commit git conflicts"`)

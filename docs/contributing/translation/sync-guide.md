@@ -26,7 +26,7 @@ Fix all [merge conflicts](https://help.github.com/en/github/collaborating-with-i
 
 #### Typos fixes
 
-Sometimes there is a typo or a grammatical change in the English source that gets fixed in an update. Since these typos most likely don't exist in the translated version, you can most likely use
+Sometimes there is a typo or a grammatical change in the English source that gets fixed in an update. Since these typos most likely don't exist in the translated version, you can most likely use the translated version as-is.
 
 #### Formatting changes
 
