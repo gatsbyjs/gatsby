@@ -6,10 +6,6 @@
       link: /docs/
     - title: Quick Start
       link: /docs/quick-start/
-    - title: Plugin Library
-      link: /plugins/
-    - title: Starter Library
-      link: /starters/
     - title: Awesome Gatsby Resources
       link: /docs/awesome-gatsby-resources/
     - title: Recipes
@@ -713,13 +709,6 @@
                   link: /docs/making-components-discoverable/
         - title: How Gatsby Boosts Your Career
           link: /docs/how-gatsby-boosts-career/
-    - title: Contributing
-      link: /contributing/
-      items:
-        - title: Community
-          link: /contributing/community/
-        - title: How to Contribute
-          link: /contributing/how-to-contribute/
     - title: Partnering With Gatsby
       link: /docs/partnering-with-gatsby/
       items:
