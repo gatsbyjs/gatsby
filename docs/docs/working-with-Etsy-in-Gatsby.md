@@ -1,5 +1,5 @@
 ---
-Title: Guide on working with Etsy in Gatsby
+Title: Working with Etsy in Gatsby
 ---
 
 # Guide on working with Etsy in Gatsby
