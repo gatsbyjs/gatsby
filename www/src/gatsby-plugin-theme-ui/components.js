@@ -15,6 +15,7 @@ import VisuallyHidden from "../components/visually-hidden"
 import Events from "../components/events/events"
 import StubList from "../components/stub-list"
 import LangList from "../components/lang-list"
+import GraphiQLEmbed from "../components/graphiql-embed"
 
 export default {
   GuideList,
@@ -30,6 +31,7 @@ export default {
   Events,
   StubList,
   LangList,
+  GraphiQLEmbed,
   a: MdxLink,
   pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
 }

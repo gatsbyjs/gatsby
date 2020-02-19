@@ -361,6 +361,10 @@ export const globalStyles = t => {
       border: `none`,
       maxWidth: `100%`,
     },
+    ".graphiql-embed": {
+      width: `100%`,
+      marginBottom: `1.5rem`,
+    },
     // Fancy external links in posts, borrowed from
     // https://github.com/comfusion/after-dark/
     // @see https://github.com/comfusion/after-dark/blob/8fdbe2f480ac40315cf0e01cece785d2b5c4b0c3/layouts/partials/critical-theme.css#L36-L39
