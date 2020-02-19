@@ -42,9 +42,9 @@ If you find yourself wanting to teach the reader how to accomplish a series of r
 
 [Reference guide articles](#reference-guide-template) cover discrete topics as documentation while linking to other resources and guides. A reference guide explains a task or concept without the step-by-step context provided by a tutorial or recipe.
 
-[Tutorials](#tutorial-template) guide users through a series of related tasks they can string together successfully. Listing prerequisites up front and limiting distractions or links away from the instructions can make a focused tutorial.
+[Tutorials](/contributing/how-to-write-a-tutorial) guide users through a series of related tasks they can string together successfully. Listing prerequisites up front and limiting distractions or links away from the instructions can make a focused tutorial.
 
-[Recipes](#recipe-template) are a happy medium between step-by-step tutorials and crawling the full reference guides, by providing step-by-step guidance for short, common Gatsby tasks. They live in the Recipes section of the docs.
+[Recipes](/contributing/how-to-write-a-recipe) are a happy medium between step-by-step tutorials and crawling the full reference guides, by providing step-by-step guidance for short, common Gatsby tasks. They live in the Recipes section of the docs.
 
 ## How to choose a reference guide topic?
 
