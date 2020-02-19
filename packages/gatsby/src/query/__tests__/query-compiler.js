@@ -276,6 +276,126 @@ describe(`actual compiling`, () => {
     expect(result.get(`mockFile`)).toMatchSnapshot()
   })
 
+  it(`handles multiple fragment usages`, async () => {
+    const nodes = [
+      createGatsbyDoc(
+        `mockFile1`,
+        `query mockFileQuery1 {
+          allDirectory {
+            nodes {
+              ...Foo
+              ...Bar
+            }
+          }
+        }`
+      ),
+      createGatsbyDoc(
+        `mockFile2`,
+        `query mockFileQuery2 {
+          allDirectory {
+            nodes {
+              ...Bar
+            }
+          }
+        }`
+      ),
+      createGatsbyDoc(
+        `mockComponent1`,
+        `fragment Bar on Directory {
+          parent {
+            ...Foo
+          }
+        }
+        fragment Foo on Directory {
+          id
+        }
+        `
+      ),
+    ]
+
+    const errors = []
+    const result = processQueries({
+      schema,
+      parsedQueries: nodes,
+      addError: e => {
+        errors.push(e)
+      },
+    })
+    expect(errors.length).toEqual(0)
+    expect(result.get(`mockFile1`)).toMatchInlineSnapshot(`
+      Object {
+        "hash": "hash",
+        "isHook": false,
+        "isStaticQuery": false,
+        "name": "mockFileQuery1",
+        "originalText": "query mockFileQuery1 {
+                allDirectory {
+                  nodes {
+                    ...Foo
+                    ...Bar
+                  }
+                }
+              }",
+        "path": "mockFile1",
+        "text": "fragment Foo on Directory {
+        id
+      }
+
+      fragment Bar on Directory {
+        parent {
+          __typename
+          ...Foo
+        }
+      }
+
+      query mockFileQuery1 {
+        allDirectory {
+          nodes {
+            ...Foo
+            ...Bar
+          }
+        }
+      }
+      ",
+      }
+    `)
+    expect(result.get(`mockFile2`)).toMatchInlineSnapshot(`
+      Object {
+        "hash": "hash",
+        "isHook": false,
+        "isStaticQuery": false,
+        "name": "mockFileQuery2",
+        "originalText": "query mockFileQuery2 {
+                allDirectory {
+                  nodes {
+                    ...Bar
+                  }
+                }
+              }",
+        "path": "mockFile2",
+        "text": "fragment Bar on Directory {
+        parent {
+          __typename
+          ...Foo
+        }
+      }
+
+      fragment Foo on Directory {
+        id
+      }
+
+      query mockFileQuery2 {
+        allDirectory {
+          nodes {
+            ...Bar
+          }
+        }
+      }
+      ",
+      }
+    `)
+  })
+
   it(`handles circular fragments`, async () => {
     const nodes = [
       createGatsbyDoc(
@@ -1057,184 +1177,6 @@ describe(`Extra fields`, () => {
 
       fragment Node on Node {
         __typename: id
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`adds id field if type has it`, () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            __typename
-          }
-        }
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`adds id field within inline fragment if type has it`, () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            ... on Directory {
-              __typename
-            }
-          }
-        }
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`adds id field within fragment if type has it`, () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            ... Directory
-          }
-        }
-      }
-      fragment Directory on Directory {
-        __typename
-      }
-
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`adds id field in the query of arbitrary depth`, () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            contents {
-              ... on Directory {
-                contents {
-                  ... on Directory {
-                    contents {
-                      ... on File {
-                        __typename
-                      }
-                      ... on Directory {
-                        __typename
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            children {
-              children {
-                children {
-                  __typename
-                }
-                ... on Directory {
-                  contents {
-                    ... on File {
-                      __typename
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`doesn't add id field twice`, async () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            id
-            contents {
-              ... on File {
-                id
-              }
-              ... on Directory {
-                id
-              }
-            }
-            children {
-              id
-              ... Node
-            }
-            ... on Directory {
-              id
-              children {
-                id
-              }
-            }
-            ...DirectoryContents
-          }
-        }
-      }
-
-      fragment DirectoryContents on Directory {
-        contents {
-          ... on File {
-            id
-          }
-          ... on Directory {
-            id
-          }
-        }
-        children {
-          id
-        }
-      }
-
-      fragment Node on Node {
-        id
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`doesn't add id field when alias for id exists`, async () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            contents {
-              ... on File {
-                id: absolutePath
-              }
-              ... on Directory {
-                id: absolutePath
-              }
-            }
-            ... on Directory {
-              id: absolutePath
-            }
-            ...DirectoryContents
-          }
-        }
-      }
-
-      fragment DirectoryContents on Directory {
-        contents {
-          ... on File {
-            id: absolutePath
-          }
-          ... on Directory {
-            id: absolutePath
-          }
-        }
       }
     `)
     expect(errors).toEqual([])

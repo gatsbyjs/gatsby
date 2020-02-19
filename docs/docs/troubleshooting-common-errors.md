@@ -79,7 +79,7 @@ Gatsby's GraphQL data layer provides access to build time data, there are someti
 
 ### Unknown field 'A' on type 'B'
 
-If the data you are requesting in a GraphQL query differs from what has been [sourced](/docs/content-and-data/) in the GraphQL schema you might encounter an error like `Unknown field 'A' on type 'B'`. As the error suggests, a field you are asking for is not defined under the type that is listed. If your site is still building okay, you can open up `localhost:8000/___graphql` and examine your schema, which includes the definition of what fields are included on the type provided by the error. This can help you identify what fields aren't being created and locate where those fields should be created, whether by a plugin or in your code.
+If the data you are requesting in a GraphQL query differs from what has been [sourced](/docs/content-and-data/) in the GraphQL schema you might encounter an error like `Unknown field 'A' on type 'B'`. As the error suggests, a field you are asking for is not defined under the type that is listed. If your site is still building okay, you can open up `http://localhost:8000/___graphql` and examine your schema, which includes the definition of what fields are included on the type provided by the error. This can help you identify what fields aren't being created and locate where those fields should be created, whether by a plugin or in your code.
 
 If the error is describing an `Unknown field 'X' on type 'Query'`, the content type you are trying to source is likely not processing correctly. The `Query` type represents the top-level root queries that are included in the GraphQL schema. Source plugins will often create root nodes that you can query like `mdx` (created by `gatsby-plugin-mdx`) or for a collection of root nodes like `allFile` (created by `gatsby-source-filesystem`).
 
@@ -103,7 +103,7 @@ Some ideas for debugging these errors include verifying the following:
 
 - the structure of your content being sourced matches your GraphQL schema as well as the way you are querying the data
 
-Comparing your GraphQL query to your site's schema in [GraphiQL at `localhost:8000/___graphql`](http://localhost:8000/___graphql) and whatever plugin or code you are using to source data is a great way to find these errors as they should all express the data in the same shape.
+Comparing your GraphQL query to your site's schema in `http://localhost:8000/___graphql` and whatever plugin or code you are using to source data is a great way to find these errors as they should all express the data in the same shape.
 
 - neither any source plugins you are using nor your own implementation of the [`sourceNodes` API](/docs/node-apis/#sourceNodes) are misconfigured
 

@@ -49,7 +49,7 @@ You will setup the Gatsby source plugin so it can fetch data from the Prismic re
 },
 ```
 
-If you run `gatsby develop` now, you should be able to access the data from Prismic through the GraphiQL interface in [`http://localhost:8000/___graphql`](http://localhost:8000/___graphql). You can check this by trying a query that uses the Prismic source.
+If you run `gatsby develop` now, you should be able to access the data from Prismic through the GraphiQL interface in `http://localhost:8000/___graphql`. You can check this by trying a query that uses the Prismic source.
 
 ```graphql
 {
@@ -135,7 +135,7 @@ export default ({ data }) => {
 }
 ```
 
-Save the file and check on your site running at [`http://localhost:8000`](http://localhost:8000)
+Save the file and check on your site running at `http://localhost:8000`
 
 You can use the helper function `RichText` to [render formatted text](https://prismic.io/docs/reactjs/rendering/rich-text) and generally, this is the process you will use to query your Prismic repository and then render it. You can clean this up and include a function that will render the array of queried blog posts.
 
@@ -305,7 +305,7 @@ And with this last step you should be able to see all of your blog posts rendere
 
 One of the most exciting features that this Gatsby Prismic source plugin provides is the ability to preview changes to your documents without having to publish them or rebuild your Gatsby app. To activate this, you first need to setup an endpoint in your Prismic repository.
 
-In your repository, go to **Settings > Previews > Create a New Preview** and fill in the fields for your setup. For a default local development environment, you should use [`http://localhost:8000`](http://localhost:8000) as the Domain, with `/preview` as the optional Link Resolver. Don't worry about including the toolbar script, the plugin will take care of it.
+In your repository, go to **Settings > Previews > Create a New Preview** and fill in the fields for your setup. For a default local development environment, you should use `http://localhost:8000` as the Domain, with `/preview` as the optional Link Resolver. Don't worry about including the toolbar script, the plugin will take care of it.
 
 Finally, return to your Gatsby configuration file to activate the feature.
 

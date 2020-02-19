@@ -23,7 +23,7 @@ A fragment consists of three components:
 
 ## Creating and using a fragment
 
-A fragment can be created inside any GraphQL query, but it's good practice to create the query separately. More organization advice in the [Conceptual Guide](/docs/querying-with-graphql/#fragments).
+A fragment can be created inside any GraphQL query, but it's good practice to create the query separately. More organization advice in the [Conceptual Guide](/docs/graphql-concepts/#fragments).
 
 ```jsx:title=src/components/IndexPost.jsx
 import React from "react"
