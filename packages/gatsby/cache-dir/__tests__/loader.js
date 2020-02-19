@@ -168,7 +168,7 @@ describe(`Production loader`, () => {
       mockPageData(`/404.html`, 404)
 
       const expectation = {
-        status: `failure`,
+        status: `error`,
         pagePath: `/404.html`,
         notFound: true,
       }
