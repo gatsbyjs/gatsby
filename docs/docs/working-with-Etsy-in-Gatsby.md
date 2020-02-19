@@ -2,7 +2,6 @@
 Title: Working with Etsy in Gatsby
 ---
 
-
 ## Etsy in Gatsby
 
 This guide will walk you through the steps needed in order to successfully work with Etsy e-commerce sites in Gatsby.
