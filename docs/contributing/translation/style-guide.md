@@ -35,8 +35,9 @@ nos comprometemos em tornar a participação em nossos projetos e em nossa comun
 de assédio para todos, independentemente da idade, corpo, tamanho, deficiência, etnia, identidade
 ou expressão de gênero, nível de experiência, nacionalidade, aparência, raça, religião ou identidade
 e orientação sexual.
-
 ```
+
+Using soft line wraps ensures that paragraphs are always matched with the original source paragraphs when syncing, and prevents weird errors with mismatched lines.
 
 ### Text in code blocks
 
