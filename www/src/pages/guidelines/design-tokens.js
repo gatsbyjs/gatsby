@@ -18,9 +18,9 @@ import {
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 
-import theme from "../../gatsby-plugin-theme-ui"
+import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { Box, Flex, Text } from "../../components/guidelines/system"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const ColorExample = ({ hex, token }) => (
   <tr>
@@ -69,7 +69,7 @@ const ColorExample = ({ hex, token }) => (
 )
 
 const DesignTokens = ({ location }) => (
-  <Layout pathname={location.pathname} pageTitle="Design Tokens">
+  <Layout location={location} pageTitle="Design Tokens">
     <Container>
       <div css={{ position: `relative`, zIndex: 1 }}>
         <PageHeading>Design Tokens</PageHeading>

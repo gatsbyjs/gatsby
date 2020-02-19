@@ -11,30 +11,55 @@ A Gatsby theme for creating a blog child theme. It includes all of the data stru
 
 ## Installation
 
-### Use the blog core theme starter
+### For a new site
 
-This will generate a new site that pre-configures use of the blog core theme.
+If you're creating a new site and want to use the blog theme, you can use the blog theme starter. This will generate a new site that pre-configures use of the blog theme.
 
 ```shell
 gatsby new my-themed-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme-core
 ```
 
-### Manually add to your site
+### For an existing site
+
+1. Install the theme
 
 ```shell
-npm install --save gatsby-theme-blog-core
+npm install gatsby-theme-blog-core
 ```
+
+2. Add the configuration to your `gatsby-config.js` file
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-theme-blog-core`,
+      options: {
+        // basePath defaults to `/`
+        basePath: `/blog`,
+      },
+    },
+  ],
+}
+```
+
+3. Add blog posts to your site by creating `md` or `mdx` files inside `/content/posts`.
+
+   > Note that if you've changed the default `contentPath` in the configuration, you'll want to add your markdown files in the directory specified by that path.
+
+4. Run your site using `gatsby develop` and navigate to your blog posts. If you used the above configuration, your URL will be `http://localhost:8000/blog`
 
 ## Usage
 
 ### Theme options
 
-| Key           | Default value    | Description                                                                                               |
-| ------------- | ---------------- | --------------------------------------------------------------------------------------------------------- |
-| `basePath`    | `/`              | Root url for all blog posts                                                                               |
-| `contentPath` | `content/posts`  | Location of blog posts                                                                                    |
-| `assetPath`   | `content/assets` | Location of assets                                                                                        |
-| `mdx`         | `true`           | Configure `gatsby-plugin-mdx` (if your website already is using the plugin pass `false` to turn this off) |
+| Key           | Default value    | Description                                                                                                                                                                    |
+| ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `basePath`    | `/`              | Root url for all blog posts                                                                                                                                                    |
+| `contentPath` | `content/posts`  | Location of blog posts                                                                                                                                                         |
+| `assetPath`   | `content/assets` | Location of assets                                                                                                                                                             |
+| `mdx`         | `true`           | Configure `gatsby-plugin-mdx`. Note that most sites will not need to use this flag. If your site has already configured `gatsby-plugin-mdx` separately, set this flag `false`. |
 
 #### Example usage
 
