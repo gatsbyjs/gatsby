@@ -9826,3 +9826,13 @@
   built_by: Alex Moon
   built_by_url: https://moonmeister.net
   featured: false
+- title: Health Pro Fitness
+  url: https://healthprofitness.com/
+  main_url: https://healthprofitness.com/
+  description: >
+    Health Pro Fitness is a lifestyle blog built with Gatsby and static Markdown content.
+  categories:
+    - Blog
+  built_by: Botox For Hair And co.
+  built_by_url: https://www.botoxforhair.net/
+  featured: false

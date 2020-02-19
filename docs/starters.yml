@@ -5262,6 +5262,16 @@
     - Integrated navigation
     - Verbose (i.e., not D.R.Y.) GraphQL queries to get data from
     - Includes plugins for offline support out of the box
+- url: https://gatsby-starter-docz-netlifycms.netlify.com/
+  repo: https://github.com/colbyfayock/gatsby-starter-docz-netlifycms
+  description: Quickly deploy Docz documentation powered by Netlify CMS!
+  tags:
+    - CMS:Netlify
+    - Documentation
+    - Netlify
+  features:
+    - Docz documentation powered by Gatsby
+    - Netlify CMS to manage content
 - url: https://keanu-pattern.netlify.com/
   repo: https://github.com/Mr404Found/gatsby-keanu-blog
   description: A responsive and super simple gatsby portfolio starter and extendable for blog also used yaml parsing
