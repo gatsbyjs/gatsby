@@ -199,8 +199,7 @@ describe(`Dev loader`, () => {
       expect(xhrCount).toBe(3)
     })
 
-    // infinite loop
-    it.skip(`should return an error when status is 500`, async () => {
+    it(`should return an error when status is 500`, async () => {
       const devLoader = new DevLoader(null, [])
 
       mockPageData(`/error-page`, 500)
@@ -209,15 +208,16 @@ describe(`Dev loader`, () => {
         status: `error`,
         pagePath: `/error-page`,
       }
-      expect(await devLoader.loadPageDataJson(`/error-page/`)).toEqual(
-        expectation
-      )
+      expect(await devLoader.loadPageDataJson(`/error-page/`)).toEqual({
+        status: `error`,
+        pagePath: `/dev-404-page`,
+        retries: 3,
+      })
       expect(devLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
 
-    // infinite loop
-    it.skip(`should retry 3 times before returning an error`, async () => {
+    it(`should retry 3 times before returning an error`, async () => {
       const devLoader = new DevLoader(null, [])
 
       mockPageData(`/blocked-page`, 0)
@@ -227,9 +227,11 @@ describe(`Dev loader`, () => {
         retries: 3,
         pagePath: `/blocked-page`,
       }
-      expect(await devLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
-        expectation
-      )
+      expect(await devLoader.loadPageDataJson(`/blocked-page/`)).toEqual({
+        status: `error`,
+        retries: 3,
+        pagePath: `/dev-404-page`,
+      })
       expect(devLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
       expect(xhrCount).toBe(4)
     })
@@ -410,22 +412,22 @@ describe(`Dev loader`, () => {
       expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
-    it(`should throw an error when 404 cannot be fetched`, async () => {
+    it(`should log an error when 404 cannot be fetched`, async () => {
       const devLoader = new DevLoader(null, [])
+      const consoleErrorSpy = jest.spyOn(console, `error`)
+      const defaultXHRMockErrorHandler = XMLHttpRequest.errorCallback
+      mock.error(() => {})
 
-      devLoader.loadPageDataJson = jest.fn(() =>
-        Promise.resolve({
-          status: `failure`,
-        })
+      await devLoader.loadPage(`/404.html/`)
+
+      expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/add-404-page/`
       )
 
-      try {
-        await devLoader.loadPage(`/404.html/`)
-      } catch (err) {
-        expect(err.message).toEqual(
-          expect.stringContaining(`404 page could not be found`)
-        )
-      }
+      mock.error(defaultXHRMockErrorHandler)
+      consoleErrorSpy.mockRestore()
+
       expect(devLoader.pageDb.size).toBe(0)
       expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
