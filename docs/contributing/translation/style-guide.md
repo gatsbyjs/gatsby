@@ -29,6 +29,7 @@ No intuito de promover um ambiente aberto e acolhedor, nós, como contribuidores
 ```
 
 ❌ DON'T:
+
 ```md
 No intuito de promover um ambiente aberto e acolhedor, nós, como contribuidores e mantenedores,
 nos comprometemos em tornar a participação em nossos projetos e em nossa comunidade o mais livre
