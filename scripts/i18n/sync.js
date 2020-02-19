@@ -222,7 +222,7 @@ async function syncTranslationRepo(code) {
     line => line.replace(`CONFLICT (modify/delete): `, ``).split(` `)[0]
   )
   if (removedFiles.length > 0) {
-    shell.exec(`git rm ${removedFiles.join(` `)}`)
+    shell.exec(`git rm ${removedFiles.join(` `)}`, { silent: true })
   }
 
   // clean out the rest of the changed files
@@ -230,7 +230,7 @@ async function syncTranslationRepo(code) {
   shell.exec(`git clean -fd`, { silent: true })
 
   // Commit the conflicts into the new branch and push it
-  shell.exec(`git commit -m "Commit git conflicts"`)
+  shell.exec(`git commit -m "Commit git conflicts"`, { silent: true })
   shell.exec(`git push -u origin ${conflictBranch}`)
 
   logger.info(`Creating conflicts pull request`)
