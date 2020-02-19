@@ -117,6 +117,8 @@ export function dbQueryToSiftQuery(query: DbQuery): any {
   return result
 }
 
+// Most of the below can be gone after we decide to remove loki
+
 // Converts a nested mongo args object into a dotted notation. acc
 // (accumulator) must be a reference to an empty object. The converted
 // fields will be added to it. E.g
