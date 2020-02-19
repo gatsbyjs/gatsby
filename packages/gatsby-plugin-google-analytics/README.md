@@ -55,7 +55,7 @@ the plugin provides a component.
 To use it, simply import it and use it like you would the `<a>` element e.g.
 
 ```jsx
-import React
+import React from 'react'
 import { OutboundLink } from 'gatsby-plugin-google-analytics'
 
 export default () => {
