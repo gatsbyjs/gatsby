@@ -79,6 +79,8 @@ function conflictPRBody(conflictFiles, comparisonUrl, prNumber) {
   return `
 Sync conflicts with the source repo. Please update the translations based on updated source content.
 
+For more information on how to resolve sync conflicts, check out the [guide for syncing translations](https://gatsbyjs.org/contributing/translations/sync-guide/).
+
 <details ${conflictFiles.length <= 10 ? `open` : ``}>
 <summary>The following ${
     conflictFiles.length
