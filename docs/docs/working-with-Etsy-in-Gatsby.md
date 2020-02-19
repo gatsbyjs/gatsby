@@ -1,6 +1,8 @@
 ---
 Title: Guide on working with Etsy in Gatsby
----# Guide on working with Etsy in Gatsby
+---
+
+# Guide on working with Etsy in Gatsby
 
 ## Etsy in Gatsby
 
