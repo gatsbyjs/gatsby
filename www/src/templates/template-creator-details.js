@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
+import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import { Helmet } from "react-helmet"
 import Img from "gatsby-image"
@@ -67,7 +67,7 @@ class CreatorTemplate extends Component {
     const sites = data.allSitesYaml.edges
 
     return (
-      <>
+      <React.Fragment>
         <Helmet>
           <title>{`${creator.name} - Creator`}</title>
         </Helmet>
@@ -231,7 +231,7 @@ class CreatorTemplate extends Component {
           </div>
         </main>
         <FooterLinks />
-      </>
+      </React.Fragment>
     )
   }
 }
