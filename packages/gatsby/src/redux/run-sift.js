@@ -249,7 +249,7 @@ const filterWithoutSift = (filter, nodeTypeNames, typedKeyValueIndexes) => {
   }
 
   return runFlatFilterWithoutSift(
-    filter.path.concat([filter.query.comparator]),
+    filter.path,
     filter.query.value,
     nodeTypeNames,
     typedKeyValueIndexes
