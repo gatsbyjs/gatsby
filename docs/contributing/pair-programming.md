@@ -30,8 +30,8 @@ We also expect the following from pair programming participants:
 
 ## How to sign up
 
-We allow booking up to 30 days in advance, and spots tend to fill up fast. If we’re all booked up today, check back tomorrow for the next batch of spots. The core team is spread across North America, India, and Europe, so most time zones will have availability during working hours.
+Fill in the [request a pairing session form][cal] to reserve your spot. The Gatsby team will be notified. You should get an email shortly with a calendar link where you can choose a spot that fits you and the organizer. The core team is spread across North America, India, and Europe, so most time zones will have availability during working hours.
 
 [Reserve your spot today][cal] and let’s build something amazing together!
 
-[cal]: https://calendly.com/gatsbyjs/pair-programming
+[cal]: https://gatsby.dev/register-pair-programming
