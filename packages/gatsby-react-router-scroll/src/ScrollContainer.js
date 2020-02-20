@@ -11,16 +11,17 @@ const propTypes = {
 }
 
 class ScrollContainer extends React.Component {
-  constructor(props, context) {
-    super(props, context)
+  constructor(props) {
+    super(props)
 
     // We don't re-register if the scroll key changes, so make sure we
     // unregister with the initial scroll key just in case the user changes it.
     this.scrollKey = props.scrollKey
+    this.context = this.props.context
   }
 
   componentDidMount() {
-    this.props.registerElement(
+    this.context.registerElement(
       this.props.scrollKey,
       ReactDOM.findDOMNode(this), // eslint-disable-line react/no-find-dom-node
       this.shouldUpdateScroll
@@ -50,7 +51,7 @@ class ScrollContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.unregisterElement(this.scrollKey)
+    this.context.unregisterElement(this.scrollKey)
   }
 
   shouldUpdateScroll = (prevRouterProps, routerProps) => {
@@ -61,7 +62,7 @@ class ScrollContainer extends React.Component {
 
     // Hack to allow accessing scrollBehavior._stateStorage.
     return shouldUpdateScroll.call(
-      this.props.scrollBehavior,
+      this.context.scrollBehavior,
       prevRouterProps,
       routerProps
     )
@@ -74,7 +75,7 @@ class ScrollContainer extends React.Component {
 
 const ScrollContainerConsumer = props => (
   <ScrollBehaviorContext.Consumer>
-    {value => <ScrollContainer {...props} {...value} />}
+    {context => <ScrollContainer {...props} context={context} />}
   </ScrollBehaviorContext.Consumer>
 )
 

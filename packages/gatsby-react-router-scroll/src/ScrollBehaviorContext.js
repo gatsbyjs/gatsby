@@ -88,13 +88,7 @@ class ScrollContext extends React.Component {
 
   render() {
     return (
-      <ScrollBehaviorContext.Provider
-        value={{
-          registerElement: this.registerElement,
-          unregisterElement: this.unregisterElement,
-          scrollBehavior: this.scrollBehavior,
-        }}
-      >
+      <ScrollBehaviorContext.Provider value={this}>
         {React.Children.only(this.props.children)}
       </ScrollBehaviorContext.Provider>
     )
