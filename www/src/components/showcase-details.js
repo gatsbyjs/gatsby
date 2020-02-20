@@ -97,14 +97,11 @@ function usePrevAndNextSite(item) {
     query {
       allSitesYaml(
         filter: {
-          featured: { eq: true }
           main_url: { ne: null }
           fields: { hasScreenshot: { eq: true } }
         }
       ) {
         nodes {
-          id
-          url
           title
           fields {
             slug
@@ -155,7 +152,7 @@ function ShowcaseModal({ children, location }) {
       modalNextLink={
         <>
           <Img
-            key={nextSite.id}
+            key={nextSite.fields.slug}
             sx={styles.prevNextImage}
             backgroundColor
             fixed={{
@@ -198,7 +195,7 @@ function ShowcaseModal({ children, location }) {
       modalPreviousLink={
         <>
           <Img
-            key={previousSite.id}
+            key={previousSite.fields.slug}
             sx={styles.prevNextImage}
             backgroundColor
             fixed={{

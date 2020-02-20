@@ -228,7 +228,7 @@ We can't wait to see what you build.
 [prpl]: https://developers.google.com/web/fundamentals/performance/prpl-pattern/
 [app-shell]: https://developers.google.com/web/fundamentals/architecture/app-shell
 [case-study]: https://developers.google.com/web/showcase/2017/twitter
-[gatsby-graphql]: /docs/querying-with-graphql/
+[gatsby-graphql]: /docs/graphql-concepts/
 [gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
 [authentication-data]: /tutorial/authentication-tutorial/
 [client-only-routes]: /docs/client-only-routes-and-user-authentication
