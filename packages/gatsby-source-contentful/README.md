@@ -172,6 +172,10 @@ If you are confident your Content Types will have natural-language IDs (e.g. `bl
 
 Number of entries to retrieve from Contentful at a time. This can be adjusted to fix issues related to "Response size too big" error.
 
+**`richText.resolveFieldLocales`** [boolean][optional] [default: `false`]
+
+If you want to resolve the locales in fields of assets and entries that are referenced by rich text (e.g., via embedded entries or entry hyperlinks), set this to `true`. Otherwise, fields of referenced assets or entries will be objects keyed by locale.
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
