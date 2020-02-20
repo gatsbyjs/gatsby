@@ -295,6 +295,7 @@ exports.createNodesForContentType = ({
   locales,
   space,
   useNameForId,
+  richTextOptions,
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -342,7 +343,10 @@ exports.createNodesForContentType = ({
           ? getField(v)
           : v[defaultLocale]
 
-        if (fieldProps.type === `RichText`) {
+        if (
+          fieldProps.type === `RichText` &&
+          richTextOptions.resolveFieldLocales
+        ) {
           return getNormalizedRichTextField({
             field: localizedField,
             fieldProps,
