@@ -103,4 +103,4 @@ class ScrollContext extends React.Component {
 
 ScrollContext.propTypes = propTypes
 
-export default ScrollBehaviorContext
+export default ScrollContext
