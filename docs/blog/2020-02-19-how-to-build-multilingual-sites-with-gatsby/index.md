@@ -76,7 +76,7 @@ Before we jump into code, it's essential to mention plugins. They greatly help w
 
 This configuration (in `gatsby-config.js`) tells the plugin to use 'en' as the default language code (`langKeyDefault`, `langKeyForNull`) and no prefix (`prefixDefault`). The last option (`useLangKeyLayout`) specifies that the used layout is language invariant.
 
-## Localized URLs
+### Localize URLs
 
 Right at the beginning, we need to think about URLs. Do you want the language code in the URL all the time? Should the default language be accessible without language code?
 
@@ -106,11 +106,11 @@ Right at the beginning, we need to think about URLs. Do you want the language co
 
 I chose the variant with default language having no prefix in the URL.
 
-## Identification of User Locale
+### Identify User Locale
 
 If your website is not Google Maps, people most likely won't share their location with you. Therefore, when identifying where a visitor is geographically, we rely on the information browsers send in the first request. That can be obtained via `window.navigator.language`, but we typically don't implement this part ourselves. In my case, it's a job that is handled by the aforementioned `gatsby-plugin-i18n`.
 
-## Generating Language-specific Pages
+### Generate Language-specific Dynamic Pages
 
 As I mentioned already, the intranet app contains profile pages for all employees. They are generated dynamically because, well, the list of employees is also dynamic. This code piece that sits in `gatsby-node.js`'s `createPages` generates pages in the original implementation:
 
@@ -184,7 +184,7 @@ createPage({
 });
 ```
 
-## Static Language-specific Pages
+### Generate Language-specific Static Pages
 
 Apart from dynamic pages, there are always some static pages. They include `index.js` and `employees.js` that handle the homepage and employees page respectively. The `gatsby-plugin-i18n` will place them on the right language-specific URLs if you follow the defined language convention-the filename suffix needs to contain the language code.
 
@@ -207,7 +207,7 @@ Once this file becomes `index.cs.js`, I need to adjust it to:
 </Layout>
 ```
 
-## Components and Language Propagation
+### Update Components
 
 That takes us to components and selected language propagation. Every component you use on your site that has anything to do with links or languages needs to know what is the current language. Take a language selector as an example. Sure, you can render it as a simple list of supported languages, but, usually, you want a bit better UX. The current language should be hidden, and switching to another language should not lose the context of the current page (very annoying behavior).
 
