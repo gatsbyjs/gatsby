@@ -32,9 +32,9 @@ function localizedPath(locale, path) {
   }
 
   // Only localize paths for localized sections
-  if (!localizedSections.includes(base)) {
-    return path
-  }
+  // if (!localizedSections.includes(base)) {
+  //   return path
+  // }
 
   // If it's another language, add the "path"
   // However, if the homepage/index page is linked don't add the "to"
