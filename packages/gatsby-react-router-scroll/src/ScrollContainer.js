@@ -20,7 +20,7 @@ class ScrollContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.context.registerElement(
+    this.props.context.registerElement(
       this.props.scrollKey,
       ReactDOM.findDOMNode(this), // eslint-disable-line react/no-find-dom-node
       this.shouldUpdateScroll
@@ -50,7 +50,7 @@ class ScrollContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    this.context.unregisterElement(this.scrollKey)
+    this.props.context.unregisterElement(this.scrollKey)
   }
 
   shouldUpdateScroll = (prevRouterProps, routerProps) => {
@@ -61,7 +61,7 @@ class ScrollContainer extends React.Component {
 
     // Hack to allow accessing scrollBehavior._stateStorage.
     return shouldUpdateScroll.call(
-      this.context.scrollBehavior,
+      this.props.context.scrollBehavior,
       prevRouterProps,
       routerProps
     )
@@ -72,7 +72,12 @@ class ScrollContainer extends React.Component {
   }
 }
 
-ScrollContainer.propTypes = propTypes
-ScrollContainer.contextType = ScrollBehaviorContext
+const ScrollContainerConsumer = props => (
+  <ScrollBehaviorContext.Consumer>
+    {context => <ScrollContainer {...props} context={context} />}
+  </ScrollBehaviorContext.Consumer>
+)
 
-export default ScrollContainer
+ScrollContainerConsumer.propTypes = propTypes
+
+export default ScrollContainerConsumer
