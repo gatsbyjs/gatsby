@@ -4,13 +4,13 @@ import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
-import Rotator from "../components/rotator"
+import Rotator from "../components/plugins/rotator"
 import { Link } from "gatsby"
 import logo from "../assets/monogram.svg"
 import { sizes } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import FooterLinks from "../components/shared/footer-links"
 import Layout from "../components/layout"
-import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
+import PageWithPluginSearchBar from "../components/plugins/page-with-plugin-searchbar"
 
 class Plugins extends Component {
   render() {

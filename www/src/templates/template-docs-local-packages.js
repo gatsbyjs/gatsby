@@ -3,8 +3,8 @@ import { graphql } from "gatsby"
 import { pick } from "lodash-es"
 
 import Layout from "../components/layout"
-import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
-import PackageReadme from "../components/package-readme"
+import PageWithPluginSearchBar from "../components/plugins/page-with-plugin-searchbar"
+import PackageReadme from "../components/plugins/package-readme"
 
 class DocsLocalPackagesTemplate extends React.Component {
   render() {

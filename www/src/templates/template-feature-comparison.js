@@ -11,7 +11,7 @@ import EvaluationTable from "../components/features/evaluation-table"
 import LogoDictionary from "../components/features/logo-dictionary"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
-import Breadcrumb from "../components/docs-breadcrumb"
+import Breadcrumb from "../components/docs/docs-breadcrumb"
 
 import { getFeaturesData } from "../utils/get-csv-features-data"
 

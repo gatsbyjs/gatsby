@@ -1,5 +1,5 @@
 import React from "react"
-import LocalizedLink from "./localized-link"
+import LocalizedLink from "../localized-link"
 
 const isHash = str => /^#/.test(str)
 const isInternal = to => /^\/(?!\/)/.test(to)

@@ -194,7 +194,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 description: A simple example of a description in frontmatter
 ---
 
-import { Chart } from "../components/chart"
+import { Chart } from "../components/mdx/chart"
 
 # Here’s a chart
 

@@ -15,7 +15,7 @@ import {
 } from "./signature"
 import ReturnBlock from "./returns"
 import { Header, LinkBox } from "./utils"
-import { scale } from "../../utils/typography"
+import { scale } from "../../../utils/typography"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const Optional = styled(`span`)`

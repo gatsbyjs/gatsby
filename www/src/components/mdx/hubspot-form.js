@@ -2,8 +2,8 @@
 import { jsx } from "theme-ui"
 import { Component } from "react"
 
-import HubspotForm from "./react-hubspot-form"
-import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
+import HubspotForm from "../react-hubspot-form"
+import { formInput, formInputFocus, buttonStyles } from "../../utils/styles"
 
 export default class GatsbyHubspotForm extends Component {
   render() {

@@ -4,10 +4,10 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
-import Avatar from "../components/avatar"
+import Avatar from "../components/blog/avatar"
 import Layout from "../components/layout"
 import Container from "../components/container"
-import BlogPostPreviewItem from "../components/blog-post-preview-item"
+import BlogPostPreviewItem from "../components/blog/blog-post-preview-item"
 import FooterLinks from "../components/shared/footer-links"
 
 class ContributorPageTemplate extends React.Component {

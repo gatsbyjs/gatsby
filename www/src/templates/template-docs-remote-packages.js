@@ -2,8 +2,8 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
-import PackageReadme from "../components/package-readme"
+import PageWithPluginSearchBar from "../components/plugins/page-with-plugin-searchbar"
+import PackageReadme from "../components/plugins/package-readme"
 
 class DocsRemotePackagesTemplate extends React.Component {
   render() {

@@ -4,7 +4,7 @@ import { Link } from "gatsby"
 import TagsIcon from "react-icons/lib/ti/tags"
 const { kebabCase } = require(`lodash-es`)
 
-import Button from "./button"
+import Button from "../button"
 
 const TagsSection = ({ tags }) => {
   if (!tags) return null

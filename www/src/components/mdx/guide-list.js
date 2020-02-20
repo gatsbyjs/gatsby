@@ -1,8 +1,8 @@
 import React from "react"
 
-import docsHierarchy from "../data/sidebars/doc-links.yaml"
-import tutorialHierarchy from "../data/sidebars/tutorial-links.yaml"
-import contributingHierarchy from "../data/sidebars/contributing-links.yaml"
+import docsHierarchy from "../../data/sidebars/doc-links.yaml"
+import tutorialHierarchy from "../../data/sidebars/tutorial-links.yaml"
+import contributingHierarchy from "../../data/sidebars/contributing-links.yaml"
 
 // Search through tree, which may be 2, 3 or more levels deep
 const childItemsBySlug = (

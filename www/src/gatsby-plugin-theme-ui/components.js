@@ -1,19 +1,19 @@
 import React from "react"
 
-import GuideList from "../components/guide-list.js"
-import HubspotForm from "../components/hubspot-form"
+import GuideList from "../components/mdx/guide-list.js"
+import HubspotForm from "../components/mdx/hubspot-form"
 import Pullquote from "../components/shared/pullquote"
 import EggheadEmbed from "../components/shared/egghead-embed"
-import DateChart from "../components/chart"
-import LayerModel from "../components/layer-model"
+import DateChart from "../components/mdx/chart"
+import LayerModel from "../components/mdx/layer-model"
 import EmailCaptureForm from "../components/email-capture-form"
-import HorizontalNavList from "../components/horizontal-nav-list"
+import HorizontalNavList from "../components/mdx/horizontal-nav-list"
 import CodeBlock from "../components/code-block"
-import MdxLink from "../components/mdx-link"
-import Breakout from "../components/breakout"
+import MdxLink from "../components/mdx/mdx-link"
+import Breakout from "../components/mdx/breakout"
 import VisuallyHidden from "../components/visually-hidden"
-import Events from "../components/events/events"
-import StubList from "../components/stub-list"
+import Events from "../components/mdx/events/events"
+import StubList from "../components/mdx/stub-list"
 
 export default {
   GuideList,

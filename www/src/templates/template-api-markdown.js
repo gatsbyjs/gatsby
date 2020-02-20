@@ -14,10 +14,10 @@ import PageWithSidebar from "../components/page-with-sidebar"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 import FooterLinks from "../components/shared/footer-links"
-import Breadcrumb from "../components/docs-breadcrumb"
+import Breadcrumb from "../components/docs/docs-breadcrumb"
 import Container from "../components/container"
 import PrevAndNext from "../components/prev-and-next"
-import APIReference, { APIContents } from "../components/api-reference"
+import APIReference, { APIContents } from "../components/docs/api-reference"
 
 const normalizeGatsbyApiCall = array =>
   array.map(entry => {

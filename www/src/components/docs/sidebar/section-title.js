@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 
 import ChevronSvg from "./chevron-svg"
-import indention from "../../utils/sidebar/indention"
+import indention from "../../../utils/sidebar/indention"
 
 const Chevron = ({ isExpanded }) => (
   <span

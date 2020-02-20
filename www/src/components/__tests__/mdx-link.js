@@ -1,6 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
-import MdxLink, { shouldRenderRawLink } from "../mdx-link"
+import MdxLink, { shouldRenderRawLink } from "../mdx/mdx-link"
 
 jest.mock("../localized-link", () => {
   // Mock the component to use a different tag so we can easily differentiate

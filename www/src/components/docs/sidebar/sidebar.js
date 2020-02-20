@@ -4,8 +4,8 @@ import React, { Component } from "react"
 
 import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
-import getActiveItem from "../../utils/sidebar/get-active-item"
-import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
+import getActiveItem from "../../../utils/sidebar/get-active-item"
+import getActiveItemParents from "../../../utils/sidebar/get-active-item-parents"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // Access to global `localStorage` property must be guarded as it

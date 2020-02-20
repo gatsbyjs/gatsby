@@ -139,7 +139,7 @@ The Layer Model component takes one prop:
 title: GraphQL Concepts in Gatsby
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
+import LayerModel from "../../www/src/components/mdx/layer-model"
 
 To help understand how GraphQL works in Gatsby...
 
@@ -171,7 +171,7 @@ The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gats
 title: Glossary
 ---
 
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
+import HorizontalNavList from "../../www/src/components/mdx/horizontal-nav-list.js"
 
 The glossary defines key vocabulary...
 

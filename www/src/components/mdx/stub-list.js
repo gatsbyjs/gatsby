@@ -3,7 +3,10 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 
-import { itemListContributing, itemListDocs } from "../utils/sidebar/item-list"
+import {
+  itemListContributing,
+  itemListDocs,
+} from "../../utils/sidebar/item-list"
 
 const findStubs = pages =>
   pages.filter(

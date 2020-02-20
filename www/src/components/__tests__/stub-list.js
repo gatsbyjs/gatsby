@@ -27,7 +27,7 @@ jest.mock(`../../utils/sidebar/item-list`, () => {
 import React from "react"
 import { render } from "@testing-library/react"
 
-import StubList from "../stub-list"
+import StubList from "../mdx/stub-list"
 
 describe(`StubList`, () => {
   describe(`stubs`, () => {

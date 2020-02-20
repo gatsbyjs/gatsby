@@ -6,7 +6,7 @@ import { graphql } from "gatsby"
 import TagsIcon from "react-icons/lib/ti/tags"
 import TiArrowRight from "react-icons/lib/ti/arrow-right"
 
-import BlogPostPreviewItem from "../components/blog-post-preview-item"
+import BlogPostPreviewItem from "../components/blog/blog-post-preview-item"
 import Button from "../components/button"
 import Container from "../components/container"
 import Layout from "../components/layout"

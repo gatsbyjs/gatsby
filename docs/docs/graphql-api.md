@@ -3,8 +3,8 @@ title: GraphQL API
 tableOfContentsDepth: 2
 ---
 
-import { GraphqlApiQuery } from "../../www/src/components/api-reference/doc-static-queries"
-import APIReference from "../../www/src/components/api-reference"
+import { GraphqlApiQuery } from "../../www/src/components/docs/api-reference/doc-static-queries"
+import APIReference from "../../www/src/components/docs/api-reference"
 
 A great advantage of Gatsby is a built-in data layer that combines all data sources you configure. Data is collected at [build time](/docs/glossary#build) and automatically assembled into a [schema](/docs/glossary#schema) that defines how data can be queried throughout your site.
 

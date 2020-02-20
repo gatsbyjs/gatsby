@@ -2,10 +2,10 @@
 import { jsx } from "theme-ui"
 
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../../assets/tech-logos"
-import Card from "../card"
-import CardHeadline from "../card-headline"
+import Card from "./card"
+import CardHeadline from "./card-headline"
 import TechWithIcon from "../tech-with-icon"
-import FuturaParagraph from "../futura-paragraph"
+import FuturaParagraph from "./futura-paragraph"
 
 const HomepageFeatures = () => (
   <div

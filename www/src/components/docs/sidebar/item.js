@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback } from "react"
 
 import Accordion from "./accordion"
-import createLink from "../../utils/sidebar/create-link"
+import createLink from "../../../utils/sidebar/create-link"
 
 const isItemActive = (activeItemParents, item) => {
   if (activeItemParents) {

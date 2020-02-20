@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 
-import ShowcaseDetails from "../components/showcase-details"
+import ShowcaseDetails from "../components/showcase/showcase-details"
 
 export default function ShowcaseTemplate({ data, location }) {
   const isModal =

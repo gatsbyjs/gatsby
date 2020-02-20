@@ -8,15 +8,15 @@ import Img from "gatsby-image"
 import qs from "qs"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import Layout from "../components/layout"
-import Modal from "../components/modal"
-import ShareMenu from "../components/share-menu"
-import Button from "../components/button"
-import Screenshot from "../views/shared/screenshot"
+import Layout from "../../components/layout"
+import Modal from "../../components/modal"
+import ShareMenu from "../../components/share-menu"
+import Button from "../../components/button"
+import Screenshot from "../../views/shared/screenshot"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
 import MdLink from "react-icons/lib/md/link"
-import FeaturedIcon from "../assets/icons/featured-sites-icons"
+import FeaturedIcon from "../../assets/icons/featured-sites-icons"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const gutter = 6

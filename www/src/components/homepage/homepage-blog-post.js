@@ -5,7 +5,7 @@ import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import Avatar from "../avatar"
+import Avatar from "../blog/avatar"
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 

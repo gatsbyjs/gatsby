@@ -71,7 +71,7 @@ Similarly to what you'd do in plain React, you can import and render JSX compone
 directly in MDX files. You can also import other MDX documents.
 
 ```mdx:title=src/pages/chart.mdx
-import { Chart } from "../components/chart"
+import { Chart } from "../components/mdx/chart"
 import FAQ from "../components/faq.mdx"
 
 # Here’s a chart
@@ -123,7 +123,7 @@ If you would like to include frontmatter metadata _and_ import components, the f
 title: Building with Gatsby
 ---
 
-import { Chart } from "../components/chart"
+import { Chart } from "../components/mdx/chart"
 
 Markdown and more content...
 ```

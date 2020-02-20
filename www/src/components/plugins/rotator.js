@@ -6,7 +6,7 @@ import Slider from "./slider"
 import Link from "gatsby-link"
 import MdNavigateBefore from "react-icons/lib/md/navigate-before"
 import MdNavigateNext from "react-icons/lib/md/navigate-next"
-import { visuallyHidden } from "../utils/styles"
+import { visuallyHidden } from "../../utils/styles"
 
 const controlButtonStyles = {
   WebkitAppearance: `none`,

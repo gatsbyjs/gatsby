@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import Button from "./button"
+import Button from "../button"
 
 const MastheadContent = () => (
   <div

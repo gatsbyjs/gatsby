@@ -36,7 +36,7 @@ results in a seamless experience for developers and content authors alike.
 Markdown and JSX are included alongside each other like this:
 
 ```markdown
-import { Chart } from '../components/chart'
+import { Chart } from '../components/mdx/chart'
 
 # Here’s a chart
 
