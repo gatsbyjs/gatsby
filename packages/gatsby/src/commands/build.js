@@ -224,15 +224,22 @@ module.exports = async function build(program: BuildArgs) {
       cachedPageData
     )
 
-    deletedPageKeys.forEach(value => {
+    const removePages = deletedPageKeys.map(value => {
       if (value === `/`) {
-        fs.removeSync(`${program.directory}/public/index.html`)
-        fs.removeSync(`${program.directory}/public/page-data/index`)
+        return fs.remove(`${program.directory}/public/index.html`)
       } else {
-        fs.removeSync(`${program.directory}/public${value}`)
-        fs.removeSync(`${program.directory}/public/page-data${value}`)
+        return fs.remove(`${program.directory}/public${value}`)
       }
     })
+    const removePageData = deletedPageKeys.map(value => {
+      if (value === `/`) {
+        return fs.remove(`${program.directory}/public/page-data/index`)
+      } else {
+        return fs.remove(`${program.directory}/public/page-data${value}`)
+      }
+    })
+
+    await Promise.all([...removePages, ...removePageData])
 
     activity.end()
   }
@@ -290,11 +297,11 @@ module.exports = async function build(program: BuildArgs) {
     )
 
     if (pagePaths.length) {
-      fs.writeFileSync(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
+      await fs.writeFile(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
       report.info(`newPages.txt created`)
     }
     if (deletedPageKeys.length) {
-      fs.writeFileSync(
+      await fs.writeFile(
         deletedFilesPath,
         `${deletedPageKeys.join(`\n`)}\n`,
         `utf8`

@@ -14,7 +14,6 @@ const createBaseOptions = () => {
 
 const createBuildQueue = () => {
   const graphqlRunner = new GraphQLRunner(store)
-
   const handler = (queryJob, callback) =>
     queryRunner(graphqlRunner, queryJob)
       .then(result => callback(null, result))
