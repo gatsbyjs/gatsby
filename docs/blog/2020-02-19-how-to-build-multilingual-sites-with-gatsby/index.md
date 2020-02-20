@@ -14,7 +14,7 @@ In this article, I will shed some light on the essential topics around multiling
 The first part of the article will be CMS agnostic. For the basics, it doesn't matter whether you use Contentful, Kontent, Prismic, or any other CMS. It's more about the expectations of your customers. In the second part, I will talk about Kontent source plugin specifics and how to handle language fallbacks.
 
 ## ISO Codes or Codenames
-When you work with multiple languages, each content piece needs to be flagged with a language. Languages like English and German make this straightforward, you can use their ISO codes as flags. But sometimes you need to distinguish between countries that speak the same language, such as Spain and Brazil. We also have ISO codes for countries, and together with their language they form a language code (en-US, cs-CZ, and so on). Many CMSs use that to identify content for that specific part of the world. It's important to be able to extend this list, though.
+When you work with multiple languages, each content piece needs to be flagged with a language. Languages like English and German make this straightforward, you can use their ISO codes as flags. But sometimes you need to distinguish between countries that speak the same language, such as Portugal and Brazil. We also have ISO codes for countries, and together with their language they form a language code (en-US, cs-CZ, and so on). Many CMSs use that to identify content for that specific part of the world. It's important to be able to extend this list, though.
 
 Why?
 
