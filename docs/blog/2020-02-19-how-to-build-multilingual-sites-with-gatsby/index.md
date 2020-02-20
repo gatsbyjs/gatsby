@@ -18,7 +18,7 @@ When you work with multiple languages, each content piece needs to be flagged wi
 
 Why?
 
-Let me tell you a story about a Zoo in Brno, my hometown. It's not a particularly special one. It's normal in size, there is not really anything that would attract visitors from long distances. So they try to get creative with marketing. You can always find signs near exposures presenting the displayed animal including some facts about its life. They translated those signs into a local dialect and even though no one really speaks that dialect anymore, a lot of people understand it and consider it funny.
+Let me tell you a story about a Zoo in Brno, my hometown. It's not a particularly special one. It's normal in size, there is not really anything that would attract visitors from long distances. So they try to get creative with marketing. You can always find signs near enclosures presenting the displayed animal including some facts about its life. They translated those signs into a local dialect and even though no one really speaks that dialect anymore, a lot of people understand it and consider it funny.
 
 ![Zoo sign](./images/zoo-sign.jpg)
 
