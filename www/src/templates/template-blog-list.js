@@ -9,7 +9,7 @@ import Layout from "../components/layout"
 import Button from "../components/button"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog/blog-post-preview-item"
-import Pagination from "../components/pagination"
+import Pagination from "../components/blog/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
 import FooterLinks from "../components/shared/footer-links"
 

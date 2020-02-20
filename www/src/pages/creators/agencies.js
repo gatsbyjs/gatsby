@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
-import CreatorsView from "../../views/creators"
+import CreatorsView from "../../components/creators"
 
 class AgenciesPage extends Component {
   render() {

@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import { Fragment } from "react"
 
 import { getItemList } from "../utils/sidebar/item-list"
-import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
+import StickyResponsiveSidebar from "./docs/sidebar/sticky-responsive-sidebar"
 
 export default ({ children, enableScrollSync, location }) => {
   const itemList = getItemList(location.pathname)

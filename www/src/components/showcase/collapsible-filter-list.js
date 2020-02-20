@@ -4,7 +4,7 @@ import { jsx } from "theme-ui"
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
 import Collapsible from "../shared/collapsible"
-import { filterButton, filterCheckbox } from "../../views/shared/styles"
+import { filterButton, filterCheckbox } from "../shared/styles"
 
 const CollapsibleFilterList = ({
   filters,

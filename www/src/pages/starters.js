@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 
-import StarterLibraryView from "../views/starter-library"
+import StarterLibraryView from "../components/starter-library"
 
 class StarterLibraryWrapper extends Component {
   render() {

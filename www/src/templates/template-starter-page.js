@@ -5,12 +5,12 @@ import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import StarterHeader from "../views/starter/header"
-import StarterMeta from "../views/starter/meta"
-import Screenshot from "../views/shared/screenshot"
-import StarterSource from "../views/starter/source"
-import StarterInstallation from "../views/starter/installation"
-import StarterDetails from "../views/starter/details"
+import StarterHeader from "../components/starter/header"
+import StarterMeta from "../components/starter/meta"
+import Screenshot from "../components/shared/screenshot"
+import StarterSource from "../components/starter/source"
+import StarterInstallation from "../components/starter/installation"
+import StarterDetails from "../components/starter/details"
 import FooterLinks from "../components/shared/footer-links"
 
 const getScreenshot = (data, fallback) => {

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component } from "react"
-import SearchIcon from "../../components/search-icon"
+import SearchIcon from "../search-icon"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
@@ -10,7 +10,7 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { loadMoreButton } from "../shared/styles"
 import LHSFilter from "./lhs-filter"
 import StarterList from "./starter-list"
-import Button from "../../components/button"
+import Button from "../button"
 import {
   SidebarHeader,
   SidebarBody,
@@ -19,9 +19,9 @@ import {
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
-import FooterLinks from "../../components/shared/footer-links"
+import FooterLinks from "../shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
-import DebounceInput from "../../components/debounce-input"
+import DebounceInput from "../debounce-input"
 import { themedInput } from "../../utils/styles"
 
 export default class FilteredStarterLibrary extends Component {
