@@ -27,7 +27,7 @@
     - title: Gatsby Style Guide
       link: /contributing/gatsby-style-guide/
     - title: Translating Gatsbyjs.org
-      link: /contributing/translation
+      link: /contributing/translation/
       items:
         - title: Starting a New Translation
           link: /contributing/translation/new-translations/
