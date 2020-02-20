@@ -52,7 +52,7 @@ if (filterPackage) {
 
 packagesWithTs.forEach(project => {
   console.log(
-    `TS Check: Checking ./packages/${project.split(/.*packages\//)[1]}`
+    `TS Check: Checking ./packages/${project.split(/.*packages[/\\]/)[1]}`
   )
 
   const args = [
