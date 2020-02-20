@@ -193,7 +193,7 @@ Apart from dynamic pages, there are always some static pages. They include `inde
 
 It's also necessary to adjust the content of each of the new files to reflect its new language. That includes component properties. Take a look at this part of my index.js:
 
-```xml
+```js:title=index.js
 <Layout location={location} title={title}>
      <IndexContent />
  </Layout>
