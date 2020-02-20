@@ -155,7 +155,7 @@ export function dbQueryToSiftQuery(query: DbQuery): object {
 //     $regex: // as above
 //   }
 // }
-export const toDottedFields = (filter, acc = {}, path = []): object => {
+export function toDottedFields(filter, acc = {}, path = []): object {
   Object.keys(filter).forEach(key => {
     const value = filter[key]
     const nextValue = _.isPlainObject(value) && value[Object.keys(value)[0]]
@@ -171,7 +171,7 @@ export const toDottedFields = (filter, acc = {}, path = []): object => {
 }
 
 // Like above, but doesn't handle $elemMatch
-export const objectToDottedField = (obj, path = []): object => {
+export function objectToDottedField(obj, path = []): object {
   let result = {}
   Object.keys(obj).forEach(key => {
     const value = obj[key]
@@ -188,7 +188,7 @@ export const objectToDottedField = (obj, path = []): object => {
   return result
 }
 
-export const liftResolvedFields = (args, resolvedFields): object => {
+export function liftResolvedFields(args, resolvedFields): object {
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.keys(dottedFields)
   const finalArgs = {}
