@@ -46,7 +46,7 @@ You see, fallbacks are not just about content and its presentation online. It's 
 
 ## Implementation
 
-The more time you invest in gathering the requirements, the less time you will need to spend on the implementation. So what do we need to implement?
+The more time you invest in gathering requirements, the less time you will need to spend on implementation. So what do we need to implement?
 
 * Localized URLs
 * Identification of user locale
