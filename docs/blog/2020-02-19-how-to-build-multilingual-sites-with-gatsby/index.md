@@ -60,7 +60,7 @@ To illustrate these steps, I used a sample intranet app that was built on Gatsby
 
 The app contains a list of employees and a profile page for every one of them.
 
-Before we jump into code, it's essential to mention plugins. They greatly help with handling multilingual websites on Gatsby, so it would be a waste of time to try and reinvent the wheel here. For the full list, see [Gatsby docs](https://www.gatsbyjs.org/docs/localization-i18n/). I chose the [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n) as it is capable of automatic locale identification, handles language-specific static pages, and lets me configure the basics.
+Before we jump into code, it's essential to mention plugins. They greatly help with handling multilingual websites in Gatsby, so it would be a waste of time to try and reinvent the wheel here. For the full list, see [Gatsby docs](https://www.gatsbyjs.org/docs/localization-i18n/). I chose the [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n) as it is capable of automatic locale identification, handles language-specific static pages, and lets me configure the basics.
 
 ```js:title=gatsby-config.js
 {
