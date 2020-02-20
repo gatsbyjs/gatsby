@@ -54,6 +54,12 @@ if (process.env.AIRTABLE_API_KEY) {
 }
 
 if (process.env.ENABLE_LOCALIZATIONS) {
+  // Ignore files that have relative MDX imports:
+  // https://github.com/gatsbyjs/gatsby/issues/20795
+  const naughtyFiles = [
+    "docs/docs/graphql-api.md",
+    "docs/docs/data-fetching.md",
+  ]
   dynamicPlugins.push(
     ...langs.map(({ code }) => ({
       resolve: `gatsby-source-git`,
@@ -61,7 +67,7 @@ if (process.env.ENABLE_LOCALIZATIONS) {
         name: `docs-${code}`,
         remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
         branch: `master`,
-        patterns: `docs/tutorial/**`,
+        patterns: [`docs/**`, ...naughtyFiles.map(file => `!${file}`)],
       },
     }))
   )
