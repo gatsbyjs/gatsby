@@ -5,7 +5,7 @@ module.exports = (state = new Map(), action) => {
       return state
 
     case `SET_PAGE_DATA`: {
-      return state.set(action.payload.id, action.payload.result)
+      return state.set(action.payload.id, action.payload.resultHash)
     }
 
     default:

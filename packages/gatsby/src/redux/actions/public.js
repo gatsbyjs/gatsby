@@ -104,7 +104,11 @@ type ActionOptions = {
 
 type PageData = {
   id: string,
-  result: ?Object,
+  resultHash: string,
+}
+
+type PageDataRemove = {
+  id: string,
 }
 
 /**
@@ -1420,7 +1424,7 @@ actions.createPageDependency = (
  *
  * @param {Object} $0
  * @param {string} $0.id the path to the page.
- * @param {string} $0.result object of the pages data and context.
+ * @param {string} $0.resultHash pages content hash.
  */
 actions.setPageData = (pageData: PageData) => {
   return {
@@ -1435,7 +1439,7 @@ actions.setPageData = (pageData: PageData) => {
  * @param {Object} $0
  * @param {string} $0.id the path to the page.
  */
-actions.removePageData = (id: PageData) => {
+actions.removePageData = (id: PageDataRemove) => {
   return {
     type: `REMOVE_PAGE_DATA`,
     payload: id,

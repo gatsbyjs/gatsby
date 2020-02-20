@@ -36,18 +36,22 @@ const write = async ({ publicDir }, page, result) => {
   await fs.outputFile(filePath, bodyStr)
 }
 
-const getChangedPageDataKeys = (store, cacheData) => {
-  if (cacheData.webpackCompilationHash !== store.webpackCompilationHash) {
+const getChangedPageDataKeys = (
+  store,
+  cachedPageData,
+  cachedWebpackCompilationHash
+) => {
+  if (cachedWebpackCompilationHash !== store.webpackCompilationHash) {
     return [...store.pages.keys()]
   }
-  if (cacheData.pageData && store.pageData) {
+  if (cachedPageData && store.pageData) {
     const pageKeys = []
     store.pageData.forEach((value, key) => {
-      if (!cacheData.pageData.has(key)) {
+      if (!cachedPageData.has(key)) {
         pageKeys.push(key)
       } else {
         const newPageData = JSON.stringify(value)
-        const previousPageData = JSON.stringify(cacheData.pageData.get(key))
+        const previousPageData = JSON.stringify(cachedPageData.get(key))
 
         if (newPageData !== previousPageData) {
           pageKeys.push(key)
@@ -60,10 +64,10 @@ const getChangedPageDataKeys = (store, cacheData) => {
   return [...store.pages.keys()]
 }
 
-const removePreviousPageData = (store, cacheData) => {
-  if (cacheData.pageData && store.pageData) {
+const collectRemovedPageData = (store, cachedPageData) => {
+  if (cachedPageData && store.pageData) {
     const deletedPageKeys = []
-    cacheData.pageData.forEach((_value, key) => {
+    cachedPageData.forEach((_value, key) => {
       if (!store.pageData.has(key)) {
         deletedPageKeys.push(key)
       }
@@ -77,5 +81,5 @@ module.exports = {
   read,
   write,
   getChangedPageDataKeys,
-  removePreviousPageData,
+  collectRemovedPageData,
 }

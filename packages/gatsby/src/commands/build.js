@@ -21,8 +21,16 @@ const {
   waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
 } = require(`../utils/jobs-manager`)
 const pageDataUtil = require(`../utils/page-data`)
+const { boundActionCreators } = require(`../redux/actions`)
 
-const cacheData = readState()
+let cachedPageData
+let cachedWebpackCompilationHash
+if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
+  const { pageData, webpackCompilationHash } = readState()
+  // extract only data that we need to reuse and let v8 garbage collect rest of state
+  cachedPageData = pageData
+  cachedWebpackCompilationHash = webpackCompilationHash
+}
 
 type BuildArgs = {
   directory: string,
@@ -74,7 +82,6 @@ module.exports = async function build(program: BuildArgs) {
     processStaticQueries,
   } = queryUtil.getInitialQueryProcessors({
     parentSpan: buildSpan,
-    cacheData,
   })
 
   await processStaticQueries()
@@ -124,6 +131,19 @@ module.exports = async function build(program: BuildArgs) {
 
   await processPageQueries()
 
+  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
+    const { pages } = store.getState()
+    if (cachedPageData) {
+      cachedPageData.forEach((_value, key) => {
+        if (!pages.has(key)) {
+          boundActionCreators.removePageData({
+            id: key,
+          })
+        }
+      })
+    }
+  }
+
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
     const bundleSizes = stats
@@ -142,10 +162,19 @@ module.exports = async function build(program: BuildArgs) {
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
 
+  await db.saveState()
+
   await waitUntilAllJobsComplete()
 
-  const pagePaths = process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES
-    ? pageDataUtil.getChangedPageDataKeys(store.getState(), cacheData)
+  // we need to save it again to make sure our latest state has been saved
+  await db.saveState()
+
+  const pagePaths = process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
+    ? pageDataUtil.getChangedPageDataKeys(
+        store.getState(),
+        cachedPageData,
+        cachedWebpackCompilationHash
+      )
     : [...store.getState().pages.keys()]
   activity = report.createProgress(
     `Building static HTML for pages`,
@@ -187,12 +216,12 @@ module.exports = async function build(program: BuildArgs) {
   activity.done()
 
   let deletedPageKeys = []
-  if (process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES) {
+  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     activity = report.activityTimer(`Delete previous page data`)
     activity.start()
-    deletedPageKeys = pageDataUtil.removePreviousPageData(
+    deletedPageKeys = pageDataUtil.collectRemovedPageData(
       store.getState(),
-      cacheData
+      cachedPageData
     )
 
     deletedPageKeys.forEach(value => {
@@ -227,7 +256,7 @@ module.exports = async function build(program: BuildArgs) {
   buildActivity.end()
 
   if (
-    process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES &&
+    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
     process.argv.includes(`--log-pages`)
   ) {
     if (pagePaths.length) {
@@ -248,7 +277,7 @@ module.exports = async function build(program: BuildArgs) {
   }
 
   if (
-    process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES &&
+    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
     process.argv.includes(`--write-to-file`)
   ) {
     const createdFilesPath = path.resolve(
