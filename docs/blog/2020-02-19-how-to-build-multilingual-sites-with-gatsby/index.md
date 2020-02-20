@@ -108,7 +108,7 @@ I chose the variant with default language having no prefix in the URL.
 
 ## Identification of User Locale
 
-If your website is not Google Maps, people most likely won't share their location with you. Therefore, when identifying where geographically a visitor is, we rely on the information browsers send in the first request. That can be obtained via `window.navigator.language`, but we typically don't implement this part ourselves. In my case, it's a job that is handled by the mentioned `gatsby-plugin-i18n`.
+If your website is not Google Maps, people most likely won't share their location with you. Therefore, when identifying where a visitor is geographically, we rely on the information browsers send in the first request. That can be obtained via `window.navigator.language`, but we typically don't implement this part ourselves. In my case, it's a job that is handled by the aforementioned `gatsby-plugin-i18n`.
 
 ## Generating Language-specific Pages
 
