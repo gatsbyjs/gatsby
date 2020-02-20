@@ -200,36 +200,22 @@ const applyFilters = (
   typedKeyValueIndexes,
   resolvedFields
 ) => {
-  const filter = filterFields
+  const filters = filterFields
     ? prefixResolvedFields(
         createDbQueriesFromObject(prepareQueryArgs(filterFields)),
         resolvedFields
       )
     : []
 
-  let result
-  // Filters are flattened, so single filter will always be a chain with needle
-  // unless it's an elemmatch
-  if (
-    typedKeyValueIndexes &&
-    filter.length === 1 &&
-    filter[0].type !== `elemMatch`
-  ) {
-    result = filterWithoutSift(filter[0], nodeTypeNames, typedKeyValueIndexes)
-    if (result) {
-      if (firstOnly) {
-        return result.slice(0, 1)
-      }
-      return result
+  const result = filterWithoutSift(filters, nodeTypeNames, typedKeyValueIndexes)
+  if (result) {
+    if (firstOnly) {
+      return result.slice(0, 1)
     }
+    return result
   }
 
-  return filterWithSift(
-    filter.map(f => dbQueryToSiftQuery(f)),
-    firstOnly,
-    nodeTypeNames,
-    resolvedFields
-  )
+  return filterWithSift(filters, firstOnly, nodeTypeNames, resolvedFields)
 }
 
 /**
@@ -242,11 +228,18 @@ const applyFilters = (
  * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
  * @returns {Array|undefined} Collection of results
  */
-const filterWithoutSift = (filter, nodeTypeNames, typedKeyValueIndexes) => {
+const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
   // This can also be `$ne`, `$in` or any other grapqhl comparison op
-  if (filter.query.comparator !== `$eq`) {
+  if (
+    !typedKeyValueIndexes ||
+    filters.length !== 1 ||
+    filters[0].type === `elemMatch` ||
+    filters[0].query.comparator !== `$eq`
+  ) {
     return undefined
   }
+
+  const filter = filters[0]
 
   return runFlatFilterWithoutSift(
     filter.path,
@@ -255,6 +248,9 @@ const filterWithoutSift = (filter, nodeTypeNames, typedKeyValueIndexes) => {
     typedKeyValueIndexes
   )
 }
+
+// Not a public API
+exports.filterWithoutSift = filterWithoutSift
 
 /**
  * Use sift to apply filters
@@ -273,7 +269,7 @@ const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
 
   return _runSiftOnNodes(
     nodes,
-    filter,
+    filter.map(f => dbQueryToSiftQuery(f)),
     firstOnly,
     nodeTypeNames,
     resolvedFields,
