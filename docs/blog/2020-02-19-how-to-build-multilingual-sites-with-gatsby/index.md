@@ -201,7 +201,7 @@ It's also necessary to adjust the content of each of the new files to reflect it
 
 Once this file becomes `index.cs.js`, I need to adjust it to:
 
-```xml
+```js:title=index.cs.js
 <Layout location={location} title={title} lang="cs">
     <IndexContent lang="cs" />
 </Layout>
