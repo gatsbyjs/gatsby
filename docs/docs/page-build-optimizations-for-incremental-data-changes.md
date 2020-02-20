@@ -1,5 +1,5 @@
 ---
-title: Page Build Optimizations for Incremental Data Changes
+title: Experimental Page Build Optimizations for Incremental Data Changes
 ---
 
 Building sites with large amounts of content (10,000s nodes upwards) is relatively fast with Gatsby. However, some projects might start to experience issues when adopting CI/CD principles - continuously building and deploying. Gatsby rebuilds the complete app on each `gatsby build` which means the complete app also needs to be deployed. Doing this each time a small data change occurs unnecessarily increases demand on CPU, memory, and bandwidth.
