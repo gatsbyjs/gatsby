@@ -42,7 +42,7 @@ export interface DbFilterStatement {
 
 /**
  * Converts a nested mongo args object into array of DbQuery objects,
- * structured representanion of each distinct path of the query. We convert
+ * structured representation of each distinct path of the query. We convert
  * nested objects with multiple keys to separate instances.
  */
 export function createDbQueriesFromObject(filter: object): Array<DbQuery> {
