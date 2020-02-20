@@ -12,6 +12,7 @@ const {
   flattenDeep,
   replace,
   concat,
+  memoize,
 } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
@@ -59,16 +60,37 @@ const getPageDataUrl = pagePath => {
   return `${__PATH_PREFIX__}/${pageDataPath}`
 }
 
-const getPageDataFile = pagePath => {
+const getPageData = pagePath => {
   const pageDataPath = getPageDataPath(pagePath)
-  return join(process.cwd(), `public`, pageDataPath)
+  const absolutePageDataPath = join(process.cwd(), `public`, pageDataPath)
+  const pageDataRaw = fs.readFileSync(absolutePageDataPath)
+
+  try {
+    return JSON.parse(pageDataRaw.toString())
+  } catch (err) {
+    return null
+  }
 }
 
 const appDataPath = join(`page-data`, `app-data.json`)
 
-const getAppDataUrl = () => `${__PATH_PREFIX__}/${appDataPath}`
+const getAppDataUrl = memoize(() => {
+  let appData
 
-const getAppDataFile = () => join(process.cwd(), `public`, appDataPath)
+  try {
+    const absoluteAppDataPath = join(process.cwd(), `public`, appDataPath)
+    const appDataRaw = fs.readFileSync(absoluteAppDataPath)
+    appData = JSON.parse(appDataRaw.toString())
+
+    if (!appData) {
+      return null
+    }
+  } catch (err) {
+    return null
+  }
+
+  return `${__PATH_PREFIX__}/${appDataPath}`
+})
 
 const loadPageDataSync = pagePath => {
   const pageDataPath = getPageDataPath(pagePath)
@@ -173,12 +195,9 @@ export default (pagePath, callback) => {
     postBodyComponents = sanitizeComponents(components)
   }
 
-  const pageDataRaw = fs.readFileSync(getPageDataFile(pagePath))
-  const pageData = JSON.parse(pageDataRaw.toString())
+  const pageData = getPageData(pagePath)
   const pageDataUrl = getPageDataUrl(pagePath)
 
-  const appDataRaw = fs.readFileSync(getAppDataFile())
-  const appData = JSON.parse(appDataRaw.toString())
   const appDataUrl = getAppDataUrl()
 
   const { componentChunkName } = pageData
@@ -345,7 +364,7 @@ export default (pagePath, callback) => {
       />
     )
   }
-  if (appData) {
+  if (appDataUrl) {
     headComponents.push(
       <link
         as="fetch"

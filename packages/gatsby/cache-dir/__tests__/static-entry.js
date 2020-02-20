@@ -264,6 +264,7 @@ describe(`static-entry`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
     global.__BASE_PATH__ = ``
+    fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
