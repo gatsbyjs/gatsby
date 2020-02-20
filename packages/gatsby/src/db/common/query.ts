@@ -1,18 +1,18 @@
 import * as _ from "lodash"
 
-export interface DbQueryQuery {
+export interface IDbQueryQuery {
   type: "query"
   path: Array<string>
-  query: DbFilterStatement
+  query: IDbFilterStatement
 }
 
-export interface DbQueryElemMatch {
+export interface IDbQueryElemMatch {
   type: "elemMatch"
   path: Array<string>
   nestedQuery: DbQuery
 }
 
-export type DbQuery = DbQueryQuery | DbQueryElemMatch
+export type DbQuery = IDbQueryQuery | IDbQueryElemMatch
 
 export enum DbComparator {
   EQ = `$eq`,
@@ -27,15 +27,15 @@ export enum DbComparator {
   GLOB = `$glob`,
 }
 
-const DB_COMPARATOR_VALUES = new Set(Object.values(DbComparator))
+const DB_COMPARATOR_VALUES: Set<string> = new Set(Object.values(DbComparator))
 
-function isDbComparator(value: any): value is DbComparator {
+function isDbComparator(value: string): value is DbComparator {
   return DB_COMPARATOR_VALUES.has(value)
 }
 
 type DbComparatorValue = string | number | boolean | RegExp | null
 
-export interface DbFilterStatement {
+export interface IDbFilterStatement {
   comparator: DbComparator
   value: DbComparatorValue | Array<DbComparatorValue>
 }
@@ -57,17 +57,19 @@ function createDbQueriesFromObjectNested(
   return _.flatMap(
     keys,
     (key: string): Array<DbQuery> => {
-      if (key === "$elemMatch") {
+      if (key === `$elemMatch`) {
         const queries = createDbQueriesFromObjectNested(filter[key])
-        return queries.map(query => ({
-          type: "elemMatch",
-          path: path,
-          nestedQuery: query,
-        }))
+        return queries.map(query => {
+          return {
+            type: `elemMatch`,
+            path: path,
+            nestedQuery: query,
+          }
+        })
       } else if (isDbComparator(key)) {
         return [
           {
-            type: "query",
+            type: `query`,
             path,
             query: {
               comparator: key,
@@ -89,22 +91,22 @@ export function prefixResolvedFields(
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.getOwnPropertyNames(dottedFields)
   queries.forEach(query => {
-    const prefixPath = query.path.join(".")
+    const prefixPath = query.path.join(`.`)
     if (
       dottedFields[prefixPath] ||
       (dottedFieldKeys.some(dottedKey => dottedKey.startsWith(prefixPath)) &&
-        query.type === "elemMatch") ||
+        query.type === `elemMatch`) ||
       dottedFieldKeys.some(dottedKey => prefixPath.startsWith(dottedKey))
     ) {
-      query.path.unshift("__gatsby_resolved")
+      query.path.unshift(`__gatsby_resolved`)
     }
   })
   return queries
 }
 
-export function dbQueryToSiftQuery(query: DbQuery): any {
+export function dbQueryToSiftQuery(query: DbQuery): object {
   const result = {}
-  if (query.type === "elemMatch") {
+  if (query.type === `elemMatch`) {
     result[query.path.join(`.`)] = {
       $elemMatch: dbQueryToSiftQuery(query.nestedQuery),
     }
@@ -153,7 +155,7 @@ export function dbQueryToSiftQuery(query: DbQuery): any {
 //     $regex: // as above
 //   }
 // }
-export const toDottedFields = (filter, acc = {}, path = []) => {
+export const toDottedFields = (filter, acc = {}, path = []): object => {
   Object.keys(filter).forEach(key => {
     const value = filter[key]
     const nextValue = _.isPlainObject(value) && value[Object.keys(value)[0]]
@@ -169,7 +171,7 @@ export const toDottedFields = (filter, acc = {}, path = []) => {
 }
 
 // Like above, but doesn't handle $elemMatch
-export const objectToDottedField = (obj, path = []) => {
+export const objectToDottedField = (obj, path = []): object => {
   let result = {}
   Object.keys(obj).forEach(key => {
     const value = obj[key]
@@ -186,7 +188,7 @@ export const objectToDottedField = (obj, path = []) => {
   return result
 }
 
-export const liftResolvedFields = (args, resolvedFields) => {
+export const liftResolvedFields = (args, resolvedFields): object => {
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.keys(dottedFields)
   const finalArgs = {}
