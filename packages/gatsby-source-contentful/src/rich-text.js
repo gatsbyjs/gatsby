@@ -14,12 +14,26 @@ const isAssetReferenceNode = node =>
 const isEntryReferenceField = field => _.get(field, `sys.type`) === `Entry`
 const isAssetReferenceField = field => _.get(field, `sys.type`) === `Asset`
 
-const getEntryContentType = (entry, contentTypes) =>
-  contentTypes.find(
-    contentType =>
-      entry.sys.contentType &&
-      contentType.sys.id === entry.sys.contentType.sys.id
-  )
+const getEntryContentType = (() => {
+  const contentTypesCachedById = {}
+
+  return (entry, contentTypes) => {
+    const entryContentTypeId = entry.sys.contentType.sys.id
+    if (contentTypesCachedById[entryContentTypeId]) {
+      return contentTypesCachedById[entryContentTypeId]
+    }
+
+    const entryContentType = contentTypes.find(
+      contentType =>
+        entry.sys.contentType &&
+        contentType.sys.id === entry.sys.contentType.sys.id
+    )
+
+    contentTypesCachedById[entryContentTypeId] = entryContentType
+
+    return entryContentType
+  }
+})()
 
 const getFieldProps = (contentType, fieldName) =>
   contentType.fields.find(({ id }) => id === fieldName)
