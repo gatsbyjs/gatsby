@@ -9836,3 +9836,15 @@
   built_by: Botox For Hair And co.
   built_by_url: https://www.botoxforhair.net/
   featured: false
+- title: ramonak.io
+  url: https://ramonak.io/
+  main_url: https://ramonak.io/
+  source_url: https://github.com/KaterinaLupacheva/ramonak.io
+  description: >
+    Tech blog and portfolio site of a full stack web developer Katsiaryna (Kate) Lupachova
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Katsiaryna Lupachova
+  built_by_url: https://ramonak.io/
+  featured: false
