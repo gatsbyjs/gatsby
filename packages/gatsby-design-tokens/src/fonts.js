@@ -31,7 +31,7 @@ const f = preval`
 
   const serif = ["Georgia", "Times New Roman", "Times", "serif"]
 
-  const fonts = { body, system, heading, monospace, serif }
+  const fonts = { body, system, sans, heading, brand, monospace, serif }
 
   let fontsStrings = {}
   for (const fontFamily in fonts) {
