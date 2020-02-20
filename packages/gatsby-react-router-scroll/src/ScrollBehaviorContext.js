@@ -5,7 +5,7 @@ import { globalHistory as history } from "@reach/router/lib/history"
 
 import SessionStorage from "./StateStorage"
 
-export const ScrollContext = React.createContext()
+export const ScrollBehaviorContext = React.createContext()
 
 const propTypes = {
   shouldUpdateScroll: PropTypes.func,
@@ -13,7 +13,7 @@ const propTypes = {
   location: PropTypes.object.isRequired,
 }
 
-class ScrollBehaviorContext extends React.Component {
+class ScrollContext extends React.Component {
   constructor(props, context) {
     super(props, context)
 
@@ -88,7 +88,7 @@ class ScrollBehaviorContext extends React.Component {
 
   render() {
     return (
-      <ScrollContext.Provider
+      <ScrollBehaviorContext.Provider
         value={{
           registerElement: this.registerElement,
           unregisterElement: this.unregisterElement,
@@ -96,7 +96,7 @@ class ScrollBehaviorContext extends React.Component {
         }}
       >
         {React.Children.only(this.props.children)}
-      </ScrollContext.Provider>
+      </ScrollBehaviorContext.Provider>
     )
   }
 }

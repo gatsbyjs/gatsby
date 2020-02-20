@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import warning from "warning"
 import PropTypes from "prop-types"
-import { ScrollContext } from "./ScrollBehaviorContext"
+import { ScrollBehaviorContext } from "./ScrollBehaviorContext"
 
 const propTypes = {
   scrollKey: PropTypes.string.isRequired,
@@ -73,9 +73,9 @@ class ScrollContainer extends React.Component {
 }
 
 const ScrollContainerConsumer = props => (
-  <ScrollContext.Consumer>
+  <ScrollBehaviorContext.Consumer>
     {value => <ScrollContainer {...props} {...value} />}
-  </ScrollContext.Consumer>
+  </ScrollBehaviorContext.Consumer>
 )
 
 ScrollContainerConsumer.propTypes = propTypes
