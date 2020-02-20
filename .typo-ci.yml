@@ -25,7 +25,10 @@ excluded_files:
   - ".typo-ci.yml"
   - ".npmignore"
   - "packages/**/.npmignore"
-
+  - "**/*.js"
+  - "**/*.ts"
+  - "**/*.jsx"
+  - "**/*.tsx"
 # Any typos we should ignore?
 excluded_words:
   - typoci

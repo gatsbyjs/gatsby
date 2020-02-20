@@ -7,7 +7,7 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 ## Adding data to GraphQL
 
-Gatsby's [GraphQL data layer](/docs/querying-with-graphql/) uses nodes to model chunks of data. Gatsby source plugins add source nodes that you can query for, but you can also create source nodes yourself. To add custom data to the GraphQL data layer yourself, Gatsby provides methods you can leverage.
+Gatsby's [GraphQL data layer](/docs/graphql-concepts/) uses nodes to model chunks of data. Gatsby source plugins add source nodes that you can query for, but you can also create source nodes yourself. To add custom data to the GraphQL data layer yourself, Gatsby provides methods you can leverage.
 
 This recipe shows you how to add custom data using `createNode()`.
 
@@ -533,7 +533,7 @@ export default ({ pageContext: { allPokemon } }) => (
 
 - [Full Pokemon data repo](https://github.com/jlengstorf/gatsby-with-unstructured-data/)
 - More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
-- When and how to [query data with GraphQL](/docs/querying-with-graphql/) for more complex Gatsby sites
+- When and how to [query data with GraphQL](/docs/graphql-concepts/) for more complex Gatsby sites
 
 ## Sourcing content from Drupal
 
