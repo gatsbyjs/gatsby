@@ -36,7 +36,7 @@ const getFieldWithLocaleResolved = ({
   contentTypes,
   getField,
   defaultLocale,
-  resolvedEntryIDs = [],
+  resolvedEntryIDs,
 }) => {
   // If the field is itself a reference to another entry, recursively resolve
   // that entry's field locales too.
