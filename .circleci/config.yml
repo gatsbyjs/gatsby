@@ -361,22 +361,218 @@ jobs:
           paths:
             - "*"
 
-  run_benchmarks:
+  benchmark_markdown_id_512:
     docker:
-      - image: circleci/node:12
+      - image: "circleci/node:12"
     resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "512"
     steps:
       - checkout
-      - run: ./scripts/build-benchmark.sh
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_id
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_id
+
+  benchmark_markdown_id_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "4096"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_id
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_id
+
+  benchmark_markdown_id_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "8192"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_id
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_id
+
+  benchmark_markdown_id_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "32768"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_id
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_id
+
+  benchmark_markdown_slug_512:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "512"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_slug
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_slug
+
+  benchmark_markdown_slug_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "4096"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_slug
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_slug
+
+  benchmark_markdown_slug_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "8192"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_slug
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_slug
+
+  benchmark_markdown_slug_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "32768"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_slug
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_slug
+
+  benchmark_markdown_table_512:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "512"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_table
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_table
+
+  benchmark_markdown_table_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "4096"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_table
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_table
+
+  benchmark_markdown_table_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "8192"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_table
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_table
+
+  benchmark_markdown_table_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "32768"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_table
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_table
 
 workflows:
   version: 2
 
-  run_benchmarks:
-    jobs: [run_benchmarks]
+  benchmark:
+    jobs:
+      - benchmark_markdown_id_512
+      - benchmark_markdown_id_4096
+      - benchmark_markdown_id_8192
+      - benchmark_markdown_id_32768
+      - benchmark_markdown_slug_512
+      - benchmark_markdown_slug_4096
+      - benchmark_markdown_slug_8192
+      - benchmark_markdown_slug_32768
+      - benchmark_markdown_table_512
+      - benchmark_markdown_table_4096
+      - benchmark_markdown_table_8192
+      - benchmark_markdown_table_32768
     triggers:
       - schedule:
-          cron: "12 3 * * *" # every day at 03:12
+          cron: 12 3 * * *
           filters:
             branches:
               only:
