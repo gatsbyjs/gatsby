@@ -39,21 +39,21 @@ const assetFactory = () => {
 }
 
 describe(`getNormalizedRichTextField()`, () => {
-  let contentTypes
+  let contentTypesById
   let currentLocale
   let defaultLocale
   let getField
 
   beforeEach(() => {
-    contentTypes = [
-      {
+    contentTypesById = {
+      article: {
         sys: { id: `article` },
         fields: [
           { id: `title`, localized: true },
           { id: `relatedArticle`, localized: false },
         ],
       },
-    ]
+    }
     currentLocale = `en`
     defaultLocale = `en`
     getField = field => field[currentLocale]
@@ -75,7 +75,7 @@ describe(`getNormalizedRichTextField()`, () => {
       expect(
         getNormalizedRichTextField({
           field,
-          contentTypes,
+          contentTypesById,
           getField,
           defaultLocale,
         })
@@ -103,7 +103,7 @@ describe(`getNormalizedRichTextField()`, () => {
           const expectedTitle = `Title`
           const actualTitle = getNormalizedRichTextField({
             field,
-            contentTypes,
+            contentTypesById,
             getField,
             defaultLocale,
           }).content[0].data.target.fields.title
@@ -130,7 +130,7 @@ describe(`getNormalizedRichTextField()`, () => {
           const expectedTitle = `Titel`
           const actualTitle = getNormalizedRichTextField({
             field,
-            contentTypes,
+            contentTypesById,
             getField,
             defaultLocale,
           }).content[0].data.target.fields.title
@@ -160,7 +160,7 @@ describe(`getNormalizedRichTextField()`, () => {
         const expectedTitle = `Titel zwei`
         const actualTitle = getNormalizedRichTextField({
           field,
-          contentTypes,
+          contentTypesById,
           getField,
           defaultLocale,
         }).content[0].data.target.fields.relatedArticle.fields.title
@@ -189,7 +189,7 @@ describe(`getNormalizedRichTextField()`, () => {
         const expectedURL = `//images.ctfassets.net/asset.jpg`
         const actualURL = getNormalizedRichTextField({
           field,
-          contentTypes,
+          contentTypesById,
           getField,
           defaultLocale,
         }).content[0].data.target.fields.file.url
@@ -202,7 +202,7 @@ describe(`getNormalizedRichTextField()`, () => {
   describe(`when a referenced entry contains an asset field`, () => {
     describe(`when the current locale is \`en\``, () => {
       beforeEach(() => {
-        contentTypes[0].fields.push({
+        contentTypesById.article.fields.push({
           id: `assetReference`,
           localized: true,
         })
@@ -228,7 +228,7 @@ describe(`getNormalizedRichTextField()`, () => {
         const expectedURL = `//images.ctfassets.net/asset.jpg`
         const actualURL = getNormalizedRichTextField({
           field,
-          contentTypes,
+          contentTypesById,
           getField,
           defaultLocale,
         }).content[0].data.target.fields.assetReference.fields.file.url
@@ -240,11 +240,11 @@ describe(`getNormalizedRichTextField()`, () => {
 
   describe(`when an entry/asset reference field is an array`, () => {
     beforeEach(() => {
-      contentTypes[0].fields.push({
+      contentTypesById.article.fields.push({
         id: `relatedArticles`,
         localized: false,
       })
-      contentTypes[0].fields.push({
+      contentTypesById.article.fields.push({
         id: `relatedAssets`,
         localized: false,
       })
@@ -272,7 +272,7 @@ describe(`getNormalizedRichTextField()`, () => {
       const expectedTitle = `Related article #1`
       const actualTitle = getNormalizedRichTextField({
         field,
-        contentTypes,
+        contentTypesById,
         getField,
         defaultLocale,
       }).content[0].data.target.fields.relatedArticles[0].fields.title
@@ -306,7 +306,7 @@ describe(`getNormalizedRichTextField()`, () => {
       const expectedURL = `//images.ctfassets.net/related-asset.jpg`
       const actualURL = getNormalizedRichTextField({
         field,
-        contentTypes,
+        contentTypesById,
         getField,
         defaultLocale,
       }).content[0].data.target.fields.relatedAssets[0].fields.file.url
@@ -345,7 +345,7 @@ describe(`getNormalizedRichTextField()`, () => {
       expect(() => {
         getNormalizedRichTextField({
           field,
-          contentTypes,
+          contentTypesById,
           getField,
           defaultLocale,
         })

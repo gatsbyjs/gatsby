@@ -347,10 +347,19 @@ exports.createNodesForContentType = ({
           fieldProps.type === `RichText` &&
           richTextOptions.resolveFieldLocales
         ) {
+          const contentTypesById = contentTypeItems.reduce(
+            (acc, contentTypeItem) => {
+              return {
+                ...acc,
+                [contentTypeItem.sys.id]: contentTypeItem,
+              }
+            },
+            {}
+          )
           return getNormalizedRichTextField({
             field: localizedField,
             fieldProps,
-            contentTypes: contentTypeItems,
+            contentTypesById,
             getField,
             defaultLocale,
           })

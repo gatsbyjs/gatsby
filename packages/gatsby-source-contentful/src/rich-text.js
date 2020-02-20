@@ -14,13 +14,6 @@ const isAssetReferenceNode = node =>
 const isEntryReferenceField = field => _.get(field, `sys.type`) === `Entry`
 const isAssetReferenceField = field => _.get(field, `sys.type`) === `Asset`
 
-const getEntryContentType = (entry, contentTypes) =>
-  contentTypes.find(
-    contentType =>
-      entry.sys.contentType &&
-      contentType.sys.id === entry.sys.contentType.sys.id
-  )
-
 const getFieldProps = (contentType, fieldName) =>
   contentType.fields.find(({ id }) => id === fieldName)
 
@@ -33,7 +26,7 @@ const getAssetWithFieldLocalesResolved = ({ asset, getField }) => {
 
 const getFieldWithLocaleResolved = ({
   field,
-  contentTypes,
+  contentTypesById,
   getField,
   defaultLocale,
   resolvedEntryIDs,
@@ -47,7 +40,7 @@ const getFieldWithLocaleResolved = ({
 
     return getEntryWithFieldLocalesResolved({
       entry: field,
-      contentTypes,
+      contentTypesById,
       getField,
       defaultLocale,
       resolvedEntryIDs: [...resolvedEntryIDs, field.sys.id],
@@ -65,7 +58,7 @@ const getFieldWithLocaleResolved = ({
     return field.map(fieldItem =>
       getFieldWithLocaleResolved({
         field: fieldItem,
-        contentTypes,
+        contentTypesById,
         getField,
         defaultLocale,
         resolvedEntryIDs,
@@ -78,7 +71,7 @@ const getFieldWithLocaleResolved = ({
 
 const getEntryWithFieldLocalesResolved = ({
   entry,
-  contentTypes,
+  contentTypesById,
   getField,
   defaultLocale,
 
@@ -88,7 +81,7 @@ const getEntryWithFieldLocalesResolved = ({
    */
   resolvedEntryIDs = [],
 }) => {
-  const contentType = getEntryContentType(entry, contentTypes)
+  const contentType = contentTypesById[entry.sys.contentType.sys.id]
 
   return {
     ...entry,
@@ -101,7 +94,7 @@ const getEntryWithFieldLocalesResolved = ({
 
       return getFieldWithLocaleResolved({
         field: fieldValue,
-        contentTypes,
+        contentTypesById,
         getField,
         defaultLocale,
         resolvedEntryIDs,
@@ -112,7 +105,7 @@ const getEntryWithFieldLocalesResolved = ({
 
 const getNormalizedRichTextNode = ({
   node,
-  contentTypes,
+  contentTypesById,
   getField,
   defaultLocale,
 }) => {
@@ -123,7 +116,7 @@ const getNormalizedRichTextNode = ({
         ...node.data,
         target: getEntryWithFieldLocalesResolved({
           entry: node.data.target,
-          contentTypes,
+          contentTypesById,
           getField,
           defaultLocale,
         }),
@@ -150,7 +143,7 @@ const getNormalizedRichTextNode = ({
       content: node.content.map(childNode =>
         getNormalizedRichTextNode({
           node: childNode,
-          contentTypes,
+          contentTypesById,
           getField,
           defaultLocale,
         })
@@ -167,7 +160,7 @@ const getNormalizedRichTextNode = ({
  */
 const getNormalizedRichTextField = ({
   field,
-  contentTypes,
+  contentTypesById,
   getField,
   defaultLocale,
 }) => {
@@ -177,7 +170,7 @@ const getNormalizedRichTextField = ({
       content: field.content.map(node =>
         getNormalizedRichTextNode({
           node,
-          contentTypes,
+          contentTypesById,
           getField,
           defaultLocale,
         })
