@@ -12,9 +12,9 @@ For more info on the standard build process please see [overview of the gatsby b
 
 ## How to use
 
-To enable this enhancement, use the environment variable `GATSBY_PAGE_BUILD_ON_DATA_CHANGES=true` in your `gatsby build` command, for example:
+To enable this enhancement, use the environment variable `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true` in your `gatsby build` command, for example:
 
-`GATSBY_PAGE_BUILD_ON_DATA_CHANGES=true node ./node_modules/.bin/gatsby build`
+`GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true node ./node_modules/.bin/gatsby build`
 
 This will run the Gatsby build process, but only build pages that have data changes since your last build. If there are any changes to code (JS, CSS) the bundling process returns a new webpack compilation hash which causes all pages to be rebuilt.
 
