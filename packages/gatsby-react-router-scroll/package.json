@@ -27,8 +27,8 @@
   "peerDependencies": {
     "@reach/router": "^1.0",
     "gatsby": "^2.0.0",
-    "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
   },
   "repository": {
     "type": "git",
