@@ -48,7 +48,7 @@ You see, fallbacks are not just about content and its presentation online. It's 
 
 The more time you invest in gathering requirements, the less time you will need to spend on implementation. So what do we need to implement?
 
-* Localized URLs
+* Localize URLs
 * Identification of user locale
 * Generate language-specific dynamic pages
 * Generate language-specific static pages
