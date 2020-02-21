@@ -8,5 +8,5 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: pvdz/eslint-action@master
-        with:
+        env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
