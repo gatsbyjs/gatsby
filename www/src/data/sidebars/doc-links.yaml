@@ -76,6 +76,9 @@
             - title: Deploying to ZEIT Now
               link: /docs/deploying-to-zeit-now/
               breadcrumbTitle: ZEIT Now
+            - title: Deploying to Cloudflare Workers
+              link: /docs/deploying-to-cloudflare-workers/
+              breadcrumbTitle: Cloudflare Workers
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
