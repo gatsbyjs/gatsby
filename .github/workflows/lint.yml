@@ -1,12 +1,25 @@
 name: Lint
 
-on: pull_request
+on: 
+  pull_request:
+    types: [opened, synchronize]
+  check_run:
+    types: [requested_action]
+  
 
 jobs:
   eslint:
+    if: github.event_name === 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: pieh/eslint-action@c87cf81298b12134179d985b3e7d0b28d7ba6700
+      - uses: pieh/eslint-action@1d0f1e06ce7fcac20884612259dc53b9c6c2e4ed
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  format:
+    if: github.event_name === 'check_run'
+    runs-on: [ubuntu-latest]
+    steps:
+      - run: |
+          echo "formatting ... someday maybe"
+    
