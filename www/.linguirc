@@ -1,0 +1,6 @@
+{
+   "sourceLocale": "en",
+   "localeDir": "src/data/locales",
+   "srcPathDirs": ["src/components", "src/pages", "src/templates", "src/views"],
+   "format": "po"
+}
