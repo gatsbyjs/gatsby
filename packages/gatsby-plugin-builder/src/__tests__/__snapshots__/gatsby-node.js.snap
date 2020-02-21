@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`validation throws on an invalid templates path 1`] = `"gatsby-plugin-builder requires a valid template path for each model"`;
+
+exports[`validation throws on missing public API Key 1`] = `"gatsby-plugin-builder requires a public API Key"`;
