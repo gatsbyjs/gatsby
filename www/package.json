@@ -124,9 +124,9 @@
     "stylelint": "stylelint './src/**/*.js'",
     "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0",
     "postinstall": "cd plugins/gatsby-transformer-gatsby-api-calls && npm install",
-    "add-locale": "lingui add-locale",
-    "extract": "NODE_ENV=test lingui extract",
-    "compile": "lingui compile"
+    "lingui:add-locale": "lingui add-locale",
+    "lingui:extract": "NODE_ENV=test lingui extract",
+    "lingui:compile": "lingui compile"
   },
   "devDependencies": {
     "@lingui/cli": "^2.9.1",
