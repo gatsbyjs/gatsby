@@ -133,7 +133,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
     })
     ;[
       { desc: `with cache`, cb: () => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => undefined }, // Always goes through sift
+      { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createIndexCache }) => {
       describe(desc, () => {
         describe(`filters by just id correctly`, () => {
