@@ -34,6 +34,7 @@ msgid "<0/> Edit this page on GitHub"
 msgstr "<0/> Edit this page on GitHub"
 
 #: src/components/navigation-mobile.js:45
+#: src/components/navigation.js:86
 msgid "Docs"
 msgstr "Docs"
 
@@ -42,40 +43,43 @@ msgid "Tutorials"
 msgstr "Tutorials"
 
 #: src/components/navigation-mobile.js:47
+#: src/components/navigation.js:88
 msgid "Plugins"
 msgstr "Plugins"
 
 #: src/components/navigation-mobile.js:48
+#: src/components/navigation.js:90
 msgid "Blog"
 msgstr "Blog"
 
 #: src/components/navigation-mobile.js:49
+#: src/components/navigation.js:91
 msgid "Showcase"
 msgstr "Showcase"
 
-#: src/components/navigation.js:164
-#~ msgid "Gatsby, Back to homepage"
-#~ msgstr "Gatsby, Back to homepage"
-
-#: src/components/navigation.js:174
-#~ msgid "Gatsby Logo"
-#~ msgstr "Gatsby Logo"
-
-#: src/components/navigation.js:180
-#~ msgid "Primary Navigation"
-#~ msgstr "Primary Navigation"
-
 #: src/components/navigation.js:87
-#~ msgid "Tutorial"
-#~ msgstr "Tutorial"
+msgid "Tutorial"
+msgstr "Tutorial"
 
 #: src/components/navigation.js:89
-#~ msgid "Features"
-#~ msgstr "Features"
+msgid "Features"
+msgstr "Features"
 
 #: src/components/navigation.js:92
-#~ msgid "Contributing"
-#~ msgstr "Contributing"
+msgid "Contributing"
+msgstr "Contributing"
+
+#: src/components/navigation.js:164
+msgid "Gatsby, Back to homepage"
+msgstr "Gatsby, Back to homepage"
+
+#: src/components/navigation.js:174
+msgid "Gatsby Logo"
+msgstr "Gatsby Logo"
+
+#: src/components/navigation.js:180
+msgid "Primary Navigation"
+msgstr "Primary Navigation"
 
 #: src/components/prev-and-next.js:37
 msgid "pagination"
@@ -123,12 +127,12 @@ msgid "Expand All"
 msgstr "Expand All"
 
 #: src/components/sidebar/section-title.js:142
-msgid "{0} expand"
-msgstr "{0} expand"
-
-#: src/components/sidebar/section-title.js:142
 msgid "{0} collapse"
 msgstr "{0} collapse"
+
+#: src/components/sidebar/section-title.js:142
+msgid "{0} expand"
+msgstr "{0} expand"
 
 #: src/components/sidebar/sidebar.js:203
 msgid "Secondary Navigation"

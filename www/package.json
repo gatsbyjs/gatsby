@@ -115,7 +115,7 @@
   "lint-staged": {
     "*.{js,jsx}": [
       "yarn run lingui:extract",
-      "git add"
+      "git add scr/data/locales"
     ]
   },
   "husky": {
