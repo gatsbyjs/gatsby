@@ -56,15 +56,15 @@ export function readFromCache(): ICachedReduxState {
 
   const nodes: [string, IReduxNode][] = [].concat(...chunks)
 
-  if (chunks.length) {
-    obj.nodes = new Map(nodes)
-  } else {
+  if (!chunks.length) {
     report.info(
       `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
     )
     // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
     return {} as ICachedReduxState
   }
+
+  obj.nodes = new Map(nodes)
 
   return obj
 }
@@ -78,7 +78,7 @@ function guessSafeChunkSize(values: [string, IReduxNode][]): number {
 
   const nodesToTest = 11 // Very arbitrary number
   const valueCount = values.length
-  const step = Math.floor(valueCount / nodesToTest)
+  const step = Math.max(1, Math.ceil(valueCount / nodesToTest))
   let maxSize = 0
   for (let i = 0; i < valueCount; i += step) {
     const size = v8.serialize(values[i]).length
@@ -99,6 +99,7 @@ function prepareCacheFolder(
   // This prevents an OOM when the page nodes collectively contain to much data
   const map = contents.nodes
   contents.nodes = undefined
+
   writeFileSync(reduxRestFile(targetDir), v8.serialize(contents))
   // Now restore them on the redux store
   contents.nodes = map
@@ -124,6 +125,7 @@ function safelyRenameToBak(reduxCacheFolder: string): string {
   const tmpSuffix = `.bak`
   let suffixCounter = 0
   let bakName = reduxCacheFolder + tmpSuffix // Start without number
+
   while (existsSync(bakName)) {
     ++suffixCounter
     bakName = reduxCacheFolder + tmpSuffix + suffixCounter
@@ -166,7 +168,7 @@ export function writeToCache(contents: ICachedReduxState): void {
       removeSync(bakName)
     }
   } catch (e) {
-    console.warn(
+    report.warn(
       `Non-fatal: Deleting the old cache folder failed, left behind in \`${bakName}\`. Rimraf reported this error: ${e}`
     )
   }

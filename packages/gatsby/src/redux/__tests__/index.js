@@ -45,6 +45,47 @@ jest.mock(`fs-extra`, () => {
     removeSync: jest.fn(file => mockWrittenContent.delete(file)),
   }
 })
+jest.mock(`glob`, () => {
+  return {
+    sync: jest.fn(pattern => {
+      // Tricky.
+      // Expecting a path prefix, ending with star. Else this won't work :/
+      if (pattern.slice(-1) !== `*`) {
+        throw new Error(`Expected pattern ending with star`)
+      }
+      let globPrefix = pattern.slice(0, -1)
+      if (globPrefix.includes(`*`)) {
+        throw new Error(`Expected pattern to be a prefix`)
+      }
+      const files = []
+      mockWrittenContent.forEach((value, key) => {
+        if (key.startsWith(globPrefix)) {
+          files.push(key)
+        }
+      })
+      return files
+    }),
+  }
+})
+
+function getFakeNodes() {
+  // Set nodes to something or the cache will fail because it asserts this
+  // Actual nodes content should match TS type; these are verified
+  let map /*: Map<string, IReduxNode>*/ = new Map()
+  map.set(`pageA`, {
+    id: `pageA`,
+    internal: {
+      type: `Ding`,
+    },
+  })
+  map.set(`pageB`, {
+    id: `pageB`,
+    internal: {
+      type: `Dong`,
+    },
+  })
+  return map
+}
 
 describe(`redux db`, () => {
   const initialComponentsState = _.cloneDeep(store.getState().components)
@@ -70,29 +111,61 @@ describe(`redux db`, () => {
     mockWrittenContent.clear()
   })
 
-  it(`should write cache to disk`, async () => {
-    expect(initialComponentsState).toEqual(new Map())
+  // yuck - loki and redux will have different shape of redux state (nodes and nodesByType)
+  // Note: branched skips will keep snapshots with and without loki env var
+  if (process.env.GATSBY_DB_NODES === `loki`) {
+    it.skip(`should write redux cache to disk`, async () => {})
+    it(`should write loki cache to disk`, async () => {
+      expect(initialComponentsState).toEqual(new Map())
 
-    await saveState()
+      store.getState().nodes = getFakeNodes()
 
-    expect(writeToCache).toBeCalled()
+      await saveState()
 
-    // reset state in memory
-    store.dispatch({
-      type: `DELETE_CACHE`,
+      expect(writeToCache).toBeCalled()
+
+      // reset state in memory
+      store.dispatch({
+        type: `DELETE_CACHE`,
+      })
+      // make sure store in memory is empty
+      expect(store.getState().components).toEqual(initialComponentsState)
+
+      // read data that was previously cached
+      const data = readState()
+
+      // make sure data was read and is not the same as our clean redux state
+      expect(data.components).not.toEqual(initialComponentsState)
+
+      expect(_.omit(data, [`nodes`, `nodesByType`])).toMatchSnapshot()
     })
-    // make sure store in memory is empty
-    expect(store.getState().components).toEqual(initialComponentsState)
+  } else {
+    it.skip(`should write loki cache to disk`, async () => {})
+    it(`should write redux cache to disk`, async () => {
+      expect(initialComponentsState).toEqual(new Map())
 
-    // read data that was previously cached
-    const data = readState()
+      store.getState().nodes = getFakeNodes()
 
-    // make sure data was read and is not the same as our clean redux state
-    expect(data.components).not.toEqual(initialComponentsState)
+      await saveState()
 
-    // yuck - loki and redux will have different shape of redux state (nodes and nodesByType)
-    expect(_.omit(data, [`nodes`, `nodesByType`])).toMatchSnapshot()
-  })
+      expect(writeToCache).toBeCalled()
+
+      // reset state in memory
+      store.dispatch({
+        type: `DELETE_CACHE`,
+      })
+      // make sure store in memory is empty
+      expect(store.getState().components).toEqual(initialComponentsState)
+
+      // read data that was previously cached
+      const data = readState()
+
+      // make sure data was read and is not the same as our clean redux state
+      expect(data.components).not.toEqual(initialComponentsState)
+
+      expect(data).toMatchSnapshot()
+    })
+  }
 
   it(`should drop legacy file if exists`, async () => {
     expect(initialComponentsState).toEqual(new Map())
