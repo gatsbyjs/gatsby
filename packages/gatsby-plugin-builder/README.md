@@ -10,7 +10,7 @@ Plugin for integrating [Builder.io](https://www.builder.io) to allow drag and dr
 
 ```javascript
 // In your gatsby-config.js
-const path = require('path')
+const path = require("path")
 module.exports = {
   plugins: [
     {
@@ -19,15 +19,16 @@ module.exports = {
         // public API Key
         publicAPIKey: "MY_PUBLIC_API_KEY",
         templates: {
-          myPageModel: path.resolve('templates/my-page.tsx')
-        }
+          myPageModel: path.resolve("templates/my-page.tsx"),
+        },
       },
     },
-  ]
+  ],
 }
 ```
 
 ## How to Query
+
 For an up-to-date complete examples check out the examples on [BuilderIo/SDK](https://github.com/BuilderIO/builder/tree/master/examples)
 
 ```graphql
