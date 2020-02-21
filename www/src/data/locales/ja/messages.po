@@ -102,6 +102,10 @@ msgstr ""
 msgid "Hit 's' to search docs"
 msgstr ""
 
+#: src/components/shared/egghead-embed.js:39
+msgid "Video hosted on <0>egghead.io</0>"
+msgstr ""
+
 #: src/components/shared/footer-links.js:7
 msgid "Accessibility Statement"
 msgstr ""
