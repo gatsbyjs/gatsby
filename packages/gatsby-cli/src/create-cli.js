@@ -166,8 +166,12 @@ function buildLocalCommands(cli, isLocalSite) {
     builder: _ =>
       _.option(`prefix-paths`, {
         type: `boolean`,
-        default: process.env.PREFIX_PATHS || false,
-        describe: `Build site with link paths prefixed (default is env.PREFIX_PATHS or false) (set pathPrefix in your gatsby-config.js).`,
+        default:
+          process.env.PREFIX_PATHS === `true` ||
+          process.env.PREFIX_PATHS === `1`,
+        describe: process.env.PREFIX_PATHS
+          ? `Build site with link paths prefixed (set by env.PREFIX_PATHS) (set pathPrefix in your gatsby-config.js).`
+          : `Build site with link paths prefixed (set pathPrefix in your gatsby-config.js).`,
       })
         .option(`no-uglify`, {
           type: `boolean`,
@@ -209,8 +213,12 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`prefix-paths`, {
           type: `boolean`,
-          default: process.env.PREFIX_PATHS || false,
-          describe: `Serve site with link paths prefixed (default is env.PREFIX_PATHS or false) (set pathPrefix value in your gatsby-config.js).`,
+          default:
+            process.env.PREFIX_PATHS === `true` ||
+            process.env.PREFIX_PATHS === `1`,
+          describe: process.env.PREFIX_PATHS
+            ? `Serve site with link paths prefixed (set by env.PREFIX_PATHS) (set pathPrefix in your gatsby-config.js).`
+            : `Serve site with link paths prefixed (set pathPrefix in your gatsby-config.js).`,
         }),
 
     handler: getCommandHandler(`serve`),
