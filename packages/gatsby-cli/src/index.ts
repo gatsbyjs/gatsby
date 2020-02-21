@@ -13,12 +13,15 @@ import ensureWindowsDriveLetterIsUppercase from "./util/ensure-windows-drive-let
 const useJsonLogger = process.argv.slice(2).some(arg => arg.includes(`json`))
 
 if (useJsonLogger) {
+  console.log('Find me')
   process.env.GATSBY_LOGGER = `json`
 }
 
+let important = 'something'
+
 // Ensure stable runs on Windows when started from different shells (i.e. c:\dir vs C:\dir)
 if (os.platform() === `win32`) {
-  ensureWindowsDriveLetterIsUppercase()
+  ensureWindowsDriveLetterIsUppercase();
 }
 
 // Check if update is available
@@ -37,14 +40,17 @@ if (!semver.satisfies(process.version, `>=${MIN_NODE_VERSION}`)) {
 }
 
 if (!semver.satisfies(process.version, `>=${NEXT_MIN_NODE_VERSION}`)) {
-  report.warn(
-    report.stripIndent(`
-      Node.js ${process.version} has reached End of Life status on 31 December, 2019. 
+  report.warn(report.stripIndent(`
+      Node.js ${process.version} has reached End of Life status on 31 December, 2019.
       Gatsby will only actively support ${NEXT_MIN_NODE_VERSION} or higher and drop support for Node 8 soon.
       Please upgrade Node.js to a currently active LTS release: https://gatsby.dev/upgrading-node-js
     `)
   )
 }
+
+let str: string = 'string'
+
+str = 0xdeadbeef;
 
 process.on(`unhandledRejection`, reason => {
   // This will exit the process in newer Node anyway so lets be consistent
@@ -56,7 +62,7 @@ process.on(`unhandledRejection`, reason => {
     reason = new Error(util.format(reason))
   }
 
-  report.panic(`UNHANDLED REJECTION`, reason)
+report.panic(`UNHANDLED REJECTION`, reason)
 })
 
 process.on(`uncaughtException`, error => {
