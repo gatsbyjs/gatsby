@@ -169,13 +169,17 @@ module.exports = async function build(program: BuildArgs) {
   // we need to save it again to make sure our latest state has been saved
   await db.saveState()
 
-  const pagePaths = process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
-    ? pageDataUtil.getChangedPageDataKeys(
-        store.getState(),
-        cachedPageData,
-        cachedWebpackCompilationHash
-      )
-    : [...store.getState().pages.keys()]
+  let pagePaths = [...store.getState().pages.keys()]
+
+  // Rebuild subset of pages if user opt into GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
+  // if there were no source files (for example components, static queries, etc) changes since last build, otherwise rebuild all pages
+  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
+    pagePaths =
+      cachedWebpackCompilationHash !== store.getState().webpackCompilationHash
+        ? [...store.getState().pages.keys()]
+        : pageDataUtil.getChangedPageDataKeys(store.getState(), cachedPageData)
+  }
+
   activity = report.createProgress(
     `Building static HTML for pages`,
     pagePaths.length,
@@ -223,23 +227,7 @@ module.exports = async function build(program: BuildArgs) {
       store.getState(),
       cachedPageData
     )
-
-    const removePages = deletedPageKeys.map(value => {
-      if (value === `/`) {
-        return fs.remove(`${program.directory}/public/index.html`)
-      } else {
-        return fs.remove(`${program.directory}/public${value}`)
-      }
-    })
-    const removePageData = deletedPageKeys.map(value => {
-      if (value === `/`) {
-        return fs.remove(`${program.directory}/public/page-data/index`)
-      } else {
-        return fs.remove(`${program.directory}/public/page-data${value}`)
-      }
-    })
-
-    await Promise.all([...removePages, ...removePageData])
+    await pageDataUtil.removePageFiles({ publicDir }, deletedPageKeys)
 
     activity.end()
   }

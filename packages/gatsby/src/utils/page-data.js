@@ -2,10 +2,14 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const { store } = require(`../redux`)
 
-const getFilePath = ({ publicDir }, pagePath) => {
+const getFilePath = ({ publicDir }, pagePath, type) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
+  if (type === `html`) {
+    return path.join(publicDir, fixedPagePath, `index.html`)
+  }
   return path.join(publicDir, `page-data`, fixedPagePath, `page-data.json`)
 }
+
 const read = async ({ publicDir }, pagePath) => {
   const filePath = getFilePath({ publicDir }, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
@@ -36,17 +40,10 @@ const write = async ({ publicDir }, page, result) => {
   await fs.outputFile(filePath, bodyStr)
 }
 
-const getChangedPageDataKeys = (
-  store,
-  cachedPageData,
-  cachedWebpackCompilationHash
-) => {
-  if (cachedWebpackCompilationHash !== store.webpackCompilationHash) {
-    return [...store.pages.keys()]
-  }
-  if (cachedPageData && store.pageData) {
+const getChangedPageDataKeys = (state, cachedPageData) => {
+  if (cachedPageData && state.pageData) {
     const pageKeys = []
-    store.pageData.forEach((value, key) => {
+    state.pageData.forEach((value, key) => {
       if (!cachedPageData.has(key)) {
         pageKeys.push(key)
       } else {
@@ -61,14 +58,14 @@ const getChangedPageDataKeys = (
     return pageKeys
   }
 
-  return [...store.pages.keys()]
+  return [...state.pages.keys()]
 }
 
-const collectRemovedPageData = (store, cachedPageData) => {
-  if (cachedPageData && store.pageData) {
+const collectRemovedPageData = (state, cachedPageData) => {
+  if (cachedPageData && state.pageData) {
     const deletedPageKeys = []
     cachedPageData.forEach((_value, key) => {
-      if (!store.pageData.has(key)) {
+      if (!state.pageData.has(key)) {
         deletedPageKeys.push(key)
       }
     })
@@ -77,9 +74,24 @@ const collectRemovedPageData = (store, cachedPageData) => {
   return []
 }
 
+const removePageFiles = ({ publicDir }, pageKeys) => {
+  const removePages = pageKeys.map(value => {
+    const pageHtml = getFilePath({ publicDir }, value, `html`)
+    return fs.remove(pageHtml)
+  })
+
+  const removePagesData = pageKeys.map(value => {
+    const pageData = getFilePath({ publicDir }, value)
+    return fs.remove(pageData)
+  })
+
+  return Promise.all([...removePages, ...removePagesData])
+}
+
 module.exports = {
   read,
   write,
   getChangedPageDataKeys,
   collectRemovedPageData,
+  removePageFiles,
 }
