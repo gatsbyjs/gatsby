@@ -81,7 +81,7 @@ const getEntryWithFieldLocalesResolved = ({
    */
   resolvedEntryIDs = new Set(),
 }) => {
-  const contentType = contentTypesById[entry.sys.contentType.sys.id]
+  const contentType = contentTypesById.get(entry.sys.contentType.sys.id)
 
   return {
     ...entry,

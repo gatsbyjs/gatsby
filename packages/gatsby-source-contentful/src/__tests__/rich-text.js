@@ -46,15 +46,14 @@ describe(`getNormalizedRichTextField()`, () => {
   let getField
 
   beforeEach(() => {
-    contentTypesById = {
-      article: {
-        sys: { id: `article` },
-        fields: [
-          { id: `title`, localized: true },
-          { id: `relatedArticle`, localized: false },
-        ],
-      },
-    }
+    contentTypesById = new Map()
+    contentTypesById.set(`article`, {
+      sys: { id: `article` },
+      fields: [
+        { id: `title`, localized: true },
+        { id: `relatedArticle`, localized: false },
+      ],
+    })
     currentLocale = `en`
     defaultLocale = `en`
     getField = field => field[currentLocale]
@@ -203,7 +202,7 @@ describe(`getNormalizedRichTextField()`, () => {
   describe(`when a referenced entry contains an asset field`, () => {
     describe(`when the current locale is \`en\``, () => {
       beforeEach(() => {
-        contentTypesById.article.fields.push({
+        contentTypesById.get(`article`).fields.push({
           id: `assetReference`,
           localized: true,
         })
@@ -241,11 +240,11 @@ describe(`getNormalizedRichTextField()`, () => {
 
   describe(`when an entry/asset reference field is an array`, () => {
     beforeEach(() => {
-      contentTypesById.article.fields.push({
+      contentTypesById.get(`article`).fields.push({
         id: `relatedArticles`,
         localized: false,
       })
-      contentTypesById.article.fields.push({
+      contentTypesById.get(`article`).fields.push({
         id: `relatedAssets`,
         localized: false,
       })
