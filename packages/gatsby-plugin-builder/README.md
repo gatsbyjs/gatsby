@@ -1,6 +1,6 @@
 # gatsby-plugin-builder
 
-Plugin for integrating [Builder.io](https://www.builder.io) with Gatsby. It puts the Builder.io schema under an `allBuilderModels` field of the Gatsby GraphQL query, If a templates map is passed as option, this plugin will create gatsby pages dynamically for each page entry in builder.io on the path specified.
+Plugin for integrating [Builder.io](https://www.builder.io) to allow drag and drop page building with Gatsby. It puts the Builder.io schema under an `allBuilderModels` field of the Gatsby GraphQL query, If a templates map is passed as option, this plugin will create gatsby pages dynamically for each page entry in builder.io on the path specified.
 
 ## Install
 

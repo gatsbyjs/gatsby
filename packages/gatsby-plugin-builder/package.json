@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-builder",
-  "description": "A plugin for using builder with Gatsby",
+  "description": "A plugin for using Builder.io with Gatsby",
   "author": "Aziz Abbas <aziz@builder.io>",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-builder#readme",
   "repository": {
