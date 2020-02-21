@@ -90,7 +90,7 @@ function TableOfContents({ page, location }) {
           textTransform: `uppercase`,
         }}
       >
-        <Trans id="docs.tableOfContents">Table of Contents</Trans>
+        <Trans>Table of Contents</Trans>
       </h2>
       <ul
         sx={{

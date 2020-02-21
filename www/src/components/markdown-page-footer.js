@@ -21,7 +21,7 @@ export default class MarkdownPageFooter extends React.Component {
               this.props.packagePage ? `packages` : `docs`
             }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
           >
-            <Trans id="docs.markdownFooter">
+            <Trans>
               <EditIcon sx={{ marginRight: 2 }} /> Edit this page on GitHub
             </Trans>
           </a>
