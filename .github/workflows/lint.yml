@@ -9,7 +9,7 @@ on:
 
 jobs:
   eslint:
-    if: github.event_name === 'pull_request'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -17,8 +17,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   format:
-    if: github.event_name === 'check_run'
-    runs-on: [ubuntu-latest]
+    if: github.event_name == 'check_run'
+    runs-on: ubuntu-latest
     steps:
       - run: |
           echo "formatting ... someday maybe"
