@@ -41,15 +41,10 @@ export const menuBeforeChangeNode = async ({
 
         query {
             ${(remoteNode.menuItems || remoteNode.childItems).nodes
-              .map(({ id }, index) => {
-                // if we already have this node, don't try to fetch it
-                if (helpers.getNode(id)) {
-                  return null
-                }
-
-                return `id__${index}: menuItem(id: "${id}") { ...MENU_ITEM_FIELDS }`
-              })
-              .filter(Boolean)
+              .map(
+                ({ id }, index) =>
+                  `id__${index}: menuItem(id: "${id}") { ...MENU_ITEM_FIELDS }`
+              )
               .join(` `)}
           }`
 
