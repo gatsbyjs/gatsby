@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: pieh/eslint-action@master
+      - uses: pieh/eslint-action@5930c487d166de2855535c6864a405fbb047080f
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
