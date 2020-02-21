@@ -148,4 +148,4 @@ function DarkModeToggle({ i18n }) {
   )
 }
 
-export default withI18n(DarkModeToggle)
+export default withI18n()(DarkModeToggle)

@@ -159,4 +159,4 @@ function SearchForm({ i18n }) {
   )
 }
 
-export default withI18n(SearchForm)
+export default withI18n()(SearchForm)

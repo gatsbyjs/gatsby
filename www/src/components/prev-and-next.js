@@ -108,4 +108,4 @@ const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
   )
 }
 
-export default withI18n(PrevAndNext)
+export default withI18n()(PrevAndNext)

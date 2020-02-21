@@ -301,4 +301,4 @@ class SidebarBody extends Component {
   }
 }
 
-export default withI18n(SidebarBody)
+export default withI18n()(SidebarBody)

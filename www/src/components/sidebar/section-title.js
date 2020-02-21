@@ -81,7 +81,7 @@ const TitleButton = ({
   </button>
 )
 
-const SplitButton = withI18n(
+const SplitButton = withI18n()(
   ({
     i18n,
     itemRef,

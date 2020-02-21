@@ -82,7 +82,7 @@ const MobileNavigation = ({ i18n }) => (
   </div>
 )
 
-export default withI18n(MobileNavigation)
+export default withI18n()(MobileNavigation)
 
 const styles = {
   svg: {

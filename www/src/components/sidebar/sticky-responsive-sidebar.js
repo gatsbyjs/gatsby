@@ -26,7 +26,7 @@ class StickyResponsiveSidebar extends Component {
 
   render() {
     const { open } = this.state
-    const { enableScrollSync } = this.props
+    const { i18n, enableScrollSync } = this.props
     const SidebarComponent = enableScrollSync ? ScrollSyncSidebar : Sidebar
 
     const iconOffset = open ? 5 : -5
@@ -143,4 +143,4 @@ class StickyResponsiveSidebar extends Component {
   }
 }
 
-export default withI18n(StickyResponsiveSidebar)
+export default withI18n()(StickyResponsiveSidebar)

@@ -108,11 +108,11 @@ msgstr ""
 
 #: src/components/shared/footer-links.js:7
 msgid "Accessibility Statement"
-msgstr ""
+msgstr "アクセシビリティ方針"
 
 #: src/components/shared/footer-links.js:8
 msgid "Code of Conduct"
-msgstr ""
+msgstr "行動規範"
 
 #: src/components/shared/footer-links.js:9
 msgid "Logo & Assets"
