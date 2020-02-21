@@ -1,5 +1,6 @@
 import merge from "lodash/merge"
 import { createRemoteMediaItemNode } from "~/steps/source-nodes/create-nodes/create-remote-media-item-node"
+import { menuBeforeChangeNode } from "~/steps/source-nodes/before-change-node/menu"
 
 const defaultPluginOptions = {
   url: null,
@@ -58,70 +59,7 @@ const defaultPluginOptions = {
        *
        * When we can get a list of all menu items regardless of location in WPGQL, this can be removed.
        */
-      beforeChangeNode: async ({
-        remoteNode,
-        actionType,
-        wpStore,
-        fetchGraphql,
-        helpers,
-        actions,
-        buildTypeName,
-      }) => {
-        if (
-          (actionType !== `UPDATE` &&
-            actionType !== `CREATE_ALL` &&
-            actionType !== `CREATE`) ||
-          !remoteNode.menuItems ||
-          !remoteNode.menuItems.nodes ||
-          !remoteNode.menuItems.nodes.length
-        ) {
-          // no need to update child MenuItems if we're not updating an existing menu
-          // if we're creating a new menu it will be empty initially.
-          // so we run this function when updating nodes or when initially
-          // creating all nodes
-          return null
-        }
-
-        const selectionSet = wpStore.getState().remoteSchema.nodeQueries
-          .menuItems.selectionSet
-
-        const query = `
-        fragment MENU_ITEM_FIELDS on MenuItem {
-          ${selectionSet}
-        }
-
-        query {
-            ${remoteNode.menuItems.nodes
-              .map(
-                ({ id }, index) =>
-                  `id__${index}: menuItem(id: "${id}") { ...MENU_ITEM_FIELDS }`
-              )
-              .join(` `)}
-          }`
-
-        const { data } = await fetchGraphql({
-          query,
-        })
-
-        const remoteChildMenuItemNodes = Object.values(data)
-
-        await Promise.all(
-          remoteChildMenuItemNodes.map(async remoteMenuItemNode => {
-            await actions.createNode({
-              ...remoteMenuItemNode,
-              nodeType: `MenuItem`,
-              type: `MenuItem`,
-              parent: null,
-              internal: {
-                contentDigest: helpers.createContentDigest(remoteMenuItemNode),
-                type: buildTypeName(`MenuItem`),
-              },
-            })
-          })
-        )
-
-        return remoteChildMenuItemNodes.map(({ id }) => id)
-      },
+      beforeChangeNode: menuBeforeChangeNode,
     },
     MenuItem: {
       /**
