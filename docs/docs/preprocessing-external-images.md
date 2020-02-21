@@ -111,7 +111,7 @@ query {
 }
 ```
 
-![Screenshot of GraphiQL with above query inserted](images/remote-file-node-graphiql-preview.png)
+![Screenshot of GraphiQL with above query inserted](./images/remote-file-node-graphiql-preview.png)
 
 You can then use `gatsby-transformer-sharp` to fill in the query for a fixed image here. For more information on transforming images using parameters and fragments, check out the [Gatsby Image API docs](/docs/gatsby-image/).
 
@@ -177,4 +177,4 @@ export const query = graphql`
 
 And if you run `gatsby develop`, you'll see the remote file locally now:
 
-![Screenshot of rendered blog post with featured image](images/remote-file-node-blogpost.png)
+![Screenshot of rendered blog post with featured image](./images/remote-file-node-blogpost.png)

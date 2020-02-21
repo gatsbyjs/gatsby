@@ -129,7 +129,7 @@ Run:
 npm run develop
 ```
 
-Open localhost:8000 and localhost:8000/\_\_\_graphql.
+Open `http://localhost:8000` and `http://localhost:8000/___graphql`.
 
 Here’s an example of creating specific widths and heights for images:
 

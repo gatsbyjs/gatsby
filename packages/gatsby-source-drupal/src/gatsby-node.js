@@ -19,12 +19,16 @@ exports.sourceNodes = async (
     headers,
     params,
     concurrentFileRequests,
+    disallowedLinkTypes,
   } = pluginOptions
   const { createNode } = actions
   const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
+
+  // Default disallowedLinkTypes to self, describedby.
+  disallowedLinkTypes = disallowedLinkTypes || [`self`, `describedby`]
 
   // Default concurrentFileRequests to `20`
   concurrentFileRequests = concurrentFileRequests || 20
@@ -57,7 +61,7 @@ exports.sourceNodes = async (
   })
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
-      if (type === `self`) return
+      if (disallowedLinkTypes.includes(type)) return
       if (!url) return
       if (!type) return
       const getNext = async (url, data = []) => {
@@ -93,7 +97,14 @@ exports.sourceNodes = async (
           }
         }
         data = data.concat(d.data.data)
-        if (d.data.links.next) {
+        // Add support for includes. Includes allow entity data to be expanded
+        // based on relationships. The expanded data is exposed as `included`
+        // in the JSON API response.
+        // See https://www.drupal.org/docs/8/modules/jsonapi/includes
+        if (d.data.included) {
+          data = data.concat(d.data.included)
+        }
+        if (d.data.links && d.data.links.next) {
           data = await getNext(d.data.links.next, data)
         }
 
@@ -144,7 +155,7 @@ exports.sourceNodes = async (
     downloadingFilesActivity.start()
     await asyncPool(concurrentFileRequests, fileNodes, async node => {
       await downloadFile(
-        { node, store, cache, createNode, createNodeId },
+        { node, store, cache, createNode, createNodeId, reporter },
         pluginOptions
       )
     })

@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.42...gatsby-source-shopify@3.0.43) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.41...gatsby-source-shopify@3.0.42) (2020-01-29)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.40...gatsby-source-shopify@3.0.41) (2020-01-16)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.39...gatsby-source-shopify@3.0.40) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.37...gatsby-source-shopify@3.0.39) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.37...gatsby-source-shopify@3.0.38) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.36...gatsby-source-shopify@3.0.37) (2019-12-20)
+
+### Features
+
+- **gatsby-source-shopify:** Add support for custom domains ([#20204](https://github.com/gatsbyjs/gatsby/issues/20204)) ([11fe33f](https://github.com/gatsbyjs/gatsby/commit/11fe33f))
+
+## [3.0.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.35...gatsby-source-shopify@3.0.36) (2019-12-17)
+
+### Features
+
+- **gatsby-source-shopify:** Add compareAtPrice to presentment prices ([#20144](https://github.com/gatsbyjs/gatsby/issues/20144)) ([5ea9af7](https://github.com/gatsbyjs/gatsby/commit/5ea9af7))
+- **gatsby-source-shopify:** add metafields to each product variant node ([#20066](https://github.com/gatsbyjs/gatsby/issues/20066)) ([5150e15](https://github.com/gatsbyjs/gatsby/commit/5150e15))
+
+## [3.0.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.33...gatsby-source-shopify@3.0.35) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.33...gatsby-source-shopify@3.0.34) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.32...gatsby-source-shopify@3.0.33) (2019-12-09)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** allShopifyPage node creation issue [#18249](https://github.com/gatsbyjs/gatsby/issues/18249) fix ([#19950](https://github.com/gatsbyjs/gatsby/issues/19950)) ([94bc770](https://github.com/gatsbyjs/gatsby/commit/94bc770))
+
+## [3.0.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.31...gatsby-source-shopify@3.0.32) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.30...gatsby-source-shopify@3.0.31) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ## [3.0.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.29...gatsby-source-shopify@3.0.30) (2019-11-18)
 
 **Note:** Version bump only for package gatsby-source-shopify

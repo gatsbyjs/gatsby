@@ -9,7 +9,12 @@ export default ({ directories }) =>
     <>
       <Box py={3} style={{ display: `flex`, flexWrap: `wrap` }}>
         {Object.entries(directories).map(([key, value]) => (
-          <Styled.a as={Link} key={key} to={value[0].pagePath}>
+          <Styled.a
+            as={Link}
+            key={key}
+            to={value[0].pagePath}
+            style={{ marginRight: `15px` }}
+          >
             <Box
               w={[1, 2, 2]}
               p={3}
@@ -19,7 +24,7 @@ export default ({ directories }) =>
                 alignItems: `center`,
               }}
             >
-              <Folder style={{ marginRight: `10px` }} />
+              <Folder style={{ marginRight: `5px` }} />
               <span>{key}</span>
             </Box>
           </Styled.a>

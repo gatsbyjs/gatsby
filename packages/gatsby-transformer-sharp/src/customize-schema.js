@@ -6,6 +6,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
+  GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const {
   queueImageResizing,
@@ -33,9 +34,9 @@ const {
 } = require(`./types`)
 
 function toArray(buf) {
-  var arr = new Array(buf.length)
+  const arr = new Array(buf.length)
 
-  for (var i = 0; i < buf.length; i++) {
+  for (let i = 0; i < buf.length; i++) {
     arr[i] = buf[i]
   }
 
@@ -73,10 +74,10 @@ const fixedNodeType = ({
             }),
         },
         aspectRatio: { type: GraphQLFloat },
-        width: { type: GraphQLFloat },
-        height: { type: GraphQLFloat },
-        src: { type: GraphQLString },
-        srcSet: { type: GraphQLString },
+        width: { type: new GraphQLNonNull(GraphQLFloat) },
+        height: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
@@ -229,9 +230,9 @@ const fluidNodeType = ({
               reporter,
             }),
         },
-        aspectRatio: { type: GraphQLFloat },
-        src: { type: GraphQLString },
-        srcSet: { type: GraphQLString },
+        aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
@@ -266,7 +267,7 @@ const fluidNodeType = ({
             ).then(({ srcSet }) => srcSet)
           },
         },
-        sizes: { type: GraphQLString },
+        sizes: { type: new GraphQLNonNull(GraphQLString) },
         originalImg: { type: GraphQLString },
         originalName: { type: GraphQLString },
         presentationWidth: { type: GraphQLInt },
@@ -374,6 +375,12 @@ const fluidNodeType = ({
   }
 }
 
+/**
+ * Keeps track of asynchronous file copy to prevent sequence errors in the
+ * underlying fs-extra module during parallel copies of the same file
+ */
+const inProgressCopy = new Set()
+
 const createFields = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -427,8 +434,16 @@ const createFields = ({
           imageName
         )
 
-        if (!fsExtra.existsSync(publicPath)) {
+        if (
+          !fsExtra.existsSync(publicPath) &&
+          !inProgressCopy.has(publicPath)
+        ) {
+          // keep track of in progress copy, we should rely on `existsSync` but
+          // a race condition exists between the exists check and the copy
+          inProgressCopy.add(publicPath)
           fsExtra.copy(details.absolutePath, publicPath, err => {
+            // this is no longer in progress
+            inProgressCopy.delete(publicPath)
             if (err) {
               console.error(
                 `error copying file from ${details.absolutePath} to ${publicPath}`,

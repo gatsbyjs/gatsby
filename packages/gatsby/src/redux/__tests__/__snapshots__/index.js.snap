@@ -16,7 +16,11 @@ Object {
       "query": "",
     },
   },
-  "inferenceMetadata": Object {},
+  "jobsV2": Object {
+    "complete": Map {},
+    "incomplete": Map {},
+  },
+  "pageDataStats": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
     "plugins": Object {},

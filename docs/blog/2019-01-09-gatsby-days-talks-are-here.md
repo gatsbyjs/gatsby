@@ -18,7 +18,7 @@ Get caught up on all the latest presentations from Gatsby Days in Mountain View,
 
 [Introducing Gatsby Themes](https://www.gatsbyjs.com/gatsby-days-themes-chris/) with **Chris Biscardi**, Developer, Gatsby
 
-[Announcing Gatsby Preview: The Future is in the Cloud ](https://www.gatsbyjs.com/gatsby-days-preview-andrew/) with **Andrew Rhyne**, Cloud Services Engineer, Gatsby
+[Announcing Gatsby Preview: The Future is in the Cloud](https://www.gatsbyjs.com/gatsby-days-preview-andrew/) with **Andrew Rhyne**, Cloud Services Engineer, Gatsby
 
 [The Power of Positioning: Selling Gatsby to Your Clients](https://www.gatsbyjs.com/gatsby-days-positioning-linda/) by **Linda Watkins**, Director of Marketing, Gatsby
 

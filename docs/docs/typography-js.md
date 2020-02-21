@@ -32,7 +32,7 @@ module.exports = {
 `gatsby-plugin-typography` takes two options for you to specify:
 
 - **pathToConfigModule** (string): The path to the file where you export your Typography configuration.
-- **omitGoogleFont** (boolean, `default: false`): By default, Typography includes a helper that makes a request to Google Font's CDN for fonts you need. You may want to use your own fonts, either by injecting fonts or using a CDN of your choosing. By setting `omitGoogleFont: true`, `gatsby-plugin-typography` will skip adding the font helper. Instead, you will have to include the appropriate fonts yourself - see [Adding a Local Font](https://www.gatsbyjs.org/docs/recipes/#adding-a-local-font)
+- **omitGoogleFont** (boolean, `default: false`): By default, Typography includes a helper that makes a request to Google Font's CDN for fonts you need. You may want to use your own fonts, either by injecting fonts or using a CDN of your choosing. By setting `omitGoogleFont: true`, `gatsby-plugin-typography` will skip adding the font helper. Instead, you will have to include the appropriate fonts yourself - see [Adding a Local Font](/docs/recipes/styling-css#adding-a-local-font)
 
 ## Creating the Typography configuration
 
@@ -92,7 +92,7 @@ const typography = new Typography(
 export default typography;
 ```
 
-After completing the above steps, you can start the development server using the command `gatsby develop` and navigate to the local website <http://localhost:8000>. If all went well you should see the text on your website using the Funston typographic theme.
+After completing the above steps, you can start the development server using the command `gatsby develop` and navigate to the local website `http://localhost:8000`. If all went well you should see the text on your website using the Funston typographic theme.
 
 **Note**: If your fonts remains unchanged, remove all `font-family` calls in your CSS and check again.
 

@@ -8,7 +8,7 @@ const { warnOnIncompatiblePeerDependency } = require(`./validate`)
 const { store } = require(`../../redux`)
 const existsSync = require(`fs-exists-cached`).sync
 const createNodeId = require(`../../utils/create-node-id`)
-const createRequireFromPath = require(`../../utils/create-require-from-path`)
+const { createRequireFromPath } = require(`gatsby-core-utils`)
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
@@ -88,7 +88,18 @@ function resolvePlugin(pluginName, rootDir) {
       rootDir !== null
         ? createRequireFromPath(`${rootDir}/:internal:`)
         : require
-    const resolvedPath = slash(path.dirname(requireSource.resolve(pluginName)))
+
+    // If the path is absolute, resolve the directory of the internal plugin,
+    // otherwise resolve the directory containing the package.json
+    const resolvedPath = slash(
+      path.dirname(
+        requireSource.resolve(
+          path.isAbsolute(pluginName)
+            ? pluginName
+            : `${pluginName}/package.json`
+        )
+      )
+    )
 
     const packageJSON = JSON.parse(
       fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)

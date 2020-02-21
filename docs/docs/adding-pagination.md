@@ -7,13 +7,13 @@ Pagination is the technique of spreading that content across multiple pages.
 
 The goal of pagination is to create multiple pages (from a single [template](/docs/building-with-components/#page-template-components)) that show a limited number of items.
 
-Each page will [query GraphQL](/docs/querying-with-graphql/) for those specific items.
+Each page will [query GraphQL](/docs/graphql-concepts/) for those specific items.
 
 The information needed to query for those specific items (i.e. values for [`limit`](/docs/graphql-reference/#limit) and [`skip`](/docs/graphql-reference/#skip)) will come from the [`context`](/docs/graphql-reference/#query-variables) that is added when [creating pages](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`.
 
 ## Example
 
-```js:title=src/templates/blog-list-template.js
+```jsx:title=src/templates/blog-list-template.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"

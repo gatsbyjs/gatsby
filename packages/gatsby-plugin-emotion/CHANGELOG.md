@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.21...gatsby-plugin-emotion@4.1.22) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
+## [4.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.20...gatsby-plugin-emotion@4.1.21) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
+## [4.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.18...gatsby-plugin-emotion@4.1.20) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
+## [4.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.18...gatsby-plugin-emotion@4.1.19) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
+## [4.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.16...gatsby-plugin-emotion@4.1.18) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
+## [4.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.16...gatsby-plugin-emotion@4.1.17) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
+## [4.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.15...gatsby-plugin-emotion@4.1.16) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
 ## [4.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.14...gatsby-plugin-emotion@4.1.15) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-plugin-emotion

@@ -72,20 +72,25 @@ describe(`build and update schema for SitePage`, () => {
     let inputFields
 
     const initialFields = [
+      `path`,
+      `component`,
+      `internalComponentName`,
+      `componentChunkName`,
+      `matchPath`,
+      `keep`,
+      `fields`,
       `id`,
       `parent`,
       `children`,
       `internal`,
-      `keep`,
-      `fields`,
     ]
 
     fields = Object.keys(schema.getType(`SitePage`).getFields())
-    expect(fields.length).toBe(6)
+    expect(fields.length).toBe(11)
     expect(fields).toEqual(initialFields)
 
     inputFields = Object.keys(schema.getType(`SitePageFilterInput`).getFields())
-    expect(fields.length).toBe(6)
+    expect(fields.length).toBe(11)
     expect(inputFields).toEqual(initialFields)
 
     // Rebuild Schema
@@ -94,11 +99,11 @@ describe(`build and update schema for SitePage`, () => {
     schema = store.getState().schema
 
     fields = Object.keys(schema.getType(`SitePage`).getFields())
-    expect(fields.length).toBe(7)
+    expect(fields.length).toBe(12)
     expect(fields).toEqual(initialFields.concat(`context`))
 
     inputFields = Object.keys(schema.getType(`SitePageFilterInput`).getFields())
-    expect(fields.length).toBe(7)
+    expect(fields.length).toBe(12)
     expect(inputFields).toEqual(initialFields.concat(`context`))
 
     const fieldsEnum = schema
@@ -145,5 +150,21 @@ describe(`build and update schema for SitePage`, () => {
       .map(value => value.name)
     expect(fieldsEnum.includes(`fields___oldKey`)).toBeTruthy()
     expect(fieldsEnum.includes(`fields___key`)).toBeTruthy()
+  })
+
+  it(`respects @dontInfer on SitePage`, async () => {
+    const typeDefs = `
+      type SitePage implements Node @dontInfer {
+        keep: String!
+        fields: SitePageFields
+      }
+    `
+    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+    store.dispatch({ type: `CREATE_NODE`, payload: secondPage() })
+
+    await rebuildWithSitePage({})
+    schema = store.getState().schema
+    expect(schema.getType(`SitePage`).getFields().context).not.toBeDefined()
+    expect(schema.getType(`SitePageFields`).getFields().key).not.toBeDefined()
   })
 })

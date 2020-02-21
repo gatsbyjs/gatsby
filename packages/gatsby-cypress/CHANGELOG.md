@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.21...gatsby-cypress@0.2.22) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.20...gatsby-cypress@0.2.21) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.19...gatsby-cypress@0.2.20) (2020-01-06)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.17...gatsby-cypress@0.2.19) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.17...gatsby-cypress@0.2.18) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.16...gatsby-cypress@0.2.17) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-cypress
+
 ## [0.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.15...gatsby-cypress@0.2.16) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-cypress
