@@ -13,6 +13,14 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/dark-mode-toggle.js:136
+msgid "Activate light mode"
+msgstr ""
+
+#: src/components/dark-mode-toggle.js:136
+msgid "Activate dark mode"
+msgstr ""
+
 #: src/components/docs-table-of-contents.js:93
 msgid "Table of Contents"
 msgstr "目次"
