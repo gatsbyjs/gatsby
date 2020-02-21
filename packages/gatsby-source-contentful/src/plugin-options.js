@@ -13,6 +13,7 @@ const defaultOptions = {
   forceFullSync: false,
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
+  limit: 100,
 }
 
 const createPluginConfig = pluginOptions => {
@@ -36,6 +37,7 @@ const optionsSchema = Joi.object().keys({
   downloadLocal: Joi.boolean(),
   localeFilter: Joi.func(),
   forceFullSync: Joi.boolean(),
+  limit: Joi.number().integer(),
   pageLimit: Joi.number().integer(),
   proxy: Joi.object().keys({
     host: Joi.string().required(),
