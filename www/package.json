@@ -112,6 +112,11 @@
   "license": "MIT",
   "main": "n/a",
   "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lingui:extract"
+    }
+  },
   "scripts": {
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
@@ -140,6 +145,7 @@
     "cross-env": "^5.2.1",
     "front-matter": "^2.3.0",
     "github-api": "^3.3.0",
+    "husky": "^4.2.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
     "jest-dom": "^3.5.0",
