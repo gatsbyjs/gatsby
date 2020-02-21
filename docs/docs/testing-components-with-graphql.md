@@ -141,6 +141,7 @@ you will be defining it directly inside your test file:
 ```js:title=src/pages/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
+import { StaticQuery } from "gatsby"
 import Index from "../index"
 
 beforeEach(() => {

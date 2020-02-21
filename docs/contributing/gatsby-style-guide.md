@@ -404,6 +404,17 @@ wording.
 
 ## Best practices
 
+### Referencing Gatsby Cloud
+
+While Gatsby Cloud is hosted on a separate site, [gatsbyjs.com](https://www.gatsbyjs.com/), it is part of the Gatsby [founding organization](/blog/2018-05-24-launching-new-gatsby-company/) and focused specifically on Gatsby sites. There are various parts of the OSS documentation that may benefit from pointing to Gatsby Cloud as a potential platform to explore.
+
+The guidelines for doing so are as follows:
+
+- If possible, Gatsby Cloud should be accompanied by other relevant technologies.
+- If Gatsby Cloud does something by default, the docs should still include instructions for accessing that functionality manually.
+
+The spirit of these guidelines is to ensure that users are aware of multiple options for running their Gatsby site. With the exception of `gatsby-cli`, the open source documentation should generally preclude assumptions about technology choices.
+
 ### Support software versions
 
 When Gatsby commits to support a specific version of software (e.g. Node 8 and up), this is reflected in documentation. Gatsby documentation should be usable by all people on supported software, which means we don't introduce any commands or practices that can't be used by people on versions we've committed to support. In rare circumstances, we'll consider mentioning a newly introduced command or practice as side notes.

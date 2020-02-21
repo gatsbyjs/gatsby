@@ -2,7 +2,7 @@
 title: Challenge 7 - Turn Your Gatsby Site into a Progressive Web App
 date: 2020-02-12
 author: "Hashim Warren"
-excerpt: "Learn how to use a new class of services that pair well with your Gatsby site"
+excerpt: "Learn how to make your Gatsby site work with poor internet service or offline"
 tags: ["learning-to-code", "contest", "100-Days-of-Gatsby"]
 ---
 
@@ -18,7 +18,7 @@ You may have been introduced to Gatsby as a [“static site generator”](/docs/
 
 But Gatsby is best understood as a Progressive Web App generator, because with Gatsby you can produce websites with native mobile app capabilities. A Progressive Web App (PWA) is a new class of website that takes advantage of the web browser’s access to mobile device APIs, to provide features traditionally only associated with native apps.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/z2JgN6Ae-Bo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/z2JgN6Ae-Bo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Progressive Web Apps - PWA Roadshow"></iframe>
 
 Imagine giving your website enhancements like offline mode, home screen installation, and push notifications. Well, those are exactly the features we want you to add to your Gatsby project this week!
 
