@@ -211,7 +211,7 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`prefix-paths`, {
           type: `boolean`,
-          default: process.env.PREFIX_PATHS || false,
+        default: process.env.PREFIX_PATHS === 'true' || process.env.PREFIX_PATHS === '1',
           describe: process.env.PREFIX_PATHS
             ? `Serve site with link paths prefixed (set by env.PREFIX_PATHS) (set pathPrefix in your gatsby-config.js).`
             : `Serve site with link paths prefixed (set pathPrefix in your gatsby-config.js).`,
