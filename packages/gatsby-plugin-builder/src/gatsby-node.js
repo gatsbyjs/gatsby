@@ -1,69 +1,69 @@
-const uuidv4 = require('uuid/v4');
-const fs = require('fs');
-const { buildSchema, printSchema } = require('gatsby/graphql');
+const uuidv4 = require("uuid/v4")
+const fs = require("fs")
+const { buildSchema, printSchema } = require("gatsby/graphql")
 const {
   transformSchema,
   introspectSchema,
-  RenameTypes
-} = require('graphql-tools-fork');
-const { createHttpLink } = require('apollo-link-http');
-const fetch = require('node-fetch');
-const invariant = require('invariant');
+  RenameTypes,
+} = require("graphql-tools-fork")
+const { createHttpLink } = require("apollo-link-http")
+const fetch = require("node-fetch")
+const invariant = require("invariant")
 
 const {
   NamespaceUnderFieldTransform,
-  StripNonQueryTransform
-} = require('./transforms');
-const { getGQLOptions, defaultOptions } = require('./builder-config');
+  StripNonQueryTransform,
+} = require("./transforms")
+const { getGQLOptions, defaultOptions } = require("./builder-config")
 
 exports.sourceNodes = async (
   { actions, createNodeId, cache, createContentDigest },
   options
 ) => {
-  const { addThirdPartySchema, createNode } = actions;
-  const config = getGQLOptions(options);
-  const { url, typeName, fieldName } = config;
+  const { addThirdPartySchema, createNode } = actions
+  const config = getGQLOptions(options)
+  const { url, typeName, fieldName } = config
 
   const link = createHttpLink({
     uri: url,
-    fetch
-  });
+    fetch,
+  })
 
-  const cacheKey = `gatsby-plugin-builder-schema-${typeName}-${fieldName}`;
-  let sdl = await cache.get(cacheKey);
-  let introspectionSchema;
+  const cacheKey = `gatsby-plugin-builder-schema-${typeName}-${fieldName}`
+  let sdl = await cache.get(cacheKey)
+  let introspectionSchema
 
   if (!sdl) {
-    introspectionSchema = await introspectSchema(link);
-    sdl = printSchema(introspectionSchema);
+    introspectionSchema = await introspectSchema(link)
+    sdl = printSchema(introspectionSchema)
   } else {
-    introspectionSchema = buildSchema(sdl);
+    introspectionSchema = buildSchema(sdl)
   }
 
-  await cache.set(cacheKey, sdl);
+  await cache.set(cacheKey, sdl)
 
-  const nodeId = createNodeId(`gatsby-plugin-builder-${typeName}`);
+  const nodeId = createNodeId(`gatsby-plugin-builder-${typeName}`)
   const node = createSchemaNode({
     id: nodeId,
     typeName,
     fieldName,
-    createContentDigest
-  });
-  createNode(node);
+    createContentDigest,
+  })
+  createNode(node)
 
   const resolver = (_, __, context) => {
-    const { path, nodeModel } = context;
+    const { path, nodeModel } = context
     nodeModel.createPageDependency({
       path,
-      nodeId
-    });
-    return {};
-  };
+      nodeId,
+    })
+    return {}
+  }
 
   const schema = transformSchema(
     {
       schema: introspectionSchema,
-      link
+      link,
     },
     [
       new StripNonQueryTransform(),
@@ -71,16 +71,16 @@ exports.sourceNodes = async (
       new NamespaceUnderFieldTransform({
         typeName,
         fieldName,
-        resolver
-      })
+        resolver,
+      }),
     ]
-  );
+  )
 
-  addThirdPartySchema({ schema });
-};
+  addThirdPartySchema({ schema })
+}
 
 function createSchemaNode({ id, typeName, fieldName, createContentDigest }) {
-  const contentDigest = createContentDigest(uuidv4());
+  const contentDigest = createContentDigest(uuidv4())
   return {
     id,
     typeName,
@@ -90,18 +90,18 @@ function createSchemaNode({ id, typeName, fieldName, createContentDigest }) {
     internal: {
       type: `BuilderPlugin`,
       contentDigest,
-      ignoreType: true
-    }
-  };
+      ignoreType: true,
+    },
+  }
 }
 
 exports.createPages = async ({ graphql, actions }, options) => {
   const config = {
     ...defaultOptions,
-    ...options
-  };
-  const { createPage } = actions;
-  const models = Object.keys(config.templates);
+    ...options,
+  }
+  const { createPage } = actions
+  const models = Object.keys(config.templates)
   const result = await graphql(`
     query {
       ${config.fieldName} {
@@ -111,27 +111,27 @@ exports.createPages = async ({ graphql, actions }, options) => {
             everything
           }`
           )
-          .join(' ')}
+          .join(" ")}
       }
     }
-  `);
+  `)
 
   models.forEach(modelName => {
-    const component = config.templates[modelName];
+    const component = config.templates[modelName]
     invariant(
       fs.existsSync(component),
-      'gatsby-plugin-builder requires a valid template path for each model'
-    );
+      "gatsby-plugin-builder requires a valid template path for each model"
+    )
     result.data[config.fieldName][modelName].forEach(entry => {
       if (
         entry.everything.data.url &&
-        entry.everything.published === 'published'
+        entry.everything.published === "published"
       ) {
         createPage({
           path: entry.everything.data.url,
-          component
-        });
+          component,
+        })
       }
-    });
-  });
-};
+    })
+  })
+}

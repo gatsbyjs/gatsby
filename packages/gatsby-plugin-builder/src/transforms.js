@@ -1,26 +1,26 @@
-const { GraphQLObjectType, GraphQLNonNull } = require(`gatsby/graphql`);
+const { GraphQLObjectType, GraphQLNonNull } = require(`gatsby/graphql`)
 const {
   VisitSchemaKind,
   cloneType,
   healSchema,
-  visitSchema
-} = require(`graphql-tools-fork`);
+  visitSchema,
+} = require(`graphql-tools-fork`)
 
 class NamespaceUnderFieldTransform {
   constructor({ typeName, fieldName, resolver }) {
-    this.typeName = typeName;
-    this.fieldName = fieldName;
-    this.resolver = resolver;
+    this.typeName = typeName
+    this.fieldName = fieldName
+    this.resolver = resolver
   }
 
   transformSchema(schema) {
-    const query = schema.getQueryType();
+    const query = schema.getQueryType()
 
-    const nestedType = new cloneType(query);
-    nestedType.name = this.typeName;
+    const nestedType = new cloneType(query)
+    nestedType.name = this.typeName
 
-    const typeMap = schema.getTypeMap();
-    typeMap[this.typeName] = nestedType;
+    const typeMap = schema.getTypeMap()
+    typeMap[this.typeName] = nestedType
 
     const newQuery = new GraphQLObjectType({
       name: query.name,
@@ -29,17 +29,17 @@ class NamespaceUnderFieldTransform {
           type: new GraphQLNonNull(nestedType),
           resolve: (parent, args, context, info) => {
             if (this.resolver) {
-              return this.resolver(parent, args, context, info);
+              return this.resolver(parent, args, context, info)
             } else {
-              return {};
+              return {}
             }
-          }
-        }
-      }
-    });
-    typeMap[query.name] = newQuery;
+          },
+        },
+      },
+    })
+    typeMap[query.name] = newQuery
 
-    return healSchema(schema);
+    return healSchema(schema)
   }
 }
 
@@ -47,16 +47,16 @@ class StripNonQueryTransform {
   transformSchema(schema) {
     return visitSchema(schema, {
       [VisitSchemaKind.MUTATION]() {
-        return null;
+        return null
       },
       [VisitSchemaKind.SUBSCRIPTION]() {
-        return null;
-      }
-    });
+        return null
+      },
+    })
   }
 }
 
 module.exports = {
   NamespaceUnderFieldTransform,
-  StripNonQueryTransform
-};
+  StripNonQueryTransform,
+}
