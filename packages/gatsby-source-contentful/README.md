@@ -170,7 +170,7 @@ If you are confident your Content Types will have natural-language IDs (e.g. `bl
 
 **`pageLimit`** [number][optional] [default: `100`]
 
-Number of entries to retrieve from Contentful at a time. Due to some technical limitation the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue can set this param to a lower number than 100, e.g `50`.
+Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g `50`.
 
 ## Notes on Contentful Content Models
 
