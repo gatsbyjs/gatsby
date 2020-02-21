@@ -10,6 +10,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
 
   console.log(`Starting to fetch data from Contentful`)
 
+  const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
     accessToken: pluginConfig.get(`accessToken`),
@@ -87,8 +88,6 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   // doesn't support this.
   let contentTypes
   try {
-    const pageLimit = pluginConfig.get(`pageLimit`)
-
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
     console.log(`error fetching content types`, e)
