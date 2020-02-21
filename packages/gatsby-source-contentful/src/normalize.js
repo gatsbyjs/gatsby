@@ -345,6 +345,7 @@ exports.createNodesForContentType = ({
 
         if (
           fieldProps.type === `RichText` &&
+          richTextOptions &&
           richTextOptions.resolveFieldLocales
         ) {
           const contentTypesById = new Map()
