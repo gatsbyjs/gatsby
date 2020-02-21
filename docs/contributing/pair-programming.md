@@ -34,7 +34,6 @@ Fill in the [request a pairing session form][cal] to reserve your spot. The Gats
 
 **Note:** Pairing sessions are currently paused as we establish a new process that will include recording so we can create lasting resources for the community from these sessions. We'll reach out to set up a time that works for you once we have the details ironed out. The core team is spread across North America, India, and Europe, so most time zones will have availability during working hours.
 
-
 [Reserve your spot today][cal] and let’s build something amazing together!
 
 [cal]: https://gatsby.dev/register-pair-programming
