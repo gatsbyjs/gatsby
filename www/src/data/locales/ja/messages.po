@@ -123,11 +123,11 @@ msgid "Expand All"
 msgstr ""
 
 #: src/components/sidebar/section-title.js:142
-msgid "{0} collapse"
+msgid "{0} expand"
 msgstr ""
 
 #: src/components/sidebar/section-title.js:142
-msgid "{0} expand"
+msgid "{0} collapse"
 msgstr ""
 
 #: src/components/sidebar/sidebar.js:203

@@ -112,10 +112,31 @@
   "license": "MIT",
   "main": "n/a",
   "private": true,
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "yarn run lingui:extract",
+      "git add"
+    ]
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn run lingui:extract"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lingui": {
+    "sourceLocale": "en",
+    "localeDir": "src/data/locales",
+    "srcPathDirs": [
+      "src/components",
+      "src/pages",
+      "src/templates",
+      "src/views"
+    ],
+    "srcPathIgnorePatterns": [
+      "__tests__"
+    ],
+    "format": "po",
+    "sorting": "origin"
   },
   "scripts": {
     "build": "gatsby build",
@@ -149,6 +170,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
     "jest-dom": "^3.5.0",
+    "lint-staged": "^10.0.7",
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-config-styled-components": "^0.1.1",

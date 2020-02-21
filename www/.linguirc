@@ -1,8 +1,0 @@
-{
-   "sourceLocale": "en",
-   "localeDir": "src/data/locales",
-   "srcPathDirs": ["src/components", "src/pages", "src/templates", "src/views"],
-   "srcPathIgnorePatterns": ["__tests__"],
-   "format": "po",
-   "sorting": "origin"
-}
