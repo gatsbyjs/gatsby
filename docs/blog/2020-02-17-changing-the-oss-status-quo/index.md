@@ -8,9 +8,9 @@ tags:
   - community
 ---
 
-In business and in our individual careers, so many of us rely heavily on open source software. We need it but open source isn't as open as it's often made out to be. Too many projects are unfriendly, even openly hostile, to new contributors. This effect, combined with the intersection of many underrepresented identities in tech effectively shuts people out of the process. Black, indigenous, and people of color (BIPOC) and women are at some of the most visible of these intersections. There are many more. Consider _who_ contributes to open source.
+In business and in our individual careers, so many of us rely heavily on open source software. We need it but open source isn't as open as it's often made out to be. Too many projects are unfriendly, even openly hostile, to new contributors. This effect, combined with the intersection of many underrepresented identities in tech, effectively shuts people out of the process. Black, indigenous, and people of color (BIPOC) and women are at some of the most visible of these intersections. There are many more. Consider _who_ contributes to open source.
 
-The status quo is made and remade every time we as maintainers add to our documentation. Every time we, as maintainers, engage with the community via social media, issue queues, and our documentation, we help decide who contributes. We contribute to their safety and their productivity. Right now, barriers to contribution are severely limiting our capacity to create and sustain open source projects.
+The status quo is made and remade every time we as maintainers add to our documentation. Every time we, as maintainers, engage with the community via social media, issue queues, and our documentation, we help decide who contributes. We contribute to their safety and their productivity. Right now, barriers to contribution are severely limiting our industry's capacity to create and sustain open source projects.
 
 There's an opportunity here. There are thousands of highly skilled potential contributors ready, willing, and able to contribute to open source projects but they need to know that they'll be safe in doing so. A handful of projects are intentionally focusing on this work and making incredible strides towards a more inclusive open source community.
 
