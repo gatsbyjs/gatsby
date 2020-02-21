@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
+const child_process = require(`child_process`)
 const startersRedirects = require(`./starter-redirects.json`)
 const yaml = require(`js-yaml`)
 const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
@@ -35,6 +36,10 @@ exports.createPages = async helpers => {
 // Create slugs for files, set released status for blog posts.
 exports.onCreateNode = helpers => {
   sections.forEach(section => section.onCreateNode(helpers))
+}
+
+exports.onPreInit = () => {
+  child_process.execSync(`yarn lingui:build`)
 }
 
 exports.onPostBuild = () => {

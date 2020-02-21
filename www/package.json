@@ -113,7 +113,7 @@
   "main": "n/a",
   "private": true,
   "scripts": {
-    "build": "lingui compile && gatsby build",
+    "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "start": "npm run develop",
@@ -125,8 +125,9 @@
     "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0",
     "postinstall": "cd plugins/gatsby-transformer-gatsby-api-calls && npm install",
     "lingui:add-locale": "lingui add-locale",
-    "lingui:extract": "NODE_ENV=test lingui extract",
-    "lingui:compile": "lingui compile"
+    "lingui:extract": "lingui extract",
+    "lingui:compile": "lingui compile",
+    "lingui:build": "yarn lingui:extract && yarn lingui:compile"
   },
   "devDependencies": {
     "@lingui/cli": "^2.9.1",
