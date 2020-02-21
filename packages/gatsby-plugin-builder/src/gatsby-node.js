@@ -1,20 +1,20 @@
-const uuidv4 = require("uuid/v4")
-const fs = require("fs")
-const { buildSchema, printSchema } = require("gatsby/graphql")
+const uuidv4 = require(`uuid/v4`)
+const fs = require(`fs`)
+const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
   transformSchema,
   introspectSchema,
   RenameTypes,
-} = require("graphql-tools-fork")
-const { createHttpLink } = require("apollo-link-http")
-const fetch = require("node-fetch")
-const invariant = require("invariant")
+} = require(`graphql-tools-fork`)
+const { createHttpLink } = require(`apollo-link-http`)
+const fetch = require(`node-fetch`)
+const invariant = require(`invariant`)
 
 const {
   NamespaceUnderFieldTransform,
   StripNonQueryTransform,
-} = require("./transforms")
-const { getGQLOptions, defaultOptions } = require("./builder-config")
+} = require(`./transforms`)
+const { getGQLOptions, defaultOptions } = require(`./builder-config`)
 
 exports.sourceNodes = async (
   { actions, createNodeId, cache, createContentDigest },
@@ -111,7 +111,7 @@ exports.createPages = async ({ graphql, actions }, options) => {
             everything
           }`
           )
-          .join(" ")}
+          .join(` `)}
       }
     }
   `)
@@ -120,12 +120,12 @@ exports.createPages = async ({ graphql, actions }, options) => {
     const component = config.templates[modelName]
     invariant(
       fs.existsSync(component),
-      "gatsby-plugin-builder requires a valid template path for each model"
+      `gatsby-plugin-builder requires a valid template path for each model`
     )
     result.data[config.fieldName][modelName].forEach(entry => {
       if (
         entry.everything.data.url &&
-        entry.everything.published === "published"
+        entry.everything.published === `published`
       ) {
         createPage({
           path: entry.everything.data.url,

@@ -48,17 +48,17 @@ const getInternalGatsbyAPI = () => {
 }
 
 describe(`validation`, () => {
-  it("throws on missing public API Key", () => {
+  it(`throws on missing public API Key`, () => {
     expect(
       sourceNodes(getInternalGatsbyAPI(), { templates: {} })
     ).rejects.toThrowErrorMatchingSnapshot()
   })
 
-  it("throws on an invalid templates path", () => {
+  it(`throws on an invalid templates path`, () => {
     expect(
       createPages(getInternalGatsbyAPI(), {
-        templates: { page: "Invalid" },
-        publicAPIKey: "mock___",
+        templates: { page: `Invalid` },
+        publicAPIKey: `mock___`,
       })
     ).rejects.toThrowErrorMatchingSnapshot()
   })
@@ -68,7 +68,7 @@ describe(`createSchemaNode`, () => {
   it(`invokes createContentDigest`, async () => {
     const api = getInternalGatsbyAPI()
     await sourceNodes(api, {
-      publicAPIKey: "mock___",
+      publicAPIKey: `mock___`,
     })
     expect(api.createContentDigest).toHaveBeenCalledTimes(1)
   })
@@ -78,7 +78,7 @@ describe(`createHttpLink`, () => {
   it(`use node fetch`, async () => {
     const api = getInternalGatsbyAPI()
     await sourceNodes(api, {
-      publicAPIKey: "mock__",
+      publicAPIKey: `mock__`,
     })
 
     expect(createHttpLink).toHaveBeenCalledWith(
