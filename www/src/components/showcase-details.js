@@ -92,7 +92,7 @@ const SourceLink = ({ ...props }) => (
   </a>
 )
 
-function usePrevAndNextSite(item, filters) {
+function usePrevAndNextSite(item, filters = []) {
   const { allSitesYaml } = useStaticQuery(graphql`
     query {
       allSitesYaml(
