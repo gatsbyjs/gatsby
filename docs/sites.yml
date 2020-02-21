@@ -9848,3 +9848,14 @@
   built_by: Katsiaryna Lupachova
   built_by_url: https://ramonak.io/
   featured: false
+- title: React JS Developer
+  main_url: "https://reacter.dev/"
+  url: "https://reacter.dev/"
+  featured: false
+  categories:
+    - App
+    - Web Development
+    - Web Development
+    - Agency
+  built_by: App Design
+  built_by_url: "https://appdesign.dev/"
