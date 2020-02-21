@@ -86,8 +86,8 @@ module.exports = async function genMDX(
 
   // pull classic style frontmatter off the raw MDX body
   debug(`processing classic frontmatter`)
-  const { data, content: frontMatterCodeResult } = grayMatter(node.rawBody)
-  const content = `${frontMatterCodeResult}
+  const { data } = grayMatter(node.rawBody)
+  const content = `${node.rawBody}
 
 export const _frontmatter = ${JSON.stringify(data)}`
 
