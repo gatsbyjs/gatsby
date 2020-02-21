@@ -3,6 +3,7 @@ const { getNormalizedRichTextField } = require(`../rich-text`)
 const entryFactory = () => {
   return {
     sys: {
+      id: `abc123`,
       contentType: { sys: { id: `article` } },
       type: `Entry`,
     },
