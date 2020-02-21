@@ -74,15 +74,28 @@ const collectRemovedPageData = (state, cachedPageData) => {
   return []
 }
 
+const checkAndRemoveEmptyDir = (dir, pagePath) => {
+  const hasFiles = fs.readdirSync(path.join(dir, pagePath), `utf8`, true)
+  if (!hasFiles.length) {
+    fs.removeSync(path.join(dir, pagePath))
+  }
+}
+
 const removePageFiles = ({ publicDir }, pageKeys) => {
-  const removePages = pageKeys.map(value => {
-    const pageHtml = getFilePath({ publicDir }, value, `html`)
-    return fs.remove(pageHtml)
+  const removePages = pageKeys.map(pagePath => {
+    const pageHtmlFile = getFilePath({ publicDir }, pagePath, `html`)
+    return fs
+      .remove(pageHtmlFile)
+      .then(() => checkAndRemoveEmptyDir(publicDir, pagePath))
   })
 
-  const removePagesData = pageKeys.map(value => {
-    const pageData = getFilePath({ publicDir }, value)
-    return fs.remove(pageData)
+  const removePagesData = pageKeys.map(pagePath => {
+    const pageDataFile = getFilePath({ publicDir }, pagePath)
+    return fs
+      .remove(pageDataFile)
+      .then(() =>
+        checkAndRemoveEmptyDir(path.join(publicDir, `page-data`), pagePath)
+      )
   })
 
   return Promise.all([...removePages, ...removePagesData])
