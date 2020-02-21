@@ -9,4 +9,4 @@ jobs:
       - uses: actions/checkout@v1
       - uses: pvdz/eslint-action@master
         with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
