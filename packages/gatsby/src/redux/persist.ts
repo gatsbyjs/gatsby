@@ -10,6 +10,7 @@ import {
 } from "fs-extra"
 import { IReduxNode, ICachedReduxState } from "./types"
 import { sync as globSync } from "glob"
+import report from "gatsby-cli/lib/reporter"
 
 const getLegacyCacheFile = (): string =>
   // TODO: remove this legacy stuff in v3 (fairly benign change but still)
@@ -57,6 +58,12 @@ export function readFromCache(): ICachedReduxState {
 
   if (chunks.length) {
     obj.nodes = new Map(nodes)
+  } else {
+    report.info(
+      `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
+    )
+    // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
+    return {} as ICachedReduxState
   }
 
   return obj
