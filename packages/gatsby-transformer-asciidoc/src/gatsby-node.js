@@ -35,6 +35,7 @@ async function onCreateNode(
 
   // changes the incoming imagesdir option to take the
   const asciidocOptions = processPluginOptions(pluginOptions, pathPrefix)
+  asciidocOptions.base_dir = node.dir
 
   const { createNode, createParentChildLink } = actions
   // Load Asciidoc contents
