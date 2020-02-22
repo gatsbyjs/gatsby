@@ -8,7 +8,7 @@ import Rotator from "../components/plugins/rotator"
 import { Link } from "gatsby"
 import logo from "../assets/monogram.svg"
 import { sizes } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import FooterLinks from "../components/shared/footer-links"
+import FooterLinks from "../components/layout/footer-links"
 import Layout from "../components/layout"
 import PageWithPluginSearchBar from "../components/plugins/page-with-plugin-searchbar"
 

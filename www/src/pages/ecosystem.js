@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
-import FooterLinks from "../components/shared/footer-links"
+import FooterLinks from "../components/layout/footer-links"
 
 import { EcosystemIcon } from "../assets/icons"
 import { PluginsIcon, StartersIcon } from "../assets/icons/ecosystem-icons"

@@ -6,8 +6,8 @@ import { Helmet } from "react-helmet"
 
 import { Link } from "gatsby"
 import Container from "../container"
-import MarkdownPageFooter from "../markdown-page-footer"
-import FooterLinks from "../shared/footer-links"
+import MarkdownPageFooter from "../docs/markdown-page-footer"
+import FooterLinks from "../layout/footer-links"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import GatsbyIcon from "./gatsby-monogram"
 

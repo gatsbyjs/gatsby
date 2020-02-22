@@ -2,7 +2,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql, useStaticQuery } from "gatsby"
 
-import gatsbyIcon from "../assets/gatsby-icon.png"
+import gatsbyIcon from "../../assets/gatsby-icon.png"
 
 const SiteMetadata = ({ pathname, locale }) => {
   const {

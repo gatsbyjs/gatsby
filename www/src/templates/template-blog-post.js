@@ -9,11 +9,11 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 import Layout from "../components/layout"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import Container from "../components/container"
-import EmailCaptureForm from "../components/email-capture-form"
+import EmailCaptureForm from "../components/mdx/email-capture-form"
 import TagsSection from "../components/blog/tags-section"
 import Avatar from "../components/blog/avatar"
 import PrevAndNext from "../components/prev-and-next"
-import FooterLinks from "../components/shared/footer-links"
+import FooterLinks from "../components/layout/footer-links"
 
 class BlogPostTemplate extends React.Component {
   render() {

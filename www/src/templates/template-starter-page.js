@@ -11,7 +11,7 @@ import Screenshot from "../components/shared/screenshot"
 import StarterSource from "../components/starter/source"
 import StarterInstallation from "../components/starter/installation"
 import StarterDetails from "../components/starter/details"
-import FooterLinks from "../components/shared/footer-links"
+import FooterLinks from "../components/layout/footer-links"
 
 const getScreenshot = (data, fallback) => {
   if (!data.screenshotFile || !data.screenshotFile.childImageSharp) {

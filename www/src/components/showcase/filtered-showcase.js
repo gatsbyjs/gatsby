@@ -9,7 +9,7 @@ import ShowcaseList from "./showcase-list"
 import Filters from "./filters"
 import SearchIcon from "../../components/search-icon"
 import Button from "../../components/button"
-import FooterLinks from "../../components/shared/footer-links"
+import FooterLinks from "../../components/layout/footer-links"
 import {
   ContentHeader,
   ContentTitle,

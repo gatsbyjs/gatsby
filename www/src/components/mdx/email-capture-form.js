@@ -6,8 +6,8 @@ import styled from "@emotion/styled"
 import SendIcon from "react-icons/lib/md/send"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import { themedInput, formInputFocus, buttonStyles } from "../utils/styles"
-import { rhythm } from "../utils/typography"
+import { themedInput, formInputFocus, buttonStyles } from "../../utils/styles"
+import { rhythm } from "../../utils/typography"
 
 const Container = styled(`div`)`
   background: ${p => p.theme.colors.newsletter.background};

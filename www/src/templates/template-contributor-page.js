@@ -8,7 +8,7 @@ import Avatar from "../components/blog/avatar"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog/blog-post-preview-item"
-import FooterLinks from "../components/shared/footer-links"
+import FooterLinks from "../components/layout/footer-links"
 
 class ContributorPageTemplate extends React.Component {
   render() {

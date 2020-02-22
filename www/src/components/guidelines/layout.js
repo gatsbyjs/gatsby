@@ -9,7 +9,7 @@ import BaseLayout from "../layout"
 import { globalStyles } from "../../utils/styles/global"
 import { Box } from "./system"
 import Header from "./header"
-import Footer from "../shared/footer-links"
+import Footer from "../layout/footer-links"
 
 const Layout = ({ children, background, location, pageTitle }) => (
   <BaseLayout location={location}>

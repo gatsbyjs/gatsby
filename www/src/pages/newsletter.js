@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout"
 import Container from "../components/container"
-import EmailCaptureForm from "../components/email-capture-form"
-import FooterLinks from "../components/shared/footer-links"
+import EmailCaptureForm from "../components/mdx/email-capture-form"
+import FooterLinks from "../components/layout/footer-links"
 
 class NewsLetter extends Component {
   render() {

@@ -19,7 +19,7 @@ import {
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
-import FooterLinks from "../shared/footer-links"
+import FooterLinks from "../layout/footer-links"
 import ResetFilters from "../shared/reset-filters"
 import DebounceInput from "../debounce-input"
 import { themedInput } from "../../utils/styles"

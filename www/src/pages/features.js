@@ -7,11 +7,11 @@ import { Helmet } from "react-helmet"
 import Button from "../components/button"
 import Layout from "../components/layout"
 import Container from "../components/container"
-import FooterLinks from "../components/shared/footer-links"
+import FooterLinks from "../components/layout/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import SimpleEvaluationTable from "../components/features/simple-evaluation-table"
-import PageWithSidebar from "../components/page-with-sidebar"
+import PageWithSidebar from "../components/docs/page-with-sidebar"
 
 const FeaturesHeader = () => (
   <section>

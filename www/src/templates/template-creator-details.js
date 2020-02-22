@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet"
 import Img from "gatsby-image"
 import CreatorsHeader from "../components/creators/creators-header"
 import Badge from "../components/creators/badge"
-import FooterLinks from "../components/shared/footer-links"
+import FooterLinks from "../components/layout/footer-links"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import GithubIcon from "react-icons/lib/go/mark-github"
 

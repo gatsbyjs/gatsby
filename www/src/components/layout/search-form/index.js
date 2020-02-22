@@ -3,8 +3,8 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { navigate } from "gatsby"
 
-import SearchIcon from "../search-icon"
-import { themedInput } from "../../utils/styles"
+import SearchIcon from "../../search-icon"
+import { themedInput } from "../../../utils/styles"
 
 const loadJS = () => import(`./docsearch.min.js`)
 let loadedJs = false
