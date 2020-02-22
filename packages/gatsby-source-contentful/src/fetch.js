@@ -34,6 +34,11 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     locales = await client.getLocales().then(response => response.items)
     defaultLocale = _.find(locales, { default: true }).code
     locales = locales.filter(pluginConfig.get(`localeFilter`))
+    if (locales.length === 0) {
+      reporter.panic(
+        `No locales found to build data model. Plase check if your localeFilter configuration is configured properly.`
+      )
+    }
     console.log(`default locale is : ${defaultLocale}`)
   } catch (e) {
     let details
