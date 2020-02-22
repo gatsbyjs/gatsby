@@ -112,17 +112,6 @@
   "license": "MIT",
   "main": "n/a",
   "private": true,
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "yarn run lingui:extract",
-      "git add scr/data/locales"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lingui": {
     "sourceLocale": "en",
     "localeDir": "src/data/locales",
@@ -166,11 +155,9 @@
     "cross-env": "^5.2.1",
     "front-matter": "^2.3.0",
     "github-api": "^3.3.0",
-    "husky": "^4.2.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
     "jest-dom": "^3.5.0",
-    "lint-staged": "^10.0.7",
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-config-styled-components": "^0.1.1",
