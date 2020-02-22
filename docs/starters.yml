@@ -5311,3 +5311,10 @@
     - Serverless
     - Gatsby
     - Square payments
+- url: https://gatsby-starter-netlify-function.netlify.com/
+  repo: https://github.com/nickmcmillan/gatsby-starter-netlify-lambda
+  description: A simple Netlify serverless lambda function starter
+  tags:
+    - Netlify
+  features:
+    - Barebones example of POSTing to a Netlify function and receiving a response from it.
