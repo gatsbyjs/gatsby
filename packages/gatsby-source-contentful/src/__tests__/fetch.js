@@ -181,7 +181,7 @@ it(`panics when localeFilter reduces locale list to 0`, async () => {
 
   expect(reporter.panic).toBeCalledWith(
     expect.stringContaining(
-      `No locales found to build data model. Plase check if your localeFilter configuration is configured properly.`
+      `Please check if your localeFilter is configured properly. Locales 'en-us' were found but were filtered down to none.`
     )
   )
 })
