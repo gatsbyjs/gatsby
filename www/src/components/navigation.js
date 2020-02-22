@@ -263,4 +263,4 @@ const Navigation = ({ pathname, i18n }) => {
   )
 }
 
-export default withI18n(Navigation)
+export default withI18n()(Navigation)
