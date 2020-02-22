@@ -6,6 +6,7 @@
 
 html {
   text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Roboto Light", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
