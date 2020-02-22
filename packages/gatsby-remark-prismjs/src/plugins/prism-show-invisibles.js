@@ -88,7 +88,9 @@ module.exports = (language = `javascript`) => {
       }
     }
 
-    for (var name in grammar) { // eslint-disable-line no-redeclare, prettier/prettier
+    /* eslint-disable no-redeclare */
+    for (var name in grammar) {
+      /* eslint-enable no-redeclare */
       if (grammar.hasOwnProperty(name) && !invisibles[name]) {
         if (name === `rest`) {
           addInvisibles(grammar[`rest`])
