@@ -43,14 +43,14 @@ const write = async ({ publicDir }, page, result) => {
 const getChangedPageDataKeys = (state, cachedPageData) => {
   if (cachedPageData && state.pageData) {
     const pageKeys = []
-    state.pageData.forEach((value, key) => {
+    state.pageData.forEach((resultHash, key) => {
       if (!cachedPageData.has(key)) {
         pageKeys.push(key)
       } else {
-        const newPageData = JSON.stringify(value)
-        const previousPageData = JSON.stringify(cachedPageData.get(key))
+        const newPageDataHash = resultHash
+        const previousPageDataHash = cachedPageData.get(key)
 
-        if (newPageData !== previousPageData) {
+        if (newPageDataHash !== previousPageDataHash) {
           pageKeys.push(key)
         }
       }
@@ -89,7 +89,7 @@ const removePageFiles = ({ publicDir }, pageKeys) => {
       .then(() => checkAndRemoveEmptyDir(publicDir, pagePath))
   })
 
-  const removePagesData = pageKeys.map(pagePath => {
+  const removePageData = pageKeys.map(pagePath => {
     const pageDataFile = getFilePath({ publicDir }, pagePath)
     return fs
       .remove(pageDataFile)
@@ -98,7 +98,7 @@ const removePageFiles = ({ publicDir }, pageKeys) => {
       )
   })
 
-  return Promise.all([...removePages, ...removePagesData])
+  return Promise.all([...removePages, ...removePageData])
 }
 
 module.exports = {

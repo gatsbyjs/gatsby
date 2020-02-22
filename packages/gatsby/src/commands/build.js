@@ -173,11 +173,14 @@ module.exports = async function build(program: BuildArgs) {
 
   // Rebuild subset of pages if user opt into GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
   // if there were no source files (for example components, static queries, etc) changes since last build, otherwise rebuild all pages
-  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    pagePaths =
-      cachedWebpackCompilationHash !== store.getState().webpackCompilationHash
-        ? [...store.getState().pages.keys()]
-        : pageDataUtil.getChangedPageDataKeys(store.getState(), cachedPageData)
+  if (
+    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
+    cachedWebpackCompilationHash === store.getState().webpackCompilationHash
+  ) {
+    pagePaths = pageDataUtil.getChangedPageDataKeys(
+      store.getState(),
+      cachedPageData
+    )
   }
 
   activity = report.createProgress(
@@ -286,7 +289,7 @@ module.exports = async function build(program: BuildArgs) {
 
     if (pagePaths.length) {
       await fs.writeFile(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
-      report.info(`newPages.txt created`)
+      report.info(`.cache/newPages.txt created`)
     }
     if (deletedPageKeys.length) {
       await fs.writeFile(
@@ -294,7 +297,7 @@ module.exports = async function build(program: BuildArgs) {
         `${deletedPageKeys.join(`\n`)}\n`,
         `utf8`
       )
-      report.info(`deletedPages.txt created`)
+      report.info(`.cache/deletedPages.txt created`)
     }
   }
 }
