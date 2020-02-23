@@ -16,7 +16,7 @@ export function renderHTML({ htmlComponentRendererPath, paths, envVars }) {
           htmlComponentRenderer.default(path, (throwAway, htmlString) => {
             resolve(
               fs.outputFile(
-                generateHtmlPathToOutput(`${process.cwd()}public`, path),
+                generateHtmlPathToOutput(`${process.cwd()}/public`, path),
                 htmlString
               )
             )

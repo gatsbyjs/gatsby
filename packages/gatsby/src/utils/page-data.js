@@ -70,11 +70,13 @@ const collectRemovedPageData = (state, cachedPageData) => {
   return []
 }
 
-const checkAndRemoveEmptyDir = (dir, pagePath) => {
-  const directory = path.join(dir, pagePath)
-  const hasFiles = fs.readdirSync(directory)
+const checkAndRemoveEmptyDir = (publicDir, pagePath) => {
+  const pageHtmlDirectory = path.join(publicDir, pagePath)
+  const pageDataDirectory = path.join(publicDir, `page-data`, pagePath)
+  const hasFiles = fs.readdirSync(pageHtmlDirectory)
   if (!hasFiles.length) {
-    fs.removeSync(directory)
+    fs.removeSync(pageHtmlDirectory)
+    fs.removeSync(pageDataDirectory)
   }
 }
 
@@ -105,7 +107,6 @@ const removePageFiles = ({ publicDir }, pageKeys) => {
   return Promise.all([...removePages, ...removePageData]).then(() => {
     sortedPageKeysByNestedLevel(pageKeys).forEach(pagePath => {
       checkAndRemoveEmptyDir(publicDir, pagePath)
-      checkAndRemoveEmptyDir(`${publicDir}/page-data`, pagePath)
     })
   })
 }
