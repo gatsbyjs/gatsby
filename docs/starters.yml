@@ -5311,3 +5311,17 @@
     - Serverless
     - Gatsby
     - Square payments
+- url: https://gatsby-starter-redux-storybook.netlify.com/
+  repo: https://github.com/fabianunger/gatsby-starter-redux-storybook
+  description: Gatsby Starter that has Redux (persist) and Storybook implemented.
+  tags:
+    - Redux
+    - Redux persist
+    - Storybook
+    - Styled-Components
+    - SEO
+  features:
+    - Redux + Redux Persist implemented also for Storybook
+    - PWA
+    - ESLint
+    - SEO ready
