@@ -367,17 +367,19 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const truncateLongPaths = store.getState().config.truncateLongPaths
   const pagePath = truncateLongPaths ? truncatePath(page.path) : page.path
 
-  if (pagePath.length > 255) {
-    report.panic({
-      id: `11331`,
-      context: {
-        pluginName: name,
-        api: `createPages`,
-        message: chalk.bold.yellow(
-          `This path contains directory/file names that exceed OS character limit`
-        ),
-      },
-    })
+  for (const segment of path.split(`/`)) {
+    if (segment.length > 255) {
+      report.panic({
+        id: `11331`,
+        context: {
+          pluginName: name,
+          api: `createPages`,
+          message: chalk.bold.yellow(
+            `This path contains directory/file names that exceed OS character limit`
+          ),
+        },
+      })
+    }
   }
 
   const internalPage: Page = {
