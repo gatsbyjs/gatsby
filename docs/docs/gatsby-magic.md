@@ -46,16 +46,11 @@ Here is where you can find more information on [Routing in Gatsby](/docs/routing
 
 ## Redux
 
-Redux is a state management library often used together with React apps. Gatsby is also a React application and uses Redux behind-the-scenes to manage the state of your site. You don’t have to do anything with Redux directly in Gatsby for it to work.
+When you implement a Gatsby [Node API](https://www.gatsbyjs.org/docs/node-apis/), you are passed a collection of [actions](/docs/actions/) (equivalent to actions bound with [bindActionCreators in Redux](https://redux.js.org/api/bindactioncreators/)). When using the supplied actions, you are manipulating state that is created, and relied upon, by Gatsby itself such as created pages and webpack config.
 
-Redux helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test; that’s why Gatsby uses it as a core technology under the hood. On top of that, Redux provides a great developer experience, such as [live code editing combined with a time-traveling debugger](https://github.com/reduxjs/redux-devtools). Redux is bundled with Gatsby by default to provide automatic state management, and it’s also available as a standalone package on npm.
+Once the build is complete, the work of Redux is done and it is not part of the bundle delivered to the browser unless required independently by the application itself.
 
-In order to use Redux for custom state management in a Gatsby site, you'll need to hook into two of Gatsby's extension points:
-
-- Wrap the root element in your Gatsby markup once using `wrapRootElement`, an API supporting both Gatsby’s server rendering and browser JavaScript processes.
-- Create a custom Redux store with reducers and initial state, providing your own state management functionality outside of Gatsby.
-
-Check out the Using Redux example with [./gatsby-ssr.js](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-ssr.js) and [./gatsby-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-browser.js) files to see how this is implemented. You can also check out more information on the official [Redux](https://redux.js.org/introduction/getting-started) docs.
+If using a data store such as Redux in your Gatsby application, the [using-redux](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux) example is a good starting point for connecting it to the pages of your Gatsby application.
 
 ## GraphQL queries
 
