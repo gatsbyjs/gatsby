@@ -16,11 +16,10 @@ const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const { getCommonDir } = require(`../../utils/path`)
+const { getCommonDir, truncatePath } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
-const strhash = require(`string-hash`)
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -46,19 +45,6 @@ const ensureWindowsDriveIsUppercase = filePath => {
   return segments.length > 0
     ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
     : filePath
-}
-
-const truncatePath = path => {
-  if (path === `/`) return path
-  const pathParts = path.split(`/`).filter(Boolean)
-  const truncatedParts = pathParts.map(pathPart => {
-    // OS limit is 255 characters
-    if (pathPart.length > 255) {
-      return pathPart.slice(0, 100) + strhash(pathPart.slice(100))
-    }
-    return pathPart
-  })
-  return truncatedParts.join(`/`)
 }
 
 const findChildren = initialChildren => {

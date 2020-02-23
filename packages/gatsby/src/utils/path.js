@@ -1,5 +1,5 @@
 const path = require(`path`)
-const { joinPath } = require(`gatsby-core-utils`)
+const { joinPath, createContentDigest } = require(`gatsby-core-utils`)
 
 export function withBasePath(basePath) {
   return (...paths) => joinPath(basePath, ...paths)
@@ -33,3 +33,19 @@ export function getCommonDir(path1, path2) {
 
   return posixJoinWithLeadingSlash(path1Segments)
 }
+
+const MAX_PATH_SEGMENT = 255
+const SLICING_INDEX = 100
+const pathSegmentRe = /[^/]+/g
+
+export const truncatePath = path =>
+  path.replace(pathSegmentRe, match => {
+    if (match.length > MAX_PATH_SEGMENT) {
+      return (
+        match.slice(0, SLICING_INDEX) +
+        createContentDigest(match.slice(SLICING_INDEX))
+      )
+    }
+
+    return match
+  })
