@@ -14,7 +14,7 @@ import EmptyGridItems from "../shared/empty-grid-items"
 import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
@@ -110,7 +110,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                         },
                       },
                     }}
-                    to={`/showcase?${qs.stringify({
+                    to={`/showcase/?${qs.stringify({
                       filters: `Featured`,
                     })}`}
                     className="featured-site"

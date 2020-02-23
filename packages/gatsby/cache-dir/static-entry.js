@@ -12,6 +12,7 @@ const {
   flattenDeep,
   replace,
   concat,
+  memoize,
 } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
@@ -59,10 +60,37 @@ const getPageDataUrl = pagePath => {
   return `${__PATH_PREFIX__}/${pageDataPath}`
 }
 
-const getPageDataFile = pagePath => {
+const getPageData = pagePath => {
   const pageDataPath = getPageDataPath(pagePath)
-  return join(process.cwd(), `public`, pageDataPath)
+  const absolutePageDataPath = join(process.cwd(), `public`, pageDataPath)
+  const pageDataRaw = fs.readFileSync(absolutePageDataPath)
+
+  try {
+    return JSON.parse(pageDataRaw.toString())
+  } catch (err) {
+    return null
+  }
 }
+
+const appDataPath = join(`page-data`, `app-data.json`)
+
+const getAppDataUrl = memoize(() => {
+  let appData
+
+  try {
+    const absoluteAppDataPath = join(process.cwd(), `public`, appDataPath)
+    const appDataRaw = fs.readFileSync(absoluteAppDataPath)
+    appData = JSON.parse(appDataRaw.toString())
+
+    if (!appData) {
+      return null
+    }
+  } catch (err) {
+    return null
+  }
+
+  return `${__PATH_PREFIX__}/${appDataPath}`
+})
 
 const loadPageDataSync = pagePath => {
   const pageDataPath = getPageDataPath(pagePath)
@@ -167,9 +195,11 @@ export default (pagePath, callback) => {
     postBodyComponents = sanitizeComponents(components)
   }
 
-  const pageDataRaw = fs.readFileSync(getPageDataFile(pagePath))
-  const pageData = JSON.parse(pageDataRaw)
+  const pageData = getPageData(pagePath)
   const pageDataUrl = getPageDataUrl(pagePath)
+
+  const appDataUrl = getAppDataUrl()
+
   const { componentChunkName } = pageData
 
   class RouteHandler extends React.Component {
@@ -251,7 +281,7 @@ export default (pagePath, callback) => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
-      let namedChunkGroups = get(stats, `namedChunkGroups`)
+      const namedChunkGroups = get(stats, `namedChunkGroups`)
 
       if (!chunks) {
         return null
@@ -330,6 +360,17 @@ export default (pagePath, callback) => {
         rel="preload"
         key={pageDataUrl}
         href={pageDataUrl}
+        crossOrigin="anonymous"
+      />
+    )
+  }
+  if (appDataUrl) {
+    headComponents.push(
+      <link
+        as="fetch"
+        rel="preload"
+        key={appDataUrl}
+        href={appDataUrl}
         crossOrigin="anonymous"
       />
     )

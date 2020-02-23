@@ -397,6 +397,8 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
     },
     resolve: (image, options, context) =>
       Promise.resolve(resolveFixed(image, options)).then(node => {
+        if (!node) return null
+
         return {
           ...node,
           image,
@@ -494,6 +496,8 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
     },
     resolve: (image, options, context) =>
       Promise.resolve(resolveFluid(image, options)).then(node => {
+        if (!node) return null
+
         return {
           ...node,
           image,
