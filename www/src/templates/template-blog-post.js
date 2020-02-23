@@ -8,7 +8,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Layout from "../components/layout"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import Container from "../components/container"
+import Container from "../components/ecosystem/container"
 import EmailCaptureForm from "../components/mdx/email-capture-form"
 import TagsSection from "../components/blog/tags-section"
 import Avatar from "../components/blog/avatar"

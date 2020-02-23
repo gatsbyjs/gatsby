@@ -1,5 +1,5 @@
 import React from "react"
-import Container from "../components/container"
+import Container from "../components/ecosystem/container"
 import Layout from "../components/layout"
 import { Link } from "gatsby"
 import FooterLinks from "../components/layout/footer-links"

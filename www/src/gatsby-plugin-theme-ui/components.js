@@ -11,7 +11,7 @@ import HorizontalNavList from "../components/mdx/horizontal-nav-list"
 import CodeBlock from "../components/code-block"
 import MdxLink from "../components/mdx/mdx-link"
 import Breakout from "../components/mdx/breakout"
-import VisuallyHidden from "../components/visually-hidden"
+import VisuallyHidden from "../components/ecosystem/visually-hidden"
 import Events from "../components/mdx/events/events"
 import StubList from "../components/mdx/stub-list"
 

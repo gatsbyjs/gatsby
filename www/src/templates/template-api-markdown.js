@@ -15,7 +15,7 @@ import MarkdownPageFooter from "../components/docs/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 import FooterLinks from "../components/layout/footer-links"
 import Breadcrumb from "../components/docs/docs-breadcrumb"
-import Container from "../components/container"
+import Container from "../components/ecosystem/container"
 import PrevAndNext from "../components/prev-and-next"
 import APIReference, { APIContents } from "../components/docs/api-reference"
 

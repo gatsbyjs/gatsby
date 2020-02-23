@@ -7,7 +7,7 @@ import TagsIcon from "react-icons/lib/ti/tags"
 
 import Layout from "../components/layout"
 import Button from "../components/button"
-import Container from "../components/container"
+import Container from "../components/ecosystem/container"
 import BlogPostPreviewItem from "../components/blog/blog-post-preview-item"
 import Pagination from "../components/blog/pagination"
 import EmailCaptureForm from "../components/mdx/email-capture-form"

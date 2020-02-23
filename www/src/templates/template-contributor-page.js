@@ -6,7 +6,7 @@ import { graphql } from "gatsby"
 
 import Avatar from "../components/blog/avatar"
 import Layout from "../components/layout"
-import Container from "../components/container"
+import Container from "../components/ecosystem/container"
 import BlogPostPreviewItem from "../components/blog/blog-post-preview-item"
 import FooterLinks from "../components/layout/footer-links"
 

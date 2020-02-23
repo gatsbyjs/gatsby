@@ -10,7 +10,7 @@ import TiArrowRight from "react-icons/lib/ti/arrow-right"
 
 import Button from "../../components/button"
 import Layout from "../../components/layout"
-import Container from "../../components/container"
+import Container from "../../components/ecosystem/container"
 import SearchIcon from "../../components/search-icon"
 import FooterLinks from "../../components/layout/footer-links"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"

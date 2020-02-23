@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 
 import { Link } from "gatsby"
-import Container from "../container"
+import Container from "../ecosystem/container"
 import MarkdownPageFooter from "../docs/markdown-page-footer"
 import FooterLinks from "../layout/footer-links"
 import GithubIcon from "react-icons/lib/go/mark-github"

@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 
-import Container from "../components/container"
+import Container from "../components/ecosystem/container"
 import Rotator from "../components/plugins/rotator"
 import { Link } from "gatsby"
 import logo from "../assets/monogram.svg"

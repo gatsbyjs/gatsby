@@ -8,7 +8,7 @@ import TiArrowRight from "react-icons/lib/ti/arrow-right"
 
 import BlogPostPreviewItem from "../components/blog/blog-post-preview-item"
 import Button from "../components/button"
-import Container from "../components/container"
+import Container from "../components/ecosystem/container"
 import Layout from "../components/layout"
 import FooterLinks from "../components/layout/footer-links"
 import { TAGS_AND_DOCS } from "../data/tags-docs"

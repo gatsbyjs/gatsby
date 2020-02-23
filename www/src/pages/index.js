@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
-import Container from "../components/container"
+import Container from "../components/ecosystem/container"
 import MastheadContent from "../components/homepage/masthead"
 import Diagram from "../components/homepage/diagram"
 import FuturaParagraph from "../components/homepage/futura-paragraph"

@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout"
-import Container from "../components/container"
+import Container from "../components/ecosystem/container"
 import EmailCaptureForm from "../components/mdx/email-capture-form"
 import FooterLinks from "../components/layout/footer-links"
 
