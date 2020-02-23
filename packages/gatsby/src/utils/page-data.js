@@ -1,12 +1,10 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const { store } = require(`../redux`)
+const { generateHtmlPathToOutput } = require(`../utils/page-html`)
 
-const getFilePath = ({ publicDir }, pagePath, type) => {
+const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
-  if (type === `html`) {
-    return path.join(publicDir, fixedPagePath, `index.html`)
-  }
   return path.join(publicDir, `page-data`, fixedPagePath, `page-data.json`)
 }
 
@@ -43,13 +41,11 @@ const write = async ({ publicDir }, page, result) => {
 const getChangedPageDataKeys = (state, cachedPageData) => {
   if (cachedPageData && state.pageData) {
     const pageKeys = []
-    state.pageData.forEach((resultHash, key) => {
+    state.pageData.forEach((newPageDataHash, key) => {
       if (!cachedPageData.has(key)) {
         pageKeys.push(key)
       } else {
-        const newPageDataHash = resultHash
         const previousPageDataHash = cachedPageData.get(key)
-
         if (newPageDataHash !== previousPageDataHash) {
           pageKeys.push(key)
         }
@@ -75,30 +71,43 @@ const collectRemovedPageData = (state, cachedPageData) => {
 }
 
 const checkAndRemoveEmptyDir = (dir, pagePath) => {
-  const hasFiles = fs.readdirSync(path.join(dir, pagePath), `utf8`, true)
+  const directory = path.join(dir, pagePath)
+  const hasFiles = fs.readdirSync(directory)
   if (!hasFiles.length) {
-    fs.removeSync(path.join(dir, pagePath))
+    fs.removeSync(directory)
   }
 }
 
+const sortedPageKeysByNestedLevel = pageKeys =>
+  pageKeys.sort((a, b) => {
+    const currentPathPathValue = a.split(`/`).length
+    const previousPathPathValue = b.split(`/`).length
+    if (currentPathPathValue > previousPathPathValue) {
+      return -1
+    }
+    if (currentPathPathValue < previousPathPathValue) {
+      return 1
+    }
+    return 0
+  })
+
 const removePageFiles = ({ publicDir }, pageKeys) => {
   const removePages = pageKeys.map(pagePath => {
-    const pageHtmlFile = getFilePath({ publicDir }, pagePath, `html`)
-    return fs
-      .remove(pageHtmlFile)
-      .then(() => checkAndRemoveEmptyDir(publicDir, pagePath))
+    const pageHtmlFile = generateHtmlPathToOutput(publicDir, pagePath)
+    return fs.remove(pageHtmlFile)
   })
 
   const removePageData = pageKeys.map(pagePath => {
     const pageDataFile = getFilePath({ publicDir }, pagePath)
-    return fs
-      .remove(pageDataFile)
-      .then(() =>
-        checkAndRemoveEmptyDir(path.join(publicDir, `page-data`), pagePath)
-      )
+    return fs.remove(pageDataFile)
   })
 
-  return Promise.all([...removePages, ...removePageData])
+  return Promise.all([...removePages, ...removePageData]).then(() => {
+    sortedPageKeysByNestedLevel(pageKeys).forEach(pagePath => {
+      checkAndRemoveEmptyDir(publicDir, pagePath)
+      checkAndRemoveEmptyDir(`${publicDir}/page-data`, pagePath)
+    })
+  })
 }
 
 module.exports = {
