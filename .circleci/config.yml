@@ -632,11 +632,11 @@ workflows:
           <<: *ignore_docs
           requires:
             - bootstrap
-      - unit_tests_node8:
-          <<: *ignore_docs
+      - lint:
           requires:
             - bootstrap
-      - lint:
+      - unit_tests_node8:
+          <<: *ignore_docs
           requires:
             - bootstrap
       - unit_tests_node10:
