@@ -495,7 +495,7 @@ Here's a more complex example of migrating a `<PrivateRoute>` component (used
 in store.gatsbyjs.org) from React Router to @reach/router.
 
 ```diff
- import React from 'react';
+ import * as React from 'react';
 -import { Redirect, Route } from 'react-router-dom';
 +import { Router, navigate } from '@reach/router';
  import { isAuthenticated } from '../../utils/auth';
@@ -549,7 +549,7 @@ If you were using `replaceRouterComponent` for this, you'll need to migrate to
 `wrapRootElement`:
 
 ```diff
-import React from 'react'
+import * as React from 'react'
 import { Provider } from 'react-redux'
 -import { Router } from 'react-router-dom'
 

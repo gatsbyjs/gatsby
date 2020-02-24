@@ -118,7 +118,7 @@ The `ThemeProvider` component exported from the `ThemeContext.js` file wraps the
 The default `layout.js` uses a `<staticQuery>` and renderProp to render the layout, which is wrapped by a Fragment `<>`. Modify it to look like this:
 
 ```jsx:title=src/components/layout.js
-import React from 'react'
+import * as React from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 

@@ -23,7 +23,7 @@ describe(`Resolve module exports`, () => {
     "/export/const": `export const fooConst = '';`,
     "/module/exports": `module.exports.barExports = '';`,
     "/multiple/export": `exports.bar = () => ''; exports.baz = {}; exports.foo = '';`,
-    "/import/with/export": `import React from 'react'; exports.baz = '';`,
+    "/import/with/export": `import * as React from 'react'; exports.baz = '';`,
     "/realistic/export": `
       /* eslint-disable react/prop-types */
       /* globals window CustomEvent */
