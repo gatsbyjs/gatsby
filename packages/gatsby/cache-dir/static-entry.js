@@ -14,7 +14,7 @@ const {
   concat,
 } = require(`lodash`)
 
-const { RouteAnnouncer } = require(`./route-announcer`)
+const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
@@ -205,7 +205,7 @@ export default (pagePath, callback) => {
       <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
         <RouteHandler path="/*" />
       </Router>
-      <RouteAnnouncer />
+      <div {...RouteAnnouncerProps} />
     </ServerLocation>
   )
 

@@ -4,9 +4,9 @@ import loader from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
+import { RouteAnnouncerProps } from "./route-announcer-props"
 import { navigate as reachNavigate } from "@reach/router"
 import { parsePath } from "gatsby-link"
-import { RouteAnnouncer } from "./route-announcer"
 
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
@@ -157,6 +157,37 @@ function init() {
 
   // Check for initial page-load redirect
   maybeRedirect(window.location.pathname)
+}
+
+class RouteAnnouncer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.announcementRef = React.createRef()
+  }
+
+  componentDidUpdate(prevProps, nextProps) {
+    requestAnimationFrame(() => {
+      let pageName = `new page at ${this.props.location.pathname}`
+      if (document.title) {
+        pageName = document.title
+      }
+      const pageHeadings = document
+        .getElementById(`gatsby-focus-wrapper`)
+        .getElementsByTagName(`h1`)
+      if (pageHeadings && pageHeadings.length) {
+        pageName = pageHeadings[0].textContent
+      }
+      const newAnnouncement = `Navigated to ${pageName}`
+      const oldAnnouncement = this.announcementRef.current.innerText
+      if (oldAnnouncement !== newAnnouncement) {
+        this.announcementRef.current.innerText = newAnnouncement
+      }
+    })
+  }
+
+  render() {
+    return <div {...RouteAnnouncerProps} ref={this.announcementRef}></div>
+  }
 }
 
 // Fire on(Pre)RouteUpdate APIs
