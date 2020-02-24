@@ -14,7 +14,7 @@ After you receive an API key, it’s recommended to review the Etsy [documentati
 
 In your terminal, type the command ‘npm install -g gatsby -cli’ to install the gatsby command-line interface. Create a new project using the command ‘gatsby new [the name of your site]’. Run ‘gatsby develop’ to view your project locally.
 
-## [Gatsby-source-etsy ](https://www.gatsbyjs.org/packages/gatsby-source-etsy/)
+## [Gatsby-source-etsy](/packages/gatsby-source-etsy/)
 
 While in your terminal, type the command ‘npm i gatsby-source-etsy’. You will then need to add the plugin to your ‘gatsby-config.js’ file, your API key, and Shop ID:
 
