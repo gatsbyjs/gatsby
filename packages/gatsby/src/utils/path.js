@@ -34,17 +34,31 @@ export function getCommonDir(path1, path2) {
   return posixJoinWithLeadingSlash(path1Segments)
 }
 
-const MAX_PATH_SEGMENT = 255
+const MAX_PATH_SEGMENT_CHARS = 255
+const MAX_PATH_SEGMENT_BYTES = 255
 const SLICING_INDEX = 100
+const SLICING_INDEX_BYTES = 50
 const pathSegmentRe = /[^/]+/g
+
+const isMacOs = process.platform === `darwin`
+const isWindows = process.platform === `win32`
 
 export const truncatePath = path =>
   path.replace(pathSegmentRe, match => {
-    if (match.length > MAX_PATH_SEGMENT) {
-      return (
-        match.slice(0, SLICING_INDEX) +
-        createContentDigest(match.slice(SLICING_INDEX))
-      )
+    if (isMacOS || isWindows) {
+      if (match.length > MAX_PATH_SEGMENT_CHARS) {
+        return (
+          match.slice(0, SLICING_INDEX) +
+          createContentDigest(match.slice(SLICING_INDEX))
+        )
+      }
+    } else {
+      if (Buffer.from(match).length > MAX_PATH_SEGMENT_BYTES) {
+        return (
+          match.slice(0, SLICING_INDEX_BYTES) +
+          createContentDigest(match.slice(SLICING_INDEX_BYTES))
+        )
+      }
     }
 
     return match

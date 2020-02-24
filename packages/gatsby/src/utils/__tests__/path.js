@@ -1,5 +1,5 @@
 const { joinPath } = require(`gatsby-core-utils`)
-const { withBasePath, getCommonDir } = require(`../path`)
+const { withBasePath, getCommonDir, truncatePath } = require(`../path`)
 const os = require(`os`)
 
 describe(`paths`, () => {
@@ -106,6 +106,40 @@ describe(`paths`, () => {
       ],
     ])(`%s`, (_label, { path1, path2, expected }) => {
       expect(getCommonDir(path1, path2)).toBe(expected)
+    })
+  })
+
+  describe(`truncatePath`, () => {
+    const SHORT_PATH = `/short/path/without/trailing/slash`
+    const SHORT_PATH_TRAILING = `/short/path/with/trailing/slash/`
+    const VERY_LONG_PATH = `/` + `x`.repeat(256) + `/`
+    const VERY_LONG_PATH_NON_LATIN = `/` + `あ`.repeat(255) + `/`
+
+    it(`Truncates long paths correctly`, () => {
+      const truncatedPathLatin = truncatePath(VERY_LONG_PATH)
+      const truncatedPathNonLatin = truncatePath(VERY_LONG_PATH_NON_LATIN)
+      for (const segment of truncatedPathLatin) {
+        expect(segment.length).toBeLessThanOrEqual(255)
+      }
+      for (const segment of truncatedPathNonLatin) {
+        expect(segment.length).toBeLessThanOrEqual(255)
+      }
+    })
+
+    it(`Preserves trailing slash`, () => {
+      const truncatedPathLong = truncatePath(VERY_LONG_PATH)
+      const truncatedPathShort = truncatePath(SHORT_PATH_TRAILING)
+      expect(truncatedPathLong.substring(truncatedPathLong.length - 1)).toEqual(
+        `/`
+      )
+      expect(
+        truncatedPathShort.substring(truncatedPathShort.length - 1)
+      ).toEqual(`/`)
+    })
+
+    it(`Does not truncate short paths`, () => {
+      const truncatedPath = truncatePath(SHORT_PATH)
+      expect(truncatedPath).toEqual(SHORT_PATH)
     })
   })
 })

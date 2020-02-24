@@ -364,8 +364,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
-  const truncateLongPaths = store.getState().config.truncateLongPaths
-  const pagePath = truncateLongPaths ? truncatePath(page.path) : page.path
+  let pagePath = page.path
 
   const isMacOs = process.platform === `darwin`
   const invalidFilenames = []
@@ -381,22 +380,51 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
-  if (process.env.NODE_ENV === `production` && invalidFilenames.length > 0) {
-    report.panic({
-      id: `11331`,
-      context: {
-        pluginName: name,
-        api: `createPages`,
-        message:
-          chalk.bold.red(
-            `This path contains filenames that exceed OS filename length limit: `
-          ) +
-          chalk(
-            `${pagePath}\n\nHere is the list of filenames that are too long:\n\n`
-          ) +
-          chalk(`${invalidFilenames.join(`\n\n`)}`),
-      },
-    })
+  if (invalidFilenames.length > 0) {
+    if (process.env.NODE_ENV === `production`) {
+      report.panic({
+        id: `11331`,
+        context: {
+          pluginName: name,
+          api: `createPages`,
+          message:
+            chalk.bold.red(
+              `This path contains filenames that exceed OS filename length limit: `
+            ) +
+            chalk(
+              `${pagePath}\n\nHere is the list of filenames that are too long:\n\n${invalidFilenames.join(
+                `\n\n`
+              )}`
+            ),
+        },
+      })
+    }
+
+    if (process.env.NODE_ENV === `development`) {
+      pagePath = truncatePath(page.path)
+      report.error({
+        id: `11331`,
+        context: {
+          pluginName: name,
+          api: `createPages`,
+          message:
+            chalk.bold.red(
+              `This path contains filenames that exceed OS filename length limit: `
+            ) +
+            chalk(
+              `${page.path}\n\nAutomatically truncated to: ${pagePath}\n\n`
+            ) +
+            chalk.bold.red(
+              `WARNING: This will cause crash in production build!\n\n`
+            ) +
+            chalk(
+              `Here is the list of filenames that are too long:\n\n${invalidFilenames.join(
+                `\n\n`
+              )}`
+            ),
+        },
+      })
+    }
   }
 
   const internalPage: Page = {

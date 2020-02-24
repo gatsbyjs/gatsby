@@ -380,7 +380,7 @@ const errorMap = {
   // Directory/file name exceeds OS character limit
   "11331": {
     text: context =>
-      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}\n\nConsider enabling "truncateLongPaths" option in gatsby-config.js. Learn more about ${context.api} here: https://www.gatsbyjs.org/docs/node-apis/#${context.api}`,
+      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}\n\nLearn more about ${context.api} here: https://www.gatsbyjs.org/docs/node-apis/#${context.api}`,
     type: `PLUGIN`,
     level: `ERROR`,
   },
