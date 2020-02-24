@@ -12,7 +12,7 @@ function getLanguages() {
 
   const langCodes = process.env.LOCALES.split(" ")
   const langs = []
-  for (code in langCodes) {
+  for (let code of langCodes) {
     const lang = allLangs.find(lang => lang.code === code)
     // Error if one of the locales provided isn't a valid locale
     if (!lang) {
