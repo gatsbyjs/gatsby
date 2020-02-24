@@ -628,18 +628,16 @@ workflows:
   build-test:
     jobs:
       - bootstrap
-      - lint:
-          requires:
-            - bootstrap
       - windows_unit_tests:
           <<: *ignore_docs
           requires:
-            - lint
             - bootstrap
       - unit_tests_node8:
           <<: *ignore_docs
           requires:
-            - lint
+            - bootstrap
+      - lint:
+          requires:
             - bootstrap
       - unit_tests_node10:
           <<: *ignore_docs
