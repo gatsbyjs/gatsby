@@ -11,12 +11,41 @@ Markdown is a plain text syntax for writing text documents that can be transform
 
 Markdown dates back to 2004, when John Gruber published the original [Markdown syntax guide](https://daringfireball.net/projects/markdown/syntax). Gruber, along with Aaron Swartz, created Markdown with two goals:
 
-- to make Markdown <q>as easy-to-read and easy-to-write as is feasible.</q>; and
-- to support inline HTML within Markdown-formatted text.
+1. to make Markdown <q>as easy-to-read and easy-to-write as is feasible.</q>; and
+1. to support inline HTML within Markdown-formatted text.
 
 Text-to-HTML filters such as [Textile](https://textile-lang.com/) define a syntax that replaces a wide range of HTML elements. Other filters, such as [reStructuredText](https://docutils.readthedocs.io/en/sphinx-docs/user/rst/quickstart.html), do not support inline HTML tags.
 
-Markdown, by contrast, only defines a syntax for a small subset HTML elements. For other elements, you use the corresponding HTML tag. In other words, Markdown makes it easy to write documents without knowing HTML, but HTML is available if you need it. A simple Markdown document might look like the following example.
+Markdown, by contrast, only defines a syntax for a small subset HTML elements. For other elements, you use the corresponding HTML tag. In other words, Markdown makes it easy to write documents without knowing HTML, but HTML is available if you need it. A simple Markdown document might look like the example the follows.
+
+```markdown
+# Markdown!
+
+You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.org/).
+
+<figure class="chart">
+  <object data="chart.svg" type="image/svg+xml"></object>
+  <caption>
+    Developers who love using Gatsby versus those who haven't tried it yet.  
+  </caption>
+</figure>
+```
+
+When converted to HTML, the preceding Markdown will become the markup below.
+
+```html
+<h1>Markdown!</h1>
+<p>
+  You can use Markdown to create documents for
+  <a href="https://www.gatsbyjs.org/">Gatsby</a>.
+</p>
+<figure class="chart">
+  <object data="chart.svg" type="image/svg+xml"></object>
+  <caption>
+    Developers who love using Gatsby versus those who haven't tried it yet. <
+  </caption>
+</figure>
+```
 
 You can use Markdown files as a content source for your Gatsby site. To do so, you'll need to install two plugins: [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/#gatsby-source-filesystem) and [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/). As with Gatsby itself, you can install both using [npm](/docs/glossary/#npm).
 
