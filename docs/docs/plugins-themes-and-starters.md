@@ -62,7 +62,7 @@ When it comes to maintaining a Gatsby site, plugins and themes offer a distinct 
 
 #### Versioning
 
-Starters can still be versioned inside a repository so that you could track issues or bugs associated with specific developments in the starter but it's more difficult to make updates with new changes.
+Starters can still be versioned inside a repository so that you can track issues or bugs associated with specific developments in the starter but it's more difficult to make updates with new changes.
 
 #### Installing as a package
 
@@ -92,11 +92,11 @@ Starters can be configured with multiple plugins so someone can get up and runni
 
 #### Custom components
 
-Custom components are most traditionally distributed as packages in the React ecosystem. Components don't need to hook into the Gatsby build system, so if shipped with a plugin don't need to be included in a `gatsby-config`'s plugin array. This is the case with `gatsby-image` which is a React component. It doesn't need to be included in the plugins array because it is merely a component.
+Custom components are most traditionally distributed as packages in the React ecosystem. Components don't need to hook into the Gatsby build system, so if shipped with a plugin they don't need to be included in a `gatsby-config`'s plugin array. This is the case with `gatsby-image` which is a React component. It doesn't need to be included in the plugins array because it is merely a component.
 
 Some plugins and themes ship with components you can use in a Gatsby site. An example is the [`<OutboundLink />` component from `gatsby-plugin-google-analytics`](/packages/gatsby-plugin-google-analytics/?=#outboundlink-component). Other plugins, like [`gatsby-plugin-react-helmet`](/packages/gatsby-plugin-react-helmet), require you to install components from other dependent libraries.
 
-Because themes are meant to own a section of a site—like a page or part of page—they are more suited to ship with components that could then be shadowed for customization.
+Because themes are meant to own a section of a site—like a page or part of a page—they are more suited to ship with components that could then be shadowed for customization.
 
 Starters will include components to render data, but they are tied to the starter.
 
