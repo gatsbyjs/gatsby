@@ -9859,3 +9859,18 @@
     - Agency
   built_by: App Design
   built_by_url: "https://appdesign.dev/"
+- title: Chris Vogt's Blog
+  main_url: https://www.chrisvogt.me
+  url: https://www.chrisvogt.me
+  source_url: https://github.com/chrisvogt/gatsby-theme-private-sphere
+  description: >-
+    Personal blog of Chris Vogt, a software developer in San Francisco. Showcases
+    my latest activity on Instagram, Goodreads, and Spotify using original widgets.
+  categories:
+    - Blog
+    - Open Source
+    - Photography
+    - Portfolio
+  built_by: Chris Vogt
+  built_by_url: https://github.com/chrisvogt
+  featured: false
