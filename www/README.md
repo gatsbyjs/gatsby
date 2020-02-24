@@ -48,6 +48,8 @@ Localizations are currently a work-in-progress and are thus disabled by default.
 LOCALES="es ja id pt-BR zh-Hans"
 ```
 
+The list of possible locales can be found at [i18n.json](/www/i18n.json).
+
 The default locale, English, is always on. There is currently no UI to link to the localizations, so you'll have to type in the name of the file you want to go to using the language code (e.g. /es/tutorial/part-one).
 
 ## Running slow build? (Screenshots placeholder)
