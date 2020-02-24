@@ -21,10 +21,10 @@ const getReduxCacheFolder = (): string =>
   // This is a function for the case that somebody does a process.chdir (#19800)
   path.join(process.cwd(), `.cache/redux`)
 
-function reduxRestFile(dir: string): string {
+function reduxSharedFile(dir: string): string {
   return path.join(dir, `redux.rest.state`)
 }
-function reduxChunkFilePrefix(dir: string): string {
+function reduxChunkedNodesFilePrefix(dir: string): string {
   return path.join(dir, `redux.node.state_`)
 }
 
@@ -46,12 +46,12 @@ export function readFromCache(): ICachedReduxState {
   }
 
   const obj: ICachedReduxState = v8.deserialize(
-    readFileSync(reduxRestFile(reduxCacheFolder))
+    readFileSync(reduxSharedFile(reduxCacheFolder))
   )
 
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const chunks = globSync(
-    reduxChunkFilePrefix(reduxCacheFolder) + `*`
+    reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
   ).map(file => v8.deserialize(readFileSync(file)))
 
   const nodes: [string, IReduxNode][] = [].concat(...chunks)
@@ -100,7 +100,7 @@ function prepareCacheFolder(
   const map = contents.nodes
   contents.nodes = undefined
 
-  writeFileSync(reduxRestFile(targetDir), v8.serialize(contents))
+  writeFileSync(reduxSharedFile(targetDir), v8.serialize(contents))
   // Now restore them on the redux store
   contents.nodes = map
 
@@ -112,7 +112,7 @@ function prepareCacheFolder(
 
     for (let i = 0; i < chunks; ++i) {
       writeFileSync(
-        reduxChunkFilePrefix(targetDir) + i,
+        reduxChunkedNodesFilePrefix(targetDir) + i,
         v8.serialize(values.slice(i * chunkSize, i * chunkSize + chunkSize))
       )
     }
