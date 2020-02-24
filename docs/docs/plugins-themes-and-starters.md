@@ -70,7 +70,7 @@ Because starters are "ejected" each time they are used, it's difficult to sync c
 
 ### Differences in configurability
 
-Plugins and themes can expose options to make them configurable for users. How much can be configured by the user is sometimes referred to as an API surface (meaning a piece of the plugin or theme that a user of it can interact with to configure).
+Plugins and themes can expose options to make them configurable for users. There are different options for configuration like passing in options and shadowing files that make plugins and themes more powerful—but also more complicated—than starters.
 
 | Configuration         | Plugin | Theme | Starter |
 | --------------------- | ------ | ----- | ------- |
