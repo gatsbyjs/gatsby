@@ -732,6 +732,8 @@
           link: /docs/glossary/headless-wordpress/
         - title: JAMStack
           link: /docs/glossary/jamstack
+        - title: MDX
+          link: /docs/glossary/mdx
         - title: Node.js
           link: /docs/glossary/node
         - title: React
