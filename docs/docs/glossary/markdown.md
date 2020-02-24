@@ -16,7 +16,7 @@ Markdown dates back to 2004, when John Gruber published the original [Markdown s
 
 Text-to-HTML filters such as [Textile](https://textile-lang.com/) define a syntax that replaces a wide range of HTML elements. Other filters, such as [reStructuredText](https://docutils.readthedocs.io/en/sphinx-docs/user/rst/quickstart.html), do not support inline HTML tags.
 
-Markdown, by contrast, only defines a syntax for a small subset HTML elements. For other elements, you use the corresponding HTML tag. In other words, Markdown makes it easy to write documents without knowing HTML, but HTML is available if you need it.
+Markdown, by contrast, only defines a syntax for a small subset HTML elements. For other elements, you use the corresponding HTML tag. In other words, Markdown makes it easy to write documents without knowing HTML, but HTML is available if you need it. A simple Markdown document might look like the following example.
 
 You can use Markdown files as a content source for your Gatsby site. To do so, you'll need to install two plugins: [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/#gatsby-source-filesystem) and [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/). As with Gatsby itself, you can install both using [npm](/docs/glossary/#npm).
 
