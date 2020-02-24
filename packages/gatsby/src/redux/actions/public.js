@@ -1473,4 +1473,4 @@ actions.createPageDependency = (
   }
 }
 
-module.exports = { actions, truncatePath }
+module.exports = { actions }
