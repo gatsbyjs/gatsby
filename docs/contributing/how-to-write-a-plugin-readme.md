@@ -1,5 +1,6 @@
 ---
 title: How to Write a Plugin README
+issue: [#21599](https://github.com/gatsbyjs/gatsby/issues/21599)
 ---
 
 ## Near-perfect example of a plugin README
