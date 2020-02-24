@@ -42,7 +42,7 @@ When converted to HTML, the preceding Markdown will become the markup below.
 <figure class="chart">
   <object data="chart.svg" type="image/svg+xml"></object>
   <caption>
-    Developers who love using Gatsby versus those who haven't tried it yet. <
+    Developers who love using Gatsby versus those who haven't tried it yet.
   </caption>
 </figure>
 ```
