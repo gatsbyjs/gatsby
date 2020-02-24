@@ -259,6 +259,8 @@
                   link: /docs/creating-a-source-plugin/
                 - title: Creating a Transformer Plugin
                   link: /docs/creating-a-transformer-plugin/
+                - title: Configuring Usage with Plugin Options
+                  link: /docs/configuring-usage-with-plugin-options/
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
                 - title: Pixabay Image Source Plugin Tutorial
