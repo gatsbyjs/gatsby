@@ -15,7 +15,8 @@ const { name: repo } = repository
 //   event
 // })
 
-const checkName = "Display lint in PR"
+// Match the name in .github/workflows/lint.yml
+const checkName = "report_eslint_action"
 
 const headers = {
   "Content-Type": "application/json",
