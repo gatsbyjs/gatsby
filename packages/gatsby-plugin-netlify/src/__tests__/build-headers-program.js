@@ -191,7 +191,7 @@ describe(`build-headers-program`, () => {
     const pluginData = await createPluginData()
 
     fs.existsSync.mockImplementation(path => {
-      if (path.includes(`page-data.json`)) {
+      if (path.includes(`page-data.json`) || path.includes(`app-data.json`)) {
         return false
       }
 
@@ -217,6 +217,7 @@ describe(`build-headers-program`, () => {
     )
     expect(output).toMatchSnapshot()
     expect(output).toMatch(/\/pages-manifest-ab11f09e0ca7ecd3b43e\.js/g)
+    expect(output).not.toMatch(/\/app-data\.json/g)
     expect(output).not.toMatch(/\/page-data\.json/g)
     expect(output).not.toMatch(/\/undefined/g)
   })
