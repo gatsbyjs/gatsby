@@ -45,11 +45,11 @@ The following tables put plugins, themes, and starters side-by-side, showing wha
 
 **Legend**
 
-| Icon | Feature Capability    |
-| ---- | --------------------- |
-| ●    | Fully configurable    |
-| ◐    | Somewhat configurable |
-| ○    | Not configurable      |
+| Icon | Feature Capability                                                    |
+| ---- | --------------------------------------------------------------------- |
+| ●    | Fully capable (possible and supported)                                |
+| ◐    | Somewhat capable (not as recommended of a practice or less supported) |
+| ○    | Not capable                                                           |
 
 ### Differences in maintainability
 
@@ -57,7 +57,7 @@ When it comes to maintaining a Gatsby site, plugins and themes offer a distinct 
 
 | Maintenance        | Plugin | Theme | Starter |
 | ------------------ | ------ | ----- | ------- |
-| Versioning         | ●      | ●     | ●       |
+| Versioning         | ●      | ●     | ◐       |
 | Install as Package | ●      | ●     | ○       |
 
 #### Versioning
@@ -70,13 +70,18 @@ Because starters are "ejected" each time they are used, it's difficult to sync c
 
 ### Differences in configurability
 
-Plugins and themes can expose a varying level of an API surface (meaning a piece of the plugin or theme that a user of it can interact with), constraining what is possible and providing sensible defaults to make them easier to start picking up and using.
+Plugins and themes can expose options to make them configurable for users. How much can be configured by the user is sometimes referred to as an API surface (meaning a piece of the plugin or theme that a user of it can interact with to configure).
 
 | Configuration         | Plugin | Theme | Starter |
 | --------------------- | ------ | ----- | ------- |
+| Pass in Options       | ●      | ●     | ◐       |
 | Shadowing             | ◐      | ●     | ○       |
 | Uses Multiple Plugins | ◐      | ●     | ●       |
 | Custom components     | ◐      | ●     | ●       |
+
+#### Pass in Options
+
+Plugins and themes both allow options to be passed in when installed in the plugins array of a `gatsby-config`. Starters can be set up with documented options for customization, but there are no officially supported options for starters apart from what the author of the starter decides to write.
 
 #### Shadowing
 
