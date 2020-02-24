@@ -51,3 +51,7 @@ The following table lists samples of values that could be used as options with e
 | Object    | `{ default: "./src/layout.js" }` | [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx/)               |
 
 **Note**: Themes (which are a type of plugin) are able to receive options from a site's `gatsby-config` to be used in its `gatsby-config` in order to allow themes to be composed together. This is done by exporting the `gatsby-config` as a function instead of an object. You can see an example of this in the [`gatsby-theme-blog`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog) and [`gatsby-theme-blog-core`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog-core) repositories. Plugins are not capable of this functionality.
+
+## Additional resources
+
+- [Example Gatsby site using plugin options with a local plugin](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-plugin-options)
