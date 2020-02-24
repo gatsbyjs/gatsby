@@ -69,7 +69,13 @@ if (process.env.ENABLE_LOCALIZATIONS) {
         branch: `master`,
         patterns: [`docs/**`, ...naughtyFiles.map(file => `!${file}`)],
       },
-    }))
+    })),
+    {
+      resolve: `gatsby-plugin-i18n`, // local plugin
+      options: {
+        languages: langs.map(lang => lang.code),
+      },
+    }
   )
 }
 
@@ -349,12 +355,6 @@ module.exports = {
       resolve: `gatsby-transformer-screenshot`,
       options: {
         nodeTypes: [`StartersYaml`],
-      },
-    },
-    {
-      resolve: `gatsby-plugin-i18n`,
-      options: {
-        languages: langs.map(lang => lang.code),
       },
     },
     // `gatsby-plugin-subfont`,
