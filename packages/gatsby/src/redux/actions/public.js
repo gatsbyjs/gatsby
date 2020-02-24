@@ -367,19 +367,37 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const truncateLongPaths = store.getState().config.truncateLongPaths
   const pagePath = truncateLongPaths ? truncatePath(page.path) : page.path
 
+  const isMacOs = process.platform === `darwin`
+  const isWindows = process.platform === `win32`
+  const invalidFilenames = []
+
   for (const segment of path.split(`/`)) {
-    if (segment.length > 255) {
-      report.panic({
-        id: `11331`,
-        context: {
-          pluginName: name,
-          api: `createPages`,
-          message: chalk.bold.yellow(
-            `This path contains directory/file names that exceed OS character limit`
-          ),
-        },
-      })
+    const isNameTooLong =
+      isMacOs || isWindows
+        ? segment.length > 255 // MacOS (APFS) and Windows (NTFS) filename length limit (255 chars)
+        : Buffer.from(segment).length > 255 // Other (255 bytes)
+
+    if (isNameTooLong) {
+      invalidFilenames.push(segment)
     }
+  }
+
+  if (process.env.NODE_ENV === `production` || invalidFilenames.length > 0) {
+    report.panic({
+      id: `11331`,
+      context: {
+        pluginName: name,
+        api: `createPages`,
+        message:
+          chalk.bold.yellow(
+            `This path contains filenames that exceed OS filename length limit: ${pagePath}\n
+          Here is the list of filenames that are too long:\n`
+          ) +
+          console.log(`
+          ${invalidFilenames.map(filename => `${filename}\n`)}
+          `),
+      },
+    })
   }
 
   const internalPage: Page = {
