@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.49...gatsby-theme-blog@1.3.0) (2020-02-24)
+
+### Features
+
+- Change mdx flag into mdxOtherwise to prevent confusion ([#21404](https://github.com/gatsbyjs/gatsby/issues/21404)) ([6874cca](https://github.com/gatsbyjs/gatsby/commit/6874cca))
+
 ## [1.2.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.48...gatsby-theme-blog@1.2.49) (2020-02-24)
 
 **Note:** Version bump only for package gatsby-theme-blog
