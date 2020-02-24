@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.19...gatsby@2.19.20) (2020-02-24)
+
+### Bug Fixes
+
+- **gatsby:** add app-data to preload list ([#21537](https://github.com/gatsbyjs/gatsby/issues/21537)) ([ad92e13](https://github.com/gatsbyjs/gatsby/commit/ad92e13))
+- **gatsby:** Fix wrongly skipping graphql filter cache ([#21578](https://github.com/gatsbyjs/gatsby/issues/21578)) ([4f68761](https://github.com/gatsbyjs/gatsby/commit/4f68761))
+
 ## [2.19.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.18...gatsby@2.19.19) (2020-02-20)
 
 ### Bug Fixes
