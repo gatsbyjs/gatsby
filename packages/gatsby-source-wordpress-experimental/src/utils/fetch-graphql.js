@@ -38,6 +38,11 @@ const handleGraphQLErrors = async ({
     return
   }
 
+  if (!reporter) {
+    reporter.panic = console.error
+    reporter.error = console.error
+  }
+
   for (const error of errors) {
     const errorWasMapped =
       errorMap &&
@@ -130,13 +135,18 @@ const fetchGraphql = async ({
   errorMap,
   ignoreGraphQLErrors = false,
   panicOnError = false,
+  url = false,
   variables = {},
 }) => {
   const {
     helpers,
-    pluginOptions: { url },
+    pluginOptions: { url: pluginOptionsUrl },
   } = store.getState().gatsbyApi
   const { reporter } = helpers
+
+  if (!url) {
+    url = pluginOptionsUrl
+  }
 
   let response
 

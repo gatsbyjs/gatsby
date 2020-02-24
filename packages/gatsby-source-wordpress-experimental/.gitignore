@@ -1,5 +1,6 @@
 /**/*.js
 !src/**/*.js
+!test-runtime/**/*.js
 gatsby-node
 !src/gatsby-node
 !src

@@ -1,0 +1,42 @@
+{
+  "name": "using-gatsby-source-wordpress-experimental",
+  "description": "Gatsby example site using gatsby-source-wordpress@next",
+  "license": "MIT",
+  "version": "0.0.1",
+  "author": {
+    "name": "Tyler",
+    "email": "tyler@gatsbyjs.com"
+  },
+  "scripts": {
+    "develop": "gatsby develop",
+    "clean": "gatsby clean",
+    "build": "gatsby build",
+    "clean-develop": "gatsby clean && gatsby develop",
+    "clean-build": "gatsby clean && gatsby build",
+    "start": "npm run develop",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "@chakra-ui/core": "^0.5.2",
+    "@emotion/core": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
+    "dotenv": "^8.2.0",
+    "emotion-theming": "^10.0.27",
+    "gatsby": "2.19.19",
+    "gatsby-image": "^2.2.41",
+    "gatsby-plugin-chakra-ui": "^0.1.2",
+    "gatsby-plugin-netlify-cache": "^1.2.0",
+    "gatsby-plugin-react-svg": "^3.0.0",
+    "gatsby-plugin-sharp": "2.4.5",
+    "gatsby-source-filesystem": "^2.1.48",
+    "gatsby-source-wordpress-experimental": "0.0.4",
+    "gatsby-transformer-sharp": "2.3.14",
+    "parse-path": "^4.0.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-paginate": "^6.3.2"
+  },
+  "devDependencies": {
+    "prettier": "^1.13.7"
+  }
+}
