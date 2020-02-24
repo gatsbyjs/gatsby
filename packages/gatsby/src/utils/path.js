@@ -45,7 +45,7 @@ const isWindows = process.platform === `win32`
 
 export const truncatePath = path =>
   path.replace(pathSegmentRe, match => {
-    if (isMacOS || isWindows) {
+    if (isMacOs || isWindows) {
       if (match.length > MAX_PATH_SEGMENT_CHARS) {
         return (
           match.slice(0, SLICING_INDEX) +
