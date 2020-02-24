@@ -9836,3 +9836,41 @@
   built_by: Botox For Hair And co.
   built_by_url: https://www.botoxforhair.net/
   featured: false
+- title: ramonak.io
+  url: https://ramonak.io/
+  main_url: https://ramonak.io/
+  source_url: https://github.com/KaterinaLupacheva/ramonak.io
+  description: >
+    Tech blog and portfolio site of a full stack web developer Katsiaryna (Kate) Lupachova
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Katsiaryna Lupachova
+  built_by_url: https://ramonak.io/
+  featured: false
+- title: React JS Developer
+  main_url: "https://reacter.dev/"
+  url: "https://reacter.dev/"
+  featured: false
+  categories:
+    - App
+    - Web Development
+    - Web Development
+    - Agency
+  built_by: App Design
+  built_by_url: "https://appdesign.dev/"
+- title: Chris Vogt's Blog
+  main_url: https://www.chrisvogt.me
+  url: https://www.chrisvogt.me
+  source_url: https://github.com/chrisvogt/gatsby-theme-private-sphere
+  description: >-
+    Personal blog of Chris Vogt, a software developer in San Francisco. Showcases
+    my latest activity on Instagram, Goodreads, and Spotify using original widgets.
+  categories:
+    - Blog
+    - Open Source
+    - Photography
+    - Portfolio
+  built_by: Chris Vogt
+  built_by_url: https://github.com/chrisvogt
+  featured: false

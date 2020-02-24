@@ -54,12 +54,12 @@ module.exports = {
 
 ### Theme options
 
-| Key           | Default value    | Description                                                                                                                                                                    |
-| ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `basePath`    | `/`              | Root url for all blog posts                                                                                                                                                    |
-| `contentPath` | `content/posts`  | Location of blog posts                                                                                                                                                         |
-| `assetPath`   | `content/assets` | Location of assets                                                                                                                                                             |
-| `mdx`         | `true`           | Configure `gatsby-plugin-mdx`. Note that most sites will not need to use this flag. If your site has already configured `gatsby-plugin-mdx` separately, set this flag `false`. |
+| Key                      | Default value    | Description                                                                      |
+| ------------------------ | ---------------- | -------------------------------------------------------------------------------- |
+| `basePath`               | `/`              | Root url for all blog posts                                                      |
+| `contentPath`            | `content/posts`  | Location of blog posts                                                           |
+| `assetPath`              | `content/assets` | Location of assets                                                               |
+| `mdxOtherwiseConfigured` | `false`          | Set this flag `true` if `gatsby-plugin-mdx` is already configured for your site. |
 
 #### Example usage
 
