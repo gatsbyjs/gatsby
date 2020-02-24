@@ -6,7 +6,6 @@ exports[`config reducer handles empty configs 1`] = `
 Object {
   "pathPrefix": "",
   "polyfill": true,
-  "truncateLongPaths": false,
 }
 `;
 
@@ -17,6 +16,5 @@ Object {
   "siteMetadata": Object {
     "hi": true,
   },
-  "truncateLongPaths": false,
 }
 `;
