@@ -1,9 +1,9 @@
 const visit = require(`unist-util-visit`)
-
-const parseLineNumberRange = require(`./parse-line-number-range`)
+const parseOptions = require(`./parse-options`)
 const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
+const commandLine = require(`./command-line`)
 
 module.exports = (
   { markdownAST },
@@ -14,6 +14,12 @@ module.exports = (
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
     languageExtensions = [],
+    prompt = {
+      user: `root`,
+      host: `localhost`,
+      global: false,
+    },
+    escapeEntities = {},
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -25,14 +31,19 @@ module.exports = (
   loadLanguageExtension(languageExtensions)
 
   visit(markdownAST, `code`, node => {
-    let language = node.lang
+    let language = node.meta ? node.lang + node.meta : node.lang
     let {
       splitLanguage,
       highlightLines,
       showLineNumbersLocal,
       numberLinesStartAt,
-    } = parseLineNumberRange(language)
+      outputLines,
+      promptUserLocal,
+      promptHostLocal,
+    } = parseOptions(language)
     const showLineNumbers = showLineNumbersLocal || showLineNumbersGlobal
+    const promptUser = promptUserLocal || prompt.user
+    const promptHost = promptHostLocal || prompt.host
     language = splitLanguage
 
     // PrismJS's theme styles are targeting pre[class*="language-"]
@@ -70,12 +81,20 @@ module.exports = (
     if (highlightLines && highlightLines.length > 0)
       highlightClassName += ` has-highlighted-lines`
 
+    const useCommandLine =
+      [`bash`].includes(languageName) &&
+      (prompt.global ||
+        (outputLines && outputLines.length > 0) ||
+        promptUserLocal ||
+        promptHostLocal)
+
     // prettier-ignore
     node.value = ``
     + `<div class="${highlightClassName}" data-language="${languageName}">`
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
-    +       `${highlightCode(languageName, node.value, highlightLines, noInlineHighlight)}`
+    +       `${useCommandLine ? commandLine(node.value, outputLines, promptUser, promptHost) : ``}`
+    +       `${highlightCode(languageName, node.value, escapeEntities, highlightLines, noInlineHighlight)}`
     +     `</code>`
     +     `${numLinesNumber}`
     +   `</pre>`
@@ -99,7 +118,8 @@ module.exports = (
       node.type = `html`
       node.value = `<code class="${className}">${highlightCode(
         languageName,
-        node.value
+        node.value,
+        escapeEntities
       )}</code>`
     })
   }

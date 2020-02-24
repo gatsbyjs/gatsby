@@ -60,7 +60,6 @@ class ShowcaseView extends Component {
         <FeaturedSites
           setFilters={this.setFilters}
           featured={data.featured.edges}
-          showcase={this.showcase}
         />
         <div id="showcase" css={{ height: 0 }} ref={this.showcase} />
         <FilteredShowcase

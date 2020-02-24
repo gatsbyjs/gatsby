@@ -6,7 +6,7 @@ import InstrumentPage from '../utils/instrument-page'
 
 const SecondPage = () => (
   <Layout>
-    <h1>Hi from the second page</h1>
+    <h1 data-testid="page-2-message">Hi from the second page</h1>
     <p>Welcome to page 2</p>
     <pre data-testid="dom-marker">page-2</pre>
     <ul>

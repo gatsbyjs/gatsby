@@ -102,7 +102,7 @@ Using the following GraphQL query you'll be able to get the table of contents
 
 ### Configuring the tableOfContents
 
-By default the tableOfContents is using the field `slug` to generate URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null. To alter the default values for tableOfContents generation, include values for `heading` (string) and/or `maxDepth` (number 1 to 6) in graphQL query. If a value for `heading` is given, the first heading that matches will be ommitted and the toc is generated from the next heading of the same depth onwards. Value for `maxDepth` sets the maximum depth of the toc (i.e. if a maxDepth of 3 is set, only h1 to h3 headings will appear in the toc).
+By default the tableOfContents is using the field `slug` to generate absolute URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null. You can also pass `absolute: false` to generate relative path. To alter the default values for tableOfContents generation, include values for `heading` (string) and/or `maxDepth` (number 1 to 6) in graphQL query. If a value for `heading` is given, the first heading that matches will be omitted and the toc is generated from the next heading of the same depth onwards. Value for `maxDepth` sets the maximum depth of the toc (i.e. if a maxDepth of 3 is set, only h1 to h3 headings will appear in the toc).
 
 ```graphql
 {
@@ -111,6 +111,7 @@ By default the tableOfContents is using the field `slug` to generate URLs. You c
       node {
         html
         tableOfContents(
+          absolute: true
           pathToSlugField: "frontmatter.path"
           heading: "only show toc from this heading onwards"
           maxDepth: 2
@@ -191,13 +192,27 @@ It's also possible to ask Gatsby to return excerpts formatted as HTML. You might
 }
 ```
 
+You can also get excerpts in Markdown format.
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        excerpt(format: MARKDOWN)
+      }
+    }
+  }
+}
+```
+
 ## gray-matter options
 
 `gatsby-transformer-remark` uses [gray-matter](https://github.com/jonschlinkert/gray-matter) to parse markdown frontmatter, so you can specify any of the options mentioned [here](https://github.com/jonschlinkert/gray-matter#options) in the `gatsby-config.js` file.
 
 ### Example: Excerpts
 
-If you don't want to use `pruneLength` for excerpts but a custom seperator, you can specify an `excerpt_separator`:
+If you don't want to use `pruneLength` for excerpts but a custom separator, you can specify an `excerpt_separator` in the `gatsby-config.js` file:
 
 ```javascript
 {
@@ -222,6 +237,44 @@ If that is the case, you can set `truncate` option on `excerpt` field, like:
 {
   markdownRemark {
     excerpt(truncate: true)
+  }
+}
+```
+
+### Excerpts for HTML embedded in Markdown files
+
+If your Markdown file contains HTML, `excerpt` will not return a value.
+
+In that case, you can set an `excerpt_separator` in the `gatsby-config.js` file:
+
+```javascript
+{
+  "resolve": `gatsby-transformer-remark`,
+  "options": {
+    "excerpt_separator": `<!-- endexcerpt -->`
+  }
+}
+```
+
+Edit your Markdown files to include that HTML tag after the text you'd like to appear in the excerpt:
+
+```markdown
+---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+<p>Where oh where is that pony?</p>
+<!-- endexcerpt -->
+<p>Is he in the stable or down by the stream?</p>
+```
+
+Then specify `MARKDOWN` as the format in your graphql query:
+
+```graphql
+{
+  markdownRemark {
+    excerpt(format: MARKDOWN)
   }
 }
 ```

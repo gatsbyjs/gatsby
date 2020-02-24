@@ -46,6 +46,16 @@ query GitHubOpenPullRequestsQuery {
               }
             }
           }
+          reviewRequests(first: 10) {
+            nodes {
+              requestedReviewer {
+                ... on Team {
+                  id
+                  name
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -55,7 +65,19 @@ query GitHubOpenPullRequestsQuery {
 module.exports = async () => {
   let data
   try {
-    data = await tools.github.graphql(query)
+    data = await tools.github.graphql(query, {
+      headers: {
+        authorization: `token ${process.env.PERSONAL_GITHUB_TOKEN}`,
+      },
+    })
+    // const filecontents = tools.getFile(
+    //   ".github/actions/high-priority-prs/src/data.json"
+    // )
+    // data = JSON.parse(filecontents)
+    tools.log.info("-----------BEGIN DATA-----------")
+    tools.log.info(data.repository.pullRequests)
+    tools.log.info(data.repository.pullRequests.nodes[0])
+    tools.log.info("-----------END DATA-----------")
   } catch (error) {
     tools.log.fatal(error)
     tools.exit.failure()

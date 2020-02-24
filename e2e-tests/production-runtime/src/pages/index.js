@@ -46,6 +46,21 @@ const IndexPage = ({ pageContext }) => (
           StaticQuery and useStaticQuery
         </Link>
       </li>
+      <li>
+        <Link to="/compilation-hash/" data-testid="compilation-hash">
+          Compilation Hash Page
+        </Link>
+      </li>
+      <li>
+        <Link to="/path-context/" data-testid="path-context">
+          Path Context
+        </Link>
+      </li>
+      <li>
+        <Link to="/안녕" data-testid="page-with-unicode-path">
+          Go to page with unicode path
+        </Link>
+      </li>
     </ul>
   </Layout>
 )

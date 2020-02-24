@@ -2,7 +2,7 @@
 title: From WordPress to Developing in React — Starting to See It
 date: 2017-10-20
 author: "Benjamin Read"
-tags: ["React", "getting-started", "wordpress"]
+tags: ["react", "getting-started", "wordpress"]
 ---
 
 As a frontend designer I've always prided myself on being a HTML and CSS
@@ -138,7 +138,7 @@ recently.
 
 Be warned: the tutorial isn’t quite finished yet, you might be better off
 starting with
-[one of the starter kits already available](/docs/gatsby-starters/),
+[one of the starter kits already available](/starters/),
 so that you get `react-helmet` and active links implemented, the 2 things I had
 to learn independently.
 

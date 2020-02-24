@@ -2,7 +2,7 @@
 title: Why We Created the Site Showcase
 date: 2018-07-20
 author: Shannon Soper
-tags: ["documentation", "launch"]
+tags: ["documentation", "releases"]
 ---
 
 We recently finished the first phase of the [Site Showcase](/showcase/), which is a searchable, filterable library of sites built with Gatsby!
@@ -17,7 +17,7 @@ The Site Showcase was developed by Cassie Beckley ([@ThatOtherPerson](https://gi
 
 ## Submitting your site
 
-If you've built a site with Gatsby and would like it to appear in the Site Showcase, please [submit your site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/site-showcase-submissions.md).
+If you've built a site with Gatsby and would like it to appear in the Site Showcase, please [submit your site](https://www.gatsbyjs.org/contributing/site-showcase-submissions/).
 
 ## Why build a site showcase?
 
@@ -78,7 +78,7 @@ Users should be able to:
 
 Here's what's next in [Issue #5927](https://github.com/gatsbyjs/gatsby/issues/5927). Feel free to tackle any part of this project and contribute to it or discuss new possibilities!
 
-## Sneak peak into the next UX project
+## Sneak peek into the next UX project
 
 Our next UX project is finishing up the starter showcase, which will look similar to the site showcase and also have a major functional difference: filter by dependency. Please contribute to these issues to help out!
 

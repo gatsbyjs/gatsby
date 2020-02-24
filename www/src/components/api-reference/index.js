@@ -1,13 +1,25 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 
 import DocBlock from "./doc-block"
 
-import { space } from "../../utils/presets"
+const APIContents = ({ docs }) => (
+  <ul>
+    {docs.map(node => (
+      <li key={`function list ${node.name}`}>
+        <a href={`#${node.name}`}>{node.name}</a>
+      </li>
+    ))}
+  </ul>
+)
+
+export { APIContents }
 
 export default ({
   docs,
-  githubPath = null,
+  relativeFilePath = null,
   showTopLevelSignatures = false,
   ignoreParams = [],
 }) => (
@@ -16,12 +28,12 @@ export default ({
       <div
         id={definition.name}
         key={`reference list ${definition.name}`}
-        css={{ marginBottom: space[6] }}
+        sx={{ mb: 6 }}
       >
         {i !== 0 && <hr />}
         <DocBlock
           definition={definition}
-          githubPath={githubPath}
+          relativeFilePath={relativeFilePath}
           showSignature={showTopLevelSignatures}
           level={0}
           linkableTitle={true}
@@ -55,18 +67,16 @@ export const pageQuery = graphql`
     ...DocumentationReturnsFragment
   }
 
-  fragment ApiCallFragment on GatsbyAPICallConnection {
-    group(field: name) {
-      name: fieldValue
-      nodes {
-        file
-        codeLocation {
-          start {
-            line
-          }
-          end {
-            line
-          }
+  fragment ApiCallFragment on GatsbyAPICallGroupConnection {
+    name: fieldValue
+    nodes {
+      file
+      codeLocation {
+        start {
+          line
+        }
+        end {
+          line
         }
       }
     }

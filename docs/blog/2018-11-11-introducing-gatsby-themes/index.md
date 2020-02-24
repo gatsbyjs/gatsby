@@ -3,7 +3,7 @@ title: Introducing Gatsby Themes
 date: 2018-11-11
 author: Chris Biscardi
 excerpt: "Scaling the production of Gatsby sites"
-tags: ["themes", "architecture"]
+tags: ["themes"]
 ---
 
 Gatsby is a powerful platform for building marketing sites, blogs,
@@ -80,7 +80,7 @@ the config.
 
 ```js
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
     {
       resolve: "gatsby-theme-blog",
       options: {},
@@ -96,7 +96,7 @@ theme's gatsby-config as a function that returns an object.
 
 ```js
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
     {
       resolve: "gatsby-theme-blog",
       options: {
@@ -150,10 +150,10 @@ const withThemePath = relativePath => {
 Then in our theme's `createPage` call, you simply use the helper to let
 the user optionally override the default component.
 
-```title:gatsby-node.js
+```js:title=gatsby-node.js
 createPage({
   path: post.node.fields.slug,
-  component: withThemePath('./src/templates/blog-post.js')
+  component: withThemePath("./src/templates/blog-post.js"),
 })
 ```
 

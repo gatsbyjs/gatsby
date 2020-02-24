@@ -45,11 +45,7 @@ const stripComment = line =>
    */
   line.replace(
     new RegExp(
-      `\\s*(${HIGHLIGHTED_JSX_COMMENT_START}|${PRISMJS_COMMENT_OPENING_SPAN_TAG}${
-        COMMENT_START.source
-      })\\s*${DIRECTIVE.source}\\s*(${HIGHLIGHTED_JSX_COMMENT_END}|${
-        COMMENT_END.source
-      }${PRISMJS_COMMENT_CLOSING_SPAN_TAG})`
+      `\\s*(${HIGHLIGHTED_JSX_COMMENT_START}|${PRISMJS_COMMENT_OPENING_SPAN_TAG}${COMMENT_START.source})\\s*${DIRECTIVE.source}\\s*(${HIGHLIGHTED_JSX_COMMENT_END}|${COMMENT_END.source}${PRISMJS_COMMENT_CLOSING_SPAN_TAG})`
     ),
     ``
   )
@@ -112,7 +108,7 @@ const parseLine = (line, code, index, actions) => {
 module.exports = function highlightLineRange(code, highlights = []) {
   if (highlights.length > 0 || HIGHLIGHT_DIRECTIVE.test(code)) {
     // HACK split plain-text spans with line separators inside into multiple plain-text spans
-    // separatered by line separator - this fixes line highlighting behaviour for jsx
+    // separated by line separator - this fixes line highlighting behaviour for jsx
     code = code.replace(PLAIN_TEXT_WITH_LF_TEST, match =>
       match.replace(/\n/g, `</span>\n<span class="token plain-text">`)
     )

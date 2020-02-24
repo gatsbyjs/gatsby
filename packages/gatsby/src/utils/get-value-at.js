@@ -5,6 +5,7 @@ const getValueAt = (obj, selector) => {
 }
 
 const get = (obj, selectors) => {
+  if (Array.isArray(obj)) return getArray(obj, selectors)
   const [key, ...rest] = selectors
   const value = obj[key]
   if (!rest.length) return value

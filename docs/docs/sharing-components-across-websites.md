@@ -9,7 +9,9 @@ There are several strategies here.
 
 **Component libraries** are a cleaner and purer approach, but often requiring additional tooling or causing some changes to require pull requests to multiple.
 
-Alternately, teams can implement **systems for component discoverability**, such as Storybook or Styleguidist, on a per-site basis and simply copy-paste desired code across repositories.
+Alternately, teams can implement **systems for component discoverability**, such as [Storybook](https://github.com/storybookjs/storybook) or [Styleguidist](https://github.com/styleguidist/react-styleguidist), on a per-site basis and simply copy-paste desired code across repositories.
+
+To avoid copy-pasting and reuse components instead you can use **component-sharing tools** such as [Bit](https://github.com/teambit/bit) to reuse and sync components between websites.
 
 <GuideList slug={props.slug} />
 

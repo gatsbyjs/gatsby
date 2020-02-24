@@ -2,7 +2,7 @@
 title: Introducing the Gatsby Documentation Project
 author: Shannon Soper
 date: 2018-02-28
-tags: ["ux", "documentation", "community"]
+tags: ["user-testing", "documentation", "community"]
 ---
 
 People really like Gatsby docs and Gatsby. In fact, we’ve talked about tracking the number of curse words and endearingly pejorative terms that people use when tweeting about Gatsby. Here’s a sampling:

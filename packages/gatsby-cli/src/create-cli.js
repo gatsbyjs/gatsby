@@ -2,7 +2,9 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
+const { setStore } = require(`./reporter/redux`)
 const didYouMean = require(`./did-you-mean`)
+const { getLocalGatsbyVersion } = require(`./util/version`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 const clipboardy = require(`clipboardy`)
@@ -21,11 +23,12 @@ const handlerP = fn => (...args) => {
 
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
+  const defaultPort = `8000`
   const directory = path.resolve(`.`)
 
   // 'not dead' query not available in browserslist used in Gatsby v1
   const DEFAULT_BROWSERS =
-    installedGatsbyVersion() === 1
+    getLocalGatsbyMajorVersion() === 1
       ? [`> 1%`, `last 2 versions`, `IE >= 9`]
       : [`>0.25%`, `not dead`]
 
@@ -37,26 +40,14 @@ function buildLocalCommands(cli, isLocalSite) {
     siteInfo.browserslist = json.browserslist || siteInfo.browserslist
   }
 
-  function installedGatsbyVersion() {
-    let majorVersion
-    try {
-      const packageInfo = require(path.join(
-        process.cwd(),
-        `node_modules`,
-        `gatsby`,
-        `package.json`
-      ))
-      try {
-        setDefaultTags({ installedGatsbyVersion: packageInfo.version })
-      } catch (e) {
-        // ignore
-      }
-      majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
-    } catch (err) {
-      /* ignore */
+  function getLocalGatsbyMajorVersion() {
+    let version = getLocalGatsbyVersion()
+
+    if (version) {
+      version = Number(version.split(`.`)[0])
     }
 
-    return majorVersion
+    return version
   }
 
   function resolveLocalCommand(command) {
@@ -64,7 +55,7 @@ function buildLocalCommands(cli, isLocalSite) {
       cli.showHelp()
       report.verbose(`current directory: ${directory}`)
       return report.panic(
-        `gatsby <${command}> can only be run for a gatsby site. \n` +
+        `gatsby <${command}> can only be run for a gatsby site.\n` +
           `Either the current working directory does not contain a valid package.json or ` +
           `'gatsby' is not specified as a dependency`
       )
@@ -94,14 +85,8 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
-      if (argv.noColor) {
-        // disables colors in popular terminal output coloring packages
-        //  - chalk: see https://www.npmjs.com/package/chalk#chalksupportscolor
-        //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
-        process.env.FORCE_COLOR = `0`
-      }
 
-      report.setNoColor(!!argv.noColor)
+      report.setNoColor(argv.noColor || process.env.NO_COLOR)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
@@ -110,7 +95,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, report, useYarn }
+      let args = { ...argv, ...siteInfo, report, useYarn, setStore }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -132,8 +117,10 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`p`, {
           alias: `port`,
           type: `string`,
-          default: `8000`,
-          describe: `Set port. Defaults to 8000`,
+          default: process.env.PORT || defaultPort,
+          describe: process.env.PORT
+            ? `Set port. Defaults to ${process.env.PORT} (set by env.PORT) (otherwise defaults ${defaultPort})`
+            : `Set port. Defaults to ${defaultPort}`,
         })
         .option(`o`, {
           alias: `open`,
@@ -179,8 +166,10 @@ function buildLocalCommands(cli, isLocalSite) {
     builder: _ =>
       _.option(`prefix-paths`, {
         type: `boolean`,
-        default: false,
-        describe: `Build site with link paths prefixed (set pathPrefix in your gatsby-config.js).`,
+        default:
+          process.env.PREFIX_PATHS === `true` ||
+          process.env.PREFIX_PATHS === `1`,
+        describe: `Build site with link paths prefixed with the pathPrefix value in gatsby-config.js. Default is env.PREFIX_PATHS or false.`,
       })
         .option(`no-uglify`, {
           type: `boolean`,
@@ -222,8 +211,10 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`prefix-paths`, {
           type: `boolean`,
-          default: false,
-          describe: `Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js).`,
+          default:
+            process.env.PREFIX_PATHS === `true` ||
+            process.env.PREFIX_PATHS === `1`,
+          describe: `Serve site with link paths prefixed with the pathPrefix value in gatsby-config.js.Default is env.PREFIX_PATHS or false.`,
         }),
 
     handler: getCommandHandler(`serve`),
@@ -278,7 +269,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `repl`,
-    desc: `Get a node repl with context of Gatsby environment, see (add docs link here)`,
+    desc: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl/)`,
     handler: getCommandHandler(`repl`, (args, cmd) => {
       process.env.NODE_ENV = process.env.NODE_ENV || `development`
       return cmd(args)
@@ -298,7 +289,26 @@ function isLocalGatsbySite() {
   } catch (err) {
     /* ignore */
   }
-  return inGatsbySite
+  return !!inGatsbySite
+}
+
+function getVersionInfo() {
+  const { version } = require(`../package.json`)
+  const isGatsbySite = isLocalGatsbySite()
+  if (isGatsbySite) {
+    // we need to get the version from node_modules
+    let gatsbyVersion = getLocalGatsbyVersion()
+
+    if (!gatsbyVersion) {
+      gatsbyVersion = `unknown`
+    }
+
+    return `Gatsby CLI version: ${version}
+Gatsby version: ${gatsbyVersion}
+  Note: this is the Gatsby version for the site at: ${process.cwd()}`
+  } else {
+    return `Gatsby CLI version: ${version}`
+  }
 }
 
 module.exports = argv => {
@@ -323,12 +333,22 @@ module.exports = argv => {
       describe: `Turn off the color in output`,
       global: true,
     })
+    .option(`json`, {
+      describe: `Turn on the JSON logger`,
+      default: false,
+      type: `boolean`,
+      global: true,
+    })
 
   buildLocalCommands(cli, isLocalSite)
 
   try {
     const { version } = require(`../package.json`)
-    cli.version(`version`, version)
+    cli.version(
+      `version`,
+      `Show the version of the Gatsby CLI and the Gatsby package in the current project`,
+      getVersionInfo()
+    )
     setDefaultTags({ gatsbyCliVersion: version })
   } catch (e) {
     // ignore
@@ -340,12 +360,10 @@ module.exports = argv => {
     .command({
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
-      handler: handlerP(
-        ({ rootPath, starter = `gatsbyjs/gatsby-starter-default` }) => {
-          const initStarter = require(`./init-starter`)
-          return initStarter(starter, { rootPath })
-        }
-      ),
+      handler: handlerP(({ rootPath, starter }) => {
+        const initStarter = require(`./init-starter`)
+        return initStarter(starter, { rootPath })
+      }),
     })
     .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
       yargs

@@ -1,37 +1,69 @@
 // @flow
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
+const { platform } = require(`os`)
 const path = require(`path`)
 const fs = require(`fs`)
-const truePath = require(`true-case-path`)
+const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
-const kebabHash = require(`kebab-hash`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
-const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
+const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
+const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
+const { trackCli } = require(`gatsby-telemetry`)
+const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+
+/**
+ * Memoize function used to pick shadowed page components to avoid expensive I/O.
+ * Ideally, we should invalidate memoized values if there are any FS operations
+ * on files that are in shadowing chain, but webpack currently doesn't handle
+ * shadowing changes during develop session, so no invalidation is not a deal breaker.
+ */
+const shadowCreatePagePath = _.memoize(
+  require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+)
+const {
+  enqueueJob,
+  createInternalJob,
+  removeInProgressJob,
+  getInProcessJobPromise,
+} = require(`../../utils/jobs-manager`)
 
 const actions = {}
+const isWindows = platform() === `win32`
 
-const findChildrenRecursively = (children = []) => {
-  children = children.concat(
-    ...children.map(child => {
-      const newChildren = getNode(child).children
-      if (_.isArray(newChildren) && newChildren.length > 0) {
-        return findChildrenRecursively(newChildren)
-      } else {
-        return []
-      }
-    })
-  )
+const ensureWindowsDriveIsUppercase = filePath => {
+  const segments = filePath.split(`:`).filter(s => s !== ``)
+  return segments.length > 0
+    ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
+    : filePath
+}
 
+const findChildren = initialChildren => {
+  const children = [...initialChildren]
+  const queue = [...initialChildren]
+  const traversedNodes = new Set()
+
+  while (queue.length > 0) {
+    const currentChild = getNode(queue.pop())
+    if (!currentChild || traversedNodes.has(currentChild.id)) {
+      continue
+    }
+    traversedNodes.add(currentChild.id)
+    const newChildren = currentChild.children
+    if (_.isArray(newChildren) && newChildren.length > 0) {
+      children.push(...newChildren)
+      queue.push(...newChildren)
+    }
+  }
   return children
 }
 
@@ -40,6 +72,14 @@ import type { Plugin } from "./types"
 type Job = {
   id: string,
 }
+
+type JobV2 = {
+  name: string,
+  inputPaths: string[],
+  outputDir: string,
+  args: Object,
+}
+
 type PageInput = {
   path: string,
   component: string,
@@ -52,7 +92,6 @@ type Page = {
   component: string,
   context: Object,
   internalComponentName: string,
-  jsonName: string,
   componentChunkName: string,
   updatedAt: number,
 }
@@ -78,12 +117,10 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(
-  _.camelCase,
-  _.upperFirst
-)
+const pascalCase = _.flow(_.camelCase, _.upperFirst)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
+const hasErroredBecauseOfNodeValidation = new Set()
 const pageComponentCache = {}
 const fileOkCache = {}
 
@@ -92,6 +129,8 @@ const fileOkCache = {}
  * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
+ * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
+ * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
@@ -112,7 +151,6 @@ actions.createPage = (
   plugin?: Plugin,
   actionOptions?: ActionOptions
 ) => {
-  let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
@@ -121,13 +159,17 @@ actions.createPage = (
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
     if (process.env.NODE_ENV !== `test`) {
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
+      report.panic({
+        id: `11323`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          message,
+        },
+      })
     } else {
       return message
     }
-    noPageOrComponent = true
   }
 
   // Validate that the context object doesn't overlap with any core page fields
@@ -177,7 +219,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         // version.  People in v1 often thought that they needed to also pass
         // the path to context for it to be available in GraphQL
       } else if (invalidFields.some(f => page.context[f] !== page[f])) {
-        report.panic(error)
+        report.panic({
+          id: `11324`,
+          context: {
+            message: error,
+          },
+        })
       } else {
         if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
           report.warn(error)
@@ -187,97 +234,137 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
+  // Check if a component is set.
+  if (!page.component) {
+    if (process.env.NODE_ENV !== `test`) {
+      report.panic({
+        id: `11322`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+        },
+      })
+    } else {
+      // For test
+      return `A component must be set when creating a page`
+    }
+  }
+
+  const pageComponentPath = shadowCreatePagePath(page.component)
+  if (pageComponentPath) {
+    page.component = pageComponentPath
+  }
+
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
     if (!fileExistsSync(page.component)) {
-      const message = `${name} created a page with a component that doesn't exist. Missing component is ${
-        page.component
-      }`
-      console.log(``)
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
-      noPageOrComponent = true
-    } else if (page.component) {
-      // check if we've processed this component path
-      // before, before running the expensive "truePath"
-      // operation
-      if (pageComponentCache[page.component]) {
-        page.component = pageComponentCache[page.component]
-      } else {
-        const originalPageComponent = page.component
-
-        // normalize component path
-        page.component = slash(page.component)
-        // check if path uses correct casing - incorrect casing will
-        // cause issues in query compiler and inconsistencies when
-        // developing on Mac or Windows and trying to deploy from
-        // linux CI/CD pipeline
-        const trueComponentPath = slash(truePath(page.component))
-        if (trueComponentPath !== page.component) {
-          if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
-            const markers = page.component
-              .split(``)
-              .map((letter, index) => {
-                if (letter !== trueComponentPath[index]) {
-                  return `^`
-                }
-                return ` `
-              })
-              .join(``)
-
-            report.warn(
-              stripIndent`
-            ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
-
-            page.component:     "${page.component}"
-            path in filesystem: "${trueComponentPath}"
-                                 ${markers}
-          `
-            )
-            hasWarnedForPageComponentInvalidCasing.add(page.component)
-          }
-
-          page.component = trueComponentPath
-        }
-        pageComponentCache[originalPageComponent] = page.component
-      }
+      report.panic({
+        id: `11325`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          component: page.component,
+        },
+      })
     }
   }
-
-  if (!page.component || !path.isAbsolute(page.component)) {
-    const message = `${name} must set the absolute path to the page component when create creating a page`
+  if (!path.isAbsolute(page.component)) {
     // Don't log out when testing
     if (process.env.NODE_ENV !== `test`) {
-      console.log(``)
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
+      report.panic({
+        id: `11326`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          component: page.component,
+        },
+      })
     } else {
+      const message = `${name} must set the absolute path to the page component when create creating a page`
       return message
     }
-    noPageOrComponent = true
   }
 
-  if (noPageOrComponent) {
-    report.panic(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
-    )
+  // check if we've processed this component path
+  // before, before running the expensive "trueCasePath"
+  // operation
+  //
+  // Skip during testing as the paths don't exist on disk.
+  if (process.env.NODE_ENV !== `test`) {
+    if (pageComponentCache[page.component]) {
+      page.component = pageComponentCache[page.component]
+    } else {
+      const originalPageComponent = page.component
+
+      // normalize component path
+      page.component = slash(page.component)
+      // check if path uses correct casing - incorrect casing will
+      // cause issues in query compiler and inconsistencies when
+      // developing on Mac or Windows and trying to deploy from
+      // linux CI/CD pipeline
+      let trueComponentPath
+      try {
+        // most systems
+        trueComponentPath = slash(trueCasePathSync(page.component))
+      } catch (e) {
+        // systems where user doesn't have access to /
+        const commonDir = getCommonDir(
+          store.getState().program.directory,
+          page.component
+        )
+
+        // using `path.win32` to force case insensitive relative path
+        const relativePath = slash(
+          path.win32.relative(commonDir, page.component)
+        )
+
+        trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
+      }
+
+      if (isWindows) {
+        page.component = ensureWindowsDriveIsUppercase(page.component)
+      }
+
+      if (trueComponentPath !== page.component) {
+        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+          const markers = page.component
+            .split(``)
+            .map((letter, index) => {
+              if (letter !== trueComponentPath[index]) {
+                return `^`
+              }
+              return ` `
+            })
+            .join(``)
+
+          report.warn(
+            stripIndent`
+          ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+
+          page.component:     "${page.component}"
+          path in filesystem: "${trueComponentPath}"
+                               ${markers}
+        `
+          )
+          hasWarnedForPageComponentInvalidCasing.add(page.component)
+        }
+
+        page.component = trueComponentPath
+      }
+
+      pageComponentCache[originalPageComponent] = page.component
+    }
   }
 
-  let jsonName
   let internalComponentName
   if (page.path === `/`) {
-    jsonName = `index`
     internalComponentName = `ComponentIndex`
   } else {
-    jsonName = `${kebabHash(page.path)}`
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
-  let internalPage: Page = {
-    jsonName,
+  const internalPage: Page = {
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
@@ -302,8 +389,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // Only run validation once during builds.
   if (
     !internalPage.component.includes(`/.cache/`) &&
-    (process.env.NODE_ENV === `production` &&
-      !fileOkCache[internalPage.component])
+    process.env.NODE_ENV === `production` &&
+    !fileOkCache[internalPage.component]
   ) {
     const fileName = internalPage.component
     const fileContent = fs.readFileSync(fileName, `utf-8`)
@@ -318,6 +405,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       !fileContent.includes(`export default`) &&
       !fileContent.includes(`module.exports`) &&
       !fileContent.includes(`exports.default`) &&
+      !fileContent.includes(`exports["default"]`) &&
+      !fileContent.match(/export \{.* as default.*\}/s) &&
       // this check only applies to js and ts, not mdx
       /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
@@ -330,15 +419,21 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       )
 
       if (!notEmpty) {
-        report.panicOnBuild(
-          `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
-        )
+        report.panicOnBuild({
+          id: `11327`,
+          context: {
+            relativePath,
+          },
+        })
       }
 
       if (!includesDefaultExport) {
-        report.panicOnBuild(
-          `[${fileName}] The page component must export a React component for it to be valid`
-        )
+        report.panicOnBuild({
+          id: `11328`,
+          context: {
+            fileName,
+          },
+        })
       }
     }
 
@@ -355,9 +450,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
-      `Attempting to create page "${
-        page.path
-      }", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+      chalk.bold.yellow(`Non-deterministic routing danger: `) +
+        `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
+        chalk.bold.yellow(
+          `This could lead to non-deterministic routing behavior`
+        )
     )
   }
 
@@ -436,7 +533,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
     node &&
-    findChildrenRecursively(node.children)
+    findChildren(node.children)
       .map(getNode)
       .map(createDeleteAction)
 
@@ -447,8 +544,10 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
+// Marked private here because it was supressed in documentation pages.
 /**
  * Batch delete nodes
+ * @private
  * @param {Array} nodes an array of node ids
  * @example
  * deleteNodes([`node1`, `node2`])
@@ -464,20 +563,32 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
-    nodes.map(n => findChildrenRecursively(getNode(n).children))
+    nodes.map(n => findChildren(getNode(n).children))
   )
+
+  const nodeIds = [...nodes, ...descendantNodes]
 
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: [...nodes, ...descendantNodes],
+    // Payload contains node IDs but inference-metadata and loki reducers require
+    // full node instances
+    payload: nodeIds,
+    fullNodes: nodeIds.map(getNode),
   }
   return deleteNodesAction
 }
 
+// We add a counter to internal to make sure we maintain insertion order for
+// backends that don't do that out of the box
+let NODE_COUNTER = 0
+
 const typeOwners = {}
+
+// memberof notation is added so this code can be referenced instead of the wrapper.
 /**
  * Create a new node.
+ * @memberof actions
  * @param {Object} node a node object
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
@@ -490,7 +601,8 @@ const typeOwners = {}
  * to add your node id, instead use the action creator `createParentChildLink`.
  * @param {Object} node.internal node fields that aren't generally
  * interesting to consumers of node data but are very useful for plugin writers
- * and Gatsby core.
+ * and Gatsby core. Only fields described below are allowed in `internal` object.
+ * Using any type of custom fields will result in validation errors.
  * @param {string} node.internal.mediaType An optional field to indicate to
  * transformer plugins that your node has raw content they can transform.
  * Use either an official media type (we use mime-db as our source
@@ -502,7 +614,7 @@ const typeOwners = {}
  * @param {string} node.internal.type An arbitrary globally unique type
  * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
- * for nodes based on the type choosen here. Nodes of a given type can
+ * for nodes based on the type chosen here. Nodes of a given type can
  * only be created by one plugin.
  * @param {string} node.internal.content An optional field. This is rarely
  * used. It is used when a source plugin sources data it doesn't know how
@@ -569,6 +681,9 @@ const createNode = (
     node.internal = {}
   }
 
+  NODE_COUNTER++
+  node.internal.counter = NODE_COUNTER
+
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
     node.children = []
@@ -589,16 +704,42 @@ const createNode = (
     )
   }
 
+  const trackParams = {}
   // Add the plugin name to the internal object.
   if (plugin) {
     node.internal.owner = plugin.name
+    trackParams[`pluginName`] = `${plugin.name}@${plugin.version}`
   }
+
+  trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
   const result = Joi.validate(node, joiSchemas.nodeSchema)
   if (result.error) {
-    console.log(chalk.bold.red(`The new node didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(node)
+    if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
+      const errorObj = {
+        id: `11467`,
+        context: {
+          validationErrorMessage: result.error.message,
+          node,
+        },
+      }
+
+      const possiblyCodeFrame = getNonGatsbyCodeFrame()
+      if (possiblyCodeFrame) {
+        errorObj.context.codeFrame = possiblyCodeFrame.codeFrame
+        errorObj.filePath = possiblyCodeFrame.fileName
+        errorObj.location = {
+          start: {
+            line: possiblyCodeFrame.line,
+            column: possiblyCodeFrame.column,
+          },
+        }
+      }
+
+      report.error(errorObj)
+      hasErroredBecauseOfNodeValidation.add(result.error.message)
+    }
+
     return { type: `VALIDATION_ERROR`, error: true }
   }
 
@@ -623,14 +764,14 @@ const createNode = (
     )
   }
 
-  node = trackInlineObjectsInRootNode(node, true)
+  node = sanitizeNode(node)
 
   const oldNode = getNode(node.id)
 
   // Ensure the plugin isn't creating a node type owned by another
   // plugin. Type "ownership" is first come first served.
   if (plugin) {
-    let pluginName = plugin.name
+    const pluginName = plugin.name
 
     if (!typeOwners[node.internal.type])
       typeOwners[node.internal.type] = pluginName
@@ -678,9 +819,9 @@ const createNode = (
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     updateNodeAction = {
-      type: `TOUCH_NODE`,
-      plugin,
       ...actionOptions,
+      plugin,
+      type: `TOUCH_NODE`,
       payload: node.id,
     }
   } else {
@@ -689,22 +830,22 @@ const createNode = (
     if (oldNode) {
       const createDeleteAction = node => {
         return {
+          ...actionOptions,
           type: `DELETE_NODE`,
           plugin,
-          ...actionOptions,
           payload: node,
         }
       }
-      deleteActions = findChildrenRecursively(oldNode.children)
+      deleteActions = findChildren(oldNode.children)
         .map(getNode)
         .map(createDeleteAction)
     }
 
     updateNodeAction = {
+      ...actionOptions,
       type: `CREATE_NODE`,
       plugin,
       oldNode,
-      ...actionOptions,
       payload: node,
     }
   }
@@ -718,6 +859,7 @@ const createNode = (
 
 actions.createNode = (...args) => dispatch => {
   const actions = createNode(...args)
+
   dispatch(actions)
   const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
     action => action.type === `CREATE_NODE`
@@ -761,6 +903,11 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
     }
 
     nodeId = options
+  }
+
+  const node = getNode(nodeId)
+  if (node && !typeOwners[node.internal.type]) {
+    typeOwners[node.internal.type] = node.internal.owner
   }
 
   return {
@@ -851,12 +998,14 @@ actions.createNodeField = (
   // Update node
   node.fields[name] = value
   node.internal.fieldOwners[schemaFieldName] = plugin.name
+  node = sanitizeNode(node)
 
   return {
+    ...actionOptions,
     type: `ADD_FIELD_TO_NODE`,
     plugin,
-    ...actionOptions,
     payload: node,
+    addedField: name,
   }
 }
 
@@ -1039,7 +1188,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
- * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
  * @example
@@ -1051,6 +1200,73 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
     plugin,
     payload: job,
   }
+}
+
+/**
+ * Create a "job". This is a long-running process that are generally
+ * started as side-effects to GraphQL queries.
+ * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * example.
+ *
+ * Gatsby doesn't finish its process until all jobs are ended.
+ * @param {Object} job A job object with name, inputPaths, outputDir and args
+ * @param {string} job.name The name of the job you want to execute
+ * @param {string[]} job.inputPaths The inputPaths that are needed to run
+ * @param {string} job.outputDir The directory where all files are being saved to
+ * @param {Object} job.args The arguments the job needs to execute
+ * @returns {Promise<object>} Promise to see if the job is done executing
+ * @example
+ * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
+ */
+actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
+  const currentState = getState()
+  const internalJob = createInternalJob(job, plugin)
+  const jobContentDigest = internalJob.contentDigest
+
+  // Check if we already ran this job before, if yes we return the result
+  // We have an inflight (in progress) queue inside the jobs manager to make sure
+  // we don't waste resources twice during the process
+  if (
+    currentState.jobsV2 &&
+    currentState.jobsV2.complete.has(jobContentDigest)
+  ) {
+    return Promise.resolve(
+      currentState.jobsV2.complete.get(jobContentDigest).result
+    )
+  }
+
+  const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
+  if (inProgressJobPromise) {
+    return inProgressJobPromise
+  }
+
+  dispatch({
+    type: `CREATE_JOB_V2`,
+    plugin,
+    payload: {
+      job: internalJob,
+      plugin,
+    },
+  })
+
+  const enqueuedJobPromise = enqueueJob(internalJob)
+  return enqueuedJobPromise.then(result => {
+    // store the result in redux so we have it for the next run
+    dispatch({
+      type: `END_JOB_V2`,
+      plugin,
+      payload: {
+        jobContentDigest,
+        result,
+      },
+    })
+
+    // remove the job from our inProgressJobQueue as it's available in our done state.
+    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
+    removeInProgressJob(jobContentDigest)
+
+    return result
+  })
 }
 
 /**
@@ -1073,7 +1289,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
 /**
  * End a "job".
  *
- * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job  A job object with at least an id set
  * @param {id} job.id The id of the job
  * @example
@@ -1130,9 +1346,14 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @example
- * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
- * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
- * createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
+ * // Generally you create redirects while creating pages.
+ * exports.createPages = ({ graphql, actions }) => {
+ *   const { createRedirect } = actions
+ *   createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
+ *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+ *   createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
+ *   // Create pages here
+ * }
  */
 actions.createRedirect = ({
   fromPath,
@@ -1154,6 +1375,37 @@ actions.createRedirect = ({
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
+    },
+  }
+}
+
+/**
+ * Create a dependency between a page and data.
+ *
+ * @param {Object} $0
+ * @param {string} $0.path the path to the page
+ * @param {string} $0.nodeId A node ID
+ * @param {string} $0.connection A connection type
+ * @private
+ */
+actions.createPageDependency = (
+  {
+    path,
+    nodeId,
+    connection,
+  }: { path: string, nodeId: string, connection: string },
+  plugin: string = ``
+) => {
+  console.warn(
+    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
+  )
+  return {
+    type: `CREATE_COMPONENT_DEPENDENCY`,
+    plugin,
+    payload: {
+      path,
+      nodeId,
+      connection,
     },
   }
 }

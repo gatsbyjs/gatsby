@@ -10,8 +10,8 @@
       "message": "chore(release): Publish"
     }
   },
-  "loglevel": "success",
   "packages": ["packages/*"],
+  "loglevel": "success",
   "version": "independent",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",

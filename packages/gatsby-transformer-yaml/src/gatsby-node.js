@@ -11,6 +11,8 @@ async function onCreateNode(
       return pluginOptions.typeName({ node, object, isArray })
     } else if (pluginOptions && _.isString(pluginOptions.typeName)) {
       return pluginOptions.typeName
+    } else if (node.internal.type !== `File`) {
+      return _.upperFirst(_.camelCase(`${node.internal.type} Yaml`))
     } else if (isArray) {
       return _.upperFirst(_.camelCase(`${node.name} Yaml`))
     } else {

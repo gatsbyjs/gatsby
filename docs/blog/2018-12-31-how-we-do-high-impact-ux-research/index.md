@@ -4,6 +4,7 @@ author: Shannon Soper
 date: 2018-12-31
 tags:
   - ux
+  - user-testing
 ---
 
 ## What this article is about:

@@ -19,7 +19,7 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
     Use the Gatsby CLI to create a new site, specifying the blog starter.
 
-    ```sh
+    ```shell
     # create a new Gatsby site using the blog starter
     gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
     ```
@@ -28,7 +28,7 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
     Navigate into your new site’s directory and start it up.
 
-    ```sh
+    ```shell
     cd my-blog-starter/
     gatsby develop
     ```
@@ -67,7 +67,7 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 
 3.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”.
 
-4.  **`/static`**: This directory contains the static files such as your icon and [robots.txt](http://www.robotstxt.org/).
+4.  **`/static`**: This directory contains the static files such as your icon and [robots.txt](https://www.robotstxt.org/).
 
 5.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
 

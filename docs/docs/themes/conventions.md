@@ -2,29 +2,18 @@
 title: Themes Conventions
 ---
 
-> ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
-
-As we begin to formalize and standardize the methodologies for building Gatsby Themes, we're documenting them all here. These aren't intended to be the only way to solve things, but are recommended approaches. If you have other ideas and best practices please open up a PR to update this page.
-
-## Table of Contents
-
-- [Naming](#naming)
-- [Initializing required directories](#initializing-required-directories)
-- [Separating queries and presentational components](#separating-queries-and-presentational-components)
-  - [Page queries](#page-queries)
-  - [Static queries](#static-queries)
-- [Site metadata](#site-metadata)
+As methodologies for building Gatsby Themes begin to formalize and standardize, documentation will be added here. These aren't intended to be the only way to solve things, but are recommended approaches. If you have other ideas and best practices please open up a PR to update this page.
 
 ## Naming
 
-It's recommended to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you
-can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`.
+It's required to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you
+can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing themes with `gatsby-theme` enables Gatsby in identifying theme packages for compilation.
 
-## Initializing Required Directories
+## Initializing required directories
 
 If your theme relies on the presence of particular directories, like `posts` for `gatsby-source-filesystem`, you can use the `onPreBootstrap` hook to initialize them to avoid a crash when Gatsby tries to build the site.
 
-```js:gatsby-node.js
+```js:title=gatsby-node.js
 exports.onPreBootstrap = ({ store, reporter }) => {
   const { program } = store.getState()
 
@@ -43,15 +32,15 @@ exports.onPreBootstrap = ({ store, reporter }) => {
 }
 ```
 
-## Separating Queries and Presentational Components
+## Separating queries and presentational components
 
 As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to override a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/page-query) or [StaticQuery](/docs/static-query).
 
-### Page Queries
+### Page queries
 
 You can use a template for top-level data collection with a page query that passes the data to a `PostList` component:
 
-```js:src/templates/post-list.js
+```jsx:title=src/templates/post-list.js
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -86,11 +75,11 @@ export const query = graphql`
 `
 ```
 
-### Static Queries
+### Static queries
 
 You can use static queries at the top level template as well and pass the data to other presentational components as props:
 
-```js:src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
@@ -130,7 +119,7 @@ const Layout = ({ children }) => {
 export default Layout
 ```
 
-## Site Metadata
+## Site metadata
 
 For commonly customized things, such as site title and social media handles, you
 can have the user set site metadata in their `gatsby-config.js`. Then, throughout
@@ -161,7 +150,7 @@ export default () => {
 
 Then use it in components like the a header:
 
-```js:title=src/components/header.js
+```jsx:title=src/components/header.js
 import React from "react"
 import { Link } from "gatsby"
 
@@ -182,3 +171,59 @@ export default () => {
   )
 }
 ```
+
+## Breaking changes
+
+Since themes will typically be installed by an end user from npm, it's
+important to follow [semantic versioning](https://semver.org/), commonly
+referred to as semver.
+
+This will allow your users to quickly discern how a dependency update might
+affect them. Patches and minor versions are not considered breaking changes,
+major versions are.
+
+### Patch _(0.0.X)_
+
+Patches are defined as bug fixes that are done in a backwards-compatible way. This
+means that public facing APIs are unaffected.
+
+#### Examples of patch versions
+
+- **Fixing a bug** in a component, such as fixing a warning or adding a fallback value.
+- **Upgrading dependencies** to their latest minor and patch versions.
+
+### Minor _(0.X.0)_
+
+Minor versions are defined as new features or functionality that are added in a
+backwards-compatible way. This means that _existing_ public facing APIs are unaffected.
+
+#### Examples of minor versions
+
+- **Adding new pages or queries** to your theme. For example, adding tag pages to a blog.
+- **Adding new configuration options** to further customize a theme.
+- **Displaying additional data** such as displaying excerpts to a post list.
+- **Adding additional props to a component** for new functionality.
+- **Adding a new MDX shortcode** that users can opt into.
+
+### Major _(X.0.0)_
+
+Major versions are any bugfixes or new features that have been added without full
+backwards-compatibility. These are often called "breaking changes".
+
+These changes should be accompanied with a migration guide that users can follow along
+for performing a theme upgrade.
+
+#### Examples of major versions
+
+- **Changing a filename in `src`** will always be a breaking change due to shadowing.
+  - Moving where a query occurs
+  - Renaming a component
+  - Renaming a directory
+- **Removing or changing the props a component accepts** since it will affect component extending.
+- **Changing queries** since a user could be using the original data in shadowed components.
+- **Removing or changing the behaviour** of your theme's configuration.
+- **Removing attributes in schema definitions** because it can break end user queries.
+- **Removing default data** this could change your generated schema and break a user's site if they
+  depend on some part of that generated schema.
+- **Changing plugins or plugin configuration** such as removing a remark plugin as it will change
+  the behavior of MD/MDX rendering.

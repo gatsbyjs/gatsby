@@ -1,19 +1,24 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
 
+import Avatar from "../components/avatar"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
-import { rhythm } from "../utils/typography"
-import { space, radii, fonts } from "../utils/presets"
 import FooterLinks from "../components/shared/footer-links"
 
 class ContributorPageTemplate extends React.Component {
   render() {
     const contributor = this.props.data.authorYaml
-    const allMdx = this.props.data.allMdx
+
+    const posts = this.props.data.allMdx.nodes.filter(
+      post =>
+        post.frontmatter.author && post.frontmatter.author.id === contributor.id
+    )
+
     return (
       <Layout location={this.props.location}>
         <Helmet>
@@ -25,77 +30,54 @@ class ContributorPageTemplate extends React.Component {
           {contributor.avatar && (
             <meta
               property="og:image"
-              content={`https://gatsbyjs.org${
-                contributor.avatar.childImageSharp.fixed.src
-              }`}
+              content={`https://gatsbyjs.org${contributor.avatar.childImageSharp.fixed.src}`}
             />
           )}
           {contributor.avatar && (
             <meta
               name="twitter:image"
-              content={`https://gatsbyjs.org${
-                contributor.avatar.childImageSharp.fixed.src
-              }`}
+              content={`https://gatsbyjs.org${contributor.avatar.childImageSharp.fixed.src}`}
             />
           )}
         </Helmet>
         <main>
           <Container>
             <div
-              css={{
+              sx={{
                 textAlign: `center`,
-                padding: `${space[7]} ${space[6]}`,
+                py: 7,
+                px: 6,
               }}
             >
               <div>
-                <Img
-                  fixed={contributor.avatar.childImageSharp.fixed}
-                  css={{
-                    height: rhythm(2.3),
-                    width: rhythm(2.3),
-                    borderRadius: radii[6],
-                    display: `inline-block`,
-                    verticalAlign: `middle`,
-                  }}
-                />
-                <h1
-                  css={{
-                    marginTop: 0,
-                  }}
-                >
-                  {contributor.id}
-                </h1>
+                <Avatar image={contributor.avatar.childImageSharp.fixed} />
+                <h1 sx={{ mt: 0, mb: 3 }}>{contributor.id}</h1>
                 <p
-                  css={{
-                    fontFamily: fonts.header,
-                    maxWidth: rhythm(18),
-                    marginLeft: `auto`,
-                    marginRight: `auto`,
+                  sx={{
+                    fontFamily: `heading`,
+                    fontSize: 3,
+                    maxWidth: `28rem`,
+                    mx: `auto`,
                   }}
                 >
                   {contributor.bio}
                 </p>
-                <a href={`https://twitter.com/${contributor.twitter}`}>
-                  {` `}
-                  {contributor.twitter}
-                </a>
+                {contributor.twitter && (
+                  <a href={`https://twitter.com/${contributor.twitter}`}>
+                    {` `}
+                    {contributor.twitter}
+                  </a>
+                )}
               </div>
             </div>
-            <div css={{ padding: `${space[7]} ${space[6]}` }}>
-              {allMdx.edges.map(({ node }) => {
-                if (node.frontmatter.author) {
-                  if (node.frontmatter.author.id === contributor.id) {
-                    return (
-                      <BlogPostPreviewItem
-                        post={node}
-                        key={node.fields.slug}
-                        css={{ marginBottom: space[9] }}
-                      />
-                    )
-                  }
-                }
-                return null
-              })}
+            <div sx={{ py: 7, px: 6 }}>
+              {posts.map(node => (
+                <BlogPostPreviewItem
+                  post={node}
+                  key={node.fields.slug}
+                  sx={{ mb: 9 }}
+                />
+              ))}
             </div>
           </Container>
           <FooterLinks />
@@ -116,8 +98,8 @@ export const pageQuery = graphql`
       avatar {
         childImageSharp {
           fixed(
-            width: 63
-            height: 63
+            width: 64
+            height: 64
             quality: 75
             traceSVG: { turdSize: 10, background: "#f6f2f8", color: "#e0d6eb" }
           ) {
@@ -137,10 +119,8 @@ export const pageQuery = graphql`
         frontmatter: { draft: { ne: true } }
       }
     ) {
-      edges {
-        node {
-          ...BlogPostPreview_item
-        }
+      nodes {
+        ...BlogPostPreview_item
       }
     }
   }

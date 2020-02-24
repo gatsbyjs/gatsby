@@ -12,7 +12,7 @@ const warnMessage = (error, behavior) => `
   gatsby-plugin-feed was initialized in gatsby-config.js without a ${error}.
   This means that the plugin will use ${behavior}, which may not match your use case.
   This behavior will be removed in the next major release of gatsby-plugin-feed.
-  For more info, check out: https://gatsby.app/adding-rss-feed
+  For more info, check out: https://gatsby.dev/adding-rss-feed
 `
 
 // TODO: remove in the next major release
@@ -42,6 +42,12 @@ exports.onPreBootstrap = async function onPreBootstrap(
       reporter.warn(
         reporter.stripIndent(
           warnMessage(`feeds option`, `the internal RSS feed creation`)
+        )
+      )
+    } else if (normalized.feeds.some(feed => typeof feed.title !== `string`)) {
+      reporter.warn(
+        reporter.stripIndent(
+          warnMessage(`title in a feed`, `the default feed title`)
         )
       )
     } else if (
@@ -77,7 +83,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
 
   const baseQuery = await runQuery(graphql, options.query)
 
-  for (let feed of options.feeds) {
+  for (let { ...feed } of options.feeds) {
     if (feed.query) {
       feed.query = await runQuery(graphql, feed.query).then(result =>
         merge({}, baseQuery, result)

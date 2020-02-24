@@ -1,9 +1,10 @@
-const _ = require(`lodash`)
-
-module.exports = (state = { nodes: {}, connections: {} }, action) => {
+module.exports = (
+  state = { nodes: new Map(), connections: new Map() },
+  action
+) => {
   switch (action.type) {
     case `DELETE_CACHE`:
-      return { nodes: {}, connections: {} }
+      return { nodes: new Map(), connections: new Map() }
     case `CREATE_COMPONENT_DEPENDENCY`:
       if (action.payload.path === ``) {
         return state
@@ -11,36 +12,40 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
 
       // If this nodeId not set yet.
       if (action.payload.nodeId) {
-        let existingPaths = []
-        if (state.nodes[action.payload.nodeId]) {
-          existingPaths = state.nodes[action.payload.nodeId]
+        let existingPaths = new Set()
+        if (state.nodes.has(action.payload.nodeId)) {
+          existingPaths = state.nodes.get(action.payload.nodeId)
         }
-        const newPaths = _.uniq(
-          existingPaths.concat(action.payload.path || action.payload.id)
-        )
-        state.nodes[action.payload.nodeId] = newPaths
+        if (!existingPaths.has(action.payload.path || action.payload.id)) {
+          existingPaths.add(action.payload.path || action.payload.id)
+        }
+        state.nodes.set(action.payload.nodeId, existingPaths)
       }
 
       // If this connection not set yet.
       if (action.payload.connection) {
-        let existingPaths = []
-        if (state.connections[action.payload.connection]) {
-          existingPaths = state.connections[action.payload.connection]
+        let existingPaths = new Set()
+        if (state.connections.has(action.payload.connection)) {
+          existingPaths = state.connections.get(action.payload.connection)
         }
-        const newPaths = _.uniq(
-          existingPaths.concat(action.payload.path || action.payload.id)
-        )
-        state.connections[action.payload.connection] = newPaths
+        if (!existingPaths.has(action.payload.path || action.payload.id)) {
+          existingPaths.add(action.payload.path || action.payload.id)
+        }
+        state.connections.set(action.payload.connection, existingPaths)
       }
 
       return state
     case `DELETE_COMPONENTS_DEPENDENCIES`:
-      state.nodes = _.mapValues(state.nodes, paths =>
-        _.difference(paths, action.payload.paths)
-      )
-      state.connections = _.mapValues(state.connections, paths =>
-        _.difference(paths, action.payload.paths)
-      )
+      state.nodes.forEach((val, _key) => {
+        for (const path of action.payload.paths) {
+          val.delete(path)
+        }
+      })
+      state.connections.forEach((val, _key) => {
+        for (const path of action.payload.paths) {
+          val.delete(path)
+        }
+      })
 
       return state
     // Don't delete data dependencies as we're now deleting transformed nodes

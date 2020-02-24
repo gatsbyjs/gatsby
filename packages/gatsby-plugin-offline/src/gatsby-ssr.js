@@ -1,3 +1,5 @@
+import React from "react"
+
 export const onPreRenderHTML = ({
   getHeadComponents,
   pathname,
@@ -13,9 +15,25 @@ export const onPreRenderHTML = ({
         type === `link` &&
         props.as === `fetch` &&
         props.rel === `preload` &&
-        props.href.startsWith(`/static/d/`)
+        (props.href.startsWith(`/static/d/`) ||
+          props.href.startsWith(`/page-data/`))
       )
   )
 
   replaceHeadComponents(filteredHeadComponents)
+}
+
+export const onRenderBody = ({ pathname, setHeadComponents }) => {
+  if (pathname !== `/offline-plugin-app-shell-fallback/`) {
+    return
+  }
+
+  setHeadComponents([
+    <noscript key="disable-offline-shell">
+      <meta
+        httpEquiv="refresh"
+        content="0;url=/.gatsby-plugin-offline:api=disableOfflineShell&redirect=true"
+      />
+    </noscript>,
+  ])
 }

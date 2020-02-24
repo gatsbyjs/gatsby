@@ -5,8 +5,7 @@ author: Brent Jackson
 excerpt: ""
 tags:
   - themes
-  - yarn
-  - tutorials
+  - getting-started
 ---
 
 Gatsby [themes][themes-tag] are a new way to share functionality across multiple Gatsby sites.
@@ -40,7 +39,7 @@ This is currently a limitation of Gatsby theme shadowing, not Yarn workspaces.
 
 Your directory structure should now look like this:
 
-```
+```text
 example/
   package.json
 gatsby-theme-example-workspaces/
@@ -102,13 +101,13 @@ In the example site, create a `gatsby-config.js` file and add the theme.
 
 ```js:title=example/gatsby-config.js
 module.exports = {
-  __experimentalThemes: ["gatsby-theme-example-workspaces"],
+  plugins: ["gatsby-theme-example-workspaces"],
 }
 ```
 
 Add a `src/pages/` directory and add a _Hello, world_ page.
 
-```js:title=example/src/pages/index.js
+```jsx:title=example/src/pages/index.js
 import React from "react"
 
 export default props => <h1>Hello, world</h1>
@@ -174,13 +173,13 @@ module.exports = {
 
 Make a `src/pages` directory in the theme and add a demo page.
 
-```js:title=gatsby-theme-example-workspaces/src/pages/theme-page.js
+```jsx:title=gatsby-theme-example-workspaces/src/pages/theme-page.js
 import React from "react"
 
 export default props => <h1>Hello, from the theme!</h1>
 ```
 
-Stop and restart the Gatsby development server to pick up the new page from the theme. The theme's page should be visible at `http://localhost:8080/theme-page`.
+Stop and restart the Gatsby development server to pick up the new page from the theme. The theme's page should be visible at `http://localhost:8000/theme-page`.
 
 That's it! By now you should have a basic Yarn workspaces setup to develop Gatsby themes with.
 Be sure to look for more posts on developing Gatsby themes in the near future,

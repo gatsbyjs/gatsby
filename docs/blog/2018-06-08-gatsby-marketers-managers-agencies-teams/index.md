@@ -2,6 +2,7 @@
 title: Gatsby for Marketers, Managers, Agencies and Teams
 date: 2018-06-08
 author: "Linda Watkins"
+tags: ["marketing"]
 ---
 
 A few years ago, I worked at a small startup on an agile marketing team. This startup built website management tools and they had many customers come to them with stories of hosting headaches. I saw first-hand the hosting hassles that companies face.

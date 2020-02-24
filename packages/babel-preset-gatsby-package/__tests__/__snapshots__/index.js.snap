@@ -21,9 +21,6 @@ Array [
   ],
   Array [
     "@babel/preset-react",
-    Object {
-      "development": true,
-    },
   ],
   "@babel/preset-flow",
 ]
@@ -50,9 +47,6 @@ Array [
   ],
   Array [
     "@babel/preset-react",
-    Object {
-      "development": true,
-    },
   ],
   "@babel/preset-flow",
 ]
@@ -61,9 +55,11 @@ Array [
 exports[`babel-preset-gatsby-package in browser mode specifies the proper plugins 1`] = `
 Array [
   "@babel/plugin-proposal-class-properties",
+  "@babel/plugin-proposal-nullish-coalescing-operator",
   "@babel/plugin-proposal-optional-chaining",
   "@babel/plugin-transform-runtime",
   "@babel/plugin-syntax-dynamic-import",
+  "babel-plugin-dynamic-import-node",
 ]
 `;
 
@@ -72,21 +68,19 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
+      "corejs": 2,
       "debug": false,
       "loose": true,
       "modules": "commonjs",
       "shippedProposals": true,
       "targets": Object {
-        "node": "current",
+        "node": "8.0",
       },
       "useBuiltIns": "entry",
     },
   ],
   Array [
     "@babel/preset-react",
-    Object {
-      "development": true,
-    },
   ],
   "@babel/preset-flow",
 ]
@@ -97,21 +91,19 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
+      "corejs": 2,
       "debug": true,
       "loose": true,
       "modules": "commonjs",
       "shippedProposals": true,
       "targets": Object {
-        "node": "current",
+        "node": "8.0",
       },
       "useBuiltIns": "entry",
     },
   ],
   Array [
     "@babel/preset-react",
-    Object {
-      "development": true,
-    },
   ],
   "@babel/preset-flow",
 ]
@@ -120,62 +112,10 @@ Array [
 exports[`babel-preset-gatsby-package in node mode specifies the proper plugins 1`] = `
 Array [
   "@babel/plugin-proposal-class-properties",
+  "@babel/plugin-proposal-nullish-coalescing-operator",
   "@babel/plugin-proposal-optional-chaining",
   "@babel/plugin-transform-runtime",
   "@babel/plugin-syntax-dynamic-import",
-]
-`;
-
-exports[`babel-preset-gatsby-package in production mode specifies proper presets for browser mode 1`] = `
-Array [
-  Array [
-    "@babel/preset-env",
-    Object {
-      "debug": false,
-      "loose": true,
-      "modules": "commonjs",
-      "shippedProposals": true,
-      "targets": Object {
-        "browsers": Array [
-          "last 4 versions",
-          "safari >= 7",
-          "ie >= 9",
-        ],
-      },
-      "useBuiltIns": false,
-    },
-  ],
-  Array [
-    "@babel/preset-react",
-    Object {
-      "development": false,
-    },
-  ],
-  "@babel/preset-flow",
-]
-`;
-
-exports[`babel-preset-gatsby-package in production mode specifies proper presets for node mode 1`] = `
-Array [
-  Array [
-    "@babel/preset-env",
-    Object {
-      "debug": false,
-      "loose": true,
-      "modules": "commonjs",
-      "shippedProposals": true,
-      "targets": Object {
-        "node": 6,
-      },
-      "useBuiltIns": "entry",
-    },
-  ],
-  Array [
-    "@babel/preset-react",
-    Object {
-      "development": false,
-    },
-  ],
-  "@babel/preset-flow",
+  "babel-plugin-dynamic-import-node",
 ]
 `;

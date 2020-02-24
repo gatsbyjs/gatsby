@@ -1,136 +1,118 @@
 ---
 title: Recipes
+tableOfContentsDepth: 2
 ---
 
 <!-- Basic template for a Gatsby recipe:
 
 ## Task to accomplish.
+1-2 sentences about it. The more concise and focused, the better!
 
-1-2 sentences about it.
-Relevant links out (tutorial, doc pages, plugin readmes, etc). -->
-
-Craving a happy medium between doing the [full tutorial](/tutorial/) and crawling the [full docs](/docs/)? Here's a quick guiding reference for how to build things, Gatsby style.
-
-## Table of Contents
-
-- [Using Gatsby without Graphql](#using-gatsby-without-graphql)
-- [Gatsby project structure](#gatsby-project-structure)
-- [Using a starter](#using-a-starter)
-- [Creating pages](#creating-pages)
-- [Linking between pages](#linking-between-pages)
-- [Styling](#styling)
-- [Creating layouts](#creating-layouts)
-- [Deploying](#deploying)
-- [Querying data](#querying-data)
-- [Sourcing data](#sourcing-data)
-- [Transforming data](#transforming-data)
-
-## Using Gatsby without GraphQL
-
-You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
-
-- Learn how to pull unstructured data into Gatsby sites in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
-- Learn when and how to use GraphQL and source plugins for more complex Gatsby sites in [Querying data with GraphQL](/docs/querying-with-graphql/)
-
-## Gatsby project structure
-
-Read the [Gatsby project structure](/docs/gatsby-project-structure/) guide for a tour of the folders and files you may see inside a Gatsby project.
-
-## Using a starter
-
-Starters are boilerplate Gatsby sites maintained officially, or by the community.
-
-- Learn how to use the Gatsby CLI tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
-- Browse the [Starter Library](/starters/)
-- Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
-
-## Creating pages
-
-You can create pages in Gatsby explicitly by defining React components in `src/pages/`, or programmatically by using the `createPages` API.
-
-- Walk through creating a page by defining a React component in `src/pages` in [tutorial part one](/tutorial/part-one/#familiarizing-with-gatsby-pages)
-- Walk through programmatically creating pages in [tutorial part seven](/tutorial/part-seven/)
-- Check out the docs overview on [creating and modifying pages](/docs/creating-and-modifying-pages/)
-
-## Linking between pages
-
-Routing in Gatsby relies on the `<Link />` component.
-
-### Requirements
-
-- A Gatsby site with two page components: `index.js` and `contact.js`
-- The Gatsby `<Link />` component
-- `gatsby develop`
+### Prerequisites
+- System/version requirements
+- Everything necessary to set up the task
+- Including setting up accounts at other sites, like Netlify
+- See [docs templates](/docs/docs-templates/) for formatting tips
 
 ### Directions
+Step-by-step directions. Each step should be repeatable and to-the-point. Anything not critical to the task should be omitted.
 
-1. Open the index page component (`src/pages/index.js`), import the `<Link />` component from Gatsby, add a `<Link />` component above the header, and give it a `to` property with the value of `"/contact/"` for the pathname:
+#### Live example (optional)
+A live example may not be possible depending on the nature of the recipe, in which case it is fine to omit.
 
-```jsx:title=src/pages/index.js
-import React from "react"
-import { Link } from "gatsby"
+### Additional resources
+- Tutorials
+- Docs pages
+- Plugin READMEs
+- etc.
 
-export default () => (
-  <div style={{ color: `purple` }}>
-    <Link to="/contact/">Contact</Link>
-    <p>What a world.</p>
-  </div>
-)
-```
+See [docs templates](/docs/docs-templates/) in the contributing docs for more help.
+-->
 
-2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
+Craving a happy medium between [full-length tutorials](/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
 
-> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). For more information about Gatsby's `<Link />` component, consult the [API reference for `<Link />`](/docs/gatsby-link/).
+## [1. Pages and layouts](/docs/recipes/pages-layouts)
 
-## Styling
+Add pages to your Gatsby site, and use layouts to manage common page elements.
+
+- [Project structure](/docs/recipes/pages-layouts#project-structure)
+- [Creating pages automatically](/docs/recipes/pages-layouts#creating-pages-automatically)
+- [Linking between pages](/docs/recipes/pages-layouts#linking-between-pages)
+- [Creating a layout component](/docs/recipes/pages-layouts#creating-a-layout-component)
+- [Creating pages programmatically with createPage](/docs/recipes/pages-layouts#creating-pages-programmatically-with-createpage)
+
+## [2. Styling with CSS](/docs/recipes/styling-css)
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
-- Walk through adding global styles to an example site in [tutorial part two](/tutorial/part-two/#creating-global-styles)
-  - More on global styles [with standard CSS files](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-with-standard-css-files)
-  - More on global styles with [CSS-in-JS](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-using-css-in-js)
-  - More on global styles [with CSS files and no layout component](/docs/creating-global-styles/#add-global-styles-with-css-files-and-no-layout-component)
-- Use the CSS-in-JS library [Glamor](/docs/glamor/)
-- Use the CSS-in-JS library [Styled Components](/docs/styled-components/)
-- Use [CSS Modules](/tutorial/part-two/#css-modules)
+- [Using global CSS files without a Layout component](/docs/recipes/styling-css#using-global-css-files-without-a-layout-component)
+- [Using global styles in a layout component](/docs/recipes/styling-css#using-global-styles-in-a-layout-component)
+- [Using Styled Components](/docs/recipes/styling-css#using-styled-components)
+- [Using CSS Modules](/docs/recipes/styling-css#using-css-modules)
+- [Using Sass/SCSS](/docs/recipes/styling-css#using-sassscss)
+- [Adding a Local Font](/docs/recipes/styling-css#adding-a-local-font)
+- [Using Emotion](/docs/recipes/styling-css#using-emotion)
+- [Using Google Fonts](/docs/recipes/styling-css#using-google-fonts)
 
-## Creating layouts
+## [3. Working with starters](/docs/recipes/working-with-starters)
 
-To wrap pages with layouts, use normal React components.
+[Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
 
-- Walk through creating a layout component in [tutorial part three](/tutorial/part-three/#your-first-layout-component)
-- Gatsby v1 approached layouts differently. If the context is helpful, learn about the [differences in v2](/blog/2018-06-08-life-after-layouts/)
+- [Using a starter](/docs/recipes/working-with-starters#using-a-starter)
 
-## Deploying
+## [4. Working with themes](/docs/recipes/working-with-themes)
 
-Showtime.
+A Gatsby theme lets you centralize the look-and-feel of your site. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
-- Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
-- Learn how to make sure your site is configured properly to be [searchable, shareable, and properly navigable](/docs/preparing-for-site-launch/)
-- Learn about [performance optimization](/docs/performance/)
-- Read about [other deployment related topics](/docs/deploying-and-hosting/)
+- [Creating a new site using a theme](/docs/recipes/working-with-themes#creating-a-new-site-using-a-theme)
+- [Creating a new site using a theme starter](/docs/recipes/working-with-themes#creating-a-new-site-using-a-theme-starter)
+- [Building a new theme](/docs/recipes/working-with-themes#building-a-new-theme)
 
-## Querying data
+## [5. Sourcing data](/docs/recipes/sourcing-data)
 
-In Gatsby, you access data through a query language called [GraphQL](https://graphql.org/).
+Pull data from multiple locations, like the filesystem or database, into your Gatsby site.
 
-- Walk through an example of how Gatsby's data layer [pulls data into components using GraphQL](/tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components)
-- Walk through [using Gatsby's `graphql` tag for page queries](/tutorial/part-five/#build-a-page-with-a-graphql-query)
-- Read through a conceptual guide on [querying data with GraphQL in Gatsby](/docs/querying-with-graphql/)
-- Learn more about the `graphql` tag -- [querying data in a Gatsby page](/docs/page-query/)
-- Learn more about `<StaticQuery />` -- [querying data in (non-page) components](/docs/static-query/)
+- [Adding data to GraphQL](/docs/recipes/sourcing-data#adding-data-to-graphql)
+- [Sourcing Markdown data for blog posts and pages with GraphQL](/docs/recipes/sourcing-data#sourcing-markdown-data-for-blog-posts-and-pages-with-graphql)
+- [Sourcing from WordPress](/docs/recipes/sourcing-data#sourcing-from-wordpress)
+- [Sourcing data from Contentful](/docs/recipes/sourcing-data#sourcing-data-from-contentful)
+- [Pulling data from an external source and creating pages without GraphQL](/docs/recipes/sourcing-data#pulling-data-from-an-external-source-and-creating-pages-without-graphql)
+- [Sourcing content from Drupal](/docs/recipes/sourcing-data#sourcing-content-from-drupal)
 
-## Sourcing data
+## [6. Querying data](/docs/recipes/querying-data)
 
-Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc).
+Gatsby lets you access your data across all sources using a single GraphQL interface.
 
-- Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
-- Search available source plugins in the [Gatsby library](/plugins/?=source)
-- Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
+- [Querying data with a Page Query](/docs/recipes/querying-data#querying-data-with-a-page-query)
+- [Querying data with the StaticQuery Component](/docs/recipes/querying-data#querying-data-with-the-staticquery-component)
+- [Querying data with the useStaticQuery hook](/docs/recipes/querying-data/#querying-data-with-the-usestaticquery-hook)
+- [Limiting with GraphQL](/docs/recipes/querying-data#limiting-with-graphql)
+- [Sorting with GraphQL](/docs/recipes/querying-data#sorting-with-graphql)
+- [Filtering with GraphQL](/docs/recipes/querying-data#filtering-with-graphql)
+- [GraphQL Query Aliases](/docs/recipes/querying-data#graphql-query-aliases)
+- [GraphQL Query Fragments](/docs/recipes/querying-data#graphql-query-fragments)
+- [Querying data client-side with fetch](/docs/recipes/querying-data#querying-data-client-side-with-fetch)
 
-## Transforming data
+## [7. Working with images](/docs/recipes/working-with-images)
 
-Transforming data in Gatsby is also plugin-driven; Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, markdown to HTML, and more).
+Access images as static resources, or automate the process of optimizing them through powerful plugins.
 
-- Walk through an example using the `gatsby-transformer-remark` plugin to transform markdown files [tutorial part six](/tutorial/part-six/#transformer-plugins)
-- Search available transformer plugins in the [Gatsby library](/plugins/?=transformer)
+- [Import an image into a component with webpack](/docs/recipes/working-with-images#import-an-image-into-a-component-with-webpack)
+- [Reference an image from the static folder](/docs/recipes/working-with-images#reference-an-image-from-the-static-folder)
+- [Optimizing and querying local images with gatsby-image](/docs/recipes/working-with-images#optimizing-and-querying-local-images-with-gatsby-image)
+- [Optimizing and querying images in post frontmatter with gatsby-image](/docs/recipes/working-with-images#optimizing-and-querying-images-in-post-frontmatter-with-gatsby-image)
+
+## [8. Transforming data](/docs/recipes/transforming-data)
+
+Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more).
+
+- [Transforming Markdown into HTML](/docs/recipes/transforming-data#transforming-markdown-into-html)
+- [Transforming images into grayscale using GraphQL](/docs/recipes/transforming-data#transforming-images-into-grayscale-using-graphql)
+
+## [9. Deploying your site](/docs/recipes/deploying-your-site)
+
+Showtime. Once you are happy with your site, you are ready to go live with it!
+
+- [Preparing for deployment](/docs/recipes/deploying-your-site#preparing-for-deployment)
+- [Deploying to Netlify](/docs/recipes/deploying-your-site#deploying-to-netlify)
+- [Deploying to ZEIT Now](/docs/recipes/deploying-your-site#deploying-to-zeit-now)

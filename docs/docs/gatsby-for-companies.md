@@ -32,4 +32,4 @@ If you're in an organization like this, it's important to:
 
 - strongly emphasize Gatsby's benefits in language familiar to [marketers](/docs/winning-over-marketers) and [executives](/docs/winning-over-executives).
 
-- position Gatsby as part of "digital transformation" initiatives your company undertakes. Faced with new competitors taking market share (eg Amazon in retail, Expedia and Airbnb in travel, PayPal in consumer finance), these businesses typically emphasize a priority as a company to be more Internet-native. This can provide an opening to pitch Gatsby as a way to do this.
+- position Gatsby as part of "digital transformation" initiatives your company undertakes. Faced with new competitors taking market share (e.g. Amazon in retail, Expedia and Airbnb in travel, PayPal in consumer finance), these businesses typically emphasize a priority as a company to be more Internet-native. This can provide an opening to pitch Gatsby as a way to do this.

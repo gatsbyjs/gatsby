@@ -41,7 +41,7 @@ export const anchorsTargetIsEquivalentToSelf = anchor =>
    * Some browsers use the empty string to mean _self, check
    * for actual `_self`
    */
-  [`_self`, ``].indexOf(anchor.target) !== -1 ||
+  [`_self`, ``].includes(anchor.target) ||
   /**
    * As per https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
    */
@@ -105,7 +105,10 @@ export const hashShouldBeFollowed = (origin, destination) =>
     /* Don't catch links pointed to the same page but with a hash. */
     destination.pathname === origin.pathname)
 
-export const routeThroughBrowserOrApp = hrefHandler => event => {
+export const routeThroughBrowserOrApp = (
+  hrefHandler,
+  pluginOptions
+) => event => {
   if (window.___failedResources) return true
 
   if (userIsForcingNavigation(event)) return true
@@ -143,6 +146,13 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 
   if (hashShouldBeFollowed(origin, destination)) return true
 
+  if (pluginOptions.excludePattern) {
+    const excludeRegex = new RegExp(pluginOptions.excludePattern)
+    if (excludeRegex.test(destination.pathname)) {
+      return true
+    }
+  }
+
   event.preventDefault()
 
   // See issue #8907: destination.pathname already includes pathPrefix added
@@ -157,8 +167,8 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
   return false
 }
 
-export default function(root, cb) {
-  const clickHandler = routeThroughBrowserOrApp(cb)
+export default function(root, pluginOptions, cb) {
+  const clickHandler = routeThroughBrowserOrApp(cb, pluginOptions)
 
   root.addEventListener(`click`, clickHandler)
 

@@ -72,7 +72,7 @@ module.exports = {
 
 and a minimal query would look like
 
-```
+```javascript
 export const pageQuery = graphql`
   query SiteMetadataLookup($slug: String!) {
     site {
@@ -80,7 +80,7 @@ export const pageQuery = graphql`
         title
       }
     }
-}
+  }
 `
 ```
 
@@ -168,7 +168,7 @@ module.exports = {
 ### Create slugs for markdown files
 
 It's handy to store the pathname or "slug" for each markdown page with the
-markdown data. This let's you query the slug from multiple places.
+markdown data. This lets you query the slug from multiple places.
 
 Here's how you do that.
 
@@ -196,7 +196,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
 }
 ```
 
-Now we can create pages for each markdown file using our slug. In the same
+Now you can create pages for each markdown file using our slug. In the same
 `gatsby-node.js` file add:
 
 ```javascript
@@ -206,7 +206,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   return new Promise((resolve, reject) => {
     const pages = []
     const blogPost = path.resolve("src/templates/blog-post.js")
-    // Query for all markdown "nodes" and for the slug we previously created.
+    // Query for all markdown "nodes" and for the slug you previously created.
     resolve(
       graphql(
         `
@@ -246,18 +246,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 ```
 
-So we've now generated the pathname or slug for each markdown page as well as
-told Gatsby about these pages. You'll notice above that we reference a blog post
-template file when creating the pages. We haven't created that yet so let's do
-it.
-
-In your `src` directory, create a templates directory and add `blog-post.js`.
+You've now generated the pathname or slug for each markdown page as well as told
+Gatsby about these pages. You'll notice above that you reference a blog post
+template file when creating the pages. You haven't created that template file yet,
+so in your `src` directory, create a templates directory and add `blog-post.js`.
 
 This is a normal React.js component with a special Gatsby twist—a GraphQL query
 specifying the data needs of the component. As a start, make the component look
 like the following. You can make it more complex once the basics are working.
 
-```javascript
+```jsx
 import React from "react"
 
 class BlogPostTemplate extends React.Component {

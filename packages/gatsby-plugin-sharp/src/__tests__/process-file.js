@@ -1,3 +1,9 @@
+jest.mock(`../safe-sharp`, () => {
+  return {
+    simd: jest.fn(),
+    concurrency: jest.fn(),
+  }
+})
 const { createArgsDigest } = require(`../process-file`)
 
 describe(`createArgsDigest`, () => {
@@ -57,42 +63,5 @@ describe(`createArgsDigest`, () => {
     })
     testHashDifferent(`fit change`, { fit: `CONTAIN` })
     testHashDifferent(`background change`, { background: `#fff0` })
-  })
-
-  describe(`doesn't change hash if not used options are different`, () => {
-    const testHashEqual = (label, change, extraBaselineOptions = {}) => {
-      it(label, () => {
-        const argsBaseline = {
-          ...defaultArgsBaseline,
-          ...extraBaselineOptions,
-        }
-        const baselineHash = createArgsDigest(argsBaseline)
-        const outputHash = createArgsDigest({
-          ...defaultArgsBaseline,
-          ...change,
-        })
-        expect(baselineHash).toBe(outputHash)
-      })
-    }
-
-    testHashEqual(`unrelated argument`, { foo: `bar` })
-
-    testHashEqual(`png option change when using jpg`, {
-      pngCompressionLevel: defaultArgsBaseline.pngCompressionLevel + 1,
-    })
-    testHashEqual(
-      `jpg option change when using png`,
-      {
-        toFormat: `png`,
-        jpegProgressive: !defaultArgsBaseline.jpegProgressive,
-      },
-      {
-        toFormat: `png`,
-      }
-    )
-    describe(`not used arguments`, () => {
-      testHashEqual(`maxWidth`, { maxWidth: 500 })
-      testHashEqual(`base64`, { base64: true })
-    })
   })
 })

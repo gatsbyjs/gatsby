@@ -11,7 +11,7 @@ stores via the [Shopify Storefront API][shopify-storefront-api].
 
 ## Install
 
-```sh
+```shell
 npm install --save gatsby-source-shopify
 ```
 
@@ -37,6 +37,9 @@ plugins: [
       // The domain name of your Shopify shop. This is required.
       // Example: 'gatsby-source-shopify-test-shop' if your Shopify address is
       // 'gatsby-source-shopify-test-shop.myshopify.com'.
+      // If you are running your shop on a custom domain, you need to use that
+      // as the shop name, without a trailing slash, for example:
+      // shopName: "gatsby-shop.com",
       shopName: "gatsby-source-shopify-test-shop",
 
       // An API access token to your Shopify shop. This is required.
@@ -46,6 +49,11 @@ plugins: [
       // Storefront API".
       // See: https://help.shopify.com/api/custom-storefronts/storefront-api/getting-started#authentication
       accessToken: "example-wou7evoh0eexuf6chooz2jai2qui9pae4tieph1sei4deiboj",
+
+      // Set the API version you want to use. For a list of available API versions,
+      // see: https://help.shopify.com/en/api/storefront-api/reference/queryroot
+      // Defaults to 2019-07
+      apiVersion: "2020-01",
 
       // Set verbose to true to display a verbose output on `npm run develop`
       // or `npm run build`. This prints which nodes are being fetched and how
@@ -57,17 +65,25 @@ plugins: [
       // at startup. If your application encounters timeout errors during
       // startup, try decreasing this number.
       paginationSize: 250,
+
+      // List of collections you want to fetch.
+      // Possible values are: 'shop' and 'content'.
+      // Defaults to ['shop', 'content'].
+      includeCollections: ["shop", "content"],
     },
   },
 ]
 ```
+
+NOTE: By default, all metafields are private. In order to pull metafields,
+you must first [expose the metafield to the Storefront API](https://help.shopify.com/en/api/guides/metafields/storefront-api-metafields#expose-metafields-to-the-storefront-api).
 
 ## How to query
 
 You can query nodes created from Shopify using GraphQL like the following:
 
 **Note**: Learn to use the GraphQL tool and Ctrl+Spacebar at
-<http://localhost:8000/___graphql> to discover the types and properties of your
+`http://localhost:8000/___graphql` to discover the types and properties of your
 GraphQL model.
 
 ```graphql
@@ -106,7 +122,6 @@ The following data types are available:
 | **Product**        | Represents an individual item for sale in a Shopify store.                                                            |
 | **ProductOption**  | Custom product property names.                                                                                        |
 | **ProductVariant** | Represents a different version of a product, such as differing sizes or differing colors.                             |
-| **ProductType**    | Represents a category of products.                                                                                    |
 | **ShopPolicy**     | Policy that a merchant has configured for their store, such as their refund or privacy policy.                        |
 
 For each data type listed above, `shopify${typeName}` and

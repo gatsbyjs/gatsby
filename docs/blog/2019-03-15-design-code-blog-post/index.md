@@ -3,7 +3,7 @@ title: Gatsby Fuels Content and Sales in Design+Code Rebuild
 date: 2019-03-15T07:00:00+00:00
 author: Linda Watkins
 tags:
-  - case study
+  - case-studies
 ---
 
 When [Design+Code](https://designcode.io/) needed to rebuild their website to focus on more robust content and meeting increased sales targets, they started with what they knew - React. As a teaching resource for building real, live apps they were already familiar with React. As experts in the courses they offer, they reached for Gatsby. This combination would provide the leading-edge experience they gained by designing with Gatsby, while customer experience was elevated from visit to sales.

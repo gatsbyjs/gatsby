@@ -122,7 +122,7 @@ your site. Typically, you define the output file structure (and thus URL
 structure) of your site by way of the input structure. For example the input
 structure:
 
-```
+```text
 my-site/
   index.md
   blogs/
@@ -131,7 +131,7 @@ my-site/
 
 ...would be transformed to:
 
-```
+```text
 my-site/
   index.html
   blogs/
@@ -148,75 +148,68 @@ Here is how we define pages from our JSON data for Gatsbygram at build time in
 the site's
 [`gatsby-node.js` file](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/gatsby-node.js):
 
-```javascript
-const _ = require(`lodash`)
-const Promise = require(`bluebird`)
+```javascript:title=gatsby-node.js
 const path = require(`path`)
 const slug = require(`slug`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programmatically
 // create pages.
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    // The “graphql” function allows us to run arbitrary
-    // queries against this Gatsbygram's graphql schema. Think of
-    // it like Gatsbygram has a built-in database constructed
-    // from static data that you can run queries against.
-    //
-    // Post is a data node type derived from data/posts.json
-    // which is created when scrapping Instagram. “allPostsJson”
-    // is a "connection" (a GraphQL convention for accessing
-    // a list of nodes) gives us an easy way to query all
-    // Post nodes.
-    resolve(
-      graphql(
-        `
-          {
-            allPostsJson(limit: 1000) {
-              edges {
-                node {
-                  id
-                }
-              }
+  // The “graphql” function allows us to run arbitrary
+  // queries against this Gatsbygram's graphql schema. Think of
+  // it like Gatsbygram has a built-in database constructed
+  // from static data that you can run queries against.
+  //
+  // Post is a data node type derived from data/posts.json
+  // which is created when scraping Instagram. “allPostsJson”
+  // is a "connection" (a GraphQL convention for accessing
+  // a list of nodes) gives us an easy way to query all
+  // Post nodes.
+  const result = await graphql(
+    `
+      {
+        allPostsJson(limit: 1000) {
+          edges {
+            node {
+              id
             }
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          reject(new Error(result.errors))
         }
+      }
+    `
+  )
 
-        // Create image post pages.
-        const postTemplate = path.resolve(`src/templates/post-page.js`)
-        // We want to create a detailed page for each
-        // Instagram post. Since the scrapped Instagram data
-        // already includes an ID field, we just use that for
-        // each page's path.
-        _.each(result.data.allPostsJson.edges, edge => {
-          // Gatsby uses Redux to manage its internal state.
-          // Plugins and sites can use functions like "createPage"
-          // to interact with Gatsby.
-          createPage({
-            // Each page is required to have a `path` as well
-            // as a template component. The `context` is
-            // optional but is often necessary so the template
-            // can query data specific to each page.
-            path: `/${slug(edge.node.id)}/`,
-            component: slash(postTemplate),
-            context: {
-              id: edge.node.id,
-            },
-          })
-        })
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
 
-        return
-      })
-    )
+  // Create image post pages.
+  const postTemplate = path.resolve(`src/templates/post-page.js`)
+  // We want to create a detailed page for each
+  // Instagram post. Since the scraped Instagram data
+  // already includes an ID field, we just use that for
+  // each page's path.
+  result.data.allPostsJson.edges.forEach(edge => {
+    // Gatsby uses Redux to manage its internal state.
+    // Plugins and sites can use functions like "createPage"
+    // to interact with Gatsby.
+    createPage({
+      // Each page is required to have a `path` as well
+      // as a template component. The `context` is
+      // optional but is often necessary so the template
+      // can query data specific to each page.
+      path: `/${slug(edge.node.id)}/`,
+      component: slash(postTemplate),
+      context: {
+        id: edge.node.id,
+      },
+    })
   })
 }
 ```
@@ -236,7 +229,7 @@ query. For the
 we pass the id to the post. Below we use that id to query our `GraphQL` schema
 and return a fully formed page:
 
-```jsx
+```jsx:title=src/templates/post-page.js
 import React from "react"
 import PostDetail from "../components/post-detail"
 
@@ -300,7 +293,7 @@ In addition to creating pages for our Instagram photos, we want to make an index
 page for browsing all photos. To build this index page, Gatsby lets us create
 pages using React.js components.
 
-```
+```text
 pages/
   index.js
   about.js
@@ -374,7 +367,7 @@ generates all the configuration for you.
 
 Normally page resources are pre-cached with a service worker. But as several
 browsers (Safari/Microsoft Edge) still don't support Service Workers, the
-[Gatsby `<Link>` component](/packages/gatsby/) pre-caches resources for
+[Gatsby `<Link>` component](/docs/linking-between-pages/#the-gatsby-link-component) pre-caches resources for
 pages it links to by loading them into memory.
 
 ## Plugins
@@ -390,7 +383,7 @@ powered by plugins.
 Plugins are added to a site in its `gatsby-config.js`. Here's what Gatsbygram's
 config file looks like:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Gatsbygram`,

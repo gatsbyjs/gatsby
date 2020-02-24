@@ -1,6 +1,7 @@
 const repl = require(`repl`)
 const { graphql } = require(`graphql`)
 const bootstrap = require(`../bootstrap`)
+const { trackCli } = require(`gatsby-telemetry`)
 const {
   loadNodeContent,
   getNodes,
@@ -10,6 +11,7 @@ const {
 const { store } = require(`../redux`)
 
 module.exports = async program => {
+  trackCli(`REPL_START`)
   // run bootstrap
   await bootstrap(program)
 
@@ -18,7 +20,6 @@ module.exports = async program => {
     schema,
     config,
     babelrc,
-    jsonDataPaths,
     pages,
     components,
     staticQueryComponents,
@@ -39,7 +40,6 @@ module.exports = async program => {
   // set some globals to make life easier
   _.context.babelrc = babelrc
   _.context.components = components
-  _.context.dataPaths = jsonDataPaths
   _.context.getNode = getNode
   _.context.getNodes = getNodes
   _.context.getNodesByType = getNodesByType
@@ -51,5 +51,8 @@ module.exports = async program => {
   _.context.siteConfig = config
   _.context.staticQueries = staticQueryComponents
 
-  _.on(`exit`, () => process.exit(0))
+  _.on(`exit`, () => {
+    trackCli(`REPL_STOP`)
+    process.exit(0)
+  })
 }

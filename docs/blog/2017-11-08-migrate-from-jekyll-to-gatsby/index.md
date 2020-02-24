@@ -2,7 +2,7 @@
 title: "Migrate from Jekyll to Gatsby"
 date: 2017-11-08
 author: "Nahuel Scotti"
-tags: ["jekyll", "markdown", "getting-started", "ci"]
+tags: ["jekyll", "markdown", "getting-started", "deployment"]
 ---
 
 ## A bit of history
@@ -67,7 +67,7 @@ need to extract the date from the file name.
 
 The slug in my case is generated with this (default in Jekyll) structure:
 
-```
+```text
 https://blog.singuerinc.com/[n-categories]/YYYY/MM/DD/dashed-title/
 
 // Given this data:

@@ -1,8 +1,8 @@
 ---
-title: Making a site with user authentication
+title: Making a Site with User Authentication
 ---
 
-Sometimes, you need to create a site with gated content, available only to authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](/docs/building-apps-with-gatsby/#client-only-routes), to define which pages a user can view only after logging in.
+Sometimes, you need to create a site with gated content, restricted to only authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](/docs/client-only-routes-and-user-authentication/), to define which pages a user can view only after logging in.
 
 ## Prerequisites
 
@@ -120,6 +120,8 @@ export const logout = callback => {
   callback()
 }
 ```
+
+_The guide on [adding authentication](/docs/building-a-site-with-authentication/) contains more information about the flow for connecting Gatsby to an external service._
 
 ## Creating client-only routes
 
@@ -253,14 +255,13 @@ Though the routing is working now, you still can access all routes without restr
 To check if a user can access the content, you can wrap the restricted content inside a PrivateRoute component:
 
 ```jsx:title=src/components/privateRoute.js
-import React from "react"
+import React, { Component } from "react"
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
   if (!isLoggedIn() && location.pathname !== `/app/login`) {
-    // If the user is not logged in, redirect to the login page.
-    navigate(`/app/login`)
+    navigate("/app/login")
     return null
   }
 

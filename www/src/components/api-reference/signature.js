@@ -5,10 +5,9 @@ import { css } from "@emotion/core"
 import { graphql } from "gatsby"
 
 import { SubHeader } from "./utils"
-import { space, fonts } from "../../utils/presets"
 
 const Wrapper = styled(`span`)`
-  font-family: ${fonts.header};
+  font-family: ${p => p.theme.fonts.heading};
   font-weight: 400;
 
   :before,
@@ -27,7 +26,7 @@ const Wrapper = styled(`span`)`
     props.block &&
     css`
       display: block;
-      margin-top: ${space[2]};
+      margin-top: ${props.theme.space[2]};
     `};
 `
 
