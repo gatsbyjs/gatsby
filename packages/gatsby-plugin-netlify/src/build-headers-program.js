@@ -47,7 +47,7 @@ function validHeaders(headers, reporter) {
 function linkTemplate(assetPath, type = `script`) {
   return `Link: <${assetPath}>; rel=preload; as=${type}${
     type === `fetch` ? `; crossorigin` : ``
-  }; nopush`
+  }`
 }
 
 function pathChunkName(path) {
