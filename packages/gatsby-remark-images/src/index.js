@@ -417,7 +417,9 @@ module.exports = (
               return resolve()
             }
 
-            const $ = cheerio.load(node.value)
+            const $ = cheerio.load(node.value, {
+              xmlMode: true,
+            })
             if ($(`img`).length === 0) {
               // No img tags
               return resolve()
@@ -464,8 +466,10 @@ module.exports = (
             }
 
             // Replace the image node with an inline HTML node.
-            node.type = `html`
-            node.value = $(`body`).html() // fix for cheerio v1
+            if (node.type !== `jsx`) {
+              node.type = `html`
+            }
+            node.value = $.html()
 
             return resolve(node)
           })
