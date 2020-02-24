@@ -5287,19 +5287,6 @@
     - Responsive webpage
     - Portfolio
     - Blog
-- url: https://gatsby-contentful-portfolio-blog.netlify.com/
-  repo: https://github.com/escapemanuele/gatsby-contentful-blog-portfolio
-  description: Simple gatsby starter for integration with Contentful. The result is a clean and nice website for businesses or freelancers with a blog and a portfolio.
-  tags:
-    - Blog
-    - CMS:Headless
-    - CMS:Contentful
-    - Portfolio
-  features:
-    - Styled components
-    - Responsive webpage
-    - Portfolio
-    - Blog
 - url: https://example-site-for-square-starter.netlify.com/
   repo: https://github.com/jonniebigodes/example-site-for-square-starter
   description: A barebones starter to help you kickstart your next Gatsby project with Square payments
