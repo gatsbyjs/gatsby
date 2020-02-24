@@ -22,7 +22,7 @@ let nodeA = {
 }
 ```
 
-Its sub objects are `foo` (value = `{ myfile: "blog/my-blog.md", b: 2}`), and those in the `baz` array (`{ x: 8 }`). Node tracking will track those back to the top level node's ID (`id2` in this case). The [trackInlineObjectsinRootNode()](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/schema/node-model.js#L351) function takes care of this and records those relationships in the [rootNodeMap](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/schema/node-model.js#L354) WeakMap. E.g. after calling `trackInlineObjectsInRootNode(nodeA)`, `rootNodeMap` would contain the following records:
+Its sub objects are `foo` (value = `{ myfile: "blog/my-blog.md", b: 2}`), and those in the `baz` array (`{ x: 8 }`). Node tracking will track those back to the top level node's ID (`id2` in this case). The [trackInlineObjectsinRootNode()](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/schema/node-model.js#L351) function takes care of this and records those relationships in the [rootNodeMap](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/schema/node-model.js#L69) WeakMap. E.g. after calling `trackInlineObjectsInRootNode(nodeA)`, `rootNodeMap` would contain the following records:
 
 ```javascript
 // rootNodeMap:
