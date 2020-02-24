@@ -1,7 +1,7 @@
 const fs = require(`fs-extra`)
 const Promise = require(`bluebird`)
 const { join } = require(`path`)
-const { generateHtmlPathToOutput } = require(`../../utils/page-html`)
+const { getPageHtmlFilePath } = require(`../../utils/page-html`)
 
 export function renderHTML({ htmlComponentRendererPath, paths, envVars }) {
   // This is being executed in child process, so we need to set some vars
@@ -17,7 +17,7 @@ export function renderHTML({ htmlComponentRendererPath, paths, envVars }) {
           htmlComponentRenderer.default(path, (throwAway, htmlString) => {
             resolve(
               fs.outputFile(
-                generateHtmlPathToOutput(join(process.cwd(), `public`), path),
+                getPageHtmlFilePath(join(process.cwd(), `public`), path),
                 htmlString
               )
             )
