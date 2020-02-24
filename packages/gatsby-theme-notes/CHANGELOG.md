@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.71](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.70...gatsby-theme-notes@1.0.71) (2020-02-24)
+
+### Bug Fixes
+
+- **gatsby-theme-notes:** fix styling clash with gatsby-theme-blog ([#21656](https://github.com/gatsbyjs/gatsby/issues/21656)) ([62534f5](https://github.com/gatsbyjs/gatsby/commit/62534f5))
+
 ## [1.0.70](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.69...gatsby-theme-notes@1.0.70) (2020-02-24)
 
 **Note:** Version bump only for package gatsby-theme-notes

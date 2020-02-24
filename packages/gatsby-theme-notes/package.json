@@ -1,7 +1,7 @@
 {
   "name": "gatsby-theme-notes",
   "description": "Gatsby Theme for adding a notes section to your website",
-  "version": "1.0.70",
+  "version": "1.0.71",
   "author": "John Otander",
   "license": "MIT",
   "main": "index.js",
@@ -33,6 +33,7 @@
     "@emotion/core": "^10.0.22",
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
+    "@theme-ui/prism": "^0.2.50",
     "gatsby-core-utils": "^1.0.28",
     "gatsby-plugin-compile-es6-packages": "^2.1.0",
     "gatsby-plugin-emotion": "^4.1.22",
@@ -44,7 +45,6 @@
     "gatsby-source-filesystem": "^2.1.48",
     "is-present": "^1.0.0",
     "react-feather": "^1.1.6",
-    "theme-ui": "^0.2.49",
-    "@theme-ui/prism": "^0.2.50"
+    "theme-ui": "^0.2.49"
   }
 }
