@@ -93,8 +93,20 @@ function headersPath(pathPrefix, path) {
   return `${pathPrefix}${path}`
 }
 
-function preloadHeadersByPage(pages, manifest, pathPrefix) {
+function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
   let linksByPage = {}
+
+  const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
+  const hasAppData = existsSync(appDataPath)
+
+  let hasPageData = false
+  if (pages.size) {
+    // test if 1 page-data file exists, if it does we know we're on a gatsby version that supports page-data
+    const pageDataPath = publicFolder(
+      getPageDataPath(pages.get(pages.keys().next().value).path)
+    )
+    hasPageData = existsSync(pageDataPath)
+  }
 
   pages.forEach(page => {
     const scripts = _.flatMap(COMMON_BUNDLES, file =>
@@ -103,10 +115,14 @@ function preloadHeadersByPage(pages, manifest, pathPrefix) {
     scripts.push(...getScriptPath(pathChunkName(page.path), manifest))
     scripts.push(...getScriptPath(page.componentChunkName, manifest))
 
-    const json = [
-      posix.join(PAGE_DATA_DIR, `app-data.json`),
-      getPageDataPath(page.path),
-    ]
+    const json = []
+    if (hasAppData) {
+      json.push(posix.join(PAGE_DATA_DIR, `app-data.json`))
+    }
+
+    if (hasPageData) {
+      json.push(getPageDataPath(page.path))
+    }
 
     const filesByResourceType = {
       script: scripts.filter(Boolean),
@@ -264,8 +280,13 @@ const applyLinkHeaders = (pluginData, { mergeLinkHeaders }) => headers => {
     return headers
   }
 
-  const { pages, manifest, pathPrefix } = pluginData
-  const perPageHeaders = preloadHeadersByPage(pages, manifest, pathPrefix)
+  const { pages, manifest, pathPrefix, publicFolder } = pluginData
+  const perPageHeaders = preloadHeadersByPage({
+    pages,
+    manifest,
+    pathPrefix,
+    publicFolder,
+  })
 
   return defaultMerge(headers, perPageHeaders)
 }
