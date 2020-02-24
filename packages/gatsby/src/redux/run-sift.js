@@ -8,6 +8,9 @@ const {
   toDottedFields,
   objectToDottedField,
   liftResolvedFields,
+  createDbQueriesFromObject,
+  prefixResolvedFields,
+  dbQueryToSiftQuery,
 } = require(`../db/common/query`)
 const {
   ensureIndexByTypedChain,
@@ -89,55 +92,6 @@ function handleMany(siftArgs, nodes) {
       )
 
   return result?.length ? result : null
-}
-
-/**
- * Given an object, assert that it has exactly one leaf property and that this
- * leaf is a number, string, or boolean. Additionally confirms that the path
- * does not contain the special cased `$elemMatch` name.
- * Returns undefined if not a flat path, if it contains `$elemMatch`, or if the
- * leaf value was not a bool, number, or string.
- * If array, it contains the property path followed by the leaf value.
- * Returns `undefined` if any condition is not met
- *
- * Example: `{a: {b: {c: "x"}}}` is flat with a chain of `['a', 'b', 'c', 'x']`
- * Example: `{a: {b: "x", c: "y"}}` is not flat because x and y are 2 leafs
- *
- * @param {Object} obj
- * @returns {Array<string | number | boolean>|undefined}
- */
-const getFlatPropertyChain = obj => {
-  if (!obj) {
-    return undefined
-  }
-
-  let chain = []
-  let props = Object.getOwnPropertyNames(obj)
-  let next = obj
-  while (props.length === 1) {
-    const prop = props[0]
-    if (prop === `$elemMatch`) {
-      // TODO: Support handling this special case without sift as well
-      return undefined
-    }
-    chain.push(prop)
-    next = next[prop]
-    if (
-      typeof next === `string` ||
-      typeof next === `number` ||
-      typeof next === `boolean`
-    ) {
-      chain.push(next)
-      return chain
-    }
-    if (!next) {
-      return undefined
-    }
-    props = Object.getOwnPropertyNames(next)
-  }
-
-  // This means at least one object in the chain had more than one property
-  return undefined
 }
 
 /**
@@ -246,27 +200,22 @@ const applyFilters = (
   typedKeyValueIndexes,
   resolvedFields
 ) => {
-  const filter = filterFields
-    ? getFilters(
-        liftResolvedFields(
-          toDottedFields(prepareQueryArgs(filterFields)),
-          resolvedFields
-        )
+  const filters = filterFields
+    ? prefixResolvedFields(
+        createDbQueriesFromObject(prepareQueryArgs(filterFields)),
+        resolvedFields
       )
     : []
 
-  let result
-  if (typedKeyValueIndexes && filter.length === 1) {
-    result = filterWithoutSift(filter[0], nodeTypeNames, typedKeyValueIndexes)
-    if (result) {
-      if (firstOnly) {
-        return result.slice(0, 1)
-      }
-      return result
+  const result = filterWithoutSift(filters, nodeTypeNames, typedKeyValueIndexes)
+  if (result) {
+    if (firstOnly) {
+      return result.slice(0, 1)
     }
+    return result
   }
 
-  return filterWithSift(filter, firstOnly, nodeTypeNames, resolvedFields)
+  return filterWithSift(filters, firstOnly, nodeTypeNames, resolvedFields)
 }
 
 /**
@@ -279,35 +228,29 @@ const applyFilters = (
  * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
  * @returns {Array|undefined} Collection of results
  */
-const filterWithoutSift = (filter, nodeTypeNames, typedKeyValueIndexes) => {
-  // Filter can be any struct like {a: {b: {$eq: "x"}}} and we want to confirm
-  // there is exactly one leaf in this structure and that this leaf is `$eq`.
-  // The actual names are irrelevant, they are a chain of props on a Node.
-
-  let chainWithNeedle = getFlatPropertyChain(filter)
-  if (!chainWithNeedle) {
-    return undefined
-  }
-
-  // `chainWithNeedle` should now be like:
-  //   `filter = {this: {is: {the: {chain: {$eq: needle}}}}}`
-  //  ->
-  //   `['this', 'is', 'the', 'chain', '$eq', needle]`
-  let targetValue = chainWithNeedle.pop()
-  let lastPath = chainWithNeedle.pop()
-
+const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
   // This can also be `$ne`, `$in` or any other grapqhl comparison op
-  if (lastPath !== `$eq`) {
+  if (
+    !typedKeyValueIndexes ||
+    filters.length !== 1 ||
+    filters[0].type === `elemMatch` ||
+    filters[0].query.comparator !== `$eq`
+  ) {
     return undefined
   }
+
+  const filter = filters[0]
 
   return runFlatFilterWithoutSift(
-    chainWithNeedle,
-    targetValue,
+    filter.path,
+    filter.query.value,
     nodeTypeNames,
     typedKeyValueIndexes
   )
 }
+
+// Not a public API
+exports.filterWithoutSift = filterWithoutSift
 
 /**
  * Use sift to apply filters
@@ -326,7 +269,7 @@ const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
 
   return _runSiftOnNodes(
     nodes,
-    filter,
+    filter.map(f => dbQueryToSiftQuery(f)),
     firstOnly,
     nodeTypeNames,
     resolvedFields,

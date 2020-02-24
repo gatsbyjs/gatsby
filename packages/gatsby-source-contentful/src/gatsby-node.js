@@ -197,8 +197,9 @@ exports.sourceNodes = async (
     })
 
   contentTypeItems.forEach((contentTypeItem, i) => {
-    normalize.createContentTypeNodes({
+    normalize.createNodesForContentType({
       contentTypeItem,
+      contentTypeItems,
       restrictedNodeFields,
       conflictFieldPrefix,
       entries: entryList[i],
@@ -210,6 +211,7 @@ exports.sourceNodes = async (
       locales,
       space,
       useNameForId: pluginConfig.get(`useNameForId`),
+      richTextOptions: pluginConfig.get(`richText`),
     })
   })
 
