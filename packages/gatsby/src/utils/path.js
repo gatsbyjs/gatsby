@@ -34,6 +34,7 @@ export function getCommonDir(path1, path2) {
   return posixJoinWithLeadingSlash(path1Segments)
 }
 
+// MacOS (APFS) and Windows (NTFS) filename length limit = 255 chars, Others = 255 bytes
 const MAX_PATH_SEGMENT_CHARS = 255
 const MAX_PATH_SEGMENT_BYTES = 255
 const SLICING_INDEX = 100
