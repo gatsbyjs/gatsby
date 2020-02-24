@@ -368,10 +368,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const pagePath = truncateLongPaths ? truncatePath(page.path) : page.path
 
   const isMacOs = process.platform === `darwin`
-  const isWindows = process.platform === `win32`
   const invalidFilenames = []
 
-  for (const segment of path.split(`/`)) {
+  for (const segment of pagePath.split(`/`)) {
     const isNameTooLong =
       isMacOs || isWindows
         ? segment.length > 255 // MacOS (APFS) and Windows (NTFS) filename length limit (255 chars)
@@ -382,20 +381,20 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
-  if (process.env.NODE_ENV === `production` || invalidFilenames.length > 0) {
+  if (process.env.NODE_ENV === `production` && invalidFilenames.length > 0) {
     report.panic({
       id: `11331`,
       context: {
         pluginName: name,
         api: `createPages`,
         message:
-          chalk.bold.yellow(
-            `This path contains filenames that exceed OS filename length limit: ${pagePath}\n
-          Here is the list of filenames that are too long:\n`
+          chalk.bold.red(
+            `This path contains filenames that exceed OS filename length limit: `
           ) +
-          console.log(`
-          ${invalidFilenames.map(filename => `${filename}\n`)}
-          `),
+          chalk(
+            `${pagePath}\n\nHere is the list of filenames that are too long:\n\n`
+          ) +
+          chalk(`${invalidFilenames.join(`\n\n`)}`),
       },
     })
   }
