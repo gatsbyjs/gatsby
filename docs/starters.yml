@@ -5311,3 +5311,20 @@
     - Serverless
     - Gatsby
     - Square payments
+- url: https://gatsby-animate.netlify.com/
+  repo: https://github.com/Mr404Found/gatsby-animate-starter
+  description: A responsive and super simple gatsby starter with awesome animations to components and to build your online solutions website. stay tuned more features coming soon
+  tags:
+    - Netlify
+    - SEO
+    - Blog
+    - Landing Page
+    - Styling:Other
+  features:
+    - Attractive Design
+    - Responsive webpage
+    - Services
+    - Animations
+    - yaml parsing
+    - Component Animations
+    - ReactReveal Library
