@@ -7,17 +7,11 @@ on:
     types: [requested_action]
 
 jobs:
-  eslint:
+  report_eslint_action:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: pvdz/eslint-action@9844f753f69fd81c227f2635a66a4737cd5064d6
+      - uses: gatsby/.github/actions/gatsby-eslint-reporter@lintaction
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  format:
-    if: github.event_name == 'check_run'
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "formatting ... someday maybe"
