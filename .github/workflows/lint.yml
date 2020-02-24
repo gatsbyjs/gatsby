@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: pvdz/eslint-action@f83f9ecdaed5fb15b26c7f041c203dd55c5134e0
+      - uses: pvdz/eslint-action@9da748446072111d9a4ab3579b1c77b2077b709c
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   format:
