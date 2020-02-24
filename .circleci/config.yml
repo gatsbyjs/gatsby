@@ -630,8 +630,6 @@ workflows:
       - bootstrap
       - windows_unit_tests:
           <<: *ignore_docs
-          requires:
-            - bootstrap
       - lint:
           requires:
             - bootstrap
