@@ -12,7 +12,7 @@ You’ll need a WordPress site with the [WooCommerce](https://woocommerce.com/) 
 
 ## Existing plugins
 
-This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages/@pasdo501/gatsby-source-woocommerce/). It is a straightforward solution specific to WooCommerce.
+This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages/@pasdo501/gatsby-source-woocommerce/).
 
 Install it:
 
