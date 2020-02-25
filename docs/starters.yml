@@ -2901,6 +2901,29 @@
   features:
     - Same as the official starter blog
     - Integration with Lunr.js
+- url: https://rg-portfolio.netlify.com/
+  repo: https://github.com/rohitguptab/rg-portfolio
+  description: Kick-off your Portfolio website with RG-Portfolio gatsby starter. We have used Gatsby + Contentful.
+  tags:
+    - Portfolio
+    - CMS:Contentful
+    - PWA
+    - Blog
+    - SEO
+    - Disqus
+    - Gallery
+    - Landing Page
+    - Markdown
+    - Netlify
+    - Styling:Bootstrap
+  features:
+    - Blogs listing with each blog post.
+    - Contact form with Email notification using formspree.io.
+    - Photos and Blogs page listing.
+    - Different types of sections like About, Service, Blogs, Work, Testimonials, Photos, and contact.
+    - All settings manage from contentful for example Header Menu, Homepage sections, blogs, and photos, etc.
+    - Social share in blog details pages with comment ( Disqus ).
+    - PWA
 - url: https://oneshopper.netlify.com
   repo: https://github.com/rohitguptab/OneShopper
   description: This Starter is created for Ecommerce site with Gatsby + Contentful and snipcart
