@@ -52,11 +52,7 @@ module.exports = async (
     content,
   })
 
-  createNode(mdxNode)
-  createParentChildLink({ parent: node, child: mdxNode })
-
-  // write scope files into .cache for later consumption
-  const { scopeImports, scopeIdentifiers } = await genMDX(
+  const { scopeImports, scopeIdentifiers, mdast } = await genMDX(
     {
       node: mdxNode,
       getNode,
@@ -72,6 +68,13 @@ module.exports = async (
     },
     { forceDisableCache: true }
   )
+
+  mdxNode.mdxAST = mdast
+
+  createNode(mdxNode)
+  createParentChildLink({ parent: node, child: mdxNode })
+
+  // write scope files into .cache for later consumption
   await cacheScope({
     cache,
     scopeIdentifiers,
