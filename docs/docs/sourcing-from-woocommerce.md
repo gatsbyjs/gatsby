@@ -12,7 +12,15 @@ You’ll need a WordPress site with the [WooCommerce](https://woocommerce.com/) 
 
 ## Existing plugins
 
-This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages/@pasdo501/gatsby-source-woocommerce/). It is a stable, straightforward solution specific to WooCommerce. You can install it with `npm install --save @pasdo501/gatsby-source-woocommerce` and then configure its options:
+This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages/@pasdo501/gatsby-source-woocommerce/). It is a straightforward solution specific to WooCommerce. 
+
+Install it:
+
+```bash
+npm install --save @pasdo501/gatsby-source-woocommerce
+``` 
+
+Configure its options:
 
 ```js:title=gatsby-config.js
 {       
@@ -32,7 +40,9 @@ This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages
 },
 ```
 
-However, there are other options which may make more sense for your project. For example, you may want to source more general site data like posts and pages from WordPress as well.
+The consumer key and secret come from WooCommerce. From your dashboard, go to WooCommerce > Settings > Advanced > REST API and then add a key. You can then copy and paste both the key and secret. Make sure to store any sensitive information in [environment variables](/docs/environment-variables/)!
+
+There are other options which may make more sense for your project. For example, you may want to source more general site data like posts and pages from WordPress as well.
 
 ### Pending Changes
 
@@ -44,7 +54,9 @@ The WPGraphQL plugin is also undergoing significant changes. It has not yet hit 
 
 ## Adding products
 
-WooCommerce products are the core of your WooCommerce site, so you’ll want to add some to your store. When you’re first getting started, there’s no need to dump absolutely everything you want to sell into your store. Begin with a few products that you can use to verify that everything is hooked up correctly. You can also [import products from a CSV file](https://docs.woocommerce.com/document/product-csv-importer-exporter/). You should see as prompt to create your first product after completing the WooCommerce setup wizard. 
+WooCommerce products are the core of your WooCommerce site, so you’ll want to add some to your store. When you’re first getting started, there’s no need to dump absolutely everything you want to sell into your store. Begin with a few products that you can use to verify that everything is hooked up correctly. You can also [import products from a CSV file](https://docs.woocommerce.com/document/product-csv-importer-exporter/). 
+
+You should see a prompt to create your first product after completing the WooCommerce setup wizard. Doing so at this time will trigger a guided tour of the new product form. Walk through this process for each product you'd like to add to your store.
 
 Once this is done, you’ll be able to use GraphQL to query for your products:
 
