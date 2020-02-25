@@ -1,8 +1,8 @@
-const fs = require("fs-extra")
-const sizeof = require("object-sizeof")
-const klaw = require("klaw")
-const { PubSub } = require("@google-cloud/pubsub")
-const { Storage } = require("@google-cloud/storage")
+const fs = require(`fs-extra`)
+const sizeof = require(`object-sizeof`)
+const klaw = require(`klaw`)
+const { PubSub } = require(`@google-cloud/pubsub`)
+const { Storage } = require(`@google-cloud/storage`)
 
 const MAX_PUBSUB_RESPONSE_SIZE = 1024 * 1024 // 5mb
 
@@ -21,26 +21,26 @@ async function processPubSubMessageOrStorageObject(msg) {
     data = msg.data
   }
 
-  return JSON.parse(Buffer.from(data, "base64").toString())
+  return JSON.parse(Buffer.from(data, `base64`).toString())
 }
 
 exports.runTask = async (msg, handler) => {
-  await fs.mkdirp("/tmp/output")
-  process.chdir("/tmp/output")
+  await fs.mkdirp(`/tmp/output`)
+  process.chdir(`/tmp/output`)
 
   const event = await processPubSubMessageOrStorageObject(msg)
-  console.log("Processing", event.id)
+  console.log(`Processing`, event.id)
   try {
-    const file = Buffer.from(event.file, "base64")
+    const file = Buffer.from(event.file, `base64`)
     const output = await handler(file, event)
-    const result = { type: "JOB_COMPLETED" }
+    const result = { type: `JOB_COMPLETED` }
     const payload = { id: event.id, files: {}, output }
-    for await (const file of klaw("/tmp/output")) {
+    for await (const file of klaw(`/tmp/output`)) {
       if (file.stats.isFile()) {
         const data = await fs.readFile(file.path)
         payload.files[
-          file.path.replace(/^\/tmp\/output\//, "")
-        ] = data.toString("base64")
+          file.path.replace(/^\/tmp\/output\//, ``)
+        ] = data.toString(`base64`)
       }
     }
 
@@ -58,19 +58,19 @@ exports.runTask = async (msg, handler) => {
     const resultMsg = Buffer.from(JSON.stringify(result))
     const messageId = await pubSubClient.topic(event.topic).publish(resultMsg)
     console.log(
-      "Published message ",
+      `Published message `,
       event.id,
       messageId,
       resultMsg.length,
       result.storedPayload
     )
-    await fs.emptyDir("/tmp")
+    await fs.emptyDir(`/tmp`)
   } catch (err) {
-    console.error("Failed to process message:", event.id, err)
+    console.error(`Failed to process message:`, event.id, err)
     await pubSubClient.topic(event.topic).publish(
       Buffer.from(
         JSON.stringify({
-          type: "JOB_FAILED",
+          type: `JOB_FAILED`,
           payload: {
             id: event.id,
             error: err.toString(),
@@ -78,6 +78,6 @@ exports.runTask = async (msg, handler) => {
         })
       )
     )
-    await fs.emptyDir("/tmp")
+    await fs.emptyDir(`/tmp`)
   }
 }

@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-const cp = require("child_process")
-const log = require("loglevel")
-const path = require("path")
-const { ProcessorQueue } = require("./processor-queue")
+const cp = require(`child_process`)
+const log = require(`loglevel`)
+const path = require(`path`)
+const { ProcessorQueue } = require(`./processor-queue`)
 const {
   GoogleFunctions,
-} = require("./processor-queue/implementations/google-functions")
-const { resolveProcessors } = require("./utils")
+} = require(`./processor-queue/implementations/google-functions`)
+const { resolveProcessors } = require(`./utils`)
 
 const MESSAGE_TYPES = {
   LOG_ACTION: `LOG_ACTION`,
@@ -26,45 +26,47 @@ function messageHandler(gatsbyProcess, processors = {}) {
       log.getLevel() <= log.levels.TRACE &&
       msg.type !== MESSAGE_TYPES.LOG_ACTION
     ) {
-      log.trace("Got gatsby message", JSON.stringify(msg))
+      log.trace(`Got gatsby message`, JSON.stringify(msg))
     }
     switch (msg.type) {
       case MESSAGE_TYPES.JOB_CREATED: {
         const processor = processors[msg.payload.name]
         if (!processor) {
-          return gatsbyProcess.send({
-            type: "JOB_NOT_WHITELISTED",
+          gatsbyProcess.send({
+            type: `JOB_NOT_WHITELISTED`,
             payload: { id: msg.payload.id },
           })
+          return
         }
         try {
           const result = await processor.process(msg.payload)
           gatsbyProcess.send({
-            type: "JOB_COMPLETED",
+            type: `JOB_COMPLETED`,
             payload: {
               id: msg.payload.id,
               result,
             },
           })
         } catch (error) {
-          log.error("Processing failed", msg.payload.id, " error:", error)
+          log.error(`Processing failed`, msg.payload.id, ` error:`, error)
           gatsbyProcess.send({
-            type: "JOB_FAILED",
+            type: `JOB_FAILED`,
             payload: { id: msg.payload.id, error: error.toString() },
           })
         }
+        break
       }
       case MESSAGE_TYPES.LOG_ACTION:
         // msg.action.payload.text && console.log(msg.action.payload.text)
         break
       default:
-        log.warn("Ignoring message: ", msg)
+        log.warn(`Ignoring message: `, msg)
     }
   }
 }
 
-exports.build = async function(cmd = "node_modules/.bin/gatsby build") {
-  log.setLevel(process.env.PARALLEL_RUNNER_LOG_LEVEL || "warn")
+exports.build = async function(cmd = `node_modules/.bin/gatsby build`) {
+  log.setLevel(process.env.PARALLEL_RUNNER_LOG_LEVEL || `warn`)
 
   process.env.ENABLE_GATSBY_EXTERNAL_JOBS = true
 
@@ -82,15 +84,15 @@ exports.build = async function(cmd = "node_modules/.bin/gatsby build") {
     })
   )
 
-  const [bin, ...args] = cmd.split(" ")
+  const [bin, ...args] = cmd.split(` `)
   const gatsbyProcess = cp.fork(path.join(process.cwd(), bin), args)
-  gatsbyProcess.on("exit", async code => {
-    log.debug("Gatsby existed with", code)
+  gatsbyProcess.on(`exit`, async code => {
+    log.debug(`Gatsby existed with`, code)
     process.exit(code)
   })
 
   const handler = messageHandler(gatsbyProcess, processors)
-  gatsbyProcess.on("message", handler)
+  gatsbyProcess.on(`message`, handler)
 }
 
 exports.messageHandler = messageHandler

@@ -1,5 +1,5 @@
-const { runTask } = require("./cloud-function-task-runner")
-const { processFile } = require("gatsby-plugin-sharp/process-file")
+const { runTask } = require(`./cloud-function-task-runner`)
+const { processFile } = require(`gatsby-plugin-sharp/process-file`)
 
 exports.processor = async (msg, context) => {
   await runTask(msg, async (file, event) => {

@@ -1,5 +1,5 @@
-const fs = require("fs-extra")
-const log = require("loglevel")
+const fs = require(`fs-extra`)
+const log = require(`loglevel`)
 
 const DEFAULT_MAX_JOB_TIME = process.env.PARALLEL_RUNNER_TIMEOUT
   ? parseInt(process.env.PARALLEL_RUNNER_TIMEOUT, 10)
@@ -31,7 +31,7 @@ class Job {
     return Buffer.from(
       JSON.stringify({
         id: this.id,
-        file: data.toString("base64"),
+        file: data.toString(`base64`),
         action: this.args,
         topic: process.env.TOPIC,
       })
@@ -44,7 +44,7 @@ class Job {
     }
     try {
       const stat = await fs.stat(this.file)
-      this.fileSize = stat.size
+      return (this.fileSize = stat.size)
     } catch (err) {
       return Promise.reject(err)
     }
@@ -63,8 +63,9 @@ class Queue {
     this._jobs = new Map()
     this.maxJobTime = maxJobTime || DEFAULT_MAX_JOB_TIME
     this.pubSubImplementation = pubSubImplementation
-    pubSubImplementation &&
+    if (pubSubImplementation) {
       pubSubImplementation.subscribe(this._onMessage.bind(this))
+    }
   }
 
   async push(id, msg) {
@@ -85,7 +86,7 @@ class Queue {
 
   _onMessage(pubSubMessage) {
     const { type, payload } = pubSubMessage
-    log.debug("Got worker message", type, payload && payload.id)
+    log.debug(`Got worker message`, type, payload && payload.id)
 
     switch (type) {
       case MESSAGE_TYPES.JOB_COMPLETED:
@@ -101,7 +102,7 @@ class Queue {
         }
         return
       default:
-        log.error("Unkown worker message: ", pubSubMessage)
+        log.error(`Unkown worker message: `, pubSubMessage)
     }
   }
 }

@@ -1,9 +1,9 @@
-const { PubSub } = require("@google-cloud/pubsub")
-const { Storage } = require("@google-cloud/storage")
-const fs = require("fs-extra")
-const path = require("path")
-const log = require("loglevel")
-const { topicFor, bucketFor } = require("./utils")
+const { PubSub } = require(`@google-cloud/pubsub`)
+const { Storage } = require(`@google-cloud/storage`)
+const fs = require(`fs-extra`)
+const path = require(`path`)
+const log = require(`loglevel`)
+const { topicFor, bucketFor } = require(`./utils`)
 
 const DEFAULT_MAX_PUB_SUB_SIZE = 1024 * 1024 * 5 // 5 Megabyte
 
@@ -24,7 +24,7 @@ class GoogleFunctions {
 
     return (async () => {
       const topicCreatedFile = path.join(
-        ".cache",
+        `.cache`,
         `topic-created-${process.env.TOPIC}`
       )
       const exists = await fs.pathExists(topicCreatedFile)
@@ -62,13 +62,13 @@ class GoogleFunctions {
       await this.storageClient
         .bucket(this.workerBucket)
         .file(`event-${id}`)
-        .save(msg.toString("base64"), { resumable: false })
+        .save(msg.toString(`base64`), { resumable: false })
     }
   }
 
   async _messageHandler(msg) {
     msg.ack()
-    const pubSubMessage = JSON.parse(Buffer.from(msg.data, "base64").toString())
+    const pubSubMessage = JSON.parse(Buffer.from(msg.data, `base64`).toString())
     if (pubSubMessage.storedPayload) {
       const payload = await this._downloadFromStorage(
         msg.id,
@@ -85,17 +85,17 @@ class GoogleFunctions {
     try {
       await this.pubSubClient.createTopic(this.resultTopic)
     } catch (err) {
-      log.trace("Create result topic failed", err)
+      log.trace(`Create result topic failed`, err)
     }
 
     const [subscription] = await this.pubSubClient
       .topic(this.resultTopic)
       .createSubscription(this.subName)
 
-    subscription.on("message", this._messageHandler.bind(this))
-    subscription.on("error", err => log.error("Error from subscription: ", err))
-    subscription.on("close", err =>
-      log.error("Subscription closed unexpectedly", err)
+    subscription.on(`message`, this._messageHandler.bind(this))
+    subscription.on(`error`, err => log.error(`Error from subscription: `, err))
+    subscription.on(`close`, err =>
+      log.error(`Subscription closed unexpectedly`, err)
     )
   }
 
@@ -117,7 +117,7 @@ class GoogleFunctions {
       )
       await bucket.setMetadata({ lifeCycle })
     } catch (err) {
-      log.trace("Create result bucket failed", err)
+      log.trace(`Create result bucket failed`, err)
     }
   }
 

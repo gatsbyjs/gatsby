@@ -1,46 +1,46 @@
 #!/usr/bin/env node
 
-const { spawn } = require("child_process")
-const { readFile, pathExists } = require("fs-extra")
-const path = require("path")
-const { PubSub } = require("@google-cloud/pubsub")
-const { Storage } = require("@google-cloud/storage")
-const { topicFor, bucketFor } = require("./utils")
-const { resolveProcessors } = require("../../../utils")
+const { spawn } = require(`child_process`)
+const { readFile, pathExists } = require(`fs-extra`)
+const path = require(`path`)
+const { PubSub } = require(`@google-cloud/pubsub`)
+const { Storage } = require(`@google-cloud/storage`)
+const { topicFor, bucketFor } = require(`./utils`)
+const { resolveProcessors } = require(`../../../utils`)
 
 function deployType(type, processor, cwd, config) {
   return new Promise((resolve, reject) => {
     const args = [
-      "functions",
-      "deploy",
+      `functions`,
+      `deploy`,
       `processor${processor.name}${type}`,
-      "--entry-point",
-      "processor",
-      "--memory",
-      "1024MB",
-      "--service-account",
+      `--entry-point`,
+      `processor`,
+      `--memory`,
+      `1024MB`,
+      `--service-account`,
       config.client_email,
-      "--project",
+      `--project`,
       config.project_id,
-      "--runtime",
-      "nodejs10",
+      `--runtime`,
+      `nodejs10`,
     ]
-    if (type === "PubSub") {
-      args.push("--trigger-topic")
+    if (type === `PubSub`) {
+      args.push(`--trigger-topic`)
       args.push(topicFor(processor))
     } else {
-      args.push("--trigger-resource")
+      args.push(`--trigger-resource`)
       args.push(bucketFor(processor))
-      args.push("--trigger-event google.storage.object.finalize")
+      args.push(`--trigger-event google.storage.object.finalize`)
     }
 
-    const ps = spawn("gcloud", args, { shell: true, cwd, stdio: "inherit" })
+    const ps = spawn(`gcloud`, args, { shell: true, cwd, stdio: `inherit` })
 
-    ps.on("close", code => {
+    ps.on(`close`, code => {
       if (code === 0) {
         return resolve(code)
       }
-      reject(code)
+      return reject(code)
     })
   })
 }
@@ -62,19 +62,19 @@ exports.deploy = async function() {
       processors.map(async processor => {
         const cwd = path.join(
           processor.path,
-          "implementations",
-          "google-functions"
+          `implementations`,
+          `google-functions`
         )
         const exists = await pathExists(cwd)
         if (!exists) {
-          console.warn("No google-functions implementation for", processor.path)
-          return
+          console.warn(`No google-functions implementation for`, processor.path)
+          return null
         }
 
         try {
           await pubSubClient.createTopic(topicFor(processor))
         } catch (err) {
-          console.log("Create topic failed", err)
+          console.log(`Create topic failed`, err)
         }
 
         try {
@@ -92,22 +92,24 @@ exports.deploy = async function() {
           const [bucket] = await storage.createBucket(bucketFor(processor))
           await bucket.setMetadata({ lifeCycle })
         } catch (err) {
-          console.log("Create bucket failed", err)
+          console.log(`Create bucket failed`, err)
         }
 
         try {
-          console.log("Deploying as pubsub handler")
-          await deployType("PubSub", processor, cwd, config)
+          console.log(`Deploying as pubsub handler`)
+          await deployType(`PubSub`, processor, cwd, config)
 
-          console.log("Deploying as storage handler")
-          await deployType("Storage", processor, cwd, config)
+          console.log(`Deploying as storage handler`)
+          await deployType(`Storage`, processor, cwd, config)
         } catch (err) {
-          console.log("Error: ", err)
+          console.log(`Error: `, err)
           return Promise.reject(err)
         }
+        return null
       })
     )
   } catch (err) {
     return Promise.reject(err)
   }
+  return null
 }

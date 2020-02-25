@@ -1,5 +1,5 @@
 "use strict"
-const { Queue, Job } = require("./queue")
+const { Queue, Job } = require(`./queue`)
 
 const DEFAULT_MAX_MESSAGE_MEM = 1024 * 1024 * 5 * 10 // 500 megabytes
 
@@ -34,7 +34,7 @@ class ProcessorQueue {
         if (this._mem <= this.maxMessageMem) {
           return resolve()
         }
-        setTimeout(check, 100)
+        return setTimeout(check, 100)
       }
       check()
     })

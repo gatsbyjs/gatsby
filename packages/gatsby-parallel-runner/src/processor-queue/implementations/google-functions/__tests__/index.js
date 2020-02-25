@@ -1,13 +1,13 @@
-const { GoogleFunctions } = require("..")
+const { GoogleFunctions } = require(`..`)
 
-test("instantiate google pubsub", async () => {
+test(`instantiate google pubsub`, async () => {
   const pubSub = await new GoogleFunctions({ noSubscription: true })
   expect(pubSub).toBeInstanceOf(GoogleFunctions)
 })
 
-test("size check for google publish", async () => {
+test(`size check for google publish`, async () => {
   const pubSub = await new GoogleFunctions({ noSubscription: true })
-  const msg = Buffer.from("Hello, World!")
+  const msg = Buffer.from(`Hello, World!`)
   pubSub.maxPubSubSize = 10000
   pubSub.pubSubClient = {
     topic: () => {
@@ -25,8 +25,8 @@ test("size check for google publish", async () => {
           expect(path).toEqual(`event-2345`)
           return {
             save: async (data, options) => {
-              expect(Buffer.from(data, "base64").toString()).toEqual(
-                "Hello, World!"
+              expect(Buffer.from(data, `base64`).toString()).toEqual(
+                `Hello, World!`
               )
               expect(options).toEqual({ resumable: false })
             },
@@ -35,8 +35,8 @@ test("size check for google publish", async () => {
       }
     },
   }
-  pubSub.publish("1234", msg)
+  pubSub.publish(`1234`, msg)
 
   pubSub.maxPubSubSize = 2
-  pubSub.publish("2345", msg)
+  pubSub.publish(`2345`, msg)
 })
