@@ -9882,4 +9882,14 @@
     - Portfolio
   built_by: Chris Vogt
   built_by_url: https://github.com/chrisvogt
+- title: Trolley Travel
+  main_url: http://trolleytravel.org/
+  url: http://trolleytravel.org/
+  description: >
+    Travel blog website to give tips and informations for many destinations, built with Novella theme
+  categories:
+    - Blog
+    - Travel
+  built_by: Pierre Beard
+  built_by_url: https://github.com/PBRT
   featured: false

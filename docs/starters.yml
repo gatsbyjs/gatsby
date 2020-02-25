@@ -2901,6 +2901,29 @@
   features:
     - Same as the official starter blog
     - Integration with Lunr.js
+- url: https://rg-portfolio.netlify.com/
+  repo: https://github.com/rohitguptab/rg-portfolio
+  description: Kick-off your Portfolio website with RG-Portfolio gatsby starter. We have used Gatsby + Contentful.
+  tags:
+    - Portfolio
+    - CMS:Contentful
+    - PWA
+    - Blog
+    - SEO
+    - Disqus
+    - Gallery
+    - Landing Page
+    - Markdown
+    - Netlify
+    - Styling:Bootstrap
+  features:
+    - Blogs listing with each blog post.
+    - Contact form with Email notification using formspree.io.
+    - Photos and Blogs page listing.
+    - Different types of sections like About, Service, Blogs, Work, Testimonials, Photos, and contact.
+    - All settings manage from contentful for example Header Menu, Homepage sections, blogs, and photos, etc.
+    - Social share in blog details pages with comment ( Disqus ).
+    - PWA
 - url: https://oneshopper.netlify.com
   repo: https://github.com/rohitguptab/OneShopper
   description: This Starter is created for Ecommerce site with Gatsby + Contentful and snipcart
@@ -5335,3 +5358,25 @@
     - Simple React functional components (FC).
     - Google Analytics ready.
     - Continuous deployment via Netlify or Zeit.
+- url: https://gatsby-starter-mountain.netlify.com/
+  repo: https://github.com/artezan/gatsby-starter-mountain
+  description: Blog theme that combine the new powerful MDX with the old WordPress. Built with WP/MDX and Theme UI
+  tags:
+    - Styling:CSS-in-JS
+    - PWA
+    - MDX
+    - CMS:WordPress
+    - Landing Page
+    - Blog
+  features:
+    - gatsby-theme-wordpress-mdx
+    - Theme UI
+    - react-animate-on-scroll
+    - Responsive Design
+    - SEO friendly
+    - Optimized images with gatsby-image
+    - Git pre-commit and pre-push hooks using Husky
+    - Highly optimized with excellent lighthouse audit score
+    - Light/Dark mode
+    - CSS Animations
+    - Mountain style

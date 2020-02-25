@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.32...gatsby-plugin-netlify@2.1.33) (2020-02-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** add page-data & app-data to preload list ([#21552](https://github.com/gatsbyjs/gatsby/issues/21552)) ([bf3fabd](https://github.com/gatsbyjs/gatsby/commit/bf3fabd))
+
 ## [2.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.31...gatsby-plugin-netlify@2.1.32) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-netlify
