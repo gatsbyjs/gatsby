@@ -86,6 +86,8 @@ function runEslint() {
 }
 
 async function updateAction() {
+  console.log('updateAction to in_progress')
+
   const body = {
     name: checkName,
     head_sha: actualSHA,
@@ -97,7 +99,7 @@ async function updateAction() {
   const {
     data: { id },
   } = await request(
-    `https://api.github.com/repos/${owner}/${repo}/check-runs/${checkName}`,
+    `https://api.github.com/repos/${owner}/${repo}/check-runs`,
     {
       method: "PATCH",
       headers,
@@ -119,7 +121,7 @@ async function completeAction(id, conclusion, output) {
   }
 
   await request(
-    `https://api.github.com/repos/${owner}/${repo}/check-runs/${id}/${checkName}`,
+    `https://api.github.com/repos/${owner}/${repo}/check-runs/${id}`,
     {
       method: "PATCH",
       headers,
