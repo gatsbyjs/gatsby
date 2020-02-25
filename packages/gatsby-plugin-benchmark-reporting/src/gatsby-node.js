@@ -80,6 +80,7 @@ class BenchMeta {
     const nodejsVersion = process.version
 
     // This assumes the benchmark is started explicitly from `node_modules/.bin/gatsby`, and not a global install
+    // (This is what `gatsby --version` does too, ultimately)
     const gatsbyCliVersion = require(`gatsby-cli/package.json`).version
 
     const gatsbyVersion = require(`gatsby/package.json`).version
@@ -88,7 +89,7 @@ class BenchMeta {
       ? require(`sharp/package.json`).version
       : `none`
 
-    const webpackVersion = require(`webpack`).version
+    const webpackVersion = require(`webpack/package.json`).version
 
     const publicJsSize = glob(`public/*.js`).reduce(
       (t, file) => t + fs.statSync(file).size,
