@@ -469,6 +469,8 @@
                   link: /docs/processing-payments-with-stripe/
                 - title: Processing Payments with Square
                   link: /docs/processing-payments-with-square/
+                - title: Sourcing from WooCommerce
+                  link: /docs/sourcing-from-woocommerce
         - title: Improving Performance
           link: /docs/performance/
           items:
