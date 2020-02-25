@@ -16,7 +16,7 @@ The namespaces in Gatsby's Redux store are a great overview of the Gatsby intern
 - Webpack
 - Metadata
 
-The Gatsby [/redux index file](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap & build phases, `store` is used to get the current state & dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](https://www.gatsbyjs.org/docs/node-apis/).
+The Gatsby [/redux index file](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](https://www.gatsbyjs.org/docs/node-apis/).
 
 ## Actions
 
@@ -24,15 +24,15 @@ Actions dispatched can have a series of effects as different reducers pick them 
 
 Actions dispatched in the store cause state changes through the reducers and also trigger listeners registered for that action on the `emitter`. The `subscribe` Redux store method is typically used to connect a web framework like React, Gatsby only uses the `subscribe` method to connect the `emitter`.
 
-The Gatsby actions are all either internal, public or restricted. The public actions, and a context relevant subset of the restricted actions, are available to users through the [Node APIs](https://www.gatsbyjs.org/docs/node-apis/). There is a Gatsby docs page detailing all the public and restricted actions [here](/docs/actions/).
+The [Gatsby actions](/docs/actions/) are all either internal, public or restricted. The public actions, and a context relevant subset of the restricted actions, are available to users through the [Node APIs](https://www.gatsbyjs.org/docs/node-apis/). 
 
-## Action Journey
+### Action Journey
 
 At the time of writing there are 10 places in the code where `CREATE_NODE` type actions are dispatched, and 10 places where they are acted on through either reducers or `emitter` listeners.
 
-Here is the journey of a simpler public action, [createRedirect](/docs/actions/#createRedirect), through defining, exposing and dispatching:
+Here is the journey of the [createRedirect](/docs/actions/#createRedirect) public action through defining, exposing and dispatching:
 
-- **Reducer case** - [redirects.js](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/reducers/redirects.js#L28) - The redirects reducer will catch actions with a type `CREATE_REDIRECT` and makes the necessary state manipulation.
+- **Reducer case** - [redirects.js](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/reducers/redirects.js#L28) - The redirects reducer will catch actions with a type `CREATE_REDIRECT` and make the necessary state manipulation.
 
 - **Side effect** - [redirects-writer.js](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/bootstrap/redirects-writer.js#L44) - An `emitter` listener is registered for the `CREATE_REDIRECT` action type.
 
@@ -40,7 +40,7 @@ Here is the journey of a simpler public action, [createRedirect](/docs/actions/#
 
 - **Expose bound action creator** - [api-runner-node.js](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/utils/api-runner-node.js#L102) - `createRedirect` is one of the public actions made available to all of the [Node APIs](/docs/node-apis/). Node APIs are all run by the `apiRun` function found in `api-runner-node.js`. A collection of public actions and the restricted actions available to the called API are bound to the Redux store dispatch. The bound action collection is then passed when calling the user's API function.
 
-- **Dispatch** - Here an example `createRedirect` call that a Gatsby user could make with the [createPages](https://www.gatsbyjs.org/docs/node-apis/#createPages) API in their project's [gatsby-node.js](https://www.gatsbyjs.org/docs/api-files-gatsby-node/) file:
+- **Dispatch** - Here is an example of the `createRedirect` call that a Gatsby user could make with the [createPages](https://www.gatsbyjs.org/docs/node-apis/#createPages) API in their project's [gatsby-node.js](https://www.gatsbyjs.org/docs/api-files-gatsby-node/) file:
 
 ```javascript:title=gatsby-node.js
 module.exports = {
