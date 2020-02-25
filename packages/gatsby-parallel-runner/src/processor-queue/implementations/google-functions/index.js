@@ -8,11 +8,16 @@ const { topicFor, bucketFor } = require(`./utils`)
 const DEFAULT_MAX_PUB_SUB_SIZE = 1024 * 1024 * 5 // 5 Megabyte
 
 class GoogleFunctions {
-  constructor({ processorSettings, maxPubSubSize, noSubscription }) {
+  constructor({
+    processorSettings,
+    maxPubSubSize,
+    noSubscription,
+    googleConfig,
+  }) {
     this.maxPubSubSize = maxPubSubSize || DEFAULT_MAX_PUB_SUB_SIZE
-    const config = JSON.parse(
-      fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS)
-    )
+    const config =
+      googleConfig ||
+      JSON.parse(fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS))
     this.subName = `gatsby-sub-${new Date().getTime()}`
     this.workerBucket = bucketFor(processorSettings)
     this.workerTopic = topicFor(processorSettings)

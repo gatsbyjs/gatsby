@@ -1,12 +1,23 @@
 const { GoogleFunctions } = require(`..`)
 
+const googleConfig = { project_id: `test-project` }
+const processorSettings = { name: `image-processor`, key: `IMAGE_PROCESSOR` }
+
 test(`instantiate google pubsub`, async () => {
-  const pubSub = await new GoogleFunctions({ noSubscription: true })
+  const pubSub = await new GoogleFunctions({
+    noSubscription: true,
+    processorSettings,
+    googleConfig,
+  })
   expect(pubSub).toBeInstanceOf(GoogleFunctions)
 })
 
 test(`size check for google publish`, async () => {
-  const pubSub = await new GoogleFunctions({ noSubscription: true })
+  const pubSub = await new GoogleFunctions({
+    noSubscription: true,
+    processorSettings,
+    googleConfig,
+  })
   const msg = Buffer.from(`Hello, World!`)
   pubSub.maxPubSubSize = 10000
   pubSub.pubSubClient = {
