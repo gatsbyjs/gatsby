@@ -1,6 +1,8 @@
 ---
 Title: Working with Etsy in Gatsby
----This guide explains how to begin working with the e-commerce site Etsy in Gatsby.
+---
+
+This guide explains how to begin working with the e-commerce site Etsy in Gatsby.
 
 ## Etsy API
 

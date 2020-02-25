@@ -469,7 +469,7 @@
                   link: /docs/processing-payments-with-stripe/
                 - title: Processing Payments with Square
                   link: /docs/processing-payments-with-square/
-                - title: Guide on working with Etsy in Gatsby
+                - title: Working with Etsy in Gatsby
                   link: /docs/working-with-Etsy-in-Gatsby/
         - title: Improving Performance
           link: /docs/performance/
