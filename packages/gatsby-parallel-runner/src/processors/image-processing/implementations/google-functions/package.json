@@ -1,0 +1,19 @@
+{
+  "name": "cloud_sharp_processor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/pubsub": "^1.4.1",
+    "@google-cloud/storage": "^4.3.0",
+    "fs-extra": "^8.1.0",
+    "gatsby-plugin-sharp": "^2.4.5",
+    "klaw": "^3.0.0",
+    "object-sizeof": "^1.5.2"
+  }
+}

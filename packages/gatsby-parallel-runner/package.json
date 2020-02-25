@@ -1,0 +1,24 @@
+{
+  "name": "gatsby-parallel-runner",
+  "version": "1.2.0-beta.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "gatsby-parallel-runner": "./bin/run.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/pubsub": "^0.29.1",
+    "@google-cloud/storage": "^4.3.0",
+    "fs-extra": "^8.1.0",
+    "grpc": "^1.24.2",
+    "loglevel": "^1.6.6"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
