@@ -16,15 +16,39 @@ on:
 #        env:
 #          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-report_eslint:
-  if: github.event_name == 'pull_request'
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v1
-    - run: yarn --frozen-lockfile --ignore-engines --ignore-optional --no-bin-links --non-interactive --silent --ignore-scripts --production=false
-    - uses: a-b-r-o-w-n/eslint-action@v1
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
-        files: "**/**"
-        #          ignore: "src/some-file-to-ignore.js"
-        extensions: ".js,.jsx,.ts"
+# Doesn't work because I think it skips the npm install step?
+#jobs:
+#  report_eslint:
+#    if: github.event_name == 'pull_request'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#      - uses: a-b-r-o-w-n/eslint-action@v1
+#        with:
+#          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+#          files: "**/**"
+#          #          ignore: "src/some-file-to-ignore.js"
+#          extensions: ".js,.jsx,.ts"
+
+jobs:
+  report_eslint:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - run: rm -f .yarnclean
+      - run: yarn --frozen-lockfile --ignore-engines --ignore-optional --no-bin-links --non-interactive --silent --ignore-scripts --production=false
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+          HUSKY_SKIP_INSTALL: true
+      # Alternative: if you use npm instead of yarn
+      # - run: npm ci --no-audit --prefer-offline
+      - uses: tinovyatkin/action-eslint@v1
+        with:
+          repo-token: ${{secrets.GITHUB_TOKEN}}
+          check-name: report_eslint # this is the check name from above 👆 where to post annotations
