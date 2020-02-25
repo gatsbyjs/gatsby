@@ -62,9 +62,9 @@ git push -u origin master
 
 Commit and push regularly for best results.
 
-Navigate inside of the `lerna-monorepo-starter` directory and install the packages by running `yarn`. Once your packages have installed, run `yarn develop` to run the application on localhost:8000.
+Navigate inside of the `lerna-monorepo-starter` directory and install the packages by running `yarn`. Once your packages have installed, run `yarn develop` to run the application on `http://localhost:8000`.
 
-Open Chrome, and navigate to localhost:8000. You’ll find a simple application with a mock blog and a mock shop. Imagine this is a fleshed out application, we can make the assumption that the underlying logic behind the blog and the shop are different and that there are similarities with the styling and components.
+Open Chrome, and navigate to `http://localhost:8000`. You’ll find a simple application with a mock blog and a mock shop. Imagine this is a fleshed out application, we can make the assumption that the underlying logic behind the blog and the shop are different and that there are similarities with the styling and components.
 
 Go back to your IDE and you’ll see that we’re not pulling data from an external source. The data is being served locally via a couple of json files in the `data` directory. When we run the `develop` command Gatsby pulls the data from these json files and creates pages for them. You can take a look at how this being done by peeking inside of the `gatsby-node.js` file. This is because Gatsby builds the code and outputs a static site.
 
@@ -333,7 +333,7 @@ This adds the `dotenv` module to only the blog and shop packages, this way we do
 
 Create a new file in your shop package called `.env.development` and `.env.production`. Inside the former, add the following line:
 
-`BLOG_URL=https://localhost:8000`
+`BLOG_URL=http://localhost:8000`
 
 Leave the production file alone for now and repeat for blog package, just change the name of the variable to `SHOP_URL` and the port to `8001`.
 

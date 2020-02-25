@@ -3,8 +3,6 @@ title: Glossary
 disableTableOfContents: true
 ---
 
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
-
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 <HorizontalNavList
@@ -78,6 +76,10 @@ A component can include components within it. In fact, [pages](#page) and [templ
 
 The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option set in config is your sites metadata that can power your SEO meta tags.
 
+### [Continuous Deployment](/docs/glossary/continuous-deployment)
+
+Continuous deployment (CD) automates the process of releasing changes to your project. A continuous deployment workflow automatically builds and tests your project, and publishes your changes only when they pass the required tests.
+
 ### CSS
 
 [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) stands for Cascading Style Sheets, and it's a major part of the Web Platform with [HTML](#html) and [JavaScript](#javascript). CSS is a language for styling webpages designed to be highly backwards-compatible. As new features are rolled out to end users, [CSS parsers](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/#CSS_parsing) can safely ignore unsupported features and enhance with the properties they do support. CSS accomplishes this with its _cascading_ design, fundamental to styling with new techniques like [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/CSS_Grid_and_Progressive_Enhancement) while providing fallbacks for older browsers. Gatsby supports multiple [approaches to styling](/docs/styling/), including regular CSS files, CSS modules, and CSS-in-JS.
@@ -95,6 +97,10 @@ A database is a structured collection of data or content. Often a [CMS](#cms) wi
 ### Decoupled
 
 Decoupling describes the separation of different concerns. With [Gatsby](#gatsby) this most commonly means decoupling the [frontend](#frontend) from the [backend](#backend), like with [Decoupled Drupal](https://dri.es/how-to-decouple-drupal-in-2019) or [Headless WordPress](https://www.smashingmagazine.com/2018/10/headless-wordpress-decoupled/).
+
+### [Decoupled Drupal](/docs/glossary/decoupled-drupal)
+
+Decoupling refers to the practice of using Drupal as a [headless CMS](#headless-cms). A decoupled Drupal instance functions as a content API that returns JSON for your [frontend](#frontend) to consume.
 
 ### Deploy
 
@@ -150,9 +156,13 @@ A [query](#query) language that allows you to pull data into your website or app
 
 A markup language that every web browser is able to understand. It stands for Hypertext Markup Language. [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) gives your web content a universal informational structure, defining things like headings, paragraphs, and more. It is also key to providing an accessible website.
 
-### Headless CMS
+### [Headless CMS](/docs/glossary/headless-cms)
 
 A [CMS](#cms) that only handles the [backend](#backend) content management instead of handling both the backend and [frontend](#frontend). This type of setup is also referred to as [Decoupled](#decoupled).
+
+### [Headless WordPress](/docs/glossary/headless-wordpress)
+
+The practice of using JSON returned from the WordPress REST API as a [headless CMS](#headless-cms). It allows you to use WordPress to write and edit content that can be consumed by any client capable of parsing JSON.
 
 ### Hosting
 
@@ -174,7 +184,7 @@ As part of its data layer and [build](#build) process, Gatsby will automatically
 
 ## J
 
-### JAMStack
+### [JAMStack](/docs/glossary/jamstack)
 
 JAMStack refers to a modern web architecture using [JavaScript](#javascript), [APIs](#api), and ([HTML](#html)) markup. From [JAMStack.org](https://jamstack.org): "It’s a new way of building websites and apps that delivers better performance, higher security, lower cost of scaling, and a better developer experience."
 
@@ -305,6 +315,10 @@ A pre-configured Gatsby project that can be used as a starting point for your pr
 Gatsby [builds](#build) static versions of your page that can be easily [hosted](#hosting). This is in contrast to dynamic systems in which each page is generated on-the-fly. Being static affords major performance gains because the work only needs to be done once per content or code change.
 
 It also refers to the `/static` folder which is automatically copied into `/public` on each [build](#build) for files that don't need to be processed by Gatsby but do need to exist in [public](#public).
+
+### [Static Site Generator](/docs/glossary/static-site-generator)
+
+A software application that creates HTML pages from templates or [components](#component) and a given content source.
 
 ## T
 

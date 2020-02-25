@@ -55,6 +55,10 @@ plugins: [
 ]
 ```
 
+This plugin only initiates the tag manager _container_. If you want to use Google Analytics, please also add `gatsby-plugin-google-analytics`.
+
+If you want to link analytics use with anything inside the container (for example, a cookie consent manager such as OneTrust), you will need to ensure that the tag manager script comes _before_ the analytics script in your `gatsby-config.js`.
+
 #### Tracking routes
 
 This plugin will fire a new event called `gatsby-route-change` whenever a route is changed in your Gatsby application. To record this in Google Tag Manager, we will need to add a trigger to the desired tag to listen for the event:

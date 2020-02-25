@@ -44,7 +44,7 @@ plugins: [
 
 ## Querying Shopify data and listing products
 
-Open the Gatsby GraphiQL interface by visiting <http://localhost:8000/___graphql>. With at least one example product added into Shopify you should see several new types of nodes in the Explorer tab, like `allShopifyProduct`. To query all products in your store sorted by title, try running the query:
+Open the Gatsby GraphiQL interface by visiting `http://localhost:8000/___graphql`. With at least one example product added into Shopify you should see several new types of nodes in the Explorer tab, like `allShopifyProduct`. To query all products in your store sorted by title, try running the query:
 
 ```graphql
 {
