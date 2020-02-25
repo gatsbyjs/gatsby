@@ -28,7 +28,7 @@ Configure its options:
   options: {
     // Base URL of Wordpress site
     api: 'wordpress.domain',
-    // true if using https. false if nah.
+    // true if using https. false otherwise.
     https: false,
     api_keys: {
       consumer_key: `your key`,
@@ -40,7 +40,7 @@ Configure its options:
 },
 ```
 
-The consumer key and secret come from WooCommerce. From your dashboard, go to WooCommerce > Settings > Advanced > REST API and then add a key. You can then copy and paste both the key and secret. Make sure to store any sensitive information in [environment variables](/docs/environment-variables/)!
+The `consumer_key` and `consumer_secret` come from WooCommerce. From your dashboard, go to WooCommerce > Settings > Advanced > REST API and then add a key. You can then copy and paste both the key and secret. Make sure to store any sensitive information in [environment variables](/docs/environment-variables/)!
 
 There are other options which may make more sense for your project. For example, you may want to source more general site data like posts and pages from WordPress as well.
 
