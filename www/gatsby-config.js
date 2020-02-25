@@ -72,7 +72,7 @@ if (langCodes.length > 0) {
     {
       resolve: `gatsby-plugin-i18n`, // local plugin
       options: {
-        languages: langs.map(lang => lang.code),
+        languages: langCodes,
       },
     }
   )
