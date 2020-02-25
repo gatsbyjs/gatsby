@@ -22,9 +22,19 @@ The second pull request will be named:
 (sync) Resolve conflicts with gatsby-i18n-source @ {hash}
 ```
 
-This pull request will list files that have conflicts between translated content and English content. These updates will appear as Git conflict markers (`<<<<<<<`).
+This pull request will list files that have conflicts between translated content and English content. These updates will appear as Git conflicts:
 
-You may resolve these conflicts however you feel comfortable: through the GitHub UI, from the command line, or with a code editor like VS Code. See the [Common types of merge issues](#common-types-of-merge-issues) section for how to resolve various conflicts.
+```diff
++ <<<<<<< HEAD
+Ahora, el componente `Box` estará al pendiente del estado de la transición de la página que es hijo, y aparecerá de entrada/salida en consecuencia.
++ =======
++ Now, the `Box` component will be aware of whether the page it's a child of is mounting or unmounting, and it will fade in/out accordingly.
++ >>>>>>> 90932a06db2e297cf416552b84e48b4b82e56fbc
+```
+
+Here, the top block is the original translated line and the bottom block is the updated source content. You should resolve these conflicts by updating the top block to reflect the content of the bottom block.
+
+You may use whatever tools you like to resolve these conflicts: the GitHub UI, the command line, or a code editor like VS Code. See the [Common types of merge issues](#common-types-of-merge-issues) section for how to resolve various conflicts.
 
 ## Manually syncing translation repos
 
@@ -38,6 +48,42 @@ git pull source master
 Fix all [merge conflicts](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-using-the-command-line) and create a pull request to finish the merge.
 
 ## Common types of merge issues
+
+### Frontmatter changes
+
+This type of conflict reflects a change to the [frontmatter]() of a document.
+
+Removing a field:
+
+```diff
++ <<<<<<<
+title: my stub article
+issue: #12345
++ =======
++ title: My Stub Article
++ >>>>>>>
+```
+
+Adding a field:
+
+```diff
++ <<<<<<<
+title: Documentacion
++ =======
++ title: Docs
++ description: The one-stop shop for documentation in Gatsby!
++ >>>>>>>
+```
+
+Changing a field:
+
+```diff
++ <<<<<<<
+title: My old title
++ =======
++ title: My new title
++ >>>>>>>
+```
 
 ### Typos fixes
 
@@ -103,3 +149,22 @@ Sometimes pages is updated with additional paragraphs, lists, or other content.
 ```
 
 In this case, the new content should be translated as with any other content. If there is a significant amount of new content, you may want to create a separate pull request to translate it.
+
+### Conflicts in untranslated files
+
+Sometimes, you may find conflicts in files that haven't been translated yet:
+
+```diff
++ <<<<<<<
+This is old English content.
++ =======
++ This is new English content.
++ >>>>>>>
+```
+
+This is usually because of an previous improper merge (for example, using the "Squash and merge" option). In this case, it's usually alright to accept the new content. In VS Code, this is done using the "Accept Incoming Change" option:
+
+```diff
+- This is old English content.
++ This is new English content.
+```
