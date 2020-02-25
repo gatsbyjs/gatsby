@@ -442,8 +442,6 @@ module.exports = {
 }
 ```
 
-Example taken from GatsbyJS.org's repo.
-
 ### Components
 
 MDX and gatsby-plugin-mdx use components for different things like rendering
