@@ -5294,10 +5294,11 @@
     - Square
     - Netlify
     - SEO
+    - eCommerce
   features:
     - Serverless
     - Gatsby
-    - Square payments
+    - Square
 - url: https://gatsby-animate.netlify.com/
   repo: https://github.com/Mr404Found/gatsby-animate-starter
   description: A responsive and super simple gatsby starter with awesome animations to components and to build your online solutions website. stay tuned more features coming soon
