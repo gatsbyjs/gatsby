@@ -394,8 +394,7 @@ Check out the examples at [@contentful/rich-text-react-renderer](https://github.
 
 ## Sourcing From Multiple Contentful Environments
 
-Sourcing from multiple Contentful environments/spaces is simple.
-Simply restate the plugin in your config, with your options for the second environment:
+To source from multiple Contentful environments/spaces, add another configuration for gatsby-source-contentful in gatsby-config.js: 
 ```
 // In your gatsby-config.js
 module.exports = {
