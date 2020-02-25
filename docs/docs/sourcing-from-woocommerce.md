@@ -42,15 +42,7 @@ Configure its options:
 
 The `consumer_key` and `consumer_secret` come from WooCommerce. From your dashboard, go to WooCommerce > Settings > Advanced > REST API and then add a key. You can then copy and paste both the key and secret. Make sure to store any sensitive information in [environment variables](/docs/environment-variables/)!
 
-There are other options which may make more sense for your project. For example, you may want to source more general site data like posts and pages from WordPress as well.
-
-### Pending Changes
-
-Note that `gatsby-source-wordpress` is undergoing a major rewrite at the time of writing. This new major version of the official source plugin is likely to change the optimal solution for using WooCommerce with Gatsby. For now, new projects should start with [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) rather than `gatsby-source-wordpress` to ease the transition. If you’re interested in the current progress of the plugin, you can [check out the working alpha version](https://github.com/gatsbyjs/gatsby/issues/19292#issuecomment-587946239). **Once this work is done, the [`wp-graphql-woocommerce` plugin](https://github.com/wp-graphql/wp-graphql-woocommerce) will be the recommended option.**
-
-If you decide to go with this more experimental route, you'll need to install and activate the [WPGraphQL](https://www.wpgraphql.com/) and [wp-graphql-woocommerce](https://github.com/wp-graphql/wp-graphql-woocommerce) plugins on your WordPress site as well.
-
-The WPGraphQL plugin is also undergoing significant changes. It has not yet hit v1 and may therefore introduce [breaking changes](https://docs.wpgraphql.com/getting-started/install-and-activate/#breaking-change-notice) as it continues to progress through development. It can be used in production but keep this in mind when using the plugin!
+It's worth noting that the offical WordPress source plugin is in active development. Knowing that this work is in-progress, if you're interested in working with a GraphQL endpoint directly in your WordPress installation, see the section below on [pending changes](#pending-changes) to get started with WPGraphQL and WooCommerce.
 
 ## Adding products
 
@@ -58,7 +50,7 @@ WooCommerce products are the core of your WooCommerce site, so you’ll want to 
 
 You should see a prompt to create your first product after completing the WooCommerce setup wizard. Doing so at this time will trigger a guided tour of the new product form. Walk through this process for each product you'd like to add to your store.
 
-Once this is done, you’ll be able to use GraphQL to query for your products:
+Once this is done, you’ll be able to use GraphQL to query for your products by adding this query to the appropriate component:
 
 ```graphql
 allWcProducts {
@@ -80,6 +72,14 @@ You can explore the data available to your site [using GraphiQL](/docs/running-q
 ### Using WPGraphQL
 
 You can explore possible queries in the [WPGraphQL WooCommerce Playground](https://docs.wpgraphql.com/extensions/wpgraphql-woocommerce/#playground). Note that some queries are only available to shop managers as opposed to customers.
+
+## Pending Changes
+
+Note that `gatsby-source-wordpress` is undergoing a major rewrite at the time of writing. This new major version of the official source plugin is likely to change the optimal solution for using WooCommerce with Gatsby. For now, new projects should start with [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) rather than `gatsby-source-wordpress` to ease the transition. If you’re interested in the current progress of the plugin, you can [check out the working alpha version](https://github.com/gatsbyjs/gatsby/issues/19292#issuecomment-587946239). **Once this work is done, the [`wp-graphql-woocommerce` plugin](https://github.com/wp-graphql/wp-graphql-woocommerce) will be the recommended option.**
+
+If you decide to go with this more experimental route, you'll need to install and activate the [WPGraphQL](https://www.wpgraphql.com/) and [wp-graphql-woocommerce](https://github.com/wp-graphql/wp-graphql-woocommerce) plugins on your WordPress site as well.
+
+The WPGraphQL plugin is also undergoing significant changes. It has not yet hit v1 and may therefore introduce [breaking changes](https://docs.wpgraphql.com/getting-started/install-and-activate/#breaking-change-notice) as it continues to progress through development. It can be used in production but keep this in mind when using the plugin!
 
 ## Other resources
 
