@@ -11,13 +11,13 @@ This repository demonstrates how to add MDX pages to a new Gatsby site.
 
 ---
 
-In this section you will see two examples of using MDX, one of which is from a 3rd party react library and another that shows how to use exisitng components with MDX.
+In this section you will see two examples of using MDX, one of which is from a 3rd party react library and another that shows how to use existing components with MDX.
 
 ## 📊 React Charts
 
-In the pages directory of this exmaple you will find the `chart-info.mdx` file which uses some components to display this array of information in multiple graphs.
+In the pages directory of this example you will find the `chart-info.mdx` file which uses some components to display this array of information in multiple graphs.
 
-```JSON
+```
 export const data = [
   {
     label: "In App Purchase Income",
