@@ -1,8 +1,8 @@
 const path = require(`path`)
-const langs = require(`./i18n.json`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
+const { langCodes } = require(`./src/utils/i18n`)
 
 const GA = {
   identifier: `UA-93349937-5`,
@@ -53,15 +53,10 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
-if (process.env.ENABLE_LOCALIZATIONS) {
-  // Ignore files that have relative MDX imports:
-  // https://github.com/gatsbyjs/gatsby/issues/20795
-  const naughtyFiles = [
-    "docs/docs/graphql-api.md",
-    "docs/docs/data-fetching.md",
-  ]
+// true if `env.LOCALES` has a defined list of languages
+if (langCodes.length > 0) {
   dynamicPlugins.push(
-    ...langs.map(({ code }) => ({
+    ...langCodes.map(code => ({
       resolve: `gatsby-source-git`,
       options: {
         name: `docs-${code}`,
