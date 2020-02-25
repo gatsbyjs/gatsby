@@ -1,6 +1,6 @@
 ---
 title: "Changing the Open Source Status Quo"
-date: 2020-02-17
+date: 2020-02-25
 author: Aisha Blake
 excerpt: "How can we increase the diversity of open source contributors? As maintainers, we need to listen to a diverse group of community members and make thoughtful changes to create a truly inclusive project."
 tags:
