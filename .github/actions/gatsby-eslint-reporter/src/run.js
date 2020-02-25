@@ -1,6 +1,6 @@
 const request = require("./request")
 
-const { GITHUB_EVENT_PATH, GITHUB_TOKEN, GITHUB_WORKSPACE } = process.env
+const { GITHUB_EVENT_PATH, GITHUB_TOKEN, GITHUB_WORKSPACE, GITHUB_RUN_ID } = process.env
 const event = require(GITHUB_EVENT_PATH)
 const { repository, after: actualSHA } = event
 const {
@@ -17,6 +17,8 @@ const { name: repo } = repository
 
 // Match the name in .github/workflows/lint.yml
 const checkName = "report_eslint_action"
+
+console.log('id is', GITHUB_RUN_ID)
 
 const headers = {
   "Content-Type": "application/json",
@@ -85,8 +87,8 @@ function runEslint() {
   }
 }
 
-async function startNewAction() {
-  console.log('startAction to in_progress')
+async function startAction() {
+  console.log('startAction POST')
 
   const body = {
     name: checkName,
@@ -99,9 +101,9 @@ async function startNewAction() {
   const {
     data: { id },
   } = await request(
-    `https://api.github.com/repos/${owner}/${repo}/check-runs`,
+    `https://api.github.com/repos/${owner}/${repo}/check-runs/${GITHUB_RUN_ID}`,
     {
-      method: "POST",
+      method: "PATCH",
       headers,
       body,
     }
@@ -111,6 +113,8 @@ async function startNewAction() {
 }
 
 async function completeAction(id, conclusion, output) {
+  console.log('completeAction PATCH to', id)
+
   const body = {
     name: checkName,
     head_sha: actualSHA,
@@ -121,7 +125,7 @@ async function completeAction(id, conclusion, output) {
   }
 
   await request(
-    `https://api.github.com/repos/${owner}/${repo}/check-runs/${id}`,
+    `https://api.github.com/repos/${owner}/${repo}/check-runs/${GITHUB_RUN_ID}`,
     {
       method: "PATCH",
       headers,
@@ -139,7 +143,7 @@ function exitWithError(err) {
 }
 
 async function run() {
-  const id = await startNewAction()
+  const id = await startAction()
   try {
     const { conclusion, output } = runEslint()
 
