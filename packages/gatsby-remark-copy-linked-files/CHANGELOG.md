@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.36...gatsby-remark-copy-linked-files@2.1.37) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.35...gatsby-remark-copy-linked-files@2.1.36) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.33...gatsby-remark-copy-linked-files@2.1.35) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.33...gatsby-remark-copy-linked-files@2.1.34) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.31...gatsby-remark-copy-linked-files@2.1.33) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.31...gatsby-remark-copy-linked-files@2.1.32) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.30...gatsby-remark-copy-linked-files@2.1.31) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
 ## [2.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.29...gatsby-remark-copy-linked-files@2.1.30) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-remark-copy-linked-files

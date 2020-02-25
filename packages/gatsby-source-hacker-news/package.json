@@ -1,20 +1,20 @@
 {
   "name": "gatsby-source-hacker-news",
   "description": "Gatsby source plugin for building websites using Hacker News as a data source",
-  "version": "2.1.16",
+  "version": "2.2.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.2",
+    "@babel/runtime": "^7.7.6",
     "axios": "^0.19.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
-    "babel-preset-gatsby-package": "^0.2.11",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "babel-preset-gatsby-package": "^0.2.16",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-hacker-news#readme",
@@ -25,7 +25,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.0.15"
+    "gatsby": "^2.13.28"
   },
   "repository": {
     "type": "git",

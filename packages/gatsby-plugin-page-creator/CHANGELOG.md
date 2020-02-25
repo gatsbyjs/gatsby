@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.39...gatsby-plugin-page-creator@2.1.40) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.38...gatsby-plugin-page-creator@2.1.39) (2020-01-29)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.37...gatsby-plugin-page-creator@2.1.38) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.36...gatsby-plugin-page-creator@2.1.37) (2019-12-20)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.34...gatsby-plugin-page-creator@2.1.36) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.34...gatsby-plugin-page-creator@2.1.35) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.33...gatsby-plugin-page-creator@2.1.34) (2019-12-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-page-creator:** typo in README.md ([#20008](https://github.com/gatsbyjs/gatsby/issues/20008)) ([c77d820](https://github.com/gatsbyjs/gatsby/commit/c77d820))
+
+## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.32...gatsby-plugin-page-creator@2.1.33) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.31...gatsby-plugin-page-creator@2.1.32) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
 ## [2.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.30...gatsby-plugin-page-creator@2.1.31) (2019-11-18)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator

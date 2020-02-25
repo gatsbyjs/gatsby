@@ -4,8 +4,8 @@ import { graphql } from "gatsby"
 
 import Button from "../../components/button"
 import Layout from "../../components/layout"
+import PageWithSidebar from "../../components/page-with-sidebar"
 import EvaluationTable from "../../components/features/evaluation-table"
-import { itemListFeatures } from "../../utils/sidebar/item-list"
 import { getFeaturesData } from "../../utils/get-csv-features-data"
 import Container from "../../components/container"
 import FooterLinks from "../../components/shared/footer-links"
@@ -36,64 +36,62 @@ const CmsFeaturesPage = ({ data, location }) => {
   )
 
   return (
-    <Layout
-      location={location}
-      itemList={itemListFeatures}
-      enableScrollSync={true}
-    >
-      <Container>
-        <main id={`reach-skip-nav`}>
-          <Breadcrumb location={location} itemList={itemListFeatures} />
-          <FeaturesHeader />
-          <h3>Comparison</h3>
-          <p>
-            To see a filtered view of Gatsby compared with specific CMS
-            technologies, choose the technologies to compare and then press
-            Compare:
-          </p>
-          <div sx={{ pb: 10 }}>
-            <div
-              sx={{
-                display: `grid`,
-                gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
-                gridAutoRows: `1fr`,
-                gridGap: 2,
-                pb: 4,
-              }}
-            >
-              {featureComparisonOptions.cms.map(
-                ({ key: optionKey, display }) => (
-                  <CompareButton
-                    key={optionKey}
-                    optionKey={optionKey}
-                    selected={selected[optionKey]}
-                    setSelected={setSelected}
-                  >
-                    {display}
-                  </CompareButton>
-                )
-              )}
+    <Layout location={location}>
+      <PageWithSidebar location={location}>
+        <Container>
+          <main id={`reach-skip-nav`}>
+            <Breadcrumb location={location} />
+            <FeaturesHeader />
+            <h3>Comparison</h3>
+            <p>
+              To see a filtered view of Gatsby compared with specific CMS
+              technologies, choose the technologies to compare and then press
+              Compare:
+            </p>
+            <div sx={{ pb: 10 }}>
+              <div
+                sx={{
+                  display: `grid`,
+                  gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
+                  gridAutoRows: `1fr`,
+                  gridGap: 2,
+                  pb: 4,
+                }}
+              >
+                {featureComparisonOptions.cms.map(
+                  ({ key: optionKey, display }) => (
+                    <CompareButton
+                      key={optionKey}
+                      optionKey={optionKey}
+                      selected={selected[optionKey]}
+                      setSelected={setSelected}
+                    >
+                      {display}
+                    </CompareButton>
+                  )
+                )}
+              </div>
+              <Button
+                to={
+                  hasSelected
+                    ? `/features/cms/gatsby-vs-${comparators.join(`-vs-`)}`
+                    : location.pathname
+                }
+              >
+                Compare with Gatsby
+              </Button>
             </div>
-            <Button
-              to={
-                hasSelected
-                  ? `/features/cms/gatsby-vs-${comparators.join(`-vs-`)}`
-                  : location.pathname
-              }
-            >
-              Compare with Gatsby
-            </Button>
-          </div>
-          <LegendTable />
-          <EvaluationTable
-            options={featureComparisonOptions.cms}
-            sections={sections}
-            sectionHeaders={sectionHeaders}
-          />
-          <FeaturesFooter />
-        </main>
-        <FooterLinks />
-      </Container>
+            <LegendTable />
+            <EvaluationTable
+              options={featureComparisonOptions.cms}
+              sections={sections}
+              sectionHeaders={sectionHeaders}
+            />
+            <FeaturesFooter />
+          </main>
+          <FooterLinks />
+        </Container>
+      </PageWithSidebar>
     </Layout>
   )
 }

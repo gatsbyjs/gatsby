@@ -50,7 +50,7 @@ plugins: [`gatsby-plugin-postcss`],
 
 3. Configure PostCSS to use Tailwind
 
-Create a postcss.config.js in your project's root folder with the following contents.
+Create a `postcss.config.js` in your project's root folder with the following contents.
 
 ```javascript:title=postcss.config.js
 module.exports = () => ({
@@ -89,7 +89,7 @@ npm install tailwindcss@0.7.4
 npm install tailwind.macro
 ```
 
-2. Use the Babel Macro (tailwind.macro) in your styled component
+2. Use the Babel Macro (`tailwind.macro`) in your styled component
 
 ```javascript
 import styled from "styled-components"

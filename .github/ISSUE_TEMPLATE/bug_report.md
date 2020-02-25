@@ -1,6 +1,8 @@
 ---
 name: Bug Report 🐞
 about: Something isn't working as expected? Here is the right place to report.
+labels:
+  - "type: bug"
 ---
 
 <!--

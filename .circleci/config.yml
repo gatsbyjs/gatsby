@@ -186,6 +186,8 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: yarn lint:code
       - run: yarn lint:other
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - run: yarn typecheck
       - run: yarn check-repo-fields
 
   unit_tests_node8:
@@ -319,47 +321,6 @@ jobs:
           command: yarn run update-source
           working_directory: ~/project/scripts/i18n
 
-  build_www:
-    docker:
-      - image: circleci/node:12
-    resource_class: xlarge # ++ RAM and CPU
-    steps:
-      - checkout
-      - restore_cache:
-          key: v2_www_public_dir
-      - restore_cache:
-          key: v2_www_cache_dir
-      - run:
-          command: yarn
-          working_directory: ~/project/www
-      - run:
-          # manually match cpu_count to vcpus available in resource_class
-          command: GATSBY_CPU_COUNT=8 yarn build
-          working_directory: ~/project/www
-      - save_cache:
-          key: v2_www_public_dir_{{ epoch }}
-          paths:
-            - ~/project/www/public
-      - save_cache:
-          key: v2_www_cache_dir_{{ epoch }}
-          paths:
-            - ~/project/www/.cache
-
-  deploy_www:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - restore_cache:
-          key: v2_www_public_dir
-      - run:
-          command: yarn add netlify-cli
-          working_directory: ~/project/www
-      - run:
-          command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI workflow https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID"
-          no_output_timeout: 2h
-          working_directory: ~/project/www
-
   windows_unit_tests:
     executor:
       name: win/vs2019
@@ -379,7 +340,7 @@ jobs:
           key: yarn-packages-v2-{{ checksum "yarn.lock" }}
       - run:
           name: "Run Tests"
-          command: yarn test
+          command: yarn jest -w 1 --ci
 
   bootstrap-with-experimental-react:
     executor: node
@@ -400,12 +361,227 @@ jobs:
           paths:
             - "*"
 
+  benchmark_markdown_id_512:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "512"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_id
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_id
+
+  benchmark_markdown_id_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "4096"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_id
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_id
+
+  benchmark_markdown_id_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "8192"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_id
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_id
+
+  benchmark_markdown_id_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "32768"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_id
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_id
+
+  benchmark_markdown_slug_512:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "512"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_slug
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_slug
+
+  benchmark_markdown_slug_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "4096"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_slug
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_slug
+
+  benchmark_markdown_slug_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "8192"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_slug
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_slug
+
+  benchmark_markdown_slug_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "32768"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_slug
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_slug
+
+  benchmark_markdown_table_512:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "512"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_table
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_table
+
+  benchmark_markdown_table_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "4096"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_table
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_table
+
+  benchmark_markdown_table_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "8192"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_table
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_table
+
+  benchmark_markdown_table_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    environment:
+      CI_NAME: circleci
+      NUM_PAGES: "32768"
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: benchmarks/markdown_table
+      - run:
+          command: npm run build
+          working_directory: benchmarks/markdown_table
+
 workflows:
   version: 2
+
+  benchmark:
+    jobs:
+      - benchmark_markdown_id_512
+      - benchmark_markdown_id_4096
+      - benchmark_markdown_id_8192
+      - benchmark_markdown_id_32768
+      - benchmark_markdown_slug_512
+      - benchmark_markdown_slug_4096
+      - benchmark_markdown_slug_8192
+      - benchmark_markdown_slug_32768
+      - benchmark_markdown_table_512
+      - benchmark_markdown_table_4096
+      - benchmark_markdown_table_8192
+      - benchmark_markdown_table_32768
+    triggers:
+      - schedule:
+          cron: 12 3 * * *
+          filters:
+            branches:
+              only:
+                - master
+
   nightly-react-next:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: "0 0 * * 1,2,3,4,5"
           filters:
             branches:
               only:
@@ -428,7 +604,7 @@ workflows:
   nightly-react-experimental:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: "0 0 * * 1,2,3,4,5"
           filters:
             branches:
               only:
@@ -451,8 +627,9 @@ workflows:
 
   build-test:
     jobs:
-      - windows_unit_tests
       - bootstrap
+      - windows_unit_tests:
+          <<: *ignore_docs
       - lint:
           requires:
             - bootstrap
@@ -501,38 +678,8 @@ workflows:
             branches:
               only:
                 - master
-      - manual_www_approval:
-          type: approval
-          filters:
-            branches:
-              only:
-                - master
-      - build_www:
-          context: build_www
-          requires:
-            - manual_www_approval
-      - deploy_www:
-          requires:
-            - build_www
-          context: build_www
       - update_i18n_source:
           filters:
             branches:
               only:
                 - master
-  www_deploy:
-    triggers:
-      - schedule:
-          cron: "0 2,6,10,14,18,22 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build_www:
-          # Check CircleCI web ui for context details (env vars)
-          context: build_www
-      - deploy_www:
-          requires:
-            - build_www
-          context: build_www

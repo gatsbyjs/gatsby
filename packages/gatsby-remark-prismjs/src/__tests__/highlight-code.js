@@ -13,7 +13,7 @@ int sum(a, b) {
 }
 `
     expect(
-      highlightCode(language, code, lineNumbersHighlight)
+      highlightCode(language, code, {}, lineNumbersHighlight)
     ).toMatchSnapshot()
   })
 
@@ -48,7 +48,7 @@ class Counter extends React.Component {
 
 export default Counter
 `
-    const processed = highlightCode(language, code, lineNumbersHighlight)
+    const processed = highlightCode(language, code, {}, lineNumbersHighlight)
 
     expect(processed).toMatchSnapshot()
     // expect spans to not contain \n as it would break line highlighting
@@ -62,7 +62,7 @@ export default Counter
       const highlightCode = require(`../highlight-code`)
       const language = `text`
       const code = `<button />`
-      expect(highlightCode(language, code, [], true)).toMatch(
+      expect(highlightCode(language, code, {}, [], true)).toMatch(
         `&lt;button /&gt;`
       )
       expect(console.warn).toHaveBeenCalledWith(
@@ -141,7 +141,9 @@ export default Counter
       const language = `javascript`
       const linesToHighlight = [1]
       const code = `const a = 1\nconst b = 2`
-      expect(highlightCode(language, code, linesToHighlight)).not.toMatch(/\n$/)
+      expect(highlightCode(language, code, {}, linesToHighlight)).not.toMatch(
+        /\n$/
+      )
     })
 
     it(`a trailing newline is preserved`, () => {
@@ -149,7 +151,7 @@ export default Counter
       const language = `javascript`
       const linesToHighlight = [1]
       const code = `const a = 1\nconst b = 2\n`
-      expect(highlightCode(language, code, linesToHighlight)).toMatch(
+      expect(highlightCode(language, code, {}, linesToHighlight)).toMatch(
         /[^\n]\n$/
       )
     })

@@ -68,7 +68,7 @@ cd plugins
 
 The bare essentials of a plugin are a directory named after your plugin, which contains a `package.json` file and a `gatsby-node.js` file:
 
-```
+```text
 |-- plugins
     |-- gatsby-source-pixabay
         |-- gatsby-node.js
@@ -339,7 +339,7 @@ exports.sourceNodes = (
 
 ### Query for results
 
-Your plugin is ready. Restart `npm run develop` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here. try:
+Your plugin is ready. Restart `npm run develop` and open a browser at `http://localhost:8000/___graphql`. The Pixabay data can be queried from here. try:
 
 ```graphql
 {

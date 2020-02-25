@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.32...gatsby-source-graphql@2.1.33) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.31...gatsby-source-graphql@2.1.32) (2020-01-23)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.30...gatsby-source-graphql@2.1.31) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.29...gatsby-source-graphql@2.1.30) (2020-01-06)
+
+### Bug Fixes
+
+- **gatsby-source-graphql:** filter unused variables ([#20293](https://github.com/gatsbyjs/gatsby/issues/20293)) ([cb8d987](https://github.com/gatsbyjs/gatsby/commit/cb8d987)), closes [#20280](https://github.com/gatsbyjs/gatsby/issues/20280)
+
+## [2.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.28...gatsby-source-graphql@2.1.29) (2019-12-19)
+
+### Bug Fixes
+
+- **gatsby-source-graphql:** use embedded remote schemas ([#20042](https://github.com/gatsbyjs/gatsby/issues/20042)) ([5bc8b79](https://github.com/gatsbyjs/gatsby/commit/5bc8b79))
+
+## [2.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.26...gatsby-source-graphql@2.1.28) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.26...gatsby-source-graphql@2.1.27) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.25...gatsby-source-graphql@2.1.26) (2019-12-09)
+
+### Features
+
+- **gatsby:** use embedded remote schemas ([#19504](https://github.com/gatsbyjs/gatsby/issues/19504)) ([588eaf7](https://github.com/gatsbyjs/gatsby/commit/588eaf7))
+
+## [2.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.24...gatsby-source-graphql@2.1.25) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.23...gatsby-source-graphql@2.1.24) (2019-11-22)
+
+### Features
+
+- **gatsby-source-graphql:** Allow override fetch ([#19630](https://github.com/gatsbyjs/gatsby/issues/19630)) ([2867fb2](https://github.com/gatsbyjs/gatsby/commit/2867fb2))
+
 ## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.22...gatsby-source-graphql@2.1.23) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-source-graphql

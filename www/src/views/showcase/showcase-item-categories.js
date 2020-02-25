@@ -22,7 +22,7 @@ const ShowcaseItemCategories = ({ categories, onCategoryClick }) => {
             },
           },
         }}
-        to={`/showcase?${qs.stringify({
+        to={`/showcase/?${qs.stringify({
           filters: [c],
         })}`}
         onClick={e => {

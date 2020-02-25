@@ -162,6 +162,58 @@ module.exports = {
 }
 ```
 
+## Disallowed Link Types
+
+You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self` and `describedby` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        // skip the action--action resource type.
+        disallowedLinkTypes: [`self`, `describedby`, `action--action`],
+      },
+    },
+  ],
+}
+```
+
+_NOTES_:
+
+When using [includes](https://www.drupal.org/docs/8/modules/jsonapi/includes) in your JSON:API calls the included data will automatically become available to query, even if the link types are skipped using `disallowedLinkTypes`.
+
+This enables you to fetch only the data you need at build time, instead of all data of a certain entity type or bundle.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        // Skip the node--page resource type and paragraph components.
+        disallowedLinkTypes: [
+          `self`,
+          `describedby`,
+          `node--page`,
+          `paragraph--text`,
+          `paragraph--image`,
+        ],
+        filters: {
+          // Use includes so only the news content paragraph components are fetched.
+          "node--news": "include=field_content",
+        },
+      },
+    },
+  ],
+}
+```
+
 ## Gatsby Preview (experimental)
 
 You will need to have the Drupal module installed, more information on that here: https://www.drupal.org/project/gatsby

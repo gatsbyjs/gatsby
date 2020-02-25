@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.27...gatsby-core-utils@1.0.28) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.26...gatsby-core-utils@1.0.27) (2020-01-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** support yarn PnP ([#20638](https://github.com/gatsbyjs/gatsby/issues/20638)) ([6375ba9](https://github.com/gatsbyjs/gatsby/commit/6375ba9))
+
+## [1.0.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.25...gatsby-core-utils@1.0.26) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.24...gatsby-core-utils@1.0.25) (2019-12-20)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.22...gatsby-core-utils@1.0.24) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.22...gatsby-core-utils@1.0.23) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.21...gatsby-core-utils@1.0.22) (2019-12-02)
+
+### Bug Fixes
+
+- **gatsby-core-utils:** make createContentDigest deterministic ([#19832](https://github.com/gatsbyjs/gatsby/issues/19832)) ([cb6d0e2](https://github.com/gatsbyjs/gatsby/commit/cb6d0e2))
+
+## [1.0.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.20...gatsby-core-utils@1.0.21) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-core-utils
+
 ## [1.0.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.19...gatsby-core-utils@1.0.20) (2019-11-18)
 
 ### Bug Fixes

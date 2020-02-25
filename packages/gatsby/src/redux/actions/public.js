@@ -20,7 +20,22 @@ const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
-const shadowCreatePagePath = require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+
+/**
+ * Memoize function used to pick shadowed page components to avoid expensive I/O.
+ * Ideally, we should invalidate memoized values if there are any FS operations
+ * on files that are in shadowing chain, but webpack currently doesn't handle
+ * shadowing changes during develop session, so no invalidation is not a deal breaker.
+ */
+const shadowCreatePagePath = _.memoize(
+  require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+)
+const {
+  enqueueJob,
+  createInternalJob,
+  removeInProgressJob,
+  getInProcessJobPromise,
+} = require(`../../utils/jobs-manager`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -57,6 +72,14 @@ import type { Plugin } from "./types"
 type Job = {
   id: string,
 }
+
+type JobV2 = {
+  name: string,
+  inputPaths: string[],
+  outputDir: string,
+  args: Object,
+}
+
 type PageInput = {
   path: string,
   component: string,
@@ -341,7 +364,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
-  let internalPage: Page = {
+  const internalPage: Page = {
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
@@ -427,7 +450,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
-      `Attempting to create page "${page.path}", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+      chalk.bold.yellow(`Non-deterministic routing danger: `) +
+        `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
+        chalk.bold.yellow(
+          `This could lead to non-deterministic routing behavior`
+        )
     )
   }
 
@@ -517,8 +544,10 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
+// Marked private here because it was supressed in documentation pages.
 /**
  * Batch delete nodes
+ * @private
  * @param {Array} nodes an array of node ids
  * @example
  * deleteNodes([`node1`, `node2`])
@@ -555,8 +584,11 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 let NODE_COUNTER = 0
 
 const typeOwners = {}
+
+// memberof notation is added so this code can be referenced instead of the wrapper.
 /**
  * Create a new node.
+ * @memberof actions
  * @param {Object} node a node object
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
@@ -739,7 +771,7 @@ const createNode = (
   // Ensure the plugin isn't creating a node type owned by another
   // plugin. Type "ownership" is first come first served.
   if (plugin) {
-    let pluginName = plugin.name
+    const pluginName = plugin.name
 
     if (!typeOwners[node.internal.type])
       typeOwners[node.internal.type] = pluginName
@@ -827,6 +859,7 @@ const createNode = (
 
 actions.createNode = (...args) => dispatch => {
   const actions = createNode(...args)
+
   dispatch(actions)
   const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
     action => action.type === `CREATE_NODE`
@@ -1155,7 +1188,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
- * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
  * @example
@@ -1167,6 +1200,73 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
     plugin,
     payload: job,
   }
+}
+
+/**
+ * Create a "job". This is a long-running process that are generally
+ * started as side-effects to GraphQL queries.
+ * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * example.
+ *
+ * Gatsby doesn't finish its process until all jobs are ended.
+ * @param {Object} job A job object with name, inputPaths, outputDir and args
+ * @param {string} job.name The name of the job you want to execute
+ * @param {string[]} job.inputPaths The inputPaths that are needed to run
+ * @param {string} job.outputDir The directory where all files are being saved to
+ * @param {Object} job.args The arguments the job needs to execute
+ * @returns {Promise<object>} Promise to see if the job is done executing
+ * @example
+ * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
+ */
+actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
+  const currentState = getState()
+  const internalJob = createInternalJob(job, plugin)
+  const jobContentDigest = internalJob.contentDigest
+
+  // Check if we already ran this job before, if yes we return the result
+  // We have an inflight (in progress) queue inside the jobs manager to make sure
+  // we don't waste resources twice during the process
+  if (
+    currentState.jobsV2 &&
+    currentState.jobsV2.complete.has(jobContentDigest)
+  ) {
+    return Promise.resolve(
+      currentState.jobsV2.complete.get(jobContentDigest).result
+    )
+  }
+
+  const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
+  if (inProgressJobPromise) {
+    return inProgressJobPromise
+  }
+
+  dispatch({
+    type: `CREATE_JOB_V2`,
+    plugin,
+    payload: {
+      job: internalJob,
+      plugin,
+    },
+  })
+
+  const enqueuedJobPromise = enqueueJob(internalJob)
+  return enqueuedJobPromise.then(result => {
+    // store the result in redux so we have it for the next run
+    dispatch({
+      type: `END_JOB_V2`,
+      plugin,
+      payload: {
+        jobContentDigest,
+        result,
+      },
+    })
+
+    // remove the job from our inProgressJobQueue as it's available in our done state.
+    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
+    removeInProgressJob(jobContentDigest)
+
+    return result
+  })
 }
 
 /**
@@ -1189,7 +1289,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
 /**
  * End a "job".
  *
- * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job  A job object with at least an id set
  * @param {id} job.id The id of the job
  * @example

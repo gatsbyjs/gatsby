@@ -1,21 +1,21 @@
 {
   "name": "gatsby-link",
   "description": "An enhanced Link component for Gatsby sites with support for resource prefetching",
-  "version": "2.2.24",
+  "version": "2.2.29",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.2",
+    "@babel/runtime": "^7.7.6",
     "@types/reach__router": "^1.2.6",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
     "@testing-library/react": "^9.3.2",
-    "babel-preset-gatsby-package": "^0.2.11",
+    "babel-preset-gatsby-package": "^0.2.16",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link#readme",

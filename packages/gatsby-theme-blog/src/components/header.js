@@ -19,11 +19,11 @@ const Title = ({ children, location }) => {
       >
         <Styled.a
           as={Link}
-          css={{
+          css={css({
             color: `inherit`,
             boxShadow: `none`,
             textDecoration: `none`,
-          }}
+          })}
           to={`/`}
         >
           {children}
@@ -54,6 +54,8 @@ const Title = ({ children, location }) => {
   }
 }
 
+const iconCss = [{ pointerEvents: `none`, margin: 4 }]
+
 const checkedIcon = (
   <img
     alt="moon indicating dark mode"
@@ -61,10 +63,7 @@ const checkedIcon = (
     width="16"
     height="16"
     role="presentation"
-    css={{
-      pointerEvents: `none`,
-      margin: 4,
-    }}
+    css={iconCss}
   />
 )
 
@@ -75,10 +74,7 @@ const uncheckedIcon = (
     width="16"
     height="16"
     role="presentation"
-    css={{
-      pointerEvents: `none`,
-      margin: 4,
-    }}
+    css={iconCss}
   />
 )
 
@@ -111,9 +107,6 @@ export default ({ children, title, ...props }) => {
           {children}
           <Switch
             aria-label="Toggle dark mode"
-            css={css({
-              bg: `black`,
-            })}
             checkedIcon={checkedIcon}
             uncheckedIcon={uncheckedIcon}
             checked={isDark}

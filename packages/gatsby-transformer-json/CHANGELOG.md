@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.25...gatsby-transformer-json@2.2.26) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [2.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.24...gatsby-transformer-json@2.2.25) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [2.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.22...gatsby-transformer-json@2.2.24) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [2.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.22...gatsby-transformer-json@2.2.23) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [2.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.20...gatsby-transformer-json@2.2.22) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [2.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.20...gatsby-transformer-json@2.2.21) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.19...gatsby-transformer-json@2.2.20) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [2.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.18...gatsby-transformer-json@2.2.19) (2019-11-22)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
 ## [2.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.17...gatsby-transformer-json@2.2.18) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-transformer-json

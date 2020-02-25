@@ -23,7 +23,7 @@ A fragment consists of three components:
 
 ## Creating and using a fragment
 
-A fragment can be created inside any GraphQL query, but it's good practice to create the query separately. More organization advice in the [Conceptual Guide](/docs/querying-with-graphql/#fragments).
+A fragment can be created inside any GraphQL query, but it's good practice to create the query separately. More organization advice in the [Conceptual Guide](/docs/graphql-concepts/#fragments).
 
 ```jsx:title=src/components/IndexPost.jsx
 import React from "react"
@@ -78,5 +78,5 @@ When compiling your site, Gatsby preprocesses all GraphQL queries it finds. Ther
 
 ## Further reading
 
-- [Querying Data with GraphQL - Fragments](/docs/querying-with-graphql/#fragments)
+- [Querying Data with GraphQL - Fragments](/docs/graphql-concepts/#fragments)
 - [GraphQL Docs - Fragments](https://graphql.org/learn/queries/#fragments)

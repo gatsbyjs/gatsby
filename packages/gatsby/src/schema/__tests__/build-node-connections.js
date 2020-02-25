@@ -66,6 +66,7 @@ const makeNodes = () => [
 describe(`build-node-connections`, () => {
   async function runQuery(query, nodes = makeNodes()) {
     store.dispatch({ type: `DELETE_CACHE` })
+    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
     nodes.forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
     )
