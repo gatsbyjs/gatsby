@@ -44,13 +44,26 @@ const mdxResolverPassthrough = fieldName => async (
 }
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
-  const { createTypes } = actions
+  const { createFieldExtension, createTypes } = actions
+  createFieldExtension({
+    name: `defaultArray`,
+    extend() {
+      return {
+        resolve(source, args, context, info) {
+          if (source[info.fieldName] == null) {
+            return []
+          }
+          return source[info.fieldName]
+        },
+      }
+    },
+  })
   createTypes(`
     type Site implements Node {
       siteMetadata: SiteMetadata
     }
     type SiteMetadata {
-      social: Social
+      social: [Social] @defaultArray
     }
     type Social {
       name: String
