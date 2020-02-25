@@ -3,15 +3,27 @@ name: ESLint
 on:
   pull_request:
     types: [opened, synchronize]
-  check_run:
-    types: [requested_action]
+#  check_run:
+#    types: [requested_action]
+#
+#jobs:
+#  report_eslint_action:
+#    if: github.event_name == 'pull_request'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#      - uses: gatsbyjs/gatsby/.github/actions/gatsby-eslint-reporter@6c4c08b3ac3e164d1e016b3092876092e1475a6e
+#        env:
+#          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 jobs:
-  report_eslint_action:
+  report_eslint:
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: gatsbyjs/gatsby/.github/actions/gatsby-eslint-reporter@6c4c08b3ac3e164d1e016b3092876092e1475a6e
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - uses: a-b-r-o-w-n/eslint-action@v1
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          files: "src/**/*"
+          #          ignore: "src/some-file-to-ignore.js"
+          extensions: ".js,.jsx,.ts"
