@@ -9859,6 +9859,15 @@
     - Agency
   built_by: App Design
   built_by_url: "https://appdesign.dev/"
+- title: Clinka
+  url: https://www.clinka.com.au/
+  main_url: https://www.clinka.com.au/
+  description: >
+    B2B website for an Australian manufacturer of environmentally friendly construction materials.
+  categories:
+    - Business
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
 - title: Chris Vogt's Blog
   main_url: https://www.chrisvogt.me
   url: https://www.chrisvogt.me
