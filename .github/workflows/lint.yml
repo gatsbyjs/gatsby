@@ -12,6 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: gatsbyjs/gatsby/.github/actions/gatsby-eslint-reporter@e39eae6f97aea75862d2e730095530121bec2057
+      - uses: gatsbyjs/gatsby/.github/actions/gatsby-eslint-reporter@6c4c08b3ac3e164d1e016b3092876092e1475a6e
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
