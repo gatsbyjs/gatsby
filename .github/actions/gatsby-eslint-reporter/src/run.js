@@ -85,7 +85,7 @@ function runEslint() {
   }
 }
 
-async function startAction() {
+async function updateAction() {
   const body = {
     name: checkName,
     head_sha: actualSHA,
@@ -93,12 +93,13 @@ async function startAction() {
     started_at: new Date(),
   }
 
+  // PATCH /repos/:owner/:repo/check-runs/:check_run_id
   const {
     data: { id },
   } = await request(
-    `https://api.github.com/repos/${owner}/${repo}/check-runs`,
+    `https://api.github.com/repos/${owner}/${repo}/check-runs/${checkName}`,
     {
-      method: "POST",
+      method: "PATCH",
       headers,
       body,
     }
@@ -118,7 +119,7 @@ async function completeAction(id, conclusion, output) {
   }
 
   await request(
-    `https://api.github.com/repos/${owner}/${repo}/check-runs/${id}`,
+    `https://api.github.com/repos/${owner}/${repo}/check-runs/${id}/${checkName}`,
     {
       method: "PATCH",
       headers,
@@ -136,7 +137,7 @@ function exitWithError(err) {
 }
 
 async function run() {
-  const id = await startAction()
+  const id = await updateAction()
   try {
     const { conclusion, output } = runEslint()
 
