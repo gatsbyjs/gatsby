@@ -1,4 +1,4 @@
-// const TSEslint = require("@typescript-eslint/eslint-plugin")
+const TSEslint = require("@typescript-eslint/eslint-plugin")
 
 module.exports = {
   parser: "babel-eslint",
@@ -84,7 +84,7 @@ module.exports = {
       parser: "@typescript-eslint/parser",
       plugins: ["@typescript-eslint/eslint-plugin"],
       rules: {
-        // ...TSEslint.configs.recommended.rules,
+        ...TSEslint.configs.recommended.rules,
         // This rule ensures that typescript types do not have semicolons
         // at the end of their lines, since our prettier setup is to have no semicolons
         // e.g.,
