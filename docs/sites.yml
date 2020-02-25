@@ -9893,3 +9893,20 @@
   built_by: Pierre Beard
   built_by_url: https://github.com/PBRT
   featured: false
+- title: 1902 Software
+  url: https://1902software.com/
+  main_url: https://1902software.com/
+  description: >
+    We are an IT company that specializes in e-commerce and website development on different platforms such as Magento, WordPress, and Umbraco. We are also known for custom software development, web design and mobile app solutions for iOS and Android.
+  categories:
+    - eCommerce
+    - Web Development
+    - Programming
+    - Mobile Development
+    - WordPress
+    - Design
+    - Business
+    - Agency
+  built_by: 1902 Software Development Corporation
+  built_by_url: https://1902software.com/
+  featured: false
