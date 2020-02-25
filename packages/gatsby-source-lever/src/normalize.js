@@ -66,7 +66,7 @@ function recursiveAddFields(ent, newEnt) {
 exports.recursiveAddFields = recursiveAddFields
 
 /**
- * Validate the GraphQL naming convetions & protect specific fields.
+ * Validate the GraphQL naming conventions & protect specific fields.
  *
  * @param {any} key
  * @returns the valid name

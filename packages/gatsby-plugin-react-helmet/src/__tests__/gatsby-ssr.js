@@ -24,6 +24,7 @@ describe(`gatsby-plugin-react-helmet`, () => {
         `noscript-component`,
         `script-component`,
         `style-component`,
+        `base-component`,
       ])
     })
 

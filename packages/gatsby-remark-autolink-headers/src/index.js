@@ -20,13 +20,33 @@ module.exports = (
     className = `anchor`,
     maintainCase = false,
     removeAccents = false,
+    enableCustomId = false,
+    isIconAfterHeader = false,
   }
 ) => {
   slugs.reset()
 
   visit(markdownAST, `heading`, node => {
-    const slug = slugs.slug(toString(node), maintainCase)
-    const id = removeAccents ? deburr(slug) : slug
+    let id
+    if (enableCustomId && node.children.length > 0) {
+      const last = node.children[node.children.length - 1]
+      // This regex matches to preceding spaces and {#custom-id} at the end of a string.
+      // Also, checks the text of node won't be empty after the removal of {#custom-id}.
+      const match = /^(.*?)\s*\{#([\w-]+)\}$/.exec(toString(last))
+      if (match && (match[1] || node.children.length > 1)) {
+        id = match[2]
+        // Remove the custom ID from the original text.
+        if (match[1]) {
+          last.value = match[1]
+        } else {
+          node.children.pop()
+        }
+      }
+    }
+    if (!id) {
+      const slug = slugs.slug(toString(node), maintainCase)
+      id = removeAccents ? deburr(slug) : slug
+    }
     const data = patch(node, `data`, {})
 
     patch(data, `id`, id)
@@ -34,17 +54,20 @@ module.exports = (
     patch(data, `hProperties`, {})
     patch(data.htmlAttributes, `id`, id)
     patch(data.hProperties, `id`, id)
+    patch(data.hProperties, `style`, `position:relative;`)
 
     if (icon !== false) {
       const label = id.split(`-`).join(` `)
-      node.children.unshift({
+      const method = isIconAfterHeader ? `push` : `unshift`
+      node.children[method]({
         type: `link`,
         url: `#${id}`,
         title: null,
+        children: [],
         data: {
           hProperties: {
             "aria-label": `${label} permalink`,
-            class: className,
+            class: `${className} ${isIconAfterHeader ? `after` : `before`}`,
           },
           hChildren: [
             {

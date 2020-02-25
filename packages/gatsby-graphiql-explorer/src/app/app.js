@@ -4,11 +4,14 @@ import ReactDOM from "react-dom"
 import GraphiQL from "graphiql"
 import GraphiQLExplorer from "graphiql-explorer"
 import { getIntrospectionQuery, buildClientSchema, parse } from "graphql"
+import CodeExporter from "graphiql-code-exporter"
+import snippets from "./snippets"
 
 import "whatwg-fetch"
 
 import "graphiql/graphiql.css"
 import "./app.css"
+import "graphiql-code-exporter/CodeExporter.css"
 
 const parameters = {}
 window.location.search
@@ -87,6 +90,11 @@ const DEFAULT_QUERY =
   (window.localStorage && window.localStorage.getItem(`graphiql:query`)) ||
   null
 
+const DEFAULT_VARIABLES =
+  parameters.variables ||
+  (window.localStorage && window.localStorage.getItem(`graphiql:variables`)) ||
+  null
+
 const QUERY_EXAMPLE_SITEMETADATA_TITLE = `#     {
 #       site {
 #         siteMetadata {
@@ -142,11 +150,23 @@ const storedExplorerPaneState =
     ? window.localStorage.getItem(`graphiql:graphiqlExplorerOpen`) !== `false`
     : true
 
+const storedCodeExporterPaneState =
+  typeof parameters.codeExporterIsOpen !== `undefined`
+    ? parameters.codeExporterIsOpen === `false`
+      ? false
+      : true
+    : window.localStorage
+    ? window.localStorage.getItem(`graphiql:graphiqlCodeExporterOpen`) ===
+      `true`
+    : false
+
 class App extends React.Component {
   state = {
     schema: null,
     query: DEFAULT_QUERY,
+    variables: DEFAULT_VARIABLES,
     explorerIsOpen: storedExplorerPaneState,
+    codeExporterIsOpen: storedCodeExporterPaneState,
   }
 
   componentDidMount() {
@@ -269,8 +289,29 @@ class App extends React.Component {
     this.setState({ explorerIsOpen: newExplorerIsOpen })
   }
 
+  _handleToggleExporter = () => {
+    const newCodeExporterIsOpen = !this.state.codeExporterIsOpen
+    if (window.localStorage) {
+      window.localStorage.setItem(
+        `graphiql:graphiqlCodeExporterOpen`,
+        newCodeExporterIsOpen
+      )
+    }
+    parameters.codeExporterIsOpen = newCodeExporterIsOpen
+    updateURL()
+    this.setState({ codeExporterIsOpen: newCodeExporterIsOpen })
+  }
+
   render() {
-    const { query, schema } = this.state
+    const { query, variables, schema, codeExporterIsOpen } = this.state
+    const codeExporter = codeExporterIsOpen ? (
+      <CodeExporter
+        hideCodeExporter={this._handleToggleExporter}
+        snippets={snippets}
+        query={query}
+        codeMirrorTheme="default"
+      />
+    ) : null
 
     return (
       <React.Fragment>
@@ -289,6 +330,7 @@ class App extends React.Component {
           fetcher={graphQLFetcher}
           schema={schema}
           query={query}
+          variables={variables}
           onEditQuery={this._handleEditQuery}
           onEditVariables={onEditVariables}
           onEditOperationName={onEditOperationName}
@@ -309,8 +351,14 @@ class App extends React.Component {
               label="Explorer"
               title="Toggle Explorer"
             />
+            <GraphiQL.Button
+              onClick={this._handleToggleExporter}
+              label="Code Exporter"
+              title="Toggle Code Exporter"
+            />
           </GraphiQL.Toolbar>
         </GraphiQL>
+        {codeExporter}
       </React.Fragment>
     )
   }

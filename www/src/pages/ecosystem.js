@@ -1,12 +1,13 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
+import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
 import FooterLinks from "../components/shared/footer-links"
 
-import { EcosystemIcon } from "../assets/mobile-nav-icons"
-import { PluginsIcon, StartersIcon } from "../assets/ecosystem-icons"
+import { EcosystemIcon } from "../assets/icons"
+import { PluginsIcon, StartersIcon } from "../assets/icons/ecosystem-icons"
 
 class EcosystemPage extends Component {
   render() {
@@ -52,6 +53,9 @@ class EcosystemPage extends Component {
         pageTitle={pageTitle}
         pageIcon={EcosystemIcon}
       >
+        <Helmet>
+          <title>Ecosystem</title>
+        </Helmet>
         <EcosystemBoard
           icons={boardIcons}
           starters={starters}
@@ -66,13 +70,10 @@ class EcosystemPage extends Component {
 export default EcosystemPage
 
 export const ecosystemQuery = graphql`
-  query EcosystemQuery(
-    $featuredStarters: [String]!
-    $featuredPlugins: [String]!
-  ) {
+  query EcosystemQuery {
     allStartersYaml(
       filter: {
-        fields: { starterShowcase: { slug: { in: $featuredStarters } } }
+        fields: { featured: { eq: true }, hasScreenshot: { eq: true } }
       }
     ) {
       edges {
@@ -97,7 +98,7 @@ export const ecosystemQuery = graphql`
         }
       }
     }
-    allNpmPackage(filter: { name: { in: $featuredPlugins } }) {
+    allNpmPackage(filter: { fields: { featured: { eq: true } } }) {
       edges {
         node {
           slug

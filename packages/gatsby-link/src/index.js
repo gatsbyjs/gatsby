@@ -30,7 +30,7 @@ const NavLinkPropTypes = {
 }
 
 // Set up IntersectionObserver
-const handleIntersection = (el, cb) => {
+const createIntersectionObserver = (el, cb) => {
   const io = new window.IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (el === entry.target) {
@@ -46,6 +46,7 @@ const handleIntersection = (el, cb) => {
   })
   // Add element to the observer
   io.observe(el)
+  return { instance: io, el }
 }
 
 class GatsbyLink extends React.Component {
@@ -77,6 +78,16 @@ class GatsbyLink extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    if (!this.io) {
+      return
+    }
+    const { instance, el } = this.io
+
+    instance.unobserve(el)
+    instance.disconnect()
+  }
+
   handleRef(ref) {
     if (this.props.innerRef && this.props.innerRef.hasOwnProperty(`current`)) {
       this.props.innerRef.current = ref
@@ -86,7 +97,7 @@ class GatsbyLink extends React.Component {
 
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
-      handleIntersection(ref, () => {
+      this.io = createIntersectionObserver(ref, () => {
         ___loader.enqueue(parsePath(this.props.to).pathname)
       })
     }
@@ -176,7 +187,13 @@ GatsbyLink.propTypes = {
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
   replace: PropTypes.bool,
+  state: PropTypes.object,
 }
+
+const showDeprecationWarning = (functionName, altFunctionName, version) =>
+  console.warn(
+    `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
+  )
 
 export default React.forwardRef((props, ref) => (
   <GatsbyLink innerRef={ref} {...props} />
@@ -187,23 +204,17 @@ export const navigate = (to, options) => {
 }
 
 export const push = to => {
-  console.warn(
-    `The "push" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
-  )
+  showDeprecationWarning(`push`, `navigate`, 3)
   window.___push(withPrefix(to))
 }
 
 export const replace = to => {
-  console.warn(
-    `The "replace" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
-  )
+  showDeprecationWarning(`replace`, `navigate`, 3)
   window.___replace(withPrefix(to))
 }
 
 // TODO: Remove navigateTo for Gatsby v3
 export const navigateTo = to => {
-  console.warn(
-    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
-  )
+  showDeprecationWarning(`navigateTo`, `navigate`, 3)
   return push(to)
 }

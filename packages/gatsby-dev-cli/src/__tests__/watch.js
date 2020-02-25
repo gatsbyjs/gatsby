@@ -101,8 +101,6 @@ describe(`watching`, () => {
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
 
-      // console.log(`checking`)
-
       expect(fs.copy).toHaveBeenCalledTimes(1)
       expect(fs.copy).toHaveBeenCalledWith(
         filePath,
@@ -129,7 +127,7 @@ describe(`watching`, () => {
       )
     })
 
-    it(`filters non-existant files/directories`, () => {
+    it(`filters non-existent files/directories`, () => {
       fs.existsSync.mockReset().mockImplementation(file => false)
 
       watch(...args)
@@ -473,7 +471,7 @@ describe(`dependency changs`, () => {
       })
     })
 
-    it(`watching gatsby-source-filesytem and having gatsby-source-wordpress installs gatsby-source-wordpress`, async () => {
+    it(`watching gatsby-source-filesystem and having gatsby-source-wordpress installs gatsby-source-wordpress`, async () => {
       checkDepsChanges.mockImplementationOnce(
         mockDepsChanges([`gatsby-source-filesystem`])
       )
@@ -507,7 +505,7 @@ describe(`dependency changs`, () => {
       })
     })
 
-    it(`watching gatsby-source-filesytem and having gatsby-source-filesystem installs gatsby-source-filesystem`, async () => {
+    it(`watching gatsby-source-filesystem and having gatsby-source-filesystem installs gatsby-source-filesystem`, async () => {
       checkDepsChanges.mockImplementationOnce(
         mockDepsChanges([`gatsby-source-filesystem`])
       )
@@ -581,7 +579,7 @@ describe(`dependency changs`, () => {
       })
     })
 
-    it(`watching gatsby-source-filesytem and both having gatsby-source-filesystem and gatsby-source-wordpress, should install both`, async () => {
+    it(`watching gatsby-source-filesystem and both having gatsby-source-filesystem and gatsby-source-wordpress, should install both`, async () => {
       checkDepsChanges.mockImplementationOnce(
         mockDepsChanges([`gatsby-source-filesystem`])
       )

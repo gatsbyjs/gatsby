@@ -1,6 +1,7 @@
 ---
 title: Programmatically create pages from data
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 > This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/), [part 5](/tutorial/part-five/), and [part 6](/tutorial/part-six/) before continuing here.
@@ -51,7 +52,7 @@ This `onCreateNode` function will be called by Gatsby whenever a new node is cre
 Stop and restart the development server. As you do, you'll see quite a few newly
 created nodes get logged to the terminal console.
 
-Use this API to add the slugs for your markdown pages to `MarkdownRemark`
+In the next section, you will use this API to add slugs for your Markdown pages to `MarkdownRemark`
 nodes.
 
 Change your function so it now only logs `MarkdownRemark` nodes.
@@ -84,8 +85,8 @@ exports.onCreateNode = ({ node, getNode }) => {
 }
 ```
 
-There in your terminal you should see the relative paths for your two markdown
-files.
+After restarting your development server, you should see the relative paths for your two markdown
+files print to the terminal screen.
 
 ![markdown-relative-path](markdown-relative-path.png)
 
@@ -111,7 +112,7 @@ Now you can add your new slugs directly onto the `MarkdownRemark` nodes. This is
 powerful, as any data you add to nodes is available to query later with GraphQL.
 So, it'll be easy to get the slug when it comes time to create the pages.
 
-To do so, you'll use a function passed to our API implementation called
+To do so, you'll use a function passed to your API implementation called
 [`createNodeField`](/docs/actions/#createNodeField). This function
 allows you to create additional fields on nodes created by other plugins. Only
 the original creator of a node can directly modify the node—all other plugins
@@ -175,11 +176,11 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 }
 
 // highlight-start
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   // **Note:** The graphql function call returns a Promise
   // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
-  return graphql(`
-    {
+  const result = await graphql(`
+    query {
       allMarkdownRemark {
         edges {
           node {
@@ -190,9 +191,9 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then(result => {
-    console.log(JSON.stringify(result, null, 4))
-  })
+  `)
+
+  console.log(JSON.stringify(result, null, 4))
 }
 // highlight-end
 ```
@@ -250,10 +251,10 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
 }
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions // highlight-line
-  return graphql(`
-    {
+  const result = await graphql(`
+    query {
       allMarkdownRemark {
         edges {
           node {
@@ -264,28 +265,28 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then(result => {
-    // highlight-start
-    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-      createPage({
-        path: node.fields.slug,
-        component: path.resolve(`./src/templates/blog-post.js`),
-        context: {
-          // Data passed to context is available
-          // in page queries as GraphQL variables.
-          slug: node.fields.slug,
-        },
-      })
+  `)
+
+  // highlight-start
+  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    createPage({
+      path: node.fields.slug,
+      component: path.resolve(`./src/templates/blog-post.js`),
+      context: {
+        // Data passed to context is available
+        // in page queries as GraphQL variables.
+        slug: node.fields.slug,
+      },
     })
-    // highlight-end
   })
+  // highlight-end
 }
 ```
 
 Restart the development server and your pages will be created! An easy way to
 find new pages you create while developing is to go to a random path where
 Gatsby will helpfully show you a list of pages on the site. If you go to
-<http://localhost:8000/sdf>, you'll see the new pages you created.
+`http://localhost:8000/sdf`, you'll see the new pages you created.
 
 ![new-pages](new-pages.png)
 
@@ -381,7 +382,7 @@ export default ({ data }) => {
                 {node.frontmatter.title}{" "}
                 <span
                   css={css`
-                    color: #bbb;
+                    color: #555;
                   `}
                 >
                   — {node.frontmatter.date}
@@ -426,7 +427,7 @@ And there you go! A working, albeit small, blog!
 
 Try playing more with the site. Try adding some more markdown files. Explore
 querying other data from the `MarkdownRemark` nodes and adding them to the
-frontpage or blog posts pages.
+front page or blog posts pages.
 
 In this part of the tutorial, you've learned the foundations of building with
 Gatsby's data layer. You've learned how to _source_ and _transform_ data using

@@ -1,7 +1,5 @@
-const _ = require(`lodash`)
-
 const { store } = require(`../`)
-const { actions } = require(`./internal.js`)
+import * as actions from "./internal"
 
 function createPageDependency({ path, nodeId, connection }) {
   const state = store.getState()
@@ -15,7 +13,8 @@ function createPageDependency({ path, nodeId, connection }) {
   }
   if (
     nodeId &&
-    _.includes(state.componentDataDependencies.nodes[nodeId], path)
+    state.componentDataDependencies.nodes.has(nodeId) &&
+    state.componentDataDependencies.nodes.get(nodeId).has(path)
   ) {
     nodeDependencyExists = true
   }
@@ -24,7 +23,8 @@ function createPageDependency({ path, nodeId, connection }) {
   }
   if (
     connection &&
-    _.includes(state.componentDataDependencies.connections, connection)
+    state.componentDataDependencies.connections.has(connection) &&
+    state.componentDataDependencies.connections.get(connection).has(path)
   ) {
     connectionDependencyExists = true
   }

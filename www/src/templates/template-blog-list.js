@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
@@ -11,14 +13,7 @@ import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
 import FooterLinks from "../components/shared/footer-links"
 
-import {
-  colors,
-  space,
-  transition,
-  radii,
-  shadows,
-  mediaQueries,
-} from "../utils/presets"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { pullIntoGutter, breakpointGutter } from "../utils/styles"
 
 class BlogPostsIndex extends React.Component {
@@ -27,95 +22,72 @@ class BlogPostsIndex extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <main
-          id={`reach-skip-nav`}
-          css={{ [breakpointGutter]: { background: colors.ui.background } }}
-        >
+        <main id={`reach-skip-nav`}>
           <Helmet>
             <title>{`Blog | Page ${this.props.pageContext.currentPage}`}</title>
           </Helmet>
           <Container>
-            <h1
-              css={{
-                marginTop: 0,
-                marginBottom: space[8],
-                [mediaQueries.md]: {
-                  marginTop: 0,
-                  position: `absolute`,
-                  width: 1,
-                  height: 1,
-                  padding: 0,
-                  overflow: `hidden`,
-                  clip: `rect(0,0,0,0)`,
-                  whiteSpace: `nowrap`,
-                  clipPath: `inset(50%)`,
+            <div
+              sx={{
+                ...pullIntoGutter,
+                display: `flex`,
+                justifyContent: `space-between`,
+                borderBottom: t => `1px solid ${t.colors.ui.border}`,
+                mb: 6,
+                pb: 6,
+                [breakpointGutter]: {
+                  pb: 0,
+                  border: 0,
                 },
               }}
             >
-              Blog
-            </h1>
+              <h1 sx={{ mb: 0 }}>Blog</h1>
+              <Button
+                key="blog-view-all-tags-button"
+                to="/blog/tags"
+                variant="small"
+              >
+                View all Tags <TagsIcon />
+              </Button>
+            </div>
             {allMdx.edges.map(({ node }, index) => (
               <BlogPostPreviewItem
                 post={node}
                 key={node.fields.slug}
-                css={{
-                  borderBottom: `1px solid ${colors.ui.border.subtle}`,
-                  paddingBottom: space[8],
-                  marginBottom:
-                    index === allMdx.edges.length - 1 ? 0 : space[8],
+                sx={{
+                  borderBottomWidth: `1px`,
+                  borderBottomStyle: `solid`,
+                  borderColor: `ui.border`,
+                  pb: 8,
+                  mb: index === allMdx.edges.length - 1 ? 0 : 8,
                   ...pullIntoGutter,
-                  position: `relative`,
                   [breakpointGutter]: {
-                    padding: space[9],
-                    boxShadow: shadows.raised,
-                    background: colors.white,
-                    borderRadius: radii[2],
+                    p: 9,
+                    boxShadow: `raised`,
+                    bg: `card.background`,
+                    borderRadius: 2,
                     border: 0,
-                    marginBottom: space[6],
-                    marginLeft: 0,
-                    marginRight: 0,
-                    transition: `transform ${transition.speed.default} ${
-                      transition.curve.default
-                    },  box-shadow ${transition.speed.default} ${
-                      transition.curve.default
-                    }, padding ${transition.speed.default} ${
-                      transition.curve.default
-                    }`,
+                    mb: 6,
+                    mx: 0,
+                    transition: t =>
+                      `transform ${t.transition.default},  box-shadow ${t.transition.default}, padding ${t.transition.default}`,
                     "&:hover": {
-                      transform: `translateY(-${space[1]})`,
-                      boxShadow: shadows.overlay,
+                      transform: t => `translateY(-${t.space[1]})`,
+                      boxShadow: `overlay`,
                     },
                     "&:active": {
-                      boxShadow: shadows.cardActive,
+                      boxShadow: `cardActive`,
                       transform: `translateY(0)`,
                     },
                   },
                   [mediaQueries.md]: {
-                    marginLeft: `-${space[9]}`,
-                    marginRight: `-${space[9]}`,
+                    marginLeft: t => `-${t.space[9]}`,
+                    marginRight: t => `-${t.space[9]}`,
                   },
                 }}
               />
             ))}
             <Pagination context={this.props.pageContext} />
-            <div
-              css={{
-                background: colors.ui.background,
-                ...pullIntoGutter,
-                paddingBottom: space[6],
-                borderBottom: `1px solid ${colors.ui.border.subtle}`,
-                display: `flex`,
-                flexFlow: `row nowrap`,
-                justifyContent: `flex-end`,
-                [breakpointGutter]: {
-                  border: 0,
-                },
-              }}
-            >
-              <Button key="blog-view-all-tags-button" to="/blog/tags" small>
-                View all Tags <TagsIcon />
-              </Button>
-            </div>
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
           </Container>
           <FooterLinks />

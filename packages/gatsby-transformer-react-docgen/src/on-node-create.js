@@ -23,8 +23,9 @@ function createDescriptionNode(
   createNodeId,
   createContentDigest
 ) {
-  if (!entry.description) return node
   const { createNode } = actions
+
+  delete node.description
 
   const descriptionNode = {
     id: createNodeId(descId(node.id)),
@@ -109,9 +110,7 @@ export default async function onCreateNode(
     components = parseMetadata(content, node, pluginOptions)
   } catch (err) {
     reporter.error(
-      `There was a problem parsing component metadata for file: "${
-        node.relativePath
-      }"`,
+      `There was a problem parsing component metadata for file: "${node.relativePath}"`,
       err
     )
     return

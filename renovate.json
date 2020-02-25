@@ -1,13 +1,35 @@
 {
-  "extends": ["config:base"],
-  "includePaths": ["starters/**"],
+  "extends": ["config:base", ":disablePeerDependencies"],
+  "includePaths": [
+    "package.json",
+    "starters/**",
+    "packages/**",
+    "www/package.json"
+  ],
   "major": {
-    "enabled": false
+    "masterIssueApproval": true
   },
-  "prHourlyLimit": 2,
-  "prConcurrentLimit": 20,
+  "masterIssue": true,
   "rebaseStalePrs": false,
+  "excludePackageNames": ["react", "react-dom"],
   "rangeStrategy": "bump",
   "bumpVersion": null,
-  "semanticCommitScope": "starters"
+  "semanticCommitScope": null,
+  "prHourlyLimit": 0,
+  "packageRules": [
+    {
+      "groupName": "minor updates in packages",
+      "updateTypes": ["minor"]
+    },
+    {
+      "groupName": "patch updates in packages",
+      "updateTypes": ["patch"]
+    },
+    {
+      "depTypeList": ["engines"],
+      "enabled": false
+    }
+  ],
+  "timezone": "GMT",
+  "schedule": "after 10am on Monday"
 }

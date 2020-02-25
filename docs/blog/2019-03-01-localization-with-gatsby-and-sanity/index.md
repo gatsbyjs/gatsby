@@ -2,7 +2,7 @@
 title: A method for Localization with Gatsby and Sanity.io
 date: 2019-03-01
 author: Travis Stanley
-tags: ["sanity", "localization", "l10n"]
+tags: ["sanity", "i18n"]
 image: "./images/gatsby-sanity-l10n.png"
 showImageInArticle: true
 ---
@@ -259,7 +259,7 @@ const createLocalePage = (page, createPage) => {
   }
 }
 
-exports.createPages = ({ actions, graphql }) => {
+exports.createPages = ({ actions }) => {
   const { createPage } = actions
 
   // generate your dynamic content here...
@@ -289,4 +289,4 @@ If you haven't already started using [Sanity.io](https://www.sanity.io) as your 
 
 For a quick start with the combo, the peeps at Sanity put up a great starting point at [Combo Example: Company Website](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo)
 
-If you have any questions or want to geek out about all things React hit me up on twitter [@cpt_silverfox](https://twitter.com/cpt_silverfox)
+If you have any questions or want to geek out about all things React hit me up on Twitter [@cpt_silverfox](https://twitter.com/cpt_silverfox)

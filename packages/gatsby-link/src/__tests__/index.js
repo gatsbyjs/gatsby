@@ -1,6 +1,6 @@
 import "@babel/polyfill"
 import React from "react"
-import { render, cleanup } from "react-testing-library"
+import { render, cleanup } from "@testing-library/react"
 import {
   createMemorySource,
   createHistory,
@@ -227,6 +227,18 @@ describe(`navigate`, () => {
       undefined
     )
   })
+
+  it(`passes a state object`, () => {
+    const to = `/some-path`
+    const options = { state: { myStateKey: `a state value` } }
+
+    getNavigate()(to, options)
+
+    expect(global.___navigate).toHaveBeenCalledWith(
+      `${global.__BASE_PATH__}${to}`,
+      options
+    )
+  })
 })
 
 describe(`ref forwarding`, () => {
@@ -251,5 +263,20 @@ describe(`ref forwarding`, () => {
     setup({ linkProps: { ref } })
 
     expect(ref.current).toEqual(expect.any(HTMLElement))
+  })
+})
+
+describe(`state`, () => {
+  it(`passes a state object`, () => {
+    const to = `/`
+    const state = { myStateKey: `a state value` }
+    getNavigate()
+
+    const { link } = setup({ linkProps: { state } })
+    link.click()
+
+    expect(
+      global.___navigate
+    ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { state })
   })
 })

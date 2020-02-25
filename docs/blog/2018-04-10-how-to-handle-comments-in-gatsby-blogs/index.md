@@ -40,15 +40,15 @@ You could create your own staticman alternative. You could use a framework like 
 
 ### Netlify
 
-Are you hosting on [netlify](https://serverless.com/)? Then you could use their forms service. If you pay for netlify, you can link forms to functions. Similar to serverless. You could use that to make PRs. Or push content to GitHub. Or other Git hosts. Too complicated. Not worth it.
+Are you hosting on [Netlify](https://serverless.com/)? Then you could use their forms service. If you pay for Netlify, you can link forms to functions. Similar to serverless. You could use that to make PRs. Or push content to GitHub. Or other Git hosts. Too complicated. Not worth it.
 
 ### Email
 
-You could link your comment form to an email address. Then you could copy and paste comments into Git. Manual comment moderation. Maybe with netlify's form service? Or a serverless setup. Again, this could be fun to setup. Again, it's probably not a very good idea!
+You could link your comment form to an email address. Then you could copy and paste comments into Git. Manual comment moderation. Maybe with Netlify's form service? Or a serverless setup. Again, this could be fun to setup. Again, it's probably not a very good idea!
 
 ## Crazy
 
-There are many other options. Some crazier than others. You could push comments to WordPress. Then pull them from WordPress into Gatsby at build time. Or push them to a headless CMS. Via a serverless setup maybe.
+There are many other options. Some crazier than others. You could push comments to WordPress. Then pull them from WordPress into Gatsby at build time. Or push them to a [headless CMS](/docs/headless-cms/). Via a serverless setup maybe.
 
 You could create a comment form. Then have it generate a mailto link. Then people email you the comment. Then you copy and paste it into Git. Or the mailto link points to a service like mailgun. Then incoming emails turn into webhooks. Then forward to serverless. Then land as pull requests.
 

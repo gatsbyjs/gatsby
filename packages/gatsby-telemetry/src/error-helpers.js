@@ -19,8 +19,6 @@ const cleanPaths = (str, separator = sep) => {
   return str
 }
 
-const ensureArray = value => [].concat(value)
-
 // Takes an Error and returns a sanitized JSON String
 const sanitizeError = (error, pathSeparator = sep) => {
   // Convert Buffers to Strings
@@ -40,14 +38,7 @@ const sanitizeError = (error, pathSeparator = sep) => {
   return cleanPaths(errorString, pathSeparator)
 }
 
-// error could be Error or [Error]
-const sanitizeErrors = error => {
-  const errors = ensureArray(error)
-  return errors.map(error => sanitizeError(error))
-}
-
 module.exports = {
   sanitizeError,
-  sanitizeErrors,
   cleanPaths,
 }

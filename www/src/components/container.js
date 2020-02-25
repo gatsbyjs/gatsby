@@ -1,18 +1,19 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
-import { space, mediaQueries } from "../utils/presets"
-import { rhythm } from "../utils/typography"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const Container = ({ children, hasSideBar = true, overrideCSS }) => (
+const Container = ({ children, withSidebar = true, overrideCSS }) => (
   <div
-    css={{
-      maxWidth: hasSideBar ? rhythm(28) : rhythm(36),
-      margin: `0 auto`,
-      padding: space[6],
+    sx={{
+      maxWidth: withSidebar
+        ? `mainContentWidth.withSidebar`
+        : `mainContentWidth.default`,
+      mx: `auto`,
+      p: 6,
       position: `relative`,
       [mediaQueries.lg]: {
-        paddingTop: space[9],
-        paddingBottom: space[9],
+        py: 9,
       },
       ...overrideCSS,
     }}

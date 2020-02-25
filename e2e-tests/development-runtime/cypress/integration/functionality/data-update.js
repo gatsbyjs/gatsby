@@ -2,6 +2,7 @@ const FILE_CONTENT = `
 ---
 title: A new post
 date: ${new Date().toJSON()}
+# foo: freshField
 ---
 
 A brand new post
@@ -13,19 +14,37 @@ describe(`on new file`, () => {
     cy.visit(`/`).waitForRouteChange()
   })
 
-  /*
-   * TODO: This seems to cause a page re-load
-   */
-  it.skip(`re-runs GraphQL queries with new file contents`, () => {
+  it(`re-runs GraphQL queries with new file contents`, () => {
+    const content = JSON.stringify(FILE_CONTENT)
     cy.exec(
-      `npm run update -- --file content/sample.md --file-content '${JSON.stringify(
-        FILE_CONTENT
-      )}'`
+      `npm run update -- --file content/new-file.md --file-content \\"${content}\\"`
     )
 
     cy.get(`ul`)
-      .find(`li`)
-      .its(`length`)
-      .should(`be.gt`, 1)
+      .find(`li:nth-child(2)`)
+      .should(`exist`, 1)
+  })
+})
+
+describe(`on schema change`, () => {
+  beforeEach(() => {
+    cy.visit(`/`).waitForRouteChange()
+  })
+
+  it(`rebuilds GraphQL schema`, () => {
+    const content = JSON.stringify(FILE_CONTENT)
+    cy.exec(
+      `npm run update -- --file content/new-file.md --exact --replacements "# foo:foo" --file-content \\"${content}\\"`
+    )
+    cy.exec(
+      `npm run update -- --file src/pages/schema-rebuild.js --exact --replacements "# foo:foo"`
+    )
+
+    cy.visit(`/schema-rebuild/`).waitForRouteChange()
+    cy.get(`p`).contains(`"foo":"freshField"`)
+
+    cy.exec(
+      `npm run update -- --file src/pages/schema-rebuild.js --exact --replacements "foo: # foo"`
+    )
   })
 })

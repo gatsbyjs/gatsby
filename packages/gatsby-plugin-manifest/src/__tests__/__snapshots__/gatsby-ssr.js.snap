@@ -33,7 +33,7 @@ exports[`gatsby-plugin-manifest Cache Busting Does file name cache busting if "c
 Array [
   <link
     href="/icons/icon-48x48-contentDigest.png"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -86,7 +86,7 @@ exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache
 Array [
   <link
     href="/icons/icon-48x48.png?v=contentDigest"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -139,7 +139,7 @@ exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache
 Array [
   <link
     href="/icons/icon-48x48.png?v=contentDigest"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -192,7 +192,7 @@ exports[`gatsby-plugin-manifest Cache Busting doesn't add cache busting if "cach
 Array [
   <link
     href="/icons/icon-48x48.png"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -264,7 +264,7 @@ exports[`gatsby-plugin-manifest Favicon Adds link favicon tag if "include_favico
 Array [
   <link
     href="/icons/icon-48x48.png"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -422,11 +422,11 @@ Array [
 ]
 `;
 
-exports[`gatsby-plugin-manifest Manifest Link Generation Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
+exports[`gatsby-plugin-manifest Manifest Link Generation Adds "icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
 Array [
   <link
     href="/icons/icon-48x48.png?v=contentDigest"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -488,6 +488,104 @@ Array [
   <meta
     content="#000000"
     name="theme-color"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Manifest Link Generation Adds correct (default) i18n "manifest" link to head 1`] = `
+Array [
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <link
+    href="/icons/icon-48x48.png"
+    rel="apple-touch-icon"
+    sizes="48x48"
+  />,
+  <link
+    href="/icons/icon-72x72.png"
+    rel="apple-touch-icon"
+    sizes="72x72"
+  />,
+  <link
+    href="/icons/icon-96x96.png"
+    rel="apple-touch-icon"
+    sizes="96x96"
+  />,
+  <link
+    href="/icons/icon-144x144.png"
+    rel="apple-touch-icon"
+    sizes="144x144"
+  />,
+  <link
+    href="/icons/icon-192x192.png"
+    rel="apple-touch-icon"
+    sizes="192x192"
+  />,
+  <link
+    href="/icons/icon-256x256.png"
+    rel="apple-touch-icon"
+    sizes="256x256"
+  />,
+  <link
+    href="/icons/icon-384x384.png"
+    rel="apple-touch-icon"
+    sizes="384x384"
+  />,
+  <link
+    href="/icons/icon-512x512.png"
+    rel="apple-touch-icon"
+    sizes="512x512"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Manifest Link Generation Adds correct (es) i18n "manifest" link to head 1`] = `
+Array [
+  <link
+    href="/manifest_es.webmanifest"
+    rel="manifest"
+  />,
+  <link
+    href="/icons/icon-48x48.png"
+    rel="apple-touch-icon"
+    sizes="48x48"
+  />,
+  <link
+    href="/icons/icon-72x72.png"
+    rel="apple-touch-icon"
+    sizes="72x72"
+  />,
+  <link
+    href="/icons/icon-96x96.png"
+    rel="apple-touch-icon"
+    sizes="96x96"
+  />,
+  <link
+    href="/icons/icon-144x144.png"
+    rel="apple-touch-icon"
+    sizes="144x144"
+  />,
+  <link
+    href="/icons/icon-192x192.png"
+    rel="apple-touch-icon"
+    sizes="192x192"
+  />,
+  <link
+    href="/icons/icon-256x256.png"
+    rel="apple-touch-icon"
+    sizes="256x256"
+  />,
+  <link
+    href="/icons/icon-384x384.png"
+    rel="apple-touch-icon"
+    sizes="384x384"
+  />,
+  <link
+    href="/icons/icon-512x512.png"
+    rel="apple-touch-icon"
+    sizes="512x512"
   />,
 ]
 `;

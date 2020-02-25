@@ -2,7 +2,7 @@
 title: Building a large, internationalized e-commerce website with Gatsby at Daniel Wellington
 date: 2019-01-28
 author: "Thibaut Remy"
-tags: ["case-study", "architecture", "i18n"]
+tags: ["case-studies", "large-sites", "i18n"]
 ---
 
 Around a year ago, we started discussing ways to improve performance on [Daniel Wellington](http://www.danielwellington.com)'s e-commerce website. Emerging markets like India require highly optimized web experience that we as web developers need to deliver on. We chose Gatsby as a tool to help us reach optimal performance.
@@ -38,7 +38,8 @@ Unfortunately, that does not scale. The development server is made to be used fo
 We decided to solve these 2 major problems by slicing our website into smaller (and faster) websites. Since we have so many markets and locales, and each of these markets are pretty silo-ed (they don't communicate or share data with each other), it made a lot of sense to separate them from each other
 
 <Pullquote>
-By splitting our 30K-page website into smaller 1K-page websites, we decreased our build time from 20+ minutes to 3 minutes.
+  By splitting our 30K-page website into smaller 1K-page websites, we decreased
+  our build time from 20+ minutes to 3 minutes.
 </Pullquote>
 
 Technically, we achieved this by setting an environment variable `GATSBY_LOCALE` when building the website, and that will restrict the amount of gatsby nodes and pages we create. To build the whole website, we parallelize the builds on multiple machines.

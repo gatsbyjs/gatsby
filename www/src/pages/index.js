@@ -1,20 +1,21 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
-import { colors, space, mediaQueries } from "../utils/presets"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
 import FuturaParagraph from "../components/futura-paragraph"
 import Button from "../components/button"
+import HomepageLogoBanner from "../components/homepage/homepage-logo-banner"
 import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
-import HomepageSection from "../components/homepage/homepage-section"
 import FooterLinks from "../components/shared/footer-links"
 import {
   setupScrollersObserver,
@@ -103,39 +104,34 @@ class IndexRoute extends React.Component {
         >
           <MastheadContent />
           <div
-            css={{
-              padding: space[6],
-              paddingTop: 0,
+            sx={{
               width: `100%`,
-              borderBottom: `1px solid ${colors.purple[10]}`,
-              borderTop: `1px solid ${colors.purple[10]}`,
-              background: colors.purple[5],
-              [mediaQueries.xl]: {
-                padding: space[8],
-              },
+              p: 8,
+              pt: 0,
             }}
           >
             <Diagram />
           </div>
+          <HomepageLogoBanner />
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
-            <Container hasSideBar={false}>
-              <div css={{ textAlign: `center` }}>
-                <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
+            <Container withSidebar={false}>
+              <section css={{ textAlign: `center` }}>
+                <h1 sx={{ fontWeight: `heading`, mt: 0 }}>Curious yet?</h1>
                 <FuturaParagraph>
                   It only takes a few minutes to get up and running!
                 </FuturaParagraph>
                 <Button
                   secondary
-                  large
+                  variant="large"
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ marginTop: space[4] }}
+                  overrideCSS={{ mt: 5 }}
                   icon={<ArrowForwardIcon />}
                 >
                   Get Started
                 </Button>
-              </div>
+              </section>
             </Container>
           </div>
 
@@ -144,13 +140,6 @@ class IndexRoute extends React.Component {
           <HomepageBlog posts={posts} />
 
           <HomepageNewsletter />
-
-          <HomepageSection
-            css={{
-              paddingTop: `0 !important`,
-              paddingBottom: `0 !important`,
-            }}
-          />
         </main>
         <FooterLinks />
       </Layout>
@@ -161,10 +150,7 @@ class IndexRoute extends React.Component {
 export default IndexRoute
 
 export const pageQuery = graphql`
-  query IndexRouteQuery(
-    $featuredStarters: [String]!
-    $featuredPlugins: [String]!
-  ) {
+  query IndexRouteQuery {
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
         fluid(maxWidth: 870) {
@@ -191,7 +177,7 @@ export const pageQuery = graphql`
     }
     allStartersYaml(
       filter: {
-        fields: { starterShowcase: { slug: { in: $featuredStarters } } }
+        fields: { featured: { eq: true }, hasScreenshot: { eq: true } }
       }
       sort: { order: DESC, fields: [fields___starterShowcase___stars] }
     ) {
@@ -217,7 +203,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allNpmPackage(filter: { name: { in: $featuredPlugins } }) {
+    allNpmPackage(filter: { fields: { featured: { eq: true } } }) {
       edges {
         node {
           slug

@@ -15,6 +15,10 @@ open source components, tutorials, and tooling that can be used seamlessly for
 building sites with Gatsby. Gatsby is built to behave almost exactly like a
 normal React application.
 
+The following model shows how data from a source can be queried by GraphQL for use inside components in the process of building a Gatsby site:
+
+<LayerModel initialLayer="View" />
+
 [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
 is a good resource for learning how to structure applications with React.
 
@@ -24,7 +28,7 @@ Everything in Gatsby is built using components.
 
 A basic directory structure of a project might look like this:
 
-```
+```text
 .
 ├── gatsby-config.js
 ├── package.json
@@ -151,7 +155,7 @@ function HTML(props) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         {props.headComponents}
-        <link rel="shortcut icon" href={favicon} />
+        <link rel="icon" href={favicon} />
         {css}
       </head>
       <body>
@@ -167,3 +171,8 @@ These are examples of the different ways React components are used in Gatsby
 sites. To see full working examples, check out the
 [examples directory](https://github.com/gatsbyjs/gatsby/tree/master/examples) in
 the Gatsby repo.
+
+### Non-page components
+
+A Non-page component is one that's embedded inside some other component, forming a component hierarchy. An example would be a Header component that's included in multiple page components.
+Gatsby uses GraphQL to enable components to declare the data they need. Using the [StaticQuery](/docs/static-query/) component or [useStaticQuery hook](/docs/use-static-query/), you can colocate a non-page component with its data.

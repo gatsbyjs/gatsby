@@ -9,7 +9,7 @@ describe(`Paginate query results`, () => {
     expect(nodes).toEqual([results[0]])
   })
 
-  it(`returns next and previos nodes`, async () => {
+  it(`returns next and previous nodes`, async () => {
     const args = { limit: 3 }
     const next = paginate(results, args).edges.map(({ next }) => next)
     const prev = paginate(results, args).edges.map(({ previous }) => previous)

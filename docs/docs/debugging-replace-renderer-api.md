@@ -18,7 +18,7 @@ Note that `replaceRenderer` is only used during the build lifecycle. It won't ca
 
 If multiple plugins implement `replaceRenderer`, the build script will warn you:
 
-```
+```text
 warning replaceRenderer API found in these plugins:
 warning plugin-name-a, default-site-plugin
 warning This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/
@@ -36,7 +36,7 @@ If you see errors during your build, you can fix them with the following steps.
 
 Your error message should list which plugins implement `replaceRenderer`:
 
-```shell
+```text
 warning replaceRenderer API found in these plugins:
 warning plugin-name-a, default-site-plugin
 ```
@@ -51,7 +51,7 @@ You'll need to override your plugins' `replaceRenderer` code in your `gatsby-ssr
 
 ### Initial setup
 
-In this example project we're using [`redux`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) and [Gatsby's Styled Components plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components).
+In this example project you're using [`redux`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) and [Gatsby's Styled Components plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components).
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -61,7 +61,7 @@ module.exports = {
 
 `gatsby-ssr.js` (based on the [using Redux example](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-ssr.js))
 
-```js:title=gatsby-ssr.js
+```jsx:title=gatsby-ssr.js
 import React from "react"
 import { Provider } from "react-redux"
 import { renderToString } from "react-dom/server"
@@ -80,9 +80,9 @@ Note that the Styled Components plugin uses `replaceRenderer`, and the code in `
 
 ### Fixing the `replaceRenderer` error
 
-Our `gatsby-config.js` file will remain unchanged. However, our `gatsby-ssr.js` file will update to include the [`replaceRenderer` functionality from the Styled Components plugin](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-styled-components/src/gatsby-ssr.js)
+Your `gatsby-config.js` file will remain unchanged. However, your `gatsby-ssr.js` file will update to include the [`replaceRenderer` functionality from the Styled Components plugin](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-styled-components/src/gatsby-ssr.js)
 
-```js:title=gatsby-ssr.js
+```jsx:title=gatsby-ssr.js
 import React from "react"
 import { Provider } from "react-redux"
 import { renderToString } from "react-dom/server"

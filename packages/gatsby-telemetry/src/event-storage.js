@@ -14,6 +14,8 @@ const isTruthy = require(`./is-truthy`)
  * to continue even when working offline.
  */
 module.exports = class EventStorage {
+  analyticsApi =
+    process.env.GATSBY_TELEMETRY_API || `https://analytics.gatsbyjs.com/events`
   constructor() {
     try {
       this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
@@ -43,6 +45,10 @@ module.exports = class EventStorage {
     this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
   }
 
+  isTrackingDisabled() {
+    return this.disabled
+  }
+
   addEvent(event) {
     if (this.disabled) {
       return
@@ -51,7 +57,7 @@ module.exports = class EventStorage {
     const eventString = JSON.stringify(event)
 
     if (this.debugEvents || this.verbose) {
-      console.error(`Captured event:`, eventString)
+      console.error(`Captured event:`, JSON.parse(eventString))
 
       if (this.debugEvents) {
         // Bail because we don't want to send debug events
@@ -75,14 +81,26 @@ module.exports = class EventStorage {
 
   async submitEvents(events) {
     try {
-      const res = await fetch(`https://analytics.gatsbyjs.com/events`, {
+      const res = await fetch(this.analyticsApi, {
         method: `POST`,
-        headers: { "content-type": `application/json` },
+        headers: {
+          "content-type": `application/json`,
+          "user-agent": this.getUserAgent(),
+        },
         body: JSON.stringify(events),
       })
       return res.ok
     } catch (e) {
       return false
+    }
+  }
+
+  getUserAgent() {
+    try {
+      const { name, version } = require(`../package.json`)
+      return `${name}:${version}`
+    } catch (e) {
+      return `Gatsby Telemetry`
     }
   }
 

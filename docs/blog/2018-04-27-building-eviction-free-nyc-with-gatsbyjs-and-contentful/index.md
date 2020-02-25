@@ -84,7 +84,7 @@ perfect fit for a number of reasons:
 System](https://en.wikipedia.org/wiki/Content_management_system), or CMS.
 Traditional CMS platforms, like WordPress or Drupal, allow authors and editors
 to easily create websites and publish content such as text articles, image, or
-video embeds. A headless CMS takes those publishing features (and the easy admin
+video embeds. A [headless CMS](/docs/headless-cms/) takes those publishing features (and the easy admin
 tools that come with them) and additionally gives you total flexibility as to
 how the website itself is constructed.
 

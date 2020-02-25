@@ -1,24 +1,24 @@
 const fs = require(`fs-extra`)
 const got = require(`got`)
-const { createContentDigest } = require(`./fallback`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
-const ProgressBar = require(`progress`)
+const { createProgress } = require(`./utils`)
 
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
+const {
+  getRemoteFileExtension,
+  getRemoteFileName,
+  createFilePath,
+} = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-const bar = new ProgressBar(
-  `Downloading remote files [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
-  }
-)
+let bar
+// Keep track of the total number of jobs we push in the queue
+let totalJobs = 0
 
 /********************
  * Type Definitions *
@@ -32,6 +32,11 @@ const bar = new ProgressBar(
 /**
  * @typedef {GatsbyCache}
  * @see gatsby/packages/gatsby/utils/cache.js
+ */
+
+/**
+ * @typedef {Reporter}
+ * @see gatsby/packages/gatsby-cli/lib/reporter.js
  */
 
 /**
@@ -51,22 +56,16 @@ const bar = new ProgressBar(
  * @param  {GatsbyCache} options.cache
  * @param  {Function} options.createNode
  * @param  {Auth} [options.auth]
+ * @param  {Reporter} [options.reporter]
  */
 
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
+const STALL_RETRY_LIMIT = 3
+const STALL_TIMEOUT = 30000
 
-/**
- * createFilePath
- * --
- *
- * @param  {String} directory
- * @param  {String} filename
- * @param  {String} url
- * @return {String}
- */
-const createFilePath = (directory, filename, ext) =>
-  path.join(directory, `${filename}${ext}`)
+const CONNECTION_RETRY_LIMIT = 5
+const CONNECTION_TIMEOUT = 30000
 
 /********************
  * Queue Management *
@@ -82,6 +81,14 @@ const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
   concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
+})
+
+// when the queue is empty we stop the progressbar
+queue.on(`drain`, () => {
+  if (bar) {
+    bar.done()
+  }
+  totalJobs = 0
 })
 
 /**
@@ -122,31 +129,65 @@ async function pushToQueue(task, cb) {
  * @param  {Headers}  headers
  * @param  {String}   tmpFilename
  * @param  {Object}   httpOpts
+ * @param  {number}   attempt
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
-const requestRemoteNode = (url, headers, tmpFilename, httpOpts) =>
+const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
   new Promise((resolve, reject) => {
-    const opts = Object.assign({}, { timeout: 30000, retries: 5 }, httpOpts)
+    let timeout
+
+    // Called if we stall for 30s without receiving any data
+    const handleTimeout = async () => {
+      fsWriteStream.close()
+      fs.removeSync(tmpFilename)
+      if (attempt < STALL_RETRY_LIMIT) {
+        // Retry by calling ourself recursively
+        resolve(
+          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
+        )
+      } else {
+        reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
+      }
+    }
+
+    const resetTimeout = () => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+      timeout = setTimeout(handleTimeout, STALL_TIMEOUT)
+    }
     const responseStream = got.stream(url, {
       headers,
-      ...opts,
+      timeout: CONNECTION_TIMEOUT,
+      retries: CONNECTION_RETRY_LIMIT,
+      ...httpOpts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
-    responseStream.on(`downloadProgress`, pro => console.log(pro))
 
     // If there's a 400/500 response or other error.
-    responseStream.on(`error`, (error, body, response) => {
+    responseStream.on(`error`, error => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
       fs.removeSync(tmpFilename)
       reject(error)
     })
 
     fsWriteStream.on(`error`, error => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
       reject(error)
     })
 
     responseStream.on(`response`, response => {
+      resetTimeout()
+
       fsWriteStream.on(`finish`, () => {
+        if (timeout) {
+          clearTimeout(timeout)
+        }
         resolve(response)
       })
     })
@@ -271,9 +312,6 @@ const pushTask = task =>
       })
   })
 
-// Keep track of the total number of jobs we push in the queue
-let totalJobs = 0
-
 /***************
  * Entry Point *
  ***************/
@@ -300,6 +338,7 @@ module.exports = ({
   createNodeId,
   ext = null,
   name = null,
+  reporter,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -327,6 +366,11 @@ module.exports = ({
 
   if (!url || isWebUri(url) === undefined) {
     return Promise.reject(`wrong url: ${url}`)
+  }
+
+  if (totalJobs === 0) {
+    bar = createProgress(`Downloading remote files`, reporter)
+    bar.start()
   }
 
   totalJobs += 1
