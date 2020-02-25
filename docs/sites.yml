@@ -9893,6 +9893,17 @@
   built_by: Pierre Beard
   built_by_url: https://github.com/PBRT
   featured: false
+- title: ProjectManager.tools
+  main_url: "https://projectmanager.tools/"
+  url: "https://projectmanager.tools/"
+  featured: false
+  categories:
+    - App
+    - Web Development
+    - Design
+    - Agency
+  built_by: App Design
+  built_by_url: "https://appdesign.dev/"
 - title: 1902 Software
   url: https://1902software.com/
   main_url: https://1902software.com/
