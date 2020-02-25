@@ -59,7 +59,7 @@
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore **/__tests__ --verbose",
-    "develop-test-runtime": "(cd test-runtime && yarn && yarn install gatsby-source-wordpress-experimental --force && yarn clean && yarn start)",
+    "develop-test-runtime": "(cd test-runtime && rm -rf ./node_modules/gatsby-source-wordpress-experimental && yarn install --check-files && yarn clean && yarn start)",
     "ci": "yarn prepare && start-server-and-test develop-test-runtime 8000",
     "ci-develop": "yarn prepare && start-server-and-test develop-test-runtime 8000 test-develop",
     "test": "jest",
