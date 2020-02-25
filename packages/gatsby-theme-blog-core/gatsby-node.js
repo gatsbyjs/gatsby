@@ -45,6 +45,18 @@ const mdxResolverPassthrough = fieldName => async (
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
+  createTypes(`
+    type Site implements Node {
+      siteMetadata: SiteMetadata
+    }
+    type SiteMetadata {
+      social: Social
+    }
+    type Social {
+      name: String
+      url: String
+    }
+  `)
   createTypes(`interface BlogPost @nodeInterface {
       id: ID!
       title: String!
