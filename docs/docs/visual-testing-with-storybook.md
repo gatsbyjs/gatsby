@@ -11,22 +11,15 @@ As your project grows over time having this information available will be invalu
 
 ## Setting up your environment
 
-To set up Storybook you need to install dependencies and do some custom configuration. First, install the Storybook CLI.
+> Note that the following instructions are using [npx](https://www.npmjs.com/package/npx). `npx` is a part of npm and in this case it allows you to automatically generate a file/folder structure complete with the default configuration. If you're running an older version of `npm` (`<5.2.0`) you should run the following command instead: `npm install -g @storybook/cli`. You can then run `sb init` from your Gatsby root directory to initialise Storybook.
+
+To set up Storybook you need to install dependencies and do some custom configuration. You can get started quickly by using the automated command line tool from your Gatsby root directory:
 
 ```shell
-npm install -g @storybook/cli
+npx -p @storybook/cli sb init
 ```
 
-Once the CLI is installed, the next step is to run the `sb init` command that is now available from the root directory of your Gatsby project.
-
-```shell
-cd my-awesome-gatsby-project
-sb init
-```
-
-> Note that if you're running a recent version of `npm` (5.2.0+) you can run the following single command instead: `npx -p @storybook/cli sb init`, which is the recommended method by Storybook. This doesn't install the CLI on your machine, thereby ensuring you're always running the latest version of the CLI.
-
-The `sb init` command bootstraps the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so you don't get errors when trying to use Gatsby specific components inside of the stories.
+This command adds a set of boilerplate files for Storybook in your project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so you don't get errors when trying to use Gatsby specific components inside of the stories.
 
 To update your Storybook config open `.storybook/config.js` and modify the content as follows:
 

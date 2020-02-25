@@ -1,6 +1,10 @@
 ---
 name: New Translation Request 🌐
 about: Suggest a new language translation of the repo.
+labels:
+  - "type: translation request"
+  - "topic: i18n"
+  - "not stale" # translation requests should be left open for more maintainers
 ---
 
 <!--

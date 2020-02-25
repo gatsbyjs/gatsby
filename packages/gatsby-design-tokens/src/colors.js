@@ -4,7 +4,7 @@ import preval from "preval.macro"
 // using syntaxes like const x = { ...var } adds side-effects to the export
 // preval precompiles it so we just return a single object.
 
-export default preval`
+export const colors = preval`
   const palette = {
     purple: {
       90: '#362066',
@@ -132,23 +132,33 @@ export default preval`
     warning: palette.red[70],
     // semi-transparent colors
     blackFade: {
-      80: 'rgba(' + blackRGB + ', 0.85)',
+      90: 'rgba(' + blackRGB + ', 0.9)',
+      80: 'rgba(' + blackRGB + ', 0.8)',
       70: 'rgba(' + blackRGB + ', 0.7)',
       60: 'rgba(' + blackRGB + ', 0.6)',
       50: 'rgba(' + blackRGB + ', 0.5)',
+      40: 'rgba(' + blackRGB + ', 0.4)',
       30: 'rgba(' + blackRGB + ', 0.3)',
+      20: 'rgba(' + blackRGB + ', 0.2)',
       10: 'rgba(' + blackRGB + ', 0.1)',
+      5: 'rgba(' + blackRGB + ', 0.05)',
     },
     whiteFade: {
-      80: 'rgba(' + whiteRGB + ', 0.85)',
+      90: 'rgba(' + whiteRGB + ', 0.9)',
+      80: 'rgba(' + whiteRGB + ', 0.8)',
       70: 'rgba(' + whiteRGB + ', 0.7)',
       60: 'rgba(' + whiteRGB + ', 0.6)',
       50: 'rgba(' + whiteRGB + ', 0.5)',
+      40: 'rgba(' + whiteRGB + ', 0.4)',
       30: 'rgba(' + whiteRGB + ', 0.3)',
+      20: 'rgba(' + whiteRGB + ', 0.2)',
       10: 'rgba(' + whiteRGB + ', 0.1)',
+      5: 'rgba(' + whiteRGB + ', 0.05)',
     },
     // role-based tokens
     // this is merely a humble start, lots to do here
+    // TODO TBD gatsby-interface now has TONES, IMO worth to discuss
+    // moving them here
     ui: {
       background: palette.grey[5],
       hover: palette.purple[5],
@@ -177,18 +187,21 @@ export default preval`
       bg: "#fdfaf6",
       border: "#faede5",
       text: "#866c5b",
-      remove: "#e45c5c",
-      add: "#4a9c59",
-      selector: "#b3568b",
-      tag: "#4084a1",
-      keyword: "#538eb6",
-      comment: "#6f8f39",
+      remove: palette.red[70],
+      add: palette.green[80],
+      selector: "#b94185",
+      tag: "#137886",
+      keyword: "#096fb3",
+      comment: "#527713",
       punctuation: "#53450e",
-      regex: "#d88489",
+      regex: "#dc0437",
       cssString: "#a2466c",
       invisibles: "#e0d7d1",
       scrollbarThumb: "#f4d1c6",
       lineHighlightBorder: "#f1beb6",
+      copyButton: palette.grey[60],
+      lineHighlightBackground: "#fbf0ea",
+      scrollbarTrack: "#faede5",
     },
   }
 `
