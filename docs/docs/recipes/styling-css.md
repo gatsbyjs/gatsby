@@ -416,9 +416,9 @@ _NOTE: So for the above example, the relevant CSS declaration would be `font-fam
 - [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)
 - [Live example on Kyle Mathews' blog](https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/)
 
-## Using FontAwesome
+## Using Font Awesome
 
-Using [FontAwesome](https://fontawesome.com/) gives you access to thousands of icons for use on your site. Since Gatsby sites are React sites, it's recommended to use the [react-fontawesome](https://github.com/FortAwesome/react-fontawesome) SVG library.
+Using [Font Awesome](https://fontawesome.com/) gives you access to thousands of icons for use on your site. Since Gatsby sites are React sites, it's recommended to use the [react-fontawesome](https://github.com/FortAwesome/react-fontawesome) SVG library.
 
 ### Prerequisites
 
@@ -454,5 +454,5 @@ export default IndexPage
 
 ### Additional resources
 
-- [FontAwesome](https://fontawesome.com/)
+- [Font Awesome](https://fontawesome.com/)
 - [react-fontawesome](https://github.com/FortAwesome/react-fontawesome)
