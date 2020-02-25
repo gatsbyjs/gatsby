@@ -158,15 +158,3 @@ Check out our [**Contributing Guide**](https://gatsbyjs.org/contributing/how-to-
 ### A note on how this repository is organized
 
 This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/packages) managed in this codebase, even though we publish them to NPM as separate packages.
-
-### Contributing to Gatsby v1
-
-We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
-
-## :memo: License
-
-Licensed under the [MIT License](./LICENSE).
-
-## 💜 Thanks
-
-Thanks to our many contributors and to [Netlify](https://www.netlify.com/) for hosting [gatsbyjs.org](https://gatsbyjs.org) and our example sites.
