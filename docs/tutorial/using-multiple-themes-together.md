@@ -18,7 +18,7 @@ yarn add gatsby-theme-blog gatsby-theme-notes @pauliescanlon/gatsby-mdx-embed
 
 ## Update gatsby-config.js
 
-The themes need to be added to the plugins array and your site will look better with some basic metadata.
+The themes need to be added to the plugins array and let's add some basic metadata while we are at it.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -36,6 +36,6 @@ module.exports = {
 
 ## Remove index.js
 
-Remove `src/pages/index.js`. The themes will compose together and provide a pre-built index page for your website.
+Remove `src/pages/index.js`. The themes will compose together and provide a pre-built index page for your website by default.
 
 ## Add some demo content
