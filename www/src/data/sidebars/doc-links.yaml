@@ -442,6 +442,9 @@
                 - title: Adding Page Transitions with gatsby-plugin-transition-link
                   link: /docs/adding-page-transitions-with-plugin-transition-link/
                   breadcrumbTitle: gatsby-plugin-transition-link
+            - title: Adding a Redux Store
+              link: /docs/adding-redux-store/
+              breadcrumbTitle: Redux Store
             - title: Making Your Site Accessible
               link: /docs/making-your-site-accessible/
             - title: Routing
