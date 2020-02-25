@@ -85,8 +85,8 @@ function runEslint() {
   }
 }
 
-async function updateAction() {
-  console.log('updateAction to in_progress')
+async function startNewAction() {
+  console.log('startAction to in_progress')
 
   const body = {
     name: checkName,
@@ -95,13 +95,13 @@ async function updateAction() {
     started_at: new Date(),
   }
 
-  // PATCH /repos/:owner/:repo/check-runs/:check_run_id
+  // POST /repos/:owner/:repo/check-runs
   const {
     data: { id },
   } = await request(
     `https://api.github.com/repos/${owner}/${repo}/check-runs`,
     {
-      method: "PATCH",
+      method: "POST",
       headers,
       body,
     }
@@ -139,7 +139,7 @@ function exitWithError(err) {
 }
 
 async function run() {
-  const id = await updateAction()
+  const id = await startNewAction()
   try {
     const { conclusion, output } = runEslint()
 
