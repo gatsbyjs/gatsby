@@ -20,13 +20,13 @@ To access this experimental feature utilizing GraphQL Playground with Gatsby, ad
 
 If you are on **Windows** then you should use:
 
-```
+```json
 "develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
 ```
 
 If you haven't installed **cross-env**, you can do it with:
 
-```
+```shell
 npm install --save-dev cross-env
 ```
 
