@@ -1,9 +1,11 @@
 import { Chart } from "react-charts"
 import Form from "../components/form.js"
 
-Let's go!
+## React Charts examples in MDX
 
-This chart is a live React component you can interact with, try hovering over the data to get more granular information.
+This file is written in MDX and has a live React component you can interact with, try hovering over the data to get more granular information.
+
+### Data represented in BarChart 
 
 <figure style={{ height: 300 }}>
   <Chart
@@ -17,11 +19,37 @@ This chart is a live React component you can interact with, try hovering over th
   />
 </figure>
 
-Here's a call to action in the flow of the content of this post:
+### Data represented in ColumnChart 
+
+<figure style={{ height: 300 }}>
+  <Chart
+    data={data}
+    series={{ type: "bar" }}
+    axes={[
+      { primary: true, type: "ordinal", position: "bottom" },
+      { position: "left", type: "linear", stacked: false},
+    ]}
+    tooltip
+  />
+</figure>
+
+### Data represented in AreaChart 
+<figure style={{ height: 300 }}>
+  <Chart
+    data={data}
+    series={{ type: "bar" }}
+    axes={[
+      { primary: true, position: 'bottom', type: 'time'},
+      { position: 'left', type: 'linear', stacked: true},
+    ]}
+    tooltip
+  />
+</figure>
+
+Want to be informed about updates to this data? Sign up here: 
 
 <Form />
 
-More content in the post...
 
 export const data = [
   {
