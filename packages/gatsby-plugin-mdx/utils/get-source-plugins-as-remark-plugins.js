@@ -40,7 +40,6 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
 
   fileNodes = getNodes().filter(n => n.internal.type === `File`)
 
-  // TODO:
   // return list of remarkPlugins
   const userPlugins = gatsbyRemarkPlugins
     .filter(plugin => {

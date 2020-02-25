@@ -16,7 +16,7 @@ module.exports = ({ mdPlugins, hastPlugins, ...pluginOptions }) => {
       remarkPlugins: [],
       plugins: [],
       root: process.cwd(),
-      gatsbyRemarkPlugins: [], // TODO:
+      gatsbyRemarkPlugins: [],
       globalScope: `export default {}`,
       shouldBlockNodeFromTransformation: () => false,
     },
