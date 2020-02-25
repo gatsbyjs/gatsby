@@ -136,6 +136,5 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
       resultHash,
     })
   }
-
   return result
 }

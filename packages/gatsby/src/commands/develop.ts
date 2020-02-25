@@ -150,7 +150,6 @@ async function startServer(program: IProgram): Promise<IServer> {
   /**
    * Set up the express app.
    **/
-
   const app = express()
   app.use(telemetry.expressMiddleware(`DEVELOP`))
   app.use(
@@ -417,7 +416,6 @@ module.exports = async (program: IProgram): Promise<void> => {
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
-
   await db.saveState()
 
   await waitUntilAllJobsComplete()

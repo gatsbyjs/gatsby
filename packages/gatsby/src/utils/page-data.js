@@ -1,21 +1,26 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const { store } = require(`../redux`)
-const { getPageHtmlFilePath } = require(`../utils/page-html`)
+const { remove: removeHtml } = require(`../utils/page-html`)
 
 const fixedPagePath = pagePath => (pagePath === `/` ? `index` : pagePath)
 
-const getPageDataFilePath = ({ publicDir }, pagePath) =>
+const getFilePath = ({ publicDir }, pagePath) =>
   path.join(publicDir, `page-data`, fixedPagePath(pagePath), `page-data.json`)
 
 const read = async ({ publicDir }, pagePath) => {
-  const filePath = getPageDataFilePath({ publicDir }, pagePath)
+  const filePath = getFilePath({ publicDir }, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
   return JSON.parse(rawPageData)
 }
 
+const remove = async ({ publicDir }, pagePath) => {
+  const filePath = getFilePath({ publicDir }, pagePath)
+  return fs.remove(filePath)
+}
+
 const write = async ({ publicDir }, page, result) => {
-  const filePath = getPageDataFilePath({ publicDir }, page.path)
+  const filePath = getFilePath({ publicDir }, page.path)
   const body = {
     componentChunkName: page.componentChunkName,
     path: page.path,
@@ -90,23 +95,17 @@ const sortedPageKeysByNestedLevel = pageKeys =>
   pageKeys.sort((a, b) => {
     const currentPagePathValue = a.split(`/`).length
     const previousPagePathValue = b.split(`/`).length
-    return currentPagePathValue > previousPagePathValue
-      ? -1
-      : currentPagePathValue < previousPagePathValue
-      ? 1
-      : 0
+    return previousPagePathValue - currentPagePathValue
   })
 
 const removePageFiles = ({ publicDir }, pageKeys) => {
-  const removePages = pageKeys.map(pagePath => {
-    const pageHtmlFile = getPageHtmlFilePath(publicDir, pagePath)
-    return fs.remove(pageHtmlFile)
-  })
+  const removePages = pageKeys.map(pagePath =>
+    removeHtml({ publicDir }, pagePath)
+  )
 
-  const removePageData = pageKeys.map(pagePath => {
-    const pageDataFile = getPageDataFilePath({ publicDir }, pagePath)
-    return fs.remove(pageDataFile)
-  })
+  const removePageData = pageKeys.map(pagePath =>
+    remove({ publicDir }, pagePath)
+  )
 
   return Promise.all([...removePages, ...removePageData]).then(() => {
     // Sort removed pageKeys by nested directories and remove if empty.
@@ -119,6 +118,7 @@ const removePageFiles = ({ publicDir }, pageKeys) => {
 module.exports = {
   read,
   write,
+  remove,
   getChangedPageDataKeys,
   collectRemovedPageData,
   removePageFiles,
