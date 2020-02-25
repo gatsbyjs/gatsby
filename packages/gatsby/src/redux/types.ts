@@ -3,14 +3,16 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export interface IReduxNode {
+  id: string
+  internal: {
+    type: string
+  }
+}
+
 export interface IReduxState {
   status: ProgramStatus
-  nodes?: {
-    id: string
-    internal: {
-      type: string
-    }
-  }[]
+  nodes?: Map<string, IReduxNode>
   nodesByType?: Map<any, any> // TODO
   jobsV2: any // TODO
   lastAction: ActionsUnion
