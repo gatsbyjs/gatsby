@@ -20,7 +20,7 @@ To access this experimental feature utilizing GraphQL Playground with Gatsby, ad
 
 If you are on **Windows** then you should use:
 
-```json
+```json:title=package.json
 "develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
 ```
 
