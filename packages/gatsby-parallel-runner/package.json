@@ -1,13 +1,22 @@
 {
   "name": "gatsby-parallel-runner",
-  "version": "1.2.0-beta.0",
-  "description": "",
+  "version": "1.2.1",
+  "description": "Gatsby plugin that allows paralellization of external tasks",
+  "keywords": [
+    "gatsby"
+  ],
   "main": "index.js",
   "bin": {
     "gatsby-parallel-runner": "./bin/run.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Mathias Biilmann <info@mathias-biilmann.net>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-parallel-runner"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-parallel-runner#readme",
   "dependencies": {
     "@google-cloud/pubsub": "^0.29.1",
     "@google-cloud/storage": "^4.3.0",
