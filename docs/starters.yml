@@ -5316,3 +5316,25 @@
     - yaml parsing
     - Component Animations
     - ReactReveal Library
+- url: https://gatsby-starter-mountain.netlify.com/
+  repo: https://github.com/artezan/gatsby-starter-mountain
+  description: Blog theme that combine the new powerful MDX with the old WordPress. Built with WP/MDX and Theme UI
+  tags:
+    - Styling:CSS-in-JS
+    - PWA
+    - MDX
+    - CMS:WordPress
+    - Landing Page
+    - Blog
+  features:
+    - gatsby-theme-wordpress-mdx
+    - Theme UI
+    - react-animate-on-scroll
+    - Responsive Design
+    - SEO friendly
+    - Optimized images with gatsby-image
+    - Git pre-commit and pre-push hooks using Husky
+    - Highly optimized with excellent lighthouse audit score
+    - Light/Dark mode
+    - CSS Animations
+    - Mountain style
