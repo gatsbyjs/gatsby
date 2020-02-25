@@ -5339,6 +5339,25 @@
     - yaml parsing
     - Component Animations
     - ReactReveal Library
+- url: https://gatsby-starter-instagram-baseweb.netlify.com/
+  repo: https://github.com/timrodz/gatsby-starter-instagram-baseweb
+  description: 🎢 A portfolio based on your latest Instagram posts, implemented with the Base Web Design System by Uber. It features out-of-the-box responsive layouts, easy-to-implement components and CSS-in-JS styling.
+  tags:
+    - Landing Page
+    - Portfolio
+    - Gallery
+    - SEO
+    - Netlify
+    - Styling:CSS-in-JS
+    - Styling:Other
+  features:
+    - Display your Instagram posts (Up to the last 12 with no API key).
+    - Plug & Play configuration. All you need is an Instagram username!
+    - Lightweight & Minimalist page structure. Let your work show itself.
+    - Responsive design.
+    - Simple React functional components (FC).
+    - Google Analytics ready.
+    - Continuous deployment via Netlify or Zeit.
 - url: https://gatsby-starter-mountain.netlify.com/
   repo: https://github.com/artezan/gatsby-starter-mountain
   description: Blog theme that combine the new powerful MDX with the old WordPress. Built with WP/MDX and Theme UI
