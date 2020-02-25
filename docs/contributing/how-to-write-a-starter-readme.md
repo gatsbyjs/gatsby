@@ -1,6 +1,6 @@
 ---
 title: How to Write a Starter README
-issue: [#21600](https://github.com/gatsbyjs/gatsby/issues/21600)
+issue: https://github.com/gatsbyjs/gatsby/issues/21600
 ---
 
 ## Near-perfect example of a starter README
