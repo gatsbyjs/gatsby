@@ -54,7 +54,6 @@ on:
 #          repo-token: ${{secrets.GITHUB_TOKEN}}
 #          check-name: report_eslint # this is the check name from above 👆 where to post annotations
 
-
 jobs:
   eslint:
     name: eslint
@@ -70,4 +69,4 @@ jobs:
       - name: eslint
         uses: icrawl/action-eslint@v1
         with:
-          custom-glob: **/**
+          custom-glob: packages
