@@ -23,8 +23,8 @@ test(`size check for google publish`, async () => {
   pubSub.pubSubClient = {
     topic: () => {
       return {
-        publish: async msg => {
-          expect(msg).toBe(msg)
+        publish: async pubSubMsg => {
+          expect(pubSubMsg).toBe(msg)
         },
       }
     },
