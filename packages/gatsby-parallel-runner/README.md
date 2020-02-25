@@ -74,4 +74,3 @@ There's currently just one processor (image-processing), with an implementation 
 
 When running `npx gatsby-parallel-runner deploy`, the active processor queue implementation will
 make sure to deploy all the cloud function needed for the available processors.
-
