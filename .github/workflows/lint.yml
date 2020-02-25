@@ -30,25 +30,41 @@ on:
 #          #          ignore: "src/some-file-to-ignore.js"
 #          extensions: ".js,.jsx,.ts"
 
+# Crashes with: ##[error]Empty value for parameter 'output.annotations[0].end_line': undefined
+#jobs:
+#  report_eslint:
+#    if: github.event_name == 'pull_request'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#        with:
+#          fetch-depth: 1
+#      - uses: actions/setup-node@v1
+#        with:
+#          node-version: 10
+#      - run: rm -f .yarnclean
+#      - run: yarn --frozen-lockfile --ignore-engines --ignore-optional --no-bin-links --non-interactive --silent --ignore-scripts --production=false
+#        env:
+#          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+#          HUSKY_SKIP_INSTALL: true
+#      # Alternative: if you use npm instead of yarn
+#      # - run: npm ci --no-audit --prefer-offline
+#      - uses: tinovyatkin/action-eslint@v1
+#        with:
+#          repo-token: ${{secrets.GITHUB_TOKEN}}
+#          check-name: report_eslint # this is the check name from above 👆 where to post annotations
+
 jobs:
-  report_eslint:
-    if: github.event_name == 'pull_request'
+  eslint:
+    name: eslint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: install node v12
+        uses: actions/setup-node@v1
         with:
-          fetch-depth: 1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 10
-      - run: rm -f .yarnclean
-      - run: yarn --frozen-lockfile --ignore-engines --ignore-optional --no-bin-links --non-interactive --silent --ignore-scripts --production=false
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-          HUSKY_SKIP_INSTALL: true
-      # Alternative: if you use npm instead of yarn
-      # - run: npm ci --no-audit --prefer-offline
-      - uses: tinovyatkin/action-eslint@v1
-        with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
-          check-name: report_eslint # this is the check name from above 👆 where to post annotations
+          node-version: 12
+      - name: yarn install
+        run: yarn install
+      - name: eslint
+        uses: icrawl/action-eslint@v1
