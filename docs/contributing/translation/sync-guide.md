@@ -137,19 +137,6 @@ Resolve these changes by updating the link.
 
 Sometimes, the content of the source page is actually updated and needs a translation. Make sure to read the change carefully and change the translation to match its meaning.
 
-### Content additions
-
-Sometimes pages is updated with additional paragraphs, lists, or other content.
-
-```diff
--In English, your articles should use the second person ("you") to provide a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
-
-+In English, your articles should use the second person ("you") to provide a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
-+For other languages, refer to each translation's guidelines (if applicable) for consistent phrasing. When appropriate, we suggest starting with the informal "you" to keep a conversational tone.
-```
-
-In this case, the new content should be translated as with any other content. If there is a significant amount of new content, you may want to create a separate pull request to translate it.
-
 ### Conflicts in untranslated files
 
 Sometimes, you may find conflicts in files that haven't been translated yet:
@@ -168,3 +155,17 @@ This is usually because of an previous improper merge (for example, using the "S
 - This is old English content.
 + This is new English content.
 ```
+
+## Creating a separate pull request
+
+If a page has significant changes, it may be worth splitting it into its own pull request:
+
+```shell
+git checkout conflicts-9032a0
+git checkout -b sync-tutorial-0
+# Fix conflicts in /docs/tutorial/part-zero/index.md
+git commit -am "Fix conflicts in tutorial part zero"
+git push -u origin sync-tutorial-0
+```
+
+Once the branch is pushed, create a pull request for branch `sync-tutorial-0` with `conflicts-9032a0` as the base branch.
