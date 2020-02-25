@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.30...gatsby-cli@2.9.0) (2020-02-24)
+
+### Features
+
+- **gatsby-cli:** support for PREFIX_PATHS env variable ([#21627](https://github.com/gatsbyjs/gatsby/issues/21627)) ([7bc2c3b](https://github.com/gatsbyjs/gatsby/commit/7bc2c3b))
+
 ## [2.8.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.29...gatsby-cli@2.8.30) (2020-02-17)
 
 ### Bug Fixes

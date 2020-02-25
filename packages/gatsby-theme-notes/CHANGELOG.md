@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.2...gatsby-theme-notes@1.1.3) (2020-02-25)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.1...gatsby-theme-notes@1.1.2) (2020-02-25)
+
+### Bug Fixes
+
+- **gatsby-theme-notes:** fix notes failing tests ([#21709](https://github.com/gatsbyjs/gatsby/issues/21709)) ([4f7424a](https://github.com/gatsbyjs/gatsby/commit/4f7424a))
+
+## [1.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.0...gatsby-theme-notes@1.1.1) (2020-02-24)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+# [1.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.71...gatsby-theme-notes@1.1.0) (2020-02-24)
+
+### Features
+
+- Change mdx flag into mdxOtherwise to prevent confusion ([#21404](https://github.com/gatsbyjs/gatsby/issues/21404)) ([6874cca](https://github.com/gatsbyjs/gatsby/commit/6874cca))
+
+## [1.0.71](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.70...gatsby-theme-notes@1.0.71) (2020-02-24)
+
+### Bug Fixes
+
+- **gatsby-theme-notes:** fix styling clash with gatsby-theme-blog ([#21656](https://github.com/gatsbyjs/gatsby/issues/21656)) ([62534f5](https://github.com/gatsbyjs/gatsby/commit/62534f5))
+
+## [1.0.70](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.69...gatsby-theme-notes@1.0.70) (2020-02-24)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
 ## [1.0.69](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.68...gatsby-theme-notes@1.0.69) (2020-02-20)
 
 **Note:** Version bump only for package gatsby-theme-notes

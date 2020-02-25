@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redux db should write cache to disk 1`] = `
+exports[`redux db should write loki cache to disk 1`] = `
 Object {
   "componentDataDependencies": Object {
     "connections": Map {},
@@ -19,6 +19,67 @@ Object {
   "jobsV2": Object {
     "complete": Map {},
     "incomplete": Map {},
+  },
+  "pageDataStats": Map {},
+  "staticQueryComponents": Map {},
+  "status": Object {
+    "plugins": Object {},
+  },
+  "webpackCompilationHash": "",
+}
+`;
+
+exports[`redux db should write redux cache to disk 1`] = `
+Object {
+  "componentDataDependencies": Object {
+    "connections": Map {},
+    "nodes": Map {},
+  },
+  "components": Map {
+    "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
+      "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+      "isInBootstrap": true,
+      "pages": Set {
+        "/my-sweet-new-page/",
+      },
+      "query": "",
+    },
+  },
+  "jobsV2": Object {
+    "complete": Map {},
+    "incomplete": Map {},
+  },
+  "nodes": Map {
+    "pageA" => Object {
+      "id": "pageA",
+      "internal": Object {
+        "type": "Ding",
+      },
+    },
+    "pageB" => Object {
+      "id": "pageB",
+      "internal": Object {
+        "type": "Dong",
+      },
+    },
+  },
+  "nodesByType": Map {
+    "Ding" => Map {
+      "pageA" => Object {
+        "id": "pageA",
+        "internal": Object {
+          "type": "Ding",
+        },
+      },
+    },
+    "Dong" => Map {
+      "pageB" => Object {
+        "id": "pageB",
+        "internal": Object {
+          "type": "Dong",
+        },
+      },
+    },
   },
   "pageDataStats": Map {},
   "staticQueryComponents": Map {},
