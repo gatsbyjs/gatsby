@@ -12,18 +12,18 @@ You’ll need a WordPress site with the [WooCommerce](https://woocommerce.com/) 
 
 ## Existing plugins
 
-This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages/@pasdo501/gatsby-source-woocommerce/). It is a straightforward solution specific to WooCommerce. 
+This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages/@pasdo501/gatsby-source-woocommerce/). It is a straightforward solution specific to WooCommerce.
 
 Install it:
 
 ```bash
 npm install --save @pasdo501/gatsby-source-woocommerce
-``` 
+```
 
 Configure its options:
 
 ```js:title=gatsby-config.js
-{       
+{
   resolve: "@pasdo501/gatsby-source-woocommerce",
   options: {
     // Base URL of Wordpress site
@@ -54,7 +54,7 @@ The WPGraphQL plugin is also undergoing significant changes. It has not yet hit 
 
 ## Adding products
 
-WooCommerce products are the core of your WooCommerce site, so you’ll want to add some to your store. When you’re first getting started, there’s no need to dump absolutely everything you want to sell into your store. Begin with a few products that you can use to verify that everything is hooked up correctly. You can also [import products from a CSV file](https://docs.woocommerce.com/document/product-csv-importer-exporter/). 
+WooCommerce products are the core of your WooCommerce site, so you’ll want to add some to your store. When you’re first getting started, there’s no need to dump absolutely everything you want to sell into your store. Begin with a few products that you can use to verify that everything is hooked up correctly. You can also [import products from a CSV file](https://docs.woocommerce.com/document/product-csv-importer-exporter/).
 
 You should see a prompt to create your first product after completing the WooCommerce setup wizard. Doing so at this time will trigger a guided tour of the new product form. Walk through this process for each product you'd like to add to your store.
 
