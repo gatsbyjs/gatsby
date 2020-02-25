@@ -59,13 +59,16 @@ jobs:
     name: eslint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v1 # 34
+        with:
+          fetch-depth: 1
       - name: install node v12
         uses: actions/setup-node@v1
         with:
           node-version: 12
       - name: yarn install
-        run: yarn install
+       run: yarn --frozen-lockfile --ignore-engines --ignore-optional --no-bin-links --non-interactive --silent --ignore-scripts --production=false
+#        run: yarn install # 2.34
       - name: eslint
         uses: icrawl/action-eslint@v1
         with:
