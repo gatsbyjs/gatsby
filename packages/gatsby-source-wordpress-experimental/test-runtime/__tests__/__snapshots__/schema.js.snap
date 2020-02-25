@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-source-wordpress-experimental local schema hasn't changed 1`] = `
+exports[`gatsby-source-wordpress-experimental hasn't altered the local Gatsby schema 1`] = `
 Array [
   Object {
     "description": null,
@@ -57506,7 +57506,7 @@ Array [
 ]
 `;
 
-exports[`gatsby-source-wordpress-experimental remote schema hasn't changed 1`] = `
+exports[`gatsby-source-wordpress-experimental hasn't altered the remote WPGraphQL schema 1`] = `
 Object {
   "mutationType": Object {
     "fields": Array [
@@ -75559,5 +75559,251 @@ In some cases, you need to provide options to alter GraphQL&#039;s execution beh
       "possibleTypes": null,
     },
   ],
+}
+`;
+
+exports[`gatsby-source-wordpress-experimental queries data properly 1`] = `
+Object {
+  "data": Object {
+    "allWpPage": Object {
+      "nodes": Array [
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "更多中文内容。",
+          "translations": Array [],
+          "uri": "zh/%e6%9b%b4%e5%a4%9a%e4%b8%ad%e6%96%87%e5%86%85%e5%ae%b9%e3%80%82/",
+        },
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "家 Chinese home page",
+          "translations": Array [
+            Object {
+              "title": "Home",
+            },
+          ],
+          "uri": "zh/",
+        },
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Blog",
+          "translations": Array [],
+          "uri": "blog/",
+        },
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Contact",
+          "translations": Array [],
+          "uri": "contact/",
+        },
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Home",
+          "translations": Array [
+            Object {
+              "title": "家 Chinese home page",
+            },
+          ],
+          "uri": "/",
+        },
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Sample Page",
+          "translations": Array [],
+          "uri": "sample-page/",
+        },
+      ],
+    },
+    "allWpPost": Object {
+      "nodes": Array [
+        Object {
+          "acfPageContent": Object {
+            "fieldGroupName": "acfPageContent",
+            "modules": null,
+          },
+          "author": Object {
+            "avatar": Object {
+              "url": "http://1.gravatar.com/avatar/7ea2eb6299f74a63d993401576d12d93?s=96&d=mm&r=g",
+            },
+            "capKey": null,
+            "capabilities": null,
+            "comments": Object {
+              "nodes": Array [],
+            },
+          },
+          "title": "A post here",
+        },
+        Object {
+          "acfPageContent": Object {
+            "fieldGroupName": "acfPageContent",
+            "modules": null,
+          },
+          "author": Object {
+            "avatar": Object {
+              "url": "http://1.gravatar.com/avatar/7ea2eb6299f74a63d993401576d12d93?s=96&d=mm&r=g",
+            },
+            "capKey": null,
+            "capabilities": null,
+            "comments": Object {
+              "nodes": Array [],
+            },
+          },
+          "title": "Hello world!",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`gatsby-source-wordpress-experimental queries data properly INCREMENTED 1`] = `
+Object {
+  "data": Object {
+    "allWpPage": Object {
+      "nodes": Array [
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "更多中文内容。",
+          "translations": Array [],
+          "uri": "zh/%e6%9b%b4%e5%a4%9a%e4%b8%ad%e6%96%87%e5%86%85%e5%ae%b9%e3%80%82/",
+        },
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "家 Chinese home page",
+          "translations": Array [
+            Object {
+              "title": "testing 1",
+            },
+          ],
+          "uri": "zh/",
+        },
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Blog",
+          "translations": Array [],
+          "uri": "blog/",
+        },
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Contact",
+          "translations": Array [],
+          "uri": "contact/",
+        },
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "testing 1",
+          "translations": Array [
+            Object {
+              "title": "家 Chinese home page",
+            },
+          ],
+          "uri": "/",
+        },
+        Object {
+          "author": Object {
+            "name": "caleb",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Sample Page",
+          "translations": Array [],
+          "uri": "sample-page/",
+        },
+      ],
+    },
+    "allWpPost": Object {
+      "nodes": Array [
+        Object {
+          "acfPageContent": Object {
+            "fieldGroupName": "acfPageContent",
+            "modules": null,
+          },
+          "author": Object {
+            "avatar": Object {
+              "url": "http://1.gravatar.com/avatar/7ea2eb6299f74a63d993401576d12d93?s=96&d=mm&r=g",
+            },
+            "capKey": null,
+            "capabilities": null,
+            "comments": Object {
+              "nodes": Array [],
+            },
+          },
+          "title": "A post here",
+        },
+        Object {
+          "acfPageContent": Object {
+            "fieldGroupName": "acfPageContent",
+            "modules": null,
+          },
+          "author": Object {
+            "avatar": Object {
+              "url": "http://1.gravatar.com/avatar/7ea2eb6299f74a63d993401576d12d93?s=96&d=mm&r=g",
+            },
+            "capKey": null,
+            "capabilities": null,
+            "comments": Object {
+              "nodes": Array [],
+            },
+          },
+          "title": "Hello world!",
+        },
+      ],
+    },
+  },
 }
 `;

@@ -137,6 +137,7 @@ const fetchGraphql = async ({
   panicOnError = false,
   url = false,
   variables = {},
+  headers = {},
 }) => {
   const { helpers, pluginOptions } = store.getState().gatsbyApi
 
@@ -159,7 +160,7 @@ const fetchGraphql = async ({
   let response
 
   try {
-    response = await http.post(url, { query, variables }, { timeout })
+    response = await http.post(url, { query, variables }, { timeout, headers })
 
     const contentType = response.headers[`content-type`]
 
