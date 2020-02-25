@@ -9899,9 +9899,9 @@
   source_url: https://github.com/bobylito/playlistFinder
   description: >
     Playlist Detective is an attempt to ease music discovery with playlists. Back in the days, people were sharing mixtapes - some songs we knew and others we didn't, therefore expanding our musical horizons.
-    
+
     Playlists are the same, and playlist detective lets you search for songs or artists you like in order to stumble on your new favorite songs.
-    
+
     It uses Algolia for the search.
   categories:
     - Media
@@ -9923,16 +9923,16 @@
   url: https://1902software.com/
   main_url: https://1902software.com/
   description: >
-  We are an IT company that specializes in e-commerce and website development on different platforms such as Magento, WordPress, and Umbraco. We are also known for custom software development, web design and mobile app solutions for iOS and Android.
+    We are an IT company that specializes in e-commerce and website development on different platforms such as Magento, WordPress, and Umbraco. We are also known for custom software development, web design and mobile app solutions for iOS and Android.
   categories:
     - eCommerce
     - Web Development
     - Programming
     - Mobile Development
-    - WordPress	
-    - Design	
-    - Business	
+    - WordPress
+    - Design
+    - Business
     - Agency
-  built_by: 1902 Software Development Corporation	
+  built_by: 1902 Software Development Corporation
   built_by_url: https://1902software.com/
   featured: false
