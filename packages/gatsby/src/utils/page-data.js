@@ -28,7 +28,6 @@ const write = async ({ publicDir }, page, result) => {
     result,
   }
   const bodyStr = JSON.stringify(body)
-
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(bodyStr) / 1000
 
