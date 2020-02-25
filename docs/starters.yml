@@ -6,6 +6,10 @@
     - CMS:Headless
     - SEO
     - Styling:PostCSS
+    - CMS:Headless
+    - Blog
+    - Ghost
+    - Casper
   features:
     - Casper standard Ghost theme
     - Data sourcing from headless Ghost
