@@ -55,6 +55,10 @@ if (process.env.AIRTABLE_API_KEY) {
 
 // true if `env.LOCALES` has a defined list of languages
 if (langCodes.length > 0) {
+  const naughtyFiles = [
+    `docs/docs/graphql-api.md`,
+    `docs/docs/data-fetching.md`,
+  ]
   dynamicPlugins.push(
     ...langCodes.map(code => ({
       resolve: `gatsby-source-git`,
