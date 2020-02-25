@@ -7,14 +7,14 @@ When gatsby is started from a parent process with the environment variable `ENAB
 it will communicate some jobs up to the parent process via ipc, instead of running them in it's own internal
 queue.
 
-This allows a parent process to orchestrate certain task across mutiple workers for better paralelization
+This allows a parent process to orchestrate certain task across multiple workers for better parallelization
 through autoscaling cloud functions or the like.
 
 Currently this plugin includes a processing queue implementation based on Google Cloud Functions, but the
 general abstractions in place should make it easy to add similar runtimes for other cloud providers or via
 different approaches to parallelization.
 
-## Intallation and usage
+## Installation and usage
 
 Install in your gatsby project:
 
@@ -74,3 +74,4 @@ There's currently just one processor (image-processing), with an implementation 
 
 When running `npx gatsby-parallel-runner deploy`, the active processor queue implementation will
 make sure to deploy all the cloud function needed for the available processors.
+
