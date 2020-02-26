@@ -18,7 +18,7 @@ class GoogleFunctions {
     const config =
       googleConfig ||
       JSON.parse(fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS))
-    this.subName = `gatsby-sub-${new Date().getTime()}`
+    this.subName = `gatsby-sub-${Date().now()}`
     this.workerBucket = bucketFor(processorSettings)
     this.workerTopic = topicFor(processorSettings)
     this.resultBucketName = `event-results-${process.env.TOPIC}`
