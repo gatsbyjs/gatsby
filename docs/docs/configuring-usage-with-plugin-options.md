@@ -21,9 +21,9 @@ module.exports = {
 }
 ```
 
-With the `optionA`, `optionB`, and `message` options passed into the plugin, the code for `gatsby-plugin-console-log` will be able to access the values `true`, `false`, and `Hello world` by their keys.
+With the `optionA`, `optionB`, and `message` options passed into the plugin, the code for `gatsby-plugin-console-log` is able to access the values `true`, `false`, and `Hello world` by their keys.
 
-For example, `gatsby-plugin-console-log` can access the message in order to log it to the console inside of the `onPreInit` API:
+For example, `gatsby-plugin-console-log` can access the `message` in order to log its value to the console inside of the `onPreInit` API:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.onPreInit = (_, pluginOptions) => {
@@ -33,15 +33,17 @@ exports.onPreInit = (_, pluginOptions) => {
 }
 ```
 
-The code above is called when `gatsby develop` or `gatsby build` is run. It takes the message from the `options` object in the config and logs it from `pluginOptions.message` when the `onPreInit` method is called.
+The code above is called when `gatsby develop` or `gatsby build` is run. It takes the `message` from the `options` object in the config and logs it from `pluginOptions.message` when the `onPreInit` method is called.
 
-The second argument passed into the function is where the options are held. Because it is an argument you can use a different name like `themeOptions` if you are building a plugin that will be used as a theme.
+The second argument passed into the function is where the options are held. 
+
+_Like arguments in any JavaScript function, you can use a different (more specific) name like `themeOptions` if you are building a plugin that will be used as a theme._
 
 ## What can be passed in as options
 
 Any JavaScript data type can be passed in as an option.
 
-The following table lists samples of values that could be used as options with existing plugins that are configurable based on options of the same type.
+The following table lists possible options values and an example plugin that makes use of them.
 
 | Data Type | Sample Value                     | Example Plugin                                                    |
 | --------- | -------------------------------- | ----------------------------------------------------------------- |

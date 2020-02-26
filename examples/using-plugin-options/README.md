@@ -31,4 +31,4 @@ success onPreInit - 0.022s
 
 If you refer to the `gatsby-config` in this example site, you'll see two plugins included in the plugins array. The first is a local plugin called `gatsby-plugin-console-log`, which logs a message to the console when you run `gatsby develop`. It has options passed in and will display the custom message.
 
-The second plugin in the plugins array uses the same plugin the plugins folder (you can read about [adding local plugins in the Gatsby docs](https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/)), it will log a default message because no options are passed in.
+The second plugin in the plugins array uses the same plugin from the plugins folder (you can read about [adding local plugins in the Gatsby docs](https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/)), it will log a default message because no options are passed in.
