@@ -18,6 +18,7 @@ import PrevAndNext from "../components/prev-and-next"
 
 const useActiveHash = itemIds => {
   const [activeHash, setActiveHash] = useState(``)
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
@@ -29,9 +30,16 @@ const useActiveHash = itemIds => {
       },
       { rootMargin: `0% 0% -100% 0%` }
     )
+
     itemIds.forEach(id => {
       observer.observe(document.querySelector(`#${id}`))
     })
+
+    return () => {
+      itemIds.forEach(id => {
+        observer.unobserve(document.querySelector(`#${id}`))
+      })
+    }
   }, [])
 
   useEffect(() => {
@@ -44,6 +52,8 @@ const useActiveHash = itemIds => {
 }
 
 const getHeadingIds = toc => {
+  if (!toc) return []
+
   const idList = []
 
   const hashToId = str => str.slice(1)
