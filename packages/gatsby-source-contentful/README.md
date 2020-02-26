@@ -392,7 +392,7 @@ documentToReactComponents(node.bodyRichText.json, options)
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
 
-## Sourcing From Multiple Contentful Environments
+## Sourcing From Multiple Contentful Spaces
 
 To source from multiple Contentful environments/spaces, add another configuration for `gatsby-source-contentful` in gatsby-config.js: 
 ```
