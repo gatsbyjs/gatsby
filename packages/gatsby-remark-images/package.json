@@ -7,7 +7,11 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "@babel/generator": "^7.8.4",
+    "@babel/parser": "^7.8.4",
     "@babel/runtime": "^7.7.6",
+    "@babel/traverse": "^7.8.4",
+    "@babel/types": "^7.8.3",
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.3",
     "gatsby-core-utils": "^1.0.28",

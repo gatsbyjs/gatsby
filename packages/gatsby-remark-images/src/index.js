@@ -15,6 +15,10 @@ const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const { slash } = require(`gatsby-core-utils`)
 const chalk = require(`chalk`)
+const { parse } = require(`@babel/parser`)
+const generate = require(`@babel/generator`).default
+const traverse = require(`@babel/traverse`).default
+const types = require(`@babel/types`)
 
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
@@ -412,62 +416,164 @@ module.exports = (
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
         ({ node, inLink }) =>
-          new Promise(async (resolve, reject) => {
+          new Promise((resolve, reject) => {
             if (!node.value) {
               return resolve()
             }
 
-            const $ = cheerio.load(node.value)
-            if ($(`img`).length === 0) {
-              // No img tags
-              return resolve()
-            }
+            const useBabel = async () => {
+              const ast = parse(node.value, {
+                plugins: [`jsx`, `typescript`],
+                sourceType: `module`,
+              })
 
-            let imageRefs = []
-            $(`img`).each(function() {
-              imageRefs.push($(this))
-            })
+              const imagePaths = []
 
-            for (let thisImg of imageRefs) {
-              // Get the details we need.
-              let formattedImgTag = {}
-              formattedImgTag.url = thisImg.attr(`src`)
-              formattedImgTag.title = thisImg.attr(`title`)
-              formattedImgTag.alt = thisImg.attr(`alt`)
+              traverse(ast, {
+                JSXElement(path) {
+                  if (path.node.openingElement.name.name === `img`) {
+                    imagePaths.push(path)
+                  }
+                },
+              })
 
-              if (!formattedImgTag.url) {
+              if (imagePaths.length === 0) {
+                // No img tags
                 return resolve()
               }
 
-              const fileType = getImageInfo(formattedImgTag.url).ext
+              let valueChanged = false
 
-              // Ignore gifs as we can't process them,
-              // svgs as they are already responsive by definition
-              if (
-                isRelativeUrl(formattedImgTag.url) &&
-                fileType !== `gif` &&
-                fileType !== `svg`
-              ) {
-                const rawHTML = await generateImagesAndUpdateNode(
-                  formattedImgTag,
-                  resolve,
-                  inLink
+              await Promise.all(
+                imagePaths.map(
+                  imagePath =>
+                    new Promise(async (resolve, reject) => {
+                      // Get the details we need.
+                      const getAttributeValue = name => {
+                        const attribute = imagePath.node.openingElement.attributes.find(
+                          attribute =>
+                            attribute.type === `JSXAttribute` &&
+                            attribute.name.type === `JSXIdentifier` &&
+                            attribute.name.name === name &&
+                            attribute.value.type === `StringLiteral`
+                        )
+
+                        return attribute && attribute.value.value
+                      }
+
+                      const url = getAttributeValue(`src`)
+
+                      if (!url) {
+                        return resolve()
+                      }
+
+                      const fileType = getImageInfo(url).ext
+
+                      // Ignore gifs as we can't process them,
+                      // svgs as they are already responsive by definition
+                      if (
+                        isRelativeUrl(url) &&
+                        fileType !== `gif` &&
+                        fileType !== `svg`
+                      ) {
+                        const formattedImgTag = {
+                          alt: getAttributeValue(`alt`),
+                          title: getAttributeValue(`title`),
+                          url,
+                        }
+
+                        const rawHTML = await generateImagesAndUpdateNode(
+                          formattedImgTag,
+                          resolve,
+                          inLink
+                        )
+
+                        if (rawHTML) {
+                          // Replace the image string
+                          imagePath.replaceWith(types.jsxText(rawHTML))
+                          valueChanged = true
+                        }
+                      }
+
+                      return resolve()
+                    })
                 )
+              )
 
-                if (rawHTML) {
-                  // Replace the image string
-                  thisImg.replaceWith(rawHTML)
-                } else {
-                  return resolve()
-                }
+              if (!valueChanged) {
+                // No need to dump AST
+                return resolve()
               }
+
+              let rawHTML = generate(ast, {}, node.value).code
+
+              // Strip the final semicolon
+              rawHTML = rawHTML.slice(0, rawHTML.length - 1)
+
+              // Replace the image node with an inline HTML node.
+              if (node.type !== `jsx`) {
+                node.type = `html`
+              }
+              node.value = rawHTML
+
+              return resolve(node)
             }
 
-            // Replace the image node with an inline HTML node.
-            node.type = `html`
-            node.value = $(`body`).html() // fix for cheerio v1
+            const useCheerio = async () => {
+              const $ = cheerio.load(node.value)
+              if ($(`img`).length === 0) {
+                // No img tags
+                return resolve()
+              }
 
-            return resolve(node)
+              let imageRefs = []
+              $(`img`).each(function() {
+                imageRefs.push($(this))
+              })
+
+              for (let thisImg of imageRefs) {
+                // Get the details we need.
+                let formattedImgTag = {}
+                formattedImgTag.url = thisImg.attr(`src`)
+                formattedImgTag.title = thisImg.attr(`title`)
+                formattedImgTag.alt = thisImg.attr(`alt`)
+
+                if (!formattedImgTag.url) {
+                  return resolve()
+                }
+
+                const fileType = getImageInfo(formattedImgTag.url).ext
+
+                // Ignore gifs as we can't process them,
+                // svgs as they are already responsive by definition
+                if (
+                  isRelativeUrl(formattedImgTag.url) &&
+                  fileType !== `gif` &&
+                  fileType !== `svg`
+                ) {
+                  const rawHTML = await generateImagesAndUpdateNode(
+                    formattedImgTag,
+                    resolve,
+                    inLink
+                  )
+
+                  if (rawHTML) {
+                    // Replace the image string
+                    thisImg.replaceWith(rawHTML)
+                  } else {
+                    return resolve()
+                  }
+                }
+              }
+
+              // Replace the image node with an inline HTML node.
+              node.type = `html`
+              node.value = $(`body`).html() // fix for cheerio v1
+
+              return resolve(node)
+            }
+
+            return useBabel().catch(() => useCheerio())
           })
       )
     ).then(htmlImageNodes =>

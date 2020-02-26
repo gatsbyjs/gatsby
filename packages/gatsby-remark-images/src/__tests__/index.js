@@ -341,6 +341,25 @@ test(`it transforms images in markdown with query strings`, async () => {
   expect(node.value).not.toMatch(`<html>`)
 })
 
+test(`it transforms HTML img tags within React`, async () => {
+  const imagePath = `image/my-image.jpeg`
+
+  const content = `
+<Component attr={func()}>
+  <img src="./${imagePath}" />
+</Component>
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
 test(`it uses tracedSVG placeholder when enabled`, async () => {
   const imagePath = `images/my-image.jpeg`
   const content = `
