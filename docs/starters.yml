@@ -1,3 +1,27 @@
+- url: https://styxlab.github.io
+  repo: https://github.com/styxlab/gatsby-starter-try-ghost
+  description: A Gatsby starter for creating blogs from headless Ghost CMS.
+  tags:
+    - Blog
+    - CMS:Headless
+    - SEO
+    - Styling:PostCSS
+  features:
+    - Casper standard Ghost theme
+    - Data sourcing from headless Ghost
+    - Sticky navigation headers
+    - Hover on author avatar
+    - Responsive design
+    - SEO optimized
+    - Styled 404 page
+    - OpenGraph structured data
+    - Twitter Cards meta
+    - Sitemap Generation
+    - XML Sitemaps
+    - Progressive Web App
+    - Offline Support
+    - RSS Feed
+    - Composable and extensible
 - url: https://gatsby-theme-sky-lite.netlify.com
   repo: https://github.com/vim-labs/gatsby-theme-sky-lite-starter
   description: A lightweight GatsbyJS starter with Material-UI and MDX Markdown support.
