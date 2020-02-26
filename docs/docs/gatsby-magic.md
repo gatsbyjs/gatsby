@@ -60,7 +60,7 @@ GraphQL is a query language (the QL part of its name) that Gatsby uses to genera
 
 Using a special syntax, you describe the data you want in your component and then that data is given to you, such as site metadata from your `gatsby-config.js`, connected WordPress posts, Markdown files, images, and more. Gatsby uses GraphQL to enable components to declare the data they need and apply it to render on a page. Using GraphQL in Gatsby provides many [benefits](/docs/why-gatsby-uses-graphql/), such as the ability to return data from multiple sources in one query, and transform that data at the same time (such as using Gatsby Image).
 
-Here is how you get started using GraphQL in Gatsby: [https://www.gatsbyjs.org/tutorial/part-four/](/tutorial/part-four/)
+Here is how you get started using GraphQL in Gatsby: [/tutorial/part-four/](/tutorial/part-four/)
 
 ## webpack
 
@@ -68,7 +68,7 @@ webpack is an open-source JavaScript module bundler that Gatsby uses under the h
 
 When Gatsby creates its default webpack config, a function is called allowing you to modify the config using a package called webpack-merge. Gatsby does multiple webpack builds with a somewhat different configuration; each build type is referred to as a “stage”.
 
-You can learn more about [webpack](https://www.gatsbyjs.org/docs/webpack-and-ssr/) including how to [add a custom webpack Config](https://www.gatsbyjs.org/docs/add-custom-webpack-config/) in Gatsby by visiting the docs.
+You can learn more about [webpack](/docs/webpack-and-ssr/) including how to [add a custom webpack Config](/docs/add-custom-webpack-config/) in Gatsby by visiting the docs.
 
 ## Gatsby Cloud
 
