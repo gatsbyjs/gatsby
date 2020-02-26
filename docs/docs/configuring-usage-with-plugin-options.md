@@ -35,7 +35,7 @@ exports.onPreInit = (_, pluginOptions) => {
 
 The code above is called when `gatsby develop` or `gatsby build` is run. It takes the `message` from the `options` object in the config and logs it from `pluginOptions.message` when the `onPreInit` method is called.
 
-The second argument passed into the function is where the options are held. 
+The second argument passed into the function is where the options are held.
 
 _Like arguments in any JavaScript function, you can use a different (more specific) name like `themeOptions` if you are building a plugin that will be used as a theme._
 
