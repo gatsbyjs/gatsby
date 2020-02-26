@@ -289,7 +289,7 @@ exports.createSchemaCustomization = true
  * @param {object} $1
  * @param {object} $1.resolvers An object map of GraphQL type names to custom resolver functions.
  * @param {object} $1.options Optional createResolvers options.
- * @param {object} $1.options.ignoreNonexistentTypes Silences the warning when trying to add resolvers for types that don't exist. Useful for optional extensions
+ * @param {object} $1.options.ignoreNonexistentTypes Silences the warning when trying to add resolvers for types that don't exist. Useful for optional extensions.
  * @example
  * exports.createResolvers = ({ createResolvers }) => {
  *   const resolvers = {
