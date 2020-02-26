@@ -153,6 +153,17 @@ test(`it transforms images with a https scheme in markdown`, async () => {
   expect(node.value).not.toMatch(`<html>`)
 })
 
+test(`it throws specific error if the image is not found`, async () => {
+  const imagePath = `https://images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/doesnotexist.jpg`
+  const content = `
+![image](${imagePath})
+  `.trim()
+
+  await expect(plugin(createPluginOptions(content, imagePath))).rejects.toThrow(
+    `Image downloading failed for ${imagePath}, please check if the image still exists on contentful`
+  )
+})
+
 test(`it transforms multiple images in markdown`, async () => {
   const imagePaths = [
     `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,
