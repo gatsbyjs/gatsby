@@ -52,7 +52,7 @@ When you implement a Gatsby [Node API](/docs/node-apis/), you are passed a colle
 
 Once the build is complete, the work of Redux is done and it is not part of the bundle delivered to the browser unless required independently by the application itself.
 
-If using a data store such as Redux in your Gatsby application, the [using-redux](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux) example is a good starting point for connecting it to the pages of your Gatsby application.
+If using a data store such as Redux in your Gatsby application, check out [Adding a Redux Store](/docs/adding-redux-store).
 
 ## GraphQL queries
 
