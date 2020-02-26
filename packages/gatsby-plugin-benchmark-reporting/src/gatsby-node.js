@@ -81,7 +81,7 @@ class BenchMeta {
 
     // This assumes the benchmark is started explicitly from `node_modules/.bin/gatsby`, and not a global install
     // (This is what `gatsby --version` does too, ultimately)
-    const gatsbyCliVersion = require(`gatsby-cli/package.json`).version
+    const gatsbyCliVersion = execToStr(`node_modules/.bin/gatsby --version`)
 
     const gatsbyVersion = require(`gatsby/package.json`).version
 
