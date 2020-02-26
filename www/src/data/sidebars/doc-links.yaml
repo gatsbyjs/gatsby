@@ -469,6 +469,8 @@
                   link: /docs/processing-payments-with-stripe/
                 - title: Processing Payments with Square
                   link: /docs/processing-payments-with-square/
+                - title: Sourcing from WooCommerce
+                  link: /docs/sourcing-from-woocommerce
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -746,6 +748,8 @@
           link: /docs/glossary/headless-wordpress/
         - title: JAMStack
           link: /docs/glossary/jamstack
+        - title: Markdown
+          link: /docs/glossary/markdown/
         - title: Node.js
           link: /docs/glossary/node
         - title: React

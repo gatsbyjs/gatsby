@@ -1,11 +1,4 @@
-const supportedExtensions = {
-  jpeg: true,
-  jpg: true,
-  png: true,
-  webp: true,
-  tif: true,
-  tiff: true,
-}
+import supportedExtensions from "./supported-extensions"
 
 module.exports = async function onCreateNode({ node, actions, createNodeId }) {
   const { createNode, createParentChildLink } = actions

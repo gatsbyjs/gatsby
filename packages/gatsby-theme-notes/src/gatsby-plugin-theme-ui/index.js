@@ -1,48 +1,19 @@
-const primary = `rebeccapurple`
-const blue = `#3c58e8`
+import merge from "deepmerge"
+import typography from "./typography"
+import colors from "./colors"
+import styles from "./styles"
+import prism from "./prism"
 
-export default {
+export default merge(typography, {
   initialColorMode: `light`,
-  colors: {
-    primary,
-    secondary: `#444`,
-    text: `#000`,
-    heading: `#000`,
-    background: `#fff`,
-    link: blue,
-    muted: `#888`,
-    highlight: `tomato`,
-    blue,
-  },
+  colors,
   fonts: {
-    body: `system-ui, sans-serif`,
+    heading: `Montserrat, sans-serif`,
+    monospace: `Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace`,
   },
-  lineHeights: {
-    body: 1.5,
+  sizes: {
+    container: 672,
   },
-  styles: {
-    root: {
-      fontFamily: `body`,
-      lineHeight: `body`,
-    },
-    a: {
-      color: blue,
-      "&:hover": {
-        color: `secondary`,
-      },
-    },
-    img: {
-      maxWidth: `100%`,
-    },
-    pre: {
-      text: primary,
-      background: `#f6f3f9`,
-      overflowX: `scroll`,
-      p: 2,
-    },
-    code: {
-      text: primary,
-      background: `#f6f3f9`,
-    },
-  },
-}
+  styles,
+  prism,
+})

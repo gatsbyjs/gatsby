@@ -14,26 +14,7 @@ Each translation has its own repository in the [gatsbyjs](https://github.com/gat
 
 Currently, the following languages are being translated:
 
-- [Arabic](https://github.com/gatsbyjs/gatsby-ar)
-- [Bengali](https://github.com/gatsbyjs/gatsby-bn)
-- [German](https://github.com/gatsbyjs/gatsby-de)
-- [Spanish](https://github.com/gatsbyjs/gatsby-es)
-- [French](https://github.com/gatsbyjs/gatsby-fr)
-- [Gujarati](https://github.com/gatsbyjs/gatsby-gu)
-- [Hindi](https://github.com/gatsbyjs/gatsby-hi)
-- [Indonesian](https://github.com/gatsbyjs/gatsby-id)
-- [Italian](https://github.com/gatsbyjs/gatsby-it)
-- [Japanese](https://github.com/gatsbyjs/gatsby-ja)
-- [Korean](https://github.com/gatsbyjs/gatsby-ko)
-- [Mongolian](https://github.com/gatsbyjs/gatsby-mn)
-- [Dutch](https://github.com/gatsbyjs/gatsby-nl)
-- [Polish](https://github.com/gatsbyjs/gatsby-pl)
-- [Brazilian Portuguese](https://github.com/gatsbyjs/gatsby-pt-BR)
-- [Russian](https://github.com/gatsbyjs/gatsby-ru)
-- [Turkish](https://github.com/gatsbyjs/gatsby-tr)
-- [Vietnamese](https://github.com/gatsbyjs/gatsby-vi)
-- [Simplified Chinese](https://github.com/gatsbyjs/gatsby-zh-Hans)
-- [Traditional Chinese](https://github.com/gatsbyjs/gatsby-zh-Hant)
+<LangList />
 
 > Note: Once a new translation repository is created, feel free to add it here in a PR!
 

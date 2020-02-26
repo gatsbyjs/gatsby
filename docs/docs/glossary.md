@@ -210,7 +210,7 @@ Linting is the process of running a program that will analyze code for potential
 
 Extends [Markdown](#markdown) to support [React](#react) [components](#component) within your content.
 
-### Markdown
+### [Markdown](/docs/glossary/markdown/)
 
 A way of writing HTML content with plain text, using special characters to denote content types such as hash symbols for [headings](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements), and underscores and asterisks for text emphasis.
 
