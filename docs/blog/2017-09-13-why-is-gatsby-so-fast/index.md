@@ -9,7 +9,7 @@ tags: ["performance", "mobile", "pwa"]
 ---
 
 _I gave this talk last weekend at [ReactNext](http://react-next.com/) in Tel
-Aviv. I spoke on the basics of measuring and improving web performance and how
+Aviv. I spoke on the basis of measuring and improving web performance and how
 Gatsby is designed so sites built with it are always very very fast._
 
 _Slides to follow interspersed with notes._
@@ -52,11 +52,11 @@ Ok, I've convinced you that site performance is important. You perhaps already
 have a site that you know is too slow. How to do you go about improving things?
 
 Our first task is to understand how to measure website performance. Only then
-can we make changes that we're confident are improving things.
+we can make changes that we're confident are improving things.
 
 Let's discuss two key website performance metrics that summarize the most
 important parts of website performance. How quickly is your website visible
-(Speed Index) and how quickly is your site usable (Time to Interactive—TTI).
+(Speed Index) and how quickly is your site usable (Time to Interactive—TTI)?
 
 ![reactnext-gatsby-performance.015](reactnext-gatsby-performance.015.png)
 
@@ -115,7 +115,7 @@ Index score some.
 Woah! **2365** Speed Index! gatsbyjs.org—stop making everyone look so bad! 😎
 
 And notice how steep the visual progress line is. Gatsby knows where it's going
-and gets there quick.
+and gets there quickly.
 
 gatsbyjs.org starts rendering 2x faster than cnn.com and washingtonpost.com and
 whereas downy.com starts rendering at the same time, its Speed Index is _2x_
