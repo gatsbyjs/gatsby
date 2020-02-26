@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
@@ -16,40 +16,7 @@ import Breadcrumb from "../components/docs-breadcrumb"
 import Container from "../components/container"
 import PrevAndNext from "../components/prev-and-next"
 
-const useActiveHash = itemIds => {
-  const [activeHash, setActiveHash] = useState(``)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setActiveHash(entry.target.id)
-          }
-        })
-      },
-      { rootMargin: `0% 0% -100% 0%` }
-    )
-
-    itemIds.forEach(id => {
-      observer.observe(document.querySelector(`#${id}`))
-    })
-
-    return () => {
-      itemIds.forEach(id => {
-        observer.unobserve(document.querySelector(`#${id}`))
-      })
-    }
-  }, [])
-
-  useEffect(() => {
-    if (activeHash) {
-      window.history.replaceState(null, null, `#${activeHash}`)
-    }
-  }, [activeHash])
-
-  return activeHash
-}
+import { useActiveHash } from "../hooks/use-active-hash"
 
 const getHeadingIds = (toc, traverseFullDepth = false) => {
   if (!toc) return []
