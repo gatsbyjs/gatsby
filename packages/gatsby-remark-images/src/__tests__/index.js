@@ -12,15 +12,15 @@ jest.mock(`gatsby-plugin-sharp`, () => {
         src: file.absolutePath,
         srcSet: `${file.absolutePath}, ${file.absolutePath}`,
         sizes: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
-        base64: `data:image/png;base64,iVBORw`,
+        base64: `data:image/png;base64,iVBORw`
       })
     },
     traceSVG: mockTraceSVG,
     stats() {
       return Promise.resolve({
-        isTransparent: true,
+        isTransparent: true
       })
-    },
+    }
   }
 })
 
@@ -36,12 +36,12 @@ const plugin = require(`../`)
 const remark = new Remark().data(`settings`, {
   commonmark: true,
   footnotes: true,
-  pedantic: true,
+  pedantic: true
 })
 
 const createNode = content => {
   const node = {
-    id: 1234,
+    id: 1234
   }
 
   const markdownNode = {
@@ -51,13 +51,13 @@ const createNode = content => {
     internal: {
       content,
       contentDigest: `some-hash`,
-      type: `MarkdownRemark`,
-    },
+      type: `MarkdownRemark`
+    }
   }
 
   markdownNode.frontmatter = {
     title: ``, // always include a title
-    parent: node.id,
+    parent: node.id
   }
 
   return markdownNode
@@ -68,20 +68,20 @@ const createPluginOptions = (content, imagePaths = `/`) => {
   return {
     files: [].concat(imagePaths).map(imagePath => {
       return {
-        absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url,
+        absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url
       }
     }),
     markdownNode: createNode(content),
     markdownAST: remark.parse(content),
     getNode: () => {
       return {
-        dir: dirName,
+        dir: dirName
       }
     },
     compiler: {
       parseString: remark.parse.bind(remark),
-      generateHTML: node => hastToHTML(toHAST(node)),
-    },
+      generateHTML: node => hastToHTML(toHAST(node))
+    }
   }
 }
 
@@ -133,7 +133,7 @@ test(`it transforms images in markdown with the "withWebp" option`, async () => 
   `.trim()
 
   const nodes = await plugin(createPluginOptions(content, imagePath), {
-    withWebp: true,
+    withWebp: true
   })
 
   expect(nodes.length).toBe(1)
@@ -341,6 +341,25 @@ test(`it transforms images in markdown with query strings`, async () => {
   expect(node.value).not.toMatch(`<html>`)
 })
 
+test(`it transforms HTML img tags within React`, async () => {
+  const imagePath = `image/my-image.jpeg`
+
+  const content = `
+<Component attr={func()}>
+  <img src="./${imagePath}" />
+</Component>
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
 test(`it uses tracedSVG placeholder when enabled`, async () => {
   const imagePath = `images/my-image.jpeg`
   const content = `
@@ -348,7 +367,7 @@ test(`it uses tracedSVG placeholder when enabled`, async () => {
   `.trim()
 
   const nodes = await plugin(createPluginOptions(content, imagePath), {
-    tracedSVG: { color: `COLOR_AUTO`, turnPolicy: `TURNPOLICY_LEFT` },
+    tracedSVG: { color: `COLOR_AUTO`, turnPolicy: `TURNPOLICY_LEFT` }
   })
 
   expect(nodes.length).toBe(1)
@@ -364,7 +383,7 @@ test(`it uses tracedSVG placeholder when enabled`, async () => {
       // fileArgs cannot be left undefined or traceSVG errors
       fileArgs: expect.any(Object),
       // args containing Potrace constants should be translated to their values
-      args: { color: Potrace.COLOR_AUTO, turnPolicy: Potrace.TURNPOLICY_LEFT },
+      args: { color: Potrace.COLOR_AUTO, turnPolicy: Potrace.TURNPOLICY_LEFT }
     })
   )
 })
@@ -375,7 +394,7 @@ describe(`showCaptions`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: true,
+      showCaptions: true
     })
     expect(nodes.length).toBe(1)
 
@@ -390,7 +409,7 @@ describe(`showCaptions`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: false,
+      showCaptions: false
     })
     expect(nodes.length).toBe(1)
 
@@ -404,7 +423,7 @@ describe(`showCaptions`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: [],
+      showCaptions: []
     })
     expect(nodes.length).toBe(1)
 
@@ -418,7 +437,7 @@ describe(`showCaptions`, () => {
     const content = `![some alt](./${imagePath})`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: true,
+      showCaptions: true
     })
     expect(nodes.length).toBe(1)
 
@@ -433,7 +452,7 @@ describe(`showCaptions`, () => {
     const content = `![](./${imagePath})`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: true,
+      showCaptions: true
     })
     expect(nodes.length).toBe(1)
 
@@ -447,7 +466,7 @@ describe(`showCaptions`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: [`alt`, `title`],
+      showCaptions: [`alt`, `title`]
     })
     expect(nodes.length).toBe(1)
 
@@ -462,7 +481,7 @@ describe(`showCaptions`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: [`title`, `alt`],
+      showCaptions: [`title`, `alt`]
     })
     expect(nodes.length).toBe(1)
 
@@ -477,7 +496,7 @@ describe(`showCaptions`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: [`alt`],
+      showCaptions: [`alt`]
     })
     expect(nodes.length).toBe(1)
 
@@ -492,7 +511,7 @@ describe(`showCaptions`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: [`title`],
+      showCaptions: [`title`]
     })
     expect(nodes.length).toBe(1)
 
@@ -507,7 +526,7 @@ describe(`showCaptions`, () => {
     const content = `![some alt](./${imagePath})`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: [`title`, `alt`],
+      showCaptions: [`title`, `alt`]
     })
     expect(nodes.length).toBe(1)
 
@@ -522,7 +541,7 @@ describe(`showCaptions`, () => {
     const content = `![](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: [`alt`, `title`],
+      showCaptions: [`alt`, `title`]
     })
     expect(nodes.length).toBe(1)
 
@@ -537,7 +556,7 @@ describe(`showCaptions`, () => {
     const content = `![some alt](./${imagePath})`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: [`title`],
+      showCaptions: [`title`]
     })
 
     expect(nodes.length).toBe(1)
@@ -552,7 +571,7 @@ describe(`showCaptions`, () => {
     const content = `![my image](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      showCaptions: [`alt`],
+      showCaptions: [`alt`]
     })
     expect(nodes.length).toBe(1)
 
@@ -570,7 +589,7 @@ describe(`markdownCaptions`, () => {
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
       showCaptions: true,
-      markdownCaptions: true,
+      markdownCaptions: true
     })
     expect(nodes.length).toBe(1)
 
@@ -586,7 +605,7 @@ describe(`markdownCaptions`, () => {
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
       showCaptions: true,
-      markdownCaptions: false,
+      markdownCaptions: false
     })
     expect(nodes.length).toBe(1)
 
@@ -602,7 +621,7 @@ describe(`markdownCaptions`, () => {
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
       showCaptions: false,
-      markdownCaptions: true,
+      markdownCaptions: true
     })
     expect(nodes.length).toBe(1)
 
@@ -618,7 +637,7 @@ describe(`disableBgImageOnAlpha`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      disableBgImageOnAlpha: false,
+      disableBgImageOnAlpha: false
     })
     expect(nodes.length).toBe(1)
 
@@ -632,7 +651,7 @@ describe(`disableBgImageOnAlpha`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      disableBgImageOnAlpha: true,
+      disableBgImageOnAlpha: true
     })
     expect(nodes.length).toBe(1)
 
@@ -648,7 +667,7 @@ describe(`disableBgImage`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      disableBgImage: false,
+      disableBgImage: false
     })
     expect(nodes.length).toBe(1)
 
@@ -662,7 +681,7 @@ describe(`disableBgImage`, () => {
     const content = `![some alt](./${imagePath} "some title")`
 
     const nodes = await plugin(createPluginOptions(content, imagePath), {
-      disableBgImage: true,
+      disableBgImage: true
     })
     expect(nodes.length).toBe(1)
 
