@@ -340,7 +340,7 @@ jobs:
           key: yarn-packages-v2-{{ checksum "yarn.lock" }}
       - run:
           name: "Run Tests"
-          command: yarn test
+          command: yarn jest -w 1 --ci
 
   bootstrap-with-experimental-react:
     executor: node
@@ -627,8 +627,9 @@ workflows:
 
   build-test:
     jobs:
-      - windows_unit_tests
       - bootstrap
+      - windows_unit_tests:
+          <<: *ignore_docs
       - lint:
           requires:
             - bootstrap

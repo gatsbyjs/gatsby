@@ -4,7 +4,7 @@ const { slash } = require(`gatsby-core-utils`)
 const slugify = require(`slugify`)
 const url = require(`url`)
 const moment = require(`moment`)
-const langs = require(`../../../i18n.json`)
+const { langCodes } = require(`../i18n`)
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
 const { localizedPath } = require(`../i18n.js`)
 
@@ -269,7 +269,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       }
     }
 
-    for (let { code } of langs) {
+    for (let code of langCodes) {
       if (fileNode.sourceInstanceName === `docs-${code}`) {
         // have to remove the beginning "/docs" path because of the way
         // gatsby-source-filesystem and gatsby-source-git differ
