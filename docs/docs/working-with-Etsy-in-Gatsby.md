@@ -6,7 +6,7 @@ This guide explains how to begin working with the e-commerce site Etsy in Gatsby
 
 ## Etsy API
 
-Utilizing the Etsy API (Application Programming Interface), developers and non-developers can create apps for the web that pull in information such as BillCharge, CartListing, ShippingOption, and a list of other API references available to query. First, you must create a [developer account](<[https://www.etsy.com/developers/register](https://www.etsy.com/developers/register)>) with Etsy, confirm the account, and enable two-factor authentication. This will allow you to generate and receive your own API key. You will be asked for a short description of your app.
+Utilizing the Etsy API (Application Programming Interface), developers and non-developers can create apps for the web that pull in information such as BillCharge, CartListing, ShippingOption, and a list of other API references available to query. First, you must create a [developer account](https://www.etsy.com/developers/register) with Etsy, confirm the account, and enable two-factor authentication. This will allow you to generate and receive your own API key. You will be asked for a short description of your app.
 
 After you receive an API key, it’s recommended to review the Etsy [documentation](<[https://www.etsy.com/developers/documentation](https://www.etsy.com/developers/documentation)>) on how to get started. Most importantly, in order for your app to function, you will need your Etsy [ShopId](<[https://support.cartrover.com/portal/kb/articles/how-to-get-your-etsy-shop-id](https://support.cartrover.com/portal/kb/articles/how-to-get-your-etsy-shop-id)>) which is the unique number associated with your store.
 
