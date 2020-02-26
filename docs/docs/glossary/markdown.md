@@ -58,7 +58,7 @@ You can also try a [Gatsby starter](https://www.gatsbyjs.org/starters/?c=Markdow
 
 ## Learn more about Markdown
 
-- [Markdown syntax](/docs/mdx/markdown-syntax/) in the Gatsby docs
+- [Markdown syntax](/docs/mdx/markdown-syntax/) from the Gatsby docs
 - [CommonMark](https://commonmark.org/), a proposed Markdown specification
 - [Sourcing from the Filesystem](/docs/sourcing-from-the-filesystem/) from the Gatsby docs
 - [Adding Markdown Pages](/docs/adding-markdown-pages/) from the Gatsby docs
