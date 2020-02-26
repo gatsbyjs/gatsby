@@ -19,18 +19,17 @@ import PrevAndNext from "../components/prev-and-next"
 import { useActiveHash } from "../hooks/use-active-hash"
 
 const getHeadingIds = (toc, traverseFullDepth = false) => {
-  if (!toc) return []
-
   const idList = []
-
   const hashToId = str => str.slice(1)
 
-  for (const item of toc) {
-    idList.push(hashToId(item.url))
+  if (toc) {
+    for (const item of toc) {
+      idList.push(hashToId(item.url))
 
-    // Only traverse sub-items if specified (they are not displayed in ToC)
-    if (`items` in item && traverseFullDepth) {
-      idList.push(...getHeadingIds(item.items, true))
+      // Only traverse sub-items if specified (they are not displayed in ToC)
+      if (`items` in item && traverseFullDepth) {
+        idList.push(...getHeadingIds(item.items, true))
+      }
     }
   }
 
