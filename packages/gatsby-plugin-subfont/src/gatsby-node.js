@@ -1,22 +1,23 @@
 const path = require(`path`)
-const { execSync } = require(`child_process`)
-const shellescape = require(`shell-escape`)
+const subfont = require(`subfont`)
 
-exports.onPostBuild = ({ store }) => {
+exports.onPostBuild = async ({ store }) => {
   const root = path.join(store.getState().program.directory, `public`)
   // TODO make this configurable
+
   const urlPaths = [`/`]
-  const baseArgs = [
-    `node_modules/.bin/subfont`,
-    `-i`,
-    `--no-recursive`,
-    `--inline-css`,
-    `--root`,
-    `file://${root}`,
-  ]
-  const args = baseArgs.concat(
-    urlPaths.map(currentPath => path.join(root, currentPath, `index.html`))
+
+  await subfont(
+    {
+      root: `file://${root}`,
+      inPlace: true,
+      inlineCss: true,
+      silent: true,
+      inputFiles: urlPaths.map(currentPath =>
+        path.join(root, currentPath, `index.html`)
+      ),
+    },
+    console
   )
-  const command = shellescape(args)
-  execSync(command)
+  return
 }
