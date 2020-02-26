@@ -8,12 +8,19 @@ const { Storage } = require(`@google-cloud/storage`)
 const { topicFor, bucketFor } = require(`./utils`)
 const { resolveProcessors } = require(`../../../utils`)
 
+function functionName(processor, type) {
+  return `processor-${processor.name}-${type}`
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9-]/g, `-`)
+    .replace(/-+/, `-`)
+}
+
 function deployType(type, processor, cwd, config) {
   return new Promise((resolve, reject) => {
     const args = [
       `functions`,
       `deploy`,
-      `processor${processor.name}${type}`,
+      functionName(processor, type),
       `--entry-point`,
       `processor`,
       `--memory`,
