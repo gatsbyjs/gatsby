@@ -44,19 +44,19 @@ const useActiveHash = itemIds => {
 }
 
 const getHeadingIds = toc => {
-  const hashList = []
+  const idList = []
 
   const hashToId = str => str.slice(1)
 
   for (const item of toc) {
-    hashList.push(hashToId(item.url))
+    idList.push(hashToId(item.url))
 
     if (`items` in item) {
-      hashList.push(...getHeadingIds(item.items))
+      idList.push(...getHeadingIds(item.items))
     }
   }
 
-  return hashList
+  return idList
 }
 
 const containerStyles = {
