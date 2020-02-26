@@ -19,7 +19,7 @@ Good news - Gatsby gives you a head start to strong [search engine optimization 
 
 An underappreciated feature of Gatsby is the [prefetching of pages](/docs/routing/#performance-and-prefetching) which makes a site feel snappy and dramatically more engaging. This may reduce user bounce rates and ["pogo sticking"](https://backlinko.com/hub/seo/pogosticking) which is a major *negative* ranking factor for Google. 
 
-Today we're going beyond the default SEO features of Gatsby, and moving on to advanced enhacencements. Use the SEO resources below to make your Gatsby site competitve in search rankings! 
+Today we're going beyond the default SEO features of Gatsby, and moving on to advanced enhancements. Use the SEO resources below to make your Gatsby site competitive in search rankings! 
 
 ### SEO Challenge Resources
 
