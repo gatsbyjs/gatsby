@@ -9921,3 +9921,10 @@
   built_by: 1902 Software Development Corporation
   built_by_url: https://1902software.com/
   featured: false
+- title: Codeful
+  url: https://www.codeful.fi/
+  main_url: https://www.codeful.fi/
+  categories:
+    - Agency
+    - Consulting
+  featured: false
