@@ -188,10 +188,8 @@ const HomepageBlogPost = ({
   desktopViewport = false,
 }) => {
   const {
-    excerpt: automaticExcerpt,
-    fields: { slug },
+    fields: { slug, excerpt },
     frontmatter: {
-      excerpt: handwrittenExcerpt,
       author: {
         id: authorName,
         avatar: {
@@ -204,8 +202,6 @@ const HomepageBlogPost = ({
       cover,
     },
   } = post
-
-  const excerpt = handwrittenExcerpt ? handwrittenExcerpt : automaticExcerpt
 
   return (
     <HomepageBlogPostRoot fullWidth={fullWidth}>

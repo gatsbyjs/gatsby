@@ -62,17 +62,10 @@ class BlogPostTemplate extends React.Component {
                 rel="author"
                 href={`https://gatsbyjs.org${post.frontmatter.author.fields.slug}`}
               />
-              <meta
-                name="description"
-                content={
-                  post.frontmatter.excerpt
-                    ? post.frontmatter.excerpt
-                    : post.excerpt
-                }
-              />
+              <meta name="description" content={post.fields.excerpt} />
 
-              <meta property="og:description" content={post.excerpt} />
-              <meta name="twitter:description" content={post.excerpt} />
+              <meta property="og:description" content={post.fields.excerpt} />
+              <meta name="twitter:description" content={post.fields.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
               <meta property="og:url" content={href} />
               {post.frontmatter.image && (
@@ -241,15 +234,14 @@ export const pageQuery = graphql`
   query($slug: String!) {
     mdx(fields: { slug: { eq: $slug } }) {
       body
-      excerpt
       timeToRead
       fields {
         slug
+        excerpt
         publishedAt
       }
       frontmatter {
         title
-        excerpt
         date(formatString: "MMMM Do YYYY")
         rawDate: date
         canonicalLink

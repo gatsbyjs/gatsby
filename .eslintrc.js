@@ -119,7 +119,10 @@ module.exports = {
           "error",
           "interface",
         ],
-
+        "@typescript-eslint/no-use-before-define": [
+          "error",
+          { functions: false },
+        ],
         // Allows us to write unions like `type Foo = "baz" | "bar"`
         // otherwise eslint will want to switch the strings to backticks,
         // which then crashes the ts compiler

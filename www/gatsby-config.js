@@ -1,8 +1,8 @@
 const path = require(`path`)
-const langs = require(`./i18n.json`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
+const { langCodes } = require(`./src/utils/i18n`)
 
 const GA = {
   identifier: `UA-93349937-5`,
@@ -53,9 +53,9 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
-if (process.env.ENABLE_LOCALIZATIONS) {
+if (langCodes.length > 0) {
   dynamicPlugins.push(
-    ...langs.map(({ code }) => ({
+    ...langCodes.map(code => ({
       resolve: `gatsby-source-git`,
       options: {
         name: `docs-${code}`,
@@ -213,7 +213,7 @@ module.exports = {
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
           // convert images using http to https in plugin library READMEs
-          `gatsby-remark-http-to-https`
+          `gatsby-remark-http-to-https`,
         ],
       },
     },
@@ -278,17 +278,16 @@ module.exports = {
                 ) {
                   edges {
                     node {
-                      excerpt
                       html
                       frontmatter {
                         title
                         date
-                        excerpt
                         author {
                           id
                         }
                       }
                       fields {
+                        excerpt
                         slug
                       }
                     }
@@ -314,7 +313,7 @@ module.exports = {
               allMdx.edges.map(({ node }) => {
                 return {
                   title: node.frontmatter.title,
-                  description: node.frontmatter.excerpt || node.excerpt,
+                  description: node.fields.excerpt,
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
                   custom_elements: [{ "content:encoded": node.html }],
