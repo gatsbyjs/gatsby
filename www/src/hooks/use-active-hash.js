@@ -7,9 +7,10 @@ export const useActiveHash = (itemIds, rootMargin = undefined) => {
     const observer = new IntersectionObserver(
       entries => {
         if (!entries.some(entry => entry.isIntersecting)) {
-          console.log(`none`)
           setActiveHash(``)
+          return
         }
+
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             setActiveHash(entry.target.id)
@@ -34,6 +35,7 @@ export const useActiveHash = (itemIds, rootMargin = undefined) => {
     if (activeHash) {
       window.history.replaceState(null, null, `#${activeHash}`)
     } else {
+      // Remove hash from URL if none is in view
       window.history.replaceState(null, null, ` `)
     }
   }, [activeHash])

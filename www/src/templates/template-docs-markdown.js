@@ -28,6 +28,7 @@ const getHeadingIds = (toc, traverseFullDepth = false) => {
   for (const item of toc) {
     idList.push(hashToId(item.url))
 
+    // Only traverse sub-items if specified (they are not displayed in ToC)
     if (`items` in item && traverseFullDepth) {
       idList.push(...getHeadingIds(item.items, true))
     }
