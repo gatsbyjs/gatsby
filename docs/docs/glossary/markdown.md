@@ -36,7 +36,8 @@ When converted to HTML, the preceding Markdown will become the markup below.
 ```html
 <h1>Markdown!</h1>
 <p>
-  You can use Markdown to create documents for <a href="https://www.gatsbyjs.org/">Gatsby</a>.
+  You can use Markdown to create documents for
+  <a href="https://www.gatsbyjs.org/">Gatsby</a>.
 </p>
 <figure class="chart">
   <object data="chart.svg" type="image/svg+xml"></object>
