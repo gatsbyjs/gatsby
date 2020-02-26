@@ -51,7 +51,7 @@ const useActiveHash = itemIds => {
   return activeHash
 }
 
-const getHeadingIds = toc => {
+const getHeadingIds = (toc, traverseFullDepth = false) => {
   if (!toc) return []
 
   const idList = []
@@ -61,8 +61,8 @@ const getHeadingIds = toc => {
   for (const item of toc) {
     idList.push(hashToId(item.url))
 
-    if (`items` in item) {
-      idList.push(...getHeadingIds(item.items))
+    if (`items` in item && traverseFullDepth) {
+      idList.push(...getHeadingIds(item.items, true))
     }
   }
 
