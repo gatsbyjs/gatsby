@@ -1,9 +1,8 @@
 const path = require(`path`)
 const subfont = require(`subfont`)
 
-exports.onPostBuild = async ({ store }) => {
+exports.onPostBuild = async ({ store }, options) => {
   const root = path.join(store.getState().program.directory, `public`)
-  // TODO make this configurable
 
   const urlPaths = [`/`]
 
@@ -16,6 +15,7 @@ exports.onPostBuild = async ({ store }) => {
       inputFiles: urlPaths.map(currentPath =>
         path.join(root, currentPath, `index.html`)
       ),
+      ...options,
     },
     console
   )

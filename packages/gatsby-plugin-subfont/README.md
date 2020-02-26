@@ -17,6 +17,15 @@ If you want the ability to run font subsetting locally you'l need Python and ins
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-subfont`],
+  plugins: [{
+    resolve: `gatsby-plugin-subfont`,
+    options: {
+      silent: true,
+      fallback: false,
+      inlineFonts: true,
+    }
+  }],
 }
 ```
+
+You can use any option of [https://github.com/Munter/subfont/blob/4b5a59afd17008ca35b6c32b52e3e922159e22fc/lib/subfont.js#L10](subfont)
