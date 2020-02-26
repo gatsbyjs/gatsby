@@ -46,7 +46,9 @@ Here is where you can find more information on [Routing in Gatsby](/docs/routing
 
 ## Redux
 
-When you implement a Gatsby [Node API](/docs/node-apis/), you are passed a collection of [actions](/docs/actions/) (equivalent to actions bound with [bindActionCreators in Redux](https://redux.js.org/api/bindactioncreators/)). When using the supplied actions, you are manipulating state that is created, and relied upon, by Gatsby itself such as created pages and webpack config.
+Redux is a state container and is used inside Gatsby to keep our internal state in one place. Redux gives us a predictable flow on how and when state updates are done. We can easily hook into these state transitions to update multiple actions to keep everything consistent.
+
+When you implement a Gatsby [Node API](/docs/node-apis/), you are passed a collection of [actions](/docs/actions/). When using the supplied actions, you are manipulating state that is created, and relied upon, by Gatsby itself such as created pages and webpack config.
 
 Once the build is complete, the work of Redux is done and it is not part of the bundle delivered to the browser unless required independently by the application itself.
 
