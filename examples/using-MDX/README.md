@@ -48,7 +48,7 @@ export const data = [
 
 ## 🔧 Running locally
 
-The site can be run locally on your own computer as well. By following these steps:
+The site can be run locally on your own computer as well by following these steps:
 
 1.  Clone the `gatsby` repository
 
@@ -88,6 +88,6 @@ The site is now running at `http://localhost:8000`, you can see the MDX example 
 
 Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/). Here are some places to start:
 
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+- **For most developers, it's recommended to start with the [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the [MDX section of the sidebar](https://www.gatsbyjs.org/docs/mdx/).
+- **To dive straight into code samples, head [to the official Gatsby documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the [MDX section of the sidebar](https://www.gatsbyjs.org/docs/mdx/).
