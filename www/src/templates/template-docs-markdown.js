@@ -78,8 +78,6 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
 
   const description = page.frontmatter.description || page.excerpt
 
-  console.log(getHeadingIds(toc))
-
   const activeHash = useActiveHash(getHeadingIds(toc))
 
   return (
