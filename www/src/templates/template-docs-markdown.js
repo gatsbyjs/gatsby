@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
@@ -15,6 +15,49 @@ import FooterLinks from "../components/shared/footer-links"
 import Breadcrumb from "../components/docs-breadcrumb"
 import Container from "../components/container"
 import PrevAndNext from "../components/prev-and-next"
+
+const useActiveHash = itemIds => {
+  const [activeHash, setActiveHash] = useState(``)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActiveHash(entry.target.id)
+          }
+        })
+      },
+      { rootMargin: `0% 0% -100% 0%` }
+    )
+    itemIds.forEach(id => {
+      observer.observe(document.querySelector(`#${id}`))
+    })
+  }, [])
+
+  useEffect(() => {
+    if (activeHash) {
+      window.history.replaceState(null, null, `#${activeHash}`)
+    }
+  }, [activeHash])
+
+  return activeHash
+}
+
+const getHeadingIds = toc => {
+  const hashList = []
+
+  const hashToId = str => str.slice(1)
+
+  for (const item of toc) {
+    hashList.push(hashToId(item.url))
+
+    if (`items` in item) {
+      hashList.push(...getHeadingIds(item.items))
+    }
+  }
+
+  return hashList
+}
 
 const containerStyles = {
   // we need to account for <Container>'s horizontal padding of
@@ -34,6 +77,10 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
   const description = page.frontmatter.description || page.excerpt
+
+  console.log(getHeadingIds(toc))
+
+  const activeHash = useActiveHash(getHeadingIds(toc))
 
   return (
     <React.Fragment>
@@ -99,7 +146,11 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
                     },
                   }}
                 >
-                  <TableOfContents location={location} page={page} />
+                  <TableOfContents
+                    activeHash={activeHash}
+                    location={location}
+                    page={page}
+                  />
                 </div>
               )}
               <div
