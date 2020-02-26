@@ -5404,3 +5404,17 @@
     - Light/Dark mode
     - CSS Animations
     - Mountain style
+- url: https://gatsby-starter-redux-storybook.netlify.com/
+  repo: https://github.com/fabianunger/gatsby-starter-redux-storybook
+  description: Gatsby Starter that has Redux (persist) and Storybook implemented.
+  tags:
+    - Redux
+    - Storybook
+    - PWA
+    - Styling:CSS-in-JS
+    - SEO
+  features:
+    - Redux + Redux Persist implemented also for Storybook
+    - PWA
+    - ESLint
+    - SEO ready
