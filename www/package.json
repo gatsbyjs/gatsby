@@ -111,11 +111,13 @@
   "license": "MIT",
   "main": "n/a",
   "private": true,
-  "babel": {
-    "presets": ["babel-preset-gatsby"]
-  },
   "lingui": {
     "sourceLocale": "en",
+    "extractBabelOptions": {
+      "presets": [
+        "babel-preset-gatsby"
+      ]
+    },
     "localeDir": "src/data/locales",
     "srcPathDirs": [
       "src/components",
