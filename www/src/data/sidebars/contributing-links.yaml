@@ -33,10 +33,12 @@
           link: /contributing/translation/new-translations/
         - title: Contributing to a Translation
           link: /contributing/translation/translators/
-        - title: Translation Maintainer Guide
-          link: /contributing/translation/maintainers/
+        - title: Translating UI Messages
+          link: /contributing/translation/ui-messages/
         - title: Keeping Translations Up-to-date
           link: /contributing/translation/sync-guide/
+        - title: Translation Maintainer Guide
+          link: /contributing/translation/maintainers/
         - title: Translation Style Guide
           link: /contributing/translation/style-guide/
     - title: How to Contribute
