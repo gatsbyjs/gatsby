@@ -39,9 +39,9 @@ Gatsby offers [official starters](/docs/starters/#official-starters) for a defau
 
 ## Conventions for usage
 
-Themes are a type of plugin, making both themes and plugins capable of the same functionality. The difference between them is the _intent for their usage_. Themes are intended to own a piece of the site (like an about us page), whereas a plugin is intended to modularize Gatsby APIs into smaller pieces. Themes tend to cover a broader scope of responsibility, packaging up multiple behaviors, where plugins are meant for a narrower use.
+Themes are a type of plugin, making both themes and plugins capable of the same functionality. The difference between them is _intended usage_. Themes are intended to own a piece of the site (like an about us page), whereas a plugin is intended to modularize Gatsby APIs into smaller pieces. Themes tend to cover a broader scope of responsibility, packaging up multiple behaviors, where plugins are meant for more specific functionality.
 
-Starters are generally used as the starting point that plugins and themes are then installed into.
+Starters are generally used as the starting point that plugins and themes are then installed into. However, they're based on one-time use and do not get updated over time as plugins and themes do.
 
 ## Comparing differences
 
@@ -68,7 +68,7 @@ When it comes to maintaining a Gatsby site, plugins and themes offer a distinct 
 
 #### Versioning
 
-Starters can still be versioned inside of a repository so that you can track issues or bugs associated with specific developments, but they aren't formally released in publishes marked by versions like a plugin or theme is.
+Starters can still be versioned inside of a repository so that you can track issues or bugs associated with specific updates, but they aren't formally released and published, so they aren't versioned like a plugin or theme is.
 
 #### Installing as a package
 
@@ -91,7 +91,7 @@ Plugins and themes both allow options to be passed in when installed in the plug
 
 #### Shadowing
 
-As an escape hatch to change small pieces of an installed theme, [shadowing](/docs/themes/shadowing/) was introduced. For example, a plugin or theme could allow a specific path to be provided in the `gatsby-config` so the plugin knows where to build pages from, but the user wouldn't be able adjust _how_ those pages are built, only from what path. Theme shadowing allows users to replace a file with their own version of it, allowing them to rewrite that logic to use the path in a different way.
+Theme, [shadowing](/docs/themes/shadowing/) exists to allow users to override or otherwise extend individual components provided by a theme. For example, a plugin or theme can provide a specific path to `gatsby-config` so the plugin knows where to build pages from, but the user wouldn't be able adjust _how_ those pages are built, only from what path. Theme shadowing allows users to replace a file with their own version of it, allowing them to rewrite that logic to use the path in a different way.
 
 An example of a plugin that uses shadowing is [`gatsby-plugin-theme-ui`](/packages/gatsby-plugin-theme-ui/?=theme-ui#customizing-the-theme) which allows you to shadow a theme file to use your own theme.
 
