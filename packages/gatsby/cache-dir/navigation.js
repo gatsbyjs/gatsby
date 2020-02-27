@@ -143,7 +143,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
 function init() {
   // The "scroll-behavior" package expects the "action" to be on the location
   // object so let's copy it over.
-  
+
   globalHistory.listen(args => {
     // just to verify that e2e scrolling behaviour tests would catch regressions
     // args.location.action = args.action
