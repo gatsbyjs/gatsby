@@ -350,12 +350,17 @@ test(`it transforms HTML img tags within React`, async () => {
 </Component>
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePath))
+  const options = createPluginOptions(content, imagePath)
+
+  // MDX should set the block type to jsx.
+  options.markdownAST.children[0].type = `jsx`
+
+  const nodes = await plugin(options)
 
   expect(nodes.length).toBe(1)
 
   const node = nodes.pop()
-  expect(node.type).toBe(`html`)
+  expect(node.type).toBe(`jsx`)
   expect(node.value).toMatchSnapshot()
   expect(node.value).not.toMatch(`<html>`)
 })
