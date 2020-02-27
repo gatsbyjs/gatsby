@@ -46,7 +46,7 @@ Before file nodes are created, Cloudinary optimizes media files queried from its
 The plugins can be used for various JAMstack applications built with Gatsby. The core goal is to store, optimize and deliver media assets with possible transformations. To get started on using the two Gatsby-Cloudinary plugins, follow these steps:
 
 1. [Create a free account on Cloudinary](http://bit.ly/2v3sy4N).
-2. [Create a Gatsby project](https://www.gatsbyjs.org/tutorial/) with any of the Gatsby starters.
+2. [Create a Gatsby project](/tutorial/) with any of the Gatsby starters.
 3. Configure either of the plugins in the `gatsby-config.js` file.
 4. Refer to the [source plugin](http://bit.ly/2NHVshC) or [transformer plugin](http://bit.ly/2sMqe1u) documentation for the procedure on how to query Cloudinary images or upload and transform them with `gatsby-image`, respectively.
 
