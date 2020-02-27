@@ -20,7 +20,7 @@ const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 const {
   waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
 } = require(`../utils/jobs-manager`)
-const pageDataUtil = require(`../utils/page-data`)
+const buildUtils = require(`../commands/build-utils`)
 const { boundActionCreators } = require(`../redux/actions`)
 
 let cachedPageData
@@ -177,7 +177,7 @@ module.exports = async function build(program: BuildArgs) {
     process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
     cachedWebpackCompilationHash === store.getState().webpackCompilationHash
   ) {
-    pagePaths = pageDataUtil.getChangedPageDataKeys(
+    pagePaths = buildUtils.getChangedPageDataKeys(
       store.getState(),
       cachedPageData
     )
@@ -226,11 +226,11 @@ module.exports = async function build(program: BuildArgs) {
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     activity = report.activityTimer(`Delete previous page data`)
     activity.start()
-    deletedPageKeys = pageDataUtil.collectRemovedPageData(
+    deletedPageKeys = buildUtils.collectRemovedPageData(
       store.getState(),
       cachedPageData
     )
-    await pageDataUtil.removePageFiles({ publicDir }, deletedPageKeys)
+    await buildUtils.removePageFiles({ publicDir }, deletedPageKeys)
 
     activity.end()
   }
