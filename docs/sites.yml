@@ -9914,6 +9914,21 @@
   built_by: Pierre Beard
   built_by_url: https://github.com/PBRT
   featured: false
+- title: Playlist Detective
+  main_url: https://www.playlistdetective.com/
+  url: https://www.playlistdetective.com/
+  source_url: https://github.com/bobylito/playlistFinder
+  description: >
+    Playlist Detective is an attempt to ease music discovery with playlists. Back in the days, people were sharing mixtapes - some songs we knew and others we didn't, therefore expanding our musical horizons.
+
+    Playlists are the same, and playlist detective lets you search for songs or artists you like in order to stumble on your new favorite songs.
+
+    It uses Algolia for the search.
+  categories:
+    - Media
+    - Music
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
 - title: ProjectManager.tools
   main_url: "https://projectmanager.tools/"
   url: "https://projectmanager.tools/"
