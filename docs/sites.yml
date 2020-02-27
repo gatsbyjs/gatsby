@@ -7865,6 +7865,27 @@
   built_by: Rou Hun Fan
   built_by_url: "https://flowen.me"
   featured: false
+- title: Problem studio
+  url: https://problem.studio
+  main_url: https://problem.studio
+  description: >
+    Problem Studio creates unique and fun web experiences. Our enemy is "boring" if ya know what we mean: overused Wordpress templates, the top 10 shopify templates, copy of a copy of a copy of a copy. We love to support design and marketing agencies and help realize their creations into a digital product. `
+  categories:
+    - Agency
+    - Business
+    - Consulting
+    - Design
+    - Education
+    - Entrepreneurship
+    - Freelance
+    - Landing Page
+    - Marketing
+    - Media
+    - Portfolio
+    - Productivity
+    - Web Development
+  built_by: Rou Hun Fan & Sander Visser
+  built_by_url: https://flowen.me
 - title: North X South
   main_url: https://northxsouth.co
   url: https://northxsouth.co
@@ -9871,3 +9892,96 @@
   built_by: Aveling Ray
   built_by_url: https://avelingray.com/
   featured: false
+- title: Clinka
+  url: https://www.clinka.com.au/
+  main_url: https://www.clinka.com.au/
+  description: >
+    B2B website for an Australian manufacturer of environmentally friendly construction materials.
+  categories:
+    - Business
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
+- title: Chris Vogt's Blog
+  main_url: https://www.chrisvogt.me
+  url: https://www.chrisvogt.me
+  source_url: https://github.com/chrisvogt/gatsby-theme-private-sphere
+  description: >-
+    Personal blog of Chris Vogt, a software developer in San Francisco. Showcases
+    my latest activity on Instagram, Goodreads, and Spotify using original widgets.
+  categories:
+    - Blog
+    - Open Source
+    - Photography
+    - Portfolio
+  built_by: Chris Vogt
+  built_by_url: https://github.com/chrisvogt
+- title: Trolley Travel
+  main_url: http://trolleytravel.org/
+  url: http://trolleytravel.org/
+  description: >
+    Travel blog website to give tips and informations for many destinations, built with Novella theme
+  categories:
+    - Blog
+    - Travel
+  built_by: Pierre Beard
+  built_by_url: https://github.com/PBRT
+  featured: false
+- title: Playlist Detective
+  main_url: https://www.playlistdetective.com/
+  url: https://www.playlistdetective.com/
+  source_url: https://github.com/bobylito/playlistFinder
+  description: >
+    Playlist Detective is an attempt to ease music discovery with playlists. Back in the days, people were sharing mixtapes - some songs we knew and others we didn't, therefore expanding our musical horizons.
+
+    Playlists are the same, and playlist detective lets you search for songs or artists you like in order to stumble on your new favorite songs.
+
+    It uses Algolia for the search.
+  categories:
+    - Media
+    - Music
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
+- title: ProjectManager.tools
+  main_url: "https://projectmanager.tools/"
+  url: "https://projectmanager.tools/"
+  featured: false
+  categories:
+    - App
+    - Web Development
+    - Design
+    - Agency
+  built_by: App Design
+  built_by_url: "https://appdesign.dev/"
+- title: 1902 Software
+  url: https://1902software.com/
+  main_url: https://1902software.com/
+  description: >
+    We are an IT company that specializes in e-commerce and website development on different platforms such as Magento, WordPress, and Umbraco. We are also known for custom software development, web design and mobile app solutions for iOS and Android.
+  categories:
+    - eCommerce
+    - Web Development
+    - Programming
+    - Mobile Development
+    - WordPress
+    - Design
+    - Business
+    - Agency
+  built_by: 1902 Software Development Corporation
+  built_by_url: https://1902software.com/
+  featured: false
+- title: Codeful
+  url: https://www.codeful.fi/
+  main_url: https://www.codeful.fi/
+  categories:
+    - Agency
+    - Consulting
+  featured: false
+- title: Marathon Oil
+  main_url: "https://www.marathonoil.com/"
+  url: "https://www.marathonoil.com/"
+  featured: false
+  categories:
+    - Business
+    - Marketing
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"

@@ -282,7 +282,7 @@ const Form = () => (
 It is common to host sites in a sub-directory of a site. Gatsby lets you [set
 the path prefix for your site](/docs/path-prefix/). After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in development and production.
 
-For pathnames you construct manually, there's a helper function, `withPrefix` that prepends your path prefix in production (but doesn't during development where paths don't need prefixed).
+For pathnames you construct manually, there's a helper function, `withPrefix` that prepends your path prefix in production (but doesn't during development where paths don't need to be prefixed).
 
 ```jsx
 import { withPrefix } from "gatsby"

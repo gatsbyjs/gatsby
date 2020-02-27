@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.2.4...gatsby-theme-blog-core@1.2.5) (2020-02-27)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+## [1.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.2.3...gatsby-theme-blog-core@1.2.4) (2020-02-26)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.2.2...gatsby-theme-blog-core@1.2.3) (2020-02-25)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+## [1.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.2.1...gatsby-theme-blog-core@1.2.2) (2020-02-25)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+## [1.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.2.0...gatsby-theme-blog-core@1.2.1) (2020-02-24)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+# [1.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.1.0...gatsby-theme-blog-core@1.2.0) (2020-02-24)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+# [1.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.0.77...gatsby-theme-blog-core@1.1.0) (2020-02-24)
+
+### Features
+
+- Change mdx flag into mdxOtherwise to prevent confusion ([#21404](https://github.com/gatsbyjs/gatsby/issues/21404)) ([6874cca](https://github.com/gatsbyjs/gatsby/commit/6874cca))
+
+## [1.0.77](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.0.76...gatsby-theme-blog-core@1.0.77) (2020-02-24)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
 ## [1.0.76](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.0.75...gatsby-theme-blog-core@1.0.76) (2020-02-20)
 
 **Note:** Version bump only for package gatsby-theme-blog-core
