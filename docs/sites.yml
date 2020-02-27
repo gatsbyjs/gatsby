@@ -9880,6 +9880,18 @@
     - Agency
   built_by: App Design
   built_by_url: "https://appdesign.dev/"
+- title: Guillermo Gómez-Peña
+  url: https://www.guillermogomezpena.com/
+  main_url: https://www.guillermogomezpena.com/
+  description: >
+    Personal website for the work of Guillermo Gómez-Peña: performance artist, writer, activist, radical pedagogue and artistic director of the performance troupe La Pocha Nostra. Recipient of the MacArthur Fellow, USA Artists Fellow, and a winner of the Bessie, Guggenheim, and American Book awards.
+  categories:
+    - Portfolio
+    - Gallery
+    - Artist
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
+  featured: false
 - title: Clinka
   url: https://www.clinka.com.au/
   main_url: https://www.clinka.com.au/
