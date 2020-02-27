@@ -36,6 +36,7 @@ const Section = styled(EcosystemSection)`
   ${mediaQueries.md} {
     margin: 0 ${p => p.theme.space[2]} 0;
     padding: ${p => p.theme.space[6]};
+    max-height: none;
 
     :last-child {
       align-self: stretch;

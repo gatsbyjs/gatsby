@@ -1,6 +1,31 @@
-const langs = require("../../i18n.json")
+const allLangs = require("../../i18n.json")
 const defaultLang = "en"
 
+// Only allow languages defined in the LOCALES env variable.
+// This allows us to compile only languages that are "complete" or test only
+// a single language
+function getLanguages() {
+  // If `LOCALES` isn't defined, only have default language (English)
+  if (!process.env.LOCALES) {
+    return []
+  }
+
+  const langCodes = process.env.LOCALES.split(" ")
+  const langs = []
+  for (let code of langCodes) {
+    const lang = allLangs.find(lang => lang.code === code)
+    // Error if one of the locales provided isn't a valid locale
+    if (!lang) {
+      throw new Error(
+        `Invalid locale provided: ${code}. See i18n.json for the list of available locales.`
+      )
+    }
+    langs.push(lang)
+  }
+  return langs
+}
+
+const langs = getLanguages()
 const langCodes = langs.map(lang => lang.code)
 
 const localizedSections = ["tutorial"]
@@ -56,4 +81,10 @@ function getLocaleAndBasePath(path) {
   return { locale: defaultLang, basePath: path }
 }
 
-module.exports = { defaultLang, localizedPath, getLocaleAndBasePath }
+module.exports = {
+  langCodes,
+  langs,
+  defaultLang,
+  localizedPath,
+  getLocaleAndBasePath,
+}
