@@ -178,7 +178,7 @@ const groupQueryIds = queryIds => {
 
 const processQueries = async (queryJobs, activity) => {
   const queue = queryQueue.createBuildQueue()
-  await queryQueue.processBatch(queue, queryJobs, activity).then(console.log)
+  await queryQueue.processBatch(queue, queryJobs, activity)
 }
 
 const createStaticQueryJob = (state, queryId) => {
@@ -232,9 +232,7 @@ const processPageQueries = async (queryIds, { state, activity }) => {
   // created during `gatsby develop`.
   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
   await processQueries(
-    pages.map(page => {
-      createPageQueryJob(state, page)
-    }),
+    pages.map(page => createPageQueryJob(state, page)),
     activity
   )
 }
@@ -279,9 +277,7 @@ const initialProcessQueries = async ({ parentSpan } = {}) => {
   } = getInitialQueryProcessors({ parentSpan })
 
   await processStaticQueries()
-  console.log(`processStaticQueries finished`)
   await processPageQueries()
-  console.log(`processPageQueries finished`)
 
   return { pageQueryIds }
 }
