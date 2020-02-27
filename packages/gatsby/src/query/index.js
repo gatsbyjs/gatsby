@@ -8,6 +8,7 @@ const { boundActionCreators } = require(`../redux/actions`)
 const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
 const GraphQLRunner = require(`./graphql-runner`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
@@ -74,6 +75,23 @@ const popNodeQueries = state => {
     const node = action.payload
 
     if (!node || !node.id || !node.internal.type) return dirtyIds
+
+    // buildTime (and contentDigest since it is a function of a Node's content) will change
+    // on every build resulting in all Nodes being marked as dirty. We should probably remove the field
+    // altogether but till then here is an early return to ensure queries aren't processed again
+    // if all that changed is the buildTime
+    if (node.id === `Site`) {
+      const { payload, oldNode } = node
+
+      const exclusions = [`buildTime`, `internal.contentDigest`]
+
+      if (
+        createContentDigest(_.omit(payload, exclusions)) ===
+        createContentDigest(_.omit(oldNode, exclusions))
+      ) {
+        return dirtyIds
+      }
+    }
 
     // Find components that depend on this node so are now dirty.
     if (state.componentDataDependencies.nodes.has(node.id)) {
@@ -160,7 +178,7 @@ const groupQueryIds = queryIds => {
 
 const processQueries = async (queryJobs, activity) => {
   const queue = queryQueue.createBuildQueue()
-  await queryQueue.processBatch(queue, queryJobs, activity)
+  await queryQueue.processBatch(queue, queryJobs, activity).then(console.log)
 }
 
 const createStaticQueryJob = (state, queryId) => {
@@ -214,7 +232,9 @@ const processPageQueries = async (queryIds, { state, activity }) => {
   // created during `gatsby develop`.
   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
   await processQueries(
-    pages.map(page => createPageQueryJob(state, page)),
+    pages.map(page => {
+      createPageQueryJob(state, page)
+    }),
     activity
   )
 }
@@ -259,7 +279,9 @@ const initialProcessQueries = async ({ parentSpan } = {}) => {
   } = getInitialQueryProcessors({ parentSpan })
 
   await processStaticQueries()
+  console.log(`processStaticQueries finished`)
   await processPageQueries()
+  console.log(`processPageQueries finished`)
 
   return { pageQueryIds }
 }
