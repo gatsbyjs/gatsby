@@ -11,8 +11,21 @@ const checkIfSchemaHasChanged = async (_, pluginOptions) => {
     return state.remoteSchema.schemaWasChanged
   }
 
-  const MD5_CACHE_KEY = `introspection-node-query-md5`
   const { helpers } = state.gatsbyApi
+
+  const lastCompletedSourceTime = await helpers.cache.get(
+    LAST_COMPLETED_SOURCE_TIME
+  )
+
+  const activity = helpers.reporter.activityTimer(
+    formatLogMessage(`diff schemas`)
+  )
+
+  if (pluginOptions.verbose && lastCompletedSourceTime) {
+    activity.start()
+  }
+
+  const MD5_CACHE_KEY = `introspection-node-query-md5`
 
   const { data } = await fetchGraphql({
     query: gql`
@@ -29,10 +42,6 @@ const checkIfSchemaHasChanged = async (_, pluginOptions) => {
   await helpers.cache.set(MD5_CACHE_KEY, schemaMd5)
 
   const schemaWasChanged = schemaMd5 !== cachedSchemaMd5
-
-  const lastCompletedSourceTime = await helpers.cache.get(
-    LAST_COMPLETED_SOURCE_TIME
-  )
 
   if (
     lastCompletedSourceTime &&
@@ -55,6 +64,10 @@ const checkIfSchemaHasChanged = async (_, pluginOptions) => {
 
   // record wether the schema changed so other logic can beware
   store.dispatch.remoteSchema.setSchemaWasChanged(schemaWasChanged)
+
+  if (pluginOptions.verbose && lastCompletedSourceTime) {
+    activity.end()
+  }
 
   return schemaWasChanged
 }
