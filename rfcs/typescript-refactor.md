@@ -1,5 +1,5 @@
 - Start Date: 2020-02-27
-- RFC PR: (leave this empty)
+- RFC PR: https://github.com/gatsbyjs/gatsby/pull/21798
 
 # Summary
 
