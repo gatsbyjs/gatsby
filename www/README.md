@@ -42,13 +42,15 @@ ANALYTICS_SERVICE_ACCOUNT_KEY="PEM KEY VALUE"
 
 ### Enabling localizations
 
-Localizations are currently a work-in-progress and are thus disabled by default. They can be enabled by setting the `ENABLE_LOCALIZATIONS` env variable:
+Localizations are currently a work-in-progress and are thus disabled by default. They can be enabled by setting the `LOCALES` env variable to the locales you want to build:
 
 ```shell
-ENABLE_LOCALIZATIONS=true
+LOCALES="es ja id pt-BR zh-Hans"
 ```
 
-There is currently no UI to link to the localizations, so you'll have to type in the name of the file you want to go to using the language code (e.g. /es/tutorial/part-one).
+The list of possible locales can be found at [i18n.json](/www/i18n.json).
+
+The default locale, English, is always on. There is currently no UI to link to the localizations, so you'll have to type in the name of the file you want to go to using the language code (e.g. /es/tutorial/part-one).
 
 ## Running slow build? (Screenshots placeholder)
 
