@@ -38,9 +38,9 @@ const sourceNodes = async (helpers, pluginOptions) => {
   // or our initial build to fetch and cache everything didn't complete,
   // pull everything from WPGQL
   if (fetchEverything) {
-    await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
-
     await fetchAndCreateAllNodes()
+
+    await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
   }
 
   // If we've already successfully pulled everything from WPGraphQL
