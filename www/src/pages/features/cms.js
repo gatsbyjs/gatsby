@@ -31,7 +31,7 @@ const CmsFeaturesPage = ({ data, location }) => {
   })
 
   const { sections, sectionHeaders } = getFeaturesData(
-    data.allGatsbyCmsSpecsCsv.edges
+    data.allGatsbyCmsSpecsCsv.nodes
   )
 
   return (
@@ -98,16 +98,14 @@ export default CmsFeaturesPage
 export const pageQuery = graphql`
   query {
     allGatsbyCmsSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          WordPress
-          Drupal
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        WordPress
+        Drupal
+        Description
       }
     }
   }

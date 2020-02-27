@@ -287,20 +287,18 @@ module.exports = {
                     fileAbsolutePath: { regex: "/docs.blog/" }
                   }
                 ) {
-                  edges {
-                    node {
-                      html
-                      frontmatter {
-                        title
-                        date
-                        author {
-                          id
-                        }
+                  nodes {
+                    html
+                    frontmatter {
+                      title
+                      date
+                      author {
+                        id
                       }
-                      fields {
-                        excerpt
-                        slug
-                      }
+                    }
+                    fields {
+                      excerpt
+                      slug
                     }
                   }
                 }
@@ -321,7 +319,7 @@ module.exports = {
               }
             },
             serialize: ({ query: { site, allMdx } }) =>
-              allMdx.edges.map(({ node }) => {
+              allMdx.nodes.map(node => {
                 return {
                   title: node.frontmatter.title,
                   description: node.fields.excerpt,

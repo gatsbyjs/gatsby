@@ -126,7 +126,7 @@ class FeaturesPage extends Component {
                 },
                 { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
               ]}
-              data={this.props.data.allGatsbyFeaturesSpecsCsv.edges}
+              data={this.props.data.allGatsbyFeaturesSpecsCsv.nodes}
             />
             <FeaturesFooter />
           </main>
@@ -142,14 +142,12 @@ export default FeaturesPage
 export const pageQuery = graphql`
   query {
     allGatsbyFeaturesSpecsCsv {
-      edges {
-        node {
-          Category
-          Gatsby
-          Jamstack
-          Cms
-          Description
-        }
+      nodes {
+        Category
+        Gatsby
+        Jamstack
+        Cms
+        Description
       }
     }
   }

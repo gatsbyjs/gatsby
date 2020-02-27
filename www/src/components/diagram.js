@@ -204,16 +204,14 @@ const Diagram = () => (
     query={graphql`
       query StaticHostsQuery {
         allStaticHostsYaml {
-          edges {
-            node {
-              title
-              url
-            }
+          nodes {
+            title
+            url
           }
         }
       }
     `}
-    render={({ allStaticHostsYaml: { edges: staticHosts } }) => (
+    render={({ allStaticHostsYaml: { nodes: staticHosts } }) => (
       <section
         className="Diagram"
         sx={{
@@ -308,7 +306,7 @@ const Diagram = () => (
           >
             <ItemTitle>Web Hosting</ItemTitle>
             <ItemDescription>
-              {staticHosts.map(({ node: staticHost }, index) => (
+              {staticHosts.map((staticHost, index) => (
                 <Fragment key={staticHost.url}>
                   {index > 0 && `, `}
                   <ItemDescriptionLink to={staticHost.url}>
