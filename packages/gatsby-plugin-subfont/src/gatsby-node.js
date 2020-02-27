@@ -1,8 +1,13 @@
 const path = require(`path`)
 const subfont = require(`subfont`)
 
-exports.onPostBuild = async ({ store }, options) => {
+exports.onPostBuild = async ({ store, reporter }, options) => {
   const root = path.join(store.getState().program.directory, `public`)
+  const subfontConsole = {
+    log: reporter.info,
+    warn: reporter.warn,
+    error: reporter.error,
+  }
 
   await subfont(
     {
@@ -13,7 +18,7 @@ exports.onPostBuild = async ({ store }, options) => {
       inputFiles: [path.join(root, `index.html`)],
       ...options,
     },
-    console
+    subfontConsole
   )
   return
 }
