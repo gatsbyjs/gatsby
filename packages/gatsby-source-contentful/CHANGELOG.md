@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.88](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.87...gatsby-source-contentful@2.1.88) (2020-02-26)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** prevent unpublished Contentful entries from breaking content sync ([#21765](https://github.com/gatsbyjs/gatsby/issues/21765)) ([11274db](https://github.com/gatsbyjs/gatsby/commit/11274db))
+
+## [2.1.87](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.86...gatsby-source-contentful@2.1.87) (2020-02-24)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Add panic messaging to builds with no locales ([#21667](https://github.com/gatsbyjs/gatsby/issues/21667)) ([6979816](https://github.com/gatsbyjs/gatsby/commit/6979816))
+- check that richTextOptions exists before using it ([#21648](https://github.com/gatsbyjs/gatsby/issues/21648)) ([80acb8d](https://github.com/gatsbyjs/gatsby/commit/80acb8d))
+- fix Contentful sync limit ([#21644](https://github.com/gatsbyjs/gatsby/issues/21644)) ([af921bb](https://github.com/gatsbyjs/gatsby/commit/af921bb))
+
+### Features
+
+- add an option to resolve locales in entries referenced by rich text ([#21619](https://github.com/gatsbyjs/gatsby/issues/21619)) ([0666df7](https://github.com/gatsbyjs/gatsby/commit/0666df7))
+
 ## [2.1.86](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.85...gatsby-source-contentful@2.1.86) (2020-02-13)
 
 ### Bug Fixes

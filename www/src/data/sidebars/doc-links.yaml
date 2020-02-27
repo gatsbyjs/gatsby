@@ -259,6 +259,8 @@
                   link: /docs/creating-a-source-plugin/
                 - title: Creating a Transformer Plugin
                   link: /docs/creating-a-transformer-plugin/
+                - title: Configuring Usage with Plugin Options
+                  link: /docs/configuring-usage-with-plugin-options/
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
                 - title: Pixabay Image Source Plugin Tutorial
@@ -469,6 +471,8 @@
                   link: /docs/processing-payments-with-stripe/
                 - title: Processing Payments with Square
                   link: /docs/processing-payments-with-square/
+                - title: Sourcing from WooCommerce
+                  link: /docs/sourcing-from-woocommerce
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -746,6 +750,8 @@
           link: /docs/glossary/headless-wordpress/
         - title: JAMStack
           link: /docs/glossary/jamstack
+        - title: Markdown
+          link: /docs/glossary/markdown/
         - title: Node.js
           link: /docs/glossary/node
         - title: React

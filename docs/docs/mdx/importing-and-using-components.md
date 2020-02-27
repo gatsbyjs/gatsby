@@ -62,3 +62,7 @@ The Chart is also available since it was passed into the MDXProvider:
 ```
 
 Because the `<Message />` and `<Chart />` components were passed into the provider, they are available for use in all MDX documents.
+
+### Additional resources
+
+- Follow this detailed [example on using MDX](/examples/using-MDX) to import and render components.

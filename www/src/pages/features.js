@@ -5,7 +5,6 @@ import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 
 import Button from "../components/button"
-import Layout from "../components/layout"
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
@@ -105,37 +104,35 @@ const FeaturesHeader = () => (
 class FeaturesPage extends Component {
   render() {
     return (
-      <Layout location={this.props.location}>
-        <PageWithSidebar location={this.props.location}>
-          <Helmet>
-            <title>Features</title>
-            <meta
-              name="description"
-              content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+      <PageWithSidebar location={this.props.location}>
+        <Helmet>
+          <title>Features</title>
+          <meta
+            name="description"
+            content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+          />
+        </Helmet>
+        <Container>
+          <main id={`reach-skip-nav`}>
+            <FeaturesHeader />
+            <SimpleEvaluationTable
+              title="Feature Comparison"
+              headers={[
+                { display: `Category`, nodeFieldProperty: `Category` },
+                { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
+                {
+                  display: `JAMstack frameworks`,
+                  nodeFieldProperty: `Jamstack`,
+                },
+                { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
+              ]}
+              data={this.props.data.allGatsbyFeaturesSpecsCsv.edges}
             />
-          </Helmet>
-          <Container>
-            <main id={`reach-skip-nav`}>
-              <FeaturesHeader />
-              <SimpleEvaluationTable
-                title="Feature Comparison"
-                headers={[
-                  { display: `Category`, nodeFieldProperty: `Category` },
-                  { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
-                  {
-                    display: `JAMstack frameworks`,
-                    nodeFieldProperty: `Jamstack`,
-                  },
-                  { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
-                ]}
-                data={this.props.data.allGatsbyFeaturesSpecsCsv.edges}
-              />
-              <FeaturesFooter />
-            </main>
-            <FooterLinks />
-          </Container>
-        </PageWithSidebar>
-      </Layout>
+            <FeaturesFooter />
+          </main>
+          <FooterLinks />
+        </Container>
+      </PageWithSidebar>
     )
   }
 }

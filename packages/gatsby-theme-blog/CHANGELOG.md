@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.3.5...gatsby-theme-blog@1.3.6) (2020-02-27)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.3.4...gatsby-theme-blog@1.3.5) (2020-02-26)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.3.3...gatsby-theme-blog@1.3.4) (2020-02-25)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.3.2...gatsby-theme-blog@1.3.3) (2020-02-25)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.3.1...gatsby-theme-blog@1.3.2) (2020-02-24)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.3.0...gatsby-theme-blog@1.3.1) (2020-02-24)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+# [1.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.49...gatsby-theme-blog@1.3.0) (2020-02-24)
+
+### Features
+
+- Change mdx flag into mdxOtherwise to prevent confusion ([#21404](https://github.com/gatsbyjs/gatsby/issues/21404)) ([6874cca](https://github.com/gatsbyjs/gatsby/commit/6874cca))
+
+## [1.2.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.48...gatsby-theme-blog@1.2.49) (2020-02-24)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
 ## [1.2.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.47...gatsby-theme-blog@1.2.48) (2020-02-20)
 
 **Note:** Version bump only for package gatsby-theme-blog
