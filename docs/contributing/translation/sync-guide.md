@@ -149,7 +149,7 @@ This is old English content.
 + >>>>>>>
 ```
 
-This is usually because of an previous improper merge (for example, using the "Squash and merge" option). In this case, it's usually alright to accept the new content. In VS Code, this is done using the "Accept Incoming Change" option:
+This is usually because of a previous improper merge (for example, using the "Squash and merge" option). In this case, it's usually alright to accept the new content. In VS Code, this is done using the "Accept Incoming Change" option:
 
 ```diff
 - This is old English content.
