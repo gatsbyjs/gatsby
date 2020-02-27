@@ -7,10 +7,6 @@ import { LAST_COMPLETED_SOURCE_TIME } from "~/constants"
 const checkIfSchemaHasChanged = async (_, pluginOptions) => {
   const state = store.getState()
 
-  if (state.remoteSchema.schemaWasCheckedForChanges) {
-    return state.remoteSchema.schemaWasChanged
-  }
-
   const { helpers } = state.gatsbyApi
 
   const lastCompletedSourceTime = await helpers.cache.get(
