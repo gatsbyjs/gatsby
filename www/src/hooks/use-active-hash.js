@@ -16,12 +16,12 @@ export const useActiveHash = (itemIds, rootMargin = undefined) => {
     )
 
     itemIds.forEach(id => {
-      observer.observe(document.querySelector(`#${id}`))
+      observer.observe(document.getElementById(id))
     })
 
     return () => {
       itemIds.forEach(id => {
-        observer.unobserve(document.querySelector(`#${id}`))
+        observer.unobserve(document.getElementById(id))
       })
     }
   }, [])
