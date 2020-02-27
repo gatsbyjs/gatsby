@@ -9976,6 +9976,20 @@
     - Agency
     - Consulting
   featured: false
+- title: Talent Point
+  url: https://talentpoint.co
+  main_url: https://talentpoint.co
+  description: >
+    Talent Point provide the tools that companies need to scale quickly and effectively, bridging the gap between employer brand, HR, and hiring to build teams from within.
+  categories:
+    - Business
+    - Technology
+    - Blog
+    - Consulting
+    - Human Resources
+  built_by: Talent Point
+  built_by_url: https://talentpoint.co
+  featured: false
 - title: Marathon Oil
   main_url: "https://www.marathonoil.com/"
   url: "https://www.marathonoil.com/"
