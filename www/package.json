@@ -4,7 +4,6 @@
   "version": "2.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@babel/core": "^7.8.4",
     "@emotion/styled": "^10.0.23",
     "@jamo/graphql-request": "2.0.2",
     "@lingui/react": "^2.9.1",
@@ -112,6 +111,9 @@
   "license": "MIT",
   "main": "n/a",
   "private": true,
+  "babel": {
+    "presets": ["babel-preset-gatsby"]
+  },
   "lingui": {
     "sourceLocale": "en",
     "localeDir": "src/data/locales",
