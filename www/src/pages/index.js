@@ -5,7 +5,6 @@ import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import Layout from "../components/layout"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -86,7 +85,7 @@ class IndexRoute extends React.Component {
     const posts = postsData.map(item => item.node)
 
     return (
-      <Layout location={this.props.location}>
+      <>
         <Helmet>
           <meta
             name="Description"
@@ -142,7 +141,7 @@ class IndexRoute extends React.Component {
           <HomepageNewsletter />
         </main>
         <FooterLinks />
-      </Layout>
+      </>
     )
   }
 }
