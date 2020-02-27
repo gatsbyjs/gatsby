@@ -118,7 +118,7 @@ plugins: [
 
 In version 3, Workbox is also upgraded to version 4 so you may need to update your `workboxConfig` if any of those changes apply to you. Please see the [docs on Google Developers](https://developers.google.com/web/tools/workbox/guides/migrations/migrate-from-v3) for more information.
 
-## Overriding Workbox configuration
+## Overriding Workbox (v4.3.1) configuration
 
 When adding this plugin to your `gatsby-config.js`, you can use the option `workboxConfig` to override the default Workbox config. To see the full list of options, see [this article on Google Developers](https://developers.google.com/web/tools/workbox/modules/workbox-build#full_generatesw_config).
 
@@ -164,6 +164,28 @@ const options = {
   skipWaiting: true,
   clientsClaim: true,
 }
+```
+
+You can also use [Workbox CLI](https://developers.google.com/web/tools/workbox/modules/workbox-cli) to generate this file automatically. 
+
+```
+workbox wizard
+? What is the root of your web app (i.e. which directory do you deploy)? public/
+? Which file types would you like to precache?
+? Where would you like your service worker file to be saved? public/sw.js
+? Where would you like to save these configuration options? workbox-config.js
+```
+
+Copy the content from `workbox-config.js` into your `gatsby-plugin-offline` options.
+
+For instance, the following configuration does the trick for a full offline website
+
+```
+  "globDirectory": "public/",
+  "globPatterns": [
+    "**/*.{html,js,json,png,jpg,webmanifest,woff,woff2,ttf,eot,css,mjs}"
+  ],
+  "swDest": "public/sw.js"
 ```
 
 ## Remove
