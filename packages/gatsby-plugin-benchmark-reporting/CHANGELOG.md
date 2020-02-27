@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.7...gatsby-plugin-benchmark-reporting@0.0.8) (2020-02-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-benchmark-reporting:** Read gatsby-cli version from n_m ([#21742](https://github.com/gatsbyjs/gatsby/issues/21742)) ([7ad36e7](https://github.com/gatsbyjs/gatsby/commit/7ad36e7))
+
+## [0.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.6...gatsby-plugin-benchmark-reporting@0.0.7) (2020-02-25)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
 ## [0.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.5...gatsby-plugin-benchmark-reporting@0.0.6) (2020-02-17)
 
 ### Features

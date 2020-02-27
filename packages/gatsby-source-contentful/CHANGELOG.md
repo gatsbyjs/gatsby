@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.88](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.87...gatsby-source-contentful@2.1.88) (2020-02-26)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** prevent unpublished Contentful entries from breaking content sync ([#21765](https://github.com/gatsbyjs/gatsby/issues/21765)) ([11274db](https://github.com/gatsbyjs/gatsby/commit/11274db))
+
 ## [2.1.87](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.86...gatsby-source-contentful@2.1.87) (2020-02-24)
 
 ### Bug Fixes

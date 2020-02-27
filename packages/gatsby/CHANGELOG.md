@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.21...gatsby@2.19.22) (2020-02-25)
+
+### Bug Fixes
+
+- **gatsby:** Chunk nodes when serializing redux to prevent OOM ([#21555](https://github.com/gatsbyjs/gatsby/issues/21555)) ([c944aae](https://github.com/gatsbyjs/gatsby/commit/c944aae)), closes [#17233](https://github.com/gatsbyjs/gatsby/issues/17233)
+
 ## [2.19.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.20...gatsby@2.19.21) (2020-02-24)
 
 **Note:** Version bump only for package gatsby
