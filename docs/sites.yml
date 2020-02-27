@@ -9964,3 +9964,12 @@
     - Agency
     - Consulting
   featured: false
+- title: Marathon Oil
+  main_url: "https://www.marathonoil.com/"
+  url: "https://www.marathonoil.com/"
+  featured: false
+  categories:
+    - Business
+    - Marketing
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
