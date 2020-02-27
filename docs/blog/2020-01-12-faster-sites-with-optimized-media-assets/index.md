@@ -1,6 +1,6 @@
 ---
 title: "Faster Sites with Optimized Media Assets"
-date: 2020-01-21
+date: 2020-03-02
 author: William Imoh
 excerpt: "Introducing two new Gatsby-Cloudinary plugins for optimized media management in Gatsby apps"
 tags: ["media", "cloudinary", "performance", "image", "video"]
