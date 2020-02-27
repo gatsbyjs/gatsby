@@ -33,7 +33,7 @@ Using the Gatsby-Cloudinary plugins, optimized media assets from Cloudinary are 
 
 ## gatsby-source-cloudinary Plugin
 
-gatsby-source-cloudinary is a plugin that fetches media assets from Cloudinary. You must first specify the folder from which to query those assets. The plugin then transforms them into Cloudinary file nodes, which can be queried with GraphQL in a Gatsby project.
+[gatsby-source-cloudinary](/packages/gatsby-source-cloudinary/) is a plugin that fetches media assets from Cloudinary. You must first specify the folder from which to query those assets. The plugin then transforms them into Cloudinary file nodes, which can be queried with GraphQL in a Gatsby project.
 
 Before file nodes are created, Cloudinary optimizes media files queried from its platform by applying the `f_auto` and `q_auto` transformation parameters. Impressively, those parameters optimize delivery format and quality for media assets by over 70 percent.
 
