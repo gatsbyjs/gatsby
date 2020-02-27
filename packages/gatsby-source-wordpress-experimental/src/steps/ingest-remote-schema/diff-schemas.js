@@ -3,8 +3,14 @@ import store from "~/store"
 import gql from "~/utils/gql"
 
 const checkIfSchemaHasChanged = async () => {
+  const state = store.getState()
+
+  if (state.remoteSchema.schemaWasCheckedForChanges) {
+    return state.remoteSchema.schemaWasChanged
+  }
+
   const MD5_CACHE_KEY = `introspection-node-query-md5`
-  const { helpers } = store.getState().gatsbyApi
+  const { helpers } = state.gatsbyApi
 
   const { data } = await fetchGraphql({
     query: gql`

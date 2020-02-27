@@ -5,6 +5,7 @@ const remoteSchema = {
     nonNodeQuery: null,
     introspectionData: null,
     schemaWasChanged: null,
+    schemaWasCheckedForChanges: false,
     typeMap: null,
     nodeListFilter: field => field.name === `nodes`,
     ingestibles: {
@@ -44,6 +45,7 @@ const remoteSchema = {
   reducers: {
     setSchemaWasChanged(state, payload) {
       state.schemaWasChanged = !!payload
+      state.schemaWasCheckedForChanges = true
 
       return state
     },
