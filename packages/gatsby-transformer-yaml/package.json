@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-yaml",
   "description": "Gatsby transformer plugin for yaml",
-  "version": "2.2.24",
+  "version": "2.2.25",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

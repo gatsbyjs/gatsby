@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React, { useState, useEffect, useRef } from "react"
 import hex2rgba from "hex2rgba"
 
-import { colors } from "../../gatsby-plugin-theme-ui"
+import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import LayerIcon from "../../assets/icons/layer-icon"
 import {
   ContentLayerContent,

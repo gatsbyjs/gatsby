@@ -16,7 +16,7 @@ class CreatorsHeader extends Component {
           borderBottom: t => `1px solid ${t.colors.ui.border}`,
           display: `flex`,
           flexDirection: `row`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           height: `headerHeight`,
           px: 6,
           zIndex: `2`,
