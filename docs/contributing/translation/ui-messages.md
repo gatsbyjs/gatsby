@@ -2,16 +2,15 @@
 title: Translating UI Messages
 ---
 
-Most content that needs to be translated is in Markdown files in translation repos. However, Gatsbyjs.org also has several pieces of UI text that should be translated. To do that, we use a library called [Lingui]().
+Most content that needs to be translated is in Markdown files in translation repos. However, Gatsbyjs.org also has several pieces of UI text that should be translated. To do that, we use a library called [Lingui](https://lingui.js.org/).
 
-## Translation Guide
+## Message Translation Guide
 
-Unlike Markdown documents, UI messages are kept in the same monorepo as the gatsby source. The reason the docs are in a separate repo is to give translation maintainers full control and prevent the main monorepo from being cluttered with translation PRs.
+Unlike Markdown documents, UI messages are kept in the same monorepo as the gatsby source.
 
-However, keeping the UI text in the same repo simplifies our build process, and because UI text is rarely changed/added compared to docs, it shouldn't result in too many PRs.
-
-1. Go to `www/` and run `yarn lingui:add-locale [lang code]` to generate a file for your language.
-2. Translate all strings like so:
+1. Follow the instructions for [cloning the monorepo]() and [running the Gatsby website]().
+2. Go to `www/` and run `yarn lingui:add-locale [lang code]` to generate a file for your language at `src/data/locales/[lang-code]/messages.po`.
+3. Translate all the strings in `[lang code]/messages.po` by editing the `msgstr` field of each message.
 
 ```po
 #: src/components/prev-and-next.js:51
@@ -19,22 +18,103 @@ msgid: "Previous"
 msgstr: "前"
 ```
 
-## Dealing with embedded content
+## Translating rich content
 
-Some messages will be surrounded by tags, usually referenced by an xml tag. It is important to keep these tags around the appropriate text so that formatting is maintained.
+Some messages will have embedded numerical tags in them. These represent embedded components, formatting, or user-defined text and should be kept in the translated string. If you are unsure about the context of a tag, make sure to look at the source file of the message.
+
+The sections below list the different types of rich content you may encounter.
+
+### Self-closing tags
+
+This type of rich text consists of a single self-closing XML tag (e.g. `<0/>`):
 
 ```po
+#: src/components/markdown-page-footer.js:24
 msgid: "<0/> edit this page on GitHub"
+msgstr: ""
 ```
+
+These are usually icons embedded in the text:
+
+```jsx
+<Trans>
+  <EditIcon sx={{ marginRight: 2 }} /> Edit this page on GitHub
+</Trans>
+```
+
+If you are translating a right-to-left language like Arabic, make sure the icons are in the proper position at the start or end of the text.
+
+### Opening and closing tags
+
+This type of rich text consists of matching XML tags (e.g. `<0>` and `</0>`):
 
 ```po
-msgid "Video hosted on <0>egghead.io</0>"
+#: src/components/shared/egghead-embed.js:39
+msgid: "Video hosted on <0>egghead.io</0>"
+msgstr: ""
 ```
 
-If you are unsure about the purpose of a particular tag, please check the source file.
+These can represent formatting, accessible text, or links:
 
-## Making a pull request
+```jsx
+<Trans>
+  Video hosted on <a href={lessonLink}>egghead.io</a>
+</Trans>
+```
+
+Make sure that the tags are paired correctly and surround the corresponding text in the translation.
+
+### Interpolated text
+
+This rich text is represented by braces and a number (e.g. `{0}`):
+
+```po
+#: src/components/sidebar/section-title.js:142
+msgid: "{0} collapse"
+msgstr: ""
+```
+
+These represent text in interpolated strings:
+
+```
+t`${item.title} collapse`
+```
+
+## Plurals, formatting, and grammatical gender
+
+Right now, no text with complex formatting rules is available for translation. When it is, this guide will be updated.
 
 ## Updating content
 
-Sometimes additional content is added to the UI, leading to untranslated text. In this case, [gatsbybot should ]
+Sometimes additional content is added to the UI, leading to untranslated text. When this occurs, please update your language's `messages.po` file with the new translations. In the future, we would like to automatically create a pull request in the language repos when new UI message translations are needed.
+
+### New messages
+
+New messages can be found by searching for `msgstr: ""`. These messages may be translated normally.
+
+### Updated message text
+
+If a previously translated UI message has changed, Lingui will mark that message as outdated and create a new entry for the updated text:
+
+```po
+#: src/components/prev-and-next.js:51
+#msgid: "Previous"
+#msgstr: "前"
+
+#: src/components/prev-and-next.js:51
+msgid: "Previous Article"
+msgstr: ""
+```
+
+Translate the updated entry and delete the old one:
+
+```diff
+- #: src/components/prev-and-next.js:51
+- #msgid: "Previous"
+- #msgstr: "前"
+
+#: src/components/prev-and-next.js:51
+msgid: "Previous Article"
+- msgstr: ""
++ msgstr: "前の記事"
+```
