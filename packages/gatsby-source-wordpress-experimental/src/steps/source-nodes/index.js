@@ -22,16 +22,6 @@ const sourceNodes = async (helpers, pluginOptions) => {
     helpers.reporter.log(``)
   }
 
-  if (lastCompletedSourceTime && schemaWasChanged && pluginOptions.verbose) {
-    helpers.reporter.log(``)
-    helpers.reporter.info(
-      formatLogMessage(
-        `Schema was changed since the last build, fetching all data`
-      )
-    )
-    helpers.reporter.log(``)
-  }
-
   const fetchEverything = !lastCompletedSourceTime || schemaWasChanged
 
   // If this is an uncached build,
