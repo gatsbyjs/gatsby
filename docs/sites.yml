@@ -9639,3 +9639,292 @@
   built_by: Viraj V Chavan
   built_by_url: https://twitter.com/VirajVChavan
   featured: false
+- title: Nexweave
+  url: https://www.nexweave.com
+  main_url: https://www.nexweave.com
+  description: >
+    Nexweave is a SaaS platform built by a team of experienced product, design & technology professionals in India. Nexweave allows brands to create personalized & interactive video experiences at scale. We would love for our site to be featured at the gatsby showcase since we have long been appreciating the flexibility and speed of the sites we have created using the same.
+  categories:
+    - Video
+    - API
+    - User Experience
+    - Marketing
+    - Design
+    - Data
+    - Technology
+    - Media
+    - Consulting
+  built_by: Kashaf S
+  built_by_url: https://www.linkedin.com/in/kashaf-shaikh-925117178
+  featured: false
+- title: Daniel Balloch
+  url: https://danielballoch.com
+  main_url: https://danielballoch.com
+  source_url: https://github.com/danielballoch/danielballoch
+  description: >
+    Hey, I'm Daniel and this is my portfolio site. Made with Gatsby, React, GraphQL, Styled Emotion & Netlify. Install & local host instructions: 1. git clone https://github.com/danielballoch/danielballoch.git 2. npm install. 3. gatsby develop. Keep in mind I'm still learning myself, so these may not be best practises. If anyone's curious as to how something works flick me a message or if you have advice for me I'd love to hear it, otherwise happy coding!
+  categories:
+    - Portfolio
+    - Business
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Daniel Balloch
+  built_by_url: https://danielballoch.com
+- title: The Rift Metz
+  url: http://theriftmetz.com/
+  main_url: http://theriftmetz.com/
+  description: >
+    The Rift is a gaming bar based in Metz (France).
+  categories:
+    - Landing Page
+    - Entertainment
+    - Design
+    - Blog
+    - Food
+  built_by: Hugo Torzuoli
+  built_by_url: https://github.com/HZooly
+  featured: false
+- title: Built with Workers
+  url: https://workers.cloudflare.com/built-with/
+  main_url: https://workers.cloudflare.com/built-with/
+  description: >
+    Showcasing websites & projects built with Cloudflare Workers
+  categories:
+    - Portfolio
+    - JavaScript
+    - Web Development
+  built_by: Workers who work at Cloudflare
+  built_by_url: https://github.com/cloudflare/built-with-workers/graphs/contributors
+- title: WebAnaya Solutions
+  url: https://www.webanaya.com
+  main_url: https://www.webanaya.com
+  description: >
+    Full Stack Web Solutions Provider.
+  categories:
+    - Agency
+    - Web Development
+    - API
+    - Blog
+  built_by: Durgesh Gupta
+  built_by_url: https://durgeshgupta.com
+  featured: false
+- title: Artem Sapegin’s Blog
+  description: >
+    Blog of a Berlin based coffee first frontend engineer who works at Omio, makes photos and hangs out with his dogs.
+  main_url: https://blog.sapegin.me/
+  url: https://blog.sapegin.me/
+  source_url: https://github.com/sapegin/blog.sapegin.me
+  categories:
+    - Blog
+    - Open Source
+    - Web Development
+    - JavaScript
+    - Programming
+    - Technology
+  built_by: Artem Sapegin
+  built_by_url: https://github.com/sapegin
+- title: adam.ai
+  url: https://adam.ai/
+  main_url: https://adam.ai/
+  description: >
+    Are you ready to make your meetings more productive? Our intelligent meeting management tool can help!
+  categories:
+    - Business
+    - Landing Page
+    - Productivity
+    - Technology
+  built_by: Hazem Osama
+  built_by_url: https://github.com/hazem3500
+  featured: false
+- title: Indra Kusuma Profile Page
+  url: https://indrakusuma.web.id/me/
+  main_url: https://indrakusuma.web.id/me/
+  description: >
+    Hi! I'm Indra Kusuma. I am an optimistic and type of person of learn by doing who have an interest in Software Engineering, specifically about Web Development.
+  categories:
+    - Landing Page
+    - Blog
+  built_by: Indra Kusuma
+  built_by_url: https://github.com/idindrakusuma/me
+  featured: false
+- title: Lukas Horak
+  main_url: https://lukashorak.com
+  url: https://lukashorak.com
+  description: >
+    Lukas Horak's personal website. Full stack JavaScript Developer, working in React on front end and Node.js on back end.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Lukas Horak
+  built_by_url: https://github.com/lhorak
+  featured: false
+- title: Alexandra Thomas
+  main_url: "https://alexandracthomas.com/"
+  url: "https://alexandracthomas.com/"
+  description: >
+    A portfolio site for Alexandra Thomas, a front-end developer with creative super powers based in Charlotte, NC.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  featured: false
+- title: Storto Productions
+  main_url: "https://www.storto-productions.com/"
+  url: "https://www.storto-productions.com/about/"
+  featured: false
+  description: >
+    A portfolio site for a video production company based out of Phoenix, AZ.
+  categories:
+    - Video
+    - Blog
+    - Portfolio
+    - Business
+  built_by: Alexandra Thomas
+  built_by_url: "https://alexandracthomas.com/"
+- title: Zatsuzen Blog
+  url: https://blog.zatsuzen.com
+  main_url: https://blog.zatsuzen.com
+  description: >
+    Web developer's tech blog
+  categories:
+    - Blog
+  built_by: Akane
+  built_by_url: https://twitter.com/akanewz
+- title: Matthew Mesa
+  url: "https://matthewmesa.com"
+  main_url: "https://matthewmesa.com"
+  description: >
+    Portfolio website for freelance digital specialist Matthew Mesa.
+  categories:
+    - Portfolio
+  built_by: Matthew Mesa
+  built_by_url: "https://matthewmesa.com"
+- title: Taskade
+  main_url: https://taskade.com
+  url: https://taskade.com
+  description: >
+    Taskade is the unified workspace for distributed teams. Collaborate and organize in real-time to get things done, faster and smarter.
+  categories:
+    - App
+    - Business
+    - Productivity
+  built_by: Taskade
+  built_by_url: https://github.com/taskade
+  featured: false
+- title: PWD
+  url: https://pwd.com.au
+  main_url: https://pwd.com.au
+  description: >
+    PWD is a full service web marketing, design, and development agency in Perth, Western Australia.
+  categories:
+    - Blog
+    - Portfolio
+    - WordPress
+    - Business
+  built_by: Alex Moon
+  built_by_url: https://moonmeister.net
+  featured: false
+- title: Health Pro Fitness
+  url: https://healthprofitness.com/
+  main_url: https://healthprofitness.com/
+  description: >
+    Health Pro Fitness is a lifestyle blog built with Gatsby and static Markdown content.
+  categories:
+    - Blog
+  built_by: Botox For Hair And co.
+  built_by_url: https://www.botoxforhair.net/
+  featured: false
+- title: ramonak.io
+  url: https://ramonak.io/
+  main_url: https://ramonak.io/
+  source_url: https://github.com/KaterinaLupacheva/ramonak.io
+  description: >
+    Tech blog and portfolio site of a full stack web developer Katsiaryna (Kate) Lupachova
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Katsiaryna Lupachova
+  built_by_url: https://ramonak.io/
+  featured: false
+- title: React JS Developer
+  main_url: "https://reacter.dev/"
+  url: "https://reacter.dev/"
+  featured: false
+  categories:
+    - App
+    - Web Development
+    - Web Development
+    - Agency
+  built_by: App Design
+  built_by_url: "https://appdesign.dev/"
+- title: Clinka
+  url: https://www.clinka.com.au/
+  main_url: https://www.clinka.com.au/
+  description: >
+    B2B website for an Australian manufacturer of environmentally friendly construction materials.
+  categories:
+    - Business
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
+- title: Chris Vogt's Blog
+  main_url: https://www.chrisvogt.me
+  url: https://www.chrisvogt.me
+  source_url: https://github.com/chrisvogt/gatsby-theme-private-sphere
+  description: >-
+    Personal blog of Chris Vogt, a software developer in San Francisco. Showcases
+    my latest activity on Instagram, Goodreads, and Spotify using original widgets.
+  categories:
+    - Blog
+    - Open Source
+    - Photography
+    - Portfolio
+  built_by: Chris Vogt
+  built_by_url: https://github.com/chrisvogt
+- title: Trolley Travel
+  main_url: http://trolleytravel.org/
+  url: http://trolleytravel.org/
+  description: >
+    Travel blog website to give tips and informations for many destinations, built with Novella theme
+  categories:
+    - Blog
+    - Travel
+  built_by: Pierre Beard
+  built_by_url: https://github.com/PBRT
+  featured: false
+- title: ProjectManager.tools
+  main_url: "https://projectmanager.tools/"
+  url: "https://projectmanager.tools/"
+  featured: false
+  categories:
+    - App
+    - Web Development
+    - Design
+    - Agency
+  built_by: App Design
+  built_by_url: "https://appdesign.dev/"
+- title: 1902 Software
+  url: https://1902software.com/
+  main_url: https://1902software.com/
+  description: >
+    We are an IT company that specializes in e-commerce and website development on different platforms such as Magento, WordPress, and Umbraco. We are also known for custom software development, web design and mobile app solutions for iOS and Android.
+  categories:
+    - eCommerce
+    - Web Development
+    - Programming
+    - Mobile Development
+    - WordPress
+    - Design
+    - Business
+    - Agency
+  built_by: 1902 Software Development Corporation
+  built_by_url: https://1902software.com/
+  featured: false
+- title: Codeful
+  url: https://www.codeful.fi/
+  main_url: https://www.codeful.fi/
+  categories:
+    - Agency
+    - Consulting
+  featured: false

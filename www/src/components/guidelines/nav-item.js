@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import styled from "@emotion/styled"
@@ -11,7 +13,7 @@ const ActiveLink = props => <Link {...props} activeClassName="active" />
 const NavLink = styled(ActiveLink, { shouldForwardProp })(
   props => {
     return {
-      "&.active": {
+      "&&.active": {
         color: themeGet(`colors.lilac`)(props),
       },
     }
@@ -21,20 +23,27 @@ const NavLink = styled(ActiveLink, { shouldForwardProp })(
   space
 )
 
-NavLink.defaultProps = {
-  color: `navigation.linkDefault`,
-  fontFamily: `heading`,
-  fontSize: 3,
-  fontWeight: `body`,
-  mr: 4,
-}
-
 NavLink.propTypes = {
   ...propTypes.color,
   ...propTypes.space,
   ...propTypes.typography,
 }
 
-const NavItem = props => <NavLink {...props} />
+const NavItem = props => (
+  <NavLink
+    sx={{
+      // override the default link styling
+      "&&": {
+        border: 0,
+        color: `navigation.linkDefault`,
+        fontFamily: `heading`,
+        fontSize: 3,
+        fontWeight: `body`,
+        mr: 4,
+      },
+    }}
+    {...props}
+  />
+)
 
 export default NavItem
