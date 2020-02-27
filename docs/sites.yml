@@ -7865,6 +7865,27 @@
   built_by: Rou Hun Fan
   built_by_url: "https://flowen.me"
   featured: false
+- title: Problem studio
+  url: https://problem.studio
+  main_url: https://problem.studio
+  description: >
+    Problem Studio creates unique and fun web experiences. Our enemy is "boring" if ya know what we mean: overused Wordpress templates, the top 10 shopify templates, copy of a copy of a copy of a copy. We love to support design and marketing agencies and help realize their creations into a digital product. `
+  categories:
+    - Agency
+    - Business
+    - Consulting
+    - Design
+    - Education
+    - Entrepreneurship
+    - Freelance
+    - Landing Page
+    - Marketing
+    - Media
+    - Portfolio
+    - Productivity
+    - Web Development
+  built_by: Rou Hun Fan & Sander Visser
+  built_by_url: https://flowen.me
 - title: North X South
   main_url: https://northxsouth.co
   url: https://northxsouth.co
