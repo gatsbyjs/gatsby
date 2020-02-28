@@ -1,4 +1,4 @@
-import supportedExtensions from "./supported-extensions"
+const { supportedExtensions } = require(`./supported-extensions`)
 
 module.exports = async function onCreateNode({ node, actions, createNodeId }) {
   const { createNode, createParentChildLink } = actions

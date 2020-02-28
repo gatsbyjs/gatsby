@@ -15,7 +15,10 @@ Udemy named Gatsby [the #1 emerging tech skill](https://www.cnbc.com/2019/12/02/
 
 Register below to join the #100daysofGatsby coding challenge!
 
-<EmailCaptureForm formId="6157faa3-5474-48b1-b7e4-e0f45237327f" signupMessage="Get weekly updates on new challenges, ideas for where to start, and step-by-step documentation for completing the challenge." />
+<EmailCaptureForm
+  formId="6157faa3-5474-48b1-b7e4-e0f45237327f"
+  signupMessage="Get weekly updates on new challenges, ideas for where to start, and step-by-step documentation for completing the challenge."
+/>
 
 ## Use #100DaysOfGatsby on Social Media
 

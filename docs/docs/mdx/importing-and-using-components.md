@@ -72,3 +72,7 @@ Because the `<Message />` and `<Chart />` components were passed into the provid
   lessonLink="https://egghead.io/lessons/gatsby-make-react-components-globally-available-as-shortcodes-in-mdx"
   lessonTitle="Make React components globally available as shortcodes in MDX"
 />
+
+### Additional resources
+
+- Follow this detailed [example on using MDX](/examples/using-MDX) to import and render components.

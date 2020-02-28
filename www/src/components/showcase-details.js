@@ -8,7 +8,6 @@ import Img from "gatsby-image"
 import qs from "qs"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import Layout from "../components/layout"
 import Modal from "../components/modal"
 import ShareMenu from "../components/share-menu"
 import Button from "../components/button"
@@ -140,7 +139,8 @@ function getExitLocation(filters = {}) {
   }
 }
 
-function ShowcaseModal({ children, location }) {
+function ShowcaseModal({ children, location, isModal }) {
+  if (!isModal) return children
   const { previousSite, nextSite } = usePrevAndNextSite(location.pathname)
   const { filters } = location.state || {}
   return (
@@ -245,9 +245,8 @@ function ShowcaseModal({ children, location }) {
 const ShowcaseDetails = ({ location, site, isModal, categories }) => {
   const screenshotFile = site.childScreenshot.screenshotFile.childImageSharp
 
-  const PageLayout = isModal ? ShowcaseModal : Layout
   return (
-    <PageLayout location={location}>
+    <ShowcaseModal isModal={isModal} location={location}>
       <div
         sx={{
           display: `flex`,
@@ -395,7 +394,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </ShowcaseModal>
   )
 }
 
