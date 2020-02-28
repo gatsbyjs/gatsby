@@ -32,7 +32,7 @@ function buildLocalCommands(cli, isLocalSite) {
       ? [`> 1%`, `last 2 versions`, `IE >= 9`]
       : [`>0.25%`, `not dead`]
 
-  let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
+  const siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
@@ -94,8 +94,8 @@ function buildLocalCommands(cli, isLocalSite) {
       process.env.gatsby_executing_command = command
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
-      let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, report, useYarn, setStore }
+      const localCmd = resolveLocalCommand(command)
+      const args = { ...argv, ...siteInfo, report, useYarn, setStore }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -262,6 +262,28 @@ function buildLocalCommands(cli, isLocalSite) {
   })
 
   cli.command({
+    command: `feedback`,
+    builder: _ =>
+      _.option(`disable`, {
+        type: `boolean`,
+        describe: `Opt out of future feedback requests`,
+      }),
+    handler: args => {
+      if (args.disable) {
+        console.log(`disabling feedback mechanism`)
+        return
+      }
+
+      console.log(
+        `Hello! Will you help Gatsby improve by taking a four question survey?`
+      )
+      console.log(
+        `Give us your feedback here: https://www.typeform.com/to/A9VWwT`
+      )
+    },
+  })
+
+  cli.command({
     command: `clean`,
     desc: `Wipe the local gatsby environment including built assets and cache`,
     handler: getCommandHandler(`clean`),
@@ -280,7 +302,7 @@ function buildLocalCommands(cli, isLocalSite) {
 function isLocalGatsbySite() {
   let inGatsbySite = false
   try {
-    let { dependencies, devDependencies } = require(path.resolve(
+    const { dependencies, devDependencies } = require(path.resolve(
       `./package.json`
     ))
     inGatsbySite =
@@ -312,8 +334,8 @@ Gatsby version: ${gatsbyVersion}
 }
 
 module.exports = argv => {
-  let cli = yargs()
-  let isLocalSite = isLocalGatsbySite()
+  const cli = yargs()
+  const isLocalSite = isLocalGatsbySite()
 
   cli
     .scriptName(`gatsby`)
