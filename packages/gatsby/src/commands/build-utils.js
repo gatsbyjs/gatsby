@@ -1,6 +1,9 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const { remove: removePageHtmlFile } = require(`../utils/page-html`)
+const {
+  remove: removePageHtmlFile,
+  getPageHtmlFilePath,
+} = require(`../utils/page-html`)
 const {
   remove: removePageDataFile,
   fixedPagePath,
@@ -39,7 +42,9 @@ const collectRemovedPageData = (state, cachedPageData) => {
 }
 
 const checkAndRemoveEmptyDir = (publicDir, pagePath) => {
-  const pageHtmlDirectory = path.join(publicDir, pagePath)
+  const pageHtmlDirectory = path.dirname(
+    getPageHtmlFilePath(publicDir, pagePath)
+  )
   const pageDataDirectory = path.join(
     publicDir,
     `page-data`,
