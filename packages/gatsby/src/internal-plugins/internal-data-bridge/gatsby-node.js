@@ -141,17 +141,35 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   })
 }
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    type Site implements Node {
+      buildTime: Date @dateformat
+    }
+  `
+  createTypes(typeDefs)
+}
+
 exports.createResolvers = ({ createResolvers }) => {
   const resolvers = {
     Site: {
       buildTime: {
         type: `Date`,
         resolve(source, args, context, info) {
-          const buildNode = context.nodeModel.getNodeById({
+          const { buildTime } = context.nodeModel.getNodeById({
             id: `SiteBuildTime`,
             type: `SiteBuildTime`,
           })
-          return buildNode.buildTime
+          return info.originalResolver(
+            {
+              ...source,
+              buildTime,
+            },
+            args,
+            context,
+            info
+          )
         },
       },
     },
