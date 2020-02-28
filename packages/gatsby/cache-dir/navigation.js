@@ -5,6 +5,7 @@ import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { navigate as reachNavigate } from "@reach/router"
+import { globalHistory } from "@reach/router/lib/history"
 import { parsePath } from "gatsby-link"
 
 // Convert to a map for faster lookup in maybeRedirect()
@@ -43,17 +44,10 @@ const onPreRouteUpdate = (location, prevLocation) => {
 const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
-    // Temp hack while awaiting https://github.com/reach/router/issues/119
-    window.__navigatingToLink = false
   }
 }
 
 const navigate = (to, options = {}) => {
-  // Temp hack while awaiting https://github.com/reach/router/issues/119
-  if (!options.replace) {
-    window.__navigatingToLink = true
-  }
-
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 
@@ -147,8 +141,11 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
 }
 
 function init() {
-  // Temp hack while awaiting https://github.com/reach/router/issues/119
-  window.__navigatingToLink = false
+  // The "scroll-behavior" package expects the "action" to be on the location
+  // object so let's copy it over.
+  globalHistory.listen(args => {
+    args.location.action = args.action
+  })
 
   window.___push = to => navigate(to, { replace: false })
   window.___replace = to => navigate(to, { replace: true })
