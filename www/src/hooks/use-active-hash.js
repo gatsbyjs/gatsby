@@ -26,11 +26,5 @@ export const useActiveHash = (itemIds, rootMargin = undefined) => {
     }
   }, [])
 
-  useEffect(() => {
-    if (activeHash) {
-      window.history.replaceState(null, null, `#${activeHash}`)
-    }
-  }, [activeHash])
-
   return activeHash
 }
