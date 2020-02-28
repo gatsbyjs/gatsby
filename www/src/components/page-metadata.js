@@ -34,7 +34,7 @@ export default function PageMetadata({
       )}
       {image && (
         <>
-          <meta name="og:image" content={image.src} />
+          <meta name="og:image" content={`https://gatsbyjs.org${image.src}`} />
           {image.width && <meta name="og:image:width" content={image.width} />}
           {image.height && (
             <meta name="og:image:width" content={image.height} />
