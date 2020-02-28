@@ -54,6 +54,10 @@ If there are no changed or deleted paths, then the relevant files will not be cr
 
 - To enable this build option you will need to set an environment variable, so you will need access to set variables in your build environment
 
-- At the end of each build, gatsby creates a `redux.state` file in `/.cache` that contains the all previous build data. You will need to persist the `.cache/redux.state` between builds, allowing for comparison, if there is no `redux.state` file located in the `/.cache` folder then a full build will be triggered
+- This feature is not available with `gatsby develop`.
 
-- Any code or static query changes (templates, components, source handling, new plugins etc) creates a new webpack compilation hash and triggers a full build
+* At the end of each build, gatsby creates a `redux.state` file in `/.cache` that contains the all previous build data. You will need to persist the `.cache/redux.state` between builds, allowing for comparison, if there is no `redux.state` file located in the `/.cache` folder then a full build will be triggered
+
+* Any code or static query changes (templates, components, source handling, new plugins etc) creates a new webpack compilation hash and triggers a full build
+
+- Using the `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` flag should be used consistently when building your project, otherwise removing the flag will clear all cache
