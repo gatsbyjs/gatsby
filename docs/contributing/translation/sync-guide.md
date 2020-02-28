@@ -18,7 +18,7 @@ This pull request contains updates to all files that do not have conflicts. This
 
 The second pull request will be named:
 
-```
+```text
 (sync) Resolve conflicts with gatsby-i18n-source @ {hash}
 ```
 
