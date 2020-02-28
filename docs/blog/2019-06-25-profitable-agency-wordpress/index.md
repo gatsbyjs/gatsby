@@ -9,6 +9,13 @@ tags:
   - aws
 ---
 
+<!--
+    Below this, Link has been imported as GatsbyLink to get around a bug in prettier v1.19.1
+    where case sensitivity is not respected for components in MDX. Link is treated as <link>
+    html head tag by prettier which leads to an error.
+    Issue Link - https://github.com/prettier/prettier/issues/7548
+-->
+
 import { Link as GatsbyLink } from "gatsby"
 
 Are you a WordPress Developer?
