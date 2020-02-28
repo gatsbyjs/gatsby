@@ -1,4 +1,4 @@
-const supportedExtensions = require(`./supported-extensions`)
+const { supportedExtensions } = require(`./supported-extensions`)
 
 module.exports = ({ createResolvers, reporter }) => {
   const resolvers = {
