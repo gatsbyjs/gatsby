@@ -53,6 +53,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - [Adding a Local Font](/docs/recipes/styling-css#adding-a-local-font)
 - [Using Emotion](/docs/recipes/styling-css#using-emotion)
 - [Using Google Fonts](/docs/recipes/styling-css#using-google-fonts)
+- [Using Font Awesome](/docs/recipes/styling-css#using-fontawesome)
 
 ## [3. Working with starters](/docs/recipes/working-with-starters)
 
@@ -107,6 +108,7 @@ Access images as static resources, or automate the process of optimizing them th
 Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more).
 
 - [Transforming Markdown into HTML](/docs/recipes/transforming-data#transforming-markdown-into-html)
+- [Transforming images into grayscale using GraphQL](/docs/recipes/transforming-data#transforming-images-into-grayscale-using-graphql)
 
 ## [9. Deploying your site](/docs/recipes/deploying-your-site)
 

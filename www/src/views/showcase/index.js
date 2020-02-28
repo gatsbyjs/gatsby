@@ -5,7 +5,6 @@ import { navigate } from "gatsby"
 import scrollToAnchor from "../../utils/scroll-to-anchor"
 import FeaturedSites from "./featured-sites"
 import FilteredShowcase from "./filtered-showcase"
-import Layout from "../../components/layout"
 
 class ShowcaseView extends Component {
   showcase = React.createRef()
@@ -45,11 +44,11 @@ class ShowcaseView extends Component {
   }
 
   render() {
-    const { location, data } = this.props
+    const { data } = this.props
     const { filters } = this.state
 
     return (
-      <Layout location={location}>
+      <>
         <Helmet>
           <title>Showcase</title>
           <meta
@@ -67,7 +66,7 @@ class ShowcaseView extends Component {
           setFilters={this.setFilters}
           data={data}
         />
-      </Layout>
+      </>
     )
   }
 }

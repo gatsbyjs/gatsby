@@ -33,10 +33,10 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Arguments
 
-| Argument    | Description                                                                                                                                                                                                     |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                        |
-| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
+| Argument    | Description                                                                                                                                                                                              |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                 |
+| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/starters/) docs for more information. |
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 

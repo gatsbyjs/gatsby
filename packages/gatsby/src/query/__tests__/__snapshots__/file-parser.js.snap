@@ -1538,6 +1538,79 @@ query {
         "start": 0,
       },
     },
+    "filePath": "static-query-hooks-with-other-export.js",
+    "hash": 407706182,
+    "isHook": true,
+    "isStaticQuery": true,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 67,
+        "line": 4,
+      },
+      "filename": true,
+      "start": Position {
+        "column": 38,
+        "line": 4,
+      },
+    },
+    "text": "query StaticQueryName { foo }",
+  },
+  Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 29,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 21,
+              "start": 6,
+            },
+            "value": "StaticQueryName",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 29,
+              "start": 22,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 27,
+                    "start": 24,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 29,
+        "start": 0,
+      },
+    },
     "filePath": "static-query-hooks-alternative-import.js",
     "hash": 407706182,
     "isHook": true,
