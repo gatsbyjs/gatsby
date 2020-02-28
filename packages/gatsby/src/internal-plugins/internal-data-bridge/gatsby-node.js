@@ -110,14 +110,16 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     .startOf(`second`)
     .toJSON()
 
+  const metadataNode = { buildTime }
+
   createNode({
-    id: `SiteBuildTime`,
+    ...metadataNode,
+    id: `SiteBuildMetadata`,
     parent: null,
     children: [],
-    buildTime,
     internal: {
-      contentDigest: createContentDigest(buildTime),
-      type: `SiteBuildTime`,
+      contentDigest: createContentDigest(metadataNode),
+      type: `SiteBuildMetadata`,
     },
   })
 
@@ -158,8 +160,8 @@ exports.createResolvers = ({ createResolvers }) => {
         type: `Date`,
         resolve(source, args, context, info) {
           const { buildTime } = context.nodeModel.getNodeById({
-            id: `SiteBuildTime`,
-            type: `SiteBuildTime`,
+            id: `SiteBuildMetadata`,
+            type: `SiteBuildMetadata`,
           })
           return info.originalResolver(
             {
