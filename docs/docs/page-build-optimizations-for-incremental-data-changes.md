@@ -6,7 +6,7 @@ Building sites with large amounts of content (10,000s nodes upwards) is relative
 
 One solution to these problems might be to use [Gatsby Cloud's Build features](https://www.gatsbyjs.com/cloud/).
 
-For projects that require self-hosted environments, where Gatsby Cloud would not be an option, being able to only deploy the content that has changed or is new (incremental data changes, you might say) would help reduce build times, deployment times and demand on resources.
+For projects that require self-hosted environments, where Gatsby Cloud would not be an option, deploying only the content that has changed or is new (incremental data changes, you might say) can help reduce build times, deployment times and demand on resources.
 
 For more info on the standard build process please see [overview of the gatsby build process](/docs/overview-of-the-gatsby-build-process/)
 
@@ -41,23 +41,23 @@ info Done building in 152.084 sec
 Done in 154.501 sec
 ```
 
-- `--write-to-file` creates two files in the `.cache` folder, with lists of the changes paths in the build assets (`public`) folder.
+- `--write-to-file` creates two files in the `.cache` folder, with lists of the changed paths in the build assets (`public`) folder.
 
-  - `newPages.txt` will contain a list of paths that have changed or are new
-  - `deletedPages.txt` will contain a list of paths that have been deleted
+  - `newPages.txt` will contain a list of new or changed paths 
+  - `deletedPages.txt` will contain a list of deleted paths
 
 If there are no changed or deleted paths, then the relevant files will not be created in the `.cache` folder.
 
 ## More information
 
-- This enhancement works by comparing the page data from the previous build to the new page data. This creates a list of page directories that are passed to the static build process
+- This enhancement works by comparing the page data from the previous build to the new page data. This creates a list of page directories that are passed to the static build process.
 
-- To enable this build option you will need to set an environment variable, so you will need access to set variables in your build environment
+- To enable this build option you will need to set an environment variable, which requires access to do so in your build environment.
 
 - This feature is not available with `gatsby develop`.
 
-* At the end of each build, gatsby creates a `redux.state` file in `/.cache` that contains the all previous build data. You will need to persist the `.cache/redux.state` between builds, allowing for comparison, if there is no `redux.state` file located in the `/.cache` folder then a full build will be triggered
+* At the end of each build, gatsby creates a `redux.state` file in `/.cache` that contains previous build data. You will need to persist the `.cache/redux.state` between builds, allowing for comparison. If there is no `redux.state` file located in the `/.cache` folder then a full build will be triggered
 
-* Any code or static query changes (templates, components, source handling, new plugins etc) creates a new webpack compilation hash and triggers a full build
+* Any code or static query changes (templates, components, source handling, new plugins etc) will prompt the creation of a new webpack compilation hash and trigger a full build.
 
-- Using the `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` flag should be used consistently when building your project, otherwise removing the flag will clear all cache
+Note: When using the `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` flag it is important to do so consistently when building your project. Otherwise, the cache will be cleared and the necessary data for comparison will no longer be available, removing the ability to check for incremental data changes.
