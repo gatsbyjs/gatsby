@@ -33,19 +33,14 @@ export default class MarkdownPageFooter extends React.Component {
                 <EditIcon sx={{ marginRight: 2 }} /> Edit this page on GitHub
               </Trans>
             </a>
-            {this.props.page &&
-              this.props.page.parent &&
-              this.props.page.parent.fields &&
-              this.props.page.parent.fields.gitLogLatestDate && (
-                <span sx={{ color: `textMuted`, fontSize: 1 }}>
-                  Last updated:{` `}
-                  <time
-                    dateTime={this.props.page.parent.fields.gitLogLatestDate}
-                  >
-                    {this.props.page.parent.fields.gitLogLatestDate}
-                  </time>
-                </span>
-              )}
+            {this.props.page?.parent?.fields?.gitLogLatestDate && (
+              <span sx={{ color: `textMuted`, fontSize: 1 }}>
+                Last updated:{` `}
+                <time dateTime={this.props.page.parent.fields.gitLogLatestDate}>
+                  {this.props.page.parent.fields.gitLogLatestDate}
+                </time>
+              </span>
+            )}
           </div>
         )}
       </>
