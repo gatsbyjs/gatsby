@@ -5,8 +5,7 @@ import {
   mediaQueries,
   breakpoints,
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-
-const isDesktop = window.matchMedia(`(min-width: ${breakpoints.xl})`).matches
+import { useEffect, useState } from "react"
 
 function isUnderDepthLimit(depth, maxDepth) {
   if (maxDepth === null) {
@@ -19,7 +18,7 @@ function isUnderDepthLimit(depth, maxDepth) {
 
 // depth and maxDepth are used to figure out how many bullets deep to render in the ToC sidebar, if no
 // max depth is set via the tableOfContentsDepth field in the frontmatter, all headings will be rendered
-function createItems(items, location, depth, maxDepth, activeHash) {
+function createItems(items, location, depth, maxDepth, activeHash, isDesktop) {
   return (
     items &&
     items.map((item, index) => {
@@ -54,7 +53,14 @@ function createItems(items, location, depth, maxDepth, activeHash) {
           )}
           {item.items && isUnderDepthLimit(depth, maxDepth) && (
             <ul sx={{ color: `textMuted`, listStyle: `none`, ml: 5 }}>
-              {createItems(item.items, location, depth + 1, maxDepth)}
+              {createItems(
+                item.items,
+                location,
+                depth + 1,
+                maxDepth,
+                activeHash,
+                isDesktop
+              )}
             </ul>
           )}
         </li>
@@ -64,6 +70,18 @@ function createItems(items, location, depth, maxDepth, activeHash) {
 }
 
 function TableOfContents({ page, activeHash, location }) {
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const isDesktopQuery = window.matchMedia(`(min-width: ${breakpoints[4]})`) // 1200px
+
+    setIsDesktop(isDesktopQuery.matches)
+
+    const updateIsDesktop = e => setIsDesktop(e.matches)
+    isDesktopQuery.addListener(updateIsDesktop)
+    return () => isDesktopQuery.removeListener(updateIsDesktop)
+  }, [])
+
   return page.tableOfContents.items ? (
     <nav
       sx={{
@@ -101,7 +119,8 @@ function TableOfContents({ page, activeHash, location }) {
           location,
           1,
           page.frontmatter.tableOfContentsDepth,
-          activeHash
+          activeHash,
+          isDesktop
         )}
       </ul>
     </nav>
