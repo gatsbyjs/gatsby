@@ -11,6 +11,7 @@ const reduxThunkLocation = path.dirname(
 )
 const reduxLocation = path.dirname(require.resolve(`redux/package.json`))
 
+<<<<<<< HEAD:packages/gatsby/src/utils/stack-trace-utils.ts
 const getNonGatsbyCallSite = (): StackFrame | undefined =>
   stackTrace
     .get()
@@ -34,6 +35,24 @@ interface ICodeFrame {
 export const getNonGatsbyCodeFrame = ({
   highlightCode = true,
 } = {}): null | ICodeFrame => {
+=======
+const getNonGatsbyCallSite = () => false
+// stackTrace
+//   .get()
+//   .find(
+//     callSite =>
+//       callSite &&
+//       callSite.getFileName() &&
+//       !callSite.getFileName().includes(gatsbyLocation) &&
+//       !callSite.getFileName().includes(reduxLocation) &&
+//       !callSite.getFileName().includes(reduxThunkLocation) &&
+//       !isNodeInternalModulePath(callSite.getFileName())
+//   )
+
+const getNonGatsbyCodeFrame = ({ highlightCode = true } = {}) => {
+  return null // Disable for development. DO NOT COMMIT
+
+>>>>>>> [wip] sqlite as OOP data store:packages/gatsby/src/utils/stack-trace-utils.js
   const callSite = getNonGatsbyCallSite()
   if (!callSite) {
     return null
@@ -63,9 +82,15 @@ export const getNonGatsbyCodeFrame = ({
   }
 }
 
+<<<<<<< HEAD:packages/gatsby/src/utils/stack-trace-utils.ts
 export const getNonGatsbyCodeFrameFormatted = ({ highlightCode = true } = {}):
   | null
   | string => {
+=======
+const getNonGatsbyCodeFrameFormatted = ({ highlightCode = true } = {}) => {
+  return null // Disable for development. DO NOT COMMIT
+
+>>>>>>> [wip] sqlite as OOP data store:packages/gatsby/src/utils/stack-trace-utils.js
   const possibleCodeFrame = getNonGatsbyCodeFrame({
     highlightCode,
   })

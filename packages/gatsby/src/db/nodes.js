@@ -21,6 +21,7 @@ interface NodeStore {
 const backend = process.env.GATSBY_DB_NODES || `redux`
 let nodesDb: NodeStore
 let runQuery
+
 switch (backend) {
   case `redux`:
     nodesDb = require(`../redux/nodes`)
@@ -30,9 +31,13 @@ switch (backend) {
     nodesDb = require(`./loki/nodes`)
     runQuery = require(`./loki/nodes-query`)
     break
+  case `sqlite`:
+    nodesDb = require(`./sqlite/nodes`)
+    runQuery = require(`./sqlite/nodes-query`)
+    break
   default:
     throw new Error(
-      `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
+      `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES: ${backend})`
     )
 }
 

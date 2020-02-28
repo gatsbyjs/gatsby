@@ -1,5 +1,6 @@
 const reduxNodes = require(`./nodes`)
 const lokiNodes = require(`../../db/loki/nodes`).reducer
+let sqliteNodes
 
 const backend = process.env.GATSBY_DB_NODES || `redux`
 
@@ -10,11 +11,15 @@ function getNodesReducer() {
       nodesReducer = reduxNodes
       break
     case `loki`:
-      nodesReducer = lokiNodes
+      nodesReducer = sqliteNodes
+      break
+    case `sqlite`:
+      nodesReducer =
+        sqliteNodes || (sqliteNodes = require(`../../db/sqlite/nodes`).reducer)
       break
     default:
       throw new Error(
-        `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
+        `Unsupported DB reducer backend (value of env var GATSBY_DB_NODES: ${backend})`
       )
   }
   return nodesReducer
@@ -29,9 +34,12 @@ function getNodesByTypeReducer() {
     case `loki`:
       nodesReducer = (state = null) => null
       break
+    case `sqlite`:
+      nodesReducer = (state = null) => null
+      break
     default:
       throw new Error(
-        `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
+        `Unsupported DB type reducer backend (value of env var GATSBY_DB_NODES: ${backend})`
       )
   }
   return nodesReducer
