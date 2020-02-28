@@ -11,36 +11,24 @@ export default function PageMetadata({
   image,
   type = "article",
 }) {
+  // <Helmet> doesn't support JSX fragments so we can't bundle the tags based on
+  // the property they match up with
   return (
     <Helmet>
-      {title && (
-        <>
-          <title>{title}</title>
-          <meta property="og:title" content={title} />
-        </>
-      )}
-      {description && (
-        <>
-          <meta name="description" content={description} />
-          <meta name="og:description" content={description} />
-        </>
-      )}
+      {title && <title>{title}</title>}
+      {title && <meta property="og:title" content={title} />}
+      {description && <meta name="description" content={description} />}
+      {description && <meta name="og:description" content={description} />}
       <meta name="og:type" content={type} />
+      {timeToRead && <meta name="twitter.label1" content="Reading time" />}
       {timeToRead && (
-        <>
-          <meta name="twitter.label1" content="Reading time" />
-          <meta name="twitter:data1" content={`${timeToRead} min read`} />
-        </>
+        <meta name="twitter:data1" content={`${timeToRead} min read`} />
       )}
       {image && (
-        <>
-          <meta name="og:image" content={`https://gatsbyjs.org${image.src}`} />
-          {image.width && <meta name="og:image:width" content={image.width} />}
-          {image.height && (
-            <meta name="og:image:width" content={image.height} />
-          )}
-        </>
+        <meta name="og:image" content={`https://gatsbyjs.org${image.src}`} />
       )}
+      {image?.width && <meta name="og:image:width" content={image.width} />}
+      {image?.height && <meta name="og:image:width" content={image.height} />}
       {children}
     </Helmet>
   )

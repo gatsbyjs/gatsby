@@ -57,7 +57,7 @@ class BlogPostTemplate extends React.Component {
             <PageMetadata
               title={post.frontmatter.title}
               description={post.fields.excerpt}
-              image={post.frontmatter.image.childImageSharp.resize}
+              image={post.frontmatter.image?.childImageSharp.resize}
             >
               <meta property="og:url" content={href} />
               <link
