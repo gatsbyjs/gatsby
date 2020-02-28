@@ -4,7 +4,7 @@ import { graphql, useStaticQuery } from "gatsby"
 
 import gatsbyIcon from "../assets/gatsby-icon.png"
 
-const SiteMetadata = ({ pathname, locale }) => {
+const SiteMetadata = ({ href, locale }) => {
   const {
     site: {
       siteMetadata: { siteUrl, title, twitter },
@@ -24,14 +24,14 @@ const SiteMetadata = ({ pathname, locale }) => {
   return (
     <Helmet defer={false} defaultTitle={title} titleTemplate={`%s | ${title}`}>
       <html lang={locale} />
-      <link rel="canonical" href={`${siteUrl}${pathname}`} />
+      <link rel="canonical" href={href} />
       <meta name="docsearch:version" content="2.0" />
       <meta
         name="viewport"
         content="width=device-width,initial-scale=1,shrink-to-fit=no,viewport-fit=cover"
       />
 
-      <meta property="og:url" content={siteUrl} />
+      <meta property="og:url" content={href} />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content={locale} />
       <meta property="og:site_name" content={title} />
