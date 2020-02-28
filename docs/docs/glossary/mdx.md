@@ -22,7 +22,7 @@ You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.org/)
 </figure>
 ```
 
-MDX takes this one step further, and makes it possible to use JSX in your Markdown documents. Let's make the `figure` element into a `Figure` component.
+MDX takes this one step further, and makes it possible to use JSX in your Markdown documents. Try making the `figure` element into a `Figure` component.
 
 ```jsx
 export const Figure = props => {
