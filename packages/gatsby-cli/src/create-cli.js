@@ -267,20 +267,11 @@ function buildLocalCommands(cli, isLocalSite) {
       _.option(`disable`, {
         type: `boolean`,
         describe: `Opt out of future feedback requests`,
+      }).option(`enable`, {
+        type: `boolean`,
+        describe: `Opt into future feedback requests`,
       }),
-    handler: args => {
-      if (args.disable) {
-        console.log(`disabling feedback mechanism`)
-        return
-      }
-
-      console.log(
-        `Hello! Will you help Gatsby improve by taking a four question survey?`
-      )
-      console.log(
-        `Give us your feedback here: https://www.typeform.com/to/A9VWwT`
-      )
-    },
+    handler: getCommandHandler(`feedback`),
   })
 
   cli.command({
