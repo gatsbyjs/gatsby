@@ -8,13 +8,13 @@ Defaults to building a site with 5k pages. Set the `NUM_PAGES` environment varia
 
 First, install node modules required by package.json. This is needed only one time. Then run the build
 
-```bash
+```shell
 npm install
 npm run build
 ```
 
 Alternatively;
 
-```sh
+```shell
 NUM_PAGES=2000 yarn bench
 ```
