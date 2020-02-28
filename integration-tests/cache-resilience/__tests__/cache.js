@@ -9,6 +9,9 @@ const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
   ON_POST_BUILD_FILE_PATH,
 } = require(`../utils/constants`)
+const {
+  useGatsbyNodeAndConfigAndQuery,
+} = require(`../utils/select-configuration`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
 const sanitizePageCreatorPluginOptions = options => {
@@ -106,70 +109,6 @@ const gatsbyBin = path.join(
 )
 
 const { compareState } = require(`../utils/nodes-diff`)
-
-const useGatsbyNode = run => {
-  const r = fs.readdirSync(`plugins`)
-  r.forEach(pluginName => {
-    const inputPath = path.join(`plugins`, pluginName, `gatsby-node-${run}.js`)
-    if (fs.existsSync(inputPath)) {
-      fs.copyFileSync(
-        inputPath,
-        path.join(`plugins`, pluginName, `gatsby-node.js`)
-      )
-    }
-  })
-}
-
-const useGatsbyConfig = run => {
-  fs.copyFileSync(`gatsby-config-${run}.js`, path.join(`gatsby-config.js`))
-}
-
-const useGatsbyQuery = run => {
-  const r = fs.readdirSync(`plugins`)
-  return r.reduce((acc, pluginName) => {
-    const inputPath = path.join(`plugins`, pluginName, `query-${run}.js`)
-    if (fs.existsSync(inputPath)) {
-      const pagePath = path.join(
-        `plugins`,
-        pluginName,
-        `src`,
-        `pages`,
-        `${pluginName}.js`
-      )
-
-      const { query, expectedResult } = require(path.join(
-        process.cwd(),
-        inputPath
-      ))
-
-      const content = query
-        ? `
-      import { graphql } from "gatsby"
-export default () => null
-
-export const query = graphql\`
-  ${query}
-\`
-      `
-        : `export default () => null`
-
-      fs.outputFileSync(pagePath, content)
-
-      acc[pluginName] = expectedResult
-      // fs.copyFileSync(
-      //   inputPath,
-      //   path.join(`plugins`, pluginName, `gatsby-node.js`)
-      // )
-    }
-    return acc
-  }, {})
-}
-
-const useGatsbyNodeAndConfigAndQuery = (run = 1) => {
-  useGatsbyNode(run)
-  useGatsbyConfig(run)
-  return useGatsbyQuery(run)
-}
 
 const build = ({ updatePlugins } = {}) => {
   spawnSync(gatsbyBin, [`clean`])
