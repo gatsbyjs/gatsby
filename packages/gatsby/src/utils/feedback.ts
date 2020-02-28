@@ -1,25 +1,23 @@
 import report from "gatsby-cli/lib/reporter"
-import Configstore from "configstore"
+import { getConfigStore, getGatsbyVersion } from "gatsby-core-utils"
 import latestVersion from "latest-version"
-import path from "path"
 
+// This is an early invocation to optimize the time to fetching the latest version from gatsby
+// This is actually a Promise<string> value
 const latestGatsbyVersion = latestVersion(`gatsby`)
 
-const config = new Configstore(
-  `gatsby`,
-  {},
-  {
-    globalConfigPath: true,
-  }
-)
-
+const config = getConfigStore()
 const feedbackKey = `feedback.disabled`
 const lastDateKey = `feedback.lastRequestDate`
 
+// This function is designed to be used by `gatsby feedback --disable`
+// and `gatsby feedback --enable`. This key is used to determine
+// if a user is allowed to be solicited for feedback
 export function setFeedbackDisabledValue(enabled: boolean) {
   config.set(feedbackKey, enabled)
 }
 
+// Print the feedback request to the user
 export function showFeedbackRequest(): void {
   config.set(lastDateKey, Date.now())
   report.log(
@@ -35,10 +33,14 @@ export function showFeedbackRequest(): void {
 // 4. They are on the most recent version of Gatsby
 export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
   // Heuristic 1
-  if (config.get(feedbackKey) === true) return false
+  if (config.get(feedbackKey) === true) {
+    return false
+  }
 
   // Heuristic 2
-  if (process.env[feedbackKey] === `1`) return false
+  if (process.env.GATSBY_FEEDBACK_DISABLED === `1`) {
+    return false
+  }
 
   // Heuristic 3
   const lastDateValue = config.get(lastDateKey)
@@ -46,35 +48,30 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
   //     Which is effectively a pass, because it's been ~infinity~ since they last
   //     received a request from us.
   if (lastDateValue) {
-    const lastDate = new Date()
+    const lastDate = new Date(lastDateValue)
     const monthsSinceLastRequest = lastDate.getMonth() - new Date().getMonth()
 
-    if (monthsSinceLastRequest < 3) return false
+    if (monthsSinceLastRequest > 3) {
+      return false
+    }
   }
 
   // Heuristic 4
-  try {
-    const versionPoints = require(path.join(
-      process.cwd(),
-      `node_modules`,
-      `gatsby`,
-      `package.json`
-    )).version.split(".")
+  const versionPoints = getGatsbyVersion().split(".")
+  const latestVersionPoints = (await latestGatsbyVersion).split(".")
 
-    const latestVersionPoints = (await latestGatsbyVersion).split(".")
+  // Since we push versions very frequently. So thinking that users will
+  // be on the latest patch is potentially unrealistic. So we are just
+  // comparing on major and minor version points.
+  const versionsMatchOnMajorAndMinor =
+    versionPoints[0] === latestVersionPoints[0] &&
+    versionPoints[1] === latestVersionPoints[1]
 
-    // Since we push versions very frequently. So thinking that users will
-    // be on the latest patch is potentially unrealistic. So we are just
-    // comparing on major and minor version points.
-    const versionsMatchOnMajorAndMinor =
-      versionPoints[0] === latestVersionPoints[0] &&
-      versionPoints[1] === latestVersionPoints[1]
-
-    if (versionsMatchOnMajorAndMinor === false) {
-      return false
-    }
-  } catch (e) {
+  if (versionsMatchOnMajorAndMinor === false) {
     return false
   }
+
+  // If all of the above passed, then the user is able to be prompted
+  // for feedback
   return true
 }

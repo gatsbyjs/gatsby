@@ -1,7 +1,6 @@
 import {
   setFeedbackDisabledValue,
   showFeedbackRequest,
-  userPassesFeedbackRequestHeuristic,
 } from "../utils/feedback"
 import { IProgram } from "./types"
 
