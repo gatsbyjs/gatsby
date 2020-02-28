@@ -1,7 +1,12 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import {
+  mediaQueries,
+  breakpoints,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+
+const isDesktop = window.matchMedia(`(min-width: ${breakpoints.xl})`).matches
 
 function isUnderDepthLimit(depth, maxDepth) {
   if (maxDepth === null) {
@@ -18,7 +23,7 @@ function createItems(items, location, depth, maxDepth, activeHash) {
   return (
     items &&
     items.map((item, index) => {
-      const isActive = item.url === `#${activeHash}`
+      const isActive = isDesktop && item.url === `#${activeHash}`
       return (
         <li
           sx={{ [mediaQueries.xl]: { fontSize: 1 } }}
