@@ -1,5 +1,5 @@
 ---
-title: Mdx
+title: MDX
 disableTableOfContents: true
 ---
 
