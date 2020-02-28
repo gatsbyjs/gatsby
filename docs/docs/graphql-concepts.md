@@ -152,7 +152,7 @@ If you give Gatsby data that looks like this:
 
 Gatsby will create a schema that looks something like this:
 
-```
+```text
 title: String
 ```
 

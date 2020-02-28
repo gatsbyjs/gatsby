@@ -188,14 +188,14 @@ The glossary defines key vocabulary...
 Rendered, it looks like this:
 
 <HorizontalNavList
-items={[
-"guide-list",
-"egghead-embed",
-"pull-quote",
-"layer-model",
-"horizontal-navigation-list",
-]}
-slug={props.slug}
+  items={[
+    "guide-list",
+    "egghead-embed",
+    "pull-quote",
+    "layer-model",
+    "horizontal-navigation-list",
+  ]}
+  slug={props.slug}
 />
 
 ---
