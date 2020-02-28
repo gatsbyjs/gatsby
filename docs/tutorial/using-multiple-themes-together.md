@@ -2,27 +2,35 @@
 title: Using Multiple Themes Together
 ---
 
-In this tutorial, you'll learn how to use multiple Gatsby themes by creating a new site using `gatsby-theme-blog`, `gatsby-theme-notes` and `@pauliescanlon/gatsby-mdx-embed`.
+## What’s contained in this tutorial?
 
-## A mental model of Gatsby themes
+By the end of this tutorial, you’ll have done the following:
 
-If you have worked with Wordpress or a similar CMS you have likely used a 'theme' or a 'template' before. Often this is a singular theme which controls the appearance and function of your entire site. You can install new themes, but not multiple themes together.
+- learned how to compose multiple Gatsby themes into a final site
+- learned about component shadowing
+- learned about shadowing a Theme-UI theme file
+
+The themes we will be composing in this tutorial are [gatsby-theme-blog](https://www.gatsbyjs.org/packages/gatsby-theme-blog/), [gatsby-theme-notes](https://www.gatsbyjs.org/packages/gatsby-theme-notes/) and [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.com/). Follow along as we go from 'hello-world' to a fully functioning final site!
+
+## Prerequisites
+
+This tutorial assumes you have a basic working knowledge of Gatsby and are comfortable with the [Gatsby fundamentals](https://www.gatsbyjs.org/tutorial/using-a-theme/)
+
+## Step 0: A mental model of Gatsby themes
+
+If you have worked with Wordpress or a similar CMS you have likely used a 'theme' or a 'template' before. Often this is a singular theme which controls the appearance and function of your entire site. You can install new themes, but _not_ multiple themes together.
 
 Gatsby themes are different.
 
-They are a bit like a toy building block set which can be linked together with other sets to form a final scene. These themes or 'sets-of-blocks' can be big and stylish, but also small and simple. Imagine that you are building a town scene using building blocks. You might have a fire station set (big and complicated), an ice cream truck set (medium sized), and a swing set (small and simple). These sets can be arranged together however you want to form a final scene.
+Insert analogy here...maybe using building blocks/lego. Got to think this through.
 
-Themes in Gatsby work in a similar way. They are 'sets-of-components' that can be composed together by the developer in unique ways to form your final site. They range from large, site-wide themes, to very small themes that control only a single aspect of your site.
-
-Follow along as we go from 'hello-world' to a fully functioning final site!
-
-## Create a new site using the hello world starter
+## Step 1: Create a new site using the hello world starter
 
 ```shell
 gatsby new multiple-themes https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-## Install the themes
+## Step 2: Install the themes
 
 The first two themes we will compose together are [gatsby-theme-blog](https://www.gatsbyjs.org/packages/gatsby-theme-blog/) and [gatsby-theme-notes](https://www.gatsbyjs.org/packages/gatsby-theme-notes/).
 
@@ -30,7 +38,7 @@ The first two themes we will compose together are [gatsby-theme-blog](https://ww
 npm install gatsby-theme-blog gatsby-theme-notes
 ```
 
-## Update gatsby-config.js
+## Step 3: Update gatsby-config.js
 
 The themes need to be added to the plugins array and an we need some basic site metadata as well.
 
@@ -70,7 +78,7 @@ module.exports = {
 }
 ```
 
-## Run the site
+## Step 4: Run the site
 
 Next, run the site and see what you have:
 
@@ -79,9 +87,13 @@ cd multiple-themes
 gatsby develop
 ```
 
-## Add some content
+## Step 5: Add some content
 
-Not much to look at yet, just a plain `hello-world`, but it works! Behind the scenes our themes [created some content folders](https://www.gatsbyjs.org/docs/themes/conventions/#initializing-required-directories) for us in the root of your site. We need to add some content to these folders now. Put an avatar image into `content/assets/avatar.png`. Add a post and a note, a bit like this:
+Not much to look at yet, just a plain `hello-world`, but it works! Behind the scenes our two themes [created content folders](https://www.gatsbyjs.org/docs/themes/conventions/#initializing-required-directories) for us in the root directory of the site. We need to add some content to these folders now.
+
+Put an avatar image into `content/assets/avatar.png`.
+
+Add at least one post and one note, a bit like this:
 
 ```md:title=content/posts/hello-posts.mdx
 ---
@@ -101,17 +113,22 @@ date: 2020-02-20
 Multiple themes are awesome!
 ```
 
-## Run the site again
+## Step 6: Run the site again
 
 ```shell
 gatsby develop
 ```
 
-Now there will be some content to look at if you go to `localhost:8000/blog` and `localhost:8000/notes`.
+Now if you visit `localhost:8000/blog` and `localhost:8000/notes` there you should see some content to look at.
 
-## Put the blog posts on the homepage
+## Step 7: Put the blog posts on the homepage
 
-Let's get rid of our plain hello world homepage and use the blog posts. Stop your development server, `CTRL + C`. Delete `src/pages/index.js`. Change the theme options for the blog theme in `gatsby-config.js`. Restart your development server with `gatsby develop`.
+Let's get rid of our plain hello world homepage and use the blog posts.
+
+- Stop your development server, `CTRL + C`.
+- Delete `src/pages/index.js`.
+- Change the theme options for the blog theme in `gatsby-config.js`.
+- Restart your development server with `gatsby develop`.
 
 ```javascript:title=gatsby-config.js
 {
@@ -123,7 +140,7 @@ Let's get rid of our plain hello world homepage and use the blog posts. Stop you
     },
 ```
 
-## Shadow the 'bio-content' component
+## Step 8: Shadow the 'bio-content.js' component
 
 Your name probably isn't Jane Doe. Let's fix that with a custom `bio-content.js` component using [theme shadowing](https://www.gatsbyjs.org/docs/themes/shadowing/). Don't forget to stop and restart your development server when adding a shadowed component the first time. Your file structure should look like this:
 
@@ -134,7 +151,7 @@ Your name probably isn't Jane Doe. Let's fix that with a custom `bio-content.js`
     │   │   ├── bio-content.js // highlight-line
 ```
 
-And your component should look like this:
+And your component might look like this:
 
 ```jsx:title=bio-content.js
 import React, { Fragment } from "react"
@@ -149,7 +166,7 @@ export default () => (
 )
 ```
 
-## Shadow the Theme-UI theme file
+## Step 9: Shadow the Theme-UI theme file
 
 Gatsby Theme Blog and Gatsby Theme Notes both use [Theme-UI](https://www.gatsbyjs.org/docs/theme-ui/) design tokens to manage their styling; colors, font sizes, spacing, etc. We can use component shadowing to gain control over these design tokens in our final site. Don't forget to stop and restart your development server when adding a shadowed component the first time. Your file structure should look like this:
 
@@ -159,7 +176,7 @@ Gatsby Theme Blog and Gatsby Theme Notes both use [Theme-UI](https://www.gatsbyj
     │   ├── index.js //highlight-line
 ```
 
-And your component should look like this:
+And your component could look like this:
 
 ```javascript:title=index.js
 import merge from "deepmerge"
@@ -181,14 +198,51 @@ export default merge(defaultTheme, {
 })
 ```
 
-## Add a smaller theme
+## Step 10: Add a smaller theme
 
-- Something like gatsby-mdx-embed, a smaller theme that adds component level function to demonstrate what a smaller theme can do.
+Themes can be big, like `gatsby-theme-blog`, but they can also be small discrete sets of components or functions. A great example of this is [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.com/) which adds the ability to easily embed social media content and videos into your MDX.
 
-## Add a custom navigation menu
+Let's install the theme.
 
-- Create a nav menu to get to the notes page
+```shell
+npm install @pauliescanlon/gatsby-mdx-embed
+```
 
-## Next steps
+Add it to your plugins.
 
-- Some ideas for next steps someone could take in theme development and work
+```javascript:title=gatsby-config.js
+module.exports = {
+  ...
+  plugins: [`@pauliescanlon/gatsby-mdx-embed`]
+  ...
+}
+```
+
+Test it out by adding a Youtube video to one of your blog posts.
+
+```md:title=content/posts/hello-posts.mdx
+---
+title: My first blog post
+date: 2020-02-15
+---
+
+Multiple themes are great! Here is a video about composing and styling themes with Jason and Jackson!
+
+<YouTube youTubeId="6Z4p-qjnKCQ" />
+```
+
+## Step 11: Add a custom navigation menu
+
+Wouldn't it be nice to navigate to your notes page more easily. Let's add some simple navigation links to your site using component shadowing.
+
+## What's next
+
+Keep creating, customizing and working on your own site. Share what you make on Twitter with the [#builtwithgatsby](https://twitter.com/hashtag/builtwithgatsby) hashtag. Moving beyond using themes you can start [creating your own themes](https://www.gatsbyjs.org/tutorial/building-a-theme/) and releasing theme for the world to enjoy!
+
+## Other resources
+
+- [Egghead.io Course: Gatsby Theme Authoring (free)](https://egghead.io/courses/gatsby-theme-authoring)
+- [Setting up yarn workspaces for Gatsby theme development](https://www.gatsbyjs.org/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/#reach-skip-nav)
+- [Composing and styling Gatsby themes (with Brent Jackson) — Learn With Jason](https://www.youtube.com/watch?v=6Z4p-qjnKCQ)
+- [Build a Personal Site Using Gatsby Themes (with Will Johnson) — Learn With Jason](https://www.youtube.com/watch?v=vf2Dy_xKUno)
+-
