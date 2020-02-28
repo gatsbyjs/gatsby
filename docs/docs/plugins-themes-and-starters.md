@@ -51,11 +51,11 @@ The following tables put plugins, themes, and starters side-by-side, showing wha
 
 **Legend**
 
-| Icon | Feature Capability                                                    |
-| ---- | --------------------------------------------------------------------- |
-| ●    | Fully capable (possible and supported)                                |
+| Icon | Feature Capability                                               |
+| ---- | ---------------------------------------------------------------- |
+| ●    | Fully capable (possible and supported)                           |
 | ◐    | Somewhat capable (support is minimal or it is not best practice) |
-| ○    | Not capable                                                           |
+| ○    | Not capable                                                      |
 
 ### Differences and considerations in maintenance
 
