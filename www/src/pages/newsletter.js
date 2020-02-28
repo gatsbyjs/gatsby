@@ -1,21 +1,18 @@
 import React, { Component } from "react"
-import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import FooterLinks from "../components/shared/footer-links"
+import PageMetadata from "../components/page-metadata"
 
 class NewsLetter extends Component {
   render() {
     return (
       <>
-        <Helmet>
-          <title>Newsletter</title>
-          <meta
-            name="description"
-            content="Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby community, hear about new features, tips & tricks, and what people are building."
-          />
-        </Helmet>
+        <PageMetadata
+          title="Newsletter"
+          description="Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby community, hear about new features, tips & tricks, and what people are building."
+        />
         <Container
           withSidebar={false}
           css={{

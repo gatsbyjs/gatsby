@@ -12,6 +12,7 @@ import Modal from "../components/modal"
 import ShareMenu from "../components/share-menu"
 import Button from "../components/button"
 import Screenshot from "../views/shared/screenshot"
+import PageMetadata from "../components/site-metadata"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
 import MdLink from "react-icons/lib/md/link"
@@ -258,38 +259,14 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
         }}
       >
         <div css={{ width: `100%` }}>
-          <Helmet titleTemplate="%s | GatsbyJS">
-            <title>{`${site.title}: Showcase`}</title>
-            <meta
-              property="og:image"
-              content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
-            />
-            <meta
-              name="twitter:image"
-              content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
-            />
+          {/* TODO might be weird on modals? */}
+          <PageMetadata
+            title={`${site.title}: Showcase`}
+            description={site.description || site.main_url}
+            image={screenshotFile.resize}
+          >
             <meta name="twitter:card" content="summary_large_image" />
-            <meta
-              name="og:title"
-              value={`${site.title}: Showcase | GatsbyJS`}
-            />
-            <meta
-              property="og:image:width"
-              content={screenshotFile.resize.width}
-            />
-            <meta
-              property="og:image:height"
-              content={screenshotFile.resize.height}
-            />
-            <meta
-              property="og:description"
-              content={site.description || site.main_url}
-            />
-            <meta
-              name="twitter:description"
-              content={site.description || site.main_url}
-            />
-          </Helmet>
+          </PageMetadata>
           <div
             sx={{
               p: gutter,

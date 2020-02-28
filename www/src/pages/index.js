@@ -2,7 +2,6 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Container from "../components/container"
@@ -15,6 +14,7 @@ import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import {
   setupScrollersObserver,
@@ -86,12 +86,7 @@ class IndexRoute extends React.Component {
 
     return (
       <>
-        <Helmet>
-          <meta
-            name="Description"
-            content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
-          />
-        </Helmet>
+        <PageMetadata description="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby." />
         <main
           id={`reach-skip-nav`}
           css={{

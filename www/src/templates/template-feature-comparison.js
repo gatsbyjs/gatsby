@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component } from "react"
-import { Helmet } from "react-helmet"
 import { css } from "@emotion/core"
 import PageWithSidebar from "../components/page-with-sidebar"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import Container from "../components/container"
 import EvaluationTable from "../components/features/evaluation-table"
@@ -33,9 +33,7 @@ class FeatureComparison extends Component {
 
     return (
       <PageWithSidebar location={location}>
-        <Helmet>
-          <title>{titleString}</title>
-        </Helmet>
+        <PageMetadata title={titleString} />
         <Container>
           <main>
             <Breadcrumb location={location} />

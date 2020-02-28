@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet"
 
 import Button from "../components/button"
 import Container from "../components/container"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
@@ -105,13 +106,10 @@ class FeaturesPage extends Component {
   render() {
     return (
       <PageWithSidebar location={this.props.location}>
-        <Helmet>
-          <title>Features</title>
-          <meta
-            name="description"
-            content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
-          />
-        </Helmet>
+        <PageMetadata
+          title="Features"
+          description="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+        />
         <Container>
           <main id={`reach-skip-nav`}>
             <FeaturesHeader />
