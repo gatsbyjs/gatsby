@@ -78,9 +78,6 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   })
 
   // Add site node.
-  const buildTime = moment()
-    .subtract(process.uptime(), `seconds`)
-    .toJSON()
 
   const createGatsbyConfigNode = (config = {}) => {
     // Delete plugins from the config as we add plugins above.
@@ -93,7 +90,6 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       port: state.program.port,
       host: state.program.host,
       ...configCopy,
-      buildTime,
     }
     createNode({
       ...node,
@@ -108,6 +104,22 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   }
 
   createGatsbyConfigNode(state.config)
+
+  const buildTime = moment()
+    .subtract(process.uptime(), `seconds`)
+    .startOf(`second`)
+    .toJSON()
+
+  createNode({
+    id: `SiteBuildTime`,
+    parent: null,
+    children: [],
+    buildTime,
+    internal: {
+      contentDigest: createContentDigest(buildTime),
+      type: `SiteBuildTime`,
+    },
+  })
 
   const pathToGatsbyConfig = systemPath.join(
     program.directory,
@@ -127,6 +139,24 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       }
     }
   })
+}
+
+exports.createResolvers = ({ createResolvers }) => {
+  const resolvers = {
+    Site: {
+      buildTime: {
+        type: `Date`,
+        resolve(source, args, context, info) {
+          const buildNode = context.nodeModel.getNodeById({
+            id: `SiteBuildTime`,
+            type: `SiteBuildTime`,
+          })
+          return buildNode.buildTime
+        },
+      },
+    },
+  }
+  createResolvers(resolvers)
 }
 
 exports.onCreatePage = ({ createContentDigest, page, actions }) => {
