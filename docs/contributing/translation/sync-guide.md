@@ -8,7 +8,7 @@ Periodically, gatsbybot will update your translation repo to be up-to-date with 
 
 When it runs the sync script, gatsbybot will create up to two pull requests. One is named:
 
-```
+```text
 (sync) Sync with gatsby-i18n-source @ {hash}
 ```
 
