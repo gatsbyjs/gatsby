@@ -24,10 +24,13 @@ const getHeadingIds = (toc, traverseFullDepth = false) => {
 
   if (toc) {
     for (const item of toc) {
-      idList.push(hashToId(item.url))
+      // Sometimes url does not exist on item. See #19851
+      if (item.url) {
+        idList.push(hashToId(item.url))
+      }
 
       // Only traverse sub-items if specified (they are not displayed in ToC)
-      if (`items` in item && traverseFullDepth) {
+      if (item.items && traverseFullDepth) {
         idList.push(...getHeadingIds(item.items, true))
       }
     }
