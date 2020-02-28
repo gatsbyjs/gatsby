@@ -27,6 +27,5 @@ module.exports = async function feedback(
     return
   }
 
-  userPassesFeedbackRequestHeuristic() // TODO: Remove this
   showFeedbackRequest()
 }

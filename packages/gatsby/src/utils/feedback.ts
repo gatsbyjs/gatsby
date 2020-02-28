@@ -34,37 +34,46 @@ export function showFeedbackRequest(): void {
 // 3. It's been at least 3 months since the last feedback request
 // 4. They are on the most recent version of Gatsby
 export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
-  //   // 1
-  //   if (config.get(feedbackKey) === true) return false
+  // Heuristic 1
+  if (config.get(feedbackKey) === true) return false
 
-  //   // 2
-  //   if (process.env[feedbackKey] === `1`) return false
+  // Heuristic 2
+  if (process.env[feedbackKey] === `1`) return false
 
-  //   // 3
-  //   const lastDateValue = config.get(lastDateKey)
-  //   // 3.a if the user has never received the feedback request, this is undefined
-  //   //     Which is effectively a pass, because it's been ~infinity~ since they last
-  //   //     received a request from us.
-  //   if (lastDateValue) {
-  //     const lastDate = new Date()
-  //     const monthsSinceLastRequest = lastDate.getMonth() - new Date().getMonth()
+  // Heuristic 3
+  const lastDateValue = config.get(lastDateKey)
+  // 3.a if the user has never received the feedback request, this is undefined
+  //     Which is effectively a pass, because it's been ~infinity~ since they last
+  //     received a request from us.
+  if (lastDateValue) {
+    const lastDate = new Date()
+    const monthsSinceLastRequest = lastDate.getMonth() - new Date().getMonth()
 
-  //     if (monthsSinceLastRequest < 3) return false
-  //   }
+    if (monthsSinceLastRequest < 3) return false
+  }
 
-  // 4.
+  // Heuristic 4
   try {
-    const { version } = require(path.join(
+    const versionPoints = require(path.join(
       process.cwd(),
       `node_modules`,
       `gatsby`,
       `package.json`
-    ))
+    )).version.split(".")
 
-    const latest = await latestGatsbyVersion
-    console.log(version, latest)
+    const latestVersionPoints = (await latestGatsbyVersion).split(".")
+
+    // Since we push versions very frequently. So thinking that users will
+    // be on the latest patch is potentially unrealistic. So we are just
+    // comparing on major and minor version points.
+    const versionsMatchOnMajorAndMinor =
+      versionPoints[0] === latestVersionPoints[0] &&
+      versionPoints[1] === latestVersionPoints[1]
+
+    if (versionsMatchOnMajorAndMinor === false) {
+      return false
+    }
   } catch (e) {
-    console.log(">???")
     return false
   }
   return true
