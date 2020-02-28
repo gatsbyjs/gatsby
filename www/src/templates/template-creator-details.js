@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
+import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
-import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
@@ -60,7 +59,7 @@ const MetaSection = ({ children, background, last, first }) => (
 
 class CreatorTemplate extends Component {
   render() {
-    const { data, location } = this.props
+    const { data } = this.props
     const creator = data.creatorsYaml
     const isAgencyOrCompany =
       creator.type === `agency` || creator.type === `company`
@@ -68,7 +67,7 @@ class CreatorTemplate extends Component {
     const sites = data.allSitesYaml.edges
 
     return (
-      <Layout location={location}>
+      <React.Fragment>
         <Helmet>
           <title>{`${creator.name} - Creator`}</title>
         </Helmet>
@@ -232,7 +231,7 @@ class CreatorTemplate extends Component {
           </div>
         </main>
         <FooterLinks />
-      </Layout>
+      </React.Fragment>
     )
   }
 }

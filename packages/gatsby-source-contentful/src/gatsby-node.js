@@ -119,7 +119,11 @@ exports.sourceNodes = async (
       })
       .filter(node => node)
 
-    localizedNodes.forEach(node => deleteNode({ node }))
+    localizedNodes.forEach(node => {
+      // touchNode first, to populate typeOwners & avoid erroring
+      touchNode({ nodeId: node.id })
+      deleteNode({ node })
+    })
   }
 
   currentSyncData.deletedEntries.forEach(deleteContentfulNode)

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.22...gatsby@2.19.23) (2020-02-28)
+
+### Bug Fixes
+
+- Remove global namespace hack for a proper workflow ([#21591](https://github.com/gatsbyjs/gatsby/issues/21591)) ([4bc595b](https://github.com/gatsbyjs/gatsby/commit/4bc595b))
+
 ## [2.19.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.21...gatsby@2.19.22) (2020-02-25)
 
 ### Bug Fixes
