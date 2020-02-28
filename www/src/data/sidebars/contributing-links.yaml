@@ -59,8 +59,6 @@
           items:
             - title: Docs Templates
               link: /contributing/docs-templates/
-            - title: Docs and Website Components
-              link: /contributing/docs-components/
             - title: How to Write a Stub
               link: /contributing/how-to-write-a-stub/
             - title: Stub List
@@ -85,6 +83,8 @@
               link: /contributing/submit-to-starter-library/
             - title: Submit to Plugin Library
               link: /contributing/submit-to-plugin-library/
+        - title: Docs & Blog Components
+          link: /contributing/docs-and-blog-components/
     - title: Gatsby Brand Guidelines
       items:
         - title: Color

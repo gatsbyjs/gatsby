@@ -141,4 +141,4 @@
 - fromPath: /docs/contributing/blog-and-website-contributions/
   toPath: /blog-contributions/
 - fromPath: /docs/contributing/docs-and-website-components/
-  toPath: /docs-components/
+  toPath: /docs-and-blog-components/

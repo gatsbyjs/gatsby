@@ -1,11 +1,11 @@
 ---
-title: Docs Components
+title: Docs & Blog Components
 tableOfContentsDepth: 2
 ---
 
 The Gatsbyjs.org site has a handful of components that have been developed to facilitate writing new content for the blog and the docs. There are also components that help organize and lay out content in various pages across the website.
 
-This guide documents what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-components.md) to see to how each component can be used, because they are all embedded here!
+This guide documents what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-blog-components.md) to see to how each component can be used, because they are all embedded here!
 
 Information about authoring in Markdown on the site is also listed.
 
@@ -163,7 +163,7 @@ The Horizontal Nav List component takes two props:
 - `slug` - which is provided in the props of the page by default
 - `items` - an array of strings for items to render and wrap with a `<Link />` to subheadings
 
-The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/) plugin to automatically apply hover links to heading tags across docs pages. Because it automatically creates links to subheadings on pages like the glossary, the Horizontal Nav List can supply matching links (like `"guide-list"` which would align with the automatically created link at `/docs/docs-components#guide-list`).
+The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/) plugin to automatically apply hover links to heading tags across docs pages. Because it automatically creates links to subheadings on pages like the glossary, the Horizontal Nav List can supply matching links (like `"guide-list"` which would align with the automatically created link at `/docs/docs-and-blog-components#guide-list`).
 
 <!-- prettier-ignore -->
 ```markdown
