@@ -5,7 +5,7 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 import Link from "../components/localized-link"
 import SearchForm from "./search-form"
-import {FaDiscord}  from "react-icons/fa";
+import DiscordIcon from "../components/discord"
 import logo from "../assets/logo.svg"
 import logoInverted from "../assets/logo-inverted.svg"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -225,8 +225,13 @@ const Navigation = ({ pathname }) => {
               <TwitterIcon style={{ verticalAlign: `middle` }} />
             </SocialNavItem>
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
-              <FaDiscord style={{ verticalAlign: `middle` }} />
-             
+              <DiscordIcon
+                overrideCSS={{
+                  verticalAlign: `middle`,
+                  position: `relative`,
+                  top: `0.05em`,
+                }}
+              />
             </SocialNavItem>
           </div>
           <div
