@@ -54,7 +54,7 @@ The following tables put plugins, themes, and starters side-by-side, showing wha
 | Icon | Feature Capability                                                    |
 | ---- | --------------------------------------------------------------------- |
 | ●    | Fully capable (possible and supported)                                |
-| ◐    | Somewhat capable (not as recommended of a practice or less supported) |
+| ◐    | Somewhat capable (support is minimal or it is not best practice) |
 | ○    | Not capable                                                           |
 
 ### Differences and considerations in maintenance
