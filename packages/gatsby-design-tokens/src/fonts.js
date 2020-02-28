@@ -2,7 +2,7 @@ import preval from "preval.macro"
 
 // TODO re:system-ui, keep an eye on https://github.com/primer/css/issues/838
 const f = preval`
-  const system = sans = body = [
+  const system = body = [
     "-apple-system",
     "BlinkMacSystemFont",
     "Segoe UI",
@@ -16,6 +16,8 @@ const f = preval`
     "Segoe UI Symbol",
     "Noto Color Emoji",
   ]
+
+  const sans = inter = ["Inter", ...system]
 
   const heading = brand = ["Futura PT", ...system]
 
@@ -31,7 +33,7 @@ const f = preval`
 
   const serif = ["Georgia", "Times New Roman", "Times", "serif"]
 
-  const fonts = { body, system, heading, monospace, serif }
+  const fonts = { body, system, sans, heading, brand, monospace, serif }
 
   let fontsStrings = {}
   for (const fontFamily in fonts) {

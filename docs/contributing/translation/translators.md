@@ -39,4 +39,4 @@ If you would like to be a maintainer of an existing translation repo, submit a P
 
 ## When a contributor will be removed
 
-Consistent with the [Code of Conduct](/docs/code-of-conduct/) the Gatsby team reserves the right to remove a contributor (including translation maintainers) from the Gatsby organization if necessary. Some reasons for being removed include spammy comments, closing PRs or issues without action or productive dialogue, or generally harmful or abusive behavior inconsistent with Gatsby's policies.
+Consistent with the [Code of Conduct](/contributing/code-of-conduct/) the Gatsby team reserves the right to remove a contributor (including translation maintainers) from the Gatsby organization if necessary. Some reasons for being removed include spammy comments, closing PRs or issues without action or productive dialogue, or generally harmful or abusive behavior inconsistent with Gatsby's policies.
