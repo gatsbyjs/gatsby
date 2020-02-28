@@ -137,3 +137,6 @@ npm run preload-fonts -- --no-sandbox
 
 This comes with [inherent security risks](https://chromium.googlesource.com/chromium/src/+/master/docs/linux_suid_sandbox_development.md),
 but you should be alright since you're only running it locally.
+
+#### Environment Variables
+In some cases you might have to point Puppeteer to an external installation of Chromium (e.g. on Alpine Linux, the build-in version of Chromium does not work). To do that, you can set the `PUPPETEER_EXECUTABLE_PATH` environment variable. A list with all enviroment variables to configure Puppeteer can be found [here](https://pptr.dev/#?product=Puppeteer&version=v1.20.0&show=api-environment-variables).
