@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import { Component } from "react"
 import { Helmet } from "react-helmet"
 import { css } from "@emotion/core"
-import Layout from "../components/layout"
+import PageWithSidebar from "../components/page-with-sidebar"
 import FooterLinks from "../components/shared/footer-links"
 import Container from "../components/container"
 import EvaluationTable from "../components/features/evaluation-table"
@@ -32,7 +32,7 @@ class FeatureComparison extends Component {
         : getFeaturesData(data.allGatsbyJamstackSpecsCsv.edges)
 
     return (
-      <Layout location={location}>
+      <PageWithSidebar location={location}>
         <Helmet>
           <title>{titleString}</title>
         </Helmet>
@@ -71,7 +71,7 @@ class FeatureComparison extends Component {
           <FeaturesFooter />
           <FooterLinks />
         </Container>
-      </Layout>
+      </PageWithSidebar>
     )
   }
 }

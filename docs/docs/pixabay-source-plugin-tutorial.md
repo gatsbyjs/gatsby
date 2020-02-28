@@ -339,7 +339,7 @@ exports.sourceNodes = (
 
 ### Query for results
 
-Your plugin is ready. Restart `npm run develop` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here. try:
+Your plugin is ready. Restart `npm run develop` and open a browser at `http://localhost:8000/___graphql`. The Pixabay data can be queried from here. try:
 
 ```graphql
 {

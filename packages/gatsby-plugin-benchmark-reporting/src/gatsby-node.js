@@ -71,11 +71,17 @@ class BenchMeta {
 
     // For the time being, our target benchmarks are part of the main repo
     // And we will want to know what version of the repo we're testing with
+    // This won't work as intended when running a site not in our repo (!)
     const gitHash = execToStr(`git rev-parse HEAD`)
+    // Git only supports UTC tz through env var, but the unix time stamp is UTC
+    const unixStamp = execToStr(`git show --quiet --date=unix --format="%cd"`)
+    const commitTime = new Date(parseInt(unixStamp, 10) * 1000).toISOString()
 
     const nodejsVersion = process.version
 
-    const gatsbyCliVersion = execToStr(`gatsby --version`)
+    // This assumes the benchmark is started explicitly from `node_modules/.bin/gatsby`, and not a global install
+    // (This is what `gatsby --version` does too, ultimately)
+    const gatsbyCliVersion = execToStr(`node_modules/.bin/gatsby --version`)
 
     const gatsbyVersion = require(`gatsby/package.json`).version
 
@@ -83,7 +89,7 @@ class BenchMeta {
       ? require(`sharp/package.json`).version
       : `none`
 
-    const webpackVersion = execToStr(`node_modules/.bin/webpack --version`)
+    const webpackVersion = require(`webpack/package.json`).version
 
     const publicJsSize = glob(`public/*.js`).reduce(
       (t, file) => t + fs.statSync(file).size,
@@ -130,6 +136,7 @@ class BenchMeta {
       cwd: process.cwd() ?? ``,
       timestamps: this.timestamps,
       gitHash,
+      commitTime,
       ci: process.env.CI || false,
       ciName: process.env.CI_NAME || `local`,
       versions: {

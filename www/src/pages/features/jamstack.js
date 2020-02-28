@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
 
 import Button from "../../components/button"
-import Layout from "../../components/layout"
 import EvaluationTable from "../../components/features/evaluation-table"
 import { getFeaturesData } from "../../utils/get-csv-features-data"
 import Container from "../../components/container"
@@ -14,6 +13,7 @@ import CompareButton from "../../components/features/compare-button"
 import Breadcrumb from "../../components/docs-breadcrumb"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
 import useComparisonState from "../../hooks/use-comparison-state"
+import PageWithSidebar from "../../components/page-with-sidebar"
 
 const FeaturesHeader = () => (
   <section>
@@ -38,7 +38,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
   )
 
   return (
-    <Layout location={location} enableScrollSync={true}>
+    <PageWithSidebar location={location}>
       <Container>
         <main id={`reach-skip-nav`}>
           <Breadcrumb location={location} />
@@ -90,7 +90,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
         </main>
         <FooterLinks />
       </Container>
-    </Layout>
+    </PageWithSidebar>
   )
 }
 

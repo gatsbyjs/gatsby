@@ -208,6 +208,9 @@ plugins.
 - [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
       the current locale and available translations to all post types translated with Polylang.
 
+- [x] [wp-rest-polylang-pro](https://github.com/dannyvaughton/wp-rest-polylang-pro) which adds
+      the current locale and available translations to all post types & taxonomies translated with Polylang Pro.
+
 - [x] [Yoast](https://yoast.com/wordpress/plugins/seo/)
   - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in WordPress.
   - Will pull the `yoast_meta: { ... }` field's contents in entity.

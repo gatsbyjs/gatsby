@@ -11,6 +11,7 @@
   },
   "masterIssue": true,
   "rebaseStalePrs": false,
+  "excludePackageNames": ["react", "react-dom"],
   "rangeStrategy": "bump",
   "bumpVersion": null,
   "semanticCommitScope": null,
