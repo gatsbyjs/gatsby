@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Using MDX Example 
+  Using MDX Example
 </h1>
 
 This repository demonstrates how to add MDX pages to a new Gatsby site.
@@ -17,7 +17,7 @@ In this section you will see two examples of using MDX, one of which is from a 3
 
 In the pages directory of this example you will find the `chart-info.mdx` file which uses some components to display this array of information in multiple graphs.
 
-```
+```javascript
 export const data = [
   {
     label: "In App Purchase Income",
@@ -34,7 +34,7 @@ export const data = [
   {
     label: "Advertising Income",
     datums: [
-      { x: "2020", y: 4},
+      { x: "2020", y: 4 },
       { x: "2019", y: 3 },
       { x: "2018", y: 12 },
       { x: "2017", y: 14 },
