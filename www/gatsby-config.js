@@ -53,7 +53,12 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
+// true if `env.LOCALES` has a defined list of languages
 if (langCodes.length > 0) {
+  const naughtyFiles = [
+    `docs/docs/graphql-api.md`,
+    `docs/docs/data-fetching.md`,
+  ]
   dynamicPlugins.push(
     ...langCodes.map(code => ({
       resolve: `gatsby-source-git`,
@@ -61,9 +66,15 @@ if (langCodes.length > 0) {
         name: `docs-${code}`,
         remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
         branch: `master`,
-        patterns: `docs/tutorial/**`,
+        patterns: [`docs/**`, ...naughtyFiles.map(file => `!${file}`)],
       },
-    }))
+    })),
+    {
+      resolve: `gatsby-plugin-i18n`, // local plugin
+      options: {
+        languages: langCodes,
+      },
+    }
   )
 }
 
