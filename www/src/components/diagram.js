@@ -6,8 +6,8 @@ import { Link, StaticQuery, graphql } from "gatsby"
 
 import logo from "../assets/monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
-import FuturaParagraph from "../components/futura-paragraph"
-import TechWithIcon from "../components/tech-with-icon"
+import FuturaParagraph from "./futura-paragraph"
+import TechWithIcon from "./tech-with-icon"
 
 const lineAnimation = keyframes({
   to: { strokeDashoffset: 10 },
