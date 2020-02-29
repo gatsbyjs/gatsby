@@ -408,7 +408,7 @@ module.exports = async (
       )
     }
 
-    if (process.env.gatsby_executing_command === `build` && program.profile) {
+    if (stage === `build-javascript` && program.profile) {
       resolve.alias[`react-dom$`] = `react-dom/profiling`
       resolve.alias[`scheduler/tracing`] = `scheduler/tracing-profiling`
     }
