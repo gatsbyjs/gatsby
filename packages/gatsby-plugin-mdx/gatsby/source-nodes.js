@@ -14,7 +14,7 @@ const getTableOfContents = require(`../utils/get-table-of-content`)
 const defaultOptions = require(`../utils/default-options`)
 const genMDX = require(`../utils/gen-mdx`)
 const { mdxHTMLLoader: loader } = require(`../utils/render-html`)
-const { interopDefault } = require(`../utils/interop-defaul`)
+const { interopDefault } = require(`../utils/interop-default`)
 
 async function getCounts({ mdast }) {
   let counts = {}
