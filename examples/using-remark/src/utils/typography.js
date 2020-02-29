@@ -131,17 +131,14 @@ const options = {
         overflow: `auto`,
       },
       ".gatsby-highlight pre[class*='language-']": {
+        backgroundColor: `transparent`,
+        borderRadius: 0,
         margin: 0,
+        padding: 0,
         overflow: `initial`,
         float: `left`,
         minWidth: `100%`,
         textShadow: `none`,
-      },
-      // Override `inline code block` background color from prismjs
-      "code[class*='language-']": {
-        backgroundColor: `transparent !important`,
-        borderRadius: `0 !important`,
-        padding: `0 !important`
       },
       ".gatsby-highlight pre[class*='language-'].line-numbers": {
         paddingLeft: `2.8em`,
