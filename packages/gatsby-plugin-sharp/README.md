@@ -101,7 +101,7 @@ a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
 plugin for Markdown content as gatsby-remark-images).
 
-When both a `maxWidth` and `maxHeight` are provided, sharp will use `COVER` as a fit strategy by default. This might not be ideal so you can now choose between `COVER`, `CONTAIN` and `FILL` as a fit strategy. To see them in action the [CSS property object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) comes close to its implementation.
+When both a `maxWidth` and `maxHeight` are provided, sharp will use `COVER` as a fit strategy by default. This might not be ideal so you can now choose between `COVER`, `CONTAIN` and `FILL` as a fit strategy. To see them in action the [CSS property object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) comes close to its implementation. The image will be cropped to aspect ratio of `maxWidth` and `maxHeight`, with sizes calculated using `maxWidth` respecting `srcSetBreakpoints`.
 
 #### Note
 
