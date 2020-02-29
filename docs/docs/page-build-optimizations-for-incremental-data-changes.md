@@ -43,7 +43,7 @@ Done in 154.501 sec
 
 - `--write-to-file` creates two files in the `.cache` folder, with lists of the changed paths in the build assets (`public`) folder.
 
-  - `newPages.txt` will contain a list of new or changed paths 
+  - `newPages.txt` will contain a list of new or changed paths
   - `deletedPages.txt` will contain a list of deleted paths
 
 If there are no changed or deleted paths, then the relevant files will not be created in the `.cache` folder.
@@ -56,7 +56,7 @@ If there are no changed or deleted paths, then the relevant files will not be cr
 
 - This feature is not available with `gatsby develop`.
 
-* At the end of each build, gatsby creates a `redux.state` file in `/.cache` that contains previous build data. You will need to persist the `.cache/redux.state` between builds, allowing for comparison. If there is no `redux.state` file located in the `/.cache` folder then a full build will be triggered
+* At the end of each build, gatsby creates a `redux.state` file in `/.cache` that contains previous build data. You will need to persist the `.cache/redux.state` between builds, allowing for comparison. If there is no `redux.state` file located in the `/.cache` folder then a full build will be triggered.
 
 * Any code or static query changes (templates, components, source handling, new plugins etc) will prompt the creation of a new webpack compilation hash and trigger a full build.
 
