@@ -10,8 +10,9 @@ Perhaps you've been approached by an SEO _expert_ who can maximize your revenue 
 
 ## Implementation
 
-The core technology powering SEO is the humble, ubiquitiuous `meta` tag along with common tags like `title`. You've probably seen something like the below:
+A core ingredient for SEO is a meaningful `title` tag. Make sure to include related keywords without falling into buzzword bingo. Some crawlers also respect `meta` tags, while Google seems to ignore these tags for ranking and indexing at all.
 
+You probably have seen something like the following:
 ```html
 <title>My Wonderful App</title>
 <meta
@@ -24,7 +25,7 @@ The core technology powering SEO is the humble, ubiquitiuous `meta` tag along wi
 />
 ```
 
-These are the _bare minimum_ requirements that should be implemented within an application's `head` tags for basic SEO. However, the following describes a powerful combo of content rendered at _build time_ powered by Gatsby and GraphQL. 
+The _bare minimum_ requirement is to include a `title` tag for basic SEO. However, the following describes a powerful combo of content rendered at _build time_ powered by Gatsby and GraphQL. 
 
 ## Gatsby + GraphQL
 
@@ -468,6 +469,8 @@ Let's see how an attached image will look like. For this tutorial, you can use t
 ![Scribble stones forming SEO](./images/seo.jpg)
 
 The image will need to be located at `content/blog/2019-01-04-hello-world-seo/images/featured.jpg`.
+
+Make sure to use appriopriate sized images for social sharing. Facebook and Twitter have retrictions beyond they will simply ignore your image.
 
 #### Querying with GraphQL
 
