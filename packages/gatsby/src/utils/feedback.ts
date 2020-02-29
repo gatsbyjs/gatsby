@@ -6,7 +6,6 @@ import latestVersion from "latest-version"
 // This is actually a Promise<string> value
 const latestGatsbyVersion = latestVersion(`gatsby`)
 
-const config = getConfigStore()
 const feedbackKey = `feedback.disabled`
 const lastDateKey = `feedback.lastRequestDate`
 
@@ -14,12 +13,12 @@ const lastDateKey = `feedback.lastRequestDate`
 // and `gatsby feedback --enable`. This key is used to determine
 // if a user is allowed to be solicited for feedback
 export function setFeedbackDisabledValue(enabled: boolean) {
-  config.set(feedbackKey, enabled)
+  getConfigStore().set(feedbackKey, enabled)
 }
 
 // Print the feedback request to the user
 export function showFeedbackRequest(): void {
-  config.set(lastDateKey, Date.now())
+  getConfigStore().set(lastDateKey, Date.now())
   report.log(
     `Hello! Will you help Gatsby improve by taking a four question survey?`
   )
@@ -33,7 +32,7 @@ export function showFeedbackRequest(): void {
 // 4. They are on the most recent version of Gatsby
 export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
   // Heuristic 1
-  if (config.get(feedbackKey) === true) {
+  if (getConfigStore().get(feedbackKey) === true) {
     return false
   }
 
@@ -43,7 +42,7 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
   }
 
   // Heuristic 3
-  const lastDateValue = config.get(lastDateKey)
+  const lastDateValue = getConfigStore().get(lastDateKey)
   // 3.a if the user has never received the feedback request, this is undefined
   //     Which is effectively a pass, because it's been ~infinity~ since they last
   //     received a request from us.

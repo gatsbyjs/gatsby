@@ -52,6 +52,10 @@ import {
   reportWebpackWarnings,
   structureWebpackErrors,
 } from "../utils/webpack-error-utils"
+import {
+  userPassesFeedbackRequestHeuristic,
+  showFeedbackRequest,
+} from "../utils/feedback"
 
 import { BuildHTMLStage, IProgram } from "./types"
 import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "../utils/jobs-manager"
@@ -349,7 +353,17 @@ async function startServer(program: IProgram): Promise<IServer> {
   return { compiler, listener, webpackActivity }
 }
 
+const feedbackHandler = async exitCode => {
+  if (await userPassesFeedbackRequestHeuristic()) {
+    showFeedbackRequest()
+  }
+  process.exit(exitCode)
+}
+
 module.exports = async (program: IProgram): Promise<void> => {
+  process.on("exit", feedbackHandler)
+  process.on("SIGINT", feedbackHandler)
+
   initTracer(program.openTracingConfigFile)
   report.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
