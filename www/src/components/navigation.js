@@ -1,12 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { useColorMode } from "theme-ui"
-import GithubIcon from "react-icons/lib/go/mark-github"
-import TwitterIcon from "react-icons/lib/fa/twitter"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import {
+  FaTwitter as TwitterIcon,
+  FaDiscord as DiscordIcon,
+} from "react-icons/fa"
 
 import Link from "../components/localized-link"
 import SearchForm from "./search-form"
-import DiscordIcon from "../components/discord"
 import logo from "../assets/logo.svg"
 import logoInverted from "../assets/logo-inverted.svg"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -226,13 +228,7 @@ const Navigation = ({ pathname }) => {
               <TwitterIcon style={{ verticalAlign: `middle` }} />
             </SocialNavItem>
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
-              <DiscordIcon
-                overrideCSS={{
-                  verticalAlign: `middle`,
-                  position: `relative`,
-                  top: `0.05em`,
-                }}
-              />
+              <DiscordIcon style={{ verticalAlign: `middle` }} />
             </SocialNavItem>
           </div>
           <div

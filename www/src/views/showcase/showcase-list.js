@@ -16,8 +16,8 @@ import qs from "qs"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-import GithubIcon from "react-icons/lib/go/mark-github"
-import LaunchSiteIcon from "react-icons/lib/md/launch"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import { MdLaunch as LaunchSiteIcon } from "react-icons/md"
 import FeaturedIcon from "../../assets/icons/featured-sites-icons"
 
 const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {

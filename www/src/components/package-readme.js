@@ -8,7 +8,7 @@ import { Link } from "gatsby"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import FooterLinks from "../components/shared/footer-links"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import GatsbyIcon from "../components/gatsby-monogram"
 
 const PackageReadMe = props => {

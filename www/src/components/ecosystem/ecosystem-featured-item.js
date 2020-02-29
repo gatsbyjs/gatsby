@@ -3,8 +3,10 @@ import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import StarIcon from "react-icons/lib/md/star"
-import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
+import {
+  MdStar as StarIcon,
+  MdArrowDownward as ArrowDownwardIcon,
+} from "react-icons/md"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"

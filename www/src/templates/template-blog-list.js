@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import TagsIcon from "react-icons/lib/ti/tags"
+import { TiTags as TagsIcon } from "react-icons/ti"
 
 import Button from "../components/button"
 import Container from "../components/container"

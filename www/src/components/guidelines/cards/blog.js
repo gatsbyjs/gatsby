@@ -1,5 +1,5 @@
 import React from "react"
-import MdArrowForward from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward } from "react-icons/md"
 
 import { Box, Flex, Heading, Link, Text } from "../system"
 import ImagePlaceholder from "../image-placeholder"

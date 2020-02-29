@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import MdArrowBack from "react-icons/lib/md/arrow-back"
+import { MdArrowBack } from "react-icons/md"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { withTitleHover } from "../shared/styles"
