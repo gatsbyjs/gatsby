@@ -4,21 +4,14 @@ title: Using Multiple Themes Together
 
 ## What this tutorial covers
 
-- composing multiple themes into a final site using [gatsby-theme-blog](/packages/gatsby-theme-blog/), [gatsby-theme-notes](/packages/gatsby-theme-notes/) and [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.com/) as examples
-- component shadowing
-- component shadowing for Theme-UI theme file
+- Composing multiple themes into a final site using [gatsby-theme-blog](/packages/gatsby-theme-blog/), [gatsby-theme-notes](/packages/gatsby-theme-notes/) and [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.com/) as examples
+- Component shadowing
+- Component shadowing for Theme-UI theme file
 
 ## Prerequisites
 
-This tutorial assumes you have a basic working knowledge of Gatsby and are comfortable with the [Gatsby fundamentals](https://www.gatsbyjs.org/tutorial/using-a-theme/)
-
-## Step 0: A mental model of Gatsby themes
-
-If you have worked with Wordpress or a similar CMS you have likely used a 'theme' or a 'template' before. Often this is a singular theme which controls the appearance and function of your entire site. You can install new themes, but _not_ multiple themes together.
-
-Gatsby themes are different.
-
-Insert analogy here...maybe using building blocks/lego. Got to think this through.
+- [Gatsby fundamentals](/tutorial/#gatsby-fundamentals)
+- [What are Gatsby themes?](/docs/themes/what-are-gatsby-themes/)
 
 ## Step 1: Create a new site using the hello world starter
 
@@ -113,7 +106,7 @@ Multiple themes are awesome!
 gatsby develop
 ```
 
-Now if you visit `localhost:8000/blog` and `localhost:8000/notes` there you should see some content to look at.
+Now if you visit `localhost:8000/blog` and `localhost:8000/notes` you should see some content to look at.
 
 ## Step 7: Put the blog posts on the homepage
 
@@ -134,7 +127,7 @@ Now if you visit `localhost:8000/blog` and `localhost:8000/notes` there you shou
 
 ## Step 8: Shadow the 'bio-content.js' component
 
-Your name probably isn't Jane Doe. Let's fix that with a custom `bio-content.js` component using [theme shadowing](/docs/themes/shadowing/). Don't forget to stop and restart your development server when adding a shadowed component the first time. Your file structure should look like this:
+Your name probably isn't Jane Doe. Let's fix that with a custom `bio-content.js` component using [theme shadowing](/docs/themes/shadowing/). Don't forget to stop and restart your development server when adding a shadowed component for the first time. Your file structure should look like this:
 
 ```
 └── src
@@ -160,7 +153,7 @@ export default () => (
 
 ## Step 9: Shadow the Theme-UI theme file
 
-`gatsby-theme-blog` and `gatsby-theme-notes` both use [Theme-UI](https://www.gatsbyjs.org/docs/theme-ui/) design tokens to manage their styling; colors, font sizes, spacing, etc. We can use component shadowing to gain control over these design tokens in our final site. Don't forget to stop and restart your development server when adding a shadowed component the first time. Your file structure should look like this:
+`gatsby-theme-blog` and `gatsby-theme-notes` both use [Theme-UI](https://www.gatsbyjs.org/docs/theme-ui/) design tokens to manage their styling; colors, font sizes, spacing, etc. We can use component shadowing to gain control over these design tokens in our final site. Don't forget to stop and restart your development server the again. Your file structure should look like this:
 
 ```
 └── src
@@ -192,7 +185,7 @@ export default merge(defaultTheme, {
 
 ## Step 10: Add another theme
 
-Themes can be big, like `gatsby-theme-blog`, but they can also be small discrete sets of components or functions. A great example of this is [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.com/) which adds the ability to easily embed social media content and videos into your MDX files.
+Themes can be big, like `gatsby-theme-blog`, but they can also be a small discrete set of components or functions. A great example of this is [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.com/) which adds the ability to embed social media content and videos directly into your MDX files.
 
 Let's install the theme.
 
@@ -218,14 +211,126 @@ title: Jason and Jackson Talk Themes
 date: 2020-02-21
 ---
 
-Here is a video about composing and styling themes with Jason and Jackson!
+Here is a video about composing and styling themes with J&J!
 
 <YouTube youTubeId="6Z4p-qjnKCQ" />
 ```
 
-## Step 11: Add a custom navigation menu
+## Step 11: Add a navigation menu
 
 We can use component shadowing one more time to add a basic navigation menu. You can read more about [creating dynamic navigation menus](/docs/creating-dynamic-navigation/) in the docs.
+
+Add a `menuLinks` array to `gatsby-config.js`
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: `Multiple Themes`,
+    description: `A tutorial for building a Gatsby site using multiple themes.`,
+    author: `Your name`,
+    menuLinks: [
+      {
+        name: `Blog`,
+        url: `/`,
+      },
+      {
+        name: `Notes`,
+        url: `/notes`,
+      },
+    ],
+    social: [
+      {
+        name: `twitter`,
+        url: `https://twitter.com/gatsbyjs`,
+      },
+      {
+        name: `github`,
+        url: `https://github.com/gatsbyjs`,
+      },
+    ],
+  },
+  plugins: [
+    {
+      resolve: `gatsby-theme-blog`,
+      options: {
+        basePath: `/`,
+      },
+    },
+    {
+      resolve: `gatsby-theme-notes`,
+      options: {
+        basePath: `/notes`,
+      },
+    },
+  ],
+}
+```
+
+```jsx:title=src/components/navigation.js
+import React from "react"
+import { Link, useStaticQuery, graphql } from "gatsby"
+import { Styled, css } from "theme-ui"
+
+export default () => {
+  const data = useStaticQuery(
+    graphql`
+      query SiteMetaData {
+        site {
+          siteMetadata {
+            menuLinks {
+              name
+              url
+            }
+          }
+        }
+      }
+    `
+  )
+  const navLinks = data.site.siteMetadata.menuLinks
+  return (
+    <nav
+      css={css({
+        py: 2,
+      })}
+    >
+      <ul
+        css={css({
+          display: `flex`,
+          listStyle: `none`,
+          margin: 0,
+          padding: 0,
+        })}
+      >
+        {navLinks.map(link => (
+          <li
+            css={css({
+              marginRight: 2,
+              ":last-of-type": {
+                marginRight: 0,
+              },
+            })}
+          >
+            <Styled.a
+              css={css({
+                fontFamily: `heading`,
+                fontWeight: `bold`,
+                textDecoration: `none`,
+                ":hover": {
+                  textDecoration: `underline`,
+                },
+              })}
+              as={Link}
+              to={link.url}
+            >
+              {link.name}
+            </Styled.a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+```
 
 Shadow `header.js` from `gatsby-theme-blog`.
 
@@ -236,7 +341,7 @@ Shadow `header.js` from `gatsby-theme-blog`.
     │   │   ├── bio-content.js // highlight-line
 ```
 
-Add in a basic navigation menu.
+Import the navigation menu and add it to the header.
 
 ```jsx:title=header.js
 import React from "react"
@@ -246,6 +351,7 @@ import Switch from "gatsby-theme-blog/src/components/switch"
 import Bio from "gatsby-theme-blog/src/components/bio"
 import sun from "gatsby-theme-blog/assets/sun.png"
 import moon from "gatsby-theme-blog/assets/moon.png"
+import Navigation from "../../components/navigation" // highlight-line
 
 const rootPath = `${__PATH_PREFIX__}/`
 
@@ -336,45 +442,7 @@ export default ({ children, title, ...props }) => {
           pt: 4,
         })}
       >
-        <nav // highlight-line
-          css={css({
-            // highlight-line
-            py: 2, // highlight-line
-            display: `flex`, // highlight-line
-          })} // highlight-line
-        >
-          {" "}
-          // highlight-line
-          <Styled.a // highlight-line
-            css={css({
-              // highlight-line
-              fontFamily: `heading`, // highlight-line
-              fontWeight: `bold`, // highlight-line
-              textDecoration: `none`, // highlight-line
-              marginRight: 2, // highlight-line
-            })} // highlight-line
-            as={Link} // highlight-line
-            to="/" // highlight-line
-          >
-            {" "}
-            // highlight-line Blog // highlight-line
-          </Styled.a>{" "}
-          // highlight-line
-          <Styled.a // highlight-line
-            css={css({
-              // highlight-line
-              fontFamily: `heading`, // highlight-line
-              fontWeight: `bold`, // highlight-line
-              textDecoration: `none`, // highlight-line
-            })} // highlight-line
-            as={Link} // highlight-line
-            to="/notes" // highlight-line
-          >
-            {" "}
-            // highlight-line Notes // highlight-line
-          </Styled.a> // highlight-line
-        </nav>{" "}
-        // highlight-line
+        <Navigation /> // highlight-line
         <div
           css={css({
             display: `flex`,
@@ -402,7 +470,7 @@ export default ({ children, title, ...props }) => {
 
 ## What's next
 
-Keep customizing and developing your own website. Share what you make on Twitter with the [#builtwithgatsby](https://twitter.com/hashtag/builtwithgatsby) hashtag. Moving beyond using multiple themes together you can start [creating your own themes](/tutorial/building-a-theme/) and releasing theme for the world to enjoy!
+- [Building a theme](/tutorial/building-a-theme/)
 
 ## Other resources
 
@@ -412,4 +480,3 @@ Keep customizing and developing your own website. Share what you make on Twitter
 - [Customizing styles in Gatsby themes with Theme-UI](/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui/)
 - [Composing and styling Gatsby themes (with Brent Jackson) — Learn With Jason](https://www.youtube.com/watch?v=6Z4p-qjnKCQ)
 - [Build a Personal Site Using Gatsby Themes (with Will Johnson) — Learn With Jason](https://www.youtube.com/watch?v=vf2Dy_xKUno)
--
