@@ -353,16 +353,16 @@ async function startServer(program: IProgram): Promise<IServer> {
   return { compiler, listener, webpackActivity }
 }
 
-const feedbackHandler = async exitCode => {
+const feedbackHandler = async (exitCode: number | string): Promise<void> => {
   if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
   }
-  process.exit(exitCode)
+  process.exit(exitCode === 1 ? 1 : 0)
 }
 
 module.exports = async (program: IProgram): Promise<void> => {
-  process.on("exit", feedbackHandler)
-  process.on("SIGINT", feedbackHandler)
+  process.on(`exit`, feedbackHandler)
+  process.on(`SIGINT`, feedbackHandler)
 
   initTracer(program.openTracingConfigFile)
   report.pendingActivity({ id: `webpack-develop` })

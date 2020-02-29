@@ -19,6 +19,10 @@ const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 const {
   waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
 } = require(`../utils/jobs-manager`)
+import {
+  userPassesFeedbackRequestHeuristic,
+  showFeedbackRequest,
+} from "../utils/feedback"
 
 type BuildArgs = {
   directory: string,
@@ -201,4 +205,8 @@ module.exports = async function build(program: BuildArgs) {
   await stopTracer()
   workerPool.end()
   buildActivity.end()
+
+  if (await userPassesFeedbackRequestHeuristic()) {
+    showFeedbackRequest()
+  }
 }

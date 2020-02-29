@@ -2,17 +2,13 @@ import report from "gatsby-cli/lib/reporter"
 import { getConfigStore, getGatsbyVersion } from "gatsby-core-utils"
 import latestVersion from "latest-version"
 
-// This is an early invocation to optimize the time to fetching the latest version from gatsby
-// This is actually a Promise<string> value
-const latestGatsbyVersion = latestVersion(`gatsby`)
-
 const feedbackKey = `feedback.disabled`
 const lastDateKey = `feedback.lastRequestDate`
 
 // This function is designed to be used by `gatsby feedback --disable`
 // and `gatsby feedback --enable`. This key is used to determine
 // if a user is allowed to be solicited for feedback
-export function setFeedbackDisabledValue(enabled: boolean) {
+export function setFeedbackDisabledValue(enabled: boolean): void {
   getConfigStore().set(feedbackKey, enabled)
 }
 
@@ -20,9 +16,11 @@ export function setFeedbackDisabledValue(enabled: boolean) {
 export function showFeedbackRequest(): void {
   getConfigStore().set(lastDateKey, Date.now())
   report.log(
-    `Hello! Will you help Gatsby improve by taking a four question survey?`
+    `\n\nHello! Will you help Gatsby improve by taking a four question survey?`
   )
-  report.log(`Give us your feedback here: https://www.typeform.com/to/A9VWwT`)
+  report.log(
+    `Give us your feedback here: https://www.typeform.com/to/A9VWwT\n\n`
+  )
 }
 
 // We are only showing feedback requests to users in if they pass a few checks:
@@ -50,14 +48,14 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
     const lastDate = new Date(lastDateValue)
     const monthsSinceLastRequest = lastDate.getMonth() - new Date().getMonth()
 
-    if (monthsSinceLastRequest > 3) {
+    if (monthsSinceLastRequest < 3) {
       return false
     }
   }
 
   // Heuristic 4
-  const versionPoints = getGatsbyVersion().split(".")
-  const latestVersionPoints = (await latestGatsbyVersion).split(".")
+  const versionPoints = getGatsbyVersion().split(`.`)
+  const latestVersionPoints = (await latestVersion(`gatsby`)).split(`.`)
 
   // Since we push versions very frequently. So thinking that users will
   // be on the latest patch is potentially unrealistic. So we are just

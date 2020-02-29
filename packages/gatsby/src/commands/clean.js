@@ -1,5 +1,9 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
+import {
+  userPassesFeedbackRequestHeuristic,
+  showFeedbackRequest,
+} from "../utils/feedback"
 
 module.exports = async function clean(args) {
   const { directory, report } = args
@@ -13,4 +17,8 @@ module.exports = async function clean(args) {
   )
 
   report.info(`Successfully deleted directories`)
+
+  if (await userPassesFeedbackRequestHeuristic()) {
+    showFeedbackRequest()
+  }
 }
