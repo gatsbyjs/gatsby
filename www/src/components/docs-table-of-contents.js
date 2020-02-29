@@ -6,6 +6,28 @@ import {
   breakpoints,
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { useEffect, useState } from "react"
+import { useActiveHash } from "../hooks/use-active-hash"
+
+const getHeadingIds = (toc, traverseFullDepth = false) => {
+  const idList = []
+  const hashToId = str => str.slice(1)
+
+  if (toc) {
+    for (const item of toc) {
+      // Sometimes url does not exist on item. See #19851
+      if (item.url) {
+        idList.push(hashToId(item.url))
+      }
+
+      // Only traverse sub-items if specified (they are not displayed in ToC)
+      if (item.items && traverseFullDepth) {
+        idList.push(...getHeadingIds(item.items, true))
+      }
+    }
+  }
+
+  return idList
+}
 
 function isUnderDepthLimit(depth, maxDepth) {
   if (maxDepth === null) {
@@ -69,8 +91,9 @@ function createItems(items, location, depth, maxDepth, activeHash, isDesktop) {
   )
 }
 
-function TableOfContents({ page, activeHash, location }) {
+function TableOfContents({ page, toc, location }) {
   const [isDesktop, setIsDesktop] = useState(false)
+  const activeHash = useActiveHash(getHeadingIds(toc))
 
   useEffect(() => {
     const isDesktopQuery = window.matchMedia(`(min-width: ${breakpoints[4]})`) // 1200px

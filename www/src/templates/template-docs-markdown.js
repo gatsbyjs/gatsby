@@ -15,29 +15,6 @@ import Breadcrumb from "../components/docs-breadcrumb"
 import Container from "../components/container"
 import PrevAndNext from "../components/prev-and-next"
 
-import { useActiveHash } from "../hooks/use-active-hash"
-
-const getHeadingIds = (toc, traverseFullDepth = false) => {
-  const idList = []
-  const hashToId = str => str.slice(1)
-
-  if (toc) {
-    for (const item of toc) {
-      // Sometimes url does not exist on item. See #19851
-      if (item.url) {
-        idList.push(hashToId(item.url))
-      }
-
-      // Only traverse sub-items if specified (they are not displayed in ToC)
-      if (item.items && traverseFullDepth) {
-        idList.push(...getHeadingIds(item.items, true))
-      }
-    }
-  }
-
-  return idList
-}
-
 const containerStyles = {
   // we need to account for <Container>'s horizontal padding of
   // `space[6]` each (1.5rem), plus add a fluffy `space[9]`
@@ -56,8 +33,6 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
   const description = page.frontmatter.description || page.excerpt
-
-  const activeHash = useActiveHash(getHeadingIds(toc))
 
   return (
     <PageWithSidebar
@@ -121,11 +96,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
                 },
               }}
             >
-              <TableOfContents
-                location={location}
-                page={page}
-                activeHash={activeHash}
-              />
+              <TableOfContents toc={toc} location={location} page={page} />
             </div>
           )}
           <div
