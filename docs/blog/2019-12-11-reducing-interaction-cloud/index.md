@@ -30,7 +30,13 @@ So how do you reduce unnecessary interaction?
 
 To reduce interaction, you can infer “as much as possible from history and the environment.” See this full quote below:
 
-<Pullquote>If the software properly infers as much as possible from history and the environment, it should be able to produce at least a reasonable starting point for the context model. Most of the user’s interaction will then consist of correcting (or confirming) the software’s predictions. This is generally less stressful than constructing the entire context from scratch.</Pullquote>
+<Pullquote>
+  If the software properly infers as much as possible from history and the
+  environment, it should be able to produce at least a reasonable starting point
+  for the context model. Most of the user’s interaction will then consist of
+  correcting (or confirming) the software’s predictions. This is generally less
+  stressful than constructing the entire context from scratch.
+</Pullquote>
 
 _Quote from Brett Victor, [“Magic Ink”](http://worrydream.com/MagicInk/#p173)_
 
