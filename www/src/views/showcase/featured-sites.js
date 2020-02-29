@@ -9,7 +9,10 @@ import { useColorMode } from "theme-ui"
 import { screenshot, screenshotHover, withTitleHover } from "../shared/styles"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { ShowcaseIcon } from "../../assets/icons"
-import { mediaQueries, colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import {
+  mediaQueries,
+  colors,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -163,7 +166,7 @@ class FeaturedSites extends Component {
               padding: t => `${t.space[6]} ${t.space[6]} 0`,
             }}
           >
-            {featured.slice(0, 9).map(({ node }) => (
+            {featured.slice(0, 9).map(node => (
               <div
                 key={node.id}
                 sx={{

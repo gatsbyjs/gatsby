@@ -20,9 +20,9 @@ import { themedInput } from "../../utils/styles"
 const OPEN_SOURCE_CATEGORY = `Open Source`
 
 const filterByCategories = (list, categories) => {
-  const items = list.reduce((aggregated, edge) => {
-    if (edge.node.categories) {
-      const filteredCategories = edge.node.categories.filter(c =>
+  const items = list.reduce((aggregated, node) => {
+    if (node.categories) {
+      const filteredCategories = node.categories.filter(c =>
         categories.includes(c)
       )
       if (
@@ -58,20 +58,20 @@ class FilteredShowcase extends Component {
       maxPatternLength: 32,
       minMatchCharLength: 1,
       keys: [
-        `node.title`,
-        `node.categories`,
-        `node.built_by`,
-        `node.description`,
+        `title`,
+        `categories`,
+        `built_by`,
+        `description`,
       ],
     }
 
-    this.fuse = new Fuse(props.data.allSitesYaml.edges, options)
+    this.fuse = new Fuse(props.data.allSitesYaml.nodes, options)
   }
 
   render() {
     const { data, filters, setFilters } = this.props
 
-    let items = data.allSitesYaml.edges
+    let items = data.allSitesYaml.nodes
 
     if (this.state.search.length > 0) {
       items = this.fuse.search(this.state.search)
@@ -82,18 +82,18 @@ class FilteredShowcase extends Component {
     }
 
     // create map of categories with totals
-    const aggregatedCategories = items.reduce((categories, edge) => {
-      if (!edge.node.categories) {
-        edge.node.categories = []
+    const aggregatedCategories = items.reduce((categories, node) => {
+      if (!node.categories) {
+        node.categories = []
       }
-      const idx = edge.node.categories.indexOf(OPEN_SOURCE_CATEGORY)
+      const idx = node.categories.indexOf(OPEN_SOURCE_CATEGORY)
       if (idx !== -1) {
-        edge.node.categories.splice(idx, 1)
+        node.categories.splice(idx, 1)
       }
-      if (edge.node.source_url) {
-        edge.node.categories.push(OPEN_SOURCE_CATEGORY)
+      if (node.source_url) {
+        node.categories.push(OPEN_SOURCE_CATEGORY)
       }
-      edge.node.categories.forEach(category => {
+      node.categories.forEach(category => {
         // if we already have the category recorded, increase count
         if (categories[category]) {
           categories[category] = categories[category] + 1
@@ -102,7 +102,7 @@ class FilteredShowcase extends Component {
           categories[category] = 1
         }
       })
-      edge.node.categories.sort((str1, str2) =>
+      node.categories.sort((str1, str2) =>
         str1.toLowerCase().localeCompare(str2.toLowerCase())
       )
 
@@ -129,7 +129,7 @@ class FilteredShowcase extends Component {
               filters={filters}
               label="Site"
               items={items}
-              edges={data.allSitesYaml.edges}
+              nodes={data.allSitesYaml.nodes}
             />
             <div sx={{ ml: `auto` }}>
               <label css={{ display: `block`, position: `relative` }}>
