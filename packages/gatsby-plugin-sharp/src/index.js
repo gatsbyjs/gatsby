@@ -511,7 +511,11 @@ async function fluid({ file, args = {}, reporter, cache }) {
   let base64Image
   if (options.base64) {
     const base64Width = options.base64Width || defaultBase64Width()
-    const base64Height = Math.max(1, Math.round((base64Width * height) / width))
+    const base64Height = Math.max(1, Math.round(base64Width * (
+       options.maxHeight && options.maxWidth 
+         ? options.maxHeight / options.maxWidth 
+         : height / width
+      )))
     const base64Args = {
       duotone: options.duotone,
       grayscale: options.grayscale,
