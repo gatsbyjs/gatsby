@@ -261,7 +261,7 @@ SEO.propTypes = {
 export default SEO
 ```
 
-Woo hoo! You enabled not only SEO for search engines like Google and Bing, but you also laid the groundwork for enhanced sharing capabilities on social networks. Finally, you will learn to add support for one of the more useful functionalities for SEO: a canonical link.
+Woo hew! You enabled not only SEO for search engines like Google and Bing, but you also laid the groundwork for enhanced sharing capabilities on social networks. Finally, you will learn to add support for one of the more useful functionalities for SEO: a canonical link.
 
 ## `link rel="canonical"`
 
@@ -410,7 +410,7 @@ SEO.propTypes = {
 export default SEO
 ```
 
-Woo hoo! Lots to digest here, but you've enabled adding an _absolute_ canonical link simply by passing in a `slug` prop and prefixing with `siteUrl`.
+Woo hew! Lots to digest here, but you've enabled adding an _absolute_ canonical link simply by passing in a `slug` prop and prefixing with `siteUrl`.
 
 To bring it all home, it's time to begin actually _using_ this extensible SEO component to show all of these moving parts coming together to deliver a great SEO experience.
 
@@ -470,7 +470,7 @@ Let's see how an attached image will look like. For this tutorial, you can use t
 
 The image will need to be located at `content/blog/2019-01-04-hello-world-seo/images/featured.jpg`.
 
-Make sure to use appriopriate sized images for social sharing. Facebook and Twitter have retrictions beyond they will simply ignore your image.
+Make sure to use appropriate sized images for social sharing. Facebook and Twitter have restrictions beyond they will simply ignore your image.
 
 #### Querying with GraphQL
 
