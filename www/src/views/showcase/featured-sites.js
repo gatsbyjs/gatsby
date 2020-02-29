@@ -7,7 +7,6 @@ import hex2rgba from "hex2rgba"
 import { useColorMode } from "theme-ui"
 
 import { screenshot, screenshotHover, withTitleHover } from "../shared/styles"
-import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { ShowcaseIcon } from "../../assets/icons"
 import { mediaQueries, colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -119,7 +118,7 @@ class FeaturedSites extends Component {
           >
             <span className="title">View all</span>
             {` `}
-            <MdArrowForward sx={{ verticalAlign: `sub` }} />
+            <ArrowForwardIcon sx={{ verticalAlign: `sub` }} />
           </a>
           <div
             css={{

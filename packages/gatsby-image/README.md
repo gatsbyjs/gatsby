@@ -253,8 +253,6 @@ Their fragments are:
 - `GatsbySanityImageFluid`
 - `GatsbySanityImageFluid_noBase64`
 
-_Links to source code for fragment fields of official Gatsby plugins can be found in the [Gatsby GraphQL API](/docs/graphql-api/)_
-
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
 with `tracedSVG` at the end.
@@ -262,6 +260,9 @@ with `tracedSVG` at the end.
 If you want to automatically use WebP images when the browser supports the file
 format, use the `withWebp` fragments. If the browser doesn't support WebP,
 `gatsby-image` will fall back to the default image format.
+
+For more information about these options, please see the
+[Gatsby Image API](/docs/gatsby-image/#image-query-fragments).
 
 _Please see the
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#tracedsvg)
