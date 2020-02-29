@@ -25,6 +25,7 @@ type BuildArgs = {
   sitePackageJson: object,
   prefixPaths: boolean,
   noUglify: boolean,
+  profile: boolean,
   openTracingConfigFile: string,
 }
 
