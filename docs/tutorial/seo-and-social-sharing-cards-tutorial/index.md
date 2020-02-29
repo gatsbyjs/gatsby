@@ -2,7 +2,7 @@
 title: Search Engine Optimization (SEO) and Social Sharing Cards with Gatsby
 ---
 
-Perhaps you've even been approached by an SEO _expert_ who can maximize your revenue and page views just by following these **Three Simple Tricks**! However, relatively few make the concerted effort to implement SEO in their web app. This tutorial will share some of the ins and outs of SEO and how you can implement common, simple SEO patterns in your Gatsby web app, today. By the end of this post you'll know how to do the following:
+Perhaps you've been approached by an SEO _expert_ who can maximize your revenue and page views just by following these **Three Simple Tricks**! Relatively few people make the concerted effort to implement SEO in their web app. This tutorial will share some of the ins and outs of SEO and how you can implement common SEO patterns in your Gatsby web app, today. By the end of this post you'll know how to do the following:
 
 - Implement SEO patterns with [react-helmet][react-helmet]
 - Create an optimized social sharing card for Twitter, Facebook, and Slack
@@ -24,23 +24,23 @@ The core technology powering SEO is the humble, ubiquitiuous `meta` tag along wi
 />
 ```
 
-These are the _bare minimum_ requirements that should be implemented within an application's `head` tags for simple and basic SEO. However -- the following describes a powerful combo of content rendered at _build time_ powered by Gatsby and GraphQL. Let's dive in.
+These are the _bare minimum_ requirements that should be implemented within an application's `head` tags for basic SEO. However, the following describes a powerful combo of content rendered at _build time_ powered by Gatsby and GraphQL. 
 
 ## Gatsby + GraphQL
 
-GraphQL is a crucial feature enabled via Gatsby (note: you don't [_have_ to use GraphQL with Gatsby][unstructured-data]). Leveraging GraphQL to query your indexable content--wherever it lives (at build time!)--is one of the most powerful and flexible techniques enabled via Gatsby. Let's briefly look at the implemention of an extensible and flexible SEO component.
+GraphQL is a crucial feature enabled via Gatsby (note: you don't [_have_ to use GraphQL with Gatsby][unstructured-data]). Leveraging GraphQL to query your indexable content--wherever it lives (at build time!)--is one of the most powerful and flexible techniques enabled via Gatsby. The following sections are a brief look at the implementation of an extensible and flexible SEO component.
 
 ### `StaticQuery`
 
-Gatsby distinguishes between page-level queries and component queries. The former can use page GraphQL queries while the latter can use a new in Gatsby v2 feature called [`StaticQuery`][gatsby-static-query]. A StaticQuery will be parsed, evaluated, and injected at _build time_ into the component that is requesting the data, allowing to fall back to sane defaults, while also providing an extensible, reusable component.
+Gatsby distinguishes between page-level queries and component queries. The former can use page GraphQL queries while the latter can use [`StaticQuery`][gatsby-static-query]. A StaticQuery will be parsed, evaluated, and injected at _build time_ into the component that is requesting the data, allowing to fall back to sane defaults, while also providing an extensible, reusable component.
 
 ### Creating the SEO component
 
 Using the power and flexibility of React, you can create a React component to power this functionality.
 
-> Note: `react-helmet` is enabled, by default, in gatsby-starter-default and gatsby-starter-blog
+> Note: `react-helmet` is enabled, by default, in gatsby-starter-default and gatsby-starter-blog.
 >
-> If you're not using those starters [follow this guide for installation instructions][gatsby-plugin-react-helmet]
+> If you're not using those starters, [follow this guide for installation instructions][gatsby-plugin-react-helmet]
 
 ```jsx:title=src/components/seo.js
 import React from "react"
@@ -75,9 +75,9 @@ export default SEO
 
 This component doesn't _do_ anything yet, but it's the foundation for a useful, extensible component. It leverages the `StaticQuery` functionality enabled via Gatsby to query siteMetadata (e.g. details in `gatsby-config.js`) with description and keywords.
 
-The `StaticQuery` component accepts a render prop, and at this point, it simply returns `null` to render nothing. Let's _actually_ render something and build out the prototype for this SEO component. Let's iterate further.
+The `StaticQuery` component accepts a render prop, and at this point, it simply returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component. 
 
-```jsx:title=src/components/seo.js
+```js:title=src/components/seo.js
 import React from "react"
 import Helmet from "react-helmet"
 import { StaticQuery, graphql } from "gatsby"
@@ -122,7 +122,7 @@ export default SEO
 
 Whew, getting closer! This will now render the `meta` `description` tag, and will do so using content injected at build-time with the `StaticQuery` component. Additionally, it will add the `lang="en"` attribute to the root-level `html` tag to silence that pesky Lighthouse warning 😉.
 
-This is still the bare bones, rudimentary approach to SEO. Let's enhance this functionality and get some useful functionality for sharing a page via social networks like Facebook, Twitter, and Slack.
+This is still the bare bones, rudimentary approach to SEO. An additional step is to enhance this functionality and get some useful functionality for sharing a page via social networks like Facebook, Twitter, and Slack.
 
 ### Implementing social SEO
 
@@ -132,9 +132,7 @@ In addition to SEO for actual _search_ engines you also want those pretty cards 
 - Title for embedded results
 - (Optionally) display an image and a card if an image is passed in to the component
 
-Let's implement it 👌
-
-```jsx:title=src/components/seo.js
+```js:title=src/components/seo.js
 import React from "react"
 import Helmet from "react-helmet"
 import PropTypes from "prop-types" // highlight-line
@@ -262,7 +260,7 @@ SEO.propTypes = {
 export default SEO
 ```
 
-Woo hoo! You enabled not only SEO for search engines like Google, Bing (people use Bing, right?) but you also laid the groundwork for enhanced sharing capabilities on social networks. Finally, you will learn to add support for one of the more useful functionalities for SEO, specifically a canonical link.
+Woo hoo! You enabled not only SEO for search engines like Google and Bing, but you also laid the groundwork for enhanced sharing capabilities on social networks. Finally, you will learn to add support for one of the more useful functionalities for SEO: a canonical link.
 
 ## `link rel="canonical"`
 
@@ -275,7 +273,7 @@ To implement this functionality, you need to do the following:
    - A canonical link should be _absolute_ (e.g. https://your-site.com/canonical-link), so you will need to prefix with this `siteUrl`
 1. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
 
-```jsx
+```js:title=src/components/seo.js
 import React from "react"
 import Helmet from "react-helmet"
 import PropTypes from "prop-types"
@@ -411,17 +409,17 @@ SEO.propTypes = {
 export default SEO
 ```
 
-Woo hoo! Lot to digest here, but you've enabled adding an _absolute_ canonical link simply by passing in a `slug` prop and prefixing with `siteUrl`.
+Woo hoo! Lots to digest here, but you've enabled adding an _absolute_ canonical link simply by passing in a `slug` prop and prefixing with `siteUrl`.
 
-To bring it all home, it's high time to begin actually _using_ this extensible SEO component to show all of these moving parts coming together to deliver a great SEO experience.
+To bring it all home, it's time to begin actually _using_ this extensible SEO component to show all of these moving parts coming together to deliver a great SEO experience.
 
 ## Using the SEO component
 
-You created an extensible SEO component. It takes a `title` prop, and then (optionally) `description`, `meta`, `image`, and `pathname` props. Let's wire it all up!
+You created an extensible SEO component. It takes a `title` prop and then (optionally) `description`, `meta`, `image`, and `pathname` props. 
 
 ### In a page component
 
-```jsx:title=src/pages/index.js
+```js:title=src/pages/index.js
 import React from "react"
 
 import Layout from "../components/layout"
@@ -441,7 +439,7 @@ export default Index
 
 ### In a template
 
-Let's pretend you have a Markdown powered blog (see: [this tutorial][gatsby-markdown-blog] for more info). Of course, you want some nice SEO as well as a nifty image for sharing on Twitter, Facebook, and Slack. The following steps are needed:
+In many cases, you want to build a Markdown powered blog (see: [this tutorial][gatsby-markdown-blog] for more info). Of course, you want some nice SEO as well as a nifty image for sharing on Twitter, Facebook, and Slack. The following steps are needed:
 
 - Create a Markdown post
 - Add an image, and add it to the Markdown posts frontmatter
@@ -465,15 +463,15 @@ Hello World!
 
 #### Adding the image
 
-Feel free to add whatever, or perhaps use this _very pertinent_ image:
+Let's see how an attached image will look like. For this tutorial, you can use the following image: 
 
-![Sample Image](./images/seo.jpg)
+![Scribble stones forming SEO](./images/seo.jpg)
 
-the image will need to be located at `content/blog/2019-01-04-hello-world-seo/images/featured.jpg`
+The image will need to be located at `content/blog/2019-01-04-hello-world-seo/images/featured.jpg`.
 
 #### Querying with GraphQL
 
-```jsx:title=src/templates/blog-post.js
+```js:title=src/templates/blog-post.js
 import React from 'react'
 import { graphql } from 'gatsby'
 
@@ -539,33 +537,33 @@ Using the techniques outlined in this post, you've made your Gatsby application 
 
 ### Google
 
-![Google](./images/google.png)
+![Indexing Results by Google](./images/google.png)
 
 ### Facebook
 
-![Facebook](./images/facebook.png)
+![Social Sharing Card as on Facebook](./images/facebook.png)
 
 ### Twitter
 
-![Twitter](./images/twitter.png)
+![Social Sharing Card as on Twitter](./images/twitter.png)
 
 ### Slack
 
-![Slack](./images/slack.png)
+![Social Sharing Card as on Slack](./images/slack.png)
 
 To learn more about these validations, check out how to _validate_ SEO with the following tools from [Google][google-validation], [Twitter][twitter-validation], and [Facebook][facebook-validation].
 
-These SEO resources outlined in this tutorial aren't _only_ a best practice, they're also a best practice enabled, by default. Available **today** in `gatsby-starter-default`, simply use:
+The SEO resources outlined in this tutorial aren't _only_ a best practice, they're also a best practice enabled, by default. Available **today** in `gatsby-starter-default`, simply use:
 
 ```shell
-npx gatsby new my-new-gatsby-app
+npm gatsby new my-new-gatsby-app
 ```
 
 and you'll have the `SEO` component available to maximize your SEO and social sharing capabilities. Check it out!
 
 ## Further Learning
 
-This tutorial is merely a shallow dive into the depths of SEO optimization--consider it a primer for further learning and a gentle introduction to some SEO concepts with a Gatsby twist. To truly master these concepts is outside the scope of this tutorial, but it truly is fascinating stuff that can directly lead to more eyes on your content!
+This tutorial is merely a shallow dive into the depths of SEO. Consider it a primer for further learning and a gentle introduction to some SEO concepts with a Gatsby twist. To truly master these concepts is outside the scope of this tutorial, but it truly is fascinating stuff that can directly lead to more eyes on your content!
 
 ### References
 
