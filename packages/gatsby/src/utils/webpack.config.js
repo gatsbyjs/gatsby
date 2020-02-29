@@ -515,12 +515,14 @@ module.exports = async (
         // TODO: maybe this option should be noMinimize?
         !program.noUglify &&
           plugins.minifyJs(
-            program.profile && {
-              terserOptions: {
-                keep_classnames: true,
-                keep_fnames: true,
-              },
-            }
+            program.profile
+              ? {
+                  terserOptions: {
+                    keep_classnames: true,
+                    keep_fnames: true,
+                  },
+                }
+              : {}
           ),
         plugins.minifyCss(),
       ].filter(Boolean),
