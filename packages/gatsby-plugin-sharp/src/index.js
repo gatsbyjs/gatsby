@@ -425,6 +425,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
   if (fixedDimension === `maxWidth`) {
     presentationWidth = Math.min(options.maxWidth, width)
     presentationHeight = Math.round(presentationWidth * (height / width))
+    if (options.maxHeight !== undefined) {
+      presentationHeight = Math.round(presentationWidth * (options.maxHeight / options.maxWidth))
+    }
   } else {
     presentationHeight = Math.min(options.maxHeight, height)
     presentationWidth = Math.round(presentationHeight * (width / height))
