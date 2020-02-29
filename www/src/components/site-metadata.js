@@ -24,7 +24,7 @@ const SiteMetadata = ({ pathname, locale }) => {
   return (
     <Helmet defer={false} defaultTitle={title} titleTemplate={`%s | ${title}`}>
       <html lang={locale} />
-      <link rel="canonical" href={`${siteUrl}${pathname}`} />
+      <link rel="alternate" href={`${siteUrl}${pathname}`} />
       <meta name="docsearch:version" content="2.0" />
       <meta
         name="viewport"
