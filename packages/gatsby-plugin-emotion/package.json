@@ -27,7 +27,8 @@
   "main": "index.js",
   "peerDependencies": {
     "@emotion/core": "^10.0.5",
-    "gatsby": "^2.0.0"
+    "gatsby": "^2.0.0",
+    "@babel/core": "^7.0.0"
   },
   "repository": {
     "type": "git",
