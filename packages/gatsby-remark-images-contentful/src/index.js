@@ -77,10 +77,12 @@ module.exports = async (
         url: originalImg, // for some reason there is a './' prefix
         responseType: `stream`,
       })
-    } catch (e) {
-      throw new Error(
-        `Image downloading failed for ${originalImg}, please check if the image still exists on contentful`
+    } catch (err) {
+      reporter.panic(
+        `Image downloading failed for ${originalImg}, please check if the image still exists on contentful`,
+        err
       )
+      return []
     }
 
     response.data.pipe(metaReader)
