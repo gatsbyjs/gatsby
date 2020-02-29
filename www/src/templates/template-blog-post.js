@@ -35,13 +35,19 @@ class BlogPostTemplate extends React.Component {
       </p>
     )
     let canonicalLink
+    let ogUrl
 
     if (post.frontmatter.canonicalLink) {
       canonicalLink = (
         <link rel="canonical" href={post.frontmatter.canonicalLink} />
       )
+      ogUrl = (
+        <meta property="og:url" content={post.frontmatter.canonicalLink} />
+      )
+    } else {
+      ogUrl = <meta property="og:url" content={href} />
     }
-    console.log("location", href)
+
     return (
       <Layout location={this.props.location}>
         <Container>
@@ -75,7 +81,7 @@ class BlogPostTemplate extends React.Component {
               <meta property="og:description" content={post.excerpt} />
               <meta name="twitter:description" content={post.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
-              <meta property="og:url" content={href} />
+              {ogUrl}
               {post.frontmatter.image && (
                 <meta
                   property="og:image"
