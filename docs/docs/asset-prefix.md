@@ -55,7 +55,7 @@ exports.onPostBuild = async function onPostBuild() {
 
 ### Using `package.json` scripts
 
-Additionally, you can use an npm script, which will let you use some command line interfaces/executables to perform some action, in this case, deploying your assets directory!
+Additionally, you can use a npm script, which will let you use some command line interfaces/executables to perform some action, in this case, deploying your assets directory!
 
 In this example, the `aws-cli` and `s3` is used to sync the `public` folder (containing all the assets) to the `s3` bucket.
 
