@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-video",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Convert videos into well supported formats via FFMPEG. Supports generating previews as well.",
   "main": "index.js",
   "scripts": {
