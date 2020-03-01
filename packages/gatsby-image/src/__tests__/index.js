@@ -245,7 +245,7 @@ describe(`<Image />`, () => {
         placeholderClassName={`placeholder`}
       />
     )
-    const aspectPreserver = container.querySelector(`div div div div`)
+    const aspectPreserver = container.querySelector(`div div div`)
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
       expect.stringMatching(/padding-bottom: 20%/)
     )
