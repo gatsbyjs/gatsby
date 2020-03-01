@@ -26,7 +26,7 @@ For this guide, you don't have to worry about most of the features. You'll just 
 
 #### Adding content to existing pages
 
-Now that you have some content to pull, you can create a basic Gatsby site to display the content. Assuming you have the [Gatsby CLI installed](/docs/quick-start/#using-the-gatsby-cli), create a new site and navigate to it in your terminal:
+Now that you have some content to pull, you can create a basic Gatsby site to display the content. Assuming you have the [Gatsby CLI installed](/docs/quick-start/#install-the-gatsby-cli), create a new site and navigate to it in your terminal:
 
 ```shell
 gatsby new kentico-kontent-guide
