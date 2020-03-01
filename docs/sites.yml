@@ -9307,7 +9307,7 @@
   url: https://www.gis-netzwerk.com/
   main_url: https://www.gis-netzwerk.com/
   description: >
-    Geoinformatik, GIS, Web-Development.
+    Multilingual (i18n) Blog with different URLs for categories, tags and posts depending on the language.
   categories:
     - Blog
     - Data
