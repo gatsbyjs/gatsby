@@ -229,7 +229,7 @@ exports.createResolvers = async (
       args: {
         ...DEFAULT_ARGS,
         crf: { type: GraphQLInt, defaultValue: 31 },
-        preset: { type: GraphQLString, defaultValue: `slow` },
+        preset: { type: GraphQLString, defaultValue: `superfast` },
         maxRate: { type: GraphQLString },
         bufSize: { type: GraphQLString },
       },
@@ -242,7 +242,7 @@ exports.createResolvers = async (
       args: {
         ...DEFAULT_ARGS,
         crf: { type: GraphQLInt, defaultValue: 36 },
-        preset: { type: GraphQLString, defaultValue: `fast` },
+        preset: { type: GraphQLString, defaultValue: `superfast` },
         maxRate: { type: GraphQLInt },
         bufSize: { type: GraphQLInt },
       },
