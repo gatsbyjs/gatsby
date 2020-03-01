@@ -479,114 +479,104 @@ class Image extends React.Component {
 
       return (
         <Tag
-          className={`${
-            className ? className : ``
-          } gatsby-image-wrapper-container`}
+          aria-hidden
+          className={`${className ? className : ``} gatsby-image-wrapper`}
           style={{
-            minHeight: `100%`,
-            minWidth: `100%`,
+            position: `relative`,
+            overflow: `hidden`,
+            maxWidth,
+            maxHeight,
+            ...style,
           }}
+          ref={this.handleRef}
+          key={`fluid-${JSON.stringify(image.srcSet)}`}
         >
+          {/* Preserve the aspect ratio. */}
           <Tag
             aria-hidden
-            className={`${className ? className : ``} gatsby-image-wrapper`}
+            title={title}
             style={{
-              position: `relative`,
-              overflow: `hidden`,
-              maxWidth,
-              maxHeight,
-              ...style,
+              width: `100%`,
+              paddingBottom: `${100 / image.aspectRatio}%`,
             }}
-            ref={this.handleRef}
-            key={`fluid-${JSON.stringify(image.srcSet)}`}
-          >
-            {/* Preserve the aspect ratio. */}
+          />
+
+          {/* Show a solid background color. */}
+          {bgColor && (
             <Tag
               aria-hidden
               title={title}
               style={{
-                width: `100%`,
-                paddingBottom: `${100 / image.aspectRatio}%`,
+                backgroundColor: bgColor,
+                position: `absolute`,
+                top: 0,
+                bottom: 0,
+                opacity: !this.state.imgLoaded ? 1 : 0,
+                right: 0,
+                left: 0,
+                ...(shouldFadeIn && delayHideStyle),
               }}
             />
+          )}
 
-            {/* Show a solid background color. */}
-            {bgColor && (
-              <Tag
-                aria-hidden
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Placeholder
+              ariaHidden
+              src={image.base64}
+              spreadProps={placeholderImageProps}
+              imageVariants={imageVariants}
+              generateSources={generateBase64Sources}
+            />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Placeholder
+              ariaHidden
+              src={image.tracedSVG}
+              spreadProps={placeholderImageProps}
+              imageVariants={imageVariants}
+              generateSources={generateTracedSVGSources}
+            />
+          )}
+
+          {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
+          {this.state.isVisible && (
+            <picture>
+              {generateImageSources(imageVariants)}
+              <Img
+                alt={alt}
                 title={title}
-                style={{
-                  backgroundColor: bgColor,
-                  position: `absolute`,
-                  top: 0,
-                  bottom: 0,
-                  opacity: !this.state.imgLoaded ? 1 : 0,
-                  right: 0,
-                  left: 0,
-                  ...(shouldFadeIn && delayHideStyle),
-                }}
+                sizes={image.sizes}
+                src={image.src}
+                crossOrigin={this.props.crossOrigin}
+                srcSet={image.srcSet}
+                style={{ imageStyle }}
+                ref={this.imageRef}
+                onLoad={this.handleImageLoaded}
+                onError={this.props.onError}
+                itemProp={itemProp}
+                loading={loading}
+                draggable={draggable}
               />
-            )}
+            </picture>
+          )}
 
-            {/* Show the blurry base64 image. */}
-            {image.base64 && (
-              <Placeholder
-                ariaHidden
-                src={image.base64}
-                spreadProps={placeholderImageProps}
-                imageVariants={imageVariants}
-                generateSources={generateBase64Sources}
-              />
-            )}
-
-            {/* Show the traced SVG image. */}
-            {image.tracedSVG && (
-              <Placeholder
-                ariaHidden
-                src={image.tracedSVG}
-                spreadProps={placeholderImageProps}
-                imageVariants={imageVariants}
-                generateSources={generateTracedSVGSources}
-              />
-            )}
-
-            {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
-            {this.state.isVisible && (
-              <picture>
-                {generateImageSources(imageVariants)}
-                <Img
-                  alt={alt}
-                  title={title}
-                  sizes={image.sizes}
-                  src={image.src}
-                  crossOrigin={this.props.crossOrigin}
-                  srcSet={image.srcSet}
-                  style={{ imageStyle }}
-                  ref={this.imageRef}
-                  onLoad={this.handleImageLoaded}
-                  onError={this.props.onError}
-                  itemProp={itemProp}
-                  loading={loading}
-                  draggable={draggable}
-                />
-              </picture>
-            )}
-
-            {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            {this.addNoScript && (
-              <noscript
-                dangerouslySetInnerHTML={{
-                  __html: noscriptImg({
-                    alt,
-                    title,
-                    loading,
-                    ...image,
-                    imageVariants,
-                  }),
-                }}
-              />
-            )}
-          </Tag>
+          {/* Show the original image during server-side rendering if JavaScript is disabled */}
+          {this.addNoScript && (
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: noscriptImg({
+                  alt,
+                  title,
+                  loading,
+                  ...image,
+                  imageVariants,
+                }),
+              }}
+            />
+          )}
         </Tag>
       )
     }
