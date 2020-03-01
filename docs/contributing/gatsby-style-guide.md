@@ -126,18 +126,44 @@ Hyperlinks should contain the clearest words to indicate where the link will lea
 ```markdown
 <!-- Good -->
 
-[Gatsby's docs](https://www.gatsbyjs.org/docs/)
+[Gatsby's docs](/docs/)
 
 <!-- Bad -->
 
-[here](https://www.gatsbyjs.org/docs/ "Gatsby's docs")
+[here](/docs/ "Gatsby's docs")
 ```
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
 
+### Use relative hyperlinks for local links
+
+Hyperlinks which point to the same domain should have relative path (not include the domain). This is usefully when you test the build of the website on a local installations or on preview builds from your build system.
+
+```markdown
+<!-- Good -->
+
+[Gatsby's glossay](/docs/glossary)
+
+<!-- Bad -->
+
+[Gatsby's glossay](https://www.gatsbyjs.org/docs/glossary)
+```
+
+Note: Links to the Gatsby Cloud / Gatsby Inc. are at located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be absolute an path (include the domain). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)
+
 ### Mark localhost URLs as code strings
 
 Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs on Gatsbyjs.org.
+
+```markdown
+<!-- Good -->
+
+open your site with `http://localhost:8000/`
+
+<!-- Bad -->
+
+open your site with [http://localhost:8000/](http://localhost:8000/)
+```
 
 ### Indicate when something is optional
 
