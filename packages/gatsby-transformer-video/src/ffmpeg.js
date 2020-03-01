@@ -24,8 +24,6 @@ export default class FFMPEG {
     this.cacheDir = cacheDir
     this.rootDir = rootDir
     this.profiles = profiles
-    this.totalVideos = 0
-    this.currentVideo = 0
 
     if (ffmpegPath) {
       ffmpeg.setFfmpegPath(ffmpegPath)
@@ -95,6 +93,7 @@ export default class FFMPEG {
     createNodeId,
   }) => {
     let path
+    let contentDigest = video.internal.contentDigest
 
     if (type === `File`) {
       path = video.absolutePath
@@ -105,18 +104,18 @@ export default class FFMPEG {
         file: { url, fileName },
       } = video
       const { ext } = parse(fileName)
+
       // Download video from Contentful for further processing
-      path = await this.queue.add(async () => {
-        const fileNode = await createRemoteFileNode({
-          url: `https:${url}`,
-          store,
-          cache,
-          createNode,
-          createNodeId,
-          ext,
-        })
-        return fileNode.absolutePath
+      const fileNode = await createRemoteFileNode({
+        url: `https:${url}`,
+        store,
+        cache,
+        createNode,
+        createNodeId,
+        ext,
       })
+      path = fileNode.absolutePath
+      contentDigest = fileNode.internal.contentDigest
     }
 
     if (!path) {
@@ -127,7 +126,7 @@ export default class FFMPEG {
 
     const optionsHash = createContentDigest(fieldArgs)
 
-    const filename = `${video.internal.contentDigest}-${optionsHash}`
+    const filename = `${contentDigest}-${optionsHash}`
 
     const info = await this.executeFfprobe(path)
 
@@ -136,16 +135,9 @@ export default class FFMPEG {
 
   // Queue video for conversion
   convertVideo = async (...args) => {
-    this.totalVideos++
-
     const videoData = await this.queue.add(() =>
       this.queuedConvertVideo(...args)
     )
-
-    if (this.currentVideo === this.totalVideos) {
-      this.totalVideos = 0
-      this.currentVideo = 0
-    }
 
     return videoData
   }
@@ -162,8 +154,7 @@ export default class FFMPEG {
     const alreadyExists = await pathExists(cachePath)
 
     if (!alreadyExists) {
-      this.currentVideo++
-      const loggingPrefix = `[FFMPEG - ${this.currentVideo}/${this.totalVideos}]`
+      const loggingPrefix = `[FFMPEG]`
       const ffmpegSession = ffmpeg().input(sourcePath)
       const filters = this.createFilters({ fieldArgs, info }).join(`,`)
       const videoStreamMetadata = this.parseVideoStream(info.streams)
