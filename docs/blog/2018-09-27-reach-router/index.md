@@ -36,12 +36,10 @@ A primary focus (no pun intended) of @reach/router is to manage focus in client-
   a router, managing focus on route transitions requires a lot effort and
   knowledge on your part.
 </Pullquote>
-
 <Pullquote>
   Reach Router provides out-of-the-box focus management so your apps are
   significantly more accessible without you breaking a sweat.
 </Pullquote>
-
 <Pullquote>
   When the location changes, the top-most part of your application that changed
   is identified and focus is moved to it. Assistive devices then announce to the

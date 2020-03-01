@@ -41,7 +41,7 @@ export default class FilteredStarterLibrary extends Component {
     })
   resetFilters = () => this.props.setURLState({ c: [], d: [], v: [], s: `` })
   showMoreSites = starters => {
-    let showAll =
+    const showAll =
       this.state.sitesToShow + 15 > starters.length ? starters.length : false
     this.setState({
       sitesToShow: showAll ? showAll : this.state.sitesToShow + 15,
@@ -77,8 +77,8 @@ export default class FilteredStarterLibrary extends Component {
     )
 
     // stopgap for missing gh data (#8763)
-    let starters = data.allStartersYaml.edges.filter(
-      ({ node: starter }) => starter.fields && starter.fields.starterShowcase
+    let starters = data.allStartersYaml.nodes.filter(
+      starter => starter.fields && starter.fields.starterShowcase
     )
 
     if (urlState.s.length > 0) {
@@ -116,7 +116,7 @@ export default class FilteredStarterLibrary extends Component {
               data={Array.from(
                 count(
                   starters.map(
-                    ({ node }) =>
+                    node =>
                       node.fields &&
                       node.fields.starterShowcase.gatsbyMajorVersion.map(
                         str => str[1]
@@ -129,9 +129,7 @@ export default class FilteredStarterLibrary extends Component {
             />
             <LHSFilter
               heading="Categories"
-              data={Array.from(
-                count(starters.map(({ node: starter }) => starter.tags))
-              )}
+              data={Array.from(count(starters.map(starter => starter.tags)))}
               filters={filtersCategory}
               setFilters={setFiltersCategory}
               sortRecent={urlState.sort === `recent`}
@@ -141,7 +139,7 @@ export default class FilteredStarterLibrary extends Component {
               data={Array.from(
                 count(
                   starters.map(
-                    ({ node: starter }) =>
+                    starter =>
                       starter.fields &&
                       starter.fields.starterShowcase.gatsbyDependencies.map(
                         str => str[0]
@@ -171,7 +169,7 @@ export default class FilteredStarterLibrary extends Component {
               filters={filters}
               label="Gatsby Starter"
               items={starters}
-              edges={starters}
+              nodes={starters}
               what="size"
             />
             <div
@@ -259,12 +257,12 @@ export default class FilteredStarterLibrary extends Component {
 // utility functions
 
 function count(arrays) {
-  let counts = new Map()
+  const counts = new Map()
 
-  for (let categories of arrays) {
+  for (const categories of arrays) {
     if (!categories) continue
 
-    for (let category of categories) {
+    for (const category of categories) {
       if (!counts.has(category)) {
         counts.set(category, 0)
       }
@@ -300,11 +298,12 @@ function filterByDependencies(list, categories) {
 
 function filterByVersions(list, versions) {
   let starters = list
+
   starters = starters.filter(
-    ({ node }) =>
-      node.fields &&
+    ({ fields }) =>
+      fields &&
       isSuperset(
-        node.fields.starterShowcase.gatsbyMajorVersion.map(c => c[1]),
+        fields.starterShowcase.gatsbyMajorVersion.map(c => c[1]),
         versions
       )
   )
@@ -312,7 +311,7 @@ function filterByVersions(list, versions) {
 }
 
 function isSuperset(set, subset) {
-  for (var elem of subset) {
+  for (const elem of subset) {
     if (!set.includes(elem)) {
       return false
     }
