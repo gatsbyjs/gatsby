@@ -1,22 +1,16 @@
-import React, { useState } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import BaseLayout from "../components/layout"
+import { getLocaleAndBasePath } from "../utils/i18n"
 
-let PluginLibraryWrapper
-export default props => {
-  const [loaded, setLoaded] = useState(false)
-
-  const promise = import(`../components/layout/plugin-library-wrapper`)
-  if (props.pageContext.layout === `plugins` && !loaded) {
-    promise.then(pl => {
-      PluginLibraryWrapper = pl.default
-      setLoaded(true)
-    })
-    return null
-  } else if (props.pageContext.layout === `plugins` && loaded) {
-    return (
-      <PluginLibraryWrapper location={props.location}>
-        {props.children}
-      </PluginLibraryWrapper>
-    )
+export default function Layout({ location, children }) {
+  if (location.state && location.state.isModal) {
+    return children
   }
-  return <>{props.children}</>
+  const { locale } = getLocaleAndBasePath(location.pathname)
+  return (
+    <BaseLayout location={location} locale={locale}>
+      {children}
+    </BaseLayout>
+  )
 }

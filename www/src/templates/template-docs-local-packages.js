@@ -2,11 +2,13 @@ import React from "react"
 import { graphql } from "gatsby"
 import { pick } from "lodash-es"
 
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import PackageReadme from "../components/package-readme"
 
 class DocsLocalPackagesTemplate extends React.Component {
   render() {
     const {
+      location,
       data: { npmPackage, markdownRemark },
     } = this.props
     const npmPackageNotFound = {
@@ -27,7 +29,7 @@ class DocsLocalPackagesTemplate extends React.Component {
     }
 
     return (
-      <>
+      <PageWithPluginSearchBar location={location}>
         <PackageReadme
           page={markdownRemark ? pick(markdownRemark, `parent`) : false}
           packageName={
@@ -67,7 +69,7 @@ class DocsLocalPackagesTemplate extends React.Component {
               : npmPackageNotFound.lastPublisher
           }
         />
-      </>
+      </PageWithPluginSearchBar>
     )
   }
 }

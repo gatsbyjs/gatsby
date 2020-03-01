@@ -34,7 +34,7 @@ import PartnershipLockups from "!raw-loader!../../assets/guidelines/partnership-
 import ColorSwatch from "../../components/guidelines/color/card"
 
 import { Box, Button, Flex, Text } from "../../components/guidelines/system"
-import theme from "../../gatsby-plugin-theme-ui"
+import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import palette from "../../utils/guidelines/extend-palette-info"
 
 const List = styled(`ul`)`
@@ -168,7 +168,7 @@ const Logo = ({ data, location }) => {
   const isDark = colorMode === `dark`
 
   return (
-    <Layout pathname={location.pathname} pageTitle="Logo">
+    <Layout location={location} pageTitle="Logo">
       <Container>
         <PageHeading>Logo</PageHeading>
         <Intro>
@@ -608,7 +608,7 @@ const Logo = ({ data, location }) => {
           </CopyColumn>
           <ContentColumn>
             <Flex flexWrap="wrap">
-              {data.allGuidanceYaml.edges.map(({ node }, index) => (
+              {data.allGuidanceYaml.nodes.map((node, index) => (
                 <Guidance
                   image={node.image && node.image}
                   key={`logo-guidance-${index}`}
@@ -633,7 +633,7 @@ const Logo = ({ data, location }) => {
           </CopyColumn>
           <ContentColumn>
             <ul>
-              {data.allFootnotesYaml.edges.map(({ node }, index) => (
+              {data.allFootnotesYaml.nodes.map((node, index) => (
                 <Text as="li" key={`logo-footnotes-${index}`} mb={3}>
                   {node.description}:<br />
                   <a
@@ -661,22 +661,18 @@ export default Logo
 export const pageQuery = graphql`
   query logoGuideQuery {
     allFootnotesYaml {
-      edges {
-        node {
-          description
-          href
-        }
+      nodes {
+        description
+        href
       }
     }
     allGuidanceYaml {
-      edges {
-        node {
-          description
-          image {
-            childImageSharp {
-              fluid(maxWidth: 380, quality: 80) {
-                ...GatsbyImageSharpFluid_noBase64
-              }
+      nodes {
+        description
+        image {
+          childImageSharp {
+            fluid(maxWidth: 380, quality: 80) {
+              ...GatsbyImageSharpFluid_noBase64
             }
           }
         }

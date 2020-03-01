@@ -5,7 +5,6 @@ import chokidar from "chokidar"
 
 import webpackHotMiddleware from "webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
-import { PackageJson } from "gatsby"
 import glob from "glob"
 import express from "express"
 import got from "got"
@@ -19,7 +18,7 @@ import webpackConfig from "../utils/webpack.config"
 import bootstrap from "../bootstrap"
 import { store, emitter } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
-import buildHTML from "./build-html"
+import { buildHTML } from "./build-html"
 import { withBasePath } from "../utils/path"
 import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
@@ -54,28 +53,11 @@ import {
   structureWebpackErrors,
 } from "../utils/webpack-error-utils"
 
+import { BuildHTMLStage, IProgram } from "./types"
 import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "../utils/jobs-manager"
 
-interface ICert {
-  keyPath: string
-  certPath: string
-  key: string
-  cert: string
-}
-
-interface IProgram {
-  useYarn: boolean
-  open: boolean
-  openTracingConfigFile: string
-  port: number
-  host: string
-  [`cert-file`]?: string
-  [`key-file`]?: string
-  directory: string
-  https?: boolean
-  sitePackageJson: PackageJson
-  ssl?: ICert
-}
+// checks if a string is a valid ip
+const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 const waitUntilAllJobsComplete = (): Promise<void> => {
   const jobsV1Promise = new Promise(resolve => {
@@ -124,9 +106,9 @@ async function startServer(program: IProgram): Promise<IServer> {
   const workerPool = WorkerPool.create()
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      await buildHTML.buildPages({
+      await buildHTML({
         program,
-        stage: `develop-html`,
+        stage: BuildHTMLStage.DevelopHTML,
         pagePaths: [`/`],
         workerPool,
         activity,
@@ -398,16 +380,21 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   // Check if https is enabled, then create or get SSL cert.
-  // Certs are named after `name` inside the project's package.json.
-  // Scoped names are converted from @npm/package-name to npm--package-name.
-  // If the name is unavailable, generate one using the current working dir.
+  // Certs are named 'devcert' and issued to the host.
   if (program.https) {
-    const name = program.sitePackageJson.name
-      ? program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`)
-      : process.cwd().replace(/[^A-Za-z0-9]/g, `-`)
+    const sslHost =
+      program.host === `0.0.0.0` || program.host === `::`
+        ? `localhost`
+        : program.host
+
+    if (REGEX_IP.test(sslHost)) {
+      report.panic(
+        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`
+      )
+    }
 
     program.ssl = await getSslCert({
-      name,
+      name: sslHost,
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
