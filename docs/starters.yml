@@ -5428,7 +5428,6 @@
   repo: https://github.com/hitsuji-no-shippo/gatsby-simple-blog-with-asciidoctor
   description:  A Gatsby blog with Asciidoctor. Forked from thundermiracle/gatsby-simple-blog.
   tags:
-    - Asciidoc
     - Blog
     - i18n
     - Netlify
