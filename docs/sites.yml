@@ -9986,3 +9986,15 @@
     - Marketing
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
+- title: Dynobase
+  url: "https://dynobase.dev/"
+  main_url: "https://dynobase.dev/"
+  description: >
+    Professional GUI Client for DynamoDB.
+  categories:
+    - Data
+    - Programming
+    - Web Development
+  built_by: Rafal Wilinski
+  built_by_url: "https://rwilinski.me/"
+  featured: false
