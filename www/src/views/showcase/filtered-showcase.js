@@ -29,7 +29,7 @@ const filterByCategories = (list, categories) => {
         categories.length === 0 ||
         filteredCategories.length === categories.length
       ) {
-        aggregated.push(edge)
+        aggregated.push(node)
       }
 
       return aggregated
