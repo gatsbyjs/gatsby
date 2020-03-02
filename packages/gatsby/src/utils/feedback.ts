@@ -1,6 +1,7 @@
 import report from "gatsby-cli/lib/reporter"
 import { getConfigStore, getGatsbyVersion } from "gatsby-core-utils"
 import latestVersion from "latest-version"
+import getDayOfYear from "date-fns/get_day_of_year"
 
 const feedbackKey = `feedback.disabled`
 const lastDateKey = `feedback.lastRequestDate`
@@ -24,24 +25,41 @@ export function showFeedbackRequest(): void {
 }
 
 // We are only showing feedback requests to users in if they pass a few checks:
-// 1. They haven't disabled the feedback mechanism
-// 2. They don't have the environment variable to disable feedback present
-// 3. It's been at least 3 months since the last feedback request
-// 4. They are on the most recent version of Gatsby
+// 1. They pass a Math.random() check. This is a skateboard version of not sending out all requests in one day.
+// 2. They haven't disabled the feedback mechanism
+// 3. They don't have the environment variable to disable feedback present
+// 4. It's been at least 3 months since the last feedback request
+// 5. They are on the most recent version of Gatsby
 export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
   // Heuristic 1
-  if (getConfigStore().get(feedbackKey) === true) {
+  // This is spreading the request volume over the quarter.
+  // We are grabbing a randomNumber within the spread of a first day
+  // of a quarter, to the last day
+  const currentQuarter = Math.floor((new Date().getMonth() + 3) / 3)
+  const randomNumber = Math.floor(
+    Math.random() *
+      // One quarter year in days (roughly)
+      (30 * 3)
+  )
+  const randomNumberWithinQuarter = randomNumber * currentQuarter
+
+  if (randomNumberWithinQuarter !== getDayOfYear(new Date())) {
     return false
   }
 
   // Heuristic 2
-  if (process.env.GATSBY_FEEDBACK_DISABLED === `1`) {
+  if (getConfigStore().get(feedbackKey) === true) {
     return false
   }
 
   // Heuristic 3
+  if (process.env.GATSBY_FEEDBACK_DISABLED === `1`) {
+    return false
+  }
+
+  // Heuristic 4
   const lastDateValue = getConfigStore().get(lastDateKey)
-  // 3.a if the user has never received the feedback request, this is undefined
+  // 4.a if the user has never received the feedback request, this is undefined
   //     Which is effectively a pass, because it's been ~infinity~ since they last
   //     received a request from us.
   if (lastDateValue) {
@@ -53,7 +71,7 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
     }
   }
 
-  // Heuristic 4
+  // Heuristic 5
   const versionPoints = getGatsbyVersion().split(`.`)
   const latestVersionPoints = (await latestVersion(`gatsby`)).split(`.`)
 

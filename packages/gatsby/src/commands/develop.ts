@@ -353,16 +353,19 @@ async function startServer(program: IProgram): Promise<IServer> {
   return { compiler, listener, webpackActivity }
 }
 
-const feedbackHandler = async (exitCode: number | string): Promise<void> => {
-  if (await userPassesFeedbackRequestHeuristic()) {
-    showFeedbackRequest()
-  }
-  process.exit(exitCode === 1 ? 1 : 0)
-}
-
 module.exports = async (program: IProgram): Promise<void> => {
-  process.on(`exit`, feedbackHandler)
-  process.on(`SIGINT`, feedbackHandler)
+  // We want to prompt the feedback request when users quit develop
+  // assuming they pass the heuristic check to know they are a user
+  // we want to request feedback from, and we're not annoying them.
+  process.on(
+    `SIGINT`,
+    async (): Promise<void> => {
+      if (await userPassesFeedbackRequestHeuristic()) {
+        showFeedbackRequest()
+      }
+      process.exit(0)
+    }
+  )
 
   initTracer(program.openTracingConfigFile)
   report.pendingActivity({ id: `webpack-develop` })

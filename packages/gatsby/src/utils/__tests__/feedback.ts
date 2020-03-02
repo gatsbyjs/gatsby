@@ -3,6 +3,12 @@ import {
   setFeedbackDisabledValue,
   userPassesFeedbackRequestHeuristic,
 } from "../feedback"
+jest.mock("date-fns/get_day_of_year", () => () => {
+  // This is required for Hueristic 1 to always match up
+  // When Math.random returns 1 (mocked in the `clearStateToAllowHeuristicsToPass` fn)
+  const currentQuarter = Math.floor((new Date().getMonth() + 3) / 3)
+  return 1 * 30 * 3 * currentQuarter
+})
 jest.mock(`gatsby-core-utils`, () => {
   return {
     ...jest.requireActual(`gatsby-core-utils`),
@@ -14,6 +20,7 @@ jest.mock(`latest-version`, () => () => Promise.resolve(`2.1.1`))
 
 const dateFromSixMonthsAgo = new Date()
 dateFromSixMonthsAgo.setMonth(dateFromSixMonthsAgo.getMonth() - 6)
+const mathRandom = Math.random
 
 // This function resets all state to make the heuristic
 // checks all pass. This is to be used to make sure an individual
@@ -21,12 +28,14 @@ dateFromSixMonthsAgo.setMonth(dateFromSixMonthsAgo.getMonth() - 6)
 // that exist within that test.
 const clearStateToAllowHeuristicsToPass = () => {
   // Heuristic 1
-  setFeedbackDisabledValue(false)
+  Math.random = jest.fn(() => 1)
   // Heuristic 2
-  delete process.env.GATSBY_FEEDBACK_DISABLED
+  setFeedbackDisabledValue(false)
   // Heuristic 3
-  getConfigStore().set(`feedback.lastRequestDate`, dateFromSixMonthsAgo)
+  delete process.env.GATSBY_FEEDBACK_DISABLED
   // Heuristic 4
+  getConfigStore().set(`feedback.lastRequestDate`, dateFromSixMonthsAgo)
+  // Heuristic 5
   ;(getGatsbyVersion as jest.Mock).mockReturnValue(`2.1.1`)
 }
 
@@ -34,7 +43,24 @@ describe(`feedback`, () => {
   describe(`userPassesFeedbackRequestHeuristic returns false when`, () => {
     beforeEach(clearStateToAllowHeuristicsToPass)
 
-    it(`Heuristic 1: the gatsby disabled key is set to false`, async () => {
+    afterEach(() => {
+      Math.random = mathRandom
+    })
+
+    it(`Heuristic 1: The random number generator hits today`, async () => {
+      // ensure default is passing before manipulating a test
+      expect(await userPassesFeedbackRequestHeuristic()).toBe(true)
+
+      // Change the random value to return a different date
+      ;(Math.random as jest.Mock).mockReturnValue(0.5)
+      expect(await userPassesFeedbackRequestHeuristic()).toBe(false)
+
+      // Unset to ensure tests are stable
+      ;(Math.random as jest.Mock).mockReturnValue(1)
+      expect(await userPassesFeedbackRequestHeuristic()).toBe(true)
+    })
+
+    it(`Heuristic 2: the gatsby disabled key is set to false`, async () => {
       // ensure default is passing before manipulating a test
       expect(await userPassesFeedbackRequestHeuristic()).toBe(true)
 
@@ -46,7 +72,7 @@ describe(`feedback`, () => {
       expect(await userPassesFeedbackRequestHeuristic()).toBe(true)
     })
 
-    it("Heuristic 2: the process.env.GATSBY_FEEDBACK_DISABLED argument is set to `1`", async () => {
+    it("Heuristic 3: the process.env.GATSBY_FEEDBACK_DISABLED argument is set to `1`", async () => {
       // ensure default is passing before manipulating a test
       expect(await userPassesFeedbackRequestHeuristic()).toBe(true)
 
@@ -58,7 +84,7 @@ describe(`feedback`, () => {
       expect(await userPassesFeedbackRequestHeuristic()).toBe(true)
     })
 
-    it(`Heuristic 3: It has been more than 3 months since the last feedback request`, async () => {
+    it(`Heuristic 4: It has been more than 3 months since the last feedback request`, async () => {
       // ensure default is passing before manipulating a test
       expect(await userPassesFeedbackRequestHeuristic()).toBe(true)
 
@@ -71,7 +97,7 @@ describe(`feedback`, () => {
       expect(await userPassesFeedbackRequestHeuristic()).toBe(true)
     })
 
-    it(`Heuristic 4: The installed Gatsby is on the latest major + minor version`, async () => {
+    it(`Heuristic 5: The installed Gatsby is on the latest major + minor version`, async () => {
       // ensure default is passing before manipulating a test
       expect(await userPassesFeedbackRequestHeuristic()).toBe(true)
 
