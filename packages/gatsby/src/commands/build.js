@@ -48,6 +48,12 @@ const waitUntilAllJobsComplete = () => {
 }
 
 module.exports = async function build(program: BuildArgs) {
+  if (program.profile) {
+    report.warn(
+      `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
+    )
+  }
+
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
   const buildActivity = report.phantomActivity(`build`)
