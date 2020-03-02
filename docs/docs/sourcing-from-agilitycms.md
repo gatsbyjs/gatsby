@@ -4,13 +4,19 @@ title: Sourcing from Agility CMS
 
 This guide takes you through the steps involved in setting up a Gatsby site that fetches content from [Agility CMS](https://agilitycms.com/).
 
+Check our [docs](https://help.agilitycms.com/hc/en-us/articles/360039879872) for up-to-date documentation.
+
 ## What is Agility CMS? What makes it different?
 
-[Agility CMS](https://agilitycms.com/) is a headless Content Management System (CMS) that lets you define your custom content types and relationships. This is called Content Architecture, and you can reuse this content for your websites and apps.
+[Agility CMS](https://agilitycms.com/) is a headless Content Management System (CMS) that lets you define your custom content types, relationships and pages. This is called Content Architecture, and you can reuse this content for your websites and apps.
 
-In addition, Agility CMS provides a page routing API, which allows you to offload control of the sitemap to the content editors.
+Agility believes that a successful website balances the **User Experience (UX)**, **Editor Experience (EX)**, and **Developer Experience (DX)**. 
 
-All content is available through the Agility CMS Fetch or Preview API.
+While Gatsby tends to handle **UX** and **DX** quite well, too often editors are an after-thought in Gatsby (and other JAMstack) websites. They feel constrained by not being able to manage their sitemap and what content is on which pages.
+
+Agility aims to empower and improve the **Editor Experience** by providing built-in **Page Management**. This means developers can build UI Components and leave editors to compose their pages.
+
+[Learn more about Agility CMS and Gatsby](https://help.agilitycms.com/hc/en-us/articles/360039879872)
 
 ## Getting started
 
@@ -60,9 +66,10 @@ If you use the `preview` key, you won't have to publish to see the changes you'v
 
 ## How it works
 
-The Gatsby Source Plugin downloads all the Pages on the Agility CMS Sitemap, as well as any Shared Content that's referenced on the `sharedContent` property in the `gatsby-config.js` file.
+The Gatsby Source Plugin will synchronize your sitemap, pages, and content for you and place it into **GraphQL**. 
 
 All of those pages and content are then made available in GraphQL to the React Components you will write to render those pages.
+
 
 Check out the component called "Jumbotron". This is an example of how to display a styled heading and sub-heading with content that comes from Agility CMS. Here is the Module that provides this content being edited in the Agility CMS Content Manager:
 
@@ -89,3 +96,5 @@ export default class Jumbotron extends Component {
 ```
 
 When you add new modules and content definitions to Agility CMS, the components used to render those modules will automatically receive the strongly typed data delivered to those modules as props.
+
+
