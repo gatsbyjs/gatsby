@@ -5,32 +5,8 @@ const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
 const visit = require(`unist-util-visit`)
 
-// Language defaults to extension.toLowerCase();
-// This map tracks languages that don't match their extension.
-const FILE_EXTENSION_TO_LANGUAGE_MAP = {
-  js: `jsx`,
-  md: `markup`,
-  sh: `bash`,
-  rb: `ruby`,
-  py: `python`,
-  ps1: `powershell`,
-  psm1: `powershell`,
-  bat: `batch`,
-  h: `c`,
-  tex: `latex`,
-}
-
-const getLanguage = file => {
-  if (!file.includes(`.`)) {
-    return `none`
-  }
-
-  const extension = file.split(`.`).pop()
-
-  return FILE_EXTENSION_TO_LANGUAGE_MAP.hasOwnProperty(extension)
-    ? FILE_EXTENSION_TO_LANGUAGE_MAP[extension]
-    : extension.toLowerCase()
-}
+const getLanguage = require(`./utils/getLanguage`)
+const getLines = require(`./utils/getLines`)
 
 module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
   if (!directory) {
@@ -46,13 +22,24 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
 
     if (value.startsWith(`embed:`)) {
       const file = value.substr(6)
-      const snippetPath = normalizePath(path.join(directory, file))
+      let snippetPath = normalizePath(path.join(directory, file))
+
+      // Embed specific lines numbers of a file
+      let lines = []
+      if (snippetPath.indexOf(`#L`) > -1) {
+        lines = snippetPath.match(/L\d+/g).map(l => l.replace(`L`, ``))
+        // Remove everything after line hash from file path
+        snippetPath = snippetPath.slice(0, snippetPath.indexOf(`#L`))
+      }
 
       if (!fs.existsSync(snippetPath)) {
         throw Error(`Invalid snippet specified; no such file "${snippetPath}"`)
       }
 
-      const code = fs.readFileSync(snippetPath, `utf8`).trim()
+      let code = fs.readFileSync(snippetPath, `utf8`).trim()
+      if (lines.length) {
+        code = getLines(snippetPath, code, lines)
+      }
 
       // PrismJS's theme styles are targeting pre[class*="language-"]
       // to apply its styles. We do the same here so that users
