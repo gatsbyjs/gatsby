@@ -16,23 +16,23 @@
       link: /docs/recipes/
       items:
         - title: Pages and Layouts
-          link: /docs/recipes/pages-layouts
+          link: /docs/recipes/pages-layouts/
         - title: Styling with CSS
-          link: /docs/recipes/styling-css
+          link: /docs/recipes/styling-css/
         - title: Working with Starters
-          link: /docs/recipes/working-with-starters
+          link: /docs/recipes/working-with-starters/
         - title: Working with Themes
-          link: /docs/recipes/working-with-themes
+          link: /docs/recipes/working-with-themes/
         - title: Sourcing Data
-          link: /docs/recipes/sourcing-data
+          link: /docs/recipes/sourcing-data/
         - title: Querying Data
-          link: /docs/recipes/querying-data
+          link: /docs/recipes/querying-data/
         - title: Working with Images
-          link: /docs/recipes/working-with-images
+          link: /docs/recipes/working-with-images/
         - title: Transforming Data
-          link: /docs/recipes/transforming-data
+          link: /docs/recipes/transforming-data/
         - title: Deploying Your Site
-          link: /docs/recipes/deploying-your-site
+          link: /docs/recipes/deploying-your-site/
     - title: Reference Guides
       link: /docs/guides/
       items:
@@ -472,7 +472,7 @@
                 - title: Processing Payments with Square
                   link: /docs/processing-payments-with-square/
                 - title: Sourcing from WooCommerce
-                  link: /docs/sourcing-from-woocommerce
+                  link: /docs/sourcing-from-woocommerce/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -588,9 +588,9 @@
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
         - title: Gatsby Magic
-          link: /docs/gatsby-magic
+          link: /docs/gatsby-magic/
         - title: React Hydration
-          link: /docs/react-hydration
+          link: /docs/react-hydration/
         - title: PRPL Pattern
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
@@ -598,7 +598,7 @@
         - title: Security in Gatsby*
           link: /docs/security-in-gatsby/
         - title: Theme Shadowing
-          link: /docs/how-shadowing-works
+          link: /docs/how-shadowing-works/
     - title: Gatsby Internals
       link: /docs/gatsby-internals/
       items:
@@ -739,29 +739,29 @@
       link: /docs/glossary/
       items:
         - title: Continuous Deployment
-          link: /docs/glossary/continuous-deployment
+          link: /docs/glossary/continuous-deployment/
         - title: Decoupled Drupal
-          link: /docs/glossary/decoupled-drupal
+          link: /docs/glossary/decoupled-drupal/
         - title: GraphQL
-          link: /docs/glossary/graphql
+          link: /docs/glossary/graphql/
         - title: Headless CMS
           link: /docs/glossary/headless-cms/
         - title: Headless WordPress
           link: /docs/glossary/headless-wordpress/
         - title: JAMStack
-          link: /docs/glossary/jamstack
+          link: /docs/glossary/jamstack/
         - title: Markdown
           link: /docs/glossary/markdown/
         - title: MDX
-          link: /docs/glossary/mdx
+          link: /docs/glossary/mdx/
         - title: Node.js
-          link: /docs/glossary/node
+          link: /docs/glossary/node/
         - title: React
-          link: /docs/glossary/react
+          link: /docs/glossary/react/
         - title: Static Site Generator
-          link: /docs/glossary/static-site-generator
+          link: /docs/glossary/static-site-generator/
         - title: webpack
-          link: /docs/glossary/webpack
+          link: /docs/glossary/webpack/
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby REPL
