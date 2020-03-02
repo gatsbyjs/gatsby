@@ -17,11 +17,9 @@ export function setFeedbackDisabledValue(enabled: boolean): void {
 export function showFeedbackRequest(): void {
   getConfigStore().set(lastDateKey, Date.now())
   report.log(
-    `\n\nHello! Will you help Gatsby improve by taking a four question survey?`
+    `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
   )
-  report.log(
-    `Give us your feedback here: https://www.typeform.com/to/A9VWwT\n\n`
-  )
+  report.log(`Give us your feedback here: https://gatsby.dev/feedback\n\n`)
 }
 
 // We are only showing feedback requests to users in if they pass a few checks:
