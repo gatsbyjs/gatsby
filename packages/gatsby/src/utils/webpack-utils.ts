@@ -376,7 +376,12 @@ export const createWebpackUtils = (
               return true
             }
             // If dep is babel-runtime or core-js, exclude
-            if (/@babel(?:\/|\\{1,2})runtime|core-js/.test(modulePath)) {
+            // TODO this needs rework, this is buggy as hell
+            if (
+              /@babel(?:\/|\\{1,2})runtime|core-js|react|react-dom|scheduler|prop-types/.test(
+                modulePath
+              )
+            ) {
               return true
             }
 

@@ -1,5 +1,6 @@
 require(`v8-compile-cache`)
 
+const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
@@ -15,6 +16,8 @@ import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
+
+const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
 // Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -482,6 +485,81 @@ module.exports = async (
   if (stage === `build-javascript`) {
     const componentsCount = store.getState().components.size
 
+    const splitChunks = {
+      chunks: `all`,
+      cacheGroups: {
+        default: false,
+        vendors: false,
+        framework: {
+          chunks: `all`,
+          name: `framework`,
+          // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
+          test: new RegExp(
+            `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
+              `|`
+            )})[\\\\/]`
+          ),
+          priority: 40,
+          // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
+          enforce: true,
+        },
+        // if a module is bigger than 160kb from node_modules we make a separate chunk for it
+        lib: {
+          test(module) {
+            return (
+              module.size() > 160000 &&
+              /node_modules[/\\]/.test(module.identifier())
+            )
+          },
+          name(module) {
+            const hash = crypto.createHash(`sha1`)
+            if (module.type === `css/mini-extract`) {
+              module.updateHash(hash)
+            } else {
+              if (!module.libIdent) {
+                throw new Error(
+                  `Encountered unknown module type: ${module.type}. Please open an issue.`
+                )
+              }
+
+              hash.update(module.libIdent({ context: program.directory }))
+            }
+
+            return hash.digest(`hex`).substring(0, 8)
+          },
+          priority: 30,
+          minChunks: 1,
+          reuseExistingChunk: true,
+        },
+        commons: {
+          name: `commons`,
+          // if a chunk is used on all components we put it in commons
+          minChunks: componentsCount,
+          priority: 20,
+        },
+        // If a chunk is used in at least 2 components we create a separate chunk
+        shared: {
+          name(module, chunks) {
+            const hash = crypto
+              .createHash(`sha1`)
+              .update(chunks.reduce((acc, chunk) => acc + chunk.name, ``))
+              .digest(`hex`)
+
+            if (module.type === `css/mini-extract`) {
+              return `styles.${hash}`
+            }
+
+            return hash
+          },
+          priority: 10,
+          minChunks: 2,
+          reuseExistingChunk: true,
+        },
+      },
+      maxInitialRequests: 25,
+      minSize: 20000,
+    }
+
     config.optimization = {
       runtimeChunk: {
         name: `webpack-runtime`,
@@ -490,39 +568,7 @@ module.exports = async (
       // TODO update to deterministic in webpack 5 (hashed is deprecated)
       // @see https://webpack.js.org/guides/caching/#module-identifiers
       moduleIds: `hashed`,
-      splitChunks: {
-        name: false,
-        chunks: `all`,
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          commons: {
-            name: `commons`,
-            chunks: `all`,
-            // if a chunk is used more than half the components count,
-            // we can assume it's pretty global
-            minChunks: componentsCount > 2 ? componentsCount * 0.5 : 2,
-          },
-          react: {
-            name: `commons`,
-            chunks: `all`,
-            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
-          },
-          // Only create one CSS file to avoid
-          // problems with code-split CSS loading in different orders
-          // causing inconsistent/non-determanistic styling
-          // See https://github.com/gatsbyjs/gatsby/issues/11072
-          styles: {
-            name: `styles`,
-            // This should cover all our types of CSS.
-            test: /\.(css|scss|sass|less|styl)$/,
-            chunks: `all`,
-            enforce: true,
-            // this rule trumps all other rules because of the priority.
-            priority: 10,
-          },
-        },
-      },
+      splitChunks,
       minimizer: [
         // TODO: maybe this option should be noMinimize?
         !program.noUglify &&
