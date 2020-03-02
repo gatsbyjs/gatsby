@@ -8,7 +8,7 @@ Thanks for being interested in contributing! We're so glad you want to help!
 
 Below you'll find guides on the Gatsby.js community, code of conduct, and how to get started contributing:
 
-- [Community](/contributing/community/): Learn why you should contribute to Gatsby.js, the most effective ways to do so, and all about the benefits (did we mention the free swag?)
+- [Community](/contributing/community/): Learn why you should contribute to Gatsby.js, the most effective ways to do so, and all about the benefits (did we mention the [free swag](https://store.gatsbyjs.org/)?)
 - [Code of Conduct](/contributing/code-of-conduct/): Read about what we expect from everyone participating in Gatsby.js to make it the most friendly and welcoming community
 - [Gatsby Style Guide](/contributing/gatsby-style-guide/): The art of contributing to Gatsby, a.k.a. the detailed requirements that will make it more likely your contribution is accepted with minimal changes
 - [How to Contribute](/contributing/how-to-contribute/): How to get the most out of your Gatsby.js contributing experience, including GitHub management tips, setup instructions for docs and code contributions, and more
