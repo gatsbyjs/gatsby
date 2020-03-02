@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.28...gatsby-plugin-preload-fonts@1.0.29) (2020-03-02)
+
+### Features
+
+- **gatsby-plugin-preload-fonts:** Add option to run in CI ([#21037](https://github.com/gatsbyjs/gatsby/issues/21037)) ([131f1e8](https://github.com/gatsbyjs/gatsby/commit/131f1e8))
+
 ## [1.0.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.27...gatsby-plugin-preload-fonts@1.0.28) (2020-03-02)
 
 ### Bug Fixes
