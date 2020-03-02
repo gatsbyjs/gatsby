@@ -77,3 +77,9 @@ Visual Studio Code is very good in this regard.
 
 In addition, you can see the instructions in [TypeScript-Babel-Starter](https://github.com/Microsoft/TypeScript-Babel-Starter)
 for setting up a `type-check` task.
+
+## ESLint
+
+This plugin supports linting TSX with [typescript-eslint](https://typescript-eslint.io) using [Gatsby's default ESLint config](https://www.gatsbyjs.org/docs/eslint/). To enable linting TSX, install `typescript`.
+
+`npm install typescript`
