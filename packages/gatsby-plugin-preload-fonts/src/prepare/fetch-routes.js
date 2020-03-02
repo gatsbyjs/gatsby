@@ -37,7 +37,7 @@ ${red(`err`)} could not establish a connection with the dev server
 
   const routesHash = createContentDigest(routes)
   // We can't detect all new routes so to make sure we are up to date
-  // we ask the user if he wants to recrawl or not.
+  // we ask the user if they wants to recrawl or not.
   if (cache.hash === routesHash) {
     // In CI we can't ask the user anything so we will bail as if the user said no.
     if (isCI()) {
