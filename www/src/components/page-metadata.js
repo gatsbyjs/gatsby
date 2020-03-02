@@ -20,6 +20,7 @@ export default function PageMetadata({
       {description && <meta name="description" content={description} />}
       {description && <meta name="og:description" content={description} />}
       <meta name="og:type" content={type} />
+      {/* Used by slack to display rich previews */}
       {timeToRead && <meta name="twitter.label1" content="Reading time" />}
       {timeToRead && (
         <meta name="twitter:data1" content={`${timeToRead} min read`} />
