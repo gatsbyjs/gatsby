@@ -13,6 +13,7 @@ Perhaps you've been approached by an SEO _expert_ who can maximize your revenue 
 A core ingredient for SEO is a meaningful `title` tag. Make sure to include related keywords without falling into buzzword bingo. Some crawlers also respect `meta` tags, while Google seems to ignore these tags for ranking and indexing at all.
 
 You probably have seen something like the following:
+
 ```html
 <title>My Wonderful App</title>
 <meta
@@ -25,7 +26,7 @@ You probably have seen something like the following:
 />
 ```
 
-The _bare minimum_ requirement is to include a `title` tag for basic SEO. However, the following describes a powerful combo of content rendered at _build time_ powered by Gatsby and GraphQL. 
+The _bare minimum_ requirement is to include a `title` tag for basic SEO. However, the following describes a powerful combo of content rendered at _build time_ powered by Gatsby and GraphQL.
 
 ## Gatsby + GraphQL
 
@@ -76,7 +77,7 @@ export default SEO
 
 This component doesn't _do_ anything yet, but it's the foundation for a useful, extensible component. It leverages the `StaticQuery` functionality enabled via Gatsby to query siteMetadata (e.g. details in `gatsby-config.js`) with description and keywords.
 
-The `StaticQuery` component accepts a render prop, and at this point, it simply returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component. 
+The `StaticQuery` component accepts a render prop, and at this point, it simply returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component.
 
 ```js:title=src/components/seo.js
 import React from "react"
@@ -416,7 +417,7 @@ To bring it all home, it's time to begin actually _using_ this extensible SEO co
 
 ## Using the SEO component
 
-You created an extensible SEO component. It takes a `title` prop and then (optionally) `description`, `meta`, `image`, and `pathname` props. 
+You created an extensible SEO component. It takes a `title` prop and then (optionally) `description`, `meta`, `image`, and `pathname` props.
 
 ### In a page component
 
@@ -464,7 +465,7 @@ Hello World!
 
 #### Adding the image
 
-Let's see how an attached image will look like. For this tutorial, you can use the following image: 
+Let's see how an attached image will look like. For this tutorial, you can use the following image:
 
 ![Scribble stones forming SEO](./images/seo.jpg)
 
