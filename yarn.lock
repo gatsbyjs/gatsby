@@ -2157,10 +2157,10 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@gustavnikolaj/async-main-wrap@^2.0.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@gustavnikolaj/async-main-wrap/-/async-main-wrap-2.2.0.tgz#15418945c534c4bd57db41721db8b3031ceaf8f8"
-  integrity sha512-Rc4DLULB3Ppd6uzRlzkiGF7of5fdTxyjarLVbsXkHpdcDLQxl0OWileX3wdSHbqJ6TRrp1zoFbY99wNJTzWiQQ==
+"@gustavnikolaj/async-main-wrap@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@gustavnikolaj/async-main-wrap/-/async-main-wrap-3.0.1.tgz#b838eb9dfaf9ed81bfc2b47f64d17a83bbcfc71b"
+  integrity sha512-FHh1Tz5Jk5xJphcYpFUMsxCTO+XbgQyCorlbztqBsYRnu5hmuoV/0Q+dJlcOtQCG6cJ5/EHX+VrSsoLBoaTJvQ==
 
 "@hapi/address@2.x.x":
   version "2.0.0"
@@ -5117,10 +5117,10 @@ assert@^1.1.1:
   dependencies:
     util "0.10.3"
 
-assetgraph@^5.8.2:
-  version "5.12.0"
-  resolved "https://registry.yarnpkg.com/assetgraph/-/assetgraph-5.12.0.tgz#b2024223745b7f273cb4e8fe73de4ffcb6d8e23e"
-  integrity sha512-w1ZQlYGFcjpE8jbSuE/+rWTq5xKvMWnR/WcYmtwFIYqyq9Ts7x6n3Hn8D7nDK5PT7rvO6DGnzI5Jguad97CD/w==
+assetgraph@^6.0.4:
+  version "6.0.5"
+  resolved "https://registry.yarnpkg.com/assetgraph/-/assetgraph-6.0.5.tgz#b35eae6e5f0a87e6f3df1586cb2c529bf19ac73d"
+  integrity sha512-t+S7aDhjxY7c/s/PX2Tz17R8rDorsMVZTSlPnUXClpnbet8R+xTNrZ47hoES7yAZ9MsgXkBKmV6TT4giYyXhOw==
   dependencies:
     acorn "^7.0.0"
     acorn-jsx "^5.0.1"
@@ -5128,9 +5128,6 @@ assetgraph@^5.8.2:
     chalk "^2.0.1"
     common-path-prefix "^1.0.0"
     createerror "^1.3.0"
-    css-font-parser-papandreou "^0.2.3-patch1"
-    css-font-weight-names "0.2.1"
-    css-list-helpers "2.0.0"
     cssnano "^4.1.10"
     data-urls "^1.0.0"
     domspace "^1.2.1"
@@ -5139,10 +5136,6 @@ assetgraph@^5.8.2:
     espurify "^2.0.1"
     estraverse "^4.3.0"
     estraverse-fb "^1.3.2"
-    font-family-papandreou "^0.2.0-patch1"
-    font-snapper "^1.0.0"
-    font-tracer "^1.1.0"
-    fontkit "^1.7.7"
     gettemporaryfilepath "^1.0.0"
     glob "^7.0.5"
     html-minifier "^4.0.0"
@@ -5155,7 +5148,6 @@ assetgraph@^5.8.2:
     normalizeurl "^1.0.0"
     perfectionist "^2.4.0"
     postcss "^7.0.14"
-    postcss-values-parser "^2.0.0"
     read-pkg-up "^6.0.0"
     repeat-string "^1.5.4"
     schemes "^1.0.1"
@@ -5167,7 +5159,6 @@ assetgraph@^5.8.2:
     teepee "^2.31.1"
     terser "^4.0.0"
     urltools "^0.4.1"
-    xmldom "^0.1.27"
 
 assign-symbols@^1.0.0:
   version "1.0.0"
@@ -7572,6 +7563,11 @@ cosmiconfig@^6.0.0:
     path-type "^4.0.0"
     yaml "^1.7.2"
 
+counteraction@^1.1.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/counteraction/-/counteraction-1.3.0.tgz#a12fa46a6815c4e39bef6610111ec77753c59fa7"
+  integrity sha512-NzT5asTvOpoZ4MEfVaiqJKudPD2n1b4yfr4sAnwFhX/+4MNclakGOutK44iY7DlGNUtAOPCiHLVx9b81b6l9kA==
+
 cpx@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/cpx/-/cpx-1.5.0.tgz#185be018511d87270dedccc293171e37655ab88f"
@@ -7736,7 +7732,12 @@ css-font-parser-papandreou@^0.2.3-patch1:
   resolved "https://registry.yarnpkg.com/css-font-parser-papandreou/-/css-font-parser-papandreou-0.2.3-patch1.tgz#ce245e6117682bdd8becca66d3089b8673beb005"
   integrity sha512-yVhlQDjEppcS9a91xPs1x7u3IYNb2HPfTXxsFoNW2Kr2ilqWOqhxpfBxS42yzo1FCu0IGg1vbt8aag9fChCwmA==
 
-css-font-weight-names@0.2.1, css-font-weight-names@^0.2.1:
+css-font-parser@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/css-font-parser/-/css-font-parser-0.3.0.tgz#0b83411ba5e1aeca5df8191e470ecd72767c972e"
+  integrity sha512-A87umgWt59068CJwWkNtcSnmecYraqv5qOA5Qu3VAhgnSpusYS3LJ5TYW5Ooe9oHAwwWIpMBhN94QL64/Iwhsg==
+
+css-font-weight-names@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/css-font-weight-names/-/css-font-weight-names-0.2.1.tgz#5710d485ad295f6b3f1ceec41f882e324a46b516"
   integrity sha1-VxDUha0pX2s/HO7EH4guMkpGtRY=
@@ -7748,7 +7749,7 @@ css-in-js-utils@^2.0.0:
     hyphenate-style-name "^1.0.2"
     isobject "^3.0.1"
 
-css-list-helpers@2.0.0, css-list-helpers@^2.0.0:
+css-list-helpers@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/css-list-helpers/-/css-list-helpers-2.0.0.tgz#7cb3d6f9ec9e5087ae49d834cead282806e8818f"
   integrity sha512-9Bj8tZ0jWbAM3u/U6m/boAzAwLPwtjzFvwivr2piSvyVa3K3rChJzQy4RIHkNkKiZCHrEMWDJWtTR8UyVhdDnQ==
@@ -10347,10 +10348,6 @@ flatted@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.0.tgz#55122b6536ea496b4b44893ee2608141d10d9916"
 
-flatten@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
-
 flow-parser@0.*:
   version "0.105.2"
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.105.2.tgz#7ba3ab7718c0519979c2f061e89c7b3c3624ee96"
@@ -10378,25 +10375,27 @@ font-family-papandreou@^0.2.0-patch1:
   resolved "https://registry.yarnpkg.com/font-family-papandreou/-/font-family-papandreou-0.2.0-patch1.tgz#65ab61dd96f90c8fd5b3b07a334ddcd20be74445"
   integrity sha512-l6WMbeh7+Zd4TTu3yUUPR5KOepiuGLd/QAPfTIoX8ipTko0IF7PU6dsM4YM2zCDToEPIPSyCBKEJnKlSdYMgaA==
 
-font-snapper@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/font-snapper/-/font-snapper-1.0.0.tgz#e80557a4d70ff532066d39972efe2743d71e5e14"
-  integrity sha512-8E91ADLNoLIXZGGRDuuK13SWPVbbxIwVkcIcvEoQdEpP13U20bOVXXrur4VxUff3pMImrot7cM/9vN0LwiJ32w==
+font-snapper@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/font-snapper/-/font-snapper-1.0.1.tgz#33a8e171ce1fe58b84c27215a6d393ae3c36f510"
+  integrity sha512-IWwv2uV6+tZLREptJXcGrYKXScLo9wmdsrJ1tx5dVXcxfvrmtZSbJemepf2WNmR+fSIsWG+wguB3AI4NZvkqdw==
   dependencies:
     css-font-weight-names "^0.2.1"
     font-family-papandreou "^0.2.0-patch1"
 
-font-tracer@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/font-tracer/-/font-tracer-1.1.0.tgz#6a01e217563c768d6e8a7fb9bc009ecdbe86fd5c"
-  integrity sha512-IfLwFnWbOE0sAmPXzpq8aFyaJzbZniMkM7d5X6GvJG+p8InEmeJFAoZzCDrx67iPWtcifUwxAE/xVu4og8+w/w==
+font-tracer@^1.3.1:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/font-tracer/-/font-tracer-1.3.2.tgz#d197e52208832c6a183565980ae030308e8323e7"
+  integrity sha512-SteSyHERctVfMokoOeFYbnITsx1iSvqMdRbEzreiqzQqFiLXWX4FoU/IiwG5HmoQUYyG7NRb4ykzBA0w+141CA==
   dependencies:
     capitalize "^2.0.0"
+    counteraction "^1.1.0"
+    css-font-parser-papandreou "^0.2.3-patch1"
     css-font-weight-names "^0.2.1"
-    postcss-values-parser "^2.0.1"
+    postcss-value-parser "^4.0.2"
     specificity "^0.4.1"
 
-fontkit@^1.7.7, fontkit@^1.8.0:
+fontkit@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/fontkit/-/fontkit-1.8.0.tgz#deb9351619e90ddc91707b6156a9f14c8ab11554"
   integrity sha512-EFDRCca7khfQWYu1iFhsqeABpi87f03MBdkT93ZE6YhqCdMzb5Eojb6c4dlJikGv5liuhByyzA7ikpIPTSBWbQ==
@@ -17975,15 +17974,6 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.0.2:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.0.2.tgz#482282c09a42706d1fc9a069b73f44ec08391dc9"
   integrity sha512-LmeoohTpp/K4UiyQCwuGWlONxXamGzCMtFxLq4W1nZVGIQLYvMCJx3yAF9qyyuFpflABI9yVdtJAqbihOsCsJQ==
 
-postcss-values-parser@^2.0.0, postcss-values-parser@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/postcss-values-parser/-/postcss-values-parser-2.0.1.tgz#da8b472d901da1e205b47bdc98637b9e9e550e5f"
-  integrity sha512-2tLuBsA6P4rYTNKCXYG/71C7j1pU6pK503suYOmn4xYrQIzW+opD+7FAFNuGSdZC/3Qfy334QbeMu7MEb8gOxg==
-  dependencies:
-    flatten "^1.0.2"
-    indexes-of "^1.0.1"
-    uniq "^1.0.1"
-
 postcss@6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.1.tgz#000dbd1f8eef217aa368b9a212c5fc40b2a8f3f2"
@@ -18349,6 +18339,20 @@ punycode@2.x.x, punycode@^2.1.0, punycode@^2.1.1:
 punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
+
+puppeteer-core@^1.19.0:
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-1.20.0.tgz#cfad0c7cbb6e9bb0d307c6e955e5c924134bbeb5"
+  integrity sha512-akoSCMDVv6BFd/4+dtW6mVgdaRQhy/cmkGzXcx9HAXZqnY9zXYbsfoXMiMpwt3+53U9zFGSjgvsi0mDKNJLfqg==
+  dependencies:
+    debug "^4.1.0"
+    extract-zip "^1.6.6"
+    https-proxy-agent "^2.2.1"
+    mime "^2.0.3"
+    progress "^2.0.1"
+    proxy-from-env "^1.0.0"
+    rimraf "^2.6.1"
+    ws "^6.1.0"
 
 puppeteer@^1.20.0:
   version "1.20.0"
@@ -20276,10 +20280,6 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shell-escape@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/shell-escape/-/shell-escape-0.2.0.tgz#68fd025eb0490b4f567a027f0bf22480b5f84133"
-
 shell-quote@1.6.1, shell-quote@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.6.1.tgz#f4781949cce402697127430ea3b3c5476f481767"
@@ -21246,25 +21246,26 @@ subarg@^1.0.0:
   dependencies:
     minimist "^1.1.0"
 
-subfont@^3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/subfont/-/subfont-3.7.1.tgz#d3e604a72309a3935ffcc7c52f3931fcbab1225d"
-  integrity sha512-3bW5Nq6HnuwWD0lSdxh9nZZbe8Dj2Ewf5vJyxXYlXNT1MEWy2NsJ/hzi6RFhK8cBg+0i605cZ56XwY/0QmRMcg==
+subfont@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/subfont/-/subfont-4.2.0.tgz#77f2a157b6a02612aed998e2684e25dd413dcff2"
+  integrity sha512-2kkzVQd/wYjk8Q9TZ5IS8JCrK2vGFUy5sEgA8IthOZ5FosaO897eOMphN/YAjObUsLO9406iHPxIZvEu+c/fwQ==
   dependencies:
-    "@gustavnikolaj/async-main-wrap" "^2.0.0"
-    assetgraph "^5.8.2"
-    css-font-parser-papandreou "^0.2.3-patch1"
+    "@gustavnikolaj/async-main-wrap" "^3.0.1"
+    assetgraph "^6.0.4"
+    css-font-parser "^0.3.0"
     css-font-weight-names "^0.2.1"
     css-list-helpers "^2.0.0"
     font-family-papandreou "^0.2.0-patch1"
-    font-snapper "^1.0.0"
-    font-tracer "^1.1.0"
+    font-snapper "^1.0.1"
+    font-tracer "^1.3.1"
     fontkit "^1.8.0"
     lodash.groupby "^4.6.0"
     postcss-value-parser "^4.0.2"
     pretty-bytes "^5.1.0"
+    puppeteer-core "^1.19.0"
     urltools "^0.4.1"
-    yargs "^12.0.2"
+    yargs "^14.2.0"
 
 sudo-prompt@^8.2.0:
   version "8.2.5"
@@ -23840,7 +23841,7 @@ yargs@^13.2.4, yargs@^13.3.0:
     y18n "^4.0.0"
     yargs-parser "^13.1.1"
 
-yargs@^14.2.2:
+yargs@^14.2.0, yargs@^14.2.2:
   version "14.2.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-14.2.2.tgz#2769564379009ff8597cdd38fba09da9b493c4b5"
   integrity sha512-/4ld+4VV5RnrynMhPZJ/ZpOCGSCeghMykZ3BhdFBDa9Wy/RH6uEGNWDJog+aUlq+9OM1CFTgtYRW5Is1Po9NOA==
