@@ -11,9 +11,10 @@ In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for 
 
 Benefits of using Gatsby for e-commerce sites include the following:
 
-- Security inherent in static sites
-- Blazing fast performance when your pages are converted from React into static files
-- Easy to host
+- Security inherent in static sites.
+- Blazing fast performance when your pages are converted from React into static files.
+- No server component required with Stripe's [client-only Checkout](https://stripe.com/docs/payments/checkout/client-only).
+- Cost-efficient hosting of static sites.
 
 ## Prerequisites
 
@@ -39,9 +40,9 @@ cd ecommerce-gatsby-tutorial
 
 Run `gatsby develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to `http://localhost:8000/` and you should see a default homepage.
 
-### Loading StripeJS
+### Loading Stripe.js
 
-Stripe provides a JavaScript library the allows you to securely redirect your customer to the Stripe hosted checkout page. Due to [PCI compliance requirements](https://stripe.com/docs/security), the Stripe.js library has to be loaded from Stripe's servers. Stripe provides a [loading wrapper](https://github.com/stripe/stripe-js) that allows you to import Stripe.js like an ES module:
+Stripe provides a JavaScript library that allows you to securely redirect your customer to the Stripe hosted checkout page. Due to [PCI compliance requirements](https://stripe.com/docs/security), the Stripe.js library has to be loaded from Stripe's servers. Stripe provides a [loading wrapper](https://github.com/stripe/stripe-js) that allows you to import Stripe.js like an ES module:
 
 ```js
 import { loadStripe } from "@stripe/stripe-js"
@@ -84,9 +85,9 @@ Additionally, you need to set a name for your Stripe account in your [Account se
 
 You can find an implementation of these examples [on GitHub](https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial).
 
-### Easy: One Button
+### Example 1: One Button
 
-If you're selling a simple product, like an eBook for example, you can create a single button that will perform a redirect to the Stripe Checkout page:
+If you're selling a single product, like an eBook for example, you can create a single button that will perform a redirect to the Stripe Checkout page:
 
 #### Create a product and SKU
 
@@ -94,7 +95,7 @@ To sell your products, you need to create them in your Stripe account using the 
 
 You will need to create both test and live product SKUs separately in the Stripe Dashboard. Make sure you toggle to "Viewing test data", then create your products for local development.
 
-#### Create a checkout component that loads StripeJS and redirects to the checkout
+#### Create a checkout component that loads Stripe.js and redirects to the checkout
 
 Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this:
 
@@ -210,7 +211,7 @@ export default IndexPage
 
 If you go back to `http://localhost:8000/` in your browser and you have `gatsby develop` running, you should now see a big, enticing "BUY MY BOOK" button. C'mon and give it a click!
 
-### Advanced: Import SKUs via source plugin
+### Example 2: Import SKUs via source plugin
 
 Instead of hardcoding the SKU IDs, you can use the [gatsby-source-stripe plugin](/packages/gatsby-source-stripe/) to retrieve your SKUs at build time.
 
@@ -414,7 +415,7 @@ import { graphql, StaticQuery } from "gatsby"
 import SkuCard from "./SkuCard"
 import { loadStripe } from "@stripe/stripe-js"
 
-const conatinerStyles = {
+const containerStyles = {
   display: "flex",
   flexDirection: "row",
   flexWrap: "wrap",
@@ -444,7 +445,7 @@ const Skus = () => {
         }
       `}
       render={({ skus }) => (
-        <div style={conatinerStyles}>
+        <div style={containerStyles}>
           {skus.edges.map(({ node: sku }) => (
             <SkuCard key={sku.id} sku={sku} stripePromise={stripePromise} />
           ))}
