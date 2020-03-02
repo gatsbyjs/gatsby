@@ -76,7 +76,7 @@ gatsby develop
 
 ## Step 5: Add some content
 
-Not much to look at yet, just a plain `hello-world`, but it works! Behind the scenes our two themes [created content folders](/docs/themes/conventions/#initializing-required-directories) for us in the root directory of the site. We need to add some content to these folders.
+Behind the scenes, the two themes created content folders in the root directory of the site. In this step, you will add some content to these folders.
 
 Put an avatar image into `content/assets/avatar.png`
 
