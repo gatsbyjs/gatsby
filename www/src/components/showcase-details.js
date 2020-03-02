@@ -259,7 +259,6 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
         }}
       >
         <div css={{ width: `100%` }}>
-          {/* TODO might be weird on modals? */}
           <PageMetadata
             title={`${site.title}: Showcase`}
             description={site.description || site.main_url}
