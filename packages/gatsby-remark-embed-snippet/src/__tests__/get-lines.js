@@ -1,4 +1,4 @@
-const getLines = require(`../utils/getLines`)
+const getLines = require(`../utils/get-lines`)
 
 describe(`gatsby-remark-embed-snippet`, () => {
   it(`should not support line syntax that isn't one line or a line range`, () => {

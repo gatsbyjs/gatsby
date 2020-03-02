@@ -5,8 +5,8 @@ const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
 const visit = require(`unist-util-visit`)
 
-const getLanguage = require(`./utils/getLanguage`)
-const getLines = require(`./utils/getLines`)
+const getLanguage = require(`./utils/get-language`)
+const getLines = require(`./utils/get-lines`)
 
 module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
   if (!directory) {
