@@ -10012,3 +10012,29 @@
   built_by: Rašid Redžić
   built_by_url: https://rasidre.com/
   featured: false
+- title: Creative code daily
+  main_url: https://www.bobylito.dev/
+  url: https://www.bobylito.dev/
+  source_url: https://github.com/bobylito/sketches
+  description: >
+    Creative code daily (CCD) is a personal project for which I build a new animation made out of code every day.
+  categories:
+    - Blog
+    - Programming
+    - Gallery
+    - Portfolio
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
+- title: Playlist Detective
+  main_url: https://www.playlistdetective.com/
+  url: https://www.playlistdetective.com/
+  source_url: https://github.com/bobylito/playlistFinder
+  description: >
+    Playlist Detective is an attempt to ease music discovery with playlists. Back in the days, people were sharing mixtapes - some songs we knew and others we didn't, therefore expanding our musical horizons.
+    Playlists are the same, and playlist detective lets you search for songs or artists you like in order to stumble on your new favorite songs.
+    It uses Algolia for the search.
+  categories:
+    - Media
+    - Music
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
