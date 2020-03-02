@@ -222,7 +222,7 @@ Here is a video about composing and styling themes with J&J!
 
 ## Step 11: Add a navigation menu
 
-We can use component shadowing one more time to add a basic navigation menu. You can read more about [creating dynamic navigation menus](/docs/creating-dynamic-navigation/) in the docs.
+Implementing component shadowing one more time to add a basic navigation menu can be an option. You can read more about [creating dynamic navigation menus](/docs/creating-dynamic-navigation/) in the docs.
 
 Add a `menuLinks` array to `gatsby-config.js`
 
