@@ -373,11 +373,17 @@ const mergeTypes = ({
     addExtensions({ schemaComposer, typeComposer, plugin, createdFrom })
 
     return true
-  } else {
+  } else if (typeOwner) {
     report.warn(
       `Plugin \`${plugin.name}\` tried to define the GraphQL type ` +
         `\`${typeComposer.getTypeName()}\`, which has already been defined ` +
         `by the plugin \`${typeOwner}\`.`
+    )
+    return false
+  } else {
+    report.warn(
+      `Plugin \`${plugin.name}\` tried to define built-in Gatsby GraphQL type ` +
+        `\`${typeComposer.getTypeName()}\``
     )
     return false
   }
@@ -746,7 +752,10 @@ const processThirdPartyTypeFields = ({ typeComposer, schemaQueryType }) => {
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
   const intermediateSchema = schemaComposer.buildSchema()
-  const createResolvers = resolvers => {
+  const createResolvers = (
+    resolvers,
+    { ignoreNonexistentTypes = false } = {}
+  ) => {
     Object.keys(resolvers).forEach(typeName => {
       const fields = resolvers[typeName]
       if (schemaComposer.has(typeName)) {
@@ -814,7 +823,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
             tc.setFieldExtension(fieldName, `createdFrom`, `createResolvers`)
           }
         })
-      } else {
+      } else if (!ignoreNonexistentTypes) {
         report.warn(
           `\`createResolvers\` passed resolvers for type \`${typeName}\` that ` +
             `doesn't exist in the schema. Use \`createTypes\` to add the type ` +

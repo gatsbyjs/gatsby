@@ -206,7 +206,7 @@ Linting is the process of running a program that will analyze code for potential
 
 ## M
 
-### MDX
+### [MDX](/docs/glossary/mdx/)
 
 Extends [Markdown](#markdown) to support [React](#react) [components](#component) within your content.
 

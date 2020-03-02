@@ -34,7 +34,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
   })
 
   const { sections, sectionHeaders } = getFeaturesData(
-    data.allGatsbyJamstackSpecsCsv.edges
+    data.allGatsbyJamstackSpecsCsv.nodes
   )
 
   return (
@@ -99,18 +99,16 @@ export default JamstackFeaturesPage
 export const pageQuery = graphql`
   query {
     allGatsbyJamstackSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          Nextjs
-          Jekyll
-          Hugo
-          Nuxtjs
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        Nextjs
+        Jekyll
+        Hugo
+        Nuxtjs
+        Description
       }
     }
   }

@@ -64,7 +64,7 @@ class CreatorTemplate extends Component {
     const isAgencyOrCompany =
       creator.type === `agency` || creator.type === `company`
 
-    const sites = data.allSitesYaml.edges
+    const sites = data.allSitesYaml.nodes
 
     return (
       <React.Fragment>
@@ -202,7 +202,7 @@ class CreatorTemplate extends Component {
                 >
                   {sites.map(site => (
                     <Link
-                      key={site.node.title}
+                      key={site.title}
                       sx={{
                         "&&": {
                           mr: 6,
@@ -212,12 +212,12 @@ class CreatorTemplate extends Component {
                           transition: `default`,
                         },
                       }}
-                      to={site.node.fields.slug}
+                      to={site.fields.slug}
                     >
                       <Img
-                        alt={`${site.node.title}`}
+                        alt={`${site.title}`}
                         fixed={
-                          site.node.childScreenshot.screenshotFile
+                          site.childScreenshot.screenshotFile
                             .childImageSharp.fixed
                         }
                       />
@@ -265,22 +265,20 @@ export const pageQuery = graphql`
         fields: { hasScreenshot: { eq: true } }
       }
     ) {
-      edges {
-        node {
-          url
-          title
-          childScreenshot {
-            screenshotFile {
-              childImageSharp {
-                fixed(width: 100, height: 100) {
-                  ...GatsbyImageSharpFixed
-                }
+      nodes {
+        url
+        title
+        childScreenshot {
+          screenshotFile {
+            childImageSharp {
+              fixed(width: 100, height: 100) {
+                ...GatsbyImageSharpFixed
               }
             }
           }
-          fields {
-            slug
-          }
+        }
+        fields {
+          slug
         }
       }
     }
