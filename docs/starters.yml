@@ -2426,7 +2426,7 @@
     - 📣 react-axe for console reporting of accessibility errors in the DOM during development
     - 📖 storybook setup for accessibility reporting on individual components
 - url: https://gatsby-theme-ggt-material-ui-blog.netlify.com/
-  repo: https://github.com/greatgatsbyjsthemes/gatsby-starter-ggt-material-ui-blog
+  repo: https://github.com/avatar-kaleb/gatsby-starter-ggt-material-ui-blog
   description: Starter material-ui blog utilizing a Gatsby theme!
   tags:
     - Blog
@@ -5418,3 +5418,21 @@
     - PWA
     - ESLint
     - SEO ready
+- url: https://dospolov.com
+  repo: https://github.com/dospolov/gatsby-starter-blog-and-cv
+  description: Gatsby starter for Blog and CV.
+  tags:
+    - Blog
+    - CMS:Netlify
+    - Pagination
+    - Portfolio
+    - Disqus
+    - RSS
+    - Styling:Ant Design
+    - Styling:Tailwind
+  features:
+    - Archive organized by tags and categories
+    - Pagination support
+    - Offline support
+    - Google Analytics support
+    - Disqus Comments support
