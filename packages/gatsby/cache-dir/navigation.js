@@ -84,7 +84,10 @@ const navigate = (to, options = {}) => {
     if (!pageResources || pageResources.status === `error`) {
       window.history.replaceState({}, ``, location.href)
       window.location = pathname
+      clearTimeout(timeoutId)
+      return
     }
+
     // If the loaded page has a different compilation hash to the
     // window, then a rebuild has occurred on the server. Reload.
     if (process.env.NODE_ENV === `production` && pageResources) {

@@ -276,7 +276,7 @@ function count(arrays) {
 
 function filterByCategories(list, categories) {
   let starters = list
-  starters = starters.filter(({ node: starter }) =>
+  starters = starters.filter(starter =>
     isSuperset(starter.tags, categories)
   )
   return starters

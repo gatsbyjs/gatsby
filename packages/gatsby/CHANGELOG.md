@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.23...gatsby@2.19.24) (2020-03-02)
+
+### Bug Fixes
+
+- **gatsby:** Improve error message when EnsureResources fails to ensure a resource ([#21429](https://github.com/gatsbyjs/gatsby/issues/21429)) ([7527993](https://github.com/gatsbyjs/gatsby/commit/7527993))
+- **gatsby:** Switching from devcert-san to devcert to fix HTTP… ([#16726](https://github.com/gatsbyjs/gatsby/issues/16726)) ([22ead19](https://github.com/gatsbyjs/gatsby/commit/22ead19)), closes [#16212](https://github.com/gatsbyjs/gatsby/issues/16212)
+
 ## [2.19.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.22...gatsby@2.19.23) (2020-02-28)
 
 ### Bug Fixes

@@ -327,6 +327,7 @@ module.exports = {
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
                   custom_elements: [{ "content:encoded": node.html }],
                   author: node.frontmatter.author.id,
+                  date: node.frontmatter.date,
                 }
               }),
           },
