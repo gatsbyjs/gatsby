@@ -5436,3 +5436,21 @@
     - Offline support
     - Google Analytics support
     - Disqus Comments support
+- url: https://gatsby-sidebar.netlify.com/
+  repo: https://github.com/Mr404Found/gatsby-sidebar-starter
+  description: A responsive Profile page with beautiful Sidebar or Navbar
+  tags:
+    - Netlify
+    - SEO
+    - Blog
+    - Landing Page
+    - Styling:Other
+  features:
+    - Attractive Design
+    - Responsive webpage
+    - Responsive Card Design
+    - Gatsby
+    - Navbar
+    - Sidebar
+    - React Reveal
+    - Animations
