@@ -46,6 +46,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
    When prompted to select your public directory, press <kbd>enter</kbd>. It will default to `public`, which is also Gatsby's default public directory.
 
 1. Update the `firebase.json` with the following cache settings
+
 ```json
 {
   "hosting": {
