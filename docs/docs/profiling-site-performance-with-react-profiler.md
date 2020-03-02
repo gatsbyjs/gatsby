@@ -18,9 +18,29 @@ To enable profiling for a Production build an additional CLI option `--profile` 
 
 Although Profiler is a light-weight component, it should be used only when necessary; each use adds some CPU and memory overhead to an application.
 
-A warning will be issued in a Gatsby Production build if the `--profile` options is provided.
+A warning will be issued in a Gatsby Production build if the `--profile` option is provided.
 
-## Example: Profile Gatsby pages
+## Using the Profiler API
+
+If you just want to see some high level results, your [React DevTools will have a profiling tab](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html#profiling-an-application) which provides some helpful performance information. However if you want to be able to capture more information programmatically, then React exports a `profiler` component which allows your site to tap into the performance metrics.
+
+The react profiler component can be used anywhere in a react tree to measure the performance of that part of the tree.
+
+### Profiling a slow component
+
+```js
+import * as React from "react"
+import { Profiler } from "react"
+
+export const MyComponent = props => (
+  // See https://reactjs.org/docs/profiler.html#onrender-callback for onRender parameters
+  <Profiler id={props.someUniqueId} onRender={capturePageMetrics}>
+    <SlowComponent />
+  </Profiler>
+)
+```
+
+### Profiling Gatsby pages
 
 Capturing page performance can be achieved by using the [wrapPageElement API](/docs/browser-apis/#wrapPageElement) to profile each page.
 
@@ -30,26 +50,13 @@ Capturing page performance can be achieved by using the [wrapPageElement API](/d
 import * as React from "react"
 import { Profiler } from "react"
 
-const capturePageMetrics = (
-  id, // the "id" prop of the Profiler tree that has just committed
-  phase, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
-  actualDuration, // time spent rendering the committed update
-  baseDuration, // estimated time to render the entire subtree without memoization
-  startTime, // when React began rendering this update
-  commitTime, // when React committed this update
-  interactions // the Set of interactions belonging to this update
-) => {
-  // Aggregate or log render timings...
-}
-
 export const wrapPageElement = ({ element, props }) => (
+  // See https://reactjs.org/docs/profiler.html#onrender-callback for onRender parameters
   <Profiler id={props.someUniqueId} onRender={capturePageMetrics}>
     {element}
   </Profiler>
 )
 ```
-
-The above is just an example, the react profiler can be used anywhere in a react tree to measure the performance of that part of the tree.
 
 ### References:
 
