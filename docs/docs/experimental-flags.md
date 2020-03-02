@@ -6,6 +6,8 @@ We're always making improvements to Gatsby and sometimes, these improvements mig
 
 This page aims to list currently known and supported experimental feature flags in Gatsby v2.
 
+Please note that everything on this page is _experimental_ in that they might or might _not_ make it into a stable version of Gatsby in the future. APIs marked as experimental may also include breaking changes in a patch or minor version bump or be removed and users should only proceed with caution.
+
 ## Currently Supported Experimental Flags
 
 ### GATSBY_DB_NODES
