@@ -57,7 +57,11 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
   )
 }
 
-const LayerModel = ({ layers, initialLayer = `Content` }) => {
+const LayerModel = ({
+  layers,
+  displayCodeFullWidth,
+  initialLayer = `Content`,
+}) => {
   const [selected, setSelected] = useState(initialLayer)
   const [sourceIndex, setSourceIndex] = useState(0)
   const refs = useRef(layers.map(() => React.createRef()))
@@ -114,7 +118,12 @@ const LayerModel = ({ layers, initialLayer = `Content` }) => {
       {layers.map(
         (layer, index) =>
           selected === layer.title &&
-          layer.component({ sourceIndex, setSourceIndex, index })
+          layer.component({
+            sourceIndex,
+            setSourceIndex,
+            index,
+            displayCodeFullWidth,
+          })
       )}
     </>
   )

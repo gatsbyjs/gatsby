@@ -1,4 +1,5 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import LayerModel from "../layer-model"
 import {
   ContentLayerContent,
@@ -41,9 +42,15 @@ const layers = [
   },
 ]
 
-
 const ComponentModel = ({ initialLayer, ...props }) => {
-  return <LayerModel layers={layers} initialLayer={initialLayer} {...props}/>
+  return (
+    <LayerModel
+      layers={layers}
+      initialLayer={initialLayer}
+      displayCodeFullWidth={false}
+      {...props}
+    />
+  )
 }
 
 export default ComponentModel

@@ -5,7 +5,7 @@ import { Link } from "gatsby"
 import {
   LayerContentWrapper,
   ExampleWrapper,
-  CodeWrapper
+  CodeWrapper,
 } from "../model-wrapper"
 
 // This content is only used when you click "cycle sources" in the Content pane
@@ -63,10 +63,10 @@ const ContentSource = ({ sourceIndex, setSourceIndex }) => (
   <CodeWrapper
     title={sources[sourceIndex].title}
     language={sources[sourceIndex].language}
+    sourcesLength={sources.length}
     sourceIndex={sourceIndex}
     setSourceIndex={setSourceIndex}
     rotateButton={true}
-    sources={sources}
   >
     {sources[sourceIndex].content}
   </CodeWrapper>
