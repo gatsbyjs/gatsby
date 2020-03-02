@@ -6729,18 +6729,6 @@
     - Nonprofit
   built_by: Jacob Herper
   built_by_url: https://herper.io
-- title: Gratsy
-  url: https://gratsy.com/
-  main_url: https://gratsy.com/
-  description: >
-    Gratsy: Feedback To Give Back
-  categories:
-    - Agency
-    - Marketing
-    - Landing Page
-  built_by: Whalar
-  built_by_url: https://whalar.com/
-  featured: false
 - title: deepThreads
   main_url: https://deepthreads.com
   url: https://deepthreads.com/
@@ -9319,7 +9307,7 @@
   url: https://www.gis-netzwerk.com/
   main_url: https://www.gis-netzwerk.com/
   description: >
-    Geoinformatik, GIS, Web-Development.
+    Multilingual (i18n) Blog with different URLs for categories, tags and posts depending on the language.
   categories:
     - Blog
     - Data
@@ -9998,3 +9986,29 @@
     - Marketing
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
+- title: Dynobase
+  url: "https://dynobase.dev/"
+  main_url: "https://dynobase.dev/"
+  description: >
+    Professional GUI Client for DynamoDB.
+  categories:
+    - Data
+    - Programming
+    - Web Development
+  built_by: Rafal Wilinski
+  built_by_url: "https://rwilinski.me/"
+  featured: false
+- title: Vaktija.eu
+  url: https://vaktija.eu
+  main_url: https://vaktija.eu
+  description: >
+    Vaktija.eu gives information about prayer times in germany. (Built with GatsbyJS. Fast in every way that matters.)
+  categories:
+    - App
+    - Community
+    - Nonprofit
+    - SEO
+    - Web Development
+  built_by: Rašid Redžić
+  built_by_url: https://rasidre.com/
+  featured: false
