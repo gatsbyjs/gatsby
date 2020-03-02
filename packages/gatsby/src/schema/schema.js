@@ -379,6 +379,7 @@ const mergeTypes = ({
         `\`${typeComposer.getTypeName()}\`, which has already been defined ` +
         `by the plugin \`${typeOwner}\`.`
     )
+    return false
   } else {
     report.warn(
       `Plugin \`${plugin.name}\` tried to define built-in Gatsby GraphQL type ` +
