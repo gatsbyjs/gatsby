@@ -1,15 +1,13 @@
-const { request } = require(`graphql-request`)
-const { isCI } = require(`gatsby-core-utils`)
-const createMockLogger = require(`logger-mock`)
-const fetchRoutes = require(`../prepare/fetch-routes`)
-
 jest.mock(`graphql-request`, () => {
   return { request: jest.fn() }
 })
 
-jest.mock(`gatsby-core-utils`, () => {
-  return { isCI: jest.fn() }
-})
+jest.mock(`gatsby-core-utils`)
+
+const { request } = require(`graphql-request`)
+const { isCI, createContentDigest } = require(`gatsby-core-utils`)
+const createMockLogger = require(`logger-mock`)
+const fetchRoutes = require(`../prepare/fetch-routes`)
 
 describe(`fetch-routes`, () => {
   const endpoint = `http://localhost:3000/___graphql`
@@ -68,11 +66,10 @@ describe(`fetch-routes`, () => {
         },
       }
     })
-    logger.confirm.mockImplementationOnce(() =>
-      Promise.resolve(false /* don't crawl routes */)
-    )
+    // don't crawl routes
+    logger.confirm.mockImplementationOnce(() => Promise.resolve(false))
+    createContentDigest.mockReturnValueOnce(cache.hash)
 
-    cache.hash = `09f5b092fb87d859e0ac53dbae299a9e`
     await expect(fetchRoutes({ logger, endpoint, cache })).resolves.toEqual([])
   })
 
@@ -86,9 +83,11 @@ describe(`fetch-routes`, () => {
         },
       }
     })
-    isCI.mockImplementationOnce(true)
 
     cache.hash = `09f5b092fb87d859e0ac53dbae299a9e`
+    createContentDigest.mockReturnValueOnce(cache.hash)
+    isCI.mockReturnValueOnce(true)
+
     await expect(fetchRoutes({ logger, endpoint, cache })).resolves.toEqual([])
   })
 })

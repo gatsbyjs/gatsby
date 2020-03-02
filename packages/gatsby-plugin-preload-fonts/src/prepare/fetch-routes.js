@@ -1,4 +1,4 @@
-import { createContentDigest, isCI } from "gatsby-core-utils"
+const { createContentDigest, isCI } = require(`gatsby-core-utils`)
 const { request } = require(`graphql-request`)
 const { formatRelative } = require(`date-fns`)
 const { red, blue, bold, dim } = require(`chalk`)
