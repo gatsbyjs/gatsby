@@ -60,7 +60,7 @@ export const configureStore = (initialState: IReduxState): Store<IReduxState> =>
     applyMiddleware(thunk, multi)
   )
 
-export const store = configureStore(readState())
+export const store: Store = configureStore(readState())
 
 // Persist state.
 export const saveState = (): void => {

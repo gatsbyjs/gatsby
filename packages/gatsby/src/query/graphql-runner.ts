@@ -19,7 +19,33 @@ import { IReduxState } from "../redux/types"
 
 type Query = string | Source
 
-class GraphQLRunner {
+interface IGraphQLRunnerStats {
+  totalQueries: number
+  uniqueOperations: Set<string>
+  uniqueQueries: Set<string>
+  totalRunQuery: number
+  totalPluralRunQuery: number
+  totalIndexHits: number
+  totalNonSingleFilters: number
+  comparatorsUsed: Map<string, number>
+  uniqueFilterPaths: Set<string>
+  uniqueSorts: Set<string>
+}
+
+interface IGraphQLRunnerStatResults {
+  totalQueries: number
+  uniqueOperations: number
+  uniqueQueries: number
+  totalRunQuery: number
+  totalPluralRunQuery: number
+  totalIndexHits: number
+  totalNonSingleFilters: number
+  comparatorsUsed: { [comparator: string]: number }
+  uniqueFilterPaths: number
+  uniqueSorts: number
+}
+
+export default class GraphQLRunner {
   parseCache: Map<Query, DocumentNode>
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,7 +56,16 @@ class GraphQLRunner {
   validDocuments: WeakSet<DocumentNode>
   scheduleClearCache: () => void
 
-  constructor(protected store: Store<IReduxState>) {
+  stats: IGraphQLRunnerStats | null
+
+  constructor(
+    protected store: Store<IReduxState>,
+    {
+      collectStats,
+    }: {
+      collectStats?: boolean
+    } = {}
+  ) {
     const { schema, schemaCustomization } = this.store.getState()
 
     this.nodeModel = new LocalNodeModel({
@@ -43,6 +78,23 @@ class GraphQLRunner {
     this.parseCache = new Map()
     this.validDocuments = new WeakSet()
     this.scheduleClearCache = debounce(this.clearCache.bind(this), 5000)
+
+    if (collectStats) {
+      this.stats = {
+        totalQueries: 0,
+        uniqueOperations: new Set(),
+        uniqueQueries: new Set(),
+        totalRunQuery: 0,
+        totalPluralRunQuery: 0,
+        totalIndexHits: 0,
+        totalNonSingleFilters: 0,
+        comparatorsUsed: new Map(),
+        uniqueFilterPaths: new Set(),
+        uniqueSorts: new Set(),
+      }
+    } else {
+      this.stats = null
+    }
   }
 
   clearCache(): void {
@@ -66,9 +118,32 @@ class GraphQLRunner {
       if (!errors.length) {
         this.validDocuments.add(document)
       }
-      return errors
+      return errors as Array<GraphQLError>
     }
     return []
+  }
+
+  getStats(): IGraphQLRunnerStatResults | null {
+    if (this.stats) {
+      const comparatorsUsedObj = {}
+      this.stats.comparatorsUsed.forEach((value, key) => {
+        comparatorsUsedObj[key] = value
+      })
+      return {
+        totalQueries: this.stats.totalQueries,
+        uniqueOperations: this.stats.uniqueOperations.size,
+        uniqueQueries: this.stats.uniqueQueries.size,
+        totalRunQuery: this.stats.totalRunQuery,
+        totalPluralRunQuery: this.stats.totalPluralRunQuery,
+        totalIndexHits: this.stats.totalIndexHits,
+        totalNonSingleFilters: this.stats.totalNonSingleFilters,
+        comparatorsUsed: comparatorsUsedObj,
+        uniqueFilterPaths: this.stats.uniqueFilterPaths.size,
+        uniqueSorts: this.stats.uniqueSorts.size,
+      }
+    } else {
+      return null
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,6 +153,12 @@ class GraphQLRunner {
     if (this.schema !== schema) {
       this.schema = schema
       this.clearCache()
+    }
+
+    if (this.stats) {
+      this.stats.totalQueries++
+      this.stats.uniqueOperations.add(`${query}${JSON.stringify(context)}`)
+      this.stats.uniqueQueries.add(query)
     }
 
     const document = this.parse(query)
@@ -96,6 +177,7 @@ class GraphQLRunner {
               context,
               customContext: schemaCustomization.context,
               nodeModel: this.nodeModel,
+              stats: this.stats,
             }),
             variableValues: context,
           })
@@ -107,5 +189,3 @@ class GraphQLRunner {
     return Promise.resolve(result)
   }
 }
-
-module.exports = GraphQLRunner

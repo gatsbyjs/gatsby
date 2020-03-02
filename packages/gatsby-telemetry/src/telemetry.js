@@ -189,6 +189,7 @@ module.exports = class AnalyticsTracker {
       componentId: `gatsby-cli`,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
+      usesLoki: process.env.GATSBY_DB_NODES === `loki`,
       ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
