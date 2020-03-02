@@ -16,10 +16,10 @@ plugins: [
   {
     resolve: `gatsby-source-medium`,
     options: {
-      username: `username/publication`
-    }
-  }
-];
+      username: `username/publication`,
+    },
+  },
+]
 ```
 
 ### Options
