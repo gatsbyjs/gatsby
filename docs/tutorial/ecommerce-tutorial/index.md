@@ -5,7 +5,7 @@ title: "Gatsby E-commerce Tutorial"
 In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments.
 
 - Demo running [on Netlify](https://gatsby-ecommerce-stripe.netlify.com/)
-- Code hosted [on GitHub](https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial)
+- Code hosted [on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe)
 
 ## Why use Gatsby for an e-commerce site?
 
@@ -83,7 +83,7 @@ Additionally, you need to set a name for your Stripe account in your [Account se
 
 ## Examples
 
-You can find an implementation of these examples [on GitHub](https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial).
+You can find an implementation of these examples [on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe).
 
 ### Example 1: One Button
 
