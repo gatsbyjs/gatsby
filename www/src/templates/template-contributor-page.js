@@ -23,7 +23,7 @@ class ContributorPageTemplate extends React.Component {
         <PageMetadata
           title={`${contributor.id} - Contributor`}
           description={contributor.bio}
-          image={contributor.avatar && contributor.avatar.childImageSharp.fixed}
+          image={contributor.avatar?.childImageSharp.fixed}
         />
         <Container>
           <div

@@ -21,6 +21,7 @@ class BlogPostTemplate extends React.Component {
       data: { mdx: post },
       location: { href },
     } = this.props
+    const { canonicalLink } = post.frontmatter
     const BioLine = ({ children }) => (
       <p
         sx={{
@@ -33,13 +34,7 @@ class BlogPostTemplate extends React.Component {
         {children}
       </p>
     )
-    let canonicalLink
 
-    if (post.frontmatter.canonicalLink) {
-      canonicalLink = (
-        <link rel="canonical" href={post.frontmatter.canonicalLink} />
-      )
-    }
     return (
       <>
         <Container>
@@ -59,7 +54,10 @@ class BlogPostTemplate extends React.Component {
               description={post.fields.excerpt}
               image={post.frontmatter.image?.childImageSharp.resize}
             >
-              <meta property="og:url" content={href} />
+              {canonicalLink && <link rel="canonical" href={canonicalLink} />}
+              {canonicalLink && (
+                <meta property="og:url" content={canonicalLink} />
+              )}
               <link
                 rel="author"
                 href={`https://gatsbyjs.org${post.frontmatter.author.fields.slug}`}
