@@ -20,5 +20,4 @@ exports.onPostBuild = async ({ store, reporter }, options) => {
     },
     subfontConsole
   )
-  return
 }
