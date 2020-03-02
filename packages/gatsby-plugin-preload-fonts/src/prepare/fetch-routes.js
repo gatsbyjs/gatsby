@@ -41,7 +41,7 @@ ${red(`err`)} could not establish a connection with the dev server
   if (cache.hash === routesHash) {
     // In CI we can't ask the user anything so we will bail as if the user said no.
     if (isCI()) {
-      process.exit(0)
+      return []
     }
 
     const lastRun = formatRelative(new Date(cache.timestamp), new Date())
@@ -56,7 +56,7 @@ ${red(`err`)} could not establish a connection with the dev server
 
 `)
     if (!ok) {
-      process.exit(0)
+      return []
     }
   }
 
