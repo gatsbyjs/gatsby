@@ -287,7 +287,9 @@ exports.createSchemaCustomization = true
  * @param {GraphQLSchema} $0.intermediateSchema Current GraphQL schema
  * @param {function} $0.createResolvers Add custom resolvers to GraphQL field configs
  * @param {object} $1
- * @param {object} $1.resolvers Resolvers from plugin options in `gatsby-config.js`.
+ * @param {object} $1.resolvers An object map of GraphQL type names to custom resolver functions.
+ * @param {object} $1.options Optional createResolvers options.
+ * @param {object} $1.options.ignoreNonexistentTypes Silences the warning when trying to add resolvers for types that don't exist. Useful for optional extensions.
  * @example
  * exports.createResolvers = ({ createResolvers }) => {
  *   const resolvers = {

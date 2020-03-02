@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.1.25...gatsby-transformer-csv@2.1.26) (2020-02-13)
+
+### Features
+
+- **gatsby-transformer-csv:** add tsv parsing option ([#21198](https://github.com/gatsbyjs/gatsby/issues/21198)) ([fef77ba](https://github.com/gatsbyjs/gatsby/commit/fef77ba))
+
 ## [2.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.1.24...gatsby-transformer-csv@2.1.25) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-transformer-csv
