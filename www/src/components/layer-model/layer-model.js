@@ -5,16 +5,9 @@ import hex2rgba from "hex2rgba"
 
 import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import LayerIcon from "../../assets/icons/layer-icon"
-import {
-  ContentLayerContent,
-  BuildLayerContent,
-  DataLayerContent,
-  ViewLayerContent,
-  AppLayerContent,
-} from "./layer-content-sections"
 
 const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
-  const { baseColor, title } = layer
+  const { baseColor, title, icon } = layer
 
   return (
     <button
@@ -54,7 +47,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
       >
         <span css={{ height: 40 }}>
           <LayerIcon
-            name={title}
+            name={icon}
             fillColor={selected ? colors[baseColor][70] : colors.grey[50]}
           />
         </span>
@@ -64,35 +57,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
   )
 }
 
-const layers = [
-  {
-    title: `Content`,
-    baseColor: `orange`,
-    component: ContentLayerContent,
-  },
-  {
-    title: `Build`,
-    baseColor: `purple`,
-    component: BuildLayerContent,
-  },
-  {
-    title: `Data`,
-    baseColor: `magenta`,
-    component: DataLayerContent,
-  },
-  {
-    title: `View`,
-    baseColor: `blue`,
-    component: ViewLayerContent,
-  },
-  {
-    title: `App`,
-    baseColor: `yellow`,
-    component: AppLayerContent,
-  },
-]
-
-const LayerModel = ({ initialLayer = `Content` }) => {
+const LayerModel = ({ layers, initialLayer = `Content` }) => {
   const [selected, setSelected] = useState(initialLayer)
   const [sourceIndex, setSourceIndex] = useState(0)
   const refs = useRef(layers.map(() => React.createRef()))
