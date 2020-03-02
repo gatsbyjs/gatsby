@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import Helmet from "react-helmet"
 
 export default function PageMetadata({
