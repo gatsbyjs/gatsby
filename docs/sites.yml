@@ -10012,3 +10012,14 @@
   built_by: Rašid Redžić
   built_by_url: https://rasidre.com/
   featured: false
+- title: Messi vs Ronaldo
+  description: >
+    The biggest debate in football - but who is the best, Messi or Ronaldo? This website provides all the goals and stats to help you reach your own conclusion.
+  main_url: "https://www.messivsronaldo.app/"
+  url: "https://www.messivsronaldo.app/"
+  categories:
+    - Sports
+    - Data
+    - App
+  built_by: Stephen Greig
+  built_by_url: "http://ste.digital/"
