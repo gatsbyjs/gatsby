@@ -33,7 +33,9 @@
     "parse-path": "^4.0.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-paginate": "^6.3.2"
+    "react-paginate": "^6.3.2",
+    "tree-kill": "^1.2.2",
+    "wait-on": "^4.0.1"
   },
   "devDependencies": {
     "prettier": "^1.13.7"
