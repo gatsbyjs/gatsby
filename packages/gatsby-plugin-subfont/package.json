@@ -24,9 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.7.6",
-    "shell-escape": "^0.2.0",
-    "subfont": "^3.7.1"
+    "subfont": "^4.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",
