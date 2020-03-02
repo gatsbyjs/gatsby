@@ -1,5 +1,5 @@
 ---
-title: Theme Tutorials
+title: Plugin and Theme Tutorials
 ---
 
 Gatsby themes are a new way to encapsulate, re-use, and compose Gatsby functionality.

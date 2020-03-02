@@ -2,7 +2,7 @@
 
 This example demonstrates usage of a local plugin -- in this case a source plugin.
 
-You might also be interested in the docs section on [local plugins](/docs/creating-a-local-plugin/), or the [source plugin tutorial](/docs/pixabay-source-plugin-tutorial/).
+You might also be interested in the docs section on [local plugins](/docs/creating-a-local-plugin/), or the [source plugin tutorial](/docs/tutorial/pixabay-source-plugin-tutorial.md).
 
 ## Using Gatsby's GraphQL integration layer
 

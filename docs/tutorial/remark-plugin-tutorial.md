@@ -16,7 +16,7 @@ In certain instances, a developer may want to customize the content of the Markd
 
 There a few things that you should have some understanding with:
 
-- How to work with Remark in Gatsby as described in [Part Six](/tutorial/part-six/) and [Part Seven](/tutorial/part-seven/) of the Gatsby Tutorial.
+- How to work with Remark in Gatsby as described in [Part Six](/tutorial/part-six) and [Part Seven](/tutorial/part-seven/) of the Gatsby Tutorial.
 - Understanding of the Markdown Syntax.
 
 ## Understanding the Abstract Syntax Tree

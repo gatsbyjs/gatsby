@@ -111,7 +111,7 @@
         - title: Keep making it better
           link: /tutorial/part-eight/#keep-making-it-better
     - title: Theme Tutorials
-      link: /tutorial/theme-tutorials/
+      link: /tutorial/plugin-and-theme-tutorials/
       items:
         - title: Using a Theme
           link: /tutorial/using-a-theme/
