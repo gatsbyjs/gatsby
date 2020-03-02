@@ -71,14 +71,9 @@ describe(`fetch-routes`, () => {
     logger.confirm.mockImplementationOnce(() =>
       Promise.resolve(false /* don't crawl routes */)
     )
-    const mockExit = jest
-      .spyOn(process, `exit`)
-      .mockImplementationOnce(() => {})
 
     cache.hash = `09f5b092fb87d859e0ac53dbae299a9e`
-    await fetchRoutes({ logger, endpoint, cache })
-
-    expect(mockExit).toHaveBeenCalledWith(0)
+    await expect(fetchRoutes({ logger, endpoint, cache })).resolves.toEqual([])
   })
 
   it(`doesn't prompt the user when the list of routes has not changed since last run if run in CI`, async () => {
@@ -92,13 +87,8 @@ describe(`fetch-routes`, () => {
       }
     })
     isCI.mockImplementationOnce(true)
-    const mockExit = jest
-      .spyOn(process, `exit`)
-      .mockImplementationOnce(() => {})
 
     cache.hash = `09f5b092fb87d859e0ac53dbae299a9e`
-    await fetchRoutes({ logger, endpoint, cache })
-
-    expect(mockExit).toHaveBeenCalledWith(0)
+    await expect(fetchRoutes({ logger, endpoint, cache })).resolves.toEqual([])
   })
 })
