@@ -47,7 +47,6 @@ const ComponentModel = ({ initialLayer, ...props }) => {
     <LayerModel
       layers={layers}
       initialLayer={initialLayer}
-      displayCodeFullWidth={false}
       {...props}
     />
   )

@@ -59,7 +59,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
 
 const LayerModel = ({
   layers,
-  displayCodeFullWidth,
+  displayCodeFullWidth=false,
   initialLayer = `Content`,
 }) => {
   const [selected, setSelected] = useState(initialLayer)
@@ -96,7 +96,7 @@ const LayerModel = ({
           role="tablist"
           sx={{
             display: `grid`,
-            gridTemplateColumns: `repeat(5, 1fr)`,
+            gridTemplateColumns: `repeat(${layers.length}, 1fr)`,
             gridGap: 1,
             textAlign: `center`,
           }}

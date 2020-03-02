@@ -6,9 +6,9 @@ import MdLoop from "react-icons/lib/md/loop"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // Components for building sections used in the model
-const LayerContentWrapper = ({ index, displayCodeFullWidth, children }) =>
-  console.log(displayCodeFullWidth) || (
-    <div
+const LayerContentWrapper = ({ index, displayCodeFullWidth=false, children }) =>{
+console.log(displayCodeFullWidth)
+   return ( <div
       id={`tabpanel${index}`}
       aria-labelledby={`tab${index}`}
       role="tabpanel"
@@ -16,7 +16,7 @@ const LayerContentWrapper = ({ index, displayCodeFullWidth, children }) =>
         py: 4,
         px: 0,
         display: `grid`,
-        gridTemplateRows: `repeat(2, 1fr)`,
+        gridTemplateRows: `repeat(2, auto)`,
         gridTemplateAreas: `"content" "example"`,
         gridGap: 0,
         [mediaQueries.lg]: {
@@ -30,8 +30,8 @@ const LayerContentWrapper = ({ index, displayCodeFullWidth, children }) =>
       }}
     >
       {children}
-    </div>
-  )
+    </div>)
+}
 
 const ExampleWrapper = ({ children }) => (
   <div
