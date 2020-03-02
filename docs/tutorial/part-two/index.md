@@ -32,7 +32,7 @@ One of the most straightforward ways to add global styles to a site is using a g
 
 Start by creating a new Gatsby site. It may be best (especially if you're new to the command line) to close the terminal windows you used for [part one](/tutorial/part-one/) and start a new terminal session for part two.
 
-Open a new terminal window, create a new "hello world" gatsby site, and start the development server:
+Open a new terminal window, create a new "hello world" Gatsby site in a directory called `tutorial-part-two`, and then move to this new directory:
 
 ```shell
 gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -48,7 +48,7 @@ You now have a new Gatsby site (based on the Gatsby "hello world" starter) with 
 │       └── index.js
 ```
 
-#### ✋ Add styles to a css file
+#### ✋ Add styles to a CSS file
 
 1. Create a `.css` file in your new project:
 
@@ -80,7 +80,7 @@ html {
 }
 ```
 
-> Note: The placement of the example css file in a `/src/styles/` folder is arbitrary.
+> Note: The placement of the example CSS file in a `/src/styles/` folder is arbitrary.
 
 #### ✋ Include the stylesheet in `gatsby-browser.js`
 
@@ -130,7 +130,7 @@ If you take a look at your project in the browser, you should see a lavender bac
 
 ## Using component-scoped CSS
 
-So far, we've talked about the more traditional approach of using standard css stylesheets. Now, we'll talk about various methods of modularizing CSS to tackle styling in a component-oriented way.
+So far, we've talked about the more traditional approach of using standard CSS stylesheets. Now, we'll talk about various methods of modularizing CSS to tackle styling in a component-oriented way.
 
 ### CSS Modules
 
@@ -161,7 +161,7 @@ export default ({ children }) => (
 )
 ```
 
-You'll notice you imported a css module file named `container.module.css`. Let's create that file now.
+You'll notice you imported a CSS module file named `container.module.css`. Let's create that file now.
 
 2. In the same directory (`src/components`), create a `container.module.css` file and copy/paste the following:
 

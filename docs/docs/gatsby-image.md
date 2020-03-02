@@ -263,10 +263,11 @@ fixed(
 ```
 
 <figure>
-  <img alt="Jay Gatsby holding wine class in normal color and duotone." src="./images/duotone-before-after.png" />
-  <figcaption>
-    Duotone | Before - After
-  </figcaption>
+  <img
+    alt="Jay Gatsby holding wine class in normal color and duotone."
+    src="./images/duotone-before-after.png"
+  />
+  <figcaption>Duotone | Before - After</figcaption>
 </figure>
 
 And an example of using the `grayscale` option with a fixed image:
@@ -278,10 +279,11 @@ fixed(
 ```
 
 <figure>
-  <img alt="Jay Gatsby holding wine class in normal color and duotone." src="./images/grayscale-before-after.png" />
-  <figcaption>
-    Grayscale | Before - After
-  </figcaption>
+  <img
+    alt="Jay Gatsby holding wine class in normal color and duotone."
+    src="./images/grayscale-before-after.png"
+  />
+  <figcaption>Grayscale | Before - After</figcaption>
 </figure>
 
 Read more in the [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp) README.

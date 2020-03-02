@@ -1,14 +1,13 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
+import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
-import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
 import FooterLinks from "../components/shared/footer-links"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
@@ -60,20 +59,15 @@ const MetaSection = ({ children, background, last, first }) => (
 
 class CreatorTemplate extends Component {
   render() {
-    const { data, location } = this.props
+    const { data } = this.props
     const creator = data.creatorsYaml
     const isAgencyOrCompany =
       creator.type === `agency` || creator.type === `company`
 
-    let sites = []
-    data.allSitesYaml.edges.map(site => {
-      if (site.node.built_by === creator.name) {
-        sites.push(site)
-      }
-    })
+    const sites = data.allSitesYaml.nodes
 
     return (
-      <Layout location={location}>
+      <React.Fragment>
         <Helmet>
           <title>{`${creator.name} - Creator`}</title>
         </Helmet>
@@ -210,23 +204,22 @@ class CreatorTemplate extends Component {
                 >
                   {sites.map(site => (
                     <Link
-                      key={site.node.title}
+                      key={site.title}
                       sx={{
                         "&&": {
                           mr: 6,
                           mb: 6,
                           borderBottom: `none`,
                           lineHeight: 0,
-                          transition: t =>
-                            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+                          transition: `default`,
                         },
                       }}
-                      to={site.node.fields.slug}
+                      to={site.fields.slug}
                     >
                       <Img
-                        alt={`${site.node.title}`}
+                        alt={`${site.title}`}
                         fixed={
-                          site.node.childScreenshot.screenshotFile
+                          site.childScreenshot.screenshotFile
                             .childImageSharp.fixed
                         }
                       />
@@ -238,7 +231,7 @@ class CreatorTemplate extends Component {
           </div>
         </main>
         <FooterLinks />
-      </Layout>
+      </React.Fragment>
     )
   }
 }
@@ -246,7 +239,7 @@ class CreatorTemplate extends Component {
 export default CreatorTemplate
 
 export const pageQuery = graphql`
-  query($slug: String!) {
+  query($slug: String!, $name: String!) {
     creatorsYaml(fields: { slug: { eq: $slug } }) {
       name
       description
@@ -268,24 +261,26 @@ export const pageQuery = graphql`
         slug
       }
     }
-    allSitesYaml(filter: { fields: { hasScreenshot: { eq: true } } }) {
-      edges {
-        node {
-          built_by
-          url
-          title
-          childScreenshot {
-            screenshotFile {
-              childImageSharp {
-                fixed(width: 100, height: 100) {
-                  ...GatsbyImageSharpFixed
-                }
+    allSitesYaml(
+      filter: {
+        built_by: { eq: $name }
+        fields: { hasScreenshot: { eq: true } }
+      }
+    ) {
+      nodes {
+        url
+        title
+        childScreenshot {
+          screenshotFile {
+            childImageSharp {
+              fixed(width: 100, height: 100) {
+                ...GatsbyImageSharpFixed
               }
             }
           }
-          fields {
-            slug
-          }
+        }
+        fields {
+          slug
         }
       }
     }

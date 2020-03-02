@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "type": "node--article",
+      "id": "article-5",
+      "attributes": {
+        "id": 24,
+        "uuid": "article-5",
+        "title": "Article #5",
+        "body": "Aliquam non varius libero, sit amet consequat ex. Aenean porta turpis quis vulputate blandit. Suspendisse in porta erat. Sed sit amet scelerisque turpis, at rutrum mauris. Sed tempor eleifend lobortis. Proin maximus, massa sed dignissim sollicitudin, quam risus mattis justo, sit amet aliquam odio ligula quis urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut mollis leo nisi, at interdum urna fermentum ut. Fusce id suscipit neque, eu fermentum lacus. Donec egestas laoreet felis ac luctus. Vestibulum molestie mattis ante, a vulputate nunc ullamcorper at. Ut hendrerit ipsum eget gravida ultricies."
+      },
+      "relationships": {
+        "field_main_image": {
+          "data": {
+            "type": "file--file",
+            "id": "file-1"
+          }
+        },
+        "field_tags": {
+          "data": [
+            {
+              "type": "taxonomy_term--tags",
+              "id": "tag-3"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "included": [
+    {
+      "type": "taxonomy_term--tags",
+      "id": "tag-3",
+      "attributes": {
+        "id": 12,
+        "uuid": "tag-3",
+        "langcode": "en",
+        "name": "Tag #3",
+        "description": null,
+        "weight": 0,
+        "changed": 1523031646,
+        "default_langcode": true,
+        "path": {
+          "alias": null,
+          "pid": null,
+          "langcode": "en"
+        }
+      }
+    }
+  ],
+  "links": {}
+}

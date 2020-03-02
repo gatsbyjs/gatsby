@@ -2,7 +2,7 @@
 
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
-const buildHTML = require(`./build-html`)
+import { buildHTML } from "./build-html"
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
@@ -155,7 +155,7 @@ module.exports = async function build(program: BuildArgs) {
   )
   activity.start()
   try {
-    await buildHTML.buildPages({
+    await buildHTML({
       program,
       stage: `build-html`,
       pagePaths,
@@ -184,10 +184,13 @@ module.exports = async function build(program: BuildArgs) {
   }
   activity.done()
 
+  activity = report.activityTimer(`onPostBuild`, { parentSpan: buildSpan })
+  activity.start()
   await apiRunnerNode(`onPostBuild`, {
     graphql: graphqlRunner,
     parentSpan: buildSpan,
   })
+  activity.end()
 
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()

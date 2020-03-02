@@ -1,4 +1,4 @@
-- fromPath: /docs/themes/api-reference
+- fromPath: /docs/themes/api-reference/
   toPath: /docs/theme-api/
 - fromPath: /docs/component-css/ # Merged Component CSS and CSS Modules
   toPath: /docs/css-modules/
@@ -60,16 +60,16 @@
   toPath: /docs/adding-website-functionality/
 - fromPath: /docs/bound-action-creators/
   toPath: /docs/actions/
-- fromPath: /docs/bound-action-creators
-  toPath: /docs/actions
-- fromPath: /docs/adding-images-fonts-files
-  toPath: /docs/importing-assets-into-files
-- fromPath: /blog/2019-10-03-gatsby-perf
-  toPath: /blog/2018-10-03-gatsby-perf
-- fromPath: /docs/add-a-service-worker
-  toPath: /docs/add-offline-support-with-a-service-worker
-- fromPath: /docs/add-offline-support
-  toPath: /docs/add-offline-support-with-a-service-worker
+- fromPath: /docs/bound-action-creators/
+  toPath: /docs/actions/
+- fromPath: /docs/adding-images-fonts-files/
+  toPath: /docs/importing-assets-into-files/
+- fromPath: /blog/2019-10-03-gatsby-perf/
+  toPath: /blog/2018-10-03-gatsby-perf/
+- fromPath: /docs/add-a-service-worker/
+  toPath: /docs/add-offline-support-with-a-service-worker/
+- fromPath: /docs/add-offline-support/
+  toPath: /docs/add-offline-support-with-a-service-worker/
 - fromPath: /docs/create-source-plugin/
   toPath: /docs/creating-a-source-plugin/
 - fromPath: /docs/create-transformer-plugin/
@@ -102,10 +102,8 @@
   toPath: /docs/gatsby-internals/
 - fromPath: /docs/behind-the-scenes-terminology/
   toPath: /docs/gatsby-internals-terminology/
-- fromPath: /docs/themes/getting-started
-  toPath: /docs/themes/using-a-gatsby-theme
-- fromPath: /docs/themes/introduction
-  toPath: /docs/themes/what-are-gatsby-themes
+- fromPath: /docs/themes/introduction/
+  toPath: /docs/themes/what-are-gatsby-themes/
 - fromPath: /docs/hosting-on-netlify/
   toPath: /docs/deploying-to-netlify/
 - fromPath: /docs/querying-with-graphql/
@@ -135,3 +133,12 @@
   # redirecting cypress-gatsby => gatsby-cypress
 - fromPath: /packages/cypress-gatsby/
   toPath: /packages/gatsby-cypress/
+- fromPath: /contributing/gatsby-docs-translation-guide/
+  toPath: /contributing/translation/
+  # redirecting gatsby-source-filesystem Programmatic Import to plugin README
+- fromPath: /docs/gatsby-source-filesystem-programmatic-import/
+  toPath: /packages/gatsby-source-filesystem/
+- fromPath: /contributing/blog-and-website-contributions/
+  toPath: /contributing/blog-contributions/
+- fromPath: /contributing/docs-and-website-components/
+  toPath: /contributing/docs-and-blog-components/

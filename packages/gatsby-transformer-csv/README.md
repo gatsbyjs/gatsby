@@ -28,9 +28,14 @@ module.exports = {
 }
 ```
 
-Above is the minimal configuration required to begin working. Additional
+### Configuration
+
+The example above is the minimal configuration required to begin working. Additional
 customization of the parsing process is possible using the parameters listed in
-[csvtojson](https://github.com/Keyang/node-csvtojson#parameters).
+[csvtojson](https://github.com/Keyang/node-csvtojson#parameters). Any parameter listed on that page
+can be passed directly to the library using the plugin options.
+
+For example, to pass the `noheader` option, you can configure like so:
 
 ```javascript
 // In your gatsby-config.js
@@ -47,6 +52,32 @@ module.exports = {
       resolve: `gatsby-transformer-csv`,
       options: {
         noheader: true,
+      },
+    },
+  ];
+}
+```
+
+By default, files that do not have a `.csv` extension will not be parsed, but this can be configured using the `extensions` option which takes an array of strings.
+
+For example, if you need to parse TSV files, you can configure the plugin like so:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+      },
+    },
+    {
+      resolve: `gatsby-transformer-csv`,
+      options: {
+        extensions: [`tsv`],
+        delimiter: '\t'
       },
     },
   ];

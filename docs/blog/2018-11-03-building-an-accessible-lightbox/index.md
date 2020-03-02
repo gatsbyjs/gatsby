@@ -29,7 +29,7 @@ cd GatsbyLightbox
 yarn develop
 ```
 
-Now open up your browser to `localhost:8000` and you should see the starter application ready to go.
+Now open up your browser to `http://localhost:8000` and you should see the starter application ready to go.
 
 ![Gatsby Starter Screenshot](/screen-4.png)
 

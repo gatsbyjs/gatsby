@@ -78,9 +78,6 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   })
 
   // Add site node.
-  const buildTime = moment()
-    .subtract(process.uptime(), `seconds`)
-    .toJSON()
 
   const createGatsbyConfigNode = (config = {}) => {
     // Delete plugins from the config as we add plugins above.
@@ -93,7 +90,6 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       port: state.program.port,
       host: state.program.host,
       ...configCopy,
-      buildTime,
     }
     createNode({
       ...node,
@@ -108,6 +104,24 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   }
 
   createGatsbyConfigNode(state.config)
+
+  const buildTime = moment()
+    .subtract(process.uptime(), `seconds`)
+    .startOf(`second`)
+    .toJSON()
+
+  const metadataNode = { buildTime }
+
+  createNode({
+    ...metadataNode,
+    id: `SiteBuildMetadata`,
+    parent: null,
+    children: [],
+    internal: {
+      contentDigest: createContentDigest(metadataNode),
+      type: `SiteBuildMetadata`,
+    },
+  })
 
   const pathToGatsbyConfig = systemPath.join(
     program.directory,
@@ -127,6 +141,42 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       }
     }
   })
+}
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    type Site implements Node {
+      buildTime: Date @dateformat
+    }
+  `
+  createTypes(typeDefs)
+}
+
+exports.createResolvers = ({ createResolvers }) => {
+  const resolvers = {
+    Site: {
+      buildTime: {
+        type: `Date`,
+        resolve(source, args, context, info) {
+          const { buildTime } = context.nodeModel.getNodeById({
+            id: `SiteBuildMetadata`,
+            type: `SiteBuildMetadata`,
+          })
+          return info.originalResolver(
+            {
+              ...source,
+              buildTime,
+            },
+            args,
+            context,
+            info
+          )
+        },
+      },
+    },
+  }
+  createResolvers(resolvers)
 }
 
 exports.onCreatePage = ({ createContentDigest, page, actions }) => {
