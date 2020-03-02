@@ -47,7 +47,7 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
       // outcome without any additional CSS.
       //
       // @see https://github.com/PrismJS/prism/blob/1d5047df37aacc900f8270b1c6215028f6988eb1/themes/prism.css#L49-L54
-      const language = getLanguage(file)
+      const language = getLanguage(snippetPath)
 
       // Change the node type to code, insert our file as value and set language.
       node.type = `code`
