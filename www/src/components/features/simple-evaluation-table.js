@@ -12,7 +12,7 @@ const SimpleEvaluationTable = ({ title, headers, data }) => (
     <table>
       <tbody>
         <SectionHeaderTop columnHeaders={headers.map(h => h.display)} />
-        {data.map(({ node }, idx) => (
+        {data.map((node, idx) => (
           <tr key={`feature-row-${idx}`}>
             {headers.map((header, i) => (
               <td

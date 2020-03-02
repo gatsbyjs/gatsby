@@ -12,7 +12,8 @@
     "strictPropertyInitialization": true,
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "jsx": "preserve"
   },
   "exclude": ["peril/*", "examples/*"]
 }
