@@ -4,7 +4,7 @@ title: Using Multiple Themes Together
 
 ## What this tutorial covers
 
-- Composing multiple themes into a final site using [gatsby-theme-blog](/packages/gatsby-theme-blog/), [gatsby-theme-notes](/packages/gatsby-theme-notes/) and [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.com/) as examples
+This tutorial covers how to compose multiple themes into a final site using [gatsby-theme-blog](/packages/gatsby-theme-blog/), [gatsby-theme-notes](/packages/gatsby-theme-notes/) and [gatsby-mdx-embed](/packages/@pauliescanlon/gatsby-mdx-embed/) as examples. It will also cover the concept of component shadowing with relation to [Theme-UI](docs/theme-ui/) for styling 
 - Component shadowing
 - Component shadowing for Theme-UI theme file
 
