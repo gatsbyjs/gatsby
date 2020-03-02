@@ -2,7 +2,6 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
 
 import { Link } from "gatsby"
 import PageMetadata from "./page-metadata"
