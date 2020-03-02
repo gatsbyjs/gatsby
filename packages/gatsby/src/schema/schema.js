@@ -746,7 +746,10 @@ const processThirdPartyTypeFields = ({ typeComposer, schemaQueryType }) => {
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
   const intermediateSchema = schemaComposer.buildSchema()
-  const createResolvers = resolvers => {
+  const createResolvers = (
+    resolvers,
+    { ignoreNonexistentTypes = false } = {}
+  ) => {
     Object.keys(resolvers).forEach(typeName => {
       const fields = resolvers[typeName]
       if (schemaComposer.has(typeName)) {
@@ -814,7 +817,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
             tc.setFieldExtension(fieldName, `createdFrom`, `createResolvers`)
           }
         })
-      } else {
+      } else if (!ignoreNonexistentTypes) {
         report.warn(
           `\`createResolvers\` passed resolvers for type \`${typeName}\` that ` +
             `doesn't exist in the schema. Use \`createTypes\` to add the type ` +

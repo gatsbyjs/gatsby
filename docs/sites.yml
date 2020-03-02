@@ -6729,18 +6729,6 @@
     - Nonprofit
   built_by: Jacob Herper
   built_by_url: https://herper.io
-- title: Gratsy
-  url: https://gratsy.com/
-  main_url: https://gratsy.com/
-  description: >
-    Gratsy: Feedback To Give Back
-  categories:
-    - Agency
-    - Marketing
-    - Landing Page
-  built_by: Whalar
-  built_by_url: https://whalar.com/
-  featured: false
 - title: deepThreads
   main_url: https://deepthreads.com
   url: https://deepthreads.com/
@@ -9319,7 +9307,7 @@
   url: https://www.gis-netzwerk.com/
   main_url: https://www.gis-netzwerk.com/
   description: >
-    Geoinformatik, GIS, Web-Development.
+    Multilingual (i18n) Blog with different URLs for categories, tags and posts depending on the language.
   categories:
     - Blog
     - Data
@@ -9880,6 +9868,17 @@
     - Agency
   built_by: App Design
   built_by_url: "https://appdesign.dev/"
+- title: Guillermo Gómez-Peña
+  url: https://www.guillermogomezpena.com/
+  main_url: https://www.guillermogomezpena.com/
+  description: >
+    Personal website for the work of Guillermo Gómez-Peña: performance artist, writer, activist, radical pedagogue and artistic director of the performance troupe La Pocha Nostra. Recipient of the MacArthur Fellow, USA Artists Fellow, and a winner of the Bessie, Guggenheim, and American Book awards.
+  categories:
+    - Portfolio
+    - Gallery
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
+  featured: false
 - title: Clinka
   url: https://www.clinka.com.au/
   main_url: https://www.clinka.com.au/
@@ -9974,4 +9973,52 @@
   featured: false
   built_by: Alexandre Valsamou-Stanislawski
   built_by_url: https://www.noima.xyz
-  
+- title: Talent Point
+  url: https://talentpoint.co
+  main_url: https://talentpoint.co
+  description: >
+    Talent Point provide the tools that companies need to scale quickly and effectively, bridging the gap between employer brand, HR, and hiring to build teams from within.
+  categories:
+    - Business
+    - Technology
+    - Blog
+    - Consulting
+    - Human Resources
+  built_by: Talent Point
+  built_by_url: https://talentpoint.co
+  featured: false
+- title: Marathon Oil
+  main_url: "https://www.marathonoil.com/"
+  url: "https://www.marathonoil.com/"
+  featured: false
+  categories:
+    - Business
+    - Marketing
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+- title: Dynobase
+  url: "https://dynobase.dev/"
+  main_url: "https://dynobase.dev/"
+  description: >
+    Professional GUI Client for DynamoDB.
+  categories:
+    - Data
+    - Programming
+    - Web Development
+  built_by: Rafal Wilinski
+  built_by_url: "https://rwilinski.me/"
+  featured: false
+- title: Vaktija.eu
+  url: https://vaktija.eu
+  main_url: https://vaktija.eu
+  description: >
+    Vaktija.eu gives information about prayer times in germany. (Built with GatsbyJS. Fast in every way that matters.)
+  categories:
+    - App
+    - Community
+    - Nonprofit
+    - SEO
+    - Web Development
+  built_by: Rašid Redžić
+  built_by_url: https://rasidre.com/
+  featured: false

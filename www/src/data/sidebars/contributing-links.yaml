@@ -63,15 +63,15 @@
               link: /contributing/how-to-write-a-stub/
             - title: Stub List
               link: /contributing/stub-list/
-        - title: Blog & Website Contributions
-          link: /contributing/blog-and-website-contributions/
+        - title: Blog Contributions
+          link: /contributing/blog-contributions/
         - title: Code Contributions
           link: /contributing/code-contributions/
+        - title: Website Contributions
+          link: /contributing/website-contributions/
           items:
             - title: Setting Up Your Local Dev Environment
               link: /contributing/setting-up-your-local-dev-environment/
-        - title: Docs and Website Components
-          link: /contributing/docs-and-website-components/
         - title: Community Contributions
           link: /contributing/community-contributions/
           items:
@@ -83,6 +83,8 @@
               link: /contributing/submit-to-starter-library/
             - title: Submit to Plugin Library
               link: /contributing/submit-to-plugin-library/
+        - title: Docs & Blog Components
+          link: /contributing/docs-and-blog-components/
     - title: Gatsby Brand Guidelines
       items:
         - title: Color
