@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"

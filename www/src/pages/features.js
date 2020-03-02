@@ -2,7 +2,6 @@
 import { jsx } from "theme-ui"
 import { Component } from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 
 import Button from "../components/button"
 import Container from "../components/container"
