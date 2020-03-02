@@ -2,7 +2,6 @@
 import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
