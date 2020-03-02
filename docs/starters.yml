@@ -5436,3 +5436,13 @@
     - Offline support
     - Google Analytics support
     - Disqus Comments support
+- url: https://gatsby-starter-typescript-themes.netlify.com/
+  repo: https://github.com/room-js/gatsby-starter-typescript-themes
+  description: Gatsby TypeScript starter with light/dark themes based on CSS variables
+  tags:
+    - Language:TypeScript
+    - Styling:SCSS
+  features:
+    - Light and Dark themes based on CSS variables (persisted state)
+    - Font Awesome
+    - Normalize.css

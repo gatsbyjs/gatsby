@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-preload-fonts",
   "description": "Gatsby plugin for preloading fonts per page",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "author": "Aaron Ross <superhawk610@gmail.com>",
   "main": "index.js",
   "bin": {

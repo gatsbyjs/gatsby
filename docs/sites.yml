@@ -9963,6 +9963,16 @@
     - Agency
     - Consulting
   featured: false
+- title: Noima
+  url: https://www.noima.xyz
+  main_url: https://www.noima.xyz
+  categories:
+    - Agency
+    - Consulting
+    - Blog
+  featured: false
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
 - title: Talent Point
   url: https://talentpoint.co
   main_url: https://talentpoint.co
@@ -9986,6 +9996,22 @@
     - Marketing
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
+- title: medignition – healthcare innovations
+  url: https://medignition.com/
+  main_url: https://medignition.com/
+  description: >
+    medignition builds digital innovations in healthcare.
+  categories:
+    - Healthcare
+    - Education
+    - Technology
+    - Design
+    - Business
+    - Portfolio
+    - Entrepreneurship
+    - Agency
+  built_by: medignition
+  built_by_url: https://medignition.com/
 - title: Dynobase
   url: "https://dynobase.dev/"
   main_url: "https://dynobase.dev/"
@@ -10038,3 +10064,14 @@
     - Music
   built_by: Alexandre Valsamou-Stanislawski
   built_by_url: https://www.noima.xyz
+- title: Messi vs Ronaldo
+  description: >
+    The biggest debate in football - but who is the best, Messi or Ronaldo? This website provides all the goals and stats to help you reach your own conclusion.
+  main_url: "https://www.messivsronaldo.app/"
+  url: "https://www.messivsronaldo.app/"
+  categories:
+    - Sports
+    - Data
+    - App
+  built_by: Stephen Greig
+  built_by_url: "http://ste.digital/"
