@@ -44,7 +44,7 @@ Using the power and flexibility of React, you can create a React component to po
 >
 > If you're not using those starters, [follow this guide for installation instructions][gatsby-plugin-react-helmet]
 
-```jsx:title=src/components/seo.js
+```js:title=src/components/seo.js
 import React from "react"
 // highlight-start
 import Helmet from "react-helmet"
@@ -77,7 +77,7 @@ export default SEO
 
 This component doesn't _do_ anything yet, but it's the foundation for a useful, extensible component. It leverages the `StaticQuery` functionality enabled via Gatsby to query siteMetadata (e.g. details in `gatsby-config.js`) with description and keywords.
 
-The `StaticQuery` component accepts a render prop, and at this point, it simply returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component.
+The `StaticQuery` component accepts a render prop, and at this point, it returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component.
 
 ```js:title=src/components/seo.js
 import React from "react"
@@ -262,7 +262,7 @@ SEO.propTypes = {
 export default SEO
 ```
 
-Woo hew! You enabled not only SEO for search engines like Google and Bing, but you also laid the groundwork for enhanced sharing capabilities on social networks. Finally, you will learn to add support for one of the more useful functionalities for SEO: a canonical link.
+Woo hoo! You enabled not only SEO for search engines like Google and Bing, but you also laid the groundwork for enhanced sharing capabilities on social networks. Finally, you will learn to add support for one of the more useful functionalities for SEO: a canonical link.
 
 ## `link rel="canonical"`
 
@@ -411,7 +411,7 @@ SEO.propTypes = {
 export default SEO
 ```
 
-Woo hew! Lots to digest here, but you've enabled adding an _absolute_ canonical link simply by passing in a `slug` prop and prefixing with `siteUrl`.
+Woo hoo! Lots to digest here, but you've enabled adding an _absolute_ canonical link by passing in a `slug` prop and prefixing with `siteUrl`.
 
 To bring it all home, it's time to begin actually _using_ this extensible SEO component to show all of these moving parts coming together to deliver a great SEO experience.
 
@@ -471,7 +471,7 @@ Let's see how an attached image will look like. For this tutorial, you can use t
 
 The image will need to be located at `content/blog/2019-01-04-hello-world-seo/images/featured.jpg`.
 
-Make sure to use appropriate sized images for social sharing. Facebook and Twitter have restrictions beyond they will simply ignore your image.
+Make sure to use appropriately sized images for social sharing. Facebook and Twitter have restrictions beyond they will simply ignore your image.
 
 #### Querying with GraphQL
 
@@ -557,7 +557,7 @@ Using the techniques outlined in this post, you've made your Gatsby application 
 
 To learn more about these validations, check out how to _validate_ SEO with the following tools from [Google][google-validation], [Twitter][twitter-validation], and [Facebook][facebook-validation].
 
-The SEO resources outlined in this tutorial aren't _only_ a best practice, they're also a best practice enabled, by default. Available **today** in `gatsby-starter-default`, simply use:
+The SEO resources outlined in this tutorial aren't _only_ a best practice, they're also a best practice enabled, by default. Available **today** in `gatsby-starter-default`, use:
 
 ```shell
 npm gatsby new my-new-gatsby-app
