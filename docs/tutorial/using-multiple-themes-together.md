@@ -29,7 +29,7 @@ npm install gatsby-theme-blog gatsby-theme-notes
 
 ## Step 3: Update gatsby-config.js
 
-The themes need to be added to the plugins array and we need some basic site metadata too.
+The themes need to be added to the plugin array and the site metadata that comes with a starter should be renamed for personalization.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
