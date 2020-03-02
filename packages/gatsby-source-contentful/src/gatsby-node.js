@@ -119,7 +119,11 @@ exports.sourceNodes = async (
       })
       .filter(node => node)
 
-    localizedNodes.forEach(node => deleteNode({ node }))
+    localizedNodes.forEach(node => {
+      // touchNode first, to populate typeOwners & avoid erroring
+      touchNode({ nodeId: node.id })
+      deleteNode({ node })
+    })
   }
 
   currentSyncData.deletedEntries.forEach(deleteContentfulNode)
@@ -165,6 +169,7 @@ exports.sourceNodes = async (
     defaultLocale,
     locales,
     space,
+    useNameForId: pluginConfig.get(`useNameForId`),
   })
 
   const newOrUpdatedEntries = []
@@ -196,8 +201,9 @@ exports.sourceNodes = async (
     })
 
   contentTypeItems.forEach((contentTypeItem, i) => {
-    normalize.createContentTypeNodes({
+    normalize.createNodesForContentType({
       contentTypeItem,
+      contentTypeItems,
       restrictedNodeFields,
       conflictFieldPrefix,
       entries: entryList[i],
@@ -208,6 +214,8 @@ exports.sourceNodes = async (
       defaultLocale,
       locales,
       space,
+      useNameForId: pluginConfig.get(`useNameForId`),
+      richTextOptions: pluginConfig.get(`richText`),
     })
   })
 
@@ -246,27 +254,4 @@ exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
     `${program.directory}/.cache/contentful/assets/`
   )
   await fs.ensureDir(CACHE_DIR)
-
-  if (getNodesByType(`ContentfulAsset`).length == 0) {
-    return
-  }
-
-  let gatsbyImageDoesNotExist = true
-  try {
-    require.resolve(`gatsby-image`)
-    gatsbyImageDoesNotExist = false
-  } catch (e) {
-    // Ignore
-  }
-
-  if (gatsbyImageDoesNotExist) {
-    return
-  }
-
-  // We have both gatsby-image installed as well as ImageSharp nodes so let's
-  // add our fragments to .cache/fragments.
-  await fs.copy(
-    require.resolve(`gatsby-source-contentful/src/fragments.js`),
-    `${program.directory}/.cache/fragments/contentful-asset-fragments.js`
-  )
 }

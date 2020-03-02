@@ -15,5 +15,11 @@ module.exports = {
         semi: true,
       },
     },
+    {
+      "files": "docs/**/*.md",
+      "options": {
+        "parser": "mdx"
+      }
+    },
   ],
 }

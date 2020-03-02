@@ -32,7 +32,7 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
-```
+```bash
 gatsby new [<site-name> [<starter-url>]]
 ```
 
@@ -45,7 +45,7 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Examples
 
-- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
+- Create a Gatsby site named `my-awesome-site`, using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default):
 
 ```bash
 gatsby new my-awesome-site
@@ -78,12 +78,12 @@ development server.
 
 #### Options
 
-|     Option      | Description                                     |   Default   |
-| :-------------: | ----------------------------------------------- | :---------: |
-| `-H`, `--host`  | Set host.                                       | `localhost` |
-| `-p`, `--port`  | Set port.                                       |   `8000`    |
-| `-o`, `--open`  | Open the site in your (default) browser for you |             |
-| `-S`, `--https` | Use HTTPS                                       |             |
+|     Option      | Description                                     |       Default        |
+| :-------------: | ----------------------------------------------- | :------------------: |
+| `-H`, `--host`  | Set host.                                       |     `localhost`      |
+| `-p`, `--port`  | Set port.                                       | `env.PORT` or `8000` |
+| `-o`, `--open`  | Open the site in your (default) browser for you |                      |
+| `-S`, `--https` | Use HTTPS                                       |                      |
 
 Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.
@@ -94,12 +94,14 @@ At the root of a Gatsby app run `gatsby build` to do a production build of a sit
 
 #### Options
 
-|            Option            | Description                                                                                                | Default |
-| :--------------------------: | ---------------------------------------------------------------------------------------------------------- | :-----: |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        | `false` |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    | `false` |
-| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |         |
-| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                           | `false` |
+|            Option            | Description                                                                                                |            Default            |
+| :--------------------------: | ---------------------------------------------------------------------------------------------------------- | :---------------------------: |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        | `env.PREFIX_PATHS` or `false` |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    |            `false`            |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |                               |
+| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                           |            `false`            |
+
+For prefixing paths, most will want to use the CLI flag (`gatsby build --prefix-paths`). For environments where you can't pass the --prefix-paths flag (ie Gatsby Cloud) this provides another way to prefix paths.
 
 ### `serve`
 
@@ -107,12 +109,14 @@ At the root of a Gatsby app run `gatsby serve` to serve the production build of 
 
 #### Options
 
-|      Option      | Description                                                                              |
-| :--------------: | ---------------------------------------------------------------------------------------- |
-|  `-H`, `--host`  | Set host. Defaults to localhost                                                          |
-|  `-p`, `--port`  | Set port. Defaults to 9000                                                               |
-|  `-o`, `--open`  | Open the site in your (default) browser for you                                          |
-| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |
+|      Option      | Description                                                                              |            Default            |
+| :--------------: | ---------------------------------------------------------------------------------------- | :---------------------------: |
+|  `-H`, `--host`  | Set host. Defaults to localhost                                                          |                               |
+|  `-p`, `--port`  | Set port. Defaults to 9000                                                               |                               |
+|  `-o`, `--open`  | Open the site in your (default) browser for you                                          |                               |
+| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). | `env.PREFIX_PATHS` or `false` |
+
+For prefixing paths, most will want to use the CLI flag (`gatsby build --prefix-paths`). For environments where you can't pass the --prefix-paths flag this provides another way to prefix paths.
 
 ### `clean`
 

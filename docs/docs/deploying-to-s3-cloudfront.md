@@ -58,7 +58,7 @@ Run `npm run build && npm run deploy` to do a build and have it immediately depl
 
 Some deployments require passing environment variables. To deploy with environment variables, update the deployment script to your `package.json`:
 
-```js:title=package.json
+```json:title=package.json
 "scripts" : {
     ...
     "deploy": "npm run -n \"-r dotenv/config\" && npm run build && gatsby-plugin-s3 deploy"
@@ -69,7 +69,7 @@ This command requires `dotenv` first, runs build next, and finally deploys to s3
 
 If you have multiple AWS profiles in your machine, you can deploy by declaring your `AWS_PROFILE` before the deploy script:
 
-```sh
+```shell
 AWS_PROFILE=yourprofilename npm run deploy
 ```
 

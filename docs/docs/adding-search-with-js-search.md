@@ -52,7 +52,7 @@ And finally, as you go through the code, be mindful it does not adhere to the be
 
 Start by creating a file named `SearchContainer.js` in the `src/components/` folder, then add the following code to get started:
 
-```javascript
+```jsx:title=src/components/SearchContainer.js
 import React, { Component } from "react"
 import Axios from "axios"
 import * as JsSearch from "js-search"
@@ -263,7 +263,7 @@ To do this, some changes are required.
 
 Start by modifying the `gatsby-node.js` file by adding the following code:
 
-```javascript
+```javascript:title=gatsby-node.js
 const path = require("path")
 const axios = require("axios")
 
@@ -309,7 +309,7 @@ exports.createPages = ({ actions }) => {
 
 Create a file named `ClientSearchTemplate.js` in the `src/templates/` folder, then add the following code to get started:
 
-```javascript
+```jsx:title=src/templates/ClientSearchTemplate.js
 import React from "react"
 import ClientSearch from "../components/ClientSearch"
 
@@ -334,7 +334,7 @@ export default SearchTemplate
 
 Create a file named `ClientSearch.js` in the `src/components/` folder, then add the following code as a baseline:
 
-```javascript
+```jsx:title=src/components/ClientSearch.js
 import React, { Component } from "react"
 import * as JsSearch from "js-search"
 

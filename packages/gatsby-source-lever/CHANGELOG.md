@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.25...gatsby-source-lever@2.1.26) (2020-02-10)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.24...gatsby-source-lever@2.1.25) (2020-02-01)
+
+### Bug Fixes
+
+- **gatsby-source-lever:** Removed inference opt out dontInfer ([#21017](https://github.com/gatsbyjs/gatsby/issues/21017)) ([0406b97](https://github.com/gatsbyjs/gatsby/commit/0406b97))
+
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.23...gatsby-source-lever@2.1.24) (2020-01-23)
+
+### Features
+
+- **gatsby-source-lever:** use schema customization API ([#20069](https://github.com/gatsbyjs/gatsby/issues/20069)) ([#20521](https://github.com/gatsbyjs/gatsby/issues/20521)) ([d02adb1](https://github.com/gatsbyjs/gatsby/commit/d02adb1))
+
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.22...gatsby-source-lever@2.1.23) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.20...gatsby-source-lever@2.1.22) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.20...gatsby-source-lever@2.1.21) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.19...gatsby-source-lever@2.1.20) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.18...gatsby-source-lever@2.1.19) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.17...gatsby-source-lever@2.1.18) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.16...gatsby-source-lever@2.1.17) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
 ## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.15...gatsby-source-lever@2.1.16) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-source-lever

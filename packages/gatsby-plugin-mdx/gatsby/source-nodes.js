@@ -14,6 +14,7 @@ const getTableOfContents = require(`../utils/get-table-of-content`)
 const defaultOptions = require(`../utils/default-options`)
 const genMDX = require(`../utils/gen-mdx`)
 const { mdxHTMLLoader: loader } = require(`../utils/render-html`)
+const { interopDefault } = require(`../utils/interop-default`)
 
 async function getCounts({ mdast }) {
   let counts = {}
@@ -52,7 +53,17 @@ async function getCounts({ mdast }) {
 }
 
 module.exports = (
-  { store, pathPrefix, getNode, getNodes, cache, reporter, actions, schema },
+  {
+    store,
+    pathPrefix,
+    getNode,
+    getNodes,
+    cache,
+    reporter,
+    actions,
+    schema,
+    ...helpers
+  },
   pluginOptions
 ) => {
   let mdxHTMLLoader
@@ -86,7 +97,7 @@ module.exports = (
    */
   for (let plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
-    const requiredPlugin = require(plugin.resolve)
+    const requiredPlugin = interopDefault(require(plugin.resolve))
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (let parserPlugin of requiredPlugin.setParserPlugins(
@@ -105,7 +116,19 @@ module.exports = (
   }
 
   const processMDX = ({ node }) =>
-    genMDX({ node, getNode, getNodes, reporter, cache, pathPrefix, options })
+    genMDX({
+      node,
+      options,
+      store,
+      pathPrefix,
+      getNode,
+      getNodes,
+      cache,
+      reporter,
+      actions,
+      schema,
+      ...helpers,
+    })
 
   // New Code // Schema
   const MdxType = schema.buildObjectType({
@@ -184,7 +207,8 @@ module.exports = (
             return html
           } catch (e) {
             reporter.error(
-              `Error querying the \`html\` field. This field is intended for use with RSS feed generation.
+              `gatsby-plugin-mdx: Error querying the \`html\` field.
+This field is intended for use with RSS feed generation.
 If you're trying to use it in application-level code, try querying for \`Mdx.body\` instead.
 Original error:
 ${e}`

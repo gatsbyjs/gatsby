@@ -353,14 +353,19 @@ const createComponentUrls = componentChunkName =>
 export class ProdLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
     const loadComponent = chunkName =>
-      asyncRequires.components[chunkName]().then(preferDefault)
+      asyncRequires.components[chunkName]
+        ? asyncRequires.components[chunkName]().then(preferDefault)
+        : Promise.resolve()
 
     super(loadComponent, matchPaths)
   }
 
   doPrefetch(pagePath) {
     const pageDataUrl = createPageDataUrl(pagePath)
-    return prefetchHelper(pageDataUrl)
+    return prefetchHelper(pageDataUrl, {
+      crossOrigin: `anonymous`,
+      as: `fetch`,
+    })
       .then(() =>
         // This was just prefetched, so will return a response from
         // the cache instead of making another request to the server

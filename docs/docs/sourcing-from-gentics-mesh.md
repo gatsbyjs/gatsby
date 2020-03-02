@@ -135,7 +135,7 @@ You can read more about how to use the GraphQL API in the [Gentics Mesh docs](ht
 
 For the purpose of this guide I've removed all the layout, SEO, link or other components in the Gatsby starter `index.js` file. Open the index file located at `src/pages/index.js` and replace the content with this code:
 
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { StaticQuery } from "gatsby"
 

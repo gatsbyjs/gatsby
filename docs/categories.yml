@@ -15,6 +15,7 @@ starter:
   - CMS:WordPress
   - CMS:sanity.io
   - CMS:Strapi
+  - CMS:Kontent
   - CMS:Forestry.io
   - CMS:Other
   - Disqus
@@ -45,6 +46,7 @@ starter:
   - Search
   - SEO
   - Shopify
+  - Square
   - Storybook
   - Stripe
   - Styling:Ant Design
@@ -86,6 +88,7 @@ site:
   - Gallery
   - Government
   - Healthcare
+  - Human Resources
   - JavaScript
   - Law
   - Landing Page
