@@ -21,7 +21,8 @@ gatsby new multiple-themes https://github.com/gatsbyjs/gatsby-starter-hello-worl
 
 ## Step 2: Install the themes
 
-The first two themes we will compose together are [gatsby-theme-blog](/packages/gatsby-theme-blog/) and [gatsby-theme-notes](/packages/gatsby-theme-notes/).
+This step composes the [gatsby-theme-blog](/packages/gatsby-theme-blog/) and [gatsby-theme-notes](/packages/gatsby-theme-notes/) by running the command below: 
+
 
 ```shell
 npm install gatsby-theme-blog gatsby-theme-notes
