@@ -2,18 +2,27 @@ import { availablePostTypesQuery } from "~/utils/graphql-queries"
 import fetchGraphql from "~/utils/fetch-graphql"
 import store from "~/store"
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
+import { formatLogMessage } from "~/utils/format-log-message"
 
 /**
  *
  * This func is temporary until support for this added in WPGQL
  * see https://github.com/wp-graphql/wp-graphql/issues/1045
  */
-export const createContentTypeNodes = async () => {
+export const createContentTypeNodes = async (_, pluginOptions) => {
   const state = store.getState()
 
   const { nodeQueries, fieldBlacklist } = state.remoteSchema
 
   const { helpers } = state.gatsbyApi
+
+  const activity = helpers.reporter.activityTimer(
+    formatLogMessage(`fetch content types`)
+  )
+
+  if (pluginOptions.verbose) {
+    activity.start()
+  }
 
   const { data } = await fetchGraphql({ query: availablePostTypesQuery })
 
@@ -37,6 +46,10 @@ export const createContentTypeNodes = async () => {
         },
       })
     })
+
+  if (pluginOptions.verbose) {
+    activity.end()
+  }
 
   return contentTypes
 }

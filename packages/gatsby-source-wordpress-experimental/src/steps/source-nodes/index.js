@@ -5,13 +5,22 @@ import { LAST_COMPLETED_SOURCE_TIME } from "~/constants"
 import { createContentTypeNodes } from "~/steps/get-content-types"
 import store from "~/store"
 import fetchAndCreateNonNodeRootFields from "./create-nodes/fetch-and-create-non-node-root-fields"
+import { formatLogMessage } from "~/utils/format-log-message"
 
-const sourceNodes = async helpers => {
+const sourceNodes = async (helpers, pluginOptions) => {
   const { cache } = helpers
 
   const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
   const { schemaWasChanged } = store.getState().remoteSchema
+
+  if (!lastCompletedSourceTime && pluginOptions.verbose) {
+    helpers.reporter.log(``)
+    helpers.reporter.info(
+      formatLogMessage(`No previous builds detected, fetching all data`)
+    )
+    helpers.reporter.log(``)
+  }
 
   const fetchEverything = !lastCompletedSourceTime || schemaWasChanged
 
@@ -19,9 +28,9 @@ const sourceNodes = async helpers => {
   // or our initial build to fetch and cache everything didn't complete,
   // pull everything from WPGQL
   if (fetchEverything) {
-    await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
-
     await fetchAndCreateAllNodes()
+
+    await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
   }
 
   // If we've already successfully pulled everything from WPGraphQL
