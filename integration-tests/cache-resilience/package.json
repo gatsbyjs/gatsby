@@ -3,11 +3,14 @@
   "description": "cache resilience tests",
   "license": "MIT",
   "scripts": {
+    "predevelop": "node utils/prebuild.js",
     "develop": "gatsby develop",
+    "prebuild": "node utils/prebuild.js",
     "build": "gatsby build",
     "test": "jest",
     "serve": "gatsby serve",
-    "use-setup": "node utils/select-configuration"
+    "use-setup": "node utils/select-configuration",
+    "inspect-state": "node utils/inspect-state"
   },
   "dependencies": {
     "gatsby": "^2.16.0",

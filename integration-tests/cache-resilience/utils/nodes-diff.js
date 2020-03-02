@@ -57,7 +57,7 @@ const compareState = (oldState, newState) => {
       ...ret.additions,
       ...ret.deletions,
       ...ret.changes,
-    }),
+    }).sort(),
   }
 }
 

@@ -10,22 +10,23 @@ const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
   ON_POST_BUILD_FILE_PATH,
 } = require(`./utils/constants`)
+const { getAllPlugins } = require(`./utils/collect-scenarios`)
 
 const getDiskCacheSnapshot = () => {
-  const plugins = fs.readdirSync(path.join(__dirname, `.cache`, `caches`))
+  const plugins = getAllPlugins()
 
   const snapshot = {}
   plugins.forEach(pluginName => {
-    const cacheDir = path.join(__dirname, `.cache`, `caches`, pluginName)
-    const files = glob.sync(path.join(cacheDir, `**`), {
+    const cacheDirectory = path.join(__dirname, `.cache`, `caches`, pluginName)
+
+    const files = glob.sync(path.join(cacheDirectory, `**`), {
       nodir: true,
     })
 
     snapshot[pluginName] = files.map(absolutePath =>
-      path.relative(cacheDir, absolutePath)
+      path.relative(cacheDirectory, absolutePath)
     )
   })
-
   return snapshot
 }
 
@@ -40,9 +41,9 @@ exports.onPreBootstrap = ({ getNodes }) => {
 }
 
 exports.onPostBuild = async ({ getNodes, store }) => {
-  const pluginNames = store
-    .getState()
-    .config.plugins.map(plugin => plugin.resolve)
+  const plugins = store.getState().config.plugins || []
+
+  const pluginNames = plugins.map(plugin => plugin.resolve)
 
   const queryResults = pluginNames.reduce((acc, pluginName) => {
     const pageDataPath = path.join(

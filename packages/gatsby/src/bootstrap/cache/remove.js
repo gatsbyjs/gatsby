@@ -39,19 +39,15 @@ ${changes.map(change => `        - ${change}`).join(`\n`)}
 
   if (!equalHashes) {
     try {
-      const changesLookup = changes.reduce((merged, folderName) => {
-        merged[folderName] = true
-        return merged
-      }, {})
       const filesToRemove = await fs.readdir(cacheDirectory).then(allFiles =>
         allFiles.reduce((merged, file) => {
           if (file === CACHE_FOLDER) {
-            const cacheFolderPath = path.join(cacheDirectory, CACHE_FOLDER)
-            const cacheFolders = fs.readdirSync(cacheFolderPath)
             return merged.concat(
-              cacheFolders
-                .filter(folder => changesLookup[folder])
-                .map(folder => path.join(cacheFolderPath, folder))
+              changes
+                .map(pluginName =>
+                  path.join(cacheDirectory, CACHE_FOLDER, pluginName)
+                )
+                .filter(absolutePath => fs.existsSync(absolutePath))
             )
           } else if (DONT_DELETE.includes(file)) {
             return merged
