@@ -22,10 +22,18 @@ const incrementalIt = (name, test) => {
 describe(`gatsby-source-wordpress-experimental`, () => {
   runGatsby()
 
+  const url = process.env.WPGRAPHQL_URL
+
+  if (!url) {
+    throw new Error(
+      `No URL specified. Please add one to process.env.WPGRAPHQL_URL`
+    )
+  }
+
   it(`hasn't altered the remote WPGraphQL schema`, async () => {
     const result = await fetchGraphql({
       query: introspectionQuery,
-      url: process.env.WPGRAPHQL_URL,
+      url,
     })
 
     expect(result.data.__schema).toMatchSnapshot()
