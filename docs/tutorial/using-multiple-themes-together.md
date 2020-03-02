@@ -127,7 +127,11 @@ Now if you visit `localhost:8000/blog` and `localhost:8000/notes` you should see
 
 ## Step 8: Shadow the 'bio-content.js' component
 
-Your name probably isn't Jane Doe. Let's fix that with a custom `bio-content.js` component using [theme shadowing](/docs/themes/shadowing/). Don't forget to stop and restart your development server when adding a shadowed component for the first time. Your file structure should look like this:
+Your name probably isn't Jane Doe. It is possible to update this information with a custom `bio-content.js` component using [theme shadowing](/docs/themes/shadowing/). 
+
+> Don't forget to stop and restart your development server when adding a shadowed component for the first time. 
+
+Your file structure should look like this:
 
 ```
 └── src
