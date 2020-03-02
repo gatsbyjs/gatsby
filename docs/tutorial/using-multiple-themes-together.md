@@ -157,7 +157,7 @@ export default () => (
 
 ## Step 9: Shadow the Theme-UI theme file
 
-`gatsby-theme-blog` and `gatsby-theme-notes` both use [Theme-UI](https://www.gatsbyjs.org/docs/theme-ui/) design tokens to manage their styling; colors, font sizes, spacing, etc. We can use component shadowing to gain control over these design tokens in our final site. Don't forget to stop and restart your development server the again. Your file structure should look like this:
+`gatsby-theme-blog` and `gatsby-theme-notes` both use [Theme-UI](/docs/theme-ui/) design tokens to manage their styling; colors, font sizes, spacing, etc. We can use component shadowing to gain control over these design tokens in the final site. Don't forget to stop and restart your development server the again. Your file structure should look like this:
 
 ```
 └── src
