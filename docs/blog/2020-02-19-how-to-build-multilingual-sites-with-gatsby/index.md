@@ -14,6 +14,7 @@ In this article, I will shed some light on the essential topics around multiling
 The first part of the article will be CMS agnostic. For the basics, it doesn't matter whether you use Contentful, Kontent, Prismic, or any other CMS. It's more about the expectations of your customers. In the second part, I will talk about Kontent source plugin specifics and how to handle language fallbacks.
 
 ## ISO Codes or Codenames
+
 When you work with multiple languages, each content piece needs to be flagged with a language. Languages like English and German make this straightforward, you can use their ISO codes as flags. But sometimes you need to distinguish between countries that speak the same language, such as Portugal and Brazil. We also have ISO codes for countries, and together with their language they form a language code (en-US, cs-CZ, and so on). Many CMSs use that to identify content for that specific part of the world. It's important to be able to extend this list, though.
 
 Why?
@@ -22,7 +23,7 @@ Let me tell you a story about a Zoo in Brno, my hometown. It's not a particularl
 
 ![Zoo sign](./images/zoo-sign.jpg)
 
-This led to a very positive reaction from their visitors. Of course, I don't know if that caused better conversions regarding ticket sales, but I'm trying to focus on the lingual part here. There is no language code for the local dialect they used. So if they decided to put the translations online, they'd have to store them under *something*. A codename.
+This led to a very positive reaction from their visitors. Of course, I don't know if that caused better conversions regarding ticket sales, but I'm trying to focus on the lingual part here. There is no language code for the local dialect they used. So if they decided to put the translations online, they'd have to store them under _something_. A codename.
 
 ## Language Fallbacks
 
@@ -48,11 +49,11 @@ You see, fallbacks are not just about content and its presentation online. It's 
 
 The more time you invest in gathering requirements, the less time you will need to spend on implementation. So what do we need to implement?
 
-* Localize URLs
-* Identify user locale
-* Generate language-specific dynamic pages
-* Generate language-specific static pages
-* Update components
+- Localize URLs
+- Identify user locale
+- Generate language-specific dynamic pages
+- Generate language-specific static pages
+- Update components
 
 To illustrate these steps, I used a sample intranet app that was built on Gatsby and Kentico Kontent and used only a single language - English. You can [find it on GitHub](https://github.com/Simply007/kontent-sample-app-gatsby-intranet).
 
@@ -142,11 +143,11 @@ We will need to adjust both the GraphQL query and the code that generates pages.
 
 During the build time, the [Kontent source plugin](https://www.gatsbyjs.org/docs/sourcing-from-kentico-kontent/) generates one Gatsby node per each content item - language combination. To distinguish these nodes, they always contain two fields:
 
-* **preferred_language**
-This field is mainly used for filtering and describes the language the item is intended for. For example, if you want Czech content, you want to filter for `preferred_language='cs'` provided you use the codename `'cs'` for Czech.
+- **preferred_language**
+  This field is mainly used for filtering and describes the language the item is intended for. For example, if you want Czech content, you want to filter for `preferred_language='cs'` provided you use the codename `'cs'` for Czech.
 
-* **system.language**
-This is the actual content item language. If you filter items based on `preferred_language='cs'`, you will get `system.language='cs'` if the item is translated. Otherwise, the item content will be in English, and `system.language` will be 'default' (here, it's English).
+- **system.language**
+  This is the actual content item language. If you filter items based on `preferred_language='cs'`, you will get `system.language='cs'` if the item is translated. Otherwise, the item content will be in English, and `system.language` will be 'default' (here, it's English).
 
 In my case, I am happy with language fallbacks for items that are not translated. That means I can use `preferred_language` and treat all items as if they were translated.
 
@@ -170,40 +171,40 @@ If you don't want to display items that fallback to parent language, just compar
 Let's define here a new variable `lang` that will hold the language code for the current item's `preferred_language`. I will use it in the `createPage` method call to place the newly generated page on the right URL.
 
 ```js
-let lang = `${person.preferred_language}/`;
-if (person.preferred_language === 'default') {
-    lang = '/';
+let lang = `${person.preferred_language}/`
+if (person.preferred_language === "default") {
+  lang = "/"
 }
 createPage({
-    path: `${lang}employees/${person.elements.urlslug.value}`,
-    component: path.resolve(`./src/templates/person.js`),
-    context: {
-         slug: person.elements.urlslug.value,
-         lang: person.preferred_language,
-    },
-});
+  path: `${lang}employees/${person.elements.urlslug.value}`,
+  component: path.resolve(`./src/templates/person.js`),
+  context: {
+    slug: person.elements.urlslug.value,
+    lang: person.preferred_language,
+  },
+})
 ```
 
 ### Generate Language-specific Static Pages
 
 Apart from dynamic pages, there are always some static pages. They include `index.js` and `employees.js` that handle the homepage and employees page respectively. The `gatsby-plugin-i18n` will place them on the right language-specific URLs if you follow the defined language convention-the filename suffix needs to contain the language code.
 
-* index.js -> index.en.js, index.cs.js
-* employees.js -> employees.en.js, employees.cs.js
+- index.js -> index.en.js, index.cs.js
+- employees.js -> employees.en.js, employees.cs.js
 
 It's also necessary to adjust the content of each of the new files to reflect its new language. That includes component properties. Take a look at this part of my index.js:
 
 ```js:title=index.js
 <Layout location={location} title={title}>
-     <IndexContent />
- </Layout>
+  <IndexContent />
+</Layout>
 ```
 
 Once this file becomes `index.cs.js`, I need to adjust it to:
 
 ```js:title=index.cs.js
 <Layout location={location} title={title} lang="cs">
-    <IndexContent lang="cs" />
+  <IndexContent lang="cs" />
 </Layout>
 ```
 
@@ -228,23 +229,30 @@ The last part of this multilingual adjustment tutorial is the language selector.
 A very simple implementation featuring just two languages (Czech and English) can look like this:
 
 ```js
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { Location } from '@reach/router';
-import { Link } from 'gatsby';
- 
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import { Location } from "@reach/router"
+import { Link } from "gatsby"
+
 function LanguageSelector({ classes, lang, location, className }) {
-   if (lang === 'default') {
-     return (
-       <Link className={className} to={`/cs/${location.pathname}`}>čeština</Link>
-     );
-   } else {
-     return (
-       <Link className={className} to={location.pathname.replace('/' + lang + '/', '/')}>english</Link>
-     );
-   }
+  if (lang === "default") {
+    return (
+      <Link className={className} to={`/cs/${location.pathname}`}>
+        čeština
+      </Link>
+    )
+  } else {
+    return (
+      <Link
+        className={className}
+        to={location.pathname.replace("/" + lang + "/", "/")}
+      >
+        english
+      </Link>
+    )
+  }
 }
-export default LanguageSelector;
+export default LanguageSelector
 ```
 
 If the current language is English, there is no language prefix in the URL and we can directly use `location.pathname` to render the language-specific link. In any other case, we first need to remove the language prefix from the path.
