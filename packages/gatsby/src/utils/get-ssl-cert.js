@@ -43,7 +43,8 @@ module.exports = async ({ name, certFile, keyFile, directory }) => {
       // if HOME is not set, we will get:
       // "The "path" argument must be of type s tring. Received type undefined"
       // fatal error. This still likely will result in fatal error, but at least it's not on import time
-      process.env.HOME = `dummy`
+      const mkdtemp = fs.mkdtempSync(path.join(os.tmpdir(), `home-`))
+      process.env.HOME = mkdtemp
     }
     const certificateFor = require(`devcert`).certificateFor
     return await certificateFor(name, {
