@@ -419,6 +419,10 @@ module.exports = async (
       )
     }
 
+    if (stage === `build-javascript` && program.profile) {
+      resolve.alias[`react-dom$`] = `react-dom/profiling`
+      resolve.alias[`scheduler/tracing`] = `scheduler/tracing-profiling`
+    }
     return resolve
   }
 
@@ -520,7 +524,17 @@ module.exports = async (
       },
       minimizer: [
         // TODO: maybe this option should be noMinimize?
-        !program.noUglify && plugins.minifyJs(),
+        !program.noUglify &&
+          plugins.minifyJs(
+            program.profile
+              ? {
+                  terserOptions: {
+                    keep_classnames: true,
+                    keep_fnames: true,
+                  },
+                }
+              : {}
+          ),
         plugins.minifyCss(),
       ].filter(Boolean),
     }

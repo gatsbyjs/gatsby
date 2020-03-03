@@ -190,7 +190,10 @@ module.exports = async (args: BootstrapArgs) => {
 
   // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
-  if (process.env.NODE_ENV === `production`) {
+  if (
+    !process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
+    process.env.NODE_ENV === `production`
+  ) {
     activity = report.activityTimer(
       `delete html and css files from previous builds`,
       {
@@ -221,6 +224,7 @@ module.exports = async (args: BootstrapArgs) => {
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
   const hashes = await Promise.all([
+    !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
     md5File(`package.json`),
     Promise.resolve(
       md5File(`${program.directory}/gatsby-config.js`).catch(() => {})
