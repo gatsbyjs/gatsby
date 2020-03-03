@@ -5446,3 +5446,14 @@
     - Light and Dark themes based on CSS variables (persisted state)
     - Font Awesome
     - Normalize.css
+- url: https://gatsby-notion-demo.netlify.com/
+  repo: https://github.com/conradlin/gatsby-starter-strata-notion
+  description: Gatsby starter utilizing Notion as a CMS based on strata site template
+  tags:
+    - CMS: Notion
+    - Blog
+  features:
+    - Super simple, portfolio + blog + newsletter site
+    - Utilizing Notion as a CMS
+    - Fully Responsive
+    - Styling with SCSS
