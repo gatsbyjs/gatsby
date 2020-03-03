@@ -10074,3 +10074,13 @@
     - App
   built_by: Stephen Greig
   built_by_url: "http://ste.digital/"
+- title: Em Em Recipes
+  url: "https://ememrecipes.com"
+  main_url: "https://ememrecipes.com"
+  description: >
+    Finally, a recipe website that gets straight to the point.
+  categories:
+    - Blog
+    - Food
+  built_by: Matthew Mesa
+  built_by_url: "https://matthewmesa.com"
