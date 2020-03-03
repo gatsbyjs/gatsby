@@ -6,7 +6,7 @@ excerpt: "Introducing two new Gatsby-Cloudinary plugins for optimized media mana
 tags: ["media", "cloudinary", "performance", "image", "video"]
 ---
 
-Plugins are at the heart of developing software with Gatsby because they not only extend Gatsby’s robust features but also make available, data from multiple sources. I’m excited to introduce you to two Gatsby plugins: gatsby-source-cloudinary and gatsby-transformer-cloudinary.
+Plugins are at the heart of developing software with Gatsby because they not only extend Gatsby’s robust features but also make available, data from multiple sources. I’m excited to introduce you to two Gatsby plugins: [gatsby-source-cloudinary](/packages/gatsby-source-cloudinary/) and [gatsby-transformer-cloudinary](/packages/gatsby-transformer-cloudinary/).
 
 Cloudinary is a cloud-based end-to-end media management platform for many of the world's top brands. With extensive product offerings from an Image management solution, Dynamic Video Platform, and a dynamic digital asset management solution.
 
