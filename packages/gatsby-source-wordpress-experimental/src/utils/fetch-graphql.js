@@ -22,6 +22,11 @@ const handleGraphQLErrors = async ({
 }) => {
   const pluginOptions = getPluginOptions()
 
+  if (!response) {
+    reporter.panic(response)
+    return
+  }
+
   const json = response.data
   const { errors } = json
 
@@ -130,18 +135,32 @@ const fetchGraphql = async ({
   errorMap,
   ignoreGraphQLErrors = false,
   panicOnError = false,
+  url = false,
   variables = {},
+  headers = {},
 }) => {
-  const {
-    helpers,
-    pluginOptions: { url },
-  } = store.getState().gatsbyApi
-  const { reporter } = helpers
+  const { helpers, pluginOptions } = store.getState().gatsbyApi
+
+  const { url: pluginOptionsUrl } = pluginOptions
+  let { reporter } = helpers
+
+  if (!reporter || typeof reporter === `undefined`) {
+    reporter = {
+      panic: message => {
+        throw new Error(message)
+      },
+      error: console.error,
+    }
+  }
+
+  if (!url) {
+    url = pluginOptionsUrl
+  }
 
   let response
 
   try {
-    response = await http.post(url, { query, variables }, { timeout })
+    response = await http.post(url, { query, variables }, { timeout, headers })
 
     const contentType = response.headers[`content-type`]
 
