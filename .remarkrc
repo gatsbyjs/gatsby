@@ -1,0 +1,12 @@
+{
+ "plugins": [
+    ["remark-frontmatter", "yaml"],
+    "remark-preset-lint-recommended",
+    ["remark-lint-list-item-indent", false],
+    ["remark-lint-no-literal-urls", false],
+    ["remark-lint-no-undefined-references", false],
+    ["remark-lint-no-unused-definitions", false],
+    ["remark-lint-no-shortcut-reference-link", false],
+    ["remark-lint-no-inline-padding", false]
+ ] 
+}
