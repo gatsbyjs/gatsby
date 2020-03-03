@@ -128,7 +128,7 @@ scope, and more.
 | [`rehypePlugins`](#rehype-plugins)                                        | `[]`                                   | Specify rehype plugins                                                |
 | [`mediaTypes`](#media-types)                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                      |
 | [`shouldBlockNodeFromTransformation`](#shouldblocknodefromtransformation) | `(node) => false`                      | Disable MDX transformation for nodes where this function returns true |
-| [`timeToRead`](#time-to-read)                                             | `wordCount => wordCount / 265`         | Calculate `timeToRead` from the word count, MDX node, and MDX AST     |
+| [`timeToRead`](#time-to-read)                                             | `wordCount => wordCount / 265`         | Calculate `timeToRead` from the word count, html, and raw MDX content |
 
 #### Extensions
 
@@ -471,7 +471,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        timeToRead: (wordCount, mdxNode) => wordCount / 42,
+        timeToRead: (wordCount, html, rawMDX) => wordCount / 42,
       },
     },
   ],
