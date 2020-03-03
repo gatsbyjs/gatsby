@@ -363,7 +363,7 @@ export const globalStyles = t => {
     },
     ".graphiql-embed": {
       width: `100%`,
-      marginBottom: `1.5rem`,
+      marginBottom: `${t.space[6]}`,
     },
     // Fancy external links in posts, borrowed from
     // https://github.com/comfusion/after-dark/
