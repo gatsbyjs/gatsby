@@ -9996,6 +9996,18 @@
     - Marketing
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
+- title: Gene
+  url: https://www.geneglobal.com/work
+  main_url: https://www.geneglobal.com
+  description: >
+    We’re an experience design agency, focused on the future of health
+  categories:
+    - Agency
+    - Technology
+    - Healthcare
+    - Consulting
+    - User Experience
+  featured: false
 - title: medignition – healthcare innovations
   url: https://medignition.com/
   main_url: https://medignition.com/
