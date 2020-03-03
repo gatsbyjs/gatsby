@@ -149,7 +149,7 @@ We need to tell gatsby where to find blog posts.
   resolve: 'gatsby-source-filesystem',
   options: {
     name: 'blog',
-    path: `${__dirname}/src/content/`,
+    path: `${__dirname}/blog/`,
   },
 },
 ```
@@ -173,7 +173,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
             `Invalid filename ${filename}. Change name to start with a valid date and title`
           )
         } else {
-          const slug = `src/content/${slugify(date, "/")}/${title}/`
+          const slug = `blog/${slugify(date, "/")}/${title}/`
           createNodeField({
             node,
             name: `slug`,
