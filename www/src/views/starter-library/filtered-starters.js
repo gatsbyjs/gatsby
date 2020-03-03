@@ -281,19 +281,15 @@ function filterByCategories(list, categories) {
   starters = starters.filter(starter => isSuperset(starter.tags, categories))
   return starters
 }
-function filterByDependencies(list, categories) {
-  let starters = list
-
-  starters = starters.filter(
-    ({ node: starter }) =>
-      starter.fields &&
+function filterByDependencies(nodes, categories) {
+  return nodes.filter(
+    node =>
+      node.fields &&
       isSuperset(
-        starter.fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
+        node.fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
         categories
       )
   )
-
-  return starters
 }
 
 function filterByVersions(list, versions) {
