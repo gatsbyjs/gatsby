@@ -51,11 +51,11 @@ Create a new folder in Gatsby project under the `src/pages-markdown` for those p
 ```
   src
   └── pages-markdown
-      ├── footer.html
-      └── header.html
+      ├── footer.md
+      └── header.md
 ```
 
-In addition, these pages must be have next properties within the frontmatter section:
+In addition, these pages must be have next properties within the `frontmatter` section:
 
 ```md
 ---
@@ -79,7 +79,7 @@ Now its time to make Gatsby engine take account into these files to inform where
 }
 ```
 
-For each file found at `src/pages-markdown` Gatsby will create a `node`. Now, we can extend the `createPages` method and make Gatsby create a new page for each `node`. The steps can be summarized as:
+For each file found at `src/pages-markdown` Gatsby will create a `node`. We can extend the `createPages` method and make Gatsby create a new page for each `node`. The steps can be summarized as:
 In addition, these pages must be have next properties within the `frontmatter` section:
 
 - Query for all the markdown nodes read by gatsby
@@ -157,7 +157,6 @@ We need to tell gatsby where to find blog posts.
 In Jekyll when we create a new blog post we create something like that `YYYY-MM-DD-some-title.md` so we need to create that `slug` from the file name. The way we can do is using the `onCreateNode` method
 
 ```js
-// gatsby-node.js
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
 
@@ -174,7 +173,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
             `Invalid filename ${filename}. Change name to start with a valid date and title`
           )
         } else {
-          const slug = `/blog/${slugify(date, "/")}/${title}/`
+          const slug = `src/content/${slugify(date, "/")}/${title}/`
           createNodeField({
             node,
             name: `slug`,
@@ -187,13 +186,14 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 }
 ```
 
-Now we need to tell gatsby to create a page for each blog post `node`. We can do it extending a bit the previous `createPages` method
+Now we need to tell gatsby to create a page for each blog post `node`. We can do it extending a bit previous `createPages` method
 
 ```js
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
-  const pageTemplate = path.resolve(`src/templates/page.js`)
+  const pageTemplate = path.resolve(`src/templates/
+  page.js`)
 
   return graphql(`...`).then(result => {
     if (result.errors) {
@@ -224,3 +224,53 @@ exports.createPages = ({ graphql, actions }) => {
 ```
 
 ### Pagination with the blog posts
+
+What we desire is a blog section that lists all posts, really a paginated list of posts, and then let user select one to be read. The previous section creates a page for each post so we need to create the pages that list the posts. Again, we only need to update a bit the `createPages` method to create a new page for each set of six posts
+
+```js
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
+  const blogListTemplate = path.resolve("./src/templates/blog-list.js")
+  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+  const pageTemplate = path.resolve(`src/templates/page.js`)
+
+  return graphql(`...`).then(result => {
+    if(result.errors) {
+      return Promise.reject(result.errors)
+    }
+
+    const markdownItems = result.data.allMarkdownRemark.edges
+
+    // Create blog-list pages
+    const posts = markdownItems.filter(item => item.node.frontmatter.layout === 'post')
+    const postsPerPage = 6
+    const numPages = Math.ceil(posts.length / postsPerPage)
+    Array.from({ length: numPages }).forEach((_, i) => {
+      createPage({
+        path: i === 0 ? `/blog` : `/blog/${i + 1}`,
+        component: blogListTemplate,
+        context: {
+          limit: postsPerPage,
+          skip: i * postsPerPage,
+          numPages,
+          currentPage: i + 1,
+        },
+      })
+    })
+
+    // Create pages and blog post pages
+    ...
+  })
+}
+```
+
+In Jekyll we used the text <!--more--> to mark the excerpt of the post. We can easily set up by configuring the plugin `gatsby-transformer-remark`:
+
+```
+{
+  resolve: `gatsby-transformer-remark`,
+  options: {
+    excerpt_separator: `<!--more-->`
+  }
+}
+```
