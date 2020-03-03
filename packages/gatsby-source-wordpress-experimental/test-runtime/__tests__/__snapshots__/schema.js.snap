@@ -89497,7 +89497,7 @@ Object {
                         "acfData": Object {
                           "name": "Jason",
                           "portrait": Object {
-                            "sourceUrl": "http://automatedtestinggatsbysourcewordpresswpgraphql.local/wp-content/uploads/2020/03/avatar.jpg",
+                            "sourceUrl": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/wp-content/uploads/2020/03/avatar.jpg",
                           },
                           "title": "WPGraphQL guy",
                           "twitterlink": Object {
@@ -89563,24 +89563,7 @@ Object {
         Object {
           "author": Object {
             "avatar": Object {
-              "url": "http://2.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-            },
-            "capKey": null,
-            "capabilities": null,
-            "comments": Object {
-              "nodes": Array [],
-            },
-          },
-          "featuredImage": Object {
-            "altText": "",
-            "sourceUrl": "http://automatedtestinggatsbysourcewordpresswpgraphql.local/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
-          },
-          "title": "First post",
-        },
-        Object {
-          "author": Object {
-            "avatar": Object {
-              "url": "http://2.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
+              "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
             },
             "capKey": null,
             "capabilities": null,
@@ -89619,7 +89602,7 @@ Object {
                         "acfData": Object {
                           "name": "Jason",
                           "portrait": Object {
-                            "sourceUrl": "http://automatedtestinggatsbysourcewordpresswpgraphql.local/wp-content/uploads/2020/03/avatar.jpg",
+                            "sourceUrl": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/wp-content/uploads/2020/03/avatar.jpg",
                           },
                           "title": "WPGraphQL guy",
                           "twitterlink": Object {
@@ -89685,24 +89668,7 @@ Object {
         Object {
           "author": Object {
             "avatar": Object {
-              "url": "http://2.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-            },
-            "capKey": null,
-            "capabilities": null,
-            "comments": Object {
-              "nodes": Array [],
-            },
-          },
-          "featuredImage": Object {
-            "altText": "",
-            "sourceUrl": "http://automatedtestinggatsbysourcewordpresswpgraphql.local/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
-          },
-          "title": "First post",
-        },
-        Object {
-          "author": Object {
-            "avatar": Object {
-              "url": "http://2.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
+              "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
             },
             "capKey": null,
             "capabilities": null,
