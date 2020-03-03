@@ -10038,6 +10038,19 @@
   built_by: Rašid Redžić
   built_by_url: https://rasidre.com/
   featured: false
+- title: Creative code daily
+  main_url: https://www.bobylito.dev/
+  url: https://www.bobylito.dev/
+  source_url: https://github.com/bobylito/sketches
+  description: >
+    Creative code daily (CCD) is a personal project for which I build a new animation made out of code every day.
+  categories:
+    - Blog
+    - Programming
+    - Gallery
+    - Portfolio
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
 - title: Messi vs Ronaldo
   description: >
     The biggest debate in football - but who is the best, Messi or Ronaldo? This website provides all the goals and stats to help you reach your own conclusion.
