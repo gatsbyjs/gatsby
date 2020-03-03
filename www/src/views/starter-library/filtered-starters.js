@@ -276,26 +276,23 @@ function count(arrays) {
   return counts
 }
 
-function filterByCategories(list, categories) {
-  let starters = list
-  starters = starters.filter(starter => isSuperset(starter.tags, categories))
-  return starters
+function filterByCategories(nodes, categories) {
+  return nodes.filter(node => isSuperset(node.tags, categories))
 }
+
 function filterByDependencies(nodes, categories) {
   return nodes.filter(
-    node =>
-      node.fields &&
+    ({ fields }) =>
+      fields &&
       isSuperset(
-        node.fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
+        fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
         categories
       )
   )
 }
 
-function filterByVersions(list, versions) {
-  let starters = list
-
-  starters = starters.filter(
+function filterByVersions(nodes, versions) {
+  return nodes.filter(
     ({ fields }) =>
       fields &&
       isSuperset(
@@ -303,7 +300,6 @@ function filterByVersions(list, versions) {
         versions
       )
   )
-  return starters
 }
 
 function isSuperset(set, subset) {
