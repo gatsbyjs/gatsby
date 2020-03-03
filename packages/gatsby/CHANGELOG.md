@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.26...gatsby@2.19.27) (2020-03-03)
+
+### Features
+
+- **gatsby:** Page build optimisations for incremental data changes ([#21523](https://github.com/gatsbyjs/gatsby/issues/21523)) ([c49d7b4](https://github.com/gatsbyjs/gatsby/commit/c49d7b4))
+
 ## [2.19.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.25...gatsby@2.19.26) (2020-03-03)
 
 ### Features

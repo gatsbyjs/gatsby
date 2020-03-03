@@ -503,6 +503,8 @@
               breadcrumbTitle: React Profiler
             - title: Scaling Issues
               link: /docs/scaling-issues/
+            - title: Experimental Page Build Optimizations for Incremental Data Changes
+              link: /docs/page-build-optimizations-for-incremental-data-changes/
         - title: Localization & Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
