@@ -147,7 +147,7 @@ module.exports = (
       )
       return undefined
     }
-  };
+  }
 
   // New Code // Schema
   const MdxType = schema.buildObjectType({
