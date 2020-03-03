@@ -261,7 +261,7 @@ module.exports = {
     ],
     social: [
       {
-        name: `twitter`,
+        name: `Twitter`,
         url: `https://twitter.com/gatsbyjs`,
       },
       {
