@@ -1,7 +1,7 @@
 import report from "gatsby-cli/lib/reporter"
 import { getConfigStore, getGatsbyVersion } from "gatsby-core-utils"
 import latestVersion from "latest-version"
-import getDayOfYear from "date-fns/get_day_of_year"
+import getDayOfYear from "date-fns/getDayOfYear"
 
 const feedbackKey = `feedback.disabled`
 const lastDateKey = `feedback.lastRequestDate`
@@ -19,7 +19,7 @@ export function showFeedbackRequest(): void {
   report.log(
     `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
   )
-  report.log(`Give us your feedback here: https://gatsby.dev/feedback\n\n`)
+  report.log(`\nGive us your feedback here: https://gatsby.dev/feedback\n\n`)
 }
 
 // We are only showing feedback requests to users in if they pass a few checks:
