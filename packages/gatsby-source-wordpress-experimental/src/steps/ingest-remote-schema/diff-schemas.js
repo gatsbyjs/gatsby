@@ -56,6 +56,12 @@ const checkIfSchemaHasChanged = async (_, pluginOptions) => {
     )
     helpers.reporter.info(formatLogMessage(`Remote schema md5: ${schemaMd5}`))
     helpers.reporter.log(``)
+  } else if (!lastCompletedSourceTime && pluginOptions.verbose) {
+    helpers.reporter.log(``)
+    helpers.reporter.info(
+      formatLogMessage(`No previous builds detected, fetching all data`)
+    )
+    helpers.reporter.log(``)
   }
 
   // record wether the schema changed so other logic can beware
