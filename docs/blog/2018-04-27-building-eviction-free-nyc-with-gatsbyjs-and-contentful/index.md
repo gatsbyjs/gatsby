@@ -108,24 +108,26 @@ GraphQL `pageQuery` will then populate your React component’s `props` with the
 corresponding data, creating an incredibly simple pipeline from content → code.
 As an example, here’s the provider portion of a sample `pageQuery`:
 
-    providers {
-      title
-      acceptsRtcCases
-      phoneNumber
-      website
-      hours
-      intakeInstructions
-      address
-      logo {
-        resolutions(width: 100, height: 100) {
-          aspectRatio
-          width
-          height
-          src
-          srcSet
-        }
-      }
+```graphql
+providers {
+  title
+  acceptsRtcCases
+  phoneNumber
+  website
+  hours
+  intakeInstructions
+  address
+  logo {
+    resolutions(width: 100, height: 100) {
+      aspectRatio
+      width
+      height
+      src
+      srcSet
     }
+  }
+}
+```
 
 #### **Challenge: Hyper-personalized result pages in a static site**
 

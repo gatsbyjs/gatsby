@@ -85,8 +85,8 @@ Our `pt1` PR is approved (🎉), but now we have to reconcile our `pt2` branch. 
 We check out the `pt2` branch and rebase it onto the updated `pt1` branch:
 
 ```bash
-$ git checkout feat/headless-cms-pt2
-$ git rebase feat/headless-cms-pt1
+git checkout feat/headless-cms-pt2
+git rebase feat/headless-cms-pt1
 ```
 
 If you're not familiar with rebasing, it's an alternative to merging that involves "replaying" commits over a different branch. This can be a weird idea for folks who are used to merging, and it takes most people a bit of practice to get comfortable with it. You can learn more about rebasing in [this article from Algolia](https://blog.algolia.com/master-git-rebase/).

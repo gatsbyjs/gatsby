@@ -104,9 +104,6 @@ Translate link text but keep all slugs and hashes in links the same as they are 
 
 If an external link is to an article in a reference like [MDN] or [Wikipedia], and a version of that article exists in your language that is of decent quality, consider linking to that version instead.
 
-[mdn]: https://developer.mozilla.org/en-US/
-[wikipedia]: https://en.wikipedia.org/wiki/Main_Page
-
 ✅ OK:
 
 ```markdown
@@ -114,3 +111,6 @@ Los elementos de React son [inmutables](https://es.wikipedia.org/wiki/Objeto_inm
 ```
 
 For links that have no equivalent (Stack Overflow, YouTube videos, etc.), use the English link.
+
+[mdn]: https://developer.mozilla.org/en-US/
+[wikipedia]: https://en.wikipedia.org/wiki/Main_Page

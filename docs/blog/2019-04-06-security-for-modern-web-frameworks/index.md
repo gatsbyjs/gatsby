@@ -136,7 +136,7 @@ Now go make awesome Gatsby sites that are completely secure! For more informatio
 
 - **General web-app security**: The [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) is a list of top website security vulnerabilities. The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
 
-* **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions.
+- **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions.
 
 - **Secure APIs**: For information on securing all APIs (authenticated or not) checkout the [Rest Secutiry Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/REST_Security_Cheat_Sheet.md) from OWASP.
 

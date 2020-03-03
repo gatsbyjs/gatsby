@@ -77,10 +77,8 @@ How unordered lists are rendered in HTML:
 
 - Gatsby
   - docs
-
-* Gatsby
+- Gatsby
   - docs
-
 - Gatsby
   - docs
 
@@ -180,7 +178,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
   - At the top of the file
   - Valid YAML
   - Between triple dashed lines
-  ```
+  ```md
   ---
   title: My Frontmatter Title
   example_boolean: true
