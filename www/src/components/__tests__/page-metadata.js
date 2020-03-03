@@ -58,7 +58,7 @@ it("generates an og:image if an image prop is provided", () => {
   const contents = Helmet.peek()
   expect(contents.metaTags).toContainEqual({
     property: "og:image",
-    content: "https://gatsbyjs.org/assets/gatsby-icon.png",
+    content: "https://gatsbyjs.org/assets/gatsby-logo.png",
   })
 })
 
