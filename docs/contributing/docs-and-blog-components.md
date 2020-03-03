@@ -1,13 +1,13 @@
 ---
-title: Docs and Website Components
+title: Docs & Blog Components
 tableOfContentsDepth: 2
 ---
 
 The Gatsbyjs.org site has a handful of components that have been developed to facilitate writing new content for the blog and the docs. There are also components that help organize and lay out content in various pages across the website.
 
-This guide documents what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-website-components.md) to see to how each component can be used, because they are all embedded here!
+This guide documents what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-blog-components.md) to see to how each component can be used, because they are all embedded here!
 
-Information about authoring in Markdown and styling components on the site is also listed.
+Information about authoring in Markdown on the site is also listed.
 
 ## Globally available components
 
@@ -163,7 +163,7 @@ The Horizontal Nav List component takes two props:
 - `slug` - which is provided in the props of the page by default
 - `items` - an array of strings for items to render and wrap with a `<Link />` to subheadings
 
-The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/) plugin to automatically apply hover links to heading tags across docs pages. Because it automatically creates links to subheadings on pages like the glossary, the Horizontal Nav List can supply matching links (like `"guide-list"` which would align with the automatically created link at `/docs/docs-and-website-components#guide-list`).
+The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/) plugin to automatically apply hover links to heading tags across docs pages. Because it automatically creates links to subheadings on pages like the glossary, the Horizontal Nav List can supply matching links (like `"guide-list"` which would align with the automatically created link at `/docs/docs-and-blog-components#guide-list`).
 
 <!-- prettier-ignore -->
 ```markdown
@@ -271,19 +271,3 @@ plugins: [
 ```
 
 Line numbers and line highlighting can be added to code blocks as well, and is explained in detail in the [`gatsby-remark-prismjs` README](/packages/gatsby-remark-prismjs/?=remark#optional-add-line-highlighting-styles).
-
-## Styling components on Gatsbyjs.org with Theme-UI
-
-Styles on the site are applied using [Theme-UI](https://theme-ui.com/), which allows for theming across the site based on design tokens (also called variables).
-
-### Design tokens
-
-Design tokens are used to consolidate the number of colors and style attributes that are applied to components throughout the site. By limiting the styles that can be applied, the site stays consistent with the guidelines for color, typography, spacing, etc.
-
-Tables listing design tokens that are used on the site can be found in the [design guidelines](/guidelines/design-tokens/).
-
-### The `sx` prop
-
-The [`sx` prop](https://theme-ui.com/sx-prop) from Theme-UI allows you to access theme values to style elements and components, it should be used wherever possible. The prop is "enabled" by adding `theme-ui`'s [JSX pragma](https://theme-ui.com/jsx-pragma) at the top of a `js` file.
-
-It is still okay to directly import tokens, e.g. `mediaQueries` or `colors` directly from [`www/src/gatsby-plugin-theme-ui`](https://github.com/gatsbyjs/gatsby/blob/master/www/src/gatsby-plugin-theme-ui/index.js) if it helps your specific use case — for example when global CSS is required, when passing theme values to other libraries or plugins, when authoring complex responsive styles, etc.

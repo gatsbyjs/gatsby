@@ -28,8 +28,8 @@ class FeatureComparison extends Component {
 
     const { sections, sectionHeaders } =
       featureType === `cms`
-        ? getFeaturesData(data.allGatsbyCmsSpecsCsv.edges)
-        : getFeaturesData(data.allGatsbyJamstackSpecsCsv.edges)
+        ? getFeaturesData(data.allGatsbyCmsSpecsCsv.nodes)
+        : getFeaturesData(data.allGatsbyJamstackSpecsCsv.nodes)
 
     return (
       <PageWithSidebar location={location}>
@@ -81,31 +81,27 @@ export default FeatureComparison
 export const pageQuery = graphql`
   query {
     allGatsbyCmsSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          WordPress
-          Drupal
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        WordPress
+        Drupal
+        Description
       }
     }
     allGatsbyJamstackSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          Nextjs
-          Jekyll
-          Hugo
-          Nuxtjs
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        Nextjs
+        Jekyll
+        Hugo
+        Nuxtjs
+        Description
       }
     }
   }
