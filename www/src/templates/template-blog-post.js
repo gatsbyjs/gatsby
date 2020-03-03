@@ -53,6 +53,7 @@ class BlogPostTemplate extends React.Component {
               title={post.frontmatter.title}
               description={post.fields.excerpt}
               type="article"
+              timeToRead={post.timeToRead}
               image={post.frontmatter.image?.childImageSharp.resize}
             >
               {canonicalLink && <link rel="canonical" href={canonicalLink} />}
