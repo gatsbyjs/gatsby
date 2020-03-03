@@ -499,3 +499,13 @@
   image: images/ahmad-awais.jpg
   for_hire: true
   portfolio: true
+- name: Usama liaquat
+  type: individual
+  image: images/usama-liaquat.jpg
+  description: >-
+    Usama liaquat is a contributor of react/react-native teams. He develop lib/packages and distributed them into many software industries
+  location: Pakistan
+  website: "https://www.linkedin.com/in/usamaliaquat/"
+  github: "https://github.com/Usamaliaquat123"
+  for_hire: true
+  portfolio: true

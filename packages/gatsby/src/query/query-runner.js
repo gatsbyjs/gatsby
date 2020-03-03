@@ -58,8 +58,8 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
           ...structuredError.context,
           codeFrame: getCodeFrame(
             queryJob.query,
-            e.locations[0].line,
-            e.locations[0].column
+            e.locations && e.locations[0].line,
+            e.locations && e.locations[0].column
           ),
           filePath: queryJob.componentPath,
           ...(urlPath && { urlPath }),

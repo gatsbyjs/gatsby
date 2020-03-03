@@ -8,9 +8,9 @@ import Img from "gatsby-image"
 import qs from "qs"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import Modal from "../components/modal"
-import ShareMenu from "../components/share-menu"
-import Button from "../components/button"
+import Modal from "./modal"
+import ShareMenu from "./share-menu"
+import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"

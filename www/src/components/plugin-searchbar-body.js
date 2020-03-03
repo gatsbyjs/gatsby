@@ -14,7 +14,7 @@ import { navigate as reachNavigate } from "@reach/router"
 import { Link } from "gatsby"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 import AlgoliaLogo from "../assets/vendor-logos/algolia.svg"
-import GatsbyIcon from "../components/gatsby-monogram"
+import GatsbyIcon from "./gatsby-monogram"
 import { debounce, unescape } from "lodash-es"
 
 import {
@@ -24,7 +24,7 @@ import {
 import { visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import removeMD from "remove-markdown"
-import SkipNavLink from "../components/skip-nav-link"
+import SkipNavLink from "./skip-nav-link"
 
 // This is for the urlSync
 const updateAfter = 700

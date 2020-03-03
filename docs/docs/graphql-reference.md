@@ -165,7 +165,8 @@ In this query the fields `categories` and `title` are filtered to find the book 
         categories: {
           in: ["magical creatures"]
         }
-        title: {regex: "/Fantastic/"
+        title: {
+          regex: "/Fantastic/"
         }
       }
     }

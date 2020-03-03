@@ -94,12 +94,13 @@ At the root of a Gatsby app run `gatsby build` to do a production build of a sit
 
 #### Options
 
-|            Option            | Description                                                                                                |            Default            |
-| :--------------------------: | ---------------------------------------------------------------------------------------------------------- | :---------------------------: |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        | `env.PREFIX_PATHS` or `false` |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    |            `false`            |
-| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |                               |
-| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                           |            `false`            |
+|            Option            | Description                                                                                                        |            Default            |
+| :--------------------------: | ------------------------------------------------------------------------------------------------------------------ | :---------------------------: |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                                | `env.PREFIX_PATHS` or `false` |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                            |            `false`            |
+|         `--profile`          | Build site with react profiling. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/ |            `false`            |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/         |                               |
+| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                                   |            `false`            |
 
 For prefixing paths, most will want to use the CLI flag (`gatsby build --prefix-paths`). For environments where you can't pass the --prefix-paths flag (ie Gatsby Cloud) this provides another way to prefix paths.
 

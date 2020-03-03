@@ -24,6 +24,11 @@ You can import your own components.
 
 **Note**: steps for importing custom components or MDX documents from a relative location in your project are also covered in the [Writing Pages in MDX guide](/docs/mdx/writing-pages/).
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-import-and-use-a-react-component-in-markdown-with-mdx"
+  lessonTitle="Import and use a React component in Markdown with MDX"
+/>
+
 ## Make components available globally as shortcodes
 
 To avoid having to import the same component inside of every MDX document you author, you can add components to an `MDXProvider` to make them globally available in MDX pages. This pattern is sometimes referred to as shortcodes.
@@ -62,6 +67,11 @@ The Chart is also available since it was passed into the MDXProvider:
 ```
 
 Because the `<Message />` and `<Chart />` components were passed into the provider, they are available for use in all MDX documents.
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-make-react-components-globally-available-as-shortcodes-in-mdx"
+  lessonTitle="Make React components globally available as shortcodes in MDX"
+/>
 
 ### Additional resources
 
