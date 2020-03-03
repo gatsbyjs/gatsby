@@ -8,7 +8,7 @@ export default function PageMetadata({
   description,
   timeToRead,
   image,
-  type = "article",
+  type,
 }) {
   // <Helmet> doesn't support JSX fragments so we can't bundle the tags based on
   // the property they match up with
@@ -18,7 +18,7 @@ export default function PageMetadata({
       {title && <meta property="og:title" content={title} />}
       {description && <meta name="description" content={description} />}
       {description && <meta property="og:description" content={description} />}
-      <meta property="og:type" content={type} />
+      {type && <meta property="og:type" content={type} />}
       {/* Used by slack to display rich previews */}
       {timeToRead && <meta name="twitter:label1" content="Reading time" />}
       {timeToRead && (

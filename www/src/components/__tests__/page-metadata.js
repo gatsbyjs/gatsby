@@ -26,8 +26,8 @@ it("generates description and og:description when a description prop is provided
   })
 })
 
-it("generates a type of article if no type is provided", () => {
-  render(<PageMetadata />)
+it("generates a type property if a type prop is provided", () => {
+  render(<PageMetadata type="article" />)
   const contents = Helmet.peek()
   expect(contents.metaTags).toContainEqual({
     property: "og:type",

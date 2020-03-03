@@ -20,6 +20,7 @@ const PackageReadMe = props => {
       <PageMetadata
         title={packageName}
         description={metaExcerpt}
+        type="article"
         timeToRead={timeToRead}
       />
       <Container>

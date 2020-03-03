@@ -86,6 +86,7 @@ export default function APITemplate({ data, location, pageContext }) {
       <PageMetadata
         title={page.frontmatter.title}
         description={page.frontmatter.description || page.excerpt}
+        type="article"
         timeToRead={page.timeToRead}
       />
       <DocSearchContent>

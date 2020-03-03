@@ -40,6 +40,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
       <PageMetadata
         title={page.frontmatter.title}
         description={page.frontmatter.description || page.excerpt}
+        type="article"
         timeToRead={page.timeToRead}
       />
       <DocSearchContent>
