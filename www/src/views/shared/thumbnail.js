@@ -27,12 +27,11 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
       sx={{
         ...withTitleHover,
         lineHeight: `dense`,
-        fontFamily: `header`,
+        fontFamily: `heading`,
         "&&": {
           borderBottom: `none`,
           color: `heading`,
-          transition: t =>
-            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+          transition: `default`,
           "&:hover": screenshotHover,
           "&:hover ~ .meta > .featured-site": {
             transform: t => `translateY(-${t.space[1]})`,

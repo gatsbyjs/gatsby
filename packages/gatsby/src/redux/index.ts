@@ -19,16 +19,16 @@ export const emitter = mitt()
 // Read old node data from cache.
 export const readState = (): IReduxState => {
   try {
-    const state = readFromCache()
+    const state = readFromCache() as IReduxState
     if (state.nodes) {
       // re-create nodesByType
       state.nodesByType = new Map()
       state.nodes.forEach(node => {
         const { type } = node.internal
-        if (!state.nodesByType.has(type)) {
-          state.nodesByType.set(type, new Map())
+        if (!state.nodesByType!.has(type)) {
+          state.nodesByType!.set(type, new Map())
         }
-        state.nodesByType.get(type).set(node.id, node)
+        state.nodesByType!.get(type).set(node.id, node)
       })
     }
 
@@ -65,18 +65,17 @@ export const store = configureStore(readState())
 // Persist state.
 export const saveState = (): void => {
   const state = store.getState()
-  const pickedState = _.pick(state, [
-    `nodes`,
-    `status`,
-    `componentDataDependencies`,
-    `components`,
-    `jobsV2`,
-    `staticQueryComponents`,
-    `webpackCompilationHash`,
-    `pageDataStats`,
-  ])
 
-  return writeToCache(pickedState)
+  return writeToCache({
+    nodes: state.nodes,
+    status: state.status,
+    componentDataDependencies: state.componentDataDependencies,
+    components: state.components,
+    jobsV2: state.jobsV2,
+    staticQueryComponents: state.staticQueryComponents,
+    webpackCompilationHash: state.webpackCompilationHash,
+    pageDataStats: state.pageDataStats,
+  })
 }
 
 store.subscribe(() => {

@@ -83,7 +83,7 @@ you must first [expose the metafield to the Storefront API](https://help.shopify
 You can query nodes created from Shopify using GraphQL like the following:
 
 **Note**: Learn to use the GraphQL tool and Ctrl+Spacebar at
-<http://localhost:8000/___graphql> to discover the types and properties of your
+`http://localhost:8000/___graphql` to discover the types and properties of your
 GraphQL model.
 
 ```graphql

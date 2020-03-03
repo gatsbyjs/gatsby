@@ -49,7 +49,9 @@ Prior to the website rebuild, Youfit viewed their website as an “add-on” bec
 Zach and the Youfit team were happy with the results, amazed by the fast page load times, and would use Gatsby again for future projects.
 
 <Pullquote citation="Zach Muha">
-We are very happy with the results so far, especially the 60% increase in leads. The website went from a burden to a strategic tool we use to capture leads and generate ROI.
+  We are very happy with the results so far, especially the 60% increase in
+  leads. The website went from a burden to a strategic tool we use to capture
+  leads and generate ROI.
 </Pullquote>
 
 By using Gatsby, Youfit significantly increased their organic traffic, lead capture and ROI. Youfit also laid the foundation for long-term success by improving their Google ranking and making their site mobile friendly. This enabled Youfit to focus on what it does best: making proactive wellness more accessible to all.

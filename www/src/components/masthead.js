@@ -31,7 +31,7 @@ const MastheadContent = () => (
     <p
       sx={{
         color: `text`,
-        fontFamily: `header`,
+        fontFamily: `heading`,
         fontSize: [4, 5],
         lineHeight: `dense`,
         maxWidth: `45rem`,
