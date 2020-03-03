@@ -27,14 +27,14 @@ By the end of this tutorial, you’ll have done the following:
 
 Start a new Gatsby project using the default starter.
 
-```bash
+```shell
 gatsby new gatsby-prismic-blog
 cd gatsby-prismic-blog
 ```
 
 Now, you will have to install missing packages. This command includes the Gatsby Prismic source plugin, and the Prismic kits for facilitating processes in React:
 
-```bash
+```shell
 npm i --save gatsby-source-prismic-graphql prismic-javascript prismic-reactjs
 ```
 
