@@ -1,5 +1,5 @@
 ---
-title: Feedback
+title: Gatsby CLI Feedback
 ---
 
 Gatsby users will be prompted every 3 months (at the most) to give feedback to Gatsby on our products and services. This feedback is incredibly valuable and will help us shape Gatsby.
