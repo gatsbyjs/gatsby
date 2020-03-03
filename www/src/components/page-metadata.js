@@ -17,18 +17,23 @@ export default function PageMetadata({
       {title && <title>{title}</title>}
       {title && <meta property="og:title" content={title} />}
       {description && <meta name="description" content={description} />}
-      {description && <meta name="og:description" content={description} />}
-      <meta name="og:type" content={type} />
+      {description && <meta property="og:description" content={description} />}
+      <meta property="og:type" content={type} />
       {/* Used by slack to display rich previews */}
-      {timeToRead && <meta name="twitter.label1" content="Reading time" />}
+      {timeToRead && <meta name="twitter:label1" content="Reading time" />}
       {timeToRead && (
         <meta name="twitter:data1" content={`${timeToRead} min read`} />
       )}
       {image && (
-        <meta name="og:image" content={`https://gatsbyjs.org${image.src}`} />
+        <meta
+          property="og:image"
+          content={`https://gatsbyjs.org${image.src}`}
+        />
       )}
-      {image?.width && <meta name="og:image:width" content={image.width} />}
-      {image?.height && <meta name="og:image:width" content={image.height} />}
+      {image?.width && <meta property="og:image:width" content={image.width} />}
+      {image?.height && (
+        <meta property="og:image:height" content={image.height} />
+      )}
       {children}
     </Helmet>
   )
