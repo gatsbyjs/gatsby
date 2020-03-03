@@ -3,20 +3,17 @@
     ["remark-frontmatter", "yaml"],
     "remark-preset-lint-recommended",
     "remark-preset-lint-markdown-style-guide",
-    ["remark-lint-emphasis-marker", false],
-    ["remark-lint-heading-increment", false],
+    ["remark-lint-emphasis-marker", "_"],
+    ["remark-lint-no-heading-punctuation", "."],
     ["remark-lint-list-item-indent", false],
     ["remark-lint-list-item-spacing", false],
     ["remark-lint-maximum-line-length", false],
     ["remark-lint-maximum-heading-length", false],
     ["remark-lint-no-literal-urls", false],
     ["remark-lint-no-undefined-references", false],
-    ["remark-lint-no-unused-definitions", false],
     ["remark-lint-no-shortcut-reference-link", false],
     ["remark-lint-no-emphasis-as-heading", false],
     ["remark-lint-no-duplicate-headings", false],
-    ["remark-lint-no-heading-punctuation", false],
-    ["remark-lint-no-multiple-toplevel-headings", false],
     ["remark-lint-ordered-list-marker-value", false]
  ] 
 }

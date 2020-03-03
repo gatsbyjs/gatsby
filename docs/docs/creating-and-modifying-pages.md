@@ -17,8 +17,8 @@ to modify pages created in core or plugins or to create [client-only routes](/do
 ## Debugging help
 
 To see what pages are being created by your code or plugins, you can query for
-page information while developing in Graph*i*QL. Paste the following query in
-the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running
+page information while developing in Graph_i_QL. Paste the following query in
+the Graph_i_QL IDE for your site. The Graph_i_QL IDE is available when running
 your sites development server at `HOST:PORT/___graphql` e.g.
 `http://localhost:8000/___graphql`.
 
