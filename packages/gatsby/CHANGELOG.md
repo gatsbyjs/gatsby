@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.25...gatsby@2.19.26) (2020-03-03)
+
+### Features
+
+- **gatsby:** add react profiling option ([#21863](https://github.com/gatsbyjs/gatsby/issues/21863)) ([3e8f2c7](https://github.com/gatsbyjs/gatsby/commit/3e8f2c7))
+
 ## [2.19.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.24...gatsby@2.19.25) (2020-03-02)
 
 ### Bug Fixes
