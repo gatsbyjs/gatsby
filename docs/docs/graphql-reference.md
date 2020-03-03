@@ -234,13 +234,9 @@ _In the playground below the list, there is an example query with a description 
   url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   # eq: I want all the titles that match "Fantastic Beasts and Where to Find Them"
-  example_eq:allMarkdownRemark(
+  example_eq: allMarkdownRemark(
     filter: {
-      frontmatter: {
-        title: {
-          eq: "Fantastic Beasts and Where to Find Them"
-        }
-      }
+      frontmatter: { title: { eq: "Fantastic Beasts and Where to Find Them" } }
     }
   ) {
     edges {
@@ -251,36 +247,22 @@ _In the playground below the list, there is an example query with a description 
       }
     }
   }
-  
   # neq: I want all the titles which are NOT equal to the empty string
-  example_ne:allMarkdownRemark(
-    filter: {
-      frontmatter: {
-        title: {
-          ne:""
-        }
-      }
-    }
+  example_ne: allMarkdownRemark(
+    filter: { frontmatter: { title: { ne: "" } } }
   ) {
     edges {
-      node {        
+      node {
         frontmatter {
           title
         }
       }
     }
   }
-  
-  # regex: I want all the titles that do not start with 'T' -- this is what /^[^T]/ means.
+  # regex: I want all the titles that do not start with 'T' -- this is what /^[^t]/ means.
   # To learn more about regular expressions: https://regexr.com/
-  example_regex:allMarkdownRemark(
-    filter: {
-      frontmatter: {
-        title: {
-          regex: "/^[^T]/"
-        }
-      }
-    }
+  example_regex: allMarkdownRemark(
+    filter: { frontmatter: { title: { regex: "/^[^t]/" } } }
   ) {
     edges {
       node {
@@ -290,17 +272,10 @@ _In the playground below the list, there is an example query with a description 
       }
     }
   }
-  
   # glob: I want all the titles that contain the word 'History'.
-  # The wildcard * stands for any non-empty string.
-  example_glob:allMarkdownRemark(
-    filter: {
-      frontmatter: {
-        title: {
-          glob: "*History*"
-        }
-      }
-    }
+  # The wildcard \* stands for any non-empty string.
+  example_glob: allMarkdownRemark(
+    filter: { frontmatter: { title: { glob: "_History_" } } }
   ) {
     edges {
       node {
@@ -310,67 +285,52 @@ _In the playground below the list, there is an example query with a description 
       }
     }
   }
-  
-  # in: I want all the titles and dates from \`frontmatter\`
-  # where the title is either 
+  # in: I want all the titles and dates from 'frontmatter'
+  # where the title is either
   # - "Children's Anthology of Monsters", or
   # - "Hogwarts: A History".
-  example_in:allMarkdownRemark(
+  example_in: allMarkdownRemark(
     filter: {
       frontmatter: {
         title: {
-          in: [
-            "Children's Anthology of Monsters",
-            "Hogwarts: A History"
-          ]
+          in: ["Children's Anthology of Monsters", "Hogwarts: A History"]
         }
       }
     }
   ) {
     edges {
       node {
-        frontmatter{
+        frontmatter {
           title
-        	date
-     		}
+          date
+        }
       }
     }
   }
-  
-  # nin: I want all the titles and dates from \`frontmatter\`
-  # where the title is neither 
+  # nin: I want all the titles and dates from 'frontmatter'
+  # where the title is neither
   # - "Children's Anthology of Monsters", nor
   # - "Hogwarts: A History".
-  example_nin:allMarkdownRemark(
+  example_nin: allMarkdownRemark(
     filter: {
       frontmatter: {
         title: {
-          nin:[
-            "Children's Anthology of Monsters",
-            "Hogwarts: A History"
-          ]
+          nin: ["Children's Anthology of Monsters", "Hogwarts: A History"]
         }
       }
     }
   ) {
     edges {
       node {
-        frontmatter{
+        frontmatter {
           title
-        	date
-     		}
+          date
+        }
       }
     }
   }
-  
-  # lte: I want all the titles for which \`timeToRead\` is less than or equal to 4 minutes.
-  example_lte:allMarkdownRemark(
-    filter: {
-      timeToRead: {
-        lte: 4
-      }
-  	}
-  ) {
+  # lte: I want all the titles for which 'timeToRead' is less than or equal to 4 minutes.
+  example_lte: allMarkdownRemark(filter: { timeToRead: { lte: 4 } }) {
     edges {
       node {
         frontmatter {
@@ -379,24 +339,15 @@ _In the playground below the list, there is an example query with a description 
       }
     }
   }
-  
   # elemMatch: I want to know all the plugins that contain "chokidar" in their dependencies.
-  # Note: the \`allSitePlugin\` query lists all the plugins used in our Gatsby site. 
+  # Note: the 'allSitePlugin' query lists all the plugins used in our Gatsby site.
   example_elemMatch: allSitePlugin(
-    filter:{
-      packageJson:{
-        dependencies:{
-          elemMatch:{
-            name:{
-              eq:"chokidar"
-            }
-          }
-        }
-      }
-  	}
+    filter: {
+      packageJson: { dependencies: { elemMatch: { name: { eq: "chokidar" } } } }
+    }
   ) {
     edges {
-      node{
+      node {
         name
       }
     }
