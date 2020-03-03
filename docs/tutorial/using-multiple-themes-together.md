@@ -246,8 +246,8 @@ Add a `menuLinks` array to `gatsby-config.js`:
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Multiple Themes`,
-    description: `A tutorial for building a Gatsby site using multiple themes.`,
+    title: `Your Site Title`,
+    description: `A description for your blazing fast site, using multiple themes!`,
     author: `Your name`,
     menuLinks: [
       {
