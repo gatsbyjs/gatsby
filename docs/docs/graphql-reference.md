@@ -714,10 +714,11 @@ The query below defines a fragment to get the site title, and then uses the frag
     title
   }
 }
+
 {
-  site {
-  ...fragmentName
-  }
+site {
+...fragmentName
+}
 }
 `}
 />

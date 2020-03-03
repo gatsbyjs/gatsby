@@ -199,11 +199,20 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
 - [Gatsby GraphQL reference for limiting](/docs/graphql-reference/#limit)
 - Live example:
 
-<iframe
+<GraphiQLEmbed
   title="Limiting returned data"
-  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
-  width="600"
-  height="300"
+  url="https://711808k40x.sse.codesandbox.io/___graphql"
+  query={`{
+  allSitePage(limit: 3) {
+    edges {
+      node {
+        id
+        path
+      }
+    }
+  }
+}
+`}
 />
 
 ## Sorting with GraphQL
@@ -260,11 +269,20 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 - Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
 - Live example:
 
-<iframe
+<GraphiQLEmbed
   title="Sorting data"
-  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(sort%3A%20%7Bfields%3A%20path%2C%20order%3A%20ASC%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
-  width="600"
-  height="300"
+  url="https://711808k40x.sse.codesandbox.io/___graphql"
+  query={`{
+  allSitePage(sort: {fields: path, order: ASC}) {
+    edges {
+      node {
+        id
+        path
+      }
+    }
+  }
+}
+`}
 />
 
 ## Filtering with GraphQL
@@ -325,11 +343,22 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 - Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
 - Live example:
 
-<iframe
+<GraphiQLEmbed
   title="Filtering data"
-  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(filter%3A%20%7Bfrontmatter%3A%20%7Bcategories%3A%20%7Beq%3A%20%22magical%20creatures%22%7D%7D%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20categories%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
-  width="600"
-  height="300"
+  url="https://711808k40x.sse.codesandbox.io/___graphql"
+  query={`{
+  allMarkdownRemark(filter: {frontmatter: {categories: {eq: "magical creatures"}}}) {
+    edges {
+      node {
+        frontmatter {
+          title
+          categories
+        }
+      }
+    }
+  }
+}
+`}
 />
 
 ## GraphQL Query Aliases
@@ -379,11 +408,20 @@ If you would like to run two queries on the same datasource, you can use an alia
 - [Gatsby GraphQL reference for aliasing](/docs/graphql-reference/#aliasing)
 - Live example:
 
-<iframe
+<GraphiQLEmbed
   title="Using aliases"
-  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20fileCount%3A%20allFile%20%7B%20%0A%20%20%20%20totalCount%0A%20%20%7D%0A%20%20filePageInfo%3A%20allFile%20%7B%0A%20%20%20%20pageInfo%20%7B%0A%20%20%20%20%20%20currentPage%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
-  width="600"
-  height="300"
+  url="https://711808k40x.sse.codesandbox.io/___graphql"
+  query={`{
+  fileCount: allFile { 
+    totalCount
+  }
+  filePageInfo: allFile {
+    pageInfo {
+      currentPage
+    }
+  }
+}
+`}
 />
 
 ## GraphQL Query Fragments
