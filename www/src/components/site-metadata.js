@@ -4,7 +4,7 @@ import { graphql, useStaticQuery } from "gatsby"
 
 import gatsbyIcon from "../assets/gatsby-icon.png"
 
-const SiteMetadata = ({ href, locale }) => {
+const SiteMetadata = ({ pathname, locale }) => {
   const {
     site: {
       siteMetadata: { siteUrl, title, twitter },
@@ -20,6 +20,10 @@ const SiteMetadata = ({ href, locale }) => {
       }
     }
   `)
+
+  // Note: `location.href` isn't available on server-side so we must get it from `pathname`:
+  // https://css-tricks.com/how-to-the-get-current-page-url-in-gatsby/#article-header-id-4
+  const href = `${siteUrl}${pathname}`
 
   return (
     <Helmet defer={false} defaultTitle={title} titleTemplate={`%s | ${title}`}>

@@ -20,7 +20,7 @@ export default function DefaultLayout({ location, locale, children }) {
   return (
     <LocaleContext.Provider value={locale || defaultLang}>
       <Global styles={globalStyles} />
-      <SiteMetadata href={location.href} locale={locale} />
+      <SiteMetadata pathname={location.pathname} locale={locale} />
       <SkipNavLink />
       <Banner />
       <Navigation pathname={location.pathname} />
