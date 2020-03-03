@@ -281,13 +281,13 @@ Unless the text is Markdown-free, you cannot use the returned value directly. In
 
 You can then insert the returned HTML inline in your JSX:
 
-```
-  <div
+```jsx
+<div
   className="body"
   dangerouslySetInnerHTML={{
-       __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
-     }}
-   />
+    __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
+  }}
+/>
 ```
 
 #### Duplicated entries

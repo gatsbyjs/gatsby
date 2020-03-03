@@ -60,7 +60,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
     starters = starters.sort(sortingFunction()).slice(0, count)
     return (
       <div sx={showcaseList}>
-        {starters.map(({ node: starter }) => {
+        {starters.map(starter => {
           const {
             description,
             gatsbyMajorVersion,
@@ -89,7 +89,11 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 />
                 <div sx={meta}>
                   <div
-                    css={{ display: `flex`, justifyContent: `space-between`, alignItems: `start` }}
+                    css={{
+                      display: `flex`,
+                      justifyContent: `space-between`,
+                      alignItems: `start`,
+                    }}
                   >
                     <span
                       sx={{

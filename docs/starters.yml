@@ -34,6 +34,18 @@
     - MDX
     - MaterialUI Components
     - React Icons
+- url: https://authenticaysh.netlify.com/
+  repo: https://github.com/ben-siewert/gatsby-starter-auth-aws-amplify
+  description: Full-featured Auth with AWS Amplify & AWS Cognito
+  tags:
+    - AWS
+    - Authentication
+  features:
+    - Full-featured AWS Authentication with Cognito
+    - Error feedback in forms
+    - Password Reset
+    - Multi-Factor Authentication
+    - Styling with Bootstrap and Sass
 - url: https://gatsby-starter-blog-demo.netlify.com/
   repo: https://github.com/gatsbyjs/gatsby-starter-blog
   description: official blog
@@ -2414,7 +2426,7 @@
     - 📣 react-axe for console reporting of accessibility errors in the DOM during development
     - 📖 storybook setup for accessibility reporting on individual components
 - url: https://gatsby-theme-ggt-material-ui-blog.netlify.com/
-  repo: https://github.com/greatgatsbyjsthemes/gatsby-starter-ggt-material-ui-blog
+  repo: https://github.com/avatar-kaleb/gatsby-starter-ggt-material-ui-blog
   description: Starter material-ui blog utilizing a Gatsby theme!
   tags:
     - Blog
@@ -5424,3 +5436,13 @@
     - Offline support
     - Google Analytics support
     - Disqus Comments support
+- url: https://gatsby-starter-typescript-themes.netlify.com/
+  repo: https://github.com/room-js/gatsby-starter-typescript-themes
+  description: Gatsby TypeScript starter with light/dark themes based on CSS variables
+  tags:
+    - Language:TypeScript
+    - Styling:SCSS
+  features:
+    - Light and Dark themes based on CSS variables (persisted state)
+    - Font Awesome
+    - Normalize.css
