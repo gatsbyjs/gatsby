@@ -471,7 +471,7 @@ Let's see how an attached image will look like. For this tutorial, you can use t
 
 The image will need to be located at `content/blog/2019-01-04-hello-world-seo/images/featured.jpg`.
 
-Make sure to use appropriately sized images for social sharing. Facebook and Twitter have restrictions beyond they will simply ignore your image.
+Make sure to use appropriately sized images for social sharing. Facebook and Twitter have restrictions beyond which they will simply ignore your image.
 
 #### Querying with GraphQL
 
@@ -529,11 +529,11 @@ export default BlogPost
 
 There are a few aspects worth nothing here:
 
-1. You're using `pruneLength: 160` for the excerpt; this is because [SEO meta descriptions should be between 150-170 characters][seo-description-length]
+- You're using `pruneLength: 160` for the excerpt; this is because [SEO meta descriptions should be between 150-170 characters][seo-description-length]
 
 - This is a slick feature of Gatsby's GraphQL capabilities, and will truncate (e.g. with a trailing `...`) appropriately. Perfect!
 
-1. The image querying is intentionally simplified, but a good base to build upon. There are specific size and aspect ratio requirements for [both Facebook][facebook-og-image] and [Twitter][twitter-image].
+- The image query is intentionally simplified, but a good base to build upon. There are specific size and aspect ratio requirements for [both Facebook][facebook-og-image] and [Twitter][twitter-image].
 
 ## The Payoff
 
