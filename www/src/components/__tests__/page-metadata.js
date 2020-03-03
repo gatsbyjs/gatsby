@@ -35,10 +35,6 @@ it("generates a type of article if no type is provided", () => {
   })
 })
 
-it("generates a type if a type prop is provided", () => {
-  //
-})
-
 it("generates twitter label data if timeToRead prop is provided", () => {
   render(<PageMetadata timeToRead={2} />)
   const contents = Helmet.peek()
