@@ -95,6 +95,7 @@
     "format": "npm run format:code && npm run format:other && npm run format:svg",
     "format:other": "npm run prettier -- --write",
     "format:code": "npm run lint:code -- --fix",
+    "format:docs": "remark --quiet --frail \"docs/\" --output",
     "format:svg": "node scripts/format-svg.js",
     "hooks:uninstall": "node node_modules/husky/husky.js uninstall",
     "hooks:install": "node node_modules/husky/husky.js install",

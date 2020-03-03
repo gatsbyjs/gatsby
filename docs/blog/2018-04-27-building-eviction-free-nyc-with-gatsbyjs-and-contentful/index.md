@@ -181,8 +181,8 @@ simply linked Netlify to a branch in the Eviction Free NYC GitHub repo and it
 compiles and deploys the site with each push. It simplifies HTTPS certificate
 generation and even includes a system for deploying AWS Lambda functions, which
 we used to ship a small Twilio integration for the site's “Save to Phone”
-feature. _(note: we’re actually still using the original
-_[Serverless](https://serverless.com/)_ solution, but this code is in the repo
+feature. _(note: we’re actually still using the original_
+[Serverless](https://serverless.com/) _solution, but this code is in the repo
 as a to-do)_
 
 The best feature of Netlify is its ability to utilize build hooks. This allows

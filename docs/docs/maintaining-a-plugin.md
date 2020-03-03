@@ -24,7 +24,7 @@ Version 1.0.0 should be released when the plugin's API is considered stable. Ver
 
 > Consider a version format of X.Y.Z (Major.Minor.Patch). Bug fixes not affecting the API increment the patch version, backwards compatible API additions/changes increment the minor version, and backwards incompatible API changes increment the major version.
 
-Read more about this concept [in this paper on semantic versioning ](https://semver.org/).
+Read more about this concept [in this paper on semantic versioning](https://semver.org/).
 
 ## Update README and document use cases
 
