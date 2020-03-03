@@ -5,7 +5,6 @@ import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import Layout from "../components/layout"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -42,22 +41,20 @@ class IndexRoute extends React.Component {
   render() {
     const {
       data: {
-        allMdx: { edges: postsData },
-        allStartersYaml: { edges: startersData },
-        allNpmPackage: { edges: pluginsData },
+        allMdx: { nodes: postsData },
+        allStartersYaml: { nodes: startersData },
+        allNpmPackage: { nodes: pluginsData },
       },
     } = this.props
 
     const starters = startersData.map(item => {
       const {
-        node: {
-          fields: {
-            starterShowcase: { slug, name, description, stars },
-          },
-          childScreenshot: {
-            screenshotFile: {
-              childImageSharp: { fixed: thumbnail },
-            },
+        fields: {
+          starterShowcase: { slug, name, description, stars },
+        },
+        childScreenshot: {
+          screenshotFile: {
+            childImageSharp: { fixed: thumbnail },
           },
         },
       } = item
@@ -73,9 +70,9 @@ class IndexRoute extends React.Component {
     })
 
     const plugins = pluginsData.map(item => {
-      item.node.type = `Plugin`
+      item.type = `Plugin`
 
-      return item.node
+      return item
     })
 
     const ecosystemFeaturedItems = this.combineEcosystemFeaturedItems({
@@ -83,10 +80,8 @@ class IndexRoute extends React.Component {
       starters,
     })
 
-    const posts = postsData.map(item => item.node)
-
     return (
-      <Layout location={this.props.location}>
+      <>
         <Helmet>
           <meta
             name="Description"
@@ -137,12 +132,12 @@ class IndexRoute extends React.Component {
 
           <HomepageEcosystem featuredItems={ecosystemFeaturedItems} />
 
-          <HomepageBlog posts={posts} />
+          <HomepageBlog posts={postsData} />
 
           <HomepageNewsletter />
         </main>
         <FooterLinks />
-      </Layout>
+      </>
     )
   }
 }
@@ -169,10 +164,8 @@ export const pageQuery = graphql`
         fields: { released: { eq: true } }
       }
     ) {
-      edges {
-        node {
-          ...HomepageBlogPostData
-        }
+      nodes {
+        ...HomepageBlogPostData
       }
     }
     allStartersYaml(
@@ -181,22 +174,20 @@ export const pageQuery = graphql`
       }
       sort: { order: DESC, fields: [fields___starterShowcase___stars] }
     ) {
-      edges {
-        node {
-          fields {
-            starterShowcase {
-              slug
-              description
-              stars
-              name
-            }
+      nodes {
+        fields {
+          starterShowcase {
+            slug
+            description
+            stars
+            name
           }
-          childScreenshot {
-            screenshotFile {
-              childImageSharp {
-                fixed(width: 64, height: 64) {
-                  ...GatsbyImageSharpFixed_noBase64
-                }
+        }
+        childScreenshot {
+          screenshotFile {
+            childImageSharp {
+              fixed(width: 64, height: 64) {
+                ...GatsbyImageSharpFixed_noBase64
               }
             }
           }
@@ -204,13 +195,11 @@ export const pageQuery = graphql`
       }
     }
     allNpmPackage(filter: { fields: { featured: { eq: true } } }) {
-      edges {
-        node {
-          slug
-          name
-          description
-          humanDownloadsLast30Days
-        }
+      nodes {
+        slug
+        name
+        description
+        humanDownloadsLast30Days
       }
     }
   }

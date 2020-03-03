@@ -17,9 +17,7 @@ Website teams moving to this space have to plan four steps -- one for each categ
 
 <figure>
   <img alt="" src="./modern-website-performance.png" />
-  <figcaption>
-    Three facets of modern website projects
-  </figcaption>
+  <figcaption>Three facets of modern website projects</figcaption>
 </figure>
 
 ## Moving to the content mesh
@@ -70,9 +68,14 @@ The answer: choose a content mesh. A content mesh:
 - automatically makes your site fast out of the box
 
 <figure>
-  <img alt="The modern website landscape" src="./content-mesh.png" height="300" />
+  <img
+    alt="The modern website landscape"
+    src="./content-mesh.png"
+    height="300"
+  />
   <figcaption>
-   The Content Mesh integrates <b>headless</b> content systems, modern development tools, and website performance
+    The Content Mesh integrates <b>headless</b> content systems, modern
+    development tools, and website performance
   </figcaption>
 </figure>
 
