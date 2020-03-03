@@ -42,7 +42,7 @@ const { compareState } = require(`../utils/nodes-diff`)
 
 const stdio = `inherit`
 
-process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION = `1`
+// process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION = `1`
 
 const build = ({ updatePlugins } = {}) => {
   spawnSync(gatsbyBin, [`clean`], { stdio })
@@ -182,7 +182,7 @@ describe.skip(`nothing changed between gatsby runs`, () => {
 })
 */
 
-describe(`some plugins changed between gatsby runs`, () => {
+describe(`Some plugins changed between gatsby runs`, () => {
   let states
 
   beforeAll(() => {
@@ -251,7 +251,45 @@ describe(`some plugins changed between gatsby runs`, () => {
     })
 
     describe(`Source plugins with transformers (child nodes)`, () => {
+      describe(`Changes to source plugins`, () => {
+        it(`Adding source plugin cause transformers to create child nodes`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-child-nodes/source-added/scenario`)
+
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
+
+        it(`Removing source plugin invalidate nodes owned by it and all children nodes`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-child-nodes/source-removed/scenario`)
+
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
+
+        it(`Changing source plugin invalidate nodes owned by it and all children nodes and recreates all nodes`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-child-nodes/source-changed/scenario`)
+
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
+      })
+
       describe(`Changes to transformer plugins`, () => {
+        it(`Adding transformer adds child nodes to existing nodes`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-child-nodes/transformer-added/scenario`)
+
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
+
         it(`Removing transformer clear nodes owned by it and remove children from parent nodes`, () => {
           const {
             plugins,
@@ -369,4 +407,8 @@ describe(`some plugins changed between gatsby runs`, () => {
       )
     })
   })
+
+  it.todo(`Query results`)
+
+  it.todo(`Jobs`)
 })

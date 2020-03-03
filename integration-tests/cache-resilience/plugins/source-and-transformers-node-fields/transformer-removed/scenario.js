@@ -1,3 +1,5 @@
+const _ = require(`lodash`)
+
 const SOURCE_PLUGIN_NAME = `source-and-transformers-node-fields/transformer-removed/gatsby-source`
 const TRANSFORMER_PLUGIN_NAME = `source-and-transformers-node-fields/transformer-removed/gatsby-transformer`
 const plugins = [SOURCE_PLUGIN_NAME, TRANSFORMER_PLUGIN_NAME]
@@ -73,31 +75,10 @@ const nodesTest = ({
     expect(
       diff.changes[`parent_childDeletionForFields`].oldValue
     ).toHaveProperty(`fields`, { foo: `bar` })
+
     expect(
-      diff.changes[`parent_childDeletionForFields`].newValue
-    ).toHaveProperty(`fields`, {})
-    expect(diff.changes[`parent_childDeletionForFields`].diff)
-      .toMatchInlineSnapshot(`
-      "  Object {
-          \\"children\\": Array [],
-      -   \\"fields\\": Object {
-      -     \\"foo\\": \\"bar\\",
-      -   },
-      +   \\"fields\\": Object {},
-          \\"foo\\": \\"bar\\",
-          \\"id\\": \\"parent_childDeletionForFields\\",
-          \\"internal\\": Object {
-            \\"contentDigest\\": \\"2cc1ab4c3453055e4ee10c4105fba64c\\",
-      -     \\"fieldOwners\\": Object {
-      -       \\"foo\\": \\"source-and-transformers-node-fields/transformer-removed/gatsby-transformer\\",
-      -     },
-      +     \\"fieldOwners\\": Object {},
-            \\"owner\\": \\"source-and-transformers-node-fields/transformer-removed/gatsby-source\\",
-            \\"type\\": \\"Parent_ChildDeletionForFields\\",
-          },
-          \\"parent\\": null,
-        }"
-    `)
+      _.isEmpty(diff.changes[`parent_childDeletionForFields`].newValue.fields)
+    ).toBe(true)
   }
 }
 
