@@ -610,7 +610,10 @@ module.exports = async ({
     }
   ) => new OptimizeCssAssetsPlugin(options)
 
-  plugins.fastRefresh = () => new ReactRefreshWebpackPlugin()
+  plugins.fastRefresh = () =>
+    new ReactRefreshWebpackPlugin({
+      disableRefreshCheck: true,
+    })
 
   /**
    * Extracts css requires into a single file;
