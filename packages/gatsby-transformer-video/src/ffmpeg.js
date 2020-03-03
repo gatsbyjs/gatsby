@@ -21,7 +21,6 @@ import profileGif from "./profiles/gif"
 export default class FFMPEG {
   constructor({ rootDir, cacheDir, ffmpegPath, ffprobePath, profiles }) {
     this.queue = new PQueue({ concurrency: 1 })
-    this.downloadQueue = new PQueue({ concurrency: 2 })
     this.cacheDir = cacheDir
     this.rootDir = rootDir
     this.profiles = profiles
@@ -107,7 +106,7 @@ export default class FFMPEG {
       const { ext } = parse(fileName)
 
       // Download video from Contentful for further processing
-      const fileNode = await this.downloadQueue.add(() =>
+      const fileNode = await this.queue.add(() =>
         createRemoteFileNode({
           url: `https:${url}`,
           store,
