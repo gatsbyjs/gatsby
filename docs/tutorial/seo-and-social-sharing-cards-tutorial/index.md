@@ -582,11 +582,11 @@ This tutorial is merely a shallow dive into the depths of SEO. Consider it a pri
 - Check out the [`gatsby-seo-example`][gatsby-seo-example] for a ready-to-use starter for powering your Markdown-based blog.
 
 [gatsby-starter-default]: https://github.com/gatsbyjs/gatsby-starter-default
-[gatsby-static-query]: https://www.gatsbyjs.org/docs/static-query/
-[gatsby-markdown-blog]: https://www.gatsbyjs.org/docs/adding-markdown-pages/
-[gatsby-plugin-react-helmet]: https://www.gatsbyjs.org/packages/gatsby-plugin-react-helmet/
+[gatsby-static-query]: /docs/static-query/
+[gatsby-markdown-blog]: /docs/adding-markdown-pages/
+[gatsby-plugin-react-helmet]: /packages/gatsby-plugin-react-helmet/
 [react-helmet]: https://github.com/nfl/react-helmet
-[unstructured-data]: https://www.gatsbyjs.org/docs/using-unstructured-data/
+[unstructured-data]: /docs/using-unstructured-data/
 [og]: https://developers.facebook.com/docs/sharing/webmasters/#markup
 [twitter-cards]: https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards.html
 [seo-description-length]: https://yoast.com/shorter-meta-descriptions/
