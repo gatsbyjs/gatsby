@@ -7,9 +7,11 @@ jest.mock(`fs-extra`, () => {
             cb()
           }
         }),
+        close: jest.fn(),
       }
     }),
     ensureDir: jest.fn(),
+    removeSync: jest.fn(),
     move: jest.fn(),
     stat: jest.fn(),
   }
@@ -213,6 +215,40 @@ describe(`create-remote-file-node`, () => {
             )
           )
         }
+      })
+
+      it(`retries if stalled`, done => {
+        const fs = require(`fs-extra`)
+
+        fs.createWriteStream.mockReturnValue({
+          on: jest.fn(),
+          close: jest.fn(),
+        })
+        jest.useFakeTimers()
+        got.stream.mockReset()
+        got.stream.mockReturnValueOnce({
+          pipe: jest.fn(() => {
+            return {
+              pipe: jest.fn(),
+              on: jest.fn(),
+            }
+          }),
+          on: jest.fn((mockType, mockCallback) => {
+            if (mockType === `response`) {
+              mockCallback({ statusCode: 200 })
+
+              expect(got.stream).toHaveBeenCalledTimes(1)
+              jest.advanceTimersByTime(1000)
+              expect(got.stream).toHaveBeenCalledTimes(1)
+              jest.advanceTimersByTime(30000)
+
+              expect(got.stream).toHaveBeenCalledTimes(2)
+              done()
+            }
+          }),
+        })
+        setup()
+        jest.runAllTimers()
       })
     })
   })

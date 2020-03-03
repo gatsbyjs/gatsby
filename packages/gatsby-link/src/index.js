@@ -187,6 +187,7 @@ GatsbyLink.propTypes = {
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
   replace: PropTypes.bool,
+  state: PropTypes.object,
 }
 
 const showDeprecationWarning = (functionName, altFunctionName, version) =>

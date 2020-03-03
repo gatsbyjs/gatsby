@@ -7,7 +7,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Avatar from "../avatar"
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const HomepageBlogPostRoot = styled(
   HorizontalScrollerItem.withComponent(`article`)
@@ -54,7 +54,7 @@ const HomepageBlogPostRoot = styled(
 `
 
 const Cover = styled(Img)`
-  border-radius: ${p => p.theme.radii[2]}px ${p => p.theme.radii[2]}px 0 0;
+  border-radius: ${p => p.theme.radii[2]} ${p => p.theme.radii[2]} 0 0;
   display: block;
   margin-bottom: -${p => p.theme.space[3]};
 `
@@ -188,10 +188,8 @@ const HomepageBlogPost = ({
   desktopViewport = false,
 }) => {
   const {
-    excerpt: automaticExcerpt,
-    fields: { slug },
+    fields: { slug, excerpt },
     frontmatter: {
-      excerpt: handwrittenExcerpt,
       author: {
         id: authorName,
         avatar: {
@@ -204,8 +202,6 @@ const HomepageBlogPost = ({
       cover,
     },
   } = post
-
-  const excerpt = handwrittenExcerpt ? handwrittenExcerpt : automaticExcerpt
 
   return (
     <HomepageBlogPostRoot fullWidth={fullWidth}>
