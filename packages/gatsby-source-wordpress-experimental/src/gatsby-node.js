@@ -2,17 +2,19 @@ import { runApisInSteps } from "~/utils/run-steps"
 import * as steps from "~/steps/index"
 
 module.exports = runApisInSteps({
-  sourceNodes: [
+  createSchemaCustomization: [
     steps.setGatsbyApiToState,
     steps.ensurePluginRequirementsAreMet,
     steps.ingestRemoteSchema,
+    steps.createSchemaCustomization,
+  ],
+
+  sourceNodes: [
     steps.persistPreviouslyCachedImages,
     steps.createContentTypeNodes,
     steps.sourceNodes,
     steps.setImageNodeIdCache,
   ],
-
-  createSchemaCustomization: [steps.createSchemaCustomization],
 
   onPostBuild: [steps.setImageNodeIdCache],
 
