@@ -9,11 +9,7 @@ module.exports = runApisInSteps({
     steps.persistPreviouslyCachedImages,
   ],
 
-  sourceNodes: [
-    steps.checkIfSchemaHasChanged,
-    steps.createContentTypeNodes,
-    steps.sourceNodes,
-  ],
+  sourceNodes: [steps.createContentTypeNodes, steps.sourceNodes],
 
   createSchemaCustomization: [steps.createSchemaCustomization],
 
