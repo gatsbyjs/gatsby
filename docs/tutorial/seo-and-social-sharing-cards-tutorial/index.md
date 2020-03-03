@@ -586,7 +586,7 @@ This tutorial is merely a shallow dive into the depths of SEO. Consider it a pri
 [gatsby-markdown-blog]: /docs/adding-markdown-pages/
 [gatsby-plugin-react-helmet]: /packages/gatsby-plugin-react-helmet/
 [react-helmet]: https://github.com/nfl/react-helmet
-[unstructured-data]: /docs/using-unstructured-data/
+[unstructured-data]: /docs/using-gatsby-without-graphql/
 [og]: https://developers.facebook.com/docs/sharing/webmasters/#markup
 [twitter-cards]: https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards.html
 [seo-description-length]: https://yoast.com/shorter-meta-descriptions/
