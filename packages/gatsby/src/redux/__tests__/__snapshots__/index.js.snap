@@ -82,6 +82,7 @@ Object {
       },
     },
   },
+  "pageData": Map {},
   "pageDataStats": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
