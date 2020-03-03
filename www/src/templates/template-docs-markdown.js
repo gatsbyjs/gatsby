@@ -96,7 +96,11 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
                 },
               }}
             >
-              <TableOfContents toc={toc} location={location} page={page} />
+              <TableOfContents
+                items={toc}
+                location={location}
+                depth={page.frontmatter.tableOfContentsDepth}
+              />
             </div>
           )}
           <div

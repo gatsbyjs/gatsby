@@ -91,9 +91,9 @@ function createItems(items, location, depth, maxDepth, activeHash, isDesktop) {
   )
 }
 
-function TableOfContents({ page, toc, location }) {
+function TableOfContents({ items, depth, location }) {
   const [isDesktop, setIsDesktop] = useState(false)
-  const activeHash = useActiveHash(getHeadingIds(toc))
+  const activeHash = useActiveHash(getHeadingIds(items))
 
   useEffect(() => {
     const isDesktopQuery = window.matchMedia(`(min-width: ${breakpoints[4]})`) // 1200px
@@ -105,7 +105,7 @@ function TableOfContents({ page, toc, location }) {
     return () => isDesktopQuery.removeListener(updateIsDesktop)
   }, [])
 
-  return page.tableOfContents.items ? (
+  return items ? (
     <nav
       sx={{
         mb: [8, null, null, null, null, 0],
@@ -137,14 +137,7 @@ function TableOfContents({ page, toc, location }) {
           m: 0,
         }}
       >
-        {createItems(
-          page.tableOfContents.items,
-          location,
-          1,
-          page.frontmatter.tableOfContentsDepth,
-          activeHash,
-          isDesktop
-        )}
+        {createItems(items, location, 1, depth, activeHash, isDesktop)}
       </ul>
     </nav>
   ) : null
