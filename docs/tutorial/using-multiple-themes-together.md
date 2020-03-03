@@ -57,7 +57,7 @@ module.exports = {
         url: `https://twitter.com/gatsbyjs`,
       },
       {
-        name: `Github`,
+        name: `GitHub`,
         url: `https://github.com/gatsbyjs`,
       },
     ],
