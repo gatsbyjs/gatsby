@@ -69,23 +69,48 @@ describe(`gatsby-source-wordpress-experimental`, () => {
           translations {
             title
           }
+          acfPageFields {
+            flex {
+              __typename
+              ... on WpPage_Acfpagefields_Flex_Header {
+                header
+              }
+              ... on WpPage_Acfpagefields_Flex_TeamMembers {
+                teamMembers {
+                  teamMember {
+                    __typename
+                    ... on WpTeamMember {
+                      acfData {
+                        name
+                        title
+                        twitterlink {
+                          target
+                          title
+                          url
+                        }
+                        webSite {
+                          target
+                          title
+                          url
+                        }
+                        portrait {
+                          sourceUrl
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
       allWpPost {
         nodes {
           title
-          acfPageContent {
-            fieldGroupName
-            modules {
-              __typename
-              ... on WpPost_Acfpagecontent_Modules_Hero {
-                fieldGroupName
-                headline
-                image {
-                  uri
-                }
-              }
-            }
+          featuredImage {
+            altText
+            sourceUrl
           }
           author {
             avatar {
