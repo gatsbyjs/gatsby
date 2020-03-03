@@ -73,12 +73,12 @@ Here’s a list of what they love about Gatsby:
 - _Hot reloading_ gives them instant visual feedback like they get in Illustrator and Photoshop
 - _Coding in React_ is fun. By fun, they mean it's easy to add modules, don’t have to build everything from scratch, and they already knew enough about creating React components from Phil’s teaching to jump into Gatsby
 
-- _Docs:_ While not perfect, the Gatsby tutorial and documentation. was “approachable”
-- _Speed_: They never heard of static site generators or the JAMstack, but the speed immediately impressed them
-- _Built off previous knowledge:_ They were able to use the routing knowledge they gleaned from NextJS
-- _Uses simple commands:_ They work locally and type `$ npm run develop`. A server opens up and they see and can edit their site in real time. Easy peasy. They want to build for production they use `$ gatsby build && gatsby serve`. Simple!
-- _Netlify:_ When I showed them Netlify and how they could quickly (and freely) push their site to GitHub and hook it up to Netlify so that it would automatically build it and make their site live! They were blown away.
-- _Fast to build:_ They were able to create their final projects in 3 weeks
+* _Docs:_ While not perfect, the Gatsby tutorial and documentation. was “approachable”
+* _Speed_: They never heard of static site generators or the JAMstack, but the speed immediately impressed them
+* _Built off previous knowledge:_ They were able to use the routing knowledge they gleaned from NextJS
+* _Uses simple commands:_ They work locally and type `$ npm run develop`. A server opens up and they see and can edit their site in real time. Easy peasy. They want to build for production they use `$ gatsby build && gatsby serve`. Simple!
+* _Netlify:_ When I showed them Netlify and how they could quickly (and freely) push their site to GitHub and hook it up to Netlify so that it would automatically build it and make their site live! They were blown away.
+* _Fast to build:_ They were able to create their final projects in 3 weeks
 
 ### Anything they didn’t like?
 

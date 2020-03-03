@@ -32,6 +32,9 @@ giving you complete control of your site's styles.
 
 Huge thanks to our own [Amberley Romo][] & [John Otander][] for their incredible work on these themes.
 
+[amberley romo]: https://mobile.twitter.com/amber1ey
+[john otander]: https://mobile.twitter.com/4lpine
+
 ## Theme UI
 
 To enable this level of style customization,
@@ -133,5 +136,3 @@ and to learn more about using the official Gatsby themes, see our [documentation
 [styled system]: https://styled-system.com
 [theme specification]: https://github.com/system-ui/theme-specification
 [emotion]: https://emotion.sh/
-[amberley romo]: https://mobile.twitter.com/amber1ey
-[john otander]: https://mobile.twitter.com/4lpine

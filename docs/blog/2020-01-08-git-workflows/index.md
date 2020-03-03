@@ -84,9 +84,9 @@ Our `pt1` PR is approved (🎉), but now we have to reconcile our `pt2` branch. 
 
 We check out the `pt2` branch and rebase it onto the updated `pt1` branch:
 
-```shell
-git checkout feat/headless-cms-pt2
-git rebase feat/headless-cms-pt1
+```bash
+$ git checkout feat/headless-cms-pt2
+$ git rebase feat/headless-cms-pt1
 ```
 
 If you're not familiar with rebasing, it's an alternative to merging that involves "replaying" commits over a different branch. This can be a weird idea for folks who are used to merging, and it takes most people a bit of practice to get comfortable with it. You can learn more about rebasing in [this article from Algolia](https://blog.algolia.com/master-git-rebase/).
@@ -103,12 +103,12 @@ In this alternative flow, we're _leveraging_ Git to show us what work needs to b
 
 Once we've fixed all the conflicts, we can finish up our rebase by running the following:
 
-```shell
+```bash
 # stage all the changes we just made
-git add .
+$ git add .
 
 # wrap up the rebase
-git rebase --continue
+$ git rebase --continue
 ```
 
 After rebasing, our Git branches look like this:
@@ -127,8 +127,8 @@ You'll notice that our `C` commit—the only commit in our `pt2` branch—has be
 
 Because we've rewritten the history, by turning `C` into `E`, we need to force-push to update our PR on GitHub:
 
-```shell
-git push origin feat/headless-cms-pt2 -f
+```bash
+$ git push origin feat/headless-cms-pt2 -f
 ```
 
 ### Merging PRs
@@ -226,9 +226,9 @@ The Git history pollution isn't a huge deal, since we'll have the chance to squa
 
 If you do wind up squash-merging a branch, you'll need to manually snip out the duplicate commits. You can do this with an [interactive rebase](https://hackernoon.com/beginners-guide-to-interactive-rebasing-346a3f9c3a6d):
 
-```shell
-git checkout feat/headless-cms-pt2
-git rebase -i feat/headless-cms
+```bash
+$ git checkout feat/headless-cms-pt2
+$ git rebase -i feat/headless-cms
 # A popup will open, presenting you with a list of commits.
 # Delete the lines that contain work covered by the squashed
 # commit. Save and close the file.
@@ -240,18 +240,18 @@ The work we're doing in this example to migrate to a headless CMS might take a w
 
 To accomplish this, we'll do some more local rebasing:
 
-```shell
+```bash
 # Update our local state
-git checkout master
-git pull origin master
+$ git checkout master
+$ git pull origin master
 
 # Rebase our root branch
-git checkout feat/headless-cms
-git rebase master
+$ git checkout feat/headless-cms
+$ git rebase master
 
 # Continue down the chain
-git checkout feat/headless-cms-pt2
-git rebase feat/headless-cms
+$ git checkout feat/headless-cms-pt2
+$ git rebase feat/headless-cms
 ```
 
 Essentially, we're scooting all of our changes to happen _after_ the most recent commit on master. It's important to rebase instead of merge so that we don't "interleave" the changes from other branches—we're keeping all of our work tightly clustered for now. This can be a bit tedious if you have lots of incremental branches, so you may wish to hold off on this until you've merged everything into the root branch.
