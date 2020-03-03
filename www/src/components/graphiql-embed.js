@@ -30,8 +30,8 @@ const GraphiQLEmbed = ({ title, url, query }) => {
       src={`${url}?query=${encodedQuery}&explorerIsOpen=false`}
       width={iframeWidth}
       height={iframeWidth * VIDEO_RATIO}
-      lazy="true"
-    ></iframe>
+      loading="lazy"
+    />
   )
 }
 
