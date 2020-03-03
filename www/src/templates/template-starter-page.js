@@ -60,7 +60,6 @@ class StarterTemplate extends React.Component {
           title={`${repoName}: Gatsby Starter`}
           image={screenshot.childImageSharp.fluid}
           description={`Gatsby Starters: ${repoName}`}
-          timeToRead={1}
         />
         <div css={{ width: `100%` }}>
           <StarterHeader stub={starterShowcase.stub} />

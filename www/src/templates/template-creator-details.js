@@ -68,7 +68,10 @@ class CreatorTemplate extends Component {
 
     return (
       <React.Fragment>
-        <PageMetadata title={`${creator.name} - Creator`} />
+        <PageMetadata
+          title={`${creator.name} - Creator`}
+          description={creator.description}
+        />
         <CreatorsHeader submissionText="Add Yourself" />
         <main
           role="main"
@@ -217,8 +220,8 @@ class CreatorTemplate extends Component {
                       <Img
                         alt={`${site.title}`}
                         fixed={
-                          site.childScreenshot.screenshotFile
-                            .childImageSharp.fixed
+                          site.childScreenshot.screenshotFile.childImageSharp
+                            .fixed
                         }
                       />
                     </Link>
