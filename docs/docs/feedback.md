@@ -6,4 +6,4 @@ Gatsby users will be prompted every 3 months (at the most) to give feedback to G
 
 ## How to opt-out
 
-Users may always opt-out from the feedback prompts with `gatsby feedback --disable` or setting the environment variable `GATSBY_TELEMETRY_DISABLED` to `1`
+Users may always opt-out from the feedback prompts with `gatsby feedback --disable` or by setting the environment variable `GATSBY_TELEMETRY_DISABLED` to `1`
