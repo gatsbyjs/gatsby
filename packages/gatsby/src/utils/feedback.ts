@@ -71,7 +71,15 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
 
   // Heuristic 5
   const versionPoints = getGatsbyVersion().split(`.`)
-  const latestVersionPoints = (await latestVersion(`gatsby`)).split(`.`)
+  let latestVersionPoints: string[] = []
+  try {
+    latestVersionPoints = (await latestVersion(`gatsby`)).split(`.`)
+  } catch (e) {
+    // do nothing.
+    // if the request fails, then we should just not show the feedback request
+    // because this in theory could happen often and we don't want to be spammy.
+    // In this case, we are guaranteed to have `versionsMatchOnMajorAndMinor` === false
+  }
 
   // Since we push versions very frequently. So thinking that users will
   // be on the latest patch is potentially unrealistic. So we are just
