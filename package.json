@@ -30,7 +30,6 @@
     "eslint-plugin-flowtype": "^3.13.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-mdx": "^1.6.8",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.17.0",
     "fs-extra": "^8.1.0",
