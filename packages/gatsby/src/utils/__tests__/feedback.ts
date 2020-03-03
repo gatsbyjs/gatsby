@@ -3,7 +3,7 @@ import {
   setFeedbackDisabledValue,
   userPassesFeedbackRequestHeuristic,
 } from "../feedback"
-jest.mock("date-fns/get_day_of_year", () => () => {
+jest.mock(`date-fns/get_day_of_year`, (): (() => number) => (): number => {
   // This is required for Hueristic 1 to always match up
   // When Math.random returns 1 (mocked in the `clearStateToAllowHeuristicsToPass` fn)
   const currentQuarter = Math.floor((new Date().getMonth() + 3) / 3)
@@ -16,7 +16,9 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
-jest.mock(`latest-version`, () => () => Promise.resolve(`2.1.1`))
+jest.mock(`latest-version`, (): (() => string) => (): string =>
+  Promise.resolve(`2.1.1`)
+)
 
 const dateFromSixMonthsAgo = new Date()
 dateFromSixMonthsAgo.setMonth(dateFromSixMonthsAgo.getMonth() - 6)
@@ -26,7 +28,7 @@ const mathRandom = Math.random
 // checks all pass. This is to be used to make sure an individual
 // test truly only gets triggered by the state manipulations
 // that exist within that test.
-const clearStateToAllowHeuristicsToPass = () => {
+const clearStateToAllowHeuristicsToPass = (): void => {
   // Heuristic 1
   Math.random = jest.fn(() => 1)
   // Heuristic 2
