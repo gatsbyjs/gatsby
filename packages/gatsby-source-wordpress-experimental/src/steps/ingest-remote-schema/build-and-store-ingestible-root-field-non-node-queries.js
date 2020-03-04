@@ -22,32 +22,50 @@ const buildNonNodeQueries = async () => {
     const type =
       typeMap.get(field.type.name) || typeMap.get(field.type.ofType.name)
 
-    const typeSettings = getTypeSettingsByType(type)
+    const typeSettings = type ? getTypeSettingsByType(type) : {}
 
     if (typeSettings.exclude) {
       continue
     }
 
-    // recursively transform fields
-    const transformedFields = recursivelyTransformFields({
-      fields: type.fields,
-    })
-
     let selectionSet
 
-    if (transformedFields) {
-      const fieldSelectionSet = buildSelectionSet(transformedFields)
+    // @todo determine and add cases for other types of
+    // root fields that have no inner selection set.
+    // this logic is already in query building elsewhere.
+    // So perhaps use it here as well?
+    const hasNoInnerSelectionSet =
+      field.type &&
+      field.type.kind === `LIST` &&
+      field.type.ofType &&
+      field.type.ofType.kind === `NON_NULL`
 
-      selectionSet = `
+    const hasInnerSelectionSet = !hasNoInnerSelectionSet
+
+    if (hasNoInnerSelectionSet) {
+      selectionSet = field.name
+    } else if (hasInnerSelectionSet) {
+      // recursively transform fields
+      const transformedFields = recursivelyTransformFields({
+        fields: type.fields,
+      })
+
+      if (transformedFields) {
+        const fieldSelectionSet = buildSelectionSet(transformedFields)
+
+        selectionSet = `
         ${field.name} {
           ${fieldSelectionSet}
         }
     `
-    } else {
-      selectionSet = field.name
+      } else {
+        selectionSet = field.name
+      }
     }
 
-    selectionSets.push(selectionSet)
+    if (selectionSet) {
+      selectionSets.push(selectionSet)
+    }
   }
 
   const nonNodeQuery = `

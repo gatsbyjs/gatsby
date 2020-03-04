@@ -59,6 +59,10 @@ export const typeIsASupportedScalar = type => {
 
 // retrieves plugin settings for the provided type
 export const getTypeSettingsByType = type => {
+  if (!type) {
+    return {}
+  }
+
   const typeSettings = store.getState().gatsbyApi.pluginOptions.type
 
   if (typeSettings[type.name]) {
