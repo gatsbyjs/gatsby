@@ -58,8 +58,8 @@ class StarterTemplate extends React.Component {
       >
         <PageMetadata
           title={`${repoName}: Gatsby Starter`}
-          image={screenshot.childImageSharp.fluid}
           description={`Gatsby Starters: ${repoName}`}
+          image={screenshot.childImageSharp.fluid}
         />
         <div css={{ width: `100%` }}>
           <StarterHeader stub={starterShowcase.stub} />

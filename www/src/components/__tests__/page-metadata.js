@@ -1,6 +1,6 @@
 jest.mock("../../hooks/use-site-metadata", () => {
   return () => {
-    return { siteUrl: "https://gatsbyjs.org" }
+    return { siteUrl: "https://www.gatsbyjs.org" }
   }
 })
 
@@ -60,7 +60,7 @@ it("generates an og:image if an image prop is provided", () => {
   const contents = Helmet.peek()
   expect(contents.metaTags).toContainEqual({
     property: "og:image",
-    content: "https://gatsbyjs.org/assets/gatsby-logo.png",
+    content: "https://www.gatsbyjs.org/assets/gatsby-logo.png",
   })
 })
 
