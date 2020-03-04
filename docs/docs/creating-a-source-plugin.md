@@ -22,7 +22,7 @@ At a high-level, a source plugin:
 
 A source plugin is a regular NPM package. It has a `package.json` file with optional
 dependencies as well as a [`gatsby-node.js`](/docs/api-files-gatsby-node) file where you implement Gatsby's [Node
-APIs](/docs/node-apis/). Read more about [Files Gatsby Looks for in a Plugin](/docs/files-gatsby-looks-for-in-a-plugin/).
+APIs](/docs/node-apis/). Read more about [Files Gatsby Looks for in a Plugin](/docs/creating-a-generic-plugin/).
 
 Gatsby's minimum supported Node.js version is Node 8 and as it's common to want to use more modern Node.js and JavaScript syntax, many plugins write code in a
 source directory and compile the code. All plugins maintained in the Gatsby repo

@@ -381,7 +381,7 @@ Using a plugin:
 
 Creating a plugin:
 - Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin/)
-- Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)
+- Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/creating-a-generic-plugin/)
 - Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin/)
 - Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
 - Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)

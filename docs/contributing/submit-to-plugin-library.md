@@ -7,7 +7,7 @@ title: Submit to Plugin Library
 In order to add your plugin to the [Plugin Library](/plugins/), you need to:
 
 1.  Publish a package to npm (learn how on the [npm docs](https://docs.npmjs.com/getting-started/publishing-npm-packages)).
-2.  Include the [required files](/docs/files-gatsby-looks-for-in-a-plugin/) in your plugin code.
+2.  Include the [required files](/docs/creating-a-generic-plugin/) in your plugin code.
 3.  **Include a `keywords` field** in your plugin's `package.json`, containing `gatsby` and `gatsby-plugin`. If your plugin is a theme, please also include `gatsby-theme`.
 4.  Document your plugin with a README, there is a [plugin template](/contributing/docs-templates/#plugin-readme-template) available to be used as reference.
 
