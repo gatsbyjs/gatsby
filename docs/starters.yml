@@ -4082,7 +4082,7 @@
     - Language:TypeScript
     - PWA
   features:
-    - Minumum changes based on default starter template for TypeScript and PWA
+    - Minimum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
     - Support GitHub Actions CI/CD workflow (beta)
 - url: https://iceberg-gatsby-multilang.netlify.com/
@@ -4249,7 +4249,7 @@
     - StyleLint for Scss linting and formatting
     - Jest for a test framework
     - Enzyme for testing with React
-    - Husky for git hooks, particularlly precommit management
+    - Husky for git hooks, particularly precommit management
     - Lint Staged to run commands only on staged files
 - url: https://martin2844.github.io/gatsby-starter-dev-portfolio/
   repo: https://github.com/martin2844/gatsby-starter-dev-portfolio
@@ -4470,7 +4470,7 @@
     - Netlify
   features:
     - Type Checking With TypeScript
-    - Powerfull Linting With ESLint
+    - Powerful Linting With ESLint
 - url: https://gatsby-typescript-tailwind.netlify.com/
   repo: https://github.com/impulse/gatsby-typescript-tailwind
   description: Gatsby starter with TypeScript and Tailwind CSS
@@ -4976,12 +4976,12 @@
     - PWA
     - TypeScript
     - Absolute import
-    - Usefull ready made custom hooks
+    - Useful ready made custom hooks
     - Ready made form component for Netlify form
     - Global CSS component and Reset CSS component
     - Advanced SEO components(ex. default twitter ogp image, sitemaps, robot.txt)
     - Prettier, ESLint
-    - unstated-next(usefull easy state library)
+    - unstated-next(useful easy state library)
 - url: https://gatsby-typescript-emotion-storybook.netlify.com/
   repo: https://github.com/duncanleung/gatsby-typescript-emotion-storybook
   description: Config for TypeScript + Emotion + Storybook + React Intl + SVGR + Jest.

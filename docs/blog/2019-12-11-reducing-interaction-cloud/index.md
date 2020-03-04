@@ -58,7 +58,7 @@ In this first screenshot, the user selects a starter.
 Next, the user logs into GitHub and give Gatsby Cloud permission to connect with their personal GitHub account.
 ![Screenshot of the Gatsby Cloud login page with a thought bubble the author drew on top of the screenshot. The thought bubble contains the text “Alright, I can sign in with Git Hub. I have an account!”](cloud-login-400.png)
 
-### Unecessary interaction: user adds new GitHub organization
+### Unnecessary interaction: user adds new GitHub organization
 
 Then, this screen asks them to “add new organization.” This is where the software failed to learn from recent history. The user just gave the system access to their personal GitHub account, so that the last value they gave the system and we ought to stick with that value.
 
