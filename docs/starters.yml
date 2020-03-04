@@ -5464,3 +5464,28 @@
     - Side Drawer
     - Sidebar
     - Navbar
+- url: https://gatsby-simple-blog-with-asciidoctor-demo.netlify.com
+  repo: https://github.com/hitsuji-no-shippo/gatsby-simple-blog-with-asciidoctor
+  description: A Gatsby blog with Asciidoctor. Forked from thundermiracle/gatsby-simple-blog.
+  tags:
+    - Blog
+    - i18n
+    - Netlify
+    - Disqus
+    - RSS
+    - SEO
+    - Linting
+    - Testing
+  features:
+    - Asciidoc support
+    - Easily Configurable
+    - Tags
+    - Edit on GitHub
+    - i18n
+    - SEO
+    - Light and Dark themes
+    - Google Analytics
+    - RSS
+    - Disqus
+    - Breadcrumbs
+    - ESLint
