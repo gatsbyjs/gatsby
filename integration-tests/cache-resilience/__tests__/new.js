@@ -9,6 +9,7 @@ const {
 } = require(`../utils/constants`)
 const { selectConfiguration } = require(`../utils/select-configuration`)
 const { loadState } = require(`../utils/load-state`)
+const { diff } = require(`../utils/nodes-diff`)
 
 const getNodesSubStateByPlugins = (state, pluginNamesArray) =>
   _.mapValues(state.nodes, stateShard => {
@@ -405,12 +406,21 @@ describe(`Some plugins changed between gatsby runs`, () => {
         secondRun: states.queryResults.secondRun[scenarioName],
       }
 
+      result.diff = diff(result.firstRun, result.secondRun)
+
       return result
     }
 
     describe(`Source plugins without transformers`, () => {
       it(`Not changing plugin doesn't change query results`, () => {
         const scenarioName = `source/no-changes`
+        const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+        queriesTest(getQueryResultTestArgs(scenarioName))
+      })
+
+      it(`Changing plugin invalidates query results`, () => {
+        const scenarioName = `source/plugin-changed`
         const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
 
         queriesTest(getQueryResultTestArgs(scenarioName))

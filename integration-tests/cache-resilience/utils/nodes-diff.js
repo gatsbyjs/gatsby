@@ -7,6 +7,14 @@ const reduceArrayToObject = array =>
     return accumulator
   }, {})
 
+const diff = (oldValue, newValue) =>
+  snapshotDiff(oldValue, newValue, {
+    expand: true,
+  })
+    .split(`\n`)
+    .slice(4)
+    .join(`\n`)
+
 const compareState = (oldState, newState) => {
   let additions = _.differenceWith(
     Array.from(newState.values()),
@@ -32,12 +40,7 @@ const compareState = (oldState, newState) => {
       id,
       oldValue,
       newValue,
-      diff: snapshotDiff(oldValue, newValue, {
-        expand: true,
-      })
-        .split(`\n`)
-        .slice(4)
-        .join(`\n`),
+      diff: diff(oldValue, newValue),
     }
   })
 
@@ -63,4 +66,5 @@ const compareState = (oldState, newState) => {
 
 module.exports = {
   compareState,
+  diff,
 }

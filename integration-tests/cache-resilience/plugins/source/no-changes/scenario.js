@@ -66,9 +66,7 @@ const queriesFixtures = [
   },
 ]
 
-const queriesTest = ({ firstRun, secondRun, diff }) => {
-  console.log({ firstRun, secondRun, diff })
-
+const queriesTest = ({ firstRun, secondRun }) => {
   expect(firstRun).toMatchInlineSnapshot(`
     Object {
       "allIndependentStable": Object {

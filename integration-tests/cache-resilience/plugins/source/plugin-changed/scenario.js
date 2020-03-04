@@ -59,9 +59,56 @@ const nodesTest = ({
     `)
   }
 }
+const graphql = require(`lodash/head`)
+
+const queriesFixtures = [
+  {
+    runs: [1, 2],
+    query: graphql`
+      {
+        allIndependentChanging {
+          nodes {
+            id
+            foo
+          }
+        }
+      }
+    `,
+  },
+]
+
+const queriesTest = ({ firstRun, diff }) => {
+  expect(firstRun).toMatchInlineSnapshot(`
+    Object {
+      "allIndependentChanging": Object {
+        "nodes": Array [
+          Object {
+            "foo": "bar",
+            "id": "INDEPENDENT_NODE_1",
+          },
+        ],
+      },
+    }
+  `)
+  expect(diff).toMatchInlineSnapshot(`
+    "  Object {
+        \\"allIndependentChanging\\": Object {
+          \\"nodes\\": Array [
+            Object {
+    -         \\"foo\\": \\"bar\\",
+    +         \\"foo\\": \\"baz\\",
+              \\"id\\": \\"INDEPENDENT_NODE_1\\",
+            },
+          ],
+        },
+      }"
+  `)
+}
 
 module.exports = {
   config,
+  queriesFixtures,
+  queriesTest,
   plugins,
   nodesTest,
 }
