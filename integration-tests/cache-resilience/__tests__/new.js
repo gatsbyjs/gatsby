@@ -48,10 +48,6 @@ const build = ({ updatePlugins } = {}) => {
   spawnSync(gatsbyBin, [`clean`], { stdio })
   selectConfiguration(1)
 
-  // const expectedQueryResults = {
-  //   firstRun: expectedResultsFromRun,
-  // }
-
   let processOutput
 
   // First run, get state
@@ -74,10 +70,7 @@ const build = ({ updatePlugins } = {}) => {
   if (updatePlugins) {
     // Invalidations
     selectConfiguration(2)
-    // expectedResultsFromRun = useGatsbyNodeAndConfigAndQuery(2)
   }
-
-  // expectedQueryResults.secondRun = expectedResultsFromRun
 
   // Second run, get state and compare with state from previous run
   processOutput = spawnSync(gatsbyBin, [`build`], {
@@ -112,13 +105,10 @@ const build = ({ updatePlugins } = {}) => {
       postBuildStateFromSecondRun:
         postBuildStateFromSecondRun.diskCacheSnapshot,
     },
-    // queryResults: {
-    //   actual: {
-    //     firstRun: postBuildStateFromFirstRun.queryResults,
-    //     secondRun: postBuildStateFromSecondRun.queryResults,
-    //   },
-    //   expected: expectedQueryResults,
-    // },
+    queryResults: {
+      firstRun: postBuildStateFromFirstRun.queryResults,
+      secondRun: postBuildStateFromSecondRun.queryResults,
+    },
   }
 }
 
@@ -408,7 +398,25 @@ describe(`Some plugins changed between gatsby runs`, () => {
     })
   })
 
-  it.todo(`Query results`)
+  describe(`Query results`, () => {
+    const getQueryResultTestArgs = scenarioName => {
+      const result = {
+        firstRun: states.queryResults.firstRun[scenarioName],
+        secondRun: states.queryResults.secondRun[scenarioName],
+      }
+
+      return result
+    }
+
+    describe(`Source plugins without transformers`, () => {
+      it(`Not changing plugin doesn't change query results`, () => {
+        const scenarioName = `source/no-changes`
+        const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+        queriesTest(getQueryResultTestArgs(scenarioName))
+      })
+    })
+  })
 
   it.todo(`Jobs`)
 })

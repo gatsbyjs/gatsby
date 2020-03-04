@@ -67,7 +67,23 @@ const queriesFixtures = [
 ]
 
 const queriesTest = ({ firstRun, secondRun, diff }) => {
-  expect(firstRun).toMatchInlineSnapshot()
+  console.log({ firstRun, secondRun, diff })
+
+  expect(firstRun).toMatchInlineSnapshot(`
+    Object {
+      "data": Object {
+        "allIndependentStable": Object {
+          "nodes": Array [
+            Object {
+              "foo": "bar",
+              "id": "STABLE_NODE_1",
+            },
+          ],
+        },
+      },
+      "pageContext": Object {},
+    }
+  `)
   expect(firstRun).toEqual(secondRun)
 }
 
