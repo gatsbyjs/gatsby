@@ -5477,6 +5477,7 @@
     - SEO
   features:
     - Userbase for authentication and end-to-end encrypted data management
+    - All user and data APIs (except updateData)
     - Tailwind CSS and SCSS for styling
     - Typescript for easier debugging and development, strict types, etc
     - Netlify for hosting
