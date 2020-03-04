@@ -353,6 +353,15 @@ async function startServer(program: IProgram): Promise<IServer> {
 }
 
 module.exports = async (program: IProgram): Promise<void> => {
+  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
+    report.panic(
+      `The flag ${chalk.yellow(
+        `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
+      )} is not available with ${chalk.cyan(
+        `gatsby develop`
+      )}, please retry using ${chalk.cyan(`gatsby build`)}`
+    )
+  }
   initTracer(program.openTracingConfigFile)
   report.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
@@ -415,7 +424,6 @@ module.exports = async (program: IProgram): Promise<void> => {
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
-
   await db.saveState()
 
   await waitUntilAllJobsComplete()
