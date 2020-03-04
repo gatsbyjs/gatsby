@@ -17,7 +17,7 @@ class CLI extends React.Component {
     hasError: false,
   }
 
-  messages = []
+  memoizedReactElementsForMessages = []
 
   componentDidCatch(error, info) {
     trackBuildError(`INK`, {
@@ -60,10 +60,14 @@ class CLI extends React.Component {
       This will avoid calling React.createElement completely for every message
       that can't change.
     */
-    if (messages.length > this.messages.length) {
-      for (let index = this.messages.length; index < messages.length; index++) {
+    if (messages.length > this.memoizedReactElementsForMessages.length) {
+      for (
+        let index = this.memoizedReactElementsForMessages.length;
+        index < messages.length;
+        index++
+      ) {
         const msg = messages[index]
-        this.messages.push(
+        this.memoizedReactElementsForMessages.push(
           msg.level === `ERROR` ? (
             <Error details={msg} key={index} />
           ) : (
@@ -93,7 +97,7 @@ class CLI extends React.Component {
     return (
       <Box flexDirection="column">
         <Box flexDirection="column">
-          <Static>{this.messages}</Static>
+          <Static>{this.memoizedReactElementsForMessages}</Static>
 
           {spinners.map(activity => (
             <Spinner key={activity.id} {...activity} />
