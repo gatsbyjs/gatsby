@@ -137,7 +137,7 @@ In tutorials that are meant for beginners, use as few hyperlinks as possible to 
 
 ### Use relative hyperlinks for local links
 
-Hyperlinks which point to the same domain should have relative path (not include the domain). This is usefully when you test the build of the website on a local installations or on preview builds from your build system.
+When referencing another page within [gatsbyjs.org](https://www.gatsbyjs.org/) hyperlinks should use relative paths (not include the full domain). This guarantees that all links function when running locally or in preview.
 
 ```markdown
 <!-- Good -->
