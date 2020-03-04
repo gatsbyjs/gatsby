@@ -126,11 +126,11 @@ Hyperlinks should contain the clearest words to indicate where the link will lea
 ```markdown
 <!-- Good -->
 
-[Gatsby's docs](/docs/)
+[Gatsby Cloud](https://www.gatsbyjs.com/cloud/)
 
 <!-- Bad -->
 
-[here](/docs/ "Gatsby's docs")
+[here](https://www.gatsbyjs.com/cloud/ "Gatsby Cloud")
 ```
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
