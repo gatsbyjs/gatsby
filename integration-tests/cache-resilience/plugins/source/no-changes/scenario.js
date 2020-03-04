@@ -48,8 +48,30 @@ const nodesTest = ({
   }
 }
 
+const graphql = require(`lodash/head`)
+
+const queriesTest = [
+  {
+    runs: [1, 2],
+    query: graphql`
+      {
+        allIndependentStable {
+          nodes {
+            id
+            foo
+          }
+        }
+      }
+    `,
+    resultTest: result => {
+      expect(result).toMatchInlineSnapshot()
+    },
+  },
+]
+
 module.exports = {
   config,
+  queriesTest,
   plugins,
   nodesTest,
 }

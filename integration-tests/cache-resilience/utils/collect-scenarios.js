@@ -5,8 +5,14 @@ const path = require(`path`)
 const collectScenarios = () => {
   const scenarios = glob
     .sync(path.join(__dirname, `..`, `plugins`, `**`, `scenario.js`))
+    .map(filename => {
+      const scenarioPath = path.relative(path.join(__dirname, `..`), filename)
 
-    .map(require)
+      return {
+        name: scenarioPath,
+        ...require(filename),
+      }
+    })
 
   return scenarios
 }
@@ -40,15 +46,35 @@ const getAllPlugins = () => {
   return _.uniq(plugins)
 }
 
-const getChangesTests = () => {
-  return collectScenarios()
-    .map(scenario => scenario.changesTests)
-    .filter(Boolean)
+const getQueriesForRun = run => {
+  const queries = {}
+
+  collectScenarios().forEach(scenario => {
+    if (scenario.queriesTest) {
+      const queriesTest = scenario.queriesTest.find(config =>
+        config.runs.includes(run)
+      )
+
+      if (queriesTest) {
+        queries[name] = queriesTest.query
+      }
+    }
+  })
+
+  console.log(queries)
+  return queries
 }
+
+// const getChangesTests = () => {
+//   return collectScenarios()
+//     .map(scenario => scenario.changesTests)
+//     .filter(Boolean)
+// }
 
 module.exports = {
   // collectScenarios,
-  getChangesTests,
+  getQueriesForRun,
+  // getChangesTests,
   getPluginsForRun,
   getAllPlugins,
 }

@@ -58,7 +58,7 @@ const useGatsbyConfig = run => {
   const configPath = path.resolve(
     path.join(__dirname, `..`, `gatsby-config.js`)
   )
-  const configContent = `module.exports = { plugins: ${JSON.stringify(
+  const configContent = `module.exports = { siteMetadata: { run: ${run} }, plugins: ${JSON.stringify(
     plugins
   )}}`
   fs.writeFileSync(configPath, configContent)
