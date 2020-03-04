@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.1.27...gatsby-plugin-typescript@2.2.0) (2020-03-02)
+
+### Features
+
+- **gatsby-plugin-typescript:** Supports linting ([#18721](https://github.com/gatsbyjs/gatsby/issues/18721)) ([d28a0bd](https://github.com/gatsbyjs/gatsby/commit/d28a0bd))
+
 ## [2.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.1.26...gatsby-plugin-typescript@2.1.27) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-typescript

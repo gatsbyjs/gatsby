@@ -30,7 +30,13 @@ So how do you reduce unnecessary interaction?
 
 To reduce interaction, you can infer “as much as possible from history and the environment.” See this full quote below:
 
-<Pullquote>If the software properly infers as much as possible from history and the environment, it should be able to produce at least a reasonable starting point for the context model. Most of the user’s interaction will then consist of correcting (or confirming) the software’s predictions. This is generally less stressful than constructing the entire context from scratch.</Pullquote>
+<Pullquote>
+  If the software properly infers as much as possible from history and the
+  environment, it should be able to produce at least a reasonable starting point
+  for the context model. Most of the user’s interaction will then consist of
+  correcting (or confirming) the software’s predictions. This is generally less
+  stressful than constructing the entire context from scratch.
+</Pullquote>
 
 _Quote from Brett Victor, [“Magic Ink”](http://worrydream.com/MagicInk/#p173)_
 
@@ -52,7 +58,7 @@ In this first screenshot, the user selects a starter.
 Next, the user logs into GitHub and give Gatsby Cloud permission to connect with their personal GitHub account.
 ![Screenshot of the Gatsby Cloud login page with a thought bubble the author drew on top of the screenshot. The thought bubble contains the text “Alright, I can sign in with Git Hub. I have an account!”](cloud-login-400.png)
 
-### Unecessary interaction: user adds new GitHub organization
+### Unnecessary interaction: user adds new GitHub organization
 
 Then, this screen asks them to “add new organization.” This is where the software failed to learn from recent history. The user just gave the system access to their personal GitHub account, so that the last value they gave the system and we ought to stick with that value.
 
