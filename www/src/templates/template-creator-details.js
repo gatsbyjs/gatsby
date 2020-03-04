@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
+import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
-import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
@@ -60,15 +59,15 @@ const MetaSection = ({ children, background, last, first }) => (
 
 class CreatorTemplate extends Component {
   render() {
-    const { data, location } = this.props
+    const { data } = this.props
     const creator = data.creatorsYaml
     const isAgencyOrCompany =
       creator.type === `agency` || creator.type === `company`
 
-    const sites = data.allSitesYaml.edges
+    const sites = data.allSitesYaml.nodes
 
     return (
-      <Layout location={location}>
+      <React.Fragment>
         <Helmet>
           <title>{`${creator.name} - Creator`}</title>
         </Helmet>
@@ -205,7 +204,7 @@ class CreatorTemplate extends Component {
                 >
                   {sites.map(site => (
                     <Link
-                      key={site.node.title}
+                      key={site.title}
                       sx={{
                         "&&": {
                           mr: 6,
@@ -215,12 +214,12 @@ class CreatorTemplate extends Component {
                           transition: `default`,
                         },
                       }}
-                      to={site.node.fields.slug}
+                      to={site.fields.slug}
                     >
                       <Img
-                        alt={`${site.node.title}`}
+                        alt={`${site.title}`}
                         fixed={
-                          site.node.childScreenshot.screenshotFile
+                          site.childScreenshot.screenshotFile
                             .childImageSharp.fixed
                         }
                       />
@@ -232,7 +231,7 @@ class CreatorTemplate extends Component {
           </div>
         </main>
         <FooterLinks />
-      </Layout>
+      </React.Fragment>
     )
   }
 }
@@ -268,22 +267,20 @@ export const pageQuery = graphql`
         fields: { hasScreenshot: { eq: true } }
       }
     ) {
-      edges {
-        node {
-          url
-          title
-          childScreenshot {
-            screenshotFile {
-              childImageSharp {
-                fixed(width: 100, height: 100) {
-                  ...GatsbyImageSharpFixed
-                }
+      nodes {
+        url
+        title
+        childScreenshot {
+          screenshotFile {
+            childImageSharp {
+              fixed(width: 100, height: 100) {
+                ...GatsbyImageSharpFixed
               }
             }
           }
-          fields {
-            slug
-          }
+        }
+        fields {
+          slug
         }
       }
     }
