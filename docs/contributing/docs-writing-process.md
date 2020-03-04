@@ -24,8 +24,6 @@ When identifying a topic, start by:
 
 > _Note: It’s required to open a GitHub issue before submitting a PR if one does not already exist._
 
-See additional ideas and information in [Docs Contributions](/contributing/docs-contributions/).
-
 ## Selecting the correct format
 
 A GitHub issue for new learning material should indicate the format. Is it a Reference or Conceptual Guide? A Tutorial? A recipe?
@@ -74,7 +72,9 @@ Create demo sites and examples to provide more authoritative material that suppo
 
 Follow the [docs templates](/contributing/docs-templates/) to ensure you’re producing content in the right format for its purpose.
 
-Run the docs site locally to check formatting and functionality. There are instructions in the [contributing docs](/contributing/docs-contributions/#docs-site-setup-instructions).
+Use the [Markdown syntax doc](/docs/mdx/markdown-syntax/) to understand your options for formatting text with Markdown, and follow [accessibility recommendations](/docs/making-your-site-accessible/#how-to-improve-accessibility) for [heading levels](/contributing/docs-contributions/#headings) and image alt text.
+
+Run the docs site locally to check formatting and functionality. There are instructions in the [contributing docs](/contributing/docs-contributions/).
 
 Produce images and rich media following a consistent specification, which will be published on this site soon.
 
@@ -87,3 +87,15 @@ When submitting work to fulfill an issue, team members are allowed to request fe
 Submit a pull request that’s tied to a GitHub issue by following the [How to Open a Pull Request guide](/contributing/how-to-open-a-pull-request/).
 
 Apply feedback from pull request reviews in order for them to be accepted. Further instructions can be found in the How to Open a Pull Request guide.
+
+## Reference links
+
+- [Docs Contributions](/contributing/docs-contributions/)
+- [Docs Templates](/contributing/docs-templates/)
+- [How to File an Issue](/contributing/how-to-file-an-issue/)
+- [Gatsby Style Guide](/contributing/gatsby-style-guide/)
+- [Markdown Syntax Doc](/docs/mdx/markdown-syntax/)
+- [Pair Programming](/contributing/pair-programming/)
+- [Blog Post Guidelines](/contributing/blog-contributions/)
+- [Docs site setup instructions](/contributing/docs-contributions/#docs-site-setup-instructions)
+- [How to Open a Pull Request](/contributing/how-to-open-a-pull-request/)
