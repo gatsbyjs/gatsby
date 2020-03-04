@@ -14,12 +14,41 @@ import Avatar from "../components/avatar"
 import PrevAndNext from "../components/prev-and-next"
 import FooterLinks from "../components/shared/footer-links"
 
+/**
+ * Extend page metadata with additional information about article authorship.
+ *
+ * More information:
+ *  - https://ogp.me/#type_article
+ *  - https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/markup
+ */
+export function BlogPostMetadata({ post }) {
+  const { canonicalLink, title, image, author, rawDate } = post.frontmatter
+  return (
+    <PageMetadata
+      title={title}
+      description={post.fields.excerpt}
+      type="article"
+      timeToRead={post.timeToRead}
+      image={image?.childImageSharp.resize}
+    >
+      {/* These are populated when the article is published elsewhere and has a
+      canonical link to that location */}
+      {canonicalLink && <link rel="canonical" href={canonicalLink} />}
+      {canonicalLink && <meta property="og:url" content={canonicalLink} />}
+      <link rel="author" href={`https://gatsbyjs.org${author.fields.slug}`} />
+      <meta name="author" content={author.id} />
+      <meta name="twitter:creator" content={author.twitter} />
+      <meta property="article:author" content={author.id} />
+      <meta property="article:published_time" content={rawDate} />
+    </PageMetadata>
+  )
+}
+
 class BlogPostTemplate extends React.Component {
   render() {
     const {
       pageContext: { prev, next },
       data: { mdx: post },
-      location: { href },
     } = this.props
     const { canonicalLink } = post.frontmatter
     const BioLine = ({ children }) => (
@@ -49,35 +78,7 @@ class BlogPostTemplate extends React.Component {
             // https://github.com/algolia/docsearch-configs/blob/89706210b62e2f384e52ca1b104f92bc0e225fff/configs/gatsbyjs.json#L71-L76
           }
           <main id={`reach-skip-nav`} className="post docSearch-content">
-            <PageMetadata
-              title={post.frontmatter.title}
-              description={post.fields.excerpt}
-              type="article"
-              timeToRead={post.timeToRead}
-              image={post.frontmatter.image?.childImageSharp.resize}
-            >
-              {canonicalLink && <link rel="canonical" href={canonicalLink} />}
-              {canonicalLink && (
-                <meta property="og:url" content={canonicalLink} />
-              )}
-              <link
-                rel="author"
-                href={`https://gatsbyjs.org${post.frontmatter.author.fields.slug}`}
-              />
-              <meta
-                name="article:author"
-                content={post.frontmatter.author.id}
-              />
-              <meta
-                name="twitter:creator"
-                content={post.frontmatter.author.twitter}
-              />
-              <meta name="author" content={post.frontmatter.author.id} />
-              <meta
-                name="article:published_time"
-                content={post.frontmatter.rawDate}
-              />
-            </PageMetadata>
+            <BlogPostMetadata post={post} />
             <div sx={{ display: `flex`, flexDirection: `column` }}>
               <section
                 sx={{
