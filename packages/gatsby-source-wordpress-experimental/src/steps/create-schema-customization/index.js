@@ -1,5 +1,4 @@
 import store from "~/store"
-import { getContentTypeQueryInfos } from "~/steps/source-nodes/fetch-nodes/fetch-nodes"
 
 import { fieldOfTypeWasFetched } from "./helpers"
 
