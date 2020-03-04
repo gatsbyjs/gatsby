@@ -65,7 +65,7 @@ exports.onPostBuild = async ({ getNodes, store }) => {
       `page-data.json`
     )
 
-    const result = require(pageDataPath).result
+    const result = require(pageDataPath).result.data
     queryResults[scenarioName] = result
   })
 
