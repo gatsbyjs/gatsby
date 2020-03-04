@@ -39,7 +39,7 @@ function isCjChar(char) {
   return cjRanges.some(([from, to]) => charCode >= from && charCode < to)
 }
 
-export const timeToRead = (mdNode, html, calcTimeToRead) => {
+export const calculateTimeToRead = (mdNode, html, calcTimeToRead) => {
   const pureText = sanitizeHTML(html, { allowTags: [] })
   const avgWPM = 265
 
