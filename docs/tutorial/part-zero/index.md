@@ -10,7 +10,7 @@ Before you start building your first Gatsby site, you’ll need to familiarize y
 
 The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the terminal. In this tutorial, we’ll use both interchangeably. It’s a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
 
-Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/), [**instructions for Windows**](https://www.lifewire.com/how-to-open-command-prompt-2618089) or [**instructions for Linux**](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
+Take a moment to locate and open up the command-line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/), [**instructions for Windows**](https://www.lifewire.com/how-to-open-command-prompt-2618089) or [**instructions for Linux**](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
 
 _Note: If you’re new to the command line, "running" a command, means "writing a given set of instructions in your command prompt, and hitting the Enter key". Commands will be shown in a highlighted box, something like `node --version`, but not every highlighted box is a command! If something is a command it will be mentioned as something you have to run/execute._
 
@@ -20,7 +20,7 @@ Node.js is an environment that can run JavaScript code outside of a web browser.
 
 ### Mac instructions
 
-To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
+To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](https://brew.sh/). A little set-up, in the beginning, can save you from some headaches later on!
 
 #### How to install or verify Homebrew on your computer:
 
@@ -32,7 +32,7 @@ To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](http
 #### Install Xcode Command Line Tools:
 
 1. Open your Terminal.
-2. Install Xcode Command line tools by running `xcode-select --install`.
+2. Install Xcode Command line tools by running `Xcode-select --install`.
    - If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account
 3. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
@@ -60,12 +60,12 @@ _💡 If when installing a package, it asks for confirmation, type `y` and press
 4. To confirm this has worked, use the following command. `nvm --version`. The output should be a version number.
 5. [Set default Node.js version](#set-default-nodejs-version)
 
-#### Arch, Manjaro and other `pacman` based distros:
+#### Arch, Manjaro and other `Pacman` based distros:
 
 1. Run `sudo pacman -Sy` to make sure your distribution is ready to go.
 2. These distros come installed with curl, so you can use that to download nvm.
    `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash`
-3. Before using nvm, you need to install additional dependencies by running `sudo pacman -S grep awk tar`.
+3. Before using nvm, you need to install additional dependencies by running `sudo Pacman -S grep awk tar`.
 4. To confirm this has worked, use the following command. `nvm --version`. The output should be a version number.
 5. [Set default Node.js version](#set-default-nodejs-version)
 
@@ -95,7 +95,7 @@ Once you have followed the installation steps and you have checked everything is
 
 ## Install Git
 
-Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter. You will need to have Git installed to set up your first Gatsby site.
+Git is a free and open-source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter. You will need to have Git installed to set up your first Gatsby site.
 
 The steps to download and install Git depend on your operating system. Follow the guide for your system:
 
@@ -171,7 +171,7 @@ A code editor is a program designed specifically for editing computer code. Ther
 
 ### Download VS Code
 
-Gatsby documentation sometimes includes screenshots that were taken in VS Code, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks just like the screenshots in the tutorial and docs. If you choose to use VS Code, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
+Gatsby documentation sometimes includes screenshots that were taken in VS Code, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks just like the screenshots in the tutorial and docs. If you choose to use the VS Code, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
 
 ### Install the Prettier plugin
 
@@ -204,7 +204,7 @@ Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/
 
 It’s not necessary to be an expert with these already — if you’re not, don’t worry! You’ll pick up a lot through the course of this tutorial series. These are some of the main web technologies you’ll use when building a Gatsby site:
 
-- **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
+- **HTML**: A markup language that every web browser can understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
 - **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
 - **JavaScript**: A programming language that helps us make the web dynamic and interactive.
 - **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
@@ -216,13 +216,13 @@ For a comprehensive introduction to what a website is--including an intro to HTM
 
 ### Learn more about the command line
 
-For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not just how to interface with it.
+For a great introduction to using the command line, check out [**Codecademy’s Command-Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not just how to interface with it.
 
 ### Learn more about npm
 
 npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you just downloaded and installed Node.js, npm was installed with it!
 
-npm has three distinct components: the npm website, the npm registry, and the npm command line interface (CLI).
+npm has three distinct components: the npm website, the npm registry, and the npm command-line interface (CLI).
 
 - On the npm website, you can browse what JavaScript packages are available in the npm registry.
 - The npm registry is a large database of information about JavaScript packages available on npm.
