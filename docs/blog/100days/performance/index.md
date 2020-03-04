@@ -1,5 +1,5 @@
 ---
-title: Challenge 8 - Keep Your Gatsby Site Blazing Fast
+title: Challenge 10 - Keep Your Gatsby Site Blazing Fast
 date: 2020-03-05
 author: "Hashim Warren"
 excerpt: "Learn how to audit your site for performance issues and provide common fixes"
