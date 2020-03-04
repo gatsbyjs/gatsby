@@ -65,7 +65,7 @@ it("populates the author info and published time", () => {
   const content = Helmet.peek()
   expect(content.linkTags).toContainEqual({
     rel: "author",
-    href: "https://gatsbyjs.org/contributors/kyle-mathews/",
+    href: "https://www.gatsbyjs.org/contributors/kyle-mathews/",
   })
   expect(content.metaTags).toContainEqual({
     name: "author",

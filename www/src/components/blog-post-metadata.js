@@ -1,5 +1,6 @@
 import React from "react"
 import PageMetadata from "./page-metadata"
+import useSiteMetadata from "../hooks/use-site-metadata"
 
 /**
  * Extend page metadata with additional information about article authorship.
@@ -10,6 +11,7 @@ import PageMetadata from "./page-metadata"
  */
 export default function BlogPostMetadata({ post }) {
   const { canonicalLink, title, image, author, rawDate } = post.frontmatter
+  const { siteUrl } = useSiteMetadata()
   return (
     <PageMetadata
       title={title}
@@ -22,7 +24,7 @@ export default function BlogPostMetadata({ post }) {
       canonical link to that location */}
       {canonicalLink && <link rel="canonical" href={canonicalLink} />}
       {canonicalLink && <meta property="og:url" content={canonicalLink} />}
-      <link rel="author" href={`https://gatsbyjs.org${author.fields.slug}`} />
+      <link rel="author" href={`${siteUrl}${author.fields.slug}`} />
       <meta name="author" content={author.id} />
       <meta name="twitter:creator" content={author.twitter} />
       <meta property="article:author" content={author.id} />
