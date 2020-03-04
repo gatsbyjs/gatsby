@@ -65,7 +65,7 @@ For PRs that add a site or a starter to the showcase, we ought to check:
 
 For PRs that add a blog post, we ought to check:
 
-- Approval – has the [blog post been approved](/contributing/blog-and-website-contributions/) by marketing or another Gatsby internal team?
+- Approval – has the [blog post been approved](/contributing/blog-contributions/) by marketing or another Gatsby internal team?
 - Correctness — whether the added documentation is technically correct
 - Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
 - Subject matter — blog posts should not be purely promotional, spammy, or inappropriate. An author should check with a member of the Gatsby team that their post is appropriate for the blog before creating their PR.

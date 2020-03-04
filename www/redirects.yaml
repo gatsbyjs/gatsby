@@ -138,3 +138,7 @@
   # redirecting gatsby-source-filesystem Programmatic Import to plugin README
 - fromPath: /docs/gatsby-source-filesystem-programmatic-import/
   toPath: /packages/gatsby-source-filesystem/
+- fromPath: /contributing/blog-and-website-contributions/
+  toPath: /contributing/blog-contributions/
+- fromPath: /contributing/docs-and-website-components/
+  toPath: /contributing/docs-and-blog-components/

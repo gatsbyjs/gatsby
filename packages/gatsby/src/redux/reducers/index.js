@@ -66,4 +66,5 @@ module.exports = {
   logs: require(`gatsby-cli/lib/reporter/redux/reducer`),
   inferenceMetadata: require(`./inference-metadata`),
   pageDataStats: require(`./page-data-stats`),
+  pageData: require(`./page-data`),
 }

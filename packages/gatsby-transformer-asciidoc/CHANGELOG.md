@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.23...gatsby-transformer-asciidoc@1.1.24) (2020-02-24)
+
+### Bug Fixes
+
+- Allow include in asciidoc ([#21674](https://github.com/gatsbyjs/gatsby/issues/21674)) ([f4295df](https://github.com/gatsbyjs/gatsby/commit/f4295df))
+
 ## [1.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.22...gatsby-transformer-asciidoc@1.1.23) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-transformer-asciidoc

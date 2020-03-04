@@ -6,8 +6,8 @@ disableTableOfContents: true
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 <HorizontalNavList
-items={"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")}
-slug={props.slug}
+  items={"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")}
+  slug={props.slug}
 />
 
 ## A
@@ -206,11 +206,11 @@ Linting is the process of running a program that will analyze code for potential
 
 ## M
 
-### MDX
+### [MDX](/docs/glossary/mdx/)
 
 Extends [Markdown](#markdown) to support [React](#react) [components](#component) within your content.
 
-### Markdown
+### [Markdown](/docs/glossary/markdown/)
 
 A way of writing HTML content with plain text, using special characters to denote content types such as hash symbols for [headings](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements), and underscores and asterisks for text emphasis.
 

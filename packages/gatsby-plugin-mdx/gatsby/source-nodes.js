@@ -14,6 +14,7 @@ const getTableOfContents = require(`../utils/get-table-of-content`)
 const defaultOptions = require(`../utils/default-options`)
 const genMDX = require(`../utils/gen-mdx`)
 const { mdxHTMLLoader: loader } = require(`../utils/render-html`)
+const { interopDefault } = require(`../utils/interop-default`)
 
 async function getCounts({ mdast }) {
   let counts = {}
@@ -96,7 +97,7 @@ module.exports = (
    */
   for (let plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
-    const requiredPlugin = require(plugin.resolve)
+    const requiredPlugin = interopDefault(require(plugin.resolve))
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (let parserPlugin of requiredPlugin.setParserPlugins(
