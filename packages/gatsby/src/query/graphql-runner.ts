@@ -1,14 +1,36 @@
-const { parse, validate, execute } = require(`graphql`)
-const { debounce } = require(`lodash`)
+import {
+  parse,
+  validate,
+  execute,
+  DocumentNode,
+  GraphQLSchema,
+  Source,
+  GraphQLError,
+  ExecutionResult,
+} from "graphql"
+import { debounce } from "lodash"
+import nodeStore from "../db/nodes"
+import createPageDependency from "../redux/actions/add-page-dependency"
 
-const withResolverContext = require(`../schema/context`)
-const { LocalNodeModel } = require(`../schema/node-model`)
+import withResolverContext from "../schema/context"
+import { LocalNodeModel } from "../schema/node-model"
+import { Store } from "redux"
+import { IReduxState } from "../redux/types"
+
+type Query = string | Source
 
 class GraphQLRunner {
-  constructor(store) {
-    this.store = store
-    const nodeStore = require(`../db/nodes`)
-    const createPageDependency = require(`../redux/actions/add-page-dependency`)
+  parseCache: Map<Query, DocumentNode>
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  nodeModel: any // TODO: convert "../schema/node-model" from Flow
+
+  schema: GraphQLSchema
+
+  validDocuments: WeakSet<DocumentNode>
+  scheduleClearCache: () => void
+
+  constructor(protected store: Store<IReduxState>) {
     const { schema, schemaCustomization } = this.store.getState()
 
     this.nodeModel = new LocalNodeModel({
@@ -23,19 +45,22 @@ class GraphQLRunner {
     this.scheduleClearCache = debounce(this.clearCache.bind(this), 5000)
   }
 
-  clearCache() {
+  clearCache(): void {
     this.parseCache.clear()
     this.validDocuments = new WeakSet()
   }
 
-  parse(query) {
+  parse(query: Query): DocumentNode {
     if (!this.parseCache.has(query)) {
       this.parseCache.set(query, parse(query))
     }
-    return this.parseCache.get(query)
+    return this.parseCache.get(query) as DocumentNode
   }
 
-  validate(schema, document) {
+  validate(
+    schema: GraphQLSchema,
+    document: DocumentNode
+  ): readonly GraphQLError[] {
     if (!this.validDocuments.has(document)) {
       const errors = validate(schema, document)
       if (!errors.length) {
@@ -46,7 +71,8 @@ class GraphQLRunner {
     return []
   }
 
-  query(query, context) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  query(query: Query, context: Record<string, any>): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
     if (this.schema !== schema) {
