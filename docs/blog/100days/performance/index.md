@@ -23,9 +23,10 @@ Let’s get started!
 ### Site Performance Resources
 
 #### A. Monitor Site Performance
-[Learn about Lighthouse](/docs/audit-with-lighthouse/) an open source tool that audits your site’s performance on mobile and desktop clients. Lighthouse is built in Chrome DevTools and can be run on demand. 
 
-You can also automatically run Lighthouse after every build if you [use Gatsby Cloud](https://gatsbyjs.com/cloud).  
+[Learn about Lighthouse](/docs/audit-with-lighthouse/) an open source tool that audits your site’s performance on mobile and desktop clients. Lighthouse is built in Chrome DevTools and can be run on demand.
+
+You can also automatically run Lighthouse after every build if you [use Gatsby Cloud](https://gatsbyjs.com/cloud).
 
 #### B. Intelligent Preloading
 
@@ -37,7 +38,8 @@ Rich media like images can have a negative impact on your build times. Consider 
 
 #### JavaScript Concerns
 
-We believe [a Gatsby site is better with JavaScript](/blog/2020-01-30-why-gatsby-is-better-with-javascript/#performance) because it enables performance features like intelligent preloading, like we mentioned above.  However, if you’d like to experiment changing the React runtime to alternative smaller runtimes like Preact, then [there’s a plugin for that](/packages/gatsby-plugin-preact/).
+We believe [a Gatsby site is better with JavaScript](/blog/2020-01-30-why-gatsby-is-better-with-javascript/#performance) because it enables performance features like intelligent preloading, like we mentioned above. However, if you’d like to experiment changing the React runtime to alternative smaller runtimes like Preact, then [there’s a plugin for that](/packages/gatsby-plugin-preact/).
+
 #### What to Do If You Need Help
 
 If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [AskGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
