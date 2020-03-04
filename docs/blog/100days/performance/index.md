@@ -14,9 +14,9 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 ## Make Your Site Faster Than The Competition’s
 
-Over the last few weeks we’ve helped you get your site production-ready by focusing on SEO and accessibility. This week we purposely saved “performance” for last, because the features we invite you to add to your site can have a positive impact on your site’s rankings in search engines, and the ability of everyone to consume your content.
+Over the last few weeks we’ve helped you get your site production-ready by focusing on [SEO](/blog/100days/seo/) and [accessibility](/blog/100days/accessibility/). This week we purposely saved “performance” for last, because the features we are inviting you to add to your site can have a positive impact on your search engine rankings (SEO), and your user's ability to consume your content (accessiblity).
 
-If you embrace and master all of the resources we have shared about SEO, accessibility, and performance you’ll create web projects that are noticeably faster, more usable, and will help your clients reach their business goals!
+If you embrace and master all of the resources we have shared in the last three weeks, you’ll create web projects that are noticeably faster, more usable, and will help your clients reach their business goals!
 
 Let’s get started!
 
@@ -34,11 +34,11 @@ By leveraging Google Analytics data and machine learning, Guess.js is able to de
 
 #### C. CDN for Media Assets
 
-Rich media like images can have a negative impact on your build times. Consider offloading the processing and hosting of your images to a specialized CDN, like Cloudinary. Experiment with their [two new Gatsby plugins](/blog/2020-01-12-faster-sites-with-optimized-media-assets/) to see if it has a positive impact on your dev workflow and the browsing experience for your visitors
+Rich media, like images can have a negative impact on your build times. Consider offloading the processing and hosting of your images to a specialized CDN, like Cloudinary. Experiment with their [two new Gatsby plugins](/blog/2020-01-12-faster-sites-with-optimized-media-assets/) to see if it has a positive impact on your dev workflow and the browsing experience for your visitors
 
-#### JavaScript Concerns
+#### D. JavaScript Concerns
 
-We believe [a Gatsby site is better with JavaScript](/blog/2020-01-30-why-gatsby-is-better-with-javascript/#performance) because it enables performance features like intelligent preloading, like we mentioned above. However, if you’d like to experiment changing the React runtime to alternative smaller runtimes like Preact, then [there’s a plugin for that](/packages/gatsby-plugin-preact/).
+We believe [a Gatsby site is better with JavaScript](/blog/2020-01-30-why-gatsby-is-better-with-javascript/#performance) because it enables performance features like intelligent preloading, like we mentioned above. However, if you’d like to experiment with changing the React runtime in your project to alternative smaller runtimes like Preact, then [there’s a plugin for that](/packages/gatsby-plugin-preact/).
 
 #### What to Do If You Need Help
 
