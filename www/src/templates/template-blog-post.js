@@ -20,7 +20,6 @@ class BlogPostTemplate extends React.Component {
       pageContext: { prev, next },
       data: { mdx: post },
     } = this.props
-    const { canonicalLink } = post.frontmatter
     const BioLine = ({ children }) => (
       <p
         sx={{
