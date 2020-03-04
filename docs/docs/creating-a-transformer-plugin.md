@@ -136,7 +136,7 @@ File content:
 Parsed YAML content:
 
 ```javascript
-[
+;[
   {
     id: "Jane Doe",
     bio: "Developer based in Somewhere, USA",
