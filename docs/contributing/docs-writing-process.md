@@ -31,10 +31,8 @@ A GitHub issue for new learning material should indicate the format. Is it a Ref
 Does docs coverage exist anywhere on gatsbyjs.org? If so, would an alternative format help provide information for Gatsby learners of different skill and experience levels? For example, if a tutorial exists but there is no coverage in Reference Guides, adding more content in a different format would benefit users.
 
 - Tutorials vs. recipes vs. guides
-
   - **Tutorials** are step-by-step learning materials that show a user how to do something without skipping steps. Tutorials must consider a beginner experience, but can be useful for anyone.
   - **Recipes** are shorter, more concise tutorials that limit their scope to a single task or outcome by using prerequisites and limited steps. Additional resources at the end lead the user to a logical next step. Recipes are for developers of all skill levels.
-
   - **Guides** are different than tutorials, and the two main sections are Reference Guides and Conceptual Guides. Instead of “steps 1-4”, guides use standalone headings and sections to explain how to accomplish the task. The audience is often more advanced than beginner due to the subject matter, but should be approachable by anyone.
 
 Given the difference in audiences of the 3 main learning material formats, that’s where increasing and overlapping coverage of topics can help support Gatsby learners of different skill and experience levels.
@@ -95,7 +93,7 @@ Apply feedback from pull request reviews in order for them to be accepted. Furth
 - [How to File an Issue](/contributing/how-to-file-an-issue/)
 - [Gatsby Style Guide](/contributing/gatsby-style-guide/)
 - [Markdown Syntax Doc](/docs/mdx/markdown-syntax/)
-- [Pair Programming](/contributing/pair-programming/)
+- [Pair Programming](/contributing/pair-programming/) for interviewing the core team only
 - [Blog Post Guidelines](/contributing/blog-contributions/)
 - [Docs site setup instructions](/contributing/docs-contributions/#docs-site-setup-instructions)
 - [How to Open a Pull Request](/contributing/how-to-open-a-pull-request/)
