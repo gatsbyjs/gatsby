@@ -149,7 +149,7 @@ When referencing another page within [gatsbyjs.org](https://www.gatsbyjs.org/) h
 [Gatsby's glossay](https://www.gatsbyjs.org/docs/glossary)
 ```
 
-Note: Links to the Gatsby Cloud / Gatsby Inc. are at located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be absolute an path (include the domain). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)
+Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be referenced using an absolute path (domain included). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)
 
 ### Mark localhost URLs as code strings
 
