@@ -53,6 +53,36 @@ class BenchMeta {
       benchmarkEnd: 0, // End of benchmark itself
     }
     this.started = false
+    this.pluginOptions = {}
+  }
+
+  setPluginOptions(options = {}) {
+    this.pluginOptions = options
+    return options
+  }
+
+  getMetadata() {
+    let siteId = ``
+    try {
+      // The tags ought to be a json string, but we try/catch it just in case it's not, or not a valid json string
+      siteId =
+        JSON.parse(process.env?.GATSBY_TELEMETRY_TAGS ?? `{}`)?.siteId ?? `` // Set by server
+    } catch (e) {
+      siteId = `error`
+      reportInfo(
+        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
+      )
+    }
+
+    return {
+      buildId: process.env.BENCHMARK_BUILD_ID || ``,
+      branch: process.env.BENCHMARK_BRANCH || ``,
+      siteId,
+      contentSource: this.pluginOptions.contentSource || `Unknown`,
+      siteType: this.pluginOptions.siteType || `Unknown`,
+      repoName: this.pluginOptions.repoName || `Unknown`,
+      buildType: process.env.BENCHMARK_BUILD_TYPE || `COLD_START`,
+    }
   }
 
   getData() {
@@ -117,22 +147,11 @@ class BenchMeta {
       nocase: true,
     }).length
 
-    let siteId = ``
-    try {
-      // The tags ought to be a json string, but we try/catch it just in case it's not, or not a valid json string
-      siteId =
-        JSON.parse(process.env?.GATSBY_TELEMETRY_TAGS ?? `{}`)?.siteId ?? `` // Set by server
-    } catch (e) {
-      siteId = `error`
-      reportInfo(
-        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
-      )
-    }
+    const benchmarkMetadata = this.getMetadata()
 
     return {
       time: this.localTime,
       sessionId: process.gatsbyTelemetrySessionId || uuidv4(),
-      siteId,
       cwd: process.cwd() ?? ``,
       timestamps: this.timestamps,
       gitHash,
@@ -155,6 +174,7 @@ class BenchMeta {
       },
       memory,
       publicJsSize,
+      ...benchmarkMetadata,
     }
   }
 
@@ -279,8 +299,11 @@ async function onPreBuild(api) {
   benchMeta.markDataPoint(`preBuild`)
 }
 
-async function onPostBuild(api) {
+async function onPostBuild(api, pluginOptions) {
   lastApi = api
+
+  benchmark.setPluginOptions(pluginOptions)
+
   benchMeta.markDataPoint(`postBuild`)
   return benchMeta.markEnd()
 }
