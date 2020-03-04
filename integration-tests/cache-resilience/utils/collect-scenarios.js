@@ -6,7 +6,10 @@ const collectScenarios = () => {
   const scenarios = glob
     .sync(path.join(__dirname, `..`, `plugins`, `**`, `scenario.js`))
     .map(filename => {
-      const scenarioPath = path.relative(path.join(__dirname, `..`), filename)
+      const scenarioPath = path.relative(
+        path.join(__dirname, `..`, `plugins`),
+        path.dirname(filename)
+      )
 
       return {
         name: scenarioPath,
@@ -50,31 +53,23 @@ const getQueriesForRun = run => {
   const queries = {}
 
   collectScenarios().forEach(scenario => {
-    if (scenario.queriesTest) {
-      const queriesTest = scenario.queriesTest.find(config =>
+    if (scenario.queriesFixtures) {
+      const queriesFixture = scenario.queriesFixtures.find(config =>
         config.runs.includes(run)
       )
 
-      if (queriesTest) {
-        queries[name] = queriesTest.query
+      if (queriesFixture) {
+        queries[scenario.name] = queriesFixture.query
       }
     }
   })
 
-  console.log(queries)
   return queries
 }
-
-// const getChangesTests = () => {
-//   return collectScenarios()
-//     .map(scenario => scenario.changesTests)
-//     .filter(Boolean)
-// }
 
 module.exports = {
   // collectScenarios,
   getQueriesForRun,
-  // getChangesTests,
   getPluginsForRun,
   getAllPlugins,
 }

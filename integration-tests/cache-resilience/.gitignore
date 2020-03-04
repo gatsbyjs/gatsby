@@ -1,6 +1,7 @@
 plugins/**/gatsby-node.js
 plugins/**/src
 gatsby-config.js
+src/pages/scenarios
 
 # temporary test artifacts
 on_pre_bootstrap.state

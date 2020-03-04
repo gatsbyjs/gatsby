@@ -2,7 +2,6 @@ const fs = require(`fs`)
 const v8 = require(`v8`)
 const glob = require(`glob`)
 const path = require(`path`)
-const _ = require(`lodash`)
 
 const db = require(`gatsby/dist/db`)
 
@@ -41,25 +40,34 @@ exports.onPreBootstrap = ({ getNodes }) => {
 }
 
 exports.onPostBuild = async ({ getNodes, store }) => {
-  const plugins = store.getState().config.plugins || []
+  const queryResults = {}
+  const scenarioPagesDirectory = path.join(
+    __dirname,
+    `src`,
+    `pages`,
+    `scenarios`
+  )
+  const scenarioPagesFiles = glob.sync(
+    path.join(scenarioPagesDirectory, `**`, `index.js`)
+  )
 
-  const pluginNames = plugins.map(plugin => plugin.resolve)
+  scenarioPagesFiles.forEach(scenarioPageFile => {
+    const scenarioName = path.dirname(
+      path.relative(scenarioPagesDirectory, scenarioPageFile)
+    )
 
-  const queryResults = pluginNames.reduce((acc, pluginName) => {
     const pageDataPath = path.join(
+      __dirname,
       `public`,
       `page-data`,
-      pluginName,
+      `scenarios`,
+      scenarioName,
       `page-data.json`
     )
-    if (fs.existsSync(pageDataPath)) {
-      const { result } = require(`./${pageDataPath}`)
 
-      acc[pluginName] = _.omit(result, [`pageContext`])
-    }
-
-    return acc
-  }, {})
+    const result = require(pageDataPath)
+    queryResults[scenarioName] = result
+  })
 
   fs.writeFileSync(
     ON_POST_BUILD_FILE_PATH,

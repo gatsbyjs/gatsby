@@ -50,7 +50,7 @@ const nodesTest = ({
 
 const graphql = require(`lodash/head`)
 
-const queriesTest = [
+const queriesFixtures = [
   {
     runs: [1, 2],
     query: graphql`
@@ -63,14 +63,17 @@ const queriesTest = [
         }
       }
     `,
-    resultTest: result => {
-      expect(result).toMatchInlineSnapshot()
-    },
   },
 ]
 
+const queriesTest = ({ firstRun, secondRun, diff }) => {
+  expect(firstRun).toMatchInlineSnapshot()
+  expect(firstRun).toEqual(secondRun)
+}
+
 module.exports = {
   config,
+  queriesFixtures,
   queriesTest,
   plugins,
   nodesTest,
