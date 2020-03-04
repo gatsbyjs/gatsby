@@ -54,6 +54,8 @@ export const menuBeforeChangeNode = async ({
 
   const remoteChildMenuItemNodes = Object.values(data)
 
+  const additionalNodeIds = remoteChildMenuItemNodes.map(({ id } = {}) => id)
+
   await Promise.all(
     remoteChildMenuItemNodes.map(async remoteMenuItemNode => {
       if (
@@ -62,7 +64,7 @@ export const menuBeforeChangeNode = async ({
         remoteMenuItemNode.childItems.nodes.length
       ) {
         // recursively fetch child menu items
-        await menuBeforeChangeNode({
+        const childNodeIds = await menuBeforeChangeNode({
           remoteNode: remoteMenuItemNode,
           actionType: `CREATE`,
           wpStore,
@@ -71,7 +73,11 @@ export const menuBeforeChangeNode = async ({
           actions,
           buildTypeName,
         })
+
+        childNodeIds.forEach(id => additionalNodeIds.push(id))
       }
+
+      const type = buildTypeName(`MenuItem`)
 
       await actions.createNode({
         ...remoteMenuItemNode,
@@ -80,11 +86,11 @@ export const menuBeforeChangeNode = async ({
         parent: null,
         internal: {
           contentDigest: helpers.createContentDigest(remoteMenuItemNode),
-          type: buildTypeName(`MenuItem`),
+          type,
         },
       })
     })
   )
 
-  return remoteChildMenuItemNodes.map(({ id }) => id)
+  return additionalNodeIds
 }
