@@ -419,6 +419,20 @@ describe(`Some plugins changed between gatsby runs`, () => {
         queriesTest(getQueryResultTestArgs(scenarioName))
       })
 
+      it(`Adding plugin adds a type to schema`, () => {
+        const scenarioName = `source/plugin-added`
+        const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+        queriesTest(getQueryResultTestArgs(scenarioName))
+      })
+
+      it(`Removing plugin removes a type from schema`, () => {
+        const scenarioName = `source/plugin-removed`
+        const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+        queriesTest(getQueryResultTestArgs(scenarioName))
+      })
+
       it(`Changing plugin invalidates query results`, () => {
         const scenarioName = `source/plugin-changed`
         const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)

@@ -39,8 +39,60 @@ const nodesTest = ({
   }
 }
 
+const graphql = require(`lodash/head`)
+
+const queriesFixtures = [
+  {
+    runs: [1, 2],
+    query: graphql`
+      {
+        typeinfo: __type(name: "Deletion") {
+          fields {
+            name
+          }
+        }
+      }
+    `,
+  },
+]
+
+const queriesTest = ({ firstRun, secondRun }) => {
+  // type exist in schema
+  expect(firstRun).toMatchInlineSnapshot(`
+    Object {
+      "typeinfo": Object {
+        "fields": Array [
+          Object {
+            "name": "id",
+          },
+          Object {
+            "name": "parent",
+          },
+          Object {
+            "name": "children",
+          },
+          Object {
+            "name": "internal",
+          },
+          Object {
+            "name": "foo",
+          },
+        ],
+      },
+    }
+  `)
+  // type doesn't exist in schema
+  expect(secondRun).toMatchInlineSnapshot(`
+    Object {
+      "typeinfo": null,
+    }
+  `)
+}
+
 module.exports = {
   config,
+  queriesFixtures,
+  queriesTest,
   plugins,
   nodesTest,
 }
