@@ -48,81 +48,95 @@ Using the power and flexibility of React, you can create a React component to po
 import React from "react"
 // highlight-start
 import Helmet from "react-helmet"
-import { StaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 // highlight-end
 
-function SEO() {
-  return (
-    <StaticQuery
-      query={graphql`
+function SEO({ description }) {
+  const { site } = useStaticQuery(
+    graphql`
+      query {
         # highlight-start
-        {
-          site {
-            siteMetadata {
-              description
-              keywords
-              siteUrl
-            }
+        site {
+          siteMetadata {
+            title
+            description
+            author
+            keywords
+            siteUrl
           }
         }
         # highlight-end
-      `}
-      render={data => null}
-    />
+      }
+    `
   )
+
+  const metaDescription = description || site.siteMetadata.description
+
+  return null
 }
 
 export default SEO
 ```
 
-This component doesn't _do_ anything yet, but it's the foundation for a useful, extensible component. It leverages the `StaticQuery` functionality enabled via Gatsby to query siteMetadata (e.g. details in `gatsby-config.js`) with description and keywords.
-
-The `StaticQuery` component accepts a render prop, and at this point, it returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component.
+This component doesn't _do_ anything yet, but it's the foundation for a useful, extensible component. It leverages the `useStaticQuery` functionality enabled via Gatsby to query siteMetadata (e.g. details in `gatsby-config.js`) with description and keywords. At this point, the `SEO` component returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component.
 
 ```js:title=src/components/seo.js
 import React from "react"
 import Helmet from "react-helmet"
-import { StaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 
-function SEO() {
-  return (
-    <StaticQuery
-      query={graphql`
-        {
-          site {
-            siteMetadata {
-              author
-              description
-              siteUrl
-            }
+function SEO({ description, lang, meta }) {
+  const { site } = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+            description
+            author
+            keywords
+            siteUrl
           }
         }
-      `}
-      render={data => (
-        <Helmet
-          htmlAttributes={{
-            lang: "en",
-          }}
-          meta={
-            // highlight-start
-            [
-              {
-                name: "description",
-                content: data.site.siteMetadata.description,
-              },
-            ]
-            // highlight-end
-          }
-        />
-      )}
+      }
+    `
+  )
+
+  const metaDescription = description || site.siteMetadata.description
+
+  return (
+    <Helmet
+      htmlAttributes={{
+        lang,
+      }}
+      meta={[
+        {
+          name: `description`,
+          content: metaDescription,
+        },
+        // highlight-start
+        {
+          name: "keywords",
+          content: data.site.siteMetadata.keywords.join(","),
+        },
+        // highlight-end
+      ]}
     />
   )
 }
 
+// highlight-start
+SEO.defaultProps = {
+  lang: `en`,
+  meta: [],
+  description: ``,
+}
+// highlight-end
+
 export default SEO
 ```
 
-Whew, getting closer! This will now render the `meta` `description` tag, and will do so using content injected at build-time with the `StaticQuery` component. Additionally, it will add the `lang="en"` attribute to the root-level `html` tag to silence that pesky Lighthouse warning 😉.
+Whew, getting closer! This will now render the `meta` `description` tag, and will do so using content injected at build-time with the `useStaticQuery` hook. Additionally, it will add the `lang="en"` attribute to the root-level `html` tag to silence that pesky Lighthouse warning 😉.
 
 This is still the bare bones, rudimentary approach to SEO. An additional step is to enhance this functionality and get some useful functionality for sharing a page via social networks like Facebook, Twitter, and Slack.
 
@@ -136,128 +150,130 @@ In addition to SEO for actual _search_ engines you also want those pretty cards 
 
 ```js:title=src/components/seo.js
 import React from "react"
-import Helmet from "react-helmet"
 import PropTypes from "prop-types" // highlight-line
-import { StaticQuery, graphql } from "gatsby"
+import Helmet from "react-helmet"
+import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
-function SEO({ description, meta, image: metaImage, title }) {
-  return (
-    <StaticQuery
-      query={graphql`
-        {
-          site {
-            siteMetadata {
-              author
-              description
-              siteUrl
-              keywords
-            }
+function SEO({ description, lang, meta, image: metaImage, title }) {
+  const { site } = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+            description
+            author
+            keywords
+            siteUrl
           }
         }
-      `}
-      render={data => {
+      }
+    `
+  )
+
+  const metaDescription = description || site.siteMetadata.description
+  // highlight-start
+  const image =
+    metaImage && metaImage.src
+      ? `${data.site.siteMetadata.siteUrl}${metaImage.src}`
+      : null
+  // highlight-end
+
+  return (
+    <Helmet
+      htmlAttributes={{
+        lang,
+      }}
+      title={title}
+      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      meta={[
+        {
+          name: `description`,
+          content: metaDescription,
+        },
+        {
+          name: "keywords",
+          content: data.site.siteMetadata.keywords.join(","),
+        },
+        {
+          property: `og:title`,
+          content: title,
+        },
+        {
+          property: `og:description`,
+          content: metaDescription,
+        },
+        {
+          property: `og:type`,
+          content: `website`,
+        },
+        {
+          name: `twitter:creator`,
+          content: site.siteMetadata.author,
+        },
+        {
+          name: `twitter:title`,
+          content: title,
+        },
+        {
+          name: `twitter:description`,
+          content: metaDescription,
+        },
         // highlight-start
-        const metaDescription =
-          description || data.site.siteMetadata.description
-        const image =
-          metaImage && metaImage.src
-            ? `${data.site.siteMetadata.siteUrl}${metaImage.src}`
-            : null
-        // highlight-end
-        return (
-          <Helmet
-            htmlAttributes={{
-              lang: "en",
-            }}
-            title={title}
-            meta={
-              [
+      ]
+        .concat(
+          metaImage
+            ? [
                 {
-                  name: "description",
-                  content: metaDescription,
+                  property: "og:image",
+                  content: image,
                 },
                 {
-                  name: "keywords",
-                  content: data.site.siteMetadata.keywords.join(","),
-                },
-                // highlight-start
-                {
-                  property: "og:title",
-                  content: title,
+                  property: "og:image:width",
+                  content: metaImage.width,
                 },
                 {
-                  property: "og:description",
-                  content: metaDescription,
+                  property: "og:image:height",
+                  content: metaImage.height,
                 },
                 {
-                  name: "twitter:creator",
-                  content: data.site.siteMetadata.author,
-                },
-                {
-                  name: "twitter:title",
-                  content: title,
-                },
-                {
-                  name: "twitter:description",
-                  content: metaDescription,
+                  name: "twitter:card",
+                  content: "summary_large_image",
                 },
               ]
-                .concat(
-                  metaImage
-                    ? [
-                        {
-                          property: "og:image",
-                          content: image,
-                        },
-                        {
-                          property: "og:image:width",
-                          content: metaImage.width,
-                        },
-                        {
-                          property: "og:image:height",
-                          content: metaImage.height,
-                        },
-                        {
-                          name: "twitter:card",
-                          content: "summary_large_image",
-                        },
-                      ]
-                    : [
-                        {
-                          name: "twitter:card",
-                          content: "summary",
-                        },
-                      ]
-                )
-                .concat(meta)
-              // highlight-end
-            }
-          />
+            : [
+                {
+                  name: "twitter:card",
+                  content: "summary",
+                },
+              ]
+          // highlight-end
         )
-      }}
+        .concat(meta)}
     />
   )
 }
 
-// highlight-start
 SEO.defaultProps = {
+  lang: `en`,
   meta: [],
+  description: ``,
 }
-// highlight-end
 
-// highlight-start
 SEO.propTypes = {
   description: PropTypes.string,
-  image: PropTypes.shape({
-    src: PropTypes.string.isRequired(),
-    height: PropTypes.string.isRequired(),
-    width: PropTypes.string.isRequired(),
-  }),
-  meta: PropTypes.array,
+  lang: PropTypes.string,
+  meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
+  // highlight-start
+  image: PropTypes.shape({
+    src: PropTypes.string.isRequired,
+    height: PropTypes.string.isRequired,
+    width: PropTypes.string.isRequired,
+  }),
+  // highlight-end
 }
-// highlight-end
 
 export default SEO
 ```
@@ -277,141 +293,148 @@ To implement this functionality, you need to do the following:
 
 ```js:title=src/components/seo.js
 import React from "react"
-import Helmet from "react-helmet"
 import PropTypes from "prop-types"
-import { StaticQuery, graphql } from "gatsby"
+import Helmet from "react-helmet"
+import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
-function SEO({ description, meta, image: metaImage, slug, title }) {
-  return (
-    <StaticQuery
-      query={graphql`
-        {
-          site {
-            siteMetadata {
-              author
-              description
-              siteUrl
-              keywords
-            }
+function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
+  const { site } = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+            description
+            author
+            keywords
+            siteUrl
           }
         }
-      `}
-      render={data => {
-        const metaDescription =
-          description || data.site.siteMetadata.description
-        const image =
-          metaImage && metaImage.src
-            ? `${data.site.siteMetadata.siteUrl}${metaImage.src}`
-            : null
-        // highlight-next-line
-        const canonical = pathname
-          ? `${data.site.siteMetadata.siteUrl}${slug}`
-          : null
-        return (
-          <Helmet
-            htmlAttributes={{
-              lang: "en",
-            }}
-            title={title}
-            link={
-              // highlight-start
-              canonical
-                ? [
-                    {
-                      rel: "canonical",
-                      href: canonical,
-                    },
-                  ]
-                : []
-              //highlight-end
-            }
-            meta={[
+      }
+    `
+  )
+
+  const metaDescription = description || site.siteMetadata.description
+  const image =
+    metaImage && metaImage.src
+      ? `${data.site.siteMetadata.siteUrl}${metaImage.src}`
+      : null
+  // highlight-start
+  const canonical = pathname
+    ? `${data.site.siteMetadata.siteUrl}${pathname}`
+    : null
+  // highlight-end
+
+  return (
+    <Helmet
+      htmlAttributes={{
+        lang,
+      }}
+      title={title}
+      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      // highlight-start
+      link={
+        canonical
+          ? [
               {
-                name: "description",
-                content: metaDescription,
-              },
-              {
-                name: "keywords",
-                content: data.site.siteMetadata.keywords.join(","),
-              },
-              {
-                property: "og:title",
-                content: title,
-              },
-              {
-                property: "og:description",
-                content: metaDescription,
-              },
-              {
-                name: "twitter:creator",
-                content: data.site.siteMetadata.author,
-              },
-              {
-                name: "twitter:title",
-                content: title,
-              },
-              {
-                name: "twitter:description",
-                content: metaDescription,
+                rel: "canonical",
+                href: canonical,
               },
             ]
-              .concat(
-                metaImage
-                  ? [
-                      {
-                        property: "og:image",
-                        content: image,
-                      },
-                      {
-                        property: "og:image:width",
-                        content: metaImage.width,
-                      },
-                      {
-                        property: "og:image:height",
-                        content: metaImage.height,
-                      },
-                      {
-                        name: "twitter:card",
-                        content: "summary_large_image",
-                      },
-                    ]
-                  : [
-                      {
-                        name: "twitter:card",
-                        content: "summary",
-                      },
-                    ]
-              )
-              .concat(meta)}
-          />
+          : []
+      }
+      //highlight-end
+      meta={[
+        {
+          name: `description`,
+          content: metaDescription,
+        },
+        {
+          name: "keywords",
+          content: data.site.siteMetadata.keywords.join(","),
+        },
+        {
+          property: `og:title`,
+          content: title,
+        },
+        {
+          property: `og:description`,
+          content: metaDescription,
+        },
+        {
+          property: `og:type`,
+          content: `website`,
+        },
+        {
+          name: `twitter:creator`,
+          content: site.siteMetadata.author,
+        },
+        {
+          name: `twitter:title`,
+          content: title,
+        },
+        {
+          name: `twitter:description`,
+          content: metaDescription,
+        },
+      ]
+        .concat(
+          metaImage
+            ? [
+                {
+                  property: "og:image",
+                  content: image,
+                },
+                {
+                  property: "og:image:width",
+                  content: metaImage.width,
+                },
+                {
+                  property: "og:image:height",
+                  content: metaImage.height,
+                },
+                {
+                  name: "twitter:card",
+                  content: "summary_large_image",
+                },
+              ]
+            : [
+                {
+                  name: "twitter:card",
+                  content: "summary",
+                },
+              ]
         )
-      }}
+        .concat(meta)}
     />
   )
 }
 
 SEO.defaultProps = {
+  lang: `en`,
   meta: [],
+  description: ``,
 }
 
 SEO.propTypes = {
   description: PropTypes.string,
-  image: PropTypes.shape({
-    src: PropTypes.string.isRequired(),
-    height: PropTypes.string.isRequired(),
-    width: PropTypes.string.isRequired(),
-  }),
-  meta: PropTypes.array,
-  // highlight-next-line
-  slug: PropTypes.string,
+  lang: PropTypes.string,
+  meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
+  image: PropTypes.shape({
+    src: PropTypes.string.isRequired,
+    height: PropTypes.string.isRequired,
+    width: PropTypes.string.isRequired,
+  }),
+  // highlight-next-line
+  pathname: PropTypes.string,
 }
 
 export default SEO
 ```
 
-Woo hoo! Lots to digest here, but you've enabled adding an _absolute_ canonical link by passing in a `slug` prop and prefixing with `siteUrl`.
+Woo hoo! Lots to digest here, but you've enabled adding an _absolute_ canonical link by passing in a `pathname` prop and prefixing with `siteUrl`.
 
 To bring it all home, it's time to begin actually _using_ this extensible SEO component to show all of these moving parts coming together to deliver a great SEO experience.
 
@@ -476,38 +499,58 @@ Make sure to use appropriately sized images for social sharing. Facebook and Twi
 #### Querying with GraphQL
 
 ```js:title=src/templates/blog-post.js
-import React from 'react'
-import { graphql } from 'gatsby'
+import React from "react"
+import { Link, graphql } from "gatsby"
 
-import Layout from '../components/layout'
-import SEO from '../components/seo' // highlight-line
+import Bio from "../components/bio"
+import Layout from "../components/layout"
+import SEO from "../components/seo" // highlight-line
+import { rhythm, scale } from "../utils/typography"
 
-// highlight-start
-function BlogPost({ data, location }) {
-  const { markdown: { excerpt, html, fields, frontmatter } } = data
-  const image = frontmatter.image ? frontmatter.image.childImageSharp.resize : null
-  // highlight-end
-  return (
-    <Layout>
-      {/* highlight-start */}
-      <SEO title="My Amazing Gatsby App" description={excerpt} image={image} pathname={fields.slug}>
-      /* highlight-end */}
-      <h1>{frontmatter.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
-    </Layout>
-  )
+class BlogPostTemplate extends React.Component {
+  render() {
+    const post = this.props.data.markdownRemark
+    const siteTitle = this.props.data.site.siteMetadata.title
+    const { previous, next } = this.props.pageContext
+    const image = post.frontmatter.image
+      ? post.frontmatter.image.childImageSharp.resize
+      : null // highlight-line
+
+    return (
+      <Layout location={this.props.location} title={siteTitle}>
+        {/* highlight-start */}
+        <SEO
+          title={post.frontmatter.title}
+          description={post.frontmatter.description || post.excerpt}
+          image={image}
+          pathname={this.props.location.pathname}
+        />
+        {/* highlight-end */}
+        <h1>{post.frontmatter.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      </Layout>
+    )
+  }
 }
 
-export const blogPostQuery = graphql`
+export default BlogPostTemplate
+
+export const pageQuery = graphql`
   # highlight-start
   query BlogPostBySlug($slug: String!) {
-    markdown: markdownRemark(fields: { $slug: { eq: $slug }}) {
-      html
-      excerpt(pruneLength: 160)
-      fields {
-        slug
+    site {
+      siteMetadata {
+        title
+        author
       }
+    }
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      id
+      excerpt(pruneLength: 160)
+      html
       frontmatter {
+        title
+        description
         image: featured {
           childImageSharp {
             resize(width: 1200) {
@@ -517,14 +560,11 @@ export const blogPostQuery = graphql`
             }
           }
         }
-        title
       }
     }
   }
   # highlight-end
 `
-
-export default BlogPost
 ```
 
 There are a few aspects worth nothing here:
