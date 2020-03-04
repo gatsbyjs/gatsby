@@ -1,3 +1,9 @@
+jest.mock("../../hooks/use-site-metadata", () => {
+  return () => {
+    return { siteUrl: "https://gatsbyjs.org" }
+  }
+})
+
 import React from "react"
 import { render } from "@testing-library/react"
 import { Helmet } from "react-helmet"

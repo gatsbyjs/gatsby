@@ -5,6 +5,11 @@ import { ThemeProvider } from "theme-ui"
 import theme from "../../../src/gatsby-plugin-theme-ui"
 import StarterTemplate from "../template-starter-page"
 
+// Mock out metadata that relies on queries
+jest.mock("../../components/page-metadata", () => {
+  return () => null
+})
+
 const getMockImage = () => {
   return {
     sizes: `1234`,

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import Helmet from "react-helmet"
+import useSiteMetadata from "../hooks/use-site-metadata"
 
 export default function PageMetadata({
   children,
@@ -10,6 +11,7 @@ export default function PageMetadata({
   image,
   type,
 }) {
+  const { siteUrl } = useSiteMetadata()
   // <Helmet> doesn't support JSX fragments so we can't bundle the tags based on
   // the property they match up with
   return (
@@ -24,12 +26,7 @@ export default function PageMetadata({
       {timeToRead && (
         <meta name="twitter:data1" content={`${timeToRead} min read`} />
       )}
-      {image && (
-        <meta
-          property="og:image"
-          content={`https://gatsbyjs.org${image.src}`}
-        />
-      )}
+      {image && <meta property="og:image" content={`${siteUrl}${image.src}`} />}
       {image?.width && <meta property="og:image:width" content={image.width} />}
       {image?.height && (
         <meta property="og:image:height" content={image.height} />
