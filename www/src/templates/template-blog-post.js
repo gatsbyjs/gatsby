@@ -5,7 +5,7 @@ import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
-import PageMetadata from "../components/page-metadata"
+import BlogPostMetadata from "../components/blog-post-metadata"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
@@ -13,36 +13,6 @@ import TagsSection from "../components/tags-section"
 import Avatar from "../components/avatar"
 import PrevAndNext from "../components/prev-and-next"
 import FooterLinks from "../components/shared/footer-links"
-
-/**
- * Extend page metadata with additional information about article authorship.
- *
- * More information:
- *  - https://ogp.me/#type_article
- *  - https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/markup
- */
-export function BlogPostMetadata({ post }) {
-  const { canonicalLink, title, image, author, rawDate } = post.frontmatter
-  return (
-    <PageMetadata
-      title={title}
-      description={post.fields.excerpt}
-      type="article"
-      timeToRead={post.timeToRead}
-      image={image?.childImageSharp.resize}
-    >
-      {/* These are populated when the article is published elsewhere and has a
-      canonical link to that location */}
-      {canonicalLink && <link rel="canonical" href={canonicalLink} />}
-      {canonicalLink && <meta property="og:url" content={canonicalLink} />}
-      <link rel="author" href={`https://gatsbyjs.org${author.fields.slug}`} />
-      <meta name="author" content={author.id} />
-      <meta name="twitter:creator" content={author.twitter} />
-      <meta property="article:author" content={author.id} />
-      <meta property="article:published_time" content={rawDate} />
-    </PageMetadata>
-  )
-}
 
 class BlogPostTemplate extends React.Component {
   render() {
