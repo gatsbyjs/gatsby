@@ -302,7 +302,7 @@ async function onPreBuild(api) {
 async function onPostBuild(api, pluginOptions) {
   lastApi = api
 
-  benchmark.setPluginOptions(pluginOptions)
+  benchMeta.setPluginOptions(pluginOptions)
 
   benchMeta.markDataPoint(`postBuild`)
   return benchMeta.markEnd()
