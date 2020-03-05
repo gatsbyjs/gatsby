@@ -35,7 +35,7 @@
     "better-opn": "1.0.0",
     "better-queue": "^3.8.10",
     "bluebird": "^3.7.2",
-    "browserslist": "3.2.8",
+    "browserslist": "^4.9.1",
     "cache-manager": "^2.10.1",
     "cache-manager-fs-hash": "^0.0.7",
     "chalk": "^2.4.2",
