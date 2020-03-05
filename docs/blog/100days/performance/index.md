@@ -34,7 +34,7 @@ By leveraging Google Analytics data and machine learning, Guess.js is able to de
 
 #### C. CDN for Media Assets
 
-Rich media, like images can have a negative impact on your build times. Consider offloading the processing and hosting of your images to a specialized CDN, like Cloudinary. Experiment with their [two new Gatsby plugins](/blog/2020-01-12-faster-sites-with-optimized-media-assets/) to see if it has a positive impact on your dev workflow and the browsing experience for your visitors
+Rich media like images, can have a negative impact on your build times when not handled properly. Consider offloading the processing and hosting of your images to a specialized CDN, like [Cloudinary](https://cloudinary.com/). Experiment with their [two new Gatsby plugins](/blog/2020-01-12-faster-sites-with-optimized-media-assets/) to see if it has a positive impact on your dev workflow and the browsing experience for your visitors
 
 #### D. JavaScript Concerns
 
