@@ -26,7 +26,6 @@ const typography = new Typography()
 module.exports = typography`
   }
 
-  // const dir = `${__dirname}/.cache`
   const dir = getCachePath(program.directory)
 
   if (!fs.existsSync(dir)) {
