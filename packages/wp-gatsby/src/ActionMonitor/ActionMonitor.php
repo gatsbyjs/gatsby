@@ -61,7 +61,7 @@ class ActionMonitor
           \update_post_meta(
               $action_monitor_post_id,
               'referenced_node_status',
-              $args['status'], // menus don't have post status. This is for Gatsby
+              $args['status'] // menus don't have post status. This is for Gatsby
           );
           \update_post_meta(
               $action_monitor_post_id,
