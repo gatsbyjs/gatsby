@@ -2056,7 +2056,7 @@
     - based on Gatsby Default Starter
     - unit tests with Jest
 - url: https://cape.netlify.com/
-  repo: https://github.com/juhi-trivedi/cape
+  repo: https://github.com/juhitrivedi/cape
   description: A Gatsby - CMS:Contentful demo with Netlify.
   tags:
     - Blog
