@@ -2,13 +2,13 @@
 /**
  * Plugin Name: WP Gatsby
  * Description: Optimize your WordPress site to be a source for Gatsby site(s).
- * Version: 0.1.2
+ * Version: 0.1.3
  * Author: GatsbyJS, Jason Bahl, Tyler Barnes
  * Author URI: https://gatsbyjs.org
  * Text Domain: wp-gatsby
  * Domain Path: /languages/
  * Requires at least: 4.7.0
- * Requires PHP: 5.6
+ * Requires PHP: 7.0
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
