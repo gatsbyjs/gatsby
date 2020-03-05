@@ -43,8 +43,13 @@ final class WP_Gatsby
         if (! isset(self::$instance) && ! ( self::$instance instanceof WP_Gatsby ) ) {
             self::$instance = new WP_Gatsby();
             self::$instance->setup_constants();
-            self::$instance->includes();
-            self::$instance->init();
+
+            $minimum_php_version_met = self::$instance->min_php_version_check();
+
+            if ( WP_GATSBY_AUTOLOAD && $minimum_php_version_met ) {
+              self::$instance->includes();
+              self::$instance->init();
+            }
         }
         return self::$instance;
     }
@@ -112,14 +117,38 @@ final class WP_Gatsby
 
         // Whether to autoload the files or not.
         if (! defined('WP_GATSBY_AUTOLOAD') ) {
-            define('WP_GATSBY_AUTOLOAD', true);
+          define(
+            'WP_GATSBY_AUTOLOAD',
+            // only autoload if WPGQL is active
+            defined('WPGRAPHQL_AUTOLOAD') ? true : false
+          );
         }
 
         // Whether to run the plugin in debug mode. Default is false.
         if (! defined('WP_GATSBY_DEBUG') ) {
             define('WP_GATSBY_DEBUG', false);
         }
+
     }
+
+    /**
+		 * Check if the minimum PHP version requirement is met before execution begins.
+		 *
+		 * If the server is running a lower version than required, throw an exception and prevent
+		 * further execution.
+		 *
+		 * @throws Exception
+		 */
+		public function min_php_version_check() {
+
+			if ( defined( 'GRAPQHL_MIN_PHP_VERSION' ) && version_compare( PHP_VERSION, GRAPQHL_MIN_PHP_VERSION, '<' ) ) {
+        // throw new \Exception( sprintf( __( 'The server\'s current PHP version %1$s is lower than the WPGraphQL minimum required version: %2$s', 'wp-graphql' ), PHP_VERSION, GRAPQHL_MIN_PHP_VERSION ) );
+
+        return false;
+			}
+
+      return true;
+		}
 
     /**
      * Include required files.
@@ -182,4 +211,6 @@ if (! function_exists('gatsby_init') ) {
     }
 }
 
-gatsby_init();
+add_action('init', function() {
+  gatsby_init();
+});
