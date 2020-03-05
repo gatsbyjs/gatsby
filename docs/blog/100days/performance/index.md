@@ -38,7 +38,7 @@ Rich media like images, can have a negative impact on your build times when not 
 
 #### D. JavaScript Concerns
 
-We believe [a Gatsby site is better with JavaScript](/blog/2020-01-30-why-gatsby-is-better-with-javascript/#performance) because it enables performance features like intelligent preloading, like we mentioned above. However, if you’d like to experiment with changing the React runtime in your project to alternative smaller runtimes like Preact, then [there’s a plugin for that](/packages/gatsby-plugin-preact/).
+[A Gatsby site is better with JavaScript](/blog/2020-01-30-why-gatsby-is-better-with-javascript/#performance) because it enables performance features like the "intelligent preloading" that is mentioned above. However, if you’d like to experiment with changing the React runtime in your project to alternative smaller runtimes like Preact, then [there’s a plugin for that](/packages/gatsby-plugin-preact/).
 
 #### What to Do If You Need Help
 
