@@ -41,9 +41,9 @@ const gatsbyBin = path.join(
 
 const { compareState } = require(`../utils/nodes-diff`)
 
-const stdio = `inherit`
+const stdio = `ignore`
 
-// process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION = `1`
+process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION = `1`
 
 const build = ({ updatePlugins } = {}) => {
   spawnSync(gatsbyBin, [`clean`], { stdio })
@@ -132,8 +132,7 @@ afterAll(() => {
   }
 })
 
-/*
-describe.skip(`nothing changed between gatsby runs`, () => {
+describe(`nothing changed between gatsby runs`, () => {
   let states
 
   beforeAll(() => {
@@ -161,17 +160,8 @@ describe.skip(`nothing changed between gatsby runs`, () => {
       // final nodes store is the same after first and second run
       expect(postBuildStateFromFirstRun).toEqual(postBuildStateFromSecondRun)
     })
-
-    // it.skip(`query results matches expectations`, () => {
-    //   expect(states.queryResults.actual).toEqual(states.queryResults.expected)
-    // })
   })
-
-  // describe(`Key-value persisted store (cache)`, () => {
-
-  // })
 })
-*/
 
 describe(`Some plugins changed between gatsby runs`, () => {
   let states
