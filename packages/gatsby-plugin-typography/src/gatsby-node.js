@@ -33,12 +33,12 @@ module.exports = typography`
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins: { define }, cache }) => {
-  const cacheDir = path.join(cache.directory, `typography.js`)
+  const cacheFile = path.join(cache.directory, `typography.js`)
   const { setWebpackConfig } = actions
   setWebpackConfig({
     plugins: [
       define({
-        __TYPOGRAPHY_PLUGIN_CACHE_ENDPOINT__: JSON.stringify(cacheDir),
+        __TYPOGRAPHY_PLUGIN_CACHE_ENDPOINT__: JSON.stringify(cacheFile),
       }),
     ],
   })
