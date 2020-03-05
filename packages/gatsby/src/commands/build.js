@@ -312,7 +312,7 @@ module.exports = async function build(program: BuildArgs) {
     }
   }
 
-  // if (await userPassesFeedbackRequestHeuristic()) {
-  //   showFeedbackRequest()
-  // }
+  if (await userPassesFeedbackRequestHeuristic()) {
+    showFeedbackRequest()
+  }
 }
