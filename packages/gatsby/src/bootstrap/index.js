@@ -220,6 +220,7 @@ module.exports = async (args: BootstrapArgs) => {
     existingPluginHash = {}
   }
 
+  // TO-DO re-add full cache invalidation on GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES change
   const { cacheDirectory, changes, hash } = await safeRemoveCache({
     directory: program.directory,
     existing: existingPluginHash,
