@@ -149,6 +149,10 @@ class ActionMonitor
         return;
       }
 
+      if ( get_post_type($object_id) === 'action_monitor' ) {
+        return;
+      }
+
       $this->savePost( $object_id );
     }
 
