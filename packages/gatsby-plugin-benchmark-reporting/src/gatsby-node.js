@@ -8,6 +8,8 @@ const fs = require(`fs`)
 
 const bootstrapTime = performance.now()
 
+const CI_NAME = process.env.CI_NAME
+
 const BENCHMARK_REPORTING_URL =
   process.env.BENCHMARK_REPORTING_URL === `cli`
     ? undefined
@@ -53,12 +55,6 @@ class BenchMeta {
       benchmarkEnd: 0, // End of benchmark itself
     }
     this.started = false
-    this.pluginOptions = {}
-  }
-
-  setPluginOptions(options = {}) {
-    this.pluginOptions = options
-    return options
   }
 
   getMetadata() {
@@ -74,14 +70,33 @@ class BenchMeta {
       )
     }
 
+    /**
+     * If we are running in netlify, environment variables can be attached using the INCOMING_HOOK_BODY
+     * extract the configuration from there
+     */
+
+    let buildType = process.env.BENCHMARK_BUILD_TYPE
+    const incomingHookBody = process.env.INCOMING_HOOK_BODY
+
+    if (CI_NAME === `netlify` && incomingHookBody) {
+      try {
+        const incomingHookBody = JSON.parse(incomingHookBody)
+        buildType = incomingHookBody && incomingHookBody.buildType
+      } catch (e) {
+        reportInfo(
+          `Suppressed an error trying to JSON.parse(INCOMING_HOOK_BODY): ${e}`
+        )
+      }
+    }
+
     return {
-      buildId: process.env.BENCHMARK_BUILD_ID || ``,
-      branch: process.env.BENCHMARK_BRANCH || ``,
+      buildId: process.env.BENCHMARK_BUILD_ID,
+      branch: process.env.BENCHMARK_BRANCH,
       siteId,
-      contentSource: this.pluginOptions.contentSource || `Unknown`,
-      siteType: this.pluginOptions.siteType || `Unknown`,
-      repoName: this.pluginOptions.repoName || `Unknown`,
-      buildType: process.env.BENCHMARK_BUILD_TYPE || `COLD_START`,
+      contentSource: process.env.BENCHMARK_CONTENT_SOURCE,
+      siteType: process.env.BENCHMARK_SITE_TYPE,
+      repoName: process.env.BENCHMARK_REPO_NAME,
+      buildType: buildType,
     }
   }
 
@@ -157,7 +172,7 @@ class BenchMeta {
       gitHash,
       commitTime,
       ci: process.env.CI || false,
-      ciName: process.env.CI_NAME || `local`,
+      ciName: CI_NAME || `local`,
       versions: {
         nodejs: nodejsVersion,
         gatsby: gatsbyVersion,
@@ -299,10 +314,8 @@ async function onPreBuild(api) {
   benchMeta.markDataPoint(`preBuild`)
 }
 
-async function onPostBuild(api, pluginOptions) {
+async function onPostBuild(api) {
   lastApi = api
-
-  benchMeta.setPluginOptions(pluginOptions)
 
   benchMeta.markDataPoint(`postBuild`)
   return benchMeta.markEnd()
