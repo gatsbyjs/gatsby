@@ -10,6 +10,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
 
   console.log(`Starting to fetch data from Contentful`)
 
+  const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
     accessToken: pluginConfig.get(`accessToken`),
@@ -30,9 +31,19 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   try {
     console.log(`Fetching default locale`)
     space = await client.getSpace()
-    locales = await client.getLocales().then(response => response.items)
-    defaultLocale = _.find(locales, { default: true }).code
-    locales = locales.filter(pluginConfig.get(`localeFilter`))
+    let contentfulLocales = await client
+      .getLocales()
+      .then(response => response.items)
+    defaultLocale = _.find(contentfulLocales, { default: true }).code
+    locales = contentfulLocales.filter(pluginConfig.get(`localeFilter`))
+    if (locales.length === 0) {
+      reporter.panic(
+        `Please check if your localeFilter is configured properly. Locales '${_.join(
+          contentfulLocales.map(item => item.code),
+          `,`
+        )}' were found but were filtered down to none.`
+      )
+    }
     console.log(`default locale is : ${defaultLocale}`)
   } catch (e) {
     let details
@@ -75,7 +86,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 
   let currentSyncData
   try {
-    let query = syncToken ? { nextSyncToken: syncToken } : { initial: true }
+    let query = syncToken
+      ? { nextSyncToken: syncToken }
+      : { initial: true, limit: pageLimit }
     currentSyncData = await client.sync(query)
   } catch (e) {
     reporter.panic(`Fetching contentful data failed`, e)
@@ -85,7 +98,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   // doesn't support this.
   let contentTypes
   try {
-    contentTypes = await pagedGet(client, `getContentTypes`)
+    contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
     console.log(`error fetching content types`, e)
   }
@@ -93,33 +106,12 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 
   let contentTypeItems = contentTypes.items
 
-  // Fix IDs on entries and assets, created/updated and deleted.
-  contentTypeItems = contentTypeItems.map(c => normalize.fixIds(c))
-
-  currentSyncData.entries = currentSyncData.entries.map(e => {
-    if (e) {
-      return normalize.fixIds(e)
-    }
-    return null
-  })
-  currentSyncData.assets = currentSyncData.assets.map(a => {
-    if (a) {
-      return normalize.fixIds(a)
-    }
-    return null
-  })
-  currentSyncData.deletedEntries = currentSyncData.deletedEntries.map(e => {
-    if (e) {
-      return normalize.fixIds(e)
-    }
-    return null
-  })
-  currentSyncData.deletedAssets = currentSyncData.deletedAssets.map(a => {
-    if (a) {
-      return normalize.fixIds(a)
-    }
-    return null
-  })
+  // Fix IDs (inline) on entries and assets, created/updated and deleted.
+  contentTypeItems.forEach(normalize.fixIds)
+  currentSyncData.entries.forEach(normalize.fixIds)
+  currentSyncData.assets.forEach(normalize.fixIds)
+  currentSyncData.deletedEntries.forEach(normalize.fixIds)
+  currentSyncData.deletedAssets.forEach(normalize.fixIds)
 
   const result = {
     currentSyncData,
@@ -140,9 +132,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 function pagedGet(
   client,
   method,
+  pageLimit,
   query = {},
   skip = 0,
-  pageLimit = 1000,
   aggregatedResponse = null
 ) {
   return client[method]({
@@ -160,9 +152,9 @@ function pagedGet(
       return pagedGet(
         client,
         method,
+        pageLimit,
         query,
         skip + pageLimit,
-        pageLimit,
         aggregatedResponse
       )
     }

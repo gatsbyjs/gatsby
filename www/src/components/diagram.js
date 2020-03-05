@@ -6,8 +6,8 @@ import { Link, StaticQuery, graphql } from "gatsby"
 
 import logo from "../assets/monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
-import FuturaParagraph from "../components/futura-paragraph"
-import TechWithIcon from "../components/tech-with-icon"
+import FuturaParagraph from "./futura-paragraph"
+import TechWithIcon from "./tech-with-icon"
 
 const lineAnimation = keyframes({
   to: { strokeDashoffset: 10 },
@@ -144,7 +144,7 @@ const ItemDescription = ({ children, color }) => (
     sx={{
       color: color ? color : `textMuted`,
       display: `block`,
-      fontFamily: `system`,
+      fontFamily: `body`,
       fontSize: 1,
       lineHeight: `dense`,
     }}
@@ -204,21 +204,19 @@ const Diagram = () => (
     query={graphql`
       query StaticHostsQuery {
         allStaticHostsYaml {
-          edges {
-            node {
-              title
-              url
-            }
+          nodes {
+            title
+            url
           }
         }
       }
     `}
-    render={({ allStaticHostsYaml: { edges: staticHosts } }) => (
+    render={({ allStaticHostsYaml: { nodes: staticHosts } }) => (
       <section
         className="Diagram"
         sx={{
           flex: `1 1 100%`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           p: 6,
           textAlign: `center`,
         }}
@@ -308,7 +306,7 @@ const Diagram = () => (
           >
             <ItemTitle>Web Hosting</ItemTitle>
             <ItemDescription>
-              {staticHosts.map(({ node: staticHost }, index) => (
+              {staticHosts.map((staticHost, index) => (
                 <Fragment key={staticHost.url}>
                   {index > 0 && `, `}
                   <ItemDescriptionLink to={staticHost.url}>

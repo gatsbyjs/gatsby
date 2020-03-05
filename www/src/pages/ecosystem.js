@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
+import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
@@ -13,21 +14,19 @@ class EcosystemPage extends Component {
     const {
       location,
       data: {
-        allStartersYaml: { edges: startersData },
-        allNpmPackage: { edges: pluginsData },
+        allStartersYaml: { nodes: startersData },
+        allNpmPackage: { nodes: pluginsData },
       },
     } = this.props
 
     const starters = startersData.map(item => {
       const {
-        node: {
-          fields: {
-            starterShowcase: { slug, name, description, stars },
-          },
-          childScreenshot: {
-            screenshotFile: {
-              childImageSharp: { fixed: thumbnail },
-            },
+        fields: {
+          starterShowcase: { slug, name, description, stars },
+        },
+        childScreenshot: {
+          screenshotFile: {
+            childImageSharp: { fixed: thumbnail },
           },
         },
       } = item
@@ -41,7 +40,7 @@ class EcosystemPage extends Component {
       }
     })
 
-    const plugins = pluginsData.map(item => item.node)
+    const plugins = pluginsData
 
     const pageTitle = `Ecosystem`
     const boardIcons = { plugins: PluginsIcon, starters: StartersIcon }
@@ -52,6 +51,9 @@ class EcosystemPage extends Component {
         pageTitle={pageTitle}
         pageIcon={EcosystemIcon}
       >
+        <Helmet>
+          <title>Ecosystem</title>
+        </Helmet>
         <EcosystemBoard
           icons={boardIcons}
           starters={starters}
@@ -66,48 +68,38 @@ class EcosystemPage extends Component {
 export default EcosystemPage
 
 export const ecosystemQuery = graphql`
-  query EcosystemQuery(
-    $featuredStarters: [String]!
-    $featuredPlugins: [String]!
-  ) {
+  query EcosystemQuery {
     allStartersYaml(
       filter: {
-        fields: {
-          starterShowcase: { slug: { in: $featuredStarters } }
-          hasScreenshot: { eq: true }
-        }
+        fields: { featured: { eq: true }, hasScreenshot: { eq: true } }
       }
     ) {
-      edges {
-        node {
-          fields {
-            starterShowcase {
-              slug
-              description
-              stars
-              name
-            }
+      nodes {
+        fields {
+          starterShowcase {
+            slug
+            description
+            stars
+            name
           }
-          childScreenshot {
-            screenshotFile {
-              childImageSharp {
-                fixed(width: 64, height: 64) {
-                  ...GatsbyImageSharpFixed_noBase64
-                }
+        }
+        childScreenshot {
+          screenshotFile {
+            childImageSharp {
+              fixed(width: 64, height: 64) {
+                ...GatsbyImageSharpFixed_noBase64
               }
             }
           }
         }
       }
     }
-    allNpmPackage(filter: { name: { in: $featuredPlugins } }) {
-      edges {
-        node {
-          slug
-          name
-          description
-          humanDownloadsLast30Days
-        }
+    allNpmPackage(filter: { fields: { featured: { eq: true } } }) {
+      nodes {
+        slug
+        name
+        description
+        humanDownloadsLast30Days
       }
     }
   }

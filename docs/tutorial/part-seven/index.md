@@ -23,6 +23,11 @@ Let's get started.
 
 ## Creating slugs for pages
 
+A ‘slug’ is the unique identifying part of a web address,
+such as the `/tutorial/part-seven` part of the page `https://www.gatsbyjs.org/tutorial/part-seven/`.
+
+It is also referred to as the ‘path’ but this tutorial will use the term ‘slug’ for consistency.
+
 Creating new pages has two steps:
 
 1.  Generate the "path" or "slug" for the page.
@@ -286,7 +291,7 @@ exports.createPages = async ({ graphql, actions }) => {
 Restart the development server and your pages will be created! An easy way to
 find new pages you create while developing is to go to a random path where
 Gatsby will helpfully show you a list of pages on the site. If you go to
-<http://localhost:8000/sdf>, you'll see the new pages you created.
+`http://localhost:8000/sdf`, you'll see the new pages you created.
 
 ![new-pages](new-pages.png)
 
@@ -382,7 +387,7 @@ export default ({ data }) => {
                 {node.frontmatter.title}{" "}
                 <span
                   css={css`
-                    color: #bbb;
+                    color: #555;
                   `}
                 >
                   — {node.frontmatter.date}
