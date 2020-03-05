@@ -69,8 +69,10 @@ The user can:
 - [ ] set aliases for commands, e.g. `gd` for `gatsby develop` 
 - [ ] know when to choose between yarn and npm
 - [ ] see what items were deleted, which gives them a chance to confirm that the actions were correct or, if not, reverse the last action
-- [ ] see localhost open automatically when `gatsby develop` succeeds (or, other options: Make sure that links to development site / graphiql are easily discoverable in some way, which will also help make sure users can find the links without much scrolling. The problem is that errors / recompiling notices are getting appended endlessly so users need to scroll very far sometimes to get to those links. Possible solutions: If we would clear older errors / notices so the links are few lines away would fix it as well. Another option is for `gatsby develop` to be interactive (like `jest --watch`) where you can use commands while it's running and we could have a command to open the browser with development site / graphiql as part of the available commands. With Ink we can make sure we don't add too much info at the bottom.)
+- [ ] see status and open localhost automatically after `gatsby develop` succeeds (https://github.com/gatsbyjs/gatsby/issues/13513)
 - [ ] get warned when they commit something that could affect build time, such as a large number of image files (since Gatsby Cloud will do this, too, I wonder if it’d be redundant and less specific to do this in the CLI also. It’d just be a general warning with no specific metrics)
+- [ ] support adding a Gatsby starter to a path within another Gatsby project (https://github.com/gatsbyjs/gatsby/issues/16135#issuecomment-516054266)
+- [ ] detect if the user is doing plugin authoring, and invite them to read documentation on it (https://github.com/gatsbyjs/gatsby/issues/13377)
 
 
 
