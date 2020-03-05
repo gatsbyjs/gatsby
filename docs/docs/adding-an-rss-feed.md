@@ -12,8 +12,14 @@ Think of it as a syndicated distribution channel for your site's content.
 
 To generate an RSS feed, you can use the [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed/) package. To install this package, run the following command:
 
-```shell
+```bash
 npm install --save gatsby-plugin-feed
+```
+
+or
+
+```bash
+yarn add gatsby-plugin-feed
 ```
 
 ## How to use [gatsby-plugin-feed](/packages/gatsby-plugin-feed/)
