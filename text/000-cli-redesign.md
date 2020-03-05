@@ -55,11 +55,12 @@ A related RFC is the [Error surveying & improvement RFC](https://github.com/gats
 
 ## Make these statements come true
 The user can:
-- [x] get suggestions for the correct spellings for misspelled Gatsby commands
+- [x] get suggestions for the correct spellings for misspelled Gatsby commands (https://github.com/gatsbyjs/gatsby/issues/13512#issuecomment-580314970)
 - [x] enter shorter input for starter URL's (users can omit the https://www part of the starter URL)
 - [x] select a starter in the CLI without needing a URL. See PR https://github.com/gatsbyjs/gatsby/pull/14097
 - [ ] be redirected to the correct URL when typing in “localhost:8000/_ _ graphiql incorrectly (we could either redirect to "correct" one or just support multiple different cases)
-- [ ] mispell a Gatsby command and the CLI will run the correct command anyway just like Google search does when you mispell something (requires us to update the did-you-mean file). https://github.com/gatsbyjs/gatsby/issues/13512
+- [ ] be directed to another localhost address is localhost:8000 is already taken (https://github.com/gatsbyjs/gatsby/issues/368 and https://github.com/gatsbyjs/gatsby/issues/13512#issuecomment-485781525)
+- [ ] misspell a Gatsby command and the CLI will run the correct command anyway just like Google search does when you mispell something (requires us to update the did-you-mean file). https://github.com/gatsbyjs/gatsby/issues/13512
 - [ ] get createPages page count in output to help users optimize for speed and catch errors faster''
 - [ ] get notified that they might need to hit `r` if they’ve changed package.json, gatsby node, etc. when `gatsby develop` is running
 - [ ] see only relevant warnings; e.g. omission of peer dependency warnings that they can ignore
