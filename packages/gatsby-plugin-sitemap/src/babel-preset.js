@@ -24,8 +24,8 @@ function resolveLocalAliasedPackages(sourcePath, currentFile, opts) {
     // originally
     if (resolvePackage.startsWith(__dirname)) return null // we resolved it, return now
 
-    // // If this is a package we want to resolve, and it was resolved before, but not by
-    // // this plugin, then we need to change it to our path.
+    // If this is a package we want to resolve, and it was resolved before, but not by
+    // this plugin, then we need to change it to our path.
     const reResolve = resolvePatterns.some(([pkg, matches]) => {
       if (matches(sourcePath)) {
         resolvePackage = pkg
@@ -34,7 +34,7 @@ function resolveLocalAliasedPackages(sourcePath, currentFile, opts) {
       return false
     })
 
-    // // No more processing needed
+    // No more processing needed
     if (!reResolve) return null
   }
 
