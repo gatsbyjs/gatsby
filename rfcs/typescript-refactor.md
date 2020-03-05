@@ -22,9 +22,7 @@ The following packages will be converted to TypeScript:
 - babel-preset-gatsby-package
 - gatsby
 - gatsby-cli
-- gatsby-codemods
 - gatsby-core-utils
-- gatsby-dev-cli
 - gatsby-image
 - gatsby-link
 - gatsby-page-utils
@@ -48,10 +46,9 @@ Here are the steps to setup a package to use TS:
 1. Add a tsconfig.json to the package with an `"extends": "../../tsconfig.json"` entry.
 2. Begin changing files from .js to .ts and adding types!
 
-Spending all of our time on a rewrite is not the goal. Adoption should be incremental, but focused. There are real wins to be had if we can have 100% TS migration, so that is the goal. In general, this is the philosophy to be had:
+Spending all of our time on a rewrite is not the goal. Adoption should be incremental, but focused. There are real wins to be had if we can have 100% TS migration, so that is the goal. In general, this is the philosophy to be had: If you are working on a feature or fix, any file you touch consider if you can easily switch it to TS. If so, do it.
 
-If you are working on a feature or fix, any file you touch consider if you can easily switch it to TS. If so, do it.
-Else if you have downtime, or are unsure what to work on, switch one of the “harder” files to TS.
+Additionally we will be **heavily** relying on the community to make this conversion happen. We will create a detailed issue with work to be completed and anyone can get involved!
 
 Once we hit 85% TypeScript migration, we will then make it a specific action to invest our time in switching files to reach 100%. Having 100% coverage brings the value of having the most sound codebase, the most IDE integration and the ability to use `tsc` as our build tool instead of babel.
 
