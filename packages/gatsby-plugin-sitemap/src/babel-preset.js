@@ -20,7 +20,6 @@ function resolveLocalAliasedPackages(sourcePath, currentFile, opts) {
 
   // Is this a sourcePath we care about, or has it already been resolved?
   if (!(sourcePath in resolvePackages)) {
-    // return null
     // only resolve the current sourcePath if it wasn't resolved by this plugin
     // originally
     if (resolvePackage.startsWith(__dirname)) return null // we resolved it, return now
