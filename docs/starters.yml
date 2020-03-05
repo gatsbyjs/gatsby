@@ -5034,7 +5034,7 @@
     - Codesyntax
     - Code syntax highlighting
 - url: https://gatsby-bootstrap-italia-starter.dej611.now.sh/
-  repo: https://github.com/dej611/gatsby-bootstrap-italia-starter
+  repo: https://github.com/italia/design-italia-gatsby-starterkit
   description: Gastby starter project using the Bootstrap Italia design kit from Italian Digital Team
   tags:
     - Styling:Bootstrap
