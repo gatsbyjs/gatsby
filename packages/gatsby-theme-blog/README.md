@@ -50,7 +50,11 @@ module.exports = {
 
    > Note that if you've changed the default `contentPath` in the configuration, you'll want to add your markdown files in the directory specified by that path.
 
-4. Run your site using `gatsby develop` and navigate to your blog posts. If you used the above configuration, your URL will be `http://localhost:8000/blog`
+4. Add image named avatar inside /assets to include a small image next to the post footer of every post page.
+
+> Note that if you've changed the default `assetPath` in the configuration, you'll want to add your asset files in the directory specified by that path.
+
+5. Run your site using `gatsby develop` and navigate to your blog posts. If you used the above configuration, your URL will be `http://localhost:8000/blog`
 
 ## Usage
 
