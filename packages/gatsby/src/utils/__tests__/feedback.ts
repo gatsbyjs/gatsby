@@ -3,7 +3,7 @@ import {
   setFeedbackDisabledValue,
   userPassesFeedbackRequestHeuristic,
 } from "../feedback"
-jest.mock(`date-fns/get_day_of_year`, (): (() => number) => (): number => {
+jest.mock(`date-fns/getDayOfYear`, (): (() => number) => (): number => {
   // This is required for Hueristic 1 to always match up
   // When Math.random returns 1 (mocked in the `clearStateToAllowHeuristicsToPass` fn)
   const currentQuarter = Math.floor((new Date().getMonth() + 3) / 3)
