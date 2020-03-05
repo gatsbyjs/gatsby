@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-source-wordpress-experimental hasn't altered the local Gatsby schema 1`] = `
+exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the local Gatsby schema 1`] = `
 Array [
   Object {
     "description": null,
@@ -70118,7 +70118,7 @@ Array [
 ]
 `;
 
-exports[`gatsby-source-wordpress-experimental hasn't altered the remote WPGraphQL schema 1`] = `
+exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the remote WPGraphQL schema 1`] = `
 Object {
   "mutationType": Object {
     "fields": Array [
@@ -89475,7 +89475,7 @@ In some cases, you need to provide options to alter GraphQL&#039;s execution beh
 }
 `;
 
-exports[`gatsby-source-wordpress-experimental queries data properly 1`] = `
+exports[`[gatsby-source-wordpress-experimental] schema queries data properly 1`] = `
 Object {
   "data": Object {
     "allWpPage": Object {
@@ -89580,7 +89580,7 @@ Object {
 }
 `;
 
-exports[`gatsby-source-wordpress-experimental queries data properly INCREMENTED 1`] = `
+exports[`[gatsby-source-wordpress-experimental] schema queries data properly INCREMENTED 1`] = `
 Object {
   "data": Object {
     "allWpPage": Object {

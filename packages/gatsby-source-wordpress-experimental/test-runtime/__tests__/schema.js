@@ -3,6 +3,7 @@ import { introspectionQuery } from "gatsby-source-wordpress-experimental/utils/g
 
 import { runGatsby } from "../test-utils/run-gatsby"
 import gql from "gatsby-source-wordpress-experimental/utils/gql"
+import { incrementalIt } from "../test-utils/incremental-it"
 
 jest.setTimeout(100000)
 
@@ -10,16 +11,7 @@ require(`dotenv`).config({
   path: `./test-runtime/.env.development`,
 })
 
-const isIncrement = process.env.WPGRAPHQL_INCREMENT
-
-const incrementalIt = (name, test) => {
-  // full fetch
-  ;(isIncrement ? it : it.skip)(name, test)
-  // incremental data fetch
-  ;(!isIncrement ? it : it.skip)(`${name} INCREMENTED`, test)
-}
-
-describe(`gatsby-source-wordpress-experimental`, () => {
+describe(`[gatsby-source-wordpress-experimental] schema`, () => {
   runGatsby()
 
   const url = process.env.WPGRAPHQL_URL

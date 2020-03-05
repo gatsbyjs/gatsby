@@ -1,8 +1,8 @@
 import { spawn } from "child_process"
 import on from "wait-on"
 import kill from "tree-kill"
-import fetchGraphql from "gatsby-source-wordpress-experimental/utils/fetch-graphql"
 import gql from "gatsby-source-wordpress-experimental/utils/gql"
+import { authedWPGQLRequest } from "./authed-wpgql-request"
 
 export const runGatsby = async () => {
   let gatsbyProcess
@@ -10,25 +10,19 @@ export const runGatsby = async () => {
   beforeAll(async () => {
     if (process.env.WPGQL_INCREMENT) {
       // mutate remote schema
-      await fetchGraphql({
-        url: process.env.WPGRAPHQL_URL,
-        query: gql`
-          mutation {
-            updatePage(
-              input: {
-                id: "cGFnZToxMQ=="
-                title: "testing 1"
-                clientMutationId: "increment-test"
-              }
-            ) {
-              clientMutationId
+      await authedWPGQLRequest(gql`
+        mutation {
+          updatePage(
+            input: {
+              id: "cGFnZToxMQ=="
+              title: "testing 1"
+              clientMutationId: "increment-test"
             }
+          ) {
+            clientMutationId
           }
-        `,
-        headers: {
-          Authorization: `Basic Y2FsZWI6dGVzdDEyMzQ=`,
-        },
-      })
+        }
+      `)
     }
 
     gatsbyProcess = spawn(`yarn`, [`develop-test-runtime`], {
@@ -46,25 +40,19 @@ export const runGatsby = async () => {
   afterAll(async () => {
     if (process.env.WPGQL_INCREMENT) {
       // change remote schema back
-      await fetchGraphql({
-        url: process.env.WPGRAPHQL_URL,
-        query: gql`
-          mutation {
-            updatePage(
-              input: {
-                id: "cGFnZToxMQ=="
-                title: "Home"
-                clientMutationId: "de-increment-test"
-              }
-            ) {
-              clientMutationId
+      await authedWPGQLRequest(gql`
+        mutation {
+          updatePage(
+            input: {
+              id: "cGFnZToxMQ=="
+              title: "Home"
+              clientMutationId: "de-increment-test"
             }
+          ) {
+            clientMutationId
           }
-        `,
-        headers: {
-          Authorization: `Basic Y2FsZWI6dGVzdDEyMzQ=`,
-        },
-      })
+        }
+      `)
     }
 
     kill(gatsbyProcess.pid)
