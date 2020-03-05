@@ -26,7 +26,7 @@ class ActionMonitor
         $this->monitorActions();
     }
 
-    // $args = $action_type, $title, $status, $node_id, $relay_id, $graphql_single_name, $graphql_plural_name
+    // $args = [$action_type, $title, $status, $node_id, $relay_id, $graphql_single_name, $graphql_plural_name]
     function insertNewAction($args) {
       if (
         !$args['action_type'] ||
@@ -40,12 +40,15 @@ class ActionMonitor
         return;
       }
 
+      $time = time();
+
       $action_monitor_post_id = \wp_insert_post(
             [
                 'post_title'    => $args['title'],
                 'post_type'     => 'action_monitor',
                 'post_status'   => 'private',
-                'author'        => -1
+                'author'        => -1,
+                'post_name'     => sanitize_title("{$args['title']}-{$time}")
             ]
       );
 
