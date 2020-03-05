@@ -88,7 +88,7 @@ function guessSafeChunkSize(values: [string, IReduxNode][]): number {
   // Max size of a Buffer is 2gb (yeah, we're assuming 64bit system)
   // https://stackoverflow.com/questions/8974375/whats-the-maximum-size-of-a-node-js-buffer
   // Use 1.5gb as the target ceiling, allowing for some margin of error
-  return Math.floor((150 * 1024 * 1024 * 1024) / maxSize)
+  return Math.floor((1.5 * 1024 * 1024 * 1024) / maxSize)
 }
 
 function prepareCacheFolder(
