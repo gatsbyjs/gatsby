@@ -55,8 +55,129 @@ const nodesTest = ({
   }
 }
 
+const graphql = require(`lodash/head`)
+
+const queriesFixtures = [
+  {
+    runs: [1],
+    type: `data`,
+    query: graphql`
+      {
+        allParentParentDeletionForTransformer {
+          nodes {
+            id
+            foo
+            childChildOfParentParentDeletionForTransformer {
+              id
+              foo
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [1, 2],
+    type: `types`,
+    query: graphql`
+      {
+        typeinfoParent: __type(name: "Parent_ParentDeletionForTransformer") {
+          fields {
+            name
+          }
+        }
+
+        typeinfoChild: __type(
+          name: "ChildOfParent_ParentDeletionForTransformer"
+        ) {
+          fields {
+            name
+          }
+        }
+      }
+    `,
+  },
+]
+
+const queriesTest = ({ typesFirstRun, typesSecondRun, dataFirstRun }) => {
+  // both parent and child types on first run
+  expect(typesFirstRun).toMatchInlineSnapshot(`
+    Object {
+      "typeinfoChild": Object {
+        "fields": Array [
+          Object {
+            "name": "id",
+          },
+          Object {
+            "name": "parent",
+          },
+          Object {
+            "name": "children",
+          },
+          Object {
+            "name": "internal",
+          },
+          Object {
+            "name": "foo",
+          },
+        ],
+      },
+      "typeinfoParent": Object {
+        "fields": Array [
+          Object {
+            "name": "id",
+          },
+          Object {
+            "name": "parent",
+          },
+          Object {
+            "name": "children",
+          },
+          Object {
+            "name": "internal",
+          },
+          Object {
+            "name": "foo",
+          },
+          Object {
+            "name": "childChildOfParentParentDeletionForTransformer",
+          },
+        ],
+      },
+    }
+  `)
+
+  // no parent or child types on second run
+  expect(typesSecondRun).toMatchInlineSnapshot(`
+    Object {
+      "typeinfoChild": null,
+      "typeinfoParent": null,
+    }
+  `)
+
+  // expected query result
+  expect(dataFirstRun).toMatchInlineSnapshot(`
+    Object {
+      "allParentParentDeletionForTransformer": Object {
+        "nodes": Array [
+          Object {
+            "childChildOfParentParentDeletionForTransformer": Object {
+              "foo": "run-1",
+              "id": "parent_parentDeletionForTransformer >>> Child",
+            },
+            "foo": "run-1",
+            "id": "parent_parentDeletionForTransformer",
+          },
+        ],
+      },
+    }
+  `)
+}
+
 module.exports = {
   config,
+  queriesFixtures,
+  queriesTest,
   plugins,
   nodesTest,
 }

@@ -95,8 +95,125 @@ const nodesTest = ({
   }
 }
 
+const graphql = require(`lodash/head`)
+
+const queriesFixtures = [
+  {
+    runs: [1, 2],
+    type: `data`,
+    query: graphql`
+      {
+        allParentChildDeletionForTransformer {
+          nodes {
+            id
+            foo
+            children {
+              __typename
+              id
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [1, 2],
+    type: `types`,
+    query: graphql`
+      {
+        typeinfoParent: __type(name: "Parent_ChildDeletionForTransformer") {
+          fields {
+            name
+          }
+        }
+
+        typeinfoChild: __type(
+          name: "ChildOfParent_ChildDeletionForTransformer"
+        ) {
+          fields {
+            name
+          }
+        }
+      }
+    `,
+  },
+]
+
+const queriesTest = ({ typesDiff, dataDiff }) => {
+  // type of transformer is removed
+  expect(typesDiff).toMatchInlineSnapshot(`
+    "  Object {
+    -   \\"typeinfoChild\\": Object {
+    -     \\"fields\\": Array [
+    -       Object {
+    -         \\"name\\": \\"id\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"parent\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"children\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"internal\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"foo\\",
+    -       },
+    -     ],
+    -   },
+    +   \\"typeinfoChild\\": null,
+        \\"typeinfoParent\\": Object {
+          \\"fields\\": Array [
+            Object {
+              \\"name\\": \\"id\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
+            },
+            Object {
+              \\"name\\": \\"children\\",
+            },
+            Object {
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+              \\"name\\": \\"foo\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"childChildOfParentChildDeletionForTransformer\\",
+            },
+          ],
+        },
+      }"
+  `)
+
+  // child is removed
+  expect(dataDiff).toMatchInlineSnapshot(`
+    "  Object {
+        \\"allParentChildDeletionForTransformer\\": Object {
+          \\"nodes\\": Array [
+            Object {
+    -         \\"children\\": Array [
+    -           Object {
+    -             \\"__typename\\": \\"ChildOfParent_ChildDeletionForTransformer\\",
+    -             \\"id\\": \\"parent_childDeletionForTransformer >>> Child\\",
+    -           },
+    -         ],
+    +         \\"children\\": Array [],
+              \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_childDeletionForTransformer\\",
+            },
+          ],
+        },
+      }"
+  `)
+}
+
 module.exports = {
   config,
+  queriesFixtures,
+  queriesTest,
   plugins,
   nodesTest,
 }

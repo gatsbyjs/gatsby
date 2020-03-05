@@ -2,6 +2,7 @@ const fs = require(`fs`)
 const v8 = require(`v8`)
 const glob = require(`glob`)
 const path = require(`path`)
+const _ = require(`lodash`)
 
 const db = require(`gatsby/dist/db`)
 
@@ -52,9 +53,11 @@ exports.onPostBuild = async ({ getNodes, store }) => {
   )
 
   scenarioPagesFiles.forEach(scenarioPageFile => {
-    const scenarioName = path.dirname(
+    const relativePathToPageData = path.dirname(
       path.relative(scenarioPagesDirectory, scenarioPageFile)
     )
+
+    const { dir: scenarioName, name: type } = path.parse(relativePathToPageData)
 
     const pageDataPath = path.join(
       __dirname,
@@ -62,11 +65,13 @@ exports.onPostBuild = async ({ getNodes, store }) => {
       `page-data`,
       `scenarios`,
       scenarioName,
+      type,
       `page-data.json`
     )
 
     const result = require(pageDataPath).result.data
-    queryResults[scenarioName] = result
+    _.set(queryResults, [scenarioName, type], result)
+    // queryResults[scenarioName] = result
   })
 
   fs.writeFileSync(

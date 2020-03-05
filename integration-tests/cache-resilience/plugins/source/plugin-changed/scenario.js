@@ -64,6 +64,7 @@ const graphql = require(`lodash/head`)
 const queriesFixtures = [
   {
     runs: [1, 2],
+    type: `data`,
     query: graphql`
       {
         allIndependentChanging {
@@ -77,8 +78,8 @@ const queriesFixtures = [
   },
 ]
 
-const queriesTest = ({ firstRun, diff }) => {
-  expect(firstRun).toMatchInlineSnapshot(`
+const queriesTest = ({ dataFirstRun, dataDiff }) => {
+  expect(dataFirstRun).toMatchInlineSnapshot(`
     Object {
       "allIndependentChanging": Object {
         "nodes": Array [
@@ -90,7 +91,7 @@ const queriesTest = ({ firstRun, diff }) => {
       },
     }
   `)
-  expect(diff).toMatchInlineSnapshot(`
+  expect(dataDiff).toMatchInlineSnapshot(`
     "  Object {
         \\"allIndependentChanging\\": Object {
           \\"nodes\\": Array [

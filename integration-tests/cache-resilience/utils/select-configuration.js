@@ -26,18 +26,20 @@ const useGatsbyQuery = run => {
 
   const queries = getQueriesForRun(run)
 
-  Object.entries(queries).forEach(([name, queryText]) => {
-    const pagePath = path.join(
-      __dirname,
-      `..`,
-      `src`,
-      `pages`,
-      `scenarios`,
-      name,
-      `index.js`
-    )
+  Object.entries(queries).forEach(([name, queriesForScenario]) => {
+    Object.entries(queriesForScenario).forEach(([type, queryText]) => {
+      const pagePath = path.join(
+        __dirname,
+        `..`,
+        `src`,
+        `pages`,
+        `scenarios`,
+        name,
+        type,
+        `index.js`
+      )
 
-    const content = `
+      const content = `
       import { graphql } from "gatsby"
       export default () => null
 
@@ -46,7 +48,8 @@ const useGatsbyQuery = run => {
       \`
     `
 
-    fs.outputFileSync(pagePath, content)
+      fs.outputFileSync(pagePath, content)
+    })
   })
 }
 

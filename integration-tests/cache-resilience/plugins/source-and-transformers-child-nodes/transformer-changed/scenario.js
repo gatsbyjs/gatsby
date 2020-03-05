@@ -64,28 +64,150 @@ const nodesTest = ({
       `parent_childChangeForTransformer >>> Child`,
     ])
 
-    // we expect following changes to transformed node
+    // we expect following changes to transformed node:
+    //  - change to`foo` value
+    //  - removal of `first` field
+    //  - addition of `second` field
+    //  - change to contentDigest
     expect(diff.changes[`parent_childChangeForTransformer >>> Child`].diff)
       .toMatchInlineSnapshot(`
       "  Object {
           \\"children\\": Array [],
+      -   \\"first\\": \\"run\\",
       -   \\"foo\\": \\"bar\\",
       +   \\"foo\\": \\"baz\\",
           \\"id\\": \\"parent_childChangeForTransformer >>> Child\\",
           \\"internal\\": Object {
-      -     \\"contentDigest\\": \\"bd4478bada76e1f5a45a3b326eaec443\\",
-      +     \\"contentDigest\\": \\"70f659e959d7d3fb752f811e8b0eb8ad\\",
+      -     \\"contentDigest\\": \\"25ad44d8db6f7cee17e248d3b4c94538\\",
+      +     \\"contentDigest\\": \\"3c57fc662e03b2b443b47575f7e82ec0\\",
             \\"owner\\": \\"source-and-transformers-child-nodes/transformer-changed/gatsby-transformer\\",
             \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
           },
           \\"parent\\": \\"parent_childChangeForTransformer\\",
+      +   \\"second\\": \\"run\\",
         }"
     `)
   }
 }
 
+const graphql = require(`lodash/head`)
+
+const queriesFixtures = [
+  {
+    runs: [1, 2],
+    type: `data`,
+    query: graphql`
+      {
+        allParentChildChangeForTransformer {
+          nodes {
+            id
+            foo
+            childChildOfParentChildChangeForTransformer {
+              id
+              foo
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [1, 2],
+    type: `types`,
+    query: graphql`
+      {
+        typeinfoParent: __type(name: "Parent_ChildChangeForTransformer") {
+          fields {
+            name
+          }
+        }
+
+        typeinfoChild: __type(name: "ChildOfParent_ChildChangeForTransformer") {
+          fields {
+            name
+          }
+        }
+      }
+    `,
+  },
+]
+
+const queriesTest = ({ typesDiff, dataDiff }) => {
+  // remove `first` field and add `second` field in child type
+  expect(typesDiff).toMatchInlineSnapshot(`
+    "  Object {
+        \\"typeinfoChild\\": Object {
+          \\"fields\\": Array [
+            Object {
+              \\"name\\": \\"id\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
+            },
+            Object {
+              \\"name\\": \\"children\\",
+            },
+            Object {
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+              \\"name\\": \\"foo\\",
+            },
+            Object {
+    -         \\"name\\": \\"first\\",
+    +         \\"name\\": \\"second\\",
+            },
+          ],
+        },
+        \\"typeinfoParent\\": Object {
+          \\"fields\\": Array [
+            Object {
+              \\"name\\": \\"id\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
+            },
+            Object {
+              \\"name\\": \\"children\\",
+            },
+            Object {
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+              \\"name\\": \\"foo\\",
+            },
+            Object {
+              \\"name\\": \\"childChildOfParentChildChangeForTransformer\\",
+            },
+          ],
+        },
+      }"
+  `)
+
+  // data only change fields for `foo` field in child node
+  expect(dataDiff).toMatchInlineSnapshot(`
+    "  Object {
+        \\"allParentChildChangeForTransformer\\": Object {
+          \\"nodes\\": Array [
+            Object {
+              \\"childChildOfParentChildChangeForTransformer\\": Object {
+    -           \\"foo\\": \\"bar\\",
+    +           \\"foo\\": \\"baz\\",
+                \\"id\\": \\"parent_childChangeForTransformer >>> Child\\",
+              },
+              \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_childChangeForTransformer\\",
+            },
+          ],
+        },
+      }"
+  `)
+}
+
 module.exports = {
   config,
+  queriesFixtures,
+  queriesTest,
   plugins,
   nodesTest,
 }

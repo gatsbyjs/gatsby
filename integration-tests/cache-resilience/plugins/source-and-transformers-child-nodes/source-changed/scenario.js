@@ -83,8 +83,143 @@ const nodesTest = ({
   }
 }
 
+const graphql = require(`lodash/head`)
+
+const queriesFixtures = [
+  {
+    runs: [1],
+    type: `data`,
+    query: graphql`
+      {
+        allParentParentChangeForTransformer {
+          nodes {
+            id
+            foo
+            childChildOfParentParentChangeForTransformer {
+              id
+              foo
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [2],
+    type: `data`,
+    query: graphql`
+      {
+        allParentParentChangeForTransformer {
+          nodes {
+            id
+            bar
+            childChildOfParentParentChangeForTransformer {
+              id
+              bar
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [1, 2],
+    type: `types`,
+    query: graphql`
+      {
+        typeinfoParent: __type(name: "Parent_ParentChangeForTransformer") {
+          fields {
+            name
+          }
+        }
+
+        typeinfoChild: __type(
+          name: "ChildOfParent_ParentChangeForTransformer"
+        ) {
+          fields {
+            name
+          }
+        }
+      }
+    `,
+  },
+]
+
+const queriesTest = ({ typesDiff, dataDiff }) => {
+  // `foo` fields are replaced with `bar` fields
+  expect(typesDiff).toMatchInlineSnapshot(`
+    "  Object {
+        \\"typeinfoChild\\": Object {
+          \\"fields\\": Array [
+            Object {
+              \\"name\\": \\"id\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
+            },
+            Object {
+              \\"name\\": \\"children\\",
+            },
+            Object {
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+    -         \\"name\\": \\"foo\\",
+    +         \\"name\\": \\"bar\\",
+            },
+          ],
+        },
+        \\"typeinfoParent\\": Object {
+          \\"fields\\": Array [
+            Object {
+              \\"name\\": \\"id\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
+            },
+            Object {
+              \\"name\\": \\"children\\",
+            },
+            Object {
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+    -         \\"name\\": \\"foo\\",
+    +         \\"name\\": \\"bar\\",
+            },
+            Object {
+              \\"name\\": \\"childChildOfParentParentChangeForTransformer\\",
+            },
+          ],
+        },
+      }"
+  `)
+
+  // data only change fields from `foo` to `bar`
+  expect(dataDiff).toMatchInlineSnapshot(`
+    "  Object {
+        \\"allParentParentChangeForTransformer\\": Object {
+          \\"nodes\\": Array [
+            Object {
+    +         \\"bar\\": \\"run-2\\",
+              \\"childChildOfParentParentChangeForTransformer\\": Object {
+    -           \\"foo\\": \\"run-1\\",
+    +           \\"bar\\": \\"run-2\\",
+                \\"id\\": \\"parent_parentChangeForTransformer >>> Child\\",
+              },
+    -         \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_parentChangeForTransformer\\",
+            },
+          ],
+        },
+      }"
+  `)
+}
+
 module.exports = {
   config,
+  queriesFixtures,
+  queriesTest,
   plugins,
   nodesTest,
 }

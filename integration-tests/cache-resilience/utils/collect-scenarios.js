@@ -13,6 +13,7 @@ const collectScenarios = () => {
 
       return {
         name: scenarioPath,
+        filename,
         ...require(filename),
       }
     })
@@ -54,12 +55,27 @@ const getQueriesForRun = run => {
 
   collectScenarios().forEach(scenario => {
     if (scenario.queriesFixtures) {
-      const queriesFixture = scenario.queriesFixtures.find(config =>
+      const queriesFixtures = scenario.queriesFixtures.filter(config =>
         config.runs.includes(run)
       )
 
-      if (queriesFixture) {
-        queries[scenario.name] = queriesFixture.query
+      if (queriesFixtures.length) {
+        queries[scenario.name] = queriesFixtures.reduce((acc, queryFixture) => {
+          const fixtureType = queryFixture.type
+
+          if (!fixtureType) {
+            console.error(
+              `ERROR: query fixture from ${scenario.filename} doesn't have type`
+            )
+          } else if (![`data`, `types`].includes(fixtureType)) {
+            console.error(
+              `ERROR: query fixture from ${scenario.filename} has incorrect type ("${fixtureType}"). Available types: ["data", "types"]`
+            )
+          } else {
+            acc[fixtureType] = queryFixture.query
+          }
+          return acc
+        }, {})
       }
     }
   })

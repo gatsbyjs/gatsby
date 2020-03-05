@@ -194,9 +194,9 @@ describe(`Some plugins changed between gatsby runs`, () => {
       }
     }
 
-    afterAll(() => {
-      console.log({ usedPlugins })
-    })
+    // afterAll(() => {
+    //   console.log({ usedPlugins })
+    // })
 
     it(`Sanity checks`, () => {
       // preconditions - we expect our cache to be empty on first run
@@ -402,11 +402,19 @@ describe(`Some plugins changed between gatsby runs`, () => {
   describe(`Query results`, () => {
     const getQueryResultTestArgs = scenarioName => {
       const result = {
-        firstRun: states.queryResults.firstRun[scenarioName],
-        secondRun: states.queryResults.secondRun[scenarioName],
+        dataFirstRun: states.queryResults.firstRun[scenarioName].data,
+        dataSecondRun: states.queryResults.secondRun[scenarioName].data,
+        typesFirstRun: states.queryResults.firstRun[scenarioName].types,
+        typesSecondRun: states.queryResults.secondRun[scenarioName].types,
       }
 
-      result.diff = diff(result.firstRun, result.secondRun)
+      if (result.dataFirstRun && result.dataSecondRun) {
+        result.dataDiff = diff(result.dataFirstRun, result.dataSecondRun)
+      }
+
+      if (result.typesFirstRun && result.typesSecondRun) {
+        result.typesDiff = diff(result.typesFirstRun, result.typesSecondRun)
+      }
 
       return result
     }
@@ -438,6 +446,54 @@ describe(`Some plugins changed between gatsby runs`, () => {
         const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
 
         queriesTest(getQueryResultTestArgs(scenarioName))
+      })
+    })
+
+    describe(`Source plugins with transformers`, () => {
+      describe(`Changes to source plugins`, () => {
+        it(`Adding source plugin creates parent and child types in schema and they are queryable on second run`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/source-added`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+
+        it(`Removing source plugin removes parent and child types from schema and they are queryable on first run`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/source-removed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+
+        it(`Changing source plugin adjust schema and query result changes just certain fields`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/source-changed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+      })
+
+      describe(`Changes to transformer plugins`, () => {
+        it(`Adding transformer plugin adds child type to schema and updates query result`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/transformer-added`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+
+        it(`Removing transformer plugin removes child type from schema and updates query result`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/transformer-removed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+
+        it(`Changing transformer plugin adjusts schema and query result changes just certain fields`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/transformer-changed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
       })
     })
   })

@@ -53,6 +53,7 @@ const graphql = require(`lodash/head`)
 const queriesFixtures = [
   {
     runs: [1, 2],
+    type: `data`,
     query: graphql`
       {
         allIndependentStable {
@@ -66,8 +67,8 @@ const queriesFixtures = [
   },
 ]
 
-const queriesTest = ({ firstRun, secondRun }) => {
-  expect(firstRun).toMatchInlineSnapshot(`
+const queriesTest = ({ dataFirstRun, dataSecondRun }) => {
+  expect(dataFirstRun).toMatchInlineSnapshot(`
     Object {
       "allIndependentStable": Object {
         "nodes": Array [
@@ -79,7 +80,7 @@ const queriesTest = ({ firstRun, secondRun }) => {
       },
     }
   `)
-  expect(firstRun).toEqual(secondRun)
+  expect(dataFirstRun).toEqual(dataSecondRun)
 }
 
 module.exports = {

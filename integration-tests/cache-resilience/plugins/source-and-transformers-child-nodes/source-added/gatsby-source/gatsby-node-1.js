@@ -4,7 +4,7 @@ exports.sourceNodes = ({ actions, createContentDigest }) => {
     internal: {
       type: `Parent_ParentAdditionForTransformer`,
     },
-    foo: `run-1`,
+    foo: `bar`,
   }
 
   node.internal.contentDigest = createContentDigest(node)

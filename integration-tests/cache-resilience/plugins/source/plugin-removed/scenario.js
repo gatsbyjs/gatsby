@@ -44,6 +44,7 @@ const graphql = require(`lodash/head`)
 const queriesFixtures = [
   {
     runs: [1, 2],
+    type: `types`,
     query: graphql`
       {
         typeinfo: __type(name: "Deletion") {
@@ -56,9 +57,9 @@ const queriesFixtures = [
   },
 ]
 
-const queriesTest = ({ firstRun, secondRun }) => {
+const queriesTest = ({ typesFirstRun, typesSecondRun }) => {
   // type exist in schema
-  expect(firstRun).toMatchInlineSnapshot(`
+  expect(typesFirstRun).toMatchInlineSnapshot(`
     Object {
       "typeinfo": Object {
         "fields": Array [
@@ -82,7 +83,7 @@ const queriesTest = ({ firstRun, secondRun }) => {
     }
   `)
   // type doesn't exist in schema
-  expect(secondRun).toMatchInlineSnapshot(`
+  expect(typesSecondRun).toMatchInlineSnapshot(`
     Object {
       "typeinfo": null,
     }

@@ -4,6 +4,7 @@ exports.onCreateNode = ({ actions, node, createContentDigest }) => {
       parent: node.id,
       id: `${node.id} >>> Child`,
       foo: `bar`,
+      first: `run`,
       internal: {
         type: `ChildOfParent_ChildChangeForTransformer`,
       },
