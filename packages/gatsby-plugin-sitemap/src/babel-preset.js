@@ -1,11 +1,10 @@
-const path = require(`path`)
 const { resolvePath } = require(`babel-plugin-module-resolver`)
 
 const babelResolverPlugin = require.resolve(`babel-plugin-module-resolver`)
 
 const resolvePackages = {
-  pify: path.dirname(require.resolve(`pify/package.json`)),
-  minimatch: path.dirname(require.resolve(`minimatch/package.json`)),
+  pify: require.resolve(`pify`),
+  minimatch: require.resolve(`minimatch`),
 }
 const resolvePatterns = Object.keys(resolvePackages).map(pkg => [
   pkg,
