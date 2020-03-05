@@ -7,10 +7,9 @@ const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
   ON_POST_BUILD_FILE_PATH,
 } = require(`../utils/constants`)
-const {
-  useGatsbyNodeAndConfigAndQuery,
-} = require(`../utils/select-configuration`)
+const { selectConfiguration } = require(`../utils/select-configuration`)
 const { loadState } = require(`../utils/load-state`)
+const { diff } = require(`../utils/nodes-diff`)
 
 const getNodesSubStateByPlugins = (state, pluginNamesArray) =>
   _.mapValues(state.nodes, stateShard => {
@@ -42,15 +41,13 @@ const gatsbyBin = path.join(
 
 const { compareState } = require(`../utils/nodes-diff`)
 
-const stdio = `pipe`
+const stdio = `inherit`
+
+// process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION = `1`
 
 const build = ({ updatePlugins } = {}) => {
   spawnSync(gatsbyBin, [`clean`], { stdio })
-  let expectedResultsFromRun = useGatsbyNodeAndConfigAndQuery(1)
-
-  const expectedQueryResults = {
-    firstRun: expectedResultsFromRun,
-  }
+  selectConfiguration(1)
 
   let processOutput
 
@@ -73,10 +70,8 @@ const build = ({ updatePlugins } = {}) => {
 
   if (updatePlugins) {
     // Invalidations
-    expectedResultsFromRun = useGatsbyNodeAndConfigAndQuery(2)
+    selectConfiguration(2)
   }
-
-  expectedQueryResults.secondRun = expectedResultsFromRun
 
   // Second run, get state and compare with state from previous run
   processOutput = spawnSync(gatsbyBin, [`build`], {
@@ -112,18 +107,21 @@ const build = ({ updatePlugins } = {}) => {
         postBuildStateFromSecondRun.diskCacheSnapshot,
     },
     queryResults: {
-      actual: {
-        firstRun: postBuildStateFromFirstRun.queryResults,
-        secondRun: postBuildStateFromSecondRun.queryResults,
-      },
-      expected: expectedQueryResults,
+      firstRun: postBuildStateFromFirstRun.queryResults,
+      secondRun: postBuildStateFromSecondRun.queryResults,
     },
   }
 }
 
+beforeAll(async () => {
+  await del([`plugins/**/src/**`])
+
+  selectConfiguration(1)
+})
+
 afterAll(() => {
   // go back to initial
-  useGatsbyNodeAndConfigAndQuery(1)
+  selectConfiguration(1)
 
   // delete saved states
   if (fs.existsSync(ON_PRE_BOOTSTRAP_FILE_PATH)) {
@@ -134,12 +132,7 @@ afterAll(() => {
   }
 })
 
-beforeAll(async () => {
-  await del([`plugins/**/src/**`])
-
-  useGatsbyNodeAndConfigAndQuery(1)
-})
-
+/*
 describe.skip(`nothing changed between gatsby runs`, () => {
   let states
 
@@ -161,18 +154,26 @@ describe.skip(`nothing changed between gatsby runs`, () => {
       } = states
 
       expect(preBootstrapStateFromFirstRun.size).toEqual(0)
-
+      // sanity check to make sure there are any nodes after first run
+      expect(postBuildStateFromFirstRun.size).toBeGreaterThan(0)
+      // no nodes where invalidated if nothing changes
       expect(postBuildStateFromFirstRun).toEqual(preBootstrapStateFromSecondRun)
+      // final nodes store is the same after first and second run
       expect(postBuildStateFromFirstRun).toEqual(postBuildStateFromSecondRun)
     })
 
-    it.skip(`query results matches expectations`, () => {
-      expect(states.queryResults.actual).toEqual(states.queryResults.expected)
-    })
+    // it.skip(`query results matches expectations`, () => {
+    //   expect(states.queryResults.actual).toEqual(states.queryResults.expected)
+    // })
   })
-})
 
-describe.skip(`some plugins changed between gatsby runs`, () => {
+  // describe(`Key-value persisted store (cache)`, () => {
+
+  // })
+})
+*/
+
+describe(`Some plugins changed between gatsby runs`, () => {
   let states
 
   beforeAll(() => {
@@ -181,855 +182,321 @@ describe.skip(`some plugins changed between gatsby runs`, () => {
     })
   })
 
-  describe.skip(`Nodes`, () => {
-    it(`sanity checks`, () => {
+  describe(`Nodes`, () => {
+    const usedPlugins = []
+    const getNodesTestArgs = (states, plugins) => {
+      const nodesSubState = getNodesSubStateByPlugins(states, plugins)
+
+      usedPlugins.push(...plugins)
+      return {
+        ...nodesSubState,
+        compareState,
+      }
+    }
+
+    // afterAll(() => {
+    //   console.log({ usedPlugins })
+    // })
+
+    it(`Sanity checks`, () => {
       // preconditions - we expect our cache to be empty on first run
       expect(states.nodes.preBootstrapStateFromFirstRun.size).toEqual(0)
     })
 
-    it.skip(`query results matches expectations`, () => {
-      console.log(states.queryResults.actual.firstRun[`gatsby-plugin-stable`])
-      console.log(states.queryResults.expected.firstRun[`gatsby-plugin-stable`])
-      expect(states.queryResults.actual).toEqual(states.queryResults.expected)
-    })
-
-    describe(`Plugin changes`, () => {
-      it(`are not deleted when the owner plugin does not change`, () => {
+    describe(`Source plugins without transformers`, () => {
+      it(`Not changing plugin doesn't invalidate nodes created by it`, () => {
         const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [`gatsby-plugin-stable`])
+          plugins,
+          nodesTest,
+        } = require(`../plugins/source/no-changes/scenario`)
 
-        expect(postBuildStateFromFirstRun).toEqual(
-          preBootstrapStateFromSecondRun
-        )
-
-        expect(postBuildStateFromFirstRun).toEqual(postBuildStateFromSecondRun)
+        nodesTest(getNodesTestArgs(states, plugins))
       })
 
-      it(`are deleted and recreated when owner plugin changes`, () => {
+      it(`Adding plugin adds new node`, () => {
         const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-plugin-independent-node`,
-        ])
+          plugins,
+          nodesTest,
+        } = require(`../plugins/source/plugin-added/scenario`)
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`INDEPENDENT_NODE_1`])
-          expect(diff.deletions.INDEPENDENT_NODE_1).toBeTruthy()
-        }
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`INDEPENDENT_NODE_1`])
-
-          expect(diff.changes.INDEPENDENT_NODE_1.diff).toMatchInlineSnapshot(`
-              "  Object {
-                  \\"children\\": Array [],
-              -   \\"foo\\": \\"bar\\",
-              +   \\"foo\\": \\"baz\\",
-                  \\"id\\": \\"INDEPENDENT_NODE_1\\",
-                  \\"internal\\": Object {
-                    \\"contentDigest\\": \\"0\\",
-                    \\"owner\\": \\"gatsby-plugin-independent-node\\",
-                    \\"type\\": \\"IndependentChanging\\",
-                  },
-                  \\"parent\\": null,
-                }"
-            `)
-        }
+        nodesTest(getNodesTestArgs(states, plugins))
       })
 
-      it(`are deleted and recreated when the owner plugin of a parent changes`, () => {
+      it(`Removing plugin clears nodes owned by it`, () => {
         const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-parent-change-for-transformer`,
-          `gatsby-transformer-parent-change`,
-        ])
+          plugins,
+          nodesTest,
+        } = require(`../plugins/source/plugin-removed/scenario`)
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([
-            `parent_parentChangeForTransformer`,
-            `parent_parentChangeForTransformer >>> Child`,
-          ])
-
-          expect(
-            diff.deletions[`parent_parentChangeForTransformer >>> Child`]
-          ).toBeTruthy()
-          expect(
-            diff.deletions[`parent_parentChangeForTransformer`]
-          ).toBeTruthy()
-        }
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([
-            `parent_parentChangeForTransformer`,
-            `parent_parentChangeForTransformer >>> Child`,
-          ])
-
-          expect(
-            diff.changes[`parent_parentChangeForTransformer >>> Child`].diff
-          ).toMatchInlineSnapshot(`
-            "  Object {
-            -   \\"bar\\": undefined,
-            +   \\"bar\\": \\"run-2\\",
-                \\"children\\": Array [],
-            -   \\"foo\\": \\"run-1\\",
-            +   \\"foo\\": undefined,
-                \\"id\\": \\"parent_parentChangeForTransformer >>> Child\\",
-                \\"internal\\": Object {
-            -     \\"contentDigest\\": \\"603e50c1fe96279688538ab046d1d70a\\",
-            +     \\"contentDigest\\": \\"f784f9722081b56fee8ca34708299a37\\",
-                  \\"owner\\": \\"gatsby-transformer-parent-change\\",
-                  \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
-                },
-                \\"parent\\": \\"parent_parentChangeForTransformer\\",
-              }"
-          `)
-          expect(diff.changes[`parent_parentChangeForTransformer`].diff)
-            .toMatchInlineSnapshot(`
-            "  Object {
-            +   \\"bar\\": \\"run-2\\",
-                \\"children\\": Array [
-                  \\"parent_parentChangeForTransformer >>> Child\\",
-                ],
-            -   \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_parentChangeForTransformer\\",
-                \\"internal\\": Object {
-            -     \\"contentDigest\\": \\"9d6d458358c77dbe8f4247752ebe41f0\\",
-            +     \\"contentDigest\\": \\"3021b9f76357d1cffb3c40fabc9e08fb\\",
-                  \\"owner\\": \\"gatsby-source-parent-change-for-transformer\\",
-                  \\"type\\": \\"Parent_ParentChangeForTransformer\\",
-                },
-                \\"parent\\": null,
-              }"
-          `)
-        }
+        nodesTest(getNodesTestArgs(states, plugins))
       })
 
-      it(`are deleted and recreated when the owner plugin of a child changes`, () => {
+      it(`Changing plugin clears nodes owned by it and recreate nodes`, () => {
         const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-child-change-for-transformer`,
-          `gatsby-transformer-child-change`,
-        ])
+          plugins,
+          nodesTest,
+        } = require(`../plugins/source/plugin-changed/scenario`)
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([
-            `parent_childChangeForTransformer >>> Child`,
-            `parent_childChangeForTransformer`,
-          ])
-
-          expect(
-            diff.deletions[`parent_childChangeForTransformer >>> Child`]
-          ).toBeTruthy()
-
-          expect(diff.changes[`parent_childChangeForTransformer`].diff)
-            .toMatchInlineSnapshot(`
-            "  Object {
-            -   \\"children\\": Array [
-            -     \\"parent_childChangeForTransformer >>> Child\\",
-            -   ],
-            +   \\"children\\": Array [],
-                \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_childChangeForTransformer\\",
-                \\"internal\\": Object {
-                  \\"contentDigest\\": \\"80e2ed37e11de736be839404c5f373f9\\",
-                  \\"owner\\": \\"gatsby-source-child-change-for-transformer\\",
-                  \\"type\\": \\"Parent_ChildChangeForTransformer\\",
-                },
-                \\"parent\\": null,
-              }"
-          `)
-        }
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([
-            `parent_childChangeForTransformer >>> Child`,
-          ])
-
-          expect(
-            diff.changes[`parent_childChangeForTransformer >>> Child`].diff
-          ).toMatchInlineSnapshot(`
-            "  Object {
-                \\"children\\": Array [],
-            -   \\"foo\\": \\"bar\\",
-            +   \\"foo\\": \\"baz\\",
-                \\"id\\": \\"parent_childChangeForTransformer >>> Child\\",
-                \\"internal\\": Object {
-            -     \\"contentDigest\\": \\"bd4478bada76e1f5a45a3b326eaec443\\",
-            +     \\"contentDigest\\": \\"70f659e959d7d3fb752f811e8b0eb8ad\\",
-                  \\"owner\\": \\"gatsby-transformer-child-change\\",
-                  \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
-                },
-                \\"parent\\": \\"parent_childChangeForTransformer\\",
-              }"
-          `)
-        }
-      })
-
-      it(`fields are deleted and recreated when the owner plugin of a node changes`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-parent-change-for-fields`,
-          `gatsby-fields-parent-change`,
-        ])
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`parent_parentChangeForFields`])
-
-          expect(diff.deletions[`parent_parentChangeForFields`]).toBeTruthy()
-        }
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`parent_parentChangeForFields`])
-
-          expect(diff.changes[`parent_parentChangeForFields`].diff)
-            .toMatchInlineSnapshot(`
-            "  Object {
-            +   \\"bar\\": \\"run-2\\",
-                \\"children\\": Array [],
-                \\"fields\\": Object {
-            -     \\"bar\\": undefined,
-            -     \\"foo\\": \\"run-1\\",
-            +     \\"bar\\": \\"run-2\\",
-            +     \\"foo\\": undefined,
-                },
-            -   \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_parentChangeForFields\\",
-                \\"internal\\": Object {
-            -     \\"contentDigest\\": \\"e88540d53597617cf99d612601037013\\",
-            +     \\"contentDigest\\": \\"3b78e62e87d3f1d8e92d274aa8dbe548\\",
-                  \\"fieldOwners\\": Object {
-                    \\"bar\\": \\"gatsby-fields-parent-change\\",
-                    \\"foo\\": \\"gatsby-fields-parent-change\\",
-                  },
-                  \\"owner\\": \\"gatsby-source-parent-change-for-fields\\",
-                  \\"type\\": \\"Parent_ParentChangeForFields\\",
-                },
-                \\"parent\\": null,
-              }"
-          `)
-        }
-      })
-
-      it(`fields are deleted and recreated when the owner plugin of a field changes`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-child-change-for-fields`,
-          `gatsby-fields-child-change`,
-        ])
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`parent_childChangeForFields`])
-
-          expect(diff.deletions[`parent_childChangeForFields`]).toBeTruthy()
-        }
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`parent_childChangeForFields`])
-
-          expect(diff.changes[`parent_childChangeForFields`].diff)
-            .toMatchInlineSnapshot(`
-            "  Object {
-                \\"children\\": Array [],
-                \\"fields\\": Object {
-            -     \\"foo1\\": \\"bar\\",
-            +     \\"foo2\\": \\"baz\\",
-                },
-                \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_childChangeForFields\\",
-                \\"internal\\": Object {
-                  \\"contentDigest\\": \\"fb9e9b9c26522bceaa1f51c537b2aff2\\",
-                  \\"fieldOwners\\": Object {
-            -       \\"foo1\\": \\"gatsby-fields-child-change\\",
-            +       \\"foo2\\": \\"gatsby-fields-child-change\\",
-                  },
-                  \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
-                  \\"type\\": \\"Parent_ChildChangeForFields\\",
-                },
-                \\"parent\\": null,
-              }"
-          `)
-        }
+        nodesTest(getNodesTestArgs(states, plugins))
       })
     })
 
-    describe(`Plugin Additions`, () => {
-      it.skip(`Addition of plugin invalidates nodes cache`, () => {})
-      it.skip(`Addition of plugin invalidates disk cache`, () => {})
+    describe(`Source plugins with transformers (child nodes)`, () => {
+      describe(`Changes to source plugins`, () => {
+        it(`Adding source plugin cause transformers to create child nodes`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-child-nodes/source-added/scenario`)
 
-      it(`ensure transformer nodes are created when source plugin is added`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-parent-addition-for-transformer`,
-          `gatsby-transformer-parent-addition`,
-        ])
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
+        it(`Removing source plugin invalidate nodes owned by it and all children nodes`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-child-nodes/source-removed/scenario`)
 
-          expect(diff.dirtyIds).toEqual([])
-        }
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
+        it(`Changing source plugin invalidate nodes owned by it and all children nodes and recreates all nodes`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-child-nodes/source-changed/scenario`)
 
-          expect(diff.dirtyIds).toEqual([
-            `parent_parentAdditionForTransformer`,
-            `parent_parentAdditionForTransformer >>> Child`,
-          ])
-
-          expect(
-            diff.additions[`parent_parentAdditionForTransformer`]
-          ).toBeTruthy()
-          expect(
-            diff.additions[`parent_parentAdditionForTransformer >>> Child`]
-          ).toBeTruthy()
-        }
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
       })
 
-      it(`ensure transformer nodes are created when transformer plugin is added`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-child-addition-for-transformer`,
-          `gatsby-transformer-child-addition`,
-        ])
+      describe(`Changes to transformer plugins`, () => {
+        it(`Adding transformer adds child nodes to existing nodes`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-child-nodes/transformer-added/scenario`)
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
 
-          expect(diff.dirtyIds).toEqual([])
-        }
+        it(`Removing transformer clear nodes owned by it and remove children from parent nodes`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-child-nodes/transformer-removed/scenario`)
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
 
-          expect(diff.dirtyIds).toEqual([
-            `parent_childAdditionForTransformer >>> Child`,
-            `parent_childAdditionForTransformer`,
-          ])
+        it(`Changing transformer clears and recreates nodes owned by it`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-child-nodes/transformer-changed/scenario`)
 
-          expect(
-            diff.additions[`parent_childAdditionForTransformer >>> Child`]
-          ).toBeTruthy()
-
-          expect(diff.changes[`parent_childAdditionForTransformer`].diff)
-            .toMatchInlineSnapshot(`
-            "  Object {
-            -   \\"children\\": Array [],
-            +   \\"children\\": Array [
-            +     \\"parent_childAdditionForTransformer >>> Child\\",
-            +   ],
-                \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_childAdditionForTransformer\\",
-                \\"internal\\": Object {
-                  \\"contentDigest\\": \\"f85e860f002547e9da9e893e3e44e162\\",
-                  \\"owner\\": \\"gatsby-source-child-addition-for-transformer\\",
-                  \\"type\\": \\"Parent_ChildAdditionForTransformer\\",
-                },
-                \\"parent\\": null,
-              }"
-          `)
-        }
-      })
-
-      it.skip(`ensure fields are created when owner of node is added`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-parent-addition-for-fields`,
-          `gatsby-fields-parent-addition`,
-        ])
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
-          expect(diff.dirtyIds).toEqual([])
-        }
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-          expect(diff.dirtyIds).toEqual([`parent_parentAdditionForFields`])
-          expect(diff.additions[`parent_parentAdditionForFields`]).toBeTruthy()
-        }
-      })
-
-      it(`ensure fields are created when owner of field is added`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-child-addition-for-fields`,
-          `gatsby-fields-child-addition`,
-        ])
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`parent_childAdditionForFields`])
-        }
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`parent_childAdditionForFields`])
-
-          expect(diff.changes[`parent_childAdditionForFields`].diff)
-            .toMatchInlineSnapshot(`
-            "  Object {
-                \\"children\\": Array [],
-            +   \\"fields\\": Object {
-            +     \\"foo1\\": \\"bar\\",
-            +   },
-                \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_childAdditionForFields\\",
-                \\"internal\\": Object {
-                  \\"contentDigest\\": \\"bdf44fdce30b104b4f290d66c2dc3ca1\\",
-            +     \\"fieldOwners\\": Object {
-            +       \\"foo1\\": \\"gatsby-fields-child-addition\\",
-            +     },
-                  \\"owner\\": \\"gatsby-source-child-addition-for-fields\\",
-                  \\"type\\": \\"Parent_ChildAdditionForFields\\",
-                },
-                \\"parent\\": null,
-              }"
-          `)
-        }
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
       })
     })
 
-    describe(`Plugin Deletions`, () => {
-      it(`Deletion of plugin invalidates nodes cache`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [`gatsby-plugin-deletion`])
+    describe(`Source plugins with transformers (node fields)`, () => {
+      describe(`Changes to source plugins`, () => {
+        it(`Adding source plugin creates a node with fields`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-node-fields/source-added/scenario`)
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
 
-          expect(diff.dirtyIds).toEqual([`DELETION_NODE_1`])
-          expect(diff.deletions.DELETION_NODE_1).toBeTruthy()
-        }
+        it(`Changing source plugin clears and recreates nodes owned by it`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-node-fields/source-changed/scenario`)
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`DELETION_NODE_1`])
-          expect(diff.deletions.DELETION_NODE_1).toBeTruthy()
-        }
-      })
-      it(`Deletion of plugin invalidates disk cache`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getDiskCacheSnapshotSubStateByPlugins(states, [
-          `gatsby-plugin-deletion`,
-        ])
-
-        // plugin had something in disk cache
-        expect(
-          (postBuildStateFromFirstRun[`gatsby-plugin-deletion`] || []).length
-        ).toEqual(1)
-        // cache was deleted in second run
-        expect(
-          (preBootstrapStateFromSecondRun[`gatsby-plugin-deletion`] || [])
-            .length
-        ).toEqual(0)
-
-        // finally, end result does not include cache
-        expect(
-          (postBuildStateFromSecondRun[`gatsby-plugin-deletion`] || []).length
-        ).toEqual(0)
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
       })
 
-      // it(`Deletion of plugin handles child nodes if it is a parent`, () => {})
-      // it(`Deletion of plugin handles parent nodes if it is a child`, () => {})
-      // it(`Deletion of plugin handles node fields`, () => {})
+      describe(`Changes to transformer plugins`, () => {
+        it(`Adding transformer adds fields to node created by source plugin`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-node-fields/transformer-added/scenario`)
 
-      it(`ensure transformer nodes are deleted when source plugin is deleted`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-parent-deletion-for-transformer`,
-          `gatsby-transformer-parent-deletion`,
-        ])
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
+        it(`Removing transformer removes fields from node created by source plugin`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-node-fields/transformer-removed/scenario`)
 
-          expect(diff.dirtyIds).toEqual([
-            `parent_parentDeletionForTransformer`,
-            `parent_parentDeletionForTransformer >>> Child`,
-          ])
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
 
-          expect(
-            diff.deletions[`parent_parentDeletionForTransformer`]
-          ).toBeTruthy()
-          expect(
-            diff.deletions[`parent_parentDeletionForTransformer >>> Child`]
-          ).toBeTruthy()
-        }
+        it(`Changing transformer removes fields from node created by source plugin and recreate fields`, () => {
+          const {
+            plugins,
+            nodesTest,
+          } = require(`../plugins/source-and-transformers-node-fields/transformer-changed/scenario`)
 
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([
-            `parent_parentDeletionForTransformer`,
-            `parent_parentDeletionForTransformer >>> Child`,
-          ])
-
-          expect(
-            diff.deletions[`parent_parentDeletionForTransformer`]
-          ).toBeTruthy()
-          expect(
-            diff.deletions[`parent_parentDeletionForTransformer >>> Child`]
-          ).toBeTruthy()
-        }
-      })
-
-      it(`ensure transformer nodes are deleted when transformer plugin is deleted`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-child-deletion-for-transformer`,
-          `gatsby-transformer-child-deletion`,
-        ])
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([
-            `parent_childDeletionForTransformer`,
-            `parent_childDeletionForTransformer >>> Child`,
-          ])
-
-          expect(
-            diff.deletions[`parent_childDeletionForTransformer >>> Child`]
-          ).toBeTruthy()
-
-          // expect(diff.changes[`parent_childDeletionForTransformer`].diff)
-          //   .toMatchInlineSnapshot(`
-          //   "  Object {
-          //   -   \\"children\\": Array [
-          //   -     \\"parent_childDeletionForTransformer >>> Child\\",
-          //   -   ],
-          //   +   \\"children\\": Array [],
-          //       \\"foo\\": \\"run-1\\",
-          //       \\"id\\": \\"parent_childDeletionForTransformer\\",
-          //       \\"internal\\": Object {
-          //         \\"contentDigest\\": \\"872081fdfb66891ee6ccdcd13716a5ce\\",
-          //         \\"owner\\": \\"gatsby-source-child-deletion-for-transformer\\",
-          //         \\"type\\": \\"Parent_ChildDeletionForTransformer\\",
-          //       },
-          //       \\"parent\\": null,
-          //     }"
-          // `)
-        }
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-          expect(diff.dirtyIds).toEqual([
-            `parent_childDeletionForTransformer >>> Child`,
-            `parent_childDeletionForTransformer`,
-          ])
-
-          expect(
-            diff.deletions[`parent_childDeletionForTransformer >>> Child`]
-          ).toBeTruthy()
-
-          expect(diff.changes[`parent_childDeletionForTransformer`].diff)
-            .toMatchInlineSnapshot(`
-            "  Object {
-            -   \\"children\\": Array [
-            -     \\"parent_childDeletionForTransformer >>> Child\\",
-            -   ],
-            +   \\"children\\": Array [],
-                \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_childDeletionForTransformer\\",
-                \\"internal\\": Object {
-                  \\"contentDigest\\": \\"872081fdfb66891ee6ccdcd13716a5ce\\",
-                  \\"owner\\": \\"gatsby-source-child-deletion-for-transformer\\",
-                  \\"type\\": \\"Parent_ChildDeletionForTransformer\\",
-                },
-                \\"parent\\": null,
-              }"
-          `)
-        }
-      })
-
-      it.skip(`ensure fields are deleted when owner of node is deleted`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-parent-addition-for-fields`,
-          `gatsby-fields-parent-addition`,
-        ])
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
-          expect(diff.dirtyIds).toEqual([])
-        }
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-          expect(diff.dirtyIds).toEqual([`parent_parentAdditionForFields`])
-          expect(diff.additions[`parent_parentAdditionForFields`]).toBeTruthy()
-        }
-      })
-
-      it(`ensure fields are deleted when owner of field is deleted`, () => {
-        const {
-          postBuildStateFromFirstRun,
-          preBootstrapStateFromSecondRun,
-          postBuildStateFromSecondRun,
-        } = getNodesSubStateByPlugins(states, [
-          `gatsby-source-child-deletion-for-fields`,
-          `gatsby-fields-child-deletion`,
-        ])
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            preBootstrapStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`parent_childDeletionForFields`])
-
-          // expect(diff.changes[`parent_childDeletionForFields`].diff)
-          //   .toMatchInlineSnapshot(`
-          //   "  Object {
-          //       \\"children\\": Array [],
-          //   -   \\"fields\\": Object {
-          //   -     \\"foo1\\": \\"bar\\",
-          //   -   },
-          //   +   \\"fields\\": Object {},
-          //       \\"foo\\": \\"run-1\\",
-          //       \\"id\\": \\"parent_childDeletionForFields\\",
-          //       \\"internal\\": Object {
-          //         \\"contentDigest\\": \\"8f6ce9febd79d1af741b4b7edfa023a5\\",
-          //   -     \\"fieldOwners\\": Object {
-          //   -       \\"foo1\\": \\"gatsby-fields-child-deletion\\",
-          //   -     },
-          //   +     \\"fieldOwners\\": Object {},
-          //         \\"owner\\": \\"gatsby-source-child-deletion-for-fields\\",
-          //         \\"type\\": \\"Parent_ChildDeletionForFields\\",
-          //       },
-          //       \\"parent\\": null,
-          //     }"
-          // `)
-        }
-
-        {
-          const diff = compareState(
-            postBuildStateFromFirstRun,
-            postBuildStateFromSecondRun
-          )
-
-          expect(diff.dirtyIds).toEqual([`parent_childDeletionForFields`])
-
-          expect(diff.changes[`parent_childDeletionForFields`].diff)
-            .toMatchInlineSnapshot(`
-            "  Object {
-                \\"children\\": Array [],
-            -   \\"fields\\": Object {
-            -     \\"foo1\\": \\"bar\\",
-            -   },
-            +   \\"fields\\": Object {},
-                \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_childDeletionForFields\\",
-                \\"internal\\": Object {
-                  \\"contentDigest\\": \\"8f6ce9febd79d1af741b4b7edfa023a5\\",
-            -     \\"fieldOwners\\": Object {
-            -       \\"foo1\\": \\"gatsby-fields-child-deletion\\",
-            -     },
-            +     \\"fieldOwners\\": Object {},
-                  \\"owner\\": \\"gatsby-source-child-deletion-for-fields\\",
-                  \\"type\\": \\"Parent_ChildDeletionForFields\\",
-                },
-                \\"parent\\": null,
-              }"
-          `)
-        }
+          nodesTest(getNodesTestArgs(states, plugins))
+        })
       })
     })
   })
 
-  describe(`Disk`, () => {
-    it(`sanity checks`, () => {
-      // preconditions - we expect our cache to be empty on first run
-      Object.values(
-        states.diskCacheSnapshot.preBootstrapStateFromFirstRun
-      ).forEach(cacheFiles => {
-        // we expect disk cache for every plugin to be empty
-        expect(cacheFiles).toEqual([])
+  describe(`Persisted key-value store (cache)`, () => {
+    it(`Preserve disk cache if owner plugin did not changed`, () => {
+      const {
+        persistedKeyValueStoreTest,
+        plugins,
+      } = require(`../plugins/key-value-cache/no-changes/scenario`)
+
+      persistedKeyValueStoreTest(
+        getDiskCacheSnapshotSubStateByPlugins(states, plugins)
+      )
+    })
+
+    it(`Removing owner plugin clears disk cache`, () => {
+      const {
+        persistedKeyValueStoreTest,
+        plugins,
+      } = require(`../plugins/key-value-cache/plugin-removed/scenario`)
+
+      persistedKeyValueStoreTest(
+        getDiskCacheSnapshotSubStateByPlugins(states, plugins)
+      )
+    })
+
+    it(`Adding owner plugin creates disk cache`, () => {
+      const {
+        persistedKeyValueStoreTest,
+        plugins,
+      } = require(`../plugins/key-value-cache/plugin-added/scenario`)
+
+      persistedKeyValueStoreTest(
+        getDiskCacheSnapshotSubStateByPlugins(states, plugins)
+      )
+    })
+
+    it(`Changing owner plugin clears disk cache and recreates it`, () => {
+      const {
+        persistedKeyValueStoreTest,
+        plugins,
+      } = require(`../plugins/key-value-cache/plugin-changed/scenario`)
+
+      persistedKeyValueStoreTest(
+        getDiskCacheSnapshotSubStateByPlugins(states, plugins)
+      )
+    })
+  })
+
+  describe(`Query results`, () => {
+    const getQueryResultTestArgs = scenarioName => {
+      const result = {
+        dataFirstRun: states.queryResults.firstRun[scenarioName].data,
+        dataSecondRun: states.queryResults.secondRun[scenarioName].data,
+        typesFirstRun: states.queryResults.firstRun[scenarioName].types,
+        typesSecondRun: states.queryResults.secondRun[scenarioName].types,
+      }
+
+      if (result.dataFirstRun && result.dataSecondRun) {
+        result.dataDiff = diff(result.dataFirstRun, result.dataSecondRun)
+      }
+
+      if (result.typesFirstRun && result.typesSecondRun) {
+        result.typesDiff = diff(result.typesFirstRun, result.typesSecondRun)
+      }
+
+      return result
+    }
+
+    describe(`Source plugins without transformers`, () => {
+      it(`Not changing plugin doesn't change query results`, () => {
+        const scenarioName = `source/no-changes`
+        const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+        queriesTest(getQueryResultTestArgs(scenarioName))
+      })
+
+      it(`Adding plugin adds a type to schema`, () => {
+        const scenarioName = `source/plugin-added`
+        const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+        queriesTest(getQueryResultTestArgs(scenarioName))
+      })
+
+      it(`Removing plugin removes a type from schema`, () => {
+        const scenarioName = `source/plugin-removed`
+        const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+        queriesTest(getQueryResultTestArgs(scenarioName))
+      })
+
+      it(`Changing plugin invalidates query results`, () => {
+        const scenarioName = `source/plugin-changed`
+        const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+        queriesTest(getQueryResultTestArgs(scenarioName))
       })
     })
 
-    it(`preserve disk cache if owner plugin did not changed`, () => {
-      const {
-        postBuildStateFromFirstRun,
-        preBootstrapStateFromSecondRun,
-        postBuildStateFromSecondRun,
-      } = getDiskCacheSnapshotSubStateByPlugins(states, [`gatsby-cache-stable`])
+    describe(`Source plugins with transformers`, () => {
+      describe(`Changes to source plugins`, () => {
+        it(`Adding source plugin creates parent and child types in schema and they are queryable on second run`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/source-added`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
 
-      // plugin had something in disk cache
-      expect(
-        (postBuildStateFromFirstRun[`gatsby-cache-stable`] || []).length
-      ).toEqual(1)
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
 
-      // cache was preserved as plugin didn't change
-      expect(postBuildStateFromFirstRun).toEqual(preBootstrapStateFromSecondRun)
+        it(`Removing source plugin removes parent and child types from schema and they are queryable on first run`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/source-removed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
 
-      // finally, end result is the same
-      expect(postBuildStateFromFirstRun).toEqual(postBuildStateFromSecondRun)
-    })
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
 
-    it(`deletes disk cache for plugin if owner plugin changed`, () => {
-      const {
-        postBuildStateFromFirstRun,
-        preBootstrapStateFromSecondRun,
-        postBuildStateFromSecondRun,
-      } = getDiskCacheSnapshotSubStateByPlugins(states, [
-        `gatsby-cache-unstable`,
-      ])
+        it(`Changing source plugin adjust schema and query result changes just certain fields`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/source-changed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
 
-      // plugin had something in disk cache
-      expect(
-        (postBuildStateFromFirstRun[`gatsby-cache-unstable`] || []).length
-      ).toEqual(1)
-      // cache was deleted in second run
-      expect(
-        (preBootstrapStateFromSecondRun[`gatsby-cache-unstable`] || []).length
-      ).toEqual(0)
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+      })
 
-      // finally, end result is the same
-      expect(postBuildStateFromFirstRun).toEqual(postBuildStateFromSecondRun)
+      describe(`Changes to transformer plugins`, () => {
+        it(`Adding transformer plugin adds child type to schema and updates query result`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/transformer-added`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+
+        it(`Removing transformer plugin removes child type from schema and updates query result`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/transformer-removed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+
+        it(`Changing transformer plugin adjusts schema and query result changes just certain fields`, () => {
+          const scenarioName = `source-and-transformers-child-nodes/transformer-changed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+      })
     })
   })
+
+  it.todo(`Jobs`)
 })
