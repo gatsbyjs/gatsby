@@ -11,6 +11,7 @@ import {
   ISetProgramStatusAction,
   IPageQueryRunAction,
   IRemoveStaleJobAction,
+  ISetDbTypeAction,
 } from "../types"
 
 // import type { Plugin } from "./types"
@@ -246,5 +247,16 @@ export const removeStaleJob = (
     payload: {
       contentDigest,
     },
+  }
+}
+
+/**
+ * Set the db type to the current state of redux or loki (or <future expansion>)
+ * In essence this should reflect process.env.GATSBY_DB_NODES, defaults to redux
+ */
+export const setDbType = (dbState: "redux" | "loki"): ISetDbTypeAction => {
+  return {
+    type: `SET_DB_TYPE`,
+    payload: dbState,
   }
 }

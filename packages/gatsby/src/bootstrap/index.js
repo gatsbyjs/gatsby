@@ -83,6 +83,11 @@ module.exports = async (args: BootstrapArgs) => {
     payload: program,
   })
 
+  store.dispatch({
+    type: `SET_DB_TYPE`,
+    payload: process.env.GATSBY_DB_NODES ?? `redux`,
+  })
+
   let activityForJobs
 
   emitter.on(`CREATE_JOB`, () => {

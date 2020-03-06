@@ -1,5 +1,5 @@
 module.exports = (
-  state = { directory: `/`, state: `BOOTSTRAPPING` },
+  state = { directory: `/`, state: `BOOTSTRAPPING`, dbType: `` },
   action
 ) => {
   switch (action.type) {
@@ -18,6 +18,12 @@ module.exports = (
       return {
         ...state,
         status: `BOOTSTRAP_FINISHED`,
+      }
+
+    case `SET_DB_TYPE`:
+      return {
+        ...state,
+        dbType: action.payload,
       }
 
     default:

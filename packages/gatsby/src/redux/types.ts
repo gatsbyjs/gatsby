@@ -33,7 +33,6 @@ export interface IReduxState {
     proxy: any
   }
   pageData: any
-  dbType?: 'redux' | 'loki'
 }
 
 export interface ICachedReduxState {
@@ -46,7 +45,6 @@ export interface ICachedReduxState {
   webpackCompilationHash: IReduxState["webpackCompilationHash"]
   pageDataStats: IReduxState["pageDataStats"]
   pageData: IReduxState["pageData"]
-  dbType?: 'redux' | 'loki'
 }
 
 export type ActionsUnion =
@@ -148,4 +146,9 @@ export interface IRemoveStaleJobAction {
   plugin: Plugin
   traceId?: string
   payload: { contentDigest: string }
+}
+
+export interface ISetDbTypeAction {
+  type: `SET_DB_TYPE`
+  payload: "redux" | "loki"
 }
