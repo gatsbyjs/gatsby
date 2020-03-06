@@ -28,9 +28,9 @@ To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](http
 1. Open your Terminal.
 2. See if Homebrew is installed. You should see "Homebrew" and a version number.
 
-   ```shell
-   brew -v
-   ```
+```shell
+brew -v
+```
 
 3. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation).
 4. Once you've installed Homebrew, repeat step 2 to verify.
@@ -40,11 +40,11 @@ To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](http
 1. Open your Terminal.
 2. Install Xcode Command line tools by running:
 
-   ```shell
-   xcode-select --install
-   ```
+```shell
+xcode-select --install
+```
 
-   > 💡 If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account
+> 💡 If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account.
 
 3. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
@@ -53,11 +53,11 @@ To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](http
 1. Open your Terminal
 2. Install node with Homebrew:
 
-   ```shell
-   brew install node
-   ```
+```shell
+brew install node
+```
 
-   > 💡 If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
+> 💡 If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
 
 ### Windows Instructions
 
@@ -211,50 +211,38 @@ Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. U
 1.  Open up your terminal.
 2.  Create a new site from a starter:
 
-    ```shell
-    gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
-    ```
-
-    > 💡 Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install
-
-3.  Change into the working directory:
-
-    ```shell
-    cd hello-world
-    ```
-
-4.  Start the development mode:
-
-    ```shell
-    gatsby develop
-    ```
-
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./03-create-site.mp4" />
-  <p>Sorry! Your browser doesn't support this video.</p>
-</video>
-
-What just happened?
-
 ```shell
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-- `new` is a gatsby command to create a new Gatsby project.
-- Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
-- Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
+> 💡 What just happened?
+>
+> - `new` is a a gatsby command to create a new Gatsby project.
+> - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
+> - Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
+
+> 💡 Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install
+
+3.  Change into the working directory:
 
 ```shell
 cd hello-world
 ```
 
-- This says 'I want to change directories (`cd`) to the “hello-world” subfolder'. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
+> 💡 This says _'I want to change directories (`cd`) to the “hello-world” subfolder'_. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
+
+4.  Start the development mode:
 
 ```shell
 gatsby develop
 ```
 
-- This command starts a development server. You will be able to see and interact with your new site in a development environment — local (on your computer, not published to the internet).
+> 💡 This command starts a development server. You will be able to see and interact with your new site in a development environment — local (on your computer, not published to the internet).
+
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="./03-create-site.mp4" />
+  <p>Sorry! Your browser doesn't support this video.</p>
+</video>
 
 ### View your site locally
 
