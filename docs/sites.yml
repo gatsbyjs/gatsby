@@ -9146,12 +9146,12 @@
     - Entertainment
     - App
 - title: madewithlove
-  main_url: https://www.madewithlove.be
-  url: https://www.madewithlove.be
+  main_url: https://madewithlove.com
+  url: https://madewithlove.com
   description: >-
     We build digital products and create the teams around them. We can help with software engineering, product management, managing technical teams, audits and technical consulting.
   built_by: madewithlove
-  built_by_url: https://www.madewithlove.be
+  built_by_url: https://madewithlove.com
   featured: false
   categories:
     - Web Development

@@ -1,3 +1,5 @@
+import { GraphQLSchema } from "graphql"
+
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
@@ -24,7 +26,7 @@ export interface IReduxState {
   jobs: {
     active: Array<any> // TODO
   }
-  schema: any
+  schema: GraphQLSchema
   schemaCustomization: any
   config: {
     developMiddleware: any
