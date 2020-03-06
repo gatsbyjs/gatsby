@@ -7,13 +7,13 @@
     "develop": "gatsby develop",
     "prebuild": "node utils/prebuild.js",
     "build": "gatsby build",
-    "test": "jest",
+    "test": "jest --verbose",
     "serve": "gatsby serve",
     "use-setup": "node utils/select-configuration",
     "inspect-state": "node utils/inspect-state"
   },
   "dependencies": {
-    "gatsby": "^2.16.0",
+    "gatsby": "^2.19.29",
     "gatsby-plugin-schema-snapshot": "^1.0.0",
     "gray-percentage": "^2.0.0",
     "react": "^16.8.0",

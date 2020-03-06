@@ -41,7 +41,7 @@ const gatsbyBin = path.join(
 
 const { compareState } = require(`../utils/nodes-diff`)
 
-const stdio = `ignore`
+const stdio = `inherit`
 
 process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION = `1`
 
