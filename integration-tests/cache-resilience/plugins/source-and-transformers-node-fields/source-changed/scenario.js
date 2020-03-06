@@ -64,8 +64,126 @@ const nodesTest = ({
   }
 }
 
+const graphql = require(`lodash/head`)
+
+const queriesFixtures = [
+  {
+    runs: [1],
+    type: `data`,
+    query: graphql`
+      {
+        allParentParentChangeForFields {
+          nodes {
+            id
+            foo
+            fields {
+              foo
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [2],
+    type: `data`,
+    query: graphql`
+      {
+        allParentParentChangeForFields {
+          nodes {
+            id
+            bar
+            fields {
+              bar
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [1, 2],
+    type: `types`,
+    query: graphql`
+      {
+        typeinfoParent: __type(name: "Parent_ParentChangeForFields") {
+          fields {
+            name
+          }
+        }
+
+        typeinfoChild: __type(name: "Parent_ParentChangeForFieldsFields") {
+          fields {
+            name
+          }
+        }
+      }
+    `,
+  },
+]
+
+const queriesTest = ({ typesDiff, dataDiff }) => {
+  // `foo` fields are replaced with `bar` fields
+  expect(typesDiff).toMatchInlineSnapshot(`
+    "  Object {
+        \\"typeinfoChild\\": Object {
+          \\"fields\\": Array [
+            Object {
+    -         \\"name\\": \\"foo\\",
+    +         \\"name\\": \\"bar\\",
+            },
+          ],
+        },
+        \\"typeinfoParent\\": Object {
+          \\"fields\\": Array [
+            Object {
+              \\"name\\": \\"id\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
+            },
+            Object {
+              \\"name\\": \\"children\\",
+            },
+            Object {
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+    -         \\"name\\": \\"foo\\",
+    +         \\"name\\": \\"bar\\",
+            },
+            Object {
+              \\"name\\": \\"fields\\",
+            },
+          ],
+        },
+      }"
+  `)
+
+  // data only change fields from `foo` to `bar`
+  expect(dataDiff).toMatchInlineSnapshot(`
+    "  Object {
+        \\"allParentParentChangeForFields\\": Object {
+          \\"nodes\\": Array [
+            Object {
+    +         \\"bar\\": \\"run-2\\",
+              \\"fields\\": Object {
+    -           \\"foo\\": \\"run-1\\",
+    +           \\"bar\\": \\"run-2\\",
+              },
+    -         \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_parentChangeForFields\\",
+            },
+          ],
+        },
+      }"
+  `)
+}
+
 module.exports = {
   config,
+  queriesFixtures,
+  queriesTest,
   plugins,
   nodesTest,
 }

@@ -131,7 +131,7 @@ afterAll(() => {
     fs.unlinkSync(ON_POST_BUILD_FILE_PATH)
   }
 })
-
+/*
 describe(`nothing changed between gatsby runs`, () => {
   let states
 
@@ -162,7 +162,7 @@ describe(`nothing changed between gatsby runs`, () => {
     })
   })
 })
-
+*/
 describe(`Some plugins changed between gatsby runs`, () => {
   let states
 
@@ -485,6 +485,26 @@ describe(`Some plugins changed between gatsby runs`, () => {
           queriesTest(getQueryResultTestArgs(scenarioName))
         })
       })
+    })
+
+    describe(`Source plugins with transformers (node fields)`, () => {
+      describe(`Changes to source plugins`, () => {
+        it(`Adding source plugin creates node and node field types in schema and they are queryable on second run`, () => {
+          const scenarioName = `source-and-transformers-node-fields/source-added`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+
+        it(`Changing source plugin adjusts schema and they are queryable on second run`, () => {
+          const scenarioName = `source-and-transformers-node-fields/source-changed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+      })
+
+      describe(`Changes to transformer plugins`, () => {})
     })
   })
 
