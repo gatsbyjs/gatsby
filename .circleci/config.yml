@@ -57,8 +57,8 @@ aliases:
       - <<: *install_node_modules
       - run: yarn list react
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
-      - run: yarn jest -w 1 --ci
-      - run: GATSBY_DB_NODES=loki yarn jest -w 1 --ci
+      - run: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+      - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
 
   e2e-test-workflow: &e2e-test-workflow
     filters:
