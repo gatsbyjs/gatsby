@@ -1,44 +1,92 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
-
+import { Component } from "react"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import { renderCell } from "./evaluation-cell"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const SimpleEvaluationTable = ({ title, headers, data }) => (
-  <React.Fragment>
-    {title && <SectionTitle text={title} />}
-    <table>
-      <tbody>
-        <SectionHeaderTop columnHeaders={headers.map(h => h.display)} />
-        {data.map((node, idx) => (
-          <tr key={`feature-row-${idx}`}>
-            {headers.map((header, i) => (
+class SimpleEvaluationTable extends Component {
+  constructor() {
+    super()
+    this.state = {}
+  }
+  render() {
+    const showTooltip = (row) => this.state[`feature-cell-${row}`]
+    const { title, headers, data } = this.props
+    return (
+      <div>
+        {title && <SectionTitle text={title} />}
+        <table>
+          <tbody>
+            <SectionHeaderTop columnHeaders={headers.map(h => h.display)} />
+            {data.map((node, idx) =>
+            [].concat([
+              <tr key={`feature-first-row-${idx}`}>
+                {headers.map((header, i) => (
+                  <td
+                  key={`feature-cell-${idx}-${i}`}
+                  sx={{
+                    display: `table-cell`,
+                    "&:hover": {
+                      cursor: `pointer`,
+                    },
+                    borderBottom: t =>
+                      !showTooltip(idx)
+                        ? `1px solid ${t.colors.ui.border}`
+                        : `none`,
+                    minWidth: 40,
+                    paddingRight: 0,
+                    paddingLeft: 0,
+                    textAlign: `left`,
+                    verticalAlign: `middle`,
+                    fontSize: 1,
+                    lineHeight: `solid`,
+                  }}
+                  onClick={() => {
+                    this.setState({
+                      [`feature-cell-${idx}`]: !showTooltip(idx),
+                    })
+                  }}
+                  >
+                    {renderCell(node[header.nodeFieldProperty], i)}
+                  </td>
+                ))}
+              </tr>,
+              // table row containing details of each feature
+              <tr
+              style={{
+                display: showTooltip(idx) ? `table-row` : `none`,
+              }}
+              key={`feature-second-row-${idx}`}
+            >
               <td
-                key={`feature-cell-${idx}-${i}`}
                 sx={{
-                  display: `table-cell`,
-                  "&:hover": {
-                    cursor: `pointer`,
+                  paddingBottom: t => `calc(${t.space[5]} - 1px)`,
+                  "&&": {
+                    [mediaQueries.xs]: {
+                      px: 3,
+                    },
                   },
-                  borderBottom: t => `1px solid ${t.colors.ui.border}`,
-                  minWidth: 40,
-                  px: 0,
-                  textAlign: `left`,
-                  verticalAlign: `middle`,
-                  fontSize: 1,
-                  lineHeight: `solid`,
                 }}
+                colSpan="5"
               >
-                {renderCell(node[header.nodeFieldProperty], i)}
+                {
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: node.Description,
+                    }}
+                  />
+                }
               </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </React.Fragment>
-)
+            </tr>,
+            ]))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+}
 
 export default SimpleEvaluationTable
+
