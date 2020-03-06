@@ -30,6 +30,7 @@
   "types": "index.d.ts",
   "dependencies": {
     "ci-info": "2.0.0",
+    "configstore": "^5.0.0",
     "node-object-hash": "^2.0.0"
   },
   "devDependencies": {
