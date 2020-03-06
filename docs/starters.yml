@@ -5468,7 +5468,6 @@
   repo: https://github.com/jneterer/userbase-gatsby-starter
   description: Another TODO app - a Gatsby starter for Userbase, TailwindCSS, SCSS, and Typescript.
   tags:
-    - Userbase
     - Styling:Tailwind
     - Styling:SCSS
     - Language:TypeScript

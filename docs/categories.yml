@@ -62,7 +62,6 @@ starter:
   - Styling:None
   - Testing
   - Transitions
-  - Userbase
 site:
   - API
   - Accessibility
