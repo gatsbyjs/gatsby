@@ -52,6 +52,10 @@ import {
   reportWebpackWarnings,
   structureWebpackErrors,
 } from "../utils/webpack-error-utils"
+import {
+  userPassesFeedbackRequestHeuristic,
+  showFeedbackRequest,
+} from "../utils/feedback"
 
 import { BuildHTMLStage, IProgram } from "./types"
 import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "../utils/jobs-manager"
@@ -353,6 +357,19 @@ async function startServer(program: IProgram): Promise<IServer> {
 }
 
 module.exports = async (program: IProgram): Promise<void> => {
+  // We want to prompt the feedback request when users quit develop
+  // assuming they pass the heuristic check to know they are a user
+  // we want to request feedback from, and we're not annoying them.
+  process.on(
+    `SIGINT`,
+    async (): Promise<void> => {
+      if (await userPassesFeedbackRequestHeuristic()) {
+        showFeedbackRequest()
+      }
+      process.exit(0)
+    }
+  )
+
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     report.panic(
       `The flag ${chalk.yellow(

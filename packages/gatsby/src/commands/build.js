@@ -20,6 +20,10 @@ const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 const {
   waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
 } = require(`../utils/jobs-manager`)
+import {
+  userPassesFeedbackRequestHeuristic,
+  showFeedbackRequest,
+} from "../utils/feedback"
 const buildUtils = require(`../commands/build-utils`)
 const { boundActionCreators } = require(`../redux/actions`)
 
@@ -306,5 +310,9 @@ module.exports = async function build(program: BuildArgs) {
       )
       report.info(`.cache/deletedPages.txt created`)
     }
+  }
+
+  if (await userPassesFeedbackRequestHeuristic()) {
+    showFeedbackRequest()
   }
 }
