@@ -122,9 +122,9 @@ const DisplayLayerContent = ({ index, displayCodeFullWidth }) => (
     <ExampleWrapper>
       <CodeWrapper title="src/pages/index.js" language="jsx">
         {`import Img from "gatsby-image"
-        export ({ data }) => (
+export ({ data }) => (
   <div>
-  <Img fluid={data.file.childImageSharp.fluid} alt="Gatsby logo" />
+    <Img fluid={data.file.childImageSharp.fluid} alt="Gatsby logo" />
   </div>
 )
 `}
