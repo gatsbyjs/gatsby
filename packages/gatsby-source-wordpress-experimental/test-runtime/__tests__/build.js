@@ -13,11 +13,22 @@ require(`dotenv`).config({
 describe(`[gatsby-source-wordpress-experimental] build`, () => {
   incrementalIt(`builds successfully`, async done => {
     const gatsbyProcess = execa(`yarn`, [`build-test-runtime`])
-    gatsbyProcess.stdout.pipe(process.stdout)
+
+    if (process.env.SHOW_GATSBY_PROCESS_STDOUT) {
+      gatsbyProcess.stdout.pipe(process.stdout)
+    } else {
+      console.log(`running \`gatsby build\` via \`yarn build-test-runtime\`...`)
+    }
+
     await gatsbyProcess
 
     const gatsbyServeProcess = execa(`yarn`, [`serve-test-runtime`])
-    gatsbyServeProcess.stdout.pipe(process.stdout)
+
+    if (process.env.SHOW_GATSBY_PROCESS_STDOUT) {
+      gatsbyServeProcess.stdout.pipe(process.stdout)
+    } else {
+      console.log(`running \`gatsby serve\` via \`yarn serve-test-runtime\`...`)
+    }
 
     const couldntStart = setTimeout(() => {
       done.fail(`couldn't start gatsby serve`)
