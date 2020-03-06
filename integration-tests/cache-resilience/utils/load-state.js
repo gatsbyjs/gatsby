@@ -17,7 +17,7 @@ const sanitizePageCreatorPluginOptions = options => {
 // TODO: Make this not mutate the passed in value
 const sanitiseNode = value => {
   if (value && value.internal && value.internal.contentDigest) {
-    if (value.internal.type === `Site`) {
+    if (value.internal.type === `SiteBuildMetadata`) {
       delete value.buildTime
       delete value.internal.contentDigest
     }
