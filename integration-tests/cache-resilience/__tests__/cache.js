@@ -43,7 +43,7 @@ const { compareState } = require(`../utils/nodes-diff`)
 
 const stdio = `inherit`
 
-process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION = `1`
+process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION = 0
 
 const build = ({ updatePlugins } = {}) => {
   spawnSync(gatsbyBin, [`clean`], { stdio })
