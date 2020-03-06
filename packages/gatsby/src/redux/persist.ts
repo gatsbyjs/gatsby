@@ -56,6 +56,17 @@ export function readFromCache(): ICachedReduxState {
 
   const nodes: [string, IReduxNode][] = [].concat(...chunks)
 
+  // If `obj.dbType` is not set then assume redux
+  if ((obj.dbType === 'loki') !== (process.env.GATSBY_DB_NODES === 'loki')) {
+    // This cache was stored while the (experimental) GATSBY_DB_NODES flag was
+    // set to a different value. Since these databases are incompatible, we now
+    // have to reset it.
+    report.info(
+      `Cache exists but was stored with a different GATSBY_DB_NODES value. Disregarding the cache and proceeding as if there was none to prevent compatibility issues.`
+    )
+    // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
+    return {} as ICachedReduxState
+  }
   if (!chunks.length && process.env.GATSBY_DB_NODES !== `loki`) {
     report.info(
       `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
@@ -136,6 +147,11 @@ function safelyRenameToBak(reduxCacheFolder: string): string {
 }
 
 export function writeToCache(contents: ICachedReduxState): void {
+  // Force-set the dbType to the current config (do it here because we want
+  // to make sure the stored value is correctly representing the state under
+  // which it was generated)
+  contents.dbType = process.env.GATSBY_DB_NODES === 'loki' ? 'loki' : 'redux'
+
   // Note: this should be a transactional operation. So work in a tmp dir and
   // make sure the cache cannot be left in a corruptable state due to errors.
 

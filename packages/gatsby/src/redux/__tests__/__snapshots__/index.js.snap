@@ -16,6 +16,7 @@ Object {
       "query": "",
     },
   },
+  "dbType": "loki",
   "jobsV2": Object {
     "complete": Map {},
     "incomplete": Map {},
@@ -46,6 +47,7 @@ Object {
       "query": "",
     },
   },
+  "dbType": "redux",
   "jobsV2": Object {
     "complete": Map {},
     "incomplete": Map {},

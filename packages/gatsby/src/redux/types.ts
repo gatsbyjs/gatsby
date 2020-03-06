@@ -33,6 +33,7 @@ export interface IReduxState {
     proxy: any
   }
   pageData: any
+  dbType?: 'redux' | 'loki'
 }
 
 export interface ICachedReduxState {
@@ -45,6 +46,7 @@ export interface ICachedReduxState {
   webpackCompilationHash: IReduxState["webpackCompilationHash"]
   pageDataStats: IReduxState["pageDataStats"]
   pageData: IReduxState["pageData"]
+  dbType?: 'redux' | 'loki'
 }
 
 export type ActionsUnion =
