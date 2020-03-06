@@ -84,7 +84,7 @@ allFeaturedEtsyListing {
 
 Using this query on a page or in a component will allow you to display your listings. The following example loops through the featured items and displays them within a component.
 
-```js
+```jsx
 {
   data.allFeaturedEtsyListing.nodes.map(item => (
     <>
