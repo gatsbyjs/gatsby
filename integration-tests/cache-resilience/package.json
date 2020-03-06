@@ -13,19 +13,14 @@
     "inspect-state": "node utils/inspect-state"
   },
   "dependencies": {
-    "gatsby": "^2.19.29",
-    "gatsby-plugin-schema-snapshot": "^1.0.0",
-    "gray-percentage": "^2.0.0",
+    "gatsby": "^2.19.30",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
-    "babel-plugin-dynamic-import-node-sync": "^2.0.1",
     "gatsby-core-utils": "^1.0.21",
     "jest": "^24.0.0",
     "jest-cli": "^24.0.0",
-    "joi": "^14.3.1",
-    "node-fetch": "^2.6.0",
     "slash": "^3.0.0",
     "snapshot-diff": "^0.6.1"
   }

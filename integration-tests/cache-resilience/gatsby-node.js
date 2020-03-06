@@ -71,7 +71,6 @@ exports.onPostBuild = async ({ getNodes, store }) => {
 
     const result = require(pageDataPath).result.data
     _.set(queryResults, [scenarioName, type], result)
-    // queryResults[scenarioName] = result
   })
 
   fs.writeFileSync(

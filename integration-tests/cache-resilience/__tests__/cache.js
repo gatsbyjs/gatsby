@@ -2,7 +2,6 @@ const fs = require(`fs-extra`)
 const { spawnSync } = require(`child_process`)
 const path = require(`path`)
 const _ = require(`lodash`)
-const del = require(`del`)
 const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
   ON_POST_BUILD_FILE_PATH,
@@ -169,20 +168,14 @@ describe(`Some plugins changed between gatsby runs`, () => {
   })
 
   describe(`Nodes`, () => {
-    const usedPlugins = []
     const getNodesTestArgs = (states, plugins) => {
       const nodesSubState = getNodesSubStateByPlugins(states, plugins)
 
-      usedPlugins.push(...plugins)
       return {
         ...nodesSubState,
         compareState,
       }
     }
-
-    // afterAll(() => {
-    //   console.log({ usedPlugins })
-    // })
 
     it(`Sanity checks`, () => {
       // preconditions - we expect our cache to be empty on first run

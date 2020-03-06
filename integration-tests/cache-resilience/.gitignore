@@ -1,5 +1,4 @@
 plugins/**/gatsby-node.js
-plugins/**/src
 gatsby-config.js
 src/pages/scenarios
 

@@ -84,7 +84,6 @@ const getQueriesForRun = run => {
 }
 
 module.exports = {
-  // collectScenarios,
   getQueriesForRun,
   getPluginsForRun,
   getAllPlugins,
