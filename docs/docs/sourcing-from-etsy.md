@@ -16,7 +16,7 @@ Note that Etsy expects developers to test the API using real data. That means yo
 
 ## Using the Etsy source plugin
 
-You can use the `gatsby-source-etsy` plugin to pull featured listings and images from your Etsy shop into your Gatsby site. To install it, run:
+You can use the [`gatsby-source-etsy`](/packages/gatsby-source-etsy/) plugin to pull featured listings and images from your Etsy shop into your Gatsby site. To install it, run:
 
 ```bash
 npm install gatsby-source-etsy
