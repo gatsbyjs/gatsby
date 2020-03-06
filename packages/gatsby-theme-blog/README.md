@@ -50,7 +50,7 @@ module.exports = {
 
    > Note that if you've changed the default `contentPath` in the configuration, you'll want to add your markdown files in the directory specified by that path.
 
-4. Add image named avatar inside /assets to include a small image next to the post footer of every post page.
+4. Add an image with the file name `avatar` (can be jpg or png) inside the `/assets` directory to include a small image next to the footer on every post page.
 
 > Note that if you've changed the default `assetPath` in the configuration, you'll want to add your asset files in the directory specified by that path.
 
