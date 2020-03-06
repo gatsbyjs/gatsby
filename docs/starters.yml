@@ -5503,8 +5503,6 @@
     - Markdown
     - PWA
     - Blog
-    - Media
-    - Freelance
   features:
     - Multilanguage support with i18n
     - Slug switcher (multilanguage)
