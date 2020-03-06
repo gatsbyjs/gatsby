@@ -34,6 +34,18 @@
     - MDX
     - MaterialUI Components
     - React Icons
+- url: https://authenticaysh.netlify.com/
+  repo: https://github.com/ben-siewert/gatsby-starter-auth-aws-amplify
+  description: Full-featured Auth with AWS Amplify & AWS Cognito
+  tags:
+    - AWS
+    - Authentication
+  features:
+    - Full-featured AWS Authentication with Cognito
+    - Error feedback in forms
+    - Password Reset
+    - Multi-Factor Authentication
+    - Styling with Bootstrap and Sass
 - url: https://gatsby-starter-blog-demo.netlify.com/
   repo: https://github.com/gatsbyjs/gatsby-starter-blog
   description: official blog
@@ -2414,7 +2426,7 @@
     - 📣 react-axe for console reporting of accessibility errors in the DOM during development
     - 📖 storybook setup for accessibility reporting on individual components
 - url: https://gatsby-theme-ggt-material-ui-blog.netlify.com/
-  repo: https://github.com/greatgatsbyjsthemes/gatsby-starter-ggt-material-ui-blog
+  repo: https://github.com/avatar-kaleb/gatsby-starter-ggt-material-ui-blog
   description: Starter material-ui blog utilizing a Gatsby theme!
   tags:
     - Blog
@@ -4070,7 +4082,7 @@
     - Language:TypeScript
     - PWA
   features:
-    - Minumum changes based on default starter template for TypeScript and PWA
+    - Minimum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
     - Support GitHub Actions CI/CD workflow (beta)
 - url: https://iceberg-gatsby-multilang.netlify.com/
@@ -4237,7 +4249,7 @@
     - StyleLint for Scss linting and formatting
     - Jest for a test framework
     - Enzyme for testing with React
-    - Husky for git hooks, particularlly precommit management
+    - Husky for git hooks, particularly precommit management
     - Lint Staged to run commands only on staged files
 - url: https://martin2844.github.io/gatsby-starter-dev-portfolio/
   repo: https://github.com/martin2844/gatsby-starter-dev-portfolio
@@ -4458,7 +4470,7 @@
     - Netlify
   features:
     - Type Checking With TypeScript
-    - Powerfull Linting With ESLint
+    - Powerful Linting With ESLint
 - url: https://gatsby-typescript-tailwind.netlify.com/
   repo: https://github.com/impulse/gatsby-typescript-tailwind
   description: Gatsby starter with TypeScript and Tailwind CSS
@@ -4964,12 +4976,12 @@
     - PWA
     - TypeScript
     - Absolute import
-    - Usefull ready made custom hooks
+    - Useful ready made custom hooks
     - Ready made form component for Netlify form
     - Global CSS component and Reset CSS component
     - Advanced SEO components(ex. default twitter ogp image, sitemaps, robot.txt)
     - Prettier, ESLint
-    - unstated-next(usefull easy state library)
+    - unstated-next(useful easy state library)
 - url: https://gatsby-typescript-emotion-storybook.netlify.com/
   repo: https://github.com/duncanleung/gatsby-typescript-emotion-storybook
   description: Config for TypeScript + Emotion + Storybook + React Intl + SVGR + Jest.
@@ -5022,7 +5034,7 @@
     - Codesyntax
     - Code syntax highlighting
 - url: https://gatsby-bootstrap-italia-starter.dej611.now.sh/
-  repo: https://github.com/dej611/gatsby-bootstrap-italia-starter
+  repo: https://github.com/italia/design-italia-gatsby-starterkit
   description: Gastby starter project using the Bootstrap Italia design kit from Italian Digital Team
   tags:
     - Styling:Bootstrap
@@ -5424,3 +5436,56 @@
     - Offline support
     - Google Analytics support
     - Disqus Comments support
+- url: https://gatsby-starter-typescript-themes.netlify.com/
+  repo: https://github.com/room-js/gatsby-starter-typescript-themes
+  description: Gatsby TypeScript starter with light/dark themes based on CSS variables
+  tags:
+    - Language:TypeScript
+    - Styling:SCSS
+  features:
+    - Light and Dark themes based on CSS variables (persisted state)
+    - Font Awesome
+    - Normalize.css
+- url: https://sumanth.netlify.com/
+  repo: https://github.com/Mr404Found/gatsby-sidedrawer
+  description: A responsive and super simple gatsby site with awesome navbar and stay tuned more features coming soon
+  tags:
+    - Netlify
+    - SEO
+    - Blog
+    - Landing Page
+    - Styling:Other
+  features:
+    - Attractive Design
+    - Responsive webpage
+    - Animations
+    - Component Animations
+    - ReactReveal Library
+    - Side Drawer
+    - Sidebar
+    - Navbar
+- url: https://gatsby-simple-blog-with-asciidoctor-demo.netlify.com
+  repo: https://github.com/hitsuji-no-shippo/gatsby-simple-blog-with-asciidoctor
+  description: A Gatsby blog with Asciidoctor. Forked from thundermiracle/gatsby-simple-blog.
+  tags:
+    - Blog
+    - i18n
+    - Netlify
+    - Disqus
+    - RSS
+    - SEO
+    - Linting
+    - Testing
+  features:
+    - Asciidoc support
+    - Easily Configurable
+    - Tags
+    - Edit on GitHub
+    - i18n
+    - SEO
+    - Light and Dark themes
+    - Google Analytics
+    - RSS
+    - Disqus
+    - Breadcrumbs
+    - ESLint

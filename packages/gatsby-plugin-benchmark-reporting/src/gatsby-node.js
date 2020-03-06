@@ -8,6 +8,8 @@ const fs = require(`fs`)
 
 const bootstrapTime = performance.now()
 
+const CI_NAME = process.env.CI_NAME
+
 const BENCHMARK_REPORTING_URL =
   process.env.BENCHMARK_REPORTING_URL === `cli`
     ? undefined
@@ -53,6 +55,49 @@ class BenchMeta {
       benchmarkEnd: 0, // End of benchmark itself
     }
     this.started = false
+  }
+
+  getMetadata() {
+    let siteId = ``
+    try {
+      // The tags ought to be a json string, but we try/catch it just in case it's not, or not a valid json string
+      siteId =
+        JSON.parse(process.env?.GATSBY_TELEMETRY_TAGS ?? `{}`)?.siteId ?? `` // Set by server
+    } catch (e) {
+      siteId = `error`
+      reportInfo(
+        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
+      )
+    }
+
+    /**
+     * If we are running in netlify, environment variables can be attached using the INCOMING_HOOK_BODY
+     * extract the configuration from there
+     */
+
+    let buildType = process.env.BENCHMARK_BUILD_TYPE
+    const incomingHookBody = process.env.INCOMING_HOOK_BODY
+
+    if (CI_NAME === `netlify` && incomingHookBody) {
+      try {
+        const incomingHookBody = JSON.parse(incomingHookBody)
+        buildType = incomingHookBody && incomingHookBody.buildType
+      } catch (e) {
+        reportInfo(
+          `Suppressed an error trying to JSON.parse(INCOMING_HOOK_BODY): ${e}`
+        )
+      }
+    }
+
+    return {
+      buildId: process.env.BENCHMARK_BUILD_ID,
+      branch: process.env.BENCHMARK_BRANCH,
+      siteId,
+      contentSource: process.env.BENCHMARK_CONTENT_SOURCE,
+      siteType: process.env.BENCHMARK_SITE_TYPE,
+      repoName: process.env.BENCHMARK_REPO_NAME,
+      buildType: buildType,
+    }
   }
 
   getData() {
@@ -117,28 +162,17 @@ class BenchMeta {
       nocase: true,
     }).length
 
-    let siteId = ``
-    try {
-      // The tags ought to be a json string, but we try/catch it just in case it's not, or not a valid json string
-      siteId =
-        JSON.parse(process.env?.GATSBY_TELEMETRY_TAGS ?? `{}`)?.siteId ?? `` // Set by server
-    } catch (e) {
-      siteId = `error`
-      reportInfo(
-        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
-      )
-    }
+    const benchmarkMetadata = this.getMetadata()
 
     return {
       time: this.localTime,
       sessionId: process.gatsbyTelemetrySessionId || uuidv4(),
-      siteId,
       cwd: process.cwd() ?? ``,
       timestamps: this.timestamps,
       gitHash,
       commitTime,
       ci: process.env.CI || false,
-      ciName: process.env.CI_NAME || `local`,
+      ciName: CI_NAME || `local`,
       versions: {
         nodejs: nodejsVersion,
         gatsby: gatsbyVersion,
@@ -155,6 +189,7 @@ class BenchMeta {
       },
       memory,
       publicJsSize,
+      ...benchmarkMetadata,
     }
   }
 
@@ -281,6 +316,7 @@ async function onPreBuild(api) {
 
 async function onPostBuild(api) {
   lastApi = api
+
   benchMeta.markDataPoint(`postBuild`)
   return benchMeta.markEnd()
 }

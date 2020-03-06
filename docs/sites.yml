@@ -9146,12 +9146,12 @@
     - Entertainment
     - App
 - title: madewithlove
-  main_url: https://www.madewithlove.be
-  url: https://www.madewithlove.be
+  main_url: https://madewithlove.com
+  url: https://madewithlove.com
   description: >-
     We build digital products and create the teams around them. We can help with software engineering, product management, managing technical teams, audits and technical consulting.
   built_by: madewithlove
-  built_by_url: https://www.madewithlove.be
+  built_by_url: https://madewithlove.com
   featured: false
   categories:
     - Web Development
@@ -9307,7 +9307,7 @@
   url: https://www.gis-netzwerk.com/
   main_url: https://www.gis-netzwerk.com/
   description: >
-    Geoinformatik, GIS, Web-Development.
+    Multilingual (i18n) Blog with different URLs for categories, tags and posts depending on the language.
   categories:
     - Blog
     - Data
@@ -9963,6 +9963,16 @@
     - Agency
     - Consulting
   featured: false
+- title: Noima
+  url: https://www.noima.xyz
+  main_url: https://www.noima.xyz
+  categories:
+    - Agency
+    - Consulting
+    - Blog
+  featured: false
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
 - title: Talent Point
   url: https://talentpoint.co
   main_url: https://talentpoint.co
@@ -9986,3 +9996,91 @@
     - Marketing
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
+- title: Gene
+  url: https://www.geneglobal.com/work
+  main_url: https://www.geneglobal.com
+  description: >
+    We’re an experience design agency, focused on the future of health
+  categories:
+    - Agency
+    - Technology
+    - Healthcare
+    - Consulting
+    - User Experience
+  featured: false
+- title: medignition – healthcare innovations
+  url: https://medignition.com/
+  main_url: https://medignition.com/
+  description: >
+    medignition builds digital innovations in healthcare.
+  categories:
+    - Healthcare
+    - Education
+    - Technology
+    - Design
+    - Business
+    - Portfolio
+    - Entrepreneurship
+    - Agency
+  built_by: medignition
+  built_by_url: https://medignition.com/
+- title: Dynobase
+  url: "https://dynobase.dev/"
+  main_url: "https://dynobase.dev/"
+  description: >
+    Professional GUI Client for DynamoDB.
+  categories:
+    - Data
+    - Programming
+    - Web Development
+  built_by: Rafal Wilinski
+  built_by_url: "https://rwilinski.me/"
+  featured: false
+- title: Vaktija.eu
+  url: https://vaktija.eu
+  main_url: https://vaktija.eu
+  description: >
+    Vaktija.eu gives information about prayer times in germany. (Built with GatsbyJS. Fast in every way that matters.)
+  categories:
+    - App
+    - Community
+    - Nonprofit
+    - SEO
+    - Web Development
+  built_by: Rašid Redžić
+  built_by_url: https://rasidre.com/
+  featured: false
+- title: Creative code daily
+  main_url: https://www.bobylito.dev/
+  url: https://www.bobylito.dev/
+  source_url: https://github.com/bobylito/sketches
+  description: >
+    Creative code daily (CCD) is a personal project for which I build a new animation made out of code every day.
+  categories:
+    - Blog
+    - Programming
+    - Gallery
+    - Portfolio
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
+- title: Messi vs Ronaldo
+  description: >
+    The biggest debate in football - but who is the best, Messi or Ronaldo? This website provides all the goals and stats to help you reach your own conclusion.
+  main_url: "https://www.messivsronaldo.app/"
+  url: "https://www.messivsronaldo.app/"
+  categories:
+    - Sports
+    - Data
+    - App
+  built_by: Stephen Greig
+  built_by_url: "http://ste.digital/"
+- title: Em Em Recipes
+  url: "https://ememrecipes.com"
+  main_url: "https://ememrecipes.com"
+  description: >
+    Finally, a recipe website that gets straight to the point.
+  categories:
+    - Blog
+    - Food
+  built_by: Matthew Mesa
+  built_by_url: "https://matthewmesa.com"

@@ -1,13 +1,7 @@
 const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
-const {
-  GraphQLList,
-  getNullableType,
-  getNamedType,
-  Kind,
-  GraphQLInterfaceType,
-} = require(`graphql`)
+const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
 const { getValueAt } = require(`../utils/get-value-at`)
 
 const findMany = typeName => (source, args, context, info) =>
@@ -137,7 +131,7 @@ const link = (options = {}, fieldConfig) => async (
   const returnType = getNullableType(options.type || info.returnType)
   const type = getNamedType(returnType)
 
-  if (options.by === `id` && !(type instanceof GraphQLInterfaceType)) {
+  if (options.by === `id`) {
     if (Array.isArray(fieldValue)) {
       return context.nodeModel.getNodesByIds(
         { ids: fieldValue, type: type },

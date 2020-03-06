@@ -54,6 +54,10 @@ npm run preload-fonts -- --no-sandbox
 
 See [Puppeteer](#puppeteer) for more information.
 
+### Using with CI
+
+If you're planning to use this plugin in CI you can set the environment variable `CI=true` (most CI providers like Travis and CircleCI will set this for you). Please note that in this case `font-preload-cache.json` will only get rebuilt when routes change.
+
 ## Explanation of method
 
 A common pattern in modern web development is to link to a remote stylesheet that
