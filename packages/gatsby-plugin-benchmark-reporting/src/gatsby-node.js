@@ -76,11 +76,11 @@ class BenchMeta {
      */
 
     let buildType = process.env.BENCHMARK_BUILD_TYPE
-    const incomingHookBody = process.env.INCOMING_HOOK_BODY
+    const incomingHookBodyEnv = process.env.INCOMING_HOOK_BODY
 
-    if (CI_NAME === `netlify` && incomingHookBody) {
+    if (CI_NAME === `netlify` && incomingHookBodyEnv) {
       try {
-        const incomingHookBody = JSON.parse(incomingHookBody)
+        const incomingHookBody = JSON.parse(incomingHookBodyEnv)
         buildType = incomingHookBody && incomingHookBody.buildType
       } catch (e) {
         reportInfo(
