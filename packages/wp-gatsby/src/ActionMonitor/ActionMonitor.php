@@ -19,9 +19,10 @@ class ActionMonitor
         add_action(
           'init',
           function () {
-              $this->initPostType();
+            $this->initPostType();
           }
         );
+
         $this->registerGraphQLFields();
         $this->monitorActions();
     }
@@ -97,7 +98,18 @@ class ActionMonitor
     function monitorActions()
     {
         // Post / Page actions
-        add_action('save_post', [$this, 'savePost'], 10, 2);
+        add_action('save_post', function($post_id) {
+
+          // Gutenberg fires save_post twice for some reason.
+          // @todo make sure the post saves properly in all situations..
+          if (!isset($_GET['post']) && !isset($_GET['graphql'])) {
+            return;
+          }
+
+          $this->savePost($post_id);
+
+        }, 10, 2);
+
         add_action('pre_post_update', [$this, 'preSavePost'], 10, 2);
 
         // Menu actions
