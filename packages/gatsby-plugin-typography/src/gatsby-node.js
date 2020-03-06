@@ -9,18 +9,17 @@ exports.onPreBootstrap = ({ store, cache }, pluginOptions) => {
 
   let module
   if (pluginOptions.pathToConfigModule) {
-    module = `module.exports = require("${
+    module = `export { default } from "${
       path.isAbsolute(pluginOptions.pathToConfigModule)
         ? pluginOptions.pathToConfigModule
         : path.join(program.directory, pluginOptions.pathToConfigModule)
-    }")`
+    }"`
     if (os.platform() === `win32`) {
       module = module.split(`\\`).join(`\\\\`)
     }
   } else {
-    module = `const Typography = require("typography")
-const typography = new Typography()
-module.exports = typography`
+    module = `import Typography from "typography"
+export default new Typography()`
   }
 
   const dir = cache.directory
@@ -29,17 +28,17 @@ module.exports = typography`
     fs.mkdirSync(dir)
   }
 
-  fs.writeFileSync(`${dir}/typography.js`, module)
+  fs.writeFileSync(path.join(dir, `typography.js`), module)
 }
 
-exports.onCreateWebpackConfig = ({ actions, plugins: { define }, cache }) => {
+exports.onCreateWebpackConfig = ({ actions, cache }) => {
   const cacheFile = path.join(cache.directory, `typography.js`)
   const { setWebpackConfig } = actions
   setWebpackConfig({
-    plugins: [
-      define({
-        __TYPOGRAPHY_PLUGIN_CACHE_ENDPOINT__: JSON.stringify(cacheFile),
-      }),
-    ],
+    resolve: {
+      alias: {
+        "typography-plugin-cache-endpoint": cacheFile,
+      },
+    },
   })
 }
