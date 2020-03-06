@@ -82,8 +82,120 @@ const nodesTest = ({
   }
 }
 
+const graphql = require(`lodash/head`)
+
+const queriesFixtures = [
+  {
+    runs: [1],
+    type: `data`,
+    query: graphql`
+      {
+        allParentChildDeletionForFields {
+          nodes {
+            id
+            foo
+            fields {
+              foo
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [2],
+    type: `data`,
+    query: graphql`
+      {
+        allParentChildDeletionForFields {
+          nodes {
+            id
+            foo
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [1, 2],
+    type: `types`,
+    query: graphql`
+      {
+        typeinfoParent: __type(name: "Parent_ChildDeletionForFields") {
+          fields {
+            name
+          }
+        }
+
+        typeinfoChild: __type(name: "Parent_ChildDeletionForFieldsFields") {
+          fields {
+            name
+          }
+        }
+      }
+    `,
+  },
+]
+
+const queriesTest = ({ typesDiff, dataDiff }) => {
+  // fields and fields type are removed
+  expect(typesDiff).toMatchInlineSnapshot(`
+    "  Object {
+    -   \\"typeinfoChild\\": Object {
+    -     \\"fields\\": Array [
+    -       Object {
+    -         \\"name\\": \\"foo\\",
+    -       },
+    -     ],
+    -   },
+    +   \\"typeinfoChild\\": null,
+        \\"typeinfoParent\\": Object {
+          \\"fields\\": Array [
+            Object {
+              \\"name\\": \\"id\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
+            },
+            Object {
+              \\"name\\": \\"children\\",
+            },
+            Object {
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+              \\"name\\": \\"foo\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"fields\\",
+            },
+          ],
+        },
+      }"
+  `)
+
+  // fields are removed
+  expect(dataDiff).toMatchInlineSnapshot(`
+    "  Object {
+        \\"allParentChildDeletionForFields\\": Object {
+          \\"nodes\\": Array [
+            Object {
+    -         \\"fields\\": Object {
+    -           \\"foo\\": \\"bar\\",
+    -         },
+              \\"foo\\": \\"bar\\",
+              \\"id\\": \\"parent_childDeletionForFields\\",
+            },
+          ],
+        },
+      }"
+  `)
+}
+
 module.exports = {
   config,
+  queriesFixtures,
+  queriesTest,
   plugins,
   nodesTest,
 }

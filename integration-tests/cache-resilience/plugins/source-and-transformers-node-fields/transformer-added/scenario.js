@@ -63,8 +63,120 @@ const nodesTest = ({
   }
 }
 
+const graphql = require(`lodash/head`)
+
+const queriesFixtures = [
+  {
+    runs: [1],
+    type: `data`,
+    query: graphql`
+      {
+        allParentChildAdditionForFields {
+          nodes {
+            id
+            foo
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [2],
+    type: `data`,
+    query: graphql`
+      {
+        allParentChildAdditionForFields {
+          nodes {
+            id
+            foo
+            fields {
+              foo1
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    runs: [1, 2],
+    type: `types`,
+    query: graphql`
+      {
+        typeinfoParent: __type(name: "Parent_ChildAdditionForFields") {
+          fields {
+            name
+          }
+        }
+
+        typeinfoChild: __type(name: "Parent_ChildAdditionForFieldsFields") {
+          fields {
+            name
+          }
+        }
+      }
+    `,
+  },
+]
+
+const queriesTest = ({ typesDiff, dataDiff }) => {
+  // fields and fields type are added
+  expect(typesDiff).toMatchInlineSnapshot(`
+    "  Object {
+    -   \\"typeinfoChild\\": null,
+    +   \\"typeinfoChild\\": Object {
+    +     \\"fields\\": Array [
+    +       Object {
+    +         \\"name\\": \\"foo1\\",
+    +       },
+    +     ],
+    +   },
+        \\"typeinfoParent\\": Object {
+          \\"fields\\": Array [
+            Object {
+              \\"name\\": \\"id\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
+            },
+            Object {
+              \\"name\\": \\"children\\",
+            },
+            Object {
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+              \\"name\\": \\"foo\\",
+    +       },
+    +       Object {
+    +         \\"name\\": \\"fields\\",
+            },
+          ],
+        },
+      }"
+  `)
+
+  // fields are added
+  expect(dataDiff).toMatchInlineSnapshot(`
+    "  Object {
+        \\"allParentChildAdditionForFields\\": Object {
+          \\"nodes\\": Array [
+            Object {
+    +         \\"fields\\": Object {
+    +           \\"foo1\\": \\"bar\\",
+    +         },
+              \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_childAdditionForFields\\",
+            },
+          ],
+        },
+      }"
+  `)
+}
+
 module.exports = {
   config,
+  queriesFixtures,
+  queriesTest,
   plugins,
   nodesTest,
 }

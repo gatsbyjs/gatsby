@@ -43,8 +43,6 @@ const { compareState } = require(`../utils/nodes-diff`)
 
 const stdio = `inherit`
 
-process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION = 0
-
 const build = ({ updatePlugins } = {}) => {
   spawnSync(gatsbyBin, [`clean`], { stdio })
   selectConfiguration(1)
@@ -114,8 +112,6 @@ const build = ({ updatePlugins } = {}) => {
 }
 
 beforeAll(async () => {
-  await del([`plugins/**/src/**`])
-
   selectConfiguration(1)
 })
 
@@ -131,7 +127,7 @@ afterAll(() => {
     fs.unlinkSync(ON_POST_BUILD_FILE_PATH)
   }
 })
-/*
+
 describe(`nothing changed between gatsby runs`, () => {
   let states
 
@@ -162,7 +158,7 @@ describe(`nothing changed between gatsby runs`, () => {
     })
   })
 })
-*/
+
 describe(`Some plugins changed between gatsby runs`, () => {
   let states
 
@@ -504,7 +500,28 @@ describe(`Some plugins changed between gatsby runs`, () => {
         })
       })
 
-      describe(`Changes to transformer plugins`, () => {})
+      describe(`Changes to transformer plugins`, () => {
+        it(`Adding transformer plugin adds fields type to schema and updates query result`, () => {
+          const scenarioName = `source-and-transformers-node-fields/transformer-added`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+
+        it(`Removing transformer plugin removes fields type from schema and updates query result`, () => {
+          const scenarioName = `source-and-transformers-node-fields/transformer-removed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+
+        it(`Changing transformer plugin adjusts schema and query result changes just certain fields`, () => {
+          const scenarioName = `source-and-transformers-node-fields/transformer-changed`
+          const { queriesTest } = require(`../plugins/${scenarioName}/scenario`)
+
+          queriesTest(getQueryResultTestArgs(scenarioName))
+        })
+      })
     })
   })
 
