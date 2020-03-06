@@ -793,7 +793,7 @@ class ActionMonitor
             "description" => "Used to keep a log of actions in WordPress for cache invalidation in gatsby-source-wpgraphql.",
             "public" => false,
             "publicly_queryable" => false,
-            "show_ui" => false,
+            "show_ui" => defined('GRAPHQL_DEBUG') && GRAPHQL_DEBUG,
             "delete_with_user" => false,
             "show_in_rest" => true,
             "rest_base" => "",
