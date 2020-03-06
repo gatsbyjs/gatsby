@@ -72,6 +72,6 @@ WPGraphQL is one way to use Gatsby and WordPress together. It adds a flexible Gr
 ### Learn more about WPGraphQL
 
 - [WPGraphQL](https://www.wpgraphql.com/) official site
-- [GraphQL](https://graphql.org) official site
+- [Using Gatsby with WPGraphQL](https://www.youtube.com/watch?v=DH7I1xRrbxs) demo by the founder
 - [What is GraphQL?](/docs/glossary/graphql/) from the Gatsby docs
 - [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)
