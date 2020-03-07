@@ -1,12 +1,21 @@
-import PropTypes from "prop-types"
-import React from "react"
-import { Link } from "@reach/router"
+import React, { Ref } from "react"
+import { Link, NavigateOptions, LinkGetProps } from "@reach/router"
+import { IGatsbyLinkProps, IGetProps, IGatsbyLinkState, IIntersectionObserver } from "./types";
 
 import { parsePath } from "./parse-path"
 
 export { parsePath }
 
-export function withPrefix(path) {
+declare var __BASE_PATH__: string
+declare var __PATH_PREFIX__: string
+declare var ___loader: any;
+
+/**
+ * It is common to host sites in a sub-directory of a site. Gatsby lets you set the path prefix for your site.
+ * After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in
+ * development and production
+ */
+export function withPrefix(path: string): string {
   return normalizePath(
     [
       typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
@@ -15,22 +24,19 @@ export function withPrefix(path) {
   )
 }
 
-export function withAssetPrefix(path) {
+export function withAssetPrefix(path: string): string {
   return [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
 }
 
-function normalizePath(path) {
+function normalizePath(path: string): string {
   return path.replace(/\/+/g, `/`)
 }
 
-const NavLinkPropTypes = {
-  activeClassName: PropTypes.string,
-  activeStyle: PropTypes.object,
-  partiallyActive: PropTypes.bool,
-}
-
 // Set up IntersectionObserver
-const createIntersectionObserver = (el, cb) => {
+const createIntersectionObserver = (
+  el: Element,
+  cb: () => void
+): IIntersectionObserver => {
   const io = new window.IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (el === entry.target) {
@@ -49,8 +55,13 @@ const createIntersectionObserver = (el, cb) => {
   return { instance: io, el }
 }
 
-class GatsbyLink extends React.Component {
-  constructor(props) {
+class GatsbyLink<TState> extends React.Component<
+  IGatsbyLinkProps<TState>,
+  IGatsbyLinkState
+> {
+  io: IIntersectionObserver | undefined
+
+  constructor(props: IGatsbyLinkProps<TState>) {
     super(props)
     // Default to no support for IntersectionObserver
     let IOSupported = false
@@ -64,21 +75,21 @@ class GatsbyLink extends React.Component {
     this.handleRef = this.handleRef.bind(this)
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: IGatsbyLinkProps<TState>): void {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
       ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
       ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     if (!this.io) {
       return
     }
@@ -88,7 +99,7 @@ class GatsbyLink extends React.Component {
     instance.disconnect()
   }
 
-  handleRef(ref) {
+  handleRef(ref: HTMLAnchorElement | null): void {
     if (this.props.innerRef && this.props.innerRef.hasOwnProperty(`current`)) {
       this.props.innerRef.current = ref
     } else if (this.props.innerRef) {
@@ -103,7 +114,10 @@ class GatsbyLink extends React.Component {
     }
   }
 
-  defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
+  defaultGetProps = ({
+    isPartiallyCurrent,
+    isCurrent,
+  }: LinkGetProps): IGetProps => {
     if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
@@ -112,7 +126,7 @@ class GatsbyLink extends React.Component {
         style: { ...this.props.style, ...this.props.activeStyle },
       }
     }
-    return null
+    return {}
   }
 
   render() {
@@ -182,39 +196,54 @@ class GatsbyLink extends React.Component {
   }
 }
 
-GatsbyLink.propTypes = {
-  ...NavLinkPropTypes,
-  onClick: PropTypes.func,
-  to: PropTypes.string.isRequired,
-  replace: PropTypes.bool,
-  state: PropTypes.object,
-}
-
-const showDeprecationWarning = (functionName, altFunctionName, version) =>
+const showDeprecationWarning = (
+  functionName: string,
+  altFunctionName: string,
+  version: number
+): void =>
   console.warn(
     `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
   )
 
-export default React.forwardRef((props, ref) => (
+/**
+ * This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other
+ * domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
+ */
+export default React.forwardRef((props, ref: Ref<HTMLAnchorElement>) => (
   <GatsbyLink innerRef={ref} {...props} />
 ))
 
-export const navigate = (to, options) => {
+/**
+ * Sometimes you need to navigate to pages programmatically, such as during form submissions. In these
+ * cases, `Link` won’t work.
+ */
+export const navigate = (to: string, options?: NavigateOptions<{}>): void => {
   window.___navigate(withPrefix(to), options)
 }
 
-export const push = to => {
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
+export const push = (to: string): void => {
   showDeprecationWarning(`push`, `navigate`, 3)
   window.___push(withPrefix(to))
 }
 
-export const replace = to => {
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
+export const replace = (to: string): void => {
   showDeprecationWarning(`replace`, `navigate`, 3)
   window.___replace(withPrefix(to))
 }
 
-// TODO: Remove navigateTo for Gatsby v3
-export const navigateTo = to => {
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
+export const navigateTo = (to: string): void => {
   showDeprecationWarning(`navigateTo`, `navigate`, 3)
   return push(to)
 }

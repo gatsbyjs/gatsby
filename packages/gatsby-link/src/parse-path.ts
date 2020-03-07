@@ -1,4 +1,6 @@
-export function parsePath(path) {
+import { IParsePathResult } from "./types"
+
+export function parsePath(path: string): IParsePathResult {
   var pathname = path || `/`
   var search = ``
   var hash = ``
