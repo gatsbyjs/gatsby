@@ -2,29 +2,29 @@
 title: Data Storage (Redux)
 ---
 
-During Gatsby's bootstrap & build phases, the state is stored and manipulated using the [Redux](https://redux.js.org/) library. The key purpose of using Redux is to centralize all of the state logic. Reviewing the Gatsby [reducers](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/reducers) and [actions](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/actions) folders gives a comprehensive picture of what state manipulations are possible.
+During Gatsby's bootstrap & build phases, the state is stored and manipulated using the [Redux](https://redux.js.org/) library. The key purpose of using Redux in Gatsby internals is to centralize all of the state logic. Reviewing the Gatsby [reducers](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/reducers) and [actions](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/actions) folders gives a comprehensive picture of what state manipulations are possible.
 
 ## Store
 
 The namespaces in Gatsby's Redux store are a great overview of the Gatsby internals, here are a few:
 
-- [Pages](https://www.gatsbyjs.org/docs/gatsby-internals-terminology/#redux-pages-namespace)
-- [Components](https://www.gatsbyjs.org/docs/gatsby-internals-terminology/#redux-components-namespace)
+- [Pages](/docs/gatsby-internals-terminology/#redux-pages-namespace)
+- [Components](/docs/gatsby-internals-terminology/#redux-components-namespace)
 - Nodes
 - Schema
 - Jobs
 - Webpack
 - Metadata
 
-The Gatsby [/redux index file](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](https://www.gatsbyjs.org/docs/node-apis/).
+The Gatsby [/redux index file](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](/docs/node-apis/).
 
 ## Actions
 
 Actions dispatched can have a series of effects as different reducers pick them up. Gatsby augments the typical Redux reducer with a pubsub [mitt](https://www.npmjs.com/package/mitt) `emitter` which subscribes to the Redux store to perform further side-effects.
 
-Actions dispatched in the store cause state changes through the reducers and also trigger listeners registered for that action on the `emitter`. The `subscribe` Redux store method is typically used to connect a web framework like React, Gatsby only uses the `subscribe` method to connect the `emitter`.
+Actions dispatched in the store cause state changes through the reducers and also trigger listeners registered for that action on the `emitter`. While the `subscribe` Redux store method is typically used to connect a web framework like React, Gatsby only uses the `subscribe` method to connect the `emitter`.
 
-The [Gatsby actions](/docs/actions/) are all either internal, public or restricted. The public actions, and a context relevant subset of the restricted actions, are available to users through the [Node APIs](https://www.gatsbyjs.org/docs/node-apis/). 
+The [Gatsby actions](/docs/actions/) are all either internal, public or restricted. The public actions, and a context relevant subset of the restricted actions, are available to users through the [Node APIs](/docs/node-apis/). 
 
 ### Action Journey
 
@@ -40,7 +40,7 @@ Here is the journey of the [createRedirect](/docs/actions/#createRedirect) publi
 
 - **Expose bound action creator** - [api-runner-node.js](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/utils/api-runner-node.js#L102) - `createRedirect` is one of the public actions made available to all of the [Node APIs](/docs/node-apis/). Node APIs are all run by the `apiRun` function found in `api-runner-node.js`. A collection of public actions and the restricted actions available to the called API are bound to the Redux store dispatch. The bound action collection is then passed when calling the user's API function.
 
-- **Dispatch** - Here is an example of the `createRedirect` call that a Gatsby user could make with the [createPages](https://www.gatsbyjs.org/docs/node-apis/#createPages) API in their project's [gatsby-node.js](https://www.gatsbyjs.org/docs/api-files-gatsby-node/) file:
+- **Dispatch** - Here is an example of the `createRedirect` call that a Gatsby user could make with the [createPages](/docs/node-apis/#createPages) API in their project's [gatsby-node.js](/docs/api-files-gatsby-node/) file:
 
 ```javascript:title=gatsby-node.js
 module.exports = {
