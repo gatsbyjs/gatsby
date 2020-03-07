@@ -10,9 +10,9 @@ The namespaces in Gatsby's Redux store are a great overview of the Gatsby intern
 
 - [Nodes](/docs/node-interface/) - All data that’s added to Gatsby is modeled using nodes. Nodes are most commonly added by Source plugins such as `gatsby-source-filesystem`.
 - [Schema](/docs/schema-generation/) - GraphQL schema inferred from Nodes, available for querying by page and static queries.
-- [Pages](/docs/gatsby-internals-terminology/#page) - A mapping of page paths to page objects. Page objects contain information needed to render a page such as component file path, page query and context.
-- [Components](/docs/gatsby-internals-terminology/#component) - A mapping of component file paths to page objects.
-- [Static Query Components](/docs/gatsby-internals-terminology/#component) - A collection of the components detected with static queries.
+- [Pages](/docs/gatsby-internals-terminology/#page) - A `Map` of page paths to page objects. Page objects contain information needed to render a page such as component file path, page query and context.
+- [Components](/docs/gatsby-internals-terminology/#component) - A `Map` of component file paths to page objects.
+- [Static Query Components](/docs/static-vs-normal-queries/#keeping-track-of-site-queries-during-build-in-redux-stores) - A `Map` of any components detected with a static query.
 - Jobs - Long-running processes, generally started as a side-effect to a GraphQL query. Gatsby doesn’t finish its process until all jobs are ended.
 - Webpack - Config for the [Webpack](https://webpack.js.org/) tool which handles code optimization and splitting of delivered javascript bundles.
 
@@ -28,17 +28,15 @@ The [Gatsby actions](/docs/actions/) are all either internal, public or restrict
 
 ### Action Journey
 
-At the time of writing there are 10 places in the code where `CREATE_NODE` type actions are dispatched, and 10 places where they are acted on through either reducers or `emitter` listeners.
+Gatsby actions have a similar journey through defining, exposing and dispatching. Let's follow the [createRedirect](/docs/actions/#createRedirect) public action:
 
-Here is the journey of the [createRedirect](/docs/actions/#createRedirect) public action through defining, exposing and dispatching:
+- **Reducer case** - The redirects reducer will catch actions with a type `CREATE_REDIRECT` and make the necessary state manipulation.
 
-- **Reducer case** - [redirects.js](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/reducers/redirects.js#L28) - The redirects reducer will catch actions with a type `CREATE_REDIRECT` and make the necessary state manipulation.
+- **Side effect** - An `emitter` listener is registered for the `CREATE_REDIRECT` action type.
 
-- **Side effect** - [redirects-writer.js](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/bootstrap/redirects-writer.js#L44) - An `emitter` listener is registered for the `CREATE_REDIRECT` action type.
+- **Action creator** - An action creator, `createRedirect`, is defined in the public actions file. The action has a payload, the information needed to complete the action, and a type, the string that identifies this particular action.
 
-- **Action creator** - [public.js](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/actions/public.js#L1358) - An action creator, `createRedirect`, is defined in the public actions file. The action has a payload, the information needed to complete the action, and a type, the string that identifies this particular action.
-
-- **Expose bound action creator** - [api-runner-node.js](https://github.com/gatsbyjs/gatsby/blob/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/utils/api-runner-node.js#L102) - `createRedirect` is one of the public actions made available to all of the [Node APIs](/docs/node-apis/). Node APIs are all run by the `apiRun` function found in `api-runner-node.js`. A collection of public actions and the restricted actions available to the called API are bound to the Redux store dispatch. The bound action collection is then passed when calling the user's API function.
+- **Expose bound action creator** - `createRedirect` is one of the public actions made available to all of the [Node APIs](/docs/node-apis/). A collection of public actions and the restricted actions available to the called API are bound to the Redux store dispatch. The bound action collection is then passed when calling the user's API function.
 
 - **Dispatch** - Here is an example of the `createRedirect` call that a Gatsby user could make with the [createPages](/docs/node-apis/#createPages) API in their project's [gatsby-node.js](/docs/api-files-gatsby-node/) file:
 
