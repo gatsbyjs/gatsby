@@ -1,14 +1,16 @@
-import webpack from "webpack"
-import webpackConfig from "../utils/webpack.config"
-import { IProgram } from "./types"
 import { Span } from "opentracing"
+import webpack, { Stats } from "webpack"
+
+import webpackConfig from "../utils/webpack.config"
+
+import { IProgram } from "./types"
 
 import { reportWebpackWarnings } from "../utils/webpack-error-utils"
 
 export const buildProductionBundle = async (
   program: IProgram,
   parentSpan: Span
-): Promise<webpack.Stats> => {
+): Promise<Stats> => {
   const { directory } = program
 
   const compilerConfig = await webpackConfig(
