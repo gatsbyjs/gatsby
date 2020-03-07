@@ -1,6 +1,7 @@
 import { CSSProperties, Ref } from "react"
 import { NavigateOptions, LinkProps } from "@reach/router"
 
+/* eslint-disable @typescript-eslint/interface-name-prefix */
 declare global {
   interface Window {
     ___push: (to: string) => void
@@ -8,6 +9,7 @@ declare global {
     ___navigate: (to: string, options?: NavigateOptions<{}>) => void
   }
 }
+/* eslint-disable @typescript-eslint/interface-name-prefix */
 
 export interface IGetProps {
   className?: string
