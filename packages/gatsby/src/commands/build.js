@@ -4,7 +4,7 @@ const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const fs = require(`fs-extra`)
 import { buildHTML } from "./build-html"
-const buildProductionBundle = require(`./build-javascript`)
+import { buildProductionBundle } from "./build-javascript"
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
