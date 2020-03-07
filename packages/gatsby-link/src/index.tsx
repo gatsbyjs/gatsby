@@ -20,48 +20,12 @@ declare var ___loader: any
 /* eslint-enable no-var */
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
-const showDeprecationWarning = (
-  functionName: string,
-  altFunctionName: string,
-  version: number
-): void =>
-  console.warn(
-    `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
-  )
-
 /**
  * Sometimes you need to navigate to pages programmatically, such as during form submissions. In these
  * cases, `Link` won’t work.
  */
 export const navigate = (to: string, options?: NavigateOptions<{}>): void => {
   window.___navigate(withPrefix(to), options)
-}
-
-/**
- * @deprecated
- * TODO: Remove for Gatsby v3
- */
-export const push = (to: string): void => {
-  showDeprecationWarning(`push`, `navigate`, 3)
-  window.___push(withPrefix(to))
-}
-
-/**
- * @deprecated
- * TODO: Remove for Gatsby v3
- */
-export const replace = (to: string): void => {
-  showDeprecationWarning(`replace`, `navigate`, 3)
-  window.___replace(withPrefix(to))
-}
-
-/**
- * @deprecated
- * TODO: Remove for Gatsby v3
- */
-export const navigateTo = (to: string): void => {
-  showDeprecationWarning(`navigateTo`, `navigate`, 3)
-  return push(to)
 }
 
 /**
@@ -253,6 +217,15 @@ class GatsbyLink<TState> extends React.Component<
   }
 }
 
+const showDeprecationWarning = (
+  functionName: string,
+  altFunctionName: string,
+  version: number
+): void =>
+  console.warn(
+    `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
+  )
+
 /**
  * This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other
  * domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
@@ -260,3 +233,30 @@ class GatsbyLink<TState> extends React.Component<
 export default React.forwardRef((props, ref: Ref<HTMLAnchorElement>) => (
   <GatsbyLink innerRef={ref} {...props} />
 ))
+
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
+export const push = (to: string): void => {
+  showDeprecationWarning(`push`, `navigate`, 3)
+  window.___push(withPrefix(to))
+}
+
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
+export const replace = (to: string): void => {
+  showDeprecationWarning(`replace`, `navigate`, 3)
+  window.___replace(withPrefix(to))
+}
+
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
+export const navigateTo = (to: string): void => {
+  showDeprecationWarning(`navigateTo`, `navigate`, 3)
+  return push(to)
+}
