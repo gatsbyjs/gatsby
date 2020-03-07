@@ -1,6 +1,12 @@
 {
   "presets": [
     ["babel-preset-gatsby-package", { "browser": true }]
+  ],
+  "overrides": [
+    {
+      "test": "**/*.ts",
+      "plugins": [["@babel/plugin-transform-typescript", { "isTSX": true }]]
+    }
   ]
 }
 
