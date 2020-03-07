@@ -2,7 +2,7 @@
 title: Data Storage (Redux)
 ---
 
-During Gatsby's bootstrap & build phases, the state is stored and manipulated using the [Redux](https://redux.js.org/) library. The key purpose of using Redux in Gatsby internals is to centralize all of the state logic. Reviewing the Gatsby [reducers](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/reducers) and [actions](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/actions) folders gives a comprehensive picture of what state manipulations are possible.
+During Gatsby's bootstrap & build phases, the state is stored and manipulated using the [Redux](https://redux.js.org/) library. The key purpose of using Redux in Gatsby internals is to centralize all of the state logic. Reviewing the Gatsby [reducers](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/reducers) and [actions](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/actions) folders gives a comprehensive picture of what state manipulations are possible.
 
 ## Store
 
@@ -16,7 +16,7 @@ The namespaces in Gatsby's Redux store are a great overview of the Gatsby intern
 - Jobs - Long-running processes, generally started as a side-effect to a GraphQL query. Gatsby doesn’t finish its process until all jobs are ended.
 - Webpack - Config for the [Webpack](https://webpack.js.org/) tool which handles code optimization and splitting of delivered javascript bundles.
 
-The Gatsby [/redux index file](https://github.com/gatsbyjs/gatsby/tree/80acb8d5d67f7e277ce44158b36da84d262e5b23/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](/docs/node-apis/).
+The Gatsby [/redux index file](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](/docs/node-apis/).
 
 ## Actions
 
