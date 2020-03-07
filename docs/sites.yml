@@ -10084,11 +10084,11 @@
     - Food
   built_by: Matthew Mesa
   built_by_url: "https://matthewmesa.com"
-  - title: MPG Calculator
+- title: MPG Calculator
   url: "https://www.mpg-calculator.co.uk"
   main_url: "https://www.mpg-calculator.co.uk"
   description: >
-    A website which allows you to calculate the MPG of your vehicle. 
+    A website which allows you to calculate the MPG of your vehicle.
   categories:
     - SEO
     - Accessibility
