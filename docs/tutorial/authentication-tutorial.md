@@ -307,9 +307,12 @@ import { getUser, isLoggedIn, logout } from "../services/auth" // highlight-line
 
 // highlight-start
 export default () => {
-  const greetingMessage = isLoggedIn()
-    ? `Hello ${getUser().name}`
-    : "You are not logged in"
+  let greetingMessage = ""
+  if (isLoggedIn()) {
+    greetingMessage = `Hello ${getUser().name}`
+  } else {
+    greetingMessage = "You are not logged in"
+  }
 
   return (
     // highlight-end
