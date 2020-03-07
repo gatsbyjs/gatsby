@@ -1,4 +1,4 @@
-const preset = require(`../`)
+import preset from "../"
 
 jest.mock(`../resolver`, () => jest.fn(moduleName => moduleName))
 
