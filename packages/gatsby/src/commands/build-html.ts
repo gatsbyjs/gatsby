@@ -1,20 +1,20 @@
 import Bluebird from "bluebird"
-import webpack from "webpack"
 import fs from "fs-extra"
-// import convertHrtime from "convert-hrtime"
-import { chunk } from "lodash"
-import webpackConfig from "../utils/webpack.config"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import telemetry from "gatsby-telemetry"
+import { chunk } from "lodash"
+import webpack, { Stats } from "webpack"
+
+import webpackConfig from "../utils/webpack.config"
+import { structureWebpackErrors } from "../utils/webpack-error-utils"
+
 import { BuildHTMLStage, IProgram } from "./types"
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
 
-import { structureWebpackErrors } from "../utils/webpack-error-utils"
-
-const runWebpack = (compilerConfig): Bluebird<webpack.Stats> =>
+const runWebpack = (compilerConfig): Bluebird<Stats> =>
   new Bluebird((resolve, reject) => {
     webpack(compilerConfig).run((err, stats) => {
       if (err) {
@@ -50,7 +50,8 @@ const buildRenderer = async (
   const config = await webpackConfig(program, directory, stage, null, {
     parentSpan,
   })
-  return await doBuildRenderer(program, config)
+
+  return doBuildRenderer(program, config)
 }
 
 const deleteRenderer = async (rendererPath: string): Promise<void> => {
