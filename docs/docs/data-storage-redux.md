@@ -8,21 +8,19 @@ During Gatsby's bootstrap & build phases, the state is stored and manipulated us
 
 The namespaces in Gatsby's Redux store are a great overview of the Gatsby internals, here are a few:
 
-- [Nodes](/docs/node-interface/) - All data that’s added to Gatsby is modeled using nodes. Nodes are most commonly added by Source plugins such as `gatsby-source-filesystem`.
-- [Schema](/docs/schema-generation/) - GraphQL schema inferred from Nodes, available for querying by page and static queries.
-- [Pages](/docs/gatsby-internals-terminology/#page) - A `Map` of page paths to page objects. Page objects contain information needed to render a page such as component file path, page query and context.
-- [Components](/docs/gatsby-internals-terminology/#component) - A `Map` of component file paths to page objects.
-- [Static Query Components](/docs/static-vs-normal-queries/#keeping-track-of-site-queries-during-build-in-redux-stores) - A `Map` of any components detected with a static query.
-- Jobs - Long-running processes, generally started as a side-effect to a GraphQL query. Gatsby doesn’t finish its process until all jobs are ended.
-- Webpack - Config for the [Webpack](https://webpack.js.org/) tool which handles code optimization and splitting of delivered javascript bundles.
+- **[Nodes](/docs/node-interface/)** - All data that’s added to Gatsby is modeled using nodes. Nodes are most commonly added by Source plugins such as `gatsby-source-filesystem`.
+- **[Schema](/docs/schema-generation/)** - GraphQL schema inferred from Nodes, available for querying by page and static queries.
+- **[Pages](/docs/gatsby-internals-terminology/#page)** - A `Map` of page paths to page objects. Page objects contain information needed to render a page such as component file path, page query and context.
+- **[Components](/docs/gatsby-internals-terminology/#component)** - A `Map` of component file paths to page objects.
+- **[Static Query Components](/docs/static-vs-normal-queries/#keeping-track-of-site-queries-during-build-in-redux-stores)** - A `Map` of any components detected with a static query.
+- **Jobs** - Long-running processes, generally started as a side-effect to a GraphQL query. Gatsby doesn’t finish its process until all jobs are ended.
+- **Webpack** - Config for the [Webpack](https://webpack.js.org/) bundler which handles code optimization and splitting of delivered javascript bundles.
 
 The Gatsby [/redux index file](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](/docs/node-apis/).
 
 ## Actions
 
-Actions dispatched can have a series of effects as different reducers pick them up. Gatsby augments the typical Redux reducer with a pubsub [mitt](https://www.npmjs.com/package/mitt) `emitter` which subscribes to the Redux store to perform further side-effects.
-
-Actions dispatched in the store cause state changes through the reducers and also trigger listeners registered for that action on the `emitter`. While the `subscribe` Redux store method is typically used to connect a web framework like React, Gatsby only uses the `subscribe` method to connect the `emitter`.
+Actions dispatched in the store cause state changes through the reducers and also trigger listeners registered for that action on a [mitt](https://www.npmjs.com/package/mitt) `emitter`. While the `subscribe` Redux store method is typically used to connect a web framework like React, Gatsby only uses the `subscribe` method to connect the `emitter`.
 
 The [Gatsby actions](/docs/actions/) are all either internal, public or restricted. The public actions, and a context relevant subset of the restricted actions, are available to users through the [Node APIs](/docs/node-apis/).
 
