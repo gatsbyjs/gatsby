@@ -7,11 +7,7 @@ import { reportWebpackWarnings } from "../utils/webpack-error-utils"
 
 export const buildProductionBundle = async (
   program: IProgram,
-  {
-    parentSpan,
-  }: {
-    parentSpan: Span
-  }
+  parentSpan: Span
 ): Promise<webpack.Stats> => {
   const { directory } = program
 

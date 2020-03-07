@@ -111,11 +111,11 @@ module.exports = async function build(program: BuildArgs) {
     { parentSpan: buildSpan }
   )
   activity.start()
-  const stats = await buildProductionBundle(program, {
-    parentSpan: activity.span,
-  }).catch(err => {
-    activity.panic(structureWebpackErrors(`build-javascript`, err))
-  })
+  const stats = await buildProductionBundle(program, activity.span).catch(
+    err => {
+      activity.panic(structureWebpackErrors(`build-javascript`, err))
+    }
+  )
   activity.end()
 
   const workerPool = WorkerPool.create()
