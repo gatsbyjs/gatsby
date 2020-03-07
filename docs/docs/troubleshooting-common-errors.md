@@ -227,12 +227,12 @@ Checking the capitalization of files output in your build logs and redeploying i
 
 ### Error: ENOSPC: System limit for number of file watchers reached
 
-You probably encountered a system limit on the number of files you can monitor.
+You may have encountered a system limit on the number of files you can monitor.
 
-To fix it, try the following:
+To fix it, increase your system's file watchers limit (which is the number of processes that check for changes to files in your site while it's running) with the following command:
 
 ```shell
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 ```
 
-You may be able to find more information or discuss this issue [here](https://github.com/gatsbyjs/gatsby/issues/11406).
+You may be able to find more information for your circumstances in [the GitHub issue corresponding to this error](https://github.com/gatsbyjs/gatsby/issues/11406).
