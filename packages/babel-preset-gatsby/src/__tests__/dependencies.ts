@@ -1,4 +1,4 @@
-const preset = require(`../dependencies`)
+import preset from "../dependencies"
 import * as pathSerializer from "../utils/path-serializer"
 
 expect.addSnapshotSerializer(pathSerializer)

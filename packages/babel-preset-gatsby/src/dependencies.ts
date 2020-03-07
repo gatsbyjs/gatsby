@@ -1,10 +1,11 @@
 // This file is heavily based on create-react-app's implementation
 // @see https://github.com/facebook/create-react-app/blob/master/packages/babel-preset-react-app/dependencies.js
 
-const path = require(`path`)
-const resolve = m => require.resolve(m)
+import path from "path"
 
-module.exports = function(api, options = {}) {
+const resolve = (m: string): string => require.resolve(m)
+
+export default (): object => {
   const absoluteRuntimePath = path.dirname(
     resolve(`@babel/runtime/package.json`)
   )
