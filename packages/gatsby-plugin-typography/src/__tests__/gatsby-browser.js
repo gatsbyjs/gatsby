@@ -8,7 +8,7 @@ jest.mock(`react-typography`, () => {
 
 const mockTypographyCache = (googleFonts = [`Roboto`]) => {
   jest.doMock(
-    `../typography`,
+    `typography-plugin-cache-endpoint`,
     () => {
       return {
         injectStyles: () => {},
