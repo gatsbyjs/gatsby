@@ -13,6 +13,7 @@ import MdxLink from "../components/mdx-link"
 import Breakout from "../components/breakout"
 import VisuallyHidden from "../components/visually-hidden"
 import Events from "../components/events/events"
+import ScriptLoader from "../components/script-loader"
 import StubList from "../components/stub-list"
 import LangList from "../components/lang-list"
 
@@ -30,6 +31,7 @@ export default {
   Events,
   StubList,
   LangList,
+  ScriptLoader,
   a: MdxLink,
   pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
 }
