@@ -18,7 +18,10 @@ export interface IReduxState {
   nodesByType?: Map<any, any> // TODO
   jobsV2: any // TODO
   lastAction: ActionsUnion
-  componentDataDependencies: any // TODO
+  componentDataDependencies: {
+    connections: any // TODO
+    nodes: any // TODO
+  }
   components: any // TODO
   staticQueryComponents: any // TODO
   webpackCompilationHash: any // TODO
