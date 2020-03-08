@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React, { Ref, ReactElement } from "react"
 import { Link, NavigateOptions, LinkGetProps } from "@reach/router"
 import {
@@ -77,6 +78,16 @@ class GatsbyLink<TState> extends React.Component<
   IGatsbyLinkProps<TState>,
   IGatsbyLinkState
 > {
+  static propTypes = {
+    activeClassName: PropTypes.string,
+    activeStyle: PropTypes.object,
+    partiallyActive: PropTypes.bool,
+    onClick: PropTypes.func,
+    to: PropTypes.string.isRequired,
+    replace: PropTypes.bool,
+    state: PropTypes.object,
+  }
+
   io: IIntersectionObserver | undefined
 
   constructor(props: IGatsbyLinkProps<TState>) {
@@ -208,8 +219,6 @@ class GatsbyLink<TState> extends React.Component<
             // loaded before continuing.
             navigate(to, { state, replace })
           }
-
-          return true
         }}
         {...rest}
       />
