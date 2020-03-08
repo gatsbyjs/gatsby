@@ -16,7 +16,7 @@
     "directory": "packages/gatsby-core-utils"
   },
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore **/__tests__",
+    "build": "babel src --out-dir dist/ --ignore **/__tests__ --ignore **/__mocks__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir dist/ --ignore **/__tests__"
   },
@@ -37,6 +37,7 @@
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
     "babel-preset-gatsby-package": "^0.2.17",
-    "cross-env": "^5.2.1"
+    "cross-env": "^5.2.1",
+    "@types/ci-info": "2.0.0"
   }
 }
