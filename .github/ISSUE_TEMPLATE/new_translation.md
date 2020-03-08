@@ -22,9 +22,10 @@ maintainers:
 ```
 
 **Maintainers**
-
+<!--
 If you would like to be a maintainer, please respond to this issue with:
 
 - your experience level in open source
 - your level of experience in the target language and localization
 - how much time you can commit to being a maintainer
+-->
