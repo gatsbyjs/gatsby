@@ -2,7 +2,7 @@ import Configstore from "configstore"
 
 let config: Configstore
 
-const getConfigStore = (): Configstore => {
+export const getConfigStore = (): Configstore => {
   if (!config) {
     config = new Configstore(
       `gatsby`,
@@ -15,5 +15,3 @@ const getConfigStore = (): Configstore => {
 
   return config
 }
-
-export default getConfigStore
