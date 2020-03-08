@@ -1,10 +1,10 @@
-const path = require(`path`)
-const os = require(`os`)
+import path from "path"
+import os from "os"
 
 /**
  * @type {import('../index').joinPath}
  */
-export function joinPath(...paths) {
+export function joinPath(...paths: string[]): string {
   const joinedPath = path.join(...paths)
   if (os.platform() === `win32`) {
     return joinedPath.replace(/\\/g, `\\\\`)
@@ -72,7 +72,7 @@ const nodePaths = [
 /**
  * @type {import('../index').isNodeInternalModulePath}
  */
-export const isNodeInternalModulePath = fileName =>
+export const isNodeInternalModulePath = (fileName: string): boolean =>
   nodePaths.some(regTest => regTest.test(fileName))
 
 /**
@@ -84,7 +84,7 @@ export const isNodeInternalModulePath = fileName =>
  * @param  {String}          path
  * @return {String}          slashed path
  */
-export function slash(path) {
+export function slash(path: string): string {
   const isExtendedLengthPath = /^\\\\\?\\/.test(path)
 
   if (isExtendedLengthPath) {
