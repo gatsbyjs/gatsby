@@ -33,6 +33,8 @@ export interface IReduxState {
     proxy: any
   }
   pageData: any
+  pages: any
+  babelrc: any
 }
 
 export interface ICachedReduxState {
