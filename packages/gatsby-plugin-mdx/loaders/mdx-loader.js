@@ -124,7 +124,7 @@ module.exports = async function(content) {
       id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
       node: fileNode,
       content,
-      options
+      options,
     })
   } catch (e) {
     return callback(e)
@@ -144,7 +144,7 @@ module.exports = async function(content) {
   if (!hasDefaultExport(content, DEFAULT_OPTIONS) && !!defaultLayout) {
     debug(`inserting default layout`, defaultLayout)
     const { content: contentWithoutFrontmatter, data } = grayMatter(content)
-    const matter = grayMatter.stringify('', data )
+    const matter = grayMatter.stringify(``, data )
 
     code = `${matter ? matter : ``}
 
