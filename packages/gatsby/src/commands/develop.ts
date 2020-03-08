@@ -33,7 +33,7 @@ import https from "https"
 
 import bootstrapSchemaHotReloader from "../bootstrap/schema-hot-reloader"
 import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
-import developStatic from "./develop-static"
+import { developStatic } from "./develop-static"
 import withResolverContext from "../schema/context"
 import sourceNodes from "../utils/source-nodes"
 import createSchemaCustomization from "../utils/create-schema-customization"
