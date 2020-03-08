@@ -1,5 +1,5 @@
 import { Span } from "opentracing"
-import webpack, { Stats } from "webpack"
+import webpack from "webpack"
 
 import webpackConfig from "../utils/webpack.config"
 
@@ -10,7 +10,7 @@ import { reportWebpackWarnings } from "../utils/webpack-error-utils"
 export const buildProductionBundle = async (
   program: IProgram,
   parentSpan: Span
-): Promise<Stats> => {
+): Promise<webpack.Stats> => {
   const { directory } = program
 
   const compilerConfig = await webpackConfig(
