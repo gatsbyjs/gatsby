@@ -13,14 +13,24 @@ export const createPageDependency = ({
 
   // Check that the dependencies aren't already recorded so we
   // can avoid creating lots of very noisy actions.
-  const nodeDependencyExists =
-    !nodeId || (nodeId && nodes.has(nodeId) && nodes.get(nodeId).has(path))
-  const connectionDependencyExists =
-    !connection ||
-    (connection &&
-      connections.has(connection) &&
-      connections.get(connection).has(path))
-
+  let nodeDependencyExists = false
+  let connectionDependencyExists = false
+  if (!nodeId) {
+    nodeDependencyExists = true
+  }
+  if (nodeId && nodes.has(nodeId) && nodes.get(nodeId).has(path)) {
+    nodeDependencyExists = true
+  }
+  if (!connection) {
+    connectionDependencyExists = true
+  }
+  if (
+    connection &&
+    connections.has(connection) &&
+    connections.get(connection).has(path)
+  ) {
+    connectionDependencyExists = true
+  }
   if (nodeDependencyExists && connectionDependencyExists) {
     return
   }
