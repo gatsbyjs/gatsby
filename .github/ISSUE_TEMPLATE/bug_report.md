@@ -16,22 +16,22 @@ labels: "type: bug"
 
 ## Description
 
-Describe the issue that you're seeing.
+<!--- Describe the issue that you're seeing. --->
 
 ### Steps to reproduce
 
-Clear steps describing how to reproduce the issue. Please please please link to a demo project if possible, this makes your issue _much_ easier to diagnose (seriously).
+<!--- Clear steps describing how to reproduce the issue. Please please please link to a demo project if possible, this makes your issue _much_ easier to diagnose (seriously).
 
-How to Make a Minimal Reproduction: https://www.gatsbyjs.org/contributing/how-to-make-a-reproducible-test-case/
+How to Make a Minimal Reproduction: https://www.gatsbyjs.org/contributing/how-to-make-a-reproducible-test-case/ --->
 
 ### Expected result
 
-What should happen?
+<!--- What should happen? --->
 
 ### Actual result
 
-What happened.
+<!--- What happened. --->
 
 ### Environment
 
-Run `gatsby info --clipboard` in your project directory and paste the output here.
+<!--- Run `gatsby info --clipboard` in your project directory and paste the output here. --->
