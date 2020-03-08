@@ -1,8 +1,8 @@
 import Configstore from "configstore"
 
-let config
+let config: Configstore
 
-module.exports = () => {
+const getConfigStore = (): Configstore => {
   if (!config) {
     config = new Configstore(
       `gatsby`,
@@ -15,3 +15,5 @@ module.exports = () => {
 
   return config
 }
+
+export default getConfigStore
