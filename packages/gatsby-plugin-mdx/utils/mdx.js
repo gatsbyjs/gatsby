@@ -9,7 +9,7 @@ const grayMatter = require(`gray-matter`)
  * @return {String}         JSX source
  */
 module.exports = async function mdxToJsx(source, options) {
-  const { data, content } = grayMatter(source)
+  const { data } = grayMatter(source)
 
   let code = await mdx(source, options || {})
 
