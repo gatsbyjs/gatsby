@@ -102,6 +102,15 @@ type ActionOptions = {
   followsSpan: ?Object,
 }
 
+type PageData = {
+  id: string,
+  resultHash: string,
+}
+
+type PageDataRemove = {
+  id: string,
+}
+
 /**
  * Delete a page
  * @param {Object} page a page object
@@ -544,8 +553,10 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
+// Marked private here because it was supressed in documentation pages.
 /**
  * Batch delete nodes
+ * @private
  * @param {Array} nodes an array of node ids
  * @example
  * deleteNodes([`node1`, `node2`])
@@ -582,8 +593,11 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 let NODE_COUNTER = 0
 
 const typeOwners = {}
+
+// memberof notation is added so this code can be referenced instead of the wrapper.
 /**
  * Create a new node.
+ * @memberof actions
  * @param {Object} node a node object
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
@@ -1402,6 +1416,33 @@ actions.createPageDependency = (
       nodeId,
       connection,
     },
+  }
+}
+
+/**
+ * Set page data in the store, saving the pages content data and context.
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the path to the page.
+ * @param {string} $0.resultHash pages content hash.
+ */
+actions.setPageData = (pageData: PageData) => {
+  return {
+    type: `SET_PAGE_DATA`,
+    payload: pageData,
+  }
+}
+
+/**
+ * Remove page data from the store.
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the path to the page.
+ */
+actions.removePageData = (id: PageDataRemove) => {
+  return {
+    type: `REMOVE_PAGE_DATA`,
+    payload: id,
   }
 }
 

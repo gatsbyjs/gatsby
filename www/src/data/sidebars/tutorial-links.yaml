@@ -138,3 +138,5 @@
           link: /tutorial/writing-documentation-with-docz/
         - title: Making a Blog with Netlify CMS
           link: /tutorial/blog-netlify-cms-tutorial/
+        - title: Search Engine Optimization (SEO) and Social Sharing Cards with Gatsby
+          link: /tutorial/seo-and-social-sharing-cards-tutorial/

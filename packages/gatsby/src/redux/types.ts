@@ -1,16 +1,20 @@
+import { GraphQLSchema } from "graphql"
+
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export interface IReduxNode {
+  id: string
+  internal: {
+    type: string
+  }
+}
+
 export interface IReduxState {
   status: ProgramStatus
-  nodes?: {
-    id: string
-    internal: {
-      type: string
-    }
-  }[]
+  nodes?: Map<string, IReduxNode>
   nodesByType?: Map<any, any> // TODO
   jobsV2: any // TODO
   lastAction: ActionsUnion
@@ -22,12 +26,15 @@ export interface IReduxState {
   jobs: {
     active: Array<any> // TODO
   }
-  schema: any
+  schema: GraphQLSchema
   schemaCustomization: any
   config: {
     developMiddleware: any
     proxy: any
   }
+  pageData: any
+  pages: any
+  babelrc: any
 }
 
 export interface ICachedReduxState {
@@ -39,6 +46,7 @@ export interface ICachedReduxState {
   staticQueryComponents: IReduxState["staticQueryComponents"]
   webpackCompilationHash: IReduxState["webpackCompilationHash"]
   pageDataStats: IReduxState["pageDataStats"]
+  pageData: IReduxState["pageData"]
 }
 
 export type ActionsUnion =
