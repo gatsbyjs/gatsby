@@ -5489,3 +5489,25 @@
     - Disqus
     - Breadcrumbs
     - ESLint
+- url: https://barcadia.netlify.com/
+  repo: https://github.com/bagseye/barcadia
+  description: A super-fast site using GatsbyJS
+  tags:
+    - Blog
+    - i18n
+    - Netlify
+    - Products
+    - Contentful
+    - SEO
+    - Pagination
+    - CMS
+  features:
+    - Attractive Design
+    - Responsive webpage
+    - Easily Configurable
+    - Tags
+    - Edit on GitHub
+    - i18n
+    - SEO
+    - Optimized images with gatsby-image
+
