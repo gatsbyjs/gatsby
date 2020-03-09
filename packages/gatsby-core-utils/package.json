@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",

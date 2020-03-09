@@ -1,4 +1,4 @@
-const getCache = require(`../get-cache`)
+import { getCache } from "../get-cache"
 
 const CACHE_KEY = `__test__`
 

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.30...gatsby-core-utils@1.0.31) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-core-utils
+
 ## [1.0.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.29...gatsby-core-utils@1.0.30) (2020-03-06)
 
 ### Bug Fixes
