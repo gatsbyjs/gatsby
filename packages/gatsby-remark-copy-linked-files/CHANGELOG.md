@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.38...gatsby-remark-copy-linked-files@2.1.39) (2020-03-09)
+
+### Features
+
+- **gatsby-remark-copy-linked-files:** Add support for poster attribute in video elements ([#22032](https://github.com/gatsbyjs/gatsby/issues/22032)) ([70fd0eb](https://github.com/gatsbyjs/gatsby/commit/70fd0eb))
+
 ## [2.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.37...gatsby-remark-copy-linked-files@2.1.38) (2020-03-06)
 
 **Note:** Version bump only for package gatsby-remark-copy-linked-files
