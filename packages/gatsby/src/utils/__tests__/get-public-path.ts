@@ -1,4 +1,4 @@
-const getPublicPath = require(`../get-public-path`)
+import { getPublicPath } from "../get-public-path"
 
 const assetPrefix = `https://cdn.example.com`
 const pathPrefix = `/blog`

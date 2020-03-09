@@ -767,6 +767,8 @@
           link: /docs/glossary/static-site-generator/
         - title: webpack
           link: /docs/glossary/webpack/
+        - title: WPGraphQL
+          link: /docs/glossary/wpgraphql/
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby Feedback

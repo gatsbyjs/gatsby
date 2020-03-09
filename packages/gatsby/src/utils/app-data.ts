@@ -1,18 +1,13 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
+import fs from "fs-extra"
+import path from "path"
 
 const APP_DATA_JSON = `app-data.json`
 
-const write = (publicDir, hash) => {
+export const write = (publicDir: string, hash: string): void => {
   fs.outputJson(path.join(publicDir, `page-data`, APP_DATA_JSON), {
     webpackCompilationHash: hash,
   })
 }
 
-const exists = publicDir =>
+export const exists = (publicDir: string): boolean =>
   fs.pathExistsSync(path.join(publicDir, `page-data`, APP_DATA_JSON))
-
-module.exports = {
-  write,
-  exists,
-}
