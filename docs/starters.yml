@@ -3793,11 +3793,11 @@
     - Styled Components
     - Sitemap Generation
     - Google Analytics
-- url: https://agility-gatsby-starter.netlify.com
+- url: https://agility-gatsby-starter-gatsbycloud.netlify.com
   repo: https://github.com/agility/agility-gatsby-starter
   description: Get started with Gatsby and Agility CMS using a minimal blog.
   tags:
-    - CMS:Other
+    - CMS:Agility CMS
     - Blog
     - SEO
   features:
@@ -5507,3 +5507,28 @@
     - Five different themes (great-gatsby, master-yoda, wonder-woman, darth-vader, luke-lightsaber)
     - Includes React Helmet for title and description tags
     - Includes Google Analytics plugin
+- url: https://gatsby-starter-i18n-bulma.netlify.com
+  repo: https://github.com/kalwalt/gatsby-starter-i18n-bulma
+  description: A gatsby starter with Bulma and optimized slug for better SEO.
+  tags:
+    - i18n
+    - Netlify
+    - CMS:Netlify
+    - Styling:Bulma
+    - Styling:SCSS
+    - Gallery
+    - SEO
+    - Markdown
+    - PWA
+    - Blog
+  features:
+    - Multilanguage support with i18n
+    - Slug switcher (multilanguage)
+    - Uses Bulma for styling
+    - Netlify CMS
+    - React Images with Modal
+    - FontAwesome icons
+    - Animate.css with WOW
+    - Robots.txt
+    - Sitemap
+    - PWA
