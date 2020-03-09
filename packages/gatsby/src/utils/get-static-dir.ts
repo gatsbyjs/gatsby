@@ -8,7 +8,7 @@ import { store } from "../redux"
  * --
  * Copy files from the static directory to the public directory
  */
-export const copyStaticDirs = (): void | Promise<void> => {
+export const copyStaticDirs = (): void => {
   // access the store to get themes
   const { themes, flattenedPlugins } = store.getState()
   // if there are legacy themes, only use them. Otherwise proceed with plugins
@@ -30,7 +30,7 @@ export const copyStaticDirs = (): void | Promise<void> => {
     .map(folder => fs.copySync(folder, nodePath.join(process.cwd(), `public`)))
 
   const staticDir = nodePath.join(process.cwd(), `static`)
-  if (!fs.existsSync(staticDir)) return Promise.resolve()
+  if (!fs.existsSync(staticDir)) return undefined
   return fs.copySync(staticDir, nodePath.join(process.cwd(), `public`), {
     dereference: true,
   })
