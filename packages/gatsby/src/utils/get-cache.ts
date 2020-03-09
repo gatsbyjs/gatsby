@@ -1,8 +1,8 @@
-const Cache = require(`./cache`).default
+import Cache from "./cache"
 
-const caches = new Map()
+const caches = new Map<string, Cache>()
 
-module.exports = function getCache(name) {
+export const getCache = (name: string): Cache => {
   let cache = caches.get(name)
   if (!cache) {
     cache = new Cache({ name }).init()

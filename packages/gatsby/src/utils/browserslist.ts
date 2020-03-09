@@ -1,8 +1,9 @@
-const path = require(`path`)
-const browserslist = require(`browserslist/node`)
+import path from "path"
+import browserslist from "browserslist/node"
 
-function installedGatsbyVersion(directory) {
+const installedGatsbyVersion = (directory: string): number | undefined => {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { version } = require(path.join(
       directory,
       `node_modules`,
@@ -15,7 +16,7 @@ function installedGatsbyVersion(directory) {
   }
 }
 
-module.exports = function getBrowsersList(directory) {
+export const getBrowsersList = (directory: string): string[] => {
   const fallback =
     installedGatsbyVersion(directory) === 1
       ? [`>1%`, `last 2 versions`, `IE >= 9`]

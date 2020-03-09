@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby",
-  "version": "0.2.31",
+  "version": "0.2.32",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "babel-plugin-macros": "^2.8.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "gatsby-core-utils": "^1.0.30"
+    "gatsby-core-utils": "^1.0.31"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0"
@@ -29,9 +29,9 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__ --ignore **/utils/path-serializer.js",
+    "build": "babel src --out-dir . --ignore **/__tests__ --ignore **/utils/path-serializer.ts --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore **/utils/path-serializer.js"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore **/utils/path-serializer.ts --extensions \".ts,.js\""
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",
