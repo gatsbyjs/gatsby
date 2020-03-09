@@ -10,7 +10,7 @@ Check our [docs](https://help.agilitycms.com/hc/en-us/articles/360039879872) for
 
 [Agility CMS](https://agilitycms.com/) is a headless Content Management System (CMS) that lets you define your custom content types, relationships and pages. This is called Content Architecture, and you can reuse this content for your websites and apps.
 
-Agility believes that a successful website balances the **User Experience (UX)**, **Editor Experience (EX)**, and **Developer Experience (DX)**. 
+Agility believes that a successful website balances the **User Experience (UX)**, **Editor Experience (EX)**, and **Developer Experience (DX)**.
 
 While Gatsby tends to handle **UX** and **DX** quite well, editors are not always comfortable working directly in a codebase. They prefer to manage their sitemap and see what content is on which pages. Using Gatsby with a headless CMS allows for this.
 
@@ -66,10 +66,9 @@ If you use the `preview` key, you won't have to publish to see the changes you'v
 
 ## How it works
 
-The Gatsby Source Plugin will synchronize your sitemap, pages, and content for you and place it into **GraphQL**. 
+The Gatsby Source Plugin will synchronize your sitemap, pages, and content for you and place it into **GraphQL**.
 
 All of those pages and content are then made available in GraphQL to the React Components you will write to render those pages.
-
 
 Check out the component called "Jumbotron". This is an example of how to display a styled heading and sub-heading with content that comes from Agility CMS. Here is the Module that provides this content being edited in the Agility CMS Content Manager:
 
@@ -96,4 +95,3 @@ export default class Jumbotron extends Component {
 ```
 
 When you add new modules and content definitions to Agility CMS, the components used to render those modules will automatically receive the strongly typed data delivered to those modules as props.
-
