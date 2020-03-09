@@ -1,14 +1,14 @@
-const fs = require(`fs-extra`)
-const chokidar = require(`chokidar`)
-const nodePath = require(`path`)
-const { store } = require(`../redux`)
+import fs from "fs-extra"
+import chokidar from "chokidar"
+import nodePath from "path"
+import { store } from "../redux"
 
 /**
  * copyStaticDirs
  * --
  * Copy files from the static directory to the public directory
  */
-exports.copyStaticDirs = () => {
+export const copyStaticDirs = (): void | Promise<void> => {
   // access the store to get themes
   const { themes, flattenedPlugins } = store.getState()
   // if there are legacy themes, only use them. Otherwise proceed with plugins
@@ -41,7 +41,7 @@ exports.copyStaticDirs = () => {
  * --
  * Set up a watcher to sync changes from the static directory to the public directory
  */
-exports.syncStaticDir = () => {
+export const syncStaticDir = (): void => {
   const staticDir = nodePath.join(process.cwd(), `static`)
   chokidar
     .watch(staticDir)
