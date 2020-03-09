@@ -9,17 +9,18 @@ exports.onPreBootstrap = ({ store, cache }, pluginOptions) => {
 
   let module
   if (pluginOptions.pathToConfigModule) {
-    module = `export { default } from "${
+    module = `module.exports = require("${
       path.isAbsolute(pluginOptions.pathToConfigModule)
         ? pluginOptions.pathToConfigModule
         : path.join(program.directory, pluginOptions.pathToConfigModule)
-    }"`
+    }")`
     if (os.platform() === `win32`) {
       module = module.split(`\\`).join(`\\\\`)
     }
   } else {
-    module = `import Typography from "typography"
-export default new Typography()`
+    module = `const Typography = require("typography")
+const typography = new Typography()
+module.exports = typography`
   }
 
   const dir = cache.directory
