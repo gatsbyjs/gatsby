@@ -1,17 +1,21 @@
+import opn from "better-opn"
 import { execSync } from "child_process"
 import execa from "execa"
-import hostedGitInfo from "hosted-git-info"
-import fs from "fs-extra"
-import sysPath from "path"
-import report from "./reporter"
-import url from "url"
-import isValid from "is-valid-path"
 import { sync as existsSync } from "fs-exists-cached"
+import fs from "fs-extra"
 import { trackCli, trackError } from "gatsby-telemetry"
+import hostedGitInfo from "hosted-git-info"
+import isValid from "is-valid-path"
+import sysPath from "path"
 import prompts from "prompts"
-import opn from "better-opn"
+import url from "url"
 
+<<<<<<< HEAD
 import { getPackageManager, promptPackageManager } from "./util/package-manager"
+=======
+import report from "./reporter"
+import { getPackageManager, promptPackageManager } from "./util/configstore"
+>>>>>>> Update packages/gatsby-cli/src/init-starter.ts
 import isTTY from "./util/is-tty"
 
 const spawnWithArgs = (
