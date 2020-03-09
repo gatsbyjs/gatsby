@@ -1,17 +1,23 @@
 import React from "react"
-import { Box, Color } from "ink"
+import { Box, Color, ColorProps } from "ink"
 
 import { ActivityLogLevels, LogLevels } from "../../../constants"
 
-const ColorSwitcher = ({ children, ...props }) => (
+const ColorSwitcher: React.FC<ColorProps> = ({ children, ...props }) => (
   <Color {...props}>{children}</Color>
 )
 
-const createLabel = (text, color) => (...props) => (
+const createLabel = (text: string, color: string): React.FC<ColorProps> => (
+  ...props
+): JSX.Element => (
   <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
 )
 
-const getLabel = level => {
+type ValueOf<T> = T[keyof T]
+
+const getLabel = (
+  level: ValueOf<typeof ActivityLogLevels> | ValueOf<typeof LogLevels>
+): ReturnType<typeof createLabel> => {
   switch (level) {
     case ActivityLogLevels.Success:
     case LogLevels.Success:
@@ -32,7 +38,18 @@ const getLabel = level => {
   }
 }
 
-export const Message = ({ level, text, duration, statusText }) => {
+interface IProps {
+  level: ValueOf<typeof ActivityLogLevels> | ValueOf<typeof LogLevels>
+  text: string
+  duration: number
+  statusText: string
+}
+export const Message: React.FC<IProps> = ({
+  level,
+  text,
+  duration,
+  statusText,
+}) => {
   let message = text
   if (duration) {
     message += ` - ${duration.toFixed(3)}s`
