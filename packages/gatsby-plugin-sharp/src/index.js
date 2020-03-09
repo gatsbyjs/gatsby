@@ -45,6 +45,67 @@ exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
+function calculateImageDimensionsAndAspectRatio(file, options) {
+  // Calculate the eventual width/height of the image.
+  const dimensions = getImageSize(file)
+  const imageAspectRatio = dimensions.width / dimensions.height
+
+  let width = options.width
+  let height = options.height
+
+  switch (options.fit) {
+    case sharp.fit.fill: {
+      width = options.width ? options.width : dimensions.width
+      height = options.height ? options.height : dimensions.height
+      break
+    }
+    case sharp.fit.inside: {
+      const widthOption = options.width
+        ? options.width
+        : Number.MAX_SAFE_INTEGER
+      const heightOption = options.height
+        ? options.height
+        : Number.MAX_SAFE_INTEGER
+
+      width = Math.min(widthOption, Math.round(heightOption * imageAspectRatio))
+      height = Math.min(
+        heightOption,
+        Math.round(widthOption / imageAspectRatio)
+      )
+      break
+    }
+    case sharp.fit.outside: {
+      const widthOption = options.width ? options.width : 0
+      const heightOption = options.height ? options.height : 0
+
+      width = Math.max(widthOption, Math.round(heightOption * imageAspectRatio))
+      height = Math.max(
+        heightOption,
+        Math.round(widthOption / imageAspectRatio)
+      )
+      break
+    }
+
+    default: {
+      if (options.width && !options.height) {
+        width = options.width
+        height = Math.round(options.width / imageAspectRatio)
+      }
+
+      if (options.height && !options.width) {
+        width = Math.round(options.height * imageAspectRatio)
+        height = options.height
+      }
+    }
+  }
+
+  return {
+    width,
+    height,
+    aspectRatio: width / height,
+  }
+}
+
 function prepareQueue({ file, args }) {
   const { pathPrefix, ...options } = args
   const argsDigestShort = createArgsDigest(options)
@@ -60,53 +121,10 @@ function prepareQueue({ file, args }) {
   // make sure outputDir is created
   fs.ensureDirSync(outputDir)
 
-  let width
-  let height
-  // Calculate the eventual width/height of the image.
-  const dimensions = getImageSize(file)
-  let aspectRatio = dimensions.width / dimensions.height
-
-  // If the width/height are both set, we're cropping the image and need to
-  // check the fit option
-  if (options.width && options.height) {
-    width = options.width
-    height = options.height
-    // Recalculate the aspectRatio for the cropped photo
-    let targetAspectRatio = width / height
-    if (options.fit !== undefined) {
-      if (options.fit === sharp.fit.inside) {
-        // If the source image is _wider_ than the crop, preserve the width
-        // Otherwise, preserve the height
-        if (aspectRatio >= targetAspectRatio) {
-          width = options.width
-          height = Math.round(options.width / aspectRatio)
-        } else {
-          width = Math.round(options.height * aspectRatio)
-          height = options.height
-        }
-      } else if (options.fit === sharp.fit.outside) {
-        // If the source image is _wider_ than the crop, preserve the height
-        // Otherwise, preserve the width
-        if (aspectRatio > targetAspectRatio) {
-          width = Math.round(options.height * aspectRatio)
-          height = options.height
-        } else {
-          width = options.width
-          height = Math.round(options.width / aspectRatio)
-        }
-      } else aspectRatio = targetAspectRatio
-    } else aspectRatio = targetAspectRatio
-  } else if (options.width) {
-    // Use the aspect ratio of the image to calculate what will be the resulting
-    // height.
-    width = options.width
-    height = Math.round(options.width / aspectRatio)
-  } else {
-    // Use the aspect ratio of the image to calculate what will be the resulting
-    // width.
-    height = options.height
-    width = Math.round(options.height * aspectRatio)
-  }
+  const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
+    file,
+    options
+  )
 
   // encode the file name for URL
   const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
@@ -280,9 +298,21 @@ async function generateBase64({ file, args = {}, reporter }) {
     args.toFormat = forceBase64Format
   }
 
+  console.log({
+    src: file.absolutePath,
+    width: options.width,
+    height: options.height,
+    position: options.cropFocus,
+    fit: options.fit,
+    background: options.background,
+  })
   pipeline
-    .resize(options.width, options.height, {
+    .resize({
+      width: options.width,
+      height: options.height,
       position: options.cropFocus,
+      fit: options.fit,
+      background: options.background,
     })
     .png({
       compressionLevel: options.pngCompressionLevel,
@@ -525,7 +555,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
   let base64Image
   if (options.base64) {
     const base64Width = options.base64Width || defaultBase64Width()
-    const base64Height = Math.max(1, Math.round((base64Width * height) / width))
+    const base64Height = Math.max(
+      1,
+      Math.round(base64Width / images[0].aspectRatio)
+    )
     const base64Args = {
       duotone: options.duotone,
       grayscale: options.grayscale,
@@ -648,7 +681,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     const base64Width = options.base64Width || defaultBase64Width()
     const base64Height = Math.max(
       1,
-      Math.round((base64Width * images[0].height) / images[0].width)
+      Math.round(base64Width / images[0].aspectRatio)
     )
     const base64Args = {
       duotone: options.duotone,
