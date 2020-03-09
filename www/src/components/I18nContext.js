@@ -9,11 +9,11 @@ const LocaleContext = React.createContext(defaultLang)
 export function I18nProvider({ locale = defaultLang, children }) {
   const catalog = require(`../data/locales/${locale}/messages.js`)
   return (
-    <LocaleProvider value={locale}>
+    <LocaleContext.Provider value={locale}>
       <LinguiProvider language={locale} catalogs={{ [locale]: catalog }}>
         {children}
       </LinguiProvider>
-    </LocaleProvider>
+    </LocaleContext.Provider>
   )
 }
 
