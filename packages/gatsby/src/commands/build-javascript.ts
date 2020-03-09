@@ -24,18 +24,16 @@ export const buildProductionBundle = async (
   return new Promise((resolve, reject) => {
     webpack(compilerConfig).run((err, stats) => {
       if (err) {
-        reject(err)
-        return
+        return reject(err)
       }
 
       reportWebpackWarnings(stats)
 
       if (stats.hasErrors()) {
-        reject(stats.compilation.errors)
-        return
+        return reject(stats.compilation.errors)
       }
 
-      resolve(stats)
+      return resolve(stats)
     })
   })
 }
