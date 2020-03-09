@@ -1,5 +1,9 @@
 import preset from "../"
 
+jest.mock(`../resolve`, () => ({
+  resolve: jest.fn(moduleName => moduleName),
+}))
+
 beforeEach(() => {
   delete process.env.BABEL_ENV
 })

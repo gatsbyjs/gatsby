@@ -1,4 +1,4 @@
-const resolve = (m: string): string => require.resolve(m)
+import { resolve } from "./resolve"
 
 type Preset = string | string[] | Array<string | object>
 interface IOptions {
