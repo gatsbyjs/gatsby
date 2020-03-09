@@ -37,68 +37,68 @@ Please enter the CA password:
 
 This is _only_ required the first time you are using Gatsby's HTTPS feature on your machine, and when you are creating a brand new certificate.
 
-After typing in your password, `devcert` will install the CA certificate in your operating system trusted certs store. For various browsers (Firefox, and Chrome on Linux) it needs to use a utility called `certutil`.
+After typing in your password, `devcert` will install the CA certificate in your operating system trusted certs store. A utility called `certutil` will be needed to update the trust store for various browsers; specifically: Firefox, and Chrome (when it's running on Linux).
 
 ### In case `certutil` is not installed on your machine
 
-`devcert` is configured to not install `certutil` automatically. You will need to do that yourself, if you want it to be able to setup the trust automatically.
+`devcert` is configured to install `certutil` automatically, unless you're running Windows. If an automatic install is not successful, you may need to install it manually.
 
-To install `certutil`, you need to install the `nss tools` package(s). The exact procedure will differ depending on your operating system.
+- To install `certutil`, you need to install the `nss tools` package(s). The exact procedure will differ depending on your operating system.
 
-On a linux OS, you should be able to simply run one of the following, depending on the flavor:
+  - On a linux OS, you should be able to simply run one of the following, depending on the flavor:
 
-```shell
-# Debian based (Ubuntu)
-sudo apt install libnss3-tools
+    ```shell
+    # Debian based (Ubuntu)
+    sudo apt install libnss3-tools
 
-# RHEL based (Fedora)
-sudo yum install nss-tools
+    # RHEL based (Fedora)
+    sudo yum install nss-tools
 
-# OpenSuse
-sudo zypper install mozilla-nss-tools
-```
+    # OpenSuse
+    sudo zypper install mozilla-nss-tools
+    ```
 
-On MacOS, you should be able to run:
+  - On MacOS, you should be able to run:
 
-```shell
-brew install nss
-```
+    ```shell
+    brew install nss
+    ```
 
-Windows is a different story. There's not too many precompiled libraries out there, so the only option would be to go searching for one, or compile it yourself. Because of how difficult Windows makes it, `devcert` will not even try to update the Firefox trust store automatically; instead, it will fallback to using the "Firefox wizard", detailed below.
+  - With regards to Windows: There's not too many precompiled libraries out there, so the only option would be to go searching for one, or compile it yourself. Because of how difficult Windows makes it, `devcert` will not even try to update the Firefox trust store automatically; instead, it will fallback to using the "Firefox wizard", detailed below.
 
-If you choose not to install `certutil`, you may get the following errors/prompts:
+  If you choose not to install `certutil`, or the automatic install is not successful, you may get the following errors/prompts:
 
-- If you use Chrome on Linux:
+  - If you use Chrome on Linux:
 
-  ```text
-  WARNING: It looks like you have Chrome installed, but you specified
-  'skipCertutilInstall: true'. Unfortunately, without installing
-  certutil, it's impossible get Chrome to trust devcert's certificates
-  The certificates will work, but Chrome will continue to warn you that
-  they are untrusted.
-  ```
+    ```text
+    WARNING: It looks like you have Chrome installed, but you specified
+    'skipCertutilInstall: true'. Unfortunately, without installing
+    certutil, it's impossible get Chrome to trust devcert's certificates
+    The certificates will work, but Chrome will continue to warn you that
+    they are untrusted.
+    ```
 
-- If you have Firefox installed, `devcert` will try to utilize Firefox itself to trust the certificate
+  - If you have Firefox installed, `devcert` will try to utilize Firefox itself to trust the certificate
 
-  ```text
-  devcert was unable to automatically configure Firefox. You'll need to
-  complete this process manually. Don't worry though - Firefox will walk
-  you through it.
+    ```text
+    devcert was unable to automatically configure Firefox. You'll need to
+    complete this process manually. Don't worry though - Firefox will walk
+    you through it.
 
-  When you're ready, hit any key to continue. Firefox will launch and
-  display a wizard to walk you through how to trust the devcert
-  certificate. When you are finished, come back here and we'll finish up.
-  (If Firefox doesn't start, go ahead and start it and navigate to
-  http://localhost:52175 in a new tab.)
+    When you're ready, hit any key to continue. Firefox will launch and
+    display a wizard to walk you through how to trust the devcert
+    certificate. When you are finished, come back here and we'll finish up.
+    (If Firefox doesn't start, go ahead and start it and navigate to
+    http://localhost:52175 in a new tab.)
 
-  If you are curious about why all this is necessary, check out
-  https://github.com/davewasmer/devcert#how-it-works
-  <Press any key to launch Firefox wizard>
-  ```
+    If you are curious about why all this is necessary, check out
+    https://github.com/davewasmer/devcert#how-it-works
+    <Press any key to launch Firefox wizard>
+    ```
 
-  - You can press enter here, and it will launch Firefox for you.
+    - You can press enter here, and it will launch Firefox for you.
 
-  - If you wish to have trust support on Firefox, tell the point-and-click wizard `this certificate can identify websites`, and click OK. Otherwise, you may hit cancel and close the browser, then key return to finish building. **Reminder: you'll only need to do this once per machine.**
+    - If you wish to have trust support on Firefox, tell the point-and-click wizard `this certificate can identify websites`, and click OK. Otherwise, you may hit cancel and close the browser, then key return to finish building. **Reminder: you'll only need to do this once per machine.**
 
 ### After `devcert` setup process
 
