@@ -249,7 +249,7 @@ class BenchMeta {
       method: `POST`,
       headers: {
         "content-type": `application/json`,
-        // "user-agent": this.getUserAgent(),
+        "x-benchmark-secret": process.env.BENCHMARK_REPORTING_SECRET,
       },
       body: json,
     }).then(res => {
