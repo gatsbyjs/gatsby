@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 jest.mock(`fs-extra`, () => {
   return {
     exists: jest.fn(),
@@ -10,10 +11,11 @@ jest.mock(`axios`, () => {
     get: jest.fn(),
   }
 })
+
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const axios = require(`axios`)
-const getLatestAPIs = require(`../get-latest-apis`)
+import { getLatestAPIs, IAPIResponse } from "../get-latest-apis"
 
 beforeEach(() => {
   ;[fs, axios].forEach(mock =>
@@ -21,7 +23,7 @@ beforeEach(() => {
   )
 })
 
-const getMockAPIFile = () => {
+const getMockAPIFile = (): IAPIResponse => {
   return {
     node: {},
     browser: {},
