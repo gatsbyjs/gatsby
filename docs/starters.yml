@@ -3793,11 +3793,11 @@
     - Styled Components
     - Sitemap Generation
     - Google Analytics
-- url: https://agility-gatsby-starter.netlify.com
+- url: https://agility-gatsby-starter-gatsbycloud.netlify.com
   repo: https://github.com/agility/agility-gatsby-starter
   description: Get started with Gatsby and Agility CMS using a minimal blog.
   tags:
-    - CMS:Other
+    - CMS:Agility CMS
     - Blog
     - SEO
   features:
