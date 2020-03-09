@@ -35,6 +35,8 @@ export interface IReduxState {
   pageData: any
   pages: any
   babelrc: any
+  themes: any
+  flattenedPlugins: any
 }
 
 export interface ICachedReduxState {
