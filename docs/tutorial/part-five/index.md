@@ -18,7 +18,7 @@ You can access it when your site's development server is running—normally at
 `http://localhost:8000/___graphql`.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
+  <source type="video/mp4" src="/graphiql-explore.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
@@ -209,7 +209,7 @@ export const query = graphql`
 `
 ```
 
-And now visit [http://localhost:8000/my-files](http://localhost:8000/my-files)… 😲
+And now visit `http://localhost:8000/my-files`… 😲
 
 ![my-files-page](my-files-page.png)
 

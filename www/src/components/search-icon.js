@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
 import MdSearch from "react-icons/lib/md/search"
 
-const SearchIcon = ({ focussed }) => (
+const SearchIcon = ({ focused }) => (
   <MdSearch
     focusable="false"
     aria-hidden="true"
@@ -16,7 +16,7 @@ const SearchIcon = ({ focussed }) => (
       pointerEvents: `none`,
       transform: `translateY(-50%)`,
       fill: t =>
-        focussed ? t.colors.themedInput.iconFocus : t.colors.themedInput.icon,
+        focused ? t.colors.themedInput.iconFocus : t.colors.themedInput.icon,
     }}
   />
 )

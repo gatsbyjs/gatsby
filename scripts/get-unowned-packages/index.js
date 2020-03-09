@@ -27,10 +27,10 @@ module.exports = async function getUnownedPackages({
   // set registry because yarn run hijacks registry
   if (!user) {
     user = await execP(
-      `node_modules/.bin/cross-env npm_config_username="" npm whoami --registry https://registry.npmjs.org`
+      `"node_modules/.bin/cross-env" npm_config_username="" npm whoami --registry https://registry.npmjs.org`
     )
       .then(({ stdout }) => stdout.trim())
-      .catch(() => {
+      .catch(err => {
         throw new Error(`You are not logged-in`)
       })
   }

@@ -16,23 +16,23 @@
       link: /docs/recipes/
       items:
         - title: Pages and Layouts
-          link: /docs/recipes/pages-layouts
+          link: /docs/recipes/pages-layouts/
         - title: Styling with CSS
-          link: /docs/recipes/styling-css
+          link: /docs/recipes/styling-css/
         - title: Working with Starters
-          link: /docs/recipes/working-with-starters
+          link: /docs/recipes/working-with-starters/
         - title: Working with Themes
-          link: /docs/recipes/working-with-themes
+          link: /docs/recipes/working-with-themes/
         - title: Sourcing Data
-          link: /docs/recipes/sourcing-data
+          link: /docs/recipes/sourcing-data/
         - title: Querying Data
-          link: /docs/recipes/querying-data
+          link: /docs/recipes/querying-data/
         - title: Working with Images
-          link: /docs/recipes/working-with-images
+          link: /docs/recipes/working-with-images/
         - title: Transforming Data
-          link: /docs/recipes/transforming-data
+          link: /docs/recipes/transforming-data/
         - title: Deploying Your Site
-          link: /docs/recipes/deploying-your-site
+          link: /docs/recipes/deploying-your-site/
     - title: Reference Guides
       link: /docs/guides/
       items:
@@ -47,6 +47,11 @@
               link: /docs/gatsby-on-linux/
             - title: Configuring CA Certificates
               link: /docs/configuring-ca-certificates/
+        - title: A/B Testing
+          link: /docs/ab-testing/
+          items:
+            - title: A/B Testing with Google Analytics & Netlify
+              link: /docs/ab-testing-with-google-analytics-and-netlify/
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
@@ -254,13 +259,15 @@
                   link: /docs/creating-a-source-plugin/
                 - title: Creating a Transformer Plugin
                   link: /docs/creating-a-transformer-plugin/
+                - title: Configuring Usage with Plugin Options
+                  link: /docs/configuring-usage-with-plugin-options/
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
                 - title: Pixabay Image Source Plugin Tutorial
                   link: /docs/pixabay-source-plugin-tutorial/
                 - title: Remark Plugin Tutorial
                   link: /docs/remark-plugin-tutorial/
-                - title: Maintaining a Plugin*
+                - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Themes
           link: /docs/themes/
@@ -332,7 +339,10 @@
               link: /docs/mdx/getting-started/
             - title: Writing Pages
               link: /docs/mdx/writing-pages/
-            - title: Customizing Components
+            - title: Importing and Using Components in MDX
+              link: /docs/mdx/importing-and-using-components/
+              breadcrumbTitle: Importing and Using Components
+            - title: Customizing Markdown Components
               link: /docs/mdx/customizing-components/
             - title: Programmatically Creating Pages
               link: /docs/mdx/programmatically-creating-pages/
@@ -459,6 +469,10 @@
                   link: /docs/building-an-ecommerce-site-with-shopify/
                 - title: Processing Payments with Stripe
                   link: /docs/processing-payments-with-stripe/
+                - title: Processing Payments with Square
+                  link: /docs/processing-payments-with-square/
+                - title: Sourcing from WooCommerce
+                  link: /docs/sourcing-from-woocommerce/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -484,8 +498,13 @@
             - title: Optimizing Site Performance with Guess.js
               link: /docs/optimizing-site-performance-with-guessjs/
               breadcrumbTitle: Guess.js
+            - title: Profiling Site Performance with React Profiler
+              link: /docs/profiling-site-performance-with-react-profiler/
+              breadcrumbTitle: React Profiler
             - title: Scaling Issues
               link: /docs/scaling-issues/
+            - title: Experimental Page Build Optimizations for Incremental Data Changes
+              link: /docs/page-build-optimizations-for-incremental-data-changes/
         - title: Localization & Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
@@ -574,9 +593,9 @@
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
         - title: Gatsby Magic
-          link: /docs/gatsby-magic
+          link: /docs/gatsby-magic/
         - title: React Hydration
-          link: /docs/react-hydration
+          link: /docs/react-hydration/
         - title: PRPL Pattern
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
@@ -584,7 +603,7 @@
         - title: Security in Gatsby*
           link: /docs/security-in-gatsby/
         - title: Theme Shadowing
-          link: /docs/how-shadowing-works
+          link: /docs/how-shadowing-works/
     - title: Gatsby Internals
       link: /docs/gatsby-internals/
       items:
@@ -724,23 +743,33 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: Continuous Deployment
+          link: /docs/glossary/continuous-deployment/
+        - title: Decoupled Drupal
+          link: /docs/glossary/decoupled-drupal/
         - title: GraphQL
-          link: /docs/glossary/graphql
+          link: /docs/glossary/graphql/
         - title: Headless CMS
           link: /docs/glossary/headless-cms/
         - title: Headless WordPress
           link: /docs/glossary/headless-wordpress/
         - title: JAMStack
-          link: /docs/glossary/jamstack
+          link: /docs/glossary/jamstack/
+        - title: Markdown
+          link: /docs/glossary/markdown/
+        - title: MDX
+          link: /docs/glossary/mdx/
         - title: Node.js
-          link: /docs/glossary/node
+          link: /docs/glossary/node/
         - title: React
-          link: /docs/glossary/react
+          link: /docs/glossary/react/
         - title: Static Site Generator
-          link: /docs/glossary/static-site-generator
+          link: /docs/glossary/static-site-generator/
         - title: webpack
-          link: /docs/glossary/webpack
+          link: /docs/glossary/webpack/
     - title: Gatsby Telemetry
       link: /docs/telemetry/
+    - title: Gatsby Feedback
+      link: /docs/cli-feedback/
     - title: Gatsby REPL
       link: /docs/gatsby-repl/

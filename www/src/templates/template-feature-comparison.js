@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import { Component } from "react"
 import { Helmet } from "react-helmet"
 import { css } from "@emotion/core"
-import Layout from "../components/layout"
+import PageWithSidebar from "../components/page-with-sidebar"
 import FooterLinks from "../components/shared/footer-links"
 import Container from "../components/container"
 import EvaluationTable from "../components/features/evaluation-table"
@@ -28,11 +28,11 @@ class FeatureComparison extends Component {
 
     const { sections, sectionHeaders } =
       featureType === `cms`
-        ? getFeaturesData(data.allGatsbyCmsSpecsCsv.edges)
-        : getFeaturesData(data.allGatsbyJamstackSpecsCsv.edges)
+        ? getFeaturesData(data.allGatsbyCmsSpecsCsv.nodes)
+        : getFeaturesData(data.allGatsbyJamstackSpecsCsv.nodes)
 
     return (
-      <Layout location={location}>
+      <PageWithSidebar location={location}>
         <Helmet>
           <title>{titleString}</title>
         </Helmet>
@@ -71,7 +71,7 @@ class FeatureComparison extends Component {
           <FeaturesFooter />
           <FooterLinks />
         </Container>
-      </Layout>
+      </PageWithSidebar>
     )
   }
 }
@@ -81,31 +81,27 @@ export default FeatureComparison
 export const pageQuery = graphql`
   query {
     allGatsbyCmsSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          WordPress
-          Drupal
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        WordPress
+        Drupal
+        Description
       }
     }
     allGatsbyJamstackSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          Nextjs
-          Jekyll
-          Hugo
-          Nuxtjs
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        Nextjs
+        Jekyll
+        Hugo
+        Nuxtjs
+        Description
       }
     }
   }

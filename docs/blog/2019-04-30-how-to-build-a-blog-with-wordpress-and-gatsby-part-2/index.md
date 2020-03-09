@@ -120,7 +120,7 @@ To do this, run the following command in the terminal and it will build the site
 gatsby develop
 ```
 
-After running that command, you can visit [localhost:8000](http://localhost:8000) in the browser and you should see the site pictured below:
+After running that command, you can visit `http://localhost:8000` in the browser and you should see the site pictured below:
 
 ![Initial appearance of Gatsby.js starter](./images/gatsby1.png)
 
@@ -214,7 +214,7 @@ module.exports = {
 
 If the Gatsby site is currently running, you need to stop it and restart it so it pulls in the new content from WordPress. It's important to know that while you can choose what information goes on what pages after your app is built, it will only pull content when it is initially run so changes in the source require a rebuild.
 
-Once you've restarted your server, you can visit [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql) to use the "graphical" playground. Here, you can use GraphQL to query your data for testing purposes. You should create opening and closing curly braces and then you can use shift+space (or ctrl+space on windows) to get suggestions. Once you have the data you want, you will be able to paste the query into your components, pages, and templates so you can use the information available. Here's what my query looks like for now:
+Once you've restarted your server, you can visit `http://localhost:8000/___graphql` to use the "graphical" playground. Here, you can use GraphQL to query your data for testing purposes. You should create opening and closing curly braces and then you can use shift+space (or ctrl+space on windows) to get suggestions. Once you have the data you want, you will be able to paste the query into your components, pages, and templates so you can use the information available. Here's what my query looks like for now:
 
 ![GraphQL query tests](./images/gatsby2.png)
 
@@ -307,7 +307,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 ```
 
-Just like before, you will need to restart your development server to see these changes take place. Go ahead and do that so you can make sure your logic is working correctly. The easiest way I've found (in development) to see a list of pages is to go to a route that doesn't exist, such as [http://localhost:8000/stuff](http://localhost:8000/stuff).
+Just like before, you will need to restart your development server to see these changes take place. Go ahead and do that so you can make sure your logic is working correctly. The easiest way I've found (in development) to see a list of pages is to go to a route that doesn't exist, such as `http://localhost:8000/stuff`.
 
 You can now see all of the pages available and clicking on one should take you to the blog post template you created earlier that just shows Hello World. If this is what you're seeing, congrats! You're ready to move to the next section.
 

@@ -30,7 +30,7 @@ cd [your-project-name]
 gatsby develop
 ```
 
-Now you can go to [`localhost:8000`](http://localhost:8000) to see your new site, but what's extra cool is that Netlify CMS is pre-installed and you can access it at [`localhost:8000/admin`](http://localhost:8000/admin).
+Now you can go to `http://localhost:8000` to see your new site, but what's extra cool is that Netlify CMS is pre-installed and you can access it at `http://localhost:8000/admin`
 
 A CMS, or content management system, is useful because you can add content like blog posts from a dashboard on your site, instead of having to add posts manually with Markdown. However, you'll likely want to be able to access the CMS from a deployed website, not just locally. For that, you'll need to deploy to Netlify through GitHub, set up continuous deployment, and do a few configurations. You'll go over this in [Step-5](#step-5).
 
