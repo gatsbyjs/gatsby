@@ -337,15 +337,18 @@ module.exports = ({
   if (typeof createNode !== `function`) {
     throw new Error(`createNode must be a function, was ${typeof createNode}`)
   }
-  if (getCache) {
+  if (typeof getCache === `function`) {
     // use cache of this plugin and not cache of function caller
     cache = getCache(`gatsby-source-filesystem`)
   } else if (process.env.GATSBY_STRICT_MODE_CACHE) {
-    console.log(`createRemoteFileNode called without "getCache"`)
-    console.trace()
+    throw new Error(
+      `Gatsby Cache Strict Mode: createRemoteFileNode called without "getCache"`
+    )
   }
   if (typeof cache !== `object`) {
-    throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
+    throw new Error(
+      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`
+    )
   }
 
   // Check if we already requested node for this remote file
