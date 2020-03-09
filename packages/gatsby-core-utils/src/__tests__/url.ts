@@ -1,4 +1,4 @@
-const { resolve } = require(`../url`)
+import { resolve } from "../url"
 
 describe(`url`, () => {
   describe(`resolve`, () => {
