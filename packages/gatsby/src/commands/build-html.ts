@@ -26,19 +26,18 @@ const runWebpack = (compilerConfig): Bluebird<webpack.Stats> =>
   })
 
 const doBuildRenderer = async (
-  program: IProgram,
+  { directory }: IProgram,
   webpackConfig: webpack.Configuration
 ): Promise<string> => {
-  const { directory } = program
   const stats = await runWebpack(webpackConfig)
-  // render-page.js is hard coded in webpack.config
-  const outputFile = `${directory}/public/render-page.js`
   if (stats.hasErrors()) {
     reporter.panic(
       structureWebpackErrors(`build-html`, stats.compilation.errors)
     )
   }
-  return outputFile
+
+  // render-page.js is hard coded in webpack.config
+  return `${directory}/public/render-page.js`
 }
 
 const buildRenderer = async (
@@ -79,22 +78,16 @@ const renderHTMLQueue = async (
 
   // const start = process.hrtime()
   const segments = chunk(pages, 50)
-  // let finished = 0
 
   await Bluebird.map(segments, async pageSegment => {
     await workerPool.renderHTML({
+      envVars,
       htmlComponentRendererPath,
       paths: pageSegment,
-      envVars,
     })
-    // finished += pageSegment.length
+
     if (activity && activity.tick) {
       activity.tick(pageSegment.length)
-      // activity.setStatus(
-      //   `${finished}/${pages.length} ${(
-      //     finished / convertHrtime(process.hrtime(start)).seconds
-      //   ).toFixed(2)} pages/second`
-      // )
     }
   })
 }
@@ -111,12 +104,12 @@ const doBuildPages = async (
 
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths)
-  } catch (e) {
+  } catch (error) {
     const prettyError = await createErrorFromString(
-      e.stack,
+      error.stack,
       `${rendererPath}.map`
     )
-    prettyError.context = e.context
+    prettyError.context = error.context
     throw prettyError
   }
 }
