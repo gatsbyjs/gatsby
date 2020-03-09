@@ -769,5 +769,7 @@
           link: /docs/glossary/webpack/
     - title: Gatsby Telemetry
       link: /docs/telemetry/
+    - title: Gatsby Feedback
+      link: /docs/cli-feedback/
     - title: Gatsby REPL
       link: /docs/gatsby-repl/
