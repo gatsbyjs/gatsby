@@ -1,7 +1,7 @@
 {
-  "name": "recipe-create-page",
+  "name": "recipe-links-between-pages",
   "private": true,
-  "description": "A Gatsby docs recipe example on creating pages programmatically",
+  "description": "A Gatsby docs recipe example on linking between pages",
   "version": "0.1.0",
   "author": "@gatsbyjs",
   "dependencies": {
@@ -12,7 +12,10 @@
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "cypress": "^4.0.2",
+    "gatsby-cypress": "^0.2.22",
+    "prettier": "^1.18.2",
+    "start-server-and-test": "^1.10.8"
   },
   "keywords": [
     "gatsby"
@@ -21,10 +24,13 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test-develop": "gatsby develop --port 8888",
+    "test": "CYPRESS_SUPPORT=y start-server-and-test test-develop http://localhost:8888 cy:open",
+    "test:ci": "start-server-and-test test-develop http://localhost:8888 cy:run"
   },
   "repository": {
     "type": "git",
