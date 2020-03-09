@@ -3,7 +3,7 @@ import { slash } from "gatsby-core-utils"
 const cleanNodeModules = (dir: string): string => {
   const x = dir.split(`node_modules/`)
 
-  if (x.length === 0) {
+  if (x.length <= 1) {
     return dir
   }
 
