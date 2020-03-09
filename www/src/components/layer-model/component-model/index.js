@@ -19,7 +19,7 @@ const layers = [
   {
     title: `Build`,
     icon: `AtomicSymbol`,
-    baseColor: `purple`,
+    baseColor: `green`,
     component: BuildLayerContent,
   },
   {

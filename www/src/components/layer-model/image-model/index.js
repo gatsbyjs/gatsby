@@ -17,7 +17,7 @@ const layers = [
   {
     title: `Config`,
     icon: `AtomicSymbol`,
-    baseColor: `purple`,
+    baseColor: `green`,
     component: ConfigLayerContent,
   },
   {

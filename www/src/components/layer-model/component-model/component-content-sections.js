@@ -2,6 +2,12 @@
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
 
+import ContentLayer from "./text-content/ContentLayer.md"
+import BuildLayer from "./text-content/BuildLayer.md"
+import DataLayer from "./text-content/DataLayer.md"
+import ViewLayer from "./text-content/ViewLayer.md"
+import AppLayer from "./text-content/AppLayer.md"
+
 import {
   LayerContentWrapper,
   ExampleWrapper,
@@ -79,16 +85,7 @@ const ContentLayerContent = ({ sourceIndex, setSourceIndex, index }) => (
         setSourceIndex={setSourceIndex}
       />
     </ExampleWrapper>
-    <div>
-      <p>
-        <b>Content</b> is often organized in systems like databases, content
-        management systems, files, or external APIs.
-      </p>
-      <p>
-        Any source of data can be connected to Gatsby through plugins or using
-        Gatsby's APIs.
-      </p>
-    </div>
+    <div><ContentLayer /></div>
   </LayerContentWrapper>
 )
 
@@ -108,19 +105,7 @@ const BuildLayerContent = ({ index }) => (
       </CodeWrapper>
     </ExampleWrapper>
     <div>
-      <p>
-        <b>Building</b> compiles your application with modern features like
-        server-side rendering, route based code splitting (
-        <Link to="/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/">
-          and more!
-        </Link>
-        ) for great performance out of the box.
-      </p>
-      <p>
-        During the build (when you run <code>gatsby build</code> or
-        <code>gatsby develop</code>), data is fetched and combined into a
-        GraphQL schema with a static snapshot of all data your site needs.
-      </p>
+      <BuildLayer />
     </div>
   </LayerContentWrapper>
 )
@@ -139,16 +124,7 @@ const DataLayerContent = ({ index }) => (
       </CodeWrapper>
     </ExampleWrapper>
     <div>
-      <p>
-        <b>Data</b> returned by GraphQL comes back in the exact same shape that
-        you asked for it, without having to travel across the network because it
-        was already gathered at{` `}
-        <Link to="/docs/glossary#build">build time</Link>.
-      </p>
-      <p>
-        Since all data is combined in the data layer, it's even possible to
-        query multiple sources at the same time.
-      </p>
+      <DataLayer />
     </div>
   </LayerContentWrapper>
 )
@@ -167,15 +143,7 @@ const ViewLayerContent = ({ index }) => (
       </CodeWrapper>
     </ExampleWrapper>
     <div>
-      <p>
-        React powers components in Gatsby sites that are{` `}
-        <Link to="/docs/glossary#hydration"> rehydrated</Link>, whatever you can
-        do in React you can do with Gatsby.
-      </p>
-      <p>
-        Your components can pull in whatever data they need from any source in
-        the data layer.
-      </p>
+      <ViewLayer />
     </div>
   </LayerContentWrapper>
 )
@@ -213,11 +181,7 @@ const AppLayerContent = ({ index }) => (
       </div>
     </ExampleWrapper>
     <div>
-      <p>
-        The optimized <b>app</b> runs in the browser with all the speed of
-        Gatsby as well as the convenience and great developer experience of
-        working with tools like React and GraphQL.
-      </p>
+      <AppLayer />
     </div>
   </LayerContentWrapper>
 )

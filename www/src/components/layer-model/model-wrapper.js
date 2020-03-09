@@ -7,7 +7,6 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // Components for building sections used in the model
 const LayerContentWrapper = ({ index, displayCodeFullWidth=false, children }) =>{
-console.log(displayCodeFullWidth)
    return ( <div
       id={`tabpanel${index}`}
       aria-labelledby={`tab${index}`}
@@ -20,7 +19,7 @@ console.log(displayCodeFullWidth)
         gridTemplateAreas: `"content" "example"`,
         gridGap: 0,
         [mediaQueries.lg]: {
-          gridTemplateRows: displayCodeFullWidth ? `repeat(2, 1fr)` : `1fr`,
+          gridTemplateRows: displayCodeFullWidth ? `repeat(2, auto)` : `1fr`,
           gridTemplateColumns: displayCodeFullWidth ? `1fr` : `repeat(2, 1fr)`,
           gridTemplateAreas: displayCodeFullWidth
             ? `"content" "example"`

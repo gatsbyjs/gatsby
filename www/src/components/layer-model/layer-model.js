@@ -85,7 +85,17 @@ const LayerModel = ({
     }
   }, [selected])
   return (
-    <>
+    <div 
+      sx={{
+        borderRadius: 3,
+        border: t => `1px solid ${t.colors.pullquote.borderColor}`,
+        paddingLeft: `2%`,
+        paddingRight: `2%`,
+        paddingTop: `2%`,
+        paddingBottom: `-2%`,
+        marginBottom: `3%`,
+      }}
+    >
       <div
         sx={{
           borderRadius: 3,
@@ -125,7 +135,7 @@ const LayerModel = ({
             displayCodeFullWidth,
           })
       )}
-    </>
+    </div>
   )
 }
 
