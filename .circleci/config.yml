@@ -413,7 +413,7 @@ jobs:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "512"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_id_4096:
@@ -425,7 +425,7 @@ jobs:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "4096"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_id_8192:
@@ -437,7 +437,7 @@ jobs:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "8192"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_id_32768:
@@ -449,7 +449,7 @@ jobs:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "32768"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_slug_512:
@@ -461,7 +461,7 @@ jobs:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "512"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_slug_4096:
@@ -473,7 +473,7 @@ jobs:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "4096"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_slug_8192:
@@ -485,7 +485,7 @@ jobs:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "8192"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_slug_32768:
@@ -497,7 +497,7 @@ jobs:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "32768"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_table_512:
@@ -509,7 +509,7 @@ jobs:
           working_directory: benchmarks/markdown_table
           NUM_PAGES: "512"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_table_4096:
@@ -521,7 +521,7 @@ jobs:
           working_directory: benchmarks/markdown_table
           NUM_PAGES: "4096"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_table_8192:
@@ -533,7 +533,7 @@ jobs:
           working_directory: benchmarks/markdown_table
           NUM_PAGES: "8192"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
           BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_table_32768:
@@ -542,7 +542,7 @@ jobs:
     resource_class: xlarge
     steps:
       - run-benchmark:
-          working_directory: benchmarks/markdown_table
+          working_directory: benchmarks/markdown_table/benchmarks/markdown_table
           NUM_PAGES: "32768"
           BENCHMARK_CONTENT_SOURCE: MDX
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby
