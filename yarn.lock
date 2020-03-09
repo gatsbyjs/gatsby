@@ -3818,6 +3818,11 @@
   resolved "https://registry.yarnpkg.com/@types/cache-manager/-/cache-manager-2.10.1.tgz#c7bc354be7988659e139e10fc7bde4b221f7f128"
   integrity sha512-oJhVIOeC8dX9RZ7OtEZvZ/6cHF5aQWoRcuJ7KwK3Xb69hIIdElpWzfJ35fOXvYOgoyRXA34jFrD8lqEjDWz37w==
 
+"@types/ci-info@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/ci-info/-/ci-info-2.0.0.tgz#51848cc0f5c30c064f4b25f7f688bf35825b3971"
+  integrity sha512-5R2/MHILQLDCzTuhs1j4Qqq8AaKUf7Ma4KSSkCtc12+fMs47zfa34qhto9goxpyX00tQK1zxB885VCiawZ5Qhg==
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
