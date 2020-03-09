@@ -340,6 +340,9 @@ module.exports = ({
   if (getCache) {
     // use cache of this plugin and not cache of function caller
     cache = getCache(`gatsby-source-filesystem`)
+  } else if (process.env.GATSBY_STRICT_MODE_CACHE) {
+    console.log(`createRemoteFileNode called without "getCache"`)
+    console.trace()
   }
   if (typeof cache !== `object`) {
     throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
