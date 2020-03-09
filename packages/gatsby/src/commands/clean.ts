@@ -1,15 +1,15 @@
-import fs from "fs-extra"
 import path from "path"
 
+import fs from "fs-extra"
+
 import {
-  userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  userPassesFeedbackRequestHeuristic,
 } from "../utils/feedback"
+
 import { IProgram } from "./types"
 
-module.exports = async function clean(program: IProgram): Promise<void> {
-  const { directory, report } = program
-
+export default async ({ directory, report }: IProgram): Promise<void> => {
   const directories = [`.cache`, `public`]
 
   report.info(`Deleting ${directories.join(`, `)}`)
