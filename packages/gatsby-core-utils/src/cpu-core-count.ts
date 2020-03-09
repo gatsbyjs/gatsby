@@ -1,9 +1,8 @@
-/**
- * @type {import('../index').cpuCoreCount}
- */
-const cpuCoreCount = ignoreEnvVar => {
+import physicalCpuCount from "./physical-cpu-count"
+
+const cpuCoreCount = (ignoreEnvVar: boolean): number => {
   try {
-    let coreCount = require(`./physical-cpu-count`) || 1
+    let coreCount = physicalCpuCount() || 1
 
     if (ignoreEnvVar) {
       // Return the physical CPU count,
@@ -48,4 +47,4 @@ const cpuCoreCount = ignoreEnvVar => {
   }
 }
 
-module.exports = cpuCoreCount
+export default cpuCoreCount
