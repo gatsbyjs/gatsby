@@ -6639,8 +6639,8 @@
   built_by_url: https://github.com/fourpost
   featured: false
 - title: ReactStudy Blog
-  url: https://peking.netlify.com/
-  main_url: https://peking.netlify.com/
+  url: https://peking.netlify.com
+  main_url: https://peking.netlify.com
   description: >
     Belong to your own blog by gatsby
   categories:
