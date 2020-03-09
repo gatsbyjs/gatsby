@@ -1,3 +1,6 @@
 {
-  "presets": [["babel-preset-gatsby-package"]]
+  "presets": [
+    ["babel-preset-gatsby-package"]
+  ]
 }
+
