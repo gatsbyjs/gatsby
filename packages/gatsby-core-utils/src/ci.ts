@@ -40,13 +40,16 @@ function getEnvFromCIInfo(): string | null {
   return null
 }
 
-interface IGetEnvDetect {
-  // @prettier-ignore
-  key: string
-  name: string
-}
+interface IGetEnvDetect {}
 
-function getEnvDetect({ key, name }: IGetEnvDetect): () => string | null {
+function getEnvDetect({
+  key,
+  name,
+}: {
+  // prettier-ignore
+  key: string,
+  name: string
+}): () => string | null {
   return function(): string | null {
     if (process.env[key]) {
       return name

@@ -1,5 +1,4 @@
-import getPhysicalCpuCount from "./physical-cpu-count"
-console.log(getPhysicalCpuCount)
+import { getPhysicalCpuCount } from "./physical-cpu-count"
 
 export const cpuCoreCount = (ignoreEnvVar: boolean): number => {
   try {
