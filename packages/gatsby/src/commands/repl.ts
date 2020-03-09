@@ -1,16 +1,12 @@
-const repl = require(`repl`)
-const { graphql } = require(`graphql`)
-const bootstrap = require(`../bootstrap`)
-const { trackCli } = require(`gatsby-telemetry`)
-const {
-  loadNodeContent,
-  getNodes,
-  getNode,
-  getNodesByType,
-} = require(`../db/nodes`)
-const { store } = require(`../redux`)
+import repl from "repl"
+import { graphql } from "graphql"
+import bootstrap from "../bootstrap"
+import { trackCli } from "gatsby-telemetry"
+import { loadNodeContent, getNodes, getNode, getNodesByType } from "../db/nodes"
+import { store } from "../redux"
+import { IProgram } from "./types"
 
-module.exports = async program => {
+module.exports = async (program: IProgram): Promise<void> => {
   trackCli(`REPL_START`)
   // run bootstrap
   await bootstrap(program)
@@ -27,7 +23,7 @@ module.exports = async program => {
 
   const nodes = getNodes()
 
-  const query = async query => {
+  const query = async (query: string): Promise<void> => {
     const result = await graphql(schema, query, {}, {}, {})
     console.log(`query result: ${JSON.stringify(result)}`)
   }

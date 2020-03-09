@@ -56,7 +56,7 @@ export function readFromCache(): ICachedReduxState {
 
   const nodes: [string, IReduxNode][] = [].concat(...chunks)
 
-  if (!chunks.length) {
+  if (!chunks.length && process.env.GATSBY_DB_NODES !== `loki`) {
     report.info(
       `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
     )
