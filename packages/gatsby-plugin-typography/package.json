@@ -41,9 +41,9 @@
     "directory": "packages/gatsby-plugin-typography"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__,**/src/__mocks__",
+    "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__,**/src/__mocks__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   },
   "engines": {
     "node": ">=8.0.0"
