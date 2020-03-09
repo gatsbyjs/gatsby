@@ -180,6 +180,7 @@ exports.sourceNodes = async (
         createNode,
         createNodeId,
         touchNode,
+        getCache,
         getNode,
         auth,
         reporter,
@@ -230,6 +231,7 @@ exports.sourceNodes = async (
     createNodeId,
     createContentDigest,
     touchNode,
+    getCache,
     getNode,
     typePrefix,
     refactoredEntityTypes,
@@ -247,6 +249,7 @@ exports.sourceNodes = async (
     excludedRoutes,
     keepMediaSizes,
     restApiRoutePrefix,
+    reporter,
   }
 
   // apply custom normalizer
