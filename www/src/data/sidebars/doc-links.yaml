@@ -264,9 +264,9 @@
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
                 - title: Pixabay Image Source Plugin Tutorial
-                  link: /docs/pixabay-source-plugin-tutorial/
+                  link: /tutorial/pixabay-source-plugin-tutorial/
                 - title: Remark Plugin Tutorial
-                  link: /docs/remark-plugin-tutorial/
+                  link: /tutorial/remark-plugin-tutorial/
                 - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Themes
