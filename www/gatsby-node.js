@@ -38,7 +38,7 @@ exports.onCreateNode = helpers => {
   sections.forEach(section => section.onCreateNode(helpers))
 }
 
-exports.onPreInit = () => {
+exports.onPostBootstrap = () => {
   child_process.execSync(`yarn lingui:build`)
 }
 
