@@ -9978,6 +9978,18 @@
     - Food
   built_by: Matthew Mesa
   built_by_url: "https://matthewmesa.com"
+- title: Jun Chen Portfolio
+  url: "https://www.junchenjun.me"
+  main_url: "https://www.junchenjun.me"
+  source_url: "https://github.com/junchenjun/junchenjun.me"
+  description: >
+    Get to know Jun.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Jun Chen
+  built_by_url: "https://www.junchenjun.me"
 - title: Xavier Mirabelli-Montan
   url: "https://xavie.mirmon.co.uk"
   main_url: "https://xavie.mirmon.co.uk"
