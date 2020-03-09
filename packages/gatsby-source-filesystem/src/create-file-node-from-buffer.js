@@ -12,11 +12,6 @@ const cacheId = hash => `create-file-node-from-buffer-${hash}`
  ********************/
 
 /**
- * @typedef {Redux}
- * @see [Redux Docs]{@link https://redux.js.org/api-reference}
- */
-
-/**
  * @typedef {GatsbyCache}
  * @see gatsby/packages/gatsby/utils/cache.js
  */
@@ -28,8 +23,8 @@ const cacheId = hash => `create-file-node-from-buffer-${hash}`
  *
  * @param  {Buffer} options.buffer
  * @param  {String} options.hash
- * @param  {Redux} options.store
  * @param  {GatsbyCache} options.cache
+ * @param  {Function} options.getCache
  * @param  {Function} options.createNode
  */
 
@@ -127,6 +122,7 @@ module.exports = ({
   hash,
   cache,
   createNode,
+  getCache,
   parentNodeId = null,
   createNodeId,
   ext,
@@ -142,6 +138,10 @@ module.exports = ({
   }
   if (typeof createNode !== `function`) {
     throw new Error(`createNode must be a function, was ${typeof createNode}`)
+  }
+  if (getCache) {
+    // use cache of this plugin and not cache of function caller
+    cache = getCache(`gatsby-source-filesystem`)
   }
   if (typeof cache !== `object`) {
     throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)

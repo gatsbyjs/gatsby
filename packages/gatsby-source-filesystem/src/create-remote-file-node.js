@@ -20,14 +20,9 @@ let bar
 // Keep track of the total number of jobs we push in the queue
 let totalJobs = 0
 
-/********************
+/** ******************
  * Type Definitions *
  ********************/
-
-/**
- * @typedef {Redux}
- * @see [Redux Docs]{@link https://redux.js.org/api-reference}
- */
 
 /**
  * @typedef {GatsbyCache}
@@ -52,9 +47,9 @@ let totalJobs = 0
  * @description Create Remote File Node Payload
  *
  * @param  {String} options.url
- * @param  {Redux} options.store
  * @param  {GatsbyCache} options.cache
  * @param  {Function} options.createNode
+ * @param  {Function} options.getCache
  * @param  {Auth} [options.auth]
  * @param  {Reporter} [options.reporter]
  */
@@ -65,7 +60,7 @@ const STALL_TIMEOUT = 30000
 const CONNECTION_RETRY_LIMIT = 5
 const CONNECTION_TIMEOUT = 30000
 
-/********************
+/** ******************
  * Queue Management *
  ********************/
 
@@ -114,7 +109,7 @@ async function pushToQueue(task, cb) {
   }
 }
 
-/******************
+/** ****************
  * Core Functions *
  ******************/
 
@@ -303,7 +298,7 @@ const pushTask = task =>
       })
   })
 
-/***************
+/** *************
  * Entry Point *
  ***************/
 
@@ -322,6 +317,7 @@ module.exports = ({
   url,
   cache,
   createNode,
+  getCache,
   parentNodeId = null,
   auth = {},
   httpHeaders = {},
@@ -340,6 +336,10 @@ module.exports = ({
   }
   if (typeof createNode !== `function`) {
     throw new Error(`createNode must be a function, was ${typeof createNode}`)
+  }
+  if (getCache) {
+    // use cache of this plugin and not cache of function caller
+    cache = getCache(`gatsby-source-filesystem`)
   }
   if (typeof cache !== `object`) {
     throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
