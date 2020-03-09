@@ -6,11 +6,11 @@ tags: ["ux", "cloud"]
 ---
 
 In my last blogpost, I introduced how we’re [making it easier to start with Gatsby Cloud for
-free](https://www.gatsbyjs.org/blog/2019-11-25-getting-started-with-gatsby-cloud/) with starters. This blogpost introduces the next set of changes that we shipped to help users get started faster. How did we do it? Inferring from history to reduce unnecessary user interaction. Quite a mouthful and needs some explanation.
+free](https://www.gatsbyjs.org/blog/2019-11-25-getting-started-with-gatsby-cloud/) with starters. This blogpost introduces the next set of changes that we shipped to help users get started faster. How did we know what changes would help users get started faster? Well, we infer from history to reduce unnecessary user interaction. That's quite a mouthful, so it needs some explanation.
 
 ## The problem
 
-So what problem did we learn about?
+So what problem did we learn about during usability tests?
 
 When watching folks onboard onto Gatsby Cloud, there was a clear point of confusion. Please see the screenshot below and read the thought bubble which depicts _approximately_ what users said during usability tests.
 
@@ -18,7 +18,7 @@ When watching folks onboard onto Gatsby Cloud, there was a clear point of confus
 
 ## What was the real problem?
 
-We knew users were confused, yet we didn’t know how to solve it quite yet. Here are some principles that helped us figure out the reason for the confusion and how to resolve it.
+We knew users were confused, yet we didn’t know how to resolve their confusion quite yet. Here are some principles that helped us figure out the reason for the confusion and how to resolve it.
 
 ## Interaction is negative
 
@@ -28,7 +28,7 @@ So how do you reduce unnecessary interaction?
 
 ## Reduce interaction by inferring from history and the environment
 
-To reduce interaction, you can infer “as much as possible from history and the environment.” See this full quote below:
+To reduce interaction, you can infer “as much as possible from history and the environment.” See this quote below:
 
 <Pullquote>
   If the software properly infers as much as possible from history and the
@@ -40,13 +40,13 @@ To reduce interaction, you can infer “as much as possible from history and the
 
 _Quote from Brett Victor, [“Magic Ink”](http://worrydream.com/MagicInk/#p173)_
 
-The principle is to make the best guess we can of what the user wants and then let them _correct_ our best guess if it’s wrong. And the guess will be right most of the time, if we infer from history and the environment.
+The principle is to make the best guess we can of what the user wants and then let them _correct_ our best guess if it’s wrong. And our best guess will be right most of the time, if we infer from history and the environment.
 
 So what could we infer from “history” and the “environment” to solve the problem we had in Gatsby Cloud, where everyone was confused and frustrated at needing to choose a GitHub organization?
 
 ## Inferring from history
 
-The first step is simply to look at history; I’ll take you on a tour of what happened before users hit their point of confusion.
+The first step is simply to look at history; I’ll take you on a tour of the user's brief history in the product before they hit their point of confusion.
 
 ### User selects starter
 
@@ -60,11 +60,11 @@ Next, the user logs into GitHub and give Gatsby Cloud permission to connect with
 
 ### Unnecessary interaction: user adds new GitHub organization
 
-Then, this screen asks them to “add new organization.” This is where the software failed to learn from recent history. The user just gave the system access to their personal GitHub account, so that the last value they gave the system and we ought to stick with that value.
+Then, this screen asks them to “add new organization.” This is where the software failed to learn from recent history. The user just gave the system access to their personal GitHub account. Access to their personal GitHub account is the last value they gave the system and we ought to stick with that value.
 
 ![Screenshot of the landing page for first-time visitors who have logged into Gatsby Cloud with a thought bubble the author drew on top of the screenshot. The thought bubble contains the text “What organization? GitHub organization? If so, why would I need to connect to GitHub again?” and "Gatsby Cloud, you have left me with no choice...I must click this button" referring to the "Add New Organization" button](add-new-org-confusion.png)
 
-By the time the user adds an organization (and they don’t know why they have to add it), and sees this next screen below, of course they are confused about why they added an organization. They didn’t need to!
+By the time the user adds an organization (and they don’t know why they have to add it), and sees this next screen below, of course they are confused about why they added an organization. They usually don’t need to because they already added access to their personal GitHub account!
 
 ![screenshot of step two of Gatsby Cloud onboarding, during which users select an organization from GitHub. I drew a speech bubble on top of the screenshot pointing out that users are confused by this screen. The speech bubble says: “Wait, I don't want to create a repository in my work's GitHub organization. Terminate mission!”](select-work-org-confusion.png)
 

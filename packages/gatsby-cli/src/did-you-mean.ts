@@ -1,7 +1,9 @@
-const meant = require(`meant`)
+import meant from "meant"
 
-function didYouMean(scmd, commands) {
-  const bestSimilarity = meant(scmd, commands).map(function(str) {
+export function didYouMean(scmd: string, commands: string[]): string {
+  const bestSimilarity = meant(scmd, commands).map(function(
+    str: string
+  ): string {
     return `    ${str}`
   })
 
@@ -16,5 +18,3 @@ function didYouMean(scmd, commands) {
     )
   }
 }
-
-module.exports = didYouMean
