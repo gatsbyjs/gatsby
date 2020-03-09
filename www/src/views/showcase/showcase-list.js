@@ -26,7 +26,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
   return (
     <main id={`reach-skip-nav`} sx={showcaseList}>
       {items.map(
-        ({ node }) =>
+        node =>
           node.fields &&
           node.fields.slug && ( // have to filter out null fields from bad data
             <div key={node.id} sx={showcaseItem}>
