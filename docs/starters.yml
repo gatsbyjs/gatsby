@@ -5494,20 +5494,12 @@
   description: A super-fast site using GatsbyJS
   tags:
     - Blog
-    - i18n
-    - Netlify
-    - Products
-    - Contentful
-    - SEO
-    - Pagination
-    - CMS
+    - CMS:Headless
+    - CMS:Contentful
+    - Portfolio
   features:
-    - Attractive Design
+    - Styled components
     - Responsive webpage
-    - Easily Configurable
-    - Tags
-    - Edit on GitHub
-    - i18n
-    - SEO
-    - Optimized images with gatsby-image
+    - Portfolio
+    - Blog
 
