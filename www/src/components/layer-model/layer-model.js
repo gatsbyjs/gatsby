@@ -59,7 +59,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
 
 const LayerModel = ({
   layers,
-  displayCodeFullWidth=false,
+  displayCodeFullWidth = false,
   initialLayer = `Content`,
 }) => {
   const [selected, setSelected] = useState(initialLayer)
@@ -85,15 +85,12 @@ const LayerModel = ({
     }
   }, [selected])
   return (
-    <div 
+    <div
       sx={{
         borderRadius: 3,
-        border: t => `1px solid ${t.colors.pullquote.borderColor}`,
-        paddingLeft: `2%`,
-        paddingRight: `2%`,
-        paddingTop: `2%`,
-        paddingBottom: `-2%`,
-        marginBottom: `3%`,
+        border: t => `1px solid ${t.colors.ui.border}`,
+        padding: 2,
+        marginBottom: 6,
       }}
     >
       <div

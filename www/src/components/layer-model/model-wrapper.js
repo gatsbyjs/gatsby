@@ -6,30 +6,39 @@ import MdLoop from "react-icons/lib/md/loop"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // Components for building sections used in the model
-const LayerContentWrapper = ({ index, displayCodeFullWidth=false, children }) =>{
-   return ( <div
+const LayerContentWrapper = ({
+  index,
+  displayCodeFullWidth = false,
+  children,
+}) => {
+  return (
+    <div
       id={`tabpanel${index}`}
       aria-labelledby={`tab${index}`}
       role="tabpanel"
       sx={{
-        py: 4,
+        pt: 4,
         px: 0,
         display: `grid`,
         gridTemplateRows: `repeat(2, auto)`,
         gridTemplateAreas: `"content" "example"`,
-        gridGap: 0,
+        gridGap: 2,
         [mediaQueries.lg]: {
           gridTemplateRows: displayCodeFullWidth ? `repeat(2, auto)` : `1fr`,
-          gridTemplateColumns: displayCodeFullWidth ? `1fr` : `repeat(2, 1fr)`,
+          gridTemplateColumns: displayCodeFullWidth ? `auto` : `repeat(2, 1fr)`,
           gridTemplateAreas: displayCodeFullWidth
             ? `"content" "example"`
             : `"example content"`,
           gridGap: 6,
         },
+        "& p:last-child": {
+          mb: 0,
+        },
       }}
     >
       {children}
-    </div>)
+    </div>
+  )
 }
 
 const ExampleWrapper = ({ children }) => (
@@ -64,6 +73,8 @@ const CodeWrapper = ({
           justifyContent: `space-between`,
           borderTopRightRadius: 2,
           borderTopLeftRadius: 2,
+          width: `100%`,
+          mx: `auto`,
         }}
         className="gatsby-code-title"
       >
@@ -109,8 +120,8 @@ const CodeWrapper = ({
         )}
       </div>
     )}
-    <div className="gatsby-highlight">
-      <pre className={`language-${language}`}>
+    <div className="gatsby-highlight" sx={{ width: `100%`, mx: `auto` }}>
+      <pre className={`language-${language}`} sx={{ mb: 0 }}>
         <code className={`language-${language}`}>{children}</code>
       </pre>
     </div>
