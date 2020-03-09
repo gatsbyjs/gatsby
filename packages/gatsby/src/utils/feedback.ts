@@ -1,7 +1,7 @@
+import getDayOfYear from "date-fns/getDayOfYear"
+import latestVersion from "latest-version"
 import report from "gatsby-cli/lib/reporter"
 import { getConfigStore, getGatsbyVersion } from "gatsby-core-utils"
-import latestVersion from "latest-version"
-import getDayOfYear from "date-fns/getDayOfYear"
 
 const feedbackKey = `feedback.disabled`
 const lastDateKey = `feedback.lastRequestDate`
@@ -9,12 +9,12 @@ const lastDateKey = `feedback.lastRequestDate`
 // This function is designed to be used by `gatsby feedback --disable`
 // and `gatsby feedback --enable`. This key is used to determine
 // if a user is allowed to be solicited for feedback
-export function setFeedbackDisabledValue(enabled: boolean): void {
+export const setFeedbackDisabledValue = (enabled: boolean): void => {
   getConfigStore().set(feedbackKey, enabled)
 }
 
 // Print the feedback request to the user
-export function showFeedbackRequest(): void {
+export const showFeedbackRequest = (): void => {
   getConfigStore().set(lastDateKey, Date.now())
   report.log(
     `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
@@ -28,7 +28,7 @@ export function showFeedbackRequest(): void {
 // 3. They don't have the environment variable to disable feedback present
 // 4. It's been at least 3 months since the last feedback request
 // 5. They are on the most recent version of Gatsby
-export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
+export const userPassesFeedbackRequestHeuristic = async (): Promise<boolean> => {
   // Heuristic 1
   // This is spreading the request volume over the quarter.
   // We are grabbing a randomNumber within the spread of a first day
@@ -88,7 +88,7 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
     versionPoints[0] === latestVersionPoints[0] &&
     versionPoints[1] === latestVersionPoints[1]
 
-  if (versionsMatchOnMajorAndMinor === false) {
+  if (!versionsMatchOnMajorAndMinor) {
     return false
   }
 
