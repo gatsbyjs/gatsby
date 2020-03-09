@@ -1,10 +1,10 @@
 ---
-title: "Incremental PRs: a new GitHub workflow for the Gatsby Cloud team"
+title: "Using Netlify Functions with Gatsby Cloud"
 date: 2020-03-11
 author: "Josh Comeau"
 excerpt: "An article detailing how to use Netlify Functions and Gatsby Cloud together, to tremendous effect!"
 tags: ["netlify", "serverless", "lambda", "gatsby cloud"]
-canonicalLink: https://joshwcomeau.com/gatsby/running-netlify-functions-on-gatsby-cloud/
+canonicalLink: https://joshwcomeau.com/gatsby/using-netlify-functions-with-gatsby-cloud/
 ---
 
 import netlifyFunctions from "@assets/netlify-functions/gatsby-cloud.png"
@@ -158,3 +158,7 @@ Why might the directory already exist? Gatsby Cloud maintains a cache, to speed 
 # In conclusion
 
 With a little bit of Node.js configuration, we're able to do some post-processing after the build, packaging up our functions and moving them to the spot Netlify expects to find them. When we push code to Github, Gatsby Cloud will run a new build, and then upload the resulting files to Netlify.
+
+If you already have a Gatsby Cloud site, and you're considering using serverless functions, I can say unequivocally that Netlify makes the experience seamless and painless, and their generous pricing model means that you can experiment with them for free.
+
+If you already use Netlify Functions and are considering moving your Gatsby site to Gatsby Cloud, we hope you'll give us a shot! One of our main focuses on the Gatsby Cloud team is to reduce the build time for complex / large sites. If you've been watching build times climb, we're doing our best to speed things up. ⚡️
