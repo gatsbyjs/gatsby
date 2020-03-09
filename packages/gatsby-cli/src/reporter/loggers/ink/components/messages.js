@@ -32,7 +32,7 @@ const getLabel = level => {
   }
 }
 
-export const Message = ({ level, text, duration, statusText }) => {
+export const Message = React.memo(({ level, text, duration, statusText }) => {
   let message = text
   if (duration) {
     message += ` - ${duration.toFixed(3)}s`
@@ -53,4 +53,4 @@ export const Message = ({ level, text, duration, statusText }) => {
       {message}
     </Box>
   )
-}
+})
