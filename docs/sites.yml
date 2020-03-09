@@ -10085,14 +10085,14 @@
   built_by: Matthew Mesa
   built_by_url: "https://matthewmesa.com"
 - title: Jun Chen Portfolio
-  main_url: "https://www.junchenjun.me"
   url: "https://www.junchenjun.me"
+  main_url: "https://www.junchenjun.me"
   source_url: "https://github.com/junchenjun/junchenjun.me"
-  description: >-
+  description: >
      Get to know -> Jun Chen.
   categories:
     - Portfolio
     - Blog
     - Web Development
   built_by: Jun Chen
-  built_by_url: https://www.junchenjun.me
+  built_by_url: "https://www.junchenjun.me"
