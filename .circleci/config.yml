@@ -545,7 +545,7 @@ jobs:
           working_directory: benchmarks/markdown_table/benchmarks/markdown_table
           NUM_PAGES: "32768"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
           BENCHMARK_SITE_TYPE: BLOG
 
 workflows:
