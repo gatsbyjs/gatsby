@@ -40,8 +40,6 @@ function getEnvFromCIInfo(): string | null {
   return null
 }
 
-interface IGetEnvDetect {}
-
 function getEnvDetect({
   key,
   name,
