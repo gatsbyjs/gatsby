@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" focusable="false">
-  <path class="svg-stroke svg-stroke-lilac" d="M13.5 12l-1-4m7.5 4l2.464-2"/>
-  <path class="svg-stroke svg-stroke-lilac" opacity=".75" d="M13.117 24.305l1.73-3.743"/>
-  <path class="svg-stroke svg-stroke-lilac" d="M21.641 18.948l2.68 3.133"/>
-  <circle class="svg-stroke svg-stroke-lilac" fill="none" cx="24.323" cy="21.963" r="1.5" transform="rotate(-116.513 24.323 21.963)"/>
-  <path class="svg-stroke svg-stroke-lilac" d="M11.896 17l-3.67 1.88"/>
-  <circle class="svg-stroke svg-stroke-lilac" fill="none" cx="17" cy="16" r="5.29"/>
-  <circle class="svg-stroke svg-stroke-lilac" fill="none" cx="12" cy="7" r="1.5"/>
-  <circle class="svg-stroke svg-stroke-lilac" fill="none" cx="8" cy="19" r="1.5"/>
-  <circle class="svg-stroke svg-stroke-lilac" fill="none" cx="13" cy="25" r="1.5"/>
-  <circle class="svg-stroke svg-stroke-lilac" fill="none" cx="23.5" cy="8.5" r="2"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" focusable="false" viewBox="0 0 32 32"><path d="M13.5 12l-1-4m7.5 4l2.464-2" class="svg-stroke svg-stroke-lilac"/><path d="M13.117 24.305l1.73-3.743" class="svg-stroke svg-stroke-lilac" opacity=".75"/><path d="M21.641 18.948l2.68 3.133" class="svg-stroke svg-stroke-lilac"/><circle cx="24.323" cy="21.963" r="1.5" fill="none" class="svg-stroke svg-stroke-lilac" transform="rotate(-116.513 24.323 21.963)"/><path d="M11.896 17l-3.67 1.88" class="svg-stroke svg-stroke-lilac"/><circle cx="17" cy="16" r="5.29" fill="none" class="svg-stroke svg-stroke-lilac"/><circle cx="12" cy="7" r="1.5" fill="none" class="svg-stroke svg-stroke-lilac"/><circle cx="8" cy="19" r="1.5" fill="none" class="svg-stroke svg-stroke-lilac"/><circle cx="13" cy="25" r="1.5" fill="none" class="svg-stroke svg-stroke-lilac"/><circle cx="23.5" cy="8.5" r="2" fill="none" class="svg-stroke svg-stroke-lilac"/></svg>
