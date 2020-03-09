@@ -62,7 +62,7 @@ describe(`gets ssl certs`, () => {
       getSslCert({ name: `mock-cert` })
       expect(getDevCert).toBeCalledWith(`mock-cert`, {
         getCaPath: true,
-        skipCertutilInstall: true,
+        skipCertutilInstall: false,
         ui: {
           getWindowsEncryptionPassword: expect.any(Function),
         },
