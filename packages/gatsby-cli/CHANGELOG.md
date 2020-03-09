@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.3...gatsby-cli@2.10.4) (2020-03-09)
+
+### Bug Fixes
+
+- **gatsby-cli:** Update build script to properly handle .tsx files ([#22111](https://github.com/gatsbyjs/gatsby/issues/22111)) ([72750f3](https://github.com/gatsbyjs/gatsby/commit/72750f3))
+
 ## [2.10.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.2...gatsby-cli@2.10.3) (2020-03-09)
 
 ### Performance Improvements
