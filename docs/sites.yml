@@ -9978,6 +9978,7 @@
     - Food
   built_by: Matthew Mesa
   built_by_url: "https://matthewmesa.com"
+
 - title: Jun Chen Portfolio
   url: "https://www.junchenjun.me"
   main_url: "https://www.junchenjun.me"
@@ -10001,3 +10002,14 @@
     - Portfolio
     - Programming
   featured: false
+- title: MPG Calculator
+  url: "https://www.mpg-calculator.co.uk"
+  main_url: "https://www.mpg-calculator.co.uk"
+  description: >
+    A website which allows you to calculate the MPG of your vehicle.
+  categories:
+    - SEO
+    - Accessibility
+    - Blog
+  built_by: PJ
+  built_by_url: "https://pjsachdev.me"
