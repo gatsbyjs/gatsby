@@ -13,10 +13,8 @@ const createLabel = (text: string, color: string): React.FC<ColorProps> => (
   <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
 )
 
-type ValueOf<T> = T[keyof T]
-
 const getLabel = (
-  level: ValueOf<typeof ActivityLogLevels> | ValueOf<typeof LogLevels>
+  level: ActivityLogLevels | LogLevels
 ): ReturnType<typeof createLabel> => {
   switch (level) {
     case ActivityLogLevels.Success:
@@ -39,7 +37,7 @@ const getLabel = (
 }
 
 interface IProps {
-  level: ValueOf<typeof ActivityLogLevels> | ValueOf<typeof LogLevels>
+  level: ActivityLogLevels | LogLevels
   text: string
   duration: number
   statusText: string
