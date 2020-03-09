@@ -76,9 +76,9 @@
     "directory": "packages/gatsby-cli"
   },
   "scripts": {
-    "build": "babel src --out-dir lib --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "build": "babel src --out-dir lib --ignore \"**/__tests__\" --extensions \".ts,.js,.tsx\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js\"",
+    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
     "postinstall": "node scripts/postinstall.js"
   },
   "yargs": {
