@@ -44,30 +44,27 @@ interface IProps {
   duration: number
   statusText: string
 }
-export const Message: React.FC<IProps> = ({
-  level,
-  text,
-  duration,
-  statusText,
-}) => {
-  let message = text
-  if (duration) {
-    message += ` - ${duration.toFixed(3)}s`
-  }
-  if (statusText) {
-    message += ` - ${statusText}`
-  }
-  if (!level || level === `LOG`) {
-    return <>{message}</>
-  }
+export const Message = React.memo<IProps>(
+  ({ level, text, duration, statusText }) => {
+    let message = text
+    if (duration) {
+      message += ` - ${duration.toFixed(3)}s`
+    }
+    if (statusText) {
+      message += ` - ${statusText}`
+    }
+    if (!level || level === `LOG`) {
+      return <>{message}</>
+    }
 
-  const TextLabel = getLabel(level)
+    const TextLabel = getLabel(level)
 
-  return (
-    <Box textWrap="wrap" flexDirection="row">
-      <TextLabel />
-      {` `}
-      {message}
-    </Box>
-  )
-}
+    return (
+      <Box textWrap="wrap" flexDirection="row">
+        <TextLabel />
+        {` `}
+        {message}
+      </Box>
+    )
+  }
+)
