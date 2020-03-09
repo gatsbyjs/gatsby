@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 
 function ScriptLoader({ async = true, children, src }) {
-  const ref = useRef()
+  const ref = useRef(null)
   /*
    * On initial render, add the script tag
    * as a child of the wrapper div

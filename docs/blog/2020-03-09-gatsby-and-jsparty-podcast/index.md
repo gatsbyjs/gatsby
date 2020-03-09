@@ -17,20 +17,22 @@ Check out the below podcast for more detail on why Gatsby, why Gatsby Cloud, and
 ## 🔉JS Party Podcast 🔉
 
 <ScriptLoader src="//cdn.changelog.com/embed.js">
-  <audio
-    data-theme="day"
-    data-src="https://changelog.com/jsparty/117/embed"
-    src="https://cdn.changelog.com/uploads/jsparty/117/js-party-117.mp3"
-    preload="none"
-    className="changelog-episode"
-    controls
-  ></audio>
-  <p>
-    <a href="https://changelog.com/jsparty/117">
-      JS Party 117: Catching up with Gatsby
-    </a>{" "}
-    – Listen on <a href="https://changelog.com/">Changelog.com</a>
-  </p>
+  <React.Fragment>
+    <audio
+      data-theme="day"
+      data-src="https://changelog.com/jsparty/117/embed"
+      src="https://cdn.changelog.com/uploads/jsparty/117/js-party-117.mp3"
+      preload="none"
+      className="changelog-episode"
+      controls
+    ></audio>
+    <p>
+      <a href="https://changelog.com/jsparty/117">
+        JS Party 117: Catching up with Gatsby
+      </a>{" "}
+      – Listen on <a href="https://changelog.com/">Changelog.com</a>
+    </p>
+  </React.Fragment>
 </ScriptLoader>
 
 [jsparty]: https://changelog.com/jsparty
