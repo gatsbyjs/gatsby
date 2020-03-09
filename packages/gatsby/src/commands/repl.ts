@@ -1,23 +1,25 @@
-import repl from "repl"
-import { graphql } from "graphql"
-import bootstrap from "../bootstrap"
 import { trackCli } from "gatsby-telemetry"
-import { loadNodeContent, getNodes, getNode, getNodesByType } from "../db/nodes"
+import { graphql } from "graphql"
+import repl from "repl"
+
+import bootstrap from "../bootstrap"
+import { getNode, getNodes, getNodesByType, loadNodeContent } from "../db/nodes"
 import { store } from "../redux"
+
 import { IProgram } from "./types"
 
-module.exports = async (program: IProgram): Promise<void> => {
+export default async (program: IProgram): Promise<void> => {
   trackCli(`REPL_START`)
   // run bootstrap
   await bootstrap(program)
 
   // get all the goodies from the store
   const {
-    schema,
-    config,
     babelrc,
-    pages,
     components,
+    config,
+    pages,
+    schema,
     staticQueryComponents,
   } = store.getState()
 
@@ -29,9 +31,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   // init new repl
-  const _ = repl.start({
-    prompt: `gatsby > `,
-  })
+  const _ = repl.start({ prompt: `gatsby > `, })
 
   // set some globals to make life easier
   _.context.babelrc = babelrc
