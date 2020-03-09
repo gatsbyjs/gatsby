@@ -35,6 +35,7 @@ exports.sourceNodes = async (
     cache,
     createNodeId,
     createContentDigest,
+    getCache,
     reporter,
   },
   {
@@ -191,6 +192,7 @@ exports.sourceNodes = async (
           createNode,
           createNodeId,
           touchNode,
+          getCache,
           getNode,
           _auth: auth,
           reporter,
