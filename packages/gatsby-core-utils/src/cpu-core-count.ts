@@ -1,8 +1,9 @@
-import physicalCpuCount from "./physical-cpu-count"
+import getPhysicalCpuCount from "./physical-cpu-count"
+console.log(getPhysicalCpuCount)
 
-const cpuCoreCount = (ignoreEnvVar: boolean): number => {
+export const cpuCoreCount = (ignoreEnvVar: boolean): number => {
   try {
-    let coreCount = physicalCpuCount() || 1
+    let coreCount = getPhysicalCpuCount() || 1
 
     if (ignoreEnvVar) {
       // Return the physical CPU count,
@@ -46,5 +47,3 @@ const cpuCoreCount = (ignoreEnvVar: boolean): number => {
     throw new Error(`There has been a problem counting the number of CPU cores`)
   }
 }
-
-export default cpuCoreCount

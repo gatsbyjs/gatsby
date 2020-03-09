@@ -1,6 +1,6 @@
 import path from "path"
 
-const getGatsbyVersion = (): string => {
+export const getGatsbyVersion = (): string => {
   try {
     return require(path.join(
       process.cwd(),
@@ -12,5 +12,3 @@ const getGatsbyVersion = (): string => {
     return ``
   }
 }
-
-export default getGatsbyVersion

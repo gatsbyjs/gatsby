@@ -40,13 +40,13 @@ function getEnvFromCIInfo(): string | null {
   return null
 }
 
-function getEnvDetect({
-  key,
-  name,
-}: {
+interface IGetEnvDetect {
+  // @prettier-ignore
   key: string
   name: string
-}): () => string | null {
+}
+
+function getEnvDetect({ key, name }: IGetEnvDetect): () => string | null {
   return function(): string | null {
     if (process.env[key]) {
       return name
@@ -70,7 +70,7 @@ function envFromCIandCIName(): string | null {
   return null
 }
 
-function envFromCIWithNoName(): `CI detected without name` | null {
+function envFromCIWithNoName(): "CI detected without name" | null {
   if (process.env.CI) {
     return `CI detected without name`
   }

@@ -19,8 +19,8 @@ const hashPrimitive = (input: BinaryLike | string): string =>
     .update(input)
     .digest(`hex`)
 
-const createContentDigest = (
-  input: BinaryLike | string | Parameters<typeof hasher.hash>[0]
+export const createContentDigest = (
+  input: BinaryLike | string | any
 ): string => {
   if (typeof input === `object`) {
     return hasher.hash(input)
@@ -28,5 +28,3 @@ const createContentDigest = (
 
   return hashPrimitive(input)
 }
-
-export default createContentDigest

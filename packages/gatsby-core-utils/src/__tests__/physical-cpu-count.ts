@@ -18,8 +18,8 @@ describe(`physical-cpu-count`, () => {
       const cProc = require(`child_process`)
       cProc.execSync.mockImplementation(() => `4`)
       mockPlatform(platform)
-      const pcc = require(`../physical-cpu-count`)
-      expect(pcc).toBe(4)
+      const { getPhysicalCpuCount } = require(`../physical-cpu-count`)
+      expect(getPhysicalCpuCount()).toBe(4)
     }
   )
 
@@ -29,8 +29,8 @@ describe(`physical-cpu-count`, () => {
       const cProc = require(`child_process`)
       cProc.execSync.mockImplementation(() => `4`)
       mockPlatform(platform)
-      const pcc = require(`../physical-cpu-count`)
-      expect(pcc).toBe(4)
+      const { getPhysicalCpuCount } = require(`../physical-cpu-count`)
+      expect(getPhysicalCpuCount()).toBe(4)
     }
   )
 
@@ -43,8 +43,8 @@ describe(`physical-cpu-count`, () => {
     `
     )
     mockPlatform(`win32`)
-    const pcc = require(`../physical-cpu-count`)
-    expect(pcc).toBe(4)
+    const { getPhysicalCpuCount } = require(`../physical-cpu-count`)
+    expect(getPhysicalCpuCount()).toBe(4)
   })
 
   it(`should return fallback CPU count on Windows when childProcess fails`, () => {
@@ -53,8 +53,8 @@ describe(`physical-cpu-count`, () => {
       throw new Error(`Fail!`)
     })
     mockPlatform(`win32`)
-    const pcc = require(`../physical-cpu-count`)
-    expect(pcc).toBe(1)
+    const { getPhysicalCpuCount } = require(`../physical-cpu-count`)
+    expect(getPhysicalCpuCount()).toBe(1)
   })
 
   it(`should check for hyperthreading when intel is the processor`, () => {
@@ -65,7 +65,7 @@ describe(`physical-cpu-count`, () => {
 
     os.cpus.mockImplementation(() => [{ model: `Intel` }, { model: `Intel` }])
     mockPlatform(`linux`)
-    const pcc = require(`../physical-cpu-count`)
-    expect(pcc).toBe(1)
+    const { getPhysicalCpuCount } = require(`../physical-cpu-count`)
+    expect(getPhysicalCpuCount()).toBe(1)
   })
 })

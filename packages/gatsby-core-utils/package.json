@@ -16,9 +16,9 @@
     "directory": "packages/gatsby-core-utils"
   },
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore **/__tests__ --ignore **/__mocks__",
+    "build": "babel src --out-dir dist/ --ignore **/__tests__ --ignore **/__mocks__ --extensions \".ts\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__"
+    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__ --extensions \".ts,.js\""
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
