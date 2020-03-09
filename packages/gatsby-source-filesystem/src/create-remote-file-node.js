@@ -59,8 +59,6 @@ let totalJobs = 0
  * @param  {Reporter} [options.reporter]
  */
 
-const CACHE_DIR = `.cache`
-const FS_PLUGIN_DIR = `gatsby-source-filesystem`
 const STALL_RETRY_LIMIT = 3
 const STALL_TIMEOUT = 30000
 
@@ -203,7 +201,6 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
  */
 async function processRemoteNode({
   url,
-  store,
   cache,
   createNode,
   parentNodeId,
@@ -213,17 +210,11 @@ async function processRemoteNode({
   ext,
   name,
 }) {
-  // Ensure our cache directory exists.
-  const pluginCacheDir = path.join(
-    store.getState().program.directory,
-    CACHE_DIR,
-    FS_PLUGIN_DIR
-  )
-  await fs.ensureDir(pluginCacheDir)
-
+  const pluginCacheDir = cache.directory
   // See if there's response headers for this url
   // from a previous request.
   const cachedHeaders = await cache.get(cacheId(url))
+
   const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
     headers[`If-None-Match`] = cachedHeaders.etag
@@ -329,7 +320,6 @@ const pushTask = task =>
  */
 module.exports = ({
   url,
-  store,
   cache,
   createNode,
   parentNodeId = null,
@@ -350,9 +340,6 @@ module.exports = ({
   }
   if (typeof createNode !== `function`) {
     throw new Error(`createNode must be a function, was ${typeof createNode}`)
-  }
-  if (typeof store !== `object`) {
-    throw new Error(`store must be the redux store, was ${typeof store}`)
   }
   if (typeof cache !== `object`) {
     throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
@@ -378,7 +365,6 @@ module.exports = ({
 
   const fileDownloadPromise = pushTask({
     url,
-    store,
     cache,
     createNode,
     parentNodeId,

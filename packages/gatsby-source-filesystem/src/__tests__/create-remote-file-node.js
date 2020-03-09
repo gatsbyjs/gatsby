@@ -52,7 +52,11 @@ describe(`create-remote-file-node`, () => {
   const defaultArgs = {
     url: ``,
     store: {},
-    cache: {},
+    cache: {
+      get: jest.fn(),
+      set: jest.fn(),
+      directory: __dirname,
+    },
     createNode: jest.fn(),
     createNodeId: jest.fn(),
     reporter,
@@ -124,10 +128,6 @@ describe(`create-remote-file-node`, () => {
 
       return createRemoteFileNode({
         ...defaultArgs,
-        cache: {
-          get: jest.fn(),
-          set: jest.fn(),
-        },
         store: {
           getState: jest.fn(() => {
             return {
@@ -284,17 +284,6 @@ describe(`create-remote-file-node`, () => {
         })
       }).toThrowErrorMatchingInlineSnapshot(
         `"cache must be the Gatsby cache, was undefined"`
-      )
-    })
-
-    it(`throws on invalid inputs: store`, () => {
-      expect(() => {
-        createRemoteFileNode({
-          ...defaultArgs,
-          store: undefined,
-        })
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"store must be the redux store, was undefined"`
       )
     })
   })

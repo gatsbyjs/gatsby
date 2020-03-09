@@ -169,9 +169,6 @@ createRemoteFileNode({
   // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
   parentNodeId,
 
-  // The redux store which is passed to all Node APIs.
-  store,
-
   // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
   cache,
 
@@ -204,7 +201,6 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 exports.downloadMediaFiles = ({
   nodes,
-  store,
   cache,
   createNode,
   createNodeId,
@@ -219,7 +215,6 @@ exports.downloadMediaFiles = ({
         fileNode = await createRemoteFileNode({
           url: node.source_url,
           parentNodeId: node.id,
-          store,
           cache,
           createNode,
           createNodeId,
@@ -250,7 +245,6 @@ createRemoteFileNode({
   // The source url of the remote file
   url: `https://example.com/a-file-without-an-extension`,
   parentNodeId: node.id,
-  store,
   cache,
   createNode,
   createNodeId,
@@ -274,10 +268,7 @@ The following example is adapted from the source of [`gatsby-source-mysql`](http
 // gatsby-node.js
 const createMySqlNodes = require(`./create-nodes`)
 
-exports.sourceNodes = async (
-  { actions, createNodeId, store, cache },
-  config
-) => {
+exports.sourceNodes = async ({ actions, createNodeId, cache }, config) => {
   const { createNode } = actions
   const { conn, queries } = config
   const { db, results } = await query(conn, queries)
@@ -289,7 +280,6 @@ exports.sourceNodes = async (
         createMySqlNodes(result, results, createNode, {
           createNode,
           createNodeId,
-          store,
           cache,
         })
       )
@@ -311,7 +301,6 @@ function attach(node, key, value, ctx) {
     ctx.linkChildren.push(parentNodeId =>
       createFileNodeFromBuffer({
         buffer: value,
-        store: ctx.store,
         cache: ctx.cache,
         createNode: ctx.createNode,
         createNodeId: ctx.createNodeId,

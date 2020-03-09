@@ -33,9 +33,6 @@ const cacheId = hash => `create-file-node-from-buffer-${hash}`
  * @param  {Function} options.createNode
  */
 
-const CACHE_DIR = `.cache`
-const FS_PLUGIN_DIR = `gatsby-source-filesystem`
-
 /**
  * writeBuffer
  * --
@@ -62,7 +59,6 @@ const writeBuffer = (filename, buffer) =>
 async function processBufferNode({
   buffer,
   hash,
-  store,
   cache,
   createNode,
   parentNodeId,
@@ -70,13 +66,7 @@ async function processBufferNode({
   ext,
   name,
 }) {
-  // Ensure our cache directory exists.
-  const pluginCacheDir = path.join(
-    store.getState().program.directory,
-    CACHE_DIR,
-    FS_PLUGIN_DIR
-  )
-  await fs.ensureDir(pluginCacheDir)
+  const pluginCacheDir = cache.directory
 
   // See if there's a cache file for this buffer's contents from
   // a previous run
@@ -135,7 +125,6 @@ const processingCache = {}
 module.exports = ({
   buffer,
   hash,
-  store,
   cache,
   createNode,
   parentNodeId = null,
@@ -153,9 +142,6 @@ module.exports = ({
   }
   if (typeof createNode !== `function`) {
     throw new Error(`createNode must be a function, was ${typeof createNode}`)
-  }
-  if (typeof store !== `object`) {
-    throw new Error(`store must be the redux store, was ${typeof store}`)
   }
   if (typeof cache !== `object`) {
     throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
@@ -178,7 +164,6 @@ module.exports = ({
   const bufferCachePromise = processBufferNode({
     buffer,
     hash,
-    store,
     cache,
     createNode,
     parentNodeId,
