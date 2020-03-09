@@ -5489,3 +5489,28 @@
     - Disqus
     - Breadcrumbs
     - ESLint
+- url: https://gatsby-starter-i18n-bulma.netlify.com
+  repo: https://github.com/kalwalt/gatsby-starter-i18n-bulma
+  description: A gatsby starter with Bulma and optimized slug for better SEO.
+  tags:
+    - i18n
+    - Netlify
+    - CMS:Netlify
+    - Styling:Bulma
+    - Styling:SCSS
+    - Gallery
+    - SEO
+    - Markdown
+    - PWA
+    - Blog
+  features:
+    - Multilanguage support with i18n
+    - Slug switcher (multilanguage)
+    - Uses Bulma for styling
+    - Netlify CMS
+    - React Images with Modal
+    - FontAwesome icons
+    - Animate.css with WOW
+    - Robots.txt
+    - Sitemap
+    - PWA
