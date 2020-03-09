@@ -14,13 +14,17 @@ import opn from "better-opn"
 import { getPackageManager, promptPackageManager } from "./util/configstore"
 import isTTY from "./util/is-tty"
 
+const spawnWithArgs = (
+  file: string,
+  args: string[],
+  options?: any
+): execa.ExecaChildProcess =>
+  execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
+
 const spawn = (cmd: string, options?: any): execa.ExecaChildProcess => {
   const [file, ...args] = cmd.split(/\s+/)
   return spawnWithArgs(file, args, options)
 }
-const spawnWithArgs = (file: string, args: string[], options?: any) =>
-  execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
-
 // Checks the existence of yarn package and user preference if it exists
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
@@ -189,7 +193,16 @@ const clone = async (hostInfo: any, rootPath: string): Promise<void> => {
   if (!isGit) await createInitialGitCommit(rootPath, url)
 }
 
-const getPaths = async (starterPath: string, rootPath?: string) => {
+interface IGetPaths {
+  starterPath: string
+  rootPath: string
+  selectedOtherStarter: boolean
+}
+
+const getPaths = async (
+  starterPath: string,
+  rootPath: string
+): Promise<IGetPaths> => {
   let selectedOtherStarter = false
 
   // if no args are passed, prompt user for path and starter
@@ -236,11 +249,11 @@ const getPaths = async (starterPath: string, rootPath?: string) => {
   return { starterPath, rootPath, selectedOtherStarter }
 }
 
-type InitOptions = {
-  rootPath?: string
+interface IInitOptions {
+  rootPath: string
 }
 
-const successMessage = (path: string) => {
+const successMessage = (path: string): void => {
   report.info(`
 Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
 
@@ -254,7 +267,7 @@ Your new Gatsby site has been successfully bootstrapped. Start developing it by 
  */
 module.exports = async (
   starter: string,
-  options: InitOptions = {}
+  options: IInitOptions
 ): Promise<void> => {
   const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
     starter,
