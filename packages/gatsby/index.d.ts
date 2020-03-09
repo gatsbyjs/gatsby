@@ -891,7 +891,7 @@ export interface ReplaceRendererArgs extends NodePluginArgs {
 
 export interface WrapPageElementNodeArgs extends NodePluginArgs {
   element: object
-  props: object
+  props: PageProps
   pathname: string
 }
 
@@ -1307,7 +1307,7 @@ export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
 
 export interface WrapPageElementBrowserArgs extends BrowserPluginArgs {
   element: object
-  props: object
+  props: PageProps
 }
 
 export interface WrapRootElementBrowserArgs extends BrowserPluginArgs {
