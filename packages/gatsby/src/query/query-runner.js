@@ -98,7 +98,6 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
     .createHash(`sha1`)
     .update(resultJSON)
     .digest(`base64`)
-
   if (resultHash !== resultHashes.get(queryJob.id)) {
     resultHashes.set(queryJob.id, resultHash)
 
@@ -117,7 +116,6 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
         `d`,
         `${queryJob.hash}.json`
       )
-
       await fs.outputFile(resultPath, resultJSON)
     }
   }
@@ -128,5 +126,15 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
     isPage: queryJob.isPage,
   })
 
+  // Sets pageData to the store, here for easier access to the resultHash
+  if (
+    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
+    queryJob.isPage
+  ) {
+    boundActionCreators.setPageData({
+      id: queryJob.id,
+      resultHash,
+    })
+  }
   return result
 }

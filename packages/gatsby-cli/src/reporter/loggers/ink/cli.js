@@ -17,6 +17,8 @@ class CLI extends React.Component {
     hasError: false,
   }
 
+  memoizedReactElementsForMessages = []
+
   componentDidCatch(error, info) {
     trackBuildError(`INK`, {
       error: {
@@ -51,6 +53,30 @@ class CLI extends React.Component {
       )
     }
 
+    /*
+      Only operation on messages array is to push new message into it. Once
+      message is there it can't change. Because of that we can do single
+      transform from message object to react element and store it.
+      This will avoid calling React.createElement completely for every message
+      that can't change.
+    */
+    if (messages.length > this.memoizedReactElementsForMessages.length) {
+      for (
+        let index = this.memoizedReactElementsForMessages.length;
+        index < messages.length;
+        index++
+      ) {
+        const msg = messages[index]
+        this.memoizedReactElementsForMessages.push(
+          msg.level === `ERROR` ? (
+            <Error details={msg} key={index} />
+          ) : (
+            <Message key={index} {...msg} />
+          )
+        )
+      }
+    }
+
     const spinners = []
     const progressBars = []
     if (showProgress) {
@@ -71,15 +97,7 @@ class CLI extends React.Component {
     return (
       <Box flexDirection="column">
         <Box flexDirection="column">
-          <Static>
-            {messages.map((msg, index) =>
-              msg.level === `ERROR` ? (
-                <Error details={msg} key={index} />
-              ) : (
-                <Message key={index} {...msg} />
-              )
-            )}
-          </Static>
+          <Static>{this.memoizedReactElementsForMessages}</Static>
 
           {spinners.map(activity => (
             <Spinner key={activity.id} {...activity} />

@@ -1,3 +1,5 @@
+import ConfigStore from "configstore"
+
 /**
  * Encrypts an input using md5 hash of hexadecimal digest.
  *
@@ -49,3 +51,15 @@ export declare function isCI(): boolean
  * @return {string | null} The name of the CI if available. Defaults to null if not in CI
  */
 export declare function getCIName(): string | null
+
+/**
+ * Gets the configstore instance related to gatsby
+ * @return {ConfigStore} the ConfigStore instance for gatsby
+ */
+export declare function getConfigStore(): ConfigStore
+
+/**
+ * Gets the version of the installed gatsby from node_modules
+ * @return {string} the version string of the installed gatsby
+ */
+export declare function getGatsbyVersion(): string

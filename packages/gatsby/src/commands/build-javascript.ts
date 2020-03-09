@@ -1,10 +1,14 @@
-/* @flow */
-const webpack = require(`webpack`)
-const webpackConfig = require(`../utils/webpack.config`)
+import webpack from "webpack"
+import webpackConfig from "../utils/webpack.config"
+import { IProgram } from "./types"
+import { Span } from "opentracing"
 
-const { reportWebpackWarnings } = require(`../utils/webpack-error-utils`)
+import { reportWebpackWarnings } from "../utils/webpack-error-utils"
 
-module.exports = async (program, { parentSpan }) => {
+export const buildProductionBundle = async (
+  program: IProgram,
+  parentSpan: Span
+): Promise<webpack.Stats> => {
   const { directory } = program
 
   const compilerConfig = await webpackConfig(

@@ -42,7 +42,7 @@ Configure its options:
 
 The `consumer_key` and `consumer_secret` come from WooCommerce. From your dashboard, go to WooCommerce > Settings > Advanced > REST API and then add a key. You can then copy and paste both the key and secret. Make sure to store any sensitive information in [environment variables](/docs/environment-variables/)!
 
-It's worth noting that the offical WordPress source plugin is in active development. Knowing that this work is in-progress, if you're interested in working with a GraphQL endpoint directly in your WordPress installation, see the section below on [pending changes](#pending-changes) to get started with WPGraphQL and WooCommerce.
+It's worth noting that the official WordPress source plugin is in active development. Knowing that this work is in-progress, if you're interested in working with a GraphQL endpoint directly in your WordPress installation, see the section below on [pending changes](#pending-changes) to get started with WPGraphQL and WooCommerce.
 
 ## Adding products
 

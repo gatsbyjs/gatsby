@@ -1,10 +1,14 @@
-const detectPort = require(`detect-port`)
-const report = require(`gatsby-cli/lib/reporter`)
-const prompts = require(`prompts`)
+import detectPort from "detect-port"
+import report from "gatsby-cli/lib/reporter"
+import prompts from "prompts"
 
-const detectPortInUseAndPrompt = async port => {
+export const detectPortInUseAndPrompt = async (
+  port: number
+): Promise<number> => {
   let foundPort = port
-  const detectedPort = await detectPort(port).catch(err => report.panic(err))
+  const detectedPort = await detectPort(port).catch((err: Error) =>
+    report.panic(err)
+  )
   if (port !== detectedPort) {
     report.log(`\nSomething is already running at port ${port}`)
     const response = await prompts({
@@ -22,5 +26,3 @@ const detectPortInUseAndPrompt = async port => {
 
   return foundPort
 }
-
-module.exports = detectPortInUseAndPrompt
