@@ -101,8 +101,6 @@ class GatsbyLink<TState> extends React.Component<
     this.state = {
       IOSupported,
     }
-    this.handleRef = this.handleRef.bind(this)
-    this.defaultGetProps = this.defaultGetProps.bind(this)
   }
 
   componentDidUpdate(prevProps: IGatsbyLinkProps<TState>): void {
@@ -129,7 +127,7 @@ class GatsbyLink<TState> extends React.Component<
     instance.disconnect()
   }
 
-  handleRef(ref: HTMLAnchorElement | null): void {
+  handleRef = (ref: HTMLAnchorElement | null): void => {
     if (
       this.props.innerRef &&
       Object.prototype.hasOwnProperty.call(this.props.innerRef, `current`)
@@ -147,7 +145,7 @@ class GatsbyLink<TState> extends React.Component<
     }
   }
 
-  defaultGetProps({ isPartiallyCurrent, isCurrent }: LinkGetProps): IGetProps {
+  defaultGetProps = ({ isPartiallyCurrent, isCurrent }: LinkGetProps): IGetProps => {
     if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
@@ -190,7 +188,7 @@ class GatsbyLink<TState> extends React.Component<
         to={prefixedTo}
         state={state}
         getProps={getProps}
-        innerRef={this.handleRef}
+        ref={this.handleRef}
         onMouseEnter={(
           e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
         ): void => {
@@ -239,7 +237,7 @@ const showDeprecationWarning = (
  * This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other
  * domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
  */
-export default React.forwardRef((props, ref: Ref<HTMLAnchorElement>) => (
+export default React.forwardRef((props, ref) => (
   <GatsbyLink innerRef={ref} {...props} />
 ))
 
