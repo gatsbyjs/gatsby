@@ -2350,7 +2350,6 @@
 - title: Serverless
   main_url: https://serverless.com
   url: https://serverless.com
-  source_url: https://github.com/serverless/site
   description: >
     Serverless.com – Build web, mobile and IoT applications with serverless architectures using AWS Lambda, Azure Functions, Google CloudFunctions & more!
   categories:
@@ -3447,17 +3446,6 @@
     - Business
   built_by: Othermachines
   built_by_url: "https://othermachines.com"
-- title: Cole Walker's Portfolio
-  main_url: "https://www.walkermakes.com"
-  url: "https://www.walkermakes.com"
-  source_url: "https://github.com/ColeWalker/portfolio"
-  description: The portfolio of web developer Cole Walker, built with the help of Gatsby v2, React-Spring, and SASS.
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-  built_by: Cole Walker
-  built_by_url: "https://www.walkermakes.com"
 - title: Standing By Company
   main_url: "https://standingby.company"
   url: "https://standingby.company"
@@ -3832,19 +3820,6 @@
     - Accessibility
     - Education
     - Video
-  built_by: Tenon.io
-  built_by_url: https://tenon.io
-  featured: false
-- title: Tenon-UI Documentation
-  main_url: https://www.tenon-ui.info
-  url: https://www.tenon-ui.info
-  description: >
-    Documentation site for Tenon-UI: Tenon.io's accessible components library.
-  categories:
-    - Accessibility
-    - Documentation
-    - Library
-    - Web Development
   built_by: Tenon.io
   built_by_url: https://tenon.io
   featured: false
@@ -4354,18 +4329,6 @@
     - Technology
   built_by: Guillaume Briday
   built_by_url: https://guillaumebriday.fr/
-  featured: false
-- title: SEOmonitor
-  main_url: "https://www.seomonitor.com"
-  url: "https://www.seomonitor.com"
-  description: >
-    SEOmonitor is a suite of SEO tools dedicated to agencies.
-  categories:
-    - Blog
-    - Portfolio
-    - Agency
-  built_by: Bejamas
-  built_by_url: https://bejamas.io/
   featured: false
 - title: Jean Regisser's Portfolio
   main_url: "https://jeanregisser.com/"
@@ -4978,16 +4941,6 @@
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
   featured: false
-- title: het Groeiatelier
-  url: https://www.hetgroeiatelier.be/
-  main_url: https://www.hetgroeiatelier.be/
-  description: >
-    Workspace for talent development and logopedics. One page site with basic info and small calendar CMS.
-  categories:
-    - Marketing
-  built_by: WEBhart
-  built_by_url: https://www.web-hart.com
-  featured: false
 - title: Lebuin D'Haese
   url: https://www.lebuindhaese.be/
   main_url: https://www.lebuindhaese.be/
@@ -5508,18 +5461,6 @@
   built_by: Jacob Herper
   built_by_url: https://herper.io
   featured: false
-- title: GreenOrbit
-  main_url: https://greenorbit.com/
-  url: https://greenorbit.com/
-  description: >
-    Cloud-based intranet software. Get your people going with everything you need, built in.
-  categories:
-    - Business
-    - App
-    - Productivity
-    - Technology
-  built_by: Effective Digital
-  built_by_url: https://effective.digital/
 - title: Purple11
   main_url: https://purple11.com/
   url: https://purple11.com/
@@ -5852,19 +5793,6 @@
     laser cutting, and rapid prototyping. We help artists, agencies and engineers turn their ideas into its physical form.
   categories:
     - Business
-  featured: false
-- title: Asjas
-  main_url: https://asjas.co.za
-  url: https://asjas.co.za/blog
-  source_url: https://github.com/Asjas/Personal-Webpage
-  description: >
-    This is a website built with Gatsby v2 that uses Netlify CMS and Gatsby-MDX as a blog (incl. portfolio page).
-  categories:
-    - Web Development
-    - Blog
-    - Portfolio
-  built_by: A-J Roos
-  built_by_url: https://twitter.com/_asjas
   featured: false
 - title: Glug-Infinite
   main_url: https://gluginfinite.github.io
@@ -6565,18 +6493,6 @@
     - User Experience
   built_by: Simon Koelewijn
   built_by_url: https://simonkoelewijn.nl
-  featured: false
-- title: Raconteur Careers
-  main_url: https://careers.raconteur.net
-  url: https://careers.raconteur.net
-  description: >
-    Raconteur is a London-based publishing house and content marketing agency. We have built this careers portal Gatsby v2 with TypeScript, Styled-Components, React-Spring and Contentful.
-  categories:
-    - Media
-    - Marketing
-    - Landing Page
-  built_by: Jacob Herper
-  built_by_url: https://herper.io
   featured: false
 - title: Frankly Steve
   url: https://www.franklysteve.com/
@@ -8230,16 +8146,6 @@
   built_by: Thomas Uta
   built_by_url: https://twitter.com/ThomasJanUta
   featured: false
-- title: Lusta Hair
-  url: https://www.lustahair.com
-  main_url: https://www.lustahair.com
-  description: >
-    Luxury 100% Remy Human Hair Toppers. The perfect solution for volume, coverage and style. Online retailer based in Australia.
-  categories:
-    - eCommerce
-  built_by: Jason Di Benedetto
-  built_by_url: https://jason.dibenedetto.fyi
-  featured: false
 - title: Yoseph.tech
   main_url: https://www.yoseph.tech
   url: https://www.yoseph.tech/compilers
@@ -8806,18 +8712,6 @@
     - Travel
   built_by: Donovan Nagel
   built_by_url: https://www.donovannagel.com
-  featured: false
-- title: Bearer - API Monitoring & Protection for your app
-  url: https://www.bearer.sh/
-  main_url: https://www.bearer.sh/
-  description: >
-    Bearer helps developers monitor API usage in real-time, protect their app against API limits and failures, and integrate APIs faster.
-  categories:
-    - API
-    - Technology
-    - Web Development
-    - Open Source
-  built_by: Bearer
   featured: false
 - title: 8fit.com
   url: https://8fit.com/
