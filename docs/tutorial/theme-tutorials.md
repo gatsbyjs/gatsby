@@ -1,5 +1,5 @@
 ---
-title: Plugin &  Theme Tutorials
+title: Plugin & Theme Tutorials
 ---
 
 Gatsby plugins are Node.js packages that implement Gatsby APIs and are commonly installed through a registry like npm. Plugins are a way to encapsulate, re-use, and compose Gatsby functionality. A good example of this concept are Gatsby themes which is a type of plugin that includes a `gatsby-config.js` file and adds pre-configured functionality, data sourcing, and/or UI code to Gatsby sites.
