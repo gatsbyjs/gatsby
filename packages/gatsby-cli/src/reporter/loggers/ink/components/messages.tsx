@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FunctionComponent } from "react"
 import { Box, Color, ColorProps } from "ink"
 
 import { ActivityLogLevels, LogLevels } from "../../../constants"
