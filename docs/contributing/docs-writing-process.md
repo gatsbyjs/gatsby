@@ -30,10 +30,11 @@ A GitHub issue for new learning material should indicate the format. Is it a Ref
 
 Does docs coverage exist anywhere on `gatsbyjs.org`? If so, would an alternative format help provide information for Gatsby learners of different skill and experience levels? For example, if a tutorial exists but there is no coverage in Reference Guides, adding more content in a different format would benefit users.
 
-- Tutorials vs. recipes vs. guides
-  - **Tutorials** are step-by-step learning materials that show a user how to do something without skipping steps. Tutorials must consider a beginner experience, but can be useful for anyone.
-  - **Recipes** are shorter, more concise tutorials that limit their scope to a single task or outcome by using prerequisites and limited steps. Additional resources at the end lead the user to a logical next step. Recipes are for developers of all skill levels.
-  - **Guides** are different than tutorials, and the two main sections are Reference Guides and Conceptual Guides. Instead of “steps 1-4”, guides use standalone headings and sections to explain how to accomplish the task. They are often aimed at a more advanced audience due to the subject matter but should be approachable to anyone.
+### Tutorials vs. recipes vs. guides:
+
+- [**Tutorials**](/tutorial/) are step-by-step learning materials that show a user how to do something without skipping steps. Tutorials must consider a beginner experience, but can be useful for anyone.
+- [**Recipes**](/docs/recipes/) are shorter, more concise tutorials that limit their scope to a single task or outcome by using prerequisites and limited steps. Additional resources at the end lead the user to a logical next step. Recipes are for developers of all skill levels.
+- [**Guides**](/docs/guides/) are different than tutorials, and the two main sections are Reference Guides and Conceptual Guides. Instead of “steps 1-4”, guides use standalone headings and sections to explain how to accomplish the task. They are often aimed at a more advanced audience due to the subject matter but should be approachable to anyone.
 
 Given the difference in audiences of the three main learning material formats, increasing and overlapping coverage of topics can help support Gatsby learners of different skill and experience levels.
 
@@ -74,13 +75,9 @@ Use the [Markdown syntax doc](/docs/mdx/markdown-syntax/) to understand your opt
 
 Run the docs site locally to check formatting and functionality. There are instructions in the [contributing docs](/contributing/docs-contributions/).
 
-Produce images and rich media following a consistent specification, which will be published on this site soon.
-
 Refer to the [Gatsby style guide](/contributing/gatsby-style-guide/) to ensure your PR will be accepted.
 
 ## Submitting a pull request
-
-When submitting work to fulfill an issue, team members are allowed to request feedback in a Google Doc for comments inline. However, this format does not count toward a story deadline internally: only a PR does.
 
 Submit a pull request that’s tied to a GitHub issue by following the [How to Open a Pull Request guide](/contributing/how-to-open-a-pull-request/).
 
