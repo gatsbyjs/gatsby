@@ -2,7 +2,7 @@
 title: Docs Writing Process
 ---
 
-When a new feature or integration is released that Gatsby developers can take advantage of, documentation should be added to improve the learning experience. Gatsby also needs docs for topic areas that have existed for periods of time in other technologies but are under-documented or under-tooled in the Gatsby ecosystem.
+When a new feature or integration is released that Gatsby developers can take advantage of, documentation should be added to improve the learning experience. Gatsby also needs docs for topic areas that exist in other technologies but are under-documented or under-tooled in the Gatsby ecosystem.
 
 The knowledge of how to work with a technique, source plugin, or varied use case may be known internally to Gatsby team members, but it also may only exist on the web at large. This contributing doc is intended to provide a written process for producing docs without prior information, a critical function of the Gatsby Learning team and open source community.
 
@@ -18,7 +18,7 @@ When identifying a topic, start by:
 
 3. Look at the [learning workflow meta issue](https://github.com/gatsbyjs/gatsby/issues/13708) to find active areas looking for docs.
 
-4. Read through the existing Gatsby docs information and find gaps in topic coverage. Is there an area you feel is missing? [File an issue](/contributing/how-to-file-an-issue/) first to discuss, then implement in a PR.
+4. Read through the existing Gatsby docs information and find gaps in topic coverage. Is there an area you feel is missing? [File an issue](/contributing/how-to-file-an-issue/) to discuss it. If the team determines it warrants documentation, implement in a PR.
 
 5. Observe common points of confusion or rough edges through user feedback and recommend solutions.
 
@@ -28,16 +28,16 @@ When identifying a topic, start by:
 
 A GitHub issue for new learning material should indicate the format. Is it a Reference or Conceptual Guide? A Tutorial? A recipe?
 
-Does docs coverage exist anywhere on gatsbyjs.org? If so, would an alternative format help provide information for Gatsby learners of different skill and experience levels? For example, if a tutorial exists but there is no coverage in Reference Guides, adding more content in a different format would benefit users.
+Does docs coverage exist anywhere on `gatsbyjs.org`? If so, would an alternative format help provide information for Gatsby learners of different skill and experience levels? For example, if a tutorial exists but there is no coverage in Reference Guides, adding more content in a different format would benefit users.
 
 - Tutorials vs. recipes vs. guides
   - **Tutorials** are step-by-step learning materials that show a user how to do something without skipping steps. Tutorials must consider a beginner experience, but can be useful for anyone.
   - **Recipes** are shorter, more concise tutorials that limit their scope to a single task or outcome by using prerequisites and limited steps. Additional resources at the end lead the user to a logical next step. Recipes are for developers of all skill levels.
-  - **Guides** are different than tutorials, and the two main sections are Reference Guides and Conceptual Guides. Instead of “steps 1-4”, guides use standalone headings and sections to explain how to accomplish the task. The audience is often more advanced than beginner due to the subject matter, but should be approachable by anyone.
+  - **Guides** are different than tutorials, and the two main sections are Reference Guides and Conceptual Guides. Instead of “steps 1-4”, guides use standalone headings and sections to explain how to accomplish the task. They are often aimed at a more advanced audience due to the subject matter but should be approachable to anyone.
 
-Given the difference in audiences of the 3 main learning material formats, that’s where increasing and overlapping coverage of topics can help support Gatsby learners of different skill and experience levels.
+Given the difference in audiences of the three main learning material formats, increasing and overlapping coverage of topics can help support Gatsby learners of different skill and experience levels.
 
-Unless for a specific purpose that follows the [Gatsby blog post guidelines](/contributing/blog-contributions/), do not suggest blog posts when what is needed is user documentation.
+Please follow the [Gatsby blog post guidelines](/contributing/blog-contributions/) and do not suggest blog posts when what is needed is user documentation.
 
 More on the format of documentation and learning materials can be found in the contributing docs:
 
@@ -46,7 +46,7 @@ More on the format of documentation and learning materials can be found in the c
 
 ## Gathering and validating supporting information
 
-Writing an effective doc that meets the needs of Gatsby users requires gathering information from various sources and applying those concepts to your original writing. You must digest and validate the details you uncover and understand them enough to describe in a way that users of multiple skill levels can learn.
+Writing an effective doc that meets the needs of Gatsby users requires gathering information from various sources and applying those concepts to your original writing. You must digest and validate the details you uncover and understand them enough to describe them in a way that users of multiple skill levels can learn.
 
 Here are some tips for gathering information on a given topic within Gatsby:
 
@@ -62,11 +62,11 @@ Here are some tips for gathering information on a given topic within Gatsby:
 
 After you’ve collected supporting information, you must produce original writing to be accepted in the Gatsby docs. Copying other blog posts, materials, or Gatsby team member interviews word-for-word without attribution is not acceptable or allowed. Furthermore, direct quotes from interviews are also _almost never_ effective for guides, recipes, or tutorials.
 
-Rather, the best way to write greenfield docs is with new text that explains the concepts and ideas you uncovered. With research and demos supporting your writing, can speak more legitimately to use cases and common troubleshooting. Phrasing information in alternative ways for different skill levels is a bit like avoiding usage of the same word or phrase in its definition: if a reader didn’t understand it the first time, they may be more likely to understand it with an alternative explanation.
+Rather, the best way to write greenfield docs is with new text that explains the concepts and ideas you uncovered. With research and demos supporting your writing, you can speak more legitimately to use cases and common troubleshooting. Phrasing information in alternative ways for different skill levels is a bit like avoiding usage of the same word or phrase in its definition: if a reader didn’t understand it the first time, they may be more likely to understand it with an alternative explanation.
 
 ## Producing learning materials
 
-Create demo sites and examples to provide more authoritative material that supports developer experience. When relevant, **functioning source code is a requirement to writing docs** that truly educate users. Source code examples can also be linked from a doc as an additional resource. Include testing as part of your source code to ensure it is robust and stands the test of time.
+Create demo sites and examples to provide more authoritative material that supports the developer experience. When relevant, **functioning source code is a requirement to writing docs** that truly educate users. Source code examples can also be linked from a doc as an additional resource. Include testing as part of your source code to ensure it is robust and stands the test of time.
 
 Follow the [docs templates](/contributing/docs-templates/) to ensure you’re producing content in the right format for its purpose.
 
