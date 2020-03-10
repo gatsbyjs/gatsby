@@ -12,6 +12,7 @@
     "@styled-system/prop-types": "^5.1.4",
     "@styled-system/should-forward-prop": "^5.1.4",
     "@styled-system/theme-get": "^5.1.2",
+    "@wardpeet/gatsby-plugin-sourcemap-explorer": "^0.0.3",
     "@xstate/react": "^0.8.1",
     "axios": "^0.19.0",
     "bluebird": "^3.7.2",

@@ -355,6 +355,7 @@ module.exports = {
         nodeTypes: [`StartersYaml`],
       },
     },
+    `@wardpeet/gatsby-plugin-sourcemap-explorer`,
     // `gatsby-plugin-subfont`,
   ].concat(dynamicPlugins),
 }
