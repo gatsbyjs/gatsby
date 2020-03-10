@@ -85,7 +85,7 @@ import 'tailwindcss/dist/base.css'
 ```
 
 3. Enable the Gatsby emotion plugin
-```javascript
+```javascript:title=gatsby-config.js
 // gatsby-config.js
 module.exports = {
   plugins: [`gatsby-plugin-emotion`]
