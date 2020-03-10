@@ -74,33 +74,39 @@ export default AboutPage
 
 ## Linking between pages
 
-Routing in Gatsby relies on the `<Link />` component.
+Routing for links internal to your Gatsby site relies on the `<Link />` component.
 
 ### Prerequisites
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
-- The Gatsby `<Link />` component
 - The [Gatsby CLI](/docs/gatsby-cli/) to run `gatsby develop`
 
 ### Directions
 
-1. Open the index page component (`src/pages/index.js`), import the `<Link />` component from Gatsby, add a `<Link />` component above the header, and give it a `to` property with the value of `"/contact/"` for the pathname:
+1. Open the index page component (`src/pages/index.js`) and import the `<Link />` component from Gatsby. Add a `<Link />` component to the JSX code and give it a `to` property with the pathname value of `"/contact/"` to output an HTML link with Gatsby powers:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
-import { Link } from "gatsby"
+import { Link } from "gatsby" // highlight-line
 
 export default () => (
-  <div style={{ color: `purple` }}>
-    <Link to="/contact/">Contact</Link>
-    <p>What a world.</p>
-  </div>
+  <main>
+    <h1>What a world.</h1>
+    <p>
+      <Link to="/contact/">Contact</Link> // highlight-line
+    </p>
+  </main>
 )
 ```
 
 2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
 
-> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). For more information about Gatsby's `<Link />` component, consult the [API reference for `<Link />`](/docs/gatsby-link/).
+> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). It outputs an HTML anchor when rendered in a browser, with built-in JavaScript functionality for performance. For more information, consult the [API reference for `<Link />`](/docs/gatsby-link/).
+
+### Additional resources
+
+- [Linking Between Pages guide](/docs/linking-between-pages)
+- [Gatsby Link API](/docs/gatsby-link)
 
 ## Creating a layout component
 

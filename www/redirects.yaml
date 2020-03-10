@@ -76,8 +76,12 @@
   toPath: /docs/creating-a-transformer-plugin/
 - fromPath: /docs/plugin-authoring/
   toPath: /docs/how-plugins-work/
+- fromPath: /tutorial/theme-tutorials
+  toPath: /tutorial/plugin-and-theme-tutorials
+- fromPath: docs/remark-plugin-tutorial.md
+  toPath: /tutorial/remark-plugin-tutorial/
 - fromPath: /docs/source-plugin-tutorial/
-  toPath: /docs/pixabay-source-plugin-tutorial/
+  toPath: /tutorial/pixabay-source-plugin-tutorial/
 - fromPath: /docs/how-plugins-work/
   toPath: /docs/plugins/
 - fromPath: /blog/2018-2-16-how-to-build-a-website-with-react/

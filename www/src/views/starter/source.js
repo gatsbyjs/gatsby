@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import TechWithIcon from "../../components/tech-with-icon"
-import GithubIcon from "react-icons/lib/fa/github"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import CodesandboxIcon from "../../assets/vendor-logos/codesandbox.svg"
 import NetlifyIcon from "../../assets/vendor-logos/netlify.svg"
 
@@ -72,12 +72,13 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
         sx={{
           "&&": {
             borderBottom: 0,
-            marginRight: t => t.space[4]
+            marginRight: t => t.space[4],
           },
         }}
       >
         <TechWithIcon icon={CodesandboxIcon}>CodeSandbox</TechWithIcon>
-      </a> &nbsp; 
+      </a>{" "}
+      &nbsp;
       <a
         href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
         sx={{

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "1.0.29",
+  "version": "1.0.31",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -30,6 +30,7 @@
   "types": "index.d.ts",
   "dependencies": {
     "ci-info": "2.0.0",
+    "configstore": "^5.0.0",
     "node-object-hash": "^2.0.0"
   },
   "devDependencies": {

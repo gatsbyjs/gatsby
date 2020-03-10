@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.2.1...gatsby-plugin-typescript@2.2.2) (2020-03-07)
+
+### Bug Fixes
+
+- **gatsby-plugin-typescript:** Broader webpack support ([#22003](https://github.com/gatsbyjs/gatsby/issues/22003)) ([4b93826](https://github.com/gatsbyjs/gatsby/commit/4b93826))
+
 ## [2.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.2.0...gatsby-plugin-typescript@2.2.1) (2020-03-06)
 
 **Note:** Version bump only for package gatsby-plugin-typescript

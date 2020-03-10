@@ -210,6 +210,24 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
+  it(`can copy HTML images from video elements with the poster attribute `, async () => {
+    const videoPath = `videos/sample-video.mp4`
+    const posterPath = `images/sample-image.jpg`
+
+    const markdownAST = remark.parse(
+      `<video controls="controls" autoplay="true" src="${videoPath}" poster="${posterPath}">\n<p>Your browser does not support the video element.</p>\n</video>`
+    )
+
+    await plugin({
+      files: [...getFiles(videoPath), ...getFiles(posterPath)],
+      markdownAST,
+      markdownNode,
+      getNode,
+    })
+
+    expect(fsExtra.copy).toHaveBeenCalledTimes(2)
+  })
+
   it(`can copy flash from object elements with the value attribute`, async () => {
     const path = `myMovie.swf`
 

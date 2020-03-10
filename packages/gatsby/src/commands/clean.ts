@@ -1,12 +1,14 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
+import fs from "fs-extra"
+import path from "path"
+
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
+import { IProgram } from "./types"
 
-module.exports = async function clean(args) {
-  const { directory, report } = args
+module.exports = async function clean(program: IProgram): Promise<void> {
+  const { directory, report } = program
 
   const directories = [`.cache`, `public`]
 

@@ -57,6 +57,8 @@
         - title: Docs Contributions
           link: /contributing/docs-contributions/
           items:
+            - title: Docs Writing Process
+              link: /contributing/docs-writing-process/
             - title: Docs Templates
               link: /contributing/docs-templates/
             - title: How to Write a Stub

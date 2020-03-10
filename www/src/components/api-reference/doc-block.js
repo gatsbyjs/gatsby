@@ -16,7 +16,7 @@ import {
 import ReturnBlock from "./returns"
 import { Header, LinkBox } from "./utils"
 import { scale } from "../../utils/typography"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 
 const Optional = styled(`span`)`
   :before {
