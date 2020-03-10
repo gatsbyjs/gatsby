@@ -6,10 +6,10 @@ const dotenv = require(`dotenv`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
-const getPublicPath = require(`./get-public-path`)
+const { getPublicPath } = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { withBasePath, withTrailingSlash } = require(`./path`)
+import { withBasePath, withTrailingSlash } from "./path"
 const getGatsbyDependents = require(`./gatsby-dependents`)
 
 const apiRunnerNode = require(`./api-runner-node`)
@@ -408,6 +408,10 @@ module.exports = async (
       )
     }
 
+    if (stage === `build-javascript` && program.profile) {
+      resolve.alias[`react-dom$`] = `react-dom/profiling`
+      resolve.alias[`scheduler/tracing`] = `scheduler/tracing-profiling`
+    }
     return resolve
   }
 
@@ -509,7 +513,17 @@ module.exports = async (
       },
       minimizer: [
         // TODO: maybe this option should be noMinimize?
-        !program.noUglify && plugins.minifyJs(),
+        !program.noUglify &&
+          plugins.minifyJs(
+            program.profile
+              ? {
+                  terserOptions: {
+                    keep_classnames: true,
+                    keep_fnames: true,
+                  },
+                }
+              : {}
+          ),
         plugins.minifyCss(),
       ].filter(Boolean),
     }

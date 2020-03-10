@@ -7,13 +7,15 @@ import Container from "../components/container"
 import Rotator from "../components/rotator"
 import { Link } from "gatsby"
 import logo from "../assets/monogram.svg"
-import { sizes } from "../gatsby-plugin-theme-ui"
+import { sizes } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import FooterLinks from "../components/shared/footer-links"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 
 class Plugins extends Component {
   render() {
+    const { location } = this.props
     return (
-      <React.Fragment>
+      <PageWithPluginSearchBar location={location} isPluginsIndex={true}>
         <Helmet>
           <title>Plugins</title>
           <meta
@@ -124,7 +126,7 @@ class Plugins extends Component {
           </div>
           <FooterLinks />
         </Container>
-      </React.Fragment>
+      </PageWithPluginSearchBar>
     )
   }
 }

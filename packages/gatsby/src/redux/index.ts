@@ -75,6 +75,7 @@ export const saveState = (): void => {
     staticQueryComponents: state.staticQueryComponents,
     webpackCompilationHash: state.webpackCompilationHash,
     pageDataStats: state.pageDataStats,
+    pageData: state.pageData,
   })
 }
 

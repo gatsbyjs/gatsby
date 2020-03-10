@@ -129,7 +129,7 @@ export interface IReduxState {
       hash: number
     }
   >
-  // @deprecated
+
   jobs: {
     active: any[] // TODO
     done: any[] // TODO
@@ -188,6 +188,7 @@ export interface IReduxState {
     }
   }
   pageDataStats: Map<SystemPath, number>
+  pageData: any
 }
 
 export interface ICachedReduxState {
@@ -199,6 +200,7 @@ export interface ICachedReduxState {
   staticQueryComponents: IReduxState["staticQueryComponents"]
   webpackCompilationHash: IReduxState["webpackCompilationHash"]
   pageDataStats: IReduxState["pageDataStats"]
+  pageData: IReduxState["pageData"]
 }
 
 export type ActionsUnion =

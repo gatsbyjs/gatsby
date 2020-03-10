@@ -90,6 +90,11 @@ const DEFAULT_QUERY =
   (window.localStorage && window.localStorage.getItem(`graphiql:query`)) ||
   null
 
+const DEFAULT_VARIABLES =
+  parameters.variables ||
+  (window.localStorage && window.localStorage.getItem(`graphiql:variables`)) ||
+  null
+
 const QUERY_EXAMPLE_SITEMETADATA_TITLE = `#     {
 #       site {
 #         siteMetadata {
@@ -159,6 +164,7 @@ class App extends React.Component {
   state = {
     schema: null,
     query: DEFAULT_QUERY,
+    variables: DEFAULT_VARIABLES,
     explorerIsOpen: storedExplorerPaneState,
     codeExporterIsOpen: storedCodeExporterPaneState,
   }
@@ -297,7 +303,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { query, schema, codeExporterIsOpen } = this.state
+    const { query, variables, schema, codeExporterIsOpen } = this.state
     const codeExporter = codeExporterIsOpen ? (
       <CodeExporter
         hideCodeExporter={this._handleToggleExporter}
@@ -324,6 +330,7 @@ class App extends React.Component {
           fetcher={graphQLFetcher}
           schema={schema}
           query={query}
+          variables={variables}
           onEditQuery={this._handleEditQuery}
           onEditVariables={onEditVariables}
           onEditOperationName={onEditOperationName}

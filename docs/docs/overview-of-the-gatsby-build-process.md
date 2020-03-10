@@ -301,6 +301,8 @@ Page queries that were queued up earlier from query extraction are run so the da
 
 With everything ready for the HTML pages in place, HTML is compiled and written out to files so it can be served up statically. Since HTML is being produced in a Node.js server context, [references to browser APIs like `window` can break the build](/docs/debugging-html-builds/) and must be conditionally applied.
 
+By default, Gatsby rebuilds static HTML for all pages on each build. There is an experimental feature flag `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` which enables [Page Build Optimizations for Incremental Data Changes](/docs/page-build-optimizations-for-incremental-data-changes/).
+
 ## What do you get from a successful build?
 
 When a Gatsby build is successfully completed, everything you need to deploy your site ends up in the `public` folder at the root of the site. The build includes minified files, transformed images, JSON files with information and data for each page, static HTML for each page, and more.

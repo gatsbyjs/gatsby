@@ -1,0 +1,7 @@
+{
+  "name": "gatsby-plugin-console-log",
+  "version": "1.0.0",
+  "description": "Log stuff in a Gatsby site's build process",
+  "main": "index.js",
+  "license": "MIT"
+}

@@ -1,6 +1,6 @@
 import { store } from "./"
 import { INode } from "./types"
-import createPageDependency from "./actions/add-page-dependency"
+import { createPageDependency } from "./actions/add-page-dependency"
 
 /**
  * Get all nodes from redux store.
