@@ -1,6 +1,6 @@
-const _ = require(`lodash`)
+import _ from "lodash"
 
-module.exports = str => {
+export const prepareRegex = (str: string): RegExp => {
   const exploded = str.split(`/`)
   const regex = new RegExp(
     exploded
