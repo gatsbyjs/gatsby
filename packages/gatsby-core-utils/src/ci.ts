@@ -1,4 +1,4 @@
-const ci = require(`ci-info`)
+import ci from "ci-info"
 
 const CI_DEFINITIONS = [
   envFromCIandCIName,
@@ -9,7 +9,7 @@ const CI_DEFINITIONS = [
   envFromCIWithNoName,
 ]
 
-function lookupCI() {
+function lookupCI(): string | null {
   for (const fn of CI_DEFINITIONS) {
     try {
       const res = fn()
@@ -24,26 +24,30 @@ function lookupCI() {
 }
 const CIName = lookupCI()
 
-function isCI() {
+export function isCI(): boolean {
   return !!CIName
 }
 
-function getCIName() {
+export function getCIName(): string | null {
   if (!isCI()) {
     return null
   }
   return CIName
 }
 
-module.exports = { isCI, getCIName }
-
-function getEnvFromCIInfo() {
+function getEnvFromCIInfo(): string | null {
   if (ci.isCI) return ci.name || `ci-info detected w/o name`
   return null
 }
 
-function getEnvDetect({ key, name }) {
-  return function() {
+function getEnvDetect({
+  key,
+  name,
+}: {
+  key: string
+  name: string
+}): () => string | null {
+  return function(): string | null {
     if (process.env[key]) {
       return name
     }
@@ -51,18 +55,22 @@ function getEnvDetect({ key, name }) {
   }
 }
 
-function herokuDetect() {
-  return /\.heroku\/node\/bin\/node/.test(process.env.NODE) && `Heroku`
+function herokuDetect(): false | "Heroku" {
+  return (
+    typeof process.env.NODE === `string` &&
+    /\.heroku\/node\/bin\/node/.test(process.env.NODE) &&
+    `Heroku`
+  )
 }
 
-function envFromCIandCIName() {
+function envFromCIandCIName(): string | null {
   if (process.env.CI_NAME && process.env.CI) {
     return process.env.CI_NAME
   }
   return null
 }
 
-function envFromCIWithNoName() {
+function envFromCIWithNoName(): "CI detected without name" | null {
   if (process.env.CI) {
     return `CI detected without name`
   }

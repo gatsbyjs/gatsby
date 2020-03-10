@@ -30,7 +30,7 @@ describe(`CI detection`, () => {
   })
 
   it(`Detects Now v2`, () => {
-    process.env.NOW_BUILDER_ANNOTATE = 1
+    process.env.NOW_BUILDER_ANNOTATE = `1`
     const { isCI, getCIName } = require(`../ci`)
 
     expect(isCI()).toBeTruthy()
@@ -53,7 +53,7 @@ describe(`CI detection`, () => {
     expect(getCIName()).toEqual(`Heroku`)
   })
   it(`Detects CI and CI_NAME`, () => {
-    process.env.CI = true
+    process.env.CI = `true`
     process.env.CI_NAME = `test CI`
     const { isCI, getCIName } = require(`../ci`)
 
@@ -61,7 +61,7 @@ describe(`CI detection`, () => {
     expect(getCIName()).toEqual(`test CI`)
   })
   it(`Detects CI and no CI_NAME`, () => {
-    process.env.CI = true
+    process.env.CI = `true`
     delete process.env.CI_NAME
     const { isCI, getCIName } = require(`../ci`)
 

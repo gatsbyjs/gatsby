@@ -1,8 +1,8 @@
 // Forked from physical-cpu-count package from npm
-const os = require(`os`)
-const childProcess = require(`child_process`)
+import os from "os"
+import childProcess from "child_process"
 
-function exec(command) {
+function exec(command: string): string {
   const output = childProcess.execSync(command, { encoding: `utf8` })
   return output
 }
@@ -10,7 +10,7 @@ function exec(command) {
 /*
  * Fallback if child process fails to receive CPU count
  */
-function fallbackToNodeJSCheck() {
+function fallbackToNodeJSCheck(): number {
   const cores = os.cpus().filter(function(cpu, index) {
     const hasHyperthreading = cpu.model.includes(`Intel`)
     const isOdd = index % 2 === 1
@@ -20,9 +20,8 @@ function fallbackToNodeJSCheck() {
   return cores.length
 }
 
-const platform = os.platform()
-
-function getPhysicalCpuCount() {
+export function getPhysicalCpuCount(): number {
+  const platform = os.platform()
   try {
     if (platform === `linux`) {
       const output = exec(
@@ -51,5 +50,3 @@ function getPhysicalCpuCount() {
 
   return fallbackToNodeJSCheck()
 }
-
-module.exports = getPhysicalCpuCount()

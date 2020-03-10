@@ -1,10 +1,10 @@
-const { resolve } = require(`../url`)
+import { urlResolve } from "../url"
 
 describe(`url`, () => {
-  describe(`resolve`, () => {
+  describe(`urlResolve`, () => {
     it(`resolves segments into valid url pathname`, () => {
       const paths = [`/`, ``, `./foo`, `bar`, `baz`]
-      const actual = resolve(...paths)
+      const actual = urlResolve(...paths)
       expect(actual).toBe(`/foo/bar/baz`)
     })
   })

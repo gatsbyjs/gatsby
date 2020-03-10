@@ -1,5 +1,5 @@
-const { joinPath, isNodeInternalModulePath, slash } = require(`../path`)
-const os = require(`os`)
+import { joinPath, isNodeInternalModulePath, slash } from "../path"
+import os from "os"
 
 describe(`paths`, () => {
   describe(`joinPath`, () => {

@@ -1,4 +1,4 @@
-const createContentDigest = require(`../create-content-digest`)
+import { createContentDigest } from "../create-content-digest"
 
 describe(`Create content digest`, () => {
   it(`returns the content digest when the input is a string`, () => {
