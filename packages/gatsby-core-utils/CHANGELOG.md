@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.30...gatsby-core-utils@1.0.31) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.29...gatsby-core-utils@1.0.30) (2020-03-06)
+
+### Bug Fixes
+
+- **gatsby-core-utils:** Add configstore as a dependency ([#22019](https://github.com/gatsbyjs/gatsby/issues/22019)) ([ab71779](https://github.com/gatsbyjs/gatsby/commit/ab71779))
+
+## [1.0.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.28...gatsby-core-utils@1.0.29) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.27...gatsby-core-utils@1.0.28) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.26...gatsby-core-utils@1.0.27) (2020-01-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** support yarn PnP ([#20638](https://github.com/gatsbyjs/gatsby/issues/20638)) ([6375ba9](https://github.com/gatsbyjs/gatsby/commit/6375ba9))
+
 ## [1.0.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.25...gatsby-core-utils@1.0.26) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-core-utils

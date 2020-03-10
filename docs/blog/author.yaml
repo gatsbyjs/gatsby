@@ -212,7 +212,7 @@
   avatar: avatars/muhammad-muhsin.jpg
   twitter: "@muhsinlk"
 - id: Ondrej Polesny
-  bio: Full-stack developer, speaker and trainer with passion for anything new and intriguing. Opensource contributor. Dev evangelist @ Kentico Cloud.
+  bio: Full-stack developer, speaker and trainer with passion for anything new and intriguing. Opensource contributor. Dev evangelist @ Kentico Kontent.
   avatar: avatars/ondrej-polesny.jpg
   twitter: "@ondrabus"
 - id: John O’Nolan
@@ -246,7 +246,7 @@
   avatar: avatars/katie-fujihara.jpg
   twitter: "@KatieFujihara"
 - id: Sidhartha Chatterjee
-  bio: Core team @ GatsbyJS. Full-Stack Developer. Scuba diver.
+  bio: Senior Software Engineer, core team @ GatsbyJS. Scuba diver.
   avatar: avatars/sidhartha-chatterjee.jpg
   twitter: "@chatsidhartha"
 - id: Tania Rascia
@@ -376,6 +376,10 @@
   bio: Product Designer at Forestry.io & TinaCMS Team Member
   avatar: avatars/scott-byrne.jpg
   twitter: "@scottpbyrne"
+- id: William Imoh
+  bio: Developer Advocate and Product Manager at Mart Labs
+  avatar: avatars/william-imoh.jpg
+  twitter: "@iChuloo"
 - id: Josh Comeau
   bio: Perpetual tinkerer, cat person. Staff software engineer on the Gatsby Cloud team.
   avatar: avatars/josh-comeau.jpg
@@ -384,3 +388,7 @@
   bio: Engineer on TypeScript at Microsoft
   avatar: avatars/orta-therox.jpg
   twitter: "@orta"
+- id: Aisha Blake
+  bio: Teacher, speaker, and community organizer who learned to code via Neopets. Loves theater, karaoke, and dogs.
+  avatar: avatars/aisha-blake.jpg
+  twitter: "@AishaBlake"

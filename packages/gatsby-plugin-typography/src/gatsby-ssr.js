@@ -1,6 +1,6 @@
 import React from "react"
 import { TypographyStyle, GoogleFont } from "react-typography"
-import typography from "./.cache/typography"
+import typography from "typography-plugin-cache-endpoint"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   if (process.env.BUILD_STAGE === `build-html`) {

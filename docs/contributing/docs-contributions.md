@@ -4,7 +4,7 @@ title: Docs Contributions
 
 Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of February 2019, over 800 people have contributed. It's people like you that make this community great!
 
-> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-and-website-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
+> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
 
 ## Top priorities
 
@@ -103,6 +103,83 @@ It can be necessary to change a heading within the docs. It's important to note 
 - Determine the URL you're looking for. `Changing headers` is linked with a URL ending in `changing-headers`, `Docs renaming instructions` becomes `docs-renaming-instructions`, etc.
 - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
 
+## Adding a description
+
+The site automatically creates description tags in order to boost SEO:
+
+```html
+<meta name="description" content="Documentation of Gatsby" />
+<meta property="og:description" content="Documentation of Gatsby" />
+<meta name="twitter:description" content="Documentation of Gatsby" />
+```
+
+By default, this description is generated from the `page.excerpt`. If you would like to add a custom description, you can use the `description` frontmatter tag:
+
+```markdown
+---
+title: Gatsby Community Events
+description: Learn about other events happening around the globe to connect with other members of the Gatsby community
+---
+```
+
+## Configuring site navigation
+
+The docs include custom built components to aid with navigation. In order to customize the navigation experience, these components allow some configurations without changing any of the React code.
+
+### Adjusting breadcrumb titles
+
+The `<Breadcrumb />` component is used in layout files to display the hierarchy of pages a user is currently browsing on at the top of each doc.
+
+To alter the title of a doc that is displayed in the Breadcrumb component, `breadcrumbTitle` is supported as a key in the [sidebar YAML files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars). It is commonly used to provide an abbreviated version of a doc's title when displayed next to its parent page title, e.g. shortening "Adding a Custom webpack Config" to "webpack Config".
+
+```yaml
+- title: Adding Page Transitions
+  link: /docs/adding-page-transitions/
+  breadcrumbTitle: Page Transitions # highlight-line
+```
+
+### Disabling or shortening Table of Contents
+
+The `<TableOfContents />` component is used to render a list of subheaders from a docs page and automatically provide deep links to them. It can be tweaked by values set in the frontmatter of a doc's markdown.
+
+In docs where the Table of Contents isn't required and should be disabled, a key in the frontmatter called `disableTableOfContents` can be set to `true` like this:
+
+```markdown
+---
+title: Glossary
+disableTableOfContents: true
+---
+
+When you're new to Gatsby there can be a lot of words to learn...
+```
+
+In other docs where the Table of Contents is extremely long it can make sense to only show headers from the doc up to a certain level, rather than all subheadings. You can set the `tableOfContentsDepth` key to a number that will limit the subheadings shown in the table of contents to that "depth". If it is set to 2, `<h2>`/`##`, and `<h3>`/`###` headers will be listed, if set to 3, `<h2>`/`##`, `<h3>`/`###`, and `<h4>`/`####` will all be shown. It is set like this:
+
+```markdown
+---
+title: Glossary
+tableOfContentsDepth: 2
+---
+
+When you're new to Gatsby there can be a lot of words to learn...
+```
+
+## Adding embedded GraphQL examples
+
+There are embedded examples in a few places in the docs (like the [GraphQL Reference guide](/docs/graphql-reference/)) that provide a working version of the code described. In the specific example of the GraphQL Query Options Reference page, these examples of the GraphiQL interface show how data can be queried from Gatsby's data layer.
+
+To write a new GraphQL example, a Codesandbox project with a Gatsby site can be opened at its server container link, for example: [https://711808k40x.sse.codesandbox.io/](https://711808k40x.sse.codesandbox.io/). Because Codesandbox is running a Gatsby site in [`develop` mode instead of `build` mode](/docs/overview-of-the-gatsby-build-process/) you can navigate to GraphiQL by adding `/___graphql` to the link. Write an example query, and when you have a query you are satisfied with, the query fields and names will be saved as URL parameters so you can share the link. Copy the URL and use it as the `src` of an iframe:
+
+```mdx
+Here's an example of a GraphQL query inline:
+
+<iframe src="https://711808k40x.sse.codesandbox.io/___graphql?query=query%20TitleQuery%20%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false&operationName=TitleQuery" /> // highlight-line
+
+More markdown content...
+```
+
+> Note that you should set the `explorerIsOpen` parameter in the URL to `false` if it isn't already.
+
 ## Docs renaming instructions
 
 Sometimes it makes sense to move or rename a file as part of docs restructuring or for content clarification. While we recommend keeping URLs consistent as often as possible, here are some tips to minimize errors and keep the docs in a good state:
@@ -113,7 +190,7 @@ Sometimes it makes sense to move or rename a file as part of docs restructuring 
 
 ```yaml:title=www/redirects.yaml
 - fromPath: /docs/source-plugin-tutorial/
-  toPath: /docs/pixabay-source-plugin-tutorial/
+  toPath: /tutorial/pixabay-source-plugin-tutorial/
 ```
 
 ## Claim your swag

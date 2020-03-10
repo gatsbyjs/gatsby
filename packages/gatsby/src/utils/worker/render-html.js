@@ -1,17 +1,7 @@
 const fs = require(`fs-extra`)
-const path = require(`path`)
 const Promise = require(`bluebird`)
-
-// copied from https://github.com/markdalgleish/static-site-generator-webpack-plugin/blob/master/index.js#L161
-const generatePathToOutput = outputPath => {
-  let outputFileName = outputPath.replace(/^(\/|\\)/, ``) // Remove leading slashes for webpack-dev-server
-
-  if (!/\.(html?)$/i.test(outputFileName)) {
-    outputFileName = path.join(outputFileName, `index.html`)
-  }
-
-  return path.join(process.cwd(), `public`, outputFileName)
-}
+const { join } = require(`path`)
+const { getPageHtmlFilePath } = require(`../../utils/page-html`)
 
 export function renderHTML({ htmlComponentRendererPath, paths, envVars }) {
   // This is being executed in child process, so we need to set some vars
@@ -25,7 +15,12 @@ export function renderHTML({ htmlComponentRendererPath, paths, envVars }) {
         const htmlComponentRenderer = require(htmlComponentRendererPath)
         try {
           htmlComponentRenderer.default(path, (throwAway, htmlString) => {
-            resolve(fs.outputFile(generatePathToOutput(path), htmlString))
+            resolve(
+              fs.outputFile(
+                getPageHtmlFilePath(join(process.cwd(), `public`), path),
+                htmlString
+              )
+            )
           })
         } catch (e) {
           // add some context to error so we can display more helpful message

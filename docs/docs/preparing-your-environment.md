@@ -5,7 +5,7 @@ overview: true
 
 To get started with Gatsby, you'll need to make sure you have the following software tools installed:
 
-1.  [Node.js](/tutorial/part-zero/#-install-nodejs-and-npm)
+1.  [Node.js](/tutorial/part-zero/#install-nodejs-for-your-appropriate-operating-system)
 2.  [npm CLI](/tutorial/part-zero/#check-your-nodejs-installation)
 3.  [Gatsby CLI](/tutorial/part-zero/#using-the-gatsby-cli)
 

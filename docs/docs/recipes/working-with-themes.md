@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Working with Themes"
+tableOfContentsDepth: 1
 ---
 
 A [Gatsby theme](/docs/themes/what-are-gatsby-themes) abstracts Gatsby configuration (shared functionality, data sourcing, design) into an installable package. This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
@@ -12,10 +13,7 @@ Found a theme you'd like to use on your project? Awesome! You can configure it f
 
 ### Prerequisites
 
-Make sure you have the following installed:
-
-- [Gatsby CLI](/docs/gatsby-cli)
-- [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable)
+- Make sure you have the [Gatsby CLI](/docs/gatsby-cli) installed
 
 ### Directions
 
@@ -51,16 +49,13 @@ module.exports = {
         - mdx defaults to `true`
         */
         basePath: `/blog`,
-        contentPath: `content/blogPosts`,
-        assetPath: `content/blogAssets`,
-        mdx: false,
       },
     },
   ],
 }
 ```
 
-4. Run `yarn develop` , the theme should be available at `http://localhost:8000/{basePath}`
+4. Run `gatsby develop` , the theme should be available at `http://localhost:8000/{basePath}`
 
 > To learn how to further customize a theme, check out the available paths on [Gatsby-theme-blog Documentation](https://www.npmjs.com/package/gatsby-theme-blog).
 

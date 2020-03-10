@@ -19,7 +19,10 @@ Design+Code started in 2015 when Meng To began with a digital book on designing 
 [Thomas Wang](https://twitter.com/thomaswangio "Twitter"), UI Developer at Design+Code, shared some of the important details of the rebuild, as well as the benefits their Gatsby-fueled site has provided their new offerings.
 
 <Pullquote citation="Thomas Wang">
-We needed a new CMS to handle the amount of content we were creating and a more full website, transitioning from a digital book to an online learning platform. We also wanted to begin using more modern tooling and frameworks so that we could teach them in the future
+  We needed a new CMS to handle the amount of content we were creating and a
+  more full website, transitioning from a digital book to an online learning
+  platform. We also wanted to begin using more modern tooling and frameworks so
+  that we could teach them in the future
 </Pullquote>
 
 ### **Learn from Doing**
@@ -29,7 +32,9 @@ The Design+Code team chose Gatsby for its out-of-the-box support for page routin
 AND, not to be overlooked, they wanted to be on the leading-side of offering Gatsby-build training.
 
 <Pullquote citation="Thomas Wang">
-Our philosophy is to always be able to teach what we create, so having an easy-to-understand framework (like Gatsby) to work with was perfect for us to be able to teach designers and beginners.
+  Our philosophy is to always be able to teach what we create, so having an
+  easy-to-understand framework (like Gatsby) to work with was perfect for us to
+  be able to teach designers and beginners.
 </Pullquote>
 
 ### **Moving to a Subscription Model**

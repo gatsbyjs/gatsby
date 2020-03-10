@@ -226,7 +226,10 @@ const makeManifest = async ({
       src: slash(path.join(basePath, icon.src)),
     }
   })
-  manifest.start_url = path.posix.join(basePath, manifest.start_url)
+
+  if (manifest.start_url) {
+    manifest.start_url = path.posix.join(basePath, manifest.start_url)
+  }
 
   //Write manifest
   fs.writeFileSync(
