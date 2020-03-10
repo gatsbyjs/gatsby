@@ -3,7 +3,7 @@ import { Box, Color, ColorProps } from "ink"
 
 import { ActivityLogLevels, LogLevels } from "../../../constants"
 
-const ColorSwitcher: React.FC<ColorProps> = ({ children, ...props }) => (
+const ColorSwitcher: FunctionComponent<ColorProps> = ({ children, ...props }) => (
   <Color {...props}>{children}</Color>
 )
 
