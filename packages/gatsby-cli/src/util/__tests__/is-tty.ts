@@ -1,5 +1,5 @@
 describe(`isTTY`, () => {
-  let originalTTY
+  let originalTTY: boolean
   beforeEach(() => {
     jest.resetModules()
 
@@ -14,7 +14,7 @@ describe(`isTTY`, () => {
     jest.mock(`gatsby-core-utils`, () => {
       return { isCI: () => false }
     })
-    const isTTY = require(`../is-tty`)
+    const { isTTY } = require(`../is-tty`)
     expect(isTTY()).toBe(true)
   })
 
@@ -23,7 +23,7 @@ describe(`isTTY`, () => {
     jest.mock(`gatsby-core-utils`, () => {
       return { isCI: () => false }
     })
-    const isTTY = require(`../is-tty`)
+    const { isTTY } = require(`../is-tty`)
     expect(isTTY()).toBe(false)
   })
 
@@ -32,7 +32,7 @@ describe(`isTTY`, () => {
     jest.mock(`gatsby-core-utils`, () => {
       return { isCI: () => true }
     })
-    const isTTY = require(`../is-tty`)
+    const { isTTY } = require(`../is-tty`)
     expect(isTTY()).toBe(false)
   })
 
@@ -41,7 +41,7 @@ describe(`isTTY`, () => {
     jest.mock(`gatsby-core-utils`, () => {
       return { isCI: () => true }
     })
-    const isTTY = require(`../is-tty`)
+    const { isTTY } = require(`../is-tty`)
     expect(isTTY()).toBe(false)
   })
 })

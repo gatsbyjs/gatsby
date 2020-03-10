@@ -10,8 +10,8 @@ import sysPath from "path"
 import prompts from "prompts"
 import url from "url"
 
-import { getPackageManager, promptPackageManager } from "./util/package-manager"
 import report from "./reporter"
+import { getPackageManager, promptPackageManager } from "./util/package-manager"
 import { isTTY } from "./util/is-tty"
 
 const spawnWithArgs = (
