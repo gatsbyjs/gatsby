@@ -129,7 +129,7 @@ export interface IReduxState {
       hash: number
     }
   >
-
+  // @deprecated
   jobs: {
     active: any[] // TODO
     done: any[] // TODO
@@ -138,7 +138,7 @@ export interface IReduxState {
     incomplete: Map<any, any> // TODO
     complete: Map<any, any>
   }
-  webpack: any // TODO This should b ethe output from ./utils/webpack.config.js
+  webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
   redirects: any[] // TODO
   babelrc: {
