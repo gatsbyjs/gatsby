@@ -3,13 +3,15 @@ import { Box, Color, ColorProps } from "ink"
 
 import { ActivityLogLevels, LogLevels } from "../../../constants"
 
-const ColorSwitcher: FunctionComponent<ColorProps> = ({ children, ...props }) => (
-  <Color {...props}>{children}</Color>
-)
-
-const createLabel = (text: string, color: string): FunctionComponent<ColorProps> => (
+const ColorSwitcher: FunctionComponent<ColorProps> = ({
+  children,
   ...props
-): JSX.Element => (
+}) => <Color {...props}>{children}</Color>
+
+const createLabel = (
+  text: string,
+  color: string
+): FunctionComponent<ColorProps> => (...props): JSX.Element => (
   <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
 )
 
