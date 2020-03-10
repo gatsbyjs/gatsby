@@ -9,7 +9,7 @@ Gatsby provides an easy way to use a local HTTPS server during development, than
 Start the development server using `npm run develop` as usual, and add either the `-S` or `--https` flag.
 
 ```shell
-$ npm run develop -- --https
+npm run develop -- --https
 ```
 
 ## Setup
@@ -37,76 +37,90 @@ Please enter the CA password:
 
 The password is _only_ required the first time you are using Gatsby's HTTPS feature on your machine, or when you are creating a brand new certificate.
 
-After typing in your password, `devcert` will install the CA certificate in your operating system trusted certs store. A utility called `certutil` will be needed to update the trust store for various browsers; specifically: Firefox, and Chrome (when it's running on Linux).
+## Using `Certutil`
 
-### In case `certutil` is not installed on your machine
+After typing in your password, `devcert` will install the CA certificate in your operating system trusted certs store. A utility called `certutil` will be needed to update the trust store for various browsers; specifically: Firefox, and Chrome (when it's running on Linux).
 
 `devcert` is configured to install `certutil` automatically, unless you're running Windows. If an automatic install is not successful, you may need to install it manually.
 
-- To install `certutil`, you need to install the `nss tools` package(s). The exact procedure will differ depending on your operating system.
+### Manual Installation of `Certutil`
 
-  - On a linux OS, you should be able to run one of the following, depending on your Linux distro:
+To install `certutil`, you need to install the `nss tools` package(s). The exact procedure will differ depending on your operating system.
 
-    ```shell
-    # Debian based (Ubuntu)
-    sudo apt install libnss3-tools
+#### Linux
 
-    # RHEL based (Fedora)
-    sudo yum install nss-tools
+On a linux OS, you should be able to run one of the following, depending on your Linux distro:
 
-    # OpenSuse
-    sudo zypper install mozilla-nss-tools
-    ```
+```shell
+# Debian based (Ubuntu)
+sudo apt install libnss3-tools
 
-  - On MacOS, you should be able to run:
+# RHEL based (Fedora)
+sudo yum install nss-tools
 
-    ```shell
-    brew install nss
-    ```
+# OpenSuse
+sudo zypper install mozilla-nss-tools
+```
 
-  - With regards to Windows: Precompiled libraries are rare, so you may need to compile it yourself. Because of how difficult Windows makes it, `devcert` will not attempt to update the Firefox trust store automatically; instead, it will fall back to using the "Firefox wizard", detailed below.
+#### MacOS
 
-  If you choose not to install `certutil`, or the automatic install is not successful, you may get the following errors/prompts:
+Run the following command:
 
-  - If you use Chrome on Linux:
+```shell
+brew install nss
+```
 
-    ```text
-    WARNING: It looks like you have Chrome installed, but you specified
-    'skipCertutilInstall: true'. Unfortunately, without installing
-    certutil, it's impossible get Chrome to trust devcert's certificates
-    The certificates will work, but Chrome will continue to warn you that
-    they are untrusted.
-    ```
+#### Windows
 
-  - If you have Firefox installed, `devcert` will try to utilize Firefox itself to trust the certificate
+Pre-compiled libraries are rare, so you may need to compile it yourself. Because of how difficult Windows makes it, `devcert` will not attempt to update the Firefox trust store automatically; instead, it will fall back to using the "Firefox wizard", detailed below.
 
-    ```text
-    devcert was unable to automatically configure Firefox. You'll need to
-    complete this process manually. Don't worry though - Firefox will walk
-    you through it.
+### Debugging Installation
 
-    When you're ready, hit any key to continue. Firefox will launch and
-    display a wizard to walk you through how to trust the devcert
-    certificate. When you are finished, come back here and we'll finish up.
-    (If Firefox doesn't start, go ahead and start it and navigate to
-    http://localhost:52175 in a new tab.)
+If you choose not to install `certutil`, or the automatic install is not successful, you may get the following errors/prompts:
 
-    If you are curious about why all this is necessary, check out
-    https://github.com/davewasmer/devcert#how-it-works
-    <Press any key to launch Firefox wizard>
-    ```
+#### Chrome on Linux
 
-    - You can press enter here, and it will launch Firefox for you.
+```text
+WARNING: It looks like you have Chrome installed, but you specified
+'skipCertutilInstall: true'. Unfortunately, without installing
+certutil, it's impossible get Chrome to trust devcert's certificates
+The certificates will work, but Chrome will continue to warn you that
+they are untrusted.
+```
 
-    - If you wish to have trust support on Firefox, tell the point-and-click wizard `this certificate can identify websites`, and click OK. Otherwise, you may hit cancel and close the browser, then key return to finish building. **Reminder: you'll only need to do this once per machine.**
+#### Firefox
 
-### After `devcert` setup process
+If you have Firefox installed, `devcert` will try to utilize Firefox itself to trust the certificate
+
+```text
+devcert was unable to automatically configure Firefox. You'll need to
+complete this process manually. Don't worry though - Firefox will walk
+you through it.
+
+When you're ready, hit any key to continue. Firefox will launch and
+display a wizard to walk you through how to trust the devcert
+certificate. When you are finished, come back here and we'll finish up.
+(If Firefox doesn't start, go ahead and start it and navigate to
+http://localhost:52175 in a new tab.)
+
+If you are curious about why all this is necessary, check out
+https://github.com/davewasmer/devcert#how-it-works
+<Press any key to launch Firefox wizard>
+```
+
+Your options are as follows:
+
+- Press enter and it will launch Firefox for you.
+
+- If you wish to have trust support on Firefox, tell the point-and-click wizard `this certificate can identify websites`, and click OK. Otherwise, you may hit cancel and close the browser, then key return to finish building. **Reminder: you'll only need to do this once per machine.**
+
+## After `devcert` setup process
 
 You can open the development server at `https://localhost:8000` and enjoy the HTTPS goodness ✨. Of course, you may change the port according to your setup.
 
 Find out more about [how devcert works](https://github.com/davewasmer/devcert#how-it-works).
 
-### Management of certificates generated by devcert
+## Management of certificates generated by devcert
 
 If you want to do some maintenance/cleanup of the certificates generated by `devcert`, please refer to [devcert-cli](https://github.com/davewasmer/devcert-cli/blob/master/README.md)
 
@@ -122,27 +136,23 @@ If you need to use a custom HTTPS setup, you can pass the `--https`, `--key-file
 - `--key-file` [relative/absolute path to ssl key file]
 - `--ca-file` [relative/absolute path to ssl certificate authority file]
 
-See the example commands below:
+### Using `npm run develop`
 
-- Using `npm run develop`
+```shell
+npm run develop -- --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file ../relative/path/to/ca.crt
+```
 
-  ```shell
-  # Using relative paths
-  $ npm run develop -- --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file ../relative/path/to/ca.crt
+> Note: You can use relative or absolute paths with this command
 
-  # Or using absolute paths
-  $ npm run develop -- --https --key-file /absolute/path/to/key.key --cert-file /absolute/path/to/cert.crt --ca-file /absolute/path/to/ca.crt
-  ```
+### Using the Gatsby CLI
 
-- Alternatively, you can run the development server using the gatsby cli
+```shell
+gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file ../relative/path/to/ca.crt
+```
 
-  ```shell
-  # Using relative paths
-  $ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file ../relative/path/to/ca.crt
+> Note: You can use relative or absolute paths with this command
 
-  # Or using absolute paths
-  $ gatsby develop --https --key-file /absolute/path/to/key.key --cert-file /absolute/path/to/cert.crt --ca-file /absolute/path/to/ca.crt
-  ```
+### Flag usage
 
 Usage of the `--ca-file` flag is only required if your certificate is signed by a certificate authority.
 
