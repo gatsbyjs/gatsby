@@ -21,7 +21,7 @@ To start setting up the Gatsby repo on your machine using git, Yarn and Gatsby-C
 
 Alternatively, you can skip the local setup and [use an online dev environment](/contributing/using-an-online-dev-environment/).
 
-To contribute to the blog or Gatsbyjs.org website, check out the setup steps on the [blog and website contributions](/contributing/blog-and-website-contributions/) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
+To contribute to the blog, check out the setup steps on the [blog contributions](/contributing/blog-contributions/) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/). To contribute to the website, see the [website contributions](/contributing/website-contributions/) page.
 
 ## Creating your own plugins and loaders
 

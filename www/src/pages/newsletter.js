@@ -1,17 +1,14 @@
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 
-import Layout from "../components/layout"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import FooterLinks from "../components/shared/footer-links"
 
 class NewsLetter extends Component {
   render() {
-    const { location } = this.props
-
     return (
-      <Layout location={location}>
+      <>
         <Helmet>
           <title>Newsletter</title>
           <meta
@@ -41,7 +38,7 @@ class NewsLetter extends Component {
           />
         </Container>
         <FooterLinks />
-      </Layout>
+      </>
     )
   }
 }

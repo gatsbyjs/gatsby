@@ -281,13 +281,13 @@ Unless the text is Markdown-free, you cannot use the returned value directly. In
 
 You can then insert the returned HTML inline in your JSX:
 
-```
-  <div
+```jsx
+<div
   className="body"
   dangerouslySetInnerHTML={{
-       __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
-     }}
-   />
+    __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
+  }}
+/>
 ```
 
 #### Duplicated entries
@@ -391,6 +391,32 @@ documentToReactComponents(node.bodyRichText.json, options)
 ```
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
+
+## Sourcing From Multiple Contentful Spaces
+
+To source from multiple Contentful environments/spaces, add another configuration for `gatsby-source-contentful` in `gatsby-config.js`:
+
+```
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_second_space_id`,
+        accessToken: process.env.SECONDARY_CONTENTFUL_ACCESS_TOKEN,
+      },
+    }
+  ],
+}
+```
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://gatsby.dev/env-vars

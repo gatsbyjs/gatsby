@@ -28,8 +28,6 @@ function getLanguages() {
 const langs = getLanguages()
 const langCodes = langs.map(lang => lang.code)
 
-const localizedSections = ["tutorial"]
-
 function isDefaultLang(locale) {
   return locale === defaultLang
 }
@@ -53,11 +51,6 @@ function localizedPath(locale, path) {
   // (e.g. if the path was made with location.pathname)
   // just return it as-is.
   if (langCodes.includes(base)) {
-    return path
-  }
-
-  // Only localize paths for localized sections
-  if (!localizedSections.includes(base)) {
     return path
   }
 

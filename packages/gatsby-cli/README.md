@@ -9,7 +9,7 @@ The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used glob
 
 Run `gatsby --help` for full help.
 
-You can also use the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](/docs/starters/). For example, if we want to make the [`gatsby develop`](#develop) command available in our application, we would open up `package.json` and add a script like so:
+You can also use the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](https://www.gatsbyjs.org/docs/starters/). For example, if we want to make the [`gatsby develop`](#develop) command available in our application, we would open up `package.json` and add a script like so:
 
 ```json:title=package.json
 {
@@ -36,10 +36,10 @@ You can also use the `package.json` script variant of these commands, typically 
 gatsby new [<site-name> [<starter-url>]]
 ```
 
-| Argument    | Description                                                                                                                                                                                                     |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| site-name   | Your Gatsby site name, which is also used to create the project directory.                                                                                                                                      |
-| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
+| Argument    | Description                                                                                                                                                                                                                             |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name, which is also used to create the project directory.                                                                                                                                                              |
+| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/) docs for more information. |
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 
@@ -94,12 +94,13 @@ At the root of a Gatsby app run `gatsby build` to do a production build of a sit
 
 #### Options
 
-|            Option            | Description                                                                                                |            Default            |
-| :--------------------------: | ---------------------------------------------------------------------------------------------------------- | :---------------------------: |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        | `env.PREFIX_PATHS` or `false` |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    |            `false`            |
-| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |                               |
-| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                           |            `false`            |
+|            Option            | Description                                                                                                        |            Default            |
+| :--------------------------: | ------------------------------------------------------------------------------------------------------------------ | :---------------------------: |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                                | `env.PREFIX_PATHS` or `false` |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                            |            `false`            |
+|         `--profile`          | Build site with react profiling. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/ |            `false`            |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/         |                               |
+| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                                   |            `false`            |
 
 For prefixing paths, most will want to use the CLI flag (`gatsby build --prefix-paths`). For environments where you can't pass the --prefix-paths flag (ie Gatsby Cloud) this provides another way to prefix paths.
 
