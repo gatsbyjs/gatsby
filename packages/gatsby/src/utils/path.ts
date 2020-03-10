@@ -1,22 +1,20 @@
-const path = require(`path`)
-const { joinPath } = require(`gatsby-core-utils`)
+import path from "path"
+import { joinPath } from "gatsby-core-utils"
 
-export function withBasePath(basePath) {
-  return (...paths) => joinPath(basePath, ...paths)
-}
+export const withBasePath = (basePath: string) => (
+  ...paths: string[]
+): string => joinPath(basePath, ...paths)
 
-export function withTrailingSlash(basePath) {
-  return `${basePath}/`
-}
+export const withTrailingSlash = (basePath: string): string => `${basePath}/`
 
-const posixJoinWithLeadingSlash = paths =>
+const posixJoinWithLeadingSlash = (paths: string[]): string =>
   path.posix.join(
     ...paths.map((segment, index) =>
       segment === `` && index === 0 ? `/` : segment
     )
   )
 
-export function getCommonDir(path1, path2) {
+export const getCommonDir = (path1: string, path2: string): string => {
   const path1Segments = path1.split(/[/\\]/)
   const path2Segments = path2.split(/[/\\]/)
 

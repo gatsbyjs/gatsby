@@ -1,6 +1,6 @@
-const { joinPath } = require(`gatsby-core-utils`)
-const { withBasePath, getCommonDir } = require(`../path`)
-const os = require(`os`)
+import { joinPath } from "gatsby-core-utils"
+import { withBasePath, getCommonDir } from "../path"
+import os from "os"
 
 describe(`paths`, () => {
   describe(`joinPath`, () => {
@@ -55,7 +55,7 @@ describe(`paths`, () => {
   })
 
   describe(`getCommonDir`, () => {
-    it.each([
+    it.each<[string, { path1: string; path2: string; expected: string }]>([
       [
         `posix: path2 is sub-path of path1`,
         {
