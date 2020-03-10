@@ -4,8 +4,6 @@ import { createPageDependency } from "./actions/add-page-dependency"
 
 /**
  * Get all nodes from redux store.
- *
- * @returns {Array}
  */
 export const getNodes = (): INode[] => {
   const nodes = store.getState().nodes
@@ -16,19 +14,14 @@ export const getNodes = (): INode[] => {
   }
 }
 
-/** Get node by id from store.
- *
- * @param {string} id
- * @returns {Object}
+/**
+ * Get node by id from store.
  */
 export const getNode = (id: string): INode | undefined =>
   store.getState().nodes.get(id)
 
 /**
  * Get all nodes of type from redux store.
- *
- * @param {string} type
- * @returns {Array}
  */
 export const getNodesByType = (type: string): INode[] => {
   const nodes = store.getState().nodesByType.get(type)
@@ -41,18 +34,12 @@ export const getNodesByType = (type: string): INode[] => {
 
 /**
  * Get all type names from redux store.
- *
- * @returns {Array}
  */
 export const getTypes = (): string[] =>
   Array.from(store.getState().nodesByType.keys())
 
 /**
  * Determine if node has changed.
- *
- * @param {string} id
- * @param {string} digest
- * @returns {boolean}
  */
 export const hasNodeChanged = (id: string, digest: string): boolean => {
   const node = store.getState().nodes.get(id)
@@ -65,10 +52,6 @@ export const hasNodeChanged = (id: string, digest: string): boolean => {
 
 /**
  * Get node and save path dependency.
- *
- * @param {string} id
- * @param {string} path
- * @returns {Object} node
  */
 export const getNodeAndSavePathDependency = (
   id: string,
@@ -114,10 +97,6 @@ export const saveResolvedNodes = async (
 
 /**
  * Get node and save path dependency.
- *
- * @param {string} typeName
- * @param {string} id
- * @returns {Object|void} node
  */
 export const getResolvedNode = (typeName: string, id: string): INode | null => {
   const { nodesByType, resolvedNodesCache } = store.getState()
@@ -181,7 +160,7 @@ export const ensureIndexByTypedChain = (
   // The format of the typedKey is `type,type/path+to+eqobj`
   const typedKey = nodeTypeNamePrefix + chained
 
-  if (typedKeyValueIndexes.get(typedKey)) {
+  if (typedKeyValueIndexes.has(typedKey)) {
     return
   }
 
@@ -248,9 +227,7 @@ export const getNodesByTypedChain = (
   chain: string[],
   value: boolean | number | string,
   nodeTypeNames: string[],
-  typedKeyValueIndexes:
-    | undefined
-    | Map<string, Map<string | number | boolean, INode>>
+  typedKeyValueIndexes: Map<string, Map<string | number | boolean, INode>>
 ): INode | undefined => {
   const key = chain.join(`+`)
 
