@@ -5489,6 +5489,24 @@
     - Disqus
     - Breadcrumbs
     - ESLint
+- url: https://gatsby-starter-clean-resume.netlify.com/
+  repo: https://github.com/masoudkarimif/gatsby-starter-clean-resume
+  description: A Gatsby Starter Template for Putting Your Resume Online Super Quick!
+  tags:
+    - Netlify
+    - Pagination
+    - Styling:Other
+    - SEO
+  features:
+    - Easy setup
+    - Completely customizable using only gatsby-config.js file
+    - Uses Milligram for styling
+    - Fully responsive
+    - Clean minimalist design
+    - Page transition
+    - Five different themes (great-gatsby, master-yoda, wonder-woman, darth-vader, luke-lightsaber)
+    - Includes React Helmet for title and description tags
+    - Includes Google Analytics plugin
 - url: https://gatsby-starter-i18n-bulma.netlify.com
   repo: https://github.com/kalwalt/gatsby-starter-i18n-bulma
   description: A gatsby starter with Bulma and optimized slug for better SEO.

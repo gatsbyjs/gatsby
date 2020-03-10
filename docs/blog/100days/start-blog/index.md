@@ -25,7 +25,7 @@ _Bonus:_ use your new blog to track your #100DaysOfGatsby progress! Research sho
 
 To create your blog, start with our [beginner-focused Gatsby tutorials](/tutorial/) and complete lessons 0-8. Depending on your current skill level, erecting a Gatsby blog make take you an afternoon or a full week (or more) to complete.
 
-If you are already familiar with Gatsby's APIs and conventions, and want a more advanced challenge, you can [create a Gatsby theme for your blog](/tutorial/theme-tutorials/).
+If you are already familiar with Gatsby's APIs and conventions, and want a more advanced challenge, you can [create a Gatsby theme for your blog](/tutorial/plugin-and-theme-tutorials/).
 
 ### What to Do If You Need Help
 
