@@ -1,33 +1,34 @@
-/* @flow */
-const { execSync } = require(`child_process`)
-const execa = require(`execa`)
-const hostedGitInfo = require(`hosted-git-info`)
-const fs = require(`fs-extra`)
-const sysPath = require(`path`)
-const report = require(`./reporter`)
-const url = require(`url`)
-const isValid = require(`is-valid-path`)
-const existsSync = require(`fs-exists-cached`).sync
-const { trackCli, trackError } = require(`gatsby-telemetry`)
-const prompts = require(`prompts`)
-const opn = require(`better-opn`)
+import opn from "better-opn"
+import { execSync } from "child_process"
+import execa from "execa"
+import { sync as existsSync } from "fs-exists-cached"
+import fs from "fs-extra"
+import { trackCli, trackError } from "gatsby-telemetry"
+import hostedGitInfo from "hosted-git-info"
+import isValid from "is-valid-path"
+import sysPath from "path"
+import prompts from "prompts"
+import url from "url"
 
-const {
-  getPackageManager,
-  promptPackageManager,
-} = require(`./util/configstore`)
-const isTTY = require(`./util/is-tty`)
-const spawn = (cmd: string, options: any) => {
+import report from "./reporter"
+import { getPackageManager, promptPackageManager } from "./util/configstore"
+import isTTY from "./util/is-tty"
+
+const spawnWithArgs = (
+  file: string,
+  args: string[],
+  options?: any
+): execa.ExecaChildProcess =>
+  execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
+
+const spawn = (cmd: string, options?: any): execa.ExecaChildProcess => {
   const [file, ...args] = cmd.split(/\s+/)
   return spawnWithArgs(file, args, options)
 }
-const spawnWithArgs = (file: string, args: string[], options: any) =>
-  execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
-
 // Checks the existence of yarn package and user preference if it exists
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
-const shouldUseYarn = async () => {
+const shouldUseYarn = async (): Promise<boolean> => {
   try {
     execSync(`yarnpkg --version`, { stdio: `ignore` })
 
@@ -49,7 +50,7 @@ const shouldUseYarn = async () => {
   }
 }
 
-const isAlreadyGitRepository = async () => {
+const isAlreadyGitRepository = async (): Promise<boolean> => {
   try {
     return await spawn(`git rev-parse --is-inside-work-tree`, {
       stdio: `pipe`,
@@ -60,14 +61,16 @@ const isAlreadyGitRepository = async () => {
 }
 
 // Initialize newly cloned directory as a git repo
-const gitInit = async rootPath => {
+const gitInit = async (
+  rootPath: string
+): Promise<execa.ExecaReturnBase<string>> => {
   report.info(`Initialising git in ${rootPath}`)
 
   return await spawn(`git init`, { cwd: rootPath })
 }
 
 // Create a .gitignore file if it is missing in the new directory
-const maybeCreateGitIgnore = async rootPath => {
+const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
   if (existsSync(sysPath.join(rootPath, `.gitignore`))) {
     return
   }
@@ -80,7 +83,10 @@ const maybeCreateGitIgnore = async rootPath => {
 }
 
 // Create an initial git commit in the new directory
-const createInitialGitCommit = async (rootPath, starterUrl) => {
+const createInitialGitCommit = async (
+  rootPath: string,
+  starterUrl: string
+): Promise<void> => {
   report.info(`Create initial git commit in ${rootPath}`)
 
   await spawn(`git add -A`, { cwd: rootPath })
@@ -98,7 +104,7 @@ const createInitialGitCommit = async (rootPath, starterUrl) => {
 }
 
 // Executes `npm install` or `yarn install` in rootPath.
-const install = async rootPath => {
+const install = async (rootPath: string): Promise<void> => {
   const prevDir = process.cwd()
 
   report.info(`Installing packages...`)
@@ -117,13 +123,17 @@ const install = async rootPath => {
   }
 }
 
-const ignored = path => !/^\.(git|hg)$/.test(sysPath.basename(path))
+const ignored = (path: string): boolean =>
+  !/^\.(git|hg)$/.test(sysPath.basename(path))
 
 // Copy starter from file system.
-const copy = async (starterPath: string, rootPath: string) => {
+const copy = async (
+  starterPath: string,
+  rootPath: string
+): Promise<boolean> => {
   // Chmod with 755.
   // 493 = parseInt('755', 8)
-  await fs.mkdirp(rootPath, { mode: 493 })
+  await fs.ensureDir(rootPath, { mode: 493 })
 
   if (!existsSync(starterPath)) {
     throw new Error(`starter ${starterPath} doesn't exist`)
@@ -152,8 +162,8 @@ const copy = async (starterPath: string, rootPath: string) => {
 }
 
 // Clones starter from URI.
-const clone = async (hostInfo: any, rootPath: string) => {
-  let url
+const clone = async (hostInfo: any, rootPath: string): Promise<void> => {
+  let url: string
   // Let people use private repos accessed over SSH.
   if (hostInfo.getDefaultRepresentation() === `sshurl`) {
     url = hostInfo.ssh({ noCommittish: true })
@@ -183,7 +193,16 @@ const clone = async (hostInfo: any, rootPath: string) => {
   if (!isGit) await createInitialGitCommit(rootPath, url)
 }
 
-const getPaths = async (starterPath: string, rootPath: string) => {
+interface IGetPaths {
+  starterPath: string
+  rootPath: string
+  selectedOtherStarter: boolean
+}
+
+const getPaths = async (
+  starterPath: string,
+  rootPath: string
+): Promise<IGetPaths> => {
   let selectedOtherStarter = false
 
   // if no args are passed, prompt user for path and starter
@@ -230,11 +249,11 @@ const getPaths = async (starterPath: string, rootPath: string) => {
   return { starterPath, rootPath, selectedOtherStarter }
 }
 
-type InitOptions = {
-  rootPath?: string,
+interface IInitOptions {
+  rootPath: string
 }
 
-const successMessage = path => {
+const successMessage = (path: string): void => {
   report.info(`
 Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
 
@@ -246,7 +265,10 @@ Your new Gatsby site has been successfully bootstrapped. Start developing it by 
 /**
  * Main function that clones or copies the starter.
  */
-module.exports = async (starter: string, options: InitOptions = {}) => {
+export default async (
+  starter: string,
+  options: IInitOptions
+): Promise<void> => {
   const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
     starter,
     options.rootPath
