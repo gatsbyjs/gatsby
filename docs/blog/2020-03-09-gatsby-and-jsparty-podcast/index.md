@@ -10,7 +10,7 @@ tags:
   - cloud
 ---
 
-Recently I had the pleasure of joining the [JSParty][jsparty] podcast to discuss _all_ things Gatsby. Starting with the classic question of "What is Gatsby?" progressing to the value of rehydration, future deliverables of the open-source product, [Gatsby Cloud][cloud], and everything in between! Quite simply, all things Gatsby with the JS Party crew!
+Recently I had the pleasure of joining the [JSParty][jsparty] podcast to discuss _all_ things Gatsby. Starting with the classic question of "What is Gatsby?", progressing to the value of rehydration, future deliverables of the open-source product, [Gatsby Cloud][cloud], and everything in between! Quite simply, all things Gatsby with the JS Party crew!
 
 Check out the below podcast for more detail on why Gatsby, why Gatsby Cloud, and our future plans for Gatsby, the product.
 
