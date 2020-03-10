@@ -14,6 +14,7 @@ import logoInverted from "../assets/logo-inverted.svg"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { breakpointGutter } from "../utils/styles"
 import DarkModeToggle from "./dark-mode-toggle"
+import LanguageDropdown from "./language-dropdown"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -212,6 +213,7 @@ const Navigation = ({ pathname }) => {
             display: `flex`,
           }}
         >
+          <LanguageDropdown pathname={pathname} />
           <SocialNavItem
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"

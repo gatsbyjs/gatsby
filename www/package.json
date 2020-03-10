@@ -8,6 +8,7 @@
     "@jamo/graphql-request": "2.0.2",
     "@loadable/component": "^5.11.0",
     "@mdx-js/mdx": "^1.5.1",
+    "@reach/menu-button": "^0.8.6",
     "@reach/skip-nav": "^0.6.2",
     "@styled-system/prop-types": "^5.1.4",
     "@styled-system/should-forward-prop": "^5.1.4",
