@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { Trans } from "@lingui/macro"
 import { graphql } from "gatsby"
-import EditIcon from "react-icons/lib/md/create"
+import { MdCreate as EditIcon } from "react-icons/md"
 
 export default class MarkdownPageFooter extends React.Component {
   constructor() {

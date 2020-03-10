@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
-import MdSearch from "react-icons/lib/md/search"
+import { MdSearch } from "react-icons/md"
 
 const SearchIcon = ({ focused }) => (
   <MdSearch

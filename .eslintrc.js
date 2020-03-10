@@ -85,6 +85,12 @@ module.exports = {
       plugins: ["@typescript-eslint/eslint-plugin"],
       rules: {
         ...TSEslint.configs.recommended.rules,
+        // This rule tries to prevent using `require()`. However in node code,
+        // there are times where this makes sense. And it specifically is causing
+        // problems in our tests where we often want this functionality for module
+        // mocking. At this point it's easier to have it off and just encouarge
+        // using top-level imports via code reviews.
+        "@typescript-eslint/no-var-requires": "off",
         // This rule ensures that typescript types do not have semicolons
         // at the end of their lines, since our prettier setup is to have no semicolons
         // e.g.,

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.8...gatsby-plugin-sharp@2.4.9) (2020-03-10)
+
+### Features
+
+- **gatsby-transformer-sharp:** add inside and outside fit opt… ([#14852](https://github.com/gatsbyjs/gatsby/issues/14852)) ([1aa2974](https://github.com/gatsbyjs/gatsby/commit/1aa2974)), closes [#13078](https://github.com/gatsbyjs/gatsby/issues/13078) [/github.com/gatsbyjs/gatsby/pull/13078#issuecomment-482247808](https://github.com//github.com/gatsbyjs/gatsby/pull/13078/issues/issuecomment-482247808)
+
 ## [2.4.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.7...gatsby-plugin-sharp@2.4.8) (2020-03-09)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

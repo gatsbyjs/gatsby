@@ -2,8 +2,7 @@
 import { jsx } from "theme-ui"
 import { Trans } from "@lingui/macro"
 import React from "react"
-import GoFold from "react-icons/lib/go/fold"
-import GoUnfold from "react-icons/lib/go/unfold"
+import { GoFold, GoUnfold } from "react-icons/go"
 
 const iconStyles = {
   display: `inline-block`,

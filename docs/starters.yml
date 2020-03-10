@@ -817,7 +817,7 @@
   features:
     - Based on gatsby-starter-default
     - Using Tachyons for CSS.
-- url: https://quizzical-mcclintock-0226ac.netlify.com/
+- url: https://gatsby-starter-tailwind.oddstronaut.com/
   repo: https://github.com/taylorbryant/gatsby-starter-tailwind
   description: A Gatsby v2 starter styled using Tailwind, a utility-first CSS framework. Uses Purgecss to remove unused CSS.
   tags:

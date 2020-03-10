@@ -3,8 +3,10 @@ import { jsx } from "theme-ui"
 import { t, Trans } from "@lingui/macro"
 import { withI18n } from "@lingui/react"
 import Link from "./localized-link"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-import ArrowBackIcon from "react-icons/lib/md/arrow-back"
+import {
+  MdArrowBack as ArrowBackIcon,
+  MdArrowForward as ArrowForwardIcon,
+} from "react-icons/md"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
