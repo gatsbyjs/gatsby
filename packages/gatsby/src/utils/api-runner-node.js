@@ -9,7 +9,7 @@ const stackTrace = require(`stack-trace`)
 const { codeFrameColumns } = require(`@babel/code-frame`)
 const fs = require(`fs-extra`)
 const { getCache } = require(`./get-cache`)
-const createNodeId = require(`./create-node-id`)
+import { createNodeId } from "./create-node-id"
 const { createContentDigest } = require(`gatsby-core-utils`)
 const {
   buildObjectType,
