@@ -21,7 +21,7 @@ Getting Gatsby Cloud and Netlify Functions to cooperate took a bit of tinkering,
 
 Today we'll look at how to use Netlify Functions for your Gatsby Cloud site.
 
-# What are Netlify Functions?
+## What are Netlify Functions?
 
 Netlify functions let you run event-driven server-side code, without worrying about running and maintaining a server. It's a service that sits in front of AWS Lambda, and brushes away some of the thorns of working directly with Amazon Web Services.
 
@@ -64,7 +64,7 @@ When using Netlify for CI _and_ deployments, you can pop this code in a `/functi
 
 Learn more about Netlify Functions in [their documentation](https://docs.netlify.com/functions/overview/).
 
-# What is Gatsby Cloud?
+## What is Gatsby Cloud?
 
 Gatsby Cloud is a service provided by Gatsby Inc. to manage deployments of Gatsby apps.
 
@@ -72,13 +72,12 @@ Critically, Gatsby Cloud is _not_ an alternative to Netlify—we still use CDN p
 
 <img
   src={netlifyFunctions}
-  caption="A screenshot of the Gatsby Cloud project dashboard. Need to work on my site's perf!"
   alt="Screenshot of Gatsby Cloud, showing a successful recent deploy."
 />
 
 There are lots of reasons to use Gatsby Cloud, but perhaps the most compelling reason for most developers is speed. We're building specialized infrastructure which allows us to build large Gatsby sites in record time.
 
-# With our powers combined…
+## With our powers combined…
 
 The trouble is that when using Gatsby Cloud, we aren't doing any building on Netlify; we build the site ahead of time, and upload the files to Netlify. This deprives Netlify of the opportunity to package and ship our functions!
 
@@ -102,7 +101,7 @@ exports.onPostBuild = () => {
 }
 ```
 
-## Gatsby build hooks
+### Gatsby build hooks
 
 In my opinion, one of the coolest things about Gatsby.js is that you can "hook in" to any of its build steps, like a lifecycle method.
 
@@ -110,7 +109,7 @@ In my opinion, one of the coolest things about Gatsby.js is that you can "hook i
 
 Learn more about Gatsby build hooks in [our documentation](https://www.gatsbyjs.org/docs/node-apis/).
 
-## Zip It and Ship It
+### Zip It and Ship It
 
 Remember when I mentioned that Netlify brushes away the thorns of working with AWS Lambda? One of those thorns is the quirk that every function needs to be its own packaged project.
 
@@ -139,7 +138,7 @@ Let's say we have two functions, `track-hit.js` and `like-content.js`. And let's
 
 Because the folks at Netlify are wonderful wizards, they extracted the module that prepares functions and published it on NPM as `@netlify/zip-it-and-ship-it`. This means we can leverage this critical part of Netlify's build process even though we aren't building on Netlify.
 
-## Cold and warm builds
+### Cold and warm builds
 
 When we ship our built project over to Netlify, it's going to look for functions in a very specific place: `/public/functions`. We need to have our built, prepared functions hanging out in that directory. Before we can build and prep the functions with `zip-it-and-ship-it`, we need to create the directory first!
 
@@ -155,7 +154,7 @@ Why might the directory already exist? Gatsby Cloud maintains a cache, to speed 
 
 > Node purists are probably aghast in horror at the fact that I'm using `existsSync` and `mkdirSync` instead of their default async versions. Because this is a build step, and not an active server, I couldn't see any compelling issue with doing it this way, and it makes the code a little simpler!
 
-# In conclusion
+## In conclusion
 
 With a little bit of Node.js configuration, we're able to do some post-processing after the build, packaging up our functions and moving them to the spot Netlify expects to find them. When we push code to Github, Gatsby Cloud will run a new build, and then upload the resulting files to Netlify.
 
