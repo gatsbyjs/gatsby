@@ -264,9 +264,9 @@
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
                 - title: Pixabay Image Source Plugin Tutorial
-                  link: /docs/pixabay-source-plugin-tutorial/
+                  link: /tutorial/pixabay-source-plugin-tutorial/
                 - title: Remark Plugin Tutorial
-                  link: /docs/remark-plugin-tutorial/
+                  link: /tutorial/remark-plugin-tutorial/
                 - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Themes
@@ -498,8 +498,13 @@
             - title: Optimizing Site Performance with Guess.js
               link: /docs/optimizing-site-performance-with-guessjs/
               breadcrumbTitle: Guess.js
+            - title: Profiling Site Performance with React Profiler
+              link: /docs/profiling-site-performance-with-react-profiler/
+              breadcrumbTitle: React Profiler
             - title: Scaling Issues
               link: /docs/scaling-issues/
+            - title: Experimental Page Build Optimizations for Incremental Data Changes
+              link: /docs/page-build-optimizations-for-incremental-data-changes/
         - title: Localization & Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
@@ -762,7 +767,11 @@
           link: /docs/glossary/static-site-generator/
         - title: webpack
           link: /docs/glossary/webpack/
+        - title: WPGraphQL
+          link: /docs/glossary/wpgraphql/
     - title: Gatsby Telemetry
       link: /docs/telemetry/
+    - title: Gatsby Feedback
+      link: /docs/cli-feedback/
     - title: Gatsby REPL
       link: /docs/gatsby-repl/
