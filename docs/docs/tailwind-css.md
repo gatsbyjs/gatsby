@@ -75,19 +75,22 @@ These steps assume you have a CSS-in-JS library already installed, and the examp
 **Option 1**: Install `twin.macro` and use Tailwind 1.2.0+
 
 1. Install Twin and Emotion
+
 ```shell
 npm install -D twin.macro @emotion/core @emotion/styled gatsby-plugin-emotion
 ```
 
 2. Import the Tailwind base styles
+
 ```javascript:title=gatsby-browser.js
-import 'tailwindcss/dist/base.css'
+import "tailwindcss/dist/base.css"
 ```
 
 3. Enable the Gatsby emotion plugin
+
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-emotion`]
+  plugins: [`gatsby-plugin-emotion`],
 }
 ```
 
