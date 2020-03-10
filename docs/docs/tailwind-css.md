@@ -70,7 +70,7 @@ These steps assume you have a CSS-in-JS library already installed, and the examp
 
 1. Install Tailwind Babel Macro
 
-**Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a new forked project can be found at `twin.macro` that supports Tailwindcss v1.2 classes. It's currently in pre-release so all plugins arn't supported at the time of writting. Feel free to either use `twin.macro` or revert to Tailwind 0.7.4.
+**Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a new forked project can be found at `twin.macro` that supports Tailwindcss v1.2 classes. It's currently in pre-release so not all plugins are supported at the time of writing. Alternatively, you can revert to Tailwind 0.7.4.
 
 **Option 1**: Install `twin.macro` and use Tailwind 1.2.0+
 
