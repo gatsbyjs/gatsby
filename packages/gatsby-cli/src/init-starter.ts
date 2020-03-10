@@ -17,11 +17,14 @@ import isTTY from "./util/is-tty"
 const spawnWithArgs = (
   file: string,
   args: string[],
-  options?: any
+  options?: execa.Options
 ): execa.ExecaChildProcess =>
   execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
 
-const spawn = (cmd: string, options?: any): execa.ExecaChildProcess => {
+const spawn = (
+  cmd: string,
+  options?: execa.Options
+): execa.ExecaChildProcess => {
   const [file, ...args] = cmd.split(/\s+/)
   return spawnWithArgs(file, args, options)
 }
