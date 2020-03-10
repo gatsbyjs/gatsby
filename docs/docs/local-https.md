@@ -158,7 +158,7 @@ Usage of the `--ca-file` flag is only required if your certificate is signed by 
 
 If your certificate is self-signed, then do not include the `--ca-file` flag. Also, if you want your browser to trust a self-signed certificate, you will need to add it to your operating system (or browser's, in Firefox's case) root certificate store for your browser to trust it.
 
-In most cases, the `--https` passed by itself is easier and more convenient to get local https.
+In most cases, the `--https` passed by itself is easier and more convenient to get local HTTPS.
 
 ---
 
