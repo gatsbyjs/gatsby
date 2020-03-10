@@ -100,7 +100,7 @@ Using this query on a page or in a component will allow you to display your list
 }
 ```
 
-Note that, in this example, there is no alt text passed to the `Img` component because this image can be considered presentational. Etsy doesn't provide space for you specify [text alternatives](https://www.w3.org/WAI/WCAG21/quickref/?versions=2.0#text-alternatives) for your images. Instead, when you list an item on Etsy, alt text is generated for each image you associate with that item from its title. Including the title or description as alt text here would only repeat the exact same information for anyone using a screen reader.
+Note that, in this example, there is no alt text passed to the `Img` component because this image can be considered presentational. All images appear in association with their title and description. Therefore, including the same information as alt text would be repetitive for anyone using a screen reader.
 
 ## Gatsby advantages
 
