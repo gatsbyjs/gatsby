@@ -44,8 +44,7 @@ function getEnvDetect({
   key,
   name,
 }: {
-  // prettier-ignore
-  key: string,
+  key: string
   name: string
 }): () => string | null {
   return function(): string | null {

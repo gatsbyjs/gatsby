@@ -1,13 +1,20 @@
 import Module from "module"
 import path from "path"
 
+/**
+ * We need to use private Module methods in this polyfill
+ */
+interface IModulePrivateMethods {
+  _nodeModulePaths: (directory: string) => string[]
+  _compile: (src: string, file: string) => void
+}
+
 const fallback = (filename: string): NodeRequire => {
-  // @ts-ignore
-  const mod = new Module(filename, null)
+  const mod = new Module(filename) as Module & IModulePrivateMethods
 
   mod.filename = filename
-  // @ts-ignore
-  mod.paths = Module._nodeModulePaths(path.dirname(filename))
+  mod.paths = (Module as typeof Module &
+    IModulePrivateMethods)._nodeModulePaths(path.dirname(filename))
   mod._compile(`module.exports = require;`, filename)
 
   return mod.exports

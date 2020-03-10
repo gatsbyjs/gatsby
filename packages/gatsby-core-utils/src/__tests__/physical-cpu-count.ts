@@ -1,7 +1,7 @@
 jest.mock(`child_process`)
 jest.mock(`os`)
 let os
-function mockPlatform(platform) {
+function mockPlatform(platform: string): void {
   os.platform.mockImplementation(() => platform)
 }
 
@@ -14,9 +14,9 @@ describe(`physical-cpu-count`, () => {
 
   it.each([`linux`, `darwin`])(
     `should return correct CPU count on %s`,
-    platform => {
+    (platform: string): void => {
       const cProc = require(`child_process`)
-      cProc.execSync.mockImplementation(() => `4`)
+      cProc.execSync.mockImplementation((): string => `4`)
       mockPlatform(platform)
       const { getPhysicalCpuCount } = require(`../physical-cpu-count`)
       expect(getPhysicalCpuCount()).toBe(4)
@@ -25,7 +25,7 @@ describe(`physical-cpu-count`, () => {
 
   it.each([`linux`, `darwin`])(
     `should return fallback CPU count on %s when childProcess fails`,
-    platform => {
+    (platform: string): void => {
       const cProc = require(`child_process`)
       cProc.execSync.mockImplementation(() => `4`)
       mockPlatform(platform)

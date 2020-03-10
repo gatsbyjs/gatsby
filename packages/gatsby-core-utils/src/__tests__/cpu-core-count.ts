@@ -1,6 +1,6 @@
-jest.mock(`../physical-cpu-count`, () => ({
-  getPhysicalCpuCount: () => 1,
-}))
+jest.mock(`../physical-cpu-count`, () => {
+  return { getPhysicalCpuCount: (): number => 1 }
+})
 import { cpuCoreCount } from "../cpu-core-count"
 
 beforeEach(() => {
