@@ -10021,3 +10021,15 @@
     - Blog
   built_by: PJ
   built_by_url: "https://pjsachdev.me"
+- title: Pure Codes Software Solutions
+  main_url: "https://purecodes.net/"
+  url: "https://purecodes.net/"
+  source_url: "https://github.com/zeshan77/purecodes"
+  featured: false
+  description: >
+    Pure Codes is a software development consultancy that specializes in PHP, Laravel, Vue.js and Tailwindcss.
+  categories:
+    - Web Development
+    - Business
+  built_by: Zeshan Khattak
+  built_by_url: "https://zeshankhattak.com/"
