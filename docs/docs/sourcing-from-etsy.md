@@ -10,7 +10,7 @@ This guide assumes you already have a functioning Gatsby site as well as an open
 
 ## Getting an API key
 
-You'll need to make sure you have two-factor authentication enabled for your Etsy account. If you don't already, you'll be prompted when you go to [register a new application](https://www.etsy.com/developers/register). Fill in the required information as completely as you can, read Etsy's terms and conditions, and create your app.
+You'll need to make sure you have two-factor authentication enabled for your Etsy account. If you don't already have it, you'll be prompted when you go to [register a new application](https://www.etsy.com/developers/register). Fill in the required information as completely as you can, read Etsy's terms and conditions, and create your app.
 
 Note that Etsy expects developers to test the API using real data. That means your shop and listings will be live even as you're working on this site. If you're already an active Etsy seller, this shouldn't change your usual workflow much. If you're starting a new shop, be mindful of [Etsy's testing policies](https://www.etsy.com/developers/documentation/getting_started/testing#section_etsy_api_testing_policies) as you test your work.
 
@@ -101,9 +101,9 @@ Using this query on a page or in a component will allow you to display your list
 
 ## Gatsby advantages
 
-If you are familiar with Etsy, you are aware of the restrictions around branding within the platform. Shops have an extremely similar look, which limits the creativity any individual shop owner can display. In addition, you have no control over Etsy's policies. An increase in their listing fees could have a significant impact on your profits. If Etsy went out of business, you would quickly be left without any customers.
+If you are familiar with Etsy, you are aware of the restrictions around branding within the platform. Shops have an extremely similar look, which limits the creativity any individual shop owner can display. In addition, you have no control over Etsy's policies.
 
-So why sell on Etsy at all? The answer is that Etsy shops trade individuality for discoverability. Etsy's advertising budget is enormous compared to what a shop owner, operating alone, could afford. You also benefit from the trust Etsy has built up over the years. Because people are familiar with Etsy, they'll often go straight there to purchase their handmade or vintage items.
+However, there are great benefits to selling on Etsy. What you lose in individuality you gain in discoverability. Etsy's advertising budget is enormous compared to what a shop owner, operating alone, could afford. You benefit from the trust Etsy has built up over the years. Because people are familiar with Etsy, they'll often go straight there to purchase their handmade or vintage items.
 
 Building your own site with Gatsby allows you to have the best of both worlds. You can take control over your customers' experience and drive traffic to your own blazing fast website. You're also able to avoid links to others' listings competing for your customers' attention. At the same time, you maintain all the benefits of having your products listed on Etsy.
 
