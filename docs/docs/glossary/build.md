@@ -9,11 +9,11 @@ Learn what _build_ means and how to set up a build process for your Gatsby proje
 
 _Build_ refers to the process of compiling your site. During a build, or at _build time_, your project gets transformed from component files to optimized HTML, CSS, and JavaScript files that you can [deploy](/docs/glossary#deploy) to your hosting provider.
 
-There are a few ways to create a build. You can build your site locally on your computer using the [Gatsby CLI](https://www.gatsbyjs.org/docs/gatsby-cli/#build), and then deploy changes to your [host](/docs/glossary#hosting). If you use [Gatsby Cloud](https://www.gatsbyjs.com/), you can take advantage of [Gatsby Builds](/blog/2020-01-27-announcing-gatsby-builds-and-reports/), a feature available with every Gatsby Cloud account. You can also use a [continuous deployment](/docs/glossary/continuous-deployment/) service such as [AWS Amplify](/docs/deploying-to-aws-amplify/) or [Netlify](/docs/deploying-to-netlify/).
+There are a few ways to create a build. You can build your site locally on your computer using the [Gatsby CLI](/docs/gatsby-cli/#build), and then deploy changes to your [host](/docs/glossary#hosting). If you use [Gatsby Cloud](https://www.gatsbyjs.com/), you can take advantage of [Gatsby Builds](/blog/2020-01-27-announcing-gatsby-builds-and-reports/), a feature available with every Gatsby Cloud account. You can also use a [continuous deployment](/docs/glossary/continuous-deployment/) service such as [AWS Amplify](/docs/deploying-to-aws-amplify/) or [Netlify](/docs/deploying-to-netlify/).
 
-For larger teams or larger projects, you may want to use a continuous deployment approach to creating your build. Each CD/CI service works slightly differently. Almost all of them, however, use the contents of a Git repository to build your site. Gatsby Cloud, for example, integrates with [GitHub](https://github.com/), and a number of hosted [content management systems](/docs/glossary#cms). It creates a new build after every commit, although you can also trigger a build manually.
+For larger teams or larger projects, you may want to use a continuous deployment approach to create builds. Each CD/CI service works slightly differently. Almost all of them, however, use the contents of a Git repository to build your site.
 
-With a continuous deployment workflow, each commit to your version control repository triggers a new build and a round of automated testing. If your change passes the tests, it will be deployed to your hosting environment.
+Gatsby Cloud, for example, integrates with [GitHub](https://github.com/), and a number of hosted [content management systems](/docs/glossary#cms). Gatsby Cloud creates a new build after every commit, although you can also trigger a build manually.
 
 ### Using Gatsby <abbr>CLI</abbr>
 
@@ -29,5 +29,5 @@ When you're ready to publish your project, run the `gatsby build` command to cre
 
 ### Learn more about builds
 
-- [Deploying and Hosting](https://www.gatsbyjs.org/docs/deploying-and-hosting/) from the Gatsby docs
-- How to enabled super fast [Distributed Builds](https://www.gatsbyjs.com/docs/distributed-builds/) for Gatsby Cloud
+- [Deploying and Hosting](/docs/deploying-and-hosting/) from the Gatsby docs
+- How to enabled super fast [Distributed Builds](/docs/distributed-builds/) for Gatsby Cloud
