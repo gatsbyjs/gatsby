@@ -11,7 +11,9 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 const telemetry = require(`gatsby-telemetry`)
 
-const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const {
+  detectPortInUseAndPrompt,
+} = require(`../utils/detect-port-in-use-and-prompt`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 

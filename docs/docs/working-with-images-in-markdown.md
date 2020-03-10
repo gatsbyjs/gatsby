@@ -55,7 +55,7 @@ The next step will be to incorporate the data into a template with a GraphQL que
 
 ### Configuring for images and posts in different directories
 
-There are also occassions when you may want to source images from a different directory than where your Markdown posts or pages are located, such as in an external `/images` folder. You can set this up by specifying two distinct sources, one for the pages and the other for images:
+There are also occasions when you may want to source images from a different directory than where your Markdown posts or pages are located, such as in an external `/images` folder. You can set this up by specifying two distinct sources, one for the pages and the other for images:
 
 ```js:title=gatsby-config.js
 module.exports = {

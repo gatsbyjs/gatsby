@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.33...gatsby@2.19.34) (2020-03-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.32...gatsby@2.19.33) (2020-03-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.31...gatsby@2.19.32) (2020-03-06)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.30...gatsby@2.19.31) (2020-03-06)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.29...gatsby@2.19.30) (2020-03-06)
+
+### Bug Fixes
+
+- **gatsby:** Prevent cache invalidation case for loki ([#22009](https://github.com/gatsbyjs/gatsby/issues/22009)) ([b5942d6](https://github.com/gatsbyjs/gatsby/commit/b5942d6))
+
+## [2.19.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.28...gatsby@2.19.29) (2020-03-05)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.27...gatsby@2.19.28) (2020-03-04)
+
+### Bug Fixes
+
+- **gatsby:** Resolve linked interfaces consistently with objec… ([#21936](https://github.com/gatsbyjs/gatsby/issues/21936)) ([bd5bdd1](https://github.com/gatsbyjs/gatsby/commit/bd5bdd1))
+
 ## [2.19.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.26...gatsby@2.19.27) (2020-03-03)
 
 ### Features

@@ -7,3 +7,5 @@ exports.urlResolve = require(`./url`).resolve
 exports.isCI = require(`./ci`).isCI
 exports.getCIName = require(`./ci`).getCIName
 exports.createRequireFromPath = require(`./create-require-from-path`)
+exports.getConfigStore = require(`./get-config-store`)
+exports.getGatsbyVersion = require(`./get-gatsby-version`)
