@@ -7,15 +7,9 @@ const ROOT = path.join(__dirname, `..`, `..`)
 const OUTPUT_FILE = path.join(ROOT, `latest-apis.json`)
 
 export interface IAPIResponse {
-  ssr: {
-    [key: string]: object
-  }
-  browser: {
-    [key: string]: object
-  }
-  node: {
-    [key: string]: object
-  }
+  browser: object
+  node: object
+  ssr: object
 }
 
 export const getLatestAPIs = async (): Promise<IAPIResponse> => {
