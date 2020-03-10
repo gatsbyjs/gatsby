@@ -2,8 +2,7 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
-import TagsIcon from "react-icons/lib/ti/tags"
-import TiArrowRight from "react-icons/lib/ti/arrow-right"
+import { TiTags as TagsIcon, TiArrowRight } from "react-icons/ti"
 
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Button from "../components/button"

@@ -4,7 +4,7 @@ const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const fs = require(`fs-extra`)
 import { buildHTML } from "./build-html"
-const buildProductionBundle = require(`./build-javascript`)
+import { buildProductionBundle } from "./build-javascript"
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
@@ -14,12 +14,16 @@ const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
 const { store, emitter, readState } = require(`../redux`)
 const queryUtil = require(`../query`)
-const appDataUtil = require(`../utils/app-data`)
+import * as appDataUtil from "../utils/app-data"
 const WorkerPool = require(`../utils/worker/pool`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 const {
   waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
 } = require(`../utils/jobs-manager`)
+import {
+  userPassesFeedbackRequestHeuristic,
+  showFeedbackRequest,
+} from "../utils/feedback"
 const buildUtils = require(`../commands/build-utils`)
 const { boundActionCreators } = require(`../redux/actions`)
 
@@ -107,11 +111,11 @@ module.exports = async function build(program: BuildArgs) {
     { parentSpan: buildSpan }
   )
   activity.start()
-  const stats = await buildProductionBundle(program, {
-    parentSpan: activity.span,
-  }).catch(err => {
-    activity.panic(structureWebpackErrors(`build-javascript`, err))
-  })
+  const stats = await buildProductionBundle(program, activity.span).catch(
+    err => {
+      activity.panic(structureWebpackErrors(`build-javascript`, err))
+    }
+  )
   activity.end()
 
   const workerPool = WorkerPool.create()
@@ -306,5 +310,9 @@ module.exports = async function build(program: BuildArgs) {
       )
       report.info(`.cache/deletedPages.txt created`)
     }
+  }
+
+  if (await userPassesFeedbackRequestHeuristic()) {
+    showFeedbackRequest()
   }
 }

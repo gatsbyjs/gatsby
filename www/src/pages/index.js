@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"

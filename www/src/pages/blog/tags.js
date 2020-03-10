@@ -5,7 +5,7 @@ import { graphql, Link } from "gatsby"
 import styled from "@emotion/styled"
 import PropTypes from "prop-types"
 import { kebabCase } from "lodash-es"
-import TiArrowRight from "react-icons/lib/ti/arrow-right"
+import { TiArrowRight } from "react-icons/ti"
 
 import PageMetadata from "../../components/page-metadata"
 import Button from "../../components/button"
