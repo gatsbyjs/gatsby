@@ -6641,6 +6641,7 @@
 - title: ReactStudy Blog
   url: https://peking.netlify.com
   main_url: https://peking.netlify.com
+  source_url: https://github.com/97thjingba/GatsbyBlogByPeking
   description: >
     Belong to your own blog by gatsby
   categories:
