@@ -66,8 +66,8 @@ In Windows it's a little more complex. [Check out this Stack Overflow article fo
 
 Project environment variables that you defined in the `.env.*` files will _NOT_ be immediately available
 in your Node.js scripts. To use those variables, use NPM package [dotenv](https://www.npmjs.com/package/dotenv) to
-examine the active `.env.*` file and attached those values.
-Dotenv is already a dependency of Gatsby, so you can require it in your `gatsby-config.js` or `gatsby-node.js` like this:
+examine the active `.env.*` file and attach those values.
+`dotenv` is already a dependency of Gatsby, so you can require it in your `gatsby-config.js` or `gatsby-node.js` like this:
 
 ```javascript:title=gatsby-config.js
 require("dotenv").config({
@@ -156,7 +156,7 @@ Specifically, you can use `dotenv` and your individual OS Env Var to locate the 
 
 ### Google Analytics env var example
 
-If you would like to add a `staging` environment with a custom Google Analytics Tracking ID, and a dedicated `apiUrl`. You can add `.env.staging` at the root of your project with the following modification to your `gatsby-config.js`:
+If you would like to add a `staging` environment with a custom Google Analytics Tracking ID, and a dedicated `apiUrl` you can add `.env.staging` at the root of your project. In order to do so, use the following modification to your `gatsby-config.js`:
 
 ```text:title=.env.staging
 GA_TRACKING_ID="UA-1234567890"
