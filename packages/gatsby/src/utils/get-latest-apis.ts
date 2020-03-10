@@ -20,7 +20,7 @@ export const getLatestAPIs = async (): Promise<IAPIResponse> => {
 
     return data
   } catch (e) {
-    if (await fs.pathExistsSync(OUTPUT_FILE)) {
+    if (await fs.exists(OUTPUT_FILE)) {
       return fs.readJSON(OUTPUT_FILE)
     }
     // possible offline/network issue
