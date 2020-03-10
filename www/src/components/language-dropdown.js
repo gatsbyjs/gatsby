@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Menu, MenuButton, MenuList, MenuLink } from "@reach/menu-button"
+import { Menu, MenuButton, MenuPopover, MenuLink } from "@reach/menu-button"
 import { MdTranslate } from "react-icons/md"
 import { Link } from "gatsby"
 import "@reach/menu-button/styles.css"
@@ -21,19 +21,30 @@ function LangLink({ code, name, localName, pathname }) {
   )
 }
 
+// We want the menu to go on the bottom right.
+// This is taken from the Reach source code here:
+// https://github.com/reach/reach-ui/blob/master/packages/popover/src/index.tsx#L101
+const menuPosition = (targetRect, popoverRect) => {
+  return {
+    left: `${targetRect.right - popoverRect.width + window.pageXOffset}px`,
+    top: `${targetRect.top + targetRect.height + window.pageYOffset}px`,
+  }
+}
+
 export default function LanguageDropdown({ pathname }) {
   return (
     <Menu>
       <MenuButton sx={{ bg: `background`, border: 0 }}>
         <MdTranslate /> Languages
       </MenuButton>
-      <MenuList
+      <MenuPopover
+        position={menuPosition}
         sx={{ width: `16rem`, border: 0, boxShadow: `shadows.floating` }}
       >
         {allLangs.map(lang => (
           <LangLink {...lang} pathname={pathname} />
         ))}
-      </MenuList>
+      </MenuPopover>
     </Menu>
   )
 }
