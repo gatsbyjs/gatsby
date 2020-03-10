@@ -5532,3 +5532,19 @@
     - Robots.txt
     - Sitemap
     - PWA
+- url: https://reactor-theme.netlify.com/
+  repo: https://github.com/hashinteractive/gatsby-theme-reactor/tree/master/gatsby-theme-reactor
+  description: The Reactor Theme is a theme for Gatsby JS sites. Gatsby themes are plugins (npm packages) that add pre-configured functionality and UI to a basic Gatsby sites. This theme is a portfolio theme for software engineers, developers and UI designers to use as a personal Curriculum Vitae.
+
+  tags:
+    - Styling:Tailwind
+    - Portfolio
+    - Landing Page
+
+  features:
+    - Profile Image
+    - Skills
+    - Projects Overview
+    - Individual Project Pages
+    - Contact
+    - Theme UI
