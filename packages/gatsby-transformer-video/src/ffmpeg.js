@@ -111,6 +111,7 @@ export default class FFMPEG {
       let fileNode
       while (!fileNode) {
         try {
+          console.log(`Downloading https:${url}`)
           fileNode = await this.queue.add(() =>
             createRemoteFileNode({
               url: `https:${url}`,
@@ -128,6 +129,8 @@ export default class FFMPEG {
             e.message = `Download of https:${url} failed after three times:\n${e.message}`
             throw e
           }
+
+          console.log(`Unable to download https:${url}\nRetrying (${tries}/3)`)
         }
       }
 
