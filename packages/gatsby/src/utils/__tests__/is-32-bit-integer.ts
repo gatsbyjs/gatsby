@@ -1,4 +1,4 @@
-const is32BitInteger = require(`../is-32-bit-integer.js`)
+import { is32BitInteger } from "../is-32-bit-integer"
 
 const MAX_INT = 2147483647
 const MIN_INT = -2147483648
