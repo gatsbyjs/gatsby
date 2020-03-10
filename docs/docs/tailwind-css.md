@@ -81,7 +81,6 @@ npm install -D twin.macro @emotion/core @emotion/styled gatsby-plugin-emotion
 
 2. Import the Tailwind base styles
 ```javascript:title=gatsby-browser.js
-// gatsby-browser.js
 import 'tailwindcss/dist/base.css'
 ```
 
