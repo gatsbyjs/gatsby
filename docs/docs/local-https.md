@@ -35,7 +35,7 @@ to use this same password.
 Please enter the CA password:
 ```
 
-This is _only_ required the first time you are using Gatsby's HTTPS feature on your machine, and when you are creating a brand new certificate.
+The password is _only_ required the first time you are using Gatsby's HTTPS feature on your machine, or when you are creating a brand new certificate.
 
 After typing in your password, `devcert` will install the CA certificate in your operating system trusted certs store. A utility called `certutil` will be needed to update the trust store for various browsers; specifically: Firefox, and Chrome (when it's running on Linux).
 
@@ -45,7 +45,7 @@ After typing in your password, `devcert` will install the CA certificate in your
 
 - To install `certutil`, you need to install the `nss tools` package(s). The exact procedure will differ depending on your operating system.
 
-  - On a linux OS, you should be able to simply run one of the following, depending on the flavor:
+  - On a linux OS, you should be able to run one of the following, depending on your Linux distro:
 
     ```shell
     # Debian based (Ubuntu)
@@ -64,7 +64,7 @@ After typing in your password, `devcert` will install the CA certificate in your
     brew install nss
     ```
 
-  - With regards to Windows: There's not too many precompiled libraries out there, so the only option would be to go searching for one, or compile it yourself. Because of how difficult Windows makes it, `devcert` will not even try to update the Firefox trust store automatically; instead, it will fallback to using the "Firefox wizard", detailed below.
+  - With regards to Windows: Precompiled libraries are rare, so you may need to compile it yourself. Because of how difficult Windows makes it, `devcert` will not attempt to update the Firefox trust store automatically; instead, it will fall back to using the "Firefox wizard", detailed below.
 
   If you choose not to install `certutil`, or the automatic install is not successful, you may get the following errors/prompts:
 
@@ -102,7 +102,7 @@ After typing in your password, `devcert` will install the CA certificate in your
 
 ### After `devcert` setup process
 
-You can open the development server at [https://localhost:8000](https://localhost:8000) and enjoy the HTTPS goodness ✨. Of course, you may change the port according to your setup.
+You can open the development server at `https://localhost:8000` and enjoy the HTTPS goodness ✨. Of course, you may change the port according to your setup.
 
 Find out more about [how devcert works](https://github.com/davewasmer/devcert#how-it-works).
 
@@ -146,7 +146,7 @@ See the example commands below:
 
 Usage of the `--ca-file` flag is only required if your certificate is signed by a certificate authority.
 
-If your certificate is self-signed, then do not include the `--ca-file` flag. Also, if you want your browser to trust a self-signed certificate, you will need to add it to your operating system (or browser's, in Firefox's case) root certificate store in order for your browser to trust it.
+If your certificate is self-signed, then do not include the `--ca-file` flag. Also, if you want your browser to trust a self-signed certificate, you will need to add it to your operating system (or browser's, in Firefox's case) root certificate store for your browser to trust it.
 
 In most cases, the `--https` passed by itself is easier and more convenient to get local https.
 
