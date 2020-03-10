@@ -1,11 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
-import MdShare from "react-icons/lib/md/share"
-import FaPinterestP from "react-icons/lib/fa/pinterest-p"
-import FaLinkedin from "react-icons/lib/fa/linkedin"
-import FaFacebook from "react-icons/lib/fa/facebook"
-import FaTwitter from "react-icons/lib/fa/twitter"
+import { MdShare } from "react-icons/md"
+import { FaPinterestP, FaLinkedin, FaFacebook, FaTwitter } from "react-icons/fa"
 
 const objectToParams = object =>
   `?` +

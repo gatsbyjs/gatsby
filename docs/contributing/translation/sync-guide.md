@@ -68,7 +68,7 @@ Adding a field:
 
 ```diff
 + <<<<<<<
-title: Documentacion
+title: Documentation
 + =======
 + title: Docs
 + description: The one-stop shop for documentation in Gatsby!

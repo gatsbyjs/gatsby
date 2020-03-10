@@ -30,7 +30,7 @@ Gatsby themes abstract all of your default configuration (shared functionality, 
 
 This means that the configuration and functionality aren’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
-Learn more about using and building themes with the [Gatsby theme tutorials](/tutorial/theme-tutorials/).
+Learn more about using and building themes with the [Gatsby theme tutorials](/tutorial/plugin-and-theme-tutorials/).
 
 ## Additional tutorials
 
