@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from "react"
 import { useActiveHash } from "../hooks/use-active-hash"
 
-const getHeadingIds = (toc, traverseFullDepth = false) => {
+const getHeadingIds = (toc, traverseFullDepth = true) => {
   const idList = []
   const hashToId = str => str.slice(1)
 
