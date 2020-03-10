@@ -7,9 +7,9 @@ tags: ["netlify", "serverless", "lambda", "gatsby cloud"]
 canonicalLink: https://joshwcomeau.com/gatsby/using-netlify-functions-with-gatsby-cloud/
 ---
 
-import netlifyFunctions from "@assets/netlify-functions/gatsby-cloud.png"
+import netlifyFunctions from "./gatsby-cloud.png"
 
-Every now and then, Gatsby developers find themselves needing a sprinkle of back-end code. We don't necessarily need a whole server, and we certainly don't want to have to deal with things like server provisioning and load balancing. We just need some code to run not-in-the-browser.
+Every now and then, Gatsby developers find themselves needing a sprinkle of back-end code. We don't necessarily need a whole server, and we certainly don't want to have to deal with things like load balancing and scaling. We just need some code to run not-in-the-browser.
 
 Case in point: when I was rebuilding my [personal blog](https://joshwcomeau.com/), I wanted to track and display the number of likes each article gets, as well as the number of hits (for a retro-style hit counter).
 
