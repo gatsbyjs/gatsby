@@ -1,5 +1,5 @@
-const { tmpdir } = require(`os`)
-const report = require(`../reporter`)
+import { tmpdir } from "os"
+import report from "../reporter"
 
 /**
  * This function ensures that the current working directory on Windows
@@ -20,7 +20,7 @@ const report = require(`../reporter`)
  * and then the next one from "C:" shell, you may get a bunch of webpack warnings
  * because it expects module paths to be case-sensitive.
  */
-module.exports = function ensureWindowsDriveLetterIsUppercase() {
+export function ensureWindowsDriveLetterIsUppercase(): void {
   const cwd = process.cwd()
   const normalizedCwd = driveLetterToUpperCase(cwd)
 
@@ -51,9 +51,9 @@ module.exports = function ensureWindowsDriveLetterIsUppercase() {
   }
 }
 
-function driveLetterToUpperCase(path) {
+function driveLetterToUpperCase(path: string): string {
   const segments = path.split(`:\\`)
   return segments.length > 1
-    ? segments.shift().toUpperCase() + `:\\` + segments.join(`:\\`)
+    ? segments.shift()!.toUpperCase() + `:\\` + segments.join(`:\\`)
     : path
 }
