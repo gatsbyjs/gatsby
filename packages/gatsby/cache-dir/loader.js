@@ -280,10 +280,26 @@ export class BaseLoader {
       if (!this.prefetchCompleted.has(pagePath)) {
         this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
         this.prefetchCompleted.add(pagePath)
+        this.queueIdleWork(() => this.loadPage(pagePath))
       }
     })
 
     return true
+  }
+
+  // Queue work to complete if 80% of the frame is idle (current max is set to 50). Returns false if work cannot be queued (no browser support)
+  queueIdleWork(callback) {
+    if (`requestIdleCallback` in window) {
+      window.requestIdleCallback(deadline => {
+        if (deadline.timeRemaining() > 40) {
+          callback()
+        } else {
+          this.queueIdleWork(callback)
+        }
+      })
+      return true
+    }
+    return false
   }
 
   doPrefetch(pagePath) {
