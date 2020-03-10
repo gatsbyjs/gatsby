@@ -106,16 +106,30 @@ export default class FFMPEG {
       const { ext } = parse(fileName)
 
       // Download video from Contentful for further processing
-      const fileNode = await this.queue.add(() =>
-        createRemoteFileNode({
-          url: `https:${url}`,
-          store,
-          cache,
-          createNode,
-          createNodeId,
-          ext,
-        })
-      )
+      // Ghetto retry till this is fixed: https://github.com/gatsbyjs/gatsby/issues/22010
+      let tries = 0
+      let fileNode
+      while (!fileNode) {
+        try {
+          fileNode = await this.queue.add(() =>
+            createRemoteFileNode({
+              url: `https:${url}`,
+              store,
+              cache,
+              createNode,
+              createNodeId,
+              ext,
+            })
+          )
+        } catch (e) {
+          tries++
+
+          if (tries === 3) {
+            e.message = `Download of https:${url} failed after three times:\n${e.message}`
+            throw e
+          }
+        }
+      }
 
       path = fileNode.absolutePath
       contentDigest = fileNode.internal.contentDigest
