@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.4...gatsby-cli@2.10.5) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.10.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.3...gatsby-cli@2.10.4) (2020-03-09)
 
 ### Bug Fixes
