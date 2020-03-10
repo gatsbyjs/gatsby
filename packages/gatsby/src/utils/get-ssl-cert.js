@@ -79,7 +79,9 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
         getWindowsEncryptionPassword,
       },
     })
-    if (caPath) process.env.NODE_EXTRA_CA_CERTS = caPath
+    if (caPath) {
+      process.env.NODE_EXTRA_CA_CERTS = caPath
+    }
     return {
       key,
       cert,
