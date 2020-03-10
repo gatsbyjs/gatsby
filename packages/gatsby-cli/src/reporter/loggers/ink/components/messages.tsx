@@ -7,7 +7,7 @@ const ColorSwitcher: FunctionComponent<ColorProps> = ({ children, ...props }) =>
   <Color {...props}>{children}</Color>
 )
 
-const createLabel = (text: string, color: string): React.FC<ColorProps> => (
+const createLabel = (text: string, color: string): FunctionComponent<ColorProps> => (
   ...props
 ): JSX.Element => (
   <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
