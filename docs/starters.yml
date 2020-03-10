@@ -5532,3 +5532,18 @@
     - Robots.txt
     - Sitemap
     - PWA
+- url: https://builtondev.github.io/gatsby-starter-builton
+  repo: https://github.com/BuiltonDev/gatsby-starter-builton
+  description: A simple starter to get up and developing quickly with Gatsby and BuiltOn.
+  tags:
+    - BuiltOn
+    - eCommerce
+    - Pagination
+  features:
+    - Lightweight
+    - Linting
+    - Imports BuiltOn products and images
+    - Images lazy loading
+    - Products list paginated
+    - Product page
+    - Subproduct listing
