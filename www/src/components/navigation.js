@@ -216,7 +216,7 @@ const Navigation = ({ pathname }) => {
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
           >
-            <GithubIcon style={{ verticalAlign: `middle` }} />
+            <GithubIcon />
           </SocialNavItem>
           <div
             sx={{
@@ -225,10 +225,10 @@ const Navigation = ({ pathname }) => {
             }}
           >
             <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">
-              <TwitterIcon style={{ verticalAlign: `middle` }} />
+              <TwitterIcon />
             </SocialNavItem>
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
-              <DiscordIcon style={{ verticalAlign: `middle` }} />
+              <DiscordIcon />
             </SocialNavItem>
           </div>
           <div

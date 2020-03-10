@@ -63,12 +63,12 @@ class Pagination extends React.Component {
           }}
         >
           <PaginationLink to={prevPageLink} sx={prevNextLinkStyles}>
-            <ArrowBackIcon style={{ verticalAlign: `sub` }} />
+            <ArrowBackIcon />
             Newer posts
           </PaginationLink>
           <PaginationLink to={nextPageLink} sx={prevNextLinkStyles}>
             Older posts
-            <ArrowForwardIcon style={{ verticalAlign: `sub` }} />
+            <ArrowForwardIcon />
           </PaginationLink>
         </div>
         <div

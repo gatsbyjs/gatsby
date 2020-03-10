@@ -39,7 +39,7 @@ const BlogCard = ({ ...props }) => (
 
       <Flex mt={4} alignItems="center">
         <Link href="#" css={{ textDecoration: `none` }}>
-          Read more <MdArrowForward style={{ verticalAlign: `middle` }} />
+          Read more <MdArrowForward />
         </Link>
       </Flex>
     </Box>
