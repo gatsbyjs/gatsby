@@ -10,13 +10,9 @@ import sysPath from "path"
 import prompts from "prompts"
 import url from "url"
 
-<<<<<<< HEAD
 import { getPackageManager, promptPackageManager } from "./util/package-manager"
-=======
 import report from "./reporter"
-import { getPackageManager, promptPackageManager } from "./util/configstore"
->>>>>>> Update packages/gatsby-cli/src/init-starter.ts
-import isTTY from "./util/is-tty"
+import { isTTY } from "./util/is-tty"
 
 const spawnWithArgs = (
   file: string,
