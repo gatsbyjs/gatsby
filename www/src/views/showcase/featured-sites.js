@@ -166,7 +166,7 @@ class FeaturedSites extends Component {
               padding: t => `${t.space[6]} ${t.space[6]} 0`,
             }}
           >
-            {featured.slice(0, 9).map(({ node }) => (
+            {featured.slice(0, 9).map(node => (
               <div
                 key={node.id}
                 sx={{

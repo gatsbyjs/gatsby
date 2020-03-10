@@ -7,13 +7,13 @@ import {
   FaDiscord as DiscordIcon,
 } from "react-icons/fa"
 
-import Link from "../components/localized-link"
+import Link from "./localized-link"
 import SearchForm from "./search-form"
 import logo from "../assets/logo.svg"
 import logoInverted from "../assets/logo-inverted.svg"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { breakpointGutter } from "../utils/styles"
-import DarkModeToggle from "../components/dark-mode-toggle"
+import DarkModeToggle from "./dark-mode-toggle"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark

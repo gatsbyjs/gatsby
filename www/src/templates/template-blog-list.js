@@ -48,7 +48,7 @@ class BlogPostsIndex extends React.Component {
               View all Tags <TagsIcon />
             </Button>
           </div>
-          {allMdx.edges.map(({ node }, index) => (
+          {allMdx.nodes.map((node, index) => (
             <BlogPostPreviewItem
               post={node}
               key={node.fields.slug}
@@ -57,7 +57,7 @@ class BlogPostsIndex extends React.Component {
                 borderBottomStyle: `solid`,
                 borderColor: `ui.border`,
                 pb: 8,
-                mb: index === allMdx.edges.length - 1 ? 0 : 8,
+                mb: index === allMdx.nodes.length - 1 ? 0 : 8,
                 ...pullIntoGutter,
                 [breakpointGutter]: {
                   p: 9,
@@ -108,10 +108,8 @@ export const pageQuery = graphql`
       limit: $limit
       skip: $skip
     ) {
-      edges {
-        node {
-          ...BlogPostPreview_item
-        }
+      nodes {
+        ...BlogPostPreview_item
       }
     }
   }

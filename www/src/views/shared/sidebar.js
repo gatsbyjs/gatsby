@@ -125,7 +125,7 @@ export const ContentTitle = ({
   search,
   items,
   filters,
-  edges,
+  nodes,
   label,
   // TODO smooth that out ("Starters" uses "size")
   what = `length`,
@@ -142,7 +142,7 @@ export const ContentTitle = ({
       filters[what] === 0 ? (
         // no search or filters
         <span>
-          {label}s <ResultCount>({edges.length})</ResultCount>
+          {label}s <ResultCount>({nodes.length})</ResultCount>
         </span>
       ) : (
         <span>

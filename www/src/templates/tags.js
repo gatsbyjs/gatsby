@@ -25,7 +25,7 @@ const preferSpacedTag = tags => {
 
 const Tags = ({ pageContext, data }) => {
   const { tags } = pageContext
-  const { edges, totalCount } = data.allMdx
+  const { nodes, totalCount } = data.allMdx
   const tagHeader = `${totalCount} post${
     totalCount === 1 ? `` : `s`
   } tagged with "${preferSpacedTag(tags)}"`
@@ -63,7 +63,7 @@ const Tags = ({ pageContext, data }) => {
           </Button>
         </React.Fragment>
       ) : null}
-      {edges.map(({ node }) => (
+      {nodes.map(node => (
         <BlogPostPreviewItem
           post={node}
           key={node.fields.slug}
@@ -89,10 +89,8 @@ export const pageQuery = graphql`
       }
     ) {
       totalCount
-      edges {
-        node {
-          ...BlogPostPreview_item
-        }
+      nodes {
+        ...BlogPostPreview_item
       }
     }
   }

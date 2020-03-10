@@ -59,7 +59,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
     starters = starters.sort(sortingFunction()).slice(0, count)
     return (
       <div sx={showcaseList}>
-        {starters.map(({ node: starter }) => {
+        {starters.map(starter => {
           const {
             description,
             gatsbyMajorVersion,
