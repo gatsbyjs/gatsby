@@ -221,7 +221,7 @@ export interface ICreatePageDependencyAction {
   payload: {
     path: string
     nodeId: string
-    connection: string
+    connection?: string
   }
 }
 

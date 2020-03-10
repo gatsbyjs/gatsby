@@ -92,7 +92,7 @@ type Resolver = (node: INode) => Promise<any> // TODO
 export const saveResolvedNodes = async (
   nodeTypeNames: string[],
   resolver: Resolver
-) => {
+): Promise<void> => {
   for (const typeName of nodeTypeNames) {
     const nodes = store.getState().nodesByType.get(typeName)
     if (!nodes) return
@@ -169,18 +169,12 @@ export const addResolvedNodes = (typeName: string): INode[] => {
  * all the Nodes in a Set (or, if the property is `id`, just the Nodes).
  * This cache is used for applying the filter and is a massive improvement over
  * looping over all the nodes, when the number of pages (/nodes) scale up.
- *
- * @param {Array<string>} chain
- * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
- *   This object lives in query/query-runner.js and is passed down runQuery
- * @returns {undefined}
  */
 export const ensureIndexByTypedChain = (
   chain: string[],
   nodeTypeNames: string[],
   typedKeyValueIndexes: Map<string, Map<string | number | boolean, Set<INode>>>
-) => {
+): void => {
   const chained = chain.join(`+`)
 
   const nodeTypeNamePrefix = nodeTypeNames.join(`,`) + `/`
@@ -249,13 +243,6 @@ export const ensureIndexByTypedChain = (
  *
  * The only exception is `id`, since internally there can be at most one node
  * per `id` so there's a minor optimization for that (no need for Sets).
- *
- * @param {Array<string>} chain Note: `eq` is assumed to be the leaf prop here
- * @param {boolean | number | string} value This is the value being filtered for
- * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
- *   This object lives in query/query-runner.js and is passed down runQuery
- * @returns {Array<Node> | undefined}
  */
 export const getNodesByTypedChain = (
   chain: string[],
@@ -263,8 +250,8 @@ export const getNodesByTypedChain = (
   nodeTypeNames: string[],
   typedKeyValueIndexes:
     | undefined
-    | Map<string, Map<string | number | boolean, Node>>
-) => {
+    | Map<string, Map<string | number | boolean, INode>>
+): INode | undefined => {
   const key = chain.join(`+`)
 
   const typedKey = nodeTypeNames.join(`,`) + `/` + key

@@ -27,7 +27,7 @@ export const createPageDependency = (
     path,
     nodeId,
     connection,
-  }: { path: string; nodeId: string; connection: string },
+  }: { path: string; nodeId: string; connection?: string },
   plugin = ``
 ): ICreatePageDependencyAction => {
   return {
