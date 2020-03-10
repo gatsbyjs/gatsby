@@ -14,7 +14,7 @@ const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
 const { store, emitter, readState } = require(`../redux`)
 const queryUtil = require(`../query`)
-const appDataUtil = require(`../utils/app-data`)
+import * as appDataUtil from "../utils/app-data"
 const WorkerPool = require(`../utils/worker/pool`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 const {

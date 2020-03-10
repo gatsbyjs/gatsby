@@ -4,7 +4,7 @@ import { graphql } from "gatsby"
 import Link from "gatsby-link"
 import Img from "gatsby-image"
 import styled from "@emotion/styled"
-import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
+import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
 import themeGet from "@styled-system/theme-get"
 import { useColorMode } from "theme-ui"
 

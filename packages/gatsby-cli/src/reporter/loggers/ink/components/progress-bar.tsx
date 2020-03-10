@@ -1,13 +1,25 @@
 import React from "react"
 import { Box } from "ink"
-import calcElapsedTime from "../../../../util/calc-elapsed-time"
+import { calcElapsedTime } from "../../../../util/calc-elapsed-time"
 
 const maxWidth = 30
 const minWidth = 10
 
-const getLength = prop => String(prop).length
+const getLength = (prop: string | number): number => String(prop).length
 
-export default function ProgressBar({ message, current, total, startTime }) {
+interface IProps {
+  message: string
+  current: number
+  total: number
+  startTime: [number, number]
+}
+
+export function ProgressBar({
+  message,
+  current,
+  total,
+  startTime,
+}: IProps): JSX.Element {
   const percentage = total ? Math.round((current / total) * 100) : 0
   const terminalWidth = process.stdout.columns || 80
   const availableWidth =

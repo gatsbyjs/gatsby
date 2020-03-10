@@ -1,9 +1,9 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const {
-  remove: removePageHtmlFile,
+import {
+  remove as removePageHtmlFile,
   getPageHtmlFilePath,
-} = require(`../utils/page-html`)
+} from "../utils/page-html"
 const {
   remove: removePageDataFile,
   fixedPagePath,

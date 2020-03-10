@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import { Component } from "react"
 import { Link } from "gatsby"
 import Button from "../../components/button"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 class CreatorsHeader extends Component {
   render() {
