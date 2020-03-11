@@ -189,7 +189,7 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 The Gatsby CLI is available via npm and should be installed globally by running:
 
 ```shell
-npm install -g gatsby-cli
+npm install -g gatsby-cli@2.10.4
 ```
 
 _**Note**: when you install Gatsby and run it for the first time, you'll see a short message notifying you about anonymous usage data that is being collected for Gatsby commands, you can read more about how that data is pulled out and used in the [telemetry doc](/docs/telemetry)._
