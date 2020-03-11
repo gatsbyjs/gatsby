@@ -14,7 +14,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 ## Challenge 11: Give Your Site Editors the CMS They Want
 
-This is the most important week of the #100DaysOfGatsby series! Up until now you’ve created a website with Markdown files, and you’ve had Gatsby [programmatically create pages](/tutorial/part-seven/) using those files, which is pretty cool. But Gatsby can do so much more... 
+This is the most important week of the #100DaysOfGatsby series! Up until now you’ve created a website with Markdown files, and you’ve had Gatsby [programmatically create pages](/tutorial/part-seven/) using those files, which is pretty cool. But Gatsby can do so much more...
 
 What makes Gatsby unique and immensely useful for your most demanding client projects is the framework’s ability to source content from anywhere, and make it available through a flexible data layer.
 
@@ -22,10 +22,9 @@ As Kyle Mathews [wrote](/blog/2019-01-31-why-themes/):
 
 > “A little-understood reason for Gatsby’s popularity: Gatsby’s data layer has the highly novel feature of enabling people to build and share data processing primitives that automatically work together and are exposed and controlled through a consistent GraphQL API. In most other frameworks, you’d need to build much of this yourself in a one-off, brittle fashion. Gatsby’s data layer enables simple snapping together of data sourcing and transformation primitives enabling the content mesh.”
 
-The website you’re on right now is a combination of content from Airtable, Markdown, and raw JSX. Gatsbyjs.org also has a swag store that sources content from Shopify, and the [Gatsby Cloud website](https://gatsbyjs.com) gets data from Contentful and a PostgreSQL database. The days of shoehorning multiple content types into a monolithic CMS [are over](/blog/2018-10-04-journey-to-the-content-mesh). Now you can choose the best tool for the job, and stack (or switch) CMS’s easily. 
+The website you’re on right now is a combination of content from Airtable, Markdown, and raw JSX. Gatsbyjs.org also has a swag store that sources content from Shopify, and the [Gatsby Cloud website](https://gatsbyjs.com) gets data from Contentful and a PostgreSQL database. The days of shoehorning multiple content types into a monolithic CMS [are over](/blog/2018-10-04-journey-to-the-content-mesh). Now you can choose the best tool for the job, and stack (or switch) CMS’s easily.
 
-Today we challenge you to add an external data source (or two) to your Gatsby project!  
-
+Today we challenge you to add an external data source (or two) to your Gatsby project!
 
 ### Challenge Resources
 
@@ -33,8 +32,7 @@ Today we challenge you to add an external data source (or two) to your Gatsby pr
 
 2. If you’re not sure which CMS to choose, many Gatsby users have had success with [Contentful](/docs/sourcing-from-contentful/), [Cosmic JS](/blog/2018-06-07-build-a-gatsby-blog-using-the-cosmic-js-source-plugin/), and [DatoCMS](/docs/recipes/sourcing-data/). If you want to use an [open source and free CMS](/blog/2019-10-15-free-headless-cms/), try WordPress, Ghost, Netlify CMS, and Drupal.
 
-3. If you’d like to learn from fully baked examples, [auto-provision a site from Gatsby Cloud](https://www.gatsbyjs.com/get-started). Examine and experiment with the gatsby-node.js API file and any additional plugins the CMS developers decided to add. Use the patterns you discover in your own project. 
-
+3. If you’d like to learn from fully baked examples, [auto-provision a site from Gatsby Cloud](https://www.gatsbyjs.com/get-started). Examine and experiment with the gatsby-node.js API file and any additional plugins the CMS developers decided to add. Use the patterns you discover in your own project.
 
 ### What to Do If You Need Help
 
