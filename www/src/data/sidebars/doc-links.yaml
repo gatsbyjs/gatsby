@@ -268,10 +268,6 @@
                   link: /docs/configuring-usage-with-plugin-options/
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
-                - title: Pixabay Image Source Plugin Tutorial
-                  link: /tutorial/pixabay-source-plugin-tutorial/
-                - title: Remark Plugin Tutorial
-                  link: /tutorial/remark-plugin-tutorial/
                 - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Themes
