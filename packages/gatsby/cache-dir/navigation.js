@@ -199,7 +199,7 @@ class RouteAnnouncer extends React.Component {
           whiteSpace: `nowrap`,
           border: 0,
         }}
-        aria-live="assertive"
+        aria-live="polite"
         aria-atomic="true"
         ref={this.announcementRef}
       ></div>
