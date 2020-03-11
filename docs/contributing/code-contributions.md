@@ -12,6 +12,7 @@ On this page:
 - [Contributing example sites](#contributing-example-sites)
 - [Using Docker to set up test environments](#using-docker-to-set-up-test-environments)
 - [Development tools](#development-tools)
+- [Official theme development](#official-theme-development)
 
 ## Repo setup
 
@@ -118,6 +119,22 @@ Using Docker Compose, you can start and stop a WordPress instance and integrate 
 ### Debugging the build process
 
 Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
+
+## Official theme development
+
+This section is for official theme development in Gatsby's monorepo. If you are looking
+to build your own theme, see [building themes](/docs/themes/building-themes/).
+
+Before getting started, make sure that you have
+[set up your local dev environment](/contributing/setting-up-your-local-dev-environment/)
+and that you're on the latest version of `gatsby-dev-cli`.
+
+- Scaffold out a starter that uses the theme you want to work on:
+  `gatsby new blog-theme-dev gatsbyjs/gatsby-starter-blog-theme`
+- Change directory to the newly scaffolded site: `cd blog-theme-dev`
+- Run Gatsby Dev CLI to sync theme files: `gatsby-dev --packages gatsby-theme-blog`
+- In another tab run the starter with `yarn develop`
+- Edit the theme files in your local gatsby monorepo (where you set your `gatsby-dev` path). You'll see changes automatically copied over and update in your starter.
 
 ## Feedback
 
