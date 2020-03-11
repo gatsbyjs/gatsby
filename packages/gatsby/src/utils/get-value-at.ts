@@ -1,10 +1,10 @@
-const getValueAt = (obj, selector) => {
+export function getValueAt(obj: object, selector: string | string[]): any {
   const selectors =
     typeof selector === `string` ? selector.split(`.`) : selector
   return get(obj, selectors)
 }
 
-const get = (obj, selectors) => {
+function get(obj: object, selectors: string[]): any {
   if (Array.isArray(obj)) return getArray(obj, selectors)
   const [key, ...rest] = selectors
   const value = obj[key]
@@ -14,11 +14,10 @@ const get = (obj, selectors) => {
   return undefined
 }
 
-const getArray = (arr, selectors) =>
-  arr
+function getArray(arr: object[], selectors: string[]): any[] {
+  return arr
     .map(value =>
       Array.isArray(value) ? getArray(value, selectors) : get(value, selectors)
     )
     .filter(v => v !== undefined)
-
-module.exports = { getValueAt }
+}
