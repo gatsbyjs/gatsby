@@ -16,7 +16,11 @@ const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const { getCommonDir, truncatePath } = require(`../../utils/path`)
+const {
+  getCommonDir,
+  truncatePath,
+  tooLongSegmentsInPath,
+} = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
@@ -373,72 +377,27 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
-  let pagePath = page.path
+  const invalidPathSegments = tooLongSegmentsInPath(page.path)
 
-  const isMacOs = process.platform === `darwin`
-  const invalidFilenames = []
+  if (invalidPathSegments.length > 0) {
+    const truncatedPath = truncatePath(page.path)
+    report.panicOnBuild({
+      id: `11331`,
+      context: {
+        path: page.path,
+        invalidPathSegments,
 
-  for (const segment of pagePath.split(`/`)) {
-    const isNameTooLong =
-      isMacOs || isWindows
-        ? segment.length > 255 // MacOS (APFS) and Windows (NTFS) filename length limit (255 chars)
-        : Buffer.from(segment).length > 255 // Other (255 bytes)
-
-    if (isNameTooLong) {
-      invalidFilenames.push(segment)
-    }
-  }
-
-  if (invalidFilenames.length > 0) {
-    if (process.env.NODE_ENV === `production`) {
-      report.panic({
-        id: `11331`,
-        context: {
-          pluginName: name,
-          api: `createPages`,
-          message:
-            chalk.bold.red(
-              `This path contains filenames that exceed OS filename length limit: `
-            ) +
-            chalk(
-              `${pagePath}\n\nHere is the list of filenames that are too long:\n\n${invalidFilenames.join(
-                `\n\n`
-              )}`
-            ),
-        },
-      })
-    }
-
-    if (process.env.NODE_ENV === `development`) {
-      pagePath = truncatePath(page.path)
-      report.error({
-        id: `11331`,
-        context: {
-          pluginName: name,
-          api: `createPages`,
-          message:
-            chalk.bold.red(
-              `This path contains filenames that exceed OS filename length limit: `
-            ) +
-            chalk(
-              `${page.path}\n\nAutomatically truncated to: ${pagePath}\n\n`
-            ) +
-            chalk.bold.red(
-              `WARNING: This will cause crash in production build!\n\n`
-            ) +
-            chalk(
-              `Here is the list of filenames that are too long:\n\n${invalidFilenames.join(
-                `\n\n`
-              )}`
-            ),
-        },
-      })
-    }
+        // we will only show truncatedPath in non-production scenario
+        isProduction: process.env.NODE_ENV === `production`,
+        truncatedPath,
+      },
+    })
+    page.path = truncatedPath
   }
 
   const internalPage: Page = {
     internalComponentName,
-    path: pagePath,
+    path: page.path,
     matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
