@@ -24,9 +24,19 @@ function lookupCI(): string | null {
 }
 const CIName = lookupCI()
 
+/**
+ * Determines whether the environment where the code is running is in CI
+ * @return true if the environment is in CI, false otherwise
+ */
+
 export function isCI(): boolean {
   return !!CIName
 }
+
+/**
+ * Gets the name of the CI environment (e.g. "ZEIT Now", "Heroku", etc.)
+ * @return The name of the CI if available. Defaults to null if not in CI
+ */
 
 export function getCIName(): string | null {
   if (!isCI()) {

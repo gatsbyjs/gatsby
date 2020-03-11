@@ -17,7 +17,8 @@
   },
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore **/__tests__ --ignore **/__mocks__ --extensions \".ts\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "watch": "babel -w src --out-dir dist/ --ignore **/__tests__ --extensions \".ts\""
   },
   "bugs": {
@@ -25,9 +26,8 @@
   },
   "files": [
     "dist/",
-    "index.d.ts"
+    "dist/index.d.ts"
   ],
-  "types": "index.d.ts",
   "dependencies": {
     "ci-info": "2.0.0",
     "configstore": "^5.0.0",
