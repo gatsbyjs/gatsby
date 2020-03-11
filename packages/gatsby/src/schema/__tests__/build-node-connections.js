@@ -7,7 +7,7 @@ const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
 jest.mock(`../../redux/actions/add-page-dependency`)
-const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+import { createPageDependency } from "../../redux/actions/add-page-dependency"
 
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 

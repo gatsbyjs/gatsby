@@ -12,7 +12,7 @@ import {
 } from "react-instantsearch-dom"
 import { navigate as reachNavigate } from "@reach/router"
 import { Link } from "gatsby"
-import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
+import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
 import AlgoliaLogo from "../assets/vendor-logos/algolia.svg"
 import GatsbyIcon from "./gatsby-monogram"
 import { debounce, unescape } from "lodash-es"

@@ -89,6 +89,49 @@ describe(`gatsby-plugin-typescript`, () => {
       })
     })
 
+    it(`sets the correct webpack config with rule.loader shortcut`, () => {
+      const actions = { setWebpackConfig: jest.fn() }
+      const jsLoader = {}
+      const loaders = { js: jest.fn(() => jsLoader) }
+      const stage = `develop`
+      const webpackConfig = {
+        module: {
+          rules: [
+            {
+              enforce: `pre`,
+              test: /\.jsx?$/,
+              exclude: /(node_modules|bower_components)/,
+              loader: `eslint-loader`,
+            },
+          ],
+        },
+      }
+      const getConfig = jest.fn(() => webpackConfig)
+      onCreateWebpackConfig({ actions, getConfig, loaders, stage })
+      expect(actions.setWebpackConfig).toHaveBeenCalledWith({
+        module: {
+          rules: [
+            {
+              test: /\.tsx?$/,
+              use: jsLoader,
+            },
+          ],
+        },
+      })
+      expect(actions.setWebpackConfig).toHaveBeenCalledWith({
+        module: {
+          rules: [
+            {
+              enforce: `pre`,
+              test: /\.tsx?$/,
+              exclude: /(node_modules|bower_components)/,
+              loader: `eslint-loader`,
+            },
+          ],
+        },
+      })
+    })
+
     it(`does not set the webpack config if there isn't a js loader`, () => {
       const actions = { setWebpackConfig: jest.fn() }
       const loaders = { js: jest.fn() }

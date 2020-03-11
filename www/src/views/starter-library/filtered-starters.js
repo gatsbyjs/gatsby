@@ -2,9 +2,11 @@
 import { jsx } from "theme-ui"
 import { Component } from "react"
 import SearchIcon from "../../components/search-icon"
-import MdArrowDownward from "react-icons/lib/md/arrow-downward"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-import MdSort from "react-icons/lib/md/sort"
+import {
+  MdArrowDownward,
+  MdArrowForward as ArrowForwardIcon,
+  MdSort,
+} from "react-icons/md"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { loadMoreButton } from "../shared/styles"
@@ -82,8 +84,8 @@ export default class FilteredStarterLibrary extends Component {
     )
 
     if (urlState.s.length > 0) {
-      starterNodes = starterNodes.filter(starter =>
-        JSON.stringify(starter.node)
+      starterNodes = starterNodes.filter(node =>
+        JSON.stringify(node)
           .toLowerCase()
           .includes(urlState.s.toLowerCase())
       )
