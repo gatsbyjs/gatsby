@@ -27,7 +27,7 @@ import chalk from "chalk"
 import address from "address"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
-import WorkerPool from "../utils/worker/pool"
+import * as WorkerPool from "../utils/worker/pool"
 import http from "http"
 import https from "https"
 
