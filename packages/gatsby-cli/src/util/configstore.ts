@@ -1,41 +1,20 @@
-import Configstore from "configstore"
+import { getConfigStore } from "gatsby-core-utils"
 import prompts from "prompts"
 import report from "../reporter"
 
-interface IConfigStore {
-  settings?: {
-    [key: string]: string
-  }
-  get(key: string): string
-  set(key: string, value: string): void
-}
-
-let conf: IConfigStore
-try {
-  conf = new Configstore(`gatsby`, {}, { globalConfigPath: true })
-} catch (e) {
-  // This should never happen (?)
-  conf = {
-    settings: {
-      "cli.packageManager": ``,
-    },
-    get: (key: string): string => conf.settings![key],
-    set: (key: string, value: string): void => {
-      conf.settings![key] = value
-    },
-  }
-}
+type PackageManager = "yarn" | "npm"
 
 const packageMangerConfigKey = `cli.packageManager`
-export const getPackageManager = (): string => conf.get(packageMangerConfigKey)
-export const setPackageManager = (packageManager: string): void => {
-  conf.set(packageMangerConfigKey, packageManager)
+export const getPackageManager = (): PackageManager =>
+  getConfigStore().get(packageMangerConfigKey)
+export const setPackageManager = (packageManager: PackageManager): void => {
+  getConfigStore().set(packageMangerConfigKey, packageManager)
   report.info(`Preferred package manager set to "${packageManager}"`)
 }
 
-export const promptPackageManager = async (): Promise<string> => {
+export const promptPackageManager = async (): Promise<PackageManager> => {
   const promptsAnswer: {
-    package_manager: string
+    package_manager: PackageManager
   } = await prompts([
     {
       type: `select`,
