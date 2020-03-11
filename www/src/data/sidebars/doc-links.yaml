@@ -121,6 +121,8 @@
             - title: Using Environment Variables
               link: /docs/environment-variables/
               breadcrumbTitle: Environment Variables
+            - title: Running a Gatsby Preview Server
+              link: /docs/running-a-gatsby-preview-server/
             - title: Using ESLint
               link: /docs/eslint/
               breadcrumbTitle: ESLint
