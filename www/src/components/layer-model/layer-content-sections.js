@@ -2,9 +2,9 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import Link from "../localized-link"
-import MdLoop from "react-icons/lib/md/loop"
+import { MdLoop } from "react-icons/md"
 
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // Components for building sections used in the model
 const LayerContentWrapper = ({ index, children }) => (
@@ -74,8 +74,7 @@ const CodeWrapper = ({
               color: `grey.60`,
               cursor: `pointer`,
               p: 2,
-              transition: t =>
-                `${t.transition.speed.default} ${t.transition.curve.default}`,
+              transition: `default`,
               borderRadius: 2,
               whiteSpace: `nowrap`,
               ":focus, :hover, :active": {

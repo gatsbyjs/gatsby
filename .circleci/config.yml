@@ -57,8 +57,8 @@ aliases:
       - <<: *install_node_modules
       - run: yarn list react
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
-      - run: yarn jest -w 1 --ci
-      - run: GATSBY_DB_NODES=loki yarn jest -w 1 --ci
+      - run: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+      - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
 
   e2e-test-workflow: &e2e-test-workflow
     filters:
@@ -129,6 +129,49 @@ commands:
           steps:
             - slack/status:
               channel: eng-react-integration-status
+
+  run-benchmark:
+    parameters:
+      working_directory:
+        type: string
+      NUM_PAGES:
+        type: string
+      BENCHMARK_CONTENT_SOURCE:
+        type: string
+      BENCHMARK_REPO_NAME:
+        type: string
+        default: gatsbyjs/gatsby
+      BENCHMARK_SITE_TYPE:
+        type: string
+        default: BLOG
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: << parameters.working_directory >>
+      - run:
+          command: npm run build
+          working_directory: << parameters.working_directory >>
+          environment:
+            BENCHMARK_BUILD_TYPE: COLD_START
+            NUM_PAGES: << parameters.NUM_PAGES >>
+            BENCHMARK_CONTENT_SOURCE: << parameters.BENCHMARK_CONTENT_SOURCE >>
+            BENCHMARK_REPO_NAME: << parameters.BENCHMARK_REPO_NAME >>
+            BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
+            CI_NAME: circleci
+      - run:
+          command: npm install
+          working_directory: << parameters.working_directory >>
+      - run:
+          command: npm run build
+          working_directory: << parameters.working_directory >>
+          environment:
+            BENCHMARK_BUILD_TYPE: WARM_START
+            NUM_PAGES: << parameters.NUM_PAGES >>
+            BENCHMARK_CONTENT_SOURCE: << parameters.BENCHMARK_CONTENT_SOURCE >>
+            BENCHMARK_REPO_NAME: << parameters.BENCHMARK_REPO_NAME >>
+            BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
+            CI_NAME: circleci
 
   e2e-test:
     parameters:
@@ -340,7 +383,7 @@ jobs:
           key: yarn-packages-v2-{{ checksum "yarn.lock" }}
       - run:
           name: "Run Tests"
-          command: yarn test
+          command: yarn jest -w 1 --ci
 
   bootstrap-with-experimental-react:
     executor: node
@@ -361,22 +404,170 @@ jobs:
           paths:
             - "*"
 
-  run_benchmarks:
+  benchmark_markdown_id_512:
     docker:
-      - image: circleci/node:12
+      - image: "circleci/node:12"
     resource_class: xlarge
     steps:
-      - checkout
-      - run: ./scripts/build-benchmark.sh
+      - run-benchmark:
+          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_id_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_id_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_id_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_slug_512:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_slug_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_slug_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_slug_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_table_512:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_table
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_table_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_table
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_table_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_table
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_table_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_table/benchmarks/markdown_table
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
 
 workflows:
   version: 2
 
-  run_benchmarks:
-    jobs: [run_benchmarks]
+  benchmark:
+    jobs:
+      - benchmark_markdown_id_512
+      - benchmark_markdown_id_4096
+      - benchmark_markdown_id_8192
+      - benchmark_markdown_id_32768
+      - benchmark_markdown_slug_512
+      - benchmark_markdown_slug_4096
+      - benchmark_markdown_slug_8192
+      - benchmark_markdown_slug_32768
+      - benchmark_markdown_table_512
+      - benchmark_markdown_table_4096
+      - benchmark_markdown_table_8192
+      - benchmark_markdown_table_32768
     triggers:
       - schedule:
-          cron: "12 3 * * *" # every day at 03:12
+          cron: 12 3 * * *
           filters:
             branches:
               only:
@@ -431,8 +622,9 @@ workflows:
 
   build-test:
     jobs:
-      - windows_unit_tests
       - bootstrap
+      - windows_unit_tests:
+          <<: *ignore_docs
       - lint:
           requires:
             - bootstrap

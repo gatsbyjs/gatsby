@@ -17,9 +17,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
   <article css={{ position: `relative` }} className={className}>
     <Link to={post.fields.slug} sx={{ "&&": { color: `card.color` } }}>
       <h2 sx={{ color: `card.header`, mt: 0 }}>{post.frontmatter.title}</h2>
-      <p>
-        {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
-      </p>
+      <p>{post.fields.excerpt}</p>
     </Link>
     <div
       css={{
@@ -44,7 +42,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
       <div
         sx={{
           display: `inline-block`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           color: `card.color`,
         }}
       >
@@ -87,12 +85,11 @@ const BlogPostPreviewItem = ({ post, className }) => (
 
 export const blogPostPreviewFragment = graphql`
   fragment BlogPostPreview_item on Mdx {
-    excerpt
     fields {
       slug
+      excerpt
     }
     frontmatter {
-      excerpt
       title
       date
       author {

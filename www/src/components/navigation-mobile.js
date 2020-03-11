@@ -9,7 +9,7 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/icons"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../utils/styles"
 
 const getProps = ({ isPartiallyCurrent }) => {
@@ -50,7 +50,7 @@ const MobileNavigation = () => (
       borderTopWidth: `1px`,
       bottom: 0,
       display: `flex`,
-      fontFamily: `header`,
+      fontFamily: `heading`,
       justifyContent: `space-around`,
       left: 0,
       paddingBottom: `env(safe-area-inset-bottom)`,
@@ -104,8 +104,7 @@ const styles = {
         mt: 0,
         mx: `auto`,
         "& path, & line, & polygon": {
-          transition: t =>
-            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+          transition: `default`,
         },
       },
       ":hover": {

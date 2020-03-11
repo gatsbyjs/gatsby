@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import Link from "../../components/localized-link"
-import LaunchDemoIcon from "react-icons/lib/md/launch"
-import GithubIcon from "react-icons/lib/go/mark-github"
-import MdStar from "react-icons/lib/md/star"
+import { MdLaunch as LaunchDemoIcon, MdStar } from "react-icons/md"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import {
   showcaseList,
   showcaseItem,
@@ -60,7 +59,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
     starters = starters.sort(sortingFunction()).slice(0, count)
     return (
       <div sx={showcaseList}>
-        {starters.map(({ node: starter }) => {
+        {starters.map(starter => {
           const {
             description,
             gatsbyMajorVersion,

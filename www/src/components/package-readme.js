@@ -4,12 +4,12 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 
-import Link from "../components/localized-link"
-import Container from "../components/container"
-import MarkdownPageFooter from "../components/markdown-page-footer"
-import FooterLinks from "../components/shared/footer-links"
-import GithubIcon from "react-icons/lib/go/mark-github"
-import GatsbyIcon from "../components/gatsby-monogram"
+import Link from "./localized-link"
+import Container from "./container"
+import MarkdownPageFooter from "./markdown-page-footer"
+import FooterLinks from "./shared/footer-links"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import GatsbyIcon from "./gatsby-monogram"
 
 const PackageReadMe = props => {
   const { page, packageName, excerpt, html, githubUrl, timeToRead } = props

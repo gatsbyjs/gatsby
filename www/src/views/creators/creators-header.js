@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import { Component } from "react"
 import Link from "../../components/localized-link"
 import Button from "../../components/button"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 class CreatorsHeader extends Component {
   render() {
@@ -16,7 +16,7 @@ class CreatorsHeader extends Component {
           borderBottom: t => `1px solid ${t.colors.ui.border}`,
           display: `flex`,
           flexDirection: `row`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           height: `headerHeight`,
           px: 6,
           zIndex: `2`,
