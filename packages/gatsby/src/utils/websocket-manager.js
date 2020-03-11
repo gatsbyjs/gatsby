@@ -4,7 +4,7 @@ const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
 const pageDataUtil = require(`../utils/page-data`)
-const normalizePagePath = require(`../utils/normalize-page-path`)
+import { normalizePagePath } from "./normalize-page-path"
 const telemetry = require(`gatsby-telemetry`)
 const url = require(`url`)
 const { createHash } = require(`crypto`)
@@ -15,19 +15,6 @@ type QueryResult = {
 }
 
 type QueryResultsMap = Map<string, QueryResult>
-
-const denormalize = path => {
-  if (path === undefined) {
-    return path
-  }
-  if (path === `/`) {
-    return `/`
-  }
-  if (path.charAt(path.length - 1) !== `/`) {
-    return path + `/`
-  }
-  return path
-}
 
 /**
  * Get cached page query result for given page path.

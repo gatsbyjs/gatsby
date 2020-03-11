@@ -1,5 +1,5 @@
 import { reportError, clearError } from "./error-overlay-handler"
-import normalizePagePath from "./normalize-page-path"
+import { normalizePagePath } from "./normalize-page-path"
 
 let socket = null
 

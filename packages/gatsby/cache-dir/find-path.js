@@ -1,6 +1,6 @@
 import { match } from "@reach/router/lib/utils"
 import stripPrefix from "./strip-prefix"
-import normalizePagePath from "./normalize-page-path"
+import { normalizePagePath } from "./normalize-page-path"
 
 const pathCache = new Map()
 let matchPaths = []
