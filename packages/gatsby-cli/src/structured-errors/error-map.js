@@ -1,4 +1,3 @@
-const chalk = require(`chalk`)
 const { stripIndent, stripIndents } = require(`common-tags`)
 
 const optionalGraphQLInfo = context =>
@@ -383,14 +382,14 @@ const errorMap = {
     text: context =>
       [
         `One or more path segments are too long - they exceed OS filename length limit.\n`,
-        `Page path: ${context.path}`,
+        `Page path: "${context.path}"`,
         `Invalid segments:\n${context.invalidPathSegments
-          .map(segment => ` - ${chalk.red(segment)}`)
+          .map(segment => ` - "${segment}"`)
           .join(`\n`)}`,
         !context.isProduction
           ? [
               `\nThis will fail production builds, please adjust your paths.`,
-              `\nIn development mode gatsby truncated to: ${context.truncatedPath} `,
+              `\nIn development mode gatsby truncated to: "${context.truncatedPath}"`,
             ]
           : [],
       ]
