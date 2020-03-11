@@ -12,7 +12,7 @@ _To help you learn about Gatsby and our ecosystem, we invite you to take the #10
 
 _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
-## Challenge 11: Give Your Site Editors the CMS They Want
+## Challenge 11:Make Your Site Content Editor Friendly by Connecting a CMS
 
 This is the most important week of the #100DaysOfGatsby series! Up until now you’ve created a website with Markdown files, and you’ve had Gatsby [programmatically create pages](/tutorial/part-seven/) using those files, which is pretty cool. But Gatsby can do so much more...
 
@@ -28,7 +28,7 @@ Today we challenge you to add an external data source (or two) to your Gatsby pr
 
 ### Challenge Resources
 
-1. [What is a headless CMS””](/docs/headless-cms/) is a solid place to get started. It also lists specific CMS’s that have Gatsby “source” plugins you can install..
+1. ["What is a headless CMS?"](/docs/headless-cms/) is a solid place to get started. It also lists specific CMS’s that have Gatsby “source” plugins you can install..
 
 2. If you’re not sure which CMS to choose, many Gatsby users have had success with [Contentful](/docs/sourcing-from-contentful/), [Cosmic JS](/blog/2018-06-07-build-a-gatsby-blog-using-the-cosmic-js-source-plugin/), and [DatoCMS](/docs/recipes/sourcing-data/). If you want to use an [open source and free CMS](/blog/2019-10-15-free-headless-cms/), try WordPress, Ghost, Netlify CMS, and Drupal.
 
