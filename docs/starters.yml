@@ -5450,8 +5450,10 @@
   repo: https://github.com/conradlin/gatsby-starter-strata-notion
   description: Gatsby starter utilizing Notion as a CMS based on strata site template
   tags:
-    - CMS: Notion
     - Blog
+    - PWA
+    - SEO
+    - Styling:SCSS
   features:
     - Super simple, portfolio + blog + newsletter site
     - Utilizing Notion as a CMS
