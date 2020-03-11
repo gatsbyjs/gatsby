@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.3.23...gatsby-plugin-typography@2.3.24) (2020-03-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-typography:** make yarn 2 compatible ([#21978](https://github.com/gatsbyjs/gatsby/issues/21978)) ([b28c27a](https://github.com/gatsbyjs/gatsby/commit/b28c27a))
+
 ## [2.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.3.22...gatsby-plugin-typography@2.3.23) (2020-03-06)
 
 **Note:** Version bump only for package gatsby-plugin-typography

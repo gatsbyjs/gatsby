@@ -151,6 +151,10 @@ async function watch(
     return
   }
 
+  const allPackagesIgnoringThemesToWatch = allPackagesToWatch.filter(
+    pkgName => !pkgName.startsWith(`gatsby-theme`)
+  )
+
   const ignored = [
     /[/\\]node_modules[/\\]/i,
     /\.git/i,
@@ -159,7 +163,9 @@ async function watch(
     /[/\\]__mocks__[/\\]/i,
     /\.npmrc/i,
   ].concat(
-    allPackagesToWatch.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
+    allPackagesIgnoringThemesToWatch.map(
+      p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`)
+    )
   )
   const watchers = _.uniq(
     allPackagesToWatch

@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.6...gatsby-cli@2.10.7) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.5...gatsby-cli@2.10.6) (2020-03-11)
+
+### Bug Fixes
+
+- **gatsby-cli:** Fix an import change that broke `gatsby new` ([#22161](https://github.com/gatsbyjs/gatsby/issues/22161)) ([29773a3](https://github.com/gatsbyjs/gatsby/commit/29773a3))
+
+## [2.10.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.4...gatsby-cli@2.10.5) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.3...gatsby-cli@2.10.4) (2020-03-09)
+
+### Bug Fixes
+
+- **gatsby-cli:** Update build script to properly handle .tsx files ([#22111](https://github.com/gatsbyjs/gatsby/issues/22111)) ([72750f3](https://github.com/gatsbyjs/gatsby/commit/72750f3))
+
+## [2.10.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.2...gatsby-cli@2.10.3) (2020-03-09)
+
+### Performance Improvements
+
+- **gatsby-cli:** avoid unnecesary rerenders for static messages in CLI ([#21955](https://github.com/gatsbyjs/gatsby/issues/21955)) ([5aff49d](https://github.com/gatsbyjs/gatsby/commit/5aff49d))
+
 ## [2.10.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.1...gatsby-cli@2.10.2) (2020-03-06)
 
 **Note:** Version bump only for package gatsby-cli
