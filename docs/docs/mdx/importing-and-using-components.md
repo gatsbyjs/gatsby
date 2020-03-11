@@ -101,6 +101,20 @@ const LazyThing = props => {
 export default LazyThing
 ```
 
+Inside your MDX, swap out any references to `Thing` with `LazyThing`:
+
+```diff
+-import Thing from "../components/Thing/Thing.js"
++import LazyThing from "../components/Thing/LazyThing.js"
+
+## Introducing Things
+
+Here is a demo:
+
+-<Thing hi={5} />
++<LazyThing hi={5} />
+```
+
 ### Additional resources
 
 - Follow this detailed [example on using MDX](/examples/using-MDX) to import and render components.
