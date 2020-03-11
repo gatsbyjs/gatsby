@@ -201,11 +201,15 @@ module.exports = async (
 
     switch (stage) {
       case `develop`:
-        configPlugins = configPlugins.concat([
-          plugins.hotModuleReplacement(),
-          plugins.noEmitOnErrors(),
-          plugins.eslintGraphqlSchemaReload(),
-        ])
+        configPlugins = configPlugins
+          .concat([
+            process.env.GATSBY_HOT_LOADER === `fast-refresh` &&
+              plugins.fastRefresh(),
+            plugins.hotModuleReplacement(),
+            plugins.noEmitOnErrors(),
+            plugins.eslintGraphqlSchemaReload(),
+          ])
+          .filter(Boolean)
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
@@ -315,13 +319,16 @@ module.exports = async (
 
         // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
         // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
-        configRules.push({
-          include: /node_modules\/react-dom/,
-          test: /\.jsx?$/,
-          use: {
-            loader: require.resolve(`./webpack-hmr-hooks-patch`),
-          },
-        })
+        // TODO: Remove entire block when we make fast-refresh the default
+        if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
+          configRules.push({
+            include: /node_modules\/react-dom/,
+            test: /\.jsx?$/,
+            use: {
+              loader: require.resolve(`./webpack-hmr-hooks-patch`),
+            },
+          })
+        }
 
         break
       }
@@ -379,9 +386,14 @@ module.exports = async (
           require.resolve(`@babel/runtime/package.json`)
         ),
         "core-js": path.dirname(require.resolve(`core-js/package.json`)),
-        "react-hot-loader": path.dirname(
-          require.resolve(`react-hot-loader/package.json`)
-        ),
+        // TODO: Remove entire block when we make fast-refresh the default
+        ...(process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+          ? {
+              "react-hot-loader": path.dirname(
+                require.resolve(`react-hot-loader/package.json`)
+              ),
+            }
+          : {}),
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
