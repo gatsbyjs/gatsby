@@ -129,12 +129,11 @@ Before getting started, make sure that you have
 [set up your local dev environment](/contributing/setting-up-your-local-dev-environment/)
 and that you're on the latest version of `gatsby-dev-cli`.
 
-- Scaffold out a starter that uses the theme you want to work on:
-  `gatsby new blog-theme-dev gatsbyjs/gatsby-starter-blog-theme`
-- Change directory to the newly scaffolded site: `cd blog-theme-dev`
+- In the Gatsby monorepo, change directory to one of the starters using the theme you want to work on: `cd starters/gatsby-starter-blog-theme`
+- Install dependencies: `yarn`
 - Run Gatsby Dev CLI to sync theme files: `gatsby-dev --packages gatsby-theme-blog`
-- In another tab run the starter with `yarn develop`
-- Edit the theme files in your local Gatsby monorepo (where you set your `gatsby-dev` path). You'll see changes automatically copied over and update in your starter.
+- In another tab run the starter: `yarn develop`
+- Edit the theme files, you'll see changes automatically copied over and update in your starter.
 
 ## Feedback
 
