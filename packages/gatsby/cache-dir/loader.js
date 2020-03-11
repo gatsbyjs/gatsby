@@ -354,7 +354,7 @@ export class BaseLoader {
 }
 
 const createComponentUrls = componentChunkName =>
-  window.___chunkMapping[componentChunkName].map(
+  (window.___chunkMapping[componentChunkName] || []).map(
     chunk => __PATH_PREFIX__ + chunk
   )
 
