@@ -400,44 +400,27 @@ export class ProdLoader extends BaseLoader {
   }
 
   loadPageDataJson(rawPath) {
-    return super
-      .loadPageDataJson(rawPath)
-      .then(data => {
-        if (data.notFound) {
-          // check if html file exist using HEAD request:
-          // if it does we should navigate to it instead of showing 404
-          console.log(`[prod-loader] checking if html file exist`, rawPath, {
-            ...data,
-          })
-
-          return doFetch(rawPath, `HEAD`).then(req => {
-            console.log(
-              `[prod-loader] html check result`,
-              rawPath,
-              { status: req.status },
-              { ...req }
-            )
-            if (req.status === 200) {
-              // page actually exist (or we asked for 404 )
-              return {
-                status: PageResourceStatus.Error,
-              }
-            } else if (req.status === 404) {
-              // page truly doesn't exist
-              return data
-            } else {
-              console.log(`[prod-loader] something else?`, req.status)
+    return super.loadPageDataJson(rawPath).then(data => {
+      if (data.notFound) {
+        // check if html file exist using HEAD request:
+        // if it does we should navigate to it instead of showing 404
+        return doFetch(rawPath, `HEAD`).then(req => {
+          if (req.status === 200) {
+            // page (.html file) actually exist (or we asked for 404 )
+            // returning page resources status as errored to trigger
+            // regular browser navigation to given page
+            return {
+              status: PageResourceStatus.Error,
             }
+          }
 
-            return data
-          })
-        }
-        console.log(`[prod-loader] loadPageDataJson data`, rawPath, data)
-        return data
-      })
-      .catch(e => {
-        console.warn(`[prod-loader] loadPageDataJson error`, rawPath, e)
-      })
+          // if HEAD request wasn't 200, return notFound result
+          // and show 404 page
+          return data
+        })
+      }
+      return data
+    })
   }
 }
 
