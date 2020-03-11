@@ -13,8 +13,6 @@ import {
   IRemoveStaleJobAction,
 } from "../types"
 
-// import type { Plugin } from "./types"
-
 /**
  * Create a dependency between a page and data. Probably for
  * internal use only.

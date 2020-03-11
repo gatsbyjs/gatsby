@@ -7,11 +7,13 @@ import { SubmitButton, CloseButton } from "./buttons"
 import { themedInput, themedInputFocus } from "../../utils/styles"
 import { Actions, Title, ScreenReaderText } from "./styled-elements"
 import RatingOption from "./rating-option"
-import MdSentimentDissatisfied from "react-icons/lib/md/sentiment-dissatisfied"
-import MdSentimentNeutral from "react-icons/lib/md/sentiment-neutral"
-import MdSentimentVerySatisfied from "react-icons/lib/md/sentiment-very-satisfied"
-import MdSend from "react-icons/lib/md/send"
-import MdRefresh from "react-icons/lib/md/refresh"
+import {
+  MdSentimentDissatisfied,
+  MdSentimentNeutral,
+  MdSentimentVerySatisfied,
+  MdSend,
+  MdRefresh,
+} from "react-icons/md"
 
 const Form = styled(`form`)`
   margin-bottom: 0;

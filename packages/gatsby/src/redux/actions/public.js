@@ -102,6 +102,15 @@ type ActionOptions = {
   followsSpan: ?Object,
 }
 
+type PageData = {
+  id: string,
+  resultHash: string,
+}
+
+type PageDataRemove = {
+  id: string,
+}
+
 /**
  * Delete a page
  * @param {Object} page a page object
@@ -1088,9 +1097,9 @@ actions.createParentChildLink = (
   { parent, child }: { parent: any, child: any },
   plugin?: Plugin
 ) => {
-  // Update parent
-  parent.children.push(child.id)
-  parent.children = _.uniq(parent.children)
+  if (!parent.children.includes(child.id)) {
+    parent.children.push(child.id)
+  }
 
   return {
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
@@ -1470,6 +1479,33 @@ actions.createPageDependency = (
       nodeId,
       connection,
     },
+  }
+}
+
+/**
+ * Set page data in the store, saving the pages content data and context.
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the path to the page.
+ * @param {string} $0.resultHash pages content hash.
+ */
+actions.setPageData = (pageData: PageData) => {
+  return {
+    type: `SET_PAGE_DATA`,
+    payload: pageData,
+  }
+}
+
+/**
+ * Remove page data from the store.
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the path to the page.
+ */
+actions.removePageData = (id: PageDataRemove) => {
+  return {
+    type: `REMOVE_PAGE_DATA`,
+    payload: id,
   }
 }
 

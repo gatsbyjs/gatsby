@@ -1,5 +1,5 @@
 import React from "react"
-import MdStar from "react-icons/lib/md/star"
+import { MdStar } from "react-icons/md"
 
 import { Box, Flex, Heading, Text } from "../system"
 import ImagePlaceholder from "../image-placeholder"

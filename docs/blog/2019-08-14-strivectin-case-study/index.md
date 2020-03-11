@@ -111,7 +111,8 @@ Launch was effortless. We had the site living on a subdomain of strivectin.com s
 Felicity Sissener, the Chief Digital Officer at StriVectin had this to say about launch:
 
 <Pullquote>
-“This has also been the smoothest cut-over of my entire career- your team and work are top notch.”
+  “This has also been the smoothest cut-over of my entire career- your team and
+  work are top notch.”
 </Pullquote>
 
 We confidently ship code to production many times per day. At the time of writing this, we have not had a single site outage.

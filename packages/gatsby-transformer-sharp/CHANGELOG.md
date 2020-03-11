@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.17...gatsby-transformer-sharp@2.3.18) (2020-03-10)
+
+### Features
+
+- **gatsby-transformer-sharp:** add inside and outside fit opt… ([#14852](https://github.com/gatsbyjs/gatsby/issues/14852)) ([1aa2974](https://github.com/gatsbyjs/gatsby/commit/1aa2974)), closes [#13078](https://github.com/gatsbyjs/gatsby/issues/13078) [/github.com/gatsbyjs/gatsby/pull/13078#issuecomment-482247808](https://github.com//github.com/gatsbyjs/gatsby/pull/13078/issues/issuecomment-482247808)
+
+## [2.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.16...gatsby-transformer-sharp@2.3.17) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.15...gatsby-transformer-sharp@2.3.16) (2020-02-27)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.14...gatsby-transformer-sharp@2.3.15) (2020-02-26)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** Warn when using unsupported ext… ([#20782](https://github.com/gatsbyjs/gatsby/issues/20782)) ([4519c05](https://github.com/gatsbyjs/gatsby/commit/4519c05))
+
 ## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.13...gatsby-transformer-sharp@2.3.14) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

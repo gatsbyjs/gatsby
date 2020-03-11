@@ -5,7 +5,7 @@ const {
   getNamedType,
   isCompositeType,
 } = require(`graphql`)
-const prepareRegex = require(`../../utils/prepare-regex`)
+const { prepareRegex } = require(`../../utils/prepare-regex`)
 const {
   getNodeTypeCollection,
   ensureFieldIndexes,

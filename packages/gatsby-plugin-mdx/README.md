@@ -118,14 +118,15 @@ module.exports = {
 any other Gatsby plugin. You can define MDX extensions, layouts, global
 scope, and more.
 
-| Key                                             | Default                                | Description                                                         |
-| ----------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------- |
-| [`extensions`](#extensions)                     | `[".mdx"]`                             | Configure the file extensions that `gatsby-plugin-mdx` will process |
-| [`defaultLayouts`](#default-layouts)            | `{}`                                   | Set the layout components for MDX source types                      |
-| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`                                   | Use Gatsby-specific remark plugins                                  |
-| [`remarkPlugins`](#remark-plugins)              | `[]`                                   | Specify remark plugins                                              |
-| [`rehypePlugins`](#rehype-plugins)              | `[]`                                   | Specify rehype plugins                                              |
-| [`mediaTypes`](#media-types)                    | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                    |
+| Key                                                                       | Default                                | Description                                                           |
+| ------------------------------------------------------------------------- | -------------------------------------- | --------------------------------------------------------------------- |
+| [`extensions`](#extensions)                                               | `[".mdx"]`                             | Configure the file extensions that gatsby-plugin-mdx will process     |
+| [`defaultLayouts`](#default-layouts)                                      | `{}`                                   | Set the layout components for MDX source types                        |
+| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins)                           | `[]`                                   | Use Gatsby-specific remark plugins                                    |
+| [`remarkPlugins`](#remark-plugins)                                        | `[]`                                   | Specify remark plugins                                                |
+| [`rehypePlugins`](#rehype-plugins)                                        | `[]`                                   | Specify rehype plugins                                                |
+| [`mediaTypes`](#media-types)                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                      |
+| [`shouldBlockNodeFromTransformation`](#shouldblocknodefromtransformation) | `(node) => false`                      | Disable MDX transformation for nodes where this function returns true |
 
 #### Extensions
 
@@ -426,6 +427,30 @@ Gatsby includes the media-type of the content on any given node. For
 `file` nodes, we choose whether to process the content with MDX or not
 by the file extension. For remote content or generated content, we
 choose which nodes to process by looking at the media type.
+
+#### shouldBlockNodeFromTransformation
+
+Given a function `(node) => Boolean` allows you to decide for each node if it should be transformed or not.
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        shouldBlockNodeFromTransformation(node) {
+          return (
+            [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
+            (node.internal.type === `File` &&
+              path.parse(node.dir).dir.endsWith(`packages`))
+          )
+        },
+      },
+    },
+  ],
+}
+```
 
 ### Components
 
