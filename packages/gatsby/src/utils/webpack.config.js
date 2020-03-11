@@ -6,10 +6,10 @@ const dotenv = require(`dotenv`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
-const getPublicPath = require(`./get-public-path`)
+const { getPublicPath } = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { withBasePath, withTrailingSlash } = require(`./path`)
+import { withBasePath, withTrailingSlash } from "./path"
 const getGatsbyDependents = require(`./gatsby-dependents`)
 
 const apiRunnerNode = require(`./api-runner-node`)

@@ -3,7 +3,7 @@
   avatar: avatars/kyle-mathews.jpeg
   twitter: "@kylemathews"
 - id: Dustin Schau
-  bio: Software Engineer @ GatsbyJS. Likes all things JavaScript, and travel. Doesn't totally suck 👋
+  bio: Head of Product @ GatsbyJS. Likes all things JavaScript, and travel. Doesn't totally suck 👋
   avatar: avatars/dustin-schau.png
   twitter: "@schaudustin"
 - id: Kostas Bariotis
@@ -388,3 +388,11 @@
   bio: Engineer on TypeScript at Microsoft
   avatar: avatars/orta-therox.jpg
   twitter: "@orta"
+- id: Aisha Blake
+  bio: Teacher, speaker, and community organizer who learned to code via Neopets. Loves theater, karaoke, and dogs.
+  avatar: avatars/aisha-blake.jpg
+  twitter: "@AishaBlake"
+- id: Rich Manalang
+  bio: Principal developer advocate at LaunchDarkly
+  avatar: avatars/rich-manalang.jpeg
+  twitter: "@rmanalan"

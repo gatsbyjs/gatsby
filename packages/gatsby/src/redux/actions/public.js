@@ -1034,9 +1034,9 @@ actions.createParentChildLink = (
   { parent, child }: { parent: any, child: any },
   plugin?: Plugin
 ) => {
-  // Update parent
-  parent.children.push(child.id)
-  parent.children = _.uniq(parent.children)
+  if (!parent.children.includes(child.id)) {
+    parent.children.push(child.id)
+  }
 
   return {
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,

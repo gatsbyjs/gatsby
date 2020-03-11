@@ -264,9 +264,9 @@
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
                 - title: Pixabay Image Source Plugin Tutorial
-                  link: /docs/pixabay-source-plugin-tutorial/
+                  link: /tutorial/pixabay-source-plugin-tutorial/
                 - title: Remark Plugin Tutorial
-                  link: /docs/remark-plugin-tutorial/
+                  link: /tutorial/remark-plugin-tutorial/
                 - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Themes
@@ -471,6 +471,8 @@
                   link: /docs/processing-payments-with-stripe/
                 - title: Processing Payments with Square
                   link: /docs/processing-payments-with-square/
+                - title: Sourcing from Etsy
+                  link: /docs/sourcing-from-etsy/
                 - title: Sourcing from WooCommerce
                   link: /docs/sourcing-from-woocommerce/
         - title: Improving Performance
@@ -767,7 +769,11 @@
           link: /docs/glossary/static-site-generator/
         - title: webpack
           link: /docs/glossary/webpack/
+        - title: WPGraphQL
+          link: /docs/glossary/wpgraphql/
     - title: Gatsby Telemetry
       link: /docs/telemetry/
+    - title: Gatsby Feedback
+      link: /docs/cli-feedback/
     - title: Gatsby REPL
       link: /docs/gatsby-repl/

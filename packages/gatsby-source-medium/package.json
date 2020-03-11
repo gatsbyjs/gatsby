@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-medium",
   "description": "Gatsby source plugin for building websites using Medium as a data source",
-  "version": "2.1.20",
+  "version": "2.1.21",
   "author": "Robert Vogt <robert@smartive.ch>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -13,7 +13,7 @@
   "devDependencies": {
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.16",
+    "babel-preset-gatsby-package": "^0.2.17",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-medium#readme",

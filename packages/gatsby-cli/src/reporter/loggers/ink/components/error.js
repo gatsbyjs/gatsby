@@ -34,7 +34,7 @@ const DocsLink = ({ docsUrl }) => {
   )
 }
 
-const Error = ({ details }) => (
+const Error = React.memo(({ details }) => (
   // const stackLength = get(details, `stack.length`, 0
 
   <Box marginY={1} flexDirection="column">
@@ -75,6 +75,6 @@ const Error = ({ details }) => (
         </Box>
       )} */}
   </Box>
-)
+))
 
 export default Error
