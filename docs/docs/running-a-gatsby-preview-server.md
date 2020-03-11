@@ -4,7 +4,7 @@ title: Running a Gatsby Preview Server
 
 When editing content in a CMS, it's great to see a preview of changes before they go live.
 
-This can be accomplished by setting up a preview server with Gatsby, which can be accomplished a couple of different ways:
+This can be accomplished by setting up a preview server with Gatsby, for which there are two options:
 
 ## Rolling your own Preview
 
@@ -15,4 +15,4 @@ Roughly, you can follow these steps to enable your own preview server:
 
 ## Using Gatsby Cloud Preview
 
-For a managed Preview server, try out [Gatsby Cloud](https://www.gatsbyjs.com/cloud). It's free for personal projects and single-purpose sites, with paid packages for a range of project and company needs.
+For a managed Preview server without having to create infrastructure yourself, try out [Gatsby Cloud](https://www.gatsbyjs.com/cloud). It's free for personal projects and single-purpose sites, with paid packages for a range of project and company needs.
