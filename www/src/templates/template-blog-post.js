@@ -6,7 +6,6 @@ import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
-import Layout from "../components/layout"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
@@ -42,7 +41,7 @@ class BlogPostTemplate extends React.Component {
       )
     }
     return (
-      <Layout location={this.props.location}>
+      <>
         <Container>
           {
             // TODO
@@ -223,7 +222,7 @@ class BlogPostTemplate extends React.Component {
           </Container>
           <FooterLinks />
         </div>
-      </Layout>
+      </>
     )
   }
 }

@@ -3,6 +3,104 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.19...gatsby-theme-notes@1.1.20) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.18...gatsby-theme-notes@1.1.19) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.17...gatsby-theme-notes@1.1.18) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.16...gatsby-theme-notes@1.1.17) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.15...gatsby-theme-notes@1.1.16) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.14...gatsby-theme-notes@1.1.15) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.13...gatsby-theme-notes@1.1.14) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.12...gatsby-theme-notes@1.1.13) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.11...gatsby-theme-notes@1.1.12) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.10...gatsby-theme-notes@1.1.11) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.9...gatsby-theme-notes@1.1.10) (2020-03-05)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.8...gatsby-theme-notes@1.1.9) (2020-03-04)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.7...gatsby-theme-notes@1.1.8) (2020-03-03)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.6...gatsby-theme-notes@1.1.7) (2020-03-03)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.5...gatsby-theme-notes@1.1.6) (2020-03-02)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.4...gatsby-theme-notes@1.1.5) (2020-03-02)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.3...gatsby-theme-notes@1.1.4) (2020-02-28)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.2...gatsby-theme-notes@1.1.3) (2020-02-25)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.1...gatsby-theme-notes@1.1.2) (2020-02-25)
+
+### Bug Fixes
+
+- **gatsby-theme-notes:** fix notes failing tests ([#21709](https://github.com/gatsbyjs/gatsby/issues/21709)) ([4f7424a](https://github.com/gatsbyjs/gatsby/commit/4f7424a))
+
+## [1.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.0...gatsby-theme-notes@1.1.1) (2020-02-24)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+# [1.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.71...gatsby-theme-notes@1.1.0) (2020-02-24)
+
+### Features
+
+- Change mdx flag into mdxOtherwise to prevent confusion ([#21404](https://github.com/gatsbyjs/gatsby/issues/21404)) ([6874cca](https://github.com/gatsbyjs/gatsby/commit/6874cca))
+
+## [1.0.71](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.70...gatsby-theme-notes@1.0.71) (2020-02-24)
+
+### Bug Fixes
+
+- **gatsby-theme-notes:** fix styling clash with gatsby-theme-blog ([#21656](https://github.com/gatsbyjs/gatsby/issues/21656)) ([62534f5](https://github.com/gatsbyjs/gatsby/commit/62534f5))
+
+## [1.0.70](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.69...gatsby-theme-notes@1.0.70) (2020-02-24)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
 ## [1.0.69](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.68...gatsby-theme-notes@1.0.69) (2020-02-20)
 
 **Note:** Version bump only for package gatsby-theme-notes

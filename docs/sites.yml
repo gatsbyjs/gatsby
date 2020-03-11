@@ -2350,7 +2350,6 @@
 - title: Serverless
   main_url: https://serverless.com
   url: https://serverless.com
-  source_url: https://github.com/serverless/site
   description: >
     Serverless.com – Build web, mobile and IoT applications with serverless architectures using AWS Lambda, Azure Functions, Google CloudFunctions & more!
   categories:
@@ -3447,17 +3446,6 @@
     - Business
   built_by: Othermachines
   built_by_url: "https://othermachines.com"
-- title: Cole Walker's Portfolio
-  main_url: "https://www.walkermakes.com"
-  url: "https://www.walkermakes.com"
-  source_url: "https://github.com/ColeWalker/portfolio"
-  description: The portfolio of web developer Cole Walker, built with the help of Gatsby v2, React-Spring, and SASS.
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-  built_by: Cole Walker
-  built_by_url: "https://www.walkermakes.com"
 - title: Standing By Company
   main_url: "https://standingby.company"
   url: "https://standingby.company"
@@ -3832,19 +3820,6 @@
     - Accessibility
     - Education
     - Video
-  built_by: Tenon.io
-  built_by_url: https://tenon.io
-  featured: false
-- title: Tenon-UI Documentation
-  main_url: https://www.tenon-ui.info
-  url: https://www.tenon-ui.info
-  description: >
-    Documentation site for Tenon-UI: Tenon.io's accessible components library.
-  categories:
-    - Accessibility
-    - Documentation
-    - Library
-    - Web Development
   built_by: Tenon.io
   built_by_url: https://tenon.io
   featured: false
@@ -4354,18 +4329,6 @@
     - Technology
   built_by: Guillaume Briday
   built_by_url: https://guillaumebriday.fr/
-  featured: false
-- title: SEOmonitor
-  main_url: "https://www.seomonitor.com"
-  url: "https://www.seomonitor.com"
-  description: >
-    SEOmonitor is a suite of SEO tools dedicated to agencies.
-  categories:
-    - Blog
-    - Portfolio
-    - Agency
-  built_by: Bejamas
-  built_by_url: https://bejamas.io/
   featured: false
 - title: Jean Regisser's Portfolio
   main_url: "https://jeanregisser.com/"
@@ -4978,16 +4941,6 @@
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
   featured: false
-- title: het Groeiatelier
-  url: https://www.hetgroeiatelier.be/
-  main_url: https://www.hetgroeiatelier.be/
-  description: >
-    Workspace for talent development and logopedics. One page site with basic info and small calendar CMS.
-  categories:
-    - Marketing
-  built_by: WEBhart
-  built_by_url: https://www.web-hart.com
-  featured: false
 - title: Lebuin D'Haese
   url: https://www.lebuindhaese.be/
   main_url: https://www.lebuindhaese.be/
@@ -5508,18 +5461,6 @@
   built_by: Jacob Herper
   built_by_url: https://herper.io
   featured: false
-- title: GreenOrbit
-  main_url: https://greenorbit.com/
-  url: https://greenorbit.com/
-  description: >
-    Cloud-based intranet software. Get your people going with everything you need, built in.
-  categories:
-    - Business
-    - App
-    - Productivity
-    - Technology
-  built_by: Effective Digital
-  built_by_url: https://effective.digital/
 - title: Purple11
   main_url: https://purple11.com/
   url: https://purple11.com/
@@ -5852,19 +5793,6 @@
     laser cutting, and rapid prototyping. We help artists, agencies and engineers turn their ideas into its physical form.
   categories:
     - Business
-  featured: false
-- title: Asjas
-  main_url: https://asjas.co.za
-  url: https://asjas.co.za/blog
-  source_url: https://github.com/Asjas/Personal-Webpage
-  description: >
-    This is a website built with Gatsby v2 that uses Netlify CMS and Gatsby-MDX as a blog (incl. portfolio page).
-  categories:
-    - Web Development
-    - Blog
-    - Portfolio
-  built_by: A-J Roos
-  built_by_url: https://twitter.com/_asjas
   featured: false
 - title: Glug-Infinite
   main_url: https://gluginfinite.github.io
@@ -6566,18 +6494,6 @@
   built_by: Simon Koelewijn
   built_by_url: https://simonkoelewijn.nl
   featured: false
-- title: Raconteur Careers
-  main_url: https://careers.raconteur.net
-  url: https://careers.raconteur.net
-  description: >
-    Raconteur is a London-based publishing house and content marketing agency. We have built this careers portal Gatsby v2 with TypeScript, Styled-Components, React-Spring and Contentful.
-  categories:
-    - Media
-    - Marketing
-    - Landing Page
-  built_by: Jacob Herper
-  built_by_url: https://herper.io
-  featured: false
 - title: Frankly Steve
   url: https://www.franklysteve.com/
   main_url: https://www.franklysteve.com/
@@ -6729,18 +6645,6 @@
     - Nonprofit
   built_by: Jacob Herper
   built_by_url: https://herper.io
-- title: Gratsy
-  url: https://gratsy.com/
-  main_url: https://gratsy.com/
-  description: >
-    Gratsy: Feedback To Give Back
-  categories:
-    - Agency
-    - Marketing
-    - Landing Page
-  built_by: Whalar
-  built_by_url: https://whalar.com/
-  featured: false
 - title: deepThreads
   main_url: https://deepthreads.com
   url: https://deepthreads.com/
@@ -7865,6 +7769,27 @@
   built_by: Rou Hun Fan
   built_by_url: "https://flowen.me"
   featured: false
+- title: Problem studio
+  url: https://problem.studio
+  main_url: https://problem.studio
+  description: >
+    Problem Studio creates unique and fun web experiences. Our enemy is "boring" if ya know what we mean: overused Wordpress templates, the top 10 shopify templates, copy of a copy of a copy of a copy. We love to support design and marketing agencies and help realize their creations into a digital product. `
+  categories:
+    - Agency
+    - Business
+    - Consulting
+    - Design
+    - Education
+    - Entrepreneurship
+    - Freelance
+    - Landing Page
+    - Marketing
+    - Media
+    - Portfolio
+    - Productivity
+    - Web Development
+  built_by: Rou Hun Fan & Sander Visser
+  built_by_url: https://flowen.me
 - title: North X South
   main_url: https://northxsouth.co
   url: https://northxsouth.co
@@ -8220,16 +8145,6 @@
     - Media
   built_by: Thomas Uta
   built_by_url: https://twitter.com/ThomasJanUta
-  featured: false
-- title: Lusta Hair
-  url: https://www.lustahair.com
-  main_url: https://www.lustahair.com
-  description: >
-    Luxury 100% Remy Human Hair Toppers. The perfect solution for volume, coverage and style. Online retailer based in Australia.
-  categories:
-    - eCommerce
-  built_by: Jason Di Benedetto
-  built_by_url: https://jason.dibenedetto.fyi
   featured: false
 - title: Yoseph.tech
   main_url: https://www.yoseph.tech
@@ -8798,18 +8713,6 @@
   built_by: Donovan Nagel
   built_by_url: https://www.donovannagel.com
   featured: false
-- title: Bearer - API Monitoring & Protection for your app
-  url: https://www.bearer.sh/
-  main_url: https://www.bearer.sh/
-  description: >
-    Bearer helps developers monitor API usage in real-time, protect their app against API limits and failures, and integrate APIs faster.
-  categories:
-    - API
-    - Technology
-    - Web Development
-    - Open Source
-  built_by: Bearer
-  featured: false
 - title: 8fit.com
   url: https://8fit.com/
   main_url: https://8fit.com/
@@ -9137,12 +9040,12 @@
     - Entertainment
     - App
 - title: madewithlove
-  main_url: https://www.madewithlove.be
-  url: https://www.madewithlove.be
+  main_url: https://madewithlove.com
+  url: https://madewithlove.com
   description: >-
     We build digital products and create the teams around them. We can help with software engineering, product management, managing technical teams, audits and technical consulting.
   built_by: madewithlove
-  built_by_url: https://www.madewithlove.be
+  built_by_url: https://madewithlove.com
   featured: false
   categories:
     - Web Development
@@ -9298,7 +9201,7 @@
   url: https://www.gis-netzwerk.com/
   main_url: https://www.gis-netzwerk.com/
   description: >
-    Geoinformatik, GIS, Web-Development.
+    Multilingual (i18n) Blog with different URLs for categories, tags and posts depending on the language.
   categories:
     - Blog
     - Data
@@ -9859,3 +9762,271 @@
     - Agency
   built_by: App Design
   built_by_url: "https://appdesign.dev/"
+- title: Guillermo Gómez-Peña
+  url: https://www.guillermogomezpena.com/
+  main_url: https://www.guillermogomezpena.com/
+  description: >
+    Personal website for the work of Guillermo Gómez-Peña: performance artist, writer, activist, radical pedagogue and artistic director of the performance troupe La Pocha Nostra. Recipient of the MacArthur Fellow, USA Artists Fellow, and a winner of the Bessie, Guggenheim, and American Book awards.
+  categories:
+    - Portfolio
+    - Gallery
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
+  featured: false
+- title: Clinka
+  url: https://www.clinka.com.au/
+  main_url: https://www.clinka.com.au/
+  description: >
+    B2B website for an Australian manufacturer of environmentally friendly construction materials.
+  categories:
+    - Business
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
+- title: Chris Vogt's Blog
+  main_url: https://www.chrisvogt.me
+  url: https://www.chrisvogt.me
+  source_url: https://github.com/chrisvogt/gatsby-theme-private-sphere
+  description: >-
+    Personal blog of Chris Vogt, a software developer in San Francisco. Showcases
+    my latest activity on Instagram, Goodreads, and Spotify using original widgets.
+  categories:
+    - Blog
+    - Open Source
+    - Photography
+    - Portfolio
+  built_by: Chris Vogt
+  built_by_url: https://github.com/chrisvogt
+- title: Trolley Travel
+  main_url: http://trolleytravel.org/
+  url: http://trolleytravel.org/
+  description: >
+    Travel blog website to give tips and informations for many destinations, built with Novella theme
+  categories:
+    - Blog
+    - Travel
+  built_by: Pierre Beard
+  built_by_url: https://github.com/PBRT
+  featured: false
+- title: Playlist Detective
+  main_url: https://www.playlistdetective.com/
+  url: https://www.playlistdetective.com/
+  source_url: https://github.com/bobylito/playlistFinder
+  description: >
+    Playlist Detective is an attempt to ease music discovery with playlists. Back in the days, people were sharing mixtapes - some songs we knew and others we didn't, therefore expanding our musical horizons.
+
+    Playlists are the same, and playlist detective lets you search for songs or artists you like in order to stumble on your new favorite songs.
+
+    It uses Algolia for the search.
+  categories:
+    - Media
+    - Music
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
+- title: ProjectManager.tools
+  main_url: "https://projectmanager.tools/"
+  url: "https://projectmanager.tools/"
+  featured: false
+  categories:
+    - App
+    - Web Development
+    - Design
+    - Agency
+  built_by: App Design
+  built_by_url: "https://appdesign.dev/"
+- title: 1902 Software
+  url: https://1902software.com/
+  main_url: https://1902software.com/
+  description: >
+    We are an IT company that specializes in e-commerce and website development on different platforms such as Magento, WordPress, and Umbraco. We are also known for custom software development, web design and mobile app solutions for iOS and Android.
+  categories:
+    - eCommerce
+    - Web Development
+    - Programming
+    - Mobile Development
+    - WordPress
+    - Design
+    - Business
+    - Agency
+  built_by: 1902 Software Development Corporation
+  built_by_url: https://1902software.com/
+  featured: false
+- title: Codeful
+  url: https://www.codeful.fi/
+  main_url: https://www.codeful.fi/
+  categories:
+    - Agency
+    - Consulting
+  featured: false
+- title: Noima
+  url: https://www.noima.xyz
+  main_url: https://www.noima.xyz
+  categories:
+    - Agency
+    - Consulting
+    - Blog
+  featured: false
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
+- title: Talent Point
+  url: https://talentpoint.co
+  main_url: https://talentpoint.co
+  description: >
+    Talent Point provide the tools that companies need to scale quickly and effectively, bridging the gap between employer brand, HR, and hiring to build teams from within.
+  categories:
+    - Business
+    - Technology
+    - Blog
+    - Consulting
+    - Human Resources
+  built_by: Talent Point
+  built_by_url: https://talentpoint.co
+  featured: false
+- title: Marathon Oil
+  main_url: "https://www.marathonoil.com/"
+  url: "https://www.marathonoil.com/"
+  featured: false
+  categories:
+    - Business
+    - Marketing
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+- title: Gene
+  url: https://www.geneglobal.com/work
+  main_url: https://www.geneglobal.com
+  description: >
+    We’re an experience design agency, focused on the future of health
+  categories:
+    - Agency
+    - Technology
+    - Healthcare
+    - Consulting
+    - User Experience
+  featured: false
+- title: medignition – healthcare innovations
+  url: https://medignition.com/
+  main_url: https://medignition.com/
+  description: >
+    medignition builds digital innovations in healthcare.
+  categories:
+    - Healthcare
+    - Education
+    - Technology
+    - Design
+    - Business
+    - Portfolio
+    - Entrepreneurship
+    - Agency
+  built_by: medignition
+  built_by_url: https://medignition.com/
+- title: Dynobase
+  url: "https://dynobase.dev/"
+  main_url: "https://dynobase.dev/"
+  description: >
+    Professional GUI Client for DynamoDB.
+  categories:
+    - Data
+    - Programming
+    - Web Development
+  built_by: Rafal Wilinski
+  built_by_url: "https://rwilinski.me/"
+  featured: false
+- title: Vaktija.eu
+  url: https://vaktija.eu
+  main_url: https://vaktija.eu
+  description: >
+    Vaktija.eu gives information about prayer times in germany. (Built with GatsbyJS. Fast in every way that matters.)
+  categories:
+    - App
+    - Community
+    - Nonprofit
+    - SEO
+    - Web Development
+  built_by: Rašid Redžić
+  built_by_url: https://rasidre.com/
+  featured: false
+- title: Creative code daily
+  main_url: https://www.bobylito.dev/
+  url: https://www.bobylito.dev/
+  source_url: https://github.com/bobylito/sketches
+  description: >
+    Creative code daily (CCD) is a personal project for which I build a new animation made out of code every day.
+  categories:
+    - Blog
+    - Programming
+    - Gallery
+    - Portfolio
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
+- title: Messi vs Ronaldo
+  description: >
+    The biggest debate in football - but who is the best, Messi or Ronaldo? This website provides all the goals and stats to help you reach your own conclusion.
+  main_url: "https://www.messivsronaldo.app/"
+  url: "https://www.messivsronaldo.app/"
+  categories:
+    - Sports
+    - Data
+    - App
+  built_by: Stephen Greig
+  built_by_url: "http://ste.digital/"
+- title: Em Em Recipes
+  url: "https://ememrecipes.com"
+  main_url: "https://ememrecipes.com"
+  description: >
+    Finally, a recipe website that gets straight to the point.
+  categories:
+    - Blog
+    - Food
+  built_by: Matthew Mesa
+  built_by_url: "https://matthewmesa.com"
+- title: Yuuniworks Portfolio / Blog
+  main_url: "https://www.yuuniworks.com/"
+  url: "https://www.yuuniworks.com/"
+  source_url: "https://github.com/junkboy0315/gatsby-portfolio-blog"
+  featured: false
+  categories:
+    - Portfolio
+    - Web Development
+    - Blog
+- title: Jun Chen Portfolio
+  url: "https://www.junchenjun.me"
+  main_url: "https://www.junchenjun.me"
+  source_url: "https://github.com/junchenjun/junchenjun.me"
+  description: >
+    Get to know Jun.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Jun Chen
+  built_by_url: "https://www.junchenjun.me"
+- title: Xavier Mirabelli-Montan
+  url: "https://xavie.mirmon.co.uk"
+  main_url: "https://xavie.mirmon.co.uk"
+  source_url: https://github.com/xaviemirmon/xavier-developer-site
+  description: >
+    The developer portfolio and blog for Xavier Mirabelli-Montan.  Built using TinaCMS Grande hosted on Gatsby Cloud.
+  categories:
+    - Blog
+    - Portfolio
+    - Programming
+  featured: false
+- title: MPG Calculator
+  url: "https://www.mpg-calculator.co.uk"
+  main_url: "https://www.mpg-calculator.co.uk"
+  description: >
+    A website which allows you to calculate the MPG of your vehicle.
+  categories:
+    - SEO
+    - Accessibility
+    - Blog
+  built_by: PJ
+  built_by_url: "https://pjsachdev.me"
+- title: Softblues
+  main_url: https://softblues.io
+  url: https://softblues.io
+  description: >
+    We optimize your project costs and deliver outstanding results by applying relevant technology. Plus, we create our own effective products for businesses and developers all over the world.
+  categories:
+    - WordPress
+    - Portfolio
+    - Agency
