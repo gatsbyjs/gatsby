@@ -1,8 +1,8 @@
-const { setDefaultTags } = require(`gatsby-telemetry`)
-const path = require(`path`)
+import { setDefaultTags } from "gatsby-telemetry"
+import path from "path"
 
-exports.getLocalGatsbyVersion = () => {
-  let version
+export const getLocalGatsbyVersion = (): string => {
+  let version = ``
   try {
     const packageInfo = require(path.join(
       process.cwd(),
