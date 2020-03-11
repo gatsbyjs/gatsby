@@ -386,12 +386,12 @@ const errorMap = {
         `Invalid segments:\n${context.invalidPathSegments
           .map(segment => ` - "${segment}"`)
           .join(`\n`)}`,
-        !context.isProduction
+        ...(!context.isProduction
           ? [
               `\nThis will fail production builds, please adjust your paths.`,
               `\nIn development mode gatsby truncated to: "${context.truncatedPath}"`,
             ]
-          : [],
+          : []),
       ]
         .filter(Boolean)
         .join(`\n`),
