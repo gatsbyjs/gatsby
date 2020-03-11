@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FunctionComponent } from "react"
 import path from "path"
 import { Color, Box } from "ink"
 import { get } from "lodash"
@@ -7,7 +7,7 @@ interface IFileProps {
   filePath: string
   location: string
 }
-const File = ({ filePath, location }: IFileProps): JSX.Element => {
+const File: FunctionComponent<IFileProps> = ({ filePath, location }) => {
   const lineNumber = get(location, `start.line`)
 
   let locString = ``
@@ -30,7 +30,7 @@ const File = ({ filePath, location }: IFileProps): JSX.Element => {
 interface IDocsLinkProps {
   docsUrl: string
 }
-const DocsLink = ({ docsUrl }: IDocsLinkProps): JSX.Element => {
+const DocsLink: FunctionComponent<IDocsLinkProps> = ({ docsUrl }) => {
   // TODO: when there's no specific docsUrl, add helpful message describing how
   // to submit an issue
   if (docsUrl === `https://gatsby.dev/issue-how-to`) return null
@@ -53,8 +53,8 @@ interface IErrorProps {
   }
 }
 
-export const Error = React.memo(
-  ({ details }: IErrorProps): JSX.Element => (
+export const Error: FunctionComponent<IErrorProps> = React.memo(
+  ({ details }) => (
     // const stackLength = get(details, `stack.length`, 0
 
     <Box marginY={1} flexDirection="column">
