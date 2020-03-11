@@ -379,7 +379,7 @@ module.exports = argv => {
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
       handler: handlerP(({ rootPath, starter }) => {
-        const initStarter = require(`./init-starter`)
+        const { initStarter } = require(`./init-starter`)
         return initStarter(starter, { rootPath })
       }),
     })

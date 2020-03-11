@@ -268,10 +268,10 @@ Your new Gatsby site has been successfully bootstrapped. Start developing it by 
 /**
  * Main function that clones or copies the starter.
  */
-export default async (
+export async function initStarter(
   starter: string,
   options: IInitOptions
-): Promise<void> => {
+): Promise<void> {
   const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
     starter,
     options.rootPath
