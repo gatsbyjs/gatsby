@@ -27,7 +27,7 @@ The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packa
 
 The options are as follows:
 
-- `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a cusome `resolveSiteUrl` function. If you override the query, you probably will also need to set a `serializer` to return the correct data for the sitemap. Due to how this plugin was built it is currently expected/required to fetch the page paths from `allSitePage`, but you may use the `allSitePage.edges.node` or `allSitePage.nodes` query structure.
+- `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom `resolveSiteUrl` function. If you override the query, you probably will also need to set a `serializer` to return the correct data for the sitemap. Due to how this plugin was built it is currently expected/required to fetch the page paths from `allSitePage`, but you may use the `allSitePage.edges.node` or `allSitePage.nodes` query structure.
 - `output` (string) The filepath and name. Defaults to `/sitemap.xml`.
 - `exclude` (array of strings) An array of paths to exclude from the sitemap.
 - `createLinkInHead` (boolean) Whether to populate the `<head>` of your site with a link to the sitemap.
