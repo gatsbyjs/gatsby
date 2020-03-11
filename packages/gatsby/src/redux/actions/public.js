@@ -16,7 +16,11 @@ const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const { getCommonDir } = require(`../../utils/path`)
+const {
+  getCommonDir,
+  truncatePath,
+  tooLongSegmentsInPath,
+} = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
@@ -371,6 +375,24 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `ComponentIndex`
   } else {
     internalComponentName = `Component${pascalCase(page.path)}`
+  }
+
+  const invalidPathSegments = tooLongSegmentsInPath(page.path)
+
+  if (invalidPathSegments.length > 0) {
+    const truncatedPath = truncatePath(page.path)
+    report.panicOnBuild({
+      id: `11331`,
+      context: {
+        path: page.path,
+        invalidPathSegments,
+
+        // we will only show truncatedPath in non-production scenario
+        isProduction: process.env.NODE_ENV === `production`,
+        truncatedPath,
+      },
+    })
+    page.path = truncatedPath
   }
 
   const internalPage: Page = {
