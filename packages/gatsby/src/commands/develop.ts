@@ -16,7 +16,7 @@ import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
 import bootstrap from "../bootstrap"
-import { store, emitter } from "../redux"
+import { store } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
 import { buildHTML } from "./build-html"
 import { withBasePath } from "../utils/path"
@@ -52,34 +52,16 @@ import {
   reportWebpackWarnings,
   structureWebpackErrors,
 } from "../utils/webpack-error-utils"
+import { waitUntilAllJobsComplete } from "../utils/commands/jobs-manager"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
 
 import { BuildHTMLStage, IProgram } from "./types"
-import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "../utils/jobs-manager"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
-
-const waitUntilAllJobsComplete = (): Promise<void> => {
-  const jobsV1Promise = new Promise(resolve => {
-    const onEndJob = (): void => {
-      if (store.getState().jobs.active.length === 0) {
-        resolve()
-        emitter.off(`END_JOB`, onEndJob)
-      }
-    }
-    emitter.on(`END_JOB`, onEndJob)
-    onEndJob()
-  })
-
-  return Promise.all([
-    jobsV1Promise,
-    waitUntilAllJobsV2Complete(),
-  ]).then(() => {})
-}
 
 // const isInteractive = process.stdout.isTTY
 
