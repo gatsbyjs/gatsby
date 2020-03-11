@@ -75,11 +75,11 @@ Because the `<Message />` and `<Chart />` components were passed into the provid
 
 ## Lazy-loading components
 
-Any components used in `.mdx` files will be bundled in your main application bundle. This can lead to a large primary bundle, and worse performance for all pages across your Gatsby site.
+When you use components in your `.mdx` files, Gatsby will bundle them into the main application bundle. This can cause performance problems.
 
-Future versions of [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx) will address this, but in the meantime, it can be prudent to lazy-load very large dependencies. The following snippet provides an example for how to accomplish this, with an imaginary `Thing` component:
+In the future, [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx) will address this. In the meantime, it can be prudent to lazy-load very large dependencies. The following snippet provides an example for lazy-loading an imaginary `Thing` component:
 
-```js
+```jsx:title=src/components/Thing/LazyThing.js
 import React from "react"
 
 import Spinner from "./somewhere"
@@ -98,7 +98,7 @@ const LazyThing = props => {
   return <Component {...props} />
 }
 
-export default LazyLiveCodeSnippet
+export default LazyThing
 ```
 
 ### Additional resources
