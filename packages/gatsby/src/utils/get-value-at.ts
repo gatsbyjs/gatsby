@@ -1,10 +1,10 @@
-export function getValueAt(obj: object, selector: string | string[]): Any {
+export function getValueAt(obj: object, selector: string | string[]): any {
   const selectors =
     typeof selector === `string` ? selector.split(`.`) : selector
   return get(obj, selectors)
 }
 
-function get(obj: object, selectors: string[]): Any {
+function get(obj: object, selectors: string[]): any {
   if (Array.isArray(obj)) return getArray(obj, selectors)
   const [key, ...rest] = selectors
   const value = obj[key]
@@ -14,7 +14,7 @@ function get(obj: object, selectors: string[]): Any {
   return undefined
 }
 
-function getArray(arr: object, selectors: string[]): Any[] {
+function getArray(arr: object[], selectors: string[]): any[] {
   return arr
     .map(value =>
       Array.isArray(value) ? getArray(value, selectors) : get(value, selectors)
