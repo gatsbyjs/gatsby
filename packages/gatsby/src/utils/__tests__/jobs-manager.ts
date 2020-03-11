@@ -1,7 +1,25 @@
-const path = require(`path`)
-const _ = require(`lodash`)
-const { slash } = require(`gatsby-core-utils`)
-let jobManager = null
+import path from "path"
+import _ from "lodash"
+import { slash } from "gatsby-core-utils"
+import {
+  InternalJob,
+  JobInput,
+  WorkerError,
+} from "../jobs-manager"
+import uuidImport from "uuid/v4"
+import pDeferImport from "p-defer"
+import fsImport from "fs-extra"
+import hashaImport from "hasha"
+import reporterImport from "gatsby-cli/lib/reporter"
+const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
+
+const reporter = reporterImport as any
+const hasha = hashaImport as any
+const fs = fsImport as any
+const pDefer = pDeferImport as any
+const uuid = uuidImport as any
+
+let jobManager: any = null
 
 // I need a mock to spy on
 jest.mock(`p-defer`, () =>
@@ -39,13 +57,6 @@ jest.mock(`uuid/v4`, () =>
   jest.fn().mockImplementation(jest.requireActual(`uuid/v4`))
 )
 
-const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
-const reporter = require(`gatsby-cli/lib/reporter`)
-const hasha = require(`hasha`)
-const fs = require(`fs-extra`)
-const pDefer = require(`p-defer`)
-const uuid = require(`uuid/v4`)
-
 fs.ensureDir = jest.fn().mockResolvedValue(true)
 
 const plugin = {
@@ -54,7 +65,7 @@ const plugin = {
   resolve: `/node_modules/gatsby-plugin-test`,
 }
 
-const createMockJob = (overrides = {}) => {
+function createMockJob(overrides: object = {}): JobInput {
   return {
     name: `TEST_JOB`,
     inputPaths: [
@@ -66,11 +77,16 @@ const createMockJob = (overrides = {}) => {
       param1: `param1`,
       param2: `param2`,
     },
+    plugin: {
+      name: "name",
+      version: "version",
+      resolve: "resolve",
+    },
     ...overrides,
   }
 }
 
-const createInternalMockJob = (overrides = {}) => {
+function createInternalMockJob(overrides: object = {}): InternalJob {
   const { createInternalJob } = jobManager
 
   return createInternalJob(createMockJob(overrides), plugin)
@@ -99,6 +115,7 @@ describe(`Jobs manager`, () => {
   describe(`createInternalJob`, () => {
     it(`should return the correct format`, async () => {
       const { createInternalJob } = jobManager
+
       const mockedJob = createMockJob()
       const job = createInternalJob(mockedJob, plugin)
 
@@ -131,6 +148,7 @@ describe(`Jobs manager`, () => {
 
     it(`should fail when path is relative`, async () => {
       const { createInternalJob } = jobManager
+
       const jobArgs = createMockJob({
         inputPaths: [`./files/image.jpg`],
       })
@@ -158,6 +176,7 @@ describe(`Jobs manager`, () => {
   describe(`enqueueJob`, () => {
     it(`should schedule a job`, async () => {
       const { enqueueJob } = jobManager
+
       worker.TEST_JOB.mockReturnValue({ output: `myresult` })
       worker.NEXT_JOB = jest.fn().mockReturnValue({ output: `another result` })
       const mockedJob = createInternalMockJob()
@@ -184,6 +203,7 @@ describe(`Jobs manager`, () => {
 
     it(`should only enqueue a job once`, async () => {
       const { enqueueJob } = jobManager
+
       const jobArgs = createInternalMockJob()
       const jobArgs2 = _.cloneDeep(jobArgs)
       const jobArgs3 = createInternalMockJob({
@@ -195,7 +215,7 @@ describe(`Jobs manager`, () => {
 
       worker.TEST_JOB.mockReturnValue({ output: `myresult` })
 
-      const promises = []
+      const promises: Promise<object>[] = []
       promises.push(enqueueJob(jobArgs))
       promises.push(enqueueJob(jobArgs2))
       promises.push(enqueueJob(jobArgs3))
@@ -214,6 +234,7 @@ describe(`Jobs manager`, () => {
 
     it(`should fail when the worker throws an error`, async () => {
       const { enqueueJob } = jobManager
+
       const jobArgs = createInternalMockJob()
       const jobArgs2 = createInternalMockJob({ inputPaths: [] })
       const jobArgs3 = createInternalMockJob({ args: { key: `value` } })
@@ -263,6 +284,7 @@ describe(`Jobs manager`, () => {
 
     it(`should fail when the worker returns a non object result`, async () => {
       const { enqueueJob } = jobManager
+
       const jobArgs = createInternalMockJob()
       const jobArgs2 = createInternalMockJob({ inputPaths: [] })
 
@@ -285,8 +307,9 @@ describe(`Jobs manager`, () => {
   describe(`getInProcessJobPromise`, () => {
     // unsure how to test this yet without a real worker
     it(`should get a promise when set`, async () => {
+      const { getInProcessJobPromise, enqueueJob } = jobManager
+
       worker.TEST_JOB.mockReturnValue({ output: `myresult` })
-      const { enqueueJob, getInProcessJobPromise } = jobManager
       const internalJob = createInternalMockJob()
       const promise = enqueueJob(internalJob)
 
@@ -299,19 +322,20 @@ describe(`Jobs manager`, () => {
   describe(`removeInProgressJob`, () => {
     // unsure how to test this yet without a real worker
     it(`should have all tasks resolved when promise is resolved`, async () => {
+      const { getInProcessJobPromise, removeInProgressJob, enqueueJob } = jobManager
+
       worker.TEST_JOB.mockReturnValue({ output: `myresult` })
-      const { enqueueJob, removeInProgressJob } = jobManager
       const internalJob = createInternalMockJob()
       await enqueueJob(internalJob)
 
       expect(
-        jobManager.getInProcessJobPromise(internalJob.contentDigest)
+        getInProcessJobPromise(internalJob.contentDigest)
       ).not.toBeUndefined()
 
       removeInProgressJob(internalJob.contentDigest)
 
       expect(
-        jobManager.getInProcessJobPromise(internalJob.contentDigest)
+        getInProcessJobPromise(internalJob.contentDigest)
       ).toBeUndefined()
     })
   })
@@ -319,8 +343,9 @@ describe(`Jobs manager`, () => {
   describe(`waitUntilAllJobsComplete`, () => {
     // unsure how to test this yet without a real worker
     it(`should have all tasks resolved when promise is resolved`, async () => {
+      const { waitUntilAllJobsComplete, enqueueJob } = jobManager
+
       worker.TEST_JOB.mockReturnValue({ output: `myresult` })
-      const { enqueueJob, waitUntilAllJobsComplete } = jobManager
       const promise = enqueueJob(createInternalMockJob())
 
       await waitUntilAllJobsComplete()
@@ -355,9 +380,9 @@ describe(`Jobs manager`, () => {
     })
 
     it(`shouldn't mark a job as stale if file is the same`, () => {
+      const { isJobStale } = jobManager
       hasha.fromFileSync = jest.fn().mockReturnValue(`1234`)
 
-      const { isJobStale } = jobManager
       const inputPaths = [
         {
           path: path.resolve(__dirname, `fixtures/input1.jpg`),
@@ -370,7 +395,7 @@ describe(`Jobs manager`, () => {
   })
 
   describe(`IPC jobs`, () => {
-    let listeners = []
+    let listeners: { (message: object): void }[]
     beforeAll(() => {
       jest.useFakeTimers()
     })
@@ -382,7 +407,7 @@ describe(`Jobs manager`, () => {
       listeners = []
       originalProcessOn = process.on
       originalSend = process.send
-      process.on = (type, cb) => {
+      process.on = (_, cb): any => {
         listeners.push(cb)
       }
 
@@ -398,6 +423,7 @@ describe(`Jobs manager`, () => {
 
     it(`should schedule a remote job when ipc and env variable are enabled`, async () => {
       const { enqueueJob } = jobManager
+
       const jobArgs = createInternalMockJob()
 
       enqueueJob(jobArgs)
@@ -416,6 +442,7 @@ describe(`Jobs manager`, () => {
 
     it(`should resolve a job when complete message is received`, async () => {
       const { enqueueJob } = jobManager
+
       const jobArgs = createInternalMockJob()
 
       const promise = enqueueJob(jobArgs)
@@ -441,6 +468,7 @@ describe(`Jobs manager`, () => {
 
     it(`should reject a job when failed message is received`, async () => {
       const { enqueueJob } = jobManager
+
       const jobArgs = createInternalMockJob()
 
       const promise = enqueueJob(jobArgs)
@@ -458,14 +486,15 @@ describe(`Jobs manager`, () => {
       jest.runAllTimers()
 
       await expect(promise).rejects.toStrictEqual(
-        new jobManager.WorkerError(`JOB failed...`)
+        new WorkerError(`JOB failed...`)
       )
       expect(worker.TEST_JOB).not.toHaveBeenCalled()
     })
 
     it(`should run the worker locally when it's not available externally`, async () => {
-      worker.TEST_JOB.mockReturnValue({ output: `myresult` })
       const { enqueueJob } = jobManager
+
+      worker.TEST_JOB.mockReturnValue({ output: `myresult` })
       const jobArgs = createInternalMockJob()
 
       const promise = enqueueJob(jobArgs)
@@ -486,9 +515,10 @@ describe(`Jobs manager`, () => {
     })
 
     it(`should run the worker locally when it's a local plugin`, async () => {
+      const { createInternalJob, enqueueJob } = jobManager
+
       jest.useRealTimers()
       const worker = require(`/gatsby-plugin-local/gatsby-worker.js`)
-      const { enqueueJob, createInternalJob } = jobManager
       const jobArgs = createInternalJob(createMockJob(), {
         name: `gatsby-plugin-local`,
         version: `1.0.0`,
@@ -501,9 +531,10 @@ describe(`Jobs manager`, () => {
     })
 
     it(`shouldn't schedule a remote job when ipc is enabled and env variable is false`, async () => {
+      const { enqueueJob } = jobManager
+
       process.env.ENABLE_GATSBY_EXTERNAL_JOBS = `false`
       jest.useRealTimers()
-      const { enqueueJob } = jobManager
       const jobArgs = createInternalMockJob()
 
       await enqueueJob(jobArgs)
@@ -513,10 +544,11 @@ describe(`Jobs manager`, () => {
     })
 
     it(`should warn when external jobs are enabled but ipc isn't used`, async () => {
-      process.env.ENABLE_GATSBY_EXTERNAL_JOBS = `true`
-      process.send = null
-      jest.useRealTimers()
       const { enqueueJob } = jobManager
+
+      process.env.ENABLE_GATSBY_EXTERNAL_JOBS = `true`
+      process.send = undefined
+      jest.useRealTimers()
       const jobArgs = createInternalMockJob()
       const jobArgs2 = createInternalMockJob({
         args: { key: `val` },
