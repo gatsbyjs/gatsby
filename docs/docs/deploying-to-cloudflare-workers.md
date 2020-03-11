@@ -118,7 +118,7 @@ jobs:
 
 Set up `CF_API_TOKEN` in Github secrets with appropriate values from [Quick Start](https://developers.cloudflare.com/workers/quickstart/#configure).
 
-## References:
+## Additional resources
 
 - [Quickstart for Workers Sites](https://developers.cloudflare.com/workers/sites/start-from-existing/)
 - [Github Action wrangler plugin](https://github.com/cloudflare/wrangler-action)
