@@ -1,4 +1,4 @@
-const { getValueAt } = require(`../get-value-at`)
+import { getValueAt } from "../get-value-at"
 
 describe(`getValueAt util`, () => {
   it(`handles object properties`, () => {
