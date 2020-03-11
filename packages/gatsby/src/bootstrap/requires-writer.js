@@ -146,10 +146,11 @@ const writeAll = async state => {
 
   // TODO: Remove all "hot" references in this `syncRequires` variable when fast-refresh is the default
   const hotImport =
-    process.env.HOT_LOADER !== `fast-refresh`
+    process.env.GATSBY_HOT_LOADER !== `fast-refresh`
       ? `const { hot } = require("react-hot-loader/root")`
       : ``
-  const hotMethod = process.env.HOT_LOADER !== `fast-refresh` ? `hot` : ``
+  const hotMethod =
+    process.env.GATSBY_HOT_LOADER !== `fast-refresh` ? `hot` : ``
 
   // Create file with sync requires of components/json files.
   let syncRequires = `${hotImport}

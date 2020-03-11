@@ -3,16 +3,16 @@ import * as ReactErrorOverlay from "react-error-overlay"
 
 const ErrorOverlay = {
   showCompileError:
-    process.env.HOT_LOADER !== `fast-refresh`
+    process.env.GATSBY_HOT_LOADER !== `fast-refresh`
       ? ReactErrorOverlay.reportBuildError
       : ReactRefreshErrorOverlay.showCompileError,
   clearCompileError:
-    process.env.HOT_LOADER !== `fast-refresh`
+    process.env.GATSBY_HOT_LOADER !== `fast-refresh`
       ? ReactErrorOverlay.dismissBuildError
       : ReactRefreshErrorOverlay.clearCompileError,
 }
 
-if (process.env.HOT_LOADER !== `fast-refresh`) {
+if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
   // Report runtime errors
   ReactErrorOverlay.startReportingRuntimeErrors({
     onError: () => {},

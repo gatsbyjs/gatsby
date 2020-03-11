@@ -15,9 +15,10 @@ import EnsureResources from "./ensure-resources"
 import { reportError, clearError } from "./error-overlay-handler"
 
 // TODO: Remove entire block when we make fast-refresh the default
+// In fast-refresh, this logic is all moved into the `error-overlay-handler`
 if (
   window.__webpack_hot_middleware_reporter__ !== undefined &&
-  process.env.HOT_LOADER !== `fast-refresh`
+  process.env.GATSBY_HOT_LOADER !== `fast-refresh`
 ) {
   const overlayErrorID = `webpack`
   // Report build errors
