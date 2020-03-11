@@ -4,9 +4,9 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-import Layout from "../components/layout"
+import PageWithSidebar from "../components/page-with-sidebar"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 import TableOfContents from "../components/docs-table-of-contents"
@@ -32,101 +32,100 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const toc =
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
+  const description = page.frontmatter.description || page.excerpt
+
   return (
-    <React.Fragment>
+    <PageWithSidebar
+      location={location}
+      enableScrollSync={urlSegment === "tutorial"}
+    >
       <Helmet>
         <title>{page.frontmatter.title}</title>
-        <meta name="description" content={page.excerpt} />
-        <meta property="og:description" content={page.excerpt} />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
         <meta property="og:title" content={page.frontmatter.title} />
         <meta property="og:type" content="article" />
-        <meta name="twitter:description" content={page.excerpt} />
+        <meta name="twitter:description" content={description} />
         <meta name="twitter.label1" content="Reading time" />
         <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
       </Helmet>
-      <Layout
-        location={location}
-        locale={page.fields.locale}
-        enableScrollSync={urlSegment === `docs` ? false : true}
-      >
-        <DocSearchContent>
-          <Container
-            overrideCSS={{
-              pb: 0,
-              [mediaQueries.lg]: {
-                pt: 9,
-              },
-              [toc && mediaQueries.xl]: {
-                ...containerStyles,
-              },
-            }}
-          >
-            <Breadcrumb location={location} />
-            <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
-              {page.frontmatter.title}
-            </h1>
-          </Container>
-          <Container
-            overrideCSS={{
-              pt: 0,
-              position: `static`,
-              [mediaQueries.lg]: {
-                pb: 9,
-              },
-              [toc && mediaQueries.xl]: {
-                ...containerStyles,
-                display: `flex`,
-                alignItems: `flex-start`,
-              },
-            }}
-          >
-            {toc && (
-              <div
-                sx={{
-                  order: 2,
-                  [mediaQueries.xl]: {
-                    ml: 9,
-                    maxWidth: `tocWidth`,
-                    position: `sticky`,
-                    top: t =>
-                      `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + ${t.space[9]})`,
-                    maxHeight: t =>
-                      `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${t.space[9]} - ${t.space[9]})`,
-                    overflow: `auto`,
-                  },
-                }}
-              >
-                <TableOfContents location={location} page={page} />
-              </div>
-            )}
+      <DocSearchContent>
+        <Container
+          overrideCSS={{
+            pb: 0,
+            [mediaQueries.lg]: {
+              pt: 9,
+            },
+            [toc && mediaQueries.xl]: {
+              ...containerStyles,
+            },
+          }}
+        >
+          <Breadcrumb location={location} />
+          <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
+            {page.frontmatter.title}
+          </h1>
+        </Container>
+        <Container
+          overrideCSS={{
+            pt: 0,
+            position: `static`,
+            [mediaQueries.lg]: {
+              pb: 9,
+            },
+            [toc && mediaQueries.xl]: {
+              ...containerStyles,
+              display: `flex`,
+              alignItems: `flex-start`,
+            },
+          }}
+        >
+          {toc && (
             <div
               sx={{
-                [page.tableOfContents.items && mediaQueries.xl]: {
-                  maxWidth: `mainContentWidth.withSidebar`,
-                  minWidth: 0,
+                order: 2,
+                [mediaQueries.xl]: {
+                  ml: 9,
+                  maxWidth: `tocWidth`,
+                  position: `sticky`,
+                  top: t =>
+                    `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + ${t.space[9]})`,
+                  maxHeight: t =>
+                    `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${t.space[9]} - ${t.space[9]})`,
+                  overflow: `auto`,
                 },
               }}
             >
-              <div>
-                <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
-                {page.frontmatter.issue && (
-                  <a
-                    href={page.frontmatter.issue}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    See the issue relating to this stub on GitHub
-                  </a>
-                )}
-                <MarkdownPageFooter page={page} />
-                <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
-              </div>
+              <TableOfContents location={location} page={page} />
             </div>
-          </Container>
-        </DocSearchContent>
-        <FooterLinks />
-      </Layout>
-    </React.Fragment>
+          )}
+          <div
+            sx={{
+              [page.tableOfContents.items && mediaQueries.xl]: {
+                maxWidth: `mainContentWidth.withSidebar`,
+                minWidth: 0,
+              },
+            }}
+          >
+            <div>
+              <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
+              {page.frontmatter.issue && (
+                <a
+                  href={page.frontmatter.issue}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See the issue relating to this stub on GitHub
+                </a>
+              )}
+              <MarkdownPageFooter page={page} />
+              <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
+            </div>
+          </div>
+        </Container>
+      </DocSearchContent>
+      <FooterLinks />
+    </PageWithSidebar>
   )
 }
 
@@ -146,6 +145,7 @@ export const pageQuery = graphql`
       }
       frontmatter {
         title
+        description
         overview
         issue
         disableTableOfContents

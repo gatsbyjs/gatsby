@@ -406,7 +406,7 @@
   description: >-
     Desarol is a remote digital agency that specializes in building static websites
     built on the decoupled CMS of your choice. We use Agile processes, we love Headless
-    Drupal, performance and accessibilty excite us.
+    Drupal, performance and accessibility excite us.
   location: United States
   website: "https://desarol.com/"
   github: "https://github.com/desarol/"
@@ -477,4 +477,35 @@
   image: images/eric-howey.jpeg
   for_hire: true
   hiring: false
+  portfolio: true
+- name: App Design
+  type: agency
+  description: >-
+    My name is Oliver. I´m a web developer specialized in React JS, Gatsby, Netlify and Wordpress CMS.
+  location: "Madrid, Spain"
+  website: "https://appdesign.dev/"
+  github: null
+  image: images/app-design-dev.jpeg
+  for_hire: false
+  hiring: true
+  portfolio: false
+- name: Ahmad Awais
+  type: individual
+  description: >-
+    Ahmad Awais is an award-winning open-source engineer and a Google Developers Expert. As a principal developer advocate, he cares deeply about developers and developer experience. Author of various open-source dev-tools and software libraries used by millions of developers worldwide. Like the Shades of Purple code-theme. He’s known for his open-source community contributions in the Node.js Community Committee as well as a decade of that in the WordPress Core software (which empowers 1/3rd of the web). He’s a TEDx Speaker, a member of SmashingMagazine Experts Panel, featured/published author at CSS-Tricks, Tuts+, Scotch.io, SitePoint, and a self-confessed tech-comedian. You can find Awais most active on Twitter @MrAhmadAwais, where he tweets #OneDevMinute dev tips and cracks silly tech jokes in the JavaScript web and cloud communities.
+  location: Canada
+  website: "https://ahmadawais.com/"
+  github: "https://github.com/ahmadawais"
+  image: images/ahmad-awais.jpg
+  for_hire: true
+  portfolio: true
+- name: Usama liaquat
+  type: individual
+  image: images/usama-liaquat.jpg
+  description: >-
+    Usama liaquat is a contributor of react/react-native teams. He develop lib/packages and distributed them into many software industries
+  location: Pakistan
+  website: "https://www.linkedin.com/in/usamaliaquat/"
+  github: "https://github.com/Usamaliaquat123"
+  for_hire: true
   portfolio: true
