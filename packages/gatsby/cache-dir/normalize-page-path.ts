@@ -10,16 +10,3 @@ export function normalizePagePath(path: string): string {
   }
   return path
 }
-
-export function denormalizePagePath(path: string): string {
-  if (path === undefined) {
-    return path
-  }
-  if (path === `/`) {
-    return `/`
-  }
-  if (path.charAt(path.length - 1) !== `/`) {
-    return path + `/`
-  }
-  return path
-}
