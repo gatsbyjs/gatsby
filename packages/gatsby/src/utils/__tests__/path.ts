@@ -1,5 +1,10 @@
 import { joinPath } from "gatsby-core-utils"
-import { withBasePath, getCommonDir, truncatePath } from "../path"
+import {
+  withBasePath,
+  getCommonDir,
+  truncatePath,
+  tooLongSegmentsInPath,
+} from "../path"
 import os from "os"
 
 describe(`paths`, () => {
@@ -106,6 +111,27 @@ describe(`paths`, () => {
       ],
     ])(`%s`, (_label, { path1, path2, expected }) => {
       expect(getCommonDir(path1, path2)).toBe(expected)
+    })
+  })
+
+  describe(`tooLongSegmentsInPath`, () => {
+    it.each<[string, { input: string; expected: Array<string> }]>([
+      [
+        `doesn't touch short paths`,
+        {
+          input: `/short/path/`,
+          expected: [],
+        },
+      ],
+      [
+        `finds long segments`,
+        {
+          input: `/lo${`o`.repeat(500)}ng/path/`,
+          expected: [`lo${`o`.repeat(500)}ng`],
+        },
+      ],
+    ])(`%s`, (_label, { input, expected }) => {
+      expect(tooLongSegmentsInPath(input)).toEqual(expected)
     })
   })
 
