@@ -1,4 +1,4 @@
-export default (path: string): string => {
+export function normalizePagePath(path: string): string {
   if (path === undefined) {
     return path
   }

@@ -1,6 +1,6 @@
 // This is a duplicate of the runtime util
 // file cache-dir/normalize-page-path.js
-export default (path: string): string => {
+export function normalizePagePath(path: string): string {
   if (path === undefined) {
     return path
   }
