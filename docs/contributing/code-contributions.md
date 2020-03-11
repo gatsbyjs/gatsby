@@ -134,7 +134,7 @@ and that you're on the latest version of `gatsby-dev-cli`.
 - Change directory to the newly scaffolded site: `cd blog-theme-dev`
 - Run Gatsby Dev CLI to sync theme files: `gatsby-dev --packages gatsby-theme-blog`
 - In another tab run the starter with `yarn develop`
-- Edit the theme files in your local gatsby monorepo (where you set your `gatsby-dev` path). You'll see changes automatically copied over and update in your starter.
+- Edit the theme files in your local Gatsby monorepo (where you set your `gatsby-dev` path). You'll see changes automatically copied over and update in your starter.
 
 ## Feedback
 
