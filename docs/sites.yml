@@ -10030,3 +10030,15 @@
     - WordPress
     - Portfolio
     - Agency
+- title: Clipchamp
+  main_url: https://clipchamp.com/
+  url: https://clipchamp.com/en/
+  description: >
+    Clipchamp is an online video editor, compressor, and converter. The Clipchamp website and blog are powered by Gatsby, Contentful, and Smartling.
+  categories:
+    - App
+    - Blog
+    - Landing Page
+    - Marketing
+    - Video
+  featured: false
