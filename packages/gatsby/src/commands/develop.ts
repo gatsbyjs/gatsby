@@ -52,7 +52,7 @@ import {
   reportWebpackWarnings,
   structureWebpackErrors,
 } from "../utils/webpack-error-utils"
-import { waitUntilAllJobsComplete } from "../utils/commands/jobs-manager"
+import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,

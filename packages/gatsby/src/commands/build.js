@@ -23,7 +23,7 @@ import {
 } from "../utils/feedback"
 const buildUtils = require(`../commands/build-utils`)
 const { boundActionCreators } = require(`../redux/actions`)
-import { waitUntilAllJobsComplete } from "../utils/commands/jobs-manager"
+import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 
 let cachedPageData
 let cachedWebpackCompilationHash

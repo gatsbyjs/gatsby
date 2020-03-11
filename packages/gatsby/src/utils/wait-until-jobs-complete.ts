@@ -1,6 +1,6 @@
-import { emitter, store } from "../../redux"
+import { emitter, store } from "../redux"
 
-import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "../jobs-manager"
+import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "./jobs-manager"
 
 export const waitUntilAllJobsComplete = (): Promise<void> => {
   const jobsV1Promise = new Promise(resolve => {
