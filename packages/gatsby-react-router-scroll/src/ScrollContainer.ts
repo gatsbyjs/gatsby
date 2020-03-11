@@ -2,6 +2,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 import warning from "warning"
 import PropTypes from "prop-types"
+import { ShouldUpdateScroll, LocationBase } from "scroll-behavior"
+import { History } from "@reach/router"
+import ScrollContext from "./ScrollBehaviorContext"
 
 const propTypes = {
   scrollKey: PropTypes.string.isRequired,
@@ -16,8 +19,30 @@ const contextTypes = {
   scrollBehavior: PropTypes.object,
 }
 
-class ScrollContainer extends React.Component {
-  constructor(props, context) {
+interface IProps {
+  scrollKey: string
+  shouldUpdateScroll: ShouldUpdateScroll<ILocation>
+  children: React.ReactNode
+}
+
+interface IContext {
+  scrollBehavior: ScrollContext
+}
+
+interface ILocation {
+  location?: LocationBase
+  history?: History
+}
+
+class ScrollContainer extends React.Component<IProps> {
+  static propTypes: typeof propTypes
+  static contextTypes: typeof contextTypes
+
+  context!: React.ContextType<React.Context<IContext>>
+  domNode: Element | Text | null = null
+  scrollKey: string
+
+  constructor(props: IProps, context: IContext) {
     super(props, context)
 
     // We don't re-register if the scroll key changes, so make sure we
@@ -25,10 +50,10 @@ class ScrollContainer extends React.Component {
     this.scrollKey = props.scrollKey
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.context.scrollBehavior.registerElement(
       this.props.scrollKey,
-      ReactDOM.findDOMNode(this), // eslint-disable-line react/no-find-dom-node
+      ReactDOM.findDOMNode(this) as HTMLElement, // eslint-disable-line react/no-find-dom-node
       this.shouldUpdateScroll
     )
 
@@ -39,7 +64,7 @@ class ScrollContainer extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: IProps): void {
     warning(
       prevProps.scrollKey === this.props.scrollKey,
       `<ScrollContainer> does not support changing scrollKey.`
@@ -55,11 +80,14 @@ class ScrollContainer extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.context.scrollBehavior.unregisterElement(this.scrollKey)
   }
 
-  shouldUpdateScroll = (prevRouterProps, routerProps) => {
+  shouldUpdateScroll: ShouldUpdateScroll<ILocation> = (
+    prevRouterProps,
+    routerProps
+  ) => {
     const { shouldUpdateScroll } = this.props
     if (!shouldUpdateScroll) {
       return true
@@ -73,7 +101,7 @@ class ScrollContainer extends React.Component {
     )
   }
 
-  render() {
+  render(): React.ReactNode {
     return this.props.children
   }
 }

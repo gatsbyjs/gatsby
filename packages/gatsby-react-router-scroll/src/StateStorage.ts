@@ -1,13 +1,23 @@
+import { LocationBase, ScrollPosition } from "scroll-behavior"
+
 const STATE_KEY_PREFIX = `@@scroll|`
 const GATSBY_ROUTER_SCROLL_STATE = `___GATSBY_REACT_ROUTER_SCROLL`
 
+interface ILocation extends LocationBase {
+  key?: string
+  pathname?: string
+}
+
 export default class SessionStorage {
-  read(location, key) {
+  read(
+    location: LocationBase,
+    key: string | null
+  ): ScrollPosition | null | undefined {
     const stateKey = this.getStateKey(location, key)
 
     try {
       const value = window.sessionStorage.getItem(stateKey)
-      return JSON.parse(value)
+      return JSON.parse(value || `{}`)
     } catch (e) {
       if (process.env.NODE_ENV !== `production`) {
         console.warn(
@@ -23,11 +33,11 @@ export default class SessionStorage {
         return window[GATSBY_ROUTER_SCROLL_STATE][stateKey]
       }
 
-      return {}
+      return ({} as unknown) as undefined
     }
   }
 
-  save(location, key, value) {
+  save(location: LocationBase, key: string | null, value: unknown): void {
     const stateKey = this.getStateKey(location, key)
     const storedValue = JSON.stringify(value)
 
@@ -49,7 +59,7 @@ export default class SessionStorage {
     }
   }
 
-  getStateKey(location, key) {
+  getStateKey(location: ILocation, key?: string | null): string {
     const locationKey = location.key || location.pathname
     const stateKeyBase = `${STATE_KEY_PREFIX}${locationKey}`
     return key === null || typeof key === `undefined`
