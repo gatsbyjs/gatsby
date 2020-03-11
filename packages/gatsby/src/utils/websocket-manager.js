@@ -4,7 +4,7 @@ const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
 const pageDataUtil = require(`../utils/page-data`)
-import { normalizePagePath } from "./normalize-page-path"
+import { normalizePagePath, denormalizePagePath } from "./normalize-page-path"
 const telemetry = require(`gatsby-telemetry`)
 const url = require(`url`)
 const { createHash } = require(`crypto`)
@@ -27,7 +27,7 @@ const getCachedPageData = async (
 ): QueryResult => {
   const { program, pages } = store.getState()
   const publicDir = path.join(program.directory, `public`)
-  if (pages.has(denormalize(pagePath)) || pages.has(pagePath)) {
+  if (pages.has(denormalizePagePath(pagePath)) || pages.has(pagePath)) {
     try {
       const pageData = await pageDataUtil.read({ publicDir }, pagePath)
 
