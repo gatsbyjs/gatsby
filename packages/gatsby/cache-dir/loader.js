@@ -299,7 +299,7 @@ export class BaseLoader {
   }
 
   hovering(rawPath) {
-    // this.loadPage(rawPath)
+    this.loadPage(rawPath)
   }
 
   getResourceURLsForPathname(rawPath) {
