@@ -100,7 +100,7 @@ const createInitialGitCommit = async (
       cwd: rootPath,
     })
   } catch {
-    // Remove git support if intial commit fails
+    // Remove git support if initial commit fails
     report.info(`Initial git commit failed - removing git support\n`)
     fs.removeSync(sysPath.join(rootPath, `.git`))
   }

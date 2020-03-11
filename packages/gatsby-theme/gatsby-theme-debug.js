@@ -16,7 +16,7 @@ const checkGastbyFiles = () => {
   const files = globby.sync(KNOWN_FS_TYPOS)
 
   if (files.length) {
-    errorsFound.push('The following files were encountered with "Gatsby" mispelled as "Gastby"', files)
+    errorsFound.push('The following files were encountered with "Gatsby" misspelled as "Gastby"', files)
   }
 }
 
