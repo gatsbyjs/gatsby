@@ -526,6 +526,10 @@ export interface GatsbyBrowser {
     args: ServiceWorkerArgs,
     options: PluginOptions
   ): any
+  onServiceWorkerUpdateReady?(
+    args: ServiceWorkerArgs,
+    options: PluginOptions
+  ): any
   registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
   replaceComponentRenderer?(
     args: ReplaceComponentRendererArgs,
