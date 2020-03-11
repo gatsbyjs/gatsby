@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.11...gatsby-plugin-benchmark-reporting@0.0.12) (2020-03-09)
+
+### Features
+
+- **gatsby-plugin-benchmark-reporting:** allow passing a secret to benchmark reporting endpoint ([#22108](https://github.com/gatsbyjs/gatsby/issues/22108)) ([5bd889e](https://github.com/gatsbyjs/gatsby/commit/5bd889e))
+
+## [0.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.10...gatsby-plugin-benchmark-reporting@0.0.11) (2020-03-07)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.9...gatsby-plugin-benchmark-reporting@0.0.10) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.8...gatsby-plugin-benchmark-reporting@0.0.9) (2020-03-06)
+
+### Features
+
+- **gatsby-plugin-benchmark-reporting:** Add more fields to the report ([#21973](https://github.com/gatsbyjs/gatsby/issues/21973)) ([f28272b](https://github.com/gatsbyjs/gatsby/commit/f28272b))
+
+## [0.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.7...gatsby-plugin-benchmark-reporting@0.0.8) (2020-02-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-benchmark-reporting:** Read gatsby-cli version from n_m ([#21742](https://github.com/gatsbyjs/gatsby/issues/21742)) ([7ad36e7](https://github.com/gatsbyjs/gatsby/commit/7ad36e7))
+
+## [0.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.6...gatsby-plugin-benchmark-reporting@0.0.7) (2020-02-25)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.5...gatsby-plugin-benchmark-reporting@0.0.6) (2020-02-17)
+
+### Features
+
+- **gatsby-plugin-benchmark-reporting:** Submit commit time of current git hash, too ([#21521](https://github.com/gatsbyjs/gatsby/issues/21521)) ([a7405f1](https://github.com/gatsbyjs/gatsby/commit/a7405f1))
+
 ## [0.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.4...gatsby-plugin-benchmark-reporting@0.0.5) (2020-02-13)
 
 ### Bug Fixes

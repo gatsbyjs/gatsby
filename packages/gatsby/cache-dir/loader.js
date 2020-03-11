@@ -361,12 +361,16 @@ const createComponentUrls = componentChunkName =>
 export class ProdLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
     const loadComponent = chunkName =>
-      asyncRequires.components[chunkName]()
-        .then(preferDefault)
-        .catch(() => {
-          console.log(`failed to load component but not an unhandled exception`)
-          return null
-        })
+      asyncRequires.components[chunkName]
+        ? asyncRequires.components[chunkName]()
+            .then(preferDefault)
+            .catch(() => {
+              console.log(
+                `failed to load component but not an unhandled exception`
+              )
+              return null
+            })
+        : Promise.resolve()
 
     super(loadComponent, matchPaths)
   }

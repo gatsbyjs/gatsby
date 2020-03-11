@@ -287,7 +287,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with cache`, cb: () => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => undefined }, // Always goes through sift
+      { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createIndexCache }) => {
       describe(`runQuery [${desc}]`, () => {
         it(`returns first result only`, async () => {
@@ -491,6 +491,15 @@ describe(`NodeModel`, () => {
             contentDigest: `0`,
           },
         },
+        {
+          id: `id2`,
+          title: `Bar`,
+          hidden: false,
+          internal: {
+            type: `Test`,
+            contentDigest: `1`,
+          },
+        },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
@@ -519,6 +528,10 @@ describe(`NodeModel`, () => {
                   return `I am the other amazing title: ${parent.title}`
                 },
               },
+              hidden: {
+                type: `Boolean!`,
+                resolve: parent => Boolean(parent.hidden),
+              },
             },
           }),
         ],
@@ -539,7 +552,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with cache`, cb: () => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => undefined }, // Always goes through sift
+      { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createIndexCache }) => {
       it(`[${desc}] should not resolve prepared nodes more than once`, async () => {
         nodeModel.replaceTypeKeyValueCache(createIndexCache())
@@ -551,7 +564,7 @@ describe(`NodeModel`, () => {
           },
           { path: `/` }
         )
-        expect(resolveBetterTitleMock.mock.calls.length).toBe(1)
+        expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
         nodeModel.replaceTypeKeyValueCache(createIndexCache())
         await nodeModel.runQuery(
@@ -562,7 +575,7 @@ describe(`NodeModel`, () => {
           },
           { path: `/` }
         )
-        expect(resolveBetterTitleMock.mock.calls.length).toBe(1)
+        expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
         nodeModel.replaceTypeKeyValueCache(createIndexCache())
         await nodeModel.runQuery(
@@ -575,8 +588,8 @@ describe(`NodeModel`, () => {
           },
           { path: `/` }
         )
-        expect(resolveBetterTitleMock.mock.calls.length).toBe(1)
-        expect(resolveOtherTitleMock.mock.calls.length).toBe(1)
+        expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+        expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
         nodeModel.replaceTypeKeyValueCache(createIndexCache())
         await nodeModel.runQuery(
           {
@@ -588,8 +601,8 @@ describe(`NodeModel`, () => {
           },
           { path: `/` }
         )
-        expect(resolveBetterTitleMock.mock.calls.length).toBe(1)
-        expect(resolveOtherTitleMock.mock.calls.length).toBe(1)
+        expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+        expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
         nodeModel.replaceTypeKeyValueCache(createIndexCache())
         await nodeModel.runQuery(
           {
@@ -601,8 +614,25 @@ describe(`NodeModel`, () => {
           },
           { path: `/` }
         )
-        expect(resolveBetterTitleMock.mock.calls.length).toBe(1)
-        expect(resolveOtherTitleMock.mock.calls.length).toBe(1)
+        expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+        expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
+      })
+
+      it(`[${desc}] can filter by resolved fields`, async () => {
+        nodeModel.replaceTypeKeyValueCache(createIndexCache())
+        const result = await nodeModel.runQuery(
+          {
+            query: {
+              filter: { hidden: { eq: false } },
+            },
+            firstOnly: false,
+            type: `Test`,
+          },
+          { path: `/` }
+        )
+        expect(result.length).toBe(2)
+        expect(result[0].id).toBe(`id1`)
+        expect(result[1].id).toBe(`id2`)
       })
     })
   })
@@ -735,7 +765,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with index cache`, cb: () => new Map() }, // Avoids sift
-      { desc: `no index cache`, cb: () => undefined }, // Requires sift
+      { desc: `no index cache`, cb: () => null }, // Requires sift
     ].forEach(({ desc, cb: createIndexCache }) => {
       describe(`[${desc}] Tracks nodes returned by queries`, () => {
         it(`Tracks objects when running query without filter`, async () => {

@@ -49,9 +49,16 @@ exports.sourceNodes = async (
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
     process.env.NODE_ENV !== `production`
   ) {
-    getNodes()
-      .filter(n => n.internal.owner === `gatsby-source-contentful`)
-      .forEach(n => touchNode({ nodeId: n.id }))
+    getNodes().forEach(node => {
+      if (node.internal.owner !== `gatsby-source-contentful`) {
+        return
+      }
+      touchNode({ nodeId: node.id })
+      if (node.localFile___NODE) {
+        // Prevent GraphQL type inference from crashing on this property
+        touchNode({ nodeId: node.localFile___NODE })
+      }
+    })
 
     console.log(`Using Contentful Offline cache ⚠️`)
     console.log(
@@ -119,7 +126,11 @@ exports.sourceNodes = async (
       })
       .filter(node => node)
 
-    localizedNodes.forEach(node => deleteNode({ node }))
+    localizedNodes.forEach(node => {
+      // touchNode first, to populate typeOwners & avoid erroring
+      touchNode({ nodeId: node.id })
+      deleteNode({ node })
+    })
   }
 
   currentSyncData.deletedEntries.forEach(deleteContentfulNode)
@@ -197,8 +208,9 @@ exports.sourceNodes = async (
     })
 
   contentTypeItems.forEach((contentTypeItem, i) => {
-    normalize.createContentTypeNodes({
+    normalize.createNodesForContentType({
       contentTypeItem,
+      contentTypeItems,
       restrictedNodeFields,
       conflictFieldPrefix,
       entries: entryList[i],
@@ -210,6 +222,7 @@ exports.sourceNodes = async (
       locales,
       space,
       useNameForId: pluginConfig.get(`useNameForId`),
+      richTextOptions: pluginConfig.get(`richText`),
     })
   })
 

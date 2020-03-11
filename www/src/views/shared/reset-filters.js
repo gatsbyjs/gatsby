@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import MdClear from "react-icons/lib/md/clear"
+import { MdClear } from "react-icons/md"
 
 const ResetFilters = ({ onClick }) => (
   <div sx={{ pr: 6 }}>

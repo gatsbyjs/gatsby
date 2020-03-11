@@ -21,14 +21,19 @@ excluded_files:
   - "node_modules/**/*"
   - "package-lock.json"
   - "yarn.lock"
-  - "packages/**/package.json"
+  - "package.json"
   - ".typo-ci.yml"
   - ".npmignore"
+  - ".gitignore"
   - "packages/**/.npmignore"
-
+  - "**/*.js"
+  - "**/*.ts"
+  - "**/*.jsx"
+  - "**/*.tsx"
 # Any typos we should ignore?
 excluded_words:
   - typoci
   - xxs
   - agadoo
   - hevc
+  - oss

@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import HomepageSection from "./homepage-section"
 import EcosystemSection from "../ecosystem/ecosystem-section"
@@ -36,6 +36,7 @@ const Section = styled(EcosystemSection)`
   ${mediaQueries.md} {
     margin: 0 ${p => p.theme.space[2]} 0;
     padding: ${p => p.theme.space[6]};
+    max-height: none;
 
     :last-child {
       align-self: stretch;
