@@ -73,6 +73,34 @@ Because the `<Message />` and `<Chart />` components were passed into the provid
   lessonTitle="Make React components globally available as shortcodes in MDX"
 />
 
+## Lazy-loading components
+
+Any components used in `.mdx` files will be bundled in your main application bundle. This can lead to a large primary bundle, and worse performance for all pages across your Gatsby site.
+
+Future versions of [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx) will address this, but in the meantime, it can be prudent to lazy-load very large dependencies. The following snippet provides an example for how to accomplish this, with an imaginary `Thing` component:
+
+```js
+import React from "react"
+
+import Spinner from "./somewhere"
+
+const LazyThing = props => {
+  // While the component is loading, we'll default it to using
+  // a Spinner.
+  const [Component, setComponent] = React.useState(() => Spinner)
+
+  // After the initial render, kick off a dynamic import to fetch
+  // the real component, and set it into our state.
+  React.useEffect(() => {
+    import("./Thing.js").then(Thing => setComponent(() => Thing.default))
+  }, [])
+
+  return <Component {...props} />
+}
+
+export default LazyLiveCodeSnippet
+```
+
 ### Additional resources
 
 - Follow this detailed [example on using MDX](/examples/using-MDX) to import and render components.
