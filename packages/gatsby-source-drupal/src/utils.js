@@ -146,9 +146,9 @@ const handleWebhookUpdate = async (
     nodesToUpdate.push(...addedReferencedNodes)
   } else {
     // if we are inserting new node, we need to update all referenced nodes
-    const newNodeReferencedNodes = referencedNodesLookup
-      .get(newNode)
-      .map(id => getNode(id))
+    const referencedNodes = referencedNodesLookup.get(newNode)
+    if (!referencedNodes) return
+    const newNodeReferencedNodes = referencedNodes.map(id => getNode(id))
     nodesToUpdate.push(...newNodeReferencedNodes)
   }
 
