@@ -509,3 +509,10 @@
   github: "https://github.com/Usamaliaquat123"
   for_hire: true
   portfolio: true
+- name: Softblues
+  type: agency
+  image: images/softblues.png
+  location: Ukraine
+  website: "https://softblues.io/"
+  for_hire: true
+  portfolio: true
