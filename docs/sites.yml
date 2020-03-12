@@ -7672,9 +7672,9 @@
   featured: false
 - title: TFE Energy
   # this is the URL that is linked from the showcase
-  main_url: https://tfe.energy
+  main_url: https://www.tfe.energy
   # this URL is used to generate a screenshot
-  url: https://tfe.energy
+  url: https://www.tfe.energy
   # optional: for open-source sites, this URL points to the repo that powers the site
   source_url: https://gitlab.com/marcfehrmedia/2019-07-03-tfe-energy
   # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
@@ -7689,6 +7689,6 @@
     – Business
   # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
   built_by: Marc Fehr
-  built_by_url: https:/www.marcfehr.media
+  built_by_url: https://www.marcfehr.media
   # leave as false, the Gatsby site review board will choose featured sites quarterly
   featured: false
