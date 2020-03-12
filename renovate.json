@@ -11,7 +11,7 @@
   },
   "masterIssue": true,
   "rebaseStalePrs": false,
-  "excludePackageNames": ["react", "react-dom"],
+  "ignoreDeps": ["react", "react-dom"],
   "rangeStrategy": "bump",
   "bumpVersion": null,
   "semanticCommitScope": null,
@@ -19,7 +19,25 @@
   "packageRules": [
     {
       "groupName": "minor updates in packages",
-      "updateTypes": ["minor"]
+      "updateTypes": ["minor"],
+      "excludePackageNames": [
+        "@theme-ui/prism",
+        "@theme-ui/typography",
+        "sharp",
+        "gatsby-plugin-theme-ui",
+        "graphiql-explorer",
+        "guess-webpack",
+        "jest-silent-reporter",
+        "js-combinatorics",
+        "jscodeshift",
+        "mini-css-extract-plugin",
+        "scroll-behavior",
+        "theme-ui",
+        "webpack-stats-plugin",
+        "xlsx",
+        "zipkin",
+        "zipkin-transport-http"
+      ]
     },
     {
       "groupName": "patch updates in packages",
