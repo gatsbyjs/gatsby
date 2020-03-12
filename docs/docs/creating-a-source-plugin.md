@@ -6,7 +6,7 @@ Source plugins are essentially out of the box integrations between Gatsby and va
 
 These systems can be CMSs like Contentful or WordPress, other cloud services like Lever and Strava, or your local filesystem -- literally anything that has an API. Currently, Gatsby has [over 300 source plugins](/plugins/?=gatsby-source).
 
-Once a source plugin brings data into Gatsby's system, it can be transformed further with **transformer plugins**.
+Once a source plugin brings data into Gatsby's system, it can be transformed further with **transformer plugins**. For step-by-step examples of how to create source and transformer plugins, check out the Gatsby [tutorials section](/tutorial/plugin-and-theme-tutorials/).
 
 ## What do source plugins do?
 
@@ -40,7 +40,7 @@ exports.sourceNodes = async ({ actions }) => {
   // Process data into nodes.
   data.forEach(datum => createNode(processDatum(datum)))
 
-  // We're done, return.
+  // You're done, return.
   return
 }
 ```
@@ -158,3 +158,7 @@ One tip to improve the development experience of using a plugin is to reduce the
   the last time you fetched data using
   [`setPluginStatus`](/docs/actions/#setPluginStatus) and then only sync down nodes that have been modified since that time. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
 - **Proactively fetch updates**. One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. This can be avoided if your source plugin knows to proactively fetch updates from the remote server. For example,[gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity), listens to changes to Sanity content when `watchMode` is enabled and pulls them into the Gatsby develop server.
+
+## Additional resources
+
+- Tutorial: [Creating a Pixabay Image Source Plugin](/tutorial/pixabay-source-plugin-tutorial/)

@@ -44,7 +44,7 @@ Using the power and flexibility of React, you can create a React component to po
 >
 > If you're not using those starters, [follow this guide for installation instructions][gatsby-plugin-react-helmet]
 
-```js:title=src/components/seo.js
+```jsx:title=src/components/seo.js
 import React from "react"
 // highlight-start
 import Helmet from "react-helmet"
@@ -80,7 +80,7 @@ export default SEO
 
 This component doesn't _do_ anything yet, but it's the foundation for a useful, extensible component. It leverages the `useStaticQuery` functionality enabled via Gatsby to query siteMetadata (e.g. details in `gatsby-config.js`) with description and keywords. At this point, the `SEO` component returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component.
 
-```js:title=src/components/seo.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
@@ -148,7 +148,7 @@ In addition to SEO for actual _search_ engines you also want those pretty cards 
 - Title for embedded results
 - (Optionally) display an image and a card if an image is passed in to the component
 
-```js:title=src/components/seo.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types" // highlight-line
 import Helmet from "react-helmet"
@@ -288,10 +288,10 @@ To implement this functionality, you need to do the following:
 
 1. Enable passing a `pathname` prop to your SEO component
 1. Prefix your `pathname` prop with your `siteUrl` (from `gatsby-config.js`)
-   - A canonical link should be _absolute_ (e.g. https://your-site.com/canonical-link), so you will need to prefix with this `siteUrl`
+   - A canonical link should be _absolute_ (e.g. `https://your-site.com/canonical-link`), so you will need to prefix with this `siteUrl`
 1. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
 
-```js:title=src/components/seo.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
@@ -444,7 +444,7 @@ You created an extensible SEO component. It takes a `title` prop and then (optio
 
 ### In a page component
 
-```js:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 
 import Layout from "../components/layout"
@@ -477,7 +477,7 @@ mkdir -p content/blog/2019-01-04-hello-world-seo
 touch content/blog/2019-01-04-hello-world-seo/index.md
 ```
 
-```md:title=content/blog/2019-01-04-hello-world-seo/index.md
+```markdown:title=content/blog/2019-01-04-hello-world-seo/index.md
 ---
 date: 2019-01-04
 featured: images/featured.jpg
@@ -498,7 +498,7 @@ Make sure to use appropriately sized images for social sharing. Facebook and Twi
 
 #### Querying with GraphQL
 
-```js:title=src/templates/blog-post.js
+```jsx:title=src/templates/blog-post.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 
