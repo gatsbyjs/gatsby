@@ -47,7 +47,7 @@ module.exports = class AnalyticsTracker {
 
   getRepositoryId() {
     if (!this.repositoryId) {
-      this.repositoryId =  _getRepositoryId()
+      this.repositoryId = _getRepositoryId()
     }
     return this.repositoryId
   }
