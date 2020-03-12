@@ -7,6 +7,7 @@
   "dependencies": {
     "core-js": "^2.5.5",
     "gatsby": "^2.0.0",
+    "gatsby-core-utils": "^1.0.28",
     "gatsby-image": "^2.0.5",
     "gatsby-plugin-glamor": "^2.0.5",
     "gatsby-plugin-google-analytics": "^2.0.5",

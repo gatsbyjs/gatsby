@@ -8,8 +8,8 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 const stackTrace = require(`stack-trace`)
 const { codeFrameColumns } = require(`@babel/code-frame`)
 const fs = require(`fs-extra`)
-const getCache = require(`./get-cache`)
-const createNodeId = require(`./create-node-id`)
+const { getCache } = require(`./get-cache`)
+import { createNodeId } from "./create-node-id"
 const { createContentDigest } = require(`gatsby-core-utils`)
 const {
   buildObjectType,
@@ -20,7 +20,7 @@ const {
   buildScalarType,
 } = require(`../schema/types/type-builders`)
 const { emitter, store } = require(`../redux`)
-const getPublicPath = require(`./get-public-path`)
+const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 const { default: errorParser } = require(`./api-runner-error-parser`)
@@ -170,7 +170,7 @@ const runAPI = (plugin, api, args, activity) => {
         },
       }
     }
-    let localReporter = getLocalReporter(activity, reporter)
+    const localReporter = getLocalReporter(activity, reporter)
 
     const apiCallArgs = [
       {
@@ -238,8 +238,8 @@ const runAPI = (plugin, api, args, activity) => {
   return null
 }
 
-let apisRunningById = new Map()
-let apisRunningByTraceId = new Map()
+const apisRunningById = new Map()
+const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
 module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
@@ -332,7 +332,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
         return null
       }
 
-      let pluginName =
+      const pluginName =
         plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
       return new Promise(resolve => {
@@ -342,7 +342,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
           pluginName: `${plugin.name}@${plugin.version}`,
         })
 
-        let localReporter = getLocalReporter(activity, reporter)
+        const localReporter = getLocalReporter(activity, reporter)
 
         const file = stackTrace
           .parse(err)

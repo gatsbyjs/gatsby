@@ -257,7 +257,7 @@ in your terminal, run
 gatsby develop
 ```
 
-Now open up [localhost:8000/home](http://localhost:8000/home) to see the home page populated with the content you created on butter.
+Now open up `http://localhost:8000/home` to see the home page populated with the content you created on butter.
 
 ### Create multiple pages using Page Types
 
@@ -295,7 +295,7 @@ gatsby develop
 
 ### Testing with GraphiQL
 
-You can test out your GraphQL queries with GraphiQL (a GraphQL debugger) fire up GraphiQL on [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql)
+You can test out your GraphQL queries with GraphiQL (a GraphQL debugger) fire up GraphiQL on `http://localhost:8000/___graphql`
 
 Once GraphiQL is open, paste the query below :
 

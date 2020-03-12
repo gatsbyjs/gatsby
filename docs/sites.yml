@@ -178,17 +178,6 @@
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
   featured: true
-- title: Timely
-  main_url: "https://timelyapp.com/"
-  url: "https://timelyapp.com/"
-  description: |
-    Fully automatic time tracking. For those who trade in time.
-  categories:
-    - Productivity
-    - Featured
-  built_by: Timm Stokke
-  built_by_url: "https://timm.stokke.me"
-  featured: true
 - title: Snap Kit
   main_url: "https://kit.snapchat.com/"
   url: "https://kit.snapchat.com/"
@@ -615,14 +604,6 @@
   categories:
     - Web Development
     - Documentation
-- title: High School Hackathons
-  main_url: "https://hackathons.hackclub.com/"
-  url: "https://hackathons.hackclub.com/"
-  source_url: "https://github.com/hackclub/hackathons"
-  featured: false
-  categories:
-    - Education
-    - Web Development
 - title: Hapticmedia
   main_url: "https://hapticmedia.fr/en/"
   url: "https://hapticmedia.fr/en/"
@@ -1057,15 +1038,6 @@
   categories:
     - Marketing
     - Technology
-- title: Yuuniworks Portfolio / Blog
-  main_url: "https://www.yuuniworks.com/"
-  url: "https://www.yuuniworks.com/"
-  source_url: "https://github.com/junkboy0315/yuuni-web"
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
 - title: The Bastion Bot
   main_url: "https://bastionbot.org/"
   url: "https://bastionbot.org/"
@@ -1345,7 +1317,7 @@
   categories:
     - Portfolio
   built_by: Jonas Tebbe
-  built_by_url: "http://twitter.com/jonastebbe"
+  built_by_url: "https://twitter.com/jonastebbe"
   featured: false
 - title: Parker Sarsfield Portfolio
   description: |
@@ -1889,21 +1861,6 @@
   built_by: Just Ask Users
   built_by_url: "https://justaskusers.com/"
   featured: false
-- title: Tensiq
-  main_url: "https://tensiq.com"
-  url: "https://tensiq.com"
-  source_url: "https://github.com/Tensiq/tensiq-site"
-  description: >
-    Tensiq is an e-Residency startup, that provides development in cutting-edge
-    technology while delivering secure, resilient, performant solutions.
-  categories:
-    - Web Development
-    - Mobile Development
-    - Agency
-    - Open Source
-  built_by: Jens
-  built_by_url: "https://github.com/arrkiin"
-  featured: false
 - title: Mintfort
   main_url: "https://mintfort.com/"
   url: "https://mintfort.com/"
@@ -1934,8 +1891,8 @@
     - Agency
     - Open Source
 - title: eworld
-  main_url: "http://eworld.herokuapp.com/"
-  url: "http://eworld.herokuapp.com/"
+  main_url: "https://eworld.herokuapp.com/"
+  url: "https://eworld.herokuapp.com/"
   featured: false
   categories:
     - eCommerce
@@ -2125,7 +2082,7 @@
   main_url: "https://madecomfy.com.au/"
   url: "https://madecomfy.com.au/"
   description: >
-    Short term rental management startup, using Contentful + Gatsby + CicleCI
+    Short term rental management startup, using Contentful + Gatsby + CircleCI
   featured: false
   categories:
     - Travel
@@ -2393,7 +2350,6 @@
 - title: Serverless
   main_url: https://serverless.com
   url: https://serverless.com
-  source_url: https://github.com/serverless/site
   description: >
     Serverless.com – Build web, mobile and IoT applications with serverless architectures using AWS Lambda, Azure Functions, Google CloudFunctions & more!
   categories:
@@ -2502,17 +2458,6 @@
   built_by: Obytes
   built_by_url: "https://www.obytes.com/"
   featured: false
-- title: Vote Save America
-  main_url: "https://votesaveamerica.com"
-  url: "https://votesaveamerica.com"
-  description: >
-    Be a voter. Save America.
-  categories:
-    - Education
-    - Government
-  featured: false
-  built_by: Jeremy E. Miller
-  built_by_url: "https://jeremyemiller.com/"
 - title: Emergence
   main_url: https://emcap.com/
   url: https://emcap.com/
@@ -3020,8 +2965,8 @@
   built_by_url: https://www.michaeluloth.com
   featured: false
 - title: Peter Barrett
-  url: "https://peterbarrett.netlify.com"
-  main_url: "https://peterbarrett.netlify.com"
+  url: "https://www.peterbarrett.ca"
+  main_url: "https://www.peterbarrett.ca"
   description: >
     Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world. Site designed by Stephen Bell.
   categories:
@@ -3185,17 +3130,6 @@
     - Web Development
     - Education
     - Open Source
-  built_by: Michael Uloth
-  built_by_url: "https://www.michaeluloth.com"
-- title: Up & Running Tutorials
-  main_url: https://www.upandrunningtutorials.com
-  url: https://www.upandrunningtutorials.com
-  featured: false
-  description: >
-    Free coding tutorials for web developers. Get your web development career up and running by learning to build better, faster websites.
-  categories:
-    - Web Development
-    - Education
   built_by: Michael Uloth
   built_by_url: "https://www.michaeluloth.com"
 - title: Grooovinger
@@ -3512,17 +3446,6 @@
     - Business
   built_by: Othermachines
   built_by_url: "https://othermachines.com"
-- title: Cole Walker's Portfolio
-  main_url: "https://www.walkermakes.com"
-  url: "https://www.walkermakes.com"
-  source_url: "https://github.com/ColeWalker/portfolio"
-  description: The portfolio of web developer Cole Walker, built with the help of Gatsby v2, React-Spring, and SASS.
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-  built_by: Cole Walker
-  built_by_url: "https://www.walkermakes.com"
 - title: Standing By Company
   main_url: "https://standingby.company"
   url: "https://standingby.company"
@@ -3544,8 +3467,8 @@
   built_by_url: "https://www.michaeluloth.com"
   featured: false
 - title: The AZOOR Society
-  main_url: "https://theazoorsociety.netlify.com"
-  url: "https://theazoorsociety.netlify.com"
+  main_url: "https://www.azoorsociety.org"
+  url: "https://www.azoorsociety.org"
   description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research. Site designed by Stephen Bell.
   categories:
     - Community
@@ -3722,7 +3645,7 @@
     - Portfolio
     - Marketing
   built_by: Maciej Leszczyński
-  built_by_url: http://twitter.com/_maciej
+  built_by_url: https://twitter.com/_maciej
   featured: false
 - title: Frame.io Workflow Guide
   main_url: https://workflow.frame.io
@@ -3897,19 +3820,6 @@
     - Accessibility
     - Education
     - Video
-  built_by: Tenon.io
-  built_by_url: https://tenon.io
-  featured: false
-- title: Tenon-UI Documentation
-  main_url: https://www.tenon-ui.info
-  url: https://www.tenon-ui.info
-  description: >
-    Documentation site for Tenon-UI: Tenon.io's accessible components library.
-  categories:
-    - Accessibility
-    - Documentation
-    - Library
-    - Web Development
   built_by: Tenon.io
   built_by_url: https://tenon.io
   featured: false
@@ -4420,18 +4330,6 @@
   built_by: Guillaume Briday
   built_by_url: https://guillaumebriday.fr/
   featured: false
-- title: SEOmonitor
-  main_url: "https://www.seomonitor.com"
-  url: "https://www.seomonitor.com"
-  description: >
-    SEOmonitor is a suite of SEO tools dedicated to agencies.
-  categories:
-    - Blog
-    - Portfolio
-    - Agency
-  built_by: Bejamas
-  built_by_url: https://bejamas.io/
-  featured: false
 - title: Jean Regisser's Portfolio
   main_url: "https://jeanregisser.com/"
   url: "https://jeanregisser.com/"
@@ -4444,17 +4342,6 @@
     - Mobile Development
   built_by: Jean Regisser
   built_by_url: "https://jeanregisser.com/"
-- title: Axcept - Visual Screenshot Testing
-  url: https://axcept.io
-  main_url: https://axcept.io
-  description: >
-    Visual Testing for everyone
-  categories:
-    - Documentation
-    - Web Development
-  built_by: d:code:it
-  built_by_url: https://dcodeit.com
-  featured: false
 - title: Chase Ohlson
   url: https://chaseohlson.com
   main_url: https://chaseohlson.com
@@ -4669,7 +4556,7 @@
   main_url: https://morello.dev
   source_url: https://gitlab.com/dennismorello/dev-blog
   description: >
-    morello.dev is a development and techology blog written by Dennis Morello.
+    morello.dev is a development and technology blog written by Dennis Morello.
   categories:
     - Blog
     - Education
@@ -5054,16 +4941,6 @@
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
   featured: false
-- title: het Groeiatelier
-  url: https://www.hetgroeiatelier.be/
-  main_url: https://www.hetgroeiatelier.be/
-  description: >
-    Workspace for talent development and logopedics. One page site with basic info and small calendar CMS.
-  categories:
-    - Marketing
-  built_by: WEBhart
-  built_by_url: https://www.web-hart.com
-  featured: false
 - title: Lebuin D'Haese
   url: https://www.lebuindhaese.be/
   main_url: https://www.lebuindhaese.be/
@@ -5197,7 +5074,7 @@
   main_url: https://peter.macinkovic.id.au/
   source_url: https://github.com/inkovic/peter-macinkovic-static-site
   description: >
-    Personal Website and Blog of eCommerce SEO Specilaist and Digital Marketer Peter Macinkovic.
+    Personal Website and Blog of eCommerce SEO Specialist and Digital Marketer Peter Macinkovic.
   categories:
     - SEO
     - Marketing
@@ -5272,6 +5149,7 @@
 - title: Kenneth Kwakye-Gyamfi Portfolio Site
   url: https://www.kwakye-gyamfi.com
   main_url: https://www.kwakye-gyamfi.com
+  source_url: https://www.github.com/cross19xx/cross-site
   description: >
     Personal portfolio site for Kenneth Kwakye-Gyamfi, a mobile and web full stack applications developer currently based in Accra, Ghana.
   categories:
@@ -5285,7 +5163,7 @@
   main_url: https://www.garethweaver.com/
   source_url: https://github.com/garethweaver/public-site-react
   description: >
-    A personal portofolio of a London based frontend developer built with Gatsby 2, Redux and Sass
+    A personal portfolio of a London based frontend developer built with Gatsby 2, Redux and Sass
   categories:
     - Portfolio
     - Web Development
@@ -5571,15 +5449,6 @@
     - Technology
     - User Experience
     - Web Development
-- title: Measures for Justice
-  main_url: https://www.measuresforjustice.org
-  url: https://www.measuresforjustice.org
-  description: >
-    Measures for Justice gathers criminal justice data at the county level and makes it available on a free public Data Portal. Site rebuilt from scratch with GatsbyJS.
-  categories:
-    - Nonprofit
-    - Marketing
-  featured: false
 - title: Raconteur Agency
   main_url: https://www.raconteur.net/agency
   url: https://www.raconteur.net/agency
@@ -5592,18 +5461,6 @@
   built_by: Jacob Herper
   built_by_url: https://herper.io
   featured: false
-- title: GreenOrbit
-  main_url: https://greenorbit.com/
-  url: https://greenorbit.com/
-  description: >
-    Cloud-based intranet software. Get your people going with everything you need, built in.
-  categories:
-    - Business
-    - App
-    - Productivity
-    - Technology
-  built_by: Effective Digital
-  built_by_url: https://effective.digital/
 - title: Purple11
   main_url: https://purple11.com/
   url: https://purple11.com/
@@ -5643,7 +5500,7 @@
   main_url: https://hiteshvaghasiya.com/
   url: https://hiteshvaghasiya.com/
   description: >
-    This is Hitesh Vaghasiya's blog. This blog is help you an E-Commerce like Magento, Shopify, and BigCommece.
+    This is Hitesh Vaghasiya's blog. This blog is help you an E-Commerce like Magento, Shopify, and BigCommerce.
   categories:
     - Blog
     - Programming
@@ -5937,19 +5794,6 @@
   categories:
     - Business
   featured: false
-- title: Asjas
-  main_url: https://asjas.co.za
-  url: https://asjas.co.za/blog
-  source_url: https://github.com/Asjas/Personal-Webpage
-  description: >
-    This is a website built with Gatsby v2 that uses Netlify CMS and Gatsby-MDX as a blog (incl. portfolio page).
-  categories:
-    - Web Development
-    - Blog
-    - Portfolio
-  built_by: A-J Roos
-  built_by_url: https://twitter.com/_asjas
-  featured: false
 - title: Glug-Infinite
   main_url: https://gluginfinite.github.io
   url: https://gluginfinite.github.io
@@ -6139,9 +5983,9 @@
 - title: APIs You Won't Hate
   url: https://apisyouwonthate.com/blog
   main_url: https://apisyouwonthate.com
-  source_url: http://github.com/apisyouwonthate/apisyouwonthate.com
+  source_url: https://github.com/apisyouwonthate/apisyouwonthate.com
   description: >
-    API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can erradicate APIs we hate.
+    API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can eradicate APIs we hate.
   categories:
     - Blog
     - Education
@@ -6650,18 +6494,6 @@
   built_by: Simon Koelewijn
   built_by_url: https://simonkoelewijn.nl
   featured: false
-- title: Raconteur Careers
-  main_url: https://careers.raconteur.net
-  url: https://careers.raconteur.net
-  description: >
-    Raconteur is a London-based publishing house and content marketing agency. We have built this careers portal Gatsby v2 with TypeScript, Styled-Components, React-Spring and Contentful.
-  categories:
-    - Media
-    - Marketing
-    - Landing Page
-  built_by: Jacob Herper
-  built_by_url: https://herper.io
-  featured: false
 - title: Frankly Steve
   url: https://www.franklysteve.com/
   main_url: https://www.franklysteve.com/
@@ -6813,18 +6645,6 @@
     - Nonprofit
   built_by: Jacob Herper
   built_by_url: https://herper.io
-- title: Gratsy
-  url: https://gratsy.com/
-  main_url: https://gratsy.com/
-  description: >
-    Gratsy: Feedback To Give Back
-  categories:
-    - Agency
-    - Marketing
-    - Landing Page
-  built_by: Whalar
-  built_by_url: https://whalar.com/
-  featured: false
 - title: deepThreads
   main_url: https://deepthreads.com
   url: https://deepthreads.com/
@@ -6833,7 +6653,7 @@
   categories:
     - eCommerce
   built_by: Kyle Kitlinski
-  built_by_url: http://github.com/k-kit
+  built_by_url: https://github.com/k-kit
   featured: false
 - title: Mill3 Studio
   main_url: https://mill3.studio/en/
@@ -7097,7 +6917,7 @@
   main_url: https://taverasmisael.com
   source_url: https://github.com/taverasmisael/taverasmisael
   description: >
-    Personal site and bloging about learning FrontEnd web development in spanish.
+    Personal site and blogging about learning FrontEnd web development in spanish.
   categories:
     - Portfolio
     - Open Source
@@ -7144,15 +6964,6 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: "https://ramonchancay.me/"
-- title: NuBrakes
-  url: https://nubrakes.com/
-  main_url: https://nubrakes.com/
-  description: >
-    NuBrakes is the mobile brake repair company that comes to you! We perform brake pad, caliper, and rotor replacement at your office, apartment or home!
-  categories:
-    - Business
-    - Entrepreneurship
-  featured: false
 - title: Third and Grove
   url: https://www.thirdandgrove.com
   main_url: https://www.thirdandgrove.com
@@ -7309,7 +7120,7 @@
   main_url: https://gatsbyfinds.netlify.com
   url: https://gatsbyfinds.netlify.com
   description: >
-    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved GatsbyJS.
+    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the latest projects made with the beloved GatsbyJS.
   categories:
     - Portfolio
     - Gallery
@@ -7958,6 +7769,27 @@
   built_by: Rou Hun Fan
   built_by_url: "https://flowen.me"
   featured: false
+- title: Problem studio
+  url: https://problem.studio
+  main_url: https://problem.studio
+  description: >
+    Problem Studio creates unique and fun web experiences. Our enemy is "boring" if ya know what we mean: overused Wordpress templates, the top 10 shopify templates, copy of a copy of a copy of a copy. We love to support design and marketing agencies and help realize their creations into a digital product. `
+  categories:
+    - Agency
+    - Business
+    - Consulting
+    - Design
+    - Education
+    - Entrepreneurship
+    - Freelance
+    - Landing Page
+    - Marketing
+    - Media
+    - Portfolio
+    - Productivity
+    - Web Development
+  built_by: Rou Hun Fan & Sander Visser
+  built_by_url: https://flowen.me
 - title: North X South
   main_url: https://northxsouth.co
   url: https://northxsouth.co
@@ -8114,7 +7946,7 @@
   main_url: https://diff001a.netlify.com/
   url: https://diff001a.netlify.com/
   description: >
-    This is diff001a's blog which contains blogs realted to programming.
+    This is diff001a's blog which contains blogs related to programming.
   categories:
     - Blog
   built_by: diff001a
@@ -8122,7 +7954,7 @@
   main_url: http://rockwong.com/blog/
   url: http://rockwong.com/blog/
   description: >
-    Rockwong is a techncal blog containing content realted to various web technologies.
+    Rockwong is a technical blog containing content related to various web technologies.
   categories:
     - Technology
     - Education
@@ -8314,16 +8146,6 @@
   built_by: Thomas Uta
   built_by_url: https://twitter.com/ThomasJanUta
   featured: false
-- title: Lusta Hair
-  url: https://www.lustahair.com
-  main_url: https://www.lustahair.com
-  description: >
-    Luxury 100% Remy Human Hair Toppers. The perfect solution for volume, coverage and style. Online retailer based in Australia.
-  categories:
-    - eCommerce
-  built_by: Jason Di Benedetto
-  built_by_url: https://jason.dibenedetto.fyi
-  featured: false
 - title: Yoseph.tech
   main_url: https://www.yoseph.tech
   url: https://www.yoseph.tech/compilers
@@ -8419,7 +8241,7 @@
   url: https://quemalabs.com/
   main_url: https://quemalabs.com/
   description: >
-    WordPress themes for these moedern times
+    WordPress themes for these modern times
   categories:
     - Blog
     - Web Development
@@ -8891,18 +8713,6 @@
   built_by: Donovan Nagel
   built_by_url: https://www.donovannagel.com
   featured: false
-- title: Bearer - API Monitoring & Protection for your app
-  url: https://www.bearer.sh/
-  main_url: https://www.bearer.sh/
-  description: >
-    Bearer helps developers monitor API usage in real-time, protect their app against API limits and failures, and integrate APIs faster.
-  categories:
-    - API
-    - Technology
-    - Web Development
-    - Open Source
-  built_by: Bearer
-  featured: false
 - title: 8fit.com
   url: https://8fit.com/
   main_url: https://8fit.com/
@@ -9189,7 +8999,7 @@
   url: https://nimahkh.github.io/nima_habibkhoda
   source_url: https://github.com/nimahkh/resume_generator
   description: >
-    The resume generator is a project to create your own resume web page easyly with Gatsby.
+    The resume generator is a project to create your own resume web page easily with Gatsby.
   categories:
     - Portfolio
   built_by: Nima Habibkhoda
@@ -9230,12 +9040,12 @@
     - Entertainment
     - App
 - title: madewithlove
-  main_url: https://www.madewithlove.be
-  url: https://www.madewithlove.be
+  main_url: https://madewithlove.com
+  url: https://madewithlove.com
   description: >-
     We build digital products and create the teams around them. We can help with software engineering, product management, managing technical teams, audits and technical consulting.
   built_by: madewithlove
-  built_by_url: https://www.madewithlove.be
+  built_by_url: https://madewithlove.com
   featured: false
   categories:
     - Web Development
@@ -9319,7 +9129,7 @@
   url: https://www.erichowey.dev/
   source_url: https://github.com/ehowey/erichoweydev
   description: >
-    Personal website and blog for Eric Howey. I am a freelance web developer based in Alberta, Canada specializing in Gatsby, React, Wordpress and Theme-UI.
+    Personal website and blog for Eric Howey. I am a freelance web developer based in Alberta, Canada specializing in Gatsby, React, WordPress and Theme-UI.
   categories:
     - Portfolio
     - Web Development
@@ -9391,7 +9201,7 @@
   url: https://www.gis-netzwerk.com/
   main_url: https://www.gis-netzwerk.com/
   description: >
-    Geoinformatik, GIS, Web-Development.
+    Multilingual (i18n) Blog with different URLs for categories, tags and posts depending on the language.
   categories:
     - Blog
     - Data
@@ -9461,7 +9271,7 @@
   url: https://adamcbowen.com/
   source_url: https://github.com/bowenac/my-website
   description: >
-    Personal website for Adam Bowen. I am a freelance web developer based in Tacoma, WA specializing in Wordpress, Craft CMS, plus a lot more and recently fell in love with Gatsby.
+    Personal website for Adam Bowen. I am a freelance web developer based in Tacoma, WA specializing in WordPress, Craft CMS, plus a lot more and recently fell in love with Gatsby.
   categories:
     - Portfolio
     - Web Development
@@ -9532,14 +9342,691 @@
   built_by: mnishiguchi
   built_by_url: https://mnishiguchi.com
   featured: false
+- title: Hear This Idea
+  main_url: https://hearthisidea.com
+  url: https://hearthisidea.com/episodes/victoria
+  source_url: https://github.com/finmoorhouse/podcast
+  description: >
+    A podcast showcasing new thinking from top academics.
+  categories:
+    - Podcast
+    - Open Source
+  built_by: Fin Moorhouse
+  built_by_url: https://finmoorhouse.com
+  featured: false
 - title: Calisthenics Skills
   main_url: https://www.calisthenicsskills.com
   url: https://www.calisthenicsskills.com
   description: >
     A beautiful fitness progress tracker built on Gatsby.
   categories:
-    - Fitness
-    - App
+    - Sports
   built_by: Andrico Karoulla
   built_by_url: https://andri.co
   featured: false
+- title: AutoloadIT
+  main_url: https://autoloadit.com/
+  url: https://autoloadit.com/
+  description: >
+    The world's leading Enterprise Automotive imaging solution
+  categories:
+    - Business
+    - Landing Page
+  built_by: Pagepro
+  built_by_url: https://pagepro.co
+  featured: false
+- title: Tools of Golf
+  main_url: https://toolsof.golf
+  url: https://toolsof.golf/titleist-915-d2-driver
+  description: >
+    Tools of Golf is a community dedicated to golf nerds and gear heads.
+  categories:
+    - Sports
+    - Data
+    - Documentation
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
+  featured: false
+- title: sung.codes
+  main_url: https://sung.codes/
+  source_url: https://github.com/dance2die/sung.codes
+  url: https://sung.codes/
+  description: >
+    Blog by Sung M. Kim (a.k.a. dance2die)
+  categories:
+    - Blog
+    - Landing Page
+  built_by: Sung M. Kim
+  built_by_url: https://github.com/dance2die
+  featured: false
+- title: Choose Tap
+  main_url: https://www.choosetap.com.au/
+  url: https://www.choosetap.com.au/
+  featured: false
+  description: >
+    Choose Tap aims to improve the health and wellbeing of communities and the environment by promoting tap water as the best choice of hydration for all Australians.
+  built_by: Hardhat
+  built_by_url: https://www.hardhat.com.au
+  categories:
+    - Nonprofit
+    - Community
+- title: Akash Rajpurohit
+  main_url: https://akashwho.codes/
+  url: https://akashwho.codes/
+  description: >
+    Personal portfolio website of Akash Rajpurohit made using Gatsby v2, where I  write short blogs related to software development and share my experiences.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Akash Rajpurohit
+  built_by_url: https://github.com/AkashRajpurohit
+  featured: false
+- title: See Kids Dream
+  url: "https://seekidsdream.org/"
+  main_url: "https://seekidsdream.org/"
+  description: >
+    A not-for-profit organization dedicated to empower youth with the skills, motivation and confidence.
+  categories:
+    - Nonprofit
+    - Education
+    - Learning
+  built_by: CapTech Consulting
+  built_by_url: https://www.captechconsulting.com/
+  featured: false
+- title: Locale Central
+  url: https://localecentral.io/
+  main_url: https://localecentral.io/
+  description: >
+    Locale Central is a web & mobile data collection app that makes it easy to record accurate data out on the field.
+  categories:
+    - Technology
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
+- title: Cathy O'Shea
+  url: https://cathyoshea.co.nz/
+  main_url: https://cathyoshea.co.nz/
+  categories:
+    - Portfolio
+    - Real Estate
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
+- title: DG Recruit
+  url: https://dgrecruit.com
+  main_url: https://dgrecruit.com
+  description: >
+    DG Recruit is a NYC recruitment agency
+  categories:
+    - Agency
+    - WordPress
+  built_by: Waverly Lab
+  built_by_url: https://waverlylab.com
+  featured: false
+- title: Smile
+  url: https://reasontosmile.com
+  main_url: https://reasontosmile.com
+  description: >
+    Smile is an online store for buying CBD products that keep you balanced and happy
+  categories:
+    - eCommerce
+    - WordPress
+  built_by: Waverly Lab
+  built_by_url: https://waverlylab.com
+- title: Bold Oak Design
+  url: https://boldoak.design/
+  main_url: https://boldoak.design/
+  description: >
+    A Milwaukee-based web design and development studio.
+  categories:
+    - Blog
+    - Business
+    - Freelance
+    - Portfolio
+    - Programming
+    - Technology
+    - Web Development
+  featured: false
+- title: Lydia Rose Eiche
+  url: https://lydiaroseeiche.com/
+  main_url: https://lydiaroseeiche.com/
+  description: >
+    Lydia Rose Eiche is a soprano, opera singer, and actress based in Milwaukee.
+  categories:
+    - Music
+    - Portfolio
+  built_by: Bold Oak Design
+  built_by_url: https://boldoak.design/
+  featured: false
+- title: Chris Otto
+  url: https://chrisotto.dev/
+  main_url: https://chrisotto.dev/
+  source_url: https://github.com/chrisotto6/chrisottodev
+  description: >
+    Blog, portfolio and website for Chris Otto.
+  categories:
+    - Blog
+    - JavaScript
+    - Landing Page
+    - Portfolio
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Chris Otto
+  built_by_url: https://github.com/chrisotto6
+  featured: false
+- title: Roboto Studio
+  url: https://roboto.studio
+  main_url: https://roboto.studio
+  description: >
+    Faster than a speeding bullet Website Development based in sunny old Nottingham
+  categories:
+    - Agency
+    - Blog
+    - Business
+    - Design
+    - Featured
+    - Freelance
+    - Web Development
+  featured: true
+- title: Viraj Chavan | Full Stack Software Engineer
+  url: http://virajc.tech
+  main_url: http://virajc.tech
+  source_url: https://github.com/virajvchavan/portfolio
+  description: >
+    Portfolio and blog of a full stack software engineer from India
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Viraj V Chavan
+  built_by_url: https://twitter.com/VirajVChavan
+  featured: false
+- title: Nexweave
+  url: https://www.nexweave.com
+  main_url: https://www.nexweave.com
+  description: >
+    Nexweave is a SaaS platform built by a team of experienced product, design & technology professionals in India. Nexweave allows brands to create personalized & interactive video experiences at scale. We would love for our site to be featured at the gatsby showcase since we have long been appreciating the flexibility and speed of the sites we have created using the same.
+  categories:
+    - Video
+    - API
+    - User Experience
+    - Marketing
+    - Design
+    - Data
+    - Technology
+    - Media
+    - Consulting
+  built_by: Kashaf S
+  built_by_url: https://www.linkedin.com/in/kashaf-shaikh-925117178
+  featured: false
+- title: Daniel Balloch
+  url: https://danielballoch.com
+  main_url: https://danielballoch.com
+  source_url: https://github.com/danielballoch/danielballoch
+  description: >
+    Hey, I'm Daniel and this is my portfolio site. Made with Gatsby, React, GraphQL, Styled Emotion & Netlify. Install & local host instructions: 1. git clone https://github.com/danielballoch/danielballoch.git 2. npm install. 3. gatsby develop. Keep in mind I'm still learning myself, so these may not be best practises. If anyone's curious as to how something works flick me a message or if you have advice for me I'd love to hear it, otherwise happy coding!
+  categories:
+    - Portfolio
+    - Business
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Daniel Balloch
+  built_by_url: https://danielballoch.com
+- title: The Rift Metz
+  url: http://theriftmetz.com/
+  main_url: http://theriftmetz.com/
+  description: >
+    The Rift is a gaming bar based in Metz (France).
+  categories:
+    - Landing Page
+    - Entertainment
+    - Design
+    - Blog
+    - Food
+  built_by: Hugo Torzuoli
+  built_by_url: https://github.com/HZooly
+  featured: false
+- title: Built with Workers
+  url: https://workers.cloudflare.com/built-with/
+  main_url: https://workers.cloudflare.com/built-with/
+  description: >
+    Showcasing websites & projects built with Cloudflare Workers
+  categories:
+    - Portfolio
+    - JavaScript
+    - Web Development
+  built_by: Workers who work at Cloudflare
+  built_by_url: https://github.com/cloudflare/built-with-workers/graphs/contributors
+- title: WebAnaya Solutions
+  url: https://www.webanaya.com
+  main_url: https://www.webanaya.com
+  description: >
+    Full Stack Web Solutions Provider.
+  categories:
+    - Agency
+    - Web Development
+    - API
+    - Blog
+  built_by: Durgesh Gupta
+  built_by_url: https://durgeshgupta.com
+  featured: false
+- title: Artem Sapegin’s Blog
+  description: >
+    Blog of a Berlin based coffee first frontend engineer who works at Omio, makes photos and hangs out with his dogs.
+  main_url: https://blog.sapegin.me/
+  url: https://blog.sapegin.me/
+  source_url: https://github.com/sapegin/blog.sapegin.me
+  categories:
+    - Blog
+    - Open Source
+    - Web Development
+    - JavaScript
+    - Programming
+    - Technology
+  built_by: Artem Sapegin
+  built_by_url: https://github.com/sapegin
+- title: adam.ai
+  url: https://adam.ai/
+  main_url: https://adam.ai/
+  description: >
+    Are you ready to make your meetings more productive? Our intelligent meeting management tool can help!
+  categories:
+    - Business
+    - Landing Page
+    - Productivity
+    - Technology
+  built_by: Hazem Osama
+  built_by_url: https://github.com/hazem3500
+  featured: false
+- title: Indra Kusuma Profile Page
+  url: https://indrakusuma.web.id/me/
+  main_url: https://indrakusuma.web.id/me/
+  description: >
+    Hi! I'm Indra Kusuma. I am an optimistic and type of person of learn by doing who have an interest in Software Engineering, specifically about Web Development.
+  categories:
+    - Landing Page
+    - Blog
+  built_by: Indra Kusuma
+  built_by_url: https://github.com/idindrakusuma/me
+  featured: false
+- title: Lukas Horak
+  main_url: https://lukashorak.com
+  url: https://lukashorak.com
+  description: >
+    Lukas Horak's personal website. Full stack JavaScript Developer, working in React on front end and Node.js on back end.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Lukas Horak
+  built_by_url: https://github.com/lhorak
+  featured: false
+- title: Alexandra Thomas
+  main_url: "https://alexandracthomas.com/"
+  url: "https://alexandracthomas.com/"
+  description: >
+    A portfolio site for Alexandra Thomas, a front-end developer with creative super powers based in Charlotte, NC.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  featured: false
+- title: Storto Productions
+  main_url: "https://www.storto-productions.com/"
+  url: "https://www.storto-productions.com/about/"
+  featured: false
+  description: >
+    A portfolio site for a video production company based out of Phoenix, AZ.
+  categories:
+    - Video
+    - Blog
+    - Portfolio
+    - Business
+  built_by: Alexandra Thomas
+  built_by_url: "https://alexandracthomas.com/"
+- title: Zatsuzen Blog
+  url: https://blog.zatsuzen.com
+  main_url: https://blog.zatsuzen.com
+  description: >
+    Web developer's tech blog
+  categories:
+    - Blog
+  built_by: Akane
+  built_by_url: https://twitter.com/akanewz
+- title: Matthew Mesa
+  url: "https://matthewmesa.com"
+  main_url: "https://matthewmesa.com"
+  description: >
+    Portfolio website for freelance digital specialist Matthew Mesa.
+  categories:
+    - Portfolio
+  built_by: Matthew Mesa
+  built_by_url: "https://matthewmesa.com"
+- title: Taskade
+  main_url: https://taskade.com
+  url: https://taskade.com
+  description: >
+    Taskade is the unified workspace for distributed teams. Collaborate and organize in real-time to get things done, faster and smarter.
+  categories:
+    - App
+    - Business
+    - Productivity
+  built_by: Taskade
+  built_by_url: https://github.com/taskade
+  featured: false
+- title: PWD
+  url: https://pwd.com.au
+  main_url: https://pwd.com.au
+  description: >
+    PWD is a full service web marketing, design, and development agency in Perth, Western Australia.
+  categories:
+    - Blog
+    - Portfolio
+    - WordPress
+    - Business
+  built_by: Alex Moon
+  built_by_url: https://moonmeister.net
+  featured: false
+- title: Health Pro Fitness
+  url: https://healthprofitness.com/
+  main_url: https://healthprofitness.com/
+  description: >
+    Health Pro Fitness is a lifestyle blog built with Gatsby and static Markdown content.
+  categories:
+    - Blog
+  built_by: Botox For Hair And co.
+  built_by_url: https://www.botoxforhair.net/
+  featured: false
+- title: ramonak.io
+  url: https://ramonak.io/
+  main_url: https://ramonak.io/
+  source_url: https://github.com/KaterinaLupacheva/ramonak.io
+  description: >
+    Tech blog and portfolio site of a full stack web developer Katsiaryna (Kate) Lupachova
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Katsiaryna Lupachova
+  built_by_url: https://ramonak.io/
+  featured: false
+- title: React JS Developer
+  main_url: "https://reacter.dev/"
+  url: "https://reacter.dev/"
+  featured: false
+  categories:
+    - App
+    - Web Development
+    - Web Development
+    - Agency
+  built_by: App Design
+  built_by_url: "https://appdesign.dev/"
+- title: Guillermo Gómez-Peña
+  url: https://www.guillermogomezpena.com/
+  main_url: https://www.guillermogomezpena.com/
+  description: >
+    Personal website for the work of Guillermo Gómez-Peña: performance artist, writer, activist, radical pedagogue and artistic director of the performance troupe La Pocha Nostra. Recipient of the MacArthur Fellow, USA Artists Fellow, and a winner of the Bessie, Guggenheim, and American Book awards.
+  categories:
+    - Portfolio
+    - Gallery
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
+  featured: false
+- title: Clinka
+  url: https://www.clinka.com.au/
+  main_url: https://www.clinka.com.au/
+  description: >
+    B2B website for an Australian manufacturer of environmentally friendly construction materials.
+  categories:
+    - Business
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
+- title: Chris Vogt's Blog
+  main_url: https://www.chrisvogt.me
+  url: https://www.chrisvogt.me
+  source_url: https://github.com/chrisvogt/gatsby-theme-private-sphere
+  description: >-
+    Personal blog of Chris Vogt, a software developer in San Francisco. Showcases
+    my latest activity on Instagram, Goodreads, and Spotify using original widgets.
+  categories:
+    - Blog
+    - Open Source
+    - Photography
+    - Portfolio
+  built_by: Chris Vogt
+  built_by_url: https://github.com/chrisvogt
+- title: Trolley Travel
+  main_url: http://trolleytravel.org/
+  url: http://trolleytravel.org/
+  description: >
+    Travel blog website to give tips and informations for many destinations, built with Novella theme
+  categories:
+    - Blog
+    - Travel
+  built_by: Pierre Beard
+  built_by_url: https://github.com/PBRT
+  featured: false
+- title: Playlist Detective
+  main_url: https://www.playlistdetective.com/
+  url: https://www.playlistdetective.com/
+  source_url: https://github.com/bobylito/playlistFinder
+  description: >
+    Playlist Detective is an attempt to ease music discovery with playlists. Back in the days, people were sharing mixtapes - some songs we knew and others we didn't, therefore expanding our musical horizons.
+
+    Playlists are the same, and playlist detective lets you search for songs or artists you like in order to stumble on your new favorite songs.
+
+    It uses Algolia for the search.
+  categories:
+    - Media
+    - Music
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
+- title: ProjectManager.tools
+  main_url: "https://projectmanager.tools/"
+  url: "https://projectmanager.tools/"
+  featured: false
+  categories:
+    - App
+    - Web Development
+    - Design
+    - Agency
+  built_by: App Design
+  built_by_url: "https://appdesign.dev/"
+- title: 1902 Software
+  url: https://1902software.com/
+  main_url: https://1902software.com/
+  description: >
+    We are an IT company that specializes in e-commerce and website development on different platforms such as Magento, WordPress, and Umbraco. We are also known for custom software development, web design and mobile app solutions for iOS and Android.
+  categories:
+    - eCommerce
+    - Web Development
+    - Programming
+    - Mobile Development
+    - WordPress
+    - Design
+    - Business
+    - Agency
+  built_by: 1902 Software Development Corporation
+  built_by_url: https://1902software.com/
+  featured: false
+- title: Codeful
+  url: https://www.codeful.fi/
+  main_url: https://www.codeful.fi/
+  categories:
+    - Agency
+    - Consulting
+  featured: false
+- title: Noima
+  url: https://www.noima.xyz
+  main_url: https://www.noima.xyz
+  categories:
+    - Agency
+    - Consulting
+    - Blog
+  featured: false
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
+- title: Talent Point
+  url: https://talentpoint.co
+  main_url: https://talentpoint.co
+  description: >
+    Talent Point provide the tools that companies need to scale quickly and effectively, bridging the gap between employer brand, HR, and hiring to build teams from within.
+  categories:
+    - Business
+    - Technology
+    - Blog
+    - Consulting
+    - Human Resources
+  built_by: Talent Point
+  built_by_url: https://talentpoint.co
+  featured: false
+- title: Marathon Oil
+  main_url: "https://www.marathonoil.com/"
+  url: "https://www.marathonoil.com/"
+  featured: false
+  categories:
+    - Business
+    - Marketing
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+- title: Gene
+  url: https://www.geneglobal.com/work
+  main_url: https://www.geneglobal.com
+  description: >
+    We’re an experience design agency, focused on the future of health
+  categories:
+    - Agency
+    - Technology
+    - Healthcare
+    - Consulting
+    - User Experience
+  featured: false
+- title: medignition – healthcare innovations
+  url: https://medignition.com/
+  main_url: https://medignition.com/
+  description: >
+    medignition builds digital innovations in healthcare.
+  categories:
+    - Healthcare
+    - Education
+    - Technology
+    - Design
+    - Business
+    - Portfolio
+    - Entrepreneurship
+    - Agency
+  built_by: medignition
+  built_by_url: https://medignition.com/
+- title: Dynobase
+  url: "https://dynobase.dev/"
+  main_url: "https://dynobase.dev/"
+  description: >
+    Professional GUI Client for DynamoDB.
+  categories:
+    - Data
+    - Programming
+    - Web Development
+  built_by: Rafal Wilinski
+  built_by_url: "https://rwilinski.me/"
+  featured: false
+- title: Vaktija.eu
+  url: https://vaktija.eu
+  main_url: https://vaktija.eu
+  description: >
+    Vaktija.eu gives information about prayer times in germany. (Built with GatsbyJS. Fast in every way that matters.)
+  categories:
+    - App
+    - Community
+    - Nonprofit
+    - SEO
+    - Web Development
+  built_by: Rašid Redžić
+  built_by_url: https://rasidre.com/
+  featured: false
+- title: Creative code daily
+  main_url: https://www.bobylito.dev/
+  url: https://www.bobylito.dev/
+  source_url: https://github.com/bobylito/sketches
+  description: >
+    Creative code daily (CCD) is a personal project for which I build a new animation made out of code every day.
+  categories:
+    - Blog
+    - Programming
+    - Gallery
+    - Portfolio
+  built_by: Alexandre Valsamou-Stanislawski
+  built_by_url: https://www.noima.xyz
+- title: Messi vs Ronaldo
+  description: >
+    The biggest debate in football - but who is the best, Messi or Ronaldo? This website provides all the goals and stats to help you reach your own conclusion.
+  main_url: "https://www.messivsronaldo.app/"
+  url: "https://www.messivsronaldo.app/"
+  categories:
+    - Sports
+    - Data
+    - App
+  built_by: Stephen Greig
+  built_by_url: "http://ste.digital/"
+- title: Em Em Recipes
+  url: "https://ememrecipes.com"
+  main_url: "https://ememrecipes.com"
+  description: >
+    Finally, a recipe website that gets straight to the point.
+  categories:
+    - Blog
+    - Food
+  built_by: Matthew Mesa
+  built_by_url: "https://matthewmesa.com"
+- title: Yuuniworks Portfolio / Blog
+  main_url: "https://www.yuuniworks.com/"
+  url: "https://www.yuuniworks.com/"
+  source_url: "https://github.com/junkboy0315/gatsby-portfolio-blog"
+  featured: false
+  categories:
+    - Portfolio
+    - Web Development
+    - Blog
+- title: Jun Chen Portfolio
+  url: "https://www.junchenjun.me"
+  main_url: "https://www.junchenjun.me"
+  source_url: "https://github.com/junchenjun/junchenjun.me"
+  description: >
+    Get to know Jun.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Jun Chen
+  built_by_url: "https://www.junchenjun.me"
+- title: Xavier Mirabelli-Montan
+  url: "https://xavie.mirmon.co.uk"
+  main_url: "https://xavie.mirmon.co.uk"
+  source_url: https://github.com/xaviemirmon/xavier-developer-site
+  description: >
+    The developer portfolio and blog for Xavier Mirabelli-Montan.  Built using TinaCMS Grande hosted on Gatsby Cloud.
+  categories:
+    - Blog
+    - Portfolio
+    - Programming
+  featured: false
+- title: MPG Calculator
+  url: "https://www.mpg-calculator.co.uk"
+  main_url: "https://www.mpg-calculator.co.uk"
+  description: >
+    A website which allows you to calculate the MPG of your vehicle.
+  categories:
+    - SEO
+    - Accessibility
+    - Blog
+  built_by: PJ
+  built_by_url: "https://pjsachdev.me"
+- title: Softblues
+  main_url: https://softblues.io
+  url: https://softblues.io
+  description: >
+    We optimize your project costs and deliver outstanding results by applying relevant technology. Plus, we create our own effective products for businesses and developers all over the world.
+  categories:
+    - WordPress
+    - Portfolio
+    - Agency

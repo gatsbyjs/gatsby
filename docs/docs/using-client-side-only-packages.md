@@ -50,7 +50,7 @@ class MyComponent extends Component {
 }
 ```
 
-## Workaround 3: Load client-side dependent components with react-loadable
+## Workaround 3: Load client-side dependent components with loadable-components
 
 Install [loadable-components](https://github.com/smooth-code/loadable-components) and use it as a wrapper for a component that wants to use a client-side only package.
 
