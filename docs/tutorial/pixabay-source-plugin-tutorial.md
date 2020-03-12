@@ -1,8 +1,6 @@
 ---
-title: Pixabay Image Source Plugin Tutorial
+title: "Creating an Image Source Plugin"
 ---
-
-Creating your own source plugin.
 
 ## What this tutorial covers
 
