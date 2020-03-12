@@ -38,7 +38,7 @@
     "progress": "^2.0.3",
     "prompts": "^2.3.0",
     "react": "^16.8.0",
-    "redux": "^4.0.4",
+    "redux": "^4.0.5",
     "resolve-cwd": "^2.0.0",
     "semver": "^6.3.0",
     "signal-exit": "^3.0.2",
