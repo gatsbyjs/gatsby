@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.40](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.39...gatsby@2.19.40) (2020-03-12)
+
+### Bug Fixes
+
+- **gatsby:** Show meaningful error when directory names are too long ([#21518](https://github.com/gatsbyjs/gatsby/issues/21518)) ([4404af1](https://github.com/gatsbyjs/gatsby/commit/4404af1))
+
+## [2.19.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.38...gatsby@2.19.39) (2020-03-11)
+
+### Features
+
+- **gatsby:** Support FastRefresh for development hot reloading ([#21534](https://github.com/gatsbyjs/gatsby/issues/21534)) ([205847b](https://github.com/gatsbyjs/gatsby/commit/205847b))
+
+## [2.19.38](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.37...gatsby@2.19.38) (2020-03-11)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.36...gatsby@2.19.37) (2020-03-11)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.35...gatsby@2.19.36) (2020-03-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.34...gatsby@2.19.35) (2020-03-10)
+
+### Bug Fixes
+
+- **gatsby:** Update types for WrapPageElement\*Args ([#22120](https://github.com/gatsbyjs/gatsby/issues/22120)) ([97fa23e](https://github.com/gatsbyjs/gatsby/commit/97fa23e)), closes [#21542](https://github.com/gatsbyjs/gatsby/issues/21542)
+
+### Performance Improvements
+
+- **gatsby:** more efficient parent-child check through arrays ([#22126](https://github.com/gatsbyjs/gatsby/issues/22126)) ([be7111b](https://github.com/gatsbyjs/gatsby/commit/be7111b))
+
+## [2.19.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.33...gatsby@2.19.34) (2020-03-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.32...gatsby@2.19.33) (2020-03-09)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.19.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.31...gatsby@2.19.32) (2020-03-06)
 
 **Note:** Version bump only for package gatsby

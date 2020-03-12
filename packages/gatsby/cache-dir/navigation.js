@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import loader from "./loader"
+import loader, { PageResourceStatus } from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
@@ -81,7 +81,7 @@ const navigate = (to, options = {}) => {
     // back, the browser will just change the URL and expect JS to handle
     // the change, which won't always work since it might not be a Gatsby
     // page.
-    if (!pageResources || pageResources.status === `error`) {
+    if (!pageResources || pageResources.status === PageResourceStatus.Error) {
       window.history.replaceState({}, ``, location.href)
       window.location = pathname
       clearTimeout(timeoutId)

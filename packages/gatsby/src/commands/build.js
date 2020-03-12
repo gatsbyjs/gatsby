@@ -4,7 +4,7 @@ const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const fs = require(`fs-extra`)
 import { buildHTML } from "./build-html"
-const buildProductionBundle = require(`./build-javascript`)
+import { buildProductionBundle } from "./build-javascript"
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
@@ -12,20 +12,18 @@ const { initTracer, stopTracer } = require(`../utils/tracer`)
 const db = require(`../db`)
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
-const { store, emitter, readState } = require(`../redux`)
+const { store, readState } = require(`../redux`)
 const queryUtil = require(`../query`)
-const appDataUtil = require(`../utils/app-data`)
-const WorkerPool = require(`../utils/worker/pool`)
+import * as appDataUtil from "../utils/app-data"
+import * as WorkerPool from "../utils/worker/pool"
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
-const {
-  waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
-} = require(`../utils/jobs-manager`)
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
 const buildUtils = require(`../commands/build-utils`)
 const { boundActionCreators } = require(`../redux/actions`)
+import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -43,24 +41,6 @@ type BuildArgs = {
   noUglify: boolean,
   profile: boolean,
   openTracingConfigFile: string,
-}
-
-const waitUntilAllJobsComplete = () => {
-  const jobsV1Promise = new Promise(resolve => {
-    const onEndJob = () => {
-      if (store.getState().jobs.active.length === 0) {
-        resolve()
-        emitter.off(`END_JOB`, onEndJob)
-      }
-    }
-    emitter.on(`END_JOB`, onEndJob)
-    onEndJob()
-  })
-
-  return Promise.all([
-    jobsV1Promise,
-    waitUntilAllJobsV2Complete(),
-  ]).then(() => {})
 }
 
 module.exports = async function build(program: BuildArgs) {
@@ -111,11 +91,11 @@ module.exports = async function build(program: BuildArgs) {
     { parentSpan: buildSpan }
   )
   activity.start()
-  const stats = await buildProductionBundle(program, {
-    parentSpan: activity.span,
-  }).catch(err => {
-    activity.panic(structureWebpackErrors(`build-javascript`, err))
-  })
+  const stats = await buildProductionBundle(program, activity.span).catch(
+    err => {
+      activity.panic(structureWebpackErrors(`build-javascript`, err))
+    }
+  )
   activity.end()
 
   const workerPool = WorkerPool.create()

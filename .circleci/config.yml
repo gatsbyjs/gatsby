@@ -130,6 +130,49 @@ commands:
             - slack/status:
               channel: eng-react-integration-status
 
+  run-benchmark:
+    parameters:
+      working_directory:
+        type: string
+      NUM_PAGES:
+        type: string
+      BENCHMARK_CONTENT_SOURCE:
+        type: string
+      BENCHMARK_REPO_NAME:
+        type: string
+        default: gatsbyjs/gatsby
+      BENCHMARK_SITE_TYPE:
+        type: string
+        default: BLOG
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: << parameters.working_directory >>
+      - run:
+          command: npm run build
+          working_directory: << parameters.working_directory >>
+          environment:
+            BENCHMARK_BUILD_TYPE: COLD_START
+            NUM_PAGES: << parameters.NUM_PAGES >>
+            BENCHMARK_CONTENT_SOURCE: << parameters.BENCHMARK_CONTENT_SOURCE >>
+            BENCHMARK_REPO_NAME: << parameters.BENCHMARK_REPO_NAME >>
+            BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
+            CI_NAME: circleci
+      - run:
+          command: npm install
+          working_directory: << parameters.working_directory >>
+      - run:
+          command: npm run build
+          working_directory: << parameters.working_directory >>
+          environment:
+            BENCHMARK_BUILD_TYPE: WARM_START
+            NUM_PAGES: << parameters.NUM_PAGES >>
+            BENCHMARK_CONTENT_SOURCE: << parameters.BENCHMARK_CONTENT_SOURCE >>
+            BENCHMARK_REPO_NAME: << parameters.BENCHMARK_REPO_NAME >>
+            BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
+            CI_NAME: circleci
+
   e2e-test:
     parameters:
       skip_file_change_test:
@@ -365,193 +408,145 @@ jobs:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "512"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_id
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_id_4096:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "4096"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_id
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_id_8192:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "8192"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_id
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_id_32768:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "32768"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_id
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_slug_512:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "512"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_slug
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_slug_4096:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "4096"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_slug
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_slug_8192:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "8192"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_slug
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_slug_32768:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "32768"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_slug
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_table_512:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "512"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_table
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_table
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_table_4096:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "4096"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_table
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_table
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_table_8192:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "8192"
     steps:
-      - checkout
-      - run:
-          command: npm install
+      - run-benchmark:
           working_directory: benchmarks/markdown_table
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_table
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
 
   benchmark_markdown_table_32768:
     docker:
       - image: "circleci/node:12"
     resource_class: xlarge
-    environment:
-      CI_NAME: circleci
-      NUM_PAGES: "32768"
     steps:
-      - checkout
-      - run:
-          command: npm install
-          working_directory: benchmarks/markdown_table
-      - run:
-          command: npm run build
-          working_directory: benchmarks/markdown_table
+      - run-benchmark:
+          working_directory: benchmarks/markdown_table/benchmarks/markdown_table
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
 
 workflows:
   version: 2
