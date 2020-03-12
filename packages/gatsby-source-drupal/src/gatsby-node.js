@@ -131,6 +131,7 @@ exports.sourceNodes = async (
   _.each(allData, contentType => {
     if (!contentType) return
     _.each(contentType.data, datum => {
+      if (!datum) return
       const node = nodeFromData(datum, createNodeId)
       nodes.set(node.id, node)
     })
