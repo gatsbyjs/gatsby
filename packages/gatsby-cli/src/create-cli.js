@@ -4,7 +4,7 @@ const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const { setStore } = require(`./reporter/redux`)
 const { didYouMean } = require(`./did-you-mean`)
-const { getLocalGatsbyVersion } = require(`./util/version`)
+import { getLocalGatsbyVersion } from "./util/version"
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 const clipboardy = require(`clipboardy`)
