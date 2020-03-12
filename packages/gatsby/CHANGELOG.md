@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.40](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.39...gatsby@2.19.40) (2020-03-12)
+
+### Bug Fixes
+
+- **gatsby:** Show meaningful error when directory names are too long ([#21518](https://github.com/gatsbyjs/gatsby/issues/21518)) ([4404af1](https://github.com/gatsbyjs/gatsby/commit/4404af1))
+
 ## [2.19.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.38...gatsby@2.19.39) (2020-03-11)
 
 ### Features
