@@ -2,7 +2,7 @@
 title: Translating UI Messages
 ---
 
-Most content that needs to be translated is in Markdown files in translation repos. However, Gatsbyjs.org also has several pieces of UI text that should be translated. To do that, we use a library called [Lingui](https://lingui.js.org/).
+Most content that needs to be translated is in Markdown files in translation repos. However, Gatsbyjs.org also has several pieces of UI text that should be translated using a library called [Lingui](https://lingui.js.org/).
 
 ## Message Translation Guide
 
@@ -86,11 +86,11 @@ Right now, no text with complex formatting rules is available for translation. W
 
 ## Updating content
 
-Sometimes additional content is added to the UI, leading to untranslated text. When this occurs, please update your language's `messages.po` file with the new translations. In the future, we would like to automatically create a pull request in the language repos when new UI message translations are needed.
+Sometimes additional content is added to the UI, leading to untranslated text. When this occurs, please update your language's `messages.po` file with the new translations.
 
 ### New messages
 
-New messages can be found by searching for `msgstr: ""`. These messages may be translated normally.
+New messages can be found by searching for `msgstr: ""`. These messages may be translated as usual.
 
 ### Updated message text
 
