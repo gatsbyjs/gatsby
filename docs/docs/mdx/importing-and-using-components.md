@@ -82,12 +82,12 @@ In the future, [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx) will address t
 ```jsx:title=src/components/Thing/LazyThing.js
 import React from "react"
 
-import Spinner from "./somewhere"
+const Placeholder = () => null
 
 const LazyThing = props => {
-  // While the component is loading, we'll default it to using
-  // a Spinner.
-  const [Component, setComponent] = React.useState(() => Spinner)
+  // While the component is loading, we'll render a fallback placeholder.
+  // (The Placeholder is a component that renders nothing).
+  const [Component, setComponent] = React.useState(() => Placeholder)
 
   // After the initial render, kick off a dynamic import to fetch
   // the real component, and set it into our state.
