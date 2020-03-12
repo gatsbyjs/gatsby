@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.28...gatsby-plugin-sitemap@2.2.29) (2020-03-12)
+
+### Features
+
+- **gatsby-plugin-sitemap:** handle different query structures and allow custom siteUrl resolution ([#21948](https://github.com/gatsbyjs/gatsby/issues/21948)) ([07319d0](https://github.com/gatsbyjs/gatsby/commit/07319d0))
+
 ## [2.2.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.27...gatsby-plugin-sitemap@2.2.28) (2020-03-06)
 
 **Note:** Version bump only for package gatsby-plugin-sitemap
