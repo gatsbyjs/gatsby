@@ -189,7 +189,7 @@ module.exports = class AnalyticsTracker {
       componentId: `gatsby-cli`,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
-      ...getRepositoryId(),
+      ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
   }
