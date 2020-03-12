@@ -41,7 +41,9 @@
         "webpack-stats-plugin",
         "xlsx",
         "zipkin",
-        "zipkin-transport-http"
+        "zipkin-transport-http",
+        "// below is list of packages that we use alpha/beta/next/canary, where it's not really safe to bump automatically and need extra caution",
+        "react-docgen"
       ]
     },
     {
