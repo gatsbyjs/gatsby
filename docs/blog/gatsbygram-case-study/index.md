@@ -223,7 +223,7 @@ pages.
 
 As you can see above, when defining a page, we can set "context" data, which is
 passed as a `prop` to the component and as a
-[GraphQL variable](http://graphql.org/learn/queries/#variables) in our `GraphQL`
+[GraphQL variable](https://graphql.org/learn/queries/#variables) in our `GraphQL`
 query. For the
 "[post template](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/templates/post-page.js)",
 we pass the id to the post. Below we use that id to query our `GraphQL` schema

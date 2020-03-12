@@ -70,7 +70,7 @@ If you're building a small site, one efficient way to build it is to pull in uns
 
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
-[GraphQL](http://graphql.org/).
+[GraphQL](https://graphql.org/).
 
 GraphQL was invented at Facebook to help product engineers _pull_ needed data into
 components.
