@@ -51,17 +51,9 @@ node_modules/
 .eslintcache
 
 # lock files
-benchmarks/*/yarn.lock
-e2e-tests/*/yarn.lock
-examples/*/yarn.lock
-integration-tests/*/yarn.lock
-peril/*/yarn.lock
-rcfs/*/yarn.lock
-scripts/*/yarn.lock
-starters/*/yarn.lock
-www/*/yarn.lock
-packages/*/yarn.lock
-package-lock.json
+yarn.lock
+# ignore any lock file other than main lock file
+!/yarn.lock
 
 # starters are special; we want to persist the lock files
 !starters/*/package-lock.json
