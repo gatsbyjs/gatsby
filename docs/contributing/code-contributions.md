@@ -132,7 +132,7 @@ and that you're on the latest version of `gatsby-dev-cli`.
 - In the Gatsby monorepo find the starter in the `/starters` directory that uses the theme you want to work on
 - Navigate to that directory, e.g. `cd starters/gatsby-starter-blog-theme`
 - Install dependencies: `yarn`
-- Run Gatsby Dev CLI to sync theme files: `gatsby-dev --packages gatsby-theme-blog`
+- Run Gatsby Dev CLI to sync theme files, referencing the appropriate theme: `gatsby-dev --packages gatsby-theme-blog`
 - In another tab run the starter: `yarn develop`
 - Edit the theme files, you'll see changes automatically copied over and update in your starter.
 
