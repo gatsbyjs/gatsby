@@ -1,24 +1,13 @@
 import { setDefaultTags } from "gatsby-telemetry"
-import path from "path"
+import { getGatsbyVersion } from "gatsby-core-utils"
 
 export const getLocalGatsbyVersion = (): string => {
-  let version = ``
-  try {
-    const packageInfo = require(path.join(
-      process.cwd(),
-      `node_modules`,
-      `gatsby`,
-      `package.json`
-    ))
-    version = packageInfo.version
+  const version = getGatsbyVersion()
 
-    try {
-      setDefaultTags({ installedGatsbyVersion: version })
-    } catch (e) {
-      // ignore
-    }
-  } catch (err) {
-    /* ignore */
+  try {
+    setDefaultTags({ installedGatsbyVersion: version })
+  } catch (e) {
+    // ignore
   }
 
   return version
