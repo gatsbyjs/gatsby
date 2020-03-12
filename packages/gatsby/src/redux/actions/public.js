@@ -575,7 +575,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
-// Marked private here because it was supressed in documentation pages.
+// Marked private here because it was suppressed in documentation pages.
 /**
  * Batch delete nodes
  * @private
