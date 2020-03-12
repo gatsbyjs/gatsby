@@ -391,7 +391,7 @@ describe(`Production loader`, () => {
       expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
-    it(`should return am error when 404 cannot be fetched`, async () => {
+    it(`should return an error when 404 cannot be fetched`, async () => {
       const prodLoader = new ProdLoader(null, [])
 
       prodLoader.loadPageDataJson = jest.fn(() =>
