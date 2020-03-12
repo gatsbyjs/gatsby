@@ -7689,6 +7689,6 @@
     - Business
   # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
   built_by: Marc Fehr
-  built_by_url: https://www.marcfehr.media
+  built_by_url: https://www.marcfehr.ch
   # leave as false, the Gatsby site review board will choose featured sites quarterly
   featured: false
