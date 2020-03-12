@@ -251,6 +251,8 @@
               items:
                 - title: Naming a Plugin
                   link: /docs/naming-a-plugin/
+                - title: Files Gatsby Looks for in a Plugin
+                  link: /docs/files-gatsby-looks-for-in-a-plugin/
                 - title: Creating a generic plugin
                   link: /docs/creating-a-generic-plugin/
                 - title: Creating a Local Plugin
