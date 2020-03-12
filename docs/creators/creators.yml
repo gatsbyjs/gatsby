@@ -512,6 +512,10 @@
 - name: Softblues
   type: agency
   image: images/softblues.png
+  description: >-
+    SoftBlues is an experience software development company specializing in modern stack technologies e.g. Gatsby, Jamstack, Headless E-commerce, Progressive Web Application and PHP Since 2009,  we have been reliable technology partners for companies aiming at business automation (AgTech, E-commerce, education and automotive industries), creating products for mass market (WordPress/WooCommerce) and startups.
+    Our mission is to deliver success to our clients, team members and partners. We are proud of our team leadership and cultivate corporate our culture based on trust, transparency, responsibility, excellent planning and  continuous improvement.
+    We’re looking forward to win-win cooperation with you!
   location: Ukraine
   website: "https://softblues.io/"
   for_hire: true
