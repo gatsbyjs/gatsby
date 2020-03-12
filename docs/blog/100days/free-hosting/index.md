@@ -29,7 +29,7 @@ Bonus: Try deploying your site to the free tier of multiple services to see firs
 
 ### Challenge Resources
 
-For your git repo, you can use GitHub, Gitlab, Bitbucket, or many similar services.
+For your git repo, you can use GitHub, GitLab, Bitbucket, or many similar services.
 
 And for your build tool and CDN we see many people have success with [AWS Amplify](/docs/deploying-to-aws-amplify/), [Netlify](/docs/deploying-to-netlify/), and [ZEIT Now](/docs/deploying-to-zeit-now/). Our documentation has step-by-step tutorials for those services, [and others](/docs/deploying-and-hosting/).
 
