@@ -119,7 +119,7 @@ export default function APITemplate({ data, location, pageContext }) {
         >
           <div>
             <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
-            <h2>{page.frontmatter.contentsHeading || "APIs"}</h2>
+            <h2>{page.frontmatter.contentsHeading || `APIs`}</h2>
             <APIContents docs={mergedFuncs} />
             <h2>Reference</h2>
             <APIReference

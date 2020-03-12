@@ -6,7 +6,6 @@ const url = require(`url`)
 const moment = require(`moment`)
 const { langCodes } = require(`../i18n`)
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
-const { localizedPath } = require(`../i18n.js`)
 
 // convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
 const slugToAnchor = slug =>
@@ -241,7 +240,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     // Add slugs for docs pages
     if (fileNode.sourceInstanceName === `docs`) {
       slug = docSlugFromPath(parsedFilePath)
-      locale = "en"
+      locale = `en`
 
       // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
@@ -286,7 +285,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       fileNode.sourceInstanceName === `packages` &&
       parsedFilePath.name === `README`
     ) {
-      locale = "en"
+      locale = `en`
       slug = `/packages/${parsedFilePath.dir}/`
       createNodeField({
         node,

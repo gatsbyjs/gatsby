@@ -57,12 +57,7 @@ class FilteredShowcase extends Component {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: [
-        `title`,
-        `categories`,
-        `built_by`,
-        `description`,
-      ],
+      keys: [`title`, `categories`, `built_by`, `description`],
     }
 
     this.fuse = new Fuse(props.data.allSitesYaml.nodes, options)

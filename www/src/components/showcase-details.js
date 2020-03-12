@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Fragment } from "react"
+import { Fragment } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Link from "./localized-link"
 import { Helmet } from "react-helmet"

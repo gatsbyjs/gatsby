@@ -1,7 +1,10 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import Link from "./localized-link"
-import { colors, mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import {
+  colors,
+  mediaQueries,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 function isUnderDepthLimit(depth, maxDepth) {
   if (maxDepth === null) {

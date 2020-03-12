@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import Link from "../localized-link"
 import styled from "@emotion/styled"
 import { color, space, typography } from "styled-system"

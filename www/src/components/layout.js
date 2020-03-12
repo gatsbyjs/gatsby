@@ -19,7 +19,7 @@ export const LocaleContext = React.createContext(defaultLang)
 
 export default function DefaultLayout({ location, locale, children }) {
   return (
-    <IconContext.Provider value={{ style: { verticalAlign: "middle" } }}>
+    <IconContext.Provider value={{ style: { verticalAlign: `middle` } }}>
       <LocaleContext.Provider value={locale || defaultLang}>
         <Global styles={globalStyles} />
         <SiteMetadata pathname={location.pathname} locale={locale} />
