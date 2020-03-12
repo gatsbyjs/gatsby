@@ -1,7 +1,3 @@
-
-packages/*/yarn.lock
-packages/*/package-lock.json
-
 # Logs
 logs
 *.log
@@ -55,7 +51,16 @@ node_modules/
 .eslintcache
 
 # lock files
-yarn.lock
+benchmarks/*/yarn.lock
+e2e-tests/*/yarn.lock
+examples/*/yarn.lock
+integration-tests/*/yarn.lock
+peril/*/yarn.lock
+rcfs/*/yarn.lock
+scripts/*/yarn.lock
+starters/*/yarn.lock
+www/*/yarn.lock
+packages/*/yarn.lock
 package-lock.json
 
 # starters are special; we want to persist the lock files
