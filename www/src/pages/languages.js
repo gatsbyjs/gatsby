@@ -1,14 +1,14 @@
 /** @jsx jsx */
+import React from "react"
 import { jsx } from "theme-ui"
 import { Helmet } from "react-helmet"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 import styled from "@emotion/styled"
 
-import { langs, isDefaultLang, makeDefaultLang } from "../utils/i18n"
+import { langs, defaultLang } from "../utils/i18n"
 
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
-import PageWithSidebar from "../components/page-with-sidebar"
 import Breadcrumb from "../components/docs-breadcrumb"
 import LanguageTableRow from "../components/languages/language-table-row"
 
@@ -52,7 +52,7 @@ const LanguagesFooter = () => (
     </p>
     <p>
       Don't see your language above?{" "}
-      <OutboundLink href="https://github.com/gatsbyjs/gatsby/issues/21750">
+      <OutboundLink href="https://www.gatsbyjs.org/contributing/translation/">
         Let us know
       </OutboundLink>
       .
@@ -60,8 +60,8 @@ const LanguagesFooter = () => (
   </section>
 )
 
-const LanguagesPage = ({ location }) => (
-  <PageWithSidebar location={location}>
+const LanguagesPage = ({ location, pageContext }) => (
+  <>
     <Helmet>
       <title>Languages</title>
       <meta
@@ -69,7 +69,6 @@ const LanguagesPage = ({ location }) => (
         content={`The Gatsby documentation is currently translated in over ${allLanguages.length}+ local languages. Set your language preference.`}
       />
     </Helmet>
-
     <Container>
       <TranslateBackground />
       <main id={`reach-skip-nav`}>
@@ -79,15 +78,15 @@ const LanguagesPage = ({ location }) => (
           <LanguageTableRow
             key={lang.code}
             lang={{ ...lang, progress: 0.5 }}
-            isDefault={isDefaultLang(lang.code)}
-            onMakeDefault={() => makeDefaultLang(lang.code)}
+            isDefault={lang.code === defaultLang}
+            isCurrent={lang.code === (pageContext.locale || defaultLang)}
           />
         ))}
         <LanguagesFooter />
       </main>
-      <FooterLinks />
     </Container>
-  </PageWithSidebar>
+    <FooterLinks />
+  </>
 )
 
 export default LanguagesPage

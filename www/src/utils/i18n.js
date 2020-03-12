@@ -79,8 +79,6 @@ function getLocaleAndBasePath(path, codes = langCodes) {
   return { locale: defaultLang, basePath: path }
 }
 
-function makeDefaultLang() {}
-
 module.exports = {
   i18nEnabled,
   langCodes,

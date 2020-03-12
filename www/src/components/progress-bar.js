@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from "theme-ui"
+import { jsx, useColorMode } from "theme-ui"
 import styled from "@emotion/styled"
 
 const Wrapper = styled.div`
@@ -15,23 +15,29 @@ const BarBackground = styled.div`
   border-radius: ${p => p.theme.radii[2]};
   margin-right: ${p => p.theme.space[2]};
 
-  background-color: ${p => p.theme.colors.ui.border};
+  background-color: ${p =>
+    p.colorMode === "dark" ? p.theme.colors.grey[90] : p.theme.colors.grey[20]};
 `
 
 const Bar = styled.div`
   height: 100%;
-  background-color: ${p => p.theme.colors.textMuted};
+  background-color: ${p =>
+    p.colorMode === "dark" ? p.theme.colors.grey[60] : p.theme.colors.grey[40]};
 `
 
-const ProgressBar = ({ progress, ...props }) => (
-  <Wrapper {...props}>
-    <BarBackground>
-      <Bar css={{ width: `${progress * 100}%` }} />
-    </BarBackground>
-    <span sx={{ width: "2.5rem", textAlign: "right", fontSize: 1 }}>
-      {Math.round(progress * 100)}%
-    </span>
-  </Wrapper>
-)
+const ProgressBar = ({ progress, ...props }) => {
+  const [colorMode] = useColorMode()
+
+  return (
+    <Wrapper {...props}>
+      <BarBackground colorMode={colorMode}>
+        <Bar colorMode={colorMode} css={{ width: `${progress * 100}%` }} />
+      </BarBackground>
+      <span sx={{ width: "2.5rem", textAlign: "right", fontSize: 1 }}>
+        {Math.round(progress * 100)}%
+      </span>
+    </Wrapper>
+  )
+}
 
 export default ProgressBar
