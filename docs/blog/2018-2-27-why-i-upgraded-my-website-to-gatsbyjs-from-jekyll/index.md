@@ -44,7 +44,7 @@ It offers much much more, however. Gatsby lets me leverage all the modern tools 
 
 Let me briefly give a high level overview of how Gatsby works from my short experience using it.
 
-Developing the application is the same as developing a React application, with useful things like [hot module replacement](https://webpack.js.org/guides/hot-module-replacement/) to aid easy development already set up by Gatsby. What’s different is that there is a framework in place to use [GraphQL](http://graphql.org/) queries to pull content into the client side browser environment. React components can define a query and the component will be hydrated with the result of the query as props when it is rendered.
+Developing the application is the same as developing a React application, with useful things like [hot module replacement](https://webpack.js.org/guides/hot-module-replacement/) to aid easy development already set up by Gatsby. What’s different is that there is a framework in place to use [GraphQL](https://graphql.org/) queries to pull content into the client side browser environment. React components can define a query and the component will be hydrated with the result of the query as props when it is rendered.
 
 For example, I defined a `PostTemplate` which will be used to render pages for articles.
 
