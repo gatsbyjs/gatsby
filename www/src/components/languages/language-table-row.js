@@ -31,10 +31,10 @@ const Row = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 12px;
-  margin: 0 -12px;
+  padding: ${p => p.theme.space[2]} ${p => p.theme.space[4]};
+  margin: 0 -${p => p.theme.space[4]};
   border: 2px solid transparent;
-  border-radius: 8px;
+  border-radius: ${p => p.theme.radii[3]};
 
   color: ${p => p.theme.colors.textMuted};
 
@@ -59,8 +59,8 @@ const Row = styled.div`
     `}
 
   ${mediaQueries.md} {
-    padding: 12px 24px;
-    margin: 0 -24px;
+    padding: ${p => p.theme.space[3]} ${p => p.theme.space[6]};
+    margin: 0 -${p => p.theme.space[6]};
   }
 `
 
@@ -78,7 +78,7 @@ const LanguageTableRow = ({ lang, isDefault, onMakeDefault }) => {
           <DefaultLanguageBadge>Set as default</DefaultLanguageBadge>
         ) : null}
       </div>
-      <div sx={{ width: "8rem" }}>
+      <div sx={{ width: "8rem", mr: 2 }}>
         {lang.code !== "en" && <ProgressBar progress={lang.progress} />}
       </div>
       <MutedOutboundLink
