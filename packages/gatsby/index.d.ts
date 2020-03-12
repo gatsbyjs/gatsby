@@ -526,6 +526,10 @@ export interface GatsbyBrowser {
     args: ServiceWorkerArgs,
     options: PluginOptions
   ): any
+  onServiceWorkerUpdateReady?(
+    args: ServiceWorkerArgs,
+    options: PluginOptions
+  ): any
   registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
   replaceComponentRenderer?(
     args: ReplaceComponentRendererArgs,
@@ -889,9 +893,9 @@ export interface ReplaceRendererArgs extends NodePluginArgs {
   setBodyProps: Function
 }
 
-export interface WrapPageElementNodeArgs extends NodePluginArgs {
+export interface WrapPageElementNodeArgs<DataType = object, PageContextType = object> extends NodePluginArgs {
   element: object
-  props: object
+  props: PageProps<DataType, PageContextType>
   pathname: string
 }
 
@@ -1305,9 +1309,9 @@ export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
   getSavedScrollPosition: Function
 }
 
-export interface WrapPageElementBrowserArgs extends BrowserPluginArgs {
+export interface WrapPageElementBrowserArgs<DataType = object, PageContextType = object> extends BrowserPluginArgs {
   element: object
-  props: object
+  props: PageProps<DataType, PageContextType>
 }
 
 export interface WrapRootElementBrowserArgs extends BrowserPluginArgs {

@@ -8,7 +8,7 @@ import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
 import FooterLinks from "../components/shared/footer-links"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 

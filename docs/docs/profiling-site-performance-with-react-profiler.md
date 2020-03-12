@@ -28,7 +28,7 @@ The react profiler component can be used anywhere in a react tree to measure the
 
 ### Profiling a slow component
 
-```js
+```jsx
 import * as React from "react"
 import { Profiler } from "react"
 
@@ -44,7 +44,7 @@ export const MyComponent = props => (
 
 Capturing page performance can be achieved by using the [wrapPageElement API](/docs/browser-apis/#wrapPageElement) to profile each page.
 
-```js
+```jsx
 //gatsby-browser.js
 
 import * as React from "react"
