@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.82](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.81...gatsby-plugin-mdx@1.0.82) (2020-03-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** make webpack rebuild when new scopes are created ([#22121](https://github.com/gatsbyjs/gatsby/issues/22121)) ([f62001e](https://github.com/gatsbyjs/gatsby/commit/f62001e))
+
 ## [1.0.81](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.80...gatsby-plugin-mdx@1.0.81) (2020-03-12)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
