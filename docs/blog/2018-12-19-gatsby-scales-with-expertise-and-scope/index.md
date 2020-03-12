@@ -22,9 +22,7 @@ In this post, I want to explain how Gatsby led me into learning React and how yo
 
 When I first discovered Gatsby two years ago, React was already quite popular. I decided to learn it to get more into modern frontend development and to step up my game. Before that I did **static** HTML/CSS/JS websites with the help of SCSS and Gulp. I never used a server-side scripting language (e.g. PHP) or a scripting engine (e.g. Nunjucks). So this was a big step, wasn't it?
 
-<Pullquote>
-Gatsby offers you a playground to learn React.
-</Pullquote>
+<Pullquote>Gatsby offers you a playground to learn React.</Pullquote>
 
 My design background (e.g. thinking in components), knowledge of JavaScript, and good tutorials definitely eased the learning curve but Gatsby also was of big help to me. My personal site always was a static site displaying my works. But now I wanted to update it more easily and also start blogging. That exactly sounds like one of Gatsby's use cases. It takes all the hard things away and offers you a **playground to learn React**, e.g. only using it as a templating language. So, to answer the question: I wouldn't say that it was a too big step for me 😊
 

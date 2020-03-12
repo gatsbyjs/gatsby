@@ -176,6 +176,11 @@ function buildLocalCommands(cli, isLocalSite) {
           default: false,
           describe: `Build site without uglifying JS bundles (for debugging).`,
         })
+        .option(`profile`, {
+          type: `boolean`,
+          default: false,
+          describe: `Build site with react profiling (this can add some additional overhead). See https://reactjs.org/docs/profiler`,
+        })
         .option(`open-tracing-config-file`, {
           type: `string`,
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,

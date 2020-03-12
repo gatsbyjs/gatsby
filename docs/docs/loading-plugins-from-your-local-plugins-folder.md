@@ -6,7 +6,7 @@ Gatsby can load plugins from your website's local plugins folder, which is a fol
 
 Consider this example project structure which includes a local plugin called `gatsby-local-plugin`:
 
-```
+```text
 /my-gatsby-site
 └── /src
     └── /pages

@@ -22,21 +22,19 @@ export const showcaseQuery = graphql`
         fields: { hasScreenshot: { eq: true } }
       }
     ) {
-      edges {
-        node {
-          id
-          title
-          categories
-          built_by
-          fields {
-            slug
-          }
-          childScreenshot {
-            screenshotFile {
-              childImageSharp {
-                fluid(maxWidth: 512) {
-                  ...GatsbyImageSharpFluid_noBase64
-                }
+      nodes {
+        id
+        title
+        categories
+        built_by
+        fields {
+          slug
+        }
+        childScreenshot {
+          screenshotFile {
+            childImageSharp {
+              fluid(maxWidth: 512) {
+                ...GatsbyImageSharpFluid_noBase64
               }
             }
           }
@@ -49,27 +47,25 @@ export const showcaseQuery = graphql`
         fields: { hasScreenshot: { eq: true } }
       }
     ) {
-      edges {
-        node {
-          id
-          featured
-          title
-          categories
-          built_by
-          description
-          main_url
-          built_by_url
-          source_url
-          childScreenshot {
-            screenshotFile {
-              childImageSharp {
-                ...ShowcaseThumbnailFragment_item
-              }
+      nodes {
+        id
+        featured
+        title
+        categories
+        built_by
+        description
+        main_url
+        built_by_url
+        source_url
+        childScreenshot {
+          screenshotFile {
+            childImageSharp {
+              ...ShowcaseThumbnailFragment_item
             }
           }
-          fields {
-            slug
-          }
+        }
+        fields {
+          slug
         }
       }
     }

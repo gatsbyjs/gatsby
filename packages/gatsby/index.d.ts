@@ -29,6 +29,90 @@ export const parsePath: (path: string) => WindowLocation
 
 export const prefetchPathname: (path: string) => void
 
+/**
+ * A props object for adding type safety to your Gatsby pages, can be
+ * extended with both the query response shape, and the page context.
+ *
+ * @example
+ * // When typing a default page from the ./pages dir
+ *
+ * import {PageProps} from "gatsby"
+ * export default (props: PageProps) => {
+ *
+ * @example
+ * // When adding types for both pageContext and GraphQL query data
+ *
+ * import {PageProps} from "gatsby"
+ *
+ * type IndexQueryProps = { downloadCount: number }
+ * type LocaleLookUpInfo = { translationStrings: any } & { langKey: string, slug: string }
+ * type IndexPageProps = PageProps<IndexPageProps, LocaleLookUpInfo>
+ *
+ * export default (props: IndexProps) => {
+ *   ..
+ */
+export type PageProps<DataType = object, PageContextType = object> = {
+  /** The path for this current page */
+  path: string
+  /** The URI for the current page */
+  uri: string
+  /** An extended version of window.document which comes from @react/router */
+  location: WindowLocation
+  /** A way to handle programmatically controlling navigation */
+  navigate:  NavigateFn
+  /** You can't get passed children as this is the root user-land component */
+  children: undefined
+  /** @deprecated use pageContext instead */
+  pathContext: object
+  /** Holds information about the build process for this component */
+  pageResources: {
+    component: React.Component
+      json: {
+        data: DataType
+        pageContext: PageContextType
+      },
+      page: {
+        componentChunkName: string,
+        path: string,
+        webpackCompilationHash: string,
+        matchPath?: string,
+      },
+  }
+  /**
+   * Data passed into the page via an exported GraphQL query. To set up this type
+   * you need to use [generics](https://www.typescriptlang.org/play/#example/generic-functions),
+   * see below for an example
+   *
+   * @example
+   *
+   * import {PageProps} from "gatsby"
+   *
+   * type IndexQueryProps = { downloadCount: number }
+   * type IndexPageProps = PageProps<IndexPageProps>
+   *
+   * export default (props: IndexProps) => {
+   *   ..
+   *
+   */
+  data: DataType
+  /**
+   * A context object which is passed in during the creation of the page. Can be extended if you are using
+   * `createPage` yourself using generics:
+   *
+   * @example
+   *
+   * import {PageProps} from "gatsby"
+   *
+   * type IndexQueryProps = { downloadCount: number }
+   * type LocaleLookUpInfo = { translationStrings: any } & { langKey: string, slug: string }
+   * type IndexPageProps = PageProps<IndexPageProps, LocaleLookUpInfo>
+   *
+   * export default (props: IndexProps) => {
+   *   ..
+   */
+  pageContext: PageContextType
+}
+
 export interface PageRendererProps {
   location: WindowLocation
 }
@@ -1206,18 +1290,7 @@ export interface RouteUpdateArgs extends BrowserPluginArgs {
 }
 
 export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
-  props: {
-    path: string
-    "*": string
-    uri: string
-    location: Location
-    navigate: NavigateFn
-    children: undefined
-    pageResources: object
-    data: object
-    pageContext: Record<string, unknown>
-    pathContext: Record<string, unknown>
-  }
+  props: PageProps
   loader: object
 }
 
