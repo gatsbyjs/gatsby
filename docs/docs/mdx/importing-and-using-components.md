@@ -79,7 +79,7 @@ When you use components in your `.mdx` files, Gatsby will bundle them into the m
 
 In the future, [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx) will address this. In the meantime, it can be prudent to lazy-load very large dependencies. The following snippet provides an example for lazy-loading an imaginary `Thing` component:
 
-```jsx:title=src/components/Thing/LazyThing.js
+```jsx:title=src/components/LazyThing.js
 import React from "react"
 
 const Placeholder = () => null
