@@ -4,7 +4,7 @@ typora-copy-images-to: ./
 disableTableOfContents: true
 ---
 
-> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/), [part 5](/tutorial/part-five/), and [part 6](/tutorial/part-six/) before continuing here.
+> 💡 This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/), [part 5](/tutorial/part-five/), and [part 6](/tutorial/part-six/) before continuing here.
 
 ## What's in this tutorial?
 
@@ -30,7 +30,7 @@ It is also referred to as the ‘path’ but this tutorial will use the term ‘
 
 Creating new pages has two steps:
 
-1.  Generate the "path" or "slug" for the page.
+1.  Generate the ‘path‘ or ‘slug‘ for the page.
 2.  Create the page.
 
 _**Note**: Often data sources will directly provide a slug or pathname for content — when working with one of those systems (e.g. a CMS), you don't need to create the slugs yourself as you do with markdown files._
@@ -89,6 +89,8 @@ exports.onCreateNode = ({ node, getNode }) => {
   }
 }
 ```
+
+> 💡 To avoid replication Gatsby stores at `node.parent` only a reference to the file node as an id like `70e062ec-ffb0-575c-98e8-281943630b27`. In an GraphQL query this references are solved for you by the query runner. But in `onCreateNode` you need the helper function `getNode` which takes this id to get the node.
 
 After restarting your development server, you should see the relative paths for your two markdown
 files print to the terminal screen.
@@ -448,3 +450,5 @@ Now that you've built a Gatsby site, where do you go next?
 - Explore more [plugins](/docs/plugins/)
 - See what [other people are building with Gatsby](/showcase/)
 - Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/node-interface/), or [GraphQL](/docs/graphql-reference/)
+
+Continue on to [part eight of the tutorial](/tutorial/part-eight/) where you'll preparing your site to go live!

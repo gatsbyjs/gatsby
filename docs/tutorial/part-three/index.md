@@ -22,7 +22,7 @@ You’re probably familiar with the idea of plugins. Many software systems suppo
 
 Community members (like you!) can contribute plugins (small amounts of JavaScript code) that others can then use when building Gatsby sites.
 
-> There are already hundreds of plugins! Explore the Gatsby [Plugin Library](/plugins/).
+> 💡 There are already hundreds of plugins! Explore the Gatsby [Plugin Library](/plugins/).
 
 Our goal with plugins is to make them straightforward to install and use. You will likely be using plugins in almost every Gatsby site you build. While working through the rest of the tutorial you’ll have many opportunities to practice installing and using plugins.
 
@@ -49,7 +49,7 @@ There are two main steps to using a plugin: Installing and configuring.
 npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
 ```
 
-> Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
+_**Note:** Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin._
 
 2. Edit the file `gatsby-config.js` at the root of your project to the following:
 
@@ -68,7 +68,7 @@ module.exports = {
 
 The `gatsby-config.js` is another special file that Gatsby will automatically recognize. This is where you add plugins and other site configuration.
 
-> Check out the [doc on gatsby-config.js](/docs/gatsby-config/) to read more, if you wish.
+> 💡 Check out the [Gatsby Config API](/docs/gatsby-config/) doc to read more, if you wish.
 
 3. Typography.js needs a configuration file. Create a new directory called `utils` in the `src` directory. Then add a new file called `typography.js` to `utils` and copy the following into the file:
 

@@ -9,7 +9,7 @@ to feel pretty comfortable 😀
 
 ## Recap of the first half of the tutorial
 
-So far, you've been learning how to use React.js—how powerful it is to be able to
+So far, you've been learning how to use React.js -- how powerful it is to be able to
 create your _own_ components to act as custom building blocks for websites.
 
 You’ve also explored styling components using CSS Modules.
@@ -18,8 +18,7 @@ You’ve also explored styling components using CSS Modules.
 
 In the next four parts of the tutorial (including this one), you'll be diving into the Gatsby data layer, which is a powerful feature of Gatsby that lets you easily build sites from Markdown, WordPress, headless CMSs, and other data sources of all flavors.
 
-**NOTE:** Gatsby’s data layer is powered by GraphQL. For an in-depth tutorial on
-GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
+_**NOTE:** Gatsby’s data layer is powered by GraphQL. For an in-depth tutorial on GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/)._
 
 ## Data in Gatsby
 
@@ -27,7 +26,7 @@ A website has four parts: HTML, CSS, JS, and data. The first half of the
 tutorial focused on the first three. Now let’s learn how to use data in Gatsby
 sites.
 
-**What is data?**
+### What is data?
 
 A very computer science-y answer would be: data is things like `"strings"`,
 integers (`42`), objects (`{ pizza: true }`), etc.
@@ -49,7 +48,7 @@ Data can also live in file types like Markdown, CSV, etc. as well as databases
 and APIs of all sorts.
 
 **Gatsby's data layer lets you pull data from these (and any other source)
-directly into your components**—in the shape and form you want.
+directly into your components** -- in the shape and form you want.
 
 ## Using Unstructured Data vs GraphQL
 
@@ -101,6 +100,32 @@ npm install --save gatsby-plugin-typography typography react-typography typograp
 ```
 
 Set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
+
+> 💡 `gatsby-config.js` must be in the root of your project, not under `src`.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    `gatsby-plugin-emotion`,
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
+  ],
+}
+```
+
+```javascript:title=src/utils/typography.js
+import Typography from "typography"
+import kirkhamTheme from "typography-theme-kirkham"
+
+const typography = new Typography(kirkhamTheme)
+
+export default typography
+export const rhythm = typography.rhythm
+```
 
 ```jsx:title=src/components/layout.js
 import React from "react"
@@ -174,32 +199,6 @@ export default () => (
 )
 ```
 
-```javascript:title=src/utils/typography.js
-import Typography from "typography"
-import kirkhamTheme from "typography-theme-kirkham"
-
-const typography = new Typography(kirkhamTheme)
-
-export default typography
-export const rhythm = typography.rhythm
-```
-
-`gatsby-config.js` (must be in the root of your project, not under src)
-
-```javascript:title=gatsby-config.js
-module.exports = {
-  plugins: [
-    `gatsby-plugin-emotion`,
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
-  ],
-}
-```
-
 Add the above files and then run `gatsby develop`, per usual, and you should see the following:
 
 ![start](start.png)
@@ -210,7 +209,7 @@ Now you can start querying 😋
 
 ## Your first GraphQL query
 
-When building sites, you'll probably want to reuse common bits of data -- like the _site title_ for example. Look at the `/about/` page. You'll notice that you have the site title (`Pandas Eating Lots`) in both the layout component (the site header) as well as in the `<h1 />` of the `about.js` page (the page header).
+When building sites, you'll probably want to reuse common bits of data -- like the _site title_ for example. Look at the `/about/` page. You'll notice that you have the site title `Pandas Eating Lots` in both the layout component (the site header) as well as in the `<h1 />` of the `about.js` page (the page header).
 
 But what if you want to change the site title in the future? You'd have to search for the title across all your components and edit each instance. This is both cumbersome and error-prone, especially for larger, more complex sites. Instead, you can store the title in one location and reference that location from other files; change the title in a single place, and Gatsby will _pull_ your updated title into files that reference it.
 
@@ -277,7 +276,7 @@ It worked! 🎉
 The basic GraphQL query that retrieves the `title` in your `about.js` changes above is:
 
 ```graphql:title=src/pages/about.js
-{
+query {
   site {
     siteMetadata {
       title
@@ -293,7 +292,7 @@ Page queries live outside of the component definition -- by convention at the en
 ### Use a StaticQuery
 
 [StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries.
-Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/).
+Let's use its newly introduced hook version -- [`useStaticQuery`](/docs/use-static-query/).
 
 Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done, your file will look like this:
 
@@ -368,7 +367,28 @@ But let's restore the real title.
 
 One of the core principles of Gatsby is that _creators need an immediate connection to what they're creating_ ([hat tip to Bret Victor](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principle/)). In other words, when you make any change to code you should immediately see the effect of that change. You manipulate an input of Gatsby and you see the new output showing up on the screen.
 
-So almost everywhere, changes you make will immediately take effect. Edit the `gatsby-config.js` file again, this time changing the `title` back to "Pandas Eating Lots". The change should show up very quickly in your site pages.
+So almost everywhere, changes you make will immediately take effect. Edit the `gatsby-config.js` file again, this time changing the `title` back to `"Pandas Eating Lots"`:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    // highlight-start
+    title: "Pandas Eating Lots",
+    // highlight-end
+  },
+  plugins: [
+    `gatsby-plugin-emotion`,
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
+  ],
+}
+```
+
+The change should show up very quickly in your site pages.
 
 ![Both titles say Pandas Eating Lots](pandas-eating-lots-titles.png)
 

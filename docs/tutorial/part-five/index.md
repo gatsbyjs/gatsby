@@ -4,7 +4,7 @@ typora-copy-images-to: ./
 disableTableOfContents: true
 ---
 
-> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) before continuing here.
+> 💡 This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) before continuing here.
 
 ## What's in this tutorial?
 
@@ -14,7 +14,7 @@ In this tutorial, you'll be learning about how to pull data into your Gatsby sit
 
 GraphiQL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool you'll use often while building Gatsby websites.
 
-You can access it when your site's development server is running—normally at
+You can access it when your site's development server is running -- normally at
 `http://localhost:8000/___graphql`.
 
 <video controls="controls" autoplay="true" loop="true">
@@ -22,7 +22,7 @@ You can access it when your site's development server is running—normally at
   <p>Your browser does not support the video element.</p>
 </video>
 
-Poke around the built-in `Site` "type" and see what fields are available on it -- including the `siteMetadata` object you queried earlier. Try opening GraphiQL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query. You'll be using GraphiQL a lot more through the remainder of the tutorial.
+Poke around the built-in `Site` "type" and see what fields are available on it -- including the `siteMetadata` object you queried in [tutorial part 4](/tutorial/part-four/). Try opening GraphiQL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query. You'll be using GraphiQL a lot more through the remainder of the tutorial.
 
 ## Using the GraphiQL Explorer
 
@@ -100,6 +100,8 @@ each time to re-run the query. You'll see the updated query results:
 
 The result is an array of `File` "nodes" (node is a fancy name for an object in a
 "graph"). Each `File` node object has the fields you queried for.
+
+> 💡 On the same level as the node `edges` is a node with the name `nodes`, which is shortcut for `edges.node`.
 
 ## Build a page with a GraphQL query
 

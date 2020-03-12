@@ -93,6 +93,7 @@ npm install --save gatsby-plugin-manifest
 ```javascript:title=gatsby-config.js
 {
   plugins: [
+    // highlight-start
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -107,6 +108,7 @@ npm install --save gatsby-plugin-manifest
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
+    // highlight-end
   ]
 }
 ```
@@ -365,7 +367,7 @@ Well, not quite; just for this tutorial. There are [Additional Tutorials](/tutor
 
 This is just the beginning. Keep going!
 
-- Did you build something cool? Share it on Twitter, tag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby), and [@mention us](https://twitter.com/gatsbyjs)!
+- Did you build something cool? Share it on Twitter, tag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby), and mention us with [@gatsbyjs](https://twitter.com/gatsbyjs)!
 - Did you write a cool blog post about what you learned? Share that, too!
 - Contribute! Take a stroll through [open issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) on the gatsby repo and [become a contributor](/contributing/how-to-contribute/).
 

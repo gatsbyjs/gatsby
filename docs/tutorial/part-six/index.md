@@ -4,7 +4,7 @@ typora-copy-images-to: ./
 disableTableOfContents: true
 ---
 
-> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) and [part 5](/tutorial/part-five/) before continuing here.
+> 💡 This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) and [part 5](/tutorial/part-five/) before continuing here.
 
 ## What's in this tutorial?
 
@@ -37,7 +37,13 @@ Pandas are really sweet.
 
 Here's a video of a panda eating sweets.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/4n0xNbfJLR8" frameborder="0" allowfullscreen></iframe>
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/4n0xNbfJLR8"
+  frameborder="0"
+  allowfullscreen
+/>
 ```
 
 Once you save the file, look at `/my-files/` again—the new markdown file is in
@@ -185,7 +191,13 @@ date: "2017-08-21"
 Do Pandas eat bananas? Check out this short video that shows that yes! pandas do
 seem to really enjoy bananas!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/4SZl1r2O_bY" frameborder="0" allowfullscreen></iframe>
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/4SZl1r2O_bY"
+  frameborder="0"
+  allowfullscreen
+/>
 ```
 
 ![two-posts](two-posts.png)
@@ -199,8 +211,9 @@ this powerful set of operators, you can select any data you want—in the format
 need.
 
 In your index page's GraphQL query, change `allMarkdownRemark` to
-`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. _Note: There are 3 underscores between `frontmatter` and `date`._ Save
-this and the sort order should be fixed.
+`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. Save this and the sort order should be fixed.
+
+_**Note:** There are 3 underscores between `frontmatter` and `date`._
 
 Try opening GraphiQL and playing with different sort options. You can sort the
 `allFile` connection along with other connections.
