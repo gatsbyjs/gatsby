@@ -61,7 +61,7 @@ I was skeptical at first: would I have to parse large amounts of JSON to get the
 data I needed? I have never even interacted with the WordPress REST API, how
 will I query it?
 
-The answer... [GraphQL](http://graphql.org/). Gatsby ships with it and through
+The answer... [GraphQL](https://graphql.org/). Gatsby ships with it and through
 an npm install of a
 [gatsby-source plugin](/docs/plugins/) of your choice
 and a tiny bit of a config, you can start querying in no time. I was amazed with

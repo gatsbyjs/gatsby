@@ -114,14 +114,14 @@ as we do and find it useful for all your projects.
 When starting out with GraphQL, we recommend the following two tutorials:
 
 - https://www.howtographql.com/
-- http://graphql.org/learn/
+- https://graphql.org/learn/
 
 [The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
 
 ## How do GraphQL and Gatsby work together?
 
 One of the great things about GraphQL is how flexible it is. People use GraphQL
-with [many different programming languages](http://graphql.org/code/) and for web and native apps.
+with [many different programming languages](https://graphql.org/code/) and for web and native apps.
 
 Most people run GraphQL on a server to respond live to requests for
 data from clients. You define a schema (a schema is a formal way of describing
@@ -232,7 +232,7 @@ See also the following blog posts:
 
 ### Fragments
 
-Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
+Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](https://graphql.org/learn/queries/#fragments).
 
 If you wish to define your own fragments for use in your application, you can use named exports to export them in any JavaScript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 
@@ -367,7 +367,7 @@ export const query = graphql`
 
 ### Getting started with GraphQL
 
-- http://graphql.org/learn/
+- https://graphql.org/learn/
 - https://www.howtographql.com/
 - https://reactjs.org/blog/2015/05/01/graphql-introduction.html
 - https://services.github.com/on-demand/graphql/
