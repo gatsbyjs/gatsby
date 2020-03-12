@@ -15,7 +15,7 @@ import {
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 const featuredSitesCard = {
   display: `flex`,

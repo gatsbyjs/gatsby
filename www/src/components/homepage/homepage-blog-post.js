@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import Avatar from "../avatar"
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"

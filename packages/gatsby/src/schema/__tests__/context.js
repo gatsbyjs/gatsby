@@ -100,7 +100,7 @@ describe(`Resolver context`, () => {
       expect(results).toEqual(expected)
     })
 
-    it(`custom resolver context is avalable in custom field extension`, async () => {
+    it(`custom resolver context is available in custom field extension`, async () => {
       dispatch(
         createResolverContext({
           hello(planet) {

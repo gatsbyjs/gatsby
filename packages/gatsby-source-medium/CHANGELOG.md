@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.20...gatsby-source-medium@2.1.21) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-medium
+
 ## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.19...gatsby-source-medium@2.1.20) (2020-03-02)
 
 ### Bug Fixes

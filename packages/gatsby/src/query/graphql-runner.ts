@@ -10,7 +10,7 @@ import {
 } from "graphql"
 import { debounce } from "lodash"
 import nodeStore from "../db/nodes"
-import createPageDependency from "../redux/actions/add-page-dependency"
+import { createPageDependency } from "../redux/actions/add-page-dependency"
 
 import withResolverContext from "../schema/context"
 import { LocalNodeModel } from "../schema/node-model"

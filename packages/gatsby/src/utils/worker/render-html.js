@@ -1,7 +1,7 @@
 const fs = require(`fs-extra`)
 const Promise = require(`bluebird`)
 const { join } = require(`path`)
-const { getPageHtmlFilePath } = require(`../../utils/page-html`)
+import { getPageHtmlFilePath } from "../../utils/page-html"
 
 export function renderHTML({ htmlComponentRendererPath, paths, envVars }) {
   // This is being executed in child process, so we need to set some vars
