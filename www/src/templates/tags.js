@@ -3,8 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
-import TagsIcon from "react-icons/lib/ti/tags"
-import TiArrowRight from "react-icons/lib/ti/arrow-right"
+import { TiTags as TagsIcon, TiArrowRight } from "react-icons/ti"
 
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Button from "../components/button"
@@ -26,7 +25,7 @@ const preferSpacedTag = tags => {
 
 const Tags = ({ pageContext, data }) => {
   const { tags } = pageContext
-  const { edges, totalCount } = data.allMdx
+  const { nodes, totalCount } = data.allMdx
   const tagHeader = `${totalCount} post${
     totalCount === 1 ? `` : `s`
   } tagged with "${preferSpacedTag(tags)}"`
@@ -64,7 +63,7 @@ const Tags = ({ pageContext, data }) => {
           </Button>
         </React.Fragment>
       ) : null}
-      {edges.map(({ node }) => (
+      {nodes.map(node => (
         <BlogPostPreviewItem
           post={node}
           key={node.fields.slug}
@@ -90,10 +89,8 @@ export const pageQuery = graphql`
       }
     ) {
       totalCount
-      edges {
-        node {
-          ...BlogPostPreview_item
-        }
+      nodes {
+        ...BlogPostPreview_item
       }
     }
   }

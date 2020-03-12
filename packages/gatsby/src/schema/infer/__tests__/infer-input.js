@@ -7,7 +7,7 @@ const { LocalNodeModel } = require(`../../node-model`)
 const nodeStore = require(`../../../db/nodes`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
-const createPageDependency = require(`../../../redux/actions/add-page-dependency`)
+import { createPageDependency } from "../../../redux/actions/add-page-dependency"
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {

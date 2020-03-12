@@ -6,8 +6,8 @@ disableTableOfContents: true
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 <HorizontalNavList
-items={"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")}
-slug={props.slug}
+  items={"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")}
+  slug={props.slug}
 />
 
 ## A
@@ -206,7 +206,7 @@ Linting is the process of running a program that will analyze code for potential
 
 ## M
 
-### MDX
+### [MDX](/docs/glossary/mdx/)
 
 Extends [Markdown](#markdown) to support [React](#react) [components](#component) within your content.
 
@@ -347,6 +347,10 @@ A UI refers to a User Interface. In the field of human-computer interaction, a U
 ### [webpack](/docs/glossary/webpack)
 
 A [JavaScript](#javascript) application that Gatsby uses to bundle your website's code up. This happens automatically on [build](#build).
+
+### [WPGraphQL](/docs/glossary/wpgraphql)
+
+A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's another way that you can use WordPress as a content source for Gatsby.
 
 ## X
 

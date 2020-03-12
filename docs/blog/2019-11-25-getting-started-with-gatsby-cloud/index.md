@@ -8,6 +8,7 @@ tags: ["ux", "cloud", "cms"]
 When you go to [our Quickstart page](https://www.gatsbyjs.com/get-started/) to try Gatsby Cloud, you’ll probably find yourself in one of two situations.
 
 Situation 1: you already have a Gatsby project
+
 Situation 2: you don’t have a Gatsby project yet
 
 ![A screenshot of the current Get Started page on gatsbyjs.com](final-state.png)
@@ -58,7 +59,7 @@ Choosing a CMS was confusing for four of the eight testers. None of them had an 
 
 Users found value in some aspects of our early onboarding designs and we wanted those good things to persist and grow, if possible.
 
-For example, choosing a starter was fun, and 3 of the users wanted more details about the starters. On starter cards, we added a link to their github repos or /starters/ page on .org
+For example, choosing a starter was fun, and 3 of the users wanted more details about the starters. On starter cards, we added a link to their github repos or /starters/ page on .org.
 
 ### Product, design, and engineering are doing something about the feedback
 

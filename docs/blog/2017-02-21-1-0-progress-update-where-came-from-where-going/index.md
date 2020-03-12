@@ -57,7 +57,7 @@ including blogs, marketing sites, documentation sites, and e-commerce.
 It wraps three of the most popular web app tools into a cohesive website
 framework:
 
-- [React](https://facebook.github.io/react/) from Facebook for building UIs
+- [React](https://reactjs.org/) from Facebook for building UIs
 - [Webpack](https://webpack.js.org/) for bundling JavaScript and CSS
 - [GraphQL](http://graphql.org/) from Facebook for declarative data queries
 
