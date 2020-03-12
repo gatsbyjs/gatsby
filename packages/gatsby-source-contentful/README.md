@@ -168,6 +168,14 @@ Using the ID is a much more stable property to work with as it will change less 
 
 If you are confident your Content Types will have natural-language IDs (e.g. `blogPost`), then you should set this option to `false`. If you are unable to ensure this, then you should leave this option set to `true` (the default).
 
+**`pageLimit`** [number][optional] [default: `100`]
+
+Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g `50`.
+
+**`richText.resolveFieldLocales`** [boolean][optional] [default: `false`]
+
+If you want to resolve the locales in fields of assets and entries that are referenced by rich text (e.g., via embedded entries or entry hyperlinks), set this to `true`. Otherwise, fields of referenced assets or entries will be objects keyed by locale.
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
@@ -245,22 +253,41 @@ You might query for a **single** node inside a component in your `src/components
 
 #### A note about LongText fields
 
-If you include fields with a `LongText` type in your Contentful `ContentType`, their returned value will be **an object not a string**. This is because Contentful LongText fields are Markdown by default. In order to handle the Markdown content properly, this field type is created as a child node so Gatsby can transform it to HTML.
-
-`ShortText` type fields will be returned as strings.
-
-Querying a **single** `CaseStudy` node with the ShortText properties `title` and `subtitle` and LongText property `body` requires formatting the LongText fields as an object with the _child node containing the exact same field name as the parent_:
+On Contentful, a "Long text" field uses Markdown by default. The field is exposed as an object, while the raw Markdown is exposed as a child node.
 
 ```graphql
 {
   contentfulCaseStudy {
-    title
-    subtitle
     body {
       body
     }
   }
 }
+```
+
+Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a childMarkdownRemark on the "Long text" field and expose the generated html as a child node:
+
+```graphql
+{
+  contentfulCaseStudy {
+    body {
+      childMarkdownRemark {
+        html
+      }
+    }
+  }
+}
+```
+
+You can then insert the returned HTML inline in your JSX:
+
+```jsx
+<div
+  className="body"
+  dangerouslySetInnerHTML={{
+    __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
+  }}
+/>
 ```
 
 #### Duplicated entries
@@ -364,6 +391,32 @@ documentToReactComponents(node.bodyRichText.json, options)
 ```
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
+
+## Sourcing From Multiple Contentful Spaces
+
+To source from multiple Contentful environments/spaces, add another configuration for `gatsby-source-contentful` in `gatsby-config.js`:
+
+```
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_second_space_id`,
+        accessToken: process.env.SECONDARY_CONTENTFUL_ACCESS_TOKEN,
+      },
+    }
+  ],
+}
+```
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://gatsby.dev/env-vars

@@ -15,10 +15,10 @@ lives in the Gatsby monorepo. See the instructions at the end for how to start
 playing with the code!
 
 <div>
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/gatsbygram.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
+  <video controls="controls" autoplay="true" loop="true">
+    <source type="video/mp4" src="/gatsbygram.mp4" />
+    <p>Your browser does not support the video element.</p>
+  </video>
 </div>
 
 ## What is Gatsby
@@ -151,7 +151,7 @@ the site's
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
 const slug = require(`slug`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have

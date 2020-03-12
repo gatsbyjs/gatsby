@@ -5,7 +5,6 @@ import chokidar from "chokidar"
 
 import webpackHotMiddleware from "webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
-import { PackageJson } from "gatsby"
 import glob from "glob"
 import express from "express"
 import got from "got"
@@ -17,9 +16,9 @@ import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
 import bootstrap from "../bootstrap"
-import { store, emitter } from "../redux"
+import { store } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
-import buildHTML from "./build-html"
+import { buildHTML } from "./build-html"
 import { withBasePath } from "../utils/path"
 import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
@@ -28,13 +27,13 @@ import chalk from "chalk"
 import address from "address"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
-import WorkerPool from "../utils/worker/pool"
+import * as WorkerPool from "../utils/worker/pool"
 import http from "http"
 import https from "https"
 
 import bootstrapSchemaHotReloader from "../bootstrap/schema-hot-reloader"
 import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
-import developStatic from "./develop-static"
+import { developStatic } from "./develop-static"
 import withResolverContext from "../schema/context"
 import sourceNodes from "../utils/source-nodes"
 import createSchemaCustomization from "../utils/create-schema-customization"
@@ -44,7 +43,7 @@ import { slash } from "gatsby-core-utils"
 import { initTracer } from "../utils/tracer"
 import apiRunnerNode from "../utils/api-runner-node"
 import db from "../db"
-import detectPortInUseAndPrompt from "../utils/detect-port-in-use-and-prompt"
+import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
 import queryUtil from "../query"
 import queryWatcher from "../query/query-watcher"
@@ -53,27 +52,16 @@ import {
   reportWebpackWarnings,
   structureWebpackErrors,
 } from "../utils/webpack-error-utils"
+import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
+import {
+  userPassesFeedbackRequestHeuristic,
+  showFeedbackRequest,
+} from "../utils/feedback"
 
-interface ICert {
-  keyPath: string
-  certPath: string
-  key: string
-  cert: string
-}
+import { BuildHTMLStage, IProgram } from "./types"
 
-interface IProgram {
-  useYarn: boolean
-  open: boolean
-  openTracingConfigFile: string
-  port: number
-  host: string
-  [`cert-file`]?: string
-  [`key-file`]?: string
-  directory: string
-  https?: boolean
-  sitePackageJson: PackageJson
-  ssl?: ICert
-}
+// checks if a string is a valid ip
+const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 // const isInteractive = process.stdout.isTTY
 
@@ -87,18 +75,6 @@ setTimeout(() => {
 onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
 })
-
-const waitJobsFinished = (): Promise<void> =>
-  new Promise(resolve => {
-    const onEndJob = (): void => {
-      if (store.getState().jobs.active.length === 0) {
-        resolve()
-        emitter.off(`END_JOB`, onEndJob)
-      }
-    }
-    emitter.on(`END_JOB`, onEndJob)
-    onEndJob()
-  })
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -116,9 +92,9 @@ async function startServer(program: IProgram): Promise<IServer> {
   const workerPool = WorkerPool.create()
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      await buildHTML.buildPages({
+      await buildHTML({
         program,
-        stage: `develop-html`,
+        stage: BuildHTMLStage.DevelopHTML,
         pagePaths: [`/`],
         workerPool,
         activity,
@@ -285,34 +261,35 @@ async function startServer(program: IProgram): Promise<IServer> {
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
-    const { prefix, url } = proxy
-    app.use(`${prefix}/*`, (req, res) => {
-      const proxiedUrl = url + req.originalUrl
-      const {
-        // remove `host` from copied headers
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        headers: { host, ...headers },
-        method,
-      } = req
-      req
-        .pipe(
-          got
-            .stream(proxiedUrl, { headers, method, decompress: false })
-            .on(`response`, response =>
-              res.writeHead(response.statusCode || 200, response.headers)
-            )
-            .on(`error`, (err, _, response) => {
-              if (response) {
-                res.writeHead(response.statusCode || 400, response.headers)
-              } else {
-                const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
+    proxy.forEach(({ prefix, url }) => {
+      app.use(`${prefix}/*`, (req, res) => {
+        const proxiedUrl = url + req.originalUrl
+        const {
+          // remove `host` from copied headers
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          headers: { host, ...headers },
+          method,
+        } = req
+        req
+          .pipe(
+            got
+              .stream(proxiedUrl, { headers, method, decompress: false })
+              .on(`response`, response =>
+                res.writeHead(response.statusCode || 200, response.headers)
+              )
+              .on(`error`, (err, _, response) => {
+                if (response) {
+                  res.writeHead(response.statusCode || 400, response.headers)
+                } else {
+                  const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
 
-                report.error(message, err)
-                res.sendStatus(500)
-              }
-            })
-        )
-        .pipe(res)
+                  report.error(message, err)
+                  res.sendStatus(500)
+                }
+              })
+          )
+          .pipe(res)
+      })
     })
   }
 
@@ -362,6 +339,28 @@ async function startServer(program: IProgram): Promise<IServer> {
 }
 
 module.exports = async (program: IProgram): Promise<void> => {
+  // We want to prompt the feedback request when users quit develop
+  // assuming they pass the heuristic check to know they are a user
+  // we want to request feedback from, and we're not annoying them.
+  process.on(
+    `SIGINT`,
+    async (): Promise<void> => {
+      if (await userPassesFeedbackRequestHeuristic()) {
+        showFeedbackRequest()
+      }
+      process.exit(0)
+    }
+  )
+
+  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
+    report.panic(
+      `The flag ${chalk.yellow(
+        `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
+      )} is not available with ${chalk.cyan(
+        `gatsby develop`
+      )}, please retry using ${chalk.cyan(`gatsby build`)}`
+    )
+  }
   initTracer(program.openTracingConfigFile)
   report.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
@@ -389,16 +388,21 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   // Check if https is enabled, then create or get SSL cert.
-  // Certs are named after `name` inside the project's package.json.
-  // Scoped names are converted from @npm/package-name to npm--package-name.
-  // If the name is unavailable, generate one using the current working dir.
+  // Certs are named 'devcert' and issued to the host.
   if (program.https) {
-    const name = program.sitePackageJson.name
-      ? program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`)
-      : process.cwd().replace(/[^A-Za-z0-9]/g, `-`)
+    const sslHost =
+      program.host === `0.0.0.0` || program.host === `::`
+        ? `localhost`
+        : program.host
+
+    if (REGEX_IP.test(sslHost)) {
+      report.panic(
+        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`
+      )
+    }
 
     program.ssl = await getSslCert({
-      name,
+      name: sslHost,
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
@@ -419,8 +423,9 @@ module.exports = async (program: IProgram): Promise<void> => {
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
+  await db.saveState()
 
-  await waitJobsFinished()
+  await waitUntilAllJobsComplete()
   requiresWriter.startListener()
   db.startAutosave()
   queryUtil.startListeningToDevelopQueue()
@@ -456,9 +461,9 @@ module.exports = async (program: IProgram): Promise<void> => {
       })
 
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let prettyHost = host,
-      lanUrlForConfig,
-      lanUrlForTerminal
+    let prettyHost = host
+    let lanUrlForConfig
+    let lanUrlForTerminal
     if (isUnspecifiedHost) {
       prettyHost = `localhost`
 

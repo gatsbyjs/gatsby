@@ -50,7 +50,7 @@ plugins: [`gatsby-plugin-postcss`],
 
 3. Configure PostCSS to use Tailwind
 
-Create a postcss.config.js in your project's root folder with the following contents.
+Create a `postcss.config.js` in your project's root folder with the following contents.
 
 ```javascript:title=postcss.config.js
 module.exports = () => ({
@@ -70,12 +70,28 @@ These steps assume you have a CSS-in-JS library already installed, and the examp
 
 1. Install Tailwind Babel Macro
 
-**Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a compatible beta is available at `tailwind.macro@next`. Feel free to either use the beta or revert to Tailwind 0.7.4.
+**Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a new forked project can be found at `twin.macro` that supports Tailwindcss v1.2 classes. It's currently in pre-release so not all plugins are supported at the time of writing. Alternatively, you can revert to Tailwind 0.7.4.
 
-**Option 1**: Install `tailwind.macro@next` and use Tailwind 1.0.0+
+**Option 1**: Install `twin.macro` and use Tailwind 1.2.0+
+
+1. Install Twin and Emotion
 
 ```shell
-npm install --save tailwind.macro@next
+npm install -D twin.macro @emotion/core @emotion/styled gatsby-plugin-emotion
+```
+
+2. Import the Tailwind base styles
+
+```javascript:title=gatsby-browser.js
+import "tailwindcss/dist/base.css"
+```
+
+3. Enable the Gatsby emotion plugin
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-emotion`],
+}
 ```
 
 **Option 2**: Install stable `tailwind.macro` and use Tailwind 0.7.4
@@ -89,7 +105,7 @@ npm install tailwindcss@0.7.4
 npm install tailwind.macro
 ```
 
-2. Use the Babel Macro (tailwind.macro) in your styled component
+2. Use the Babel Macro (`tailwind.macro`) in your styled component
 
 ```javascript
 import styled from "styled-components"

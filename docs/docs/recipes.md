@@ -53,6 +53,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - [Adding a Local Font](/docs/recipes/styling-css#adding-a-local-font)
 - [Using Emotion](/docs/recipes/styling-css#using-emotion)
 - [Using Google Fonts](/docs/recipes/styling-css#using-google-fonts)
+- [Using Font Awesome](/docs/recipes/styling-css#using-fontawesome)
 
 ## [3. Working with starters](/docs/recipes/working-with-starters)
 
@@ -64,6 +65,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 A Gatsby theme lets you centralize the look-and-feel of your site. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
+- [Creating a new site using a theme](/docs/recipes/working-with-themes#creating-a-new-site-using-a-theme)
 - [Creating a new site using a theme starter](/docs/recipes/working-with-themes#creating-a-new-site-using-a-theme-starter)
 - [Building a new theme](/docs/recipes/working-with-themes#building-a-new-theme)
 
@@ -106,6 +108,7 @@ Access images as static resources, or automate the process of optimizing them th
 Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more).
 
 - [Transforming Markdown into HTML](/docs/recipes/transforming-data#transforming-markdown-into-html)
+- [Transforming images into grayscale using GraphQL](/docs/recipes/transforming-data#transforming-images-into-grayscale-using-graphql)
 
 ## [9. Deploying your site](/docs/recipes/deploying-your-site)
 
@@ -114,3 +117,4 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 - [Preparing for deployment](/docs/recipes/deploying-your-site#preparing-for-deployment)
 - [Deploying to Netlify](/docs/recipes/deploying-your-site#deploying-to-netlify)
 - [Deploying to ZEIT Now](/docs/recipes/deploying-your-site#deploying-to-zeit-now)
+- [Deploying to Cloudflare Workers](/docs/recipes/deploying-your-site#deploying-to-cloudflare-workers)

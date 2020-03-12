@@ -11,7 +11,7 @@ const Promise = require(`bluebird`)
 const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const getBrowserslist = require(`../utils/browserslist`)
+import { getBrowsersList } from "../utils/browserslist"
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -19,6 +19,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
+const removeStaleJobs = require(`./remove-stale-jobs`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -72,7 +73,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   const program = {
     ...args,
-    browserslist: getBrowserslist(directory),
+    browserslist: getBrowsersList(directory),
     // Fix program directory path for windows env.
     directory,
   }
@@ -160,6 +161,9 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
+  // run stale jobs
+  store.dispatch(removeStaleJobs(store.getState()))
+
   activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
@@ -186,7 +190,10 @@ module.exports = async (args: BootstrapArgs) => {
 
   // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
-  if (process.env.NODE_ENV === `production`) {
+  if (
+    !process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
+    process.env.NODE_ENV === `production`
+  ) {
     activity = report.activityTimer(
       `delete html and css files from previous builds`,
       {
@@ -217,6 +224,7 @@ module.exports = async (args: BootstrapArgs) => {
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
   const hashes = await Promise.all([
+    !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
     md5File(`package.json`),
     Promise.resolve(
       md5File(`${program.directory}/gatsby-config.js`).catch(() => {})
@@ -229,7 +237,7 @@ module.exports = async (args: BootstrapArgs) => {
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  let state = store.getState()
+  const state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
