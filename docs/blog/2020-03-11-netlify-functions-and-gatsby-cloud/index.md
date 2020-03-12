@@ -1,6 +1,6 @@
 ---
 title: "Using Netlify Functions with Gatsby Cloud"
-date: 2020-03-11
+date: 2020-03-16
 author: "Josh Comeau"
 excerpt: "An article detailing how to use Netlify Functions and Gatsby Cloud together, to tremendous effect!"
 tags: ["netlify", "serverless", "lambda", "gatsby cloud"]
