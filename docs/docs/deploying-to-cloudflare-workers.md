@@ -81,11 +81,11 @@ wrangler publish
 
 Now your site is available at gatsby-project.subdomain.workers.dev!
 
-5. CI with Github Actions
+5. CI with GitHub Actions
 
-Use wrangler's Github action [plugin](https://github.com/cloudflare/wrangler-action) to automatically deploy to Workers every time you push to master.
+Use wrangler's GitHub action [plugin](https://github.com/cloudflare/wrangler-action) to automatically deploy to Workers every time you push to master.
 
-Once Github Actions is enabled on your repo, add a file to your project's root called `.github/workflows/main.yml` with the contents:
+Once GitHub Actions is enabled on your repo, add a file to your project's root called `.github/workflows/main.yml` with the contents:
 
 ```
 name: Deploy production site
@@ -116,7 +116,7 @@ jobs:
         environment: "production"
 ```
 
-Set up `CF_API_TOKEN` in Github secrets with appropriate values from [Quick Start](https://developers.cloudflare.com/workers/quickstart/#configure).
+Set up `CF_API_TOKEN` in GitHub secrets with appropriate values from [Quick Start](https://developers.cloudflare.com/workers/quickstart/#configure).
 
 ## Additional resources
 
