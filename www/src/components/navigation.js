@@ -199,10 +199,10 @@ const Navigation = ({ pathname }) => {
             <NavItem linkTo="/tutorial/">Tutorials</NavItem>
             <NavItem linkTo="/plugins/">Plugins</NavItem>
             <NavItem linkTo="/features/">Features</NavItem>
+            <NavItem linkTo="/starters/">Starters</NavItem>
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
             <NavItem linkTo="/contributing/">Contributing</NavItem>
-            {/* <NavItem linkTo="/starters/">Starters</NavItem> */}
           </ul>
         </nav>
         <SearchForm key="SearchForm" offsetVertical={navItemTopOffset} />
