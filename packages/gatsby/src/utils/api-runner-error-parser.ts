@@ -25,7 +25,7 @@ const errorParser = ({ err }: { err: unknown }): IMatch => {
   if (err instanceof Error) {
     errorMessage = err.message
   }
-  if (typeof err === 'string') {
+  if (typeof err === `string`) {
     errorMessage = err
   }
 
@@ -43,7 +43,7 @@ const errorParser = ({ err }: { err: unknown }): IMatch => {
   if (!structured) {
     return {
       id: `11321`,
-      context: { sourceMessage: errorMessage || '' },
+      context: { sourceMessage: errorMessage || `` },
       error: err instanceof Error ? err : undefined,
     }
   }
