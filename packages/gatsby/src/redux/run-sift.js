@@ -1,6 +1,5 @@
 // @flow
 const { default: sift } = require(`sift`)
-const _ = require(`lodash`)
 const { prepareRegex } = require(`../utils/prepare-regex`)
 const { makeRe } = require(`micromatch`)
 import { getValueAt } from "../utils/get-value-at"
@@ -258,8 +257,8 @@ exports.filterWithoutSift = filterWithoutSift
  *   will be limited to 1 if `firstOnly` is true
  */
 const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
-  const nodes = _.flatten(
-    nodeTypeNames.map(typeName => addResolvedNodes(typeName))
+  const nodes = [].concat(
+    ...nodeTypeNames.map(typeName => addResolvedNodes(typeName))
   )
 
   return _runSiftOnNodes(
