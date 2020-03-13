@@ -17,9 +17,9 @@
     "babel-preset-gatsby-package": "^0.2.17"
   },
   "dependencies": {
-    "fast-glob": "^3.1.1",
+    "fast-glob": "^3.2.2",
     "node-fetch": "^2.6.0",
-    "uuid": "^3.3.3"
+    "uuid": "^3.4.0"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

@@ -7,8 +7,8 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.6",
-    "@contentful/rich-text-types": "^13.1.0",
+    "@babel/runtime": "^7.8.7",
+    "@contentful/rich-text-types": "^13.4.0",
     "@hapi/joi": "^15.1.1",
     "axios": "^0.19.0",
     "base64-img": "^1.0.4",
@@ -26,8 +26,8 @@
     "qs": "^6.9.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
     "babel-preset-gatsby-package": "^0.2.17",
     "cross-env": "^5.2.1"
   },

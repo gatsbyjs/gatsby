@@ -30,12 +30,12 @@
   ],
   "dependencies": {
     "ci-info": "2.0.0",
-    "configstore": "^5.0.0",
+    "configstore": "^5.0.1",
     "node-object-hash": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
     "@types/ci-info": "2.0.0",
     "babel-preset-gatsby-package": "^0.2.17",
     "cross-env": "^5.2.1"
