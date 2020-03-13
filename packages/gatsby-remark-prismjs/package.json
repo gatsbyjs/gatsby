@@ -16,7 +16,7 @@
     "@babel/core": "^7.7.5",
     "babel-preset-gatsby-package": "^0.2.17",
     "cross-env": "^5.2.1",
-    "prismjs": "^1.17.1",
+    "prismjs": "^1.19.0",
     "remark": "^9.0.0"
   },
   "peerDependencies": {
