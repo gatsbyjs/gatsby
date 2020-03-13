@@ -220,7 +220,7 @@ export interface ICreatePageDependencyAction {
   plugin: string
   payload: {
     path: string
-    nodeId: string
+    nodeId?: string
     connection?: string
   }
 }
