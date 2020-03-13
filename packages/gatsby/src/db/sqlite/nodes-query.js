@@ -18,6 +18,8 @@ const {
   Λ,
 } = require(`./index.js`)
 const {
+  NAME_TABLE,
+
   getdb,
   isArrayField,
   isObjectField,
@@ -456,7 +458,7 @@ async function runQuery(query, ...args) {
   let db = getdb()
   try {
     let query = `
-        SELECT \`${MAIN_NODE}\` FROM nodes
+        SELECT \`${MAIN_NODE}\` FROM \`${NAME_TABLE}\`
       WHERE 1
         ${
           queryCondGroups.length

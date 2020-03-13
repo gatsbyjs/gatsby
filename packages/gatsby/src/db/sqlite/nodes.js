@@ -21,6 +21,13 @@ const {
 } = require(`./index.js`)
 const { makeRe } = require(`micromatch`)
 
+// TODO: config?
+const NAME_DB =
+  process.env.GATSBY_SQLITE_DB_NAME || process.env.NODE_ENV === `production`
+    ? `gatsby_prod_default`
+    : `gatsby_dev_default`
+const NAME_TABLE = process.env.GATSBY_SQLITE_TABLE_NAME || `nodes`
+
 let db
 
 let INSERT_cache_key
@@ -37,7 +44,7 @@ let knownObjectFields = new Set() // Lower case! These may always also be null
 function getdb() {
   if (db) return db
 
-  db = require(`better-sqlite3`)(`clitest`, { verbose: dbLog })
+  db = require(`better-sqlite3`)(NAME_DB, { verbose: dbLog })
     .function(`regexp`, { deterministic: true }, function(r, qv) {
       // This makes `where a regexp b` work. But it's a user function so could be anything really
       // Note: we encode regexes as strings, meaning it'll be prefixed by a
@@ -79,12 +86,12 @@ function getdb() {
     })
 
   // https://old.sqliteonline.com/
-  db.prepare(`DROP TABLE IF EXISTS nodes`).run()
+  db.prepare(`DROP TABLE IF EXISTS \`${NAME_TABLE}\``).run()
   // Room for improvement. For now we add fields on the fly, as TEXT
   knownFields = [`id`, MAIN_NODE, `children`, `internal` + Λ + `type`] // Ordered because the prepared statement is ordered
   db.prepare(
     `
-      CREATE TABLE IF NOT EXISTS nodes
+      CREATE TABLE IF NOT EXISTS \`${NAME_TABLE}\`
         (
           \`id\` TEXT PRIMARY KEY UNIQUE NOT NULL,
           \`${MAIN_NODE}\` TEXT NOT NULL,
@@ -97,16 +104,16 @@ function getdb() {
   INSERT_cache_key = ``
   INSERT = updatePreparedInsert(knownFields)
   SELECT_BY_ID = db.prepare(`
-    SELECT \`${MAIN_NODE}\` FROM nodes WHERE id = ? LIMIT 1
+    SELECT \`${MAIN_NODE}\` FROM \`${NAME_TABLE}\` WHERE id = ? LIMIT 1
   `)
   SELECT_BY_TYPE = db.prepare(`
-    SELECT \`${MAIN_NODE}\` FROM nodes WHERE \`internal${Λ}type\` = ?
+    SELECT \`${MAIN_NODE}\` FROM \`${NAME_TABLE}\` WHERE \`internal${Λ}type\` = ?
   `)
   SELECT_ALL = db.prepare(`
-    SELECT \`${MAIN_NODE}\` FROM nodes
+    SELECT \`${MAIN_NODE}\` FROM \`${NAME_TABLE}\`
   `)
   UPDATE_CHILDREN = db.prepare(`
-    UPDATE nodes
+    UPDATE \`${NAME_TABLE}\`
     SET
       \`${MAIN_NODE}\` = ?,
       \`children\` = ?
@@ -134,7 +141,7 @@ function updatePreparedInsert(fieldNames) {
   // log('Updating prepared INSERT for', fieldNames.length, 'fields, out of', knownFields.length, 'known fields')
   INSERT_cache_key = cols
   return getdb().prepare(`
-    INSERT INTO nodes (${cols}) VALUES (${fieldNames
+    INSERT INTO \`${NAME_TABLE}\` (${cols}) VALUES (${fieldNames
     .map(() => `?`)
     .join(`, `)});
   `)
@@ -252,7 +259,7 @@ function addFieldToTableIfNew(key) {
 
   // The name can't be prepared (it seems?)
   getdb()
-    .prepare(`ALTER TABLE nodes ADD COLUMN \`${k}\` TEXT;`)
+    .prepare(`ALTER TABLE \`${NAME_TABLE}\` ADD COLUMN \`${k}\` TEXT;`)
     .run()
   knownFields.push(k)
 }
@@ -334,7 +341,7 @@ function reducer(state = new Map(), action) {
 
     case `DELETE_CACHE`:
       getdb()
-        .prepare(`DELETE FROM nodes;`)
+        .prepare(`DELETE FROM \`${NAME_TABLE}\`;`)
         .run() // This is TRUNCATE TABLE
       return null
 
@@ -414,7 +421,7 @@ function reducer(state = new Map(), action) {
       getdb()
         .prepare(
           `
-            UPDATE nodes
+            UPDATE \`${NAME_TABLE}\`
             SET
               \`${MAIN_NODE}\` = ?,
               \`${qualifiedAddedField}\` = ?
@@ -486,6 +493,8 @@ function ensureFieldIndexes(...args) {
 }
 
 module.exports = {
+  NAME_TABLE,
+
   getNodeTypeCollection,
 
   getdb,

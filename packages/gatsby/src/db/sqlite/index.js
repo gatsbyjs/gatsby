@@ -22,7 +22,10 @@ const ARRAY_PREFIX = `$array$` // Field prefix for array field names
 const OBJECT_PREFIX = `` // Field prefix for object field names
 
 const SILENT_DB = false
-const dbLog = (...args) => SILENT_DB || console.debug(...args)
+const dbLog = (...args) =>
+  (process.env.GATSBY_SQLITE_VERBOSE
+    ? process.env.GATSBY_SQLITE_VERBOSE === `1`
+    : !SILENT_DB) && console.debug(...args)
 
 async function start(...args) {
   console.lg(`sqlite/index/start`, args)
