@@ -1,12 +1,12 @@
 import Joi from "@hapi/joi"
 import stackTrace from "stack-trace"
 import errorSchema from "./error-schema"
-import { errorMap, defaultError, IErrorMapEntry } from "./error-map"
+import { errorMap, defaultError, IErrorMapEntry, ErrorId } from "./error-map"
 import { sanitizeStructuredStackTrace } from "../reporter/errors"
 
 interface IConstructError {
   details: {
-    id?: keyof typeof errorMap
+    id?: ErrorId
     context?: Record<string, string>
     error?: string
     [key: string]: unknown

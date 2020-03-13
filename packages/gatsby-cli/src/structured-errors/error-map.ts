@@ -28,7 +28,7 @@ const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
     context.plugin ? `\nPlugin: ${context.plugin}` : ``
   }`
 
-export const errorMap = {
+const errors = {
   "": {
     text: (context): string => {
       const sourceMessage = context.sourceMessage
@@ -430,7 +430,7 @@ export const errorMap = {
       ]
         .filter(Boolean)
         .join(`\n`),
-    level: `ERROR`,
+    level: Level.ERROR,
   },
   // node object didn't pass validation
   "11467": {
@@ -485,6 +485,10 @@ export const errorMap = {
     docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
   },
 }
+
+export type ErrorId = keyof typeof errors
+
+export const errorMap: Record<ErrorId, IErrorMapEntry> = errors
 
 export const defaultError = errorMap[``]
 
