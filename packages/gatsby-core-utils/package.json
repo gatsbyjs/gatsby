@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore **/__tests__ --ignore **/__mocks__ --extensions \".ts\"",
-    "typegen": "yarn tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "watch": "babel -w src --out-dir dist/ --ignore **/__tests__ --extensions \".ts\""
   },
