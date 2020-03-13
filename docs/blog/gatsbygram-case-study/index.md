@@ -15,10 +15,10 @@ lives in the Gatsby monorepo. See the instructions at the end for how to start
 playing with the code!
 
 <div>
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/gatsbygram.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
+  <video controls="controls" autoplay="true" loop="true">
+    <source type="video/mp4" src="/gatsbygram.mp4" />
+    <p>Your browser does not support the video element.</p>
+  </video>
 </div>
 
 ## What is Gatsby
@@ -223,7 +223,7 @@ pages.
 
 As you can see above, when defining a page, we can set "context" data, which is
 passed as a `prop` to the component and as a
-[GraphQL variable](http://graphql.org/learn/queries/#variables) in our `GraphQL`
+[GraphQL variable](https://graphql.org/learn/queries/#variables) in our `GraphQL`
 query. For the
 "[post template](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/templates/post-page.js)",
 we pass the id to the post. Below we use that id to query our `GraphQL` schema

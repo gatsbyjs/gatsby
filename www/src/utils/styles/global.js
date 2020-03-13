@@ -47,6 +47,11 @@ const prismToken = t => {
     ".token.entity": {
       cursor: `help`,
     },
+    ".token-line > span.token:empty::after": {
+      minHeight: `1em`,
+      display: `inline-block`,
+      content: `""`,
+    },
     ".namespace": {
       opacity: 0.7,
     },

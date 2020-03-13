@@ -8,7 +8,7 @@ import createCli from "./create-cli"
 import report from "./reporter"
 import pkg from "../package.json"
 import updateNotifier from "update-notifier"
-import ensureWindowsDriveLetterIsUppercase from "./util/ensure-windows-drive-letter-is-uppercase"
+import { ensureWindowsDriveLetterIsUppercase } from "./util/ensure-windows-drive-letter-is-uppercase"
 
 const useJsonLogger = process.argv.slice(2).some(arg => arg.includes(`json`))
 
@@ -39,7 +39,7 @@ if (!semver.satisfies(process.version, `>=${MIN_NODE_VERSION}`)) {
 if (!semver.satisfies(process.version, `>=${NEXT_MIN_NODE_VERSION}`)) {
   report.warn(
     report.stripIndent(`
-      Node.js ${process.version} has reached End of Life status on 31 December, 2019. 
+      Node.js ${process.version} has reached End of Life status on 31 December, 2019.
       Gatsby will only actively support ${NEXT_MIN_NODE_VERSION} or higher and drop support for Node 8 soon.
       Please upgrade Node.js to a currently active LTS release: https://gatsby.dev/upgrading-node-js
     `)
