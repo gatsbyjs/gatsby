@@ -392,7 +392,11 @@ class Image extends React.Component {
             imgLoaded: imageInCache,
             // `currentSrc` should be a string, but can be `undefined` in IE,
             // !! operator validates the value is not undefined/null/""
-            imgCached: !!this.imageRef.current.currentSrc,
+            // for lazyloaded components this might be null
+            // TODO fix imgCached behaviour as it's now false when it's lazyloaded
+            imgCached: !!(
+              this.imageRef.current && this.imageRef.current.currentSrc
+            ),
           })
         )
       })
