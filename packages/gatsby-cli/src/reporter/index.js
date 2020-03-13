@@ -85,7 +85,7 @@ const prematureEnd = () => {
 
 signalExit((code, signal) => {
   if (code !== 0 && signal !== `SIGINT` && signal !== `SIGTERM`) prematureEnd()
-  else interuptActivities()
+  else interruptActivities()
 })
 
 /**
