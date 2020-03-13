@@ -5545,3 +5545,19 @@
     - Robots.txt
     - Sitemap
     - PWA
+- url: https://gatsby-graphcms-ecommerce-starter.netlify.com
+  repo: https://github.com/GraphCMS/gatsby-graphcms-ecommerce-starter
+  description: Swag store built with GraphCMS, Stripe, Gatsby, Postmark and Printful.
+  tags:
+    - eCommerce
+    - i18n
+    - Netlify
+    - Styling:Tailwind
+    - CMS:Other
+    - Stripe
+  features:
+    - Dropshipping by Printful
+    - Printful inventory enhanced by GraphCMS
+    - Custom GraphQL API for handling checkout and payment
+    - Postmark for order notifications
+    - Strong Customer Authentication
