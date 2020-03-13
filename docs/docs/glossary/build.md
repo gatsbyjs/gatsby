@@ -5,7 +5,7 @@ disableTableOfContents: true
 
 Learn what _build_ means and how to set up a build process for your Gatsby project.
 
-## What is build?
+## What is a build?
 
 _Build_ refers to the process of compiling your site. During a build, or at _build time_, your project gets transformed from component files to optimized HTML, CSS, and JavaScript files that you can [deploy](/docs/glossary#deploy) to your hosting provider.
 
