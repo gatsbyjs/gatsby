@@ -45,7 +45,7 @@ export interface IGatsbyConfig {
   pathPrefix?: string
 }
 
-export interface INode {
+export interface IGatsbyNode {
   id: Identifier
   parent: Identifier
   children: Identifier[]
@@ -62,9 +62,9 @@ export interface INode {
   [key: string]: unknown
 }
 
-type GatsbyNodes = Map<string, INode>
+type GatsbyNodes = Map<string, IGatsbyNode>
 
-export interface IReduxState {
+export interface IGatsbyState {
   program: IProgram
   nodes: GatsbyNodes
   nodesByType: Map<string, GatsbyNodes>
@@ -192,15 +192,15 @@ export interface IReduxState {
 }
 
 export interface ICachedReduxState {
-  nodes?: IReduxState["nodes"]
-  status: IReduxState["status"]
-  componentDataDependencies: IReduxState["componentDataDependencies"]
-  components: IReduxState["components"]
-  jobsV2: IReduxState["jobsV2"]
-  staticQueryComponents: IReduxState["staticQueryComponents"]
-  webpackCompilationHash: IReduxState["webpackCompilationHash"]
-  pageDataStats: IReduxState["pageDataStats"]
-  pageData: IReduxState["pageData"]
+  nodes?: IGatsbyState["nodes"]
+  status: IGatsbyState["status"]
+  componentDataDependencies: IGatsbyState["componentDataDependencies"]
+  components: IGatsbyState["components"]
+  jobsV2: IGatsbyState["jobsV2"]
+  staticQueryComponents: IGatsbyState["staticQueryComponents"]
+  webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
+  pageDataStats: IGatsbyState["pageDataStats"]
+  pageData: IGatsbyState["pageData"]
 }
 
 export type ActionsUnion =

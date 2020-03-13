@@ -1,11 +1,11 @@
 import { store } from "./"
-import { INode } from "./types"
+import { IGatsbyNode } from "./types"
 import { createPageDependency } from "./actions/add-page-dependency"
 
 /**
  * Get all nodes from redux store.
  */
-export const getNodes = (): INode[] => {
+export const getNodes = (): IGatsbyNode[] => {
   const nodes = store.getState().nodes
   if (nodes) {
     return Array.from(nodes.values())
@@ -17,13 +17,13 @@ export const getNodes = (): INode[] => {
 /**
  * Get node by id from store.
  */
-export const getNode = (id: string): INode | undefined =>
+export const getNode = (id: string): IGatsbyNode | undefined =>
   store.getState().nodes.get(id)
 
 /**
  * Get all nodes of type from redux store.
  */
-export const getNodesByType = (type: string): INode[] => {
+export const getNodesByType = (type: string): IGatsbyNode[] => {
   const nodes = store.getState().nodesByType.get(type)
   if (nodes) {
     return Array.from(nodes.values())
@@ -56,7 +56,7 @@ export const hasNodeChanged = (id: string, digest: string): boolean => {
 export const getNodeAndSavePathDependency = (
   id: string,
   path: string
-): INode | undefined => {
+): IGatsbyNode | undefined => {
   const node = getNode(id)
 
   if (!node) {
@@ -70,7 +70,7 @@ export const getNodeAndSavePathDependency = (
   return node
 }
 
-type Resolver = (node: INode) => Promise<any> // TODO
+type Resolver = (node: IGatsbyNode) => Promise<any> // TODO
 
 export const saveResolvedNodes = async (
   nodeTypeNames: string[],
@@ -98,7 +98,10 @@ export const saveResolvedNodes = async (
 /**
  * Get node and save path dependency.
  */
-export const getResolvedNode = (typeName: string, id: string): INode | null => {
+export const getResolvedNode = (
+  typeName: string,
+  id: string
+): IGatsbyNode | null => {
   const { nodesByType, resolvedNodesCache } = store.getState()
   const nodes = nodesByType.get(typeName)
 
@@ -121,13 +124,13 @@ export const getResolvedNode = (typeName: string, id: string): INode | null => {
   return node
 }
 
-export const addResolvedNodes = (typeName: string): INode[] => {
-  const resolvedNodes: INode[] = []
+export const addResolvedNodes = (typeName: string): IGatsbyNode[] => {
+  const resolvedNodes: IGatsbyNode[] = []
   const { nodesByType, resolvedNodesCache } = store.getState()
   const nodes = nodesByType.get(typeName)
 
   if (!nodes) {
-    return resolvedNodes
+    return []
   }
 
   const resolvedNodesFromCache = resolvedNodesCache.get(typeName)
@@ -152,7 +155,10 @@ export const addResolvedNodes = (typeName: string): INode[] => {
 export const ensureIndexByTypedChain = (
   chain: string[],
   nodeTypeNames: string[],
-  typedKeyValueIndexes: Map<string, Map<string | number | boolean, Set<INode>>>
+  typedKeyValueIndexes: Map<
+    string,
+    Map<string | number | boolean, Set<IGatsbyNode>>
+  >
 ): void => {
   const chained = chain.join(`+`)
 
@@ -166,7 +172,7 @@ export const ensureIndexByTypedChain = (
 
   const { nodes, resolvedNodesCache } = store.getState()
 
-  const byKeyValue = new Map<string | number | boolean, Set<INode>>()
+  const byKeyValue = new Map<string | number | boolean, Set<IGatsbyNode>>()
   typedKeyValueIndexes.set(typedKey, byKeyValue)
 
   nodes.forEach(node => {
@@ -227,8 +233,8 @@ export const getNodesByTypedChain = (
   chain: string[],
   value: boolean | number | string,
   nodeTypeNames: string[],
-  typedKeyValueIndexes: Map<string, Map<string | number | boolean, INode>>
-): INode | undefined => {
+  typedKeyValueIndexes: Map<string, Map<string | number | boolean, IGatsbyNode>>
+): IGatsbyNode | undefined => {
   const key = chain.join(`+`)
 
   const typedKey = nodeTypeNames.join(`,`) + `/` + key

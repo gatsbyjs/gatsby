@@ -11,15 +11,15 @@ import mitt from "mitt"
 import thunk from "redux-thunk"
 import reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
-import { IReduxState, ActionsUnion } from "./types"
+import { IGatsbyState, ActionsUnion } from "./types"
 
 // Create event emitter for actions
 export const emitter = mitt()
 
 // Read old node data from cache.
-export const readState = (): IReduxState => {
+export const readState = (): IGatsbyState => {
   try {
-    const state = readFromCache() as IReduxState
+    const state = readFromCache() as IGatsbyState
     if (state.nodes) {
       // re-create nodesByType
       state.nodesByType = new Map()
@@ -42,7 +42,7 @@ export const readState = (): IReduxState => {
   }
   // BUG: Would this not cause downstream bugs? seems likely. Why wouldn't we just
   // throw and kill the program?
-  return {} as IReduxState
+  return {} as IGatsbyState
 }
 
 /**
@@ -53,7 +53,9 @@ const multi: Middleware = ({ dispatch }) => next => (
 ): ActionsUnion | ActionsUnion[] =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-export const configureStore = (initialState: IReduxState): Store<IReduxState> =>
+export const configureStore = (
+  initialState: IGatsbyState
+): Store<IGatsbyState> =>
   createStore(
     combineReducers({ ...reducers }),
     initialState,
