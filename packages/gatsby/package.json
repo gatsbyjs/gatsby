@@ -37,7 +37,7 @@
     "better-queue": "^3.8.10",
     "bluebird": "^3.7.2",
     "browserslist": "^4.9.1",
-    "cache-manager": "^2.10.1",
+    "cache-manager": "^2.11.1",
     "cache-manager-fs-hash": "^0.0.7",
     "chalk": "^2.4.2",
     "chokidar": "3.3.0",

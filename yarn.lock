@@ -3824,10 +3824,10 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/cache-manager@^2.10.1":
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/@types/cache-manager/-/cache-manager-2.10.1.tgz#c7bc354be7988659e139e10fc7bde4b221f7f128"
-  integrity sha512-oJhVIOeC8dX9RZ7OtEZvZ/6cHF5aQWoRcuJ7KwK3Xb69hIIdElpWzfJ35fOXvYOgoyRXA34jFrD8lqEjDWz37w==
+"@types/cache-manager@^2.10.2":
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/@types/cache-manager/-/cache-manager-2.10.2.tgz#75a1be9e42a79ee651a0d01aaaf1e4f7b18e3245"
+  integrity sha512-QlcorzgUh56qKfwb25dQ21fiNM52uSn/PWlsr4tDaKS+pLqzwlrB20aGhoK1MVPmpuVUMGa6Cfoyzs8TXtzGaw==
 
 "@types/ci-info@2.0.0":
   version "2.0.0"
@@ -6309,12 +6309,13 @@ cache-manager-fs-hash@^0.0.7:
     es6-promisify "^6.0.0"
     lockfile "^1.0.4"
 
-cache-manager@^2.10.1:
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/cache-manager/-/cache-manager-2.10.1.tgz#d8f312381255966cfc19c990bc8834c8d24edb2a"
-  integrity sha512-bk17v9IkLqNcbCzggEh82LEJhjHp+COnL57L7a0ESbM/cOuXIIBatdVjD/ps7vOsofI48++zAC14Ye+8v50flg==
+cache-manager@^2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/cache-manager/-/cache-manager-2.11.1.tgz#212e8c3db15288af653b029a1d9fe12f1fd9df61"
+  integrity sha512-XhUuc9eYwkzpK89iNewFwtvcDYMUsvtwzHeyEOPJna/WsVsXcrzsA1ft2M0QqPNunEzLhNCYPo05tEfG+YuNow==
   dependencies:
     async "1.5.2"
+    lodash.clonedeep "4.5.0"
     lru-cache "4.0.0"
 
 cacheable-request@^2.1.1:
@@ -14885,7 +14886,7 @@ lodash.clone@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clone/-/lodash.clone-4.5.0.tgz#195870450f5a13192478df4bc3d23d2dea1907b6"
 
-lodash.clonedeep@^4.5.0:
+lodash.clonedeep@4.5.0, lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
 
