@@ -393,7 +393,7 @@ onClick = () => {
 
 Gatsby's `<Link>` component will only fetch each page's resources once, when it doesn't have a cached copy. Updates to pages on the site are not reflected in the browser as they are effectively "locked in time". This can have the undesirable impact of different users having different views of the content.
 
-In order to prevent this staleness, Gatsby also requests an additional resource on each new page load: `app-data.json`. This contains a hash generated when the site is built; if anything in the `src` directory changes, the hash will change. During page loads, if Gatsby sees a different hash in the `app-data.json` to the hash it initially retrieved when the site first loaded then the browser will navigate using `window.location`. The browser fetches the new page and starts over again, so any cached resources are lost.
+In order to prevent this staleness, Gatsby requests an additional resource on each new page load: `app-data.json`. This contains a hash generated when the site is built; if anything in the `src` directory changes, the hash will change. During page loads, if Gatsby sees a different hash in the `app-data.json` than the hash it initially retrieved when the site first loaded, the browser will navigate using `window.location`. The browser fetches the new page and starts over again, so any cached resources are lost.
 
 This only works if the page has not previously been loaded, as the `app-data.json` will not be re-requested for that page. Therefore staleness isn't a solved problem, but it should be a less frequent one.
 
