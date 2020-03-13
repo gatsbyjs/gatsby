@@ -96,7 +96,7 @@ Put an avatar image into `content/assets/avatar.png`.
 
 Add at least one post and one note:
 
-```md:title=content/posts/hello-posts.mdx
+```mdx:title=content/posts/hello-posts.mdx
 ---
 title: My first blog post
 date: 2020-02-15
@@ -105,7 +105,7 @@ date: 2020-02-15
 Multiple themes are great!
 ```
 
-```md:title=content/note/hello-notes.mdx
+```mdx:title=content/note/hello-notes.mdx
 ---
 title: My first note
 date: 2020-02-20
@@ -226,7 +226,7 @@ module.exports = {
 
 Test it out by adding a Youtube video to one of your blog posts:
 
-```md:title=content/posts/hello-posts.mdx
+```mdx:title=content/posts/hello-posts.mdx
 ---
 title: Jason and Jackson Talk Themes
 date: 2020-02-21
