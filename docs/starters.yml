@@ -5558,6 +5558,26 @@
     - Robots.txt
     - Sitemap
     - PWA
+- url: https://gatsby-contentful-portfolio.netlify.com/
+  repo: https://github.com/wkocjan/gatsby-contentful-portfolio
+  description: Gatsby portfolio theme integrated with Contentful
+  tags:
+    - CMS:Contentful
+    - CMS:Headless
+    - Gallery
+    - Portfolio
+    - SEO
+    - Styling:Tailwind
+  features:
+    - Clean minimalist design
+    - Contentful integration with ready to go placeholder content
+    - Responsive design
+    - Uses TailwindCSS for styling
+    - Font Awesome icons
+    - Robots.txt
+    - SEO optimized
+    - OpenGraph structured data
+    - Integration with Mailchimp
 - url: https://gatsby-graphcms-ecommerce-starter.netlify.com
   repo: https://github.com/GraphCMS/gatsby-graphcms-ecommerce-starter
   description: Swag store built with GraphCMS, Stripe, Gatsby, Postmark and Printful.
