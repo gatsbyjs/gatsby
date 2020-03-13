@@ -6,6 +6,8 @@ const {
 } = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const getDefinitions = require(`mdast-util-definitions`)
+const toHAST = require(`mdast-util-to-hast`)
+const hastToHTML = require(`hast-util-to-html`)
 const path = require(`path`)
 const queryString = require(`query-string`)
 const isRelativeUrl = require(`is-relative-url`)
@@ -118,7 +120,7 @@ module.exports = (
       return _.escape(captionString)
     }
 
-    return compiler.generateHTML(compiler.parseString(captionString))
+    return hastToHTML(toHAST(compiler.parseString(captionString)))
   }
 
   // Takes a node and generates the needed images and then returns
