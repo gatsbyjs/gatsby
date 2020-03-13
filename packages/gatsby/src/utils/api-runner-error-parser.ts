@@ -1,44 +1,50 @@
 import { IMatch } from "../types"
 
-const errorParser = ({ err }): IMatch => {
+const errorParser = ({ err }: { err: unknown }): IMatch => {
   const handlers = [
     {
       regex: /(.+) is not defined/m,
-      cb: (match): IMatch => {
+      cb: (match: RegExpMatchArray): IMatch => {
         return {
           id: `11330`,
           context: { sourceMessage: match[0], arg: match[1] },
         }
       },
     },
-    // Match anything with a generic catch-all error handler
-    {
-      regex: /[\s\S]*/gm,
-      cb: (match): IMatch => {
-        return {
-          id: `11321`,
-          context: { sourceMessage: err instanceof Error ? match[0] : err },
-          error: err instanceof Error ? err : undefined,
-        }
-      },
-    },
   ]
 
-  let structured
+  let structured: IMatch | undefined
+  let errorMessage: string | undefined
+
+  // try to handle as many type of err as possible.
+  // the err might come from a plugin so we don't
+  // know what we are getting
+  if (Array.isArray(err)) {
+    err = err[0]
+  }
+  if (err instanceof Error) {
+    errorMessage = err.message
+  }
+  if (typeof err === `string`) {
+    errorMessage = err
+  }
 
   for (const { regex, cb } of handlers) {
-    if (Array.isArray(err)) {
-      err = err[0]
-    }
-    if (err.message) {
-      err = err.message
-    }
-    const matched = err?.match(regex)
+    const matched = errorMessage?.match(regex)
     if (matched) {
       structured = {
         ...cb(matched),
       }
       break
+    }
+  }
+
+  // if we haven't found any known error
+  if (!structured) {
+    return {
+      id: `11321`,
+      context: { sourceMessage: errorMessage || `` },
+      error: err instanceof Error ? err : undefined,
     }
   }
 
