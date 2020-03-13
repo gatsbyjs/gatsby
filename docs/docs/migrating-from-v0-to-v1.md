@@ -291,7 +291,7 @@ control over what data they got. In v1, templates and pages can query for
 exactly the data they need.
 
 There will be a more in-depth tutorial and GraphQL-specific documentation soon
-but in the meantime, check out http://graphql.org/ and play around on Gatsby's
+but in the meantime, check out https://graphql.org/ and play around on Gatsby's
 built-in GraphQL IDE (Graph*i*QL) which can be reached when you start the
 development server.
 

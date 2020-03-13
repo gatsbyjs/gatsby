@@ -3,7 +3,7 @@ const { slash } = require(`gatsby-core-utils`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
-const { getValueAt } = require(`../../utils/get-value-at`)
+import { getValueAt } from "../../utils/get-value-at"
 
 const isFile = (nodeStore, fieldPath, relativePath) => {
   const filePath = getFilePath(nodeStore, fieldPath, relativePath)

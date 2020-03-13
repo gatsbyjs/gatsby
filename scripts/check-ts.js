@@ -7,6 +7,7 @@
 "use strict"
 
 const fs = require(`fs`)
+const glob = require(`glob`)
 const path = require(`path`)
 const chalk = require(`chalk`)
 const yargs = require(`yargs`)
@@ -23,9 +24,17 @@ const packages = fs
   .map(file => path.resolve(PACKAGES_DIR, file))
   .filter(f => fs.lstatSync(path.resolve(f)).isDirectory())
 
-let packagesWithTs = packages.filter(p =>
-  fs.existsSync(path.resolve(p, `tsconfig.json`))
-)
+// We only want to typecheck against packages that have a tsconfig.json
+// AND have some ts files in it's source code.
+let packagesWithTs = packages
+  .filter(p => fs.existsSync(path.resolve(p, `tsconfig.json`)))
+  .filter(
+    project =>
+      glob.sync(`/**/*.ts`, {
+        root: project,
+        ignore: `**/node_modules/**`,
+      }).length
+  )
 
 if (filterPackage) {
   packagesWithTs = packagesWithTs.filter(project =>

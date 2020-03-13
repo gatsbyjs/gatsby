@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.96](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.95...gatsby-source-contentful@2.1.96) (2020-03-12)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.95](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.94...gatsby-source-contentful@2.1.95) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.94](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.93...gatsby-source-contentful@2.1.94) (2020-03-10)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Don’t crash when GATSBY_CONTENTFUL_OFFLINE and downloadLocal are used ([#21472](https://github.com/gatsbyjs/gatsby/issues/21472)) ([02471fc](https://github.com/gatsbyjs/gatsby/commit/02471fc)), closes [#21463](https://github.com/gatsbyjs/gatsby/issues/21463)
+
+## [2.1.93](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.92...gatsby-source-contentful@2.1.93) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.92](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.91...gatsby-source-contentful@2.1.92) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.91](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.90...gatsby-source-contentful@2.1.91) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.90](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.89...gatsby-source-contentful@2.1.90) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [2.1.89](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.88...gatsby-source-contentful@2.1.89) (2020-02-28)
 
 **Note:** Version bump only for package gatsby-source-contentful

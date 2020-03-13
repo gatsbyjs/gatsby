@@ -2,6 +2,20 @@ import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findPath, findMatchPath } from "./find-path"
 
+/**
+ * Available resource loading statuses
+ */
+export const PageResourceStatus = {
+  /**
+   * At least one of critical resources failed to load
+   */
+  Error: `error`,
+  /**
+   * Resources loaded successfully
+   */
+  Success: `success`,
+}
+
 const preferDefault = m => (m && m.default) || m
 
 const stripSurroundingSlashes = s => {
@@ -42,7 +56,7 @@ const loadPageDataJson = loadObj => {
         }
 
         return Object.assign(loadObj, {
-          status: `success`,
+          status: PageResourceStatus.Success,
           payload: jsonPayload,
         })
       } catch (err) {
@@ -55,7 +69,7 @@ const loadPageDataJson = loadObj => {
       // If the request was for a 404 page and it doesn't exist, we're done
       if (pagePath === `/404.html`) {
         return Object.assign(loadObj, {
-          status: `failure`,
+          status: PageResourceStatus.Error,
         })
       }
 
@@ -69,7 +83,7 @@ const loadPageDataJson = loadObj => {
     // handle 500 response (Unrecoverable)
     if (status === 500) {
       return Object.assign(loadObj, {
-        status: `error`,
+        status: PageResourceStatus.Error,
       })
     }
 
@@ -78,9 +92,9 @@ const loadPageDataJson = loadObj => {
       return loadPageDataJson(Object.assign(loadObj, { retries: retries + 1 }))
     }
 
-    // Retried 3 times already, result is a failure.
+    // Retried 3 times already, result is an error.
     return Object.assign(loadObj, {
-      status: `error`,
+      status: PageResourceStatus.Error,
     })
   })
 }
@@ -118,8 +132,8 @@ const toPageResources = (pageData, component = null) => {
 export class BaseLoader {
   constructor(loadComponent, matchPaths) {
     // Map of pagePath -> Page. Where Page is an object with: {
-    //   status: `success` || `error`,
-    //   payload: PageResources, // undefined if `error`
+    //   status: PageResourceStatus.Success || PageResourceStatus.Error,
+    //   payload: PageResources, // undefined if PageResourceStatus.Error
     // }
     // PageResources is {
     //   component,
@@ -178,16 +192,10 @@ export class BaseLoader {
     ])
       .then(allData => {
         const result = allData[1]
-        if (result.status === `error`) {
+        if (result.status === PageResourceStatus.Error) {
           return {
-            status: `error`,
+            status: PageResourceStatus.Error,
           }
-        }
-        if (result.status === `failure`) {
-          // throw an error so error trackers can pick this up
-          throw new Error(
-            `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/add-404-page/`
-          )
         }
 
         let pageData = result.payload
@@ -196,9 +204,9 @@ export class BaseLoader {
           const finalResult = { createdAt: new Date() }
           let pageResources
           if (!component) {
-            finalResult.status = `error`
+            finalResult.status = PageResourceStatus.Error
           } else {
-            finalResult.status = `success`
+            finalResult.status = PageResourceStatus.Success
             if (result.notFound === true) {
               finalResult.notFound = true
             }
@@ -322,7 +330,7 @@ export class BaseLoader {
       let appData
 
       if (status !== 200 && retries < 3) {
-        // Retry 3 times incase of failures
+        // Retry 3 times incase of non-200 responses
         return this.loadAppData(retries + 1)
       }
 
@@ -346,14 +354,19 @@ export class BaseLoader {
 }
 
 const createComponentUrls = componentChunkName =>
-  window.___chunkMapping[componentChunkName].map(
+  (window.___chunkMapping[componentChunkName] || []).map(
     chunk => __PATH_PREFIX__ + chunk
   )
 
 export class ProdLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
     const loadComponent = chunkName =>
-      asyncRequires.components[chunkName]().then(preferDefault)
+      asyncRequires.components[chunkName]
+        ? asyncRequires.components[chunkName]()
+            .then(preferDefault)
+            // loader will handle the case when component is null
+            .catch(() => null)
+        : Promise.resolve()
 
     super(loadComponent, matchPaths)
   }
@@ -370,7 +383,7 @@ export class ProdLoader extends BaseLoader {
         this.loadPageDataJson(pagePath)
       )
       .then(result => {
-        if (result.status !== `success`) {
+        if (result.status !== PageResourceStatus.Success) {
           return Promise.resolve()
         }
         const pageData = result.payload
@@ -380,6 +393,30 @@ export class ProdLoader extends BaseLoader {
           () => pageData
         )
       })
+  }
+
+  loadPageDataJson(rawPath) {
+    return super.loadPageDataJson(rawPath).then(data => {
+      if (data.notFound) {
+        // check if html file exist using HEAD request:
+        // if it does we should navigate to it instead of showing 404
+        return doFetch(rawPath, `HEAD`).then(req => {
+          if (req.status === 200) {
+            // page (.html file) actually exist (or we asked for 404 )
+            // returning page resources status as errored to trigger
+            // regular browser navigation to given page
+            return {
+              status: PageResourceStatus.Error,
+            }
+          }
+
+          // if HEAD request wasn't 200, return notFound result
+          // and show 404 page
+          return data
+        })
+      }
+      return data
+    })
   }
 }
 
