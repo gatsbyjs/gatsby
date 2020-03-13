@@ -1,4 +1,5 @@
 import constructError from "../construct-error"
+import { IErrorDetails } from "../../reporter"
 
 let log
 let processExit
@@ -19,13 +20,15 @@ afterAll(() => {
 })
 
 test(`it exits on invalid error schema`, () => {
-  constructError({ details: { context: {}, lol: `invalid` } })
+  constructError({
+    details: { context: {}, lol: `invalid` } as IErrorDetails,
+  })
 
   expect(processExit).toHaveBeenCalledWith(1)
 })
 
 test(`it logs error on invalid schema`, () => {
-  constructError({ details: { context: {}, lol: `invalid` } })
+  constructError({ details: { context: {}, lol: `invalid` } as IErrorDetails })
 
   expect(log).toHaveBeenCalledWith(
     `Failed to validate error`,

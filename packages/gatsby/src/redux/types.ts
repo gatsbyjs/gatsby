@@ -12,6 +12,16 @@ export interface IReduxNode {
   }
 }
 
+export interface IPage {
+  path: string
+  matchPath?: string
+  component: string
+  context: Record<string, any>
+  internalComponentName: string
+  componentChunkName: string
+  updatedAt: number
+}
+
 export interface IReduxState {
   status: ProgramStatus
   nodes?: Map<string, IReduxNode>
@@ -35,6 +45,7 @@ export interface IReduxState {
     developMiddleware: any
     proxy: any
   }
+  pages: IPage[]
   pageData: any
   pages: any
   babelrc: any

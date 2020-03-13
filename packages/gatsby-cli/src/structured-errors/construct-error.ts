@@ -1,32 +1,29 @@
 import Joi from "@hapi/joi"
 import stackTrace from "stack-trace"
 import errorSchema from "./error-schema"
-import { errorMap, defaultError, IErrorMapEntry, ErrorId } from "./error-map"
-import { sanitizeStructuredStackTrace } from "../reporter/errors"
+import { errorMap, defaultError, IErrorMapEntry } from "./error-map"
+import { isNodeInternalModulePath } from "gatsby-core-utils"
+import { IErrorDetails } from "../reporter"
 
 interface IConstructError {
-  details: {
-    id?: ErrorId
-    context?: Record<string, string>
-    error?: string
-    [key: string]: unknown
-  }
+  details: IErrorDetails
 }
 
 interface ILocationPosition {
   line: number
   column: number
 }
+export interface ICallSite {
+  fileName: string
+  functionName?: string
+  lineNumber?: number
+  columnNumber?: number
+}
 
-interface IStructuredError {
+export interface IStructuredError {
   code?: string
   text: string
-  stack: {
-    fileName: string
-    functionName?: string
-    lineNumber?: number
-    columnNumber?: number
-  }[]
+  stack: ICallSite[] | null
   filePath?: string
   location?: {
     start: ILocationPosition
@@ -37,6 +34,48 @@ interface IStructuredError {
   level: IErrorMapEntry["level"]
   type?: IErrorMapEntry["type"]
   docsUrl?: string
+}
+
+const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
+
+const packagesToSkipTest = new RegExp(
+  `node_modules[\\/](${packagesToSkip.join(`|`)})`
+)
+
+const sanitizeStructuredStackTrace = (stack: ICallSite[]): ICallSite[] => {
+  // first filter out not useful call sites
+  stack = stack.filter(callSite => {
+    if (!callSite.fileName) {
+      return false
+    }
+
+    if (packagesToSkipTest.test(callSite.fileName)) {
+      return false
+    }
+
+    if (callSite.fileName.includes(`asyncToGenerator.js`)) {
+      return false
+    }
+
+    if (isNodeInternalModulePath(callSite.fileName)) {
+      return false
+    }
+
+    return true
+  })
+
+  // then sanitize individual call site objects to make sure we don't
+  // emit objects with extra fields that won't be handled by consumers
+  stack = stack.map(({ fileName, functionName, lineNumber, columnNumber }) => {
+    return {
+      fileName,
+      functionName,
+      lineNumber,
+      columnNumber,
+    }
+  })
+
+  return stack
 }
 
 // Merge partial error details with information from the errorMap
