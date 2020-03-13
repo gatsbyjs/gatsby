@@ -4,7 +4,7 @@ title: Sourcing from Sanity
 
 ## What is Sanity.io?
 
-[Sanity](https:///www.sanity.io) is a hosted backend for structured content that comes with an open source editor built in React. It has powerful real-time APIs for both reading and writing data.
+[Sanity](https://www.sanity.io) is a hosted backend for structured content that comes with an open source editor built in React. It has powerful real-time APIs for both reading and writing data.
 
 You can use Sanity as a headless CMS that lets your authors work in a user friendly environment, or as a pure data backend for your apps. We make it easier for you to reuse content across multiple websites, apps, print, voice assistants, and other channels.
 
