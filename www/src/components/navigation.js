@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { useColorMode } from "theme-ui"
+import { withI18n } from "@lingui/react"
+import { t, Trans } from "@lingui/macro"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import {
   FaTwitter as TwitterIcon,
@@ -82,7 +84,17 @@ const SocialNavItem = ({ href, title, children }) => (
   </a>
 )
 
-const Navigation = ({ pathname }) => {
+const navItems = [
+  { id: "docs", text: t`Docs` },
+  { id: "tutorial", text: t`Tutorial` },
+  { id: "plugins", text: t`Plugins` },
+  { id: "features", text: t`Features` },
+  { id: "blog", text: t`Blog` },
+  { id: "showcase", text: t`Showcase` },
+  { id: "contributing", text: t`Contributing` },
+]
+
+const Navigation = ({ pathname, i18n }) => {
   const [colorMode] = useColorMode()
   const isHomepage = pathname === `/`
 
@@ -151,7 +163,7 @@ const Navigation = ({ pathname }) => {
             width: [`24px`, null, `auto`],
             overflow: [`hidden`, null, `visible`],
           }}
-          aria-label="Gatsby, Back to homepage"
+          aria-label={i18n._(t`Gatsby, Back to homepage`)}
         >
           <img
             src={colorMode === `light` ? logo : logoInverted}
@@ -161,13 +173,13 @@ const Navigation = ({ pathname }) => {
               maxWidth: `none`,
               m: 0,
             }}
-            alt="Gatsby Logo"
+            alt={i18n._(t`Gatsby Logo`)}
             aria-hidden="true"
           />
         </Link>
         <nav
           className="navigation"
-          aria-label="Primary Navigation"
+          aria-label={i18n._(t`Primary Navigation`)}
           sx={{
             display: `none`,
             [mediaQueries.md]: {
@@ -195,14 +207,11 @@ const Navigation = ({ pathname }) => {
               },
             }}
           >
-            <NavItem linkTo="/docs/">Docs</NavItem>
-            <NavItem linkTo="/tutorial/">Tutorials</NavItem>
-            <NavItem linkTo="/plugins/">Plugins</NavItem>
-            <NavItem linkTo="/features/">Features</NavItem>
-            <NavItem linkTo="/blog/">Blog</NavItem>
-            <NavItem linkTo="/showcase/">Showcase</NavItem>
-            <NavItem linkTo="/contributing/">Contributing</NavItem>
-            {/* <NavItem linkTo="/starters/">Starters</NavItem> */}
+            {navItems.map(({ id, text }) => (
+              <NavItem key={id} linkTo={`/${id}/`}>
+                <Trans id={text} />
+              </NavItem>
+            ))}
           </ul>
         </nav>
         <SearchForm key="SearchForm" offsetVertical={navItemTopOffset} />
@@ -250,4 +259,4 @@ const Navigation = ({ pathname }) => {
   )
 }
 
-export default Navigation
+export default withI18n()(Navigation)
