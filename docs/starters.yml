@@ -5502,6 +5502,19 @@
     - Disqus
     - Breadcrumbs
     - ESLint
+- url: https://barcadia.netlify.com/
+  repo: https://github.com/bagseye/barcadia
+  description: A super-fast site using GatsbyJS
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Contentful
+    - Portfolio
+  features:
+    - Styled components
+    - Responsive webpage
+    - Portfolio
+    - Blog
 - url: https://gatsby-starter-clean-resume.netlify.com/
   repo: https://github.com/masoudkarimif/gatsby-starter-clean-resume
   description: A Gatsby Starter Template for Putting Your Resume Online Super Quick!
@@ -5565,3 +5578,19 @@
     - SEO optimized
     - OpenGraph structured data
     - Integration with Mailchimp
+- url: https://gatsby-graphcms-ecommerce-starter.netlify.com
+  repo: https://github.com/GraphCMS/gatsby-graphcms-ecommerce-starter
+  description: Swag store built with GraphCMS, Stripe, Gatsby, Postmark and Printful.
+  tags:
+    - eCommerce
+    - i18n
+    - Netlify
+    - Styling:Tailwind
+    - CMS:Other
+    - Stripe
+  features:
+    - Dropshipping by Printful
+    - Printful inventory enhanced by GraphCMS
+    - Custom GraphQL API for handling checkout and payment
+    - Postmark for order notifications
+    - Strong Customer Authentication
