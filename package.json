@@ -101,7 +101,9 @@
     "jest": "jest",
     "jest:inspect": "node --inspect node_modules/.bin/jest --runInBand",
     "jest:inspect-brk": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "jest:redux": "cross-env GATSBY_DB_NODES=redux jest",
     "jest:loki": "cross-env GATSBY_DB_NODES=loki jest",
+    "jest:sqlite": "cross-env GATSBY_DB_NODES=sqlite jest",
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
     "lint": "npm-run-all --continue-on-error -p lint:code lint:other",
@@ -131,5 +133,8 @@
   ],
   "resolutions": {
     "write-file-atomic": "2.4.3"
+  },
+  "dependencies": {
+    "better-sqlite3": "^6.0.1"
   }
 }

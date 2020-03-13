@@ -1,21 +1,16 @@
-const reduxNodes = require(`./nodes`)
-const lokiNodes = require(`../../db/loki/nodes`).reducer
-let sqliteNodes
-
 const backend = process.env.GATSBY_DB_NODES || `redux`
 
 function getNodesReducer() {
   let nodesReducer
   switch (backend) {
     case `redux`:
-      nodesReducer = reduxNodes
+      nodesReducer = require(`./nodes`)
       break
     case `loki`:
-      nodesReducer = sqliteNodes
+      nodesReducer = require(`../../db/loki/nodes`).reducer
       break
     case `sqlite`:
-      nodesReducer =
-        sqliteNodes || (sqliteNodes = require(`../../db/sqlite/nodes`).reducer)
+      nodesReducer = require(`../../db/sqlite/nodes`).reducer
       break
     default:
       throw new Error(

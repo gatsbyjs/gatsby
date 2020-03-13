@@ -1,17 +1,26 @@
-const BOLD = `\x1b[;1;1m`
-const OVER = `\x1b[32;53m`
-const DIM = `\x1b[30;1m`
-const BLINK = `\x1b[;5;1m`
-const RED = `\x1b[31m`
-const GREEN = `\x1b[32m`
-const PURPLE = `\x1b[35m`
-const RESET = `\x1b[0m`
+// FYI: "blotting" is the process if flattening an object to a list of dotted
+// fields for each leaf property, separated with path separator stored in Λ
+// This means `{a: {b: 1, c: {d: 2}}` becomes `a.b` and `a.b.c.d`
 
-const log = () => {} //console.debug // debug is an alias for log but is not wrapped by the framework meaning i can log inside a reducer o:)
-const Λ = `_` // Field separator for flat object representation (foo.bar=a -> fooΛbar=a). Note: this is lower cased! So don't use upper case here
+const {
+  ARRAY_PREFIX,
+  MAIN_NODE,
+  OBJECT_PREFIX,
 
-let shh = true
-let dblog = (...args) => shh || console.debug(args)
+  BOLD,
+  GREEN,
+  PURPLE,
+  RESET,
+  RED,
+
+  log,
+  dbLog,
+  decodeSqliteToJs,
+  encodeJsToSqlite,
+  Λ,
+} = require(`./index.js`)
+const { makeRe } = require(`micromatch`)
+
 let db
 
 let INSERT_cache_key
@@ -22,50 +31,100 @@ let SELECT_ALL
 let UPDATE_CHILDREN
 
 let knownFields
+let knownArrayFields = new Set() // Lower case! These may always also be null
+let knownObjectFields = new Set() // Lower case! These may always also be null
 
 function getdb() {
   if (db) return db
 
-  db = require(`better-sqlite3`)(`clitest`, { verbose: dblog })
+  db = require(`better-sqlite3`)(`clitest`, { verbose: dbLog })
+    .function(`regexp`, { deterministic: true }, function(r, qv) {
+      // This makes `where a regexp b` work. But it's a user function so could be anything really
+      // Note: we encode regexes as strings, meaning it'll be prefixed by a
+      // double quote in the query. We have to slice that off too.
+      // TODO: the regex can only be passed on as a string, but we can prepare and cache that regex in js-land and pass on an identifier for it, instead. Should be a little faster in the end.
 
-  global.sqlitedb = db
+      const regexBody = r.slice(2, r.lastIndexOf(`/`))
+      const regexFlags = r.slice(r.lastIndexOf(`/`) + 1)
+      const regex = new RegExp(regexBody, regexFlags)
+
+      const v = decodeSqliteToJs(qv)
+
+      console.log(
+        `## Custom sqlite \`regexp\` function is being invoked:`,
+        arguments,
+        `body:` + regexBody,
+        `flags:` + regexFlags,
+        regex,
+        v === null ? `false because null` : regex.test(v)
+      )
+      if (v === null) return 0 // TODO: null never matches in sqlite (should it for us?). Test passes when we add this.
+      // `r` should be a stringified regex, including slashes and (optional) flags
+      // `v` should be a string
+      // Apparently the return value should be 0 or 1, rather than boolean.
+      return regex.test(v) ? 1 : 0
+    })
+    .function(`micromatch_glob`, { deterministic: true }, function(qglob, qv) {
+      console.log(
+        `## Custom sqlite \`micromatch_glob\` function is being invoked:`,
+        arguments
+      )
+
+      const glob = decodeSqliteToJs(qglob)
+      const v = decodeSqliteToJs(qv)
+
+      // TODO: cache these
+      // Apparently the return value should be 0 or 1, rather than boolean.
+      return makeRe(glob).test(v) ? 1 : 0
+    })
+
   // https://old.sqliteonline.com/
   db.prepare(`DROP TABLE IF EXISTS nodes`).run()
   // Room for improvement. For now we add fields on the fly, as TEXT
-  knownFields = [`id`, `$gatsby_node$`, `children`, `internal` + Λ + `type`] // Ordered because the prepared statement is ordered
+  knownFields = [`id`, MAIN_NODE, `children`, `internal` + Λ + `type`] // Ordered because the prepared statement is ordered
   db.prepare(
     `
-  CREATE TABLE IF NOT EXISTS nodes
-    (
-      \`id\` TEXT PRIMARY KEY UNIQUE NOT NULL,
-      \`$gatsby_node$\` TEXT NOT NULL,
-      \`children\` TEXT,
-      \`internal${Λ}type\` TEXT
-    );
-`
+      CREATE TABLE IF NOT EXISTS nodes
+        (
+          \`id\` TEXT PRIMARY KEY UNIQUE NOT NULL,
+          \`${MAIN_NODE}\` TEXT NOT NULL,
+          \`children\` TEXT,
+          \`internal${Λ}type\` TEXT
+        );
+    `
   ).run()
 
   INSERT_cache_key = ``
   INSERT = updatePreparedInsert(knownFields)
   SELECT_BY_ID = db.prepare(`
-    SELECT \`$gatsby_node$\` FROM nodes WHERE id = ? LIMIT 1
+    SELECT \`${MAIN_NODE}\` FROM nodes WHERE id = ? LIMIT 1
   `)
   SELECT_BY_TYPE = db.prepare(`
-    SELECT \`$gatsby_node$\` FROM nodes WHERE \`internal${Λ}type\` = ?
+    SELECT \`${MAIN_NODE}\` FROM nodes WHERE \`internal${Λ}type\` = ?
   `)
   SELECT_ALL = db.prepare(`
-    SELECT \`$gatsby_node$\` FROM nodes
+    SELECT \`${MAIN_NODE}\` FROM nodes
   `)
   UPDATE_CHILDREN = db.prepare(`
     UPDATE nodes
     SET
-      \`$gatsby_node$\` = ?,
+      \`${MAIN_NODE}\` = ?,
       \`children\` = ?
     WHERE id = ?
     LIMIT 1
   `)
 
   return db
+}
+
+function isArrayField(fieldName) {
+  return knownArrayFields.has(fieldName)
+}
+function isObjectField(fieldName) {
+  return knownObjectFields.has(fieldName)
+}
+function getKnownFields() {
+  return knownFields
 }
 
 // We prepare an INSERT and replace it whenever we add a new field
@@ -185,7 +244,7 @@ function deleteAll(...args) {
 function addFieldToTableIfNew(key) {
   // Key is assumed to be lower cased already (db is case insensitive)
   if (knownFields.includes(key)) {
-    return false
+    return
   }
 
   let k = key.replace(/`/g, `\\\``)
@@ -196,30 +255,62 @@ function addFieldToTableIfNew(key) {
     .prepare(`ALTER TABLE nodes ADD COLUMN \`${k}\` TEXT;`)
     .run()
   knownFields.push(k)
-  return true
 }
 
 // TODO: dedupe
 function blot(obj, prefix = ``, paths = new Map()) {
   // TODO: prevent cyclic loop issues
   Object.keys(obj).forEach(key => {
-    let newPrefix = prefix + (prefix ? Λ : ``) + key
+    let newPrefix = prefix + (prefix ? Λ : ``) + key.toLowerCase()
     let v = obj[key]
-    if (typeof v === `string` || typeof v === `number` || v === null) {
-      paths.set(newPrefix, v)
-      return
-    }
-    if (typeof v === `boolean` || v === undefined) {
-      paths.set(newPrefix, String(v))
+    if (
+      typeof v === `string` ||
+      typeof v === `number` ||
+      typeof v === `boolean` ||
+      v === null ||
+      v === undefined
+    ) {
+      paths.set(newPrefix, encodeJsToSqlite(v))
       return
     }
     if (Array.isArray(v)) {
-      // We could support arrays more granularly later (int keys == array or smth)
-      paths.set(newPrefix, JSON.stringify(v))
+      log(
+        RED +
+          `  - Marking \`` +
+          key +
+          `\` as an array field because value is \`` +
+          JSON.stringify(v) +
+          `\`` +
+          RESET
+      )
+      // We track this to support `in` on fields that are arrays. Doing it in
+      // this function because it receives all the values and we need to also
+      // consider fields that are `null` the first time they are seen.
+      knownArrayFields.add(newPrefix)
+      // Set a special field to mark an array as "existing property" this way
+      // an empty array (which will not have other fields) can still be
+      // considered as a "set property" for NULL checks. It's not pretty... ino!
+      paths.set(ARRAY_PREFIX + newPrefix, encodeJsToSqlite(true))
+
+      // Process arrays the same as any other object, with numbers as keys
+      blot(v, newPrefix, paths)
       return
     }
     if (typeof v === `object`) {
-      // Not null, not array, assue plain object for the sake of it
+      // Not null, not array, assume plain object for the sake of it
+
+      // We track this to support sorting on fields containing an object value.
+      // The problem is that these still need to sort in the proper order for
+      // the case of object, null, and non-existing. Not sure this ever makes
+      // sense in the real world.
+      knownObjectFields.add(newPrefix)
+      // Set a special field to mark the object as "existing property" this way
+      // an empty object (which will not have other fields) can still be
+      // considered as a "set property" for NULL checks. It's not pretty... ino!
+      // Note: picking `false` because its encoding will sort properly ...
+      // (For example: `false` < `null`, `false` < `"str`, etc)
+      paths.set(OBJECT_PREFIX + newPrefix, encodeJsToSqlite(false))
+
       blot(v, newPrefix, paths)
       return
     }
@@ -255,22 +346,18 @@ function reducer(state = new Map(), action) {
       // Any unknown field should be added as a text field to the table.
 
       let paths = blot(node, ``)
-
-      // log('So output:', paths)
+      log(`  - Blotted::`, paths)
 
       // Next step is to make sure the fields are part of the table, add new
       // fields as TEXT, and to build up an argument list for the prepared
       // statement at the same time. Note that nodes may not contain all field
       // names seen so far, so we have to build up an arg and field list.
-      let preparedFields = [`$gatsby_node$`]
+      let preparedFields = [MAIN_NODE]
       let preparedArgs = [JSON.stringify(node)]
-      let added = false
       paths.forEach((value, key) => {
         // TODO: protect against cycles (we cant support those, anyways...?)
         let lkey = key.toLowerCase() // sqlite is case insensitive
-        if (addFieldToTableIfNew(lkey)) {
-          added = true
-        }
+        addFieldToTableIfNew(lkey)
         preparedArgs.push(value)
         preparedFields.push(lkey)
       })
@@ -293,25 +380,47 @@ function reducer(state = new Map(), action) {
       // Note: Loki would just drop the old node and use the new node
       // We don't need to but we may need to add a new field to the table
 
-      // Note: this adds `{fields: {[addedField]: ...}}` (not directly on node)
-
-      let unqualifiedAddedField = action.addedField
+      let unqualifiedAddedField = String(action.addedField).toLowerCase()
       let qualifiedAddedField = `fields` + Λ + unqualifiedAddedField
       let addedValue = action.payload.fields[unqualifiedAddedField]
       addFieldToTableIfNew(qualifiedAddedField)
+
+      if (Array.isArray(addedValue)) {
+        log(
+          RED +
+            `  - Marking \`` +
+            qualifiedAddedField +
+            `\` as an array field because value is \`` +
+            JSON.stringify(addedValue) +
+            `\`` +
+            RESET
+        )
+        // We track this to support `in` on fields that are arrays
+        knownArrayFields.add(qualifiedAddedField)
+      } else {
+        log(
+          GREEN +
+            `  - Marking \`` +
+            qualifiedAddedField +
+            `\` NOT as an array field because value is \`` +
+            JSON.stringify(addedValue) +
+            `\`` +
+            RESET
+        )
+      }
 
       // I'm assuming this node exists ...
       // TODO: can this prepared query be cached? Won't be _that_ many props
       getdb()
         .prepare(
           `
-        UPDATE nodes
-        SET
-          \`$gatsby_node$\` = ?,
-          \`${qualifiedAddedField}\` = ?
-        WHERE id = ?
-        LIMIT 1
-      `
+            UPDATE nodes
+            SET
+              \`${MAIN_NODE}\` = ?,
+              \`${qualifiedAddedField}\` = ?
+            WHERE id = ?
+            LIMIT 1
+          `
         )
         .run([
           JSON.stringify(action.payload), // The payload should be the new node
@@ -378,6 +487,11 @@ function ensureFieldIndexes(...args) {
 
 module.exports = {
   getNodeTypeCollection,
+
+  getdb,
+  getKnownFields,
+  isArrayField,
+  isObjectField,
 
   getNodes,
   getNode,
