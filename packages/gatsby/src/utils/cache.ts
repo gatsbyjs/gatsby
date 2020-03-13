@@ -1,4 +1,9 @@
-import manager, { Store, StoreConfig, CachingConfig, MultiCache } from "cache-manager"
+import manager, {
+  Store,
+  StoreConfig,
+  CachingConfig,
+  MultiCache,
+} from "cache-manager"
 import fs from "fs-extra"
 import fsStore from "cache-manager-fs-hash"
 import path from "path"
@@ -10,7 +15,6 @@ interface ICacheProperties {
   name?: string
   store?: Store
 }
-
 
 export default class Cache {
   public name: string
