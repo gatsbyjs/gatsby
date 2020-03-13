@@ -7507,8 +7507,8 @@
   built_by: Divyanshu Maithani
   built_by_url: https://twitter.com/divyanshu013
 - title: TFE Energy
-  main_url: https://tfe.energy
-  url: https://tfe.energy
+  main_url: https://www.tfe.energy
+  url: https://www.tfe.energy
   source_url: https://gitlab.com/marcfehrmedia/2019-07-03-tfe-energy
   description: >
     TFE Energy believes in the future. Their new website is programmed with Gatsby, Scrollmagic, Contentful, Cloudify.
@@ -7518,7 +7518,7 @@
     - Video
     - Business
   built_by: Marc Fehr
-  built_by_url: https:/www.marcfehr.media
+  built_by_url: https://www.marcfehr.ch
 - title: AtomBuild
   url: https://atombuild.github.io/
   main_url: https://atombuild.github.io/
