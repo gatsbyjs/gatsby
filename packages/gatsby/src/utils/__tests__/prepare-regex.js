@@ -1,4 +1,4 @@
-const prepareRegex = require(`../prepare-regex`)
+const { prepareRegex } = require(`../prepare-regex`)
 
 describe(`Prepare regex for Sift.js`, () => {
   it(`handles simple regex`, () => {

@@ -1,5 +1,141 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Process nodes correctly allows other extensions to be used for input files 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "blue",
+      "field2": "funny",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TestKsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "true",
+      "field2": "yup",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TestKsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "false",
+      "field2": "nope",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TestKsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly allows other extensions to be used for input files 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "blue",
+        "field2": "funny",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TestKsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "blue	funny
+true	yup
+false	nope",
+        "extension": "ksv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/ksv",
+        },
+        "name": "test",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "true",
+        "field2": "yup",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TestKsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "blue	funny
+true	yup
+false	nope",
+        "extension": "ksv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/ksv",
+        },
+        "name": "test",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "false",
+        "field2": "nope",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TestKsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "blue	funny
+true	yup
+false	nope",
+        "extension": "ksv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/ksv",
+        },
+        "name": "test",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
 exports[`Process nodes correctly correctly creates nodes from JSON which is an array of objects 1`] = `
 Array [
   Array [
@@ -1100,6 +1236,142 @@ c,23",
           "mediaType": "text/csv",
         },
         "name": "theQueryShouldMatch",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly passes through the delimiter option 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "blue",
+      "field2": "funny",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TestTsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "true",
+      "field2": "yup",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TestTsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "false",
+      "field2": "nope",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TestTsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly passes through the delimiter option 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "blue",
+        "field2": "funny",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TestTsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "blue	funny
+true	yup
+false	nope",
+        "extension": "tsv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/tsv",
+        },
+        "name": "test",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "true",
+        "field2": "yup",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TestTsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "blue	funny
+true	yup
+false	nope",
+        "extension": "tsv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/tsv",
+        },
+        "name": "test",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "false",
+        "field2": "nope",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TestTsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "blue	funny
+true	yup
+false	nope",
+        "extension": "tsv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/tsv",
+        },
+        "name": "test",
         "parent": null,
       },
     },

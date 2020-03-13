@@ -8,6 +8,8 @@ module.exports = function() {
   const { cache } = loaderUtils.getOptions(this)
   const abs = path.join(cache.directory, MDX_SCOPES_LOCATION)
   const files = fs.readdirSync(abs)
+  // make webpack rebuild when new scopes are created
+  this.addContextDependency(abs)
   return (
     files
       .map(

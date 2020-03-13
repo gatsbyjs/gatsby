@@ -1,10 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
-import loader from "./loader"
+import loader, { PageResourceStatus } from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { navigate as reachNavigate } from "@reach/router"
+import { globalHistory } from "@reach/router/lib/history"
 import { parsePath } from "gatsby-link"
 
 // Convert to a map for faster lookup in maybeRedirect()
@@ -43,17 +44,10 @@ const onPreRouteUpdate = (location, prevLocation) => {
 const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
-    // Temp hack while awaiting https://github.com/reach/router/issues/119
-    window.__navigatingToLink = false
   }
 }
 
 const navigate = (to, options = {}) => {
-  // Temp hack while awaiting https://github.com/reach/router/issues/119
-  if (!options.replace) {
-    window.__navigatingToLink = true
-  }
-
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 
@@ -87,10 +81,13 @@ const navigate = (to, options = {}) => {
     // back, the browser will just change the URL and expect JS to handle
     // the change, which won't always work since it might not be a Gatsby
     // page.
-    if (!pageResources || pageResources.status === `error`) {
+    if (!pageResources || pageResources.status === PageResourceStatus.Error) {
       window.history.replaceState({}, ``, location.href)
       window.location = pathname
+      clearTimeout(timeoutId)
+      return
     }
+
     // If the loaded page has a different compilation hash to the
     // window, then a rebuild has occurred on the server. Reload.
     if (process.env.NODE_ENV === `production` && pageResources) {
@@ -147,8 +144,11 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
 }
 
 function init() {
-  // Temp hack while awaiting https://github.com/reach/router/issues/119
-  window.__navigatingToLink = false
+  // The "scroll-behavior" package expects the "action" to be on the location
+  // object so let's copy it over.
+  globalHistory.listen(args => {
+    args.location.action = args.action
+  })
 
   window.___push = to => navigate(to, { replace: false })
   window.___replace = to => navigate(to, { replace: true })
@@ -190,6 +190,7 @@ class RouteAnnouncer extends React.Component {
         id="gatsby-announcer"
         style={{
           position: `absolute`,
+          top: 0,
           width: 1,
           height: 1,
           padding: 0,
@@ -198,7 +199,6 @@ class RouteAnnouncer extends React.Component {
           whiteSpace: `nowrap`,
           border: 0,
         }}
-        role="alert"
         aria-live="assertive"
         aria-atomic="true"
         ref={this.announcementRef}

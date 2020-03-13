@@ -9,7 +9,7 @@
   ],
   "overrides": [
     {
-      "test": "**/*.ts",
+      "test": ["**/*.ts", "**/*.tsx"],
       "plugins": [["@babel/plugin-transform-typescript", { "isTSX": true }]]
     }
   ]

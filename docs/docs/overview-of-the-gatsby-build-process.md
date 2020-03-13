@@ -2,8 +2,6 @@
 title: Overview of the Gatsby Build Process
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-
 <!-- written at the time of commit e85278c to bootstrap/index.js and commit f8cae16 to build.js -->
 
 _This is a high-level overview about the steps in the Gatsby build process. For more detailed information about specific steps, check out the [Gatsby Internals](/docs/gatsby-internals) section of the docs._
@@ -302,6 +300,8 @@ Page queries that were queued up earlier from query extraction are run so the da
 6. `Building static HTML for pages`
 
 With everything ready for the HTML pages in place, HTML is compiled and written out to files so it can be served up statically. Since HTML is being produced in a Node.js server context, [references to browser APIs like `window` can break the build](/docs/debugging-html-builds/) and must be conditionally applied.
+
+By default, Gatsby rebuilds static HTML for all pages on each build. There is an experimental feature flag `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` which enables [Page Build Optimizations for Incremental Data Changes](/docs/page-build-optimizations-for-incremental-data-changes/).
 
 ## What do you get from a successful build?
 

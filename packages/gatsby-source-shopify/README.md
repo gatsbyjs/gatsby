@@ -83,7 +83,7 @@ you must first [expose the metafield to the Storefront API](https://help.shopify
 You can query nodes created from Shopify using GraphQL like the following:
 
 **Note**: Learn to use the GraphQL tool and Ctrl+Spacebar at
-<http://localhost:8000/___graphql> to discover the types and properties of your
+`http://localhost:8000/___graphql` to discover the types and properties of your
 GraphQL model.
 
 ```graphql
@@ -470,6 +470,6 @@ available.
 [gatsby]: https://www.gatsbyjs.org/
 [shopify]: https://www.shopify.com/
 [shopify-storefront-api]: https://help.shopify.com/api/custom-storefronts/storefront-api
-[graphql-inline-fragments]: http://graphql.org/learn/queries/#inline-fragments
+[graphql-inline-fragments]: https://graphql.org/learn/queries/#inline-fragments
 [gatsby-plugin-sharp]: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sharp
 [gatsby-image-fragments]: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image#gatsby-transformer-sharp

@@ -25,7 +25,7 @@ AWS Amplify is a combination of client library, CLI toolchain, and a Console for
 1. Accept the default build settings. Give the Amplify Console permission to deploy backend resources with your frontend with a service role. This allows the Console to detect changes to both your backend and frontend on every code commit and make updates. If you do not have a service role follow the prompts to create one, then come back to the console and pick it from the dropdown.
    ![Gatsby Amplify2](./images/amplify-build-settings.gif)
 
-1. Review your changes and then choose **Save and deploy**. The Amplify Console will pull code from your repository, build changes to the backend and frontend, and deploy your build artifacts at `https://master.unique-id.amplifyapp.com`. Bonus: Screenshots of your app on different devices to find layout issues :fire:
+1. Review your changes and then choose **Save and deploy**. The Amplify Console will pull code from your repository, build changes to the backend and frontend, and deploy your build artifacts at `https://master.unique-id.amplifyapp.com`. Bonus: Screenshots of your app on different devices to find layout issues 🔥
    ![Gatsby Amplify2](./images/amplify-gatsby-deploy.gif)
 
 ## References:
