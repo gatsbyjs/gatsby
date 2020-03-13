@@ -1,10 +1,11 @@
+const path = require(`path`)
 const { resolvePath } = require(`babel-plugin-module-resolver`)
 
 const babelResolverPlugin = require.resolve(`babel-plugin-module-resolver`)
 
 const resolvePackages = {
-  pify: require.resolve(`pify`),
-  minimatch: require.resolve(`minimatch`),
+  pify: path.dirname(require.resolve(`pify/package.json`)),
+  minimatch: path.dirname(require.resolve(`minimatch/package.json`)),
 }
 const resolvePatterns = Object.keys(resolvePackages).map(pkg => [
   pkg,
@@ -20,12 +21,13 @@ function resolveLocalAliasedPackages(sourcePath, currentFile, opts) {
 
   // Is this a sourcePath we care about, or has it already been resolved?
   if (!(sourcePath in resolvePackages)) {
+    // return null
     // only resolve the current sourcePath if it wasn't resolved by this plugin
     // originally
     if (resolvePackage.startsWith(__dirname)) return null // we resolved it, return now
 
-    // If this is a package we want to resolve, and it was resolved before, but not by
-    // this plugin, then we need to change it to our path.
+    // // If this is a package we want to resolve, and it was resolved before, but not by
+    // // this plugin, then we need to change it to our path.
     const reResolve = resolvePatterns.some(([pkg, matches]) => {
       if (matches(sourcePath)) {
         resolvePackage = pkg
@@ -34,7 +36,7 @@ function resolveLocalAliasedPackages(sourcePath, currentFile, opts) {
       return false
     })
 
-    // No more processing needed
+    // // No more processing needed
     if (!reResolve) return null
   }
 

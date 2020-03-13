@@ -10,18 +10,6 @@ import {
 
 const publicPath = `./public`
 
-exports.onCreateBabelConfig = ({ actions, stage }) => {
-  const { setBabelPreset } = actions
-  switch (stage) {
-    case `build-html`:
-    case `develop-html`:
-      setBabelPreset({
-        name: require.resolve(`./babel-preset`),
-      })
-      break
-  }
-}
-
 exports.onPostBuild = async (
   { graphql, pathPrefix, basePath = pathPrefix },
   pluginOptions
