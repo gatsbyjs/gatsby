@@ -1,4 +1,4 @@
-const Joi = require(`@hapi/joi`)
+import Joi from "@hapi/joi"
 
 const Position = Joi.object().keys({
   line: Joi.number(),
@@ -35,4 +35,4 @@ const errorSchema = Joi.object().keys({
   panicOnBuild: Joi.boolean(),
 })
 
-module.exports = errorSchema
+export default errorSchema

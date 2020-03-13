@@ -1,21 +1,23 @@
-const errorParser = ({ err }) => {
+import { IMatch } from "../types"
+
+const errorParser = ({ err }): IMatch => {
   const handlers = [
     {
       regex: /(.+) is not defined/m,
-      cb: match => {
+      cb: (match): IMatch => {
         return {
           id: `11330`,
-          context: { message: match[0], arg: match[1] },
+          context: { sourceMessage: match[0], arg: match[1] },
         }
       },
     },
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,
-      cb: match => {
+      cb: (match): IMatch => {
         return {
           id: `11321`,
-          context: { message: err instanceof Error ? match[0] : err },
+          context: { sourceMessage: err instanceof Error ? match[0] : err },
           error: err instanceof Error ? err : undefined,
         }
       },

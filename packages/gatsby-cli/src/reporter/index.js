@@ -48,7 +48,7 @@ const tracer = require(`opentracing`).globalTracer()
 
 const { getErrorFormatter } = require(`./errors`)
 const { getStore } = require(`./redux`)
-const constructError = require(`../structured-errors/construct-error`)
+import constructError from "../structured-errors/construct-error"
 
 const errorFormatter = getErrorFormatter()
 
