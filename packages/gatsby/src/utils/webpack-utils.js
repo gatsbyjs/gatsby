@@ -5,9 +5,11 @@ const flexbugs = require(`postcss-flexbugs-fixes`)
 const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
+const ReactRefreshWebpackPlugin = require(`@pmmmwh/react-refresh-webpack-plugin`)
 const isWsl = require(`is-wsl`)
 
 const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
+const GatsbyWebpackEslintGraphqlSchemaReload = require(`./gatsby-webpack-eslint-graphql-schema-reload-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
 const eslintConfig = require(`./eslint-config`)
@@ -325,7 +327,7 @@ module.exports = async ({
           loaders.js({
             ...options,
             configFile: true,
-            compact: true,
+            compact: PRODUCTION,
           }),
         ],
       }
@@ -459,7 +461,10 @@ module.exports = async ({
         loaders.css({ ...options, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
-      if (!isSSR) use.unshift(loaders.miniCssExtract({ hmr: !options.modules }))
+      if (!isSSR)
+        use.unshift(
+          loaders.miniCssExtract({ hmr: !PRODUCTION && !options.modules })
+        )
 
       return {
         use,
@@ -605,6 +610,11 @@ module.exports = async ({
     }
   ) => new OptimizeCssAssetsPlugin(options)
 
+  plugins.fastRefresh = () =>
+    new ReactRefreshWebpackPlugin({
+      disableRefreshCheck: true,
+    })
+
   /**
    * Extracts css requires into a single file;
    * includes some reasonable defaults
@@ -619,6 +629,9 @@ module.exports = async ({
   plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
 
   plugins.extractStats = options => new GatsbyWebpackStatsExtractor(options)
+
+  plugins.eslintGraphqlSchemaReload = options =>
+    new GatsbyWebpackEslintGraphqlSchemaReload(options)
 
   return {
     loaders,

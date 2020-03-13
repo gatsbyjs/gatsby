@@ -12,7 +12,7 @@ const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 const { store, emitter } = require(`../redux/`)
 const { boundActionCreators } = require(`../redux/actions`)
@@ -70,7 +70,7 @@ const handleQuery = (
     if (
       isNewQuery ||
       oldQuery.hash !== query.hash ||
-      oldQuery.text !== query.text
+      oldQuery.query !== query.text
     ) {
       boundActionCreators.replaceStaticQuery({
         name: query.name,
@@ -146,7 +146,7 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
 
         If you're more experienced with GraphQL, you can also export GraphQL
         fragments from components and compose the fragments in the Page component
-        query and pass data down into the child component — http://graphql.org/learn/queries/#fragments
+        query and pass data down into the child component — https://graphql.org/learn/queries/#fragments
 
       `)
     }
@@ -237,6 +237,7 @@ const watch = async rootDir => {
       ...packagePaths,
     ])
     .on(`change`, path => {
+      report.pendingActivity({ id: `query-extraction` })
       debounceCompile()
     })
 
@@ -264,3 +265,5 @@ exports.startWatchDeletePage = () => {
     }
   })
 }
+
+exports.updateStateAndRunQueries = updateStateAndRunQueries

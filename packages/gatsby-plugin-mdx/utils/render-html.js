@@ -155,9 +155,8 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) =>
                 keys.map(({ body }) =>
                   renderMdxBody
                     ? renderMdxBody(body)
-                    : reporter.error(
-                        `gatsby-plugin-mdx: renderMdxBody was unavailable when rendering html.
->> This is a bug.`
+                    : new Error(
+                        `renderMdxBody was unavailable when rendering html.`
                       )
                 )
               )

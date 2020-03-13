@@ -1,5 +1,5 @@
 ---
-title: "Writing documentation with Docz"
+title: "Writing Documentation with Docz"
 ---
 
 Writing good documentation is important for your project maintainers (and for your future self). [Docz](https://www.docz.site) is a very nice documentation generator. It enables you to write interactive documentation for your React components with very little effort.
@@ -24,10 +24,10 @@ To set up Docz you need to install the Docz Gatsby theme and add some custom con
 cd my-gatsby-site-with-docz
 ```
 
-And install the `gatsby-theme-docz` package:
+And install required packages:
 
 ```shell
-npm install --save gatsby-theme-docz@next
+npm install --save gatsby-theme-docz docz
 ```
 
 Add `gatsby-theme-docz` under `plugins` in `gatsby-config.js`:

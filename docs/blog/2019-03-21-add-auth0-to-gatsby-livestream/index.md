@@ -19,16 +19,7 @@ We regularly get questions about how to add authentication to Gatsby, and while 
 
 On a recent livestream, [Ado Kukic](https://twitter.com/KukicAdo) helped me create an example for setting up auth for a Gatsby account page.
 
-<iframe
-  id="ytplayer"
-  title="Adding auth to Gatsby apps livestream on YouTube"
-  type="text/html"
-  width="720"
-  height="405"
-  src="https://www.youtube.com/embed/j-vuF2PYHmU?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx"
-  frameborder="0"
-  allowfullscreen
-/>
+https://youtu.be/j-vuF2PYHmU?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
 
 **This is part of the [Learn With Jason series](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx), which [streams live on Twitch][twitch] every Thursday at 9 am Pacific.**
 
@@ -43,7 +34,7 @@ The code we built is [available on GitHub](https://github.com/jlengstorf/gatsby-
 
 ## Additional links and resources
 
-- [Building Apps With Gatsby](/docs/building-apps-with-gatsby/)
+- [Adding App Functionality with Gatsby](/docs/adding-app-and-website-functionality/)
 - [Auth0](https://auth0.com/)
 - [Simple auth example in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/)
 - [Source code for the Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org), which uses Auth0 to authenticate users

@@ -1,13 +1,12 @@
 const uuidv4 = require(`uuid/v4`)
 const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
-  makeRemoteExecutableSchema,
   transformSchema,
   introspectSchema,
   RenameTypes,
-} = require(`graphql-tools`)
+} = require(`graphql-tools-fork`)
 const { createHttpLink } = require(`apollo-link-http`)
-const fetch = require(`node-fetch`)
+const nodeFetch = require(`node-fetch`)
 const invariant = require(`invariant`)
 
 const {
@@ -25,6 +24,7 @@ exports.sourceNodes = async (
     typeName,
     fieldName,
     headers = {},
+    fetch = nodeFetch,
     fetchOptions = {},
     createLink,
     createSchema,
@@ -51,8 +51,8 @@ exports.sourceNodes = async (
     link = createHttpLink({
       uri: url,
       fetch,
-      headers,
       fetchOptions,
+      headers: typeof headers === `function` ? await headers() : headers,
     })
   }
 
@@ -74,11 +74,6 @@ exports.sourceNodes = async (
     await cache.set(cacheKey, sdl)
   }
 
-  const remoteSchema = makeRemoteExecutableSchema({
-    schema: introspectionSchema,
-    link,
-  })
-
   const nodeId = createNodeId(`gatsby-source-graphql-${typeName}`)
   const node = createSchemaNode({
     id: nodeId,
@@ -96,15 +91,21 @@ exports.sourceNodes = async (
     return {}
   }
 
-  const schema = transformSchema(remoteSchema, [
-    new StripNonQueryTransform(),
-    new RenameTypes(name => `${typeName}_${name}`),
-    new NamespaceUnderFieldTransform({
-      typeName,
-      fieldName,
-      resolver,
-    }),
-  ])
+  const schema = transformSchema(
+    {
+      schema: introspectionSchema,
+      link,
+    },
+    [
+      new StripNonQueryTransform(),
+      new RenameTypes(name => `${typeName}_${name}`),
+      new NamespaceUnderFieldTransform({
+        typeName,
+        fieldName,
+        resolver,
+      }),
+    ]
+  )
 
   addThirdPartySchema({ schema })
 

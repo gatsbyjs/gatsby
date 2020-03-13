@@ -32,7 +32,7 @@ examples:
 - [Plugin README](/packages/gatsby-source-filesystem/)
 - [Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents, as well as tips for different types of guide articles.
 
 ## Writing process
 
@@ -82,13 +82,19 @@ Also, there's a community of contributors to support you. Bounce ideas off of th
 
 ### Use "you" as the pronoun
 
-Your articles should use the second person ("you") to help to give it a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
+In English, your articles should use the second person ("you") to provide a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
 
-Using "you" is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. You might notice that some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
+For other languages, refer to each translation's guidelines (if applicable) for consistent phrasing. When appropriate, we suggest starting with the informal "you" to keep a conversational tone.
+
+Using "you" in English is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. You might notice that some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
+
+When updating a doc to adhere to this part of the Gatsby Style Guide, one exception in English is when "we" refers to Gatsby's core processes. The subject is the code in this case, rather than a teacher/reader connotation, and should be rewritten or restructured to not confuse the reader about what they are responsible for doing when something is happening automatically behind the scenes.
 
 ### Avoid "easy" and "simple"
 
-Avoid using words like "easy", "simple," and "basic" because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, just use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
+Avoid using words like "easy", "simple" and "basic" because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
+
+For even more inclusive docs, avoid phrases that assume a reader's experience or skill level, like "just deploy it and you're done" or "for a refresher (referring to a completely different doc that someone may not have read)". Often, rephrasing results in stronger sentences that appeal to a wider range of contexts.
 
 ### Avoid emojis, slang, and metaphors
 
@@ -120,14 +126,44 @@ Hyperlinks should contain the clearest words to indicate where the link will lea
 ```markdown
 <!-- Good -->
 
-[Gatsby's docs](https://www.gatsbyjs.org/docs/)
+[Gatsby Cloud](https://www.gatsbyjs.com/cloud/)
 
 <!-- Bad -->
 
-[here](https://www.gatsbyjs.org/docs/ "Gatsby's docs")
+[here](https://www.gatsbyjs.com/cloud/ "Gatsby Cloud")
 ```
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
+
+### Use relative hyperlinks for local links
+
+When referencing another page within [gatsbyjs.org](https://www.gatsbyjs.org/) hyperlinks should use relative paths (not include the full domain). This guarantees that all links function when running locally or in preview.
+
+```markdown
+<!-- Good -->
+
+[Gatsby's glossay](/docs/glossary)
+
+<!-- Bad -->
+
+[Gatsby's glossay](https://www.gatsbyjs.org/docs/glossary)
+```
+
+Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be referenced using an absolute path (domain included). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)
+
+### Mark localhost URLs as code strings
+
+Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs on Gatsbyjs.org.
+
+```markdown
+<!-- Good -->
+
+open your site with `http://localhost:8000/`
+
+<!-- Bad -->
+
+open your site with [http://localhost:8000/](http://localhost:8000/)
+```
 
 ### Indicate when something is optional
 
@@ -143,7 +179,7 @@ abstract syntax tree (AST) is ..."
 
 ### Use SEO optimized titles
 
-This explains how to create a doc that shows up in search engines like Google or Bing.
+This explains how to account for Search Engine Optimization (SEO) and create a doc that shows up in search engines like Google or Bing.
 
 When you create the new guide or tutorial under `/docs/`, you’ll either create a file or a folder if there will be images pulled into the doc.
 
@@ -265,11 +301,11 @@ alert(s)
 
 #### Code formatting: Line highlighting
 
-You may also choose to include line highlighting in your code snippets, using the following keywords inline in the snippet:
+You may also choose to include line highlighting in your code snippets, using the following keywords as comments inline in the snippet:
 
 ##### `highlight-line`: highlights the current line
 
-````
+````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
@@ -291,7 +327,7 @@ module.exports = {
 
 ##### `highlight-next-line`: highlights the next line
 
-````
+````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
@@ -315,7 +351,7 @@ module.exports = {
 
 ##### `highlight-start` & `highlight-end`: highlights a range
 
-````
+````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
 	// highlight-start
@@ -341,9 +377,12 @@ module.exports = {
 
 ### Capitalize proper nouns
 
-Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in Guide articles.
+Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in blog posts, docs, and other learning materials on this website.
 
+- Gatsby
+- GraphQL
 - JavaScript (capital letters in "J" and "S" and no abbreviations)
+- Markdown
 - Node.js
 
 A full-stack developer (adjective form with a dash) works on the full stack
@@ -379,7 +418,7 @@ For words that have multiple spellings, prefer the US English word over British 
 
 ### Use apps that help you edit
 
-Use the [Hemingway App](https://www.hemingwayapp.com/). There’s nothing magical
+Use the [Hemingway App](https://hemingwayapp.com/). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
 style issues:
 
@@ -393,6 +432,17 @@ designed for scientific communication but might help avoid overspecialized
 wording.
 
 ## Best practices
+
+### Referencing Gatsby Cloud
+
+While Gatsby Cloud is hosted on a separate site, [gatsbyjs.com](https://www.gatsbyjs.com/), it is part of the Gatsby [founding organization](/blog/2018-05-24-launching-new-gatsby-company/) and focused specifically on Gatsby sites. There are various parts of the OSS documentation that may benefit from pointing to Gatsby Cloud as a potential platform to explore.
+
+The guidelines for doing so are as follows:
+
+- If possible, Gatsby Cloud should be accompanied by other relevant technologies.
+- If Gatsby Cloud does something by default, the docs should still include instructions for accessing that functionality manually.
+
+The spirit of these guidelines is to ensure that users are aware of multiple options for running their Gatsby site. With the exception of `gatsby-cli`, the open source documentation should generally preclude assumptions about technology choices.
 
 ### Support software versions
 

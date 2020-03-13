@@ -2,11 +2,9 @@
 title: GraphQL Concepts
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
-[GraphQL](http://graphql.org/).
+[GraphQL](https://graphql.org/).
 
 GraphQL was invented at Facebook to help product engineers _pull_ needed data into
 React components.
@@ -88,7 +86,7 @@ The result of the query is automatically inserted into your React component
 on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
-_Note:_ To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
+**Note:** To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
 
 ### Understanding the parts of a query
 
@@ -96,15 +94,15 @@ The following diagram shows a GraphQL query, with each word highlighted in a col
 
 ![GraphQL query diagram](./images/basic-query.png)
 
-#### Query Operation Type
+#### Query operation type
 
 The diagram marks the word `query` as the "Operation Type", for Gatsby's uses the only operation type you will deal with is `query`, this can be omitted from your queries if you prefer (like in the above example).
 
-#### Operation Name
+#### Operation name
 
 `SiteInformation` is marked as the "Operation Name", which is a unique name that you assign to a query yourself. This is similar to how you would name a function or a variable, and like a function this can be omitted if you would rather the query be anonymous.
 
-#### Query Fields
+#### Query fields
 
 The four words `site`, `id`, `siteMetadata`, and `title` are marked as "Fields". Any top-level fields -- like `site` in the diagram -- are sometimes referred to as **root level fields**, though the name doesn't signify functional significance as all fields in GraphQL queries behave the same.
 
@@ -116,14 +114,14 @@ as we do and find it useful for all your projects.
 When starting out with GraphQL, we recommend the following two tutorials:
 
 - https://www.howtographql.com/
-- http://graphql.org/learn/
+- https://graphql.org/learn/
 
 [The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
 
 ## How do GraphQL and Gatsby work together?
 
 One of the great things about GraphQL is how flexible it is. People use GraphQL
-with [many different programming languages](http://graphql.org/code/) and for web and native apps.
+with [many different programming languages](https://graphql.org/code/) and for web and native apps.
 
 Most people run GraphQL on a server to respond live to requests for
 data from clients. You define a schema (a schema is a formal way of describing
@@ -142,8 +140,7 @@ a live GraphQL server from the browser.
 
 Most usages of GraphQL involve manually creating a GraphQL schema.
 
-With Gatsby, we use plugins which fetch data from different sources. We then use that data
-to automatically _infer_ a GraphQL schema.
+Gatsby uses plugins which can fetch data from different sources. That data is used to automatically _infer_ a GraphQL schema.
 
 If you give Gatsby data that looks like this:
 
@@ -155,7 +152,7 @@ If you give Gatsby data that looks like this:
 
 Gatsby will create a schema that looks something like this:
 
-```
+```text
 title: String
 ```
 
@@ -179,11 +176,11 @@ People often store dates like "2018-01-05" but want to display the date in some 
 }
 ```
 
-See the full list of formatting options by viewing our [GraphQL Reference page](/docs/graphql-reference/#dates).
+See the full list of formatting options by viewing our [GraphQL reference page](/docs/graphql-reference/#dates).
 
 ### Markdown
 
-Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/), then in your queries, you can specify you want the transformed HTML version instead of markdown:
+Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/), then in your queries, you can specify if you want the transformed HTML version instead of markdown:
 
 ```graphql
 markdownRemark {
@@ -235,7 +232,7 @@ See also the following blog posts:
 
 ### Fragments
 
-Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
+Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](https://graphql.org/learn/queries/#fragments).
 
 If you wish to define your own fragments for use in your application, you can use named exports to export them in any JavaScript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 
@@ -327,7 +324,7 @@ export const query = graphql`
 `
 ```
 
-Now, we can use the component together with the exported fragment in our index page.
+Now, you can use the component together with the exported fragment in your index page.
 
 ```jsx:title=src/pages/index.jsx
 import React from "react"
@@ -354,6 +351,7 @@ export const query = graphql`
       totalCount
       edges {
         node {
+          id
           ...IndexPostFragment
         }
       }
@@ -369,7 +367,7 @@ export const query = graphql`
 
 ### Getting started with GraphQL
 
-- http://graphql.org/learn/
+- https://graphql.org/learn/
 - https://www.howtographql.com/
 - https://reactjs.org/blog/2015/05/01/graphql-introduction.html
 - https://services.github.com/on-demand/graphql/

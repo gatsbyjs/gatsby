@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.34...gatsby-graphiql-explorer@0.2.35) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [0.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.33...gatsby-graphiql-explorer@0.2.34) (2020-02-10)
+
+### Bug Fixes
+
+- **docs:** fix links to localhost on docs/blog/tutorials ... ([#21179](https://github.com/gatsbyjs/gatsby/issues/21179)) ([c9b0fa3](https://github.com/gatsbyjs/gatsby/commit/c9b0fa3))
+- **gatsby-graphiql-explorer:** Allow graphiql to set initial query variables from query string ([#21158](https://github.com/gatsbyjs/gatsby/issues/21158)) ([daaa3a8](https://github.com/gatsbyjs/gatsby/commit/daaa3a8))
+
+## [0.2.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.32...gatsby-graphiql-explorer@0.2.33) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [0.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.31...gatsby-graphiql-explorer@0.2.32) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [0.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.29...gatsby-graphiql-explorer@0.2.31) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [0.2.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.29...gatsby-graphiql-explorer@0.2.30) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [0.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.28...gatsby-graphiql-explorer@0.2.29) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [0.2.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.27...gatsby-graphiql-explorer@0.2.28) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [0.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.26...gatsby-graphiql-explorer@0.2.27) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [0.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.25...gatsby-graphiql-explorer@0.2.26) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+## [0.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.24...gatsby-graphiql-explorer@0.2.25) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [0.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.23...gatsby-graphiql-explorer@0.2.24) (2019-10-14)
+
+### Bug Fixes
+
+- update dependency webpack to v4.41.1 ([#18504](https://github.com/gatsbyjs/gatsby/issues/18504)) ([a93df04](https://github.com/gatsbyjs/gatsby/commit/a93df04))
+
 ## [0.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.22...gatsby-graphiql-explorer@0.2.23) (2019-10-09)
 
 **Note:** Version bump only for package gatsby-graphiql-explorer

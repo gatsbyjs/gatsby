@@ -67,6 +67,8 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
   workbox.routing.registerRoute(customRoute)
   ```
 
+- `debug` specifies whether Workbox should show debugging output in the browser console at runtime. When undefined, defaults to showing debug messages on `localhost` only.
+
 - `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration). For example:
 
   ```javascript:title=gatsby-config.js
@@ -195,7 +197,15 @@ Gatsby offers great SEO capabilities and that is no different with `gatsby-plugi
 
 To see the HTML data that crawlers will receive, run this in your terminal:
 
-```bash
+**on Windows (using powershell):**
+
+```shell
+Invoke-WebRequest https://www.yourdomain.tld | Select -ExpandProperty Content
+```
+
+**on Mac OS/Linux:**
+
+```shell
 curl https://www.yourdomain.tld
 ```
 

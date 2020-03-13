@@ -3,14 +3,13 @@ require(`v8-compile-cache`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
-const getPublicPath = require(`./get-public-path`)
+const { getPublicPath } = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { withBasePath, withTrailingSlash } = require(`./path`)
+import { withBasePath, withTrailingSlash } from "./path"
 const getGatsbyDependents = require(`./gatsby-dependents`)
 
 const apiRunnerNode = require(`./api-runner-node`)
@@ -202,14 +201,15 @@ module.exports = async (
 
     switch (stage) {
       case `develop`:
-        configPlugins = configPlugins.concat([
-          plugins.hotModuleReplacement(),
-          plugins.noEmitOnErrors(),
-
-          new FriendlyErrorsWebpackPlugin({
-            clearConsole: false,
-          }),
-        ])
+        configPlugins = configPlugins
+          .concat([
+            process.env.GATSBY_HOT_LOADER === `fast-refresh` &&
+              plugins.fastRefresh(),
+            plugins.hotModuleReplacement(),
+            plugins.noEmitOnErrors(),
+            plugins.eslintGraphqlSchemaReload(),
+          ])
+          .filter(Boolean)
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
@@ -319,13 +319,16 @@ module.exports = async (
 
         // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
         // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
-        configRules.push({
-          include: /node_modules\/react-dom/,
-          test: /\.jsx?$/,
-          use: {
-            loader: require.resolve(`./webpack-hmr-hooks-patch`),
-          },
-        })
+        // TODO: Remove entire block when we make fast-refresh the default
+        if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
+          configRules.push({
+            include: /node_modules\/react-dom/,
+            test: /\.jsx?$/,
+            use: {
+              loader: require.resolve(`./webpack-hmr-hooks-patch`),
+            },
+          })
+        }
 
         break
       }
@@ -383,9 +386,14 @@ module.exports = async (
           require.resolve(`@babel/runtime/package.json`)
         ),
         "core-js": path.dirname(require.resolve(`core-js/package.json`)),
-        "react-hot-loader": path.dirname(
-          require.resolve(`react-hot-loader/package.json`)
-        ),
+        // TODO: Remove entire block when we make fast-refresh the default
+        ...(process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+          ? {
+              "react-hot-loader": path.dirname(
+                require.resolve(`react-hot-loader/package.json`)
+              ),
+            }
+          : {}),
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
@@ -412,6 +420,10 @@ module.exports = async (
       )
     }
 
+    if (stage === `build-javascript` && program.profile) {
+      resolve.alias[`react-dom$`] = `react-dom/profiling`
+      resolve.alias[`scheduler/tracing`] = `scheduler/tracing-profiling`
+    }
     return resolve
   }
 
@@ -474,6 +486,10 @@ module.exports = async (
       runtimeChunk: {
         name: `webpack-runtime`,
       },
+      // use hashes instead of ids for module identifiers
+      // TODO update to deterministic in webpack 5 (hashed is deprecated)
+      // @see https://webpack.js.org/guides/caching/#module-identifiers
+      moduleIds: `hashed`,
       splitChunks: {
         name: false,
         chunks: `all`,
@@ -502,12 +518,24 @@ module.exports = async (
             test: /\.(css|scss|sass|less|styl)$/,
             chunks: `all`,
             enforce: true,
+            // this rule trumps all other rules because of the priority.
+            priority: 10,
           },
         },
       },
       minimizer: [
         // TODO: maybe this option should be noMinimize?
-        !program.noUglify && plugins.minifyJs(),
+        !program.noUglify &&
+          plugins.minifyJs(
+            program.profile
+              ? {
+                  terserOptions: {
+                    keep_classnames: true,
+                    keep_fnames: true,
+                  },
+                }
+              : {}
+          ),
         plugins.minifyCss(),
       ].filter(Boolean),
     }
@@ -534,14 +562,7 @@ module.exports = async (
     ]
 
     // Packages we want to externalize because meant to be user-provided
-    const userExternalList = [
-      `es6-promise`,
-      `minimatch`,
-      `pify`,
-      `react-helmet`,
-      `react`,
-      /^react-dom\//,
-    ]
+    const userExternalList = [`react-helmet`, `react`, /^react-dom\//]
 
     const checkItem = (item, request) => {
       if (typeof item === `string` && item === request) {

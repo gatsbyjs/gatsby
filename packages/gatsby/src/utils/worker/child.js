@@ -1,5 +1,7 @@
 // Note: this doesn't check for conflicts between module exports
+import { getFilePath } from "./page-data"
+
 module.exports = {
-  ...require(`./page-data`),
+  getFilePath,
   ...require(`./render-html`),
 }

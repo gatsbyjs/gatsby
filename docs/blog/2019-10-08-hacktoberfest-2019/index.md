@@ -27,7 +27,7 @@ You may find these links helpful!
 - [Code of Conduct](https://www.gatsbyjs.org/contributing/code-of-conduct/)
 - [How to Open a Pull Request](https://www.gatsbyjs.org/contributing/how-to-open-a-pull-request/)
 
-PS: When your first PR is merged, you can claim some [free swag from the Gatsby Store](https://www.gatsbyjs.org/docs/contributor-swag/)! 😄
+PS: When your first PR is merged, you can claim some [free swag from the Gatsby Store](https://www.gatsbyjs.org/contributing/contributor-swag/)! 😄
 
 ## Issue areas
 
@@ -45,7 +45,7 @@ Want to do help us translate the Gatsby docs? Consider contributing to an existi
 
 - Spanish repo: https://github.com/gatsbyjs/gatsby-es
 - Russian repo: https://github.com/gatsbyjs/gatsby-ru
-- New translation repo request: https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md
+- New translation repo request: https://github.com/gatsbyjs/gatsby/issues/new?template=new_translation.md
 
 ### [OSS][oss]
 
@@ -58,6 +58,11 @@ Make OSS contributions to Gatsby plugins, transformers and core by searching [OS
 Learn how to contribute to the Gatsby Ecosystem (starter library, site showcase, themes and plugin library, etc.) by reading the doc on [Community Contributions](https://www.gatsbyjs.org/contributing/community-contributions/). You can gain credit for both Hacktoberfest and Gatsby swag by submitting a PR with your Gatsby project to the starter library or site showcase in this repo. You can also check out issues labeled with [ecosystem](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3AHacktoberfest+label%3A%F0%9F%8E%AFEcosystem+) to get Hacktoberfest credit!
 
 Gatsby [plugins](https://www.gatsbyjs.org/docs/creating-plugins/) and [themes](https://www.gatsbyjs.org/docs/themes/building-themes/) (a type of plugin) [published with the necessary files](https://www.gatsbyjs.org/contributing/submit-to-plugin-library/) can also count toward Hacktoberfest credit and earn Gatsby swag. This post will list all plugins created during Hacktoberfest: create your own and add it here in a Pull Request to get credit!
+
+#### Plugins Created During Hacktoberfest
+
+- [gatsby-source-etsy](https://www.npmjs.com/package/gatsby-source-etsy): Source plugin for creative goods shop listings
+- [gatsby-plugin-colorblind-filters](https://www.npmjs.com/package/gatsby-plugin-colorblind-filters): Color blindness simulation for Gatsby sites
 
 ## Gatsby's Hacktoberfest Goals
 

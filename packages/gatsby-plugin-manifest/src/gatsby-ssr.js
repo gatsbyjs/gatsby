@@ -45,7 +45,7 @@ exports.onRenderBody = (
       headComponents.push(
         <link
           key={`gatsby-plugin-manifest-icon-link`}
-          rel="shortcut icon"
+          rel="icon"
           href={withPrefix(addDigestToPath(favicon, iconDigest, cacheBusting))}
         />
       )

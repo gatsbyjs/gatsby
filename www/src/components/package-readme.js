@@ -5,12 +5,11 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 
 import { Link } from "gatsby"
-import Container from "../components/container"
-import MarkdownPageFooter from "../components/markdown-page-footer"
-import FooterLinks from "../components/shared/footer-links"
-import GithubIcon from "react-icons/lib/go/mark-github"
-import GatsbyIcon from "../components/gatsby-monogram"
-import { linkStyles } from "../utils/styles"
+import Container from "./container"
+import MarkdownPageFooter from "./markdown-page-footer"
+import FooterLinks from "./shared/footer-links"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import GatsbyIcon from "./gatsby-monogram"
 
 const PackageReadMe = props => {
   const { page, packageName, excerpt, html, githubUrl, timeToRead } = props
@@ -34,7 +33,7 @@ const PackageReadMe = props => {
             display: `flex`,
             flexWrap: `wrap`,
             justifyContent: `space-between`,
-            pb: 9,
+            pb: 6,
             "&&:hover": {
               color: `inherit`,
             },
@@ -50,7 +49,7 @@ const PackageReadMe = props => {
               packageName[0] !== `@` && (
                 <div
                   sx={{
-                    ...linkStyles,
+                    variant: `links.muted`,
                     mr: 8,
                     "&&": {
                       border: 0,
@@ -76,7 +75,7 @@ const PackageReadMe = props => {
                 </div>
               )}
             <a
-              css={{ ...linkStyles }}
+              sx={{ variant: `links.muted` }}
               href={githubUrl}
               aria-labelledby="github-link-label"
             >
@@ -85,7 +84,10 @@ const PackageReadMe = props => {
             </a>
           </div>
           {githubUrl && (
-            <Link to={`/starters?d=${packageName}`} css={{ ...linkStyles }}>
+            <Link
+              to={`/starters?d=${packageName}`}
+              sx={{ variant: `links.muted` }}
+            >
               See starters using this
             </Link>
           )}

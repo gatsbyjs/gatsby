@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const Card = ({ children }) => (
   <div
@@ -29,10 +29,9 @@ const Card = ({ children }) => (
   >
     <div
       sx={{
-        p: 6,
-        pb: 0,
+        p: 8,
+        pb: [0, 8],
         transform: `translateZ(0)`,
-        [mediaQueries.sm]: { p: 8 },
       }}
     >
       {children}

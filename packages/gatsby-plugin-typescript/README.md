@@ -17,7 +17,7 @@ Provides drop-in support for TypeScript and TSX.
 ```javascript
 module.exports = {
   // ...,
-  plugins: [...`gatsby-plugin-typescript`],
+  plugins: [`gatsby-plugin-typescript`],
 }
 ```
 
@@ -63,6 +63,10 @@ compiler is not involved, the following applies:
 > cannot be compiled to ES.next. Workaround: Convert
 > to using export default and export const,
 > and import x, {y} from "z".
+>
+> Does not support baseUrl.
+> Workaround: use [gatsby-plugin-root-import](https://www.gatsbyjs.org/packages/gatsby-plugin-root-import/)
+> and configure it to point the baseUrl value (also set baseUrl option in tsconfig.json file).
 
 https://babeljs.io/docs/en/babel-plugin-transform-typescript.html
 
@@ -73,3 +77,9 @@ Visual Studio Code is very good in this regard.
 
 In addition, you can see the instructions in [TypeScript-Babel-Starter](https://github.com/Microsoft/TypeScript-Babel-Starter)
 for setting up a `type-check` task.
+
+## ESLint
+
+This plugin supports linting TSX with [typescript-eslint](https://typescript-eslint.io) using [Gatsby's default ESLint config](https://www.gatsbyjs.org/docs/eslint/). To enable linting TSX, install `typescript`.
+
+`npm install typescript`

@@ -1,12 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Link } from "gatsby"
-import ChevronRight from "react-icons/lib/md/chevron-right"
-import ChevronLeft from "react-icons/lib/md/chevron-left"
+import Link from "./localized-link"
+import {
+  MdChevronRight as ChevronRight,
+  MdChevronLeft as ChevronLeft,
+} from "react-icons/md"
+import { getItemList } from "../utils/sidebar/item-list"
 import getActiveItem from "../utils/sidebar/get-active-item"
 import getActiveItemParents from "../utils/sidebar/get-active-item-parents"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 const Separator = ({ character = <ChevronRight /> }) => (
   <span sx={{ my: 0, mx: 1 }} role="presentation">
@@ -19,20 +21,21 @@ const BreadcrumbNav = ({ children, mobile = false }) => (
     aria-label="breadcrumb"
     sx={{
       color: `textMuted`,
-      display: `${mobile ? `inherit` : `none`}`,
+      display: [
+        `${mobile ? `inherit` : `none`}`,
+        null,
+        `${mobile ? `none` : `inherit`}`,
+      ],
       fontSize: 1,
-      mb: 6,
-      [mediaQueries.md]: {
-        display: `${mobile ? `none` : `inherit`}`,
-        mb: 8,
-      },
+      mb: [6, null, 8],
     }}
   >
     {children}
   </nav>
 )
 
-const Breadcrumb = ({ itemList, location }) => {
+const Breadcrumb = ({ location }) => {
+  const itemList = getItemList(location.pathname)
   // provide escape if no itemList is provided so breadcrumb isn't rendered
   if (itemList === undefined) return null
 

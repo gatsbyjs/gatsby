@@ -5,10 +5,7 @@ import propTypes from "@styled-system/prop-types"
 
 import { Flex } from "./system"
 
-const styleProps = compose(
-  border,
-  typography
-)
+const styleProps = compose(border, typography)
 
 const BadgeBase = styled(Flex)(
   {
@@ -31,7 +28,7 @@ BadgeBase.defaultProps = {
   borderColor: `yellow.10`,
   borderRadius: 5,
   color: `yellow.90`,
-  fontFamily: `system`,
+  fontFamily: `body`,
   fontSize: 0,
   fontWeight: `body`,
   letterSpacing: `tracked`,

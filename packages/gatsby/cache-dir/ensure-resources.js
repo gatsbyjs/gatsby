@@ -1,5 +1,5 @@
 import React from "react"
-import loader from "./loader"
+import loader, { PageResourceStatus } from "./loader"
 import shallowCompare from "shallow-compare"
 
 class EnsureResources extends React.Component {
@@ -21,12 +21,14 @@ class EnsureResources extends React.Component {
       }
     }
 
-    return null
+    return {
+      location: { ...location },
+    }
   }
 
   loadResources(rawPath) {
     loader.loadPage(rawPath).then(pageResources => {
-      if (pageResources && pageResources.status !== `error`) {
+      if (pageResources && pageResources.status !== PageResourceStatus.Error) {
         this.setState({
           location: { ...window.location },
           pageResources,
@@ -72,6 +74,14 @@ class EnsureResources extends React.Component {
   }
 
   render() {
+    if (process.env.NODE_ENV !== `production` && !this.state.pageResources) {
+      throw new Error(
+        `EnsureResources was not able to find resources for path: "${this.props.location.pathname}"
+This typically means that an issue occurred building components for that path.
+Run \`gatsby clean\` to remove any cached elements.`
+      )
+    }
+
     return this.props.children(this.state)
   }
 }

@@ -1,14 +1,8 @@
 const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
-const {
-  GraphQLList,
-  getNullableType,
-  getNamedType,
-  Kind,
-  GraphQLInterfaceType,
-} = require(`graphql`)
-const { getValueAt } = require(`../utils/get-value-at`)
+const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
+import { getValueAt } from "../utils/get-value-at"
 
 const findMany = typeName => (source, args, context, info) =>
   context.nodeModel.runQuery(
@@ -137,7 +131,7 @@ const link = (options = {}, fieldConfig) => async (
   const returnType = getNullableType(options.type || info.returnType)
   const type = getNamedType(returnType)
 
-  if (options.by === `id` && !(type instanceof GraphQLInterfaceType)) {
+  if (options.by === `id`) {
     if (Array.isArray(fieldValue)) {
       return context.nodeModel.getNodesByIds(
         { ids: fieldValue, type: type },
@@ -157,6 +151,12 @@ const link = (options = {}, fieldConfig) => async (
   const oneOf = value => {
     return { in: value }
   }
+
+  // Return early if fieldValue is [] since { in: [] } doesn't make sense
+  if (Array.isArray(fieldValue) && fieldValue.length === 0) {
+    return fieldValue
+  }
+
   const operator = Array.isArray(fieldValue) ? oneOf : equals
   args.filter = options.by.split(`.`).reduceRight((acc, key, i, { length }) => {
     return {

@@ -11,7 +11,9 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 const telemetry = require(`gatsby-telemetry`)
 
-const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const {
+  detectPortInUseAndPrompt,
+} = require(`../utils/detect-port-in-use-and-prompt`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 
@@ -67,9 +69,11 @@ module.exports = async program => {
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
-  const config = await preferDefault(
-    getConfigFile(program.directory, `gatsby-config`)
+  const { configModule } = await getConfigFile(
+    program.directory,
+    `gatsby-config`
   )
+  const config = preferDefault(configModule)
 
   const { pathPrefix: configPathPrefix } = config || {}
 

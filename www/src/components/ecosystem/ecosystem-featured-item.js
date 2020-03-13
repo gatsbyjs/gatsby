@@ -3,11 +3,13 @@ import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import StarIcon from "react-icons/lib/md/star"
-import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
+import {
+  MdStar as StarIcon,
+  MdArrowDownward as ArrowDownwardIcon,
+} from "react-icons/md"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
@@ -25,7 +27,7 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 
 export const BlockLink = styled(Link)`
   background: ${p => p.theme.colors.card.background};
-  border-radius: ${p => p.theme.radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   box-shadow: ${p => p.theme.shadows.raised};
   display: flex;
   flex-direction: column;
@@ -59,13 +61,13 @@ const Header = styled(`header`)`
 
   span {
     align-items: center;
-    color: ${p => p.theme.colors.lilac};
+    color: ${p => p.theme.colors.textMuted};
     display: flex;
     font-size: ${p => p.theme.fontSizes[1]};
     padding-left: ${p => p.theme.space[3]};
 
     svg {
-      fill: ${p => p.theme.colors.lilac};
+      fill: ${p => p.theme.colors.textMuted};
       height: auto;
       margin-left: ${p => p.theme.space[1]};
       width: ${p => p.theme.space[4]};

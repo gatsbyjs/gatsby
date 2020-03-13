@@ -9,7 +9,7 @@ Many Gatsby plugins and themes require building native Node.js modules, e.g.
 To do so, you need a functional build environment (Python and Visual C++ Build
 Tools).
 
-The easy way to setup your build environment on Windows is to install the
+The recommended way to setup your build environment on Windows is to install the
 [`windows-build-tools`](https://github.com/felixrieseberg/windows-build-tools)
 package by running `npm install windows-build-tools -g` on an admin PowerShell
 console. Upon installing this package, it downloads and installs Visual C++
@@ -87,6 +87,4 @@ Sharp uses a C library, libvips. If you are having issues while installing Sharp
 
 ## Windows Subsystem for Linux
 
-If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. In the above scenario you would download e.g. Ubuntu, open the terminal, [install Node](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions), and run `sudo apt-get install build-essential` in the terminal — and the compilation works way more reliable. Please note that you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
-
-You can also visit [Gatsby on Linux](/docs/gatsby-on-linux/) to learn more.
+If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. For more explicit instructions on getting set up with WSL, see the [Gatsby on Linux](/docs/gatsby-on-linux/#windows-subsystem-linux-wsl) documentation.

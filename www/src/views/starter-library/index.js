@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
-import Layout from "../../components/layout"
 import RRSM from "../../utils/reach-router-state-manager"
 import queryString from "query-string"
 
@@ -23,7 +22,7 @@ class StarterLibraryPage extends Component {
         : `Library` // if no search term or single dependency
 
     return (
-      <Layout location={location}>
+      <>
         <Helmet>
           <title>Starter Library</title>
           <meta
@@ -55,7 +54,7 @@ class StarterLibraryPage extends Component {
           )}
           defaultSearchState={{ v: [`2`] }}
         />
-      </Layout>
+      </>
     )
   }
 }

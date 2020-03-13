@@ -5,7 +5,7 @@ import styled from "@emotion/styled"
 
 import Button from "../button"
 import { rhythm } from "../../utils/typography"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const ICON_SIZE = 7
 
@@ -21,7 +21,7 @@ export const Header = styled(`header`)`
 
 export const Name = styled(`h3`)`
   align-items: center;
-  color: ${p => p.theme.colors.lilac};
+  color: ${p => p.theme.colors.textMuted};
   display: flex;
   font-size: ${p => p.theme.fontSizes[2]};
   font-weight: ${p => p.theme.fontWeights.body};

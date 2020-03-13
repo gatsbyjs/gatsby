@@ -176,12 +176,12 @@ describe(`Define parent-child relationships with field extensions`, () => {
     await buildSchema()
     expect(report.warn).toBeCalledTimes(1)
     expect(report.warn).toBeCalledWith(
-      `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
+      `The type \`Parent\` does not explicitly define the field \`childChild\`.\n` +
+        `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
         `extension set to \`false\`, automatically adding fields for ` +
         `children types is deprecated.\n` +
         `In Gatsby v3, only children fields explicitly set with the ` +
-        `\`childOf\` extension will be added.\n` +
-        `For example, in Gatsby v3, \`Parent\` will not get a \`childChild\` field.`
+        `\`childOf\` extension will be added.\n`
     )
   })
 
@@ -871,6 +871,29 @@ describe(`Define parent-child relationships with field extensions`, () => {
       `)
     )
     await expect(buildSchema()).resolves.toEqual(expect.any(Object))
+  })
+
+  it(`adds root field arguments for searchable child fields (when there are no data nodes)`, async () => {
+    dispatch(
+      createTypes(`
+        type Parent implements Node {
+          id: ID!
+        }
+        type ChildWithoutSourceNodes implements Node @childOf(types: ["Parent"]) {
+          name: String
+        }
+      `)
+    )
+    const { schema } = await buildSchema()
+    const expectedArg = schema
+      .getType(`Query`)
+      .getFields()
+      .parent.args.find(arg => arg.name === `childChildWithoutSourceNodes`)
+    const expectedArgType = schema.getType(`ChildWithoutSourceNodesFilterInput`)
+
+    expect(expectedArg).toBeDefined()
+    expect(expectedArgType).toBeDefined()
+    expect(expectedArg.type).toStrictEqual(expectedArgType)
   })
 })
 

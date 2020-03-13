@@ -6,7 +6,7 @@ import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
@@ -191,7 +191,7 @@ class SidebarBody extends Component {
   }
 
   render() {
-    const { closeSidebar, itemList, location, onPositionChange } = this.props
+    const { closeSidebar, itemList, location } = this.props
     const { openSectionHash, activeItemLink, activeItemParents } = this.state
 
     const isSingle = itemList.filter(item => item.level === 0).length === 1
@@ -224,16 +224,6 @@ class SidebarBody extends Component {
           </header>
         )}
         <nav
-          onScroll={({ nativeEvent }) => {
-            // get proper scroll position
-            const position = nativeEvent.target.scrollTop
-            const { pathname } = location
-            const sidebarType = pathname.split(`/`)[1]
-
-            requestAnimationFrame(() => {
-              onPositionChange(sidebarType, position)
-            })
-          }}
           ref={this.scrollRef}
           sx={{
             WebkitOverflowScrolling: `touch`,
@@ -242,7 +232,7 @@ class SidebarBody extends Component {
             display: `block`,
             overflowY: `auto`,
             transition: t =>
-              `opacity ${t.transition.speed.slow} ${t.transition.curve.default}`,
+              `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
             zIndex: 10,
             borderRightWidth: `1px`,
             borderRightStyle: `solid`,

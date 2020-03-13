@@ -70,7 +70,7 @@ If you're building a small site, one efficient way to build it is to pull in uns
 
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
-[GraphQL](http://graphql.org/).
+[GraphQL](https://graphql.org/).
 
 GraphQL was invented at Facebook to help product engineers _pull_ needed data into
 components.
@@ -274,7 +274,7 @@ It worked! 🎉
 
 ![Page title pulling from siteMetadata](site-metadata-title.png)
 
-The basic GraphQL query that retrieves the `title` in our `about.js` changes above is:
+The basic GraphQL query that retrieves the `title` in your `about.js` changes above is:
 
 ```graphql:title=src/pages/about.js
 {
@@ -292,7 +292,7 @@ Page queries live outside of the component definition -- by convention at the en
 
 ### Use a StaticQuery
 
-[StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like our `layout.js` component), to retrieve data via GraphQL queries.
+[StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries.
 Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/).
 
 Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done, your file will look like this:

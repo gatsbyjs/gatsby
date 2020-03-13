@@ -26,7 +26,7 @@ In terms of what this means to you as a marketer – it's essentially a modern w
 
 ![What is JAMstack](./images/whatisjamstack.jpeg)
 
-Put simply, a JAMstack website has an unlimited ecosystem of all of the tools and services you need in the background, but the actual site itself on the front-end is just HTML.
+Put simply, a JAMstack website has an unlimited ecosystem of all of the tools and services you need in the background, but the actual site itself on the frontend is just HTML.
 
 Building your marketing site on the JAMstack is an efficient and reliable way to combine all of your content and channels and serve it up as a lightning-fast website that your visitors will love. If you need to add ecommerce, paywalls, a podcast or some other content to your site in the future, your team won't have to figure out how to get everything to play ball with your CMS or build a new site from scratch. Instead they'll be able to connect new APIs or services to your existing site.
 
@@ -34,7 +34,9 @@ Building your marketing site on the JAMstack is an efficient and reliable way to
 Using a traditional CMS is more restrictive and opinionated than this. You're constrained to the platform you choose from the get-go and forced to accept additional "features" that you might not even need. While these platforms have provided us with an excellent way to publish websites in the past, it's changing for the future.
 
 <Pullquote>
-Thanks to progression with modern browsers, static site generators, APIs and content delivery networks, websites can be built as modular stacks that aren't tied to specific technologies.
+  Thanks to progression with modern browsers, static site generators, APIs and
+  content delivery networks, websites can be built as modular stacks that aren't
+  tied to specific technologies.
 </Pullquote>
 
 **Going back to the benefits:** better performance, higher security, cheaper to scale & a better experience. These aren't just developer benefits, they apply directly to the marketing team too. Better performance means better site engagement and improved SEO. Higher security means less chance of not hitting your stretch goal next June because the site got hacked. Cheaper to scale means there will be less roadblocks in your way when you want to add that Shopify store or when a big campaign sends 1M visitors to the site. Better experience — who wouldn't want that?
@@ -64,7 +66,7 @@ Site performance and site speed is an increasingly important ranking factor. Not
 
 Using plugins to assist the speed at which you can launch marketing campaigns makes sense. But if the end result is hindered by poor performance and reduced page engagement – does it still make sense?
 
-Ditching the concept of the plugin and opting for a JAMstack site which is "just HTML" doesn't actually mean you have to give up functionality, or suddenly need to know how to code like a front-end developer to manage a site and its content. You can still achieve the same results with an ecosystem of tools and services that are tailored specifically for you. Yes it takes some development up-front (let's be real, so does any website) - but the payoff is huge!
+Ditching the concept of the plugin and opting for a JAMstack site which is "just HTML" doesn't actually mean you have to give up functionality, or suddenly need to know how to code like a frontend developer to manage a site and its content. You can still achieve the same results with an ecosystem of tools and services that are tailored specifically for you. Yes it takes some development up-front (let's be real, so does any website) - but the payoff is huge!
 
 ## Example: Ghost Docs site performance
 
@@ -85,17 +87,21 @@ Since the SEO health of the site was so bad before, it took a few days for Googl
 In the first month after we launched, impressions in Google were up 44% and clicks were up 12%. By month two, impressions were up 73% and clicks 43%. Beyond this things started to stabilise a little on a MoM basis, but overall things are trending upward, with plenty of new search terms appearing in search console every week.
 
 <figure>
-  <img alt="Ghost Docs Website Performance" src="./images/googleanalytics.png" />
+  <img
+    alt="Ghost Docs Website Performance"
+    src="./images/googleanalytics.png"
+  />
   <figcaption>
-    Month 3 and 4 compared to the first two months after launching the new Docs site
+    Month 3 and 4 compared to the first two months after launching the new Docs
+    site
   </figcaption>
 </figure>
-
 <figure>
-  <img alt="Ghost Docs Website Growth" src="./images/googleanalyticsgrowth.png" />
-  <figcaption>
-    Growth over the past 6 months
-  </figcaption>
+  <img
+    alt="Ghost Docs Website Growth"
+    src="./images/googleanalyticsgrowth.png"
+  />
+  <figcaption>Growth over the past 6 months</figcaption>
 </figure>
 
 As always, there is still work to do to ensure the site ranks well for the most relevant terms, but right now the work put in upfront to improve the site is paying off handsomely. From a marketers perspective it was really exciting - I've never migrated a site with such instant success before.
@@ -103,14 +109,14 @@ As always, there is still work to do to ensure the site ranks well for the most 
 **Here's the stack we're using:**
 
 - [Ghost](https://ghost.org/) delivering content via the API
-- A front-end built in React with [Gatsby](https://gatsbyjs.org/) (our static site generator of choice)
+- A frontend built in React with [Gatsby](https://gatsbyjs.org/) (our static site generator of choice)
 - Deployed with [Netlifly](https://netlify.com/) (really nifty content delivery network)
 - [Algolia](https://algolia.com/) powering the search functionality
 - [Zapier](https://zapier.com/) to automate community feedback into Slack for content improvements
 
 We have also built and contributed an [advanced sitemap plugin](/packages/gatsby-plugin-advanced-sitemap/?=sitemap) which automatically builds a sitemap for any Gatsby project.
 
-Much of the SEO functionality is being pulled directly from Ghost via the API (which has all of the structured data, custom meta data, canonicals etc built-in). This means I can manage most of the content and meta data directly in the Ghost admin client. When I save new changes they're pushed into the static front-end via Netlify – it's a fantastic workflow!
+Much of the SEO functionality is being pulled directly from Ghost via the API (which has all of the structured data, custom meta data, canonicals etc built-in). This means I can manage most of the content and meta data directly in the Ghost admin client. When I save new changes they're pushed into the static frontend via Netlify – it's a fantastic workflow!
 
 ![Netlify](./images/netlify.png)
 

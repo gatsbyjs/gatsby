@@ -1,23 +1,25 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { useColorMode } from "theme-ui"
-import { Link } from "gatsby"
-import GithubIcon from "react-icons/lib/go/mark-github"
-import TwitterIcon from "react-icons/lib/fa/twitter"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import {
+  FaTwitter as TwitterIcon,
+  FaDiscord as DiscordIcon,
+} from "react-icons/fa"
 
-import SearchForm from "../components/search-form"
-import DiscordIcon from "../components/discord"
+import Link from "./localized-link"
+import SearchForm from "./search-form"
 import logo from "../assets/logo.svg"
 import logoInverted from "../assets/logo-inverted.svg"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { breakpointGutter } from "../utils/styles"
-import DarkModeToggle from "../components/dark-mode-toggle"
+import DarkModeToggle from "./dark-mode-toggle"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
 const navItemTopOffset = `0.4rem`
 // theme-ui values
-const navItemHorizontalSpacing = [1, 1, 1, 2]
+const navItemHorizontalSpacing = [1, null, 2]
 
 const overrideDefaultMdLineHeight = {
   [mediaQueries.md]: {
@@ -51,11 +53,12 @@ const NavItem = ({ linkTo, children }) => (
     <Link
       to={linkTo}
       activeClassName="active"
+      partiallyActive={true}
       sx={{
         ...navItemStyles,
         "&.active": {
           borderBottomColor: `lilac`,
-          color: `lilac`,
+          color: `navigation.linkActive`,
         },
       }}
     >
@@ -116,7 +119,7 @@ const Navigation = ({ pathname }) => {
         sx={{
           alignItems: `center`,
           display: `flex`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           height: `100%`,
           margin: `0 auto`,
           px: 6,
@@ -142,11 +145,11 @@ const Navigation = ({ pathname }) => {
             display: `flex`,
             flexShrink: 0,
             height: `logo`,
-            mr: [1, 1, 1, 3],
+            mr: [1, null, 3],
             textDecoration: `none`,
             /* chop logo down to just the monogram for small screens */
-            width: [`24px`, `24px`, `24px`, `auto`],
-            overflow: [`hidden`, `hidden`, `hidden`, `visible`],
+            width: [`24px`, null, `auto`],
+            overflow: [`hidden`, null, `visible`],
           }}
           aria-label="Gatsby, Back to homepage"
         >
@@ -187,9 +190,7 @@ const Navigation = ({ pathname }) => {
                 listStyle: `none`,
                 m: 0,
                 maskImage: t =>
-                  `linear-gradient(to right, transparent, white ${
-                    t.space[1]
-                  }, white 98%, transparent)`,
+                  `linear-gradient(to right, transparent, white ${t.space[1]}, white 98%, transparent)`,
                 overflowX: `auto`,
               },
             }}
@@ -215,7 +216,7 @@ const Navigation = ({ pathname }) => {
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
           >
-            <GithubIcon style={{ verticalAlign: `middle` }} />
+            <GithubIcon />
           </SocialNavItem>
           <div
             sx={{
@@ -224,16 +225,10 @@ const Navigation = ({ pathname }) => {
             }}
           >
             <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">
-              <TwitterIcon style={{ verticalAlign: `middle` }} />
+              <TwitterIcon />
             </SocialNavItem>
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
-              <DiscordIcon
-                overrideCSS={{
-                  verticalAlign: `middle`,
-                  position: `relative`,
-                  top: `0.05em`,
-                }}
-              />
+              <DiscordIcon />
             </SocialNavItem>
           </div>
           <div

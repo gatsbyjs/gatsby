@@ -4,7 +4,7 @@ import { Component } from "react"
 import PropTypes from "prop-types"
 
 import EcosystemSection from "./ecosystem-section"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -72,7 +72,12 @@ class EcosystemBoard extends Component {
         <EcosystemSection
           title="External Resources"
           description="A curated list of interesting Gatsby community projects and learning resources like podcasts and tutorials."
-          links={[{ label: `Browse Resources`, to: `/docs/awesome-gatsby/` }]}
+          links={[
+            {
+              label: `Browse Resources`,
+              to: `/docs/awesome-gatsby-resources/`,
+            },
+          ]}
         />
       </div>
     )

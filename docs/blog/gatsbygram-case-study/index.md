@@ -15,10 +15,10 @@ lives in the Gatsby monorepo. See the instructions at the end for how to start
 playing with the code!
 
 <div>
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/gatsbygram.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
+  <video controls="controls" autoplay="true" loop="true">
+    <source type="video/mp4" src="/gatsbygram.mp4" />
+    <p>Your browser does not support the video element.</p>
+  </video>
 </div>
 
 ## What is Gatsby
@@ -122,7 +122,7 @@ your site. Typically, you define the output file structure (and thus URL
 structure) of your site by way of the input structure. For example the input
 structure:
 
-```
+```text
 my-site/
   index.md
   blogs/
@@ -131,7 +131,7 @@ my-site/
 
 ...would be transformed to:
 
-```
+```text
 my-site/
   index.html
   blogs/
@@ -148,10 +148,10 @@ Here is how we define pages from our JSON data for Gatsbygram at build time in
 the site's
 [`gatsby-node.js` file](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/gatsby-node.js):
 
-```javascript
+```javascript:title=gatsby-node.js
 const path = require(`path`)
 const slug = require(`slug`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
@@ -223,13 +223,13 @@ pages.
 
 As you can see above, when defining a page, we can set "context" data, which is
 passed as a `prop` to the component and as a
-[GraphQL variable](http://graphql.org/learn/queries/#variables) in our `GraphQL`
+[GraphQL variable](https://graphql.org/learn/queries/#variables) in our `GraphQL`
 query. For the
 "[post template](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/templates/post-page.js)",
 we pass the id to the post. Below we use that id to query our `GraphQL` schema
 and return a fully formed page:
 
-```jsx
+```jsx:title=src/templates/post-page.js
 import React from "react"
 import PostDetail from "../components/post-detail"
 
@@ -293,7 +293,7 @@ In addition to creating pages for our Instagram photos, we want to make an index
 page for browsing all photos. To build this index page, Gatsby lets us create
 pages using React.js components.
 
-```
+```text
 pages/
   index.js
   about.js
@@ -383,7 +383,7 @@ powered by plugins.
 Plugins are added to a site in its `gatsby-config.js`. Here's what Gatsbygram's
 config file looks like:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Gatsbygram`,

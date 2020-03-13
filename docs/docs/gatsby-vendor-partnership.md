@@ -54,9 +54,9 @@ Current partners have reported development timelines of 2-3 days when the conten
 
 If you have a GraphQL-based API, you **may not need to build an integration at all** -- Gatsby supports integration with GraphQL APIs via so-called ["schema stitching"](/blog/2018-09-25-announcing-graphql-stitching-support/).
 
-If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](/docs/creating-plugins/) and [source plugin tutorial](/docs/pixabay-source-plugin-tutorial/).
+If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](/docs/creating-plugins/) and [source plugin tutorial](/tutorial/pixabay-source-plugin-tutorial/).
 
-If you still have questions, please [raise an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://discord.gg/0ZcbPKXt5bVoxkfV), or reach out to our Head of Developer Relations [Jason Lengstorf](/contributors/jason-lengstorf/) at developer-relations@gatsbyjs.com.
+If you still have questions, please [raise an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://gatsby.dev/discord), or reach out to our team at [developer-relations@gatsbyjs.com](mailto:developer-relations@gatsbyjs.com).
 
 ### Step Two: Launching Your Gatsby Integration
 
@@ -64,7 +64,7 @@ To launch your Gatsby integration, there are two steps:
 
 1. **Publishing your integration to our [plugin library](/plugins/)**. If you built the integration, we have [developer documentation](/docs/plugin-authoring/#publishing-a-plugin-to-the-library) for publishing that integration to the Node.js package registry (npm). Once you publish it, over the next 24 hours, our system will automatically pull it in.
 
-2. **Add your example to our [starter library](/starters/)**. Most Gatsby users find it easier to try a new integration when they can start with a ready-made code example. We created [a starter library](http://gatsbyjs.org/starters/) to showcase these plugins to the community. [Here’s how you add your starter to it](/contributing/submit-to-starter-library/).
+2. **Add your example to our [starter library](/starters/)**. Most Gatsby users find it easier to try a new integration when they can start with a ready-made code example. We created [a starter library](https://gatsbyjs.org/starters/) to showcase these plugins to the community. [Here’s how you add your starter to it](/contributing/submit-to-starter-library/).
 
 ### Step Three: Co-Marketing With Gatsby
 
