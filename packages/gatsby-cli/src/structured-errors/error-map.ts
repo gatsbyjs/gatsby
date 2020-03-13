@@ -414,7 +414,7 @@ export const errorMap = {
   },
   // Directory/file name exceeds OS character limit
   "11331": {
-    text: context =>
+    text: (context): string =>
       [
         `One or more path segments are too long - they exceed OS filename length limit.\n`,
         `Page path: "${context.path}"`,
