@@ -30,4 +30,4 @@ When you're ready to publish your project, run the `gatsby build` command to cre
 ### Learn more about builds
 
 - [Deploying and Hosting](/docs/deploying-and-hosting/) from the Gatsby docs
-- How to enabled super fast [Distributed Builds](/docs/distributed-builds/) for Gatsby Cloud
+- How to enable super fast [Distributed Builds](https://www.gatsbyjs.com/docs/distributed-builds/) for Gatsby Cloud
