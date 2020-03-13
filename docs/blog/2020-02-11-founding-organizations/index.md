@@ -29,7 +29,7 @@ And when founding organizations aren’t able to build strong businesses, or the
 
 A question that’s frequently discussed in the web development community is how to make open-source maintainable. Some examples:
 
-- Henry Zhu, the lead maintainer of Babel, one of the most-depended-on projects in the Javascript ecosystem, until 2017 was [working on Babel in his free-time](https://www.henryzoo.com/leaving-behance/) while working a full-time job.
+- Henry Zhu, the lead maintainer of Babel, one of the most-depended-on projects in the JavaScript ecosystem, until 2017 was [working on Babel in his free-time](https://www.henryzoo.com/leaving-behance/) while working a full-time job.
 - Tobias Koppers, the lead maintainer of webpack, another of the most depended-upon projects in the JavaScript ecosystem, around the same time [openly solicited sponsors](http://www.cross-platform-blog.com/tools/interview-with-webpack-author-tobias-koppers/) in public interviews to fund himself rather than taking freelance work.
 
 Open source is key infrastructure: for comparison, imagine if the lead mechanic on the Brooklyn Bridge had to work on it in his spare time, or hustle for contracts!

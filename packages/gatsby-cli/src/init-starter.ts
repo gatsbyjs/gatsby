@@ -11,17 +11,20 @@ import prompts from "prompts"
 import url from "url"
 
 import report from "./reporter"
-import { getPackageManager, promptPackageManager } from "./util/configstore"
+import { getPackageManager, promptPackageManager } from "./util/package-manager"
 import isTTY from "./util/is-tty"
 
 const spawnWithArgs = (
   file: string,
   args: string[],
-  options?: any
+  options?: execa.Options
 ): execa.ExecaChildProcess =>
   execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
 
-const spawn = (cmd: string, options?: any): execa.ExecaChildProcess => {
+const spawn = (
+  cmd: string,
+  options?: execa.Options
+): execa.ExecaChildProcess => {
   const [file, ...args] = cmd.split(/\s+/)
   return spawnWithArgs(file, args, options)
 }
@@ -97,7 +100,7 @@ const createInitialGitCommit = async (
       cwd: rootPath,
     })
   } catch {
-    // Remove git support if intial commit fails
+    // Remove git support if initial commit fails
     report.info(`Initial git commit failed - removing git support\n`)
     fs.removeSync(sysPath.join(rootPath, `.git`))
   }
@@ -265,10 +268,10 @@ Your new Gatsby site has been successfully bootstrapped. Start developing it by 
 /**
  * Main function that clones or copies the starter.
  */
-export default async (
+export async function initStarter(
   starter: string,
   options: IInitOptions
-): Promise<void> => {
+): Promise<void> {
   const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
     starter,
     options.rootPath

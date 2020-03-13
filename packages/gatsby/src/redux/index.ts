@@ -57,7 +57,7 @@ export const configureStore = (
   initialState: IGatsbyState
 ): Store<IGatsbyState> =>
   createStore(
-    combineReducers({ ...reducers }),
+    combineReducers<IReduxState>({ ...reducers }),
     initialState,
     applyMiddleware(thunk, multi)
   )

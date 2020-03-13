@@ -117,3 +117,4 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 - [Preparing for deployment](/docs/recipes/deploying-your-site#preparing-for-deployment)
 - [Deploying to Netlify](/docs/recipes/deploying-your-site#deploying-to-netlify)
 - [Deploying to ZEIT Now](/docs/recipes/deploying-your-site#deploying-to-zeit-now)
+- [Deploying to Cloudflare Workers](/docs/recipes/deploying-your-site#deploying-to-cloudflare-workers)
