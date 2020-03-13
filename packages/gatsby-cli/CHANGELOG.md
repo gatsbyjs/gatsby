@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.9...gatsby-cli@2.10.10) (2020-03-13)
+
+### Bug Fixes
+
+- make 11321 and 11330 error formatters backward compatible ([#22249](https://github.com/gatsbyjs/gatsby/issues/22249)) ([6b01efe](https://github.com/gatsbyjs/gatsby/commit/6b01efe))
+
 ## [2.10.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.8...gatsby-cli@2.10.9) (2020-03-12)
 
 **Note:** Version bump only for package gatsby-cli
