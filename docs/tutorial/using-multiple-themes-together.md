@@ -148,7 +148,7 @@ It is possible to update the author bio information with a custom `bio-content.j
 
 Your file structure should look like this:
 
-```
+```text
 └── src
     ├── gatsby-theme-blog
     │   ├── components
