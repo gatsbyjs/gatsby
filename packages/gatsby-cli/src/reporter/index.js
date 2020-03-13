@@ -58,7 +58,7 @@ const addMessage = level => text => reporterActions.createLog({ level, text })
 
 let isVerbose = false
 
-const interuptActivities = () => {
+const interruptActivities = () => {
   const { activities } = getStore().getState().logs
   Object.keys(activities).forEach(activityId => {
     const activity = activities[activityId]
@@ -80,12 +80,12 @@ const prematureEnd = () => {
     status: ActivityStatuses.Failed,
   })
 
-  interuptActivities()
+  interruptActivities()
 }
 
 signalExit((code, signal) => {
   if (code !== 0 && signal !== `SIGINT` && signal !== `SIGTERM`) prematureEnd()
-  else interuptActivities()
+  else interruptActivities()
 })
 
 /**
