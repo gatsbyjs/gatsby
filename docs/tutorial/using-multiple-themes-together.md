@@ -176,7 +176,7 @@ export default () => (
 
 Your file structure should look like this:
 
-```
+```text
 └── src
     ├── gatsby-plugin-theme-ui
     │   ├── index.js //highlight-line
