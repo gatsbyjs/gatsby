@@ -5502,6 +5502,19 @@
     - Disqus
     - Breadcrumbs
     - ESLint
+- url: https://barcadia.netlify.com/
+  repo: https://github.com/bagseye/barcadia
+  description: A super-fast site using GatsbyJS
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Contentful
+    - Portfolio
+  features:
+    - Styled components
+    - Responsive webpage
+    - Portfolio
+    - Blog
 - url: https://gatsby-starter-clean-resume.netlify.com/
   repo: https://github.com/masoudkarimif/gatsby-starter-clean-resume
   description: A Gatsby Starter Template for Putting Your Resume Online Super Quick!
