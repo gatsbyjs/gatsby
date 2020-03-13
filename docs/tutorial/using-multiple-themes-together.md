@@ -360,7 +360,7 @@ export default () => {
 
 Shadow `header.js` from `gatsby-theme-blog`:
 
-```
+```text
 └── src
     ├── gatsby-theme-blog
     │   ├── components
