@@ -13,7 +13,7 @@ There are a few ways to create a build. You can build your site locally on your 
 
 For larger teams or larger projects, you may want to use a continuous deployment approach to create builds. Each CD/CI service works slightly differently. Almost all of them, however, use the contents of a Git repository to build your site.
 
-Gatsby Cloud, for example, integrates with [GitHub](https://github.com/), and a number of hosted [content management systems](/docs/glossary#cms). Gatsby Cloud creates a new build after every commit, although you can also trigger a build manually.
+Gatsby Cloud, for example, integrates with [GitHub](https://github.com/), and a number of hosted [content management systems](/docs/glossary#cms). Gatsby Cloud creates a new build after every commit or content change, although you can also trigger a build manually.
 
 ### Using Gatsby <abbr>CLI</abbr>
 
