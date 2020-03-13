@@ -79,8 +79,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   })
 }
 
-const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
-  githubApiClient
+const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) => {
+  return githubApiClient
     .request(
       `
     query {
@@ -106,7 +106,7 @@ const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
       }
 
       const githubUrl = `https://github.com/${owner}/${repo}`
-      const { url } = await fetch(githubUrl, { method: `HEAD` })
+      const { url } = await fetch(githubUrl, { method: "HEAD" })
       const { owner: newOwner, name: newRepo } = parseGHUrl(url)
 
       reporter.warn(
@@ -118,6 +118,7 @@ const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
         retry + 1
       )
     })
+}
 
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions

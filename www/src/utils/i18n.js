@@ -1,5 +1,5 @@
-const allLangs = require(`../../i18n.json`)
-const defaultLang = `en`
+const allLangs = require("../../i18n.json")
+const defaultLang = "en"
 
 // Only allow languages defined in the LOCALES env variable.
 // This allows us to compile only languages that are "complete" or test only
@@ -10,7 +10,7 @@ function getLanguages() {
     return []
   }
 
-  const langCodes = process.env.LOCALES.split(` `)
+  const langCodes = process.env.LOCALES.split(" ")
   const langs = []
   for (let code of langCodes) {
     const lang = allLangs.find(lang => lang.code === code)

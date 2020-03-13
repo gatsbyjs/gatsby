@@ -12,7 +12,7 @@ class SimpleEvaluationTable extends Component {
     this.state = {}
   }
   render() {
-    const showTooltip = row => this.state[`feature-cell-${row}`]
+    const showTooltip = (row) => this.state[`feature-cell-${row}`]
     const { title, headers, data } = this.props
     return (
       <div>
@@ -21,67 +21,66 @@ class SimpleEvaluationTable extends Component {
           <tbody>
             <SectionHeaderTop columnHeaders={headers.map(h => h.display)} />
             {data.map((node, idx) =>
-              [].concat([
-                <tr key={`feature-first-row-${idx}`}>
-                  {headers.map((header, i) => (
-                    <td
-                      key={`feature-cell-${idx}-${i}`}
-                      sx={{
-                        display: `table-cell`,
-                        "&:hover": {
-                          cursor: `pointer`,
-                        },
-                        borderBottom: t =>
-                          !showTooltip(idx)
-                            ? `1px solid ${t.colors.ui.border}`
-                            : `none`,
-                        minWidth: 40,
-                        paddingRight: 0,
-                        paddingLeft: 0,
-                        textAlign: `left`,
-                        verticalAlign: `middle`,
-                        fontSize: 1,
-                        lineHeight: `solid`,
-                      }}
-                      onClick={() => {
-                        this.setState({
-                          [`feature-cell-${idx}`]: !showTooltip(idx),
-                        })
-                      }}
-                    >
-                      {renderCell(node[header.nodeFieldProperty], i)}
-                    </td>
-                  ))}
-                </tr>,
-                // table row containing details of each feature
-                <tr
-                  style={{
-                    display: showTooltip(idx) ? `table-row` : `none`,
-                  }}
-                  key={`feature-second-row-${idx}`}
-                >
+            [].concat([
+              <tr key={`feature-first-row-${idx}`}>
+                {headers.map((header, i) => (
                   <td
-                    sx={{
-                      paddingBottom: t => `calc(${t.space[5]} - 1px)`,
-                      "&&": {
-                        [mediaQueries.xs]: {
-                          px: 3,
-                        },
-                      },
-                    }}
-                    colSpan="5"
+                  key={`feature-cell-${idx}-${i}`}
+                  sx={{
+                    display: `table-cell`,
+                    "&:hover": {
+                      cursor: `pointer`,
+                    },
+                    borderBottom: t =>
+                      !showTooltip(idx)
+                        ? `1px solid ${t.colors.ui.border}`
+                        : `none`,
+                    minWidth: 40,
+                    paddingRight: 0,
+                    paddingLeft: 0,
+                    textAlign: `left`,
+                    verticalAlign: `middle`,
+                    fontSize: 1,
+                    lineHeight: `solid`,
+                  }}
+                  onClick={() => {
+                    this.setState({
+                      [`feature-cell-${idx}`]: !showTooltip(idx),
+                    })
+                  }}
                   >
-                    {
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: node.Description,
-                        }}
-                      />
-                    }
+                    {renderCell(node[header.nodeFieldProperty], i)}
                   </td>
-                </tr>,
-              ])
-            )}
+                ))}
+              </tr>,
+              // table row containing details of each feature
+              <tr
+              style={{
+                display: showTooltip(idx) ? `table-row` : `none`,
+              }}
+              key={`feature-second-row-${idx}`}
+            >
+              <td
+                sx={{
+                  paddingBottom: t => `calc(${t.space[5]} - 1px)`,
+                  "&&": {
+                    [mediaQueries.xs]: {
+                      px: 3,
+                    },
+                  },
+                }}
+                colSpan="5"
+              >
+                {
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: node.Description,
+                    }}
+                  />
+                }
+              </td>
+            </tr>,
+            ]))}
           </tbody>
         </table>
       </div>
@@ -90,3 +89,4 @@ class SimpleEvaluationTable extends Component {
 }
 
 export default SimpleEvaluationTable
+

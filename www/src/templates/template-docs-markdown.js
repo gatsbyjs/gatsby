@@ -37,7 +37,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   return (
     <PageWithSidebar
       location={location}
-      enableScrollSync={urlSegment === `tutorial`}
+      enableScrollSync={urlSegment === "tutorial"}
     >
       <Helmet>
         <title>{page.frontmatter.title}</title>

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
+import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
