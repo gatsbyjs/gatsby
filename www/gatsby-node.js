@@ -18,7 +18,7 @@ exports.createPages = async helpers => {
   const { createRedirect } = actions
 
   redirects.forEach(redirect => {
-    createRedirect({ isPermanent: true, ...redirect })
+    createRedirect({ isPermanent: true, ...redirect, force: true })
   })
 
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
@@ -26,6 +26,7 @@ exports.createPages = async helpers => {
       fromPath: `/starters${fromSlug}`,
       toPath: `/starters${toSlug}`,
       isPermanent: true,
+      force: true,
     })
   })
 

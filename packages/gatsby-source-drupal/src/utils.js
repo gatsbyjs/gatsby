@@ -88,6 +88,7 @@ const handleWebhookUpdate = async (
     cache,
     createNodeId,
     createContentDigest,
+    getCache,
     getNode,
     reporter,
     store,
@@ -161,6 +162,7 @@ const handleWebhookUpdate = async (
         cache,
         createNode,
         createNodeId,
+        getCache,
       },
       pluginOptions
     )

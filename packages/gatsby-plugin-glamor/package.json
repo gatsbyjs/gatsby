@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-glamor",
   "description": "Gatsby plugin to add support for Glamor",
-  "version": "2.1.21",
+  "version": "2.1.22",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
