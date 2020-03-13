@@ -6,10 +6,6 @@ title: Using Multiple Themes Together
 
 This tutorial covers how to compose multiple themes into a final site using [gatsby-theme-blog](/packages/gatsby-theme-blog/), [gatsby-theme-notes](/packages/gatsby-theme-notes/) and [gatsby-mdx-embed](/packages/@pauliescanlon/gatsby-mdx-embed/) as examples. It will also cover the concept of component shadowing with [Theme-UI](docs/theme-ui/) for styling.
 
-- Composing themes
-- Component shadowing
-- Component shadowing for Theme-UI theme file
-
 ## Prerequisites
 
 This tutorial assumes the following:
@@ -17,20 +13,14 @@ This tutorial assumes the following:
 - That you have an understanding of [Gatsby fundamentals](/tutorial/#gatsby-fundamentals)
 - An existing knowledge of [Gatsby themes](/docs/themes/what-are-gatsby-themes/)
 
-## Overview
-
-- Steps 1 - 3: Composing `gatsby-theme-blog` and `gatsby-theme-notes`
-- Steps 4: Adding content
-- Step 5: Put the blog on the homepage
-- Step 6: Component shadowing for author bio
-- Step 7: Component shadowing for Theme-UI
-- Step 8: Add another theme
-- Step 9: Component shadowing for navigation menu
-
-## Step 1: Create a new site using the hello world starter
+## Step 1: Create a new site using the hello world starter and change directory to "multiple-themes"
 
 ```shell
 gatsby new multiple-themes https://github.com/gatsbyjs/gatsby-starter-hello-world
+```
+
+```shell
+cd multiple-themes
 ```
 
 ## Step 2: Install and compose the themes
@@ -43,7 +33,7 @@ Install the themes:
 npm install gatsby-theme-blog gatsby-theme-notes
 ```
 
-Update `gatsby-config.js` to add the themes to the plugin array and to add basic site metadata:
+Edit `gatsby-config.js` to add the themes to the plugin array and to update the site metadata:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -92,7 +82,7 @@ gatsby develop
 
 Behind the scenes, the two themes created content folders in the root directory of the site. In this step, you will add some content to these folders.
 
-Put an avatar image into `content/assets/avatar.png`.
+Put an avatar image into `content/assets/` directory
 
 Add at least one post and one note:
 
@@ -121,7 +111,7 @@ Restart your development server:
 gatsby develop
 ```
 
-Now if you visit `localhost:8000/blog` and `localhost:8000/notes` you should see your content.
+Now if you visit `http://localhost:8001/blog/hello-posts/` and `http://localhost:8001/notes/hello-notes` you should see your content.
 
 ## Step 5: Put the blog posts on the homepage
 
@@ -155,7 +145,9 @@ Your file structure should look like this:
     │   │   ├── bio-content.js // highlight-line
 ```
 
-And your component could look like this:
+`src/gatsby-theme-blog/components/bio-content.js`
+
+and your component could look like this:
 
 ```jsx:title=bio-content.js
 import React, { Fragment } from "react"
@@ -182,7 +174,8 @@ Your file structure should look like this:
     │   ├── index.js //highlight-line
 ```
 
-And your component could look like this:
+`src/gatsby-plugin-theme-ui/index.js`
+and your component could look like this:
 
 ```javascript:title=index.js
 import merge from "deepmerge"
@@ -214,13 +207,40 @@ Install the theme:
 npm install @pauliescanlon/gatsby-mdx-embed
 ```
 
-Add it to your plugins:
+Update the `gatsby-config.js` file and add `gatsby-mdx-embed` as a plugin:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  ...
-  plugins: [`@pauliescanlon/gatsby-mdx-embed`]
-  ...
+  siteMetadata: {
+    title: `Your Site Title`,
+    description: `A description for your blazing fast site, using multiple themes!`,
+    author: `Your name`,
+    social: [
+      {
+        name: `Twitter`,
+        url: `https://twitter.com/gatsbyjs`,
+      },
+      {
+        name: `GitHub`,
+        url: `https://github.com/gatsbyjs`,
+      },
+    ],
+  },
+  plugins: [
+    `@pauliescanlon/gatsby-mdx-embed`, // highlight-line
+    {
+      resolve: `gatsby-theme-blog`,
+      options: {
+        basePath: `/`,
+      },
+    },
+    {
+      resolve: `gatsby-theme-notes`,
+      options: {
+        basePath: `/notes`,
+      },
+    },
+  ],
 }
 ```
 
@@ -249,6 +269,7 @@ module.exports = {
     title: `Your Site Title`,
     description: `A description for your blazing fast site, using multiple themes!`,
     author: `Your name`,
+    // highlight-start
     menuLinks: [
       {
         name: `Blog`,
@@ -269,8 +290,10 @@ module.exports = {
         url: `https://github.com/gatsbyjs`,
       },
     ],
+    // highlight-end
   },
   plugins: [
+    `@pauliescanlon/gatsby-mdx-embed`,
     {
       resolve: `gatsby-theme-blog`,
       options: {
@@ -285,7 +308,6 @@ module.exports = {
         basePath: `/notes`,
       },
     },
-    `@pauliescanlon/gatsby-mdx-embed`,
   ],
 }
 ```
@@ -358,7 +380,7 @@ export default () => {
 }
 ```
 
-Shadow `header.js` from `gatsby-theme-blog`:
+When that is done the next step would be to shadow `header.js` from `gatsby-theme-blog` by creating `src/gatsby-theme-blog/components/header.js` :
 
 ```text
 └── src
@@ -494,7 +516,7 @@ export default ({ children, title, ...props }) => {
 }
 ```
 
-## What's next
+## What's next ?
 
 - [Building a theme](/tutorial/building-a-theme/)
 
