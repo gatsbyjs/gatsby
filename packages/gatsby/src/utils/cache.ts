@@ -1,4 +1,4 @@
-import manager, { Store, StoreConfig, CachingConfig } from "cache-manager"
+import manager, { Store, StoreConfig, CachingConfig, MultiCache } from "cache-manager"
 import fs from "fs-extra"
 import fsStore from "cache-manager-fs-hash"
 import path from "path"
@@ -11,10 +11,11 @@ interface ICacheProperties {
   store?: Store
 }
 
+
 export default class Cache {
   public name: string
   public store: Store
-  public cache?: manager.Cache
+  public cache?: MultiCache
 
   constructor({ name = `db`, store = fsStore }: ICacheProperties = {}) {
     this.name = name
