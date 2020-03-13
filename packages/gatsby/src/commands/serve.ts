@@ -1,31 +1,40 @@
-/* @flow weak */
-const path = require(`path`)
-const openurl = require(`better-opn`)
-const fs = require(`fs-extra`)
-const compression = require(`compression`)
-const express = require(`express`)
-const chalk = require(`chalk`)
-const { match: reachMatch } = require(`@reach/router/lib/utils`)
-const onExit = require(`signal-exit`)
-const report = require(`gatsby-cli/lib/reporter`)
+import path from "path"
+import openurl from "better-opn"
+import fs from "fs-extra"
+import compression from "compression"
+import express from "express"
+import chalk from "chalk"
+import { match as reachMatch } from "@reach/router/lib/utils"
+import onExit from "signal-exit"
+import report from "gatsby-cli/lib/reporter"
 
-const telemetry = require(`gatsby-telemetry`)
+import telemetry from "gatsby-telemetry"
 
-const {
-  detectPortInUseAndPrompt,
-} = require(`../utils/detect-port-in-use-and-prompt`)
-const getConfigFile = require(`../bootstrap/get-config-file`)
-const preferDefault = require(`../bootstrap/prefer-default`)
+import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
+import getConfigFile from "../bootstrap/get-config-file"
+import preferDefault from "../bootstrap/prefer-default"
+import { IProgram } from "./types"
+
+interface IMatchPath {
+  path: string
+  matchPath: string
+}
+
+interface IServeProgram extends IProgram {
+  prefixPaths: boolean
+}
 
 onExit(() => {
   telemetry.trackCli(`SERVE_STOP`)
 })
 
-const readMatchPaths = async program => {
+const readMatchPaths = async (
+  program: IServeProgram
+): Promise<IMatchPath[]> => {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
   let rawJSON = `[]`
   try {
-    rawJSON = await fs.readFile(filePath)
+    rawJSON = await fs.readFile(filePath, `utf8`)
   } catch (error) {
     report.warn(error)
     report.warn(
@@ -39,10 +48,19 @@ const readMatchPaths = async program => {
       )}?`
     )
   }
-  return JSON.parse(rawJSON)
+  return JSON.parse(rawJSON) as IMatchPath[]
 }
 
-const matchPathRouter = (matchPaths, options) => (req, res, next) => {
+const matchPathRouter = (
+  matchPaths: IMatchPath[],
+  options: {
+    root: string
+  }
+) => (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+): void => {
   const { url } = req
   if (req.accepts(`html`)) {
     const matchPath = matchPaths.find(
@@ -63,7 +81,7 @@ const matchPathRouter = (matchPaths, options) => (req, res, next) => {
   return next()
 }
 
-module.exports = async program => {
+module.exports = async (program: IServeProgram): Promise<void> => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
   let { prefixPaths, port, open, host } = program
@@ -96,7 +114,11 @@ module.exports = async program => {
     }
     return next()
   })
-  app.use(function(req, res, next) {
+  app.use(function(
+    _: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     res.header(`Access-Control-Allow-Origin`, `*`)
     res.header(
       `Access-Control-Allow-Headers`,
@@ -106,13 +128,13 @@ module.exports = async program => {
   })
   app.use(pathPrefix, router)
 
-  const startListening = () => {
+  const startListening = (): void => {
     app.listen(port, host, () => {
-      let openUrlString = `http://${host}:${port}${pathPrefix}`
+      const openUrlString = `http://${host}:${port}${pathPrefix}`
       report.info(`gatsby serve running at: ${chalk.bold(openUrlString)}`)
       if (open) {
         report.info(`Opening browser...`)
-        Promise.resolve(openurl(openUrlString)).catch(err =>
+        Promise.resolve(openurl(openUrlString)).catch(() =>
           report.warn(`Browser not opened because no browser was found`)
         )
       }
