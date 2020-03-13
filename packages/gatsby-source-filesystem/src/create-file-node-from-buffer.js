@@ -142,10 +142,6 @@ module.exports = ({
   if (typeof getCache === `function`) {
     // use cache of this plugin and not cache of function caller
     cache = getCache(`gatsby-source-filesystem`)
-  } else if (process.env.GATSBY_STRICT_MODE_CACHE) {
-    throw new Error(
-      `Gatsby Cache Strict Mode: createFileNodeFromBuffer called without "getCache"`
-    )
   }
   if (typeof cache !== `object`) {
     throw new Error(
