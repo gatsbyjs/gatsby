@@ -2,6 +2,7 @@ import { GraphQLSchema } from "graphql"
 
 export interface IGatsbyPlugin {
   name: string
+  version: string
 }
 
 export enum ProgramStatus {
@@ -9,11 +10,64 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export interface IJob {
+  id: string
+}
+
+export interface IJobV2 {
+  name: string
+  inputPaths: string[]
+  outputDir: string
+  args: Record<string, any> // TODO
+}
+
+export interface IPage {
+  path: string
+  matchPath?: string
+  component: string
+  context: Record<string, any> // TODO
+  internalComponentName: string
+  componentChunkName: string
+  updatedAt: number
+  isCreatedByStatefulCreatePages: boolean
+}
+
+export type IPageInput = Pick<
+  IPage,
+  "path" | "component" | "context" | "matchPath"
+>
+
+export interface IActionOptions {
+  traceId?: string
+  parentSpan?: Record<string, any> | null // TODO
+  followsSpan?: Record<string, any> | null // TODO
+}
+
+export interface IPageData {
+  id: string
+  resultHash: string
+}
+
+export interface IPageDataRemove {
+  id: string
+}
+
 export interface IReduxNode {
   id: string
   internal: {
     type: string
   }
+}
+
+export interface IGatsbyError {
+  id: string
+  context: {
+    codeFrame?: any // TODO
+    validationErrorMessage: string
+    node: any // TODO
+  }
+  filePath?: any // TODO
+  location?: any // TODO
 }
 
 export interface IReduxState {
@@ -59,6 +113,9 @@ export interface ICachedReduxState {
 }
 
 export type ActionsUnion =
+  | ICreatePageAction
+  | IDeletePageAction
+  | IDeleteNodeAction
   | ICreatePageDependencyAction
   | IDeleteComponentDependenciesAction
   | IReplaceComponentQueryAction
@@ -69,6 +126,145 @@ export type ActionsUnion =
   | IQueryExtractionBabelErrorAction
   | ISetProgramStatusAction
   | IPageQueryRunAction
+
+export interface ICreatePageAction extends IActionOptions {
+  type: `CREATE_PAGE`
+  plugin?: IGatsbyPlugin
+  contextModified: boolean
+  payload: IPage
+}
+
+export interface ICreateNodeAction extends IActionOptions {
+  type: `CREATE_NODE`
+  plugin: IGatsbyPlugin
+  oldNode: any // TODO
+  payload: any // TODO
+}
+
+export interface ICreateNodeFieldAction extends IActionOptions {
+  type: `ADD_FIELD_TO_NODE`
+  plugin: IGatsbyPlugin
+  payload: any // TODO
+  addedField: string
+}
+
+export interface ICreateParentChildLinkAction {
+  type: `ADD_CHILD_NODE_TO_PARENT_NODE`
+  plugin?: IGatsbyPlugin
+  payload: any // TODO
+}
+
+export interface ISetWebpackConfigAction {
+  type: `SET_WEBPACK_CONFIG`
+  plugin: IGatsbyPlugin | null
+  payload: any // TODO
+}
+
+export interface IReplaceWebpackConfigAction {
+  type: `REPLACE_WEBPACK_CONFIG`
+  plugin: IGatsbyPlugin | null
+  payload: any // TODO
+}
+
+export interface ISetBabelOptionsAction {
+  type: `SET_BABEL_OPTIONS`
+  plugin: IGatsbyPlugin | null
+  payload: any // TODO
+}
+
+export interface ISetBabelPluginAction {
+  type: `SET_BABEL_PLUGIN`
+  plugin: IGatsbyPlugin | null
+  payload: any // TODO
+}
+
+export interface ISetBabelPresetAction {
+  type: `SET_BABEL_PRESET`
+  plugin: IGatsbyPlugin | null
+  payload: any // TODO
+}
+
+export interface ICreateJobAction {
+  type: `CREATE_JOB`
+  plugin: IGatsbyPlugin | null
+  payload: IJob
+}
+
+export interface ICreateJobV2Action {
+  type: `CREATE_JOB_V2`
+  plugin: IGatsbyPlugin | null
+  payload: {
+    job: any // TODO,
+    plugin: IGatsbyPlugin | null
+  }
+}
+
+export interface ISetJobAction {
+  type: `SET_JOB`
+  plugin: IGatsbyPlugin | null
+  payload: IJob
+}
+
+export interface IEndJobAction {
+  type: `END_JOB`
+  plugin: IGatsbyPlugin | null
+  payload: IJob
+}
+
+export interface ICreateRedirectAction {
+  type: `CREATE_REDIRECT`
+  payload: {
+    fromPath: string
+    isPermanent: boolean
+    redirectInBrowser: boolean
+    toPath: string
+  }
+}
+
+export interface ISetPluginStatusAction {
+  type: `SET_PLUGIN_STATUS`
+  plugin: IGatsbyPlugin
+  payload: Record<string, any> // TODO
+}
+
+export interface ITouchNodeAction {
+  type: `TOUCH_NODE`
+  plugin?: IGatsbyPlugin
+  payload: string
+}
+
+export interface IValidationErrorAction {
+  type: `VALIDATION_ERROR`
+  error: boolean
+}
+
+export interface IDeletePageAction {
+  type: `DELETE_PAGE`
+  payload: IPageInput
+}
+
+export interface IDeleteNodeAction {
+  type: `DELETE_NODE`
+  plugin?: IGatsbyPlugin
+  payload: any // TODO
+}
+
+export interface IDeleteNodesAction {
+  type: `DELETE_NODES`
+  plugin: IGatsbyPlugin
+  fullNodes: any[] // TODO
+  payload: any[] // TODO
+}
+
+export interface ISetPageDataAction {
+  type: `SET_PAGE_DATA`
+  payload: IPageData
+}
+
+export interface IRemovePageDataAction {
+  type: `REMOVE_PAGE_DATA`
+  payload: IPageDataRemove
+}
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`

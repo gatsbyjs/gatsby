@@ -9,7 +9,7 @@ import fs from "fs"
 import { trueCasePathSync } from "true-case-path"
 import url from "url"
 import { slash } from "gatsby-core-utils"
-import { hasNodeChanged, getNode }  from "../../db/nodes"
+import { hasNodeChanged, getNode } from "../../db/nodes"
 import sanitizeNode from "../../db/sanitize-node"
 import { store } from ".."
 import { sync as fileExistsSync } from "fs-exists-cached"
@@ -23,7 +23,40 @@ import {
 import apiRunnerNode from "../../utils/api-runner-node"
 import { trackCli } from "gatsby-telemetry"
 import { getNonGatsbyCodeFrame } from "../../utils/stack-trace-utils"
-import { IGatsbyPlugin } from "../types"
+import {
+  IGatsbyPlugin,
+  IPageInput,
+  IPage,
+  IGatsbyError,
+  IActionOptions,
+  ICreatePageAction,
+  IDeletePageAction,
+  IDeleteNodeAction,
+  IDeleteNodesAction,
+  ICreateNodeAction,
+  IValidationErrorAction,
+  IJob,
+  IJobV2,
+  ITouchNodeAction,
+  ICreateNodeFieldAction,
+  ICreateParentChildLinkAction,
+  ISetWebpackConfigAction,
+  IReplaceWebpackConfigAction,
+  ISetBabelOptionsAction,
+  ISetBabelPluginAction,
+  ISetBabelPresetAction,
+  ICreateJobAction,
+  ICreateJobV2Action,
+  ISetJobAction,
+  IEndJobAction,
+  ISetPluginStatusAction,
+  ICreateRedirectAction,
+  ICreatePageDependencyAction,
+  IPageData,
+  ISetPageDataAction,
+  IPageDataRemove,
+  IRemovePageDataAction,
+} from "../types"
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -41,17 +74,17 @@ const {
   getInProcessJobPromise,
 } = require(`../../utils/jobs-manager`)
 
-const actions = {}
+const actions: { [key: string]: any } = {}
 const isWindows = platform() === `win32`
 
-const ensureWindowsDriveIsUppercase = filePath => {
+const ensureWindowsDriveIsUppercase = (filePath): string => {
   const segments = filePath.split(`:`).filter(s => s !== ``)
   return segments.length > 0
     ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
     : filePath
 }
 
-const findChildren = initialChildren => {
+const findChildren = (initialChildren): any[] => {
   const children = [...initialChildren]
   const queue = [...initialChildren]
   const traversedNodes = new Set()
@@ -71,48 +104,6 @@ const findChildren = initialChildren => {
   return children
 }
 
-type Job = {
-  id: string,
-}
-
-type JobV2 = {
-  name: string,
-  inputPaths: string[],
-  outputDir: string,
-  args: Object,
-}
-
-type PageInput = {
-  path: string,
-  component: string,
-  context?: Object,
-}
-
-type Page = {
-  path: string,
-  matchPath?: string,
-  component: string,
-  context: Object,
-  internalComponentName: string,
-  componentChunkName: string,
-  updatedAt: number,
-}
-
-type ActionOptions = {
-  traceId?: string,
-  parentSpan: ?Object,
-  followsSpan: ?Object,
-}
-
-type PageData = {
-  id: string,
-  resultHash: string,
-}
-
-type PageDataRemove = {
-  id: string,
-}
-
 /**
  * Delete a page
  * @param {Object} page a page object
@@ -121,7 +112,7 @@ type PageDataRemove = {
  * @example
  * deletePage(page)
  */
-actions.deletePage = (page: PageInput) => {
+actions.deletePage = (page: IPageInput): IDeletePageAction => {
   return {
     type: `DELETE_PAGE`,
     payload: page,
@@ -158,14 +149,15 @@ const fileOkCache = {}
  * })
  */
 actions.createPage = (
-  page: PageInput,
+  page: IPageInput,
   plugin?: IGatsbyPlugin,
-  actionOptions?: ActionOptions
-) => {
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
-  }
+  actionOptions?: IActionOptions
+): ICreatePageAction | string => {
+  const pluginPlaceholder = `Your site's "gatsby-node.js"`
+  const hasNoPluginName = !plugin || plugin.name === `default-site-plugin`
+  const name = `The plugin "${
+    hasNoPluginName ? pluginPlaceholder : plugin!.name
+  }"`
   if (!page.path) {
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
@@ -393,14 +385,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.path = truncatedPath
   }
 
-  const internalPage: Page = {
+  const internalPage: IPage = {
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
-      actionOptions &&
+      !!actionOptions &&
       actionOptions.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
@@ -469,7 +461,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     fileOkCache[internalPage.component] = true
   }
 
-  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const oldPage: IPage = store.getState().pages.get(internalPage.path)
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 
@@ -503,7 +495,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * @example
  * deleteNode({node: node})
  */
-actions.deleteNode = (options: any, plugin: IGatsbyPlugin, args: any) => {
+actions.deleteNode = (
+  options: any,
+  plugin: IGatsbyPlugin,
+  args: any
+): IDeleteNodeAction | IDeleteNodeAction[] => {
   let id
 
   // Check if using old method signature. Warn about incorrect usage but get
@@ -527,6 +523,7 @@ actions.deleteNode = (options: any, plugin: IGatsbyPlugin, args: any) => {
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const node = getNode(id)
+  const typeOwners = {}
   if (plugin) {
     const pluginName = plugin.name
 
@@ -548,7 +545,7 @@ actions.deleteNode = (options: any, plugin: IGatsbyPlugin, args: any) => {
         `)
   }
 
-  const createDeleteAction = node => {
+  const createDeleteAction = (node): IDeleteNodeAction => {
     return {
       type: `DELETE_NODE`,
       plugin,
@@ -581,7 +578,10 @@ actions.deleteNode = (options: any, plugin: IGatsbyPlugin, args: any) => {
  * @example
  * deleteNodes([`node1`, `node2`])
  */
-actions.deleteNodes = (nodes: any[], plugin: IGatsbyPlugin) => {
+actions.deleteNodes = (
+  nodes: any[],
+  plugin: IGatsbyPlugin
+): IDeleteNodesAction => {
   let msg =
     `The "deleteNodes" action is now deprecated and will be removed in ` +
     `Gatsby v3. Please use "deleteNode" instead.`
@@ -597,15 +597,14 @@ actions.deleteNodes = (nodes: any[], plugin: IGatsbyPlugin) => {
 
   const nodeIds = [...nodes, ...descendantNodes]
 
-  const deleteNodesAction = {
+  return {
     type: `DELETE_NODES`,
     plugin,
     // Payload contains node IDs but inference-metadata and loki reducers require
     // full node instances
     payload: nodeIds,
-    fullNodes: nodeIds.map(getNode),
+    fullNodes: nodeIds.map(getNode) as any[],
   }
-  return deleteNodesAction
 }
 
 // We add a counter to internal to make sure we maintain insertion order for
@@ -692,12 +691,27 @@ const typeOwners = {}
  *   }
  * })
  */
-const createNode = (
+
+type CreateNode = (
   node: any,
-  plugin?: IGatsbyPlugin,
-  actionOptions?: ActionOptions = {}
-) => {
-  if (!_.isObject(node)) {
+  actionOptions: IActionOptions,
+  plugin?: IGatsbyPlugin
+) =>
+  | ICreateNodeAction
+  | IValidationErrorAction
+  | Array<ICreateNodeAction | IDeleteNodeAction>
+  | void
+
+const createNode: CreateNode = (
+  node: any,
+  actionOptions: IActionOptions = {},
+  plugin?: IGatsbyPlugin
+):
+  | ICreateNodeAction
+  | IValidationErrorAction
+  | Array<ICreateNodeAction | IDeleteNodeAction>
+  | void => {
+  if (typeof node !== `object`) {
     return console.log(
       chalk.bold.red(
         `The node passed to the "createNode" action creator must be an object`
@@ -745,7 +759,7 @@ const createNode = (
   const result = Joi.validate(node, joiSchemas.nodeSchema)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
-      const errorObj = {
+      const errorObj: IGatsbyError = {
         id: `11467`,
         context: {
           validationErrorMessage: result.error.message,
@@ -857,7 +871,7 @@ const createNode = (
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
     if (oldNode) {
-      const createDeleteAction = node => {
+      const createDeleteAction = (node): IDeleteNodeAction => {
         return {
           ...actionOptions,
           type: `DELETE_NODE`,
@@ -886,13 +900,16 @@ const createNode = (
   }
 }
 
-actions.createNode = (...args) => dispatch => {
+actions.createNode = (...args: Parameters<CreateNode>) => (
+  dispatch
+): Promise<any> | undefined => {
+  // TODO: remove any
   const actions = createNode(...args)
 
   dispatch(actions)
-  const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
-    action => action.type === `CREATE_NODE`
-  )
+  const createNodeAction = ((Array.isArray(actions)
+    ? actions
+    : [actions]) as any[]).find(action => action.type === `CREATE_NODE`) // TODO: Remove any[]
 
   if (!createNodeAction) {
     return undefined
@@ -918,7 +935,10 @@ actions.createNode = (...args) => dispatch => {
  * @example
  * touchNode({ nodeId: `a-node-id` })
  */
-actions.touchNode = (options: any, plugin?: IGatsbyPlugin) => {
+actions.touchNode = (
+  options: any,
+  plugin?: IGatsbyPlugin
+): ITouchNodeAction => {
   let nodeId = _.get(options, `nodeId`)
 
   // Check if using old method signature. Warn about incorrect usage
@@ -946,13 +966,14 @@ actions.touchNode = (options: any, plugin?: IGatsbyPlugin) => {
   }
 }
 
-type CreateNodeInput = {
-  node: Object,
-  fieldName?: string,
-  fieldValue?: string,
-  name?: string,
-  value: any,
+interface ICreateNodeInput {
+  node: Record<string, any> // TODO,
+  fieldName?: string
+  fieldValue?: string
+  name?: string
+  value: any
 }
+
 /**
  * Extend another node. The new node field is placed under the `fields`
  * key on the extended node object.
@@ -976,10 +997,10 @@ type CreateNodeInput = {
  * // The field value is now accessible at node.fields.happiness
  */
 actions.createNodeField = (
-  { node, name, value, fieldName, fieldValue }: CreateNodeInput,
+  { node, name, value, fieldName, fieldValue }: ICreateNodeInput,
   plugin: IGatsbyPlugin,
-  actionOptions?: ActionOptions
-) => {
+  actionOptions?: IActionOptions
+): ICreateNodeFieldAction => {
   if (fieldName) {
     console.warn(
       `Calling "createNodeField" with "fieldName" is deprecated. Use "name" instead`
@@ -1003,6 +1024,8 @@ actions.createNodeField = (
   if (!node.fields) {
     node.fields = {}
   }
+
+  name = name || ``
 
   // Normalized name of the field that will be used in schema
   const schemaFieldName = _.includes(name, `___NODE`)
@@ -1051,9 +1074,9 @@ actions.createNodeField = (
  * createParentChildLink({ parent: parentNode, child: childNode })
  */
 actions.createParentChildLink = (
-  { parent, child }: { parent: any, child: any },
+  { parent, child }: { parent: any; child: any },
   plugin?: IGatsbyPlugin
-) => {
+): ICreateParentChildLinkAction => {
   if (!parent.children.includes(child.id)) {
     parent.children.push(child.id)
   }
@@ -1074,7 +1097,10 @@ actions.createParentChildLink = (
  *
  * @param {Object} config partial webpack config, to be merged into the current one
  */
-actions.setWebpackConfig = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
+actions.setWebpackConfig = (
+  config: Record<string, any>,
+  plugin: IGatsbyPlugin | null = null
+): ISetWebpackConfigAction => {
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
@@ -1091,7 +1117,10 @@ actions.setWebpackConfig = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
  *
  * @param {Object} config complete webpack config
  */
-actions.replaceWebpackConfig = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
+actions.replaceWebpackConfig = (
+  config: Record<string, any>,
+  plugin: IGatsbyPlugin | null = null
+): IReplaceWebpackConfigAction => {
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
@@ -1110,13 +1139,17 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?IGatsbyPlugin = null) 
  *   }
  * })
  */
-actions.setBabelOptions = (options: Object, plugin?: ?IGatsbyPlugin = null) => {
+actions.setBabelOptions = (
+  options: Record<string, any>,
+  plugin: IGatsbyPlugin | null = null
+): ISetBabelOptionsAction => {
   // Validate
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
-  }
-  if (!_.isObject(options)) {
+  const pluginPlaceholder = `Your site's "gatsby-node.js"`
+  const hasNoPluginName = !plugin || plugin.name === `default-site-plugin`
+  const name = `The plugin "${
+    hasNoPluginName ? pluginPlaceholder : plugin!.name
+  }"`
+  if (typeof options !== `object`) {
     console.log(`${name} must pass an object to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
     if (process.env.NODE_ENV !== `test`) {
@@ -1124,7 +1157,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?IGatsbyPlugin = null) => {
     }
   }
 
-  if (!_.isObject(options.options)) {
+  if (typeof options.options !== `object`) {
     console.log(`${name} must pass options to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
     if (process.env.NODE_ENV !== `test`) {
@@ -1152,12 +1185,16 @@ actions.setBabelOptions = (options: Object, plugin?: ?IGatsbyPlugin = null) => {
  *   },
  * })
  */
-actions.setBabelPlugin = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
+actions.setBabelPlugin = (
+  config: Record<string, any>,
+  plugin: IGatsbyPlugin | null = null
+): ISetBabelPluginAction => {
   // Validate
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
-  }
+  const pluginPlaceholder = `Your site's "gatsby-node.js"`
+  const hasNoPluginName = !plugin || plugin.name === `default-site-plugin`
+  const name = `The plugin "${
+    hasNoPluginName ? pluginPlaceholder : plugin!.name
+  }"`
   if (!config.name) {
     console.log(`${name} must set the name of the Babel plugin`)
     console.log(JSON.stringify(config, null, 4))
@@ -1188,12 +1225,16 @@ actions.setBabelPlugin = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
  *   },
  * })
  */
-actions.setBabelPreset = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
+actions.setBabelPreset = (
+  config: Record<string, any>,
+  plugin: IGatsbyPlugin | null = null
+): ISetBabelPresetAction => {
   // Validate
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
-  }
+  const pluginPlaceholder = `Your site's "gatsby-node.js"`
+  const hasNoPluginName = !plugin || plugin.name === `default-site-plugin`
+  const name = `The plugin "${
+    hasNoPluginName ? pluginPlaceholder : plugin!.name
+  }"`
   if (!config.name) {
     console.log(`${name} must set the name of the Babel preset`)
     console.log(JSON.stringify(config, null, 4))
@@ -1223,7 +1264,10 @@ actions.setBabelPreset = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
-actions.createJob = (job: Job, plugin?: ?IGatsbyPlugin = null) => {
+actions.createJob = (
+  job: IJob,
+  plugin: IGatsbyPlugin | null = null
+): ICreateJobAction => {
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -1247,7 +1291,11 @@ actions.createJob = (job: Job, plugin?: ?IGatsbyPlugin = null) => {
  * @example
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
-actions.createJobV2 = (job: JobV2, plugin: IGatsbyPlugin) => (dispatch, getState) => {
+actions.createJobV2 = (job: IJobV2, plugin: IGatsbyPlugin) => (
+  dispatch,
+  getState
+): ICreateJobV2Action | Promise<any> => {
+  // TODO: Remove any
   const currentState = getState()
   const internalJob = createInternalJob(job, plugin)
   const jobContentDigest = internalJob.contentDigest
@@ -1307,7 +1355,10 @@ actions.createJobV2 = (job: JobV2, plugin: IGatsbyPlugin) => (dispatch, getState
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
-actions.setJob = (job: Job, plugin?: ?IGatsbyPlugin = null) => {
+actions.setJob = (
+  job: IJob,
+  plugin: IGatsbyPlugin | null = null
+): ISetJobAction => {
   return {
     type: `SET_JOB`,
     plugin,
@@ -1324,7 +1375,10 @@ actions.setJob = (job: Job, plugin?: ?IGatsbyPlugin = null) => {
  * @example
  * endJob({ id: `write file id: 123` })
  */
-actions.endJob = (job: Job, plugin?: ?IGatsbyPlugin = null) => {
+actions.endJob = (
+  job: IJob,
+  plugin: IGatsbyPlugin | null = null
+): IEndJobAction => {
   return {
     type: `END_JOB`,
     plugin,
@@ -1341,9 +1395,9 @@ actions.endJob = (job: Job, plugin?: ?IGatsbyPlugin = null) => {
  * setPluginStatus({ lastFetched: Date.now() })
  */
 actions.setPluginStatus = (
-  status: { [key: string]: mixed },
+  status: Record<string, any>,
   plugin: IGatsbyPlugin
-) => {
+): ISetPluginStatusAction => {
   return {
     type: `SET_PLUGIN_STATUS`,
     plugin,
@@ -1352,7 +1406,7 @@ actions.setPluginStatus = (
 }
 
 // Check if path is absolute and add pathPrefix in front if it's not
-const maybeAddPathPrefix = (path, pathPrefix) => {
+const maybeAddPathPrefix = (path, pathPrefix): string => {
   const parsed = url.parse(path)
   const isRelativeProtocol = path.startsWith(`//`)
   return `${
@@ -1390,7 +1444,7 @@ actions.createRedirect = ({
   redirectInBrowser = false,
   toPath,
   ...rest
-}) => {
+}): ICreateRedirectAction => {
   let pathPrefix = ``
   if (store.getState().program.prefixPaths) {
     pathPrefix = store.getState().config.pathPrefix
@@ -1422,9 +1476,9 @@ actions.createPageDependency = (
     path,
     nodeId,
     connection,
-  }: { path: string, nodeId: string, connection: string },
-  plugin: string = ``
-) => {
+  }: { path: string; nodeId: string; connection: string },
+  plugin = ``
+): ICreatePageDependencyAction => {
   console.warn(
     `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
   )
@@ -1446,7 +1500,7 @@ actions.createPageDependency = (
  * @param {string} $0.id the path to the page.
  * @param {string} $0.resultHash pages content hash.
  */
-actions.setPageData = (pageData: PageData) => {
+actions.setPageData = (pageData: IPageData): ISetPageDataAction => {
   return {
     type: `SET_PAGE_DATA`,
     payload: pageData,
@@ -1459,7 +1513,7 @@ actions.setPageData = (pageData: PageData) => {
  * @param {Object} $0
  * @param {string} $0.id the path to the page.
  */
-actions.removePageData = (id: PageDataRemove) => {
+actions.removePageData = (id: IPageDataRemove): IRemovePageDataAction => {
   return {
     type: `REMOVE_PAGE_DATA`,
     payload: id,
