@@ -1,5 +1,4 @@
-import React from "react"
-import * as CSS from "csstype"
+import React, { CSSProperties } from "react"
 
 type Loading = "lazy" | "eager"
 type CrossOrigin = "anonymous" | "use-credentials" | ""
@@ -16,7 +15,7 @@ interface ImageObject {
   media?: string
 }
 
-interface FixedObject {
+export interface FixedObject {
   width: number
   height: number
   src: ImageObject["src"]
@@ -28,7 +27,7 @@ interface FixedObject {
   media?: ImageObject["media"]
 }
 
-interface FluidObject {
+export interface FluidObject {
   aspectRatio: number
   src: ImageObject["src"]
   srcSet: ImageObject["srcSet"]
@@ -72,8 +71,8 @@ export interface GatsbyImageProps {
   className?: string | object
   critical?: boolean
   crossOrigin?: CrossOrigin
-  style?: CSS.Properties
-  imgStyle?: CSS.Properties
+  style?: CSSProperties
+  imgStyle?: CSSProperties
   placeholderStyle?: object
   placeholderClassName?: string
   backgroundColor?: string | boolean
@@ -113,7 +112,7 @@ interface ImgPropTypes {
   srcSet?: ImageObject["srcSet"]
   src: ImageObject["src"]
   crossOrigin?: GatsbyImageProps["crossOrigin"]
-  style?: CSS.Properties
+  style?: CSSProperties
   onLoad?: GatsbyImageProps["onLoad"]
   onError?: GatsbyImageProps["onError"]
   itemProp?: GatsbyImageProps["itemProp"]
@@ -447,6 +446,7 @@ const Img = React.forwardRef(
 
     return (
       <img
+        alt={alt}
         aria-hidden={ariaHidden}
         sizes={sizes}
         srcSet={srcSet}
@@ -610,7 +610,7 @@ export class Image extends React.Component<GatsbyImageProps, State> {
     const shouldFadeIn: boolean =
       this.state.fadeIn === true && !this.state.imgCached
 
-    const imageStyle: CSS.Properties = {
+    const imageStyle: CSSProperties = {
       opacity: shouldReveal ? 1 : 0,
       transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
       ...imgStyle,
@@ -619,11 +619,11 @@ export class Image extends React.Component<GatsbyImageProps, State> {
     const bgColor: string | undefined =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
-    const delayHideStyle: CSS.Properties = {
+    const delayHideStyle: CSSProperties = {
       transitionDelay: `${durationFadeIn}ms`,
     }
 
-    const imagePlaceholderStyle: CSS.Properties = {
+    const imagePlaceholderStyle: CSSProperties = {
       opacity: this.state.imgLoaded ? 0 : 1,
       ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
@@ -746,7 +746,7 @@ export class Image extends React.Component<GatsbyImageProps, State> {
       const imageVariants = fixed as FixedObject[]
       const image = getCurrentSrcData(fixed) as FixedObject
 
-      const divStyle = {
+      const divStyle: CSSProperties = {
         position: `relative`,
         overflow: `hidden`,
         display: `inline-block`,
