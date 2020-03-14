@@ -1,5 +1,5 @@
 - url: https://delog-w3layouts.netlify.com/
-  repo: https://github.com/W3Layouts/gatsby-starter-delog/
+  repo: https://github.com/W3Layouts/gatsby-starter-delog
   description: A Gatsby Starter built with Netlify CMS to launch your dream blog with a click.
   tags:
     - Blog
