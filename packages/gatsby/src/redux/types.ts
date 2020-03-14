@@ -1,22 +1,6 @@
 import { GraphQLSchema } from "graphql"
 import { IProgram } from "../commands/types"
 
-interface INode {
-  id: string
-  parent: string | null
-  children: INode["id"][]
-  array?: any[]
-  internal: {
-    owner: string
-    counter: number
-    mediaType: string
-    type: string
-    content: any
-    contentDigest: string
-    description: string
-  }
-}
-
 export interface IGatsbyPlugin {
   name: string
   version: string
@@ -72,7 +56,7 @@ export interface IPageDataRemove {
 export interface IReduxNode {
   id: string
   parent: string | null
-  children: INode["id"][]
+  children: IReduxNode["id"][]
   fields: any
   array?: any[]
   internal: {
