@@ -154,6 +154,8 @@ exports.onPostBuild = (
   const customMergeFunction = (objValue, srcValue) => {
     if (_.isArray(objValue))
       return srcValue
+    else
+      return _.mergeWith(objValue, srcValue, customMergeFunction)
   }
 
   const combinedOptions = _.mergeWith(options, workboxConfig, customMergeFunction);
