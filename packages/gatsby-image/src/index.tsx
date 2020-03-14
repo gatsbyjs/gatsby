@@ -1,7 +1,8 @@
 import React from "react"
 import * as CSS from "csstype"
 
-type Loading = `auto` | `lazy` | `eager`
+type Loading = "lazy" | "eager"
+type CrossOrigin = "anonymous" | "use-credentials" | ""
 
 interface ImageObject {
   width: number
@@ -47,7 +48,7 @@ type NoscriptImgProps = {
   alt?: string
   width?: number
   height?: number
-  crossOrigin?: string
+  crossOrigin?: CrossOrigin
   loading?: Loading
   draggable?: boolean
   imageVariants: ImageVariants[]
@@ -70,7 +71,7 @@ export interface GatsbyImageProps {
   alt?: string
   className?: string | object
   critical?: boolean
-  crossOrigin?: string | boolean
+  crossOrigin?: CrossOrigin
   style?: CSS.Properties
   imgStyle?: CSS.Properties
   placeholderStyle?: object
@@ -111,6 +112,7 @@ interface ImgPropTypes {
   sizes?: FluidObject["sizes"]
   srcSet?: ImageObject["srcSet"]
   src: ImageObject["src"]
+  crossOrigin?: GatsbyImageProps["crossOrigin"]
   style?: CSS.Properties
   onLoad?: GatsbyImageProps["onLoad"]
   onError?: GatsbyImageProps["onError"]
@@ -546,7 +548,7 @@ export class Image extends React.Component<GatsbyImageProps, State> {
   }
 
   // Specific to IntersectionObserver based lazy-load support
-  public handleRef(ref: React.RefObject<HTMLImageElement>) {
+  public handleRef(ref: HTMLImageElement) {
     if (this.useIOSupport && ref) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
