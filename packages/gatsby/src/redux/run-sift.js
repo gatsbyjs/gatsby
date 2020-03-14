@@ -3,6 +3,7 @@ const { default: sift } = require(`sift`)
 const { prepareRegex } = require(`../utils/prepare-regex`)
 const { makeRe } = require(`micromatch`)
 import { getValueAt } from "../utils/get-value-at"
+import _ from "lodash"
 const {
   toDottedFields,
   objectToDottedField,
