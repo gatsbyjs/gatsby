@@ -13,7 +13,7 @@ import { hasNodeChanged, getNode } from "../../db/nodes"
 import sanitizeNode from "../../db/sanitize-node"
 import { store } from ".."
 import { sync as fileExistsSync } from "fs-exists-cached"
-import joiSchemas from "../../joi-schemas/joi"
+import * as joiSchemas from "../../joi-schemas/joi"
 import { generateComponentChunkName } from "../../utils/js-chunk-names"
 import {
   getCommonDir,
@@ -75,7 +75,7 @@ const {
   getInProcessJobPromise,
 } = require(`../../utils/jobs-manager`)
 
-const actions: Record<string, any> = {}
+export const actions: Record<string, any> = {}
 const isWindows = platform() === `win32`
 
 const ensureWindowsDriveIsUppercase = (filePath): string => {
@@ -524,10 +524,11 @@ actions.deleteNode = (
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const node = getNode(id) as IReduxNode
-  const typeOwners = {}
+  // const typeOwners = {}
   if (plugin) {
     const pluginName = plugin.name
 
+    /* eslint-disable @typescript-eslint/no-use-before-define */
     if (node && typeOwners[node.internal.type] !== pluginName)
       throw new Error(stripIndent`
           The plugin "${pluginName}" deleted a node of a type owned by another plugin.
@@ -544,6 +545,7 @@ actions.deleteNode = (
 
           ${JSON.stringify(plugin, null, 4)}
         `)
+    /* eslint-enable @typescript-eslint/no-use-before-define */
   }
 
   const createDeleteAction = (node: IReduxNode): IDeleteNodeAction => {
@@ -1520,5 +1522,3 @@ actions.removePageData = (id: IPageDataRemove): IRemovePageDataAction => {
     payload: id,
   }
 }
-
-module.exports = { actions }
