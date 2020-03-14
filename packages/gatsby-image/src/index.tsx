@@ -455,6 +455,7 @@ const Img = React.forwardRef(
         onLoad={onLoad}
         onError={onError}
         ref={ref}
+        // @ts-ignore : need to update @types/react
         loading={loading}
         draggable={draggable}
         style={{
