@@ -10,6 +10,7 @@
   { "code": "it", "name": "Italian", "localName": "Italiano" },
   { "code": "ja", "name": "Japanese", "localName": "日本語" },
   { "code": "ko", "name": "Korean", "localName": "한국어" },
+  { "code": "mr", "name": "Marathi", "localName": "मराठी" },
   { "code": "mn", "name": "Mongolian", "localName": "Монгол хэл" },
   { "code": "nl", "name": "Dutch", "localName": "Nederlands" },
   { "code": "pl", "name": "Polish", "localName": "Polski" },
