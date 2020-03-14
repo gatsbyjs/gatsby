@@ -23,7 +23,7 @@ const { createNodeFactory, generateNodeId } = createNodeHelpers({
 
 const downloadImageAndCreateFileNode = async (
   { url, nodeId },
-  { createNode, createNodeId, touchNode, store, cache, reporter }
+  { createNode, createNodeId, touchNode, store, cache, getCache, reporter }
 ) => {
   let fileNodeID
 
@@ -42,6 +42,7 @@ const downloadImageAndCreateFileNode = async (
     cache,
     createNode,
     createNodeId,
+    getCache,
     parentNodeId: nodeId,
     reporter,
   })

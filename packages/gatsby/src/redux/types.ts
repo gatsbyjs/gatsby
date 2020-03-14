@@ -18,7 +18,10 @@ export interface IReduxState {
   nodesByType?: Map<any, any> // TODO
   jobsV2: any // TODO
   lastAction: ActionsUnion
-  componentDataDependencies: any // TODO
+  componentDataDependencies: {
+    connections: any // TODO
+    nodes: any // TODO
+  }
   components: any // TODO
   staticQueryComponents: any // TODO
   webpackCompilationHash: any // TODO
@@ -35,6 +38,8 @@ export interface IReduxState {
   pageData: any
   pages: any
   babelrc: any
+  themes: any
+  flattenedPlugins: any
 }
 
 export interface ICachedReduxState {

@@ -222,11 +222,6 @@ export default function({ types: t }) {
               const shortResultPath = `public/static/d/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
 
-              // Remove query variable since it is useless now
-              if (this.templatePath.parentPath.isVariableDeclarator()) {
-                this.templatePath.parentPath.remove()
-              }
-
               // only remove the import if its like:
               // import { useStaticQuery } from 'gatsby'
               // but not if its like:

@@ -1,4 +1,4 @@
-// This custom error should help us debug sharp errors when occuring.
+// This custom error should help us debug sharp errors when occurring.
 
 export class SharpError extends Error {
   /**

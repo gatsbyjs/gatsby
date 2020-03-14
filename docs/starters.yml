@@ -817,7 +817,7 @@
   features:
     - Based on gatsby-starter-default
     - Using Tachyons for CSS.
-- url: https://quizzical-mcclintock-0226ac.netlify.com/
+- url: https://gatsby-starter-tailwind.oddstronaut.com/
   repo: https://github.com/taylorbryant/gatsby-starter-tailwind
   description: A Gatsby v2 starter styled using Tailwind, a utility-first CSS framework. Uses Purgecss to remove unused CSS.
   tags:
@@ -3793,11 +3793,11 @@
     - Styled Components
     - Sitemap Generation
     - Google Analytics
-- url: https://agility-gatsby-starter.netlify.com
+- url: https://agility-gatsby-starter-gatsbycloud.netlify.com
   repo: https://github.com/agility/agility-gatsby-starter
   description: Get started with Gatsby and Agility CMS using a minimal blog.
   tags:
-    - CMS:Other
+    - CMS:Agility CMS
     - Blog
     - SEO
   features:
@@ -5446,6 +5446,19 @@
     - Light and Dark themes based on CSS variables (persisted state)
     - Font Awesome
     - Normalize.css
+- url: https://gatsby-notion-demo.netlify.com/
+  repo: https://github.com/conradlin/gatsby-starter-strata-notion
+  description: Gatsby starter utilizing Notion as a CMS based on strata site template
+  tags:
+    - Blog
+    - PWA
+    - SEO
+    - Styling:SCSS
+  features:
+    - Super simple, portfolio + blog + newsletter site
+    - Utilizing Notion as a CMS
+    - Fully Responsive
+    - Styling with SCSS
 - url: https://sumanth.netlify.com/
   repo: https://github.com/Mr404Found/gatsby-sidedrawer
   description: A responsive and super simple gatsby site with awesome navbar and stay tuned more features coming soon
@@ -5489,3 +5502,95 @@
     - Disqus
     - Breadcrumbs
     - ESLint
+- url: https://barcadia.netlify.com/
+  repo: https://github.com/bagseye/barcadia
+  description: A super-fast site using GatsbyJS
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Contentful
+    - Portfolio
+  features:
+    - Styled components
+    - Responsive webpage
+    - Portfolio
+    - Blog
+- url: https://gatsby-starter-clean-resume.netlify.com/
+  repo: https://github.com/masoudkarimif/gatsby-starter-clean-resume
+  description: A Gatsby Starter Template for Putting Your Resume Online Super Quick!
+  tags:
+    - Netlify
+    - Pagination
+    - Styling:Other
+    - SEO
+  features:
+    - Easy setup
+    - Completely customizable using only gatsby-config.js file
+    - Uses Milligram for styling
+    - Fully responsive
+    - Clean minimalist design
+    - Page transition
+    - Five different themes (great-gatsby, master-yoda, wonder-woman, darth-vader, luke-lightsaber)
+    - Includes React Helmet for title and description tags
+    - Includes Google Analytics plugin
+- url: https://gatsby-starter-i18n-bulma.netlify.com
+  repo: https://github.com/kalwalt/gatsby-starter-i18n-bulma
+  description: A gatsby starter with Bulma and optimized slug for better SEO.
+  tags:
+    - i18n
+    - Netlify
+    - CMS:Netlify
+    - Styling:Bulma
+    - Styling:SCSS
+    - Gallery
+    - SEO
+    - Markdown
+    - PWA
+    - Blog
+  features:
+    - Multilanguage support with i18n
+    - Slug switcher (multilanguage)
+    - Uses Bulma for styling
+    - Netlify CMS
+    - React Images with Modal
+    - FontAwesome icons
+    - Animate.css with WOW
+    - Robots.txt
+    - Sitemap
+    - PWA
+- url: https://gatsby-contentful-portfolio.netlify.com/
+  repo: https://github.com/wkocjan/gatsby-contentful-portfolio
+  description: Gatsby portfolio theme integrated with Contentful
+  tags:
+    - CMS:Contentful
+    - CMS:Headless
+    - Gallery
+    - Portfolio
+    - SEO
+    - Styling:Tailwind
+  features:
+    - Clean minimalist design
+    - Contentful integration with ready to go placeholder content
+    - Responsive design
+    - Uses TailwindCSS for styling
+    - Font Awesome icons
+    - Robots.txt
+    - SEO optimized
+    - OpenGraph structured data
+    - Integration with Mailchimp
+- url: https://gatsby-graphcms-ecommerce-starter.netlify.com
+  repo: https://github.com/GraphCMS/gatsby-graphcms-ecommerce-starter
+  description: Swag store built with GraphCMS, Stripe, Gatsby, Postmark and Printful.
+  tags:
+    - eCommerce
+    - i18n
+    - Netlify
+    - Styling:Tailwind
+    - CMS:Other
+    - Stripe
+  features:
+    - Dropshipping by Printful
+    - Printful inventory enhanced by GraphCMS
+    - Custom GraphQL API for handling checkout and payment
+    - Postmark for order notifications
+    - Strong Customer Authentication
