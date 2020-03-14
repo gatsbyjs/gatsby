@@ -10,7 +10,6 @@
     - Simple blog designed for designer and developers
     - Add posts with Netlify CMS
     - Add meta description from CMS
-
 - url: https://styxlab.github.io
   repo: https://github.com/styxlab/gatsby-starter-try-ghost
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
