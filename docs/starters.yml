@@ -1,3 +1,16 @@
+- url: https://delog-w3layouts.netlify.com/
+  repo: https://github.com/W3Layouts/gatsby-starter-delog/
+  description: A Gatsby Starter built with Netlify CMS to launch your dream blog with a click.
+  tags:
+    - Blog
+    - CMS:Netlify CMS
+    - SEO
+    - Styling:SCSS
+  features:
+    - Simple blog designed for designer and developers
+    - Add posts with Netlify CMS
+    - Add meta description from CMS
+
 - url: https://styxlab.github.io
   repo: https://github.com/styxlab/gatsby-starter-try-ghost
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
