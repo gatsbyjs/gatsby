@@ -378,7 +378,7 @@ const listenToIntersections = (
     return
   }
 
-  return () => {
+  return (): void => {
     observer.unobserve(el)
     listeners.delete(el)
   }
@@ -548,7 +548,7 @@ export class Image extends React.Component<GatsbyImageProps, State> {
   }
 
   // Specific to IntersectionObserver based lazy-load support
-  public handleRef(ref: HTMLImageElement) {
+  public handleRef(ref: HTMLImageElement): void {
     if (this.useIOSupport && ref) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
@@ -576,7 +576,7 @@ export class Image extends React.Component<GatsbyImageProps, State> {
     }
   }
 
-  public handleImageLoaded() {
+  public handleImageLoaded(): void {
     activateCacheForImage(this.props)
 
     this.setState({ imgLoaded: true })
@@ -586,7 +586,7 @@ export class Image extends React.Component<GatsbyImageProps, State> {
     }
   }
 
-  public render() {
+  public render(): JSX.Element | null {
     const {
       title,
       alt,
