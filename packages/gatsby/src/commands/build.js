@@ -16,7 +16,7 @@ const { store, readState } = require(`../redux`)
 const queryUtil = require(`../query`)
 import * as appDataUtil from "../utils/app-data"
 import * as WorkerPool from "../utils/worker/pool"
-const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
+import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
