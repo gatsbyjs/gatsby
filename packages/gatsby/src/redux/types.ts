@@ -1,4 +1,21 @@
 import { GraphQLSchema } from "graphql"
+import { IProgram } from "../commands/types"
+
+interface INode {
+  id: string
+  parent: string | null
+  children: INode["id"][]
+  array?: any[]
+  internal: {
+    owner: string
+    counter: number
+    mediaType: string
+    type: string
+    content: any
+    contentDigest: string
+    description: string
+  }
+}
 
 export interface IGatsbyPlugin {
   name: string
@@ -54,8 +71,19 @@ export interface IPageDataRemove {
 
 export interface IReduxNode {
   id: string
+  parent: string | null
+  children: INode["id"][]
+  fields: any
+  array?: any[]
   internal: {
+    owner: string
+    counter: number
+    fieldOwners: any // TODO
+    mediaType: string
     type: string
+    content: any
+    contentDigest: string
+    description: string
   }
 }
 
@@ -92,12 +120,14 @@ export interface IReduxState {
   config: {
     developMiddleware: any
     proxy: any
+    pathPrefix: string
   }
   pageData: any
   pages: any
   babelrc: any
   themes: any
   flattenedPlugins: any
+  program: IProgram
 }
 
 export interface ICachedReduxState {
@@ -137,21 +167,21 @@ export interface ICreatePageAction extends IActionOptions {
 export interface ICreateNodeAction extends IActionOptions {
   type: `CREATE_NODE`
   plugin: IGatsbyPlugin
-  oldNode: any // TODO
-  payload: any // TODO
+  oldNode: IReduxNode
+  payload: IReduxNode
 }
 
 export interface ICreateNodeFieldAction extends IActionOptions {
   type: `ADD_FIELD_TO_NODE`
   plugin: IGatsbyPlugin
-  payload: any // TODO
+  payload: IReduxNode
   addedField: string
 }
 
 export interface ICreateParentChildLinkAction {
   type: `ADD_CHILD_NODE_TO_PARENT_NODE`
   plugin?: IGatsbyPlugin
-  payload: any // TODO
+  payload: IReduxNode
 }
 
 export interface ISetWebpackConfigAction {
@@ -230,7 +260,7 @@ export interface ISetPluginStatusAction {
 export interface ITouchNodeAction {
   type: `TOUCH_NODE`
   plugin?: IGatsbyPlugin
-  payload: string
+  payload: IReduxNode["id"]
 }
 
 export interface IValidationErrorAction {
@@ -246,14 +276,14 @@ export interface IDeletePageAction {
 export interface IDeleteNodeAction {
   type: `DELETE_NODE`
   plugin?: IGatsbyPlugin
-  payload: any // TODO
+  payload: IReduxNode // TODO
 }
 
 export interface IDeleteNodesAction {
   type: `DELETE_NODES`
   plugin: IGatsbyPlugin
-  fullNodes: any[] // TODO
-  payload: any[] // TODO
+  fullNodes: IReduxNode[]
+  payload: string[]
 }
 
 export interface ISetPageDataAction {

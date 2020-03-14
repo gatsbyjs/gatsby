@@ -26,7 +26,12 @@ import { getNonGatsbyCodeFrame } from "../../utils/stack-trace-utils"
 import {
   IGatsbyPlugin,
   IPageInput,
+  IReduxNode,
   IPage,
+  IJob,
+  IJobV2,
+  IPageDataRemove,
+  IPageData,
   IGatsbyError,
   IActionOptions,
   ICreatePageAction,
@@ -35,8 +40,6 @@ import {
   IDeleteNodesAction,
   ICreateNodeAction,
   IValidationErrorAction,
-  IJob,
-  IJobV2,
   ITouchNodeAction,
   ICreateNodeFieldAction,
   ICreateParentChildLinkAction,
@@ -52,9 +55,7 @@ import {
   ISetPluginStatusAction,
   ICreateRedirectAction,
   ICreatePageDependencyAction,
-  IPageData,
   ISetPageDataAction,
-  IPageDataRemove,
   IRemovePageDataAction,
 } from "../types"
 
@@ -74,7 +75,7 @@ const {
   getInProcessJobPromise,
 } = require(`../../utils/jobs-manager`)
 
-const actions: { [key: string]: any } = {}
+const actions: Record<string, any> = {}
 const isWindows = platform() === `win32`
 
 const ensureWindowsDriveIsUppercase = (filePath): string => {
@@ -522,7 +523,7 @@ actions.deleteNode = (
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
-  const node = getNode(id)
+  const node = getNode(id) as IReduxNode
   const typeOwners = {}
   if (plugin) {
     const pluginName = plugin.name
@@ -545,7 +546,7 @@ actions.deleteNode = (
         `)
   }
 
-  const createDeleteAction = (node): IDeleteNodeAction => {
+  const createDeleteAction = (node: IReduxNode): IDeleteNodeAction => {
     return {
       type: `DELETE_NODE`,
       plugin,
@@ -560,7 +561,7 @@ actions.deleteNode = (
   const deleteDescendantsActions =
     node &&
     findChildren(node.children)
-      .map(getNode)
+      .map<IReduxNode>(getNode)
       .map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
@@ -579,7 +580,7 @@ actions.deleteNode = (
  * deleteNodes([`node1`, `node2`])
  */
 actions.deleteNodes = (
-  nodes: any[],
+  nodes: IReduxNode[],
   plugin: IGatsbyPlugin
 ): IDeleteNodesAction => {
   let msg =
@@ -603,7 +604,7 @@ actions.deleteNodes = (
     // Payload contains node IDs but inference-metadata and loki reducers require
     // full node instances
     payload: nodeIds,
-    fullNodes: nodeIds.map(getNode) as any[],
+    fullNodes: nodeIds.map(getNode) as IReduxNode[],
   }
 }
 
@@ -693,7 +694,7 @@ const typeOwners = {}
  */
 
 type CreateNode = (
-  node: any,
+  node: IReduxNode,
   actionOptions: IActionOptions,
   plugin?: IGatsbyPlugin
 ) =>
@@ -703,7 +704,7 @@ type CreateNode = (
   | void
 
 const createNode: CreateNode = (
-  node: any,
+  node: IReduxNode,
   actionOptions: IActionOptions = {},
   plugin?: IGatsbyPlugin
 ):
@@ -721,7 +722,7 @@ const createNode: CreateNode = (
 
   // Ensure the new node has an internals object.
   if (!node.internal) {
-    node.internal = {}
+    node.internal = {} as IReduxNode["internal"]
   }
 
   NODE_COUNTER++
@@ -787,7 +788,7 @@ const createNode: CreateNode = (
   }
 
   // Ensure node isn't directly setting fields.
-  if (node.fields) {
+  if ((node as any).fields) {
     throw new Error(
       stripIndent`
       Plugins creating nodes can not set data on the reserved field "fields"
@@ -809,7 +810,7 @@ const createNode: CreateNode = (
 
   node = sanitizeNode(node)
 
-  const oldNode = getNode(node.id)
+  const oldNode = getNode(node.id) as IReduxNode
 
   // Ensure the plugin isn't creating a node type owned by another
   // plugin. Type "ownership" is first come first served.
@@ -954,7 +955,7 @@ actions.touchNode = (
     nodeId = options
   }
 
-  const node = getNode(nodeId)
+  const node = getNode(nodeId) as IReduxNode
   if (node && !typeOwners[node.internal.type]) {
     typeOwners[node.internal.type] = node.internal.owner
   }
@@ -967,7 +968,7 @@ actions.touchNode = (
 }
 
 interface ICreateNodeInput {
-  node: Record<string, any> // TODO,
+  node: IReduxNode
   fieldName?: string
   fieldValue?: string
   name?: string
@@ -1074,7 +1075,7 @@ actions.createNodeField = (
  * createParentChildLink({ parent: parentNode, child: childNode })
  */
 actions.createParentChildLink = (
-  { parent, child }: { parent: any; child: any },
+  { parent, child }: { parent: IReduxNode; child: IReduxNode },
   plugin?: IGatsbyPlugin
 ): ICreateParentChildLinkAction => {
   if (!parent.children.includes(child.id)) {
