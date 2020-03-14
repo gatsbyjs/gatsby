@@ -1,5 +1,9 @@
 import { GraphQLSchema } from "graphql"
 
+export interface IGatsbyPlugin {
+  name: string
+}
+
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,

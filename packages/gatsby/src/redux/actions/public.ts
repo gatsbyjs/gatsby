@@ -1,29 +1,29 @@
-// @flow
-const Joi = require(`@hapi/joi`)
-const chalk = require(`chalk`)
-const _ = require(`lodash`)
-const { stripIndent } = require(`common-tags`)
-const report = require(`gatsby-cli/lib/reporter`)
-const { platform } = require(`os`)
-const path = require(`path`)
-const fs = require(`fs`)
-const { trueCasePathSync } = require(`true-case-path`)
-const url = require(`url`)
-const { slash } = require(`gatsby-core-utils`)
-const { hasNodeChanged, getNode } = require(`../../db/nodes`)
-const sanitizeNode = require(`../../db/sanitize-node`)
-const { store } = require(`..`)
-const fileExistsSync = require(`fs-exists-cached`).sync
-const joiSchemas = require(`../../joi-schemas/joi`)
-const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const {
+import Joi from "@hapi/joi"
+import chalk from "chalk"
+import _ from "lodash"
+import { stripIndent } from "common-tags"
+import report from "gatsby-cli/lib/reporter"
+import { platform } from "os"
+import path from "path"
+import fs from "fs"
+import { trueCasePathSync } from "true-case-path"
+import url from "url"
+import { slash } from "gatsby-core-utils"
+import { hasNodeChanged, getNode }  from "../../db/nodes"
+import sanitizeNode from "../../db/sanitize-node"
+import { store } from ".."
+import { sync as fileExistsSync } from "fs-exists-cached"
+import joiSchemas from "../../joi-schemas/joi"
+import { generateComponentChunkName } from "../../utils/js-chunk-names"
+import {
   getCommonDir,
   truncatePath,
   tooLongSegmentsInPath,
-} = require(`../../utils/path`)
-const apiRunnerNode = require(`../../utils/api-runner-node`)
-const { trackCli } = require(`gatsby-telemetry`)
-const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+} from "../../utils/path"
+import apiRunnerNode from "../../utils/api-runner-node"
+import { trackCli } from "gatsby-telemetry"
+import { getNonGatsbyCodeFrame } from "../../utils/stack-trace-utils"
+import { IGatsbyPlugin } from "../types"
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -71,8 +71,6 @@ const findChildren = initialChildren => {
   return children
 }
 
-import type { Plugin } from "./types"
-
 type Job = {
   id: string,
 }
@@ -92,7 +90,7 @@ type PageInput = {
 
 type Page = {
   path: string,
-  matchPath: ?string,
+  matchPath?: string,
   component: string,
   context: Object,
   internalComponentName: string,
@@ -101,7 +99,7 @@ type Page = {
 }
 
 type ActionOptions = {
-  traceId: ?string,
+  traceId?: string,
   parentSpan: ?Object,
   followsSpan: ?Object,
 }
@@ -161,7 +159,7 @@ const fileOkCache = {}
  */
 actions.createPage = (
   page: PageInput,
-  plugin?: Plugin,
+  plugin?: IGatsbyPlugin,
   actionOptions?: ActionOptions
 ) => {
   let name = `The plugin "${plugin.name}"`
@@ -505,7 +503,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * @example
  * deleteNode({node: node})
  */
-actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
+actions.deleteNode = (options: any, plugin: IGatsbyPlugin, args: any) => {
   let id
 
   // Check if using old method signature. Warn about incorrect usage but get
@@ -583,7 +581,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
  * @example
  * deleteNodes([`node1`, `node2`])
  */
-actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
+actions.deleteNodes = (nodes: any[], plugin: IGatsbyPlugin) => {
   let msg =
     `The "deleteNodes" action is now deprecated and will be removed in ` +
     `Gatsby v3. Please use "deleteNode" instead.`
@@ -696,7 +694,7 @@ const typeOwners = {}
  */
 const createNode = (
   node: any,
-  plugin?: Plugin,
+  plugin?: IGatsbyPlugin,
   actionOptions?: ActionOptions = {}
 ) => {
   if (!_.isObject(node)) {
@@ -920,7 +918,7 @@ actions.createNode = (...args) => dispatch => {
  * @example
  * touchNode({ nodeId: `a-node-id` })
  */
-actions.touchNode = (options: any, plugin?: Plugin) => {
+actions.touchNode = (options: any, plugin?: IGatsbyPlugin) => {
   let nodeId = _.get(options, `nodeId`)
 
   // Check if using old method signature. Warn about incorrect usage
@@ -979,7 +977,7 @@ type CreateNodeInput = {
  */
 actions.createNodeField = (
   { node, name, value, fieldName, fieldValue }: CreateNodeInput,
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   actionOptions?: ActionOptions
 ) => {
   if (fieldName) {
@@ -1054,7 +1052,7 @@ actions.createNodeField = (
  */
 actions.createParentChildLink = (
   { parent, child }: { parent: any, child: any },
-  plugin?: Plugin
+  plugin?: IGatsbyPlugin
 ) => {
   if (!parent.children.includes(child.id)) {
     parent.children.push(child.id)
@@ -1076,7 +1074,7 @@ actions.createParentChildLink = (
  *
  * @param {Object} config partial webpack config, to be merged into the current one
  */
-actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+actions.setWebpackConfig = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
@@ -1093,7 +1091,7 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  *
  * @param {Object} config complete webpack config
  */
-actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+actions.replaceWebpackConfig = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
@@ -1112,7 +1110,7 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  *   }
  * })
  */
-actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
+actions.setBabelOptions = (options: Object, plugin?: ?IGatsbyPlugin = null) => {
   // Validate
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -1154,7 +1152,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
  *   },
  * })
  */
-actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
+actions.setBabelPlugin = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
   // Validate
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -1190,7 +1188,7 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
  *   },
  * })
  */
-actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
+actions.setBabelPreset = (config: Object, plugin?: ?IGatsbyPlugin = null) => {
   // Validate
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -1225,7 +1223,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
-actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
+actions.createJob = (job: Job, plugin?: ?IGatsbyPlugin = null) => {
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -1249,7 +1247,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * @example
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
-actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
+actions.createJobV2 = (job: JobV2, plugin: IGatsbyPlugin) => (dispatch, getState) => {
   const currentState = getState()
   const internalJob = createInternalJob(job, plugin)
   const jobContentDigest = internalJob.contentDigest
@@ -1309,7 +1307,7 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
-actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
+actions.setJob = (job: Job, plugin?: ?IGatsbyPlugin = null) => {
   return {
     type: `SET_JOB`,
     plugin,
@@ -1326,7 +1324,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
  * @example
  * endJob({ id: `write file id: 123` })
  */
-actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
+actions.endJob = (job: Job, plugin?: ?IGatsbyPlugin = null) => {
   return {
     type: `END_JOB`,
     plugin,
@@ -1344,7 +1342,7 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
  */
 actions.setPluginStatus = (
   status: { [key: string]: mixed },
-  plugin: Plugin
+  plugin: IGatsbyPlugin
 ) => {
   return {
     type: `SET_PLUGIN_STATUS`,
