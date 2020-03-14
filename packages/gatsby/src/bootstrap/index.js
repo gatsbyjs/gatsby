@@ -310,12 +310,12 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   const srcDir = `${__dirname}/../../cache-dir`
   const siteDir = cacheDirectory
-  const tryRequire = `${__dirname}/../utils/test-require-error.js`
+  const tryRequire = `${__dirname}/../utils/test-require-error.ts`
   try {
     await fs.copy(srcDir, siteDir, {
       clobber: true,
     })
-    await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
+    await fs.copy(tryRequire, `${siteDir}/test-require-error.ts`, {
       clobber: true,
     })
     await fs.ensureDirSync(`${cacheDirectory}/json`)
