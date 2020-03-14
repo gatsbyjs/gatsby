@@ -150,8 +150,13 @@ exports.onPostBuild = (
     skipWaiting: true,
     clientsClaim: true,
   }
+  
+  const customMergeFunction = (objValue, srcValue) => {
+    if (_.isArray(objValue))
+      return srcValue
+  }
 
-  const combinedOptions = _.merge(options, workboxConfig)
+  const combinedOptions = _.mergeWith(options, workboxConfig, customMergeFunction);
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
