@@ -9,14 +9,14 @@ During Gatsby's bootstrap & build phases, the state is stored and manipulated us
 The namespaces in Gatsby's Redux store are a great overview of the Gatsby internals, here are a few:
 
 - **[Nodes](/docs/node-interface/)** - All data that’s added to Gatsby is modeled using nodes. Nodes are most commonly added by Source plugins such as `gatsby-source-filesystem`.
-- **[Schema](/docs/schema-generation/)** - GraphQL schema inferred from Nodes, available for querying by page and static queries.
-- **[Pages](/docs/gatsby-internals-terminology/#page)** - A `Map` of page paths to page objects. Page objects contain information needed to render a page such as component file path, page query and context.
+- **[Schema](/docs/schema-generation/)** - GraphQL [schema](/docs/glossary#schema) [inferred](/docs/glossary#inference) from Nodes, available for querying by page and static queries.
+- **[Pages](/docs/gatsby-internals-terminology/#page)** - A `Map` of page paths to page objects. Objects made via [Page Creation](/docs/page-creation) contain information needed to render a page such as component file path, page query and context.
 - **[Components](/docs/gatsby-internals-terminology/#component)** - A `Map` of component file paths to page objects.
-- **[Static Query Components](/docs/static-vs-normal-queries/#keeping-track-of-site-queries-during-build-in-redux-stores)** - A `Map` of any components detected with a static query.
-- **Jobs** - Long-running processes, generally started as a side-effect to a GraphQL query. Gatsby doesn’t finish its process until all jobs are ended.
-- **Webpack** - Config for the [Webpack](https://webpack.js.org/) bundler which handles code optimization and splitting of delivered javascript bundles.
+- **[Static Query Components](/docs/static-vs-normal-queries/#keeping-track-of-site-queries-during-build-in-redux-stores)** - A `Map` of any components detected with a [static query](/docs/static-query/).
+- **Jobs** - Long-running and CPU-intensive processes, generally started as a side-effect to a GraphQL query. Gatsby doesn’t finish its process until all jobs are ended.
+- **Webpack** - Config for the [Webpack](/docs/webpack-and-ssr/) bundler which handles code optimization and splitting of delivered javascript bundles.
 
-The Gatsby [/redux index file](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](/docs/node-apis/).
+The Gatsby [redux index file](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/index.ts) has two key exports, `store` and `emitter`. Throughout the bootstrap and build phases, `store` is used to get the current state and dispatch actions, while `emitter` is used to register listeners for particular actions. The store is also made available to Gatsby users through the [Node APIs](/docs/node-apis/).
 
 ## Actions
 
@@ -24,9 +24,9 @@ Actions dispatched in the store cause state changes through the reducers and als
 
 The [Gatsby actions](/docs/actions/) are all either internal, public or restricted. The public actions, and a context relevant subset of the restricted actions, are available to users through the [Node APIs](/docs/node-apis/).
 
-### Action Journey
+### Example action journey for `createRedirect`
 
-Gatsby actions have a similar journey through defining, exposing and dispatching. Let's follow the [createRedirect](/docs/actions/#createRedirect) public action:
+Gatsby actions have a similar journey through defining, exposing and dispatching. This section follows the [createRedirect](/docs/actions/#createRedirect) public action:
 
 - **Reducer case** - The redirects reducer will catch actions with a type `CREATE_REDIRECT` and make the necessary state manipulation.
 
@@ -49,3 +49,10 @@ module.exports = {
   },
 }
 ```
+
+By walking through an action scenario in detail, you can hopefully understand more about Gatsby's internals using Redux.
+
+## Additional resources
+
+- [Behind the Scenes: What Makes Gatsby Great](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/)
+- [Gatsby Magic](/docs/gatsby-magic/)
