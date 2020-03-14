@@ -39,7 +39,7 @@ export interface FluidObject {
   media?: ImageObject["media"]
 }
 
-type NoscriptImgProps = {
+interface NoscriptImgProps {
   src?: string
   sizes?: string
   title?: string
