@@ -128,8 +128,29 @@ export interface ICachedReduxState {
 
 export type ActionsUnion =
   | ICreatePageAction
+  | ICreateNodeAction
   | IDeletePageAction
   | IDeleteNodeAction
+  | ICreateNodeFieldAction
+  | ICreateParentChildLinkAction
+  | ISetWebpackConfigAction
+  | IReplaceWebpackConfigAction
+  | ISetBabelOptionsAction
+  | ISetBabelPluginAction
+  | ISetBabelPresetAction
+  | ICreateJobAction
+  | ICreateJobV2Action
+  | ISetJobAction
+  | IEndJobAction
+  | ICreateRedirectAction
+  | ISetPluginStatusAction
+  | ITouchNodeAction
+  | IValidationErrorAction
+  | IDeletePageAction
+  | IDeleteNodeAction
+  | IDeleteNodesAction
+  | ISetPageDataAction
+  | IRemovePageDataAction
   | ICreatePageDependencyAction
   | IDeleteComponentDependenciesAction
   | IReplaceComponentQueryAction
