@@ -168,20 +168,24 @@ const convertProps = (props: IGatsbyImageProps): ConvertedProps => {
     convertedProps.loading = `eager`
   }
 
-  // convert fluid & fixed to arrays so we only have to work with arrays
-  return {
-    ...convertedProps,
-    fixed:
-      convertedProps.fixed &&
-      (groupByMedia(
-        ([] as IFixedObject[]).concat(convertedProps.fixed)
-      ) as IFixedObject[]),
-    fluid:
-      convertedProps.fluid &&
-      (groupByMedia(
-        ([] as IFluidObject[]).concat(convertedProps.fluid)
-      ) as IFluidObject[]),
+  if (critical) {
+    logDeprecationNotice(`critical`, `the native "loading" attribute`)
+    convertedProps.loading = `eager`
   }
+
+  // convert fluid & fixed to arrays so we only have to work with arrays
+  if (convertedProps.fluid) {
+    convertedProps.fluid = groupByMedia(
+      ([] as IFluidObject[]).concat(convertedProps.fluid)
+    ) as IFluidObject[]
+  }
+  if (convertedProps.fixed) {
+    convertedProps.fixed = groupByMedia(
+      ([] as IFixedObject[]).concat(convertedProps.fixed)
+    ) as IFixedObject[]
+  }
+
+  return convertedProps
 }
 
 /**
