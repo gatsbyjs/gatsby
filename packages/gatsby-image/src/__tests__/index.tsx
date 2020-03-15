@@ -1,11 +1,11 @@
 import "@babel/polyfill"
 import React from "react"
 import { render, cleanup, fireEvent } from "@testing-library/react"
-import { Image, FixedObject, FluidObject } from "../"
+import { Image, IFixedObject, IFluidObject, IGatsbyImageProps } from "../"
 
 afterAll(cleanup)
 
-const fixedShapeMock: FixedObject = {
+const fixedShapeMock: IFixedObject = {
   width: 100,
   height: 100,
   src: `test_image.jpg`,
@@ -14,7 +14,7 @@ const fixedShapeMock: FixedObject = {
   base64: `string_of_base64`,
 }
 
-const fluidShapeMock: FluidObject = {
+const fluidShapeMock: IFluidObject = {
   aspectRatio: 1.5,
   src: `test_image.jpg`,
   srcSet: `some srcSet`,
@@ -23,7 +23,7 @@ const fluidShapeMock: FluidObject = {
   base64: `string_of_base64`,
 }
 
-const fixedImagesShapeMock: FixedObject[] = [
+const fixedImagesShapeMock: IFixedObject[] = [
   {
     width: 100,
     height: 100,
@@ -43,7 +43,7 @@ const fixedImagesShapeMock: FixedObject[] = [
   },
 ]
 
-const fluidImagesShapeMock: FluidObject[] = [
+const fluidImagesShapeMock: IFluidObject[] = [
   {
     aspectRatio: 1.5,
     src: `test_image.jpg`,
@@ -65,10 +65,10 @@ const fluidImagesShapeMock: FluidObject[] = [
 
 const setup = (
   fluid = false,
-  props = {},
-  onLoad = () => {},
-  onError = () => {}
-) => {
+  props: IGatsbyImageProps = {},
+  onLoad: IGatsbyImageProps["onLoad"] = (): void => {},
+  onError: IGatsbyImageProps["onError"] = (): void => {}
+): HTMLElement => {
   const { container } = render(
     <Image
       backgroundColor
@@ -94,9 +94,9 @@ const setup = (
 
 const setupImages = (
   fluidImages = false,
-  onLoad = () => {},
-  onError = () => {}
-) => {
+  onLoad: IGatsbyImageProps["onLoad"] = (): void => {},
+  onError: IGatsbyImageProps["onError"] = (): void => {}
+): HTMLElement => {
   const { container } = render(
     <Image
       backgroundColor
@@ -121,15 +121,14 @@ const setupImages = (
 describe(`<Image />`, () => {
   const OLD_MATCH_MEDIA = window.matchMedia
   beforeEach(() => {
-    // @ts-ignore
     window.matchMedia = jest.fn(media =>
       media === `only screen and (min-width: 1024px)`
-        ? {
+        ? ({
             matches: true,
-          }
-        : {
+          } as MediaQueryList)
+        : ({
             matches: false,
-          }
+          } as MediaQueryList)
     )
   })
   afterEach(() => {

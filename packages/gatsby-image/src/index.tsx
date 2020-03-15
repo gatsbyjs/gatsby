@@ -3,7 +3,7 @@ import React, { CSSProperties } from "react"
 type Loading = "lazy" | "eager"
 type CrossOrigin = "anonymous" | "use-credentials" | ""
 
-interface ImageObject {
+interface IImageObject {
   width: number
   height: number
   src: string
@@ -15,31 +15,31 @@ interface ImageObject {
   media?: string
 }
 
-export interface FixedObject {
+export interface IFixedObject {
   width: number
   height: number
-  src: ImageObject["src"]
-  srcSet: ImageObject["srcSet"]
-  base64?: ImageObject["base64"]
-  tracedSVG?: ImageObject["tracedSVG"]
-  srcWebp?: ImageObject["srcWebp"]
-  srcSetWebp?: ImageObject["srcSetWebp"]
-  media?: ImageObject["media"]
+  src: IImageObject["src"]
+  srcSet: IImageObject["srcSet"]
+  base64?: IImageObject["base64"]
+  tracedSVG?: IImageObject["tracedSVG"]
+  srcWebp?: IImageObject["srcWebp"]
+  srcSetWebp?: IImageObject["srcSetWebp"]
+  media?: IImageObject["media"]
 }
 
-export interface FluidObject {
+export interface IFluidObject {
   aspectRatio: number
-  src: ImageObject["src"]
-  srcSet: ImageObject["srcSet"]
+  src: IImageObject["src"]
+  srcSet: IImageObject["srcSet"]
   sizes: string
-  base64?: ImageObject["base64"]
-  tracedSVG?: ImageObject["tracedSVG"]
-  srcWebp?: ImageObject["srcWebp"]
-  srcSetWebp?: ImageObject["srcSetWebp"]
-  media?: ImageObject["media"]
+  base64?: IImageObject["base64"]
+  tracedSVG?: IImageObject["tracedSVG"]
+  srcWebp?: IImageObject["srcWebp"]
+  srcSetWebp?: IImageObject["srcSetWebp"]
+  media?: IImageObject["media"]
 }
 
-interface NoscriptImgProps {
+interface INoscriptImgProps {
   src?: string
   sizes?: string
   title?: string
@@ -53,17 +53,17 @@ interface NoscriptImgProps {
   imageVariants: ImageVariants[]
 }
 
-type ImageVariants = FixedObject | FluidObject
+type ImageVariants = IFixedObject | IFluidObject
 
 // If you modify these propTypes, please don't forget to update following files as well:
 // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/index.d.ts
 // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/README.md#gatsby-image-props
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md#gatsby-image-props
-export interface GatsbyImageProps {
-  resolutions?: FixedObject
-  sizes?: FluidObject
-  fixed?: FixedObject | FixedObject[]
-  fluid?: FluidObject | FluidObject[]
+export interface IGatsbyImageProps {
+  resolutions?: IFixedObject
+  sizes?: IFluidObject
+  fixed?: IFixedObject | IFixedObject[]
+  fluid?: IFluidObject | IFluidObject[]
   fadeIn?: boolean
   durationFadeIn?: number
   title?: string
@@ -85,44 +85,51 @@ export interface GatsbyImageProps {
   draggable?: boolean
 }
 
-type ConvertedProps = Omit<GatsbyImageProps, "resolutions" | "sizes">
-
-interface PlaceholderImageProps {
-  title?: GatsbyImageProps["title"]
-  alt?: GatsbyImageProps["alt"]
-  style?: GatsbyImageProps["style"]
-  className?: GatsbyImageProps["className"]
-  itemProp?: GatsbyImageProps["itemProp"]
+interface IGatsbyImageState {
+  isVisible: boolean
+  imgLoaded: boolean
+  imgCached: boolean
+  fadeIn: boolean
 }
 
-interface PlaceholderProps {
+type ConvertedProps = Omit<IGatsbyImageProps, "resolutions" | "sizes">
+
+interface IPlaceholderImageProps {
+  title?: IGatsbyImageProps["title"]
+  alt?: IGatsbyImageProps["alt"]
+  style?: IGatsbyImageProps["style"]
+  className?: IGatsbyImageProps["className"]
+  itemProp?: IGatsbyImageProps["itemProp"]
+}
+
+interface IPlaceholderProps {
   src: string
   imageVariants: ImageVariants[]
   generateSources: (props: ImageVariants[]) => React.ReactElement[]
-  spreadProps: PlaceholderImageProps
+  spreadProps: IPlaceholderImageProps
   ariaHidden: boolean
 }
 
-interface ImgPropTypes {
-  alt?: GatsbyImageProps["alt"]
-  title?: GatsbyImageProps["title"]
-  width?: ImageObject["width"]
-  height?: ImageObject["height"]
-  sizes?: FluidObject["sizes"]
-  srcSet?: ImageObject["srcSet"]
-  src: ImageObject["src"]
-  crossOrigin?: GatsbyImageProps["crossOrigin"]
+interface IImgPropTypes {
+  alt?: IGatsbyImageProps["alt"]
+  title?: IGatsbyImageProps["title"]
+  width?: IImageObject["width"]
+  height?: IImageObject["height"]
+  sizes?: IFluidObject["sizes"]
+  srcSet?: IImageObject["srcSet"]
+  src: IImageObject["src"]
+  crossOrigin?: IGatsbyImageProps["crossOrigin"]
   style?: CSSProperties
-  onLoad?: GatsbyImageProps["onLoad"]
-  onError?: GatsbyImageProps["onError"]
-  itemProp?: GatsbyImageProps["itemProp"]
-  loading?: GatsbyImageProps["loading"]
-  draggable?: GatsbyImageProps["draggable"]
+  onLoad?: IGatsbyImageProps["onLoad"]
+  onError?: IGatsbyImageProps["onError"]
+  itemProp?: IGatsbyImageProps["itemProp"]
+  loading?: IGatsbyImageProps["loading"]
+  draggable?: IGatsbyImageProps["draggable"]
   ariaHidden?: boolean
 }
 
-function isFluidObject(variant: ImageVariants): variant is FluidObject {
-  return (variant as FluidObject).sizes !== undefined
+function isIFluidObject(variant: ImageVariants): variant is IFluidObject {
+  return (variant as IFluidObject).sizes !== undefined
 }
 
 const logDeprecationNotice = (prop: string, replacement: string): void => {
@@ -143,8 +150,8 @@ const logDeprecationNotice = (prop: string, replacement: string): void => {
 }
 
 // Handle legacy props during their deprecation phase
-const convertProps = (props: GatsbyImageProps): ConvertedProps => {
-  let convertedProps = { ...props }
+const convertProps = (props: IGatsbyImageProps): ConvertedProps => {
+  const convertedProps = { ...props }
   const { resolutions, sizes, critical } = convertedProps
 
   if (resolutions) {
@@ -166,10 +173,14 @@ const convertProps = (props: GatsbyImageProps): ConvertedProps => {
     ...convertedProps,
     fixed:
       convertedProps.fixed &&
-      (groupByMedia(new Array().concat(convertedProps.fixed)) as FixedObject[]),
+      (groupByMedia(
+        ([] as IFixedObject[]).concat(convertedProps.fixed)
+      ) as IFixedObject[]),
     fluid:
       convertedProps.fluid &&
-      (groupByMedia(new Array().concat(convertedProps.fluid)) as FluidObject[]),
+      (groupByMedia(
+        ([] as IFluidObject[]).concat(convertedProps.fluid)
+      ) as IFluidObject[]),
   }
 }
 
@@ -182,6 +193,8 @@ const convertProps = (props: GatsbyImageProps): ConvertedProps => {
 const hasArtDirectionSupport = (currentData: ImageVariants[]): boolean =>
   !!currentData && currentData.some(image => typeof image.media !== `undefined`)
 
+const isBrowser = typeof window !== `undefined`
+
 /**
  * Tries to detect if a media query matches the current viewport.
  * @property media   {{media?: string}}  A media query string.
@@ -189,25 +202,6 @@ const hasArtDirectionSupport = (currentData: ImageVariants[]): boolean =>
  */
 const matchesMedia = ({ media }: { media?: string }): boolean =>
   media ? isBrowser && !!window.matchMedia(media).matches : false
-
-/**
- * Find the source of an image to use as a key in the image cache.
- * Use `the first image in either `fixed` or `fluid`
- * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
- * @return {string}
- */
-const getImageSrcKey = ({
-  fluid,
-  fixed,
-}: Pick<GatsbyImageProps, "fluid" | "fixed">): string | undefined => {
-  const data = fluid
-    ? getCurrentSrcData(fluid)
-    : fixed
-    ? getCurrentSrcData(fixed)
-    : undefined
-
-  return data && data.src
-}
 
 /**
  * Returns the current src - Preferably with art-direction support.
@@ -233,17 +227,36 @@ const getCurrentSrcData = (
   return currentData[0]
 }
 
+/**
+ * Find the source of an image to use as a key in the image cache.
+ * Use `the first image in either `fixed` or `fluid`
+ * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
+ * @return {string}
+ */
+const getImageSrcKey = ({
+  fluid,
+  fixed,
+}: Pick<IGatsbyImageProps, "fluid" | "fixed">): string | undefined => {
+  const data = fluid
+    ? getCurrentSrcData(fluid)
+    : fixed
+    ? getCurrentSrcData(fixed)
+    : undefined
+
+  return data && data.src
+}
+
 // Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
 const imageCache: { [key: string]: boolean } = Object.create({})
-const inImageCache = (props: GatsbyImageProps): boolean => {
+const inImageCache = (props: IGatsbyImageProps): boolean => {
   const convertedProps = convertProps(props)
   // Find src
   const src = getImageSrcKey(convertedProps)
   return src && imageCache[src] ? imageCache[src] : false
 }
 
-const activateCacheForImage = (props: GatsbyImageProps): void => {
+const activateCacheForImage = (props: IGatsbyImageProps): void => {
   const convertedProps = convertProps(props)
   // Find src
   const src = getImageSrcKey(convertedProps)
@@ -255,7 +268,6 @@ const hasNativeLazyLoadSupport =
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
 
-const isBrowser = typeof window !== `undefined`
 const hasIOSupport = isBrowser && window.IntersectionObserver
 
 let io: IntersectionObserver | undefined
@@ -296,13 +308,13 @@ function generateImageSources(imageVariants: ImageVariants[]): JSX.Element[] {
           type="image/webp"
           media={variant.media}
           srcSet={variant.srcSetWebp}
-          sizes={isFluidObject(variant) ? variant.sizes : undefined}
+          sizes={isIFluidObject(variant) ? variant.sizes : undefined}
         />
       )}
       <source
         media={variant.media}
         srcSet={variant.srcSet}
-        sizes={isFluidObject(variant) ? variant.sizes : undefined}
+        sizes={isIFluidObject(variant) ? variant.sizes : undefined}
       />
     </React.Fragment>
   ))
@@ -350,7 +362,7 @@ function generateNoscriptSource(
   const mediaAttr = variant.media ? `media="${variant.media}" ` : ``
   const typeAttr = isWebp ? `type='image/webp' ` : ``
   const sizesAttr =
-    isFluidObject(variant) && variant.sizes ? `sizes="${variant.sizes}" ` : ``
+    isIFluidObject(variant) && variant.sizes ? `sizes="${variant.sizes}" ` : ``
 
   return `<source ${typeAttr}${mediaAttr}srcset="${src}" ${sizesAttr}/>`
 }
@@ -365,26 +377,21 @@ function generateNoscriptSources(imageVariants: ImageVariants[]): string {
     .join(``)
 }
 
-const listenToIntersections = (
-  el: Element,
-  cb: () => void
-): (() => void) | void => {
+const listenToIntersections = (el: Element, cb: () => void): (() => void) => {
   const observer = getIO()
 
   if (observer) {
     observer.observe(el)
     listeners.set(el, cb)
-  } else {
-    return
   }
 
   return (): void => {
-    observer.unobserve(el)
+    observer!.unobserve(el)
     listeners.delete(el)
   }
 }
 
-const noscriptImg = (props: NoscriptImgProps): string => {
+const noscriptImg = (props: INoscriptImgProps): string => {
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
@@ -408,7 +415,7 @@ const noscriptImg = (props: NoscriptImgProps): string => {
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
 // the `Img` component in a `picture` element. This maintains compatibility
 // until a breaking change can be introduced in the next major release
-const Placeholder: React.FC<PlaceholderProps> = ({
+const Placeholder: React.FC<IPlaceholderProps> = ({
   src,
   imageVariants,
   generateSources,
@@ -428,7 +435,7 @@ const Placeholder: React.FC<PlaceholderProps> = ({
 }
 
 const Img = React.forwardRef(
-  (props: ImgPropTypes, ref: React.Ref<HTMLImageElement>) => {
+  (props: IImgPropTypes, ref: React.Ref<HTMLImageElement>) => {
     const {
       alt,
       sizes,
@@ -473,14 +480,10 @@ const Img = React.forwardRef(
   }
 )
 
-type State = {
-  isVisible: boolean
-  imgLoaded: boolean
-  imgCached: boolean
-  fadeIn: boolean
-}
-
-export class Image extends React.Component<GatsbyImageProps, State> {
+export class Image extends React.Component<
+  IGatsbyImageProps,
+  IGatsbyImageState
+> {
   seenBefore: boolean
   isCritical: boolean
   addNoScript: boolean
@@ -498,7 +501,7 @@ export class Image extends React.Component<GatsbyImageProps, State> {
     loading: `lazy`,
   }
 
-  constructor(props: GatsbyImageProps) {
+  constructor(props: IGatsbyImageProps) {
     super(props)
 
     // If this image has already been loaded before then we can assume it's
@@ -523,7 +526,7 @@ export class Image extends React.Component<GatsbyImageProps, State> {
       imgLoaded: false,
       imgCached: false,
       fadeIn: (!this.seenBefore && props.fadeIn) || false,
-    } as State
+    }
 
     this.imageRef = React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
@@ -631,7 +634,7 @@ export class Image extends React.Component<GatsbyImageProps, State> {
       ...placeholderStyle,
     }
 
-    const placeholderImageProps: PlaceholderImageProps = {
+    const placeholderImageProps: IPlaceholderImageProps = {
       title,
       alt: !this.state.isVisible ? alt : ``,
       style: imagePlaceholderStyle,
@@ -640,8 +643,8 @@ export class Image extends React.Component<GatsbyImageProps, State> {
     }
 
     if (fluid) {
-      const imageVariants = fluid as FluidObject[]
-      const image = getCurrentSrcData(fluid) as FluidObject
+      const imageVariants = fluid as IFluidObject[]
+      const image = getCurrentSrcData(fluid) as IFluidObject
 
       return (
         <Tag
@@ -744,8 +747,8 @@ export class Image extends React.Component<GatsbyImageProps, State> {
     }
 
     if (fixed) {
-      const imageVariants = fixed as FixedObject[]
-      const image = getCurrentSrcData(fixed) as FixedObject
+      const imageVariants = fixed as IFixedObject[]
+      const image = getCurrentSrcData(fixed) as IFixedObject
 
       const divStyle: CSSProperties = {
         position: `relative`,
