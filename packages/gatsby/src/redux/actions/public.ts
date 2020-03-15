@@ -5,14 +5,14 @@ import { stripIndent } from "common-tags"
 import report from "gatsby-cli/lib/reporter"
 import { platform } from "os"
 import path from "path"
-import fs from "fs"
+import { readFileSync } from "fs"
 import { trueCasePathSync } from "true-case-path"
 import url from "url"
 import { slash } from "gatsby-core-utils"
 import { hasNodeChanged, getNode } from "../../db/nodes"
 import sanitizeNode from "../../db/sanitize-node"
 import { store } from ".."
-import { sync as fileExistsSync } from "fs-exists-cached"
+import * as fsExists from "fs-exists-cached"
 import * as joiSchemas from "../../joi-schemas/joi"
 import { generateComponentChunkName } from "../../utils/js-chunk-names"
 import {
@@ -262,7 +262,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
-    if (!fileExistsSync(page.component)) {
+    if (!fsExists.sync(page.component)) {
       report.panic({
         id: `11325`,
         context: {
@@ -415,7 +415,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     !fileOkCache[internalPage.component]
   ) {
     const fileName = internalPage.component
-    const fileContent = fs.readFileSync(fileName, `utf-8`)
+    const fileContent = readFileSync(fileName, `utf-8`)
     let notEmpty = true
     let includesDefaultExport = true
 
@@ -524,7 +524,6 @@ actions.deleteNode = (
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const node = getNode(id) as IReduxNode
-  // const typeOwners = {}
   if (plugin) {
     const pluginName = plugin.name
 
