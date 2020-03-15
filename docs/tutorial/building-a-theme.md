@@ -1173,8 +1173,6 @@ export const theme = {
     },
   },
   styles: {
-    Layout: {},
-
     h1: {
       color: "gray.3",
       fontSize: 5,
