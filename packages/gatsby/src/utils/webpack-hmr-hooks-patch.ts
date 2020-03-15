@@ -5,7 +5,7 @@ const originalFetch = global.fetch
 // @ts-ignore
 delete global.fetch
 
-export * from "react-hot-loader/webpack"
+export { default } from "react-hot-loader/webpack"
 
 // @ts-ignore
 global.fetch = originalFetch
