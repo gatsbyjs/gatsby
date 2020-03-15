@@ -1,13 +1,39 @@
-const { Actions } = require(`../constants`)
+import { ActivityStatuses } from "../constants"
 
-module.exports = (
-  state = {
+import { Actions } from "../constants"
+
+export interface IActivity {
+  startTime: [number, number] | undefined
+  id: string
+  uuid: string
+  text: string
+  type: string
+  status: ActivityStatuses
+  statusText: string
+  current: string
+  total: number
+  duration: number
+  errored: boolean
+}
+
+interface IActivities {
+  [id: string]: IActivity
+}
+
+export interface IState {
+  messages: string[]
+  activities: IActivities
+  status: string
+}
+
+export const reducer = (
+  state: IState = {
     messages: [],
     activities: {},
     status: ``,
   },
   action
-) => {
+): IState => {
   switch (action.type) {
     case Actions.SetStatus: {
       return {

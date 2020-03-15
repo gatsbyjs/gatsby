@@ -1,7 +1,7 @@
-const Redux = require(`redux`)
-const reducer = require(`./reducer`)
+import Redux, { AnyAction, Dispatch, CombinedState } from "redux"
+import { reducer, IState } from "./reducer"
 
-const { ActivityTypes, Actions } = require(`../constants`)
+import { ActivityTypes, Actions } from "../constants"
 
 let store = Redux.createStore(
   Redux.combineReducers({
@@ -10,10 +10,14 @@ let store = Redux.createStore(
   {}
 )
 
-const storeSwapListeners = []
-const onLogActionListeners = new Set()
+type store = Redux.Store<CombinedState<{ logs: IState }>, Redux.AnyAction>
 
-const isInternalAction = action => {
+type storeListener = (store: store) => void
+
+const storeSwapListeners: storeListener[] = []
+const onLogActionListeners = new Set<Dispatch<AnyAction>>()
+
+const isInternalAction = (action): boolean => {
   if (
     [
       Actions.PendingActivity,
@@ -31,7 +35,15 @@ const isInternalAction = action => {
   return false
 }
 
-const iface = {
+interface IIface {
+  dispatch(dispatch: any)
+  getStore: () => store
+  onStoreSwap: (fn: storeListener) => void
+  onLogAction: (fn: Redux.Dispatch<Redux.AnyAction>) => () => void
+  setStore: (s: store) => void
+}
+
+const iface: IIface = {
   getStore: () => store,
   dispatch: action => {
     if (!action) {
@@ -67,7 +79,7 @@ const iface = {
   },
   onLogAction: fn => {
     onLogActionListeners.add(fn)
-    return () => {
+    return (): void => {
       onLogActionListeners.delete(fn)
     }
   },
@@ -81,4 +93,4 @@ const iface = {
   },
 }
 
-module.exports = iface
+export default iface

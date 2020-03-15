@@ -1,0 +1,138 @@
+import { Actions, ActivityStatuses } from "../constants"
+import { IActivity } from "./reducer"
+import { Dispatch, AnyAction } from "redux"
+
+type dispatchAction = (dispatch: Dispatch<AnyAction>) => void
+
+export type actionsToEmitType = Array<
+  dispatchAction | { type: Actions; payload: Partial<IActivity> }
+>
+
+export interface IActionTypes {
+  setStatus(
+    status: string,
+    force?: boolean | undefined
+  ): (dispatch: Dispatch<AnyAction>) => void
+  createLog(arg0: {
+    text: string
+    level: string
+    duration: number
+    group?: string
+    code?: string
+    type?: string
+    filePath?: string
+    location?: string
+    docsUrl?: string
+    context?: string
+    statusText?: string
+    activity_uuid: string
+    activity_current: string
+    activity_total: number
+    activity_type: string
+    stack?: string
+  }): {
+    type: Actions
+    payload: {
+      level: string
+      text: string
+      statusText: string | undefined
+      duration: number
+      group: string | undefined
+      code: string | undefined
+      type: string | undefined
+      filePath: string | undefined
+      location: string | undefined
+      docsUrl: string | undefined
+      context: string | undefined
+      activity_current: string
+      activity_total: number
+      activity_type: string
+      activity_uuid: string
+      timestamp: string
+      stack: string | undefined
+    }
+  }
+
+  startActivity: ({
+    id,
+    text,
+    type,
+    status,
+    current,
+    total,
+  }: {
+    id: string
+    text: string
+    type: string
+    status?: ActivityStatuses | undefined
+    current: string
+    total: number
+  }) => actionsToEmitType
+
+  endActivity: ({
+    id,
+    status,
+  }: {
+    id: string
+    status: ActivityStatuses
+  }) => actionsToEmitType | null
+
+  createPendingActivity: ({
+    id,
+    status,
+  }: {
+    id: string
+    status?: ActivityStatuses | undefined
+  }) => actionsToEmitType
+
+  updateActivity: (
+    activity: Partial<IActivity>
+  ) => {
+    type: Actions
+    payload: Partial<IActivity>
+  } | null
+
+  setActivityErrored: ({
+    id,
+  }: {
+    id: string
+  }) => {
+    type: Actions
+    payload: {
+      id: IActivity["id"]
+    }
+  } | null
+
+  setActivityStatusText: ({
+    id,
+    statusText,
+  }: {
+    id: string
+    statusText: string
+  }) => {
+    type: Actions
+    payload: Partial<IActivity>
+  } | null
+
+  setActivityTotal: ({
+    id,
+    total,
+  }: {
+    id: string
+    total: number
+  }) => {
+    type: Actions
+    payload: Partial<IActivity>
+  } | null
+
+  activityTick: ({
+    id,
+    increment,
+  }: {
+    id: string
+    increment?: number | undefined
+  }) => {
+    type: Actions
+    payload: Partial<IActivity>
+  } | null
+}

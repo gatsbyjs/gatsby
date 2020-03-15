@@ -1,23 +1,31 @@
-// @flow
-const uuidv4 = require(`uuid/v4`)
-const convertHrtime = require(`convert-hrtime`)
-const { trackCli } = require(`gatsby-telemetry`)
-const { bindActionCreators } = require(`redux`)
-const { dispatch, getStore } = require(`./index`)
-const {
+/* eslint-disable @typescript-eslint/camelcase */
+
+import uuidv4 from "uuid/v4"
+import convertHrtime from "convert-hrtime"
+import { trackCli } from "gatsby-telemetry"
+import { bindActionCreators } from "redux"
+
+import iface from "./index"
+import {
   Actions,
   ActivityLogLevels,
   ActivityStatuses,
   ActivityTypes,
-} = require(`../constants`)
-const signalExit = require(`signal-exit`)
+} from "../constants"
+import signalExit from "signal-exit"
 
-const getActivity = id => getStore().getState().logs.activities[id]
+import { IActivity } from "./reducer"
+import { IActionTypes, actionsToEmitType } from "./action-types"
+
+const { dispatch, getStore } = iface
+
+const getActivity = (id: string): IActivity =>
+  getStore().getState().logs.activities[id]
 
 /**
  * @returns {Number} Milliseconds from activity start
  */
-const getElapsedTimeMS = activity => {
+const getElapsedTimeMS = (activity: IActivity): number => {
   const elapsed = process.hrtime(activity.startTime)
   return convertHrtime(elapsed).milliseconds
 }
@@ -28,7 +36,7 @@ const ActivityStatusToLogLevel = {
   [ActivityStatuses.Success]: ActivityLogLevels.Success,
 }
 
-const getGlobalStatus = (id, status) => {
+const getGlobalStatus = (id: string, status: ActivityStatuses): string => {
   const { logs } = getStore().getState()
 
   const currentActivities = [id, ...Object.keys(logs.activities)]
@@ -57,24 +65,28 @@ const getGlobalStatus = (id, status) => {
   }, ActivityStatuses.Success)
 }
 
-let cancelDelayedSetStatus = null
+type voidFunc = () => void
+
+let cancelDelayedSetStatus: voidFunc | null = null
 let weShouldExit = false
 signalExit(() => {
   weShouldExit = true
 })
+
 /**
  * Like setTimeout, but also handle signalExit
  */
-const delayedCall = (fn, timeout) => {
-  const fnWrap = () => {
+const delayedCall = (fn: { (): void; (): void }, timeout: number): voidFunc => {
+  const fnWrap = (): void => {
     fn()
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     clear()
   }
 
   const timeoutID = setTimeout(fnWrap, timeout)
   const cancelSignalExit = signalExit(fnWrap)
 
-  const clear = () => {
+  const clear = (): void => {
     clearTimeout(timeoutID)
     cancelSignalExit()
   }
@@ -82,7 +94,7 @@ const delayedCall = (fn, timeout) => {
   return clear
 }
 
-const actions = {
+const actions: IActionTypes = {
   createLog: ({
     level,
     text,
@@ -125,7 +137,7 @@ const actions = {
     }
   },
   createPendingActivity: ({ id, status = ActivityStatuses.NotStarted }) => {
-    const actionsToEmit = []
+    const actionsToEmit: actionsToEmitType = []
 
     const logsState = getStore().getState().logs
 
@@ -146,7 +158,7 @@ const actions = {
 
     return actionsToEmit
   },
-  setStatus: (status, force = false) => dispatch => {
+  setStatus: (status, force = false) => (dispatch): void => {
     const currentStatus = getStore().getState().logs.status
 
     if (cancelDelayedSetStatus) {
@@ -175,7 +187,7 @@ const actions = {
     current,
     total,
   }) => {
-    const actionsToEmit = []
+    const actionsToEmit: actionsToEmitType = []
 
     const logsState = getStore().getState().logs
 
@@ -209,7 +221,7 @@ const actions = {
     if (!activity) {
       return null
     }
-    const actionsToEmit = []
+    const actionsToEmit: actionsToEmitType = []
     if (activity.type === ActivityTypes.Pending) {
       actionsToEmit.push({
         type: Actions.CancelActivity,
@@ -278,7 +290,7 @@ const actions = {
     return actionsToEmit
   },
 
-  updateActivity: ({ id, ...rest }) => {
+  updateActivity: ({ id = ``, ...rest }) => {
     const activity = getActivity(id)
     if (!activity) {
       return null
@@ -293,7 +305,7 @@ const actions = {
       },
     }
   },
-  setActivityErrored: ({ id, ...rest }) => {
+  setActivityErrored: ({ id }) => {
     const activity = getActivity(id)
     if (!activity) {
       return null
@@ -329,4 +341,4 @@ const actions = {
   },
 }
 
-module.exports = bindActionCreators(actions, dispatch)
+module.exports = bindActionCreators<any, any>(actions, dispatch)
