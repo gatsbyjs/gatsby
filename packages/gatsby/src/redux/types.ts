@@ -1,4 +1,5 @@
 import { GraphQLSchema } from "graphql"
+import { IProgram } from "../commands/types"
 
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
@@ -40,6 +41,7 @@ export interface IReduxState {
   babelrc: any
   themes: any
   flattenedPlugins: any
+  program: IProgram
 }
 
 export interface ICachedReduxState {
