@@ -7,11 +7,7 @@ function Bio() {
       query={bioQuery}
       render={data => (
         <div>
-          <p data-testid="bio">
-            A site by {data.site.siteMetadata.author.name} who
-            {` `}
-            {data.site.siteMetadata.author.bio}
-          </p>
+          <p data-testid="bio">A site by {data.site.siteMetadata.author}</p>
         </div>
       )}
     />
@@ -22,10 +18,7 @@ export const bioQuery = graphql`
   {
     site {
       siteMetadata {
-        author {
-          bio
-          name
-        }
+        author
       }
     }
   }

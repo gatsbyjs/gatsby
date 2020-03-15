@@ -11,7 +11,7 @@ tags:
     "algolia",
     "getting-started",
     "hosting",
-    "ci",
+    "deployment",
     "performance",
   ]
 ---
@@ -49,7 +49,7 @@ for a quick breakdown on why web development is, for lack of a better phrase,
 “going back to the basics.”
 
 Having dealt with my share of CMS headaches with Joomla in the almost-forgotten
-past, and Wordpress in the more recent years, I’ve been on a quest to simplify
+past, and WordPress in the more recent years, I’ve been on a quest to simplify
 things. I don’t want to worry about having a plugin or theme get hacked or the
 constant nagging to install updates. I also would prefer to not deal with themes
 at all and just have flexible building blocks to shape my site’s appearance via
@@ -58,7 +58,7 @@ my own codebase. Static sites excel at these things.
 But while static sites give you lots of perks, they do create some extra hurdles
 over going the traditional route.
 
-<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/LfjSCQ5ivKH3q" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/jump-rabbit-mixed-LfjSCQ5ivKH3q">via GIPHY</a></p>
+https://giphy.com/gifs/jump-rabbit-mixed-LfjSCQ5ivKH3q
 
 While they’re generally fast out of the box, static sites don’t make their
 content easily editable. After all, a static site’s content is usually just that
@@ -73,7 +73,7 @@ Before I jump into the topic of content and “data”, I want to briefly say th
 building a static site template with React-based architecture and hot module
 reloading is just plain fun. Gatsby’s CLI gets you going so quickly. It really
 is a joy to use. Judging from all the
-[twitter comments](http://twitter.com/gatsbyjs) saying the same thing, I think
+[Twitter comments](https://twitter.com/gatsbyjs) saying the same thing, I think
 that’s a common consensus.
 
 Okay, now back to some static hurdles.
@@ -83,19 +83,19 @@ Okay, now back to some static hurdles.
 Our site has a lot of content (~300 articles) that needs to be maintained by
 non-developers, my co-workers. This meant we needed an approachable interface
 for copy and content editing. I wanted to make it as convenient as logging into
-Wordpress and publishing from there, without the Wordpress. So the publishing
+WordPress and publishing from there, without the WordPress. So the publishing
 experience couldn’t rely on creating a file and committing changes to a Git
 repo.
 
 > Sidebar: There is
-> [Gatsby-Source-Wordpress](/packages/gatsby-source-wordpress/)
-> plugin that pulls in content via a Wordpress API. However, to me, this was not
+> [Gatsby-Source-WordPress](/packages/gatsby-source-wordpress/)
+> plugin that pulls in content via a WordPress API. However, to me, this was not
 > appealing because I was trying to avoid hosting a traditional CMS entirely.
 
 # Solution: Contentful + Gatsby
 
-Contentful is a hosted headless CMS with a fantastic user experience. It’s
-similar to having a backend like Wordpress, but you are fully responsible for
+Contentful is a hosted [headless CMS](/docs/headless-cms/) with a fantastic user experience. It’s
+similar to having a backend like WordPress, but you are fully responsible for
 the frontend layer. The beauty of Contentful is threefold.
 
 - Intuitive and attractive UI
@@ -280,7 +280,7 @@ through this section without a bullet list of why Netlify is so fantastic.
 - [And a lot more....](https://www.netlify.com/features/)
 - Did I mention you get all this for FREE?
 
-<div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/vMnuZGHJfFSTe" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/vMnuZGHJfFSTe">via GIPHY</a></p>
+https://giphy.com/gifs/vMnuZGHJfFSTe
 
 And back to using it with Gatsby.
 
@@ -330,4 +330,4 @@ buttons and leaves you with a “Is it really this easy?” kind of feeling.
 
 Now, hopefully, our customers will feel the same with our site.
 
-<div style="width:100%;height:0;padding-bottom:92%;position:relative;"><iframe src="https://giphy.com/embed/12NUbkX6p4xOO4" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/shia-labeouf-12NUbkX6p4xOO4">via GIPHY</a></p>
+https://giphy.com/gifs/shia-labeouf-12NUbkX6p4xOO4

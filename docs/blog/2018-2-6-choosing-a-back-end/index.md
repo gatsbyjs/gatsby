@@ -21,11 +21,11 @@ Gatsby pitches as a “Blazing-fast static site generator for React”. So if I 
 I found Gatsby a real pleasure. You can find tutorials on their site for setup and once you see the code it’s fairly simple. I can personally recommend [Scott Tolinski’s series - available on Youtube](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg). Gatsby nicely wraps up React and React Router with a nice folder structure, webkit, ES6, Sass support and - importantly - GraphQL.
 
 > **What-QL?** GraphQL is a query language for APIs. Where in the WordPress Days I’d have to get the whole post just to display the title, with GraphQL I can tell the API to give me just the title.
-> [Their site is pretty handy too](http://graphql.org/).
+> [Their site is pretty handy too](https://graphql.org/).
 
 I got the site setup pretty quickly after learning about it. There’s a tonne of tutorials and instructional material around. And you can use as much or as little React as you want. There’s also a [massive list of available plugins](/docs/plugins/), which is only going to grow.
 
-So if you have any experience with React, or if you’re just getting started, this is a great choice. Gatsby doesn’t tell you how your code has to look. In fact it’s setup so you can use Markdown files for pages, but I didn’t fancy that, so I don’t. Simple as that! Likewise, if I want to scale this to build websites for other people, I don’t want to spend ages teaching them how to use Markdown, clone a Git repo and add it to the Git repo. Queue a Headless CMS.
+So if you have any experience with React, or if you’re just getting started, this is a great choice. Gatsby doesn’t tell you how your code has to look. In fact it’s setup so you can use Markdown files for pages, but I didn’t fancy that, so I don’t. Simple as that! Likewise, if I want to scale this to build websites for other people, I don’t want to spend ages teaching them how to use Markdown, clone a Git repo and add it to the Git repo. Queue a [headless CMS](/docs/headless-cms/).
 
 You build your site. You’ve got your Sass, you’ve got your Markdown files (or not), but everything’s blank! So now what? How do we populate it with content?
 
@@ -44,7 +44,7 @@ Firstly, though, why do we want a Headless CMS and a JAMstack for the project? T
 
 ---
 
-![Contenful](contentful.png)
+![Contentful](contentful.png)
 
 ### Contentful
 

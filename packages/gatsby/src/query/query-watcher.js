@@ -10,8 +10,9 @@
 
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
+
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 const { store, emitter } = require(`../redux/`)
 const { boundActionCreators } = require(`../redux/actions`)
@@ -19,6 +20,7 @@ const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const queryUtil = require(`./index`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
+const getGatsbyDependents = require(`../utils/gatsby-dependents`)
 
 const getQueriesSnapshot = () => {
   const state = store.getState()
@@ -42,9 +44,9 @@ const handleComponentsWithRemovedQueries = (
       debug(`Static query was removed from ${c.componentPath}`)
       store.dispatch({
         type: `REMOVE_STATIC_QUERY`,
-        payload: c.jsonName,
+        payload: c.id,
       })
-      boundActionCreators.deleteComponentsDependencies([c.jsonName])
+      boundActionCreators.deleteComponentsDependencies([c.id])
     }
   })
 }
@@ -57,7 +59,7 @@ const handleQuery = (
   // If this is a static query
   // Add action / reducer + watch staticquery files
   if (query.isStaticQuery) {
-    const oldQuery = staticQueryComponents.get(query.jsonName)
+    const oldQuery = staticQueryComponents.get(query.id)
     const isNewQuery = !oldQuery
 
     // Compare query text because text is compiled query with any attached
@@ -68,13 +70,12 @@ const handleQuery = (
     if (
       isNewQuery ||
       oldQuery.hash !== query.hash ||
-      oldQuery.text !== query.text
+      oldQuery.query !== query.text
     ) {
       boundActionCreators.replaceStaticQuery({
         name: query.name,
         componentPath: query.path,
-        id: query.jsonName,
-        jsonName: query.jsonName,
+        id: query.id,
         query: query.text,
         hash: query.hash,
       })
@@ -85,8 +86,8 @@ const handleQuery = (
         }.`
       )
 
-      boundActionCreators.deleteComponentsDependencies([query.jsonName])
-      queryUtil.enqueueExtractedQueryId(query.jsonName)
+      boundActionCreators.deleteComponentsDependencies([query.id])
+      queryUtil.enqueueExtractedQueryId(query.id)
     }
     return true
   }
@@ -94,9 +95,9 @@ const handleQuery = (
   return false
 }
 
-const updateStateAndRunQueries = isFirstRun => {
+const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
   const snapshot = getQueriesSnapshot()
-  return queryCompiler().then(queries => {
+  return queryCompiler({ parentSpan }).then(queries => {
     // If there's an error while extracting queries, the queryCompiler returns false
     // or zero results.
     // Yeah, should probably be an error but don't feel like threading the error
@@ -145,7 +146,7 @@ const updateStateAndRunQueries = isFirstRun => {
 
         If you're more experienced with GraphQL, you can also export GraphQL
         fragments from components and compose the fragments in the Page component
-        query and pass data down into the child component — http://graphql.org/learn/queries/#fragments
+        query and pass data down into the child component — https://graphql.org/learn/queries/#fragments
 
       `)
     }
@@ -171,9 +172,7 @@ const clearInactiveComponents = () => {
   components.forEach(component => {
     if (!activeTemplates.has(component.componentPath)) {
       debug(
-        `${
-          component.componentPath
-        } component was removed because it isn't used by any page`
+        `${component.componentPath} component was removed because it isn't used by any page`
       )
       store.dispatch({
         type: `REMOVE_TEMPLATE_COMPONENT`,
@@ -183,14 +182,14 @@ const clearInactiveComponents = () => {
   })
 }
 
-exports.extractQueries = () => {
+exports.extractQueries = ({ parentSpan } = {}) => {
   // Remove template components that point to not existing page templates.
   // We need to do this, because components data is cached and there might
   // be changes applied when development server isn't running. This is needed
   // only in initial run, because during development state will be adjusted.
   clearInactiveComponents()
 
-  return updateStateAndRunQueries(true).then(() => {
+  return updateStateAndRunQueries(true, { parentSpan }).then(() => {
     // During development start watching files to recompile & run
     // queries on the fly.
     if (process.env.NODE_ENV !== `production`) {
@@ -221,12 +220,24 @@ const debounceCompile = _.debounce(() => {
   updateStateAndRunQueries()
 }, 100)
 
-const watch = rootDir => {
+const watch = async rootDir => {
   if (watcher) return
 
+  const modulesThatUseGatsby = await getGatsbyDependents()
+
+  const packagePaths = modulesThatUseGatsby.map(module => {
+    const filesRegex = `*.+(t|j)s?(x)`
+    const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
+    return slash(path.join(module.path, pathRegex))
+  })
+
   watcher = chokidar
-    .watch(slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)))
+    .watch([
+      slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
+      ...packagePaths,
+    ])
     .on(`change`, path => {
+      report.pendingActivity({ id: `query-extraction` })
       debounceCompile()
     })
 
@@ -254,3 +265,5 @@ exports.startWatchDeletePage = () => {
     }
   })
 }
+
+exports.updateStateAndRunQueries = updateStateAndRunQueries

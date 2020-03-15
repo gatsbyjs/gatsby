@@ -10,22 +10,56 @@ const {
   getNamedType,
 } = require(`graphql`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const { build } = require(`../index`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const withResolverContext = require(`../context`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 // XXX(freiksenet): Expand
 describe(`Kitchen sink schema test`, () => {
   let schema
+  let schemaComposer
 
   const runQuery = query =>
-    graphql(schema, query, undefined, withResolverContext({}, schema))
+    graphql(
+      schema,
+      query,
+      undefined,
+      withResolverContext({
+        schema,
+        schemaComposer,
+        context: {},
+        customContext: {},
+      })
+    )
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation((api, ...args) => {
@@ -49,17 +83,23 @@ describe(`Kitchen sink schema test`, () => {
 
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
+      actions.createNode(node, { name: `test` })(store.dispatch)
     )
+
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: `
-        type PostsJson implements Node @infer {
-          id: String!
+        interface Post @nodeInterface {
+          id: ID!
+          code: String
+        }
+        type PostsJson implements Node & Post @infer {
+          id: ID!
           time: Date @dateformat(locale: "fi", formatString: "DD MMMM")
           code: String
           image: File @fileByRelativePath
         }
+
       `,
     })
     buildThirdPartySchemas().forEach(schema =>
@@ -70,12 +110,27 @@ describe(`Kitchen sink schema test`, () => {
     )
     await build({})
     schema = store.getState().schema
+    schemaComposer = store.getState().schemaCustomization.composer
   })
 
   it(`passes kitchen sink query`, async () => {
     expect(
       await runQuery(`
         {
+          interface: allPost(sort: { fields: id }, limit: 1) {
+            nodes {
+              id
+              code
+              ... on PostsJson {
+                time
+                image {
+                  childImageSharp {
+                    id
+                  }
+                }
+              }
+            }
+          }
           sort: allPostsJson(sort: { fields: likes, order: ASC }, limit: 2) {
             edges {
               node {
@@ -91,10 +146,10 @@ describe(`Kitchen sink schema test`, () => {
                 image {
                   childImageSharp {
                     id
-        					}
+                  }
                 }
                 _3invalidKey
-        			}
+              }
             }
           }
           filter: allPostsJson(filter: { likes: { eq: null } }, limit: 2) {
@@ -105,7 +160,9 @@ describe(`Kitchen sink schema test`, () => {
               }
             }
           }
-          resolveFilter: postsJson(idWithDecoration: { eq: "decoration-1601601194425654597"}) {
+          resolveFilter: postsJson(
+            idWithDecoration: { eq: "decoration-1601601194425654597" }
+          ) {
             id
             idWithDecoration
             likes
@@ -140,7 +197,7 @@ describe(`Kitchen sink schema test`, () => {
             }
           }
         }
-    `)
+      `)
     ).toMatchSnapshot()
   })
 
@@ -279,11 +336,24 @@ const mockCreateResolvers = ({ createResolvers }) => {
     Query: {
       likedEnough: {
         type: `[PostsJson]`,
-        resolve(parent, args, context) {
-          return context.nodeModel
-            .getAllNodes({ type: `PostsJson` })
-            .filter(post => post.likes != null && post.likes > 5)
-            .slice(0, 2)
+        async resolve(parent, args, context) {
+          const result = await context.nodeModel.runQuery({
+            type: `PostsJson`,
+            query: {
+              filter: {
+                likes: {
+                  ne: null,
+                  gt: 5,
+                },
+              },
+              sort: {
+                fields: [`likes`],
+                order: [`DESC`],
+              },
+            },
+            firstOnly: false,
+          })
+          return result.slice(0, 2)
         },
       },
     },

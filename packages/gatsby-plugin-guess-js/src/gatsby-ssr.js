@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const nodePath = require(`path`)
 const fs = require(`fs`)
 const React = require(`react`)
 
@@ -10,18 +9,6 @@ function urlJoin(...parts) {
     const segment = next == null ? `` : String(next).replace(/^\/+/, ``)
     return segment ? `${r.replace(/\/$/, ``)}/${segment}` : r
   }, ``)
-}
-
-let pd = []
-const readPageData = () => {
-  if (pd.length > 0) {
-    return pd
-  } else {
-    pd = JSON.parse(
-      fs.readFileSync(nodePath.join(process.cwd(), `.cache`, `data.json`))
-    )
-    return pd
-  }
 }
 
 let s
@@ -37,19 +24,19 @@ const readStats = () => {
 }
 
 exports.onRenderBody = (
-  { setHeadComponents, pathname, pathPrefix },
+  { setHeadComponents, pathname, pathPrefix, loadPageDataSync },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV === `production`) {
-    const pagesData = readPageData()
+  if (
+    process.env.NODE_ENV === `production` ||
+    process.env.NODE_ENV === `test`
+  ) {
     const stats = readStats()
     const matchedPaths = Object.keys(
       guess({ path: pathname, threshold: pluginOptions.minimumThreshold })
     )
     if (!_.isEmpty(matchedPaths)) {
-      const matchedPages = matchedPaths.map(match =>
-        _.find(pagesData.pages, page => page.path === match)
-      )
+      const matchedPages = matchedPaths.map(loadPageDataSync)
       let componentUrls = []
       matchedPages.forEach(p => {
         if (p && p.componentChunkName) {
@@ -68,7 +55,6 @@ exports.onRenderBody = (
           href: urlJoin(pathPrefix, c),
         })
       )
-
       setHeadComponents(components)
     }
 

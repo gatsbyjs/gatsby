@@ -41,7 +41,7 @@ export const anchorsTargetIsEquivalentToSelf = anchor =>
    * Some browsers use the empty string to mean _self, check
    * for actual `_self`
    */
-  [`_self`, ``].indexOf(anchor.target) !== -1 ||
+  [`_self`, ``].includes(anchor.target) ||
   /**
    * As per https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
    */
@@ -81,8 +81,8 @@ export const pathIsNotHandledByApp = (destination, pathStartRegEx) => {
      * pointing to the same domain but outside of the app's pathPrefix. For
      * example, a Gatsby app lives at https://example.com/myapp/, with the
      * pathPrefix set to `/myapp`. When adding an absolute link to the same
-     * domain but outside of the /myapp path, for example, <a
-     * href="https://example.com/not-my-app"> the plugin won't catch it and
+     * domain but outside of the /myapp path, for example, `<a
+     * href="https://example.com/not-my-app">` the plugin won't catch it and
      * will navigate to an external link instead of doing a pushState resulting
      * in `https://example.com/myapp/https://example.com/not-my-app`
      */
@@ -105,7 +105,10 @@ export const hashShouldBeFollowed = (origin, destination) =>
     /* Don't catch links pointed to the same page but with a hash. */
     destination.pathname === origin.pathname)
 
-export const routeThroughBrowserOrApp = hrefHandler => event => {
+export const routeThroughBrowserOrApp = (
+  hrefHandler,
+  pluginOptions
+) => event => {
   if (window.___failedResources) return true
 
   if (userIsForcingNavigation(event)) return true
@@ -143,6 +146,13 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 
   if (hashShouldBeFollowed(origin, destination)) return true
 
+  if (pluginOptions.excludePattern) {
+    const excludeRegex = new RegExp(pluginOptions.excludePattern)
+    if (excludeRegex.test(destination.pathname)) {
+      return true
+    }
+  }
+
   event.preventDefault()
 
   // See issue #8907: destination.pathname already includes pathPrefix added
@@ -157,8 +167,8 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
   return false
 }
 
-export default function(root, cb) {
-  const clickHandler = routeThroughBrowserOrApp(cb)
+export default function(root, pluginOptions, cb) {
+  const clickHandler = routeThroughBrowserOrApp(cb, pluginOptions)
 
   root.addEventListener(`click`, clickHandler)
 

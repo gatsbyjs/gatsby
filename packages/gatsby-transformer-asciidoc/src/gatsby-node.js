@@ -25,6 +25,14 @@ async function onCreateNode(
     return
   }
 
+  // register custom converter if given
+  if (pluginOptions.converterFactory) {
+    asciidoc.ConverterFactory.register(
+      new pluginOptions.converterFactory(asciidoc),
+      [`html5`]
+    )
+  }
+
   // changes the incoming imagesdir option to take the
   const asciidocOptions = processPluginOptions(pluginOptions, pathPrefix)
 
@@ -34,7 +42,10 @@ async function onCreateNode(
   // Load Asciidoc file for extracting
   // https://asciidoctor-docs.netlify.com/asciidoctor.js/processor/extract-api/
   // We use a `let` here as a warning: some operations, like .convert() mutate the document
-  let doc = await asciidoc.load(content, asciidocOptions)
+  let doc = await asciidoc.load(content, {
+    base_dir: node.dir,
+    ...asciidocOptions,
+  })
 
   try {
     const html = doc.convert()

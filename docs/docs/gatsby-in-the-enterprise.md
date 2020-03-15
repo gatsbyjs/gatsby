@@ -1,5 +1,5 @@
 ---
-title: "Building With Gatsby in the Enterprise"
+title: Building with Gatsby in the Enterprise
 ---
 
 Some Gatsby advocates may be working inside “enterprise” software development organizations. Others may work at agencies which work closely with such organizations.
@@ -8,7 +8,7 @@ If this describes you, you have unique challenges, but also opportunities, build
 
 This guide is designed to help you navigate the terrain in order to effectively advocate for Gatsby within your organization.
 
-### Common characteristics of enterprises
+## Common characteristics of enterprises
 
 People mean different things when they say “enterprise”. Some mean 500-person companies. Other people mean 20,000-person companies.
 
@@ -16,7 +16,7 @@ When we say “enterprise” we mean large companies with established infrastruc
 
 Other common characteristics include specified procurement processes, standardization on particular technology stacks, changeover at e.g. 5-year intervals, and frequent security audits. Often, enterprises are heavily invested in maintaining and improving existing web properties (“brownfield”) as opposed to creating new ones (“greenfield”).
 
-### Key benefits of Gatsby for enterprises
+## Key benefits of Gatsby for enterprises
 
 One of the key challenges that enterprises face is keeping their tech stack up to date in order to enjoy productivity and performance benefits, while preventing their tooling setups from degrading into “legacy” code.
 
@@ -38,11 +38,11 @@ Depending on your type of your organization, not all of these challenges may app
 
 A somewhat complete list of potential areas that may have in-house, standard solutions: authentication, SSO, error logging, deployments, staging, hosting, security, CDN, middleware (data fetching), analytics, and internationalization/localization.
 
-These requirements tend to be in place to enable enable marketing, security, analytics, and operations teams to function effectively.
+These requirements tend to be in place to enable marketing, security, analytics, and operations teams to function effectively.
 
 **Solution 1: Dedicate a few days or weeks to build integrations.** If your company has these requirements, building integrations is quite feasible with Gatsby’s plugin system (and even well-documented, with many examples for each category of integration).
 
-**Challenge 2: Need for buy-in from executives.** Sometimes new technology adoption in the enterprise requires buy-in from executives who aren’t end-users of Gatsby.
+**Challenge 2: Need for buy-in from executives.** Sometimes new technology adoption in the enterprise requires buy-in from executives who aren’t end users of Gatsby.
 
 **Solution 2: Potential strategies to get buy-in include building consensus among developers, executing a simple proof of concept, and using the language of execs and managers.**
 
@@ -64,7 +64,7 @@ Often, there are key individuals at agencies that are excited for personal and p
 
 One key to successfully completing a Gatsby project is having a pre-existing relationship of trust between the enterprise and its agency partners. When this isn’t true — perhaps because of past behavior on the part of one or both parties — any sort of change becomes difficult.
 
-### Conclusion
+## Conclusion
 
 Adopting Gatsby in an enterprise can be more difficult than in small companies. However, there are lasting benefits for the company as well as the individuals guiding the change.
 
@@ -73,3 +73,5 @@ Because technology choices are more sticky in the enterprise, driving adoption o
 The benefits your company will derive, such as performance and the ability to rapidly iterate on its consumer-facing web presence and digital footprint, will provide significant benefits in the marketplace. Your company will be more likely to thrive _because of the work you did_.
 
 Typically, individuals who guide and lead a shift to Gatsby are seen as forward-thinking and as agents of change, which can be [very beneficial for their careers within the company](/docs/how-gatsby-boosts-career/). In addition, as the Gatsby rollout gains steam and proceeds through the company, they are prime candidates to spearhead the effort.
+
+For more, see [blog posts on Gatsby in the enterprise](/blog/tags/enterprise).

@@ -1,23 +1,22 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link, graphql } from "gatsby"
 
 import Avatar from "./avatar"
-import { colors, fonts } from "../utils/presets"
 
 const formatDate = dateString =>
   new Date(dateString).toLocaleDateString(`en-EN`, {
+    timeZone: `UTC`,
     month: `long`,
     day: `numeric`,
     year: `numeric`,
   })
 
 const BlogPostPreviewItem = ({ post, className }) => (
-  <article className={className} css={{ position: `relative` }}>
-    <Link to={post.fields.slug} css={{ "&&": { color: colors.gray.copy } }}>
-      <h2 css={{ marginTop: 0 }}>{post.frontmatter.title}</h2>
-      <p>
-        {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
-      </p>
+  <article css={{ position: `relative` }} className={className}>
+    <Link to={post.fields.slug} sx={{ "&&": { color: `card.color` } }}>
+      <h2 sx={{ color: `card.header`, mt: 0 }}>{post.frontmatter.title}</h2>
+      <p>{post.fields.excerpt}</p>
     </Link>
     <div
       css={{
@@ -36,13 +35,14 @@ const BlogPostPreviewItem = ({ post, className }) => (
         <Avatar
           image={post.frontmatter.author.avatar.childImageSharp.fixed}
           alt={post.frontmatter.author.id}
+          overrideCSS={{ mr: 3 }}
         />
       </Link>
       <div
-        css={{
+        sx={{
           display: `inline-block`,
-          fontFamily: fonts.header,
-          color: colors.gray.calm,
+          fontFamily: `heading`,
+          color: `card.color`,
         }}
       >
         <div>
@@ -83,13 +83,12 @@ const BlogPostPreviewItem = ({ post, className }) => (
 )
 
 export const blogPostPreviewFragment = graphql`
-  fragment BlogPostPreview_item on MarkdownRemark {
-    excerpt
+  fragment BlogPostPreview_item on Mdx {
     fields {
       slug
+      excerpt
     }
     frontmatter {
-      excerpt
       title
       date
       author {

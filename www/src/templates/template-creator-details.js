@@ -1,22 +1,14 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
-import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
-import { rhythm } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
 import FooterLinks from "../components/shared/footer-links"
-import {
-  colors,
-  space,
-  transition,
-  radii,
-  mediaQueries,
-  fontSizes,
-  lineHeights,
-} from "../utils/presets"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 
@@ -24,17 +16,17 @@ const breakpoint2Columns = mediaQueries.md
 
 const MetaTitle = ({ children }) => (
   <p
-    css={{
+    sx={{
       margin: `0`,
-      color: colors.gray.calm,
-      marginBottom: space[1],
+      color: `textMuted`,
+      mb: 1,
       flexShrink: 0,
       [mediaQueries.xs]: {
         width: 150,
       },
       [breakpoint2Columns]: {
-        fontWeight: `600`,
-        marginBottom: 0,
+        fontWeight: `bold`,
+        mb: 0,
         textTransform: `none`,
       },
     }}
@@ -45,19 +37,16 @@ const MetaTitle = ({ children }) => (
 
 const MetaSection = ({ children, background, last, first }) => (
   <div
-    css={{
-      background: background ? background : colors.ui.whisper,
-      marginLeft: `-${space[5]}`,
-      marginRight: `-${space[5]}`,
-      padding: space[5],
-      borderTop: first ? `1px solid ${colors.ui.light}` : null,
-      borderBottom: last ? null : `1px solid ${colors.ui.light}`,
+    sx={{
+      background: background ? background : `ui.background`,
+      mx: t => `-${t.space[5]}`,
+      p: 5,
+      borderTop: t => (first ? `1px solid ${t.colors.ui.border}` : null),
+      borderBottom: t => (last ? null : `1px solid ${t.colors.ui.border}`),
       [breakpoint2Columns]: {
         background: `transparent`,
-        paddingLeft: 0,
-        paddingRight: 0,
-        marginLeft: 0,
-        marginRight: 0,
+        px: 0,
+        mx: 0,
       },
       [mediaQueries.sm]: {
         display: `flex`,
@@ -70,45 +59,40 @@ const MetaSection = ({ children, background, last, first }) => (
 
 class CreatorTemplate extends Component {
   render() {
-    const { data, location } = this.props
+    const { data } = this.props
     const creator = data.creatorsYaml
     const isAgencyOrCompany =
       creator.type === `agency` || creator.type === `company`
 
-    let sites = []
-    data.allSitesYaml.edges.map(site => {
-      if (site.node.built_by === creator.name) {
-        sites.push(site)
-      }
-    })
+    const sites = data.allSitesYaml.nodes
 
     return (
-      <Layout location={location}>
+      <React.Fragment>
         <Helmet>
           <title>{`${creator.name} - Creator`}</title>
         </Helmet>
         <CreatorsHeader submissionText="Add Yourself" />
         <main
           role="main"
-          css={{
-            padding: space[6],
-            paddingBottom: `10vh`,
+          sx={{
+            p: 6,
+            pb: `10vh`,
             display: `flex`,
             flexDirection: `column`,
             alignItems: `center`,
             justifyContent: `center`,
             width: `100%`,
             [breakpoint2Columns]: {
-              paddingBottom: space[6],
+              pb: 6,
               flexDirection: `row`,
               alignItems: `flex-start`,
             },
           }}
         >
           <div
-            css={{
-              margin: space[6],
-              marginBottom: space[1],
+            sx={{
+              m: 6,
+              mb: 1,
               flexGrow: `1`,
               width: `100%`,
               [breakpoint2Columns]: {
@@ -122,13 +106,13 @@ class CreatorTemplate extends Component {
           >
             <Img
               alt={`${creator.name}`}
-              css={{ borderRadius: radii[1] }}
+              sx={{ borderRadius: 1 }}
               fluid={creator.image.childImageSharp.fluid}
             />
           </div>
           <div
-            css={{
-              margin: space[6],
+            sx={{
+              m: 6,
               flex: `1`,
               width: `100%`,
               [mediaQueries.lg]: {
@@ -137,25 +121,19 @@ class CreatorTemplate extends Component {
               },
             }}
           >
-            <h1
-              css={{
-                margin: `0`,
-              }}
-            >
-              {creator.name}
-            </h1>
+            <h1 sx={{ m: 0 }}>{creator.name}</h1>
             <div
               css={{
                 alignItems: `center`,
                 display: `flex`,
-                marginTop: space[3],
+                mt: 3,
               }}
             >
               {isAgencyOrCompany && (
                 <span
-                  css={{
-                    color: colors.gray.calm,
-                    marginRight: space[2],
+                  sx={{
+                    color: `textMuted`,
+                    mr: 2,
                   }}
                 >
                   {creator.type.charAt(0).toUpperCase() + creator.type.slice(1)}
@@ -164,17 +142,17 @@ class CreatorTemplate extends Component {
 
               {creator.for_hire || creator.hiring ? (
                 <div
-                  css={{
+                  sx={{
                     alignSelf: `flex-start`,
-                    fontSize: fontSizes[1],
-                    marginRight: space[2],
+                    fontSize: 1,
+                    mr: 2,
                   }}
                 >
                   <Badge
                     forHire={creator.for_hire}
-                    customCSS={{
-                      background: colors.success,
-                      color: colors.white,
+                    overrideCSS={{
+                      background: `green.50`,
+                      color: `white`,
                     }}
                   >
                     {creator.for_hire ? `Open for work` : `Hiring`}
@@ -184,13 +162,13 @@ class CreatorTemplate extends Component {
               {creator.github && (
                 <a
                   href={creator.github}
-                  css={{
+                  sx={{
                     "& svg": { display: `block` },
                     "&&": {
                       border: 0,
-                      lineHeight: lineHeights.solid,
+                      lineHeight: `solid`,
                       "&:hover": {
-                        color: colors.gatsby,
+                        color: `gatsby`,
                       },
                     },
                   }}
@@ -199,13 +177,7 @@ class CreatorTemplate extends Component {
                 </a>
               )}
             </div>
-            <div
-              css={{
-                padding: `${rhythm()} 0`,
-              }}
-            >
-              {creator.description}
-            </div>
+            <div sx={{ py: 6 }}>{creator.description}</div>
             <MetaSection first>
               <MetaTitle>Get in touch</MetaTitle>
               <a
@@ -218,13 +190,7 @@ class CreatorTemplate extends Component {
             </MetaSection>
             <MetaSection>
               <MetaTitle>From</MetaTitle>
-              <p
-                css={{
-                  margin: `0`,
-                }}
-              >
-                {creator.location}
-              </p>
+              <p sx={{ m: 0 }}>{creator.location}</p>
             </MetaSection>
             {creator.portfolio === true && sites.length > 0 && (
               <MetaSection background="transparent" last>
@@ -238,24 +204,22 @@ class CreatorTemplate extends Component {
                 >
                   {sites.map(site => (
                     <Link
-                      key={site.node.title}
-                      css={{
+                      key={site.title}
+                      sx={{
                         "&&": {
-                          marginRight: space[6],
-                          marginBottom: space[6],
+                          mr: 6,
+                          mb: 6,
                           borderBottom: `none`,
                           lineHeight: 0,
-                          transition: `all ${transition.speed.default} ${
-                            transition.curve.default
-                          }`,
+                          transition: `default`,
                         },
                       }}
-                      to={site.node.fields.slug}
+                      to={site.fields.slug}
                     >
                       <Img
-                        alt={`${site.node.title}`}
+                        alt={`${site.title}`}
                         fixed={
-                          site.node.childScreenshot.screenshotFile
+                          site.childScreenshot.screenshotFile
                             .childImageSharp.fixed
                         }
                       />
@@ -267,7 +231,7 @@ class CreatorTemplate extends Component {
           </div>
         </main>
         <FooterLinks />
-      </Layout>
+      </React.Fragment>
     )
   }
 }
@@ -275,7 +239,7 @@ class CreatorTemplate extends Component {
 export default CreatorTemplate
 
 export const pageQuery = graphql`
-  query($slug: String!) {
+  query($slug: String!, $name: String!) {
     creatorsYaml(fields: { slug: { eq: $slug } }) {
       name
       description
@@ -297,24 +261,26 @@ export const pageQuery = graphql`
         slug
       }
     }
-    allSitesYaml(filter: { fields: { hasScreenshot: { eq: true } } }) {
-      edges {
-        node {
-          built_by
-          url
-          title
-          childScreenshot {
-            screenshotFile {
-              childImageSharp {
-                fixed(width: 100, height: 100) {
-                  ...GatsbyImageSharpFixed
-                }
+    allSitesYaml(
+      filter: {
+        built_by: { eq: $name }
+        fields: { hasScreenshot: { eq: true } }
+      }
+    ) {
+      nodes {
+        url
+        title
+        childScreenshot {
+          screenshotFile {
+            childImageSharp {
+              fixed(width: 100, height: 100) {
+                ...GatsbyImageSharpFixed
               }
             }
           }
-          fields {
-            slug
-          }
+        }
+        fields {
+          slug
         }
       }
     }

@@ -1,6 +1,16 @@
 import * as React from "react"
 import { EventEmitter } from "events"
-import { WindowLocation } from "@reach/router"
+import { WindowLocation, NavigateFn } from "@reach/router"
+import { createContentDigest } from "gatsby-core-utils"
+import {
+  ComposeEnumTypeConfig,
+  ComposeInputObjectTypeConfig,
+  ComposeInterfaceTypeConfig,
+  ComposeObjectTypeConfig,
+  ComposeScalarTypeConfig,
+  ComposeUnionTypeConfig,
+} from "graphql-compose"
+import { GraphQLOutputType } from "graphql"
 
 export {
   default as Link,
@@ -13,15 +23,95 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
-export interface StaticQueryProps {
-  query: any
-  render?: RenderCallback
-  children?: RenderCallback
-}
-
 export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const parsePath: (path: string) => WindowLocation
+
+export const prefetchPathname: (path: string) => void
+
+/**
+ * A props object for adding type safety to your Gatsby pages, can be
+ * extended with both the query response shape, and the page context.
+ *
+ * @example
+ * // When typing a default page from the ./pages dir
+ *
+ * import {PageProps} from "gatsby"
+ * export default (props: PageProps) => {
+ *
+ * @example
+ * // When adding types for both pageContext and GraphQL query data
+ *
+ * import {PageProps} from "gatsby"
+ *
+ * type IndexQueryProps = { downloadCount: number }
+ * type LocaleLookUpInfo = { translationStrings: any } & { langKey: string, slug: string }
+ * type IndexPageProps = PageProps<IndexPageProps, LocaleLookUpInfo>
+ *
+ * export default (props: IndexProps) => {
+ *   ..
+ */
+export type PageProps<DataType = object, PageContextType = object> = {
+  /** The path for this current page */
+  path: string
+  /** The URI for the current page */
+  uri: string
+  /** An extended version of window.document which comes from @react/router */
+  location: WindowLocation
+  /** A way to handle programmatically controlling navigation */
+  navigate:  NavigateFn
+  /** You can't get passed children as this is the root user-land component */
+  children: undefined
+  /** @deprecated use pageContext instead */
+  pathContext: object
+  /** Holds information about the build process for this component */
+  pageResources: {
+    component: React.Component
+      json: {
+        data: DataType
+        pageContext: PageContextType
+      },
+      page: {
+        componentChunkName: string,
+        path: string,
+        webpackCompilationHash: string,
+        matchPath?: string,
+      },
+  }
+  /**
+   * Data passed into the page via an exported GraphQL query. To set up this type
+   * you need to use [generics](https://www.typescriptlang.org/play/#example/generic-functions),
+   * see below for an example
+   *
+   * @example
+   *
+   * import {PageProps} from "gatsby"
+   *
+   * type IndexQueryProps = { downloadCount: number }
+   * type IndexPageProps = PageProps<IndexPageProps>
+   *
+   * export default (props: IndexProps) => {
+   *   ..
+   *
+   */
+  data: DataType
+  /**
+   * A context object which is passed in during the creation of the page. Can be extended if you are using
+   * `createPage` yourself using generics:
+   *
+   * @example
+   *
+   * import {PageProps} from "gatsby"
+   *
+   * type IndexQueryProps = { downloadCount: number }
+   * type LocaleLookUpInfo = { translationStrings: any } & { langKey: string, slug: string }
+   * type IndexPageProps = PageProps<IndexPageProps, LocaleLookUpInfo>
+   *
+   * export default (props: IndexProps) => {
+   *   ..
+   */
+  pageContext: PageContextType
+}
 
 export interface PageRendererProps {
   location: WindowLocation
@@ -37,12 +127,12 @@ export interface PageRendererProps {
  */
 export class PageRenderer extends React.Component<PageRendererProps> {}
 
-type RenderCallback = (data: any) => React.ReactNode
+type RenderCallback<T = any> = (data: T) => React.ReactNode
 
-export interface StaticQueryProps {
+export interface StaticQueryProps<T = any> {
   query: any
-  render?: RenderCallback
-  children?: RenderCallback
+  render?: RenderCallback<T>
+  children?: RenderCallback<T>
 }
 
 /**
@@ -55,7 +145,9 @@ export interface StaticQueryProps {
  * @see https://www.gatsbyjs.org/docs/static-query/
  */
 
-export class StaticQuery extends React.Component<StaticQueryProps> {}
+export class StaticQuery<T = any> extends React.Component<
+  StaticQueryProps<T>
+> {}
 
 /**
  * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
@@ -113,7 +205,9 @@ export interface GatsbyNode {
    * @see https://www.gatsbyjs.org/docs/node-apis/#createPages
    */
   createPages?(
-    args: CreatePagesArgs & { traceId: "initial-createPages" },
+    args: CreatePagesArgs & {
+      traceId: "initial-createPages"
+    },
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -133,7 +227,9 @@ export interface GatsbyNode {
    * add and remove pages.
    */
   createPagesStatefully?(
-    args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" },
+    args: CreatePagesArgs & {
+      traceId: "initial-createPagesStatefully"
+    },
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -182,8 +278,8 @@ export interface GatsbyNode {
    *   // create a new node field.
    * }
    */
-  onCreateNode?(
-    args: CreateNodeArgs,
+  onCreateNode?<TNode extends object = {}>(
+    args: CreateNodeArgs<TNode>,
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -196,8 +292,8 @@ export interface GatsbyNode {
    * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
    * for more on this API.
    */
-  onCreatePage?(
-    args: CreatePageArgs,
+  onCreatePage?<TContext = Record<string, unknown>>(
+    args: CreatePageArgs<TContext>,
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -371,6 +467,30 @@ export interface GatsbyNode {
     options: PluginOptions,
     callback: PluginCallback
   ): void
+
+  /**
+   * Customize Gatsby’s GraphQL schema by creating type definitions, field extensions or adding third-party schemas.
+   * The createTypes, createFieldExtension and addThirdPartySchema actions are only available in this API.
+   *
+   * For details on their usage please refer to the actions documentation.
+   *
+   * This API runs immediately before schema generation. For modifications of the generated schema, e.g.
+   * to customize added third-party types, use the createResolvers API.
+   * @see https://www.gatsbyjs.org/docs/node-apis/#createSchemaCustomization
+   */
+  createSchemaCustomization?(
+    args: CreateSchemaCustomizationArgs,
+    options: PluginOptions
+  ): any
+  createSchemaCustomization?(
+    args: CreateSchemaCustomizationArgs,
+    options: PluginOptions
+  ): Promise<any>
+  createSchemaCustomization?(
+    args: CreateSchemaCustomizationArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
 }
 
 /**
@@ -403,6 +523,10 @@ export interface GatsbyBrowser {
     options: PluginOptions
   ): any
   onServiceWorkerUpdateFound?(
+    args: ServiceWorkerArgs,
+    options: PluginOptions
+  ): any
+  onServiceWorkerUpdateReady?(
     args: ServiceWorkerArgs,
     options: PluginOptions
   ): any
@@ -600,7 +724,13 @@ export interface PluginOptions {
 export type PluginCallback = (err: Error | null, result?: any) => void
 
 export interface CreatePagesArgs extends ParentSpanPluginArgs {
-  graphql: Function
+  graphql<TData, TVariables = any>(
+    query: string,
+    variables?: TVariables
+  ): Promise<{
+    errors?: any
+    data?: TData
+  }>
   traceId: string
   waitForCascadingActions: boolean
 }
@@ -619,8 +749,9 @@ export interface CreateDevServerArgs extends ParentSpanPluginArgs {
   app: any
 }
 
-export interface CreateNodeArgs extends ParentSpanPluginArgs {
-  node: Node
+export interface CreateNodeArgs<TNode extends object = {}>
+  extends ParentSpanPluginArgs {
+  node: Node & TNode
   traceId: string
   traceTags: {
     nodeId: string
@@ -628,8 +759,9 @@ export interface CreateNodeArgs extends ParentSpanPluginArgs {
   }
 }
 
-export interface CreatePageArgs extends ParentSpanPluginArgs {
-  page: Node
+export interface CreatePageArgs<TContext = Record<string, unknown>>
+  extends ParentSpanPluginArgs {
+  page: Page<TContext>
   traceId: string
 }
 
@@ -658,49 +790,112 @@ export interface SetFieldsOnGraphQLNodeTypeArgs extends ParentSpanPluginArgs {
   traceId: "initial-setFieldsOnGraphQLNodeType"
 }
 
+export interface GatsbyGraphQLObjectType {
+  kind: "OBJECT"
+  config: ComposeObjectTypeConfig<any, any>
+}
+
+interface GatsbyGraphQLInputObjectType {
+  kind: "INPUT_OBJECT"
+  config: ComposeInputObjectTypeConfig
+}
+
+interface GatsbyGraphQLUnionType {
+  kind: "UNION"
+  config: ComposeUnionTypeConfig<any, any>
+}
+
+interface GatsbyGraphQLInterfaceType {
+  kind: "INTERFACE"
+  config: ComposeInterfaceTypeConfig<any, any>
+}
+
+interface GatsbyGraphQLEnumType {
+  kind: "ENUM"
+  config: ComposeEnumTypeConfig
+}
+
+interface GatsbyGraphQLScalarType {
+  kind: "SCALAR"
+  config: ComposeScalarTypeConfig
+}
+
+export type GatsbyGraphQLType =
+  | GatsbyGraphQLObjectType
+  | GatsbyGraphQLInputObjectType
+  | GatsbyGraphQLUnionType
+  | GatsbyGraphQLInterfaceType
+  | GatsbyGraphQLEnumType
+  | GatsbyGraphQLScalarType
+
+export interface NodePluginSchema {
+  buildObjectType(
+    config: ComposeObjectTypeConfig<any, any>
+  ): GatsbyGraphQLObjectType
+  buildUnionType(
+    config: ComposeUnionTypeConfig<any, any>
+  ): GatsbyGraphQLUnionType
+  buildInterfaceType(
+    config: ComposeInterfaceTypeConfig<any, any>
+  ): GatsbyGraphQLInterfaceType
+  buildInputObjectType(
+    config: ComposeInputObjectTypeConfig
+  ): GatsbyGraphQLInputObjectType
+  buildEnumType(config: ComposeEnumTypeConfig): GatsbyGraphQLEnumType
+  buildScalarType(config: ComposeScalarTypeConfig): GatsbyGraphQLScalarType
+}
+
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
   traceId: "initial-sourceNodes"
   waitForCascadingActions: boolean
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
-  schema: object
+  intermediateSchema: object
   createResolvers: Function
-  traceId: `initial-createResolvers`
+  traceId: "initial-createResolvers"
+}
+
+export interface CreateSchemaCustomizationArgs extends ParentSpanPluginArgs {
+  traceId: "initial-createSchemaCustomization"
 }
 
 export interface PreRenderHTMLArgs extends NodePluginArgs {
-  getHeadComponents: any[]
-  replaceHeadComponents: Function
-  getPreBodyComponents: any[]
-  replacePreBodyComponents: Function
-  getPostBodyComponents: any[]
-  replacePostBodyComponents: Function
+  getHeadComponents: () => React.ReactNode[]
+  replaceHeadComponents: (comp: React.ReactNode[]) => void
+  getPreBodyComponents: () => React.ReactNode[]
+  replacePreBodyComponents: (comp: React.ReactNode[]) => void
+  getPostBodyComponents: () => React.ReactNode[]
+  replacePostBodyComponents: (comp: React.ReactNode[]) => void
 }
 
+type ReactProps<T extends Element> = React.DetailedHTMLProps<
+  React.HTMLAttributes<T>,
+  T
+>
 export interface RenderBodyArgs extends NodePluginArgs {
   pathname: string
-  setHeadComponents: Function
-  setHtmlAttributes: Function
-  setBodyAttributes: Function
-  setPreBodyComponents: Function
-  setPostBodyComponents: Function
+  setHeadComponents: (comp: React.ReactNode[]) => void
+  setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
+  setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
+  setPreBodyComponents: (comp: React.ReactNode[]) => void
+  setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
 }
 
 export interface ReplaceRendererArgs extends NodePluginArgs {
-  replaceBodyHTMLString: Function
-  setHeadComponents: Function
-  setHtmlAttributes: Function
-  setBodyAttributes: Function
-  setPreBodyComponents: Function
-  setPostBodyComponents: Function
+  replaceBodyHTMLString: (str: string) => void
+  setHeadComponents: (comp: React.ReactNode[]) => void
+  setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
+  setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
+  setPreBodyComponents: (comp: React.ReactNode[]) => void
+  setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
 }
 
-export interface WrapPageElementNodeArgs extends NodePluginArgs {
+export interface WrapPageElementNodeArgs<DataType = object, PageContextType = object> extends NodePluginArgs {
   element: object
-  props: object
+  props: PageProps<DataType, PageContextType>
   pathname: string
 }
 
@@ -725,10 +920,11 @@ export interface NodePluginArgs {
   hasNodeChanged: Function
   reporter: Reporter
   getNodeAndSavePathDependency: Function
-  cache: Cache
+  cache: Cache["cache"]
   createNodeId: Function
-  createContentDigest: Function
+  createContentDigest: typeof createContentDigest
   tracing: Tracing
+  schema: NodePluginSchema
   [key: string]: unknown
 }
 
@@ -769,8 +965,8 @@ export interface Actions {
   deletePage(args: { path: string; component: string }): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createPage */
-  createPage(
-    args: { path: string; component: string; context: Record<string, unknown> },
+  createPage<TContext = Record<string, unknown>>(
+    args: Page<TContext>,
     plugin?: ActionPlugin,
     option?: ActionOptions
   ): void
@@ -789,10 +985,14 @@ export interface Actions {
   deleteNodes(nodes: string[], plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
-  createNode(node: Node, plugin?: ActionPlugin, options?: ActionOptions): void
+  createNode(
+    node: NodeInput,
+    plugin?: ActionPlugin,
+    options?: ActionOptions
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
-  touchNode(node: { nodeId: string; plugin?: ActionPlugin }): void
+  touchNode(node: { nodeId: string }, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
   createNodeField(
@@ -840,6 +1040,17 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
+  /** @see https://www.gatsbyjs.org/docs/actions/#createJobV2 */
+  createJobV2(
+    job: {
+      name: string
+      inputPaths: string[]
+      outputDir: string
+      args: Record<string, unknown>
+    },
+    plugin?: ActionPlugin
+  ): Promise<unknown>
+
   /** @see https://www.gatsbyjs.org/docs/actions/#setJob */
   setJob(
     job: Record<string, unknown> & { id: string },
@@ -856,11 +1067,12 @@ export interface Actions {
   createRedirect(
     redirect: {
       fromPath: string
-      isPermanent: boolean
+      isPermanent?: boolean
       toPath: string
-      redirectInBrowser: boolean
-      force: boolean
-      statusCode: number
+      redirectInBrowser?: boolean
+      force?: boolean
+      statusCode?: number
+      [key: string]: unknown
     },
     plugin?: ActionPlugin
   ): void
@@ -868,13 +1080,26 @@ export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#addThirdPartySchema */
   addThirdPartySchema(
     args: { schema: object },
-    plugin: ActionPlugin,
+    plugin?: ActionPlugin,
     traceId?: string
   ): void
 
-  /** TODO create jsdoc on gatsbyjs.org */
+  /** @see https://www.gatsbyjs.org/docs/actions/#createTypes */
   createTypes(
-    types: string | object | Array<string | object>,
+    types:
+      | string
+      | GraphQLOutputType
+      | GatsbyGraphQLType
+      | string[]
+      | GraphQLOutputType[]
+      | GatsbyGraphQLType[],
+    plugin?: ActionPlugin,
+    traceId?: string
+  ): void
+
+  /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
+  createFieldExtension(
+    extension: object,
     plugin: ActionPlugin,
     traceId?: string
   ): void
@@ -887,31 +1112,50 @@ export interface Store {
   replaceReducer: Function
 }
 
-type logMessageType = (format: string, ...args: any[]) => void
+type LogMessageType = (format: string) => void
+type LogErrorType = (errorMeta: string | Object, error?: Object) => void
+
+export type ActivityTracker = {
+  start(): () => void
+  end(): () => void
+  span: Object
+  setStatus(status: string): void
+  panic: LogErrorType
+  panicOnBuild: LogErrorType
+}
+
+export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
+  tick(increment?: number): void
+  done(): void
+  total: number
+}
+
+export type ActivityArgs = {
+  parentSpan?: Object
+  id?: string
+}
 
 export interface Reporter {
-  stripIndent: Function
+  stripIndent: (input: string) => string
   format: object
-  setVerbose(isVerbose: boolean): void
-  setNoColor(isNoColor: boolean): void
-  panic(...args: any[]): void
-  panicOnBuild(...args: any[]): void
-  error(message: string, error: Error): void
+  setVerbose(isVerbose?: boolean): void
+  setNoColor(isNoColor?: boolean): void
+  panic: LogErrorType
+  panicOnBuild: LogErrorType
+  error: LogErrorType
   uptime(prefix: string): void
-  success: logMessageType
-  verbose: logMessageType
-  info: logMessageType
-  warn: logMessageType
-  log: logMessageType
-  activityTimer(
-    name: string,
-    activityArgs: { parentSpan: object }
-  ): {
-    start: () => void
-    status(status: string): void
-    end: () => void
-    span: object
-  }
+  success: LogMessageType
+  verbose: LogMessageType
+  info: LogMessageType
+  warn: LogMessageType
+  log: LogMessageType
+  activityTimer(name: string, activityArgs?: ActivityArgs): ActivityTracker
+  createProgress(
+    text: string,
+    total?: number,
+    start?: number,
+    activityArgs?: ActivityArgs
+  ): ProgressActivityTracker
 }
 
 export interface Cache {
@@ -1050,17 +1294,7 @@ export interface RouteUpdateArgs extends BrowserPluginArgs {
 }
 
 export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
-  props: {
-    path: string
-    "*": string
-    uri: string
-    location: object
-    navigate: Function
-    children: undefined
-    pageResources: object
-    data: object
-    pageContext: object
-  }
+  props: PageProps
   loader: object
 }
 
@@ -1075,9 +1309,9 @@ export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
   getSavedScrollPosition: Function
 }
 
-export interface WrapPageElementBrowserArgs extends BrowserPluginArgs {
+export interface WrapPageElementBrowserArgs<DataType = object, PageContextType = object> extends BrowserPluginArgs {
   element: object
-  props: object
+  props: PageProps<DataType, PageContextType>
 }
 
 export interface WrapRootElementBrowserArgs extends BrowserPluginArgs {
@@ -1100,42 +1334,32 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
   serviceWorker: ServiceWorkerRegistration
 }
 
-export interface Node {
-  path?: string
+export interface NodeInput {
   id: string
-  parent: string
-  children: Node[]
-  fields?: Record<string, string>
+  parent?: string
+  children?: string[]
   internal: {
     type: string
-    mediaType: string
-    content: string
+    mediaType?: string
+    content?: string
     contentDigest: string
-    owner: string
     description?: string
   }
-  resolve?: string
-  name?: string
-  version?: string
-  pluginOptions?: PluginOptions
-  nodeAPIs?: any[]
-  browserAPIs?: any[]
-  ssrAPIs?: any[]
-  pluginFilepath?: string
-  packageJson?: PackageJson
-  siteMetadata?: Record<string, any>
-  port?: string
-  host?: string
-  pathPrefix?: string
-  polyfill?: boolean
-  buildTime?: string
-  jsonName?: string
-  internalComponentName?: string
-  matchPath?: unknown
-  component?: string
-  componentChunkName?: string
-  context?: Record<string, any>
-  pluginCreatorId?: string
-  componentPath?: string
   [key: string]: unknown
+}
+
+export interface Node extends NodeInput {
+  parent: string
+  children: string[]
+  internal: NodeInput["internal"] & {
+    owner: string
+  }
+  [key: string]: unknown
+}
+
+export interface Page<TContext = Record<string, unknown>> {
+  path: string
+  matchPath?: string
+  component: string
+  context: TContext
 }

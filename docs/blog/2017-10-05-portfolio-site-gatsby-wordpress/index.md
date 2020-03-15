@@ -61,7 +61,7 @@ I was skeptical at first: would I have to parse large amounts of JSON to get the
 data I needed? I have never even interacted with the WordPress REST API, how
 will I query it?
 
-The answer... [GraphQL](http://graphql.org/). Gatsby ships with it and through
+The answer... [GraphQL](https://graphql.org/). Gatsby ships with it and through
 an npm install of a
 [gatsby-source plugin](/docs/plugins/) of your choice
 and a tiny bit of a config, you can start querying in no time. I was amazed with
@@ -76,7 +76,7 @@ GraphQL schema. Here is an example of my Projects page which includes pulling
 some ACF fields which were originally defined in my Projects page template:
 
 ```js
-// Pull the project page content from Wordpress
+// Pull the project page content from WordPress
 export const projectsPageQuery = graphql`
   query projectsPageQuery {
     wordpressPage(slug: { eq: "projects" }) {
@@ -129,7 +129,7 @@ project I didn't know a lot about:
 - WordPress REST API
 
 Moving forward with Gatsby, I'd like to extend my site to include pagination
-within the blog, use [Styled Components](https://www.styled-components.com/) and
+within the blog, use [Styled Components](https://styled-components.com/) and
 ensure the site scores a 90+ overall on
 [Lighthouse](https://developers.google.com/web/tools/lighthouse/), Google’s
 performance auditing tool.

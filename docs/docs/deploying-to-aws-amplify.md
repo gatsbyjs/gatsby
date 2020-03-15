@@ -2,7 +2,7 @@
 title: Deploying to AWS Amplify
 ---
 
-In this guide we'll walk through how to deploy and host your Gatsby site using the [AWS Amplify Console](https://console.amplify.aws).
+In this guide you'll walk through how to deploy and host your Gatsby site using the [AWS Amplify Console](https://console.amplify.aws).
 
 AWS Amplify is a combination of client library, CLI toolchain, and a Console for continuous deployment and hosting. The Amplify CLI and library allow developers to get up & running with full-stack cloud-powered applications with features like authentication, storage, serverless GraphQL or REST APIs, analytics, Lambda functions, & more. The Amplify Console provides continuous deployment and hosting for modern web apps (single page apps and static site generators). Continuous deployment allows developers to deploy updates to their web app on every code commit to their Git repository. Hosting includes features such as globally available CDNs, easy custom domain setup + HTTPS, feature branch deployments, and password protection.
 
@@ -25,10 +25,16 @@ AWS Amplify is a combination of client library, CLI toolchain, and a Console for
 1. Accept the default build settings. Give the Amplify Console permission to deploy backend resources with your frontend with a service role. This allows the Console to detect changes to both your backend and frontend on every code commit and make updates. If you do not have a service role follow the prompts to create one, then come back to the console and pick it from the dropdown.
    ![Gatsby Amplify2](./images/amplify-build-settings.gif)
 
-1. Review your changes and then choose **Save and deploy**. The Amplify Console will pull code from your repository, build changes to the backend and frontend, and deploy your build artifacts at `https://master.unique-id.amplifyapp.com`. Bonus: Screenshots of your app on different devices to find layout issues :fire:
+1. Review your changes and then choose **Save and deploy**. The Amplify Console will pull code from your repository, build changes to the backend and frontend, and deploy your build artifacts at `https://master.unique-id.amplifyapp.com`. Bonus: Screenshots of your app on different devices to find layout issues 🔥
    ![Gatsby Amplify2](./images/amplify-gatsby-deploy.gif)
 
 ## References:
 
 - [Publishing Your Next Gatsby Site to AWS With AWS Amplify](/blog/2018-08-24-gatsby-aws-hosting/)
 - If you want more control over hosting on AWS you can also [deploy your Gatsby.js Site to AWS S3](/docs/deploying-to-s3-cloudfront/).
+
+### More resources
+
+Jason Lengstorf and Nader Dabit livestream building a site & deploying with AWS Amplify:
+
+https://youtu.be/i9HG8CV-_dQ

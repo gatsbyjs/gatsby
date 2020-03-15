@@ -14,7 +14,7 @@ For the past couple of weeks, I’ve been rebuilding my personal website from sc
 
 For a bit of background, I originally built my website while I was an undergraduate back in 2016. It was a single page [React](https://reactjs.org/) application, with the design based around an interactive search box where visitors could type in things. The application would then change based on what was typed in, to show projects I’ve done, like a website resume or portfolio. I tagged it on Git for posterity [here](https://github.com/jiahaog/jiahao.codes/releases/tag/1.0.0).
 
-Some drawbacks were that the content was very coupled with the code to to style the page, and it was difficult to change the theme without having to rewrite a lot of code. It uses a customized version of [JSON Resume](https://jsonresume.org/) to display data, but ultimately I didn't do a good job and it was a bit of a mess.
+Some drawbacks were that the content was very coupled with the code to style the page, and it was difficult to change the theme without having to rewrite a lot of code. It uses a customized version of [JSON Resume](https://jsonresume.org/) to display data, but ultimately I didn't do a good job and it was a bit of a mess.
 
 Furthermore, being a single page application, it takes a little too long to load just to display some static content. I wanted to add routing and different pages to add blogging functionality, which it wasn’t really suitable for without major refactoring.
 
@@ -44,7 +44,7 @@ It offers much much more, however. Gatsby lets me leverage all the modern tools 
 
 Let me briefly give a high level overview of how Gatsby works from my short experience using it.
 
-Developing the application is the same as developing a React application, with useful things like [hot module replacement](https://webpack.js.org/guides/hot-module-replacement/) to aid easy development already set up by Gatsby. What’s different is that there is a framework in place to use [GraphQL](http://graphql.org/) queries to pull content into the client side browser environment. React components can define a query and the component will be hydrated with the result of the query as props when it is rendered.
+Developing the application is the same as developing a React application, with useful things like [hot module replacement](https://webpack.js.org/guides/hot-module-replacement/) to aid easy development already set up by Gatsby. What’s different is that there is a framework in place to use [GraphQL](https://graphql.org/) queries to pull content into the client side browser environment. React components can define a query and the component will be hydrated with the result of the query as props when it is rendered.
 
 For example, I defined a `PostTemplate` which will be used to render pages for articles.
 

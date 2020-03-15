@@ -1,186 +1,51 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
-import { navigate, PageRenderer } from "gatsby"
-import mousetrap from "mousetrap"
-import Modal from "react-modal"
-import { SkipNavLink } from "@reach/skip-nav"
-import MdClose from "react-icons/lib/md/close"
 
-import {
-  colors,
-  radii,
-  space,
-  shadows,
-  mediaQueries,
-  sizes,
-} from "../utils/presets"
-import Banner from "../components/banner"
-import Navigation from "../components/navigation"
-import MobileNavigation from "../components/navigation-mobile"
-import PageWithSidebar from "../components/page-with-sidebar"
-import SiteMetadata from "../components/site-metadata"
+import { Global } from "@emotion/core"
 
-// Import Futura PT typeface
-import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
-import "../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
-import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
-import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
+import { globalStyles } from "../utils/styles/global"
+import { breakpointGutter } from "../utils/styles"
+import Banner from "./banner"
+import Navigation from "./navigation"
+import MobileNavigation from "./navigation-mobile"
+import SiteMetadata from "./site-metadata"
+import SkipNavLink from "./skip-nav-link"
+import "../assets/fonts/futura"
 
-import { skipLink } from "../utils/styles"
-
-let windowWidth
-
-class DefaultLayout extends React.Component {
-  constructor() {
-    super()
-    this.handleCloseModal = this.handleCloseModal.bind(this)
-  }
-
-  handleCloseModal() {
-    navigate(this.props.modalBackgroundPath)
-  }
-
-  componentDidMount() {
-    Modal.setAppElement(`#___gatsby`)
-
-    if (this.props.isModal && window.innerWidth > 750) {
-      mousetrap.bind(`left`, this.props.modalPrevious)
-      mousetrap.bind(`right`, this.props.modalNext)
-      mousetrap.bind(`spacebar`, this.props.modalNext)
-
-      document.querySelector(`html`).style.overflowY = `hidden`
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.props.isModal && window.innerWidth > 750) {
-      mousetrap.unbind(`left`)
-      mousetrap.unbind(`right`)
-      mousetrap.unbind(`spacebar`)
-
-      document.querySelector(`html`).style.overflowY = `auto`
-    }
-  }
-
-  render() {
-    // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
-    const isSidebarDisabled =
-      this.props.isSidebarDisabled || !this.props.itemList
-    let isModal = false
-    if (!windowWidth && typeof window !== `undefined`) {
-      windowWidth = window.innerWidth
-    }
-    if (this.props.isModal && windowWidth > 750) {
-      isModal = true
-    }
-
-    if (isModal && window.innerWidth > 750) {
-      return (
-        <>
-          <PageRenderer
-            location={{ pathname: this.props.modalBackgroundPath }}
-          />
-          <Modal
-            isOpen={true}
-            style={{
-              content: {
-                top: `inherit`,
-                left: `inherit`,
-                right: `inherit`,
-                bottom: `inherit`,
-                margin: `0 auto`,
-                width: `750px`,
-                background: `none`,
-                border: `none`,
-                padding: `${space[8]} 0`,
-                overflow: `visible`,
-              },
-              overlay: {
-                position: `absolute`,
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: `unset`,
-                minHeight: `100%`,
-                minWidth: `100%`,
-                zIndex: 10,
-                overflowY: `auto`,
-                backgroundColor: `rgba(255, 255, 255, 0.95)`,
-              },
-            }}
-            onRequestClose={() => navigate(this.props.modalBackgroundPath)}
-            contentLabel="Site Details Modal"
-          >
-            <div
-              css={{
-                backgroundColor: colors.white,
-                borderRadius: radii[2],
-                boxShadow: shadows.dialog,
-                position: `relative`,
-              }}
-            >
-              <button
-                onClick={this.handleCloseModal}
-                css={{
-                  background: colors.ui.bright,
-                  border: 0,
-                  borderBottomLeftRadius: radii[1],
-                  borderTopRightRadius: radii[1],
-                  color: colors.gatsby,
-                  cursor: `pointer`,
-                  position: `absolute`,
-                  left: `auto`,
-                  right: 0,
-                  height: 40,
-                  width: 40,
-                  "&:hover": {
-                    background: colors.gatsby,
-                    color: colors.white,
-                  },
-                }}
-              >
-                <MdClose />
-              </button>
-              {this.props.children}
-              {this.props.modalPreviousLink}
-              {this.props.modalNextLink}
-            </div>
-          </Modal>
-        </>
-      )
-    }
-
+export default function DefaultLayout({ location, children }) {
+  if (location.state?.isModal) {
     return (
       <>
-        <SiteMetadata pathname={this.props.location.pathname} />
-        <SkipNavLink css={skipLink}>Skip to main content</SkipNavLink>
-        <Banner />
-        <Navigation pathname={this.props.location.pathname} />
-        <div
-          className={`main-body`}
-          css={{
-            paddingLeft: `env(safe-area-inset-left)`,
-            paddingRight: `env(safe-area-inset-right)`,
-            paddingTop: sizes.bannerHeight,
-            // make room for the mobile navigation
-            paddingBottom: sizes.headerHeight,
-            [mediaQueries.md]: {
-              paddingTop: `calc(${sizes.bannerHeight} + ${sizes.headerHeight})`,
-              paddingBottom: 0,
-            },
-          }}
-        >
-          <PageWithSidebar
-            disable={isSidebarDisabled}
-            itemList={this.props.itemList}
-            location={this.props.location}
-            enableScrollSync={this.props.enableScrollSync}
-            renderContent={() => this.props.children}
-          />
-        </div>
-        <MobileNavigation />
+        <SiteMetadata pathname={location.pathname} />
+        {children}
       </>
     )
   }
-}
 
-export default DefaultLayout
+  return (
+    <>
+      <Global styles={globalStyles} />
+      <SiteMetadata pathname={location.pathname} />
+      <SkipNavLink />
+      <Banner />
+      <Navigation pathname={location.pathname} />
+      <div
+        className={`main-body docSearch-content`}
+        sx={{
+          px: `env(safe-area-inset-left)`,
+          pt: t => t.sizes.bannerHeight,
+          // make room for the mobile navigation
+          pb: t => t.sizes.headerHeight,
+          [breakpointGutter]: {
+            pt: t => `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
+            pb: 0,
+          },
+        }}
+      >
+        {children}
+      </div>
+      <MobileNavigation />
+    </>
+  )
+}

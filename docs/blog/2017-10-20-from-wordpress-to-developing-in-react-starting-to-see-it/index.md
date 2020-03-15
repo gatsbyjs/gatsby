@@ -2,7 +2,7 @@
 title: From WordPress to Developing in React — Starting to See It
 date: 2017-10-20
 author: "Benjamin Read"
-tags: ["React", "getting-started", "wordpress"]
+tags: ["react", "getting-started", "wordpress"]
 ---
 
 As a frontend designer I've always prided myself on being a HTML and CSS
@@ -88,7 +88,7 @@ Beautiful.
 ## GraphQL: SQL-like data queries
 
 One thing I particularly love about Gatsby.js is its inclusion of
-[GraphQL](http://graphql.org/). Like SQL, you
+[GraphQL](https://graphql.org/). Like SQL, you
 use GraphQL to query your data, whether from the WordPress API, Contentful or
 Markdown, and extract a dataset to display in your template.
 
@@ -138,7 +138,7 @@ recently.
 
 Be warned: the tutorial isn’t quite finished yet, you might be better off
 starting with
-[one of the starter kits already available](/docs/gatsby-starters/),
+[one of the starter kits already available](/starters/),
 so that you get `react-helmet` and active links implemented, the 2 things I had
 to learn independently.
 

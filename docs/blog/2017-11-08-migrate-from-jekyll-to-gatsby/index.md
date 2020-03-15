@@ -2,7 +2,7 @@
 title: "Migrate from Jekyll to Gatsby"
 date: 2017-11-08
 author: "Nahuel Scotti"
-tags: ["jekyll", "markdown", "getting-started", "ci"]
+tags: ["jekyll", "markdown", "getting-started", "deployment"]
 ---
 
 ## A bit of history
@@ -25,7 +25,7 @@ but this was extremely slow.
 Some weeks ago, one of my colleagues at work told me about
 [Gatsby](/) Since I was already learning
 [React](https://reactjs.org/) and had started looking at
-[GraphQL](http://graphql.org/) (after attending a talk at
+[GraphQL](https://graphql.org/) (after attending a talk at
 [Nordic.js](http://nordicjs.com/))—I was very interested in giving it a try.
 
 ## Migrating from Jekyll to Gatsby
@@ -67,7 +67,7 @@ need to extract the date from the file name.
 
 The slug in my case is generated with this (default in Jekyll) structure:
 
-```
+```text
 https://blog.singuerinc.com/[n-categories]/YYYY/MM/DD/dashed-title/
 
 // Given this data:

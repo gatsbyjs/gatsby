@@ -1,21 +1,15 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import SearchIcon from "../../components/search-icon"
-import MdArrowDownward from "react-icons/lib/md/arrow-downward"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-import MdSort from "react-icons/lib/md/sort"
-
-import { rhythm } from "../../utils/typography"
 import {
-  colors,
-  space,
-  radii,
-  mediaQueries,
-  sizes,
-  fonts,
-} from "../../utils/presets"
+  MdArrowDownward,
+  MdArrowForward as ArrowForwardIcon,
+  MdSort,
+} from "react-icons/md"
 
-import styles from "../shared/styles"
-
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { loadMoreButton } from "../shared/styles"
 import LHSFilter from "./lhs-filter"
 import StarterList from "./starter-list"
 import Button from "../../components/button"
@@ -30,6 +24,7 @@ import {
 import FooterLinks from "../../components/shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
 import DebounceInput from "../../components/debounce-input"
+import { themedInput } from "../../utils/styles"
 
 export default class FilteredStarterLibrary extends Component {
   state = {
@@ -48,7 +43,7 @@ export default class FilteredStarterLibrary extends Component {
     })
   resetFilters = () => this.props.setURLState({ c: [], d: [], v: [], s: `` })
   showMoreSites = starters => {
-    let showAll =
+    const showAll =
       this.state.sitesToShow + 15 > starters.length ? starters.length : false
     this.setState({
       sitesToShow: showAll ? showAll : this.state.sitesToShow + 15,
@@ -84,27 +79,27 @@ export default class FilteredStarterLibrary extends Component {
     )
 
     // stopgap for missing gh data (#8763)
-    let starters = data.allStartersYaml.edges.filter(
-      ({ node: starter }) => starter.fields && starter.fields.starterShowcase
+    let starterNodes = data.allStartersYaml.nodes.filter(
+      starter => starter.fields && starter.fields.starterShowcase
     )
 
     if (urlState.s.length > 0) {
-      starters = starters.filter(starter =>
-        JSON.stringify(starter.node)
+      starterNodes = starterNodes.filter(node =>
+        JSON.stringify(node)
           .toLowerCase()
           .includes(urlState.s.toLowerCase())
       )
     }
 
     if (filtersCategory.size > 0) {
-      starters = filterByCategories(starters, filtersCategory)
+      starterNodes = filterByCategories(starterNodes, filtersCategory)
     }
     if (filtersDependency.size > 0) {
-      starters = filterByDependencies(starters, filtersDependency)
+      starterNodes = filterByDependencies(starterNodes, filtersDependency)
     }
 
     if (filtersVersion.size > 0) {
-      starters = filterByVersions(starters, filtersVersion)
+      starterNodes = filterByVersions(starterNodes, filtersVersion)
     }
 
     return (
@@ -112,7 +107,7 @@ export default class FilteredStarterLibrary extends Component {
         <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
-            <div css={{ height: space[10] }}>
+            <div sx={{ height: t => t.space[10] }}>
               {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
                 <ResetFilters onClick={resetFilters} />
               )}
@@ -122,8 +117,8 @@ export default class FilteredStarterLibrary extends Component {
               heading="Gatsby Version"
               data={Array.from(
                 count(
-                  starters.map(
-                    ({ node }) =>
+                  starterNodes.map(
+                    node =>
                       node.fields &&
                       node.fields.starterShowcase.gatsbyMajorVersion.map(
                         str => str[1]
@@ -137,7 +132,7 @@ export default class FilteredStarterLibrary extends Component {
             <LHSFilter
               heading="Categories"
               data={Array.from(
-                count(starters.map(({ node: starter }) => starter.tags))
+                count(starterNodes.map(starter => starter.tags))
               )}
               filters={filtersCategory}
               setFilters={setFiltersCategory}
@@ -147,8 +142,8 @@ export default class FilteredStarterLibrary extends Component {
               heading="Gatsby Dependencies"
               data={Array.from(
                 count(
-                  starters.map(
-                    ({ node: starter }) =>
+                  starterNodes.map(
+                    starter =>
                       starter.fields &&
                       starter.fields.starterShowcase.gatsbyDependencies.map(
                         str => str[0]
@@ -166,10 +161,10 @@ export default class FilteredStarterLibrary extends Component {
           <ContentHeader
             cssOverrides={{
               height: `6rem`,
-              paddingTop: `${space[6]}`,
+              pt: 6,
               [mediaQueries.sm]: {
-                height: sizes.headerHeight,
-                paddingTop: 0,
+                height: `headerHeight`,
+                pt: 0,
               },
             }}
           >
@@ -177,78 +172,63 @@ export default class FilteredStarterLibrary extends Component {
               search={urlState.s}
               filters={filters}
               label="Gatsby Starter"
-              items={starters}
-              edges={starters}
+              items={starterNodes}
+              nodes={starterNodes}
               what="size"
             />
             <div
-              css={{
+              sx={{
                 display: `flex`,
                 justifyContent: `space-between`,
-                marginBottom: space[2],
+                mb: 2,
                 width: `100%`,
                 [mediaQueries.sm]: {
                   justifyContent: `flex-end`,
-                  marginBottom: 0,
+                  mb: 0,
                   width: `50%`,
                 },
               }}
             >
-              {/* @todo: add sorting. */}
+              {/* TODO add sorting. */}
               <label
-                css={{
+                sx={{
                   display: `none`,
                   [mediaQueries.lg]: {
                     border: 0,
-                    borderRadius: radii[2],
-                    color: colors.gatsby,
-                    fontFamily: fonts.header,
-                    paddingTop: space[1],
-                    paddingRight: space[1],
-                    paddingBottom: space[1],
-                    width: rhythm(5),
+                    borderRadius: 2,
+                    color: `gatsby`,
+                    fontFamily: `heading`,
+                    py: 1,
+                    pr: 1,
+                    width: `10rem`,
                   },
                 }}
                 onClick={toggleSort}
               >
-                <MdSort css={{ marginRight: 8 }} />
+                <MdSort sx={{ mr: 2 }} />
                 {urlState.sort === `recent` ? `Most recent` : `Most stars`}
               </label>
               <label css={{ position: `relative` }}>
                 <DebounceInput
-                  css={{
-                    marginTop: space[1],
-                    ...styles.searchInput,
-                    width: rhythm(6),
+                  sx={{
+                    ...themedInput,
+                    pl: 7,
                   }}
                   value={urlState.s}
                   onChange={this.onChangeUrlWithText}
                   placeholder="Search starters"
                   aria-label="Search starters"
                 />
-                <SearchIcon
-                  overrideCSS={{
-                    fill: colors.lilac,
-                    height: space[4],
-                    left: `5px`,
-                    pointerEvents: `none`,
-                    position: `absolute`,
-                    top: `50%`,
-                    transform: `translateY(-50%)`,
-                    width: space[4],
-                  }}
-                />
+                <SearchIcon />
               </label>
               <Button
                 to="https://gatsbyjs.org/contributing/submit-to-starter-library/"
                 tag="href"
                 target="_blank"
                 rel="noopener noreferrer"
-                small
+                variant="small"
                 icon={<ArrowForwardIcon />}
-                overrideCSS={{
-                  marginLeft: 10,
-                }}
+                overrideCSS={{ ml: 3 }}
               >
                 Submit a Starter
               </Button>
@@ -257,14 +237,15 @@ export default class FilteredStarterLibrary extends Component {
           <StarterList
             urlState={urlState}
             sortRecent={urlState.sort === `recent`}
-            starters={starters}
+            starters={starterNodes}
             count={this.state.sitesToShow}
           />
-          {this.state.sitesToShow < starters.length && (
+          {this.state.sitesToShow < starterNodes.length && (
             <Button
+              variant="large"
               tag="button"
-              overrideCSS={styles.loadMoreButton}
-              onClick={() => this.showMoreSites(starters)}
+              overrideCSS={loadMoreButton}
+              onClick={() => this.showMoreSites(starterNodes)}
               icon={<MdArrowDownward />}
             >
               Load More
@@ -280,12 +261,12 @@ export default class FilteredStarterLibrary extends Component {
 // utility functions
 
 function count(arrays) {
-  let counts = new Map()
+  const counts = new Map()
 
-  for (let categories of arrays) {
+  for (const categories of arrays) {
     if (!categories) continue
 
-    for (let category of categories) {
+    for (const category of categories) {
       if (!counts.has(category)) {
         counts.set(category, 0)
       }
@@ -297,43 +278,34 @@ function count(arrays) {
   return counts
 }
 
-function filterByCategories(list, categories) {
-  let starters = list
-  starters = starters.filter(({ node: starter }) =>
-    isSuperset(starter.tags, categories)
-  )
-  return starters
+function filterByCategories(nodes, categories) {
+  return nodes.filter(node => isSuperset(node.tags, categories))
 }
-function filterByDependencies(list, categories) {
-  let starters = list
 
-  starters = starters.filter(
-    ({ node: starter }) =>
-      starter.fields &&
+function filterByDependencies(nodes, categories) {
+  return nodes.filter(
+    ({ fields }) =>
+      fields &&
       isSuperset(
-        starter.fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
+        fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
         categories
       )
   )
-
-  return starters
 }
 
-function filterByVersions(list, versions) {
-  let starters = list
-  starters = starters.filter(
-    ({ node }) =>
-      node.fields &&
+function filterByVersions(nodes, versions) {
+  return nodes.filter(
+    ({ fields }) =>
+      fields &&
       isSuperset(
-        node.fields.starterShowcase.gatsbyMajorVersion.map(c => c[1]),
+        fields.starterShowcase.gatsbyMajorVersion.map(c => c[1]),
         versions
       )
   )
-  return starters
 }
 
 function isSuperset(set, subset) {
-  for (var elem of subset) {
+  for (const elem of subset) {
     if (!set.includes(elem)) {
       return false
     }

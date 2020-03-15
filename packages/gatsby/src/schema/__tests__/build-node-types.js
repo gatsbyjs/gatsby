@@ -6,34 +6,57 @@ const { buildSchema } = require(`../schema`)
 const { LocalNodeModel } = require(`../node-model`)
 const nodeStore = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
 jest.mock(`../../redux/actions/add-page-dependency`)
-const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+import { createPageDependency } from "../../redux/actions/add-page-dependency"
 
 const { TypeConflictReporter } = require(`../infer/type-conflict-reporter`)
 const typeConflictReporter = new TypeConflictReporter()
 const addConflictSpy = jest.spyOn(typeConflictReporter, `addConflict`)
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 const makeNodes = () => [
   {
     id: `p1`,
-    internal: { type: `Parent` },
+    internal: { type: `Parent`, contentDigest: `0` },
     hair: `red`,
     children: [`c1`, `c2`, `r1`],
   },
   {
     id: `r1`,
-    internal: { type: `Relative` },
+    internal: { type: `Relative`, contentDigest: `0` },
     hair: `black`,
     children: [],
     parent: `p1`,
   },
   {
     id: `c1`,
-    internal: { type: `Child` },
+    internal: { type: `Child`, contentDigest: `0` },
     hair: `brown`,
     children: [],
     parent: `p1`,
@@ -41,7 +64,7 @@ const makeNodes = () => [
   },
   {
     id: `c2`,
-    internal: { type: `Child` },
+    internal: { type: `Child`, contentDigest: `0` },
     hair: `blonde`,
     children: [],
     parent: `p1`,
@@ -52,8 +75,9 @@ const makeNodes = () => [
 describe(`build-node-types`, () => {
   async function runQuery(query, nodes = makeNodes()) {
     store.dispatch({ type: `DELETE_CACHE` })
+    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
+      actions.createNode(node, { name: `test` })(store.dispatch)
     )
 
     const schemaComposer = createSchemaComposer()
@@ -63,6 +87,7 @@ describe(`build-node-types`, () => {
       types: [],
       typeConflictReporter,
       thirdPartySchemas: [],
+      inferenceMetadata: store.getState().inferenceMetadata,
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
@@ -70,6 +95,7 @@ describe(`build-node-types`, () => {
     let { data, errors } = await graphql(schema, query, undefined, {
       ...context,
       nodeModel: new LocalNodeModel({
+        schemaComposer,
         schema,
         nodeStore,
         createPageDependency,

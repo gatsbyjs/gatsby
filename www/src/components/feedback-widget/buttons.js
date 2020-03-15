@@ -6,9 +6,9 @@ import {
   colors,
   fontSizes,
   radii,
-  shadows,
   space,
-} from "../../utils/presets"
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { formInputFocus, focusStyle } from "../../utils/styles"
 
 const rotation = keyframes`
   0% {
@@ -19,17 +19,12 @@ const rotation = keyframes`
   }
 `
 
-export const focusStyle = css`
-  outline: 2px solid ${colors.accent};
-  outline-offset: -2px;
-`
-
 const buttonStyles = css`
   -webkit-appearance: none;
   align-items: center;
   background: ${colors.gatsby};
   border: none;
-  border-radius: ${radii[2]}px;
+  border-radius: ${radii[2]};
   color: ${colors.white};
   cursor: pointer;
   display: flex;
@@ -51,10 +46,6 @@ const buttonStyles = css`
   &:disabled {
     cursor: not-allowed;
     opacity: 0.9;
-  }
-
-  &:hover {
-    box-shadow: 0 0 0 0.12rem ${colors.accent}88;
   }
 `
 
@@ -78,79 +69,82 @@ export const SubmitButton = styled(`button`)`
 
 export const CloseButton = styled(`button`)`
   ${buttonStyles};
-  background: ${colors.white};
-  border: 1px solid ${colors.gray.border};
-  color: ${colors.gatsby};
+  background: ${p => p.theme.colors.widget.background};
+  border: 1px solid ${p => p.theme.colors.input.border};
+  color: ${p => p.theme.colors.textMuted};
+
+  :focus {
+    ${formInputFocus}
+  }
 `
 
 export const ToggleButtonLabel = styled(`span`)`
   align-items: center;
-  background: ${colors.white};
-  border: 1px solid ${colors.gray.border};
-  border-radius: ${radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   display: flex;
   height: 2.5rem;
-  padding: 0 ${space[8]} 0 ${space[3]};
+  padding: 0 ${p => p.theme.space[9]} 0 ${p => p.theme.space[3]};
+  background: ${p => p.theme.colors.widget.background};
+  color: ${p => p.theme.colors.text};
+  box-shadow: ${p => p.theme.shadows.floating},
+    inset 0 0 0 1px ${p => p.theme.colors.widget.border};
   transition: 0.5s;
   white-space: nowrap;
   width: 100%;
 
   ${mediaQueries.lg} {
-    box-shadow: ${shadows.floating};
     width: auto;
+    z-index: 1;
   }
 `
 
-export const ToggleButtonIcon = styled(`span`)`
-  align-items: center;
-  background: ${colors.lilac};
-  border-radius: ${radii[6]};
-  color: ${colors.white};
-  display: flex;
-  font-size: ${fontSizes[1]};
-  height: ${space[8]};
-  justify-content: center;
-  position: absolute;
-  right: ${space[1]};
-  transform: scale(0.6);
-  transition: 0.5s;
-  width: ${space[8]};
-
-  svg {
-    fill: ${colors.white};
-    height: ${space[5]};
-    width: ${space[5]};
-    transition: 0.5s;
+export const ToggleButtonIcon = styled(`span`)(props => {
+  return {
+    alignItems: `center`,
+    background: props.theme.colors.accent,
+    borderRadius: props.theme.radii[6],
+    color: props.theme.colors.white,
+    display: `flex`,
+    fontSize: props.theme.fontSizes[1],
+    height: props.theme.space[8],
+    justifyContent: `center`,
+    position: `absolute`,
+    right: props.theme.space[1],
+    transform: `scale(0.6)`,
+    transition: `0.5s`,
+    width: props.theme.space[8],
+    zIndex: 2,
+    svg: {
+      fill: props.theme.colors.white,
+      height: props.theme.space[6],
+      width: props.theme.space[6],
+      transition: `0.5s`,
+    },
+    [mediaQueries.lg]: {
+      ".opened &, .failed &, .success &, .submitting &": {
+        svg: {
+          height: props.theme.space[5],
+          width: props.theme.space[5],
+        },
+        "&:hover": {
+          svg: {
+            transform: `rotate(90deg)`,
+            fill: props.theme.colors.accent,
+          },
+        },
+      },
+    },
+    "@media screen and (prefers-reduced-motion: reduce)": {
+      transition: 0,
+    },
   }
-
-  ${mediaQueries.lg} {
-    .opened &,
-    .failed &,
-    .success &,
-    .submitting & {
-      svg {
-        height: ${space[6]};
-        width: ${space[6]};
-      }
-
-      &:hover {
-        svg {
-          transform: rotate(90deg);
-          fill: ${colors.accent};
-        }
-      }
-    }
-  }
-
-  @media screen and (prefers-reduced-motion: reduce) {
-    transition: 0;
-  }
-`
+})
 
 export const ToggleButton = styled(`button`)`
   align-items: center;
   background: none;
   border: none;
+  border-radius: ${p => p.theme.radii[2]};
   cursor: pointer;
   display: flex;
   padding: 0;
@@ -161,16 +155,12 @@ export const ToggleButton = styled(`button`)`
 
   &:hover {
     ${ToggleButtonLabel} {
-      box-shadow: 0 0 0 0.12rem ${colors.accent}88;
+      box-shadow: 0 0 0 0.12rem ${p => p.theme.colors.accent}88;
     }
   }
 
   &:focus {
-    outline: none;
-
-    ${ToggleButtonLabel} {
-      ${focusStyle}
-    }
+    ${focusStyle}
   }
 
   .opened &,
@@ -191,19 +181,20 @@ export const ToggleButton = styled(`button`)`
     .success &,
     .submitting & {
       display: flex;
-      transform: translate(-${space[2]}, -26rem);
+      transform: translate(-${p => p.theme.space[2]}, -26rem);
 
       ${ToggleButtonIcon} {
-        background: ${colors.white};
-        border: 1px solid ${colors.gray.border};
+        background: ${p => p.theme.colors.widget.background};
+        border: 1px solid ${p => p.theme.colors.ui.border};
         transform: scale(1);
 
         svg {
-          fill: ${colors.gatsby};
+          fill: ${p => p.theme.colors.textMuted};
         }
       }
 
       &:focus {
+        box-shadow: none;
         ${ToggleButtonIcon} {
           ${focusStyle};
         }

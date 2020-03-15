@@ -4,9 +4,6 @@ date: 2018-11-07
 author: Dustin Schau
 tags:
   - apps
-  - web apps
-  - applications
-  - beyond static
 excerpt: Gatsby is great for not only static sites but also traditional web applications. Using Gatsby enables the benefits of both static and web applications so you don't have to sacrifice the advantages of one approach to reap the benefits of the other.
 cover: images/what-if-i-told-you.jpg
 ---
@@ -100,9 +97,9 @@ class Messages extends React.Component {
 
   // note: this is a simplified example without error handling, authentication, etc.
   async componentDidMount() {
-    const messages = await fetch(`/api/some-url-to-get-messages`).then(
-      response => response.json()
-    )
+    const messages = await fetch(
+      `/api/some-url-to-get-messages`
+    ).then(response => response.json())
 
     this.setState({
       messages,
@@ -160,7 +157,7 @@ These performance optimizations aren't opt-in; they're enabled, by default. As n
 
 ### Plugins and the Gatsby Ecosystem
 
-One of the key benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from Wordpress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform yaml data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy! Want to load optimized, responsive, blur-in images? Yep.
+One of the key benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from WordPress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform yaml data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy! Want to load optimized, responsive, blur-in images? Yep.
 
 Let's take a look at that image functionality provided by one of our components, `gatsby-image`, in slightly more detail.
 
@@ -181,7 +178,7 @@ Next: let's compare and contrast the end user experience of fetching authenticat
 
 ### The App Shell
 
-In merely adding the [`gatsby-plugin-offline`][gatsby-plugin-offline] plugin, we enable a fully-featured, progressive web application that works offline and creates an app shell by registering a service worker. An app shell is essentially separate components of your application (e.g. header, footer, sidebar, etc.) that are instantly available from a service worker while dynamic content is fetched in the background. This creates a great end-user experience, as the application is able to visually populate instantly as data loads into place in the background.
+In merely adding the [`gatsby-plugin-offline`][gatsby-plugin-offline] plugin, we enable a fully-featured, progressive web application that works offline and creates an app shell by registering a service worker. An app shell is essentially separate components of your application (e.g. header, footer, sidebar, etc.) that are instantly available from a service worker while dynamic content is fetched in the background. This creates a great end user experience, as the application is able to visually populate instantly as data loads into place in the background.
 
 If we consider this approach, the technique looks like the following:
 
@@ -216,7 +213,7 @@ Additionally, Gatsby Mail shows some specific web application functionality, suc
 - GraphQL at build time and _run time_ utilizing a remote GraphQL API and [apollo-boost][apollo-boost], and
 - loading an app shell with `gatsby-plugin-offline` (check out the "Fast 3G" example below!)
 
-and even a light/dark theme, because why not! You can see all of these concepts unify to form this great end-user experience in the below example with a simulated fast 3G connection. The app shell (header, footer, etc.) loads into place _instantly_ as the dynamic content is fetched (from the remote GraphQL API!) in the background.
+and even a light/dark theme, because why not! You can see all of these concepts unify to form this great end user experience in the below example with a simulated fast 3G connection. The app shell (header, footer, etc.) loads into place _instantly_ as the dynamic content is fetched (from the remote GraphQL API!) in the background.
 
 ![App Shell with Gatsby Mail](./images/gatsby-mail-app-shell.gif)
 
@@ -231,10 +228,10 @@ We can't wait to see what you build.
 [prpl]: https://developers.google.com/web/fundamentals/performance/prpl-pattern/
 [app-shell]: https://developers.google.com/web/fundamentals/architecture/app-shell
 [case-study]: https://developers.google.com/web/showcase/2017/twitter
-[gatsby-graphql]: /docs/querying-with-graphql/
+[gatsby-graphql]: /docs/graphql-concepts/
 [gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
-[authentication-data]: /docs/authentication-tutorial/
-[client-only-routes]: /docs/building-apps-with-gatsby/#client-only-routes--user-authentication
+[authentication-data]: /tutorial/authentication-tutorial/
+[client-only-routes]: /docs/client-only-routes-and-user-authentication
 [create-react-app]: https://facebook.github.io/create-react-app/
 [react-dom-render-to-string]: https://reactjs.org/docs/react-dom-server.html#rendertostring
 [cdm]: https://reactjs.org/docs/react-component.html#componentdidmount
@@ -242,7 +239,7 @@ We can't wait to see what you build.
 [react-context]: https://reactjs.org/docs/context.html
 [react-lifecycle-methods]: https://reactjs.org/docs/state-and-lifecycle.html
 [gatsby-unstructured]: /blog/2018-10-25-unstructured-data/
-[authentication-tutorial]: /docs/authentication-tutorial/
+[authentication-tutorial]: /tutorial/authentication-tutorial/
 [using-gatsby-image]: https://using-gatsby-image.gatsbyjs.org/
 [traced-svg]: https://using-gatsby-image.gatsbyjs.org/traced-svg/
 [gatsby-plugin-offline]: /packages/gatsby-plugin-offline/

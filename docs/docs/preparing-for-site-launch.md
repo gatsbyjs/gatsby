@@ -9,4 +9,4 @@ Before you hit that deploy button though, there are a few things you can do to m
 
 In this section you learn how to add a 404 page for when your users land somewhere unexpected, add search and categorization to your content, and a few other nifty things to ensure your site is crawl-able and index-able to all those fancy bots out there. 🤖
 
-[[guidelist]]
+<GuideList slug={props.slug} />

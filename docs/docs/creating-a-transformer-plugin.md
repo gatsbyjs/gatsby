@@ -15,6 +15,8 @@ The purpose of this doc is to:
 1.  Define what a Gatsby transformer plugin is, and
 2.  Walk through a simplified reimplementation of an existing plugin, to demonstrate how to create a transformer plugin.
 
+For a step-by-step process, check out the tutorial on [Creating a Remark Transformer Plugin](/tutorial/remark-plugin-tutorial/).
+
 ## What do transformer plugins do?
 
 Transformer plugins "transform" data of one type into another type. You'll often use both source plugins and transformer plugins in your Gatsby sites.
@@ -27,7 +29,7 @@ Just like a source plugin, a transformer plugin is a normal NPM package. It has 
 
 `gatsby-transformer-yaml` is transformer plugin that looks for new nodes with a media type of text/yaml (e.g. a .yaml file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
 
-As an example, let's partially rebuild a simplified `gatsby-transformer-yaml` directly in an example site. Let's say we have a default gatsby starter site which includes a `src/data/example.yml` file:
+Check out this example of rebuilding a simplified `gatsby-transformer-yaml` directly in a site. Say you have a default Gatsby starter site which includes a `src/data/example.yml` file:
 
 ```yaml:title=src/data/example.yml
 - name: Jane Doe
@@ -126,7 +128,7 @@ exports.onCreateNode = onCreateNode
 
 File content:
 
-```text
+```yaml
 - id: Jane Doe
   bio: Developer based in Somewhere, USA
 - id: John Smith
@@ -148,7 +150,7 @@ Parsed YAML content:
 ]
 ```
 
-Now we'll write a helper function to transform the parsed YAML content into new Gatsby nodes:
+Now you'll write a helper function to transform the parsed YAML content into new Gatsby nodes:
 
 ```javascript
 function transformObject(obj, id, type) {
@@ -167,11 +169,11 @@ function transformObject(obj, id, type) {
 }
 ```
 
-Above, we create a `yamlNode` object with the shape expected by the [`createNode` action](/docs/actions/#createNode).
+Above, you create a `yamlNode` object with the shape expected by the [`createNode` action](/docs/actions/#createNode).
 
-We then create a link between the parent node (file) and the child node (yaml content).
+You then create a link between the parent node (file) and the child node (yaml content).
 
-In our updated `gatsby-node.js`, we'll then iterate through the parsed YAML content, using the helper function to transform each into a new node:
+In your updated `gatsby-node.js`, you'll then iterate through the parsed YAML content, using the helper function to transform each into a new node:
 
 ```javascript:title=gatsby-node.js
 const jsYaml = require(`js-yaml`)
@@ -225,7 +227,7 @@ async function onCreateNode({
 exports.onCreateNode = onCreateNode
 ```
 
-Now we can query for our new nodes containing our transformed YAML data:
+Now you can query for your new nodes containing our transformed YAML data:
 
 ```graphql
 query {
@@ -276,9 +278,7 @@ Cache keys should at least contain the contentDigest of the concerned node. For 
 
 ```javascript:title=extend-node-type.js
 const htmlCacheKey = node =>
-  `transformer-remark-markdown-html-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  `transformer-remark-markdown-html-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
 ```
 
 Accessing and setting content in the cache is as simple as:
@@ -288,3 +288,7 @@ const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
 
 cache.set(htmlCacheKey(markdownNode), html)
 ```
+
+## Additional resources
+
+- Tutorial: [Creating a Remark Transformer Plugin](/tutorial/remark-plugin-tutorial/)

@@ -1,10 +1,11 @@
 const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const { getDb, colls } = require(`./index`)
+import { createPageDependency } from "../../redux/actions/add-page-dependency"
 
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 // Node collection metadata
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 
 function makeTypeCollName(type) {
   return `gatsby:nodeType:${type}`
@@ -25,7 +26,7 @@ function createNodeTypeCollection(type) {
   // into a transaction
   const options = {
     unique: [`id`],
-    indices: [`id`],
+    indices: [`id`, `internal.counter`],
     disableMeta: true,
   }
   const coll = getDb().addCollection(collName, options)
@@ -39,7 +40,7 @@ function createNodeTypeCollection(type) {
 function getTypeCollName(type) {
   const nodeTypesColl = getDb().getCollection(colls.nodeTypes.name)
   invariant(nodeTypesColl, `Collection ${colls.nodeTypes.name} should exist`)
-  let nodeTypeInfo = nodeTypesColl.by(`type`, type)
+  const nodeTypeInfo = nodeTypesColl.by(`type`, type)
   return nodeTypeInfo ? nodeTypeInfo.collName : undefined
 }
 
@@ -72,7 +73,7 @@ function deleteNodeTypeCollections(force = false) {
   // find() returns all objects in collection
   const nodeTypes = nodeTypesColl.find()
   for (const nodeType of nodeTypes) {
-    let coll = getDb().getCollection(nodeType.collName)
+    const coll = getDb().getCollection(nodeType.collName)
     if (coll.count() === 0 || force) {
       getDb().removeCollection(coll.name)
       nodeTypesColl.remove(nodeType)
@@ -93,9 +94,9 @@ function deleteAll() {
   }
 }
 
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 // Queries
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 
 /**
  * Returns the node with `id` == id, or null if not found
@@ -126,14 +127,17 @@ function getNode(id) {
 /**
  * Returns all nodes of a type (where `typeName ==
  * node.internal.type`). This is an O(1) operation since nodes are
- * already stored in seperate collections by type
+ * already stored in separate collections by type
  */
 function getNodesByType(typeName) {
   invariant(typeName, `typeName is null`)
   const collName = getTypeCollName(typeName)
   const coll = getDb().getCollection(collName)
   if (!coll) return []
-  return coll.data
+  return coll
+    .chain()
+    .simplesort(`internal.counter`)
+    .data()
 }
 
 /**
@@ -165,7 +169,6 @@ function getTypes() {
 function getNodeAndSavePathDependency(id, path) {
   invariant(id, `id is null`)
   invariant(id, `path is null`)
-  const createPageDependency = require(`../../redux/actions/add-page-dependency`)
   const node = getNode(id)
   createPageDependency({ path, nodeId: id })
   return node
@@ -188,9 +191,9 @@ function hasNodeChanged(id, digest) {
   }
 }
 
-/////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////
 // Create/Update/Delete
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 
 /**
  * Creates a node in the DB. Will create a collection for the node
@@ -239,11 +242,8 @@ function updateNode(node) {
   invariant(node.internal.type, `node has no "internal.type" field`)
   invariant(node.id, `node has no "id" field`)
 
-  const type = node.internal.type
-
-  let coll = getNodeTypeCollection(type)
-  invariant(coll, `${type} collection doesn't exist. When trying to update`)
-  coll.update(node)
+  const oldNode = getNode(node.id)
+  return createNode(node, oldNode)
 }
 
 /**
@@ -261,7 +261,7 @@ function deleteNode(node) {
 
   const type = node.internal.type
 
-  let nodeTypeColl = getNodeTypeCollection(type)
+  const nodeTypeColl = getNodeTypeCollection(type)
   if (!nodeTypeColl) {
     invariant(
       nodeTypeColl,
@@ -269,14 +269,15 @@ function deleteNode(node) {
     )
   }
 
-  if (nodeTypeColl.by(`id`, node.id)) {
+  const obj = nodeTypeColl.by(`id`, node.id)
+  if (obj) {
     const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
     invariant(nodeMetaColl, `Collection ${colls.nodeMeta.name} should exist`)
     nodeMetaColl.findAndRemove({ id: node.id })
     // TODO What if this `remove()` fails? We will have removed the id
     // -> collName mapping, but not the actual node in the
     // collection. Need to make this into a transaction
-    nodeTypeColl.remove(node)
+    nodeTypeColl.remove(obj)
   }
   // idempotent. Do nothing if node wasn't already in DB
 }
@@ -290,9 +291,66 @@ function deleteNodes(nodes) {
   }
 }
 
-/////////////////////////////////////////////////////////////////////
+const saveResolvedNodes = async (nodeTypeNames, resolver) => {
+  for (const typeName of nodeTypeNames) {
+    const nodes = getNodesByType(typeName)
+    const resolved = await Promise.all(
+      nodes.map(async node => {
+        node.__gatsby_resolved = await resolver(node)
+        return node
+      })
+    )
+    const nodeColl = getNodeTypeCollection(typeName)
+    if (nodeColl) {
+      nodeColl.update(resolved)
+    }
+  }
+}
+
+// Cleared on DELETE_CACHE
+let fieldUsages = null
+const FIELD_INDEX_THRESHOLD = 5
+
+// Every time we run a query, we increment a counter for each of its
+// fields, so that we can determine which fields are used the
+// most. Any time a field is seen more than `FIELD_INDEX_THRESHOLD`
+// times, we create a loki index so that future queries with that
+// field will execute faster.
+// times, we create a loki index so that future queries with that
+// field will execute faster.
+function ensureFieldIndexes(typeName, lokiArgs, sortArgs) {
+  if (fieldUsages == null) {
+    fieldUsages = {}
+    const { emitter } = require(`../../redux`)
+
+    emitter.on(`DELETE_CACHE`, () => {
+      for (const field in fieldUsages) {
+        delete fieldUsages[field]
+      }
+    })
+  }
+
+  const nodeColl = getNodeTypeCollection(typeName)
+
+  if (!fieldUsages[typeName]) {
+    fieldUsages[typeName] = {}
+  }
+
+  _.forEach(lokiArgs, (v, fieldName) => {
+    // Increment the usages of the field
+    _.update(fieldUsages[typeName], fieldName, n => (n ? n + 1 : 1))
+    // If we have crossed the threshold, then create the index
+    if (_.get(fieldUsages[typeName], fieldName) >= FIELD_INDEX_THRESHOLD) {
+      // Loki ensures that this is a noop if index already exists. E.g
+      // if it was previously added via a sort field
+      nodeColl.ensureIndex(fieldName)
+    }
+  })
+}
+
+// ///////////////////////////////////////////////////////////////////
 // Reducer
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 
 function reducer(state = new Map(), action) {
   switch (action.type) {
@@ -318,7 +376,7 @@ function reducer(state = new Map(), action) {
     }
 
     case `DELETE_NODES`: {
-      deleteNodes(action.payload)
+      deleteNodes(action.fullNodes)
       return null
     }
 
@@ -327,9 +385,9 @@ function reducer(state = new Map(), action) {
   }
 }
 
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 // Exports
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 
 module.exports = {
   getNodeTypeCollection,
@@ -349,4 +407,7 @@ module.exports = {
   deleteAll,
 
   reducer,
+
+  saveResolvedNodes,
+  ensureFieldIndexes,
 }

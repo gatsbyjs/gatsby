@@ -2,6 +2,12 @@
 title: Querying with Sift
 ---
 
+> This documentation isn't up to date with the latest version of Gatsby.
+>
+> The [schema customization](/docs/schema-customization) and [node materialisation](https://github.com/gatsbyjs/gatsby/pull/16091) features have both made changes to this part of Gatsby.
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+
 ## Summary
 
 Gatsby stores all data loaded during the source-nodes phase in Redux. And it allows you to write GraphQL queries to query that data. But Redux is a plain JavaScript object store. So how does Gatsby query over those nodes using the GraphQL query language?
@@ -16,10 +22,10 @@ Remember, at the point this resolve function is created, we have been iterating 
 
 The `resolve()` function calls `run-sift.js`, and provides it with the following arguments:
 
-- GraphQLArgs (as JavaScript object). Within a filter. E.g `wordcount: { paragraphs: { eq: 4 } }`
-- All nodes in redux of this type. E.g where `internal.type == MmarkdownRemark'`
+- GraphQLArgs (as JavaScript object). Within a filter. E.g. `wordcount: { paragraphs: { eq: 4 } }`
+- All nodes in redux of this type. E.g. where `internal.type == MmarkdownRemark'`
 - Context `path`, if being called as part of a [page query](/docs/query-execution/#query-queue-execution)
-- typeName. E.g `markdownRemark`
+- typeName. E.g. `markdownRemark`
 - gqlType. See [more on gqlType](/docs/schema-gql-type)
 
 For example:
@@ -36,7 +42,7 @@ runSift({
     }
   },
   nodes: ${latestNodes},
-  path: context.path, // E.g /blogs/my-blog
+  path: context.path, // E.g. /blogs/my-blog
   typeName: `markdownRemark`,
   type: ${gqlType}
 })
@@ -74,7 +80,7 @@ So, the above query would become:
 }
 ```
 
-### 2. Drop leaves (e.g `{eq: 4}`) from args
+### 2. Drop leaves (e.g. `{eq: 4}`) from args
 
 To assist in step 3, we create a version of the siftified args called `fieldsToSift` that has all leaves of the args tree replaced with boolean `true`. This is handled by the [extractFieldsToSift](https://github.com/gatsbyjs/gatsby/blob/6dc8a14f8efc78425b1f225901dce7264001e962/packages/gatsby/src/redux/run-sift.js#L65) function. `fieldsToSift` would look like this after the function is applied:
 

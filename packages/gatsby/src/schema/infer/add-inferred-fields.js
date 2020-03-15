@@ -6,7 +6,8 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 const { isFile } = require(`./is-file`)
 const { isDate } = require(`../types/date`)
-const is32BitInteger = require(`./is-32-bit-integer`)
+const { addDerivedType } = require(`../types/derived-types`)
+import { is32BitInteger } from "../../utils/is-32-bit-integer"
 
 const addInferredFields = ({
   schemaComposer,
@@ -31,6 +32,7 @@ const addInferredFields = ({
     nodeStore,
     exampleObject: exampleValue,
     prefix: typeComposer.getTypeName(),
+    unsanitizedFieldPath: [typeComposer.getTypeName()],
     typeMapping,
     config,
   })
@@ -47,6 +49,7 @@ const addInferredFieldsImpl = ({
   exampleObject,
   typeMapping,
   prefix,
+  unsanitizedFieldPath,
   config,
 }) => {
   const fields = []
@@ -70,11 +73,7 @@ const addInferredFieldsImpl = ({
         .map(field => `\`${field.unsanitizedKey}\``)
         .join(`, `)
       report.warn(
-        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${
-          field.key
-        }\` - [${possibleFieldsNames}]. Gatsby will use \`${
-          field.unsanitizedKey
-        }\`.`
+        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${field.key}\` - [${possibleFieldsNames}]. Gatsby will use \`${field.unsanitizedKey}\`.`
       )
       selectedField = field
     } else {
@@ -87,6 +86,7 @@ const addInferredFieldsImpl = ({
       typeComposer,
       nodeStore,
       prefix,
+      unsanitizedFieldPath,
       typeMapping,
       config,
     })
@@ -148,10 +148,12 @@ const getFieldConfig = ({
   exampleValue,
   key,
   unsanitizedKey,
+  unsanitizedFieldPath,
   typeMapping,
   config,
 }) => {
   const selector = `${prefix}.${key}`
+  unsanitizedFieldPath.push(unsanitizedKey)
 
   let arrays = 0
   let value = exampleValue
@@ -172,6 +174,7 @@ const getFieldConfig = ({
       value: exampleValue,
       key: unsanitizedKey,
     })
+    arrays = arrays + (value.multiple ? 1 : 0)
   } else {
     fieldConfig = getSimpleFieldConfig({
       schemaComposer,
@@ -180,12 +183,14 @@ const getFieldConfig = ({
       key,
       value,
       selector,
+      unsanitizedFieldPath,
       typeMapping,
       config,
       arrays,
     })
   }
 
+  unsanitizedFieldPath.pop()
   if (!fieldConfig) return null
 
   // Proxy resolver to unsanitized fieldName in case it contained invalid characters
@@ -258,9 +263,7 @@ const getFieldConfigFromFieldNameConvention = ({
       ? nodeStore.getNodes().find(node => _.get(node, foreignKey) === value)
       : nodeStore.getNode(value)
 
-  const linkedNodes = Array.isArray(value)
-    ? value.map(getNodeBy)
-    : [getNodeBy(value)]
+  const linkedNodes = value.linkedNodes.map(getNodeBy)
 
   const linkedTypes = _.uniq(
     linkedNodes.filter(Boolean).map(node => node.internal.type)
@@ -269,7 +272,7 @@ const getFieldConfigFromFieldNameConvention = ({
   invariant(
     linkedTypes.length,
     `Encountered an error trying to infer a GraphQL type for: \`${key}\`. ` +
-      `There is no corresponding node with the \`id\` field matching: "${value}".`
+      `There is no corresponding node with the \`id\` field matching: "${value.linkedNodes}".`
   )
 
   let type
@@ -303,6 +306,7 @@ const getSimpleFieldConfig = ({
   key,
   value,
   selector,
+  unsanitizedFieldPath,
   typeMapping,
   config,
   arrays,
@@ -316,7 +320,7 @@ const getSimpleFieldConfig = ({
       if (isDate(value)) {
         return { type: `Date`, extensions: { dateformat: {} } }
       }
-      if (isFile(nodeStore, selector, value)) {
+      if (isFile(nodeStore, unsanitizedFieldPath, value)) {
         // NOTE: For arrays of files, where not every path references
         // a File node in the db, it is semi-random if the field is
         // inferred as File or String, since the exampleValue only has
@@ -354,15 +358,26 @@ const getSimpleFieldConfig = ({
           // "addDefaultResolvers: true" only makes sense for
           // pre-existing types.
           if (!config.shouldAddFields) return null
-          fieldTypeComposer = ObjectTypeComposer.create(
-            createTypeName(selector),
-            schemaComposer
-          )
-          fieldTypeComposer.setExtension(`createdFrom`, `inference`)
-          fieldTypeComposer.setExtension(
-            `plugin`,
-            typeComposer.getExtension(`plugin`)
-          )
+
+          const typeName = createTypeName(selector)
+          if (schemaComposer.has(typeName)) {
+            // Type could have been already created via schema customization
+            fieldTypeComposer = schemaComposer.getOTC(typeName)
+          } else {
+            fieldTypeComposer = ObjectTypeComposer.create(
+              typeName,
+              schemaComposer
+            )
+            fieldTypeComposer.setExtension(`createdFrom`, `inference`)
+            fieldTypeComposer.setExtension(
+              `plugin`,
+              typeComposer.getExtension(`plugin`)
+            )
+            addDerivedType({
+              typeComposer,
+              derivedTypeName: fieldTypeComposer.getTypeName(),
+            })
+          }
         }
 
         // Inference config options are either explicitly defined on a type
@@ -380,6 +395,7 @@ const getSimpleFieldConfig = ({
             exampleObject: value,
             typeMapping,
             prefix: selector,
+            unsanitizedFieldPath,
             config: inferenceConfig,
           }),
         }

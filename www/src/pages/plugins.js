@@ -1,18 +1,21 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
 import Rotator from "../components/rotator"
 import { Link } from "gatsby"
-import logo from "../monogram.svg"
-import { rhythm } from "../utils/typography"
-import { colors, space, sizes, fontSizes } from "../utils/presets"
+import logo from "../assets/monogram.svg"
+import { sizes } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import FooterLinks from "../components/shared/footer-links"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 
 class Plugins extends Component {
   render() {
+    const { location } = this.props
     return (
-      <>
+      <PageWithPluginSearchBar location={location} isPluginsIndex={true}>
         <Helmet>
           <title>Plugins</title>
           <meta
@@ -25,9 +28,7 @@ class Plugins extends Component {
             alignItems: `center`,
             display: `flex`,
             flexDirection: `column`,
-            minHeight: `calc(100vh - (${sizes.headerHeight} + ${
-              sizes.bannerHeight
-            }))`,
+            minHeight: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`,
           }}
         >
           <div
@@ -38,21 +39,20 @@ class Plugins extends Component {
           >
             <img
               src={logo}
-              css={{
+              sx={{
                 display: `inline-block`,
-                height: rhythm(3),
-                width: rhythm(3),
-                marginLeft: `auto`,
-                marginRight: `auto`,
+                height: t => t.space[12],
+                width: t => t.space[12],
+                mx: `auto`,
               }}
               alt=""
             />
             <h1
-              css={{
-                fontSize: fontSizes[6],
-                marginLeft: space[5],
-                marginRight: space[5],
-                marginBottom: 0,
+              sx={{
+                fontSize: 6,
+                fontWeight: `heading`,
+                mx: 5,
+                mb: 0,
                 textAlign: `center`,
               }}
             >
@@ -97,20 +97,20 @@ class Plugins extends Component {
                   pluginName: `gatsby-plugin-google-analytics`,
                 },
                 {
-                  text: `Wordpress integration?`,
+                  text: `WordPress integration?`,
                   pluginName: `gatsby-source-wordpress`,
                 },
                 {
                   text: `anything?`,
                 },
               ]}
-              color={colors.lilac}
+              color="lilac"
             />
 
             <p
-              css={{
-                color: colors.gray.lightCopy,
-                fontSize: fontSizes[2],
+              sx={{
+                color: `textMuted`,
+                fontSize: 2,
                 textAlign: `center`,
               }}
             >
@@ -126,7 +126,7 @@ class Plugins extends Component {
           </div>
           <FooterLinks />
         </Container>
-      </>
+      </PageWithPluginSearchBar>
     )
   }
 }

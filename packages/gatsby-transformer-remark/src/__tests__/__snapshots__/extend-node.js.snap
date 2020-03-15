@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Code block metas are correctly generated code block with language and meta 1`] = `
+Object {
+  "htmlAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "console.log('hello world')
+",
+              },
+            ],
+            "properties": Object {
+              "className": Array [
+                "language-js",
+              ],
+              "dataMeta": "foo bar",
+            },
+            "tagName": "code",
+            "type": "element",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "pre",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+}
+`;
+
 exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 1`] = `
 Object {
   "excerpt": "",
@@ -130,8 +167,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
 Object {
-  "excerpt": "Where oh where is my little pony?
-",
+  "excerpt": "Where oh where is my little pony?",
   "excerptAst": Object {
     "children": Array [
       Object {
@@ -159,6 +195,40 @@ Object {
   "frontmatter": Object {
     "title": "my little pony",
   },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given HTML correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "<p>Where oh where <strong>is</strong> my little pony?</p>
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given MARKDOWN correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where **is** my little pony?
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given MARKDOWN without excerpt separator, falls back to pruneLength 1`] = `
+Object {
+  "excerpt": "Where oh where **is** my little pony? Lorem…
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given MARKDOWN, pruning is done not counting markdown characters 1`] = `
+Object {
+  "excerpt": "Where oh where **is**…
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given PLAIN correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony?",
 }
 `;
 
@@ -369,6 +439,90 @@ Object {
 }
 `;
 
+exports[`Excerpt is generated correctly from schema when plugins options has a excerpt_separator defined correctly prunes length to default value 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema when plugins options has a excerpt_separator defined correctly prunes length to provided parameter 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema when plugins options has a excerpt_separator defined correctly prunes length to provided parameter with truncate 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dol…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dol…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
 exports[`Headings are generated correctly from schema returns value 1`] = `
 Object {
   "headings": Array [
@@ -417,6 +571,20 @@ Object {
 }
 `;
 
+exports[`Links are correctly prefixed when assetPrefix is used correctly prefixes links 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"/prefix/path/to/page2\\">a reference</a></p>",
+}
+`;
+
+exports[`Relative links keep being relative relative links are not prefixed 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"./path/to/page2\\">a reference</a></p>",
+}
+`;
+
 exports[`Table of contents is generated correctly from schema correctly generates table of contents 1`] = `
 Object {
   "frontmatter": Object {
@@ -434,12 +602,84 @@ Object {
 }
 `;
 
+exports[`Table of contents is generated correctly from schema correctly generates table of contents in relative path 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "tableOfContents": "<ul>
+<li>
+<p><a href=\\"#first-title\\">first title</a></p>
+<ul>
+<li><a href=\\"#second-title\\">second title</a></li>
+</ul>
+</li>
+<li><a href=\\"#third-title\\">third title</a></li>
+</ul>",
+}
+`;
+
 exports[`Table of contents is generated correctly from schema returns null on non existing table of contents field 1`] = `
 Object {
   "frontmatter": Object {
     "title": "my little pony",
   },
-  "tableOfContents": null,
+  "tableOfContents": "<ul>
+<li>
+<p></p>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>",
+}
+`;
+
+exports[`Table of contents properly handles headings containing inline code blocks <code> tags generated by \`gatsby-remark-prismjs\` are properly treated as unescaped HTML 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "My Blog Post",
+  },
+  "tableOfContents": "<ul>
+<li>
+<p><a href=\\"/My%20Blog%20Post/#my-blog-post\\">My Blog Post</a></p>
+<ul>
+<li>
+<p><a href=\\"/My%20Blog%20Post/#generating-tocs-with-code-classlanguage-textgatsby-transformer-remarkcode\\">Generating TOCs with <code class=\\"language-text\\">gatsby-transformer-remark</code></a></p>
+<ul>
+<li><a href=\\"/My%20Blog%20Post/#embedding-code-classlanguage-textltcodegtcode-tags\\">Embedding <code class=\\"language-text\\">&lt;code&gt;</code> Tags</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>",
+}
+`;
+
+exports[`Table of contents properly handles headings containing inline code blocks Inline code blocks within headings are translated to <code> tags in generated TOC 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "My Blog Post",
+  },
+  "tableOfContents": "<ul>
+<li>
+<p><a href=\\"/My%20Blog%20Post/#my-blog-post\\">My Blog Post</a></p>
+<ul>
+<li>
+<p><a href=\\"/My%20Blog%20Post/#generating-tocs-with-gatsby-transformer-remark\\">Generating TOCs with <code>gatsby-transformer-remark</code></a></p>
+<ul>
+<li><a href=\\"/My%20Blog%20Post/#embedding-code-tags\\">Embedding <code>&#x3C;code></code> Tags</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>",
+}
+`;
+
+exports[`Wordcount and timeToRead are generated correctly from schema correctly generate timeToRead for CJK 1`] = `
+Object {
+  "timeToRead": 1,
 }
 `;
 
