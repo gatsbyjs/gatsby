@@ -696,8 +696,8 @@ const typeOwners = {}
 
 type CreateNode = (
   node: IReduxNode,
-  actionOptions: IActionOptions,
-  plugin?: IGatsbyPlugin
+  plugin?: IGatsbyPlugin,
+  actionOptions: IActionOptions
 ) =>
   | ICreateNodeAction
   | IValidationErrorAction
@@ -706,8 +706,8 @@ type CreateNode = (
 
 const createNode: CreateNode = (
   node: IReduxNode,
-  actionOptions: IActionOptions = {},
-  plugin?: IGatsbyPlugin
+  plugin?: IGatsbyPlugin,
+  actionOptions: IActionOptions = {}
 ):
   | ICreateNodeAction
   | IValidationErrorAction
