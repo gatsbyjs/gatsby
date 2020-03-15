@@ -697,7 +697,7 @@ const typeOwners = {}
 type CreateNode = (
   node: IReduxNode,
   plugin?: IGatsbyPlugin,
-  actionOptions: IActionOptions
+  actionOptions?: IActionOptions
 ) =>
   | ICreateNodeAction
   | IValidationErrorAction
@@ -707,7 +707,7 @@ type CreateNode = (
 const createNode: CreateNode = (
   node: IReduxNode,
   plugin?: IGatsbyPlugin,
-  actionOptions: IActionOptions = {}
+  actionOptions?: IActionOptions
 ):
   | ICreateNodeAction
   | IValidationErrorAction
@@ -853,6 +853,8 @@ const createNode: CreateNode = (
       )
     }
   }
+
+  actionOptions = actionOptions || {}
 
   if (actionOptions.parentSpan) {
     actionOptions.parentSpan.setTag(`nodeId`, node.id)
