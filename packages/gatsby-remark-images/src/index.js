@@ -1,7 +1,7 @@
 const {
   DEFAULT_OPTIONS,
-  imageClass,
   imageBackgroundClass,
+  imageClass,
   imageWrapperClass,
 } = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
@@ -41,7 +41,7 @@ module.exports = (
 ) => {
   const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
 
-  const findParentLinks = ({ children }) =>
+  const hasParentLinks = ({ children }) =>
     children.some(
       node =>
         (node.type === `html` && !!node.value.match(/<a /)) ||
@@ -58,9 +58,10 @@ module.exports = (
       return
     }
 
-    const inLink = ancestors.some(findParentLinks)
+    const linkToOriginal =
+      options.linkImagesToOriginal && !ancestors.some(hasParentLinks)
 
-    rawHtmlNodes.push({ node, inLink })
+    rawHtmlNodes.push({ node, linkToOriginal })
   })
 
   // This will allow the use of MDX
@@ -70,9 +71,10 @@ module.exports = (
       return
     }
 
-    const inLink = ancestors.some(findParentLinks)
+    const linkToOriginal =
+      options.linkImagesToOriginal && !ancestors.some(hasParentLinks)
 
-    rawJsxNodes.push({ node, inLink })
+    rawJsxNodes.push({ node, linkToOriginal })
   })
 
   // This will only work for markdown syntax image tags
@@ -81,9 +83,10 @@ module.exports = (
     markdownAST,
     [`image`, `imageReference`],
     (node, ancestors) => {
-      const inLink = ancestors.some(findParentLinks)
+      const linkToOriginal =
+        options.linkImagesToOriginal && !ancestors.some(hasParentLinks)
 
-      markdownImageNodes.push({ node, inLink })
+      markdownImageNodes.push({ node, linkToOriginal })
     }
   )
 
@@ -144,7 +147,7 @@ module.exports = (
   const generateImagesAndUpdateNode = async function(
     node,
     resolve,
-    inLink,
+    linkToOriginal,
     overWrites = {}
   ) {
     // Check if this markdownNode has a File parent. This plugin
@@ -333,7 +336,7 @@ module.exports = (
   `.trim()
 
     // Make linking to original image optional.
-    if (!inLink && options.linkImagesToOriginal) {
+    if (linkToOriginal) {
       rawHTML = `
   <a
     class="gatsby-resp-image-link"
@@ -374,7 +377,7 @@ module.exports = (
   const markdownImageNodesPromise = Promise.all(
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
-      ({ node, inLink }) =>
+      ({ node, linkToOriginal }) =>
         new Promise(async (resolve, reject) => {
           const overWrites = {}
           let refNode
@@ -405,7 +408,7 @@ module.exports = (
             const rawHTML = await generateImagesAndUpdateNode(
               node,
               resolve,
-              inLink,
+              linkToOriginal,
               overWrites
             )
 
@@ -426,7 +429,7 @@ module.exports = (
     )
   )
 
-  async function useBabel(node, inLink) {
+  async function useBabel(node, linkToOriginal) {
     const ast = parse(node.value, {
       plugins: [`jsx`, `typescript`],
       sourceType: `module`,
@@ -463,6 +466,7 @@ module.exports = (
     }
 
     let valueChanged = false
+    let newRootValue = null
 
     await Promise.all(
       imagePaths.map(
@@ -502,16 +506,40 @@ module.exports = (
                 url,
               }
 
+              let imageLinkToOriginal = linkToOriginal && !astInLink
+              const classNames = getAttributeValue(`className`)
+              if (classNames) {
+                const classList = classNames.split(` `)
+                if (imageLinkToOriginal) {
+                  imageLinkToOriginal = !classList.some(className =>
+                    options.forceNoLinkClassNames.includes(className)
+                  )
+                } else {
+                  imageLinkToOriginal = classList.some(className =>
+                    options.forceLinkClassNames.includes(className)
+                  )
+                }
+              }
+
               const rawHTML = await generateImagesAndUpdateNode(
                 formattedImgTag,
                 resolve,
-                inLink || astInLink
+                imageLinkToOriginal
               )
 
+              // Replace the image string
               if (rawHTML) {
-                // Replace the image string
-                imagePath.replaceWith(types.jsxText(rawHTML))
                 valueChanged = true
+                try {
+                  imagePath.replaceWith(types.jsxText(rawHTML))
+                } catch (err) {
+                  // If imagePath has the root node, an error is thrown because text can't be set at root.
+                  if (err instanceof TypeError) {
+                    newRootValue = rawHTML
+                  } else {
+                    throw err
+                  }
+                }
               }
             }
 
@@ -525,18 +553,22 @@ module.exports = (
       return null
     }
 
-    let rawJSX = generate(ast, {}, node.value).code
+    if (newRootValue) {
+      node.value = newRootValue
+    } else {
+      let rawJSX = generate(ast, {}, node.value).code
 
-    // Strip the final semicolon
-    rawJSX = rawJSX.slice(0, rawJSX.length - 1)
+      // Strip the final semicolon
+      rawJSX = rawJSX.slice(0, rawJSX.length - 1)
 
-    // Replace the image node with an inline HTML node.
-    node.value = rawJSX
+      // Replace the image node with an inline HTML node.
+      node.value = rawJSX
+    }
 
     return node
   }
 
-  function useCheerio(node, inLink) {
+  function useCheerio(node, linkToOriginal) {
     return new Promise(async resolve => {
       const $ = cheerio.load(node.value)
       if ($(`img`).length === 0) {
@@ -568,10 +600,21 @@ module.exports = (
             alt: thisImg.attr(`alt`),
           }
 
+          let imageLinkToOriginal = linkToOriginal
+          if (imageLinkToOriginal) {
+            imageLinkToOriginal = !options.forceNoLinkClassNames.some(
+              className => thisImg.hasClass(className)
+            )
+          } else {
+            imageLinkToOriginal = options.forceLinkClassNames.some(className =>
+              thisImg.hasClass(className)
+            )
+          }
+
           const rawHTML = await generateImagesAndUpdateNode(
             formattedImgTag,
             resolve,
-            inLink
+            imageLinkToOriginal
           )
 
           if (rawHTML) {
@@ -596,17 +639,19 @@ module.exports = (
   // HTML image node stuff
   // Complex because HTML nodes can contain multiple images
   const rawHtmlNodesPromise = Promise.all(
-    rawHtmlNodes.map(({ node, inLink }) => useCheerio(node, inLink))
+    rawHtmlNodes.map(({ node, linkToOriginal }) =>
+      useCheerio(node, linkToOriginal)
+    )
   )
 
   const rawJsxNodesPromise = Promise.all(
-    rawJsxNodes.map(({ node, inLink }) =>
-      useBabel(node, inLink).catch(err => {
+    rawJsxNodes.map(({ node, linkToOriginal }) =>
+      useBabel(node, linkToOriginal).catch(err => {
         console.log(
           `Error while parsing JSX with Babel, using Cheerio fallback.`
         )
         console.log(err)
-        return useCheerio(node, inLink)
+        return useCheerio(node, linkToOriginal)
       })
     )
   )

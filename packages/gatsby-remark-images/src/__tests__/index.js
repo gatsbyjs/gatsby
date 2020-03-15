@@ -360,6 +360,74 @@ test(`it leaves single-line linked HTML img tags alone within JSX`, async () => 
   expect(node.value).not.toMatch(`<html>`)
 })
 
+test(`it links img tags with link class`, async () => {
+  const imagePath = `images/this-image-shouldnt-have-a-link.jpeg`
+
+  const content = `
+<img class="link" src="./${imagePath}">
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath), {
+    linkImagesToOriginal: false,
+  })
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it doesn't link img tags with no-link class`, async () => {
+  const imagePath = `images/this-image-shouldnt-have-a-link.jpeg`
+
+  const content = `
+<img class="no-link" src="./${imagePath}">
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it links img tags with link class within JSX`, async () => {
+  const imagePath = `images/this-image-shouldnt-have-a-link.jpeg`
+
+  const content = `
+<img className="link" src="./${imagePath}" />
+  `.trim()
+
+  const nodes = await plugin(createPluginOptionsJSX(content, imagePath), {
+    linkImagesToOriginal: false,
+  })
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`jsx`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it doesn't link img tags with no-link class within JSX`, async () => {
+  const imagePath = `images/this-image-shouldnt-have-a-link.jpeg`
+
+  const content = `
+<img className="no-link" src="./${imagePath}" />
+  `.trim()
+
+  const nodes = await plugin(createPluginOptionsJSX(content, imagePath))
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`jsx`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
 test(`it handles goofy nesting properly`, async () => {
   const imagePath = `images/this-image-already-has-a-link.jpeg`
 
@@ -413,13 +481,28 @@ test(`it transforms HTML img tags within JSX`, async () => {
   const imagePath = `image/my-image.jpeg`
 
   const content = `
+<img src="./${imagePath}" />
+  `.trim()
+
+  const nodes = await plugin(createPluginOptionsJSX(content, imagePath))
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`jsx`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it transforms HTML img tags inside other elements within JSX`, async () => {
+  const imagePath = `image/my-image.jpeg`
+
+  const content = `
 <Component attr={func()}>
   <img src="./${imagePath}" />
 </Component>
   `.trim()
 
   const nodes = await plugin(createPluginOptionsJSX(content, imagePath))
-
   expect(nodes.length).toBe(1)
 
   const node = nodes.pop()

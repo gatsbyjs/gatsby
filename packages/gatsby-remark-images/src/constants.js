@@ -3,6 +3,8 @@ exports.DEFAULT_OPTIONS = {
   wrapperStyle: ``,
   backgroundColor: `white`,
   linkImagesToOriginal: true,
+  forceLinkClassNames: [`link`],
+  forceNoLinkClassNames: [`no-link`, `nolink`],
   showCaptions: false,
   markdownCaptions: false,
   withWebp: false,
