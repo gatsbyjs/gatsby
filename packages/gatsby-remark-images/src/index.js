@@ -54,6 +54,10 @@ module.exports = (
   // This will allow the use of html image tags
   const rawHtmlNodes = []
   visitWithParents(markdownAST, [`html`], (node, ancestors) => {
+    if (!node.value) {
+      return
+    }
+
     const inLink = ancestors.some(findParentLinks)
 
     rawHtmlNodes.push({ node, inLink })
@@ -62,6 +66,10 @@ module.exports = (
   // This will allow the use of MDX
   const rawJsxNodes = []
   visitWithParents(markdownAST, [`jsx`], (node, ancestors) => {
+    if (!node.value) {
+      return
+    }
+
     const inLink = ancestors.some(findParentLinks)
 
     rawJsxNodes.push({ node, inLink })
@@ -426,10 +434,25 @@ module.exports = (
 
     const imagePaths = []
 
+    let astLinkCount = 0
     traverse(ast, {
       JSXElement(path) {
         if (path.node.openingElement.name.name === `img`) {
-          imagePaths.push(path)
+          const astInLink = astLinkCount > 0
+          imagePaths.push({
+            imagePath: path,
+            astInLink,
+          })
+        }
+      },
+      JSXOpeningElement(path) {
+        if (path.node.name.name === `a`) {
+          ++astLinkCount
+        }
+      },
+      JSXClosingElement(path) {
+        if (path.node.name.name === `a`) {
+          --astLinkCount
         }
       },
     })
@@ -443,7 +466,7 @@ module.exports = (
 
     await Promise.all(
       imagePaths.map(
-        imagePath =>
+        ({ imagePath, astInLink }) =>
           new Promise(async resolve => {
             // Get the details we need.
             const getAttributeValue = name => {
@@ -482,7 +505,7 @@ module.exports = (
               const rawHTML = await generateImagesAndUpdateNode(
                 formattedImgTag,
                 resolve,
-                inLink
+                inLink || astInLink
               )
 
               if (rawHTML) {
@@ -526,26 +549,25 @@ module.exports = (
         imageRefs.push($(this))
       })
 
-      for (let thisImg of imageRefs) {
-        // Get the details we need.
-        let formattedImgTag = {}
-        formattedImgTag.url = thisImg.attr(`src`)
-        formattedImgTag.title = thisImg.attr(`title`)
-        formattedImgTag.alt = thisImg.attr(`alt`)
+      for (const thisImg of imageRefs) {
+        const url = thisImg.attr(`src`)
 
-        if (!formattedImgTag.url) {
+        if (!url) {
           return resolve()
         }
 
-        const fileType = getImageInfo(formattedImgTag.url).ext
+        const fileType = getImageInfo(url).ext
 
         // Ignore gifs as we can't process them,
         // svgs as they are already responsive by definition
-        if (
-          isRelativeUrl(formattedImgTag.url) &&
-          fileType !== `gif` &&
-          fileType !== `svg`
-        ) {
+        if (isRelativeUrl(url) && fileType !== `gif` && fileType !== `svg`) {
+          // Get the details we need.
+          const formattedImgTag = {
+            url,
+            title: thisImg.attr(`title`),
+            alt: thisImg.attr(`alt`),
+          }
+
           const rawHTML = await generateImagesAndUpdateNode(
             formattedImgTag,
             resolve,
@@ -574,16 +596,18 @@ module.exports = (
   // HTML image node stuff
   // Complex because HTML nodes can contain multiple images
   const rawHtmlNodesPromise = Promise.all(
-    rawHtmlNodes.map(({ node, inLink }) =>
-      node.value ? useCheerio(node, inLink) : Promise.resolve()
-    )
+    rawHtmlNodes.map(({ node, inLink }) => useCheerio(node, inLink))
   )
 
   const rawJsxNodesPromise = Promise.all(
     rawJsxNodes.map(({ node, inLink }) =>
-      node.value
-        ? useBabel(node, inLink).catch(() => useCheerio(node, inLink))
-        : Promise.resolve()
+      useBabel(node, inLink).catch(err => {
+        console.log(
+          `Error while parsing JSX with Babel, using Cheerio fallback.`
+        )
+        console.log(err)
+        return useCheerio(node, inLink)
+      })
     )
   )
 

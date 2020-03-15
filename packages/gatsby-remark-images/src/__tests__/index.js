@@ -85,6 +85,15 @@ const createPluginOptions = (content, imagePaths = `/`) => {
   }
 }
 
+const createPluginOptionsJSX = (content, imagePaths = `/`) => {
+  const options = createPluginOptions(content, imagePaths)
+  // MDX should set the block type to jsx.
+  options.markdownAST.children.forEach(child => {
+    child.type = `jsx`
+  })
+  return options
+}
+
 test(`it returns empty array when 0 images`, async () => {
   const content = `
 # hello world
@@ -253,8 +262,9 @@ test(`it leaves images that are already linked alone`, async () => {
 `
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
-  const node = nodes.pop()
+  expect(nodes.length).toBe(1)
 
+  const node = nodes.pop()
   expect(node.type).toBe(`html`)
   expect(node.value).toMatchSnapshot()
   expect(node.value).not.toMatch(`<html>`)
@@ -270,8 +280,9 @@ test(`it leaves linked HTML img tags alone`, async () => {
   `.trim()
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
-  const node = nodes.pop()
+  expect(nodes.length).toBe(1)
 
+  const node = nodes.pop()
   expect(node.type).toBe(`html`)
   expect(node.value).toMatchSnapshot()
   expect(node.value).not.toMatch(`<html>`)
@@ -285,8 +296,65 @@ test(`it leaves single-line linked HTML img tags alone`, async () => {
   `.trim()
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
-  const node = nodes.pop()
+  expect(nodes.length).toBe(1)
 
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it leaves linked HTML img tags alone within JSX`, async () => {
+  const imagePath = `images/this-image-already-has-a-link.jpeg`
+
+  const content = `
+<a href="https://example.org">
+  <img src="./${imagePath}" />
+</a>
+  `.trim()
+
+  const nodes = await plugin(createPluginOptionsJSX(content, imagePath))
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`jsx`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it leaves single-line linked HTML img tags alone within JSX`, async () => {
+  const imagePath = `images/this-image-already-has-a-link.jpeg`
+
+  const content = `
+<a href="https://example.org"><img src="./${imagePath}" /></a>
+  `.trim()
+
+  const nodes = await plugin(createPluginOptionsJSX(content, imagePath))
+  expect(nodes.length).toBe(1)
+
+  /*
+   The content is parsed as
+    [
+      {
+        "type": "jsx",
+        "children": [
+          {
+            "type": "html",
+            "value": "<a ..."
+          },{
+            "type": "html",
+            "value": "<img ..."
+          },{
+            "type": "html",
+            "value": "</a>"
+          }
+        ]
+      }
+    ]
+    and the plugin only processes and returns the img child.
+   */
+
+  const node = nodes.pop()
   expect(node.type).toBe(`html`)
   expect(node.value).toMatchSnapshot()
   expect(node.value).not.toMatch(`<html>`)
@@ -341,7 +409,7 @@ test(`it transforms images in markdown with query strings`, async () => {
   expect(node.value).not.toMatch(`<html>`)
 })
 
-test(`it transforms HTML img tags within React`, async () => {
+test(`it transforms HTML img tags within JSX`, async () => {
   const imagePath = `image/my-image.jpeg`
 
   const content = `
@@ -350,12 +418,7 @@ test(`it transforms HTML img tags within React`, async () => {
 </Component>
   `.trim()
 
-  const options = createPluginOptions(content, imagePath)
-
-  // MDX should set the block type to jsx.
-  options.markdownAST.children[0].type = `jsx`
-
-  const nodes = await plugin(options)
+  const nodes = await plugin(createPluginOptionsJSX(content, imagePath))
 
   expect(nodes.length).toBe(1)
 
