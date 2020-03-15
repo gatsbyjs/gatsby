@@ -1,16 +1,23 @@
-import Redux, { AnyAction, Dispatch, CombinedState } from "redux"
+import {
+  createStore,
+  combineReducers,
+  AnyAction,
+  Dispatch,
+  CombinedState,
+  Store,
+} from "redux"
 import { reducer, IState } from "./reducer"
 
 import { ActivityTypes, Actions } from "../constants"
 
-let store = Redux.createStore(
-  Redux.combineReducers({
+let store = createStore(
+  combineReducers({
     logs: reducer,
   }),
   {}
 )
 
-type store = Redux.Store<CombinedState<{ logs: IState }>, Redux.AnyAction>
+type store = Store<CombinedState<{ logs: IState }>, AnyAction>
 
 type storeListener = (store: store) => void
 
@@ -39,7 +46,7 @@ interface IIface {
   dispatch(dispatch: any)
   getStore: () => store
   onStoreSwap: (fn: storeListener) => void
-  onLogAction: (fn: Redux.Dispatch<Redux.AnyAction>) => () => void
+  onLogAction: (fn: Dispatch<AnyAction>) => () => void
   setStore: (s: store) => void
 }
 
