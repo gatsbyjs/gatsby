@@ -361,7 +361,7 @@ test(`it leaves single-line linked HTML img tags alone within JSX`, async () => 
 })
 
 test(`it links img tags with link class`, async () => {
-  const imagePath = `images/this-image-shouldnt-have-a-link.jpeg`
+  const imagePath = `images/this-image-should-not-have-a-link.jpeg`
 
   const content = `
 <img class="link" src="./${imagePath}">
@@ -379,7 +379,7 @@ test(`it links img tags with link class`, async () => {
 })
 
 test(`it doesn't link img tags with no-link class`, async () => {
-  const imagePath = `images/this-image-shouldnt-have-a-link.jpeg`
+  const imagePath = `images/this-image-should-not-have-a-link.jpeg`
 
   const content = `
 <img class="no-link" src="./${imagePath}">
@@ -395,7 +395,7 @@ test(`it doesn't link img tags with no-link class`, async () => {
 })
 
 test(`it links img tags with link class within JSX`, async () => {
-  const imagePath = `images/this-image-shouldnt-have-a-link.jpeg`
+  const imagePath = `images/this-image-should-not-have-a-link.jpeg`
 
   const content = `
 <img className="link" src="./${imagePath}" />
@@ -413,7 +413,7 @@ test(`it links img tags with link class within JSX`, async () => {
 })
 
 test(`it doesn't link img tags with no-link class within JSX`, async () => {
-  const imagePath = `images/this-image-shouldnt-have-a-link.jpeg`
+  const imagePath = `images/this-image-should-not-have-a-link.jpeg`
 
   const content = `
 <img className="no-link" src="./${imagePath}" />

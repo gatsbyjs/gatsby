@@ -123,7 +123,7 @@ exports[`disableBgImageOnAlpha does not disable background image on transparent 
 exports[`it doesn't link img tags with no-link class 1`] = `
 "<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\">
       <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
-  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image shouldnt have a link\\" title=\\"this image shouldnt have a link\\" src=\\"not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg, not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image should not have a link\\" title=\\"this image should not have a link\\" src=\\"not-a-real-dir/images/this-image-should-not-have-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-should-not-have-a-link.jpeg, not-a-real-dir/images/this-image-should-not-have-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
     </span>"
 `;
 
@@ -138,10 +138,10 @@ exports[`it doesn't link img tags with no-link class within JSX 1`] = `
   ></span>
   <img
         class=\\"gatsby-resp-image-image\\"
-        alt=\\"this image shouldnt have a link\\"
-        title=\\"this image shouldnt have a link\\"
-        src=\\"not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg\\"
-        srcset=\\"not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg, not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg\\"
+        alt=\\"this image should not have a link\\"
+        title=\\"this image should not have a link\\"
+        src=\\"not-a-real-dir/images/this-image-should-not-have-a-link.jpeg\\"
+        srcset=\\"not-a-real-dir/images/this-image-should-not-have-a-link.jpeg, not-a-real-dir/images/this-image-should-not-have-a-link.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
@@ -242,9 +242,9 @@ exports[`it leaves single-line linked HTML img tags alone within JSX 1`] = `
 
 exports[`it links img tags with link class 1`] = `
 "<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\">
-      <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
+      <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/images/this-image-should-not-have-a-link.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
     <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
-  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image shouldnt have a link\\" title=\\"this image shouldnt have a link\\" src=\\"not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg, not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image should not have a link\\" title=\\"this image should not have a link\\" src=\\"not-a-real-dir/images/this-image-should-not-have-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-should-not-have-a-link.jpeg, not-a-real-dir/images/this-image-should-not-have-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
   </a>
     </span>"
 `;
@@ -256,7 +256,7 @@ exports[`it links img tags with link class within JSX 1`] = `
     >
       <a
     class=\\"gatsby-resp-image-link\\"
-    href=\\"not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg\\"
+    href=\\"not-a-real-dir/images/this-image-should-not-have-a-link.jpeg\\"
     style=\\"display: block\\"
     target=\\"_blank\\"
     rel=\\"noopener\\"
@@ -267,10 +267,10 @@ exports[`it links img tags with link class within JSX 1`] = `
   ></span>
   <img
         class=\\"gatsby-resp-image-image\\"
-        alt=\\"this image shouldnt have a link\\"
-        title=\\"this image shouldnt have a link\\"
-        src=\\"not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg\\"
-        srcset=\\"not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg, not-a-real-dir/images/this-image-shouldnt-have-a-link.jpeg\\"
+        alt=\\"this image should not have a link\\"
+        title=\\"this image should not have a link\\"
+        src=\\"not-a-real-dir/images/this-image-should-not-have-a-link.jpeg\\"
+        srcset=\\"not-a-real-dir/images/this-image-should-not-have-a-link.jpeg, not-a-real-dir/images/this-image-should-not-have-a-link.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
