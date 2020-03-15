@@ -207,35 +207,40 @@ exports.sourceNodes = async (
       }
     })
 
-  contentTypeItems.forEach((contentTypeItem, i) => {
-    normalize.createNodesForContentType({
-      contentTypeItem,
-      contentTypeItems,
-      restrictedNodeFields,
-      conflictFieldPrefix,
-      entries: entryList[i],
-      createNode,
-      createNodeId,
-      resolvable,
-      foreignReferenceMap,
-      defaultLocale,
-      locales,
-      space,
-      useNameForId: pluginConfig.get(`useNameForId`),
-      richTextOptions: pluginConfig.get(`richText`),
-    })
-  })
+  for (let i = 0; i < contentTypeItems.length; i++) {
+    const contentTypeItem = contentTypeItems[i]
+    await Promise.all(
+      normalize.createNodesForContentType({
+        contentTypeItem,
+        contentTypeItems,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i],
+        createNode,
+        createNodeId,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        space,
+        useNameForId: pluginConfig.get(`useNameForId`),
+        richTextOptions: pluginConfig.get(`richText`),
+      })
+    )
+  }
 
-  assets.forEach(assetItem => {
-    normalize.createAssetNodes({
-      assetItem,
-      createNode,
-      createNodeId,
-      defaultLocale,
-      locales,
-      space,
-    })
-  })
+  for (let i = 0; i < assets.length; i++) {
+    await Promise.all(
+      normalize.createAssetNodes({
+        assetItem: assets[i],
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+        space,
+      })
+    )
+  }
 
   if (pluginConfig.get(`downloadLocal`)) {
     await downloadContentfulAssets({
