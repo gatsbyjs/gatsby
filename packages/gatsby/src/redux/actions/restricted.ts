@@ -1,11 +1,36 @@
-// @flow
 const { camelCase } = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { parseTypeDef } = require(`../../schema/types/type-defs`)
+import { GraphQLSchema, GraphQLOutputType } from "graphql"
+import { ActionCreator } from "redux"
+import { ThunkAction } from "redux-thunk"
+import { GraphQLFieldExtensionDefinition } from "../../schema/extensions"
+import { GatsbyGraphQLType } from "../../schema/types/type-builders"
+import {
+  IGatsbyPlugin,
+  ActionsUnion,
+  IAddThirdPartySchema,
+  ICreateTypes,
+  IReduxState,
+  ICreateFieldExtension,
+  IPrintTypeDefinitions,
+  ICreateResolverContext,
+} from "../types"
 
-import type { Plugin } from "./types"
+type RestrictionActionNames =
+  | "createFieldExtension"
+  | "createTypes"
+  | "createResolverContext"
+  | "addThirdPartySchema"
+  | "printTypeDefinitions"
 
-const actions = {}
+type SomeActionCreator =
+  | ActionCreator<ActionsUnion>
+  | ActionCreator<ThunkAction<any, IReduxState, any, ActionsUnion>>
+
+type ActionCreatorsMap = Record<RestrictionActionNames, SomeActionCreator>
+
+const actions: ActionCreatorsMap = {} as ActionCreatorsMap
 
 /**
  * Add a third-party schema to be merged into main schema. Schema has to be a
@@ -22,9 +47,9 @@ const actions = {}
  */
 actions.addThirdPartySchema = (
   { schema }: { schema: GraphQLSchema },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
-) => {
+): IAddThirdPartySchema => {
   return {
     type: `ADD_THIRD_PARTY_SCHEMA`,
     plugin,
@@ -33,7 +58,6 @@ actions.addThirdPartySchema = (
   }
 }
 
-import type GatsbyGraphQLType from "../../schema/types/type-builders"
 /**
  * Add type definitions to the GraphQL schema.
  *
@@ -181,9 +205,9 @@ actions.createTypes = (
     | GraphQLOutputType
     | GatsbyGraphQLType
     | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
-) => {
+): ICreateTypes => {
   return {
     type: `CREATE_TYPES`,
     plugin,
@@ -195,7 +219,7 @@ actions.createTypes = (
 }
 
 const { reservedExtensionNames } = require(`../../schema/extensions`)
-import type GraphQLFieldExtensionDefinition from "../../schema/extensions"
+
 /**
  * Add a field extension to the GraphQL schema.
  *
@@ -239,9 +263,12 @@ import type GraphQLFieldExtensionDefinition from "../../schema/extensions"
  */
 actions.createFieldExtension = (
   extension: GraphQLFieldExtensionDefinition,
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
-) => (dispatch, getState) => {
+): ThunkAction<void, IReduxState, {}, ICreateFieldExtension> => (
+  dispatch,
+  getState
+): void => {
   const { name } = extension || {}
   const { fieldExtensions } = getState().schemaCustomization
 
@@ -294,14 +321,14 @@ actions.printTypeDefinitions = (
     exclude,
     withFieldTypes = true,
   }: {
-    path?: string,
-    include?: { types?: Array<string>, plugins?: Array<string> },
-    exclude?: { types?: Array<string>, plugins?: Array<string> },
-    withFieldTypes?: boolean,
+    path?: string
+    include?: { types?: Array<string>; plugins?: Array<string> }
+    exclude?: { types?: Array<string>; plugins?: Array<string> }
+    withFieldTypes?: boolean
   },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
-) => {
+): IPrintTypeDefinitions => {
   return {
     type: `PRINT_SCHEMA_REQUESTED`,
     plugin,
@@ -347,9 +374,11 @@ actions.printTypeDefinitions = (
  */
 actions.createResolverContext = (
   context: object,
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
-) => dispatch => {
+): ThunkAction<void, IReduxState, {}, ICreateResolverContext> => (
+  dispatch
+): void => {
   if (!context || typeof context !== `object`) {
     report.error(
       `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
@@ -369,9 +398,12 @@ actions.createResolverContext = (
   }
 }
 
-const withDeprecationWarning = (actionName, action, api, allowedIn) => (
-  ...args
-) => {
+const withDeprecationWarning = (
+  actionName: RestrictionActionNames,
+  action: SomeActionCreator,
+  api: API,
+  allowedIn: API[]
+): SomeActionCreator => (...args: any[]): ReturnType<ActionCreator<any>> => {
   report.warn(
     `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
       `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
@@ -379,9 +411,13 @@ const withDeprecationWarning = (actionName, action, api, allowedIn) => (
   return action(...args)
 }
 
-const withErrorMessage = (actionName, api, allowedIn) => () =>
+const withErrorMessage = (
+  actionName: RestrictionActionNames,
+  api: API,
+  allowedIn: API[]
+) => () =>
   // return a thunk that does not dispatch anything
-  () => {
+  (): void => {
     report.error(
       `\`${actionName}\` is not available in the \`${api}\` API. ` +
         `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
@@ -393,24 +429,47 @@ const nodeAPIs = Object.keys(require(`../../utils/api-node-docs`))
 const ALLOWED_IN = `ALLOWED_IN`
 const DEPRECATED_IN = `DEPRECATED_IN`
 
-const set = (availableActionsByAPI, api, actionName, action) => {
+type API = string
+
+type Restrictions = Record<
+  RestrictionActionNames,
+  Partial<
+    {
+      [K in typeof ALLOWED_IN | typeof DEPRECATED_IN]: API[]
+    }
+  >
+>
+
+type AvailableActionsByAPI = Record<
+  API,
+  { [K in RestrictionActionNames]: SomeActionCreator }
+>
+
+const set = (
+  availableActionsByAPI: {},
+  api: API,
+  actionName: RestrictionActionNames,
+  action: SomeActionCreator
+): void => {
   availableActionsByAPI[api] = availableActionsByAPI[api] || {}
   availableActionsByAPI[api][actionName] = action
 }
 
-const mapAvailableActionsToAPIs = restrictions => {
-  const availableActionsByAPI = {}
+const mapAvailableActionsToAPIs = (
+  restrictions: Restrictions
+): AvailableActionsByAPI => {
+  const availableActionsByAPI: AvailableActionsByAPI = {}
 
-  const actionNames = Object.keys(restrictions)
+  const actionNames = Object.keys(restrictions) as (keyof typeof restrictions)[]
   actionNames.forEach(actionName => {
     const action = actions[actionName]
 
-    const allowedIn = restrictions[actionName][ALLOWED_IN] || []
+    const allowedIn: API[] = restrictions[actionName][ALLOWED_IN] || []
     allowedIn.forEach(api =>
       set(availableActionsByAPI, api, actionName, action)
     )
 
-    const deprecatedIn = restrictions[actionName][DEPRECATED_IN] || []
+    const deprecatedIn: API[] = restrictions[actionName][DEPRECATED_IN] || []
     deprecatedIn.forEach(api =>
       set(
         availableActionsByAPI,
@@ -456,4 +515,4 @@ const availableActionsByAPI = mapAvailableActionsToAPIs({
   },
 })
 
-module.exports = { actions, availableActionsByAPI }
+export { actions, availableActionsByAPI }
