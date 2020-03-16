@@ -1,13 +1,13 @@
-import { ActivityStatuses } from "../constants"
+import { ActivityStatuses, ActivityTypes } from "../constants"
 
 import { Actions } from "../constants"
 
 export interface IActivity {
-  startTime: [number, number] | undefined
+  startTime?: [number, number]
   id: string
   uuid: string
   text: string
-  type: string
+  type: ActivityTypes
   status: ActivityStatuses
   statusText: string
   current: string
