@@ -25,7 +25,7 @@ Before you begin writing, make sure to read the rest of this style guide.
 Docs can cover a broad range of topics. Please see the following
 examples:
 
-- [Reference guides](/docs/add-404-page/)
+- [Reference guides](/docs/guides/)
 - [Reference guide overviews](/docs/styling/)
 - [Recipes](/docs/recipes/)
 - [Tutorials](/tutorial/part-one/)
