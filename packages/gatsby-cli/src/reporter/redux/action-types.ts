@@ -47,7 +47,7 @@ export interface IEndActivityInProgress {
   type: ActivityTypes.Spinner | ActivityTypes.Hidden | ActivityTypes.Progress
 }
 
-export interface ILogReturn {
+export interface ILog {
   level: string
   text: string
   statusText?: string
@@ -69,24 +69,7 @@ export interface ILogReturn {
 
 export interface IActionTypes {
   setStatus(status: string, force?: boolean): DispatchAction
-  createLog(arg0: {
-    text: string
-    level: string
-    duration: number
-    group?: string
-    code?: string
-    type?: string
-    filePath?: string
-    location?: string
-    docsUrl?: string
-    context?: string
-    statusText?: string
-    activity_uuid: string
-    activity_current: string
-    activity_total: number
-    activity_type: string
-    stack?: string
-  }): IActionReturn<Actions.Log, ILogReturn>
+  createLog(arg0: Omit<ILog, "timestamp">): IActionReturn<Actions.Log, ILog>
 
   startActivity: ({
     id,
@@ -112,7 +95,7 @@ export interface IActionTypes {
     status: ActivityStatuses
   }) => QueuedActionsToEmit<
     Actions.CancelActivity | Actions.EndActivity | Actions.Log,
-    IEndActivityPending | IEndActivityInProgress | ILogReturn
+    IEndActivityPending | IEndActivityInProgress | ILog
   > | null
 
   createPendingActivity: ({

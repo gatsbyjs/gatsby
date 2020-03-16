@@ -22,7 +22,7 @@ import {
   ICreatePendingActivityReturn,
   IEndActivityPending,
   IEndActivityInProgress,
-  ILogReturn,
+  ILog,
 } from "./action-types"
 
 const { dispatch, getStore } = ReporterStore
@@ -237,7 +237,7 @@ const actions: IActionTypes = {
     }
     const actionsToEmit: QueuedActionsToEmit<
       Actions.CancelActivity | Actions.EndActivity | Actions.Log,
-      IEndActivityPending | IEndActivityInProgress | ILogReturn
+      IEndActivityPending | IEndActivityInProgress | ILog
     > = []
     if (activity.type === ActivityTypes.Pending) {
       actionsToEmit.push({
