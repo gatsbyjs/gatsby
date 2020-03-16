@@ -53,11 +53,7 @@ function onCreateWebpackConfig({
     if (isTypescriptDepAvailable) {
       const builtInEslintRule = getConfig().module.rules.find(rule => {
         if (rule.enforce === `pre`) {
-          if (rule.use) {
-            return rule.use.some(use => /eslint-loader/.test(use.loader))
-          } else {
-            return /eslint-loader/.test(rule.loader)
-          }
+          return rule.use.some(use => /eslint-loader/.test(use.loader))
         }
         return false
       })
