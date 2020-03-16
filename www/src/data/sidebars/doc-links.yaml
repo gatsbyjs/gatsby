@@ -76,6 +76,9 @@
             - title: Deploying to ZEIT Now
               link: /docs/deploying-to-zeit-now/
               breadcrumbTitle: ZEIT Now
+            - title: Deploying to Cloudflare Workers
+              link: /docs/deploying-to-cloudflare-workers/
+              breadcrumbTitle: Cloudflare Workers
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
@@ -121,6 +124,8 @@
             - title: Using Environment Variables
               link: /docs/environment-variables/
               breadcrumbTitle: Environment Variables
+            - title: Running a Gatsby Preview Server
+              link: /docs/running-a-gatsby-preview-server/
             - title: Using ESLint
               link: /docs/eslint/
               breadcrumbTitle: ESLint
@@ -263,10 +268,6 @@
                   link: /docs/configuring-usage-with-plugin-options/
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
-                - title: Pixabay Image Source Plugin Tutorial
-                  link: /tutorial/pixabay-source-plugin-tutorial/
-                - title: Remark Plugin Tutorial
-                  link: /tutorial/remark-plugin-tutorial/
                 - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Themes

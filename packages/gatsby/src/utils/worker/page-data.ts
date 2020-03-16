@@ -1,10 +1,9 @@
-const path = require(`path`)
+import path from "path"
 
-const getFilePath = ({ publicDir }, pagePath) => {
+export const getFilePath = (
+  { publicDir }: { publicDir: string },
+  pagePath: string
+): string => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
   return path.join(publicDir, `page-data`, fixedPagePath, `page-data.json`)
-}
-
-module.exports = {
-  getFilePath,
 }

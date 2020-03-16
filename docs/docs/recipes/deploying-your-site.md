@@ -104,3 +104,29 @@ Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application withou
 ### Additional resources
 
 - [Deploying to ZEIT Now](/docs/deploying-to-zeit-now/)
+
+## Deploying to Cloudflare Workers
+
+Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to deploy your Gatsby application globally without leaving the command-line interface.
+
+### Prerequisites
+
+- An account on [Cloudflare](https://dash.cloudflare.com/sign-up)
+- A [Workers Unlimited plan](https://developers.cloudflare.com/workers/about/pricing/) for \$5/month to enable the KV store, which is required to serve the Gatsby files.
+- A [Gatsby site](/docs/quick-start) set up with Gatsby's CLI
+- [wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/install/) installed globally (`npm i -g @cloudflare/wrangler`)
+
+### Directions
+
+1. Build your Gatsby application using `gatsby build`
+2. Run `wrangler config` where you'll be prompted for your [Cloudflare API token](https://developers.cloudflare.com/workers/quickstart/#api-token)
+3. Run `wrangler init --site`
+4. Configure `wrangler.toml`. First add [account ID](https://developers.cloudflare.com/workers/quickstart/#account-id-and-zone-id) field and then either
+   1. A free workers.dev domain by setting `workers_dev = true`
+   2. A custom domain on Cloudflare by setting `workers_dev = false`, `zone_id = "abdc..` and `route = customdomain.com/*`
+5. In `wrangler.toml` set `bucket = "./public"`
+6. Run `wrangler publish` and your site will be deployed in seconds!
+
+### Additional resources
+
+- [Hosting on Cloudflare](/docs/deploying-to-cloudflare-workers)

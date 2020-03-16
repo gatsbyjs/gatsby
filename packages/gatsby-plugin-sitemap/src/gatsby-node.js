@@ -2,7 +2,7 @@ import path from "path"
 import sitemap from "sitemap"
 import {
   defaultOptions,
-  runQuery,
+  filterQuery,
   writeFile,
   renameFile,
   withoutTrailingSlash,
@@ -18,7 +18,15 @@ exports.onPostBuild = async (
   delete options.plugins
   delete options.createLinkInHead
 
-  const { query, serialize, output, exclude, hostname, ...rest } = {
+  const {
+    query,
+    serialize,
+    output,
+    exclude,
+    hostname,
+    resolveSiteUrl,
+    ...rest
+  } = {
     ...defaultOptions,
     ...options,
   }
@@ -28,8 +36,15 @@ exports.onPostBuild = async (
   // Paths we're excluding...
   const excludeOptions = exclude.concat(defaultOptions.exclude)
 
-  const queryRecords = await runQuery(graphql, query, excludeOptions, basePath)
-  const urls = serialize(queryRecords)
+  const queryRecords = await graphql(query)
+
+  const filteredRecords = filterQuery(
+    queryRecords,
+    excludeOptions,
+    basePath,
+    resolveSiteUrl
+  )
+  const urls = serialize(filteredRecords)
 
   if (!rest.sitemapSize || urls.length <= rest.sitemapSize) {
     const map = sitemap.createSitemap(rest)
@@ -41,7 +56,7 @@ exports.onPostBuild = async (
     site: {
       siteMetadata: { siteUrl },
     },
-  } = queryRecords
+  } = filteredRecords
   return new Promise(resolve => {
     // sitemap-index.xml is default file name. (https://git.io/fhNgG)
     const indexFilePath = path.join(
