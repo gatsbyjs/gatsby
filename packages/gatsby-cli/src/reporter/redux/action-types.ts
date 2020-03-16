@@ -2,17 +2,14 @@ import { Actions, ActivityStatuses } from "../constants"
 import { IActivity } from "./reducer"
 import { Dispatch, AnyAction } from "redux"
 
-type dispatchAction = (dispatch: Dispatch<AnyAction>) => void
+type DispatchAction = (dispatch: Dispatch<AnyAction>) => void
 
-export type actionsToEmitType = Array<
-  dispatchAction | { type: Actions; payload: Partial<IActivity> }
+export type QueuedActionsToEmit<T> = Array<
+  DispatchAction | { type: T; payload: Partial<IActivity> }
 >
 
 export interface IActionTypes {
-  setStatus(
-    status: string,
-    force?: boolean | undefined
-  ): (dispatch: Dispatch<AnyAction>) => void
+  setStatus(status: string, force?: boolean | undefined): DispatchAction
   createLog(arg0: {
     text: string
     level: string
@@ -31,7 +28,7 @@ export interface IActionTypes {
     activity_type: string
     stack?: string
   }): {
-    type: Actions
+    type: Actions.Log
     payload: {
       level: string
       text: string
@@ -67,7 +64,7 @@ export interface IActionTypes {
     status?: ActivityStatuses | undefined
     current: string
     total: number
-  }) => actionsToEmitType
+  }) => QueuedActionsToEmit<Actions.StartActivity>
 
   endActivity: ({
     id,
@@ -75,7 +72,9 @@ export interface IActionTypes {
   }: {
     id: string
     status: ActivityStatuses
-  }) => actionsToEmitType | null
+  }) => QueuedActionsToEmit<
+    Actions.CancelActivity | Actions.EndActivity | Actions.Log
+  > | null
 
   createPendingActivity: ({
     id,
@@ -83,12 +82,12 @@ export interface IActionTypes {
   }: {
     id: string
     status?: ActivityStatuses | undefined
-  }) => actionsToEmitType
+  }) => QueuedActionsToEmit<Actions.PendingActivity>
 
   updateActivity: (
     activity: Partial<IActivity>
   ) => {
-    type: Actions
+    type: Actions.UpdateActivity
     payload: Partial<IActivity>
   } | null
 
@@ -97,7 +96,7 @@ export interface IActionTypes {
   }: {
     id: string
   }) => {
-    type: Actions
+    type: Actions.ActivityErrored
     payload: {
       id: IActivity["id"]
     }
@@ -110,7 +109,7 @@ export interface IActionTypes {
     id: string
     statusText: string
   }) => {
-    type: Actions
+    type: Actions.UpdateActivity
     payload: Partial<IActivity>
   } | null
 
@@ -121,7 +120,7 @@ export interface IActionTypes {
     id: string
     total: number
   }) => {
-    type: Actions
+    type: Actions.UpdateActivity
     payload: Partial<IActivity>
   } | null
 
@@ -132,7 +131,7 @@ export interface IActionTypes {
     id: string
     increment?: number | undefined
   }) => {
-    type: Actions
+    type: Actions.UpdateActivity
     payload: Partial<IActivity>
   } | null
 }
