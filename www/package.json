@@ -9,7 +9,7 @@
     "@lingui/react": "^2.9.1",
     "@loadable/component": "^5.12.0",
     "@mdx-js/mdx": "^1.5.7",
-    "@reach/skip-nav": "^0.6.2",
+    "@reach/skip-nav": "^0.9.0",
     "@styled-system/prop-types": "^5.1.5",
     "@styled-system/should-forward-prop": "^5.1.5",
     "@styled-system/theme-get": "^5.1.2",
