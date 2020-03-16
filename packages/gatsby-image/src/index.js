@@ -387,7 +387,7 @@ class Image extends React.Component {
         // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
         // imgLoaded and imgCached are in a 2nd setState call to be changed together,
         // avoiding initiating unnecessary animation frames from style changes.
-        this.setState({ isVisible: true }, () =>
+        this.setState({ isVisible: true }, () => {
           this.setState({
             imgLoaded: imageInCache,
             // `currentSrc` should be a string, but can be `undefined` in IE,
@@ -398,7 +398,7 @@ class Image extends React.Component {
               this.imageRef.current && this.imageRef.current.currentSrc
             ),
           })
-        )
+        })
       })
     }
   }
