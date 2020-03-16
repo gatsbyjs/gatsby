@@ -39,6 +39,7 @@ npm install --save gatsby-plugin-google-analytics
 ```js:title=gatsby-config.js
 module.exports = {
   plugins: [
+  `gatsby-plugin-google-analytics`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
