@@ -5,7 +5,7 @@ import convertHrtime from "convert-hrtime"
 import { trackCli } from "gatsby-telemetry"
 import { bindActionCreators } from "redux"
 
-import iface from "./index"
+import ReporterStore from "./index"
 import {
   Actions,
   ActivityLogLevels,
@@ -25,7 +25,7 @@ import {
   ILogReturn,
 } from "./action-types"
 
-const { dispatch, getStore } = iface
+const { dispatch, getStore } = ReporterStore
 
 const getActivity = (id: string): IActivity =>
   getStore().getState().logs.activities[id]

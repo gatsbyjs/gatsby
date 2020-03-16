@@ -42,7 +42,7 @@ const isInternalAction = (action): boolean => {
   return false
 }
 
-interface IIface {
+interface IReporterStore {
   dispatch(dispatch: any)
   getStore: () => store
   onStoreSwap: (fn: storeListener) => void
@@ -50,7 +50,7 @@ interface IIface {
   setStore: (s: store) => void
 }
 
-const iface: IIface = {
+const ReporterStore: IReporterStore = {
   getStore: () => store,
   dispatch: action => {
     if (!action) {
@@ -58,10 +58,10 @@ const iface: IIface = {
     }
 
     if (Array.isArray(action)) {
-      action.forEach(item => iface.dispatch(item))
+      action.forEach(item => ReporterStore.dispatch(item))
       return
     } else if (typeof action === `function`) {
-      action(iface.dispatch)
+      action(ReporterStore.dispatch)
       return
     }
 
@@ -100,4 +100,4 @@ const iface: IIface = {
   },
 }
 
-export default iface
+export default ReporterStore
