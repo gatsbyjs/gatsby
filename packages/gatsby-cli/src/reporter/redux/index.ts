@@ -50,7 +50,7 @@ interface IIface {
   setStore: (s: store) => void
 }
 
-const iface: IIface = {
+export const iface: IIface = {
   getStore: () => store,
   dispatch: action => {
     if (!action) {
@@ -99,5 +99,3 @@ const iface: IIface = {
     storeSwapListeners.forEach(fn => fn(store))
   },
 }
-
-export default iface
