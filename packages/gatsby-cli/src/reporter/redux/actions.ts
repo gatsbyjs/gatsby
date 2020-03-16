@@ -76,7 +76,7 @@ signalExit(() => {
 /**
  * Like setTimeout, but also handle signalExit
  */
-const delayedCall = (fn: { (): void; (): void }, timeout: number): voidFunc => {
+const delayedCall = (fn: voidFunc, timeout: number): voidFunc => {
   const fnWrap = (): void => {
     fn()
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
