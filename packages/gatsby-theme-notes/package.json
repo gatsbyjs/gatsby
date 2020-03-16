@@ -34,7 +34,7 @@
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
     "@theme-ui/prism": "^0.2.50",
-    "@theme-ui/typography": "^0.2.46",
+    "@theme-ui/typography": "^0.3.0",
     "deepmerge": "^4.2.2",
     "gatsby-core-utils": "^1.0.33",
     "gatsby-plugin-compile-es6-packages": "^2.1.0",
