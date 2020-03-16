@@ -1,9 +1,9 @@
-const { camelCase } = require(`lodash`)
-const report = require(`gatsby-cli/lib/reporter`)
-const { parseTypeDef } = require(`../../schema/types/type-defs`)
+import { camelCase } from "lodash"
 import { GraphQLSchema, GraphQLOutputType } from "graphql"
 import { ActionCreator } from "redux"
 import { ThunkAction } from "redux-thunk"
+import report from "gatsby-cli/lib/reporter"
+import { parseTypeDef } from "../../schema/types/type-defs"
 import { GraphQLFieldExtensionDefinition } from "../../schema/extensions"
 import { GatsbyGraphQLType } from "../../schema/types/type-builders"
 import {
