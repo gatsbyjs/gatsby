@@ -8,7 +8,7 @@ Most content that needs to be translated is in Markdown files in translation rep
 
 Unlike Markdown documents, UI messages are kept in the same monorepo as the gatsby source.
 
-1. Follow the instructions for [running the Gatsby website](/contributing/blog-and-website-contributions/#making-changes-to-the-website).
+1. Follow the instructions for [running the Gatsby website](/contributing/website-contributions/).
 2. Go to `www/` and run `yarn lingui:add-locale [lang code]` to generate a file for your language at `src/data/locales/[lang-code]/messages.po`.
 3. Translate all the strings in `[lang code]/messages.po` by editing the `msgstr` field of each message.
 
