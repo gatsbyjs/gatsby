@@ -33,13 +33,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0",
-    "typescript": "^3.2.1"
-  },
-  "peerDependenciesMeta": {
-    "typescript": {
-      "optional": true
-    }
+    "gatsby": "^2.0.0"
   },
   "repository": {
     "type": "git",
