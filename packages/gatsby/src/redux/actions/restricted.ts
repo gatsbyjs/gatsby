@@ -15,6 +15,7 @@ import {
   ICreateFieldExtension,
   IPrintTypeDefinitions,
   ICreateResolverContext,
+  IGatsbyPluginContext,
 } from "../types"
 
 type RestrictionActionNames =
@@ -373,7 +374,7 @@ actions.printTypeDefinitions = (
  * }
  */
 actions.createResolverContext = (
-  context: object,
+  context: IGatsbyPluginContext,
   plugin: IGatsbyPlugin,
   traceId?: string
 ): ThunkAction<void, IReduxState, {}, ICreateResolverContext> => (

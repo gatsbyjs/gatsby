@@ -1,6 +1,7 @@
 import { GraphQLSchema } from "graphql"
 import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
+import { parseTypeDef } from "../schema/types/type-defs"
 
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
@@ -17,6 +18,10 @@ export interface IReduxNode {
 export interface IGatsbyPlugin {
   name: string
   version: string
+}
+
+export interface IGatsbyPluginContext {
+  [key: string]: (...args: any[]) => any
 }
 
 export interface IReduxState {
@@ -178,7 +183,7 @@ export interface ICreateTypes {
   type: `CREATE_TYPES`
   plugin: IGatsbyPlugin
   traceId?: string
-  payload: any
+  payload: ReturnType<parseTypeDef> | Array<ReturnType<parseTypeDef>>
 }
 
 export interface ICreateFieldExtension {
@@ -207,5 +212,7 @@ export interface ICreateResolverContext {
   type: `CREATE_RESOLVER_CONTEXT`
   plugin: IGatsbyPlugin
   traceId?: string
-  payload: object
+  payload:
+    | IGatsbyPluginContext
+    | { [camelCasedPluginNameWithoutPrefix: string]: IGatsbyPluginContext }
 }
