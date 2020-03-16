@@ -1,6 +1,7 @@
-import { printSchema } from "graphql"
+import { printSchema, GraphQLSchema } from "graphql"
+import { CLIEngine } from "eslint"
 
-module.exports = schema => {
+module.exports = (schema: GraphQLSchema): CLIEngine.Options => {
   return {
     useEslintrc: false,
     resolvePluginsRelativeTo: __dirname,

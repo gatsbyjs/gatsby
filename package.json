@@ -8,6 +8,7 @@
     "@types/babel__code-frame": "^7.0.1",
     "@types/bluebird": "^3.5.30",
     "@types/cache-manager": "^2.10.2",
+    "@types/eslint": "^6.1.8",
     "@types/express": "^4.17.3",
     "@types/fs-extra": "^8.1.0",
     "@types/got": "^9.6.9",
