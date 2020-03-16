@@ -5604,3 +5604,15 @@
     - Custom GraphQL API for handling checkout and payment
     - Postmark for order notifications
     - Strong Customer Authentication
+- url: https://koop-blog.netlify.com/
+  repo: https://github.com/bagseye/koop-blog
+  description: A simple blog platform using GatsbyJS and MDX
+  tags:
+    - Blog
+    - Markdown
+    - MDX
+  features:
+    - Responsive design
+    - Styled 404 page
+    - Lightweight
+    - Styled Components
