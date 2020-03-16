@@ -1,15 +1,74 @@
-import { Actions, ActivityStatuses } from "../constants"
+import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
 import { IActivity } from "./reducer"
 import { Dispatch, AnyAction } from "redux"
 
 type DispatchAction = (dispatch: Dispatch<AnyAction>) => void
 
-export type QueuedActionsToEmit<T> = Array<
-  DispatchAction | { type: T; payload: Partial<IActivity> }
+interface IActionReturn<T, P> {
+  type: T
+  payload: P
+}
+
+export type QueuedActionsToEmit<T, P> = Array<
+  DispatchAction | IActionReturn<T, P>
 >
 
+export interface IStartActivityReturn {
+  id: string
+  uuid: string
+  text: string
+  type: string
+  status: string
+  startTime: [number, number]
+
+  statusText: string
+
+  current: string
+  total: number
+}
+
+export interface ICreatePendingActivityReturn {
+  id: string
+  type: ActivityTypes.Pending
+  status: string
+}
+
+export interface IEndActivityPending {
+  id: string
+  status: ActivityStatuses.Cancelled
+  type: ActivityTypes.Pending
+}
+
+export interface IEndActivityInProgress {
+  uuid: string
+  id: string
+  status: ActivityStatuses
+  duration: number
+  type: ActivityTypes.Spinner | ActivityTypes.Hidden | ActivityTypes.Progress
+}
+
+export interface ILogReturn {
+  level: string
+  text: string
+  statusText?: string
+  duration: number
+  group?: string
+  code?: string
+  type?: string
+  filePath?: string
+  location?: string
+  docsUrl?: string
+  context?: string
+  activity_current: string
+  activity_total: number
+  activity_type: string
+  activity_uuid: string
+  timestamp: string
+  stack?: string
+}
+
 export interface IActionTypes {
-  setStatus(status: string, force?: boolean | undefined): DispatchAction
+  setStatus(status: string, force?: boolean): DispatchAction
   createLog(arg0: {
     text: string
     level: string
@@ -27,28 +86,7 @@ export interface IActionTypes {
     activity_total: number
     activity_type: string
     stack?: string
-  }): {
-    type: Actions.Log
-    payload: {
-      level: string
-      text: string
-      statusText: string | undefined
-      duration: number
-      group: string | undefined
-      code: string | undefined
-      type: string | undefined
-      filePath: string | undefined
-      location: string | undefined
-      docsUrl: string | undefined
-      context: string | undefined
-      activity_current: string
-      activity_total: number
-      activity_type: string
-      activity_uuid: string
-      timestamp: string
-      stack: string | undefined
-    }
-  }
+  }): IActionReturn<Actions.Log, ILogReturn>
 
   startActivity: ({
     id,
@@ -61,10 +99,10 @@ export interface IActionTypes {
     id: string
     text: string
     type: string
-    status?: ActivityStatuses | undefined
+    status?: ActivityStatuses
     current: string
     total: number
-  }) => QueuedActionsToEmit<Actions.StartActivity>
+  }) => QueuedActionsToEmit<Actions.StartActivity, IStartActivityReturn>
 
   endActivity: ({
     id,
@@ -73,7 +111,8 @@ export interface IActionTypes {
     id: string
     status: ActivityStatuses
   }) => QueuedActionsToEmit<
-    Actions.CancelActivity | Actions.EndActivity | Actions.Log
+    Actions.CancelActivity | Actions.EndActivity | Actions.Log,
+    IEndActivityPending | IEndActivityInProgress | ILogReturn
   > | null
 
   createPendingActivity: ({
@@ -81,26 +120,21 @@ export interface IActionTypes {
     status,
   }: {
     id: string
-    status?: ActivityStatuses | undefined
-  }) => QueuedActionsToEmit<Actions.PendingActivity>
+    status?: ActivityStatuses
+  }) => QueuedActionsToEmit<
+    Actions.PendingActivity,
+    ICreatePendingActivityReturn
+  >
 
   updateActivity: (
     activity: Partial<IActivity>
-  ) => {
-    type: Actions.UpdateActivity
-    payload: Partial<IActivity>
-  } | null
+  ) => IActionReturn<Actions.UpdateActivity, Partial<IActivity>> | null
 
   setActivityErrored: ({
     id,
   }: {
     id: string
-  }) => {
-    type: Actions.ActivityErrored
-    payload: {
-      id: IActivity["id"]
-    }
-  } | null
+  }) => IActionReturn<Actions.ActivityErrored, { id: IActivity["id"] }> | null
 
   setActivityStatusText: ({
     id,
@@ -108,10 +142,10 @@ export interface IActionTypes {
   }: {
     id: string
     statusText: string
-  }) => {
-    type: Actions.UpdateActivity
-    payload: Partial<IActivity>
-  } | null
+  }) => IActionReturn<
+    Actions.UpdateActivity,
+    { id?: string; statusText?: string }
+  > | null
 
   setActivityTotal: ({
     id,
@@ -119,19 +153,19 @@ export interface IActionTypes {
   }: {
     id: string
     total: number
-  }) => {
-    type: Actions.UpdateActivity
-    payload: Partial<IActivity>
-  } | null
+  }) => IActionReturn<
+    Actions.UpdateActivity,
+    { id?: string; total?: number }
+  > | null
 
   activityTick: ({
     id,
     increment,
   }: {
     id: string
-    increment?: number | undefined
-  }) => {
-    type: Actions.UpdateActivity
-    payload: Partial<IActivity>
-  } | null
+    increment?: number
+  }) => IActionReturn<
+    Actions.UpdateActivity,
+    { id?: string; current?: string }
+  > | null
 }

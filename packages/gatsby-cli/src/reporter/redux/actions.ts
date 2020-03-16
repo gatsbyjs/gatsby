@@ -15,7 +15,15 @@ import {
 import signalExit from "signal-exit"
 
 import { IActivity } from "./reducer"
-import { IActionTypes, QueuedActionsToEmit } from "./action-types"
+import {
+  IActionTypes,
+  QueuedActionsToEmit,
+  IStartActivityReturn,
+  ICreatePendingActivityReturn,
+  IEndActivityPending,
+  IEndActivityInProgress,
+  ILogReturn,
+} from "./action-types"
 
 const { dispatch, getStore } = iface
 
@@ -137,7 +145,10 @@ const actions: IActionTypes = {
     }
   },
   createPendingActivity: ({ id, status = ActivityStatuses.NotStarted }) => {
-    const actionsToEmit: QueuedActionsToEmit<Actions.PendingActivity> = []
+    const actionsToEmit: QueuedActionsToEmit<
+      Actions.PendingActivity,
+      ICreatePendingActivityReturn
+    > = []
 
     const logsState = getStore().getState().logs
 
@@ -187,7 +198,10 @@ const actions: IActionTypes = {
     current,
     total,
   }) => {
-    const actionsToEmit: QueuedActionsToEmit<Actions.StartActivity> = []
+    const actionsToEmit: QueuedActionsToEmit<
+      Actions.StartActivity,
+      IStartActivityReturn
+    > = []
 
     const logsState = getStore().getState().logs
 
@@ -222,7 +236,8 @@ const actions: IActionTypes = {
       return null
     }
     const actionsToEmit: QueuedActionsToEmit<
-      Actions.CancelActivity | Actions.EndActivity | Actions.Log
+      Actions.CancelActivity | Actions.EndActivity | Actions.Log,
+      IEndActivityPending | IEndActivityInProgress | ILogReturn
     > = []
     if (activity.type === ActivityTypes.Pending) {
       actionsToEmit.push({
