@@ -10044,3 +10044,14 @@
     - Marketing
     - Video
   featured: false
+- title: Mob HQ
+  main_url: https://hq.yt-mob.com/
+  url: https://hq.yt-mob.com/
+  description: >
+    Mob HQ is the Headquarters for the World Cup winning Downhill Mountain Bike Race Team, and also a full-time Ride Center for YT bikes.
+  categories:
+    - Sports
+    - Travel
+  built_by: Built by Rebels Ltd.
+  built_by_url: https://builtbyrebels.com/
+  featured: false
