@@ -82,7 +82,13 @@ describe(`gatsby-plugin-typescript`, () => {
               enforce: `pre`,
               test: /\.tsx?$/,
               exclude: /(node_modules|bower_components)/,
-              use: [eslintLoader],
+              use: [
+                {
+                  loader: eslintLoader.loader,
+                  // overrides for .ts/.tsx files
+                  options: expect.any(Object),
+                },
+              ],
             },
           ],
         },

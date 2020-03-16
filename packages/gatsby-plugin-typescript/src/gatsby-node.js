@@ -67,6 +67,44 @@ function onCreateWebpackConfig({
           ...builtInEslintRule,
           test: /\.tsx?$/,
         }
+
+        if (typescriptEslintRule.use) {
+          // adjust eslint config for typescript (parser and rules switch from vanilla js to typescript versions)
+          typescriptEslintRule.use = typescriptEslintRule.use.map(use => {
+            if (!use.loader.includes(`eslint-loader`)) {
+              return use
+            }
+
+            return {
+              ...use,
+              options: {
+                ...use.options,
+                baseConfig: {
+                  ...use.options?.baseConfig,
+                  overrides: [
+                    ...(use.options?.baseConfig?.overrides || []),
+                    {
+                      files: [`*.ts`, `*.tsx`],
+                      parser: `@typescript-eslint/parser`,
+                      plugins: [`@typescript-eslint/eslint-plugin`],
+                      rules: {
+                        "no-array-constructor": `off`,
+                        "@typescript-eslint/no-array-constructor": `error`,
+                        "no-empty-function": `off`,
+                        "@typescript-eslint/no-empty-function": `error`,
+                        "no-unused-vars": `off`,
+                        "@typescript-eslint/no-unused-vars": `warn`,
+                        "no-use-before-define": `off`,
+                        "@typescript-eslint/no-use-before-define": `error`,
+                      },
+                    },
+                  ],
+                },
+              },
+            }
+          })
+        }
+
         actions.setWebpackConfig({
           module: {
             rules: [typescriptEslintRule],
