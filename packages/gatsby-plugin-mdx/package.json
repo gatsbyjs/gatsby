@@ -35,7 +35,7 @@
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.0.34",
     "gray-matter": "^4.0.2",
-    "json5": "^2.1.1",
+    "json5": "^2.1.2",
     "loader-utils": "^1.4.0",
     "lodash": "^4.17.15",
     "mdast-util-to-string": "^1.1.0",
