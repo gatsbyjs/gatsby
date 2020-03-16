@@ -5,7 +5,7 @@ import convertHrtime from "convert-hrtime"
 import { trackCli } from "gatsby-telemetry"
 import { bindActionCreators } from "redux"
 
-import { iface } from "./index"
+import iface from "./index"
 import {
   Actions,
   ActivityLogLevels,
