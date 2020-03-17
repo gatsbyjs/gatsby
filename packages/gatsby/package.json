@@ -98,7 +98,7 @@
     "md5-file": "^3.2.3",
     "micromatch": "^3.1.10",
     "mime": "^2.4.4",
-    "mini-css-extract-plugin": "^0.8.0",
+    "mini-css-extract-plugin": "^0.8.2",
     "mitt": "^1.2.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.24.0",
