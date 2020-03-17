@@ -8,12 +8,19 @@ const _ = require(`lodash`)
 
 let getResourcesFromHTML = require(`./get-resources-from-html`)
 
-exports.createPages = ({ actions }) => {
+exports.onPreBootstrap = ({ cache }) => {
+  const appShellSourcePath = path.join(__dirname, `app-shell.js`)
+  const appShellTargetPath = path.join(cache.directory, `app-shell.js`)
+  fs.copyFileSync(appShellSourcePath, appShellTargetPath)
+}
+
+exports.createPages = ({ actions, cache }) => {
+  const appShellPath = path.join(cache.directory, `app-shell.js`)
   if (process.env.NODE_ENV === `production`) {
     const { createPage } = actions
     createPage({
       path: `/offline-plugin-app-shell-fallback/`,
-      component: slash(path.resolve(`${__dirname}/app-shell.js`)),
+      component: slash(appShellPath),
     })
   }
 }
