@@ -221,7 +221,7 @@ module.exports = async function build(program: BuildArgs) {
       store.getState(),
       cachedPageData
     )
-    await buildUtils.removePageFiles({ publicDir }, deletedPageKeys)
+    await buildUtils.removePageFiles(publicDir, deletedPageKeys)
 
     activity.end()
   }
