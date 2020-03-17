@@ -372,8 +372,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
-      !!actionOptions &&
-      actionOptions.traceId === `initial-createPagesStatefully`,
+      actionOptions?.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
@@ -1244,7 +1243,7 @@ export const createRedirect = ({
   ...rest
 }): ICreateRedirectAction => {
   let pathPrefix = ``
-  if (store.getState().program.prefixPaths) {
+  if (`prefixPaths` in store.getState().program) {
     pathPrefix = store.getState().config.pathPrefix
   }
 
