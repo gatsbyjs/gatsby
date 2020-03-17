@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux"
 import { store } from ".."
 
 import * as internalActions from "./internal"
-import { actions as publicActions } from "./public"
+import * as publicActions from "./public"
 import {
   actions as restrictedActions,
   availableActionsByAPI,

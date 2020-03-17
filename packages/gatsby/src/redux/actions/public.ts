@@ -76,7 +76,6 @@ const {
   getInProcessJobPromise,
 } = require(`../../utils/jobs-manager`)
 
-export const actions: Record<string, any> = {}
 const isWindows = platform() === `win32`
 
 const ensureWindowsDriveIsUppercase = (filePath: string): string => {
@@ -111,7 +110,7 @@ const findChildren = (
 /**
  * Delete a page
  */
-actions.deletePage = (page: IPageInput): IDeletePageAction => {
+export const deletePage = (page: IPageInput): IDeletePageAction => {
   return {
     type: `DELETE_PAGE`,
     payload: page,
@@ -129,7 +128,7 @@ const fileOkCache = {}
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documentation about creating pages.
  */
-actions.createPage = (
+export const createPage = (
   page: IPageInput,
   plugin?: IGatsbyPlugin,
   actionOptions?: IActionOptions
@@ -472,7 +471,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 /**
  * Delete a node
  */
-actions.deleteNode = (
+export const deleteNode = (
   options: IReduxNode["id"] | { node: IReduxNode },
   plugin: IGatsbyPlugin,
   args: IGatsbyPlugin
@@ -551,7 +550,7 @@ actions.deleteNode = (
 /**
  * Batch delete nodes
  */
-actions.deleteNodes = (
+export const deleteNodes = (
   nodes: string[],
   plugin: IGatsbyPlugin
 ): IDeleteNodesAction => {
@@ -600,7 +599,7 @@ type CreateNode = (
   | (ICreateNodeAction | IDeleteNodeAction)[]
   | void
 
-const createNode: CreateNode = (node, plugin, actionOptions) => {
+const _createNode: CreateNode = (node, plugin, actionOptions) => {
   if (typeof node !== `object`) {
     return console.log(
       chalk.bold.red(
@@ -792,10 +791,10 @@ const createNode: CreateNode = (node, plugin, actionOptions) => {
   }
 }
 
-actions.createNode = (...args: Parameters<CreateNode>) => (
+export const createNode = (...args: Parameters<CreateNode>) => (
   dispatch
 ): Promise<any> | undefined => {
-  const actions = createNode(...args) as (
+  const actions = _createNode(...args) as (
     | ICreateNodeAction
     | IDeleteNodeAction
     | ITouchNodeAction
@@ -826,7 +825,7 @@ actions.createNode = (...args: Parameters<CreateNode>) => (
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
  */
-actions.touchNode = (
+export const touchNode = (
   options: string | { nodeId: IReduxNode["id"] },
   plugin?: IGatsbyPlugin
 ): ITouchNodeAction => {
@@ -873,7 +872,7 @@ interface ICreateNodeInput {
  * other plugins.  Also since nodes are immutable, you can't mutate the node
  * directly. So to extend another node, use this.
  */
-actions.createNodeField = (
+export const createNodeField = (
   { node, name, value, fieldName, fieldValue }: ICreateNodeInput,
   plugin: IGatsbyPlugin,
   actionOptions?: IActionOptions
@@ -945,7 +944,7 @@ actions.createNodeField = (
  * don't have direct access to the immutable parent node, use this action
  * instead.
  */
-actions.createParentChildLink = (
+export const createParentChildLink = (
   { parent, child }: { parent: IReduxNode; child: IReduxNode },
   plugin?: IGatsbyPlugin
 ): ICreateParentChildLinkAction => {
@@ -967,7 +966,7 @@ actions.createParentChildLink = (
  *
  * For full control over the webpack config, use `replaceWebpackConfig()`.
  */
-actions.setWebpackConfig = (
+export const setWebpackConfig = (
   config: webpack.Configuration,
   plugin: IGatsbyPlugin | null = null
 ): ISetWebpackConfigAction => {
@@ -985,7 +984,7 @@ actions.setWebpackConfig = (
  * Generally only useful for cases where you need to handle config merging logic
  * yourself, in which case consider using `webpack-merge`.
  */
-actions.replaceWebpackConfig = (
+export const replaceWebpackConfig = (
   config: webpack.Configuration,
   plugin: IGatsbyPlugin | null = null
 ): IReplaceWebpackConfigAction => {
@@ -1000,7 +999,7 @@ actions.replaceWebpackConfig = (
  * Set top-level Babel options. Plugins and presets will be ignored. Use
  * setBabelPlugin and setBabelPreset for this.
  */
-actions.setBabelOptions = (
+export const setBabelOptions = (
   options: Record<string, any>,
   plugin: IGatsbyPlugin | null = null
 ): ISetBabelOptionsAction => {
@@ -1036,7 +1035,7 @@ actions.setBabelOptions = (
 /**
  * Add new plugins or merge options into existing Babel plugins.
  */
-actions.setBabelPlugin = (
+export const setBabelPlugin = (
   config: babel.ConfigItem,
   plugin: IGatsbyPlugin | null = null
 ): ISetBabelPluginAction => {
@@ -1066,7 +1065,7 @@ actions.setBabelPlugin = (
 /**
  * Add new presets or merge options into existing Babel presets.
  */
-actions.setBabelPreset = (
+export const setBabelPreset = (
   config: babel.ConfigItem,
   plugin: IGatsbyPlugin | null = null
 ): ISetBabelPresetAction => {
@@ -1101,7 +1100,7 @@ actions.setBabelPreset = (
  *
  * Gatsby doesn't finish its process until all jobs are ended.
  */
-actions.createJob = (
+export const createJob = (
   job: IJob,
   plugin: IGatsbyPlugin | null = null
 ): ICreateJobAction => {
@@ -1120,7 +1119,7 @@ actions.createJob = (
  *
  * Gatsby doesn't finish its process until all jobs are ended.
  */
-actions.createJobV2 = (job: IJobV2, plugin: IGatsbyPlugin) => (
+export const createJobV2 = (job: IJobV2, plugin: IGatsbyPlugin) => (
   dispatch,
   getState
 ): ICreateJobV2Action | Promise<any> => {
@@ -1179,7 +1178,7 @@ actions.createJobV2 = (job: IJobV2, plugin: IGatsbyPlugin) => (
  * Set (update) a "job". Sometimes on really long running jobs you want
  * to update the job as it continues.
  */
-actions.setJob = (
+export const setJob = (
   job: IJob,
   plugin: IGatsbyPlugin | null = null
 ): ISetJobAction => {
@@ -1195,7 +1194,7 @@ actions.setJob = (
  *
  * Gatsby doesn't finish its process until all jobs are ended.
  */
-actions.endJob = (
+export const endJob = (
   job: IJob,
   plugin: IGatsbyPlugin | null = null
 ): IEndJobAction => {
@@ -1210,7 +1209,7 @@ actions.endJob = (
  * Set plugin status. A plugin can use this to save status keys e.g. the last
  * it fetched something. These values are persisted between runs of Gatsby.
  */
-actions.setPluginStatus = (
+export const setPluginStatus = (
   status: Record<string, any>,
   plugin: IGatsbyPlugin
 ): ISetPluginStatusAction => {
@@ -1237,7 +1236,7 @@ const maybeAddPathPrefix = (path: string, pathPrefix: string): string => {
  * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
  * plugin](/packages/gatsby-plugin-s3/).
  */
-actions.createRedirect = ({
+export const createRedirect = ({
   fromPath,
   isPermanent = false,
   redirectInBrowser = false,
@@ -1264,7 +1263,7 @@ actions.createRedirect = ({
 /**
  * Create a dependency between a page and data.
  */
-actions.createPageDependency = (
+export const createPageDependency = (
   {
     path,
     nodeId,
@@ -1289,7 +1288,7 @@ actions.createPageDependency = (
 /**
  * Set page data in the store, saving the pages content data and context.
  */
-actions.setPageData = (pageData: IPageData): ISetPageDataAction => {
+export const setPageData = (pageData: IPageData): ISetPageDataAction => {
   return {
     type: `SET_PAGE_DATA`,
     payload: pageData,
@@ -1299,7 +1298,7 @@ actions.setPageData = (pageData: IPageData): ISetPageDataAction => {
 /**
  * Remove page data from the store.
  */
-actions.removePageData = (id: IPageDataRemove): IRemovePageDataAction => {
+export const removePageData = (id: IPageDataRemove): IRemovePageDataAction => {
   return {
     type: `REMOVE_PAGE_DATA`,
     payload: id,
