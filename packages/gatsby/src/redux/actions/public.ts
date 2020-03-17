@@ -58,6 +58,7 @@ import {
   ISetPageDataAction,
   IRemovePageDataAction,
 } from "../types"
+import webpack from "webpack"
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -970,7 +971,7 @@ actions.createParentChildLink = (
  * For full control over the webpack config, use `replaceWebpackConfig()`.
  */
 actions.setWebpackConfig = (
-  config: Record<string, any>,
+  config: webpack.Configuration,
   plugin: IGatsbyPlugin | null = null
 ): ISetWebpackConfigAction => {
   return {
@@ -988,7 +989,7 @@ actions.setWebpackConfig = (
  * yourself, in which case consider using `webpack-merge`.
  */
 actions.replaceWebpackConfig = (
-  config: Record<string, any>,
+  config: webpack.Configuration,
   plugin: IGatsbyPlugin | null = null
 ): IReplaceWebpackConfigAction => {
   return {
@@ -1039,7 +1040,7 @@ actions.setBabelOptions = (
  * Add new plugins or merge options into existing Babel plugins.
  */
 actions.setBabelPlugin = (
-  config: Record<string, any>,
+  config: babel.ConfigItem,
   plugin: IGatsbyPlugin | null = null
 ): ISetBabelPluginAction => {
   // Validate
@@ -1069,7 +1070,7 @@ actions.setBabelPlugin = (
  * Add new presets or merge options into existing Babel presets.
  */
 actions.setBabelPreset = (
-  config: Record<string, any>,
+  config: babel.ConfigItem,
   plugin: IGatsbyPlugin | null = null
 ): ISetBabelPresetAction => {
   // Validate
