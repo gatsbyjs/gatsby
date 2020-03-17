@@ -551,7 +551,7 @@ actions.deleteNode = (
  * Batch delete nodes
  */
 actions.deleteNodes = (
-  nodes: IReduxNode[],
+  nodes: string[],
   plugin: IGatsbyPlugin
 ): IDeleteNodesAction => {
   let msg =
