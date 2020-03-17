@@ -121,4 +121,4 @@ Set up `CF_API_TOKEN` in GitHub secrets with appropriate values from [Quick Star
 ## Additional resources
 
 - [Quickstart for Workers Sites](https://developers.cloudflare.com/workers/sites/start-from-existing/)
-- [Github Action wrangler plugin](https://github.com/cloudflare/wrangler-action)
+- [GitHub Action wrangler plugin](https://github.com/cloudflare/wrangler-action)
