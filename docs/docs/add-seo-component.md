@@ -34,7 +34,7 @@ import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 
-const SEO = ({ title, description, image, pathname, article }) => ()
+const SEO = ({ title, description, image, pathname, article }) => ({})
 
 export default SEO
 
