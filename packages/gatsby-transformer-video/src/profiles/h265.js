@@ -18,6 +18,7 @@ export default function profileH265({
     `-bf 2`,
     `-g ${Math.floor((fps || currentFps) / 2)}`,
     `-pix_fmt yuv420p`,
+    `-tag:v hvc1`,
   ].filter(Boolean)
 
   return (
