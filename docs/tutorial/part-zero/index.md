@@ -57,11 +57,11 @@ xcode-select --install
 brew install node
 ```
 
-> 💡 If you don't want to install it through Homebrew, download your preferred version of Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
+> 💡 If you don't want to install it through Homebrew, download the latest version of Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
 
 ### Windows Instructions
 
-- Download and install your preferred version of Node.js version from [the official Node.js website](https://nodejs.org/en/)
+- Download and install the latest version of Node.js version from [the official Node.js website](https://nodejs.org/en/)
 
 ### Linux Instructions
 
@@ -92,7 +92,7 @@ sudo apt -y upgrade
 sudo apt-get install curl
 ```
 
-3. After it finishes installing, download the your preferred nvm version:
+3. After it finishes installing, download the latest nvm version:
 
 ```shell
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
