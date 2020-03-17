@@ -441,7 +441,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     fileOkCache[internalPage.component] = true
   }
 
-  const oldPage: IPage = store.getState().pages.get(internalPage.path)
+  const oldPage = store.getState().pages.get(internalPage.path)
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 

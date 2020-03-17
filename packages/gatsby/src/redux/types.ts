@@ -107,7 +107,7 @@ export interface IReduxState {
     pathPrefix: string
   }
   pageData: any
-  pages: any
+  pages: Map<string, IPage>
   babelrc: any
   themes: any
   flattenedPlugins: any
