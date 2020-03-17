@@ -801,7 +801,6 @@ const createNode: CreateNode = (
 actions.createNode = (...args: Parameters<CreateNode>) => (
   dispatch
 ): Promise<any> | undefined => {
-  // TODO: remove any
   const actions = createNode(...args)
 
   dispatch(actions)
@@ -830,7 +829,7 @@ actions.createNode = (...args: Parameters<CreateNode>) => (
  * updated but still exist so Gatsby knows to keep them.
  */
 actions.touchNode = (
-  options: any,
+  options: string | { nodeId: IReduxNode["id"] },
   plugin?: IGatsbyPlugin
 ): ITouchNodeAction => {
   let nodeId = _.get(options, `nodeId`)
