@@ -76,9 +76,9 @@
   toPath: /docs/creating-a-transformer-plugin/
 - fromPath: /docs/plugin-authoring/
   toPath: /docs/how-plugins-work/
-- fromPath: /tutorial/theme-tutorials
-  toPath: /tutorial/plugin-and-theme-tutorials
-- fromPath: docs/remark-plugin-tutorial.md
+- fromPath: /tutorial/theme-tutorials/
+  toPath: /tutorial/plugin-and-theme-tutorials/
+- fromPath: /docs/remark-plugin-tutorial/
   toPath: /tutorial/remark-plugin-tutorial/
 - fromPath: /docs/source-plugin-tutorial/
   toPath: /tutorial/pixabay-source-plugin-tutorial/

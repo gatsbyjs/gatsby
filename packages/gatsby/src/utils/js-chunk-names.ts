@@ -1,8 +1,8 @@
-const { kebabCase } = require(`lodash`)
-const path = require(`path`)
-const { store } = require(`../redux`)
+import { kebabCase } from "lodash"
+import path from "path"
+import { store } from "../redux"
 
-const generateComponentChunkName = componentPath => {
+export const generateComponentChunkName = (componentPath: string): string => {
   const program = store.getState().program
   let directory = `/`
   if (program && program.directory) {
@@ -11,5 +11,3 @@ const generateComponentChunkName = componentPath => {
   const name = path.relative(directory, componentPath)
   return `component---${kebabCase(name)}`
 }
-
-exports.generateComponentChunkName = generateComponentChunkName

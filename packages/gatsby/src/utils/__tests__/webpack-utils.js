@@ -25,7 +25,13 @@ describe(`webpack utils`, () => {
     it(`returns default values without any options`, () => {
       const rule = config.rules.js()
 
-      expect(rule).toMatchSnapshot()
+      expect(rule).toMatchSnapshot({
+        use: [
+          {
+            loader: expect.stringContaining(`babel-loader`),
+          },
+        ],
+      })
     })
     describe(`include function`, () => {
       let js
@@ -84,7 +90,13 @@ describe(`webpack utils`, () => {
     it(`returns default values without any options`, () => {
       const rule = config.rules.dependencies()
 
-      expect(rule).toMatchSnapshot()
+      expect(rule).toMatchSnapshot({
+        use: [
+          {
+            loader: expect.stringContaining(`babel-loader`),
+          },
+        ],
+      })
     })
     describe(`exclude function`, () => {
       let dependencies
