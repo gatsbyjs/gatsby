@@ -1,7 +1,7 @@
-const zipkin = require(`zipkin`)
-const { HttpLogger } = require(`zipkin-transport-http`)
-const ZipkinTracer = require(`zipkin-javascript-opentracing`)
-const fetch = require(`node-fetch`)
+import zipkin from "zipkin"
+import { HttpLogger } from "zipkin-transport-http"
+import ZipkinTracer from "zipkin-javascript-opentracing"
+import fetch from "node-fetch"
 
 let logger
 let recorder
@@ -10,7 +10,7 @@ let recorder
  * Create and return an open-tracing compatible tracer. See
  * https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts
  */
-function create() {
+export const create = (): ZipkinTracer => {
   logger = new HttpLogger({
     // endpoint of local docker zipkin instance
     endpoint: `http://localhost:9411/api/v1/spans`,
@@ -40,28 +40,11 @@ function create() {
   return tracer
 }
 
-/**
- * Run any tracer cleanup required before the node.js process
- * exits. For Zipkin HTTP, we must manually process any spans still on
- * the queue
- */
-async function stop() {
-  // First, write all partial spans to the http logger
-  recorder.partialSpans.forEach((span, id) => {
-    if (recorder._timedOut(span)) {
-      recorder._writeSpan(id)
-    }
-  })
-
-  // Then tell http logger to process all spans in its queue
-  return await _processQueue()
-}
-
 // Workaround for issue in Zipkin HTTP Logger where Spans are not
 // cleared off their processing queue before the node.js process
 // exits. Code is mostly the same as the zipkin processQueue
 // implementation.
-async function _processQueue() {
+const _processQueue = async (): Promise<true> => {
   const self = logger
   if (self.queue.length > 0) {
     const postBody = `[${self.queue.join(`,`)}]`
@@ -83,14 +66,26 @@ async function _processQueue() {
       })
       .catch(error => {
         const err = `Error sending Zipkin data ${error}`
-        if (self.errorListenerSet) this.emit(`error`, new Error(err))
+        if (self.errorListenerSet) self.emit(`error`, new Error(err))
         else console.error(err)
       })
   }
   return true
 }
 
-module.exports = {
-  create,
-  stop,
+/**
+ * Run any tracer cleanup required before the node.js process
+ * exits. For Zipkin HTTP, we must manually process any spans still on
+ * the queue
+ */
+export const stop = async (): Promise<true> => {
+  // First, write all partial spans to the http logger
+  recorder.partialSpans.forEach((span, id) => {
+    if (recorder._timedOut(span)) {
+      recorder._writeSpan(id)
+    }
+  })
+
+  // Then tell http logger to process all spans in its queue
+  return await _processQueue()
 }
