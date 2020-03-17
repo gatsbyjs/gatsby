@@ -12,7 +12,7 @@ describe(`isTTY`, () => {
   it(`returns true if not on ci & TTY is enabled`, () => {
     process.stdout.isTTY = true
     jest.mock(`gatsby-core-utils`, () => {
-      return { isCI: () => false }
+      return { isCI: (): boolean => false }
     })
     const { isTTY } = require(`../is-tty`)
     expect(isTTY()).toBe(true)
@@ -21,7 +21,7 @@ describe(`isTTY`, () => {
   it(`returns false if not on ci & TTY is disabled`, () => {
     process.stdout.isTTY = false
     jest.mock(`gatsby-core-utils`, () => {
-      return { isCI: () => false }
+      return { isCI: (): boolean => false }
     })
     const { isTTY } = require(`../is-tty`)
     expect(isTTY()).toBe(false)
@@ -30,7 +30,7 @@ describe(`isTTY`, () => {
   it(`returns false if on ci & TTY is enabled`, () => {
     process.stdout.isTTY = true
     jest.mock(`gatsby-core-utils`, () => {
-      return { isCI: () => true }
+      return { isCI: (): boolean => true }
     })
     const { isTTY } = require(`../is-tty`)
     expect(isTTY()).toBe(false)
@@ -39,7 +39,7 @@ describe(`isTTY`, () => {
   it(`returns false if on ci & TTY is disabled`, () => {
     process.stdout.isTTY = false
     jest.mock(`gatsby-core-utils`, () => {
-      return { isCI: () => true }
+      return { isCI: (): boolean => true }
     })
     const { isTTY } = require(`../is-tty`)
     expect(isTTY()).toBe(false)
