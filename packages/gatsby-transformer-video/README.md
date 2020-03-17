@@ -21,7 +21,9 @@ npm i gatsby-transformer-video
 
 ## Prerequisites
 
-You will need to install `ffmpeg` and `ffprobe` as well. Your FFMPEG version should be compiled with at least the following flags enabled:
+To properly convert and analyze videos, this relies on `ffmpeg` and `ffprobe`. These will be **downloaded automatically** except you turn it off via configuration.
+
+If you want to use your own version of `ffmpeg` and `ffprobe`, it should be compiled with at least the following flags enabled:
 
 `--enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libvpx --enable-libwebp --enable-libopus`
 
@@ -29,15 +31,15 @@ Some operating systems may provide these FFMPEG via a package manager. Some may 
 
 If you can't find a way to get ffmpeg with all requirements for your system, you can always compile it on your own: https://trac.ffmpeg.org/wiki/CompilationGuide
 
-**How to link ffmpeg to this plugin:**
+**How to link your custom binaries to this plugin**
 
 - Provide the path to ffmpeg && ffprobe via GatsbyJS plugin configuration
-- Set an environment variable -> https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#ffmpeg-and-ffprobe
-- Add the static binaries to any folder in your `$PATH`
+- Or set an environment variable -> https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#ffmpeg-and-ffprobe
+- Or add the static binaries to any folder in your `$PATH`
 
 ### Linux
 
-Linux users might be able to: `sudo apt-get install ffmpeg`
+Linux/Debian users might be able to: `sudo apt-get install ffmpeg`
 
 Make sure you have `ffprobe` installed as well.
 
