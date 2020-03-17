@@ -78,14 +78,16 @@ const {
 export const actions: Record<string, any> = {}
 const isWindows = platform() === `win32`
 
-const ensureWindowsDriveIsUppercase = (filePath): string => {
+const ensureWindowsDriveIsUppercase = (filePath: string): string => {
   const segments = filePath.split(`:`).filter(s => s !== ``)
   return segments.length > 0
-    ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
+    ? segments.shift()!.toUpperCase() + `:` + segments.join(`:`)
     : filePath
 }
 
-const findChildren = (initialChildren): any[] => {
+const findChildren = (
+  initialChildren: IReduxNode["id"][]
+): IReduxNode["id"][] => {
   const children = [...initialChildren]
   const queue = [...initialChildren]
   const traversedNodes = new Set()
@@ -1410,7 +1412,7 @@ actions.setPluginStatus = (
 }
 
 // Check if path is absolute and add pathPrefix in front if it's not
-const maybeAddPathPrefix = (path, pathPrefix): string => {
+const maybeAddPathPrefix = (path: string, pathPrefix: string): string => {
   const parsed = url.parse(path)
   const isRelativeProtocol = path.startsWith(`//`)
   return `${
