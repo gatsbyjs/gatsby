@@ -47,6 +47,37 @@
       ],
     },
     {
+      // minor updates in packages <1.0.0 - need master issue approval
+      // not grouped
+      masterIssueApproval: true,
+      updateTypes: ["minor"],
+      packageNames: [
+        // below is list of packages that use 0.X version range, any minor bump there can contain breaking changes, so we just ignore minor bumps for those packages and will need to bump them manually
+        "@reach/skip-nav",
+        "@theme-ui/prism",
+        "@theme-ui/typography",
+        "axios",
+        "babel-preset-gatsby",
+        "sharp",
+        "gatsby-plugin-theme-ui",
+        "graphiql-explorer",
+        "guess-webpack",
+        "jest-silent-reporter",
+        "js-combinatorics",
+        "jscodeshift",
+        "mini-css-extract-plugin",
+        "react-refresh",
+        "scroll-behavior",
+        "theme-ui",
+        "webpack-stats-plugin",
+        "xlsx",
+        "zipkin",
+        "zipkin-transport-http",
+        // below is list of packages that we use alpha/beta/next/canary, where it's not really safe to bump automatically and need extra caution
+        "react-docgen",
+      ],
+    },
+    {
       groupName: "patch updates in packages",
       updateTypes: ["patch"],
     },
