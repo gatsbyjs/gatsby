@@ -125,10 +125,10 @@ module.exports = (
     }
     let remark = new Remark().data(`settings`, remarkOptions)
 
-    for (const plugin of pluginOptions.plugins) {
+    for (let plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
-        for (const parserPlugin of requiredPlugin.setParserPlugins(
+        for (let parserPlugin of requiredPlugin.setParserPlugins(
           plugin.pluginOptions
         )) {
           if (_.isArray(parserPlugin)) {
@@ -268,7 +268,7 @@ module.exports = (
 
     async function getTableOfContents(markdownNode, gqlTocOptions) {
       // fetch defaults
-      const appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
+      let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
       // get cached toc
       const cachedToc = await cache.get(
         tableOfContentsCacheKey(markdownNode, appliedTocOptions)
@@ -443,7 +443,7 @@ module.exports = (
         truncate,
         excerptSeparator,
       })
-      const excerptMarkdown = unified()
+      var excerptMarkdown = unified()
         .use(stringify)
         .stringify(excerptAST)
       return excerptMarkdown
@@ -456,7 +456,7 @@ module.exports = (
       excerptSeparator
     ) {
       const text = await getAST(markdownNode).then(ast => {
-        const excerptNodes = []
+        let excerptNodes = []
         let isBeforeSeparator = true
         visit(
           ast,
@@ -631,7 +631,7 @@ module.exports = (
       wordCount: {
         type: `MarkdownWordCount`,
         resolve(markdownNode) {
-          const counts = {}
+          let counts = {}
 
           unified()
             .use(parse)

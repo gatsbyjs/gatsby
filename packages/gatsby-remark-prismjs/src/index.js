@@ -29,12 +29,12 @@ module.exports = (
     return aliases[lower] || lower
   }
 
-  // Load language extension if defined
+  //Load language extension if defined
   loadLanguageExtension(languageExtensions)
 
   visit(markdownAST, `code`, node => {
     let language = node.meta ? node.lang + node.meta : node.lang
-    const {
+    let {
       splitLanguage,
       highlightLines,
       showLineNumbersLocal,
@@ -67,9 +67,7 @@ module.exports = (
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
     const className = `${classPrefix}${languageName}`
 
-    let numLinesStyle
-    let numLinesClass
-    let numLinesNumber
+    let numLinesStyle, numLinesClass, numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
     if (showLineNumbers) {
       numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt -
@@ -115,10 +113,7 @@ module.exports = (
       let languageName = `text`
 
       if (inlineCodeMarker) {
-        const [language, restOfValue] = node.value.split(
-          `${inlineCodeMarker}`,
-          2
-        )
+        let [language, restOfValue] = node.value.split(`${inlineCodeMarker}`, 2)
         if (language && restOfValue) {
           languageName = normalizeLanguage(language)
           node.value = restOfValue

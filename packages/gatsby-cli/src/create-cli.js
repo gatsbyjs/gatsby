@@ -3,7 +3,7 @@ const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const { setStore } = require(`./reporter/redux`)
-const didYouMean = require(`./did-you-mean`)
+const { didYouMean } = require(`./did-you-mean`)
 const { getLocalGatsbyVersion } = require(`./util/version`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
@@ -267,6 +267,19 @@ function buildLocalCommands(cli, isLocalSite) {
   })
 
   cli.command({
+    command: `feedback`,
+    builder: _ =>
+      _.option(`disable`, {
+        type: `boolean`,
+        describe: `Opt out of future feedback requests`,
+      }).option(`enable`, {
+        type: `boolean`,
+        describe: `Opt into future feedback requests`,
+      }),
+    handler: getCommandHandler(`feedback`),
+  })
+
+  cli.command({
     command: `clean`,
     desc: `Wipe the local gatsby environment including built assets and cache`,
     handler: getCommandHandler(`clean`),
@@ -366,7 +379,7 @@ module.exports = argv => {
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
       handler: handlerP(({ rootPath, starter }) => {
-        const initStarter = require(`./init-starter`)
+        const { initStarter } = require(`./init-starter`)
         return initStarter(starter, { rootPath })
       }),
     })
@@ -391,7 +404,7 @@ Creating a plugin:
 - Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
 - Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
 - Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
-- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/docs/pixabay-source-plugin-tutorial/)
+- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/tutorial/pixabay-source-plugin-tutorial/)
 - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
 - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
           `)

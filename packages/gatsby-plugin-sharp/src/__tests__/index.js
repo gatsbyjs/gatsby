@@ -164,7 +164,7 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 
   describe(`fluid`, () => {
-    const boundActionCreators = {}
+    let boundActionCreators = {}
     beforeEach(() => {
       boundActionCreators.createJobV2 = jest
         .fn()
@@ -375,7 +375,7 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 
   describe(`fixed`, () => {
-    const boundActionCreators = {}
+    let boundActionCreators = {}
     beforeEach(() => {
       boundActionCreators.createJobV2 = jest
         .fn()
@@ -518,12 +518,12 @@ describe(`gatsby-plugin-sharp`, () => {
     }
 
     it(`fixed`, async () => {
-      const result = await fixed({ file, args })
+      let result = await fixed({ file, args })
       expect(result).toMatchSnapshot()
     })
 
     it(`fluid`, async () => {
-      const result = await fluid({ file, args })
+      let result = await fluid({ file, args })
       expect(result).toMatchSnapshot()
     })
   })

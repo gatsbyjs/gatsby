@@ -101,7 +101,7 @@ function removeImport(tag) {
   const importPath = getTagImport(identifier)
 
   const removeVariableDeclaration = statement => {
-    const declaration = statement.findParent(p => p.isVariableDeclaration())
+    let declaration = statement.findParent(p => p.isVariableDeclaration())
     if (declaration) {
       declaration.remove()
     }
@@ -221,11 +221,6 @@ export default function({ types: t }) {
               const filename = state.file.opts.filename
               const shortResultPath = `public/static/d/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
-
-              // Remove query variable since it is useless now
-              if (this.templatePath.parentPath.isVariableDeclarator()) {
-                this.templatePath.parentPath.remove()
-              }
 
               // only remove the import if its like:
               // import { useStaticQuery } from 'gatsby'
@@ -390,7 +385,7 @@ export default function({ types: t }) {
             ) {
               const [{ name: varName }] = hookPath.node.arguments
 
-              const binding = hookPath.scope.getBinding(varName)
+              let binding = hookPath.scope.getBinding(varName)
 
               if (binding) {
                 followVariableDeclarations(binding).path.traverse({

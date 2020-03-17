@@ -5,7 +5,7 @@ exports.onRouteUpdate = (_, pluginOptions) => {
   ) {
     // wrap inside a timeout to ensure the title has properly been changed
     setTimeout(() => {
-      const data = pluginOptions.dataLayerName
+      let data = pluginOptions.dataLayerName
         ? window[pluginOptions.dataLayerName]
         : window.dataLayer
 

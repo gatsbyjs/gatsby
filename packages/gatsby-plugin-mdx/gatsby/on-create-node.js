@@ -126,7 +126,7 @@ class BabelPluginTransformRelativeImports {
       return {
         visitor: {
           StringLiteral({ node }) {
-            const split = node.value.split(`!`)
+            let split = node.value.split(`!`)
             const nodePath = split.pop()
             const loaders = `${split.join(`!`)}${split.length > 0 ? `!` : ``}`
             if (nodePath.startsWith(`.`)) {

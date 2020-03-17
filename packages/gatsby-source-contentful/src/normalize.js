@@ -170,7 +170,7 @@ exports.buildForeignReferenceMap = ({
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
         if (entryItemFields[entryItemFieldKey]) {
-          const entryItemFieldValue =
+          let entryItemFieldValue =
             entryItemFields[entryItemFieldKey][defaultLocale]
           // If this is an array of single reference object
           // add to the reference map, otherwise ignore.

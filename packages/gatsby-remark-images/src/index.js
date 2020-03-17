@@ -49,7 +49,7 @@ module.exports = (
 
   // This will allow the use of html image tags
   // const rawHtmlNodes = select(markdownAST, `html`)
-  const rawHtmlNodes = []
+  let rawHtmlNodes = []
   visitWithParents(markdownAST, [`html`, `jsx`], (node, ancestors) => {
     const inLink = ancestors.some(findParentLinks)
 
@@ -57,7 +57,7 @@ module.exports = (
   })
 
   // This will only work for markdown syntax image tags
-  const markdownImageNodes = []
+  let markdownImageNodes = []
 
   visitWithParents(
     markdownAST,
@@ -150,7 +150,7 @@ module.exports = (
       return resolve()
     }
 
-    const fluidResult = await fluid({
+    let fluidResult = await fluid({
       file: imageNode,
       args: options,
       reporter,
@@ -364,7 +364,7 @@ module.exports = (
             !node.hasOwnProperty(`url`) &&
             node.hasOwnProperty(`identifier`)
           ) {
-            // consider as imageReference node
+            //consider as imageReference node
             refNode = node
             node = definitions(refNode.identifier)
             // pass original alt from referencing node
@@ -423,14 +423,14 @@ module.exports = (
               return resolve()
             }
 
-            const imageRefs = []
+            let imageRefs = []
             $(`img`).each(function() {
               imageRefs.push($(this))
             })
 
-            for (const thisImg of imageRefs) {
+            for (let thisImg of imageRefs) {
               // Get the details we need.
-              const formattedImgTag = {}
+              let formattedImgTag = {}
               formattedImgTag.url = thisImg.attr(`src`)
               formattedImgTag.title = thisImg.attr(`title`)
               formattedImgTag.alt = thisImg.attr(`alt`)

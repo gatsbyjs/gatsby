@@ -105,7 +105,7 @@ describe(`Test plugin feed`, () => {
         },
       ]
 
-      for (const options of invalidOptions) {
+      for (let options of invalidOptions) {
         try {
           await setup(options)
         } catch (e) {

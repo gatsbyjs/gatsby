@@ -154,8 +154,8 @@ fragment commentsFragment on HackerNewsItem {
         if (!comment.kids) {
           comment.kids = []
         }
-        const commentChildIds = comment.kids.map(k => createNodeId(k.id))
-        const commentNode = {
+        let commentChildIds = comment.kids.map(k => createNodeId(k.id))
+        let commentNode = {
           ..._.omit(comment, `kids`),
           id: createNodeId(comment.id),
           children: commentChildIds,

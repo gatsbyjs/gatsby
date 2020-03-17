@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 
-// / Plugin options are loaded onPreBootstrap in gatsby-node
+/// Plugin options are loaded onPreBootstrap in gatsby-node
 const pluginDefaults = {
   forceBase64Format: false,
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
@@ -74,7 +74,7 @@ exports.healOptions = (
   fileExtension = ``,
   defaultArgs = {}
 ) => {
-  const options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
+  let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
