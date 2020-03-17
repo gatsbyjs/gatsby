@@ -1,6 +1,6 @@
 import { slash } from "gatsby-core-utils"
 import path from "path"
-import opentracing, { Tracer } from "opentracing"
+import { Tracer, initGlobalTracer } from "opentracing"
 
 let tracerProvider
 
@@ -20,10 +20,10 @@ export const initTracer = (tracerFile: string): Tracer => {
     tracerProvider = require(resolvedPath)
     tracer = tracerProvider.create()
   } else {
-    tracer = new opentracing.Tracer() // Noop
+    tracer = new Tracer() // Noop
   }
 
-  opentracing.initGlobalTracer(tracer)
+  initGlobalTracer(tracer)
 
   return tracer
 }
