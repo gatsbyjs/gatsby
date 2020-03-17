@@ -109,11 +109,6 @@ const findChildren = (
 
 /**
  * Delete a page
- * @param {Object} page a page object
- * @param {string} page.path The path of the page
- * @param {string} page.component The absolute path to the page component
- * @example
- * deletePage(page)
  */
 actions.deletePage = (page: IPageInput): IDeletePageAction => {
   return {
@@ -132,24 +127,6 @@ const fileOkCache = {}
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documentation about creating pages.
- * @param {Object} page a page object
- * @param {string} page.path Any valid URL. Must start with a forward slash
- * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
- * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
- * @param {string} page.component The absolute path to the component for this page
- * @param {Object} page.context Context data for this page. Passed as props
- * to the component `this.props.pageContext` as well as to the graphql query
- * as graphql arguments.
- * @example
- * createPage({
- *   path: `/my-sweet-new-page/`,
- *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
- *   // The context is passed as props to the component as well
- *   // as into the component's GraphQL query.
- *   context: {
- *     id: `123456`,
- *   },
- * })
  */
 actions.createPage = (
   page: IPageInput,
@@ -493,10 +470,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
 /**
  * Delete a node
- * @param {object} $0
- * @param {object} $0.node the node object
- * @example
- * deleteNode({node: node})
  */
 actions.deleteNode = (
   options: any,
@@ -574,13 +547,8 @@ actions.deleteNode = (
   }
 }
 
-// Marked private here because it was suppressed in documentation pages.
 /**
  * Batch delete nodes
- * @private
- * @param {Array} nodes an array of node ids
- * @example
- * deleteNodes([`node1`, `node2`])
  */
 actions.deleteNodes = (
   nodes: IReduxNode[],
@@ -617,85 +585,9 @@ let NODE_COUNTER = 0
 
 const typeOwners = {}
 
-// memberof notation is added so this code can be referenced instead of the wrapper.
 /**
  * Create a new node.
- * @memberof actions
- * @param {Object} node a node object
- * @param {string} node.id The node's ID. Must be globally unique.
- * @param {string} node.parent The ID of the parent's node. If the node is
- * derived from another node, set that node as the parent. Otherwise it can
- * just be `null`.
- * @param {Array} node.children An array of children node IDs. If you're
- * creating the children nodes while creating the parent node, add the
- * children node IDs here directly. If you're adding a child node to a
- * parent node created by a plugin, you can't mutate this value directly
- * to add your node id, instead use the action creator `createParentChildLink`.
- * @param {Object} node.internal node fields that aren't generally
- * interesting to consumers of node data but are very useful for plugin writers
- * and Gatsby core. Only fields described below are allowed in `internal` object.
- * Using any type of custom fields will result in validation errors.
- * @param {string} node.internal.mediaType An optional field to indicate to
- * transformer plugins that your node has raw content they can transform.
- * Use either an official media type (we use mime-db as our source
- * (https://www.npmjs.com/package/mime-db) or a made-up one if your data
- * doesn't fit in any existing bucket. Transformer plugins use node media types
- * for deciding if they should transform a node into a new one. E.g.
- * markdown transformers look for media types of
- * `text/markdown`.
- * @param {string} node.internal.type An arbitrary globally unique type
- * chosen by the plugin creating the node. Should be descriptive of the
- * node as the type is used in forming GraphQL types so users will query
- * for nodes based on the type chosen here. Nodes of a given type can
- * only be created by one plugin.
- * @param {string} node.internal.content An optional field. This is rarely
- * used. It is used when a source plugin sources data it doesn't know how
- * to transform e.g. a markdown string pulled from an API. The source plugin
- * can defer the transformation to a specialized transformer plugin like
- * gatsby-transformer-remark. This `content` field holds the raw content
- * (so for the markdown case, the markdown string).
- *
- * Data that's already structured should be added to the top-level of the node
- * object and _not_ added here. You should not `JSON.stringify` your node's
- * data here.
- *
- * If the content is very large and can be lazy-loaded, e.g. a file on disk,
- * you can define a `loadNodeContent` function for this node and the node
- * content will be lazy loaded when it's needed.
- * @param {string} node.internal.contentDigest the digest for the content
- * of this node. Helps Gatsby avoid doing extra work on data that hasn't
- * changed.
- * @param {string} node.internal.description An optional field. Human
- * readable description of what this node represent / its source. It will
- * be displayed when type conflicts are found, making it easier to find
- * and correct type conflicts.
- * @returns {Promise} The returned Promise resolves when all cascading
- * `onCreateNode` API calls triggered by `createNode` have finished.
- * @example
- * createNode({
- *   // Data for the node.
- *   field1: `a string`,
- *   field2: 10,
- *   field3: true,
- *   ...arbitraryOtherData,
- *
- *   // Required fields.
- *   id: `a-node-id`,
- *   parent: `the-id-of-the-parent-node`, // or null if it's a source node without a parent
- *   children: [],
- *   internal: {
- *     type: `CoolServiceMarkdownField`,
- *     contentDigest: crypto
- *       .createHash(`md5`)
- *       .update(JSON.stringify(fieldData))
- *       .digest(`hex`),
- *     mediaType: `text/markdown`, // optional
- *     content: JSON.stringify(fieldData), // optional
- *     description: `Cool Service: "Title of entry"`, // optional
- *   }
- * })
  */
-
 type CreateNode = (
   node: IReduxNode,
   plugin?: IGatsbyPlugin,
@@ -936,10 +828,6 @@ actions.createNode = (...args: Parameters<CreateNode>) => (
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {Object} $0
- * @param {string} $0.nodeId The id of a node
- * @example
- * touchNode({ nodeId: `a-node-id` })
  */
 actions.touchNode = (
   options: any,
@@ -987,20 +875,6 @@ interface ICreateNodeInput {
  * Once a plugin has claimed a field name the field name can't be used by
  * other plugins.  Also since nodes are immutable, you can't mutate the node
  * directly. So to extend another node, use this.
- * @param {Object} $0
- * @param {Object} $0.node the target node object
- * @param {string} $0.fieldName [deprecated] the name for the field
- * @param {string} $0.fieldValue [deprecated] the value for the field
- * @param {string} $0.name the name for the field
- * @param {string} $0.value the value for the field
- * @example
- * createNodeField({
- *   node,
- *   name: `happiness`,
- *   value: `is sweet graphql queries`
- * })
- *
- * // The field value is now accessible at node.fields.happiness
  */
 actions.createNodeField = (
   { node, name, value, fieldName, fieldValue }: ICreateNodeInput,
@@ -1073,11 +947,6 @@ actions.createNodeField = (
  * this new child node to the `children` array of the parent but since you
  * don't have direct access to the immutable parent node, use this action
  * instead.
- * @param {Object} $0
- * @param {Object} $0.parent the parent node object
- * @param {Object} $0.child the child node object
- * @example
- * createParentChildLink({ parent: parentNode, child: childNode })
  */
 actions.createParentChildLink = (
   { parent, child }: { parent: IReduxNode; child: IReduxNode },
@@ -1100,8 +969,6 @@ actions.createParentChildLink = (
  * Specifically, any change to `entry`, `output`, `target`, or `resolveLoaders` will be ignored.
  *
  * For full control over the webpack config, use `replaceWebpackConfig()`.
- *
- * @param {Object} config partial webpack config, to be merged into the current one
  */
 actions.setWebpackConfig = (
   config: Record<string, any>,
@@ -1120,8 +987,6 @@ actions.setWebpackConfig = (
  *
  * Generally only useful for cases where you need to handle config merging logic
  * yourself, in which case consider using `webpack-merge`.
- *
- * @param {Object} config complete webpack config
  */
 actions.replaceWebpackConfig = (
   config: Record<string, any>,
@@ -1137,13 +1002,6 @@ actions.replaceWebpackConfig = (
 /**
  * Set top-level Babel options. Plugins and presets will be ignored. Use
  * setBabelPlugin and setBabelPreset for this.
- * @param {Object} config An options object in the shape of a normal babelrc JavaScript object
- * @example
- * setBabelOptions({
- *   options: {
- *     sourceMaps: `inline`,
- *   }
- * })
  */
 actions.setBabelOptions = (
   options: Record<string, any>,
@@ -1180,16 +1038,6 @@ actions.setBabelOptions = (
 
 /**
  * Add new plugins or merge options into existing Babel plugins.
- * @param {Object} config A config object describing the Babel plugin to be added.
- * @param {string} config.name The name of the Babel plugin
- * @param {Object} config.options Options to pass to the Babel plugin.
- * @example
- * setBabelPlugin({
- *   name:  `babel-plugin-emotion`,
- *   options: {
- *     sourceMap: true,
- *   },
- * })
  */
 actions.setBabelPlugin = (
   config: Record<string, any>,
@@ -1220,16 +1068,6 @@ actions.setBabelPlugin = (
 
 /**
  * Add new presets or merge options into existing Babel presets.
- * @param {Object} config A config object describing the Babel plugin to be added.
- * @param {string} config.name The name of the Babel preset.
- * @param {Object} config.options Options to pass to the Babel preset.
- * @example
- * setBabelPreset({
- *   name: `@babel/preset-react`,
- *   options: {
- *     pragma: `Glamor.createElement`,
- *   },
- * })
  */
 actions.setBabelPreset = (
   config: Record<string, any>,
@@ -1265,10 +1103,6 @@ actions.setBabelPreset = (
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
- * @param {Object} job A job object with at least an id set
- * @param {id} job.id The id of the job
- * @example
- * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
 actions.createJob = (
   job: IJob,
@@ -1288,14 +1122,6 @@ actions.createJob = (
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
- * @param {Object} job A job object with name, inputPaths, outputDir and args
- * @param {string} job.name The name of the job you want to execute
- * @param {string[]} job.inputPaths The inputPaths that are needed to run
- * @param {string} job.outputDir The directory where all files are being saved to
- * @param {Object} job.args The arguments the job needs to execute
- * @returns {Promise<object>} Promise to see if the job is done executing
- * @example
- * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
 actions.createJobV2 = (job: IJobV2, plugin: IGatsbyPlugin) => (
   dispatch,
@@ -1355,11 +1181,6 @@ actions.createJobV2 = (job: IJobV2, plugin: IGatsbyPlugin) => (
 /**
  * Set (update) a "job". Sometimes on really long running jobs you want
  * to update the job as it continues.
- *
- * @param {Object} job A job object with at least an id set
- * @param {id} job.id The id of the job
- * @example
- * setJob({ id: `write file id: 123`, progress: 50 })
  */
 actions.setJob = (
   job: IJob,
@@ -1376,10 +1197,6 @@ actions.setJob = (
  * End a "job".
  *
  * Gatsby doesn't finish its process until all jobs are ended.
- * @param {Object} job  A job object with at least an id set
- * @param {id} job.id The id of the job
- * @example
- * endJob({ id: `write file id: 123` })
  */
 actions.endJob = (
   job: IJob,
@@ -1395,10 +1212,6 @@ actions.endJob = (
 /**
  * Set plugin status. A plugin can use this to save status keys e.g. the last
  * it fetched something. These values are persisted between runs of Gatsby.
- *
- * @param {Object} status  An object with arbitrary values set
- * @example
- * setPluginStatus({ lastFetched: Date.now() })
  */
 actions.setPluginStatus = (
   status: Record<string, any>,
@@ -1426,23 +1239,6 @@ const maybeAddPathPrefix = (path: string, pathPrefix: string): string => {
  * your hosting technology e.g. the [Netlify
  * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
  * plugin](/packages/gatsby-plugin-s3/).
- *
- * @param {Object} redirect Redirect data
- * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
- * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
- * @param {string} redirect.toPath URL of a created page (see `createPage`)
- * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
- * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
- * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
- * @example
- * // Generally you create redirects while creating pages.
- * exports.createPages = ({ graphql, actions }) => {
- *   const { createRedirect } = actions
- *   createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
- *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
- *   createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
- *   // Create pages here
- * }
  */
 actions.createRedirect = ({
   fromPath,
@@ -1470,12 +1266,6 @@ actions.createRedirect = ({
 
 /**
  * Create a dependency between a page and data.
- *
- * @param {Object} $0
- * @param {string} $0.path the path to the page
- * @param {string} $0.nodeId A node ID
- * @param {string} $0.connection A connection type
- * @private
  */
 actions.createPageDependency = (
   {
@@ -1501,10 +1291,6 @@ actions.createPageDependency = (
 
 /**
  * Set page data in the store, saving the pages content data and context.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
- * @param {string} $0.resultHash pages content hash.
  */
 actions.setPageData = (pageData: IPageData): ISetPageDataAction => {
   return {
@@ -1515,9 +1301,6 @@ actions.setPageData = (pageData: IPageData): ISetPageDataAction => {
 
 /**
  * Remove page data from the store.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
  */
 actions.removePageData = (id: IPageDataRemove): IRemovePageDataAction => {
   return {
