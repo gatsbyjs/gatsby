@@ -1,19 +1,32 @@
 // use `let` to workaround https://github.com/jhnns/rewire/issues/144
 let fs = require(`fs`)
 let workboxBuild = require(`workbox-build`)
+const { promisify } = require(`util`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
 
+const readFile = promisify(fs.readFile)
+const writeFile = promisify(fs.writeFile)
 let getResourcesFromHTML = require(`./get-resources-from-html`)
 
-exports.createPages = ({ actions }) => {
+exports.onPreBootstrap = async ({ cache }) => {
+  const appShellDir = cache.directory
+  const appShellSourcePath = path.join(__dirname, `app-shell.js`)
+  const appShellTargetPath = path.join(appShellDir, `app-shell.js`)
+  const appShellSource = await readFile(appShellSourcePath)
+
+  await writeFile(appShellTargetPath, appShellSource)
+}
+
+exports.createPages = ({ actions, cache }) => {
+  const appShellPath = path.join(cache.directory, `app-shell.js`)
   if (process.env.NODE_ENV === `production`) {
     const { createPage } = actions
     createPage({
       path: `/offline-plugin-app-shell-fallback/`,
-      component: slash(path.resolve(`${__dirname}/app-shell.js`)),
+      component: slash(appShellPath),
     })
   }
 }
