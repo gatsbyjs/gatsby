@@ -472,9 +472,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * Delete a node
  */
 actions.deleteNode = (
-  options: any,
+  options: IReduxNode["id"] | { node: IReduxNode },
   plugin: IGatsbyPlugin,
-  args: any
+  args: IGatsbyPlugin
 ): IDeleteNodeAction | IDeleteNodeAction[] => {
   let id
 
