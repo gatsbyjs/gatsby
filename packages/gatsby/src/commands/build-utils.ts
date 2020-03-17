@@ -1,18 +1,20 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
+import fs from "fs-extra"
+import path from "path"
+
 import {
   remove as removePageHtmlFile,
   getPageHtmlFilePath,
 } from "../utils/page-html"
-const {
-  remove: removePageDataFile,
-  fixedPagePath,
-} = require(`../utils/page-data`)
+import { remove as removePageDataFile, fixedPagePath } from "../utils/page-data"
+import { IReduxState } from "../redux/types"
 
-const getChangedPageDataKeys = (state, cachedPageData) => {
+export const getChangedPageDataKeys = (
+  state: IReduxState,
+  cachedPageData: Map<string, string>
+): string[] => {
   if (cachedPageData && state.pageData) {
-    const pageKeys = []
-    state.pageData.forEach((newPageDataHash, key) => {
+    const pageKeys: string[] = []
+    state.pageData.forEach((newPageDataHash: string, key: string) => {
       if (!cachedPageData.has(key)) {
         pageKeys.push(key)
       } else {
@@ -28,10 +30,13 @@ const getChangedPageDataKeys = (state, cachedPageData) => {
   return [...state.pages.keys()]
 }
 
-const collectRemovedPageData = (state, cachedPageData) => {
+export const collectRemovedPageData = (
+  state: IReduxState,
+  cachedPageData: Map<string, string>
+): string[] => {
   if (cachedPageData && state.pageData) {
-    const deletedPageKeys = []
-    cachedPageData.forEach((_value, key) => {
+    const deletedPageKeys: string[] = []
+    cachedPageData.forEach((_value: string, key: string) => {
       if (!state.pageData.has(key)) {
         deletedPageKeys.push(key)
       }
@@ -41,7 +46,7 @@ const collectRemovedPageData = (state, cachedPageData) => {
   return []
 }
 
-const checkAndRemoveEmptyDir = (publicDir, pagePath) => {
+const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
   const pageHtmlDirectory = path.dirname(
     getPageHtmlFilePath(publicDir, pagePath)
   )
@@ -59,14 +64,17 @@ const checkAndRemoveEmptyDir = (publicDir, pagePath) => {
   }
 }
 
-const sortedPageKeysByNestedLevel = pageKeys =>
+const sortedPageKeysByNestedLevel = (pageKeys: string[]): string[] =>
   pageKeys.sort((a, b) => {
     const currentPagePathValue = a.split(`/`).length
     const previousPagePathValue = b.split(`/`).length
     return previousPagePathValue - currentPagePathValue
   })
 
-const removePageFiles = ({ publicDir }, pageKeys) => {
+export const removePageFiles = async (
+  publicDir: string,
+  pageKeys: string[]
+): Promise<void> => {
   const removePages = pageKeys.map(pagePath =>
     removePageHtmlFile({ publicDir }, pagePath)
   )
@@ -81,10 +89,4 @@ const removePageFiles = ({ publicDir }, pageKeys) => {
       checkAndRemoveEmptyDir(publicDir, pagePath)
     })
   })
-}
-
-module.exports = {
-  getChangedPageDataKeys,
-  collectRemovedPageData,
-  removePageFiles,
 }

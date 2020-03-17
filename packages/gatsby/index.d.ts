@@ -1196,7 +1196,7 @@ export interface PackageJson {
   dependencies?: Array<Record<string, string>>
   devDependencies?: Array<Record<string, string>>
   peerDependencies?: Array<Record<string, string>>
-  optionalDependecies?: Array<Record<string, string>>
+  optionalDependencies?: Array<Record<string, string>>
   bundledDependecies?: Array<Record<string, string>>
   keywords?: string[]
 }

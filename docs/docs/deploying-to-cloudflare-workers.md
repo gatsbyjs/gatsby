@@ -20,7 +20,7 @@ npm i -g @cloudflare/wrangler
 
 To create the Worker code that will serve your Gatsby files, from the root of your Gatsby project run:
 
-```
+```shell
 wrangler init --site
 ```
 
@@ -44,7 +44,7 @@ You'll notice your project structure should now look something like:
 
 To authenticate into your Cloudflare account run:
 
-```
+```shell
 wrangler config
 ```
 
@@ -52,13 +52,13 @@ Follow the [Quick Start](https://developers.cloudflare.com/workers/quickstart/#c
 
 If you don't already have a workers.dev domain run:
 
-```
+```shell
 wrangler subdomain
 ```
 
 Then, add your account ID to the `wrangler.toml` file, and set `bucket` to `"./public"`, which is where Gatsby's built files are output by default:
 
-```
+```toml
 name = "gatsby-project"
 type = "webpack"
 account_id = "abcd..."
@@ -87,7 +87,7 @@ Use wrangler's GitHub action [plugin](https://github.com/cloudflare/wrangler-act
 
 Once GitHub Actions is enabled on your repo, add a file to your project's root called `.github/workflows/main.yml` with the contents:
 
-```
+```yaml
 name: Deploy production site
 
 on:
@@ -99,21 +99,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Navigate to repo
-      run: cd $GITHUB_WORKSPACE
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-    - name: Install deps
-      run: npm install
-    - name: Build docs
-      run: npm run build
-    - name: Publish
-      uses: cloudflare/wrangler-action@1.1.0
-      with:
-        apiToken: ${{ secrets.CF_API_TOKEN }}
-        environment: "production"
+      - uses: actions/checkout@v1
+      - name: Navigate to repo
+        run: cd $GITHUB_WORKSPACE
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+      - name: Install deps
+        run: npm install
+      - name: Build docs
+        run: npm run build
+      - name: Publish
+        uses: cloudflare/wrangler-action@1.1.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          environment: "production"
 ```
 
 Set up `CF_API_TOKEN` in GitHub secrets with appropriate values from [Quick Start](https://developers.cloudflare.com/workers/quickstart/#configure).
