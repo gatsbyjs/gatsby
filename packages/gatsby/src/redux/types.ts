@@ -171,7 +171,7 @@ export interface ICreatePageAction extends IActionOptions {
 
 export interface ICreateNodeAction extends IActionOptions {
   type: `CREATE_NODE`
-  plugin: IGatsbyPlugin
+  plugin?: IGatsbyPlugin
   oldNode: IReduxNode
   payload: IReduxNode
 }
@@ -262,7 +262,7 @@ export interface ISetPluginStatusAction {
   payload: Record<string, any> // TODO
 }
 
-export interface ITouchNodeAction {
+export interface ITouchNodeAction extends IActionOptions {
   type: `TOUCH_NODE`
   plugin?: IGatsbyPlugin
   payload: IReduxNode["id"]
@@ -278,7 +278,7 @@ export interface IDeletePageAction {
   payload: IPageInput
 }
 
-export interface IDeleteNodeAction {
+export interface IDeleteNodeAction extends IActionOptions {
   type: `DELETE_NODE`
   plugin?: IGatsbyPlugin
   payload: IReduxNode // TODO

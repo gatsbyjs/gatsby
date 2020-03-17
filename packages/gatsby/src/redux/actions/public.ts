@@ -595,19 +595,12 @@ type CreateNode = (
   actionOptions?: IActionOptions
 ) =>
   | ICreateNodeAction
+  | ITouchNodeAction
   | IValidationErrorAction
-  | Array<ICreateNodeAction | IDeleteNodeAction>
+  | (ICreateNodeAction | IDeleteNodeAction)[]
   | void
 
-const createNode: CreateNode = (
-  node: IReduxNode,
-  plugin?: IGatsbyPlugin,
-  actionOptions?: IActionOptions
-):
-  | ICreateNodeAction
-  | IValidationErrorAction
-  | Array<ICreateNodeAction | IDeleteNodeAction>
-  | void => {
+const createNode: CreateNode = (node, plugin, actionOptions) => {
   if (typeof node !== `object`) {
     return console.log(
       chalk.bold.red(
@@ -684,7 +677,7 @@ const createNode: CreateNode = (
   }
 
   // Ensure node isn't directly setting fields.
-  if ((node as any).fields) {
+  if (node.fields) {
     throw new Error(
       stripIndent`
       Plugins creating nodes can not set data on the reserved field "fields"
@@ -757,7 +750,7 @@ const createNode: CreateNode = (
   }
 
   let deleteActions
-  let updateNodeAction
+  let updateNodeAction: ICreateNodeAction | ITouchNodeAction
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     updateNodeAction = {
@@ -802,12 +795,16 @@ const createNode: CreateNode = (
 actions.createNode = (...args: Parameters<CreateNode>) => (
   dispatch
 ): Promise<any> | undefined => {
-  const actions = createNode(...args)
+  const actions = createNode(...args) as (
+    | ICreateNodeAction
+    | IDeleteNodeAction
+    | ITouchNodeAction
+  )[]
 
   dispatch(actions)
-  const createNodeAction = ((Array.isArray(actions)
-    ? actions
-    : [actions]) as any[]).find(action => action.type === `CREATE_NODE`) // TODO: Remove any[]
+  const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
+    action => action.type === `CREATE_NODE`
+  ) as ICreateNodeAction | undefined
 
   if (!createNodeAction) {
     return undefined
