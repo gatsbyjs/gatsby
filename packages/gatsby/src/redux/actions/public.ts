@@ -1001,7 +1001,7 @@ export const replaceWebpackConfig = (
  */
 export const setBabelOptions = (
   options: Record<string, any>,
-  plugin: IGatsbyPlugin | null = null
+  plugin: IGatsbyPlugin
 ): ISetBabelOptionsAction => {
   // Validate
   const pluginPlaceholder = `Your site's "gatsby-node.js"`
@@ -1037,7 +1037,7 @@ export const setBabelOptions = (
  */
 export const setBabelPlugin = (
   config: babel.ConfigItem,
-  plugin: IGatsbyPlugin | null = null
+  plugin: IGatsbyPlugin
 ): ISetBabelPluginAction => {
   // Validate
   const pluginPlaceholder = `Your site's "gatsby-node.js"`
@@ -1067,7 +1067,7 @@ export const setBabelPlugin = (
  */
 export const setBabelPreset = (
   config: babel.ConfigItem,
-  plugin: IGatsbyPlugin | null = null
+  plugin: IGatsbyPlugin
 ): ISetBabelPresetAction => {
   // Validate
   const pluginPlaceholder = `Your site's "gatsby-node.js"`
@@ -1210,7 +1210,7 @@ export const endJob = (
  * it fetched something. These values are persisted between runs of Gatsby.
  */
 export const setPluginStatus = (
-  status: Record<string, any>,
+  status: Record<string, string>,
   plugin: IGatsbyPlugin
 ): ISetPluginStatusAction => {
   return {
