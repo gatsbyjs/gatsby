@@ -5,6 +5,7 @@ starter:
   - AWS
   - Blog
   - Client-side App
+  - CMS:Agility CMS
   - CMS:Cosmic JS
   - CMS:Headless
   - CMS:Contentful
@@ -58,6 +59,7 @@ starter:
   - Styling:PostCSS
   - Styling:SCSS
   - Styling:Tailwind
+  - Styling:Milligram
   - Styling:Other
   - Styling:None
   - Testing

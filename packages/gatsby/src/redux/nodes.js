@@ -1,5 +1,6 @@
 /* @flow */
 
+import { createPageDependency } from "./actions/add-page-dependency"
 const { store } = require(`./index`)
 
 /**
@@ -77,7 +78,6 @@ exports.hasNodeChanged = (id, digest) => {
  * @returns {Object} node
  */
 exports.getNodeAndSavePathDependency = (id, path) => {
-  const createPageDependency = require(`./actions/add-page-dependency`)
   const node = getNode(id)
   createPageDependency({ path, nodeId: id })
   return node

@@ -8,8 +8,8 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 const stackTrace = require(`stack-trace`)
 const { codeFrameColumns } = require(`@babel/code-frame`)
 const fs = require(`fs-extra`)
-const getCache = require(`./get-cache`)
-const createNodeId = require(`./create-node-id`)
+const { getCache } = require(`./get-cache`)
+import { createNodeId } from "./create-node-id"
 const { createContentDigest } = require(`gatsby-core-utils`)
 const {
   buildObjectType,
@@ -20,10 +20,10 @@ const {
   buildScalarType,
 } = require(`../schema/types/type-builders`)
 const { emitter, store } = require(`../redux`)
-const getPublicPath = require(`./get-public-path`)
+const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
-const { default: errorParser } = require(`./api-runner-error-parser`)
+import errorParser from "./api-runner-error-parser"
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.

@@ -8,7 +8,7 @@ const path = require(`path`)
 const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const getBrowserslist = require(`../utils/browserslist`)
+import { getBrowsersList } from "../utils/browserslist"
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -71,7 +71,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   const program = {
     ...args,
-    browserslist: getBrowserslist(directory),
+    browserslist: getBrowsersList(directory),
     // Fix program directory path for windows env.
     directory,
   }
