@@ -57,11 +57,11 @@ xcode-select --install
 brew install node
 ```
 
-> 💡 If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
+> 💡 If you don't want to install it through Homebrew, download your preferred version of Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
 
 ### Windows Instructions
 
-- Download and install the latest Node.js version from [the official Node.js website](https://nodejs.org/en/)
+- Download and install your preferred version of Node.js version from [the official Node.js website](https://nodejs.org/en/)
 
 ### Linux Instructions
 
@@ -92,10 +92,10 @@ sudo apt -y upgrade
 sudo apt-get install curl
 ```
 
-3. After it finishes installing, download the latest nvm version:
+3. After it finishes installing, download the your preferred nvm version:
 
 ```shell
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 ```
 
 4. Confirm this has worked. The output should be a version number.
@@ -117,7 +117,7 @@ sudo pacman -Sy
 2. These distros come installed with curl, so you can use that to download nvm:
 
 ```shell
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 ```
 
 3. Before using nvm, you need to install additional dependencies by running:
@@ -139,7 +139,7 @@ nvm --version
 1. These distros come installed with curl, so you can use that to download nvm:
 
 ```shell
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 ```
 
 2. Confirm this has worked. The output should be a version number.
@@ -152,11 +152,11 @@ nvm --version
 
 #### Set default Node.js version
 
-When nvm is installed, it does not default to a particular node version. You’ll need to install the version you want and give nvm instructions to use it. This example uses the latest release of version 12, but other version numbers can be used instead.
+When nvm is installed, it does not default to a particular node version. You’ll need to install the version you want and give nvm instructions to use it. This example uses the version 10 release, but more recent version numbers can be used instead.
 
 ```shell
-nvm install 12
-nvm use 12
+nvm install 10
+nvm use 10
 ```
 
 Confirm that this worked:
