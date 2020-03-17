@@ -10055,3 +10055,17 @@
   built_by: Built by Rebels Ltd.
   built_by_url: https://builtbyrebels.com/
   featured: false
+- title: Kosmos & Kaos
+  main_url: https://www.kosmosogkaos.is/
+  url: https://www.kosmosogkaos.is/
+  description: >
+    A carefully designed user experience is damn good business.
+  categories:
+    - Design
+    - Consulting
+    - Agency
+    - Web Development
+    - JavaScript
+  built_by: Kosmos & Kaos
+  built_by_url: https://www.kosmosogkaos.is/
+  featured: false
