@@ -8,7 +8,7 @@ import { buildProductionBundle } from "./build-javascript"
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
-const { initTracer, stopTracer } = require(`../utils/tracer`)
+import { initTracer, stopTracer } from "../utils/tracer"
 const db = require(`../db`)
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
