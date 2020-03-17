@@ -1,23 +1,17 @@
 // use `let` to workaround https://github.com/jhnns/rewire/issues/144
 let fs = require(`fs`)
 let workboxBuild = require(`workbox-build`)
-const { promisify } = require(`util`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
 let getResourcesFromHTML = require(`./get-resources-from-html`)
 
-exports.onPreBootstrap = async ({ cache }) => {
-  const appShellDir = cache.directory
+exports.onPreBootstrap = ({ cache }) => {
   const appShellSourcePath = path.join(__dirname, `app-shell.js`)
-  const appShellTargetPath = path.join(appShellDir, `app-shell.js`)
-  const appShellSource = await readFile(appShellSourcePath)
-
-  await writeFile(appShellTargetPath, appShellSource)
+  const appShellTargetPath = path.join(cache.directory, `app-shell.js`)
+  fs.copyFileSync(appShellSourcePath, appShellTargetPath)
 }
 
 exports.createPages = ({ actions, cache }) => {
