@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.99](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.98...gatsby-source-contentful@2.1.99) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency axios to ^0.19.2 ([#22317](https://github.com/gatsbyjs/gatsby/issues/22317)) ([91e780f](https://github.com/gatsbyjs/gatsby/commit/91e780f))
+- **readme:** Update Readme gatsby-source-contentful missing co… ([#22339](https://github.com/gatsbyjs/gatsby/issues/22339)) ([ab59162](https://github.com/gatsbyjs/gatsby/commit/ab59162))
+
+## [2.1.98](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.97...gatsby-source-contentful@2.1.98) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.97](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.96...gatsby-source-contentful@2.1.97) (2020-03-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [2.1.96](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.95...gatsby-source-contentful@2.1.96) (2020-03-12)
 
 **Note:** Version bump only for package gatsby-source-contentful

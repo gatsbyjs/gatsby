@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`specific one 1`] = `
+exports[`query-error-parser specific one 1`] = `
 Object {
   "context": Object {
     "sourceMessage": "Variable \\"Foo\\" of required type \\"Bar\\" was not provided.",
@@ -18,7 +18,7 @@ Object {
 }
 `;
 
-exports[`totally vague one 1`] = `
+exports[`query-error-parser totally vague one 1`] = `
 Object {
   "context": Object {
     "sourceMessage": "foo bar",

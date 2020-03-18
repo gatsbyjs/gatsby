@@ -1,5 +1,5 @@
-const stackTrace = require(`stack-trace`)
-const { codeFrameColumns } = require(`@babel/code-frame`)
+import stackTrace, { StackFrame } from "stack-trace"
+import { codeFrameColumns } from "@babel/code-frame"
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const chalk = require(`chalk`)
@@ -11,7 +11,7 @@ const reduxThunkLocation = path.dirname(
 )
 const reduxLocation = path.dirname(require.resolve(`redux/package.json`))
 
-const getNonGatsbyCallSite = () =>
+const getNonGatsbyCallSite = (): StackFrame | undefined =>
   stackTrace
     .get()
     .find(
@@ -24,7 +24,16 @@ const getNonGatsbyCallSite = () =>
         !isNodeInternalModulePath(callSite.getFileName())
     )
 
-const getNonGatsbyCodeFrame = ({ highlightCode = true } = {}) => {
+interface ICodeFrame {
+  fileName: string
+  line: number
+  column: number
+  codeFrame: string
+}
+
+export const getNonGatsbyCodeFrame = ({
+  highlightCode = true,
+} = {}): null | ICodeFrame => {
   const callSite = getNonGatsbyCallSite()
   if (!callSite) {
     return null
@@ -54,7 +63,9 @@ const getNonGatsbyCodeFrame = ({ highlightCode = true } = {}) => {
   }
 }
 
-const getNonGatsbyCodeFrameFormatted = ({ highlightCode = true } = {}) => {
+export const getNonGatsbyCodeFrameFormatted = ({ highlightCode = true } = {}):
+  | null
+  | string => {
   const possibleCodeFrame = getNonGatsbyCodeFrame({
     highlightCode,
   })
@@ -65,9 +76,4 @@ const getNonGatsbyCodeFrameFormatted = ({ highlightCode = true } = {}) => {
 
   const { fileName, line, column, codeFrame } = possibleCodeFrame
   return `File ${chalk.bold(`${fileName}:${line}:${column}`)}\n${codeFrame}`
-}
-
-module.exports = {
-  getNonGatsbyCodeFrame,
-  getNonGatsbyCodeFrameFormatted,
 }

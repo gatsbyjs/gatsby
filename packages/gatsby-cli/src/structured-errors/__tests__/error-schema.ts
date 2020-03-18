@@ -1,4 +1,4 @@
-const schema = require(`../error-schema`)
+import schema from "../error-schema"
 
 test(`throws invalid on an invalid error`, () => {
   expect(schema.validate({ lol: `true` })).rejects.toBeDefined()

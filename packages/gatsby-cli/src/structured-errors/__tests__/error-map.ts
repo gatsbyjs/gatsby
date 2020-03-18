@@ -1,4 +1,4 @@
-const { errorMap, defaultError } = require(`../error-map`)
+import { errorMap, defaultError } from "../error-map"
 
 test(`it defaults to generic error`, () => {
   expect(defaultError).toEqual(
