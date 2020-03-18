@@ -27,7 +27,7 @@ Run the Cypress integration tests to make sure everything still works.
 npm test
 ```
 
-This will start the Cypress app to inspect tests in more detail. You can also run them in a single-run for Continuous Integration (e.g. on a Github PR):
+This will start the Cypress app to inspect tests in more detail. You can also run them in a single-run for Continuous Integration (e.g. on a GitHub PR):
 
 ```
 npm run test:ci
