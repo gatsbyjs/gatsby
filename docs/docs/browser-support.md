@@ -2,7 +2,7 @@
 title: Browser Support
 ---
 
-Gatsby supports [the same browsers as the current stable version of React.js](https://facebook.github.io/react/docs/react-dom.html#browser-support) which is currently IE9+ as well as the most recent versions of other popular browsers.
+Gatsby supports [the same browsers as the current stable version of React.js](https://reactjs.org/docs/react-dom.html#browser-support) which is currently IE9+ as well as the most recent versions of other popular browsers.
 
 ## Polyfills
 

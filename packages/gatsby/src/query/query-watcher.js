@@ -146,7 +146,7 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
 
         If you're more experienced with GraphQL, you can also export GraphQL
         fragments from components and compose the fragments in the Page component
-        query and pass data down into the child component — http://graphql.org/learn/queries/#fragments
+        query and pass data down into the child component — https://graphql.org/learn/queries/#fragments
 
       `)
     }

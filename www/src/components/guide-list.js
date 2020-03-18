@@ -1,4 +1,5 @@
 import React from "react"
+import { Trans } from "@lingui/macro"
 
 import docsHierarchy from "../data/sidebars/doc-links.yaml"
 import tutorialHierarchy from "../data/sidebars/tutorial-links.yaml"
@@ -42,7 +43,9 @@ const GuideList = ({ slug }) => {
   ))
   const toc = subitemList.length ? (
     <>
-      <h2>In this section:</h2>
+      <h2>
+        <Trans>In this section:</Trans>
+      </h2>
       <ul>{subitemList}</ul>
     </>
   ) : null

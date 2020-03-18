@@ -31,6 +31,7 @@ const createMockCache = () => {
   return {
     get: jest.fn(),
     set: jest.fn(),
+    directory: __dirname,
   }
 }
 
@@ -57,13 +58,13 @@ describe(`create-file-node-from-buffer`, () => {
     const setup = ({
       hash,
       buffer = createMockBuffer(`some binary content`),
-      cache = createMockCache(),
+      getCache = () => createMockCache(),
     } = {}) =>
       createFileNodeFromBuffer({
         ...defaultArgs,
         buffer,
         hash,
-        cache,
+        getCache,
       })
 
     it(`rejects when the buffer can't be read`, () => {
@@ -84,7 +85,7 @@ describe(`create-file-node-from-buffer`, () => {
       const buffer = createMockBuffer(`buffer-content`)
       await setup({ buffer })
 
-      expect(ensureDir).toBeCalledTimes(2)
+      expect(ensureDir).toBeCalledTimes(1)
       expect(bufferEq(buffer, output)).toBe(true)
     })
 
@@ -93,8 +94,8 @@ describe(`create-file-node-from-buffer`, () => {
 
       const cache = createMockCache()
 
-      await setup({ cache, hash: `same-hash` })
-      await setup({ cache, hash: `same-hash` })
+      await setup({ getCache: () => cache, hash: `same-hash` })
+      await setup({ getCache: () => cache, hash: `same-hash` })
 
       expect(cache.get).toBeCalledTimes(1)
       expect(cache.set).toBeCalledTimes(1)
@@ -107,7 +108,7 @@ describe(`create-file-node-from-buffer`, () => {
       const cache = createMockCache()
       cache.get.mockImplementationOnce(() => `cached-file-path`)
 
-      await setup({ cache, hash: `cached-hash` })
+      await setup({ getCache: () => cache, hash: `cached-hash` })
 
       expect(cache.get).toBeCalledWith(expect.stringContaining(`cached-hash`))
       expect(cache.set).not.toBeCalled()
@@ -142,26 +143,34 @@ describe(`create-file-node-from-buffer`, () => {
       )
     })
 
-    it(`throws on invalid inputs: cache`, () => {
+    it(`throws on invalid inputs: cache or getCache`, () => {
       expect(() => {
         createFileNodeFromBuffer({
           ...defaultArgs,
           cache: undefined,
+          getCache: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
-        `"cache must be the Gatsby cache, was undefined"`
+        `"Neither \\"cache\\" or \\"getCache\\" was passed. getCache must be function that return Gatsby cache, \\"cache\\" must be the Gatsby cache, was undefined"`
       )
     })
 
-    it(`throws on invalid inputs: store`, () => {
+    it(`doesn't throw when getCache is defined`, () => {
       expect(() => {
         createFileNodeFromBuffer({
           ...defaultArgs,
-          store: undefined,
+          getCache: () => createMockCache(),
         })
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"store must be the redux store, was undefined"`
-      )
+      }).not.toThrow()
+    })
+
+    it(`doesn't throw when cache is defined`, () => {
+      expect(() => {
+        createFileNodeFromBuffer({
+          ...defaultArgs,
+          cache: createMockCache(),
+        })
+      }).not.toThrow()
     })
   })
 })
