@@ -18,17 +18,17 @@ Did you know Gatsby can be used for websites as well as dynamic apps? Dustin Sch
 
 https://www.youtube.com/watch?v=zeVC-gD3u7M
 
-For example, if your project needs private routes, or sections of the site that only authenticated users can view, Gatsby can enable that with just a plugin, or by creating a few components from scratch. In the following resources we invite you to try both paths, and experiment powerful third party authentication services.
+For example, if your project needs private routes, or sections of the site that only authenticated users can view, Gatsby can enable that with just a plugin, or by creating a few components from scratch. In the following resources we invite you to try both paths, and experiment with powerful third-party authentication services.
 
 ### Gatsby for Apps Resources
 
 #### Overview & Examples
 
-Get familiar with how [Gatsby works for apps](/docs/adding-app-and-website-functionality/).
+First, get familiar with how [Gatsby works for apps](/docs/adding-app-and-website-functionality/).
 
-[Watch this helpful livestream](/blog/2019-03-21-add-auth0-to-gatsby-livestream/) that covers adding Auth0 to your site.
+Then [watch this helpful livestream](/blog/2019-03-21-add-auth0-to-gatsby-livestream/) that covers adding an authentication service called Auth0 to your site.
 
-Play with live examples of these features by signing in to the [Gatsby Swag Store](https://store.gatsbyjs.org/), and [Gatsby Cloud](https://gatsbyjs.com/cloud)
+Lastly, play with live examples of these features by signing in to the [Gatsby Swag Store](https://store.gatsbyjs.org/), and [Gatsby Cloud](https://gatsbyjs.com/cloud)
 
 #### The Plugin Path
 
@@ -36,7 +36,7 @@ To get started quickly, use `gatsby-plugin-create-client-paths` to create privat
 
 #### The Hand-Rolled Path
 
-[Read this tutorial and handy illustration](/docs/client-only-routes-and-user-authentication/) that walks you through adding private routes and auth in Gatsby.
+[Read this tutorial and handy illustration](/docs/client-only-routes-and-user-authentication/) that walks you through adding private routes and authentication in Gatsby.
 
 ### What to Do If You Need Help
 
