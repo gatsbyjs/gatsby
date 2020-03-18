@@ -96,5 +96,3 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 - Links to relevant plugins
 - Links to starters
 ```
-
----
