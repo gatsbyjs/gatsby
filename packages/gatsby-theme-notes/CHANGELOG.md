@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.27...gatsby-theme-notes@1.1.28) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency gatsby-plugin-theme-ui ([#22318](https://github.com/gatsbyjs/gatsby/issues/22318)) ([b8167de](https://github.com/gatsbyjs/gatsby/commit/b8167de))
+- update dependency theme-ui ([#22324](https://github.com/gatsbyjs/gatsby/issues/22324)) ([05af9d1](https://github.com/gatsbyjs/gatsby/commit/05af9d1))
+
 ## [1.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.1.26...gatsby-theme-notes@1.1.27) (2020-03-16)
 
 **Note:** Version bump only for package gatsby-theme-notes
