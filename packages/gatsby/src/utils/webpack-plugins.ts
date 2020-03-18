@@ -1,4 +1,4 @@
-import webpack, { Plugin, IgnorePlugin, WatchIgnorePlugin } from "webpack"
+import webpack, { Plugin } from "webpack"
 
 const plugin = (
   name: string,
