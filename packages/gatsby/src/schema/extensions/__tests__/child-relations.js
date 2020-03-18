@@ -176,12 +176,12 @@ describe(`Define parent-child relationships with field extensions`, () => {
     await buildSchema()
     expect(report.warn).toBeCalledTimes(1)
     expect(report.warn).toBeCalledWith(
-      `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
+      `The type \`Parent\` does not explicitly define the field \`childChild\`.\n` +
+        `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
         `extension set to \`false\`, automatically adding fields for ` +
         `children types is deprecated.\n` +
         `In Gatsby v3, only children fields explicitly set with the ` +
-        `\`childOf\` extension will be added.\n` +
-        `For example, in Gatsby v3, \`Parent\` will not get a \`childChild\` field.`
+        `\`childOf\` extension will be added.\n`
     )
   })
 

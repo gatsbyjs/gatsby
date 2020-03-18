@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import MdInfoOutline from "react-icons/lib/md/info-outline"
+import { MdInfoOutline } from "react-icons/md"
 
 const renderText = txt => {
   const words = txt.split(` `)
@@ -63,11 +63,7 @@ const getBackground = num => {
     }
     case `1`: {
       return t =>
-        `linear-gradient(180deg, transparent 50%, ${
-          t.colors.orange[20]
-        } 50%), linear-gradient(90deg, transparent 50%, ${
-          t.colors.orange[20]
-        } 50%)`
+        `linear-gradient(180deg, transparent 50%, ${t.colors.orange[20]} 50%), linear-gradient(90deg, transparent 50%, ${t.colors.orange[20]} 50%)`
     }
     case `3`:
     case `0`:

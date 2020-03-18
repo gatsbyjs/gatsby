@@ -3,6 +3,128 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.83](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.82...gatsby-plugin-mdx@1.0.83) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.82](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.81...gatsby-plugin-mdx@1.0.82) (2020-03-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** make webpack rebuild when new scopes are created ([#22121](https://github.com/gatsbyjs/gatsby/issues/22121)) ([f62001e](https://github.com/gatsbyjs/gatsby/commit/f62001e))
+
+## [1.0.81](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.80...gatsby-plugin-mdx@1.0.81) (2020-03-12)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.80](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.79...gatsby-plugin-mdx@1.0.80) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.79](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.78...gatsby-plugin-mdx@1.0.79) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.78](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.77...gatsby-plugin-mdx@1.0.78) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.77](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.76...gatsby-plugin-mdx@1.0.77) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.76](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.75...gatsby-plugin-mdx@1.0.76) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.75](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.74...gatsby-plugin-mdx@1.0.75) (2020-03-02)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.74](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.73...gatsby-plugin-mdx@1.0.74) (2020-02-25)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.73](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.72...gatsby-plugin-mdx@1.0.73) (2020-02-14)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.72](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.71...gatsby-plugin-mdx@1.0.72) (2020-02-13)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.71](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.70...gatsby-plugin-mdx@1.0.71) (2020-02-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Pass node API helpers through mdx-loader to remark plugins ([#21211](https://github.com/gatsbyjs/gatsby/issues/21211)) ([247a183](https://github.com/gatsbyjs/gatsby/commit/247a183))
+
+## [1.0.70](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.69...gatsby-plugin-mdx@1.0.70) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.69](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.68...gatsby-plugin-mdx@1.0.69) (2020-01-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** support yarn PnP ([#20638](https://github.com/gatsbyjs/gatsby/issues/20638)) ([6375ba9](https://github.com/gatsbyjs/gatsby/commit/6375ba9))
+
+## [1.0.68](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.67...gatsby-plugin-mdx@1.0.68) (2020-01-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Pass node API helpers from onCreateNode and sourceNodes to remark plugins ([#20879](https://github.com/gatsbyjs/gatsby/issues/20879)) ([cd150b5](https://github.com/gatsbyjs/gatsby/commit/cd150b5))
+
+## [1.0.67](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.66...gatsby-plugin-mdx@1.0.67) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.66](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.64...gatsby-plugin-mdx@1.0.66) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.65](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.64...gatsby-plugin-mdx@1.0.65) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.64](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.63...gatsby-plugin-mdx@1.0.64) (2019-12-20)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.63](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.62...gatsby-plugin-mdx@1.0.63) (2019-12-18)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.62](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.61...gatsby-plugin-mdx@1.0.62) (2019-12-11)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.61](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.59...gatsby-plugin-mdx@1.0.61) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.60](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.59...gatsby-plugin-mdx@1.0.60) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.58...gatsby-plugin-mdx@1.0.59) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.57...gatsby-plugin-mdx@1.0.58) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.56...gatsby-plugin-mdx@1.0.57) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Handle special characters in windows paths ([#19600](https://github.com/gatsbyjs/gatsby/issues/19600)) ([9929cf0](https://github.com/gatsbyjs/gatsby/commit/9929cf0))
+
+## [1.0.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.55...gatsby-plugin-mdx@1.0.56) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 ## [1.0.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.54...gatsby-plugin-mdx@1.0.55) (2019-10-29)
 
 ### Bug Fixes

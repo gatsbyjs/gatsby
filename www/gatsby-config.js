@@ -2,6 +2,7 @@ const path = require(`path`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
+const { langCodes } = require(`./src/utils/i18n`)
 
 const GA = {
   identifier: `UA-93349937-5`,
@@ -52,6 +53,31 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
+// true if `env.LOCALES` has a defined list of languages
+if (langCodes.length > 0) {
+  const naughtyFiles = [
+    `docs/docs/graphql-api.md`,
+    `docs/docs/data-fetching.md`,
+  ]
+  dynamicPlugins.push(
+    ...langCodes.map(code => ({
+      resolve: `gatsby-source-git`,
+      options: {
+        name: `docs-${code}`,
+        remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
+        branch: `master`,
+        patterns: [`docs/**`, ...naughtyFiles.map(file => `!${file}`)],
+      },
+    })),
+    {
+      resolve: `gatsby-plugin-i18n`, // local plugin
+      options: {
+        languages: langCodes,
+      },
+    }
+  )
+}
+
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
@@ -84,13 +110,6 @@ module.exports = {
         name: `packages`,
         path: `${__dirname}/../packages/`,
         ignore: [`**/dist/**`],
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `ecosystem`,
-        path: `${__dirname}/src/data/ecosystem/`,
       },
     },
     {
@@ -133,8 +152,8 @@ module.exports = {
           )
         },
         gatsbyRemarkPlugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -148,7 +167,12 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 104,
+            },
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
@@ -158,8 +182,8 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
@@ -174,7 +198,12 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 104,
+            },
+          },
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
@@ -194,6 +223,8 @@ module.exports = {
           },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
+          // convert images using http to https in plugin library READMEs
+          `gatsby-remark-http-to-https`,
         ],
       },
     },
@@ -256,21 +287,18 @@ module.exports = {
                     fileAbsolutePath: { regex: "/docs.blog/" }
                   }
                 ) {
-                  edges {
-                    node {
+                  nodes {
+                    html
+                    frontmatter {
+                      title
+                      date
+                      author {
+                        id
+                      }
+                    }
+                    fields {
                       excerpt
-                      html
-                      frontmatter {
-                        title
-                        date
-                        excerpt
-                        author {
-                          id
-                        }
-                      }
-                      fields {
-                        slug
-                      }
+                      slug
                     }
                   }
                 }
@@ -291,21 +319,29 @@ module.exports = {
               }
             },
             serialize: ({ query: { site, allMdx } }) =>
-              allMdx.edges.map(({ node }) => {
+              allMdx.nodes.map(node => {
                 return {
                   title: node.frontmatter.title,
-                  description: node.frontmatter.excerpt || node.excerpt,
+                  description: node.fields.excerpt,
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
                   custom_elements: [{ "content:encoded": node.html }],
                   author: node.frontmatter.author.id,
+                  date: node.frontmatter.date,
                 }
               }),
           },
         ],
       },
     },
-    `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        headers: {
+          "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+        },
+      },
+    },
     `gatsby-plugin-netlify-cache`,
     {
       resolve: `gatsby-plugin-mailchimp`,

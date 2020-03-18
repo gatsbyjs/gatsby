@@ -9,23 +9,46 @@ const path = require(`path`)
 const fs = require(`fs`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const { getCommonDir } = require(`../../utils/path`)
+const {
+  getCommonDir,
+  truncatePath,
+  tooLongSegmentsInPath,
+} = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 
+/**
+ * Memoize function used to pick shadowed page components to avoid expensive I/O.
+ * Ideally, we should invalidate memoized values if there are any FS operations
+ * on files that are in shadowing chain, but webpack currently doesn't handle
+ * shadowing changes during develop session, so no invalidation is not a deal breaker.
+ */
+const shadowCreatePagePath = _.memoize(
+  require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+)
+const {
+  enqueueJob,
+  createInternalJob,
+  removeInProgressJob,
+  getInProcessJobPromise,
+} = require(`../../utils/jobs-manager`)
+
 const actions = {}
 const isWindows = platform() === `win32`
 
-function getRelevantFilePathSegments(filePath) {
-  return filePath.split(`/`).filter(s => s !== ``)
+const ensureWindowsDriveIsUppercase = filePath => {
+  const segments = filePath.split(`:`).filter(s => s !== ``)
+  return segments.length > 0
+    ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
+    : filePath
 }
 
 const findChildren = initialChildren => {
@@ -53,6 +76,14 @@ import type { Plugin } from "./types"
 type Job = {
   id: string,
 }
+
+type JobV2 = {
+  name: string,
+  inputPaths: string[],
+  outputDir: string,
+  args: Object,
+}
+
 type PageInput = {
   path: string,
   component: string,
@@ -75,6 +106,15 @@ type ActionOptions = {
   followsSpan: ?Object,
 }
 
+type PageData = {
+  id: string,
+  resultHash: string,
+}
+
+type PageDataRemove = {
+  id: string,
+}
+
 /**
  * Delete a page
  * @param {Object} page a page object
@@ -90,10 +130,7 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(
-  _.camelCase,
-  _.upperFirst
-)
+const pascalCase = _.flow(_.camelCase, _.upperFirst)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
@@ -226,6 +263,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
+  const pageComponentPath = shadowCreatePagePath(page.component)
+  if (pageComponentPath) {
+    page.component = pageComponentPath
+  }
+
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
@@ -294,9 +336,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       }
 
       if (isWindows) {
-        const segments = getRelevantFilePathSegments(page.component)
-        page.component =
-          segments.shift().toUpperCase() + `/` + segments.join(`/`)
+        page.component = ensureWindowsDriveIsUppercase(page.component)
       }
 
       if (trueComponentPath !== page.component) {
@@ -337,7 +377,25 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
-  let internalPage: Page = {
+  const invalidPathSegments = tooLongSegmentsInPath(page.path)
+
+  if (invalidPathSegments.length > 0) {
+    const truncatedPath = truncatePath(page.path)
+    report.panicOnBuild({
+      id: `11331`,
+      context: {
+        path: page.path,
+        invalidPathSegments,
+
+        // we will only show truncatedPath in non-production scenario
+        isProduction: process.env.NODE_ENV === `production`,
+        truncatedPath,
+      },
+    })
+    page.path = truncatedPath
+  }
+
+  const internalPage: Page = {
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
@@ -362,8 +420,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // Only run validation once during builds.
   if (
     !internalPage.component.includes(`/.cache/`) &&
-    (process.env.NODE_ENV === `production` &&
-      !fileOkCache[internalPage.component])
+    process.env.NODE_ENV === `production` &&
+    !fileOkCache[internalPage.component]
   ) {
     const fileName = internalPage.component
     const fileContent = fs.readFileSync(fileName, `utf-8`)
@@ -423,7 +481,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
-      `Attempting to create page "${page.path}", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+      chalk.bold.yellow(`Non-deterministic routing danger: `) +
+        `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
+        chalk.bold.yellow(
+          `This could lead to non-deterministic routing behavior`
+        )
     )
   }
 
@@ -513,8 +575,10 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
+// Marked private here because it was suppressed in documentation pages.
 /**
  * Batch delete nodes
+ * @private
  * @param {Array} nodes an array of node ids
  * @example
  * deleteNodes([`node1`, `node2`])
@@ -533,10 +597,15 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     nodes.map(n => findChildren(getNode(n).children))
   )
 
+  const nodeIds = [...nodes, ...descendantNodes]
+
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: [...nodes, ...descendantNodes],
+    // Payload contains node IDs but inference-metadata and loki reducers require
+    // full node instances
+    payload: nodeIds,
+    fullNodes: nodeIds.map(getNode),
   }
   return deleteNodesAction
 }
@@ -546,8 +615,11 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 let NODE_COUNTER = 0
 
 const typeOwners = {}
+
+// memberof notation is added so this code can be referenced instead of the wrapper.
 /**
  * Create a new node.
+ * @memberof actions
  * @param {Object} node a node object
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
@@ -730,7 +802,7 @@ const createNode = (
   // Ensure the plugin isn't creating a node type owned by another
   // plugin. Type "ownership" is first come first served.
   if (plugin) {
-    let pluginName = plugin.name
+    const pluginName = plugin.name
 
     if (!typeOwners[node.internal.type])
       typeOwners[node.internal.type] = pluginName
@@ -818,6 +890,7 @@ const createNode = (
 
 actions.createNode = (...args) => dispatch => {
   const actions = createNode(...args)
+
   dispatch(actions)
   const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
     action => action.type === `CREATE_NODE`
@@ -963,6 +1036,7 @@ actions.createNodeField = (
     type: `ADD_FIELD_TO_NODE`,
     plugin,
     payload: node,
+    addedField: name,
   }
 }
 
@@ -982,9 +1056,9 @@ actions.createParentChildLink = (
   { parent, child }: { parent: any, child: any },
   plugin?: Plugin
 ) => {
-  // Update parent
-  parent.children.push(child.id)
-  parent.children = _.uniq(parent.children)
+  if (!parent.children.includes(child.id)) {
+    parent.children.push(child.id)
+  }
 
   return {
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
@@ -1145,7 +1219,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
- * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
  * @example
@@ -1157,6 +1231,73 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
     plugin,
     payload: job,
   }
+}
+
+/**
+ * Create a "job". This is a long-running process that are generally
+ * started as side-effects to GraphQL queries.
+ * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * example.
+ *
+ * Gatsby doesn't finish its process until all jobs are ended.
+ * @param {Object} job A job object with name, inputPaths, outputDir and args
+ * @param {string} job.name The name of the job you want to execute
+ * @param {string[]} job.inputPaths The inputPaths that are needed to run
+ * @param {string} job.outputDir The directory where all files are being saved to
+ * @param {Object} job.args The arguments the job needs to execute
+ * @returns {Promise<object>} Promise to see if the job is done executing
+ * @example
+ * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
+ */
+actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
+  const currentState = getState()
+  const internalJob = createInternalJob(job, plugin)
+  const jobContentDigest = internalJob.contentDigest
+
+  // Check if we already ran this job before, if yes we return the result
+  // We have an inflight (in progress) queue inside the jobs manager to make sure
+  // we don't waste resources twice during the process
+  if (
+    currentState.jobsV2 &&
+    currentState.jobsV2.complete.has(jobContentDigest)
+  ) {
+    return Promise.resolve(
+      currentState.jobsV2.complete.get(jobContentDigest).result
+    )
+  }
+
+  const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
+  if (inProgressJobPromise) {
+    return inProgressJobPromise
+  }
+
+  dispatch({
+    type: `CREATE_JOB_V2`,
+    plugin,
+    payload: {
+      job: internalJob,
+      plugin,
+    },
+  })
+
+  const enqueuedJobPromise = enqueueJob(internalJob)
+  return enqueuedJobPromise.then(result => {
+    // store the result in redux so we have it for the next run
+    dispatch({
+      type: `END_JOB_V2`,
+      plugin,
+      payload: {
+        jobContentDigest,
+        result,
+      },
+    })
+
+    // remove the job from our inProgressJobQueue as it's available in our done state.
+    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
+    removeInProgressJob(jobContentDigest)
+
+    return result
+  })
 }
 
 /**
@@ -1179,7 +1320,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
 /**
  * End a "job".
  *
- * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job  A job object with at least an id set
  * @param {id} job.id The id of the job
  * @example
@@ -1297,6 +1438,33 @@ actions.createPageDependency = (
       nodeId,
       connection,
     },
+  }
+}
+
+/**
+ * Set page data in the store, saving the pages content data and context.
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the path to the page.
+ * @param {string} $0.resultHash pages content hash.
+ */
+actions.setPageData = (pageData: PageData) => {
+  return {
+    type: `SET_PAGE_DATA`,
+    payload: pageData,
+  }
+}
+
+/**
+ * Remove page data from the store.
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the path to the page.
+ */
+actions.removePageData = (id: PageDataRemove) => {
+  return {
+    type: `REMOVE_PAGE_DATA`,
+    payload: id,
   }
 }
 

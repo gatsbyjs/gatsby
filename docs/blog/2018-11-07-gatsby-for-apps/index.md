@@ -97,9 +97,9 @@ class Messages extends React.Component {
 
   // note: this is a simplified example without error handling, authentication, etc.
   async componentDidMount() {
-    const messages = await fetch(`/api/some-url-to-get-messages`).then(
-      response => response.json()
-    )
+    const messages = await fetch(
+      `/api/some-url-to-get-messages`
+    ).then(response => response.json())
 
     this.setState({
       messages,
@@ -228,7 +228,7 @@ We can't wait to see what you build.
 [prpl]: https://developers.google.com/web/fundamentals/performance/prpl-pattern/
 [app-shell]: https://developers.google.com/web/fundamentals/architecture/app-shell
 [case-study]: https://developers.google.com/web/showcase/2017/twitter
-[gatsby-graphql]: /docs/querying-with-graphql/
+[gatsby-graphql]: /docs/graphql-concepts/
 [gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
 [authentication-data]: /tutorial/authentication-tutorial/
 [client-only-routes]: /docs/client-only-routes-and-user-authentication

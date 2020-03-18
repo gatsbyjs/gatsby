@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.20...gatsby-plugin-styled-jsx@3.1.21) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-styled-jsx
+
+## [3.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.19...gatsby-plugin-styled-jsx@3.1.20) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-styled-jsx
+
+## [3.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.18...gatsby-plugin-styled-jsx@3.1.19) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-styled-jsx
+
+## [3.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.17...gatsby-plugin-styled-jsx@3.1.18) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-plugin-styled-jsx
+
+## [3.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.15...gatsby-plugin-styled-jsx@3.1.17) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-styled-jsx
+
+## [3.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.15...gatsby-plugin-styled-jsx@3.1.16) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-styled-jsx
+
+## [3.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.14...gatsby-plugin-styled-jsx@3.1.15) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-styled-jsx
+
+## [3.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.13...gatsby-plugin-styled-jsx@3.1.14) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-styled-jsx
+
+## [3.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.12...gatsby-plugin-styled-jsx@3.1.13) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-styled-jsx
+
 ## [3.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.11...gatsby-plugin-styled-jsx@3.1.12) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-plugin-styled-jsx

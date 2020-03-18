@@ -69,31 +69,12 @@ export function createProgress(message, reporter) {
 }
 
 /**
- * slash
- * --
- * Convert Windows backslash paths to slash paths: foo\\bar ➔ foo/bar
- *
- *
- * @param  {String}          path
- * @return {String}          slashed path
- */
-export function slash(path) {
-  const isExtendedLengthPath = /^\\\\\?\\/.test(path)
-
-  if (isExtendedLengthPath) {
-    return path
-  }
-
-  return path.replace(/\\/g, `/`)
-}
-
-/**
  * createFilePath
  * --
  *
  * @param  {String} directory
  * @param  {String} filename
- * @param  {String} url
+ * @param  {String} ext
  * @return {String}
  */
 export function createFilePath(directory, filename, ext) {

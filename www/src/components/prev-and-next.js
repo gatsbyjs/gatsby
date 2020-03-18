@@ -1,10 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-import ArrowBackIcon from "react-icons/lib/md/arrow-back"
+import { t, Trans } from "@lingui/macro"
+import { withI18n } from "@lingui/react"
+import Link from "./localized-link"
+import {
+  MdArrowBack as ArrowBackIcon,
+  MdArrowForward as ArrowForwardIcon,
+} from "react-icons/md"
 
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const prevNextLinkStyles = {
   // bump specificity to override the border applied to Link's by default
@@ -12,7 +16,7 @@ const prevNextLinkStyles = {
     borderBottom: 0,
   },
   color: `gatsby`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   fontSize: 3,
   fontWeight: `bold`,
   lineHeight: `dense`,
@@ -25,14 +29,14 @@ const prevNextLabelStyles = {
   mt: 0,
 }
 
-const PrevAndNext = ({ prev = null, next = null, ...props }) => {
+const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
   if (!prev && !next) {
     return null
   }
 
   return (
     <nav
-      aria-label="pagination"
+      aria-label={i18n._(t`pagination`)}
       sx={{
         [mediaQueries.sm]: {
           display: `flex`,
@@ -45,17 +49,25 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
       <div css={{ [mediaQueries.sm]: { width: `48%` } }}>
         {prev && (
           <Link to={prev.link} sx={prevNextLinkStyles}>
-            <p sx={prevNextLabelStyles}>Previous</p>
+            <p sx={prevNextLabelStyles}>
+              <Trans>Previous</Trans>
+            </p>
             <span
               sx={{
                 [mediaQueries.md]: {
-                  marginLeft: t => `-${t.space[4]}`,
+                  ml: `-1.5em`,
                 },
                 display: `inline-flex`,
                 alignItems: `center`,
               }}
             >
-              <ArrowBackIcon sx={{ verticalAlign: `sub` }} />
+              <ArrowBackIcon
+                sx={{
+                  flexShrink: 0,
+                  mr: `0.5em`,
+                  verticalAlign: `sub`,
+                }}
+              />
               {prev.title}
             </span>
           </Link>
@@ -70,18 +82,26 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
       >
         {next && (
           <Link to={next.link} sx={prevNextLinkStyles}>
-            <p sx={prevNextLabelStyles}>Next</p>
+            <p sx={prevNextLabelStyles}>
+              <Trans>Next</Trans>
+            </p>
             <span
               sx={{
                 [mediaQueries.md]: {
-                  marginRight: t => `-${t.space[4]}`,
+                  mr: `-1.5em`,
                 },
                 display: `inline-flex`,
                 alignItems: `center`,
               }}
             >
               {next.title}
-              <ArrowForwardIcon sx={{ verticalAlign: `sub` }} />
+              <ArrowForwardIcon
+                sx={{
+                  flexShrink: 0,
+                  ml: `0.5em`,
+                  verticalAlign: `sub`,
+                }}
+              />
             </span>
           </Link>
         )}
@@ -90,4 +110,4 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
   )
 }
 
-export default PrevAndNext
+export default withI18n()(PrevAndNext)

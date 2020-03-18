@@ -5,6 +5,7 @@ starter:
   - AWS
   - Blog
   - Client-side App
+  - CMS:Agility CMS
   - CMS:Cosmic JS
   - CMS:Headless
   - CMS:Contentful
@@ -46,6 +47,7 @@ starter:
   - Search
   - SEO
   - Shopify
+  - Square
   - Storybook
   - Stripe
   - Styling:Ant Design
@@ -57,6 +59,7 @@ starter:
   - Styling:PostCSS
   - Styling:SCSS
   - Styling:Tailwind
+  - Styling:Milligram
   - Styling:Other
   - Styling:None
   - Testing
@@ -87,6 +90,7 @@ site:
   - Gallery
   - Government
   - Healthcare
+  - Human Resources
   - JavaScript
   - Law
   - Landing Page

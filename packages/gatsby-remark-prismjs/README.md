@@ -20,9 +20,9 @@ plugins: [
           resolve: `gatsby-remark-prismjs`,
           options: {
             // Class prefix for <pre> tags containing syntax highlighting;
-            // defaults to 'language-' (eg <pre class="language-js">).
+            // defaults to 'language-' (e.g. <pre class="language-js">).
             // If your site loads Prism into the browser at runtime,
-            // (eg for use with libraries like react-live),
+            // (e.g. for use with libraries like react-live),
             // you may use this to prevent Prism from re-processing syntax.
             // This is an uncommon use-case though;
             // If you're unsure, it's best to use the default value.
@@ -75,6 +75,10 @@ plugins: [
               host: "localhost",
               global: false,
             },
+            // By default the HTML entities <>&'" are escaped.
+            // Add additional HTML escapes by providing a mapping
+            // of HTML entities and their escape value IE: { '}': '&#123;' }
+            escapeEntities: {},
           },
         },
       ],
@@ -521,7 +525,7 @@ See the [client-side PrismJS implementation][8] for reference.
 [1]: https://github.com/PrismJS/prism/tree/8eb0ab6f76484ca47fa7acbf77657fab17b03ca7/plugins/line-highlight
 [2]: https://github.com/facebook/react/blob/00ba97a354e841701b4b83983c3a3904895e7b87/docs/_config.yml#L10
 [3]: http://prismjs.com/#plugins
-[4]: https://facebook.github.io/react/tutorial/tutorial.html
+[4]: https://reactjs.org/tutorial/tutorial.html
 [5]: https://github.com/PrismJS/prism/tree/1d5047df37aacc900f8270b1c6215028f6988eb1/themes
 [6]: http://prismjs.com/
 [7]: https://prismjs.com/plugins/line-numbers/

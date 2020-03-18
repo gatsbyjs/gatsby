@@ -3,7 +3,7 @@ const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const { setStore } = require(`./reporter/redux`)
-const didYouMean = require(`./did-you-mean`)
+const { didYouMean } = require(`./did-you-mean`)
 const { getLocalGatsbyVersion } = require(`./util/version`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
@@ -23,6 +23,7 @@ const handlerP = fn => (...args) => {
 
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
+  const defaultPort = `8000`
   const directory = path.resolve(`.`)
 
   // 'not dead' query not available in browserslist used in Gatsby v1
@@ -31,7 +32,7 @@ function buildLocalCommands(cli, isLocalSite) {
       ? [`> 1%`, `last 2 versions`, `IE >= 9`]
       : [`>0.25%`, `not dead`]
 
-  let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
+  const siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
@@ -93,8 +94,8 @@ function buildLocalCommands(cli, isLocalSite) {
       process.env.gatsby_executing_command = command
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
-      let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, report, useYarn, setStore }
+      const localCmd = resolveLocalCommand(command)
+      const args = { ...argv, ...siteInfo, report, useYarn, setStore }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -116,8 +117,10 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`p`, {
           alias: `port`,
           type: `string`,
-          default: `8000`,
-          describe: `Set port. Defaults to 8000`,
+          default: process.env.PORT || defaultPort,
+          describe: process.env.PORT
+            ? `Set port. Defaults to ${process.env.PORT} (set by env.PORT) (otherwise defaults ${defaultPort})`
+            : `Set port. Defaults to ${defaultPort}`,
         })
         .option(`o`, {
           alias: `open`,
@@ -163,13 +166,20 @@ function buildLocalCommands(cli, isLocalSite) {
     builder: _ =>
       _.option(`prefix-paths`, {
         type: `boolean`,
-        default: false,
-        describe: `Build site with link paths prefixed (set pathPrefix in your gatsby-config.js).`,
+        default:
+          process.env.PREFIX_PATHS === `true` ||
+          process.env.PREFIX_PATHS === `1`,
+        describe: `Build site with link paths prefixed with the pathPrefix value in gatsby-config.js. Default is env.PREFIX_PATHS or false.`,
       })
         .option(`no-uglify`, {
           type: `boolean`,
           default: false,
           describe: `Build site without uglifying JS bundles (for debugging).`,
+        })
+        .option(`profile`, {
+          type: `boolean`,
+          default: false,
+          describe: `Build site with react profiling (this can add some additional overhead). See https://reactjs.org/docs/profiler`,
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
@@ -206,8 +216,10 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`prefix-paths`, {
           type: `boolean`,
-          default: false,
-          describe: `Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js).`,
+          default:
+            process.env.PREFIX_PATHS === `true` ||
+            process.env.PREFIX_PATHS === `1`,
+          describe: `Serve site with link paths prefixed with the pathPrefix value in gatsby-config.js.Default is env.PREFIX_PATHS or false.`,
         }),
 
     handler: getCommandHandler(`serve`),
@@ -255,6 +267,19 @@ function buildLocalCommands(cli, isLocalSite) {
   })
 
   cli.command({
+    command: `feedback`,
+    builder: _ =>
+      _.option(`disable`, {
+        type: `boolean`,
+        describe: `Opt out of future feedback requests`,
+      }).option(`enable`, {
+        type: `boolean`,
+        describe: `Opt into future feedback requests`,
+      }),
+    handler: getCommandHandler(`feedback`),
+  })
+
+  cli.command({
     command: `clean`,
     desc: `Wipe the local gatsby environment including built assets and cache`,
     handler: getCommandHandler(`clean`),
@@ -273,7 +298,7 @@ function buildLocalCommands(cli, isLocalSite) {
 function isLocalGatsbySite() {
   let inGatsbySite = false
   try {
-    let { dependencies, devDependencies } = require(path.resolve(
+    const { dependencies, devDependencies } = require(path.resolve(
       `./package.json`
     ))
     inGatsbySite =
@@ -305,8 +330,8 @@ Gatsby version: ${gatsbyVersion}
 }
 
 module.exports = argv => {
-  let cli = yargs()
-  let isLocalSite = isLocalGatsbySite()
+  const cli = yargs()
+  const isLocalSite = isLocalGatsbySite()
 
   cli
     .scriptName(`gatsby`)
@@ -354,7 +379,7 @@ module.exports = argv => {
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
       handler: handlerP(({ rootPath, starter }) => {
-        const initStarter = require(`./init-starter`)
+        const { initStarter } = require(`./init-starter`)
         return initStarter(starter, { rootPath })
       }),
     })
@@ -379,7 +404,7 @@ Creating a plugin:
 - Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
 - Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
 - Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
-- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/docs/pixabay-source-plugin-tutorial/)
+- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/tutorial/pixabay-source-plugin-tutorial/)
 - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
 - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
           `)

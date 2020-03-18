@@ -1,14 +1,13 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
+import { Component, Fragment } from "react"
+import { withI18n } from "@lingui/react"
+import { t } from "@lingui/macro"
 
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-import ScrollPositionProvider, {
-  ScrollPositionConsumer,
-} from "./scrollbar-position-provider"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 class StickyResponsiveSidebar extends Component {
   constructor(props) {
@@ -27,19 +26,14 @@ class StickyResponsiveSidebar extends Component {
 
   render() {
     const { open } = this.state
-    const {
-      enableScrollSync,
-      location: { pathname },
-    } = this.props
+    const { i18n, enableScrollSync } = this.props
     const SidebarComponent = enableScrollSync ? ScrollSyncSidebar : Sidebar
 
     const iconOffset = open ? 5 : -5
     const menuOpacity = open ? 1 : 0
 
-    const sidebarType = pathname.split(`/`)[1]
-
     return (
-      <ScrollPositionProvider>
+      <Fragment>
         <div
           sx={{
             border: 0,
@@ -49,7 +43,7 @@ class StickyResponsiveSidebar extends Component {
             position: `fixed`,
             top: 0,
             transition: t =>
-              `opacity ${t.transition.speed.slow} ${t.transition.curve.default}`,
+              `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
             width: `sidebarWidth.mobile`,
             zIndex: `sidebar`,
             [mediaQueries.md]: {
@@ -77,23 +71,17 @@ class StickyResponsiveSidebar extends Component {
                 ? `translateX(0)`
                 : t => `translateX(-${t.sizes.sidebarWidth.mobile})`,
               transition: t =>
-                `transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
+                `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               [mediaQueries.md]: {
                 boxShadow: `none`,
                 transform: `none !important`,
               },
             }}
           >
-            <ScrollPositionConsumer>
-              {({ positions, onPositionChange }) => (
-                <SidebarComponent
-                  position={positions[sidebarType]}
-                  onPositionChange={onPositionChange}
-                  closeSidebar={this._closeSidebar}
-                  {...this.props}
-                />
-              )}
-            </ScrollPositionConsumer>
+            <SidebarComponent
+              closeSidebar={this._closeSidebar}
+              {...this.props}
+            />
           </div>
         </div>
         <div
@@ -115,7 +103,7 @@ class StickyResponsiveSidebar extends Component {
           }}
           onClick={this._openSidebar}
           role="button"
-          aria-label="Show Secondary Navigation"
+          aria-label={i18n._(t`Show Secondary Navigation`)}
           aria-controls="SecondaryNavigation"
           aria-expanded={open ? `true` : `false`}
           tabIndex={0}
@@ -136,7 +124,7 @@ class StickyResponsiveSidebar extends Component {
               cssProps={{
                 transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
                 transition: t =>
-                  `transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
+                  `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               }}
             />
             <ChevronSvg
@@ -145,14 +133,14 @@ class StickyResponsiveSidebar extends Component {
                 transform: `translate(${5 -
                   iconOffset}px, -5px) rotate(270deg)`,
                 transition: t =>
-                  `transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
+                  `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               }}
             />
           </div>
         </div>
-      </ScrollPositionProvider>
+      </Fragment>
     )
   }
 }
 
-export default StickyResponsiveSidebar
+export default withI18n()(StickyResponsiveSidebar)

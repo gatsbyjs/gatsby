@@ -2,7 +2,7 @@
 title: Community
 ---
 
-As of September 2019, the Gatsby community is comprised of over 2,400 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
+As of December 2019, the Gatsby community is comprised of over 2,800 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
 
 Open source doesn’t always have the best reputation for being friendly and welcoming, and that makes us sad. **Everyone belongs in open source, and Gatsby is dedicated to making you feel welcome.**
 
@@ -44,14 +44,6 @@ Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby com
 
 For the latest news about Gatsby,
 [follow **@gatsbyjs** on Twitter](https://twitter.com/gatsbyjs).
-
-### Community Maintainers Meeting
-
-The Gatsby Core team (official Gatsby employees who are working on Gatsby open-source) holds a weekly meeting where we encourage community members to share their projects, struggles, and successes directly with the Gatsby Core team. Additionally the Core team shares pertinent info and plans that are applicable to the community!
-
-This event is held on a recurring basis, every Wednesday at 8:30 AM Pacific Standard Time (PST).
-
-[Add the recurring calendar invite here](https://gatsby.dev/core-maintainers)
 
 ## Where to get support
 

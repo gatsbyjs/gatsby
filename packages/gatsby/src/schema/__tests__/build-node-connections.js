@@ -7,7 +7,7 @@ const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
 jest.mock(`../../redux/actions/add-page-dependency`)
-const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+import { createPageDependency } from "../../redux/actions/add-page-dependency"
 
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -66,6 +66,7 @@ const makeNodes = () => [
 describe(`build-node-connections`, () => {
   async function runQuery(query, nodes = makeNodes()) {
     store.dispatch({ type: `DELETE_CACHE` })
+    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
     nodes.forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
     )
@@ -76,6 +77,7 @@ describe(`build-node-connections`, () => {
       nodeStore,
       types: [],
       thirdPartySchemas: [],
+      inferenceMetadata: store.getState().inferenceMetadata,
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 

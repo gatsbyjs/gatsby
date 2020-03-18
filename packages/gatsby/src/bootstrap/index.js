@@ -1,7 +1,7 @@
 /* @flow */
 
 const _ = require(`lodash`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
@@ -11,7 +11,7 @@ const Promise = require(`bluebird`)
 const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const getBrowserslist = require(`../utils/browserslist`)
+import { getBrowsersList } from "../utils/browserslist"
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -19,6 +19,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
+const removeStaleJobs = require(`./remove-stale-jobs`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -72,7 +73,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   const program = {
     ...args,
-    browserslist: getBrowserslist(directory),
+    browserslist: getBrowsersList(directory),
     // Fix program directory path for windows env.
     directory,
   }
@@ -130,6 +131,7 @@ module.exports = async (args: BootstrapArgs) => {
     const themes = await loadThemes(config, {
       useLegacyThemes: true,
       configFilePath,
+      rootDir: program.directory,
     })
     config = themes.config
 
@@ -141,6 +143,7 @@ module.exports = async (args: BootstrapArgs) => {
     const plugins = await loadThemes(config, {
       useLegacyThemes: false,
       configFilePath,
+      rootDir: program.directory,
     })
     config = plugins.config
   }
@@ -158,13 +161,23 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
+  // run stale jobs
+  store.dispatch(removeStaleJobs(store.getState()))
+
   activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
+  // Multiple occurrences of the same name-version-pair can occur,
+  // so we report an array of unique pairs
+  const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
   telemetry.decorateEvent(`BUILD_END`, {
-    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+    plugins: pluginsStr,
+  })
+
+  telemetry.decorateEvent(`DEVELOP_STOP`, {
+    plugins: pluginsStr,
   })
 
   // onPreInit
@@ -177,7 +190,10 @@ module.exports = async (args: BootstrapArgs) => {
 
   // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
-  if (process.env.NODE_ENV === `production`) {
+  if (
+    !process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
+    process.env.NODE_ENV === `production`
+  ) {
     activity = report.activityTimer(
       `delete html and css files from previous builds`,
       {
@@ -208,6 +224,7 @@ module.exports = async (args: BootstrapArgs) => {
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
   const hashes = await Promise.all([
+    !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
     md5File(`package.json`),
     Promise.resolve(
       md5File(`${program.directory}/gatsby-config.js`).catch(() => {})
@@ -220,7 +237,7 @@ module.exports = async (args: BootstrapArgs) => {
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  let state = store.getState()
+  const state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
@@ -409,6 +426,16 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   await apiRunnerNode(`onPreBootstrap`, {
     parentSpan: activity.span,
+  })
+  activity.end()
+
+  // Prepare static schema types
+  activity = report.activityTimer(`createSchemaCustomization`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  await require(`../utils/create-schema-customization`)({
+    parentSpan: bootstrapSpan,
   })
   activity.end()
 

@@ -60,6 +60,7 @@ export const useSiteMetadata = () => {
       query SiteMetaData {
         site {
           siteMetadata {
+            title
             siteUrl
             headline
             description
@@ -79,7 +80,7 @@ export const useSiteMetadata = () => {
 
 Then just import your newly created hook, like so:
 
-```jsx:jsx:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { useSiteMetadata } from "../hooks/use-site-metadata"
 

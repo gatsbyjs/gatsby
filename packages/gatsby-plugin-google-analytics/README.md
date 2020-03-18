@@ -15,6 +15,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
+        // The property ID; the tracking code won't be generated without it
         trackingId: "YOUR_GOOGLE_ANALYTICS_TRACKING_ID",
         // Defines where to place the tracking script - `true` in the head and `false` in the body
         head: false,
@@ -54,18 +55,16 @@ the plugin provides a component.
 To use it, simply import it and use it like you would the `<a>` element e.g.
 
 ```jsx
-import React
-import { OutboundLink } from 'gatsby-plugin-google-analytics'
+import React from "react"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-export default () => {
+export default () => (
   <div>
-    <OutboundLink
-      href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/"
-    >
+    <OutboundLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/">
       Visit the Google Analytics plugin page!
     </OutboundLink>
   </div>
-}
+)
 ```
 
 ## Options
@@ -149,6 +148,58 @@ This plugin also supports several optional General fields documented in [Google 
 - `transport`: string
 
 These fields can be specified in the plugin's `options` as shown in the [How to use](#how-to-use) section.
+
+## TrackCustomEvent Function
+
+To allow custom events to be tracked, the plugin exposes a function to include in your project.
+
+To use it, import the package and call the event within your components and business logic.
+
+```jsx
+import React
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
+
+export default () => {
+  <div>
+    <button
+      onClick={e => {
+        // To stop the page reloading
+        e.preventDefault()
+        // Lets track that custom click
+        trackCustomEvent({
+          // string - required - The object that was interacted with (e.g.video)
+          category: "Special Button",
+          // string - required - Type of interaction (e.g. 'play')
+          action: "Click",
+          // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
+          label: "Gatsby Plugin Example Campaign",
+          // number - optional - Numeric value associated with the event. (e.g. A product ID)
+          value: 43
+        })
+        //... Other logic here
+      }}
+    >
+      Tap that!
+    </button>
+  </div>
+}
+```
+
+### All Fields Options
+
+- `category`: string - required
+- `action`: string - required
+- `label`: string
+- `value`: integer
+- `nonInteraction`: bool
+- `transport`: string
+- `hitCallback`: function
+
+For more information see the [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events) documentation.
+
+#### hitCallback
+
+A timeout is included by default incase the Analytics library fails to load. For more information see [Google Analytics - Handling Timeouts](https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits#handling_timeouts)
 
 ## Troubleshooting
 

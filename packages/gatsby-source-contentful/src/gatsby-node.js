@@ -35,7 +35,16 @@ exports.onPreBootstrap = validateOptions
  */
 
 exports.sourceNodes = async (
-  { actions, getNode, getNodes, createNodeId, store, cache, reporter },
+  {
+    actions,
+    getNode,
+    getNodes,
+    createNodeId,
+    store,
+    cache,
+    getCache,
+    reporter,
+  },
   pluginOptions
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
@@ -49,9 +58,16 @@ exports.sourceNodes = async (
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
     process.env.NODE_ENV !== `production`
   ) {
-    getNodes()
-      .filter(n => n.internal.owner === `gatsby-source-contentful`)
-      .forEach(n => touchNode({ nodeId: n.id }))
+    getNodes().forEach(node => {
+      if (node.internal.owner !== `gatsby-source-contentful`) {
+        return
+      }
+      touchNode({ nodeId: node.id })
+      if (node.localFile___NODE) {
+        // Prevent GraphQL type inference from crashing on this property
+        touchNode({ nodeId: node.localFile___NODE })
+      }
+    })
 
     console.log(`Using Contentful Offline cache ⚠️`)
     console.log(
@@ -119,7 +135,11 @@ exports.sourceNodes = async (
       })
       .filter(node => node)
 
-    localizedNodes.forEach(node => deleteNode({ node }))
+    localizedNodes.forEach(node => {
+      // touchNode first, to populate typeOwners & avoid erroring
+      touchNode({ nodeId: node.id })
+      deleteNode({ node })
+    })
   }
 
   currentSyncData.deletedEntries.forEach(deleteContentfulNode)
@@ -165,6 +185,7 @@ exports.sourceNodes = async (
     defaultLocale,
     locales,
     space,
+    useNameForId: pluginConfig.get(`useNameForId`),
   })
 
   const newOrUpdatedEntries = []
@@ -196,8 +217,9 @@ exports.sourceNodes = async (
     })
 
   contentTypeItems.forEach((contentTypeItem, i) => {
-    normalize.createContentTypeNodes({
+    normalize.createNodesForContentType({
       contentTypeItem,
+      contentTypeItems,
       restrictedNodeFields,
       conflictFieldPrefix,
       entries: entryList[i],
@@ -208,6 +230,8 @@ exports.sourceNodes = async (
       defaultLocale,
       locales,
       space,
+      useNameForId: pluginConfig.get(`useNameForId`),
+      richTextOptions: pluginConfig.get(`richText`),
     })
   })
 
@@ -228,6 +252,7 @@ exports.sourceNodes = async (
       createNodeId,
       store,
       cache,
+      getCache,
       getNodes,
       reporter,
     })
@@ -246,27 +271,4 @@ exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
     `${program.directory}/.cache/contentful/assets/`
   )
   await fs.ensureDir(CACHE_DIR)
-
-  if (getNodesByType(`ContentfulAsset`).length == 0) {
-    return
-  }
-
-  let gatsbyImageDoesNotExist = true
-  try {
-    require.resolve(`gatsby-image`)
-    gatsbyImageDoesNotExist = false
-  } catch (e) {
-    // Ignore
-  }
-
-  if (gatsbyImageDoesNotExist) {
-    return
-  }
-
-  // We have both gatsby-image installed as well as ImageSharp nodes so let's
-  // add our fragments to .cache/fragments.
-  await fs.copy(
-    require.resolve(`gatsby-source-contentful/src/fragments.js`),
-    `${program.directory}/.cache/fragments/contentful-asset-fragments.js`
-  )
 }

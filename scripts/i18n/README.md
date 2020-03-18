@@ -21,7 +21,7 @@ These scripts require the following variables to be defined in the environment, 
 
 Usage:
 
-```
+```shell
 yarn run update-source
 ```
 
@@ -31,7 +31,7 @@ The `update-source` script updates the contents of `gatsby-i18n-source` based on
 
 Usage:
 
-```
+```shell
 yarn run create [issue #]
 ```
 
@@ -55,6 +55,18 @@ The script will take this info and:
 
 This script should **only** be run by an admin of the GatsbyJS organization.
 
-### `sync` (TODO)
+### `sync`
+
+Usage:
+
+```shell
+yarn run sync [language code]
+```
 
 The `sync` script updates contents of the translation repository based on new changes to the repo. It can be run manually or through a bot.
+
+When run, the script will:
+
+- Pulls the latest version of `gatsby-i18n-source`.
+- Creates a "sync" pull request that updates all files that do not contain conflicts from the merge.
+- Creates a "conflicts" pull request that contains all merge conflicts, with instructions on how to resolve them.

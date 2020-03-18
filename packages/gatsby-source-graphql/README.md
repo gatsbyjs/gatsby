@@ -42,8 +42,27 @@ module.exports = {
           // Learn about environment variables: https://gatsby.dev/env-vars
           Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
         },
+        // HTTP headers alternatively accepts a function (allows async)
+        headers: async () => {
+          return {
+            Authorization: await getAuthorizationToken(),
+          }
+        },
         // Additional options to pass to node-fetch
         fetchOptions: {},
+      },
+    },
+
+    // Advanced config, using a custom fetch function
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "GitHub",
+        fieldName: "github",
+        url: "https://api.github.com/graphql",
+        // A `fetch`-compatible API to use when making requests.
+        fetch: (uri, options = {}) =>
+          fetch(uri, { ...options, headers: sign(options.headers) }),
       },
     },
 
@@ -54,14 +73,15 @@ module.exports = {
         typeName: "GitHub",
         fieldName: "github",
         // Create Apollo Link manually. Can return a Promise.
-        createLink: (pluginOptions) => {
+        createLink: pluginOptions => {
           return createHttpLink({
-            uri: 'https://api.github.com/graphql',
+            uri: "https://api.github.com/graphql",
             headers: {
-              'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
+              Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
             },
             fetch,
           })
+        },
       },
     },
   ],

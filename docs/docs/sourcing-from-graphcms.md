@@ -58,23 +58,23 @@ If everything works correctly, you should now have your GraphCMS data added to t
 
 From the root of your project, run the development environment with `gatsby develop`. Once the server has started and is error free, you should be able to open the following URL in your browser:
 
-<http://localhost:8000/___graphql>
+`http://localhost:8000/___graphql`
 
 This will show you an interface where you can test your new content API.
 
 Try running this query:
 
-```js
+```graphql
 query {
-    gcms {
-        mountains {
-            title
-            elevation
-            image {
-                url
-            }
-        }
+  gcms {
+    mountains {
+      title
+      elevation
+      image {
+        url
+      }
     }
+  }
 }
 ```
 
@@ -110,7 +110,7 @@ Again, if everything is working properly, you should see a successful response i
 
 For the purpose of this tutorial I've removed all the layout, SEO, link or other components that comprise a page in the Gatsby starter. The components are still there and 99% of users will likely want to put them back in once they understand what's happening in the code. You are just looking at the nails for right now, but the hammers, saws and other tools are still in the toolbox. Open the index file located at `src/pages/index.js` and replace the content with this code:
 
-```js
+```jsx
 import React from "react"
 import { StaticQuery } from "gatsby"
 

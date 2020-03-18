@@ -1,6 +1,7 @@
 // @flow
 const { camelCase } = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
+const { parseTypeDef } = require(`../../schema/types/type-defs`)
 
 import type { Plugin } from "./types"
 
@@ -12,7 +13,7 @@ const actions = {}
  *
  * This schema is going to be merged as-is. This can easily break the main
  * Gatsby schema, so it's user's responsibility to make sure it doesn't happen
- * (by eg namespacing the schema).
+ * (by e.g. namespacing the schema).
  *
  * @availableIn [createSchemaCustomization, sourceNodes]
  *
@@ -187,7 +188,9 @@ actions.createTypes = (
     type: `CREATE_TYPES`,
     plugin,
     traceId,
-    payload: types,
+    payload: Array.isArray(types)
+      ? types.map(parseTypeDef)
+      : parseTypeDef(types),
   }
 }
 

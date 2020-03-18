@@ -24,4 +24,8 @@ describe(`Pages`, () => {
       cy.getTestElement(`title`).contains(`Overwritten page from local theme`)
     })
   })
+  it(`page queries can be shadowed`, () => {
+    cy.visit(`/about`).waitForRouteChange()
+    cy.getTestElement(`author`).contains(`Sidhartha Chatterjee`)
+  })
 })
