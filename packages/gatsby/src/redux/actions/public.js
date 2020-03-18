@@ -16,7 +16,11 @@ const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const { getCommonDir } = require(`../../utils/path`)
+const {
+  getCommonDir,
+  truncatePath,
+  tooLongSegmentsInPath,
+} = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
@@ -373,6 +377,24 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
+  const invalidPathSegments = tooLongSegmentsInPath(page.path)
+
+  if (invalidPathSegments.length > 0) {
+    const truncatedPath = truncatePath(page.path)
+    report.panicOnBuild({
+      id: `11331`,
+      context: {
+        path: page.path,
+        invalidPathSegments,
+
+        // we will only show truncatedPath in non-production scenario
+        isProduction: process.env.NODE_ENV === `production`,
+        truncatedPath,
+      },
+    })
+    page.path = truncatedPath
+  }
+
   const internalPage: Page = {
     internalComponentName,
     path: page.path,
@@ -553,7 +575,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
-// Marked private here because it was supressed in documentation pages.
+// Marked private here because it was suppressed in documentation pages.
 /**
  * Batch delete nodes
  * @private
@@ -1034,9 +1056,9 @@ actions.createParentChildLink = (
   { parent, child }: { parent: any, child: any },
   plugin?: Plugin
 ) => {
-  // Update parent
-  parent.children.push(child.id)
-  parent.children = _.uniq(parent.children)
+  if (!parent.children.includes(child.id)) {
+    parent.children.push(child.id)
+  }
 
   return {
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,

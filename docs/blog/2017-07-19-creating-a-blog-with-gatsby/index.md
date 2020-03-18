@@ -647,7 +647,7 @@ Now go build something great.
     (previous link), and expands upon it with a bunch of features and some more
     advanced functionality
 
-[react-dom-server]: https://facebook.github.io/react/docs/react-dom-server.html
+[react-dom-server]: https://reactjs.org/docs/react-dom-server.html
 [gatsby-release]: /blog/gatsby-v1/
 [gatsby-plugins]: /docs/plugins/
 [gatsby-plugin-catch-links]: /packages/gatsby-plugin-catch-links/

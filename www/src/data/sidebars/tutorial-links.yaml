@@ -113,6 +113,10 @@
     - title: Plugin & Theme Tutorials
       link: /tutorial/plugin-and-theme-tutorials/
       items:
+        - title: Creating an Image Source Plugin
+          link: /tutorial/pixabay-source-plugin-tutorial/
+        - title: Creating a Remark Transformer Plugin
+          link: /tutorial/remark-plugin-tutorial/
         - title: Using a Theme
           link: /tutorial/using-a-theme/
         - title: Using Multiple Themes Together

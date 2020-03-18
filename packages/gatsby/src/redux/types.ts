@@ -1,4 +1,5 @@
 import { GraphQLSchema } from "graphql"
+import { IProgram } from "../commands/types"
 
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
@@ -18,7 +19,10 @@ export interface IReduxState {
   nodesByType?: Map<any, any> // TODO
   jobsV2: any // TODO
   lastAction: ActionsUnion
-  componentDataDependencies: any // TODO
+  componentDataDependencies: {
+    connections: any // TODO
+    nodes: any // TODO
+  }
   components: any // TODO
   staticQueryComponents: any // TODO
   webpackCompilationHash: any // TODO
@@ -35,6 +39,9 @@ export interface IReduxState {
   pageData: any
   pages: any
   babelrc: any
+  themes: any
+  flattenedPlugins: any
+  program: IProgram
 }
 
 export interface ICachedReduxState {

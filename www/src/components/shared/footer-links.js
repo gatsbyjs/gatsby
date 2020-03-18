@@ -1,6 +1,13 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
+import { t, Trans } from "@lingui/macro"
+
+const links = [
+  { to: `/accessibility-statement/`, text: t`Accessibility Statement` },
+  { to: `/contributing/code-of-conduct/`, text: t`Code of Conduct` },
+  { to: `/guidelines/logo/`, text: t`Logo & Assets` },
+]
 
 const FooterLinks = props => (
   <footer>
@@ -40,15 +47,13 @@ const FooterLinks = props => (
         },
       }}
     >
-      <li>
-        <Link to="/accessibility-statement">Accessibility Statement</Link>
-      </li>
-      <li>
-        <Link to="/contributing/code-of-conduct/">Code of Conduct</Link>
-      </li>
-      <li>
-        <a href="/guidelines/logo/">Logo &amp; Assets</a>
-      </li>
+      {links.map(({ to, text }) => (
+        <li key={to}>
+          <Link to={to}>
+            <Trans id={text} />
+          </Link>
+        </li>
+      ))}
       <li>
         <a href="https://www.gatsbyjs.com">Gatsbyjs.com</a>
       </li>

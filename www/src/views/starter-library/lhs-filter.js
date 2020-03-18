@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
-import MdCheckbox from "react-icons/lib/md/check-box"
+import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md"
 
 import Collapsible from "../shared/collapsible"
 import { filterButton, filterCheckbox } from "../shared/styles"
@@ -45,9 +44,11 @@ export default function LHSFilter({
             >
               <div sx={filterCheckbox}>
                 {filters.has(c) ? (
-                  <MdCheckbox style={{ verticalAlign: `-0.125em` }} />
+                  <MdCheckBox style={{ verticalAlign: `-0.125em` }} />
                 ) : (
-                  <MdCheckboxBlank style={{ verticalAlign: `-0.125em` }} />
+                  <MdCheckBoxOutlineBlank
+                    style={{ verticalAlign: `-0.125em` }}
+                  />
                 )}
               </div>
               <div sx={{ mr: `auto` }}>{c.replace(/^gatsby-/, `*-`)}</div>
