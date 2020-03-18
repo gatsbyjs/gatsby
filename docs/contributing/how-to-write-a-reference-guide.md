@@ -8,6 +8,9 @@ Reference guide articles cover discrete topics as documentation with links to ot
 
 Reference guide sections provide canonical information on how and why to build things with Gatsby for a variety of scenarios. Reference material should list text headings for each section of a guide, rather than "steps 1-5" like a tutorial.
 
+## What are reference guide overview pages?
+
+**Reference guide overview pages** act as parent pages for groups of reference guide articles, offering an original summary of what can be found in the section. They almost always include a `<Guidelist />` component to automatically list the subpage links in that section of the sidebar. See the [Docs and Blog Components](/contributing/docs-and-blog-components/#guide-list) page to learn more about the Guidelist component.
 ### Other types of guide articles
 
 The Gatsby docs include multiple types of guides. They mostly follow the same format, but some docs will have a slightly different purpose and/or audience.
