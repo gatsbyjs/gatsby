@@ -1,13 +1,11 @@
-// @flow
+import webpack, { Plugin } from "webpack"
 
-const webpack = require(`webpack`)
-
-const plugin = (name, optimize) => {
-  const Plugin = (optimize ? webpack.optimize : webpack)[name]
-  return (...args: any) => new Plugin(...args)
+const plugin = (name: string, optimize?: boolean): Plugin => {
+  const WebpackPlugin = (optimize ? webpack.optimize : webpack)[name]
+  return (...args: any): Plugin => new WebpackPlugin(...args)
 }
 
-const plugins = {
+export const builtinPlugins = {
   normalModuleReplacement: plugin(`NormalModuleReplacementPlugin`),
   contextReplacement: plugin(`ContextReplacementPlugin`),
   ignore: plugin(`IgnorePlugin`),
@@ -53,5 +51,3 @@ const plugins = {
   occurrenceOrder: plugin(`OccurrenceOrderPlugin`, true),
   moduleConcatenation: plugin(`ModuleConcatenationPlugin`, true),
 }
-
-module.exports = plugins
