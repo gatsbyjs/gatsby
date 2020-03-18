@@ -92,12 +92,17 @@ export interface IRuleUtils {
   eslint: RuleFactory
 }
 
-export type PluginUtils = BuiltinPlugins & {
-  extractText: PluginFactory
-  uglify: PluginFactory
-  moment: PluginFactory
-  extractStats: PluginFactory
-}
+export type PluginUtils = BuiltinPlugins &
+  Partial<{
+    extractText: PluginFactory
+    uglify: PluginFactory
+    moment: PluginFactory
+    extractStats: PluginFactory
+    minifyJs: PluginFactory
+    minifyCss: PluginFactory
+    fastRefresh: PluginFactory
+    eslintGraphqlSchemaReload: PluginFactory
+  }>
 
 /**
  * webpack atoms namespace
@@ -130,11 +135,7 @@ export const createUtils = async ({
 
   const makeExternalOnly = (original: RuleFactory) => (
     options = {}
-<<<<<<< HEAD:packages/gatsby/src/utils/webpack-utils.ts
   ): RuleSetRule => {
-=======
-  ): Rule => {
->>>>>>> 7095e418b30989e671899aee68fe25afca82a89c:packages/gatsby/src/utils/webpack-utils.js
     const rule = original(options)
     rule.include = vendorRegex
     return rule
@@ -142,11 +143,7 @@ export const createUtils = async ({
 
   const makeInternalOnly = (original: RuleFactory) => (
     options = {}
-<<<<<<< HEAD:packages/gatsby/src/utils/webpack-utils.ts
   ): RuleSetRule => {
-=======
-  ): Rule => {
->>>>>>> 7095e418b30989e671899aee68fe25afca82a89c:packages/gatsby/src/utils/webpack-utils.js
     const rule = original(options)
     rule.exclude = vendorRegex
     return rule
@@ -530,7 +527,7 @@ export const createUtils = async ({
   /**
    * Plugins
    */
-  const plugins = { ...builtinPlugins }
+  const plugins: PluginUtils = { ...builtinPlugins }
 
   /**
    * Minify JavaScript code without regard for IE8. Attempts
@@ -539,7 +536,7 @@ export const createUtils = async ({
   plugins.minifyJs = ({
     terserOptions,
     ...options
-  }: { terserOptions?: TerserPlugin.TerserPluginOptions } = {}): RuleSetRule =>
+  }: { terserOptions?: TerserPlugin.TerserPluginOptions } = {}): Plugin =>
     new TerserPlugin({
       cache: true,
       // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
