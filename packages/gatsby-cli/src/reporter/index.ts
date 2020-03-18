@@ -60,8 +60,7 @@ if (process.env.GATSBY_LOGGER.includes(`json`)) {
 
 const errorFormatter = getErrorFormatter()
 
-// eslint-disable-next-line @typescript-eslint/interface-name-prefix
-export interface ActivityTracker {
+interface IActivityTracker {
   start(): void
   end(): void
   span: Span
@@ -70,11 +69,19 @@ export interface ActivityTracker {
   panicOnBuild: (errorMeta: ErrorMeta, error?: Error) => Error | undefined
 }
 
-export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
+interface IProgressActivityTracker {
   tick(increment?: number): void
   done(): void
   total: number
+  start(): void
+  span: Span
+  setStatus(status: string): void
+  panic: (errorMeta: ErrorMeta, error?: Error) => never
+  panicOnBuild: (errorMeta: ErrorMeta, error?: Error) => Error | undefined
 }
+
+export type ActivityTracker = IActivityTracker
+export type ProgressActivityTracker = IProgressActivityTracker
 
 export interface IActivityArgs {
   parentSpan?: Span
@@ -145,14 +152,14 @@ class Reporter {
   format = chalk
   /**
    * Toggle verbosity.
-   * @param {boolean} [_isVerbose=true]
+   * @param _isVerbose
    */
-  setVerbose = (_isVerbose = true): void => {
+  setVerbose(_isVerbose = true): void {
     isVerbose = _isVerbose
   }
   /**
    * Turn off colors in error output.
-   * @param {boolean} [isNoColor=false]
+   * @param isNoColor
    */
   setNoColor(isNoColor = false): void {
     if (isNoColor) {
@@ -171,7 +178,7 @@ class Reporter {
   }
   /**
    * Log arguments and exit process with status 1.
-   * @param {*} args
+   * @param args
    */
   panic(errorMeta: ErrorMeta, error?: Error): never {
     const details = this.error(errorMeta, error)
@@ -204,7 +211,7 @@ class Reporter {
       }
       details.error = error
       details.context = {
-        sourceMessage: errorMeta + ` ` + error?.message,
+        sourceMessage: `${errorMeta} ${error.message}`,
       }
     } else if (errorMeta instanceof Error) {
       details.error = errorMeta
@@ -216,9 +223,9 @@ class Reporter {
       return errorMeta.map(
         errorItem => this.error(errorItem) as IStructuredError
       )
-    } else if (arguments.length === 1 && typeof errorMeta === `object`) {
+    } else if (typeof errorMeta === `object`) {
       details = { ...errorMeta }
-    } else if (arguments.length === 1 && typeof errorMeta === `string`) {
+    } else if (typeof errorMeta === `string`) {
       details.context = {
         sourceMessage: errorMeta,
       }
@@ -239,13 +246,13 @@ class Reporter {
 
   /**
    * Set prefix on uptime.
-   * @param {string} prefix - A string to prefix uptime with.
+   * @param prefix - A string to prefix uptime with.
    */
   uptime(prefix): void {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   }
 
-  verbose = (text: string): void => {
+  verbose(text: string): void {
     if (isVerbose) {
       reporterActions.createLog({
         level: LogLevels.Debug,
@@ -259,20 +266,17 @@ class Reporter {
   warn = addMessage(LogLevels.Warning)
   log = addMessage(LogLevels.Log)
 
-  pendingActivity: reporterActions.createPendingActivity
+  pendingActivity = reporterActions.createPendingActivity
 
-  completeActivity = (
-    id: string,
-    status: string = ActivityStatuses.Success
-  ): void => {
+  completeActivity = (id: string, status = ActivityStatuses.Success): void => {
     reporterActions.endActivity({ id, status })
   }
 
   /**
    * Time an activity.
-   * @param {string} text - Name of activity.
-   * @param {IActivityArgs} activityArgs - optional object with tracer parentSpan
-   * @returns {ActivityTracker} The activity tracker.
+   * @param text - Name of activity.
+   * @param activityArgs - optional object with tracer parentSpan
+   * @returns The activity tracker.
    */
   activityTimer(
     text: string,
@@ -344,9 +348,9 @@ class Reporter {
    * are visible to the user. So this function can be used to create a _hidden_ activity
    * that while not displayed in the CLI, still triggers a change in process status.
    *
-   * @param {string} text - Name of activity.
-   * @param {IActivityArgs} activityArgs - optional object with tracer parentSpan
-   * @returns {ActivityTracker} The activity tracker.
+   * @param text - Name of activity.
+   * @param activityArgs - optional object with tracer parentSpan
+   * @returns The activity tracker.
    */
   phantomActivity(
     text: string,
