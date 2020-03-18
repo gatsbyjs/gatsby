@@ -19,6 +19,8 @@
           link: /docs/recipes/pages-layouts/
         - title: Styling with CSS
           link: /docs/recipes/styling-css/
+        - title: Working with Plugins
+          link: /docs/recipes/working-with-plugins/
         - title: Working with Starters
           link: /docs/recipes/working-with-starters/
         - title: Working with Themes
