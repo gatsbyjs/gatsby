@@ -31,45 +31,42 @@ exports.sourceNodes = async (
   const { createNode } = actions
 
   try {
-    const result = await fetch(username, limit)
-    const json = JSON.parse(strip(result.data))
+    const { data } = await fetch(username, limit)
+    const { payload } = JSON.parse(strip(data))
 
     let importableResources = []
     let posts = {} // because `posts` needs to be in a scope accessible by `links` below
 
-    const users = Object.keys(json.payload.references.User).map(
-      key => json.payload.references.User[key]
+    const users = Object.keys(payload.references.User).map(
+      key => payload.references.User[key]
     )
     importableResources = importableResources.concat(users)
 
-    if (json.payload.posts) {
-      posts = json.payload.posts
+    if (payload.posts) {
+      posts = payload.posts
       importableResources = importableResources.concat(posts)
     }
 
-    if (json.payload.references.Post) {
-      posts = Object.keys(json.payload.references.Post).map(
-        key => json.payload.references.Post[key]
+    if (payload.references.Post) {
+      posts = Object.keys(payload.references.Post).map(
+        key => payload.references.Post[key]
       )
       importableResources = importableResources.concat(posts)
     }
 
-    if (json.payload.references.Collection) {
-      const collections = Object.keys(json.payload.references.Collection).map(
-        key => json.payload.references.Collection[key]
+    if (payload.references.Collection) {
+      const collections = Object.keys(payload.references.Collection).map(
+        key => payload.references.Collection[key]
       )
       importableResources = importableResources.concat(collections)
     }
 
-    const resources = Array.prototype
-      .concat(...importableResources)
-      .map(resource => {
-        return {
-          ...resource,
-          medium_id: resource.id,
-          id: createNodeId(resource.id ? resource.id : resource.userId),
-        }
-      })
+    const resources = [ ...importableResources ]
+      .map(resource => ({
+        ...resource,
+        medium_id: resource.id,
+        id: createNodeId(resource.id ? resource.id : resource.userId),
+      }))
 
     const getID = node => (node ? node.id : null)
 
@@ -78,35 +75,35 @@ exports.sourceNodes = async (
 
       const contentDigest = createContentDigest(resource)
 
-      const links =
-        resource.type === `Post`
-          ? {
-              author___NODE: getID(
-                resources.find(r => r.userId === resource.creatorId)
-              ),
-            }
-          : resource.type === `User`
-          ? {
-              posts___NODE: resources
-                .filter(
-                  r => r.type === `Post` && r.creatorId === resource.userId
-                )
-                .map(r => r.id),
-            }
-          : {}
+      let links = {}
 
-      const node = Object.assign(
-        resource,
-        {
-          parent: null,
-          children: [],
-          internal: {
-            type: `Medium${resource.type}`,
-            contentDigest,
-          },
+      if (resource.type === `Post`) {
+        links = {
+          author___NODE: getID(
+            resources.find(r => r.userId === resource.creatorId)
+          ),
+        }
+      }
+      else if (resource.type === `User`) {
+        links = {
+          posts___NODE: resources
+            .filter(
+              r => (r.type === `Post`) && (r.creatorId === resource.userId)
+            )
+            .map(r => r.id),
+        }
+      }
+
+      const node = {
+        ...resource,
+        ...links,
+        parent: null,
+        children: [],
+        internal: {
+          type: `Medium${resource.type}`,
+          contentDigest,
         },
-        links
-      )
+      }
 
       createNode(node)
     })
