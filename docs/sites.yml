@@ -10055,6 +10055,19 @@
   built_by: Built by Rebels Ltd.
   built_by_url: https://builtbyrebels.com/
   featured: false
+- title: Design Portfolio of Richard Bruskowski
+  main_url: https://bruskowski.design/
+  url: https://bruskowski.design/
+  description: >
+    My freelance design portfolio: Visual design, digital products, interactive prototypes, design systems, brand design. Uses MDX, Styled Components, Framer Motion. Started with Gatsby Starter Emilia by LekoArts.
+  categories:
+    - Design
+    - Portfolio
+    - User Experience
+    - Freelance
+    - Photography
+  built_by: Richard Bruskowski
+  built_by_url: https://github.com/richardbruskowski
 - title: Kelvin DeCosta's Website
   url: https://kelvindecosta.com
   main_url: https://kelvindecosta.com
