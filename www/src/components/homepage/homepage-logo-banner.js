@@ -92,11 +92,12 @@ const HomepageLogoBanner = () => {
       </Title>
       <LogoGroup>
         {data.allFile.nodes.map(image => (
-          <Img
-            alt={`${image.base.split(`.`)[0]}`}
-            fixed={image.childImageSharp.fixed}
-            key={image.base}
-          />
+          <div key={image.base} tabIndex="0">
+            <Img
+              alt={`${image.base.split(`.`)[0]}`}
+              fixed={image.childImageSharp.fixed}
+            />
+          </div>
         ))}
       </LogoGroup>
     </Section>
