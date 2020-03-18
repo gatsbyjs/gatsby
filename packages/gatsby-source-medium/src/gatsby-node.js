@@ -340,7 +340,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       createdAt: Date @dateformat
       updatedAt: Date @dateformat
       curationEligibleAt: Date @dateformat
-      acceptedAt: Int
+      acceptedAt: Date @dateformat
       firstPublishedAt: Date @dateformat
       latestPublishedAt: Date @dateformat
       vote: Boolean
@@ -354,7 +354,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       translationSourceCreatorId: String
       isApprovedTranslation: Boolean
       inResponseToPostId: String
-      inResponseToRemovedAt: Int
+      inResponseToRemovedAt: Date @dateformat
       isTitleSynthesized: Boolean
       allowResponses: Boolean
       importedUrl: String
@@ -373,19 +373,19 @@ exports.createSchemaCustomization = async ({ actions }) => {
       notifyFollowers: Boolean
       notifyTwitter: Boolean
       notifyFacebook: Boolean
-      responseHiddenOnParentPostAt: Int
+      responseHiddenOnParentPostAt: Date @dateformat
       isSeries: Boolean
       isSubscriptionLocked: Boolean
-      seriesLastAppendedAt: Int
+      seriesLastAppendedAt: Date @dateformat
       audioVersionDurationSec: Int
       sequenceId: String
       isEligibleForRevenue: Boolean
       isBlockedFromHightower: Boolean
-      deletedAt: Int
+      deletedAt: Date @dateformat
       lockedPostSource: Int
-      hightowerMinimumGuaranteeStartsAt: Int
-      hightowerMinimumGuaranteeEndsAt: Int
-      featureLockRequestAcceptedAt: Int
+      hightowerMinimumGuaranteeStartsAt: Date @dateformat
+      hightowerMinimumGuaranteeEndsAt: Date @dateformat
+      featureLockRequestAcceptedAt: Date @dateformat
       mongerRequestType: Int
       layerCake: Int
       socialTitle: String
@@ -480,7 +480,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       backgroundSize: String
       filter: String
       externalSrc: String
-      repairedAt: Int
+      repairedAt: Date @dateformat
     }
 
     type MediumPostVirtualsLinks @derivedTypes {
@@ -504,7 +504,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       topicId: String
       slug: String
       createdAt: Date @dateformat
-      deletedAt: Int
+      deletedAt: Date @dateformat
       image: MediumPostVirtualsTopicsImage
       name: String
       description: String
