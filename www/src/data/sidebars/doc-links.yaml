@@ -746,6 +746,8 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: Build
+          link: /docs/glossary/build/
         - title: Continuous Deployment
           link: /docs/glossary/continuous-deployment/
         - title: Decoupled Drupal
