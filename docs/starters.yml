@@ -5620,3 +5620,20 @@
     - Styled 404 page
     - Lightweight
     - Styled Components
+- url: https://gatsby-airtable-listing.netlify.com/
+  repo: https://github.com/wkocjan/gatsby-airtable-listing
+  description: Airtable theme for Gatsby
+  tags:
+    - Airtable
+    - SEO
+    - Styling:Tailwind
+  features:
+    - Airtable integration
+    - Modals with previous/next navigation
+    - Responsive design
+    - Uses TailwindCSS for styling
+    - Font Awesome icons
+    - Clean minimalist design
+    - SEO optimized
+    - Robots.txt
+    - OpenGraph structured data
