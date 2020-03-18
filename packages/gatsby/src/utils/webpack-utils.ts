@@ -10,7 +10,7 @@ import isWsl from "is-wsl"
 const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
 const GatsbyWebpackEslintGraphqlSchemaReload = require(`./gatsby-webpack-eslint-graphql-schema-reload-plugin`)
 
-const builtinPlugins = require(`./webpack-plugins`)
+import { builtinPlugins } from "./webpack-plugins"
 const eslintConfig = require(`./eslint-config`)
 
 type LoaderResolver<T = {}> = (options?: T) => Loader
@@ -130,7 +130,11 @@ export const createUtils = async ({
 
   const makeExternalOnly = (original: RuleFactory) => (
     options = {}
+<<<<<<< HEAD:packages/gatsby/src/utils/webpack-utils.ts
   ): RuleSetRule => {
+=======
+  ): Rule => {
+>>>>>>> 7095e418b30989e671899aee68fe25afca82a89c:packages/gatsby/src/utils/webpack-utils.js
     const rule = original(options)
     rule.include = vendorRegex
     return rule
@@ -138,7 +142,11 @@ export const createUtils = async ({
 
   const makeInternalOnly = (original: RuleFactory) => (
     options = {}
+<<<<<<< HEAD:packages/gatsby/src/utils/webpack-utils.ts
   ): RuleSetRule => {
+=======
+  ): Rule => {
+>>>>>>> 7095e418b30989e671899aee68fe25afca82a89c:packages/gatsby/src/utils/webpack-utils.js
     const rule = original(options)
     rule.exclude = vendorRegex
     return rule
