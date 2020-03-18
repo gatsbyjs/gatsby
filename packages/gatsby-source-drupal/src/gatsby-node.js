@@ -8,7 +8,15 @@ const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
 
 exports.sourceNodes = async (
-  { actions, store, cache, createNodeId, createContentDigest, reporter },
+  {
+    actions,
+    store,
+    cache,
+    createNodeId,
+    createContentDigest,
+    getCache,
+    reporter,
+  },
   pluginOptions
 ) => {
   let {
@@ -156,7 +164,7 @@ exports.sourceNodes = async (
     downloadingFilesActivity.start()
     await asyncPool(concurrentFileRequests, fileNodes, async node => {
       await downloadFile(
-        { node, store, cache, createNode, createNodeId, reporter },
+        { node, store, cache, createNode, createNodeId, getCache, reporter },
         pluginOptions
       )
     })
@@ -179,6 +187,7 @@ exports.onCreateDevServer = (
     store,
     cache,
     createContentDigest,
+    getCache,
     reporter,
   },
   pluginOptions
@@ -209,6 +218,7 @@ exports.onCreateDevServer = (
             cache,
             createNodeId,
             createContentDigest,
+            getCache,
             getNode,
             reporter,
             store,

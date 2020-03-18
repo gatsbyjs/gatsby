@@ -1,3 +1,13 @@
+- url: https://delog-w3layouts.netlify.com/
+  repo: https://github.com/W3Layouts/gatsby-starter-delog
+  description: A Gatsby Starter built with Netlify CMS to launch your dream blog with a click.
+  tags:
+    - Blog
+    - CMS:Netlify
+  features:
+    - Simple blog designed for designer and developers
+    - Manage Posts with Netlify CMS
+    - Option to add featured image and meta description while adding posts
 - url: https://styxlab.github.io
   repo: https://github.com/styxlab/gatsby-starter-try-ghost
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
@@ -5502,6 +5512,19 @@
     - Disqus
     - Breadcrumbs
     - ESLint
+- url: https://barcadia.netlify.com/
+  repo: https://github.com/bagseye/barcadia
+  description: A super-fast site using GatsbyJS
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Contentful
+    - Portfolio
+  features:
+    - Styled components
+    - Responsive webpage
+    - Portfolio
+    - Blog
 - url: https://gatsby-starter-clean-resume.netlify.com/
   repo: https://github.com/masoudkarimif/gatsby-starter-clean-resume
   description: A Gatsby Starter Template for Putting Your Resume Online Super Quick!
@@ -5545,6 +5568,26 @@
     - Robots.txt
     - Sitemap
     - PWA
+- url: https://gatsby-contentful-portfolio.netlify.com/
+  repo: https://github.com/wkocjan/gatsby-contentful-portfolio
+  description: Gatsby portfolio theme integrated with Contentful
+  tags:
+    - CMS:Contentful
+    - CMS:Headless
+    - Gallery
+    - Portfolio
+    - SEO
+    - Styling:Tailwind
+  features:
+    - Clean minimalist design
+    - Contentful integration with ready to go placeholder content
+    - Responsive design
+    - Uses TailwindCSS for styling
+    - Font Awesome icons
+    - Robots.txt
+    - SEO optimized
+    - OpenGraph structured data
+    - Integration with Mailchimp
 - url: https://gatsby-graphcms-ecommerce-starter.netlify.com
   repo: https://github.com/GraphCMS/gatsby-graphcms-ecommerce-starter
   description: Swag store built with GraphCMS, Stripe, Gatsby, Postmark and Printful.
@@ -5561,3 +5604,15 @@
     - Custom GraphQL API for handling checkout and payment
     - Postmark for order notifications
     - Strong Customer Authentication
+- url: https://koop-blog.netlify.com/
+  repo: https://github.com/bagseye/koop-blog
+  description: A simple blog platform using GatsbyJS and MDX
+  tags:
+    - Blog
+    - Markdown
+    - MDX
+  features:
+    - Responsive design
+    - Styled 404 page
+    - Lightweight
+    - Styled Components
