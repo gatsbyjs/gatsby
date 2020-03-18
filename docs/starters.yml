@@ -5256,13 +5256,17 @@
     - ✔️ Highly optimized (Lighthouse score 4 x 100)
 - url: https://gatsby-starter-typescript-deploy.netlify.com/
   repo: https://github.com/jongwooo/gatsby-starter-typescript
-  description: Typescript version of the default Gatsby starter🔮
+  description: TypeScript version of the default Gatsby starter🔮
   tags:
     - Language:TypeScript
+    - Linting
     - Netlify
   features:
-    - Typescript version starter based on the official default
-    - Prettier
+    - ✔️ Gatsby
+    - ✔️ TypeScript
+    - ✔️ Prettier
+    - ✔️ ESLint
+    - ✔️ Deploy to Netlify through GitHub Actions
 - url: https://answer.netlify.com/
   repo: https://github.com/passwd10/gatsby-starter-answer
   description: A simple Gatsby blog to show your Future Action on top of the page
