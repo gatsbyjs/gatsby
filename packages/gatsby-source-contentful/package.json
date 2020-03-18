@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.8.7",
     "@contentful/rich-text-types": "^13.4.0",
     "@hapi/joi": "^15.1.1",
-    "axios": "^0.19.0",
+    "axios": "^0.19.2",
     "base64-img": "^1.0.4",
     "bluebird": "^3.7.2",
     "chalk": "^2.4.2",

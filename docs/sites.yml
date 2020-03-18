@@ -10068,4 +10068,12 @@
     - Photography
   built_by: Richard Bruskowski
   built_by_url: https://github.com/richardbruskowski
+- title: Kelvin DeCosta's Website
+  url: https://kelvindecosta.com
+  main_url: https://kelvindecosta.com
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Kelvin DeCosta
+  built_by_url: https://github.com/kelvindecosta
   featured: false
