@@ -16,4 +16,4 @@ When writing (or reviewing) learning materials that show Gatsby users how to com
 
 ## Why use templates?
 
-Follow the how-to templates (models) listed here when contributing to Gatsby docs to ensure that the docs accomplish their purpose. If you have a good reason to deviate from the following template structures, mention those reasons in the PR so others can give proper feedback.
+Follow the how-to templates (models) listed here when contributing to Gatsby docs to ensure that the docs accomplish their purpose. If you have a good reason to deviate from the following template structures, mention those reasons in an issue so others can give proper feedback on your idea.
