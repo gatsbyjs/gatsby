@@ -5491,6 +5491,22 @@
     - Side Drawer
     - Sidebar
     - Navbar
+- url: https://userbase-gatsby-starter.jacobneterer.com
+  repo: https://github.com/jneterer/userbase-gatsby-starter
+  description: Another TODO app - a Gatsby starter for Userbase, TailwindCSS, SCSS, and Typescript.
+  tags:
+    - Styling:Tailwind
+    - Styling:SCSS
+    - Language:TypeScript
+    - Authentication
+    - Netlify
+    - SEO
+  features:
+    - Userbase for authentication and end-to-end encrypted data management
+    - All user and data APIs
+    - Tailwind CSS and SCSS for styling
+    - Typescript for easier debugging and development, strict types, etc
+    - Netlify for hosting
 - url: https://gatsby-simple-blog-with-asciidoctor-demo.netlify.com
   repo: https://github.com/hitsuji-no-shippo/gatsby-simple-blog-with-asciidoctor
   description: A Gatsby blog with Asciidoctor. Forked from thundermiracle/gatsby-simple-blog.
