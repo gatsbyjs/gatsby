@@ -13,7 +13,7 @@ import { withBasePath, withTrailingSlash } from "./path"
 const getGatsbyDependents = require(`./gatsby-dependents`)
 
 const apiRunnerNode = require(`./api-runner-node`)
-const createUtils = require(`./webpack-utils`)
+import { createUtils } from "./webpack-utils"
 const hasLocalEslint = require(`./local-eslint-config-finder`)
 
 // Four stages or modes:

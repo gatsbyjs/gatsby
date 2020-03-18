@@ -1,4 +1,4 @@
-const utils = require(`../webpack-utils`)
+import { createUtils } from "../webpack-utils"
 
 jest.mock(`babel-preset-gatsby/package.json`, () => {
   return {
@@ -8,7 +8,7 @@ jest.mock(`babel-preset-gatsby/package.json`, () => {
 
 let config
 beforeAll(async () => {
-  config = await utils({
+  config = await createUtils({
     stage: `develop`,
     program: {
       browserslist: [],
