@@ -10055,3 +10055,12 @@
   built_by: Built by Rebels Ltd.
   built_by_url: https://builtbyrebels.com/
   featured: false
+- title: Kelvin DeCosta's Website
+  url: https://kelvindecosta.com
+  main_url: https://kelvindecosta.com
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Kelvin DeCosta
+  built_by_url: https://github.com/kelvindecosta
+  featured: false
