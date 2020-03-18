@@ -1,3 +1,13 @@
+- url: https://delog-w3layouts.netlify.com/
+  repo: https://github.com/W3Layouts/gatsby-starter-delog
+  description: A Gatsby Starter built with Netlify CMS to launch your dream blog with a click.
+  tags:
+    - Blog
+    - CMS:Netlify
+  features:
+    - Simple blog designed for designer and developers
+    - Manage Posts with Netlify CMS
+    - Option to add featured image and meta description while adding posts
 - url: https://styxlab.github.io
   repo: https://github.com/styxlab/gatsby-starter-try-ghost
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
@@ -5594,3 +5604,15 @@
     - Custom GraphQL API for handling checkout and payment
     - Postmark for order notifications
     - Strong Customer Authentication
+- url: https://koop-blog.netlify.com/
+  repo: https://github.com/bagseye/koop-blog
+  description: A simple blog platform using GatsbyJS and MDX
+  tags:
+    - Blog
+    - Markdown
+    - MDX
+  features:
+    - Responsive design
+    - Styled 404 page
+    - Lightweight
+    - Styled Components

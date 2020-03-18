@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@3.1.20...gatsby-plugin-styled-components@3.1.21) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-styled-components
+
 ## [3.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@3.1.19...gatsby-plugin-styled-components@3.1.20) (2020-03-06)
 
 **Note:** Version bump only for package gatsby-plugin-styled-components

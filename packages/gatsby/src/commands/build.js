@@ -8,7 +8,7 @@ import { buildProductionBundle } from "./build-javascript"
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
-const { initTracer, stopTracer } = require(`../utils/tracer`)
+import { initTracer, stopTracer } from "../utils/tracer"
 const db = require(`../db`)
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
@@ -21,7 +21,7 @@ import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
-const buildUtils = require(`../commands/build-utils`)
+import * as buildUtils from "./build-utils"
 const { boundActionCreators } = require(`../redux/actions`)
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 
@@ -221,7 +221,7 @@ module.exports = async function build(program: BuildArgs) {
       store.getState(),
       cachedPageData
     )
-    await buildUtils.removePageFiles({ publicDir }, deletedPageKeys)
+    await buildUtils.removePageFiles(publicDir, deletedPageKeys)
 
     activity.end()
   }
