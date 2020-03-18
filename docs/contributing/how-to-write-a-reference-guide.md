@@ -171,5 +171,3 @@ Assume the reader has basic programming knowledge such as the command line, code
 - Links to relevant plugins
 - Links to starters
 ```
-
----
