@@ -3541,7 +3541,7 @@
     - Netlify Dev for local development
 - url: https://gatsby-starter-blog-and-portfolio.netlify.com/
   repo: https://github.com/alisalahio/gatsby-starter-blog-and-portfolio
-  description: Just gatsby-starter-blog , with portfolio section added
+  description: Just gatsby-starter-blog, with portfolio section added
   tags:
     - Blog
     - Portfolio
