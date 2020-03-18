@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 
-// @ts-ignore: This file assume run at browsers.
-const originalFetch = global.fetch
+let originalFetch: any
 // @ts-ignore
-delete global.fetch
+if (global.fetch) {
+  // @ts-ignore
+  originalFetch = global.fetch
+  // @ts-ignore
+  delete global.fetch
+}
 
 export { default } from "react-hot-loader/webpack"
 
