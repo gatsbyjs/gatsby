@@ -60,5 +60,3 @@ If this is a theme that requires data in a specific format in order to match an 
 
 If you have unanswered questions, would like help with enhancing or debugging the plugin, it is nice to include instructions for people who want to contribute to your plugin.
 ```
-
----
