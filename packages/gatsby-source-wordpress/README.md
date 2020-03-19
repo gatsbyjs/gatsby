@@ -446,7 +446,7 @@ To access those fields, instead of using their field name, you need to use
 your WordPress pages you would need to use `page_builder_page`).
 
 To access data stored in these fields, you need to use GraphQL
-[inline fragments](http://graphql.org/learn/queries/#inline-fragments). This
+[inline fragments](https://graphql.org/learn/queries/#inline-fragments). This
 require you to know types of nodes. The easiest way to get the types of nodes is to use
 `___GraphiQL` debugger and run the below query (adjust post type and field name):
 

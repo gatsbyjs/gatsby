@@ -470,6 +470,6 @@ available.
 [gatsby]: https://www.gatsbyjs.org/
 [shopify]: https://www.shopify.com/
 [shopify-storefront-api]: https://help.shopify.com/api/custom-storefronts/storefront-api
-[graphql-inline-fragments]: http://graphql.org/learn/queries/#inline-fragments
+[graphql-inline-fragments]: https://graphql.org/learn/queries/#inline-fragments
 [gatsby-plugin-sharp]: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sharp
 [gatsby-image-fragments]: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image#gatsby-transformer-sharp

@@ -1,9 +1,10 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
+import { Trans } from "@lingui/macro"
 import {
   mediaQueries,
-  breakpoints,
+  breakpoints
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { useEffect, useState } from "react"
 import { useActiveHash } from "../hooks/use-active-hash"
@@ -130,7 +131,7 @@ function TableOfContents({ items, depth, location }) {
           textTransform: `uppercase`,
         }}
       >
-        Table of Contents
+        <Trans>Table of Contents</Trans>
       </h2>
       <ul
         sx={{

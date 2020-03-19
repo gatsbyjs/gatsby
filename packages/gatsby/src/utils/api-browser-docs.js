@@ -59,7 +59,7 @@ exports.onPreRouteUpdate = true
 exports.onRouteUpdateDelayed = true
 
 /**
- * Called when the user changes routes
+ * Called when the user changes routes, including on the initial load of the app
  * @param {object} $0
  * @param {object} $0.location A location object
  * @param {object|null} $0.prevLocation The previous location object

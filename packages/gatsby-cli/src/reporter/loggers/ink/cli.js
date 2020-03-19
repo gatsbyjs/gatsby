@@ -1,12 +1,12 @@
 import React from "react"
 import { Box, Static } from "ink"
-import isTTY from "../../../util/is-tty"
+import { isTTY } from "../../../util/is-tty"
 import { trackBuildError } from "gatsby-telemetry"
 
 import { Spinner } from "../ink/components/spinner"
 import { ProgressBar } from "../ink/components/progress-bar"
 import { Message } from "../ink/components/messages"
-import Error from "./components/error"
+import { Error } from "./components/error"
 import Develop from "../ink/components/develop"
 
 const showProgress = isTTY()

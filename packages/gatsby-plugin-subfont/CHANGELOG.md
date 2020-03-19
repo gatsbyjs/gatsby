@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-subfont@2.0.1...gatsby-plugin-subfont@2.0.2) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-subfont
+
 ## [2.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-subfont@2.0.0...gatsby-plugin-subfont@2.0.1) (2020-03-06)
 
 **Note:** Version bump only for package gatsby-plugin-subfont

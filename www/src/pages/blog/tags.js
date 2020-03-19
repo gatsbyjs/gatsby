@@ -6,7 +6,7 @@ import styled from "@emotion/styled"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { kebabCase } from "lodash-es"
-import TiArrowRight from "react-icons/lib/ti/arrow-right"
+import { TiArrowRight } from "react-icons/ti"
 
 import Button from "../../components/button"
 import Container from "../../components/container"

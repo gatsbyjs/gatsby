@@ -1,5 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import { t } from "@lingui/macro"
+import { withI18n } from "@lingui/react"
 
 import ChevronSvg from "./chevron-svg"
 import indention from "../../utils/sidebar/indention"
@@ -79,78 +81,83 @@ const TitleButton = ({
   </button>
 )
 
-const SplitButton = ({
-  itemRef,
-  createLink,
-  isActive,
-  isExpanded,
-  isParentOfActiveItem,
-  item,
-  location,
-  onLinkClick,
-  onSectionTitleClick,
-  uid,
-}) => (
-  <span
-    ref={itemRef}
-    css={{
-      alignItems: `flex-end`,
-      display: `flex`,
-      position: `relative`,
-      width: `100%`,
-    }}
-  >
+const SplitButton = withI18n()(
+  ({
+    i18n,
+    itemRef,
+    createLink,
+    isActive,
+    isExpanded,
+    isParentOfActiveItem,
+    item,
+    location,
+    onLinkClick,
+    onSectionTitleClick,
+    uid,
+  }) => (
     <span
-      sx={{
-        // borderRightWidth: "1px",
-        // borderRightStyle: "solid",
-        // borderRightColor: "sidebar.itemBorderColor"
-        flexGrow: 1,
+      ref={itemRef}
+      css={{
+        alignItems: `flex-end`,
+        display: `flex`,
+        position: `relative`,
+        width: `100%`,
       }}
     >
-      {createLink({
-        isActive,
-        isExpanded,
-        isParentOfActiveItem,
-        item,
-        location,
-        onLinkClick,
-        level: item.level,
-        overrideCSS: {
-          ...(item.level === 0 &&
-            item.ui !== `steps` && {
-              "&&": {
-                ...styles.level0,
-                color:
-                  (isParentOfActiveItem && isExpanded) || isActive
-                    ? `link.color`
-                    : `navigation.linkDefault`,
-              },
-            }),
-          pr: t => t.sizes.sidebarItemMinHeight,
-        },
-      })}
+      <span
+        sx={{
+          // borderRightWidth: "1px",
+          // borderRightStyle: "solid",
+          // borderRightColor: "sidebar.itemBorderColor"
+          flexGrow: 1,
+        }}
+      >
+        {createLink({
+          isActive,
+          isExpanded,
+          isParentOfActiveItem,
+          item,
+          location,
+          onLinkClick,
+          level: item.level,
+          overrideCSS: {
+            ...(item.level === 0 &&
+              item.ui !== `steps` && {
+                "&&": {
+                  ...styles.level0,
+                  color:
+                    (isParentOfActiveItem && isExpanded) || isActive
+                      ? `link.color`
+                      : `navigation.linkDefault`,
+                },
+              }),
+            pr: t => t.sizes.sidebarItemMinHeight,
+          },
+        })}
+      </span>
+      <button
+        aria-controls={uid}
+        aria-expanded={isExpanded}
+        aria-label={i18n._(
+          isExpanded ? t`${item.title} collapse` : t`${item.title} expand`
+        )}
+        sx={{
+          ...styles.resetButton,
+          bottom: 0,
+          ml: `auto`,
+          minHeight: `sidebarItemMinHeight`,
+          position: `absolute`,
+          right: 0,
+          top: 0,
+          width: `sidebarItemMinHeight`,
+          zIndex: 1,
+        }}
+        onClick={() => onSectionTitleClick(item)}
+      >
+        <Chevron isExpanded={isExpanded} />
+      </button>
     </span>
-    <button
-      aria-controls={uid}
-      aria-expanded={isExpanded}
-      aria-label={item.title + (isExpanded ? ` collapse` : ` expand`)}
-      sx={{
-        ...styles.resetButton,
-        bottom: 0,
-        ml: `auto`,
-        minHeight: `sidebarItemMinHeight`,
-        position: `absolute`,
-        right: 0,
-        top: 0,
-        width: `sidebarItemMinHeight`,
-        zIndex: 1,
-      }}
-      onClick={() => onSectionTitleClick(item)}
-    >
-      <Chevron isExpanded={isExpanded} />
-    </button>
-  </span>
+  )
 )
 
 const Title = ({ item, isActive, isExpanded }) => (
