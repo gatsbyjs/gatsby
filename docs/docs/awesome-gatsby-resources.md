@@ -93,6 +93,7 @@ See the [unofficial list of themes](https://gatsbytemplates.io/)
 - [Deploying Your First Gatsby Site to Netlify](https://scotch.io/tutorials/deploying-your-first-gatsby-site-to-netlify)
 - [Add a chat widget to your Gatsby blog](https://pusher.com/tutorials/chat-gatsby/)
 - [Headless WordPress: Why Gatsby Should Be Next on Your List of Things to Learn](https://deliciousbrains.com/gatsby-headless-wordpress/)
+- [Gatsby Tutorials \[video series\] — Michael Uloth](https://www.youtube.com/watch?v=jAa1wh5ATm0&list=PLHBEcHVSROXQQhXpNhmiVKKcw72Cc0V-U)
 
 ### German
 
