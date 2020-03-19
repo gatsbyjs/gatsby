@@ -60,7 +60,8 @@ const IndexPage = () => {
  )
 }
 
-export default IndexPage```
+export default IndexPage
+```
 
 In this example, the `flags` object returned by the `useFlags()` hook is a simple object that contains all of the client-side feature flags available in your LaunchDarkly project. As the values of these flags change, components that rely on them re-render automatically.
 
