@@ -124,6 +124,7 @@
     "postinstall": "cd plugins/gatsby-transformer-gatsby-api-calls && npm install"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^8.0.9",
     "babel-jest": "^24.9.0",
     "babel-preset-gatsby": "^0.2.23",

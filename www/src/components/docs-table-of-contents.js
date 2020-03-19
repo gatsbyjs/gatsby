@@ -47,6 +47,7 @@ function createItems(items, location, depth, maxDepth, activeHash, isDesktop) {
       const isActive = isDesktop && item.url === `#${activeHash}`
       return (
         <li
+          data-testid={item.url || ``}
           sx={{ [mediaQueries.xl]: { fontSize: 1 } }}
           key={location.pathname + (item.url || depth + `-` + index)}
         >
