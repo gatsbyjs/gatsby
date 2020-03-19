@@ -1,4 +1,5 @@
 import { Loader, RuleSetRule, Plugin } from "webpack"
+import { GraphQLSchema } from "graphql"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
@@ -6,13 +7,14 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import isWsl from "is-wsl"
+import { getBrowsersList } from "./browserslist"
 
-const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
-const GatsbyWebpackEslintGraphqlSchemaReload = require(`./gatsby-webpack-eslint-graphql-schema-reload-plugin`)
+import GatsbyWebpackStatsExtractor from "./gatsby-webpack-stats-extractor"
+import GatsbyWebpackEslintGraphqlSchemaReload from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
 
 import { builtinPlugins } from "./webpack-plugins"
-import { IProgram } from "../commands/types"
-const eslintConfig = require(`./eslint-config`)
+import { IProgram, Stage } from "../commands/types"
+import { eslintConfig } from "./eslint-config"
 
 type LoaderResolver<T = {}> = (options?: T) => Loader
 
@@ -28,20 +30,10 @@ type PluginFactory = (...args: any) => Plugin
 
 type BuiltinPlugins = typeof builtinPlugins
 
-type Stage = "develop" | "develop-html" | "build-javascript" | "build-html"
-
-/**
- * Configuration options for `createUtils`
- */
-export interface IWebpackUtilsOptions {
-  stage: Stage
-  program: IProgram
-}
-
 /**
  * Utils that produce webpack `loader` objects
  */
-export interface ILoaderUtils {
+interface ILoaderUtils {
   json: LoaderResolver
   yaml: LoaderResolver
   null: LoaderResolver
@@ -64,7 +56,7 @@ export interface ILoaderUtils {
   imports: LoaderResolver
   exports: LoaderResolver
 
-  eslint: LoaderResolver
+  eslint(schema: GraphQLSchema): Loader
 }
 
 interface IModuleThatUseGatsby {
@@ -96,20 +88,19 @@ export interface IRuleUtils {
   cssModules: RuleFactory
   postcss: ContextualRuleFactory<{ overrideBrowserOptions: string[] }>
 
-  eslint: RuleFactory
+  eslint: (schema: GraphQLSchema) => RuleSetRule
 }
 
-export type PluginUtils = BuiltinPlugins &
-  Partial<{
-    extractText: PluginFactory
-    uglify: PluginFactory
-    moment: PluginFactory
-    extractStats: PluginFactory
-    minifyJs: PluginFactory
-    minifyCss: PluginFactory
-    fastRefresh: PluginFactory
-    eslintGraphqlSchemaReload: PluginFactory
-  }>
+export type PluginUtils = BuiltinPlugins & {
+  extractText: PluginFactory
+  uglify: PluginFactory
+  moment: PluginFactory
+  extractStats: PluginFactory
+  minifyJs: PluginFactory
+  minifyCss: PluginFactory
+  fastRefresh: PluginFactory
+  eslintGraphqlSchemaReload: PluginFactory
+}
 
 /**
  * webpack atoms namespace
@@ -117,7 +108,7 @@ export type PluginUtils = BuiltinPlugins &
 export interface IWebpackUtils {
   loaders: ILoaderUtils
 
-  rules: Partial<IRuleUtils>
+  rules: IRuleUtils
 
   plugins: PluginUtils
 }
@@ -125,16 +116,13 @@ export interface IWebpackUtils {
 /**
  * A factory method that produces an atoms namespace
  */
-export const createUtils = async ({
-  stage,
-  program,
-}: {
-  stage: Stage
+export const createWebpackUtils = (
+  stage: Stage,
   program: IProgram
-}): Promise<IWebpackUtils> => {
+): IWebpackUtils => {
   const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
-  const supportedBrowsers = program.browserslist
+  const supportedBrowsers = getBrowsersList(program.directory)
 
   const PRODUCTION = !stage.includes(`develop`)
 
@@ -284,7 +272,7 @@ export const createUtils = async ({
       }
     },
 
-    eslint: (schema = ``) => {
+    eslint: (schema: GraphQLSchema) => {
       const options = eslintConfig(schema)
 
       return {
@@ -311,7 +299,7 @@ export const createUtils = async ({
   /**
    * Rules
    */
-  const rules: Partial<IRuleUtils> = {}
+  const rules = {} as IRuleUtils
 
   /**
    * JavaScript loader via babel, includes userland code
@@ -321,9 +309,7 @@ export const createUtils = async ({
     const js = ({
       modulesThatUseGatsby = [],
       ...options
-    }: {
-      modulesThatUseGatsby?: IModuleThatUseGatsby[]
-    } = {}): RuleSetRule => {
+    }: { modulesThatUseGatsby?: IModuleThatUseGatsby[] } = {}): RuleSetRule => {
       return {
         test: /\.(js|mjs|jsx)$/,
         include: (modulePath: string): boolean => {
@@ -338,7 +324,7 @@ export const createUtils = async ({
             modulePath.includes(module.path)
           )
         },
-        type: `javascript/auto` as const,
+        type: `javascript/auto`,
         use: [
           loaders.js({
             ...options,
@@ -348,7 +334,6 @@ export const createUtils = async ({
         ],
       }
     }
-
     rules.js = js
   }
 
@@ -360,7 +345,9 @@ export const createUtils = async ({
   {
     const dependencies = ({
       modulesThatUseGatsby = [],
-    }: { modulesThatUseGatsby?: IModuleThatUseGatsby[] } = {}): RuleSetRule => {
+    }: {
+      modulesThatUseGatsby?: IModuleThatUseGatsby[]
+    } = {}): RuleSetRule => {
       const jsOptions = {
         babelrc: false,
         configFile: false,
@@ -400,25 +387,20 @@ export const createUtils = async ({
           // If dep is user land code, exclude
           return true
         },
-        type: `javascript/auto` as const,
+        type: `javascript/auto`,
         use: [loaders.dependencies(jsOptions)],
       }
     }
-
     rules.dependencies = dependencies
   }
 
-  {
-    const eslint = (schema): RuleSetRule => {
-      return {
-        enforce: `pre` as const,
-        test: /\.jsx?$/,
-        exclude: vendorRegex,
-        use: [loaders.eslint(schema)],
-      }
+  rules.eslint = (schema: GraphQLSchema): RuleSetRule => {
+    return {
+      enforce: `pre`,
+      test: /\.jsx?$/,
+      exclude: vendorRegex,
+      use: [loaders.eslint(schema)],
     }
-
-    rules.eslint = eslint
   }
 
   rules.yaml = (): RuleSetRule => {
@@ -532,7 +514,7 @@ export const createUtils = async ({
   /**
    * Plugins
    */
-  const plugins: PluginUtils = { ...builtinPlugins }
+  const plugins = { ...builtinPlugins } as PluginUtils
 
   /**
    * Minify JavaScript code without regard for IE8. Attempts

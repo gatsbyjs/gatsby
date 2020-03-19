@@ -1,4 +1,5 @@
-import { createUtils } from "../webpack-utils"
+import { createWebpackUtils } from "../webpack-utils"
+import { Stage, IProgram } from "../../commands/types"
 
 jest.mock(`babel-preset-gatsby/package.json`, () => {
   return {
@@ -7,13 +8,9 @@ jest.mock(`babel-preset-gatsby/package.json`, () => {
 })
 
 let config
-beforeAll(async () => {
-  config = await createUtils({
-    stage: `develop`,
-    program: {
-      browserslist: [],
-    },
-  })
+
+beforeAll(() => {
+  config = createWebpackUtils(Stage.Develop, {} as IProgram)
 })
 
 describe(`webpack utils`, () => {
@@ -23,7 +20,7 @@ describe(`webpack utils`, () => {
     })
 
     it(`returns default values without any options`, () => {
-      const rule = config.rules.js()
+      const rule = config.rules.js([])
 
       expect(rule).toMatchSnapshot({
         use: [
@@ -36,14 +33,12 @@ describe(`webpack utils`, () => {
     describe(`include function`, () => {
       let js
       beforeAll(() => {
-        js = config.rules.js({
-          modulesThatUseGatsby: [
-            {
-              name: `gatsby-seo`,
-              path: `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo`,
-            },
-          ],
-        })
+        js = config.rules.js([
+          {
+            name: `gatsby-seo`,
+            path: `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo`,
+          },
+        ])
       })
 
       it(`includes source files from user code`, () => {
