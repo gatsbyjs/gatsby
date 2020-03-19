@@ -51,7 +51,7 @@ Fix all [merge conflicts](https://help.github.com/en/github/collaborating-with-i
 
 ### Frontmatter changes
 
-This type of conflict reflects a change to the [frontmatter]() of a document.
+This type of conflict reflects a change to the [frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) of a document.
 
 Removing a field:
 
