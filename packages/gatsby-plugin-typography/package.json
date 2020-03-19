@@ -1,18 +1,18 @@
 {
   "name": "gatsby-plugin-typography",
   "description": "Gatsby plugin to setup server rendering of Typography.js' CSS",
-  "version": "2.3.21",
+  "version": "2.3.25",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.6"
+    "@babel/runtime": "^7.8.7"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.15",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "babel-preset-gatsby-package": "^0.2.18",
     "cross-env": "^5.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

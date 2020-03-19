@@ -2,7 +2,7 @@
 
 This example demonstrates usage of a local plugin -- in this case a source plugin.
 
-You might also be interested in the docs section on [local plugins](/docs/creating-a-local-plugin/), or the [source plugin tutorial](/docs/pixabay-source-plugin-tutorial/).
+You might also be interested in the docs section on [local plugins](/docs/creating-a-local-plugin/), or the [source plugin tutorial](/tutorial/pixabay-source-plugin-tutorial/).
 
 ## Using Gatsby's GraphQL integration layer
 
@@ -17,3 +17,7 @@ This example uses a [local plugin](/docs/loading-plugins-from-your-local-plugins
 3. Use the [`createNode` action](/docs/actions/#createNode) to add the data to Gatsby’s GraphQL layer
 
 The [`gatsby-node.js` file](./plugins/gatsby-source-pokeapi/gatsby-node.js) of the local plugin includes detailed comments on the process.
+
+## Examples loading multiple local plugins outside the plugins folder
+
+To see how to load multiple plugins from outside the plugins folder, refer to the [`using-multiple-local-plugins` example repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-multiple-local-plugins).

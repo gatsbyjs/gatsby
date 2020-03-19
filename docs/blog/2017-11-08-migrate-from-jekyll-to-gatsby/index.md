@@ -25,7 +25,7 @@ but this was extremely slow.
 Some weeks ago, one of my colleagues at work told me about
 [Gatsby](/) Since I was already learning
 [React](https://reactjs.org/) and had started looking at
-[GraphQL](http://graphql.org/) (after attending a talk at
+[GraphQL](https://graphql.org/) (after attending a talk at
 [Nordic.js](http://nordicjs.com/))—I was very interested in giving it a try.
 
 ## Migrating from Jekyll to Gatsby

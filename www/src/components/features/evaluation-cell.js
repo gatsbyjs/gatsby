@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import MdInfoOutline from "react-icons/lib/md/info-outline"
+import { MdInfoOutline } from "react-icons/md"
 
 const renderText = txt => {
   const words = txt.split(` `)

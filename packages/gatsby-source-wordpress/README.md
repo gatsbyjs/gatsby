@@ -58,6 +58,10 @@ module.exports = {
         baseUrl: "live-gatbsyjswp.pantheonsite.io",
         // The protocol. This can be http or https.
         protocol: "https",
+        // The rest api route prefix that your WordPress site is using.
+        // Sometimes this is modified by WordPress plugins.
+        // If not set, it uses the default of "wp-json"
+        restApiRoutePrefix: "wp-json",
         // Indicates whether the site is hosted on wordpress.com.
         // If false, then the assumption is made that the site is self hosted.
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
@@ -204,6 +208,9 @@ plugins.
 - [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
       the current locale and available translations to all post types translated with Polylang.
 
+- [x] [wp-rest-polylang-pro](https://github.com/dannyvaughton/wp-rest-polylang-pro) which adds
+      the current locale and available translations to all post types & taxonomies translated with Polylang Pro.
+
 - [x] [Yoast](https://yoast.com/wordpress/plugins/seo/)
   - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in WordPress.
   - Will pull the `yoast_meta: { ... }` field's contents in entity.
@@ -266,7 +273,7 @@ and would skip pulling Comments.
 
 You can query nodes created from WordPress using GraphQL like the following:
 Note : Learn to use the GraphQL tool and Ctrl+Spacebar at
-<http://localhost:3000/___graphiql> to discover the types and properties of your
+`http://localhost:3000/___graphiql` to discover the types and properties of your
 GraphQL model.
 
 ### Query posts
@@ -439,7 +446,7 @@ To access those fields, instead of using their field name, you need to use
 your WordPress pages you would need to use `page_builder_page`).
 
 To access data stored in these fields, you need to use GraphQL
-[inline fragments](http://graphql.org/learn/queries/#inline-fragments). This
+[inline fragments](https://graphql.org/learn/queries/#inline-fragments). This
 require you to know types of nodes. The easiest way to get the types of nodes is to use
 `___GraphiQL` debugger and run the below query (adjust post type and field name):
 
@@ -851,7 +858,7 @@ module.exports = {
 
 ```javascript
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
