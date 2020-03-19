@@ -1,5 +1,5 @@
 ---
-title: “Flying Feature Flags with LaunchDarkly’s New Plugin for Gatsby”
+title: Flying Feature Flags with LaunchDarkly’s New Plugin for Gatsby
 date: 2020-03-19
 author: "Rich Manalang"
 excerpt: "Feature flags grant developers exquisite control over how and when new features are revealed to customers. LaunchDarkly’s new plugin for Gatsby makes using them exquisitely easy!"
@@ -7,10 +7,6 @@ tags:
   - cloud
   - plugins
 ---
-#Fly Your Feature Flags with LaunchDarkly’s New Plugin for Gatsby
-
-
-***Editor's note:** This guest post is by [Rich Manalang](https://twitter.com/rmanalan), a Principal Developer Advocate at [LaunchDarkly](https://launchdarkly.com). It describes how you can use feature flags on your Gatsby sites so you can have better control of how (and when) you release features to your customers.*
 
  A few months ago we decided to migrate our [public-facing documentation site](https://docs.launchdarkly.com) from a managed documentation service to Gatsby. We wanted greater control of the site and a git-based workflow. Additional goals were to scale to a larger set of internal authors and also accept contributions from our community. During the development of this new site, we realized that it might be useful to hide certain sections of the site from certain groups of people; for example, limit access to beta users or a specified group of reviewers.
 
