@@ -12,6 +12,7 @@ const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 import { getBrowsersList } from "../utils/browserslist"
+import { createSchemaCustomization } from "../utils/create-schema-customization"
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -434,7 +435,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../utils/create-schema-customization`)({
+  await createSchemaCustomization({
     parentSpan: bootstrapSpan,
   })
   activity.end()

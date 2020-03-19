@@ -5,6 +5,7 @@ exports[`Allow alternative import of useStaticQuery 1`] = `
 import React from 'react';
 import * as Gatsby from 'gatsby';
 export default (() => {
+  const query = \\"2626356014\\";
   const siteTitle = staticQueryData.data;
   return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
 });"
@@ -82,7 +83,8 @@ import React from 'react';
 export default (() => {
   const data = staticQueryData.data;
   return React.createElement(React.Fragment, null, React.createElement(\\"h1\\", null, data.site.siteMetadata.title), React.createElement(\\"p\\", null, data.site.siteMetadata.description));
-});"
+});
+export const query = \\"2626356014\\";"
 `;
 
 exports[`Transforms only the call expression in useStaticQuery 1`] = `
@@ -103,6 +105,7 @@ exports[`Transforms queries and preserves destructuring in useStaticQuery 1`] = 
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';
 export default (() => {
+  const query = \\"2626356014\\";
   const {
     site
   } = staticQueryData.data;
@@ -114,6 +117,7 @@ exports[`Transforms queries and preserves variable type in useStaticQuery 1`] = 
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';
 export default (() => {
+  const query = \\"2626356014\\";
   let {
     site
   } = staticQueryData.data;
@@ -137,6 +141,7 @@ exports[`Transforms queries defined in own variable in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';
 export default (() => {
+  const query = \\"2626356014\\";
   const siteTitle = staticQueryData.data;
   return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
 });"

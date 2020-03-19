@@ -60,7 +60,7 @@ I noticed there were some more downsides to Amplify:
 
 - Gatsby allows you to have [routes that only exist on the client side](/docs/building-apps-with-gatsby/#client-only-routes--user-authentication).
 
-- Essentially, you declare a starting point — say for example: /users/, and anything past that starting point will get picked up by the client side. Once the client navigates to /users/1, it will dynamically fetch that user from some sort of API. This is great and allows for very hybrid, partially static, partially dynamic applications. However, when people directly navigate to /users/1 , they will get a 404 because it simply does not exist on the serverside, which is kind of an issue.
+- Essentially, you declare a starting point — say for example: /users/, and anything past that starting point will get picked up by the client side. Once the client navigates to /users/1, it will dynamically fetch that user from some sort of API. This is great and allows for very hybrid, partially static, partially dynamic applications. However, when people directly navigate to /users/1, they will get a 404 because it simply does not exist on the serverside, which is kind of an issue.
 
 - We already had a CI service ourselves, and weren’t really interested in learning all these Amplify-specific things that we already had working ourselves just fine.
 
