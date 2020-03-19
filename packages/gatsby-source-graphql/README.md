@@ -185,7 +185,7 @@ But the plugin also supports query batching to improve query performance.
 it is bounded by the number of parallel GraphQL queries executed by Gatsby (by default it is **4**).
 
 Fortunately, we can increase the number of queries executed in parallel by setting the [environment variable](https://gatsby.dev/env-vars)
-`GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY` to a higher value and setting `batch` option of the plugin
+`GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY` to a higher value and setting the `batch` option of the plugin
 to `true`.
 
 Example:
