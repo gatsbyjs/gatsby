@@ -36,7 +36,7 @@ The most straightforward way to prevent the XSS attack is to sanitize the innerH
 
 ## Cross-Site Request Forgery (CSRF)
 
-A web application that use cookies could be attacked by the CSRF exploit, which deceives a your user to execute actions by its name. By default, the browser "trusts" all the activity made validating the user's identity and therefore sendind the associated cookies in every request.
+A web application that use cookies could be attacked by the CSRF exploit, which deceives a your user to execute actions by its name. By default, the browser "trusts" all the activity made validating the user's identity and therefore sending the associated cookies in every request.
 
 For example, assume that your users received an email with a malicious link:
 
