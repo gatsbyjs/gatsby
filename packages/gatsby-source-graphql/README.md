@@ -329,7 +329,7 @@ Note that if any query result contains errors the whole batch will fail.
 
 If your server supports apollo-style query batching you can also try
 [HttpLinkDataLoader](https://github.com/prisma-labs/http-link-dataloader).
-Just pass it to the `gatsby-source-graphql` plugin via `createLink` option.
+Pass it to the `gatsby-source-graphql` plugin via the `createLink` option.
 
 This strategy is usually slower than query merging but provides better error reporting.
 
