@@ -3541,7 +3541,7 @@
     - Netlify Dev for local development
 - url: https://gatsby-starter-blog-and-portfolio.netlify.com/
   repo: https://github.com/alisalahio/gatsby-starter-blog-and-portfolio
-  description: Just gatsby-starter-blog , with portfolio section added
+  description: Just gatsby-starter-blog, with portfolio section added
   tags:
     - Blog
     - Portfolio
@@ -5256,13 +5256,17 @@
     - ✔️ Highly optimized (Lighthouse score 4 x 100)
 - url: https://gatsby-starter-typescript-deploy.netlify.com/
   repo: https://github.com/jongwooo/gatsby-starter-typescript
-  description: Typescript version of the default Gatsby starter🔮
+  description: TypeScript version of the default Gatsby starter🔮
   tags:
     - Language:TypeScript
+    - Linting
     - Netlify
   features:
-    - Typescript version starter based on the official default
-    - Prettier
+    - ✔️ Gatsby
+    - ✔️ TypeScript
+    - ✔️ Prettier
+    - ✔️ ESLint
+    - ✔️ Deploy to Netlify through GitHub Actions
 - url: https://answer.netlify.com/
   repo: https://github.com/passwd10/gatsby-starter-answer
   description: A simple Gatsby blog to show your Future Action on top of the page
@@ -5487,6 +5491,22 @@
     - Side Drawer
     - Sidebar
     - Navbar
+- url: https://userbase-gatsby-starter.jacobneterer.com
+  repo: https://github.com/jneterer/userbase-gatsby-starter
+  description: Another TODO app - a Gatsby starter for Userbase, TailwindCSS, SCSS, and Typescript.
+  tags:
+    - Styling:Tailwind
+    - Styling:SCSS
+    - Language:TypeScript
+    - Authentication
+    - Netlify
+    - SEO
+  features:
+    - Userbase for authentication and end-to-end encrypted data management
+    - All user and data APIs
+    - Tailwind CSS and SCSS for styling
+    - Typescript for easier debugging and development, strict types, etc
+    - Netlify for hosting
 - url: https://gatsby-simple-blog-with-asciidoctor-demo.netlify.com
   repo: https://github.com/hitsuji-no-shippo/gatsby-simple-blog-with-asciidoctor
   description: A Gatsby blog with Asciidoctor. Forked from thundermiracle/gatsby-simple-blog.
@@ -5568,6 +5588,28 @@
     - Robots.txt
     - Sitemap
     - PWA
+- url: https://gatsby-attila.netlify.com/
+  repo: https://github.com/armada-inc/gatsby-attila-theme-starter
+  description: A Gatsby starter for creating blogs from headless Ghost CMS.
+  tags:
+    - Blog
+    - CMS:Headless
+    - SEO
+    - Styling:SCSS
+    - Pagination
+  features:
+    - Attila standard Ghost theme
+    - Data sourcing from headless Ghost
+    - Responsive design
+    - SEO optimized
+    - OpenGraph structured data
+    - Twitter Cards meta
+    - Sitemap Generation
+    - XML Sitemaps
+    - Progressive Web App
+    - Offline Support
+    - RSS Feed
+    - Composable and extensible
 - url: https://gatsby-contentful-portfolio.netlify.com/
   repo: https://github.com/wkocjan/gatsby-contentful-portfolio
   description: Gatsby portfolio theme integrated with Contentful
@@ -5616,3 +5658,20 @@
     - Styled 404 page
     - Lightweight
     - Styled Components
+- url: https://gatsby-airtable-listing.netlify.com/
+  repo: https://github.com/wkocjan/gatsby-airtable-listing
+  description: Airtable theme for Gatsby
+  tags:
+    - Airtable
+    - SEO
+    - Styling:Tailwind
+  features:
+    - Airtable integration
+    - Modals with previous/next navigation
+    - Responsive design
+    - Uses TailwindCSS for styling
+    - Font Awesome icons
+    - Clean minimalist design
+    - SEO optimized
+    - Robots.txt
+    - OpenGraph structured data

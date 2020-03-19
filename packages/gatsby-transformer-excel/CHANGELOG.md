@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.2.23...gatsby-transformer-excel@2.2.24) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency xlsx to ^0.15.6 ([#22326](https://github.com/gatsbyjs/gatsby/issues/22326)) ([bdbc980](https://github.com/gatsbyjs/gatsby/commit/bdbc980))
+
 ## [2.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.2.22...gatsby-transformer-excel@2.2.23) (2020-03-16)
 
 **Note:** Version bump only for package gatsby-transformer-excel
