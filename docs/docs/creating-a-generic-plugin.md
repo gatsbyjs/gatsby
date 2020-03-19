@@ -2,7 +2,7 @@
 title: Creating a Generic plugin
 ---
 
-This section is aimed at explaining the structure of a gatsby plugin and the files that are needed to create it.
+This section is aimed at explaining the structure of a Gatsby plugin and the files that are needed to create it.
 
 As seen in the [what is a plugin doc](/docs/what-is-a-plugin/),a plugin is a piece of software that acts as an add-on and gives your site additional functionality.
 
@@ -14,15 +14,24 @@ The process of initializing a `package.json` in a project is done by running :
   npm init
 ```
 
-After running the above command a series of options are listed in the CLI interface and the options are stored in your `package.json` which contain some [files Gatsby looks for in a Plugin](/docs/files-gatsby-looks-for-in-a-plugin.md)
+After running the above command a series of options are listed in the CLI interface and those you select are stored in your `package.json` which contain some [files Gatsby looks for in a Plugin](/docs/files-gatsby-looks-for-in-a-plugin.md)
 
 ### What happens in a Generic Plugin ?
 
-In a generic plugin the `gatsby-node.js` file enables the use of [gatsby node APIs](/docs/node-apis/) which is where all the processes like createPage,createResolvers,sourceNodes exist.
+In a generic plugin the `gatsby-node.js` file enables the use of [gatsby node APIs](/docs/node-apis/) such as `createPage`, `createResolvers`, and `sourceNodes`.
 
-In this file you are able to carry out functions that load API keys, send calls to APIs, create Gatsby-nodes using the API response, create pages to display responses, and loop through responses to display an individual response (a good use case of this would be a plugin that gets data from an API).
+In `gatsby-node.js` you are able to carry out functions with APIs such as:
 
-An example of a source node would look like this:
+- Loading API keys
+- Sending calls to APIs
+- Creating Gatsby-nodes using the API response
+- Creating Individual pages from nodes
+
+> A good use case of the above would be a plugin that gets data from an API.
+
+[sourceNodes](/docs/node-apis/#sourceNodes) is a life-cycle API that a plugin can use to create Nodes. A Node is the smallest unit of data in Gatsby. Nodes are created using the [createNode](/docs/actions/#createNode) action.
+
+An example of how a sourceNode would be implemented is shown below :
 
 ```JavaScript
 export.sourceNodes = ({ actions,createNodeID,createContentDigest})=>{
@@ -42,8 +51,8 @@ export.sourceNodes = ({ actions,createNodeID,createContentDigest})=>{
 }
 ```
 
-Restarting the server will make the `allTestNode` query available at `localhost:8000/___graphql`
+The above code block creates a node called "Test Node " as seen from the `title` parameter. If this process is successful restarting the server will make the `allTestNode` query available at `localhost:8000/___graphql`.
 
 > Libraries like [Axios](https://www.npmjs.com/package/axios) can be used to handle calls in the `gatsby-node.js` file
 
-As seen in the [naming a plugin](/docs/naming-a-plugin/) section, the function of the plugin is shown in the naming format. However, they all have the same structure.
+Though all plugins have the same structure, their name signals what functionality they provide. See the [naming a plugin](/docs/naming-a-plugin) section for more information.
