@@ -4,9 +4,34 @@ const path = require(`path`)
 const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
 const visit = require(`unist-util-visit`)
+const rangeParser = require(`parse-numeric-range`)
 
-const getLanguage = require(`./utils/get-language`)
-const getLines = require(`./utils/get-lines`)
+// Language defaults to extension.toLowerCase();
+// This map tracks languages that don't match their extension.
+const FILE_EXTENSION_TO_LANGUAGE_MAP = {
+  js: `jsx`,
+  md: `markup`,
+  sh: `bash`,
+  rb: `ruby`,
+  py: `python`,
+  ps1: `powershell`,
+  psm1: `powershell`,
+  bat: `batch`,
+  h: `c`,
+  tex: `latex`,
+}
+
+const getLanguage = file => {
+  if (!file.includes(`.`)) {
+    return `none`
+  }
+
+  const extension = file.split(`.`).pop()
+
+  return FILE_EXTENSION_TO_LANGUAGE_MAP.hasOwnProperty(extension)
+    ? FILE_EXTENSION_TO_LANGUAGE_MAP[extension]
+    : extension.toLowerCase()
+}
 
 module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
   if (!directory) {
@@ -26,10 +51,16 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
 
       // Embed specific lines numbers of a file
       let lines = []
-      if (snippetPath.indexOf(`#L`) > -1) {
-        lines = snippetPath.match(/L\d+/g).map(l => l.replace(`L`, ``))
-        // Remove everything after line hash from file path
-        snippetPath = snippetPath.slice(0, snippetPath.indexOf(`#L`))
+      const rangePrefixIndex = snippetPath.indexOf(`#L`)
+      if (rangePrefixIndex > -1) {
+        const range = snippetPath.slice(rangePrefixIndex + 2)
+        if (range.length === 1) {
+          lines = [Number.parseInt(range, 10)]
+        } else {
+          lines = rangeParser.parse(range)
+        }
+        // Remove everything after the range prefix from file path
+        snippetPath = snippetPath.slice(0, rangePrefixIndex)
       }
 
       if (!fs.existsSync(snippetPath)) {
@@ -38,7 +69,10 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
 
       let code = fs.readFileSync(snippetPath, `utf8`).trim()
       if (lines.length) {
-        code = getLines(snippetPath, code, lines)
+        code = code
+          .split(`\n`)
+          .filter((_, lineNumber) => lines.includes(lineNumber + 1))
+          .join(`\n`)
       }
 
       // PrismJS's theme styles are targeting pre[class*="language-"]
