@@ -20,7 +20,7 @@ aliases:
     restore_cache:
       name: Restore node_modules cache
       keys:
-        - yarn-cypress-cache-{{ checksum "yarn.lock" }}
+        - yarn-cypress-cache-{{ checksum "yarn.lock" }}-image-10-13
 
   install_node_modules: &install_node_modules
     run:
@@ -30,7 +30,7 @@ aliases:
   persist_cache: &persist_cache
     save_cache:
       name: Save node modules cache
-      key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
+      key: yarn-cypress-cache-{{ checksum "yarn.lock" }}-image-10-13
       paths:
         - ~/.cache
 
@@ -211,7 +211,6 @@ jobs:
     steps:
       - checkout
       - <<: *restore_cache
-      - run: sudo npm i -g yarn
       - <<: *install_node_modules
       - <<: *persist_cache
       # persist our git checkout and node_modules as the next step (assert-changed-files) might exit this step
