@@ -5588,6 +5588,28 @@
     - Robots.txt
     - Sitemap
     - PWA
+- url: https://gatsby-attila.netlify.com/
+  repo: https://github.com/armada-inc/gatsby-attila-theme-starter
+  description: A Gatsby starter for creating blogs from headless Ghost CMS.
+  tags:
+    - Blog
+    - CMS:Headless
+    - SEO
+    - Styling:SCSS
+    - Pagination
+  features:
+    - Attila standard Ghost theme
+    - Data sourcing from headless Ghost
+    - Responsive design
+    - SEO optimized
+    - OpenGraph structured data
+    - Twitter Cards meta
+    - Sitemap Generation
+    - XML Sitemaps
+    - Progressive Web App
+    - Offline Support
+    - RSS Feed
+    - Composable and extensible
 - url: https://gatsby-contentful-portfolio.netlify.com/
   repo: https://github.com/wkocjan/gatsby-contentful-portfolio
   description: Gatsby portfolio theme integrated with Contentful
