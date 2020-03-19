@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.56...gatsby-source-filesystem@2.1.57) (2020-03-18)
+
+### Features
+
+- **gatsby-source-filesystem:** Unify publicURL ([#22328](https://github.com/gatsbyjs/gatsby/issues/22328)) ([756d386](https://github.com/gatsbyjs/gatsby/commit/756d386))
+
 ## [2.1.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.55...gatsby-source-filesystem@2.1.56) (2020-03-16)
 
 **Note:** Version bump only for package gatsby-source-filesystem

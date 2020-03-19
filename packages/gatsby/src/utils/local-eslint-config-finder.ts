@@ -1,11 +1,13 @@
-const path = require(`path`)
-const glob = require(`glob`)
-const debug = require(`debug`)(`gatsby:webpack-eslint-config`)
-const report = require(`gatsby-cli/lib/reporter`)
+import path from "path"
+import glob from "glob"
+import debug from "debug"
+import report from "gatsby-cli/lib/reporter"
 
-module.exports = directory => {
+const log = debug(`gatsby:webpack-eslint-config`)
+
+export const hasLocalEslint = (directory: string): boolean => {
   try {
-    debug(`Attempting to load package.json for eslint config check`)
+    log(`Attempting to load package.json for eslint config check`)
 
     const pkg = require(path.resolve(directory, `package.json`))
     if (pkg.eslintConfig) {
@@ -15,7 +17,7 @@ module.exports = directory => {
     report.error(`There was a problem processing the package.json file`, err)
   }
 
-  debug(`Checking for eslint config file`)
+  log(`Checking for eslint config file`)
   const eslintFiles = glob.sync(`.eslintrc?(.js|.json|.yaml|.yml)`, {
     cwd: directory,
   })

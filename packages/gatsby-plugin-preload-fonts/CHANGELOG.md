@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.35...gatsby-plugin-preload-fonts@1.0.36) (2020-03-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-preload-fonts:** lookup routes with and without trailing slash ([#21890](https://github.com/gatsbyjs/gatsby/issues/21890)) ([6475398](https://github.com/gatsbyjs/gatsby/commit/6475398)), closes [#21814](https://github.com/gatsbyjs/gatsby/issues/21814)
+
 ## [1.0.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.34...gatsby-plugin-preload-fonts@1.0.35) (2020-03-16)
 
 **Note:** Version bump only for package gatsby-plugin-preload-fonts
