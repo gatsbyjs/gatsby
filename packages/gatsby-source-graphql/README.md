@@ -278,7 +278,7 @@ Consider following example:
 }
 ```
 
-They will be merged to a single query:
+They will be merged into a single query:
 
 ```js
 {
