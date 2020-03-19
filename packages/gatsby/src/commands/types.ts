@@ -20,6 +20,7 @@ export interface IProgram {
   https?: boolean
   sitePackageJson: PackageJson
   ssl?: ICert
+  browserslist: string[]
 }
 
 export enum BuildHTMLStage {

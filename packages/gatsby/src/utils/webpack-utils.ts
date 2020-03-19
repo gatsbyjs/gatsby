@@ -1,4 +1,4 @@
-import { Loader, RuleSetRule, Plugin, Module } from "webpack"
+import { Loader, RuleSetRule, Plugin } from "webpack"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
@@ -11,11 +11,13 @@ const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
 const GatsbyWebpackEslintGraphqlSchemaReload = require(`./gatsby-webpack-eslint-graphql-schema-reload-plugin`)
 
 import { builtinPlugins } from "./webpack-plugins"
+import { IProgram } from "../commands/types"
 const eslintConfig = require(`./eslint-config`)
 
 type LoaderResolver<T = {}> = (options?: T) => Loader
 
-type RuleFactory<T = {}> = (options?: T) => RuleSetRule
+type LoaderOptions = Record<string, any>
+type RuleFactory<T = {}> = (options?: T & LoaderOptions) => RuleSetRule
 
 type ContextualRuleFactory<T = {}> = RuleFactory<T> & {
   internal?: RuleFactory<T>
@@ -33,7 +35,7 @@ type Stage = "develop" | "develop-html" | "build-javascript" | "build-html"
  */
 export interface IWebpackUtilsOptions {
   stage: Stage
-  program: any
+  program: IProgram
 }
 
 /**
@@ -50,7 +52,7 @@ export interface ILoaderUtils {
   postcss: LoaderResolver<{
     browsers?: string[]
     overrideBrowserslist?: string[]
-    plugins?: Array<any> | ((loader: any) => Array<any>)
+    plugins?: Plugin[] | ((loader: Loader) => Plugin[])
   }>
 
   file: LoaderResolver
@@ -70,6 +72,8 @@ interface IModuleThatUseGatsby {
   path: string
 }
 
+type CssLoaderModuleOption = boolean | Record<string, any> | string
+
 /**
  * Utils that produce webpack rule objects
  */
@@ -78,16 +82,19 @@ export interface IRuleUtils {
    * Handles JavaScript compilation via babel
    */
   js: RuleFactory<{ modulesThatUseGatsby?: IModuleThatUseGatsby[] }>
-  dependencies: RuleFactory
+  dependencies: RuleFactory<{ modulesThatUseGatsby?: IModuleThatUseGatsby[] }>
   yaml: RuleFactory
   fonts: RuleFactory
   images: RuleFactory
   miscAssets: RuleFactory
   media: RuleFactory
 
-  css: ContextualRuleFactory<{ browsers?: string[] }>
+  css: ContextualRuleFactory<{
+    browsers?: string[]
+    modules?: CssLoaderModuleOption
+  }>
   cssModules: RuleFactory
-  postcss: ContextualRuleFactory<{ overrideBrowserOptions: any }>
+  postcss: ContextualRuleFactory<{ overrideBrowserOptions: string[] }>
 
   eslint: RuleFactory
 }
@@ -123,7 +130,7 @@ export const createUtils = async ({
   program,
 }: {
   stage: Stage
-  program: any
+  program: IProgram
 }): Promise<IWebpackUtils> => {
   const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
@@ -467,17 +474,15 @@ export const createUtils = async ({
    * CSS style loader.
    */
   {
-    const css: ContextualRuleFactory = ({
-      browsers,
-      ...options
-    }: { browsers?: string[]; modules?: Module[] } = {}): RuleSetRule => {
+    const css: IRuleUtils["css"] = (options = {}): RuleSetRule => {
+      const { browsers, ...restOptions } = options
       const use = [
-        loaders.css({ ...options, importLoaders: 1 }),
+        loaders.css({ ...restOptions, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
       if (!isSSR)
         use.unshift(
-          loaders.miniCssExtract({ hmr: !PRODUCTION && !options.modules })
+          loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules })
         )
 
       return {
@@ -492,7 +497,7 @@ export const createUtils = async ({
     css.internal = makeInternalOnly(css)
     css.external = makeExternalOnly(css)
 
-    const cssModules = (options: any): RuleSetRule => {
+    const cssModules: IRuleUtils["cssModules"] = (options): RuleSetRule => {
       const rule = css({ ...options, modules: true })
       delete rule.exclude
       rule.test = /\.module\.css$/
@@ -507,7 +512,7 @@ export const createUtils = async ({
    * PostCSS loader.
    */
   {
-    const postcss: ContextualRuleFactory = (options: any): RuleSetRule => {
+    const postcss: ContextualRuleFactory = (options): RuleSetRule => {
       return {
         test: /\.css$/,
         use: [loaders.css({ importLoaders: 1 }), loaders.postcss(options)],
