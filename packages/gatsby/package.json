@@ -160,7 +160,7 @@
     "xhr-mock": "^2.5.1"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   },
   "files": [
     "apis.json",
