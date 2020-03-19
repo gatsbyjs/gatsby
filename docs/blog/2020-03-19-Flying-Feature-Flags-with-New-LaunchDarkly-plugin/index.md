@@ -11,7 +11,7 @@ tags:
 
 
 ***Editor's note:** This guest post is by [Rich Manalang](https://twitter.com/rmanalan), a Principal Developer Advocate at [LaunchDarkly](https://launchdarkly.com). It describes how you can use feature flags on your Gatsby sites so you can have better control of how (and when) you release features to your customers.*
- 
+
  A few months ago we decided to migrate our [public-facing documentation site](https://docs.launchdarkly.com) from a managed documentation service to Gatsby. We wanted greater control of the site and a git-based workflow. Additional goals were to scale to a larger set of internal authors and also accept contributions from our community. During the development of this new site, we realized that it might be useful to hide certain sections of the site from certain groups of people; for example, limit access to beta users or a specified group of reviewers.
 
 Here at [LaunchDarkly](https://launchdarkly.com/), we know a thing or two about using feature flags to control and manage the release of features. First, though, you might be wondering, [“What *are* feature flags, anyway?”](https://martinfowler.com/articles/feature-toggles.html). In simple terms, a feature flag is a decision point in your code that can change the behavior of your application. LaunchDarkly is a feature management system. It lets you ship code to production without revealing it to your customers, gradually release that code to an expanding group of customers, and easily roll back to an earlier version if you find a bug.
@@ -34,11 +34,11 @@ Here’s a quick demo of this plugin in action:
 
  The example in the video shows a simple page from the Gatsby default starter using the LaunchDarkly plugin. Here’s the code:
 
-gist:[rmanalan/]722aac404ad0c10286bfd5f3ad3d8690[#index.jsx]
+`gist:rmanalan/722aac404ad0c10286bfd5f3ad3d8690#index.jsx`
 
 https://gist.github.com/rmanalan/722aac404ad0c10286bfd5f3ad3d8690
 
-In this example, the `flags` object returned by the `useFlags()` hook is a simple object that contains all of the client-side feature flags available in your LaunchDarkly project. As the values of these flags change, components that rely on them re-render automatically. 
+In this example, the `flags` object returned by the `useFlags()` hook is a simple object that contains all of the client-side feature flags available in your LaunchDarkly project. As the values of these flags change, components that rely on them re-render automatically.
 
 Here, we’re looking for a flag called `helloWorld`. This particular `helloWorld` flag is a boolean flag, but you can create flags that are multivariate strings, integers, or even JSON.
 
