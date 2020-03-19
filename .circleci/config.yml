@@ -7,7 +7,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "10"
+        default: "10.13"
     docker:
       - image: circleci/node:<< parameters.image >>
 
