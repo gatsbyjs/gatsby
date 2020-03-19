@@ -1,6 +1,6 @@
 // This module is also copied into the .cache directory some modules copied there
 // from cache-dir can also use this module.
-export default (moduleName, err) => {
+export const testRequireError = (moduleName: string, err: any): boolean => {
   // PnP will return the following code when a require is allowed per the
   // dependency tree rules but the requested file doesn't exist
   if (
