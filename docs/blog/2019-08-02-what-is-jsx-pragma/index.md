@@ -8,7 +8,7 @@ tags:
   - theme-ui
 ---
 
-If you’re looking into using [Theme UI](https://theme-ui.com/) , you’ll come across some (potentially) unfamiliar looking syntax:
+If you’re looking into using [Theme UI](https://theme-ui.com/), you’ll come across some (potentially) unfamiliar looking syntax:
 
 ```jsx
 /** @jsx jsx */

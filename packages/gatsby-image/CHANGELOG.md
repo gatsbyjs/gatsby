@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.44...gatsby-image@2.2.45) (2020-03-18)
+
+### Bug Fixes
+
+- **gatsby-image:** When art-directing images, default the padding aspect ratio to first image without a media query when no media query matches ([#21431](https://github.com/gatsbyjs/gatsby/issues/21431)) ([df7e93d](https://github.com/gatsbyjs/gatsby/commit/df7e93d))
+
 ## [2.2.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.43...gatsby-image@2.2.44) (2020-03-16)
 
 **Note:** Version bump only for package gatsby-image
