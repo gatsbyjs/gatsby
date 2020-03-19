@@ -1367,7 +1367,9 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
  * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
- * plugin](/packages/gatsby-plugin-s3/).
+ * plugin](/packages/gatsby-plugin-s3/). Alternatively, you can use
+ * [this plugin](/packages/gatsby-plugin-meta-redirect/) to generate meta redirect
+ * html files for redirecting on any static file host.
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash

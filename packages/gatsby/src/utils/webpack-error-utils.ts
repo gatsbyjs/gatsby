@@ -1,12 +1,31 @@
 const reporter = require(`gatsby-cli/lib/reporter`)
+import { Stats } from "webpack"
 
 const stageCodeToReadableLabel = {
   "build-javascript": `Generating JavaScript bundles`,
   "build-html": `Generating SSR bundle`,
   develop: `Generating development JavaScript bundle`,
-}
+} as const
 
-const transformWebpackError = (stage, webpackError) => {
+type Stage = keyof typeof stageCodeToReadableLabel
+type StageLabel = typeof stageCodeToReadableLabel[Stage]
+
+interface ITransformedWebpackError {
+  id: "98123"
+  filePath?: string
+  location?: {
+    start: string
+  }
+  context: {
+    stage: Stage
+    stageLabel: StageLabel
+    message?: string
+  }
+}
+const transformWebpackError = (
+  stage: keyof typeof stageCodeToReadableLabel,
+  webpackError: any
+): ITransformedWebpackError => {
   return {
     id: `98123`,
     filePath: webpackError?.module?.resource,
@@ -30,7 +49,10 @@ const transformWebpackError = (stage, webpackError) => {
   }
 }
 
-exports.structureWebpackErrors = (stage, webpackError) => {
+export const structureWebpackErrors = (
+  stage: Stage,
+  webpackError: any
+): ITransformedWebpackError[] | ITransformedWebpackError => {
   if (Array.isArray(webpackError)) {
     return webpackError.map(e => transformWebpackError(stage, e))
   }
@@ -38,7 +60,7 @@ exports.structureWebpackErrors = (stage, webpackError) => {
   return transformWebpackError(stage, webpackError)
 }
 
-exports.reportWebpackWarnings = stats => {
+export const reportWebpackWarnings = (stats: Stats): void => {
   stats.compilation.warnings.forEach(webpackWarning => {
     if (webpackWarning.warning) {
       // grab inner Exception if it exists

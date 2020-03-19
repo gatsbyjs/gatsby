@@ -91,6 +91,14 @@ const getCurrentSrcData = currentData => {
     if (foundMedia !== -1) {
       return currentData[foundMedia]
     }
+
+    // No media matches, select first element without a media condition
+    const noMedia = currentData.findIndex(
+      image => typeof image.media === `undefined`
+    )
+    if (noMedia !== -1) {
+      return currentData[noMedia]
+    }
   }
   // Else return the first image.
   return currentData[0]

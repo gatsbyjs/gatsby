@@ -175,8 +175,8 @@ exports.onCreateWebpackConfig = (
       name: `netlify-identity-widget`,
       global: `netlifyIdentity`,
       assetDir: `build`,
-      assetName: `netlify-identity-widget.js`,
-      sourceMap: `netlify-identity-widget.js.map`,
+      assetName: `netlify-identity.js`,
+      sourceMap: `netlify-identity.js.map`,
     })
   }
 
