@@ -43,7 +43,7 @@ const setup = version => {
 
 describe(`error handling`, () => {
   it(`panics on Node < 10.13.0`, () => {
-    ;[`6.0.0`, `8.0.0`, `8.0.0`, `10.0.0`].forEach(version => {
+    ;[`6.0.0`, `8.0.0`, `10.0.0`].forEach(version => {
       const { reporter } = setup(version)
 
       expect(reporter.panic).toHaveBeenCalledTimes(1)
