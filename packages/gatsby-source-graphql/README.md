@@ -190,7 +190,7 @@ to `true`.
 
 Example:
 
-```
+```shell
 cross-env GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY=20 gatsby develop
 ```
 
