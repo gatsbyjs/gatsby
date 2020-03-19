@@ -181,7 +181,7 @@ module.exports = {
 By default, `gatsby-source-graphql` executes each query in a separate network request.
 But the plugin also supports query batching to improve query performance.
 
-**Caveat**: Batching is only possible for queries starting approximately at the same time. In other words
+**Caveat**: Batching is only possible for queries starting at approximately the same time. In other words
 it is bounded by the number of parallel GraphQL queries executed by Gatsby (by default it is **4**).
 
 Fortunately we can increase the number of queries executed in parallel by setting [environment variable](https://gatsby.dev/env-vars)
