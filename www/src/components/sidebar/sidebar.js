@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Component } from "react"
+import { t } from "@lingui/macro"
+import { withI18n } from "@lingui/react"
 
 import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
@@ -191,14 +193,14 @@ class SidebarBody extends Component {
   }
 
   render() {
-    const { closeSidebar, itemList, location } = this.props
+    const { i18n, closeSidebar, itemList, location } = this.props
     const { openSectionHash, activeItemLink, activeItemParents } = this.state
 
     const isSingle = itemList.filter(item => item.level === 0).length === 1
 
     return (
       <section
-        aria-label="Secondary Navigation"
+        aria-label={i18n._(t`Secondary Navigation`)}
         id="SecondaryNavigation"
         className="docSearch-sidebar"
         sx={{ height: `100%` }}
@@ -299,4 +301,4 @@ class SidebarBody extends Component {
   }
 }
 
-export default SidebarBody
+export default withI18n()(SidebarBody)

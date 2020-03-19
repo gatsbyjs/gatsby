@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
+import { t } from "@lingui/macro"
+import { withI18n } from "@lingui/react"
 
 import {
   BlogIcon,
@@ -39,8 +41,15 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
     <div>{label}</div>
   </Link>
 )
+const navItems = [
+  { id: "docs", text: t`Docs`, icon: DocsIcon },
+  { id: `tutorial`, text: t`Tutorials`, icon: TutorialIcon },
+  { id: `plugins`, text: t`Plugins`, icon: PluginsIcon },
+  { id: `blog`, text: t`Blog`, icon: BlogIcon },
+  { id: `showcase`, text: t`Showcase`, icon: ShowcaseIcon },
+]
 
-const MobileNavigation = () => (
+const MobileNavigation = ({ i18n }) => (
   <div
     sx={{
       alignItems: `center`,
@@ -62,15 +71,18 @@ const MobileNavigation = () => (
       },
     }}
   >
-    <MobileNavItem linkTo="/docs/" label="Docs" icon={DocsIcon} />
-    <MobileNavItem linkTo="/tutorial/" label="Tutorials" icon={TutorialIcon} />
-    <MobileNavItem linkTo="/plugins/" label="Plugins" icon={PluginsIcon} />
-    <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
-    <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
+    {navItems.map(({ id, text, icon }) => (
+      <MobileNavItem
+        linkTo={`/${id}/`}
+        key={id}
+        text={i18n._(text)}
+        icon={icon}
+      />
+    ))}
   </div>
 )
 
-export default MobileNavigation
+export default withI18n()(MobileNavigation)
 
 const styles = {
   svg: {

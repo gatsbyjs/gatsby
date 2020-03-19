@@ -24,6 +24,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     createNodeId,
     store,
     cache,
+    getCache,
     getNodes,
     reporter,
   } = gatsbyFunctions
@@ -74,6 +75,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
             cache,
             createNode,
             createNodeId,
+            getCache,
             reporter,
           })
 
