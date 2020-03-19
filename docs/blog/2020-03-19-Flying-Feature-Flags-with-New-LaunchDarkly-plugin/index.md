@@ -34,9 +34,33 @@ Here’s a quick demo of this plugin in action:
 
  The example in the video shows a simple page from the Gatsby default starter using the LaunchDarkly plugin. Here’s the code:
 
-gist:rmanalan/722aac404ad0c10286bfd5f3ad3d8690#index.jsx
-<script src="https://gist.github.com/rmanalan/722aac404ad0c10286bfd5f3ad3d8690.js"></script>
-https://gist.github.com/rmanalan/722aac404ad0c10286bfd5f3ad3d8690
+
+```import React from "react"
+import { Link } from "gatsby"
+
+import Layout from "../components/layout"
+import Image from "../components/image"
+import SEO from "../components/seo"
+
+import { useFlags } from 'gatsby-plugin-launchdarkly'
+
+const IndexPage = () => {
+ const flags = useFlags()
+ return (
+   <Layout>
+     <SEO title="Home" />
+     <h1>{ flags.helloWorld ? 'Hello World!' : '' }</h1>
+     <p>Welcome to your new Gatsby site.</p>
+     <p>Now go build something great.</p>
+     <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
+       <Image />
+     </div>
+     <Link to="/page-2/">Go to page 2</Link>
+   </Layout>
+ )
+}
+
+export default IndexPage```
 
 In this example, the `flags` object returned by the `useFlags()` hook is a simple object that contains all of the client-side feature flags available in your LaunchDarkly project. As the values of these flags change, components that rely on them re-render automatically.
 
