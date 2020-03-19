@@ -225,29 +225,28 @@ const getInitialQueryProcessors = ({ parentSpan } = {}) => {
   const { staticQueryIds, pageQueryIds } = groupQueryIds(queryIds)
 
   const queryjobsCount =
-    _.filter(pageQueryIds.map(id => state.pages.get(id))).length +
+    pageQueryIds.filter(id => state.pages.has(id)).length +
     staticQueryIds.length
 
-  let activity = null
-  let processedQueuesCount = 0
-  const createProcessor = (fn, queryIds) => async () => {
-    if (!activity) {
-      activity = createQueryRunningActivity(queryjobsCount, parentSpan)
-    }
+  let activity
 
-    await fn(queryIds, { state, activity })
+  const actuallyProcessStaticQueries = async () => {
+    activity = createQueryRunningActivity(queryjobsCount, parentSpan)
 
-    processedQueuesCount++
-    // if both page and static queries are done, finish activity
-    if (processedQueuesCount === 2) {
-      activity.done()
-    }
+    await processStaticQueries(staticQueryIds, { state, activity })
+  }
+
+  const actuallyProcessPageQueries = async () => {
+    await processPageQueries(pageQueryIds, { state, activity })
+
+    activity.done()
   }
 
   return {
-    processStaticQueries: createProcessor(processStaticQueries, staticQueryIds),
-    processPageQueries: createProcessor(processPageQueries, pageQueryIds),
+    processStaticQueries: actuallyProcessStaticQueries,
+    processPageQueries: actuallyProcessPageQueries,
     pageQueryIds,
+    activity,
   }
 }
 
