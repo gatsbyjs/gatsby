@@ -302,7 +302,7 @@ They will be merged into a single query:
 }
 ```
 
-Then `gatsby-source-graphql` splits the result of this single query to multiple results
+Then `gatsby-source-graphql` splits the result of this single query into multiple results
 and delivers it back to Gatsby as if it executed multiple queries:
 
 ```js
