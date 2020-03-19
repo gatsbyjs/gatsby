@@ -63,7 +63,7 @@ module.exports = {
 
 ## Configuring Gatsby Live Preview
 
-The [Gatsby Drupal Module](https://www.drupal.org/project/gatsby) enhances the experience of your Drupal content editors for Gatsby sites using Drupal as a data source. This module provides Gatsby live preview capabilities using your Gatsby Cloud account or on your locally running Gatsby development server.
+The [Gatsby Drupal Module](https://www.drupal.org/project/gatsby) enhances the content editor experience when using Gatsby with Drupal as a data source. This module provides Gatsby live preview capabilities using your [Gatsby Cloud account](https://www.gatsbyjs.com/get-started) or on your [locally running Gatsby development server](/docs/running-a-gatsby-preview-server/).
 
 While not required in order to build a Gatsby site that uses Drupal data, this module is the place where additional features are added to improve the Gatsby and Drupal integration.
 
