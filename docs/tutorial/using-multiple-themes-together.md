@@ -130,7 +130,7 @@ Now if you visit `http://localhost:8001/blog/hello-posts/` and `http://localhost
     },
 ```
 
-## Step 6: Shadow the 'bio-content.js' component
+## Shadow the 'bio-content.js' component
 
 It is possible to update the author bio information with a custom `bio-content.js` component using [theme shadowing](/docs/themes/shadowing/).
 
