@@ -78,7 +78,7 @@ cd multiple-themes
 gatsby develop
 ```
 
-## Step 4: Add content
+## Add content
 
 Behind the scenes, the two themes created content folders in the root directory of the site. In this step, you will add some content to these folders.
 
