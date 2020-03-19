@@ -1,4 +1,4 @@
-const { parse } = require(`graphql`)
+import { parse, DocumentNode } from "graphql"
 
 const fileType = `
   type File implements Node @infer {
@@ -82,9 +82,5 @@ const sitePageType = `
   }
 `
 
-const builtInTypeDefinitions = () =>
+export const builtInTypeDefinitions = (): DocumentNode[] =>
   [fileType, directoryType, sitePageType].map(type => parse(type))
-
-module.exports = {
-  builtInTypeDefinitions,
-}
