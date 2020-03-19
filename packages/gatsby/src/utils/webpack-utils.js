@@ -8,7 +8,7 @@ const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
 const ReactRefreshWebpackPlugin = require(`@pmmmwh/react-refresh-webpack-plugin`)
 const isWsl = require(`is-wsl`)
 
-const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
+import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 const GatsbyWebpackEslintGraphqlSchemaReload = require(`./gatsby-webpack-eslint-graphql-schema-reload-plugin`)
 
 import { builtinPlugins } from "./webpack-plugins"
