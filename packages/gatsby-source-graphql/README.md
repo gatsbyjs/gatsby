@@ -216,7 +216,7 @@ module.exports = {
 ```
 
 By default, the plugin batches up to 5 queries. You can override this by passing
-`dataLoaderOptions`:
+`dataLoaderOptions` and set a `maxBatchSize`:
 
 ```js
 const fs = require("fs")
