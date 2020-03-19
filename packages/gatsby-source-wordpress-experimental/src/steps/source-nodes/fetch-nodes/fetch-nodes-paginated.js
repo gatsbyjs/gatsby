@@ -18,12 +18,29 @@ const paginatedWpNodeFetch = async ({
   ...variables
 }) => {
   if (
+    !settings.limit &&
+    typeof settings.limit === `number` &&
+    settings.limit === 0
+  ) {
+    // if the Type.limit plugin option is set to the number 0,
+    // we shouldn't fetch anything
+    return []
+  }
+
+  if (
     settings.limit &&
     // if we're about to fetch more than our limit
     allContentNodes.length + variables.first > settings.limit
   ) {
     // just fetch whatever number is remaining
     variables.first = settings.limit - allContentNodes.length
+  }
+
+  // if the GQL var "first" is greater than our Type.limit plugin option,
+  // that's no good
+  if (settings.limit && settings.limit < variables.first) {
+    // so just fetch our limit
+    variables.first = settings.limit
   }
 
   const typeCount = store.getState().logger.typeCount[nodeTypeName] || 0
@@ -66,7 +83,10 @@ const paginatedWpNodeFetch = async ({
     })
   }
 
-  if (hasNextPage) {
+  if (
+    hasNextPage &&
+    (!settings.limit || settings.limit < allContentNodes.length)
+  ) {
     return paginatedWpNodeFetch({
       ...variables,
       contentTypePlural,

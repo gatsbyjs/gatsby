@@ -32,6 +32,36 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
     expect(result.data.__schema).toMatchSnapshot()
   })
 
+  test(`Type.limit option works when set to 1`, async () => {
+    const result = await fetchGraphql({
+      url: `http://localhost:8000/___graphql`,
+      query: gql`
+        {
+          allWpTypeLimitTest {
+            totalCount
+          }
+        }
+      `,
+    })
+
+    expect(result.data.allWpTypeLimitTest.totalCount).toEqual(1)
+  })
+
+  test(`Type.limit option works when set to 0`, async () => {
+    const result = await fetchGraphql({
+      url: `http://localhost:8000/___graphql`,
+      query: gql`
+        {
+          allWpTypeLimit0Test {
+            totalCount
+          }
+        }
+      `,
+    })
+
+    expect(result.data.allWpTypeLimit0Test.totalCount).toEqual(0)
+  })
+
   incrementalIt(`resolves menus`, async () => {
     const result = await fetchGraphql({
       url: `http://localhost:8000/___graphql`,

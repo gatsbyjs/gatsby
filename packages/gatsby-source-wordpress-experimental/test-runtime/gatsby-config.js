@@ -43,6 +43,12 @@ module.exports = {
           },
         },
         type: {
+          TypeLimitTest: {
+            limit: 1,
+          },
+          TypeLimit0Test: {
+            limit: 0,
+          },
           Post: {
             limit:
               process.env.NODE_ENV === `development`
