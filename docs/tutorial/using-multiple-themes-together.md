@@ -257,7 +257,7 @@ Here is a video about composing and styling themes with J&J!
 <YouTube youTubeId="6Z4p-qjnKCQ" />
 ```
 
-## Step 9: Use component shadowing to add a navigation menu
+## Add a navigation menu
 
 Use component shadowing to add a navigation menu. You can read more about [creating dynamic navigation menus](/docs/creating-dynamic-navigation/) in the docs.
 
