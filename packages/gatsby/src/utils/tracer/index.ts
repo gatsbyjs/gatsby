@@ -1,6 +1,6 @@
-const { slash } = require(`gatsby-core-utils`)
-const path = require(`path`)
-const opentracing = require(`opentracing`)
+import { slash } from "gatsby-core-utils"
+import path from "path"
+import { Tracer, initGlobalTracer } from "opentracing"
 
 let tracerProvider
 
@@ -13,28 +13,23 @@ let tracerProvider
  * `stop` - Run any tracer cleanup required before the node.js process
  * exits
  */
-function initTracer(tracerFile) {
-  let tracer
+export const initTracer = (tracerFile: string): Tracer => {
+  let tracer: Tracer
   if (tracerFile) {
     const resolvedPath = slash(path.resolve(tracerFile))
     tracerProvider = require(resolvedPath)
     tracer = tracerProvider.create()
   } else {
-    tracer = new opentracing.Tracer() // Noop
+    tracer = new Tracer() // Noop
   }
 
-  opentracing.initGlobalTracer(tracer)
+  initGlobalTracer(tracer)
 
   return tracer
 }
 
-async function stopTracer() {
+export const stopTracer = async (): Promise<void> => {
   if (tracerProvider && tracerProvider.stop) {
     await tracerProvider.stop()
   }
-}
-
-module.exports = {
-  initTracer,
-  stopTracer,
 }

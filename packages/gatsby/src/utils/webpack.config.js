@@ -562,14 +562,7 @@ module.exports = async (
     ]
 
     // Packages we want to externalize because meant to be user-provided
-    const userExternalList = [
-      `es6-promise`,
-      `minimatch`,
-      `pify`,
-      `react-helmet`,
-      `react`,
-      /^react-dom\//,
-    ]
+    const userExternalList = [`react-helmet`, `react`, /^react-dom\//]
 
     const checkItem = (item, request) => {
       if (typeof item === `string` && item === request) {

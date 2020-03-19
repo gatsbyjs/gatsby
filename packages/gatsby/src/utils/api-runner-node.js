@@ -23,7 +23,7 @@ const { emitter, store } = require(`../redux`)
 const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
-const { default: errorParser } = require(`./api-runner-error-parser`)
+import errorParser from "./api-runner-error-parser"
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
