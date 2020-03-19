@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-blog-core",
-  "version": "1.2.32",
+  "version": "1.2.33",
   "main": "index.js",
   "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "license": "MIT",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@mdx-js/react": "^1.5.7",
-    "gatsby": "^2.19.48",
+    "gatsby": "^2.19.49",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
