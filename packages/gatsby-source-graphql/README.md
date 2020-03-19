@@ -254,7 +254,7 @@ Under the hood `gatsby-source-graphql` uses [DataLoader](https://github.com/grap
 for query batching. It merges all queries from a batch to a single query that gets sent to the
 server in a single network request.
 
-Consider following example:
+Consider the following example where both of these queries are run:
 
 ```js
 {
