@@ -10077,3 +10077,14 @@
   built_by: Kelvin DeCosta
   built_by_url: https://github.com/kelvindecosta
   featured: false
+- title: Coronavirus (COVID-19) Tracker
+  url: https://coronavirus.traction.one/
+  main_url: https://coronavirus.traction.one/
+  description: >
+    This application shows the near real-time status based on data from JHU CSSE.
+  categories:
+    - Data
+    - Directory
+  built_by: Sankarsan Kampa
+  built_by_url: https://traction.one
+  featured: false
