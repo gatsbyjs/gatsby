@@ -1,6 +1,6 @@
 ---
 title: Flying Feature Flags with LaunchDarkly’s New Plugin for Gatsby
-date: 2020-03-19
+date: 2020-03-23
 author: "Rich Manalang"
 excerpt: "Feature flags grant developers exquisite control over how and when new features are revealed to customers. LaunchDarkly’s new plugin for Gatsby makes using them exquisitely easy!"
 tags:
