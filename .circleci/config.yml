@@ -211,7 +211,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_cache
-      - run: npm i -g yarn
+      - run: sudo npm i -g yarn
       - <<: *install_node_modules
       - <<: *persist_cache
       # persist our git checkout and node_modules as the next step (assert-changed-files) might exit this step
