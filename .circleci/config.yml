@@ -14,7 +14,7 @@ executors:
 aliases:
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node10.16.0-chrome76
+      - image: cypress/browsers:node10.13.0-chrome76
 
   restore_cache: &restore_cache
     restore_cache:
@@ -212,6 +212,7 @@ jobs:
       - checkout
       - <<: *restore_cache
       - <<: *install_node_modules
+      - run: npm i -g yarn
       - <<: *persist_cache
       # persist our git checkout and node_modules as the next step (assert-changed-files) might exit this step
       # when no files have changed (master). We still need to have these files for jobs like lint & unit_tests_node8
