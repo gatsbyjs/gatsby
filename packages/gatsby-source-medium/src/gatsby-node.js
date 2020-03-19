@@ -61,12 +61,13 @@ exports.sourceNodes = async (
       importableResources = importableResources.concat(collections)
     }
 
-    const resources = [ ...importableResources ]
-      .map(resource => ({
+    const resources = [...importableResources].map(resource => {
+      return {
         ...resource,
         medium_id: resource.id,
         id: createNodeId(resource.id ? resource.id : resource.userId),
-      }))
+      }
+    })
 
     const getID = node => (node ? node.id : null)
 
@@ -83,13 +84,10 @@ exports.sourceNodes = async (
             resources.find(r => r.userId === resource.creatorId)
           ),
         }
-      }
-      else if (resource.type === `User`) {
+      } else if (resource.type === `User`) {
         links = {
           posts___NODE: resources
-            .filter(
-              r => (r.type === `Post`) && (r.creatorId === resource.userId)
-            )
+            .filter(r => r.type === `Post` && r.creatorId === resource.userId)
             .map(r => r.id),
         }
       }
