@@ -15,6 +15,6 @@ Evaluating all those factors, we decided that it's better to drop Node 8 support
 
 # How will it affect me?
 
-You should fine if you have already upgraded your Node version to 10.13.0 or higher, you won't be affected.
+You should be fine if you have already upgraded your Node version to 10.13.0 or higher as you won't be affected.
 
 Otherwise follow the [Upgrading your Node guide](https://www.gatsbyjs.org/docs/upgrading-node-js).
