@@ -48,11 +48,6 @@ const remoteSchema = {
       return state
     },
 
-    setQueries(state, payload) {
-      state.nodeQueries = payload
-      return state
-    },
-
     addFieldsToBlackList(state, payload) {
       state.fieldBlacklist = [...state.fieldBlacklist, ...payload]
       return state
