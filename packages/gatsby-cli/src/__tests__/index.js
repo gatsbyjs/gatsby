@@ -52,7 +52,7 @@ describe(`error handling`, () => {
   })
 
   it(`shows error with link to more info`, () => {
-    const { reporter } = setup(`v8.0.0`)
+    const { reporter } = setup(`v6.0.0`)
 
     expect(reporter.panic).toHaveBeenCalledWith(
       expect.stringContaining(`https://gatsby.dev/upgrading-node-js`)
