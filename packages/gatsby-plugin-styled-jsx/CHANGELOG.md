@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.21...gatsby-plugin-styled-jsx@3.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
 ## [3.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.1.20...gatsby-plugin-styled-jsx@3.1.21) (2020-03-16)
 
 **Note:** Version bump only for package gatsby-plugin-styled-jsx
