@@ -106,3 +106,4 @@ Note:  Not all browsers support CSP, check [can-i-use](https://caniuse.com/#feat
 - [How to prevent XSS attacks when using dangerouslySetInnerHTML in React](https://medium.com/@Jam3/how-to-prevent-xss-attacks-when-using-dangerouslysetinnerhtml-in-react-f669f778cebb)
 - [Exploiting XSS via Markdown](https://medium.com/taptuit/exploiting-xss-via-markdown-72a61e774bf8)
 - [Auditing package dependencies for security vulnerabilities](https://docs.npmjs.com/auditing-package-dependencies-for-security-vulnerabilities)
+- [SameSite cookies explained](https://web.dev/samesite-cookies-explained/)
