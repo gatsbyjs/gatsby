@@ -70,7 +70,7 @@ In addition to a form, a hidden input could be added, holding the value of a enc
 
 ## Third-party Scripts
 
-Some third-party scripts like Google Tag Manager gives the possibility to add arbitrary JavaScript code on top of them. Be sure to control the access of these services.
+Some third-party scripts like Google Tag Manager gives the possibility to add arbitrary JavaScript code on top of them as a [custom HTML tag](https://support.google.com/tagmanager/answer/6107167), which can be a malicious script. To avoid that, be sure to have a [access control](https://support.google.com/tagmanager/answer/6107011) management in these services.
 
 ## Check Your Dependencies
 
