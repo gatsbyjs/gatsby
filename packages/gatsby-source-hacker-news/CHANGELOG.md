@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@2.2.5...gatsby-source-hacker-news@2.3.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@2.2.4...gatsby-source-hacker-news@2.2.5) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency axios to ^0.19.2 ([#22317](https://github.com/gatsbyjs/gatsby/issues/22317)) ([91e780f](https://github.com/gatsbyjs/gatsby/commit/91e780f))
+
+## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@2.2.3...gatsby-source-hacker-news@2.2.4) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@2.2.2...gatsby-source-hacker-news@2.2.3) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
 ## [2.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@2.2.1...gatsby-source-hacker-news@2.2.2) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-source-hacker-news

@@ -9,7 +9,9 @@ https://using-contentful.gatsbyjs.org/
 
 ## Install
 
-`npm install --save gatsby-source-contentful`
+```shell
+npm install --save gatsby-source-contentful
+```
 
 ## How to use
 
@@ -168,9 +170,13 @@ Using the ID is a much more stable property to work with as it will change less 
 
 If you are confident your Content Types will have natural-language IDs (e.g. `blogPost`), then you should set this option to `false`. If you are unable to ensure this, then you should leave this option set to `true` (the default).
 
-**`pageLimit`** [number][optional] [default: `1000`]
+**`pageLimit`** [number][optional] [default: `100`]
 
-Number of entries to retrieve from Contentful at a time. This can be adjusted to fix issues related to "Response size too big" error.
+Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g `50`.
+
+**`richText.resolveFieldLocales`** [boolean][optional] [default: `false`]
+
+If you want to resolve the locales in fields of assets and entries that are referenced by rich text (e.g., via embedded entries or entry hyperlinks), set this to `true`. Otherwise, fields of referenced assets or entries will be objects keyed by locale.
 
 ## Notes on Contentful Content Models
 
@@ -277,13 +283,13 @@ Unless the text is Markdown-free, you cannot use the returned value directly. In
 
 You can then insert the returned HTML inline in your JSX:
 
-```
-  <div
+```jsx
+<div
   className="body"
   dangerouslySetInnerHTML={{
-       __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
-     }}
-   />
+    __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
+  }}
+/>
 ```
 
 #### Duplicated entries
@@ -387,6 +393,32 @@ documentToReactComponents(node.bodyRichText.json, options)
 ```
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
+
+## Sourcing From Multiple Contentful Spaces
+
+To source from multiple Contentful environments/spaces, add another configuration for `gatsby-source-contentful` in `gatsby-config.js`:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_second_space_id`,
+        accessToken: process.env.SECONDARY_CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
+  ],
+}
+```
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://gatsby.dev/env-vars

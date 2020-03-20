@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.44...gatsby-plugin-netlify-cms@4.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [4.1.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.43...gatsby-plugin-netlify-cms@4.1.44) (2020-03-20)
+
+### Bug Fixes
+
+- **plugin-netlify-cms:** use 'netlify-identity.js' instead of 'netlify-identity-widget.js' ([#22387](https://github.com/gatsbyjs/gatsby/issues/22387)) ([2205811](https://github.com/gatsbyjs/gatsby/commit/2205811))
+
+## [4.1.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.42...gatsby-plugin-netlify-cms@4.1.43) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency mini-css-extract-plugin ([#22320](https://github.com/gatsbyjs/gatsby/issues/22320)) ([d5c936e](https://github.com/gatsbyjs/gatsby/commit/d5c936e))
+
+## [4.1.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.41...gatsby-plugin-netlify-cms@4.1.42) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [4.1.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.40...gatsby-plugin-netlify-cms@4.1.41) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
 ## [4.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.39...gatsby-plugin-netlify-cms@4.1.40) (2020-02-13)
 
 ### Bug Fixes

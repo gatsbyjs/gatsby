@@ -1,6 +1,6 @@
 ![Logo](./img/gatsby-mdx.png)
 
-> gatsby-plugin-mdx is the official integration for using [MDX](https://mdxjs.com)
+> `gatsby-plugin-mdx` is the official integration for using [MDX](https://mdxjs.com)
 > with [Gatsby](https://www.gatsbyjs.org/).
 
 # What’s MDX?
@@ -36,10 +36,11 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
       - [Imports](#imports)
       - [Shortcodes](#shortcodes)
       - [Gatsby remark plugins](#gatsby-remark-plugins)
-      - [MD plugins](#md-plugins)
-      - [HAST plugins](#hast-plugins)
+      - [Remark plugins](#remark-plugins)
+      - [Rehype plugins](#rehype-plugins)
       - [Media types](#media-types)
         - [Explanation](#explanation)
+      - [shouldBlockNodeFromTransformation](#shouldblocknodefromtransformation)
     - [Components](#components)
       - [MDXProvider](#mdxprovider)
         - [Related](#related)
@@ -62,7 +63,7 @@ yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 
 ## Usage
 
-After installing gatsby-plugin-mdx you can add it to your plugins list in your
+After installing `gatsby-plugin-mdx` you can add it to your plugins list in your
 `gatsby-config.js`.
 
 ```js
@@ -84,7 +85,7 @@ By default, this configuration will allow you to automatically create pages
 with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
 
-Note that gatsby-plugin-mdx requires gatsby-source-filesystem to be present
+Note that `gatsby-plugin-mdx` requires gatsby-source-filesystem to be present
 and configured to process local markdown files in order to
 generate the resulting Gatsby nodes.
 
@@ -114,18 +115,19 @@ module.exports = {
 
 ### Configuration
 
-gatsby-plugin-mdx exposes a configuration API that can be used similarly to
+`gatsby-plugin-mdx` exposes a configuration API that can be used similarly to
 any other Gatsby plugin. You can define MDX extensions, layouts, global
 scope, and more.
 
-| Key                                             | Default                                | Description                                                       |
-| ----------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------- |
-| [`extensions`](#extensions)                     | `[".mdx"]`                             | Configure the file extensions that gatsby-plugin-mdx will process |
-| [`defaultLayouts`](#default-layouts)            | `{}`                                   | Set the layout components for MDX source types                    |
-| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`                                   | Use Gatsby-specific remark plugins                                |
-| [`remarkPlugins`](#remark-plugins)              | `[]`                                   | Specify remark plugins                                            |
-| [`rehypePlugins`](#rehype-plugins)              | `[]`                                   | Specify rehype plugins                                            |
-| [`mediaTypes`](#media-types)                    | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                  |
+| Key                                                                       | Default                                | Description                                                           |
+| ------------------------------------------------------------------------- | -------------------------------------- | --------------------------------------------------------------------- |
+| [`extensions`](#extensions)                                               | `[".mdx"]`                             | Configure the file extensions that gatsby-plugin-mdx will process     |
+| [`defaultLayouts`](#default-layouts)                                      | `{}`                                   | Set the layout components for MDX source types                        |
+| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins)                           | `[]`                                   | Use Gatsby-specific remark plugins                                    |
+| [`remarkPlugins`](#remark-plugins)                                        | `[]`                                   | Specify remark plugins                                                |
+| [`rehypePlugins`](#rehype-plugins)                                        | `[]`                                   | Specify rehype plugins                                                |
+| [`mediaTypes`](#media-types)                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                      |
+| [`shouldBlockNodeFromTransformation`](#shouldblocknodefromtransformation) | `(node) => false`                      | Disable MDX transformation for nodes where this function returns true |
 
 #### Extensions
 
@@ -356,7 +358,7 @@ Using a string reference is also supported for `gatsbyRemarkPlugins`.
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
 ```
 
-#### MD plugins
+#### Remark plugins
 
 This is a configuration option that is [mirrored from the core MDX
 processing pipeline](https://mdxjs.com/plugins). It enables the use of
@@ -378,7 +380,7 @@ module.exports = {
 }
 ```
 
-#### HAST plugins
+#### Rehype plugins
 
 This is a configuration option that is [mirrored from the core MDX
 processing pipeline](https://mdxjs.com/plugins). It enables the use of
@@ -402,7 +404,7 @@ module.exports = {
 
 #### Media types
 
-Deciding what content gets processed by gatsby-plugin-mdx. This is an
+Deciding what content gets processed by `gatsby-plugin-mdx`. This is an
 advanced option that is useful for dealing with specialized generated
 content. It is not intended to be configured for most users.
 
@@ -427,9 +429,33 @@ Gatsby includes the media-type of the content on any given node. For
 by the file extension. For remote content or generated content, we
 choose which nodes to process by looking at the media type.
 
+#### shouldBlockNodeFromTransformation
+
+Given a function `(node) => Boolean` allows you to decide for each node if it should be transformed or not.
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        shouldBlockNodeFromTransformation(node) {
+          return (
+            [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
+            (node.internal.type === `File` &&
+              path.parse(node.dir).dir.endsWith(`packages`))
+          )
+        },
+      },
+    },
+  ],
+}
+```
+
 ### Components
 
-MDX and gatsby-plugin-mdx use components for different things like rendering
+MDX and `gatsby-plugin-mdx` use components for different things like rendering
 and component mappings.
 
 #### MDXProvider

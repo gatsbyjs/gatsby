@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.1.24...gatsby-plugin-remove-trailing-slashes@2.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.1.23...gatsby-plugin-remove-trailing-slashes@2.1.24) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
+
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.1.22...gatsby-plugin-remove-trailing-slashes@2.1.23) (2020-03-13)
+
+**Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.1.21...gatsby-plugin-remove-trailing-slashes@2.1.22) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
+
 ## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.1.20...gatsby-plugin-remove-trailing-slashes@2.1.21) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes

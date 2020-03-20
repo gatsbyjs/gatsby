@@ -55,7 +55,7 @@ const multi: Middleware = ({ dispatch }) => next => (
 
 export const configureStore = (initialState: IReduxState): Store<IReduxState> =>
   createStore(
-    combineReducers({ ...reducers }),
+    combineReducers<IReduxState>({ ...reducers }),
     initialState,
     applyMiddleware(thunk, multi)
   )
@@ -75,6 +75,7 @@ export const saveState = (): void => {
     staticQueryComponents: state.staticQueryComponents,
     webpackCompilationHash: state.webpackCompilationHash,
     pageDataStats: state.pageDataStats,
+    pageData: state.pageData,
   })
 }
 

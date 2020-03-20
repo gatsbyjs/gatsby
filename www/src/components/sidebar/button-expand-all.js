@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import { Trans } from "@lingui/macro"
 import React from "react"
-import GoFold from "react-icons/lib/go/fold"
-import GoUnfold from "react-icons/lib/go/unfold"
+import { GoFold, GoUnfold } from "react-icons/go"
 
 const iconStyles = {
   display: `inline-block`,
@@ -37,14 +37,18 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
         <span sx={iconStyles}>
           <GoFold />
         </span>
-        <span>Collapse All</span>
+        <span>
+          <Trans>Collapse All</Trans>
+        </span>
       </React.Fragment>
     ) : (
       <React.Fragment>
         <span sx={iconStyles}>
           <GoUnfold />
         </span>
-        <span>Expand All</span>
+        <span>
+          <Trans>Expand All</Trans>
+        </span>
       </React.Fragment>
     )}
   </button>

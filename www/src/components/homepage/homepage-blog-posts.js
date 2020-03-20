@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { Link } from "gatsby"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import HomepageBlogPost from "./homepage-blog-post"
 import {
@@ -10,7 +10,10 @@ import {
   HorizontalScrollerContent,
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
-import { breakpoints, mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import {
+  breakpoints,
+  mediaQueries,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`

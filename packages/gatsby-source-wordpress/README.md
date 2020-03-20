@@ -208,6 +208,9 @@ plugins.
 - [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
       the current locale and available translations to all post types translated with Polylang.
 
+- [x] [wp-rest-polylang-pro](https://github.com/dannyvaughton/wp-rest-polylang-pro) which adds
+      the current locale and available translations to all post types & taxonomies translated with Polylang Pro.
+
 - [x] [Yoast](https://yoast.com/wordpress/plugins/seo/)
   - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in WordPress.
   - Will pull the `yoast_meta: { ... }` field's contents in entity.
@@ -443,7 +446,7 @@ To access those fields, instead of using their field name, you need to use
 your WordPress pages you would need to use `page_builder_page`).
 
 To access data stored in these fields, you need to use GraphQL
-[inline fragments](http://graphql.org/learn/queries/#inline-fragments). This
+[inline fragments](https://graphql.org/learn/queries/#inline-fragments). This
 require you to know types of nodes. The easiest way to get the types of nodes is to use
 `___GraphiQL` debugger and run the below query (adjust post type and field name):
 

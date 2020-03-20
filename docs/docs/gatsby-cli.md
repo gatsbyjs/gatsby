@@ -33,10 +33,10 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Arguments
 
-| Argument    | Description                                                                                                                                                                                                     |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                        |
-| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
+| Argument    | Description                                                                                                                                                                                              |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                 |
+| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/starters/) docs for more information. |
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 
@@ -113,12 +113,13 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 
 #### Options
 
-|            Option            | Description                                                                                               |
-| :--------------------------: | --------------------------------------------------------------------------------------------------------- |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                       |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                   |
-| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
-| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                          |
+|            Option            | Description                                                                                                                                  |
+| :--------------------------: | -------------------------------------------------------------------------------------------------------------------------------------------- |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                                                          |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                                                      |
+|         `--profile`          | Build site with react profiling. See [Profiling Site Performance with React Profiler](/docs/profiling-site-performance-with-react-profiler/) |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/)                                    |
+| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                                                             |
 
 In addition to these build options, there are some optional [build environment variables](/docs/environment-variables/#build-variables) for more advanced configurations that can adjust how a build runs. For example, setting `CI=true` as an environment variable will tailor output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals).
 

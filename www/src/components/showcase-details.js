@@ -8,16 +8,14 @@ import Img from "gatsby-image"
 import qs from "qs"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import Layout from "../components/layout"
-import Modal from "../components/modal"
-import ShareMenu from "../components/share-menu"
-import Button from "../components/button"
+import Modal from "./modal"
+import ShareMenu from "./share-menu"
+import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
 
-import MdArrowUpward from "react-icons/lib/md/arrow-upward"
-import MdLink from "react-icons/lib/md/link"
 import FeaturedIcon from "../assets/icons/featured-sites-icons"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { MdArrowUpward, MdLink } from "react-icons/md"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 
 const gutter = 6
 const gutterDesktop = 8
@@ -97,14 +95,11 @@ function usePrevAndNextSite(item) {
     query {
       allSitesYaml(
         filter: {
-          featured: { eq: true }
           main_url: { ne: null }
           fields: { hasScreenshot: { eq: true } }
         }
       ) {
         nodes {
-          id
-          url
           title
           fields {
             slug
@@ -143,7 +138,8 @@ function getExitLocation(filters = {}) {
   }
 }
 
-function ShowcaseModal({ children, location }) {
+function ShowcaseModal({ children, location, isModal }) {
+  if (!isModal) return children
   const { previousSite, nextSite } = usePrevAndNextSite(location.pathname)
   const { filters } = location.state || {}
   return (
@@ -155,7 +151,7 @@ function ShowcaseModal({ children, location }) {
       modalNextLink={
         <>
           <Img
-            key={nextSite.id}
+            key={nextSite.fields.slug}
             sx={styles.prevNextImage}
             backgroundColor
             fixed={{
@@ -198,7 +194,7 @@ function ShowcaseModal({ children, location }) {
       modalPreviousLink={
         <>
           <Img
-            key={previousSite.id}
+            key={previousSite.fields.slug}
             sx={styles.prevNextImage}
             backgroundColor
             fixed={{
@@ -248,9 +244,8 @@ function ShowcaseModal({ children, location }) {
 const ShowcaseDetails = ({ location, site, isModal, categories }) => {
   const screenshotFile = site.childScreenshot.screenshotFile.childImageSharp
 
-  const PageLayout = isModal ? ShowcaseModal : Layout
   return (
-    <PageLayout location={location}>
+    <ShowcaseModal isModal={isModal} location={location}>
       <div
         sx={{
           display: `flex`,
@@ -398,7 +393,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </ShowcaseModal>
   )
 }
 

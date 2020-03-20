@@ -20,7 +20,7 @@ If you don't see the language among the issues listed, feel free to create a new
 
 ### Finding codeowners
 
-For a new translation, open an issue with information about your intended language. If you already have co-contributors to act as fellow [code owners](https://help.github.com/en/articles/about-code-owners) and provide checks and balances for PR reviews and quality assurance, that would be very helpful! Otherwise, you can check out other [translation request issues](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+%22New+Translation+Request%22) people have made and offer to join, or [get in touch with us](/contributing/how-to-contribute/#not-sure-how-to-start-contributing) at Gatsby for help in building your translation team.
+For a new translation, open an issue with information about your intended language. If you already have co-contributors to act as fellow [code owners](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners) and provide checks and balances for PR reviews and quality assurance, that would be very helpful! Otherwise, you can check out other [translation request issues](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+%22New+Translation+Request%22) people have made and offer to join, or [get in touch with us](/contributing/how-to-contribute/#not-sure-how-to-start-contributing) at Gatsby for help in building your translation team.
 
 ## Criteria for translation approval
 

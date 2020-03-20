@@ -3,6 +3,83 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.100...gatsby-source-contentful@2.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.1.100](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.99...gatsby-source-contentful@2.1.100) (2020-03-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.99](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.98...gatsby-source-contentful@2.1.99) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency axios to ^0.19.2 ([#22317](https://github.com/gatsbyjs/gatsby/issues/22317)) ([91e780f](https://github.com/gatsbyjs/gatsby/commit/91e780f))
+- **readme:** Update Readme gatsby-source-contentful missing co… ([#22339](https://github.com/gatsbyjs/gatsby/issues/22339)) ([ab59162](https://github.com/gatsbyjs/gatsby/commit/ab59162))
+
+## [2.1.98](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.97...gatsby-source-contentful@2.1.98) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.97](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.96...gatsby-source-contentful@2.1.97) (2020-03-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.96](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.95...gatsby-source-contentful@2.1.96) (2020-03-12)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.95](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.94...gatsby-source-contentful@2.1.95) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.94](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.93...gatsby-source-contentful@2.1.94) (2020-03-10)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Don’t crash when GATSBY_CONTENTFUL_OFFLINE and downloadLocal are used ([#21472](https://github.com/gatsbyjs/gatsby/issues/21472)) ([02471fc](https://github.com/gatsbyjs/gatsby/commit/02471fc)), closes [#21463](https://github.com/gatsbyjs/gatsby/issues/21463)
+
+## [2.1.93](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.92...gatsby-source-contentful@2.1.93) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.92](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.91...gatsby-source-contentful@2.1.92) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.91](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.90...gatsby-source-contentful@2.1.91) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.90](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.89...gatsby-source-contentful@2.1.90) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.89](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.88...gatsby-source-contentful@2.1.89) (2020-02-28)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.88](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.87...gatsby-source-contentful@2.1.88) (2020-02-26)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** prevent unpublished Contentful entries from breaking content sync ([#21765](https://github.com/gatsbyjs/gatsby/issues/21765)) ([11274db](https://github.com/gatsbyjs/gatsby/commit/11274db))
+
+## [2.1.87](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.86...gatsby-source-contentful@2.1.87) (2020-02-24)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Add panic messaging to builds with no locales ([#21667](https://github.com/gatsbyjs/gatsby/issues/21667)) ([6979816](https://github.com/gatsbyjs/gatsby/commit/6979816))
+- check that richTextOptions exists before using it ([#21648](https://github.com/gatsbyjs/gatsby/issues/21648)) ([80acb8d](https://github.com/gatsbyjs/gatsby/commit/80acb8d))
+- fix Contentful sync limit ([#21644](https://github.com/gatsbyjs/gatsby/issues/21644)) ([af921bb](https://github.com/gatsbyjs/gatsby/commit/af921bb))
+
+### Features
+
+- add an option to resolve locales in entries referenced by rich text ([#21619](https://github.com/gatsbyjs/gatsby/issues/21619)) ([0666df7](https://github.com/gatsbyjs/gatsby/commit/0666df7))
+
 ## [2.1.86](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.85...gatsby-source-contentful@2.1.86) (2020-02-13)
 
 ### Bug Fixes
