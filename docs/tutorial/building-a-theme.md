@@ -1220,7 +1220,7 @@ export default theme
 
 Now, refactor the `layout.js` component in `gatsby-theme-events` to actually use Theme UI.
 
-First, import the `Layout`, `Header`, `Main`, and `Container` [components from Theme UI](https://theme-ui.com/components).
+First, import the `Header`, and `Container` [components from Theme UI](https://theme-ui.com/components).
 
 ```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
