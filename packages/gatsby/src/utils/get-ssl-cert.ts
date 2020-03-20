@@ -1,9 +1,10 @@
-const report = require(`gatsby-cli/lib/reporter`)
-const fs = require(`fs`)
-const path = require(`path`)
-const os = require(`os`)
+import report from "gatsby-cli/lib/reporter"
+import fs from "fs"
+import path from "path"
+import os from "os"
+import { ICert } from "../commands/types"
 
-const absoluteOrDirectory = (directory, filePath) => {
+const absoluteOrDirectory = (directory: string, filePath: string): string => {
   // Support absolute paths
   if (path.isAbsolute(filePath)) {
     return filePath
@@ -11,7 +12,19 @@ const absoluteOrDirectory = (directory, filePath) => {
   return path.join(directory, filePath)
 }
 
-module.exports = async ({ name, certFile, keyFile, directory }) => {
+interface IGetSslCertArgs {
+  name: string
+  certFile?: string
+  keyFile?: string
+  directory: string
+}
+
+export const getSslCert = async ({
+  name,
+  certFile,
+  keyFile,
+  directory,
+}: IGetSslCertArgs): Promise<ICert | false> => {
   // check that cert file and key file are both true or both false, if they are both
   // false, it defaults to the automatic ssl
   if (certFile ? !keyFile : keyFile) {
@@ -25,11 +38,11 @@ module.exports = async ({ name, certFile, keyFile, directory }) => {
     const keyPath = absoluteOrDirectory(directory, keyFile)
     const certPath = absoluteOrDirectory(directory, certFile)
 
-    return await {
+    return {
       keyPath,
       certPath,
-      key: fs.readFileSync(keyPath),
-      cert: fs.readFileSync(certPath),
+      key: fs.readFileSync(keyPath, `utf-8`),
+      cert: fs.readFileSync(certPath, `utf-8`),
     }
   }
 

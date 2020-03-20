@@ -19,7 +19,7 @@ jest.mock(`devcert`, () => {
 
 const { certificateFor } = require(`devcert`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-const getSslCert = require(`../get-ssl-cert`)
+const { getSslCert } = require(`../get-ssl-cert`)
 
 describe(`gets ssl certs`, () => {
   beforeEach(() => {
@@ -28,9 +28,9 @@ describe(`gets ssl certs`, () => {
     certificateFor.mockClear()
   })
   describe(`Custom SSL certificate`, () => {
-    it.each([[{ certFile: `foo` }], [{ keyFile: `bar` }]])(
+    it.each([{ certFile: `foo` }, { keyFile: `bar` }])(
       `panic if cert and key are not both included`,
-      args => {
+      (args: any): void => {
         getSslCert(args)
 
         expect(reporter.panic.mock.calls).toMatchSnapshot()
