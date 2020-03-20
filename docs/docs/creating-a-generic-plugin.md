@@ -14,7 +14,7 @@ The process of initializing a `package.json` in a project is done by running :
   npm init
 ```
 
-After running the above command a series of options are listed in the CLI interface and those you select are stored in your `package.json` which contain some [files Gatsby looks for in a Plugin](/docs/files-gatsby-looks-for-in-a-plugin.md)
+After running the above command a series of options are listed in the CLI interface and those you select are stored in your `package.json` which contain some [files Gatsby looks for in a Plugin](/docs/what-you-dont-need-plugins-for/)
 
 ### What happens in a Generic Plugin ?
 
