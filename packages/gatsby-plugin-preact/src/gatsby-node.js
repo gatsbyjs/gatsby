@@ -1,9 +1,8 @@
-
 exports.onPreInit = () => {
   // Setting this variable replaces react-hot-loader with
   // [fast-refresh](https://reactnative.dev/docs/next/fast-refresh)
   // and resolves conflicts with running Preact in development.
-  process.env.GATSBY_HOT_LOADER='fast-refresh';
+  process.env.GATSBY_HOT_LOADER = `fast-refresh`;
 }
 
 exports.onCreateWebpackConfig = ({ actions }) => {
