@@ -378,7 +378,7 @@ export const createWebpackUtils = (
             // If dep is known library that doesn't need polyfilling, we don't.
             // TODO this needs rework, this is buggy as hell
             if (
-              /node_modules[\\/](runtime|core-js|react|react-dom|scheduler|prop-types)[\\/]/.test(
+              /node_modules[\\/](@babel[\\/]runtime|core-js|react|react-dom|scheduler|prop-types)[\\/]/.test(
                 modulePath
               )
             ) {
