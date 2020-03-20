@@ -5,8 +5,8 @@
  * This plugin replaces options of eslint-plugin-graphql during develop
  */
 const { store } = require(`../redux`)
-const eslintConfig = require(`./eslint-config`)
-const hasLocalEslint = require(`./local-eslint-config-finder`)
+import { eslintConfig } from "./eslint-config"
+const { hasLocalEslint } = require(`./local-eslint-config-finder`)
 
 const isEslintRule = rule => {
   const options = rule && rule.use && rule.use[0] && rule.use[0].options
