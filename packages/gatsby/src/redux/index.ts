@@ -55,7 +55,7 @@ const multi: Middleware = ({ dispatch }) => next => (
 
 export const configureStore = (initialState: IReduxState): Store<IReduxState> =>
   createStore(
-    combineReducers({ ...reducers }),
+    combineReducers<IReduxState>({ ...reducers }),
     initialState,
     applyMiddleware(thunk, multi)
   )

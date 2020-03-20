@@ -9,7 +9,9 @@ https://using-contentful.gatsbyjs.org/
 
 ## Install
 
-`npm install --save gatsby-source-contentful`
+```shell
+npm install --save gatsby-source-contentful
+```
 
 ## How to use
 
@@ -396,7 +398,7 @@ Check out the examples at [@contentful/rich-text-react-renderer](https://github.
 
 To source from multiple Contentful environments/spaces, add another configuration for `gatsby-source-contentful` in `gatsby-config.js`:
 
-```
+```javascript
 // In your gatsby-config.js
 module.exports = {
   plugins: [
@@ -413,7 +415,7 @@ module.exports = {
         spaceId: `your_second_space_id`,
         accessToken: process.env.SECONDARY_CONTENTFUL_ACCESS_TOKEN,
       },
-    }
+    },
   ],
 }
 ```

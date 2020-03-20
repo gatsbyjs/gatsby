@@ -38,7 +38,14 @@ import {
 } from "./queries"
 
 export const sourceNodes = async (
-  { actions: { createNode, touchNode }, createNodeId, store, cache, reporter },
+  {
+    actions: { createNode, touchNode },
+    createNodeId,
+    store,
+    cache,
+    getCache,
+    reporter,
+  },
   {
     shopName,
     accessToken,
@@ -64,6 +71,7 @@ export const sourceNodes = async (
       touchNode,
       store,
       cache,
+      getCache,
       reporter,
     }
 
