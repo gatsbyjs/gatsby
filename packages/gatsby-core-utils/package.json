@@ -40,5 +40,8 @@
     "babel-preset-gatsby-package": "^0.3.0",
     "cross-env": "^5.2.1",
     "typescript": "^3.8.3"
+  },
+  "engines": {
+    "node": ">=10.13.0"
   }
 }
