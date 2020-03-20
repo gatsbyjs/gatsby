@@ -25,7 +25,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^2.0.0",
-    "preact": "^10.0.0"
+    "preact": "^10.3.4"
   },
   "repository": {
     "type": "git",
