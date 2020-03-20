@@ -7,7 +7,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "10"
+        default: "10.13"
     docker:
       - image: circleci/node:<< parameters.image >>
 
@@ -69,7 +69,7 @@ aliases:
           - /blog.+/
     requires:
       - lint
-      - unit_tests_node8
+      - unit_tests_node10
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -237,12 +237,6 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - run: yarn typecheck
       - run: yarn check-repo-fields
-
-  unit_tests_node8:
-    executor:
-      name: node
-      image: "8"
-    <<: *test_template
 
   unit_tests_node10:
     executor: node
@@ -633,24 +627,20 @@ workflows:
       - lint:
           requires:
             - bootstrap
-      - unit_tests_node8:
-          <<: *ignore_docs
-          requires:
-            - bootstrap
       - unit_tests_node10:
           <<: *ignore_docs
           requires:
             - lint
-            - unit_tests_node8
+            - bootstrap
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
             - lint
-            - unit_tests_node8
+            - bootstrap
       - unit_tests_www:
           requires:
             - lint
-            - unit_tests_node8
+            - bootstrap
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:

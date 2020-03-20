@@ -24,8 +24,8 @@ if (os.platform() === `win32`) {
 // Check if update is available
 updateNotifier({ pkg }).notify({ isGlobal: true })
 
-const MIN_NODE_VERSION = `8.0.0`
-const NEXT_MIN_NODE_VERSION = `10.13.0`
+const MIN_NODE_VERSION = `10.13.0`
+// const NEXT_MIN_NODE_VERSION = `10.13.0`
 
 if (!semver.satisfies(process.version, `>=${MIN_NODE_VERSION}`)) {
   report.panic(
@@ -36,15 +36,15 @@ if (!semver.satisfies(process.version, `>=${MIN_NODE_VERSION}`)) {
   )
 }
 
-if (!semver.satisfies(process.version, `>=${NEXT_MIN_NODE_VERSION}`)) {
-  report.warn(
-    report.stripIndent(`
-      Node.js ${process.version} has reached End of Life status on 31 December, 2019.
-      Gatsby will only actively support ${NEXT_MIN_NODE_VERSION} or higher and drop support for Node 8 soon.
-      Please upgrade Node.js to a currently active LTS release: https://gatsby.dev/upgrading-node-js
-    `)
-  )
-}
+// if (!semver.satisfies(process.version, `>=${NEXT_MIN_NODE_VERSION}`)) {
+//   report.warn(
+//     report.stripIndent(`
+//       Node.js ${process.version} has reached End of Life status on 31 December, 2019.
+//       Gatsby will only actively support ${NEXT_MIN_NODE_VERSION} or higher and drop support for Node 8 soon.
+//       Please upgrade Node.js to a currently active LTS release: https://gatsby.dev/upgrading-node-js
+//     `)
+//   )
+// }
 
 process.on(`unhandledRejection`, reason => {
   // This will exit the process in newer Node anyway so lets be consistent
