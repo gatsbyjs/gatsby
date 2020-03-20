@@ -11,7 +11,7 @@ const isWsl = require(`is-wsl`)
 const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
 const GatsbyWebpackEslintGraphqlSchemaReload = require(`./gatsby-webpack-eslint-graphql-schema-reload-plugin`)
 
-const builtinPlugins = require(`./webpack-plugins`)
+import { builtinPlugins } from "./webpack-plugins"
 const eslintConfig = require(`./eslint-config`)
 
 type LoaderSpec = string | { loader: string, options?: Object }
@@ -132,7 +132,7 @@ module.exports = async ({
   const makeExternalOnly = (original: RuleFactory<*>) => (
     options = {}
   ): Rule => {
-    let rule = original(options)
+    const rule = original(options)
     rule.include = vendorRegex
     return rule
   }
@@ -140,7 +140,7 @@ module.exports = async ({
   const makeInternalOnly = (original: RuleFactory<*>) => (
     options = {}
   ): Rule => {
-    let rule = original(options)
+    const rule = original(options)
     rule.exclude = vendorRegex
     return rule
   }
@@ -307,7 +307,7 @@ module.exports = async ({
    * and packages that depend on `gatsby`
    */
   {
-    let js = ({ modulesThatUseGatsby = [], ...options } = {}) => {
+    const js = ({ modulesThatUseGatsby = [], ...options } = {}) => {
       return {
         test: /\.(js|mjs|jsx)$/,
         include: modulePath => {
@@ -342,7 +342,7 @@ module.exports = async ({
    * Excludes modules that use Gatsby since the `rules.js` already transpiles those
    */
   {
-    let dependencies = ({ modulesThatUseGatsby = [] } = {}) => {
+    const dependencies = ({ modulesThatUseGatsby = [] } = {}) => {
       const jsOptions = {
         babelrc: false,
         configFile: false,
@@ -391,7 +391,7 @@ module.exports = async ({
   }
 
   {
-    let eslint = schema => {
+    const eslint = schema => {
       return {
         enforce: `pre`,
         test: /\.jsx?$/,

@@ -14,7 +14,7 @@ const getGatsbyDependents = require(`./gatsby-dependents`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
-const hasLocalEslint = require(`./local-eslint-config-finder`)
+import { hasLocalEslint } from "./local-eslint-config-finder"
 
 // Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
