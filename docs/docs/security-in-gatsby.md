@@ -89,7 +89,7 @@ Similar to `npm`, you can use the `yarn audit` command. It is available since v1
 Content Security Policy is a security layer added in web applications to detect and prevent attacks, e.g. the XSS attack mentioned above.
 
 To add it to your Gatsby website, add [gatsby-plugin-csp](https://www.gatsbyjs.org/packages/gatsby-plugin-csp/) to your `gatsby-config.js` with the desired configuration. Note that
-currently there is a [incompatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) with [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image) and other plugins.
+currently there is a [incompatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](https://www.gatsbyjs.org/packages/gatsby-plugin-csp/) and [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image) and other plugins that generate hashes in inline styles.
 
 Note:  Not all browsers support CSP, check [can-i-use](https://caniuse.com/#feat=mdn-http_headers_csp_content-security-policy) for more information.
 
