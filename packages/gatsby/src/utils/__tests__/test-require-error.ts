@@ -1,4 +1,4 @@
-const testRequireError = require(`../test-require-error`).default
+import { testRequireError } from "../test-require-error"
 
 describe(`test-require-error`, () => {
   it(`detects require errors`, () => {

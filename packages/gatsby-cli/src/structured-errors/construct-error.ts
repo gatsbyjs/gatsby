@@ -8,7 +8,7 @@ interface IConstructError {
   details: {
     id?: ErrorId
     context?: Record<string, string>
-    error?: string
+    error?: Error
     [key: string]: unknown
   }
 }

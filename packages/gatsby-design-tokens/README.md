@@ -18,7 +18,7 @@
 
 > Design tokens are the visual design atoms of the design system — specifically, they are named entities that store visual design attributes. We use them in place of hard-coded values (such as hex values for color or pixel values for spacing) in order to maintain a scalable and consistent visual system for UI development.
 
-This quote from the [Lightning Desing System Design Tokens documentation](https://www.lightningdesignsystem.com/design-tokens/) accurately describes the tokens contained in this package — to be a bit more specific: `gatsby-design-tokens` offers _plain objects or arrays of values for related **CSS properties**_. Currently.
+This quote from the [Lightning Design System Design Tokens documentation](https://www.lightningdesignsystem.com/design-tokens/) accurately describes the tokens contained in this package — to be a bit more specific: `gatsby-design-tokens` offers _plain objects or arrays of values for related **CSS properties**_. Currently.
 
 Gatsby's design tokens are following the [System UI Theme Specification](https://system-ui.com/theme/) as well as the [Theme UI Theme Specification](https://theme-ui.com/theme-spec).
 

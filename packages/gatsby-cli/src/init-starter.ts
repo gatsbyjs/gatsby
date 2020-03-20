@@ -12,7 +12,7 @@ import url from "url"
 
 import report from "./reporter"
 import { getPackageManager, promptPackageManager } from "./util/package-manager"
-import isTTY from "./util/is-tty"
+import { isTTY } from "./util/is-tty"
 
 const spawnWithArgs = (
   file: string,

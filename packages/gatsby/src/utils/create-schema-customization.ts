@@ -1,7 +1,14 @@
-const apiRunnerNode = require(`./api-runner-node`)
-const { store } = require(`../redux`)
+import apiRunnerNode from "./api-runner-node"
+import { store } from "../redux"
+import { Span } from "opentracing"
 
-module.exports = async ({ refresh = false, parentSpan }) => {
+export const createSchemaCustomization = async ({
+  refresh = false,
+  parentSpan,
+}: {
+  refresh?: boolean
+  parentSpan?: Span
+}): Promise<void> => {
   if (refresh) {
     store.dispatch({ type: `CLEAR_SCHEMA_CUSTOMIZATION` })
   }
