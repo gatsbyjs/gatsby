@@ -95,7 +95,7 @@ This contains the small [webpack-runtime](https://webpack.js.org/concepts/manife
 
 ##### framework-[contenthash].js
 
-The framework bundle contains the react framework. We've noticed that the user hardly updates React to a newer version. Creating a separate bundle allows us to stay longer in the user's browser cache.
+The framework bundle contains the react framework. We've noticed that React hardly gets upgraded to a newer version. Creating a separate bundle improves users' browser cache hit rate as this bundle is likely not going to be updated often.
 
 ##### commons-[contenthash].js
 
