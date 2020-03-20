@@ -1,32 +1,42 @@
 import { store } from "../redux"
-import { memoize } from "lodash"
+import { memoize, MemoizedFunction } from "lodash"
 
-const { createRequireFromPath } = require(`gatsby-core-utils`)
-const { join, dirname } = require(`path`)
+import { createRequireFromPath } from "gatsby-core-utils/src"
+import { join, dirname } from "path"
+import { PackageJson } from "../.."
 
-const fs = require(`fs`)
-const { promisify } = require(`util`)
+import fs from "fs"
+import { promisify } from "util"
 const readFile = promisify(fs.readFile)
 
-const getAllDependencies = (pkg, { noDev } = {}) =>
+interface IDependency {
+  name: string
+  version: string
+  path: string
+}
+
+const getAllDependencies = (
+  pkg: PackageJson,
+  dev = true
+): Set<[string, string]> =>
   new Set([
     ...Object.entries(pkg.dependencies || {}),
-    ...Object.entries((!noDev && pkg.devDependencies) || {}),
+    ...Object.entries((dev && pkg.devDependencies) || {}),
     ...Object.entries(pkg.optionalDependencies || {}),
   ])
 
-const readJSON = async file => {
+const readJSON = async (file: string): Promise<PackageJson> => {
   const buffer = await readFile(file)
   return JSON.parse(buffer.toString())
 }
 
 const getTreeFromNodeModules = async (
-  dir,
-  filterFn = () => true,
-  results = new Map()
-) => {
+  dir: string,
+  filterFn: (dependency: IDependency) => boolean = (): boolean => true,
+  results: Map<string, IDependency> = new Map()
+): Promise<IDependency[]> => {
   const requireFromHere = createRequireFromPath(`${dir}/:internal:`)
-  let packageJSON
+  let packageJSON: PackageJson
   try {
     packageJSON = await readJSON(require.resolve(join(dir, `package.json`)))
   } catch (error) {
@@ -36,7 +46,7 @@ const getTreeFromNodeModules = async (
   await Promise.all(
     Array.from(getAllDependencies(packageJSON)).map(async ([name, version]) => {
       try {
-        const currentDependency = {
+        const currentDependency: IDependency = {
           name,
           version,
           path: dirname(requireFromHere.resolve(`${name}/package.json`)),
@@ -60,7 +70,8 @@ const getTreeFromNodeModules = async (
 }
 
 // Returns [Object] with name and path
-module.exports = memoize(async () => {
+export const getGatsbyDependents: (() => Promise<IDependency[]>) &
+  MemoizedFunction = memoize(async () => {
   const { program } = store.getState()
   const nodeModules = await getTreeFromNodeModules(
     program.directory,
