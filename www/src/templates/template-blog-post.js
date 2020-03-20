@@ -2,11 +2,12 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import Link from "../components/localized-link"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"

@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
 import Rotator from "../components/rotator"
-import { Link } from "gatsby"
+import Link from "../components/localized-link"
 import logo from "../assets/monogram.svg"
 import { sizes } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import FooterLinks from "../components/shared/footer-links"

@@ -55,7 +55,7 @@ module.exports = {
 }
 ```
 
-4. Run `gatsby develop` , the theme should be available at `http://localhost:8000/{basePath}`
+4. Run `gatsby develop`, the theme should be available at `http://localhost:8000/{basePath}`
 
 > To learn how to further customize a theme, check out the available paths on [Gatsby-theme-blog Documentation](https://www.npmjs.com/package/gatsby-theme-blog).
 
