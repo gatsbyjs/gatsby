@@ -11,7 +11,7 @@ import { RuleSetRule, Compiler, RuleSetQuery, RuleSetLoader } from "webpack"
 import { GraphQLSchema } from "graphql"
 
 const isEslintRule = (rule?: RuleSetRule): boolean => {
-  const options = rule && rule.use && rule.use[0] && rule.use[0].options
+  const options = rule?.use?.[0]?.options
   return options && typeof options.useEslintrc !== `undefined`
 }
 
