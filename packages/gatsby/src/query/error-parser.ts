@@ -3,8 +3,8 @@ import { SourceLocation } from "graphql"
 
 interface IErrorParser {
   message: string
-  filePath: string | undefined
-  location:
+  filePath?: string | undefined
+  location?:
     | {
         start: SourceLocation
         end?: SourceLocation

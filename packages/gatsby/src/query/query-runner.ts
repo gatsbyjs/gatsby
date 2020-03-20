@@ -1,34 +1,47 @@
-// @flow
+import fs from "fs-extra"
+import report from "gatsby-cli/lib/reporter"
 
-const fs = require(`fs-extra`)
-const report = require(`gatsby-cli/lib/reporter`)
+import path from "path"
+import { store } from "../redux"
+import { boundActionCreators } from "../redux/actions"
+import pageDataUtil from "../utils/page-data"
+import { getCodeFrame } from "./graphql-errors"
+import errorParser from "./error-parser"
 
-const path = require(`path`)
-const { store } = require(`../redux`)
-const { boundActionCreators } = require(`../redux/actions`)
-const pageDataUtil = require(`../utils/page-data`)
-const { getCodeFrame } = require(`./graphql-errors`)
-const { default: errorParser } = require(`./error-parser`)
+import { GraphQLRunner } from "./graphql-runner"
+import { ExecutionResultDataDefault } from "graphql/execution/execute"
+import { ExecutionResult } from "graphql"
 
 const resultHashes = new Map()
 
-type QueryJob = {
-  id: string,
-  hash?: string,
-  query: string,
-  componentPath: string,
-  context: Object,
-  isPage: Boolean,
+interface IQueryJob {
+  id: string
+  hash?: string
+  query: string
+  componentPath: string
+  context: {
+    path: any
+    context: any
+  }
+  isPage: boolean
+  pluginCreatorId: string
 }
 
 // Run query
-module.exports = async (graphqlRunner, queryJob: QueryJob) => {
+export const queryRunner = async (
+  graphqlRunner: GraphQLRunner,
+  queryJob: IQueryJob
+): Promise<ExecutionResult<ExecutionResultDataDefault>> => {
   const { program } = store.getState()
 
-  const graphql = (query, context) => graphqlRunner.query(query, context)
+  const graphql = (
+    query: string,
+    context: any
+  ): Promise<ExecutionResult<ExecutionResultDataDefault>> =>
+    graphqlRunner.query(query, context)
 
   // Run query
-  let result
+  let result: ExecutionResult<ExecutionResultDataDefault>
   // Nothing to do if the query doesn't exist.
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
@@ -62,7 +75,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
             e.locations && e.locations[0].column
           ),
           filePath: queryJob.componentPath,
-          ...(urlPath && { urlPath }),
+          ...(urlPath ? { urlPath } : {}),
           ...queryContext,
           plugin,
         }
