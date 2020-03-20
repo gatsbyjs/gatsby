@@ -1,7 +1,7 @@
 /* @flow */
 const levenshtein = require(`fast-levenshtein`)
 const fs = require(`fs-extra`)
-const testRequireError = require(`../utils/test-require-error`).default
+import { testRequireError } from "../utils/test-require-error"
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const existsSync = require(`fs-exists-cached`).sync
@@ -20,7 +20,8 @@ module.exports = async function getConfigFile(
   distance: number = 3
 ) {
   const configPath = path.join(rootDir, configName)
-  let configModule, configFilePath
+  let configModule
+  let configFilePath
   try {
     configFilePath = require.resolve(configPath)
     configModule = require(configFilePath)

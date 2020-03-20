@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.20.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.1...gatsby@2.20.2) (2020-03-20)
+
+**Note:** Version bump only for package gatsby
+
+## [2.20.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.0...gatsby@2.20.1) (2020-03-20)
+
+**Note:** Version bump only for package gatsby
+
+# [2.20.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.50...gatsby@2.20.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.19.50](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.49...gatsby@2.19.50) (2020-03-20)
+
+### Bug Fixes
+
+- **gatsby:** Incorrect PackageJson type ([#22406](https://github.com/gatsbyjs/gatsby/issues/22406)) ([5496e6b](https://github.com/gatsbyjs/gatsby/commit/5496e6b))
+
+## [2.19.49](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.48...gatsby@2.19.49) (2020-03-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.48](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.47...gatsby@2.19.48) (2020-03-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.47](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.46...gatsby@2.19.47) (2020-03-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.19.46](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.45...gatsby@2.19.46) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency axios to ^0.19.2 ([#22317](https://github.com/gatsbyjs/gatsby/issues/22317)) ([91e780f](https://github.com/gatsbyjs/gatsby/commit/91e780f))
+- update dependency mini-css-extract-plugin ([#22320](https://github.com/gatsbyjs/gatsby/issues/22320)) ([d5c936e](https://github.com/gatsbyjs/gatsby/commit/d5c936e))
+- update dependency webpack-stats-plugin to ^0.3.1 ([#22325](https://github.com/gatsbyjs/gatsby/issues/22325)) ([cc75305](https://github.com/gatsbyjs/gatsby/commit/cc75305))
+- update minor updates in packages ([#22329](https://github.com/gatsbyjs/gatsby/issues/22329)) ([bfb864b](https://github.com/gatsbyjs/gatsby/commit/bfb864b))
+
 ## [2.19.45](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.44...gatsby@2.19.45) (2020-03-16)
 
 **Note:** Version bump only for package gatsby
