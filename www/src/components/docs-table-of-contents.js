@@ -4,12 +4,17 @@ import { Link } from "gatsby"
 import { Trans } from "@lingui/macro"
 import {
   mediaQueries,
-  breakpoints
+  breakpoints,
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { useEffect, useState } from "react"
 import { useActiveHash } from "../hooks/use-active-hash"
 
-const getHeadingIds = (toc, traverseFullDepth = true) => {
+const getHeadingIds = (
+  toc,
+  traverseFullDepth = true,
+  depth,
+  recursionDepth = 1
+) => {
   const idList = []
   const hashToId = str => str.slice(1)
 
@@ -21,8 +26,12 @@ const getHeadingIds = (toc, traverseFullDepth = true) => {
       }
 
       // Only traverse sub-items if specified (they are not displayed in ToC)
-      if (item.items && traverseFullDepth) {
-        idList.push(...getHeadingIds(item.items, true))
+      // recursion depth should only go up to 6 headings deep and may come in as
+      // undefined if not set in the tableOfContentsDepth frontmatter field
+      if (item.items && traverseFullDepth && recursionDepth < (depth || 6)) {
+        idList.push(
+          ...getHeadingIds(item.items, true, depth, recursionDepth + 1)
+        )
       }
     }
   }
@@ -95,11 +104,10 @@ function createItems(items, location, depth, maxDepth, activeHash, isDesktop) {
 
 function TableOfContents({ items, depth, location }) {
   const [isDesktop, setIsDesktop] = useState(false)
-  const activeHash = useActiveHash(getHeadingIds(items))
+  const activeHash = useActiveHash(getHeadingIds(items, true, depth))
 
   useEffect(() => {
     const isDesktopQuery = window.matchMedia(`(min-width: ${breakpoints[4]})`) // 1200px
-
     setIsDesktop(isDesktopQuery.matches)
 
     const updateIsDesktop = e => setIsDesktop(e.matches)
