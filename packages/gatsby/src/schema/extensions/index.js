@@ -6,7 +6,7 @@ const {
 } = require(`graphql`)
 
 const { link, fileByPath } = require(`../resolvers`)
-const { getDateResolver } = require(`../types/date`)
+import { getDateResolver } from "../types/date"
 
 import type { GraphQLFieldConfigArgumentMap, GraphQLFieldConfig } from "graphql"
 import type { ComposeFieldConfig, ComposeOutputType } from "graphql-compose"

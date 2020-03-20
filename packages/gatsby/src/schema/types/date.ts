@@ -1,6 +1,6 @@
-const moment = require(`moment`)
-const { GraphQLScalarType, Kind } = require(`graphql`)
-const { oneLine } = require(`common-tags`)
+import moment, { MomentInput, unitOfTime, LocaleSpecifier } from "moment"
+import { GraphQLScalarType, Kind, GraphQLFieldConfig } from "graphql"
+import { oneLine } from "common-tags"
 
 const ISO_8601_FORMAT = [
   `YYYY`,
@@ -79,14 +79,14 @@ const ISO_8601_FORMAT = [
   `YYYYDDDD`,
 ]
 
-const GraphQLDate = new GraphQLScalarType({
+export const GraphQLDate = new GraphQLScalarType({
   name: `Date`,
   description: oneLine`
     A date string, such as 2007-12-03, compliant with the ISO 8601 standard
     for representation of dates and times using the Gregorian calendar.`,
   serialize: String,
   parseValue: String,
-  parseLiteral(ast) {
+  parseLiteral(ast): string | undefined {
     return ast.kind === Kind.STRING ? ast.value : undefined
   },
 })
@@ -109,20 +109,22 @@ const momentFormattingRegexes = {
   ".": `\\.`,
   Z: `(Z|[+-]\\d\\d(?::?\\d\\d)?)`,
 }
-const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map(format =>
+const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map(format => {
+  const matchedFormat = format.match(momentFormattingTokens)
+  if (matchedFormat === null) return ``
   // convert ISO string to a map of momentTokens ([YYYY, MM, DD])
-  [...format.match(momentFormattingTokens)]
+  return [...matchedFormat]
     .map(token =>
       // see if the token (YYYY or ss) is found, else we just return the value
       momentFormattingRegexes[token] ? momentFormattingRegexes[token] : token
     )
     .join(``)
-).join(`|`)
+}).join(`|`)
 
 // calculate all lengths of the formats, if a string is longer or smaller it can't be valid
 const ISO_8601_FORMAT_LENGTHS = [
   ...new Set(
-    ISO_8601_FORMAT.reduce((acc, val) => {
+    ISO_8601_FORMAT.reduce((acc: number[], val: string) => {
       if (!val.endsWith(`Z`)) {
         return acc.concat(val.length)
       }
@@ -154,7 +156,7 @@ const looksLikeDateEndRegex = /(\d|Z)$/
  * @param {*} value
  * @return {boolean}
  */
-function looksLikeADate(value) {
+export function looksLikeADate(value?: string): boolean {
   // quick check if value does not look like a date
   if (
     !value ||
@@ -178,18 +180,25 @@ function looksLikeADate(value) {
  * @param {*} value
  * @return {boolean}
  */
-function isDate(value) {
+export function isDate(value: MomentInput): boolean {
   const momentDate = moment.utc(value, ISO_8601_FORMAT, true)
   return typeof value !== `number` && momentDate.isValid()
 }
 
+interface IFormatDateArgs {
+  date?: Date
+  fromNow?: boolean
+  formatString?: string
+  difference?: unitOfTime.Diff
+  locale?: LocaleSpecifier
+}
 const formatDate = ({
   date,
   fromNow,
   difference,
   formatString,
   locale = `en`,
-}) => {
+}: IFormatDateArgs): string | number => {
   const normalizedDate = JSON.parse(JSON.stringify(date))
   if (formatString) {
     return moment
@@ -210,7 +219,26 @@ const formatDate = ({
   return normalizedDate
 }
 
-const getDateResolver = (options = {}, fieldConfig) => {
+interface IDateResolverOption {
+  locale?: string
+  formatString?: string
+  fromNow?: string
+  difference?: string
+  from?: string
+  fromNode?: { type: string; defaultValue: boolean }
+}
+type DateResolverFieldConfig = GraphQLFieldConfig<any, any, any>
+type DateResolver = (
+  source: any,
+  args: any,
+  context: any,
+  info: any
+) => Promise<null | string | number | (string | number)[]>
+
+export const getDateResolver = (
+  options: IDateResolverOption = {},
+  fieldConfig: DateResolverFieldConfig
+): { args: Record<string, any>; resolve: DateResolver } => {
   const { locale, formatString, fromNow, difference } = options
   return {
     args: {
@@ -246,7 +274,7 @@ const getDateResolver = (options = {}, fieldConfig) => {
         defaultValue: locale,
       },
     },
-    async resolve(source, args, context, info) {
+    async resolve(source, args, context, info): ReturnType<DateResolver> {
       const resolver = fieldConfig.resolve || context.defaultFieldResolver
       const date = await resolver(source, args, context, {
         ...info,
@@ -261,5 +289,3 @@ const getDateResolver = (options = {}, fieldConfig) => {
     },
   }
 }
-
-module.exports = { GraphQLDate, getDateResolver, isDate, looksLikeADate }
