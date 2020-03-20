@@ -1,13 +1,11 @@
 import { store } from "../redux"
-import { memoize, MemoizedFunction } from "lodash"
+import { memoize } from "lodash"
 
 import { createRequireFromPath } from "gatsby-core-utils"
 import { join, dirname } from "path"
 import { PackageJson } from "../.."
 
-import fs from "fs"
-import { promisify } from "util"
-const readFile = promisify(fs.readFile)
+import { readFile } from "fs-extra"
 
 interface IDependency {
   name: string
@@ -15,13 +13,10 @@ interface IDependency {
   path: string
 }
 
-const getAllDependencies = (
-  pkg: PackageJson,
-  dev = true
-): Set<[string, string]> =>
+const getAllDependencies = (pkg: PackageJson): Set<[string, string]> =>
   new Set([
     ...Object.entries(pkg.dependencies || {}),
-    ...Object.entries((dev && pkg.devDependencies) || {}),
+    ...Object.entries(pkg.devDependencies || {}),
     ...Object.entries(pkg.optionalDependencies || {}),
   ])
 
@@ -32,7 +27,6 @@ const readJSON = async (file: string): Promise<PackageJson> => {
 
 const getTreeFromNodeModules = async (
   dir: string,
-  filterFn: (dependency: IDependency) => boolean = (): boolean => true,
   results: Map<string, IDependency> = new Map()
 ): Promise<IDependency[]> => {
   const requireFromHere = createRequireFromPath(`${dir}/:internal:`)
@@ -51,12 +45,13 @@ const getTreeFromNodeModules = async (
           version,
           path: dirname(requireFromHere.resolve(`${name}/package.json`)),
         }
-        if (filterFn(currentDependency)) {
-          await getTreeFromNodeModules(
-            currentDependency.path,
-            filterFn,
-            results
-          )
+
+        // Include anything that has `gatsby` in its name but not `gatsby` itself
+        if (
+          /gatsby/.test(currentDependency.name) &&
+          currentDependency.name !== `gatsby`
+        ) {
+          await getTreeFromNodeModules(currentDependency.path, results)
           if (!results.has(currentDependency.name))
             results.set(currentDependency.name, currentDependency)
         }
@@ -66,17 +61,13 @@ const getTreeFromNodeModules = async (
       }
     })
   )
+
   return Array.from(results.values())
 }
 
-// Returns [Object] with name and path
-export const getGatsbyDependents: (() => Promise<IDependency[]>) &
-  MemoizedFunction = memoize(async () => {
-  const { program } = store.getState()
-  const nodeModules = await getTreeFromNodeModules(
-    program.directory,
-    // Include anything that has `gatsby` in its name but not `gatsby` itself
-    dependency => /gatsby/.test(dependency.name) && dependency.name !== `gatsby`
-  )
-  return nodeModules
-})
+export const getGatsbyDependents = memoize(
+  async (): Promise<IDependency[]> => {
+    const { program } = store.getState()
+    return getTreeFromNodeModules(program.directory)
+  }
+)
