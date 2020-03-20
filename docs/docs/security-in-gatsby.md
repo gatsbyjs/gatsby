@@ -89,6 +89,27 @@ In npm, you can use the `npm audit` command to check your dependencies. It is av
 
 Similar to `npm`, you can use the `yarn audit` command. It is available since v1.12.0, not available in v2. Check their [docs](https://classic.yarnpkg.com/en/docs/cli/audit/) for more options.
 
+## Key Security
+
+Gatsby provides the capability of [fetching data from anywhere](https://www.gatsbyjs.org/docs/content-and-data/) and by that you should know that most of this data requires a key to access them. These keys should be stored in the server by using [Environment Variables](https://www.gatsbyjs.org/docs/environment-variables/) as this example below, fetching data from GitHub with an Authentication Header:
+
+```js
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "GitHub",
+        fieldName: "github",
+        url: "https://api.github.com/graphql",
+        headers: {
+          // highlight-next-line
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        },
+      }
+    }
+```
+
+Note: Whether you need to authenticate someone in your application, Gatsby has an [Authentication Tutorial](https://www.gatsbyjs.org/tutorial/authentication-tutorial) which helps doing this job in a secure way.
+
 ## Content Security Policy (CSP)
 
 Content Security Policy is a security layer added in web applications to detect and prevent attacks, e.g. the XSS attack mentioned above.
