@@ -17,6 +17,7 @@ import { IProgram } from "./types"
 
 import { developMachine } from "../state-machines/develop"
 import { interpret } from "xstate"
+import { emitter } from "../redux"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
@@ -117,8 +118,10 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   ).start()
 
-  developService.onTransition(async context => {
-    console.log(`on transition`, context.value)
+  developService.onTransition(async (context, event) => {
+    if (context.changed) {
+      console.log(`on transition`, context.value, event)
+    }
   })
 
   /**
@@ -144,6 +147,14 @@ module.exports = async (program: IProgram): Promise<void> => {
     res.end()
 
     // TODO await transition
+  })
+
+  emitter.on(`ENQUEUE_NODE_MUTATION`, event => {
+    if (developService.state.matches(`idle`)) {
+      // Drain the entire queue
+    } else {
+      // Add this action to queue
+    }
   })
 
   // Start bootstrap process

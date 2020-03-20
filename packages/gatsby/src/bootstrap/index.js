@@ -430,140 +430,140 @@
 //   })
 //   activity.end()
 
-  // Prepare static schema types
-  // activity = report.activityTimer(`createSchemaCustomization`, {
-  //   parentSpan: bootstrapSpan,
-  // })
-  // activity.start()
-  // await createSchemaCustomization({
-  //   parentSpan: bootstrapSpan,
-  // })
-  // activity.end()
+// Prepare static schema types
+// activity = report.activityTimer(`createSchemaCustomization`, {
+//   parentSpan: bootstrapSpan,
+// })
+// activity.start()
+// await createSchemaCustomization({
+//   parentSpan: bootstrapSpan,
+// })
+// activity.end()
 
-  // Source nodes
-  // activity = report.activityTimer(`source and transform nodes`, {
-  //   parentSpan: bootstrapSpan,
-  // })
-  // activity.start()
-  // await require(`../utils/source-nodes`)({ parentSpan: activity.span })
-  // activity.end()
+// Source nodes
+// activity = report.activityTimer(`source and transform nodes`, {
+//   parentSpan: bootstrapSpan,
+// })
+// activity.start()
+// await require(`../utils/source-nodes`)({ parentSpan: activity.span })
+// activity.end()
 
-  // Create Schema.
-  // activity = report.activityTimer(`building schema`, {
-  //   parentSpan: bootstrapSpan,
-  // })
-  // activity.start()
-  // await require(`../schema`).build({ parentSpan: activity.span })
-  // activity.end()
+// Create Schema.
+// activity = report.activityTimer(`building schema`, {
+//   parentSpan: bootstrapSpan,
+// })
+// activity.start()
+// await require(`../schema`).build({ parentSpan: activity.span })
+// activity.end()
 
-  // // Collect resolvable extensions and attach to program.
-  // const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
-  // // Change to this being an action and plugins implement `onPreBootstrap`
-  // // for adding extensions.
-  // const apiResults = await apiRunnerNode(`resolvableExtensions`, {
-  //   traceId: `initial-resolvableExtensions`,
-  //   parentSpan: bootstrapSpan,
-  // })
+// // Collect resolvable extensions and attach to program.
+// const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
+// // Change to this being an action and plugins implement `onPreBootstrap`
+// // for adding extensions.
+// const apiResults = await apiRunnerNode(`resolvableExtensions`, {
+//   traceId: `initial-resolvableExtensions`,
+//   parentSpan: bootstrapSpan,
+// })
 
-  // store.dispatch({
-  //   type: `SET_PROGRAM_EXTENSIONS`,
-  //   payload: _.flattenDeep([extensions, apiResults]),
-  // })
+// store.dispatch({
+//   type: `SET_PROGRAM_EXTENSIONS`,
+//   payload: _.flattenDeep([extensions, apiResults]),
+// })
 
-  // const graphqlRunner = createGraphqlRunner(store, report)
+// const graphqlRunner = createGraphqlRunner(store, report)
 
-  // Collect pages.
-  // activity = report.activityTimer(`createPages`, {
-  //   parentSpan: bootstrapSpan,
-  // })
-  // activity.start()
-  // await apiRunnerNode(
-  //   `createPages`,
-  //   {
-  //     graphql: graphqlRunner,
-  //     traceId: `initial-createPages`,
-  //     waitForCascadingActions: true,
-  //     parentSpan: activity.span,
-  //   },
-  //   { activity }
-  // )
-  // activity.end()
+// Collect pages.
+// activity = report.activityTimer(`createPages`, {
+//   parentSpan: bootstrapSpan,
+// })
+// activity.start()
+// await apiRunnerNode(
+//   `createPages`,
+//   {
+//     graphql: graphqlRunner,
+//     traceId: `initial-createPages`,
+//     waitForCascadingActions: true,
+//     parentSpan: activity.span,
+//   },
+//   { activity }
+// )
+// activity.end()
 
-  // A variant on createPages for plugins that want to
-  // have full control over adding/removing pages. The normal
-  // "createPages" API is called every time (during development)
-  // that data changes.
-  // activity = report.activityTimer(`createPagesStatefully`, {
-  //   parentSpan: bootstrapSpan,
-  // })
-  // activity.start()
-  // await apiRunnerNode(
-  //   `createPagesStatefully`,
-  //   {
-  //     graphql: graphqlRunner,
-  //     traceId: `initial-createPagesStatefully`,
-  //     waitForCascadingActions: true,
-  //     parentSpan: activity.span,
-  //   },
-  //   {
-  //     activity,
-  //   }
-  // )
-  // activity.end()
+// A variant on createPages for plugins that want to
+// have full control over adding/removing pages. The normal
+// "createPages" API is called every time (during development)
+// that data changes.
+// activity = report.activityTimer(`createPagesStatefully`, {
+//   parentSpan: bootstrapSpan,
+// })
+// activity.start()
+// await apiRunnerNode(
+//   `createPagesStatefully`,
+//   {
+//     graphql: graphqlRunner,
+//     traceId: `initial-createPagesStatefully`,
+//     waitForCascadingActions: true,
+//     parentSpan: activity.span,
+//   },
+//   {
+//     activity,
+//   }
+// )
+// activity.end()
 
-  // activity = report.activityTimer(`onPreExtractQueries`, {
-  //   parentSpan: bootstrapSpan,
-  // })
-  // activity.start()
-  // await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
-  // activity.end()
+// activity = report.activityTimer(`onPreExtractQueries`, {
+//   parentSpan: bootstrapSpan,
+// })
+// activity.start()
+// await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
+// activity.end()
 
-  // Update Schema for SitePage.
-  activity = report.activityTimer(`update schema`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
-  activity.end()
+// Update Schema for SitePage.
+//   activity = report.activityTimer(`update schema`, {
+//     parentSpan: bootstrapSpan,
+//   })
+//   activity.start()
+//   await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
+//   activity.end()
 
-  // await extractQueries({ parentSpan: bootstrapSpan })
+//   // await extractQueries({ parentSpan: bootstrapSpan })
 
-  // Write out files.
-  // activity = report.activityTimer(`write out requires`, {
-  //   parentSpan: bootstrapSpan,
-  // })
-  // activity.start()
-  // try {
-  //   await requiresWriter.writeAll(store.getState())
-  // } catch (err) {
-  //   report.panic(`Failed to write out requires`, err)
-  // }
-  // activity.end()
+//   // Write out files.
+//   // activity = report.activityTimer(`write out requires`, {
+//   //   parentSpan: bootstrapSpan,
+//   // })
+//   // activity.start()
+//   // try {
+//   //   await requiresWriter.writeAll(store.getState())
+//   // } catch (err) {
+//   //   report.panic(`Failed to write out requires`, err)
+//   // }
+//   // activity.end()
 
-  // Write out redirects.
-  activity = report.activityTimer(`write out redirect data`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await writeRedirects()
-  activity.end()
+//   // Write out redirects.
+//   activity = report.activityTimer(`write out redirect data`, {
+//     parentSpan: bootstrapSpan,
+//   })
+//   activity.start()
+//   await writeRedirects()
+//   activity.end()
 
-  activity = report.activityTimer(`onPostBootstrap`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
-  activity.end()
+//   activity = report.activityTimer(`onPostBootstrap`, {
+//     parentSpan: bootstrapSpan,
+//   })
+//   activity.start()
+//   await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
+//   activity.end()
 
-  report.log(``)
-  report.info(`bootstrap finished - ${process.uptime().toFixed(3)} s`)
-  report.log(``)
-  emitter.emit(`BOOTSTRAP_FINISHED`)
-  require(`../redux/actions`).boundActionCreators.setProgramStatus(
-    `BOOTSTRAP_FINISHED`
-  )
+//   report.log(``)
+//   report.info(`bootstrap finished - ${process.uptime().toFixed(3)} s`)
+//   report.log(``)
+//   emitter.emit(`BOOTSTRAP_FINISHED`)
+//   require(`../redux/actions`).boundActionCreators.setProgramStatus(
+//     `BOOTSTRAP_FINISHED`
+//   )
 
-  bootstrapSpan.finish()
+//   bootstrapSpan.finish()
 
-  return { graphqlRunner }
-}
+//   return { graphqlRunner }
+// }

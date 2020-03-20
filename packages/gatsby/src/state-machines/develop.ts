@@ -282,11 +282,10 @@ export const developMachine = Machine<any>(
       //     },
       //   },
       // },
-      transactionRunning: {
+      refreshing: {
         invoke: {
-          src: async (ctx, event): Promise<void> =>
-            console.log(`transactiuon running`, event),
-          id: `transactionRunning`,
+          src: async (ctx, event): Promise<void> => {},
+          id: `refreshing`,
           onDone: {
             target: `customizingSchema`,
             actions: assign({
@@ -344,6 +343,40 @@ export const developMachine = Machine<any>(
         },
       },
 
+      committingBatch: {
+        invoke: {
+          src: async (): Promise<any> => {
+            // Consume the entire batch and run actions
+            return {}
+          },
+        },
+      },
+
+      // Doors are open for people to enter
+      batchingNodeMutations: {
+        on: {
+          // More people enter same bus
+          ADD_NODE_MUTATION: [
+            {
+              cond: (): boolean => {},
+              target: `committingBatch`,
+            },
+            {
+              actions: assign(() => {}),
+            },
+          ],
+        },
+
+        // Check if bus is either full or if enough time has passed since
+        // last passenger entered the bus
+
+        // Fallback
+        after: {
+          1000: `committingBatch`,
+        },
+      },
+
+      // There is an empty bus and doors are closed
       idle: {
         entry: [
           assign({
@@ -353,15 +386,24 @@ export const developMachine = Machine<any>(
         ],
         on: {
           WEBHOOK_RECEIVED: {
-            target: `transactionRunning`,
+            target: `refreshing`,
             actions: assign((ctx, event) => {
               return { webhookBody: event.body }
             }),
           },
+          ADD_NODE_MUTATION: {
+            target: `batchingNodeMutations`,
+          },
+          NODE_MUTATION_TRANSACTION: {
+            target: `buildingSchema`,
+            actions: assign((ctx, event) => {
+              console.log(`ENQUEUE_NODE_MUTATION`, { event })
+              // return { event: event.body }
+              return {}
+            }),
+          },
         },
-        //   ENQUEUE_NODE_MUTATION: {
-        //     target: `transactionRunning`,
-        //   },
+
         //   ENQUEUE_PAGE_MUTATION: {
         //     target: `batchingPageMutations`,
         //   },
