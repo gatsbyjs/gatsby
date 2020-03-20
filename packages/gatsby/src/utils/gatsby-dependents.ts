@@ -4,10 +4,7 @@ import { memoize, MemoizedFunction } from "lodash"
 import { createRequireFromPath } from "gatsby-core-utils"
 import { join, dirname } from "path"
 import { PackageJson } from "../.."
-
-import fs from "fs"
-import { promisify } from "util"
-const readFile = promisify(fs.readFile)
+import { readFile } from "fs-extra"
 
 interface IDependency {
   name: string
