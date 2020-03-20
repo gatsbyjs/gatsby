@@ -1,5 +1,5 @@
 import React from "react"
-import MdWarning from "react-icons/lib/md/warning"
+import { MdWarning } from "react-icons/md"
 import Link from "gatsby-link"
 
 import {

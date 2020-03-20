@@ -167,6 +167,13 @@ export default () => {
   const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
   return <div>{data.doo}</div>;
 }`,
+    "static-query-hooks-with-other-export.js": `import { graphql, useStaticQuery } from 'gatsby'
+export { Bar } from 'bar'
+export default () => {
+  const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}
+`,
     "static-query-hooks-alternative-import.js": `import * as Gatsby from 'gatsby'
 export default () => {
   const data = Gatsby.useStaticQuery(Gatsby.graphql\`query StaticQueryName { foo }\`);
@@ -229,12 +236,15 @@ export default () => {
   })
 
   it(`extracts query AST correctly from files`, async () => {
+    const errors = []
+    const addError = errors.push.bind(errors)
     const results = await parser.parseFiles(
       Object.keys(MOCK_FILE_INFO),
-      jest.fn()
+      addError
     )
     expect(results).toMatchSnapshot()
     expect(reporter.warn).toMatchSnapshot()
+    expect(errors.length).toEqual(1)
   })
 
   it(`generates spec-compliant query names out of path`, async () => {

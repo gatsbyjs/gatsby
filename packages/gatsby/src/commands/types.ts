@@ -1,4 +1,4 @@
-import { PackageJson } from "gatsby"
+import { PackageJson, Reporter } from "gatsby"
 
 export interface ICert {
   keyPath: string
@@ -13,6 +13,7 @@ export interface IProgram {
   openTracingConfigFile: string
   port: number
   host: string
+  report: Reporter
   [`cert-file`]?: string
   [`key-file`]?: string
   directory: string

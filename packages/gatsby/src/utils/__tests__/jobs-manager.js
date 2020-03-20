@@ -218,9 +218,9 @@ describe(`Jobs manager`, () => {
       const jobArgs2 = createInternalMockJob({ inputPaths: [] })
 
       worker.TEST_JOB.mockImplementationOnce(() => {
-        throw new Error(`An error occured`)
+        throw new Error(`An error occurred`)
       }).mockImplementationOnce(() =>
-        Promise.reject(new Error(`An error occured`))
+        Promise.reject(new Error(`An error occurred`))
       )
 
       expect.assertions(4)
@@ -228,13 +228,13 @@ describe(`Jobs manager`, () => {
         await enqueueJob(jobArgs)
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
-          `[WorkerError: Error: An error occured]`
+          `[WorkerError: Error: An error occurred]`
         )
       }
       try {
         await enqueueJob(jobArgs2)
       } catch (err) {
-        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occured]`)
+        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occurred]`)
       }
       expect(endActivity).toHaveBeenCalledTimes(2)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(2)

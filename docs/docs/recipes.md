@@ -53,6 +53,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - [Adding a Local Font](/docs/recipes/styling-css#adding-a-local-font)
 - [Using Emotion](/docs/recipes/styling-css#using-emotion)
 - [Using Google Fonts](/docs/recipes/styling-css#using-google-fonts)
+- [Using Font Awesome](/docs/recipes/styling-css#using-fontawesome)
 
 ## [3. Working with starters](/docs/recipes/working-with-starters)
 
@@ -116,3 +117,4 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 - [Preparing for deployment](/docs/recipes/deploying-your-site#preparing-for-deployment)
 - [Deploying to Netlify](/docs/recipes/deploying-your-site#deploying-to-netlify)
 - [Deploying to ZEIT Now](/docs/recipes/deploying-your-site#deploying-to-zeit-now)
+- [Deploying to Cloudflare Workers](/docs/recipes/deploying-your-site#deploying-to-cloudflare-workers)

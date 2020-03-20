@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import styled from "@emotion/styled"
-import MdWarning from "react-icons/lib/md/warning"
+import { MdWarning } from "react-icons/md"
 
 import {
   Container,
@@ -468,7 +468,7 @@ const Typography = ({ location }) => (
 
         <Box display={{ md: `flex ` }} mt={12} pb={12} textAlign="left">
           <MarketingColumn title="Modern web tech without the headache">
-            Enjoy the power of the latest web technologies – React.js , Webpack
+            Enjoy the power of the latest web technologies – React.js, Webpack
             , modern JavaScript and CSS and more — all set up and waiting for
             you to start building.
           </MarketingColumn>

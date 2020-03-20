@@ -67,8 +67,9 @@ Though Ghost is open source, it still requires hosting. The official Ghost recom
 No matter how small the initial cost of a “free” headless CMS, the biggest tax you’ll pay is writer workflow. If you, or someone on your team hates writing and managing content within your CMS, then it doesn’t matter how much money was saved every month.
 
 This is where the power of a headless CMS architecture shines. You can create a Gatsby site that starts with one free headless CMS, then switches to another if the first one didn’t fit your workflow, without making drastic changes to your site.
+
 <Pullquote>
-The decoupled nature of your site erases concerns of CMS lock-in.
+  The decoupled nature of your site erases concerns of CMS lock-in.
 </Pullquote>
 
 Now, that’s really being free!

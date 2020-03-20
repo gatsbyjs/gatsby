@@ -6,8 +6,8 @@ disableTableOfContents: true
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 <HorizontalNavList
-items={"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")}
-slug={props.slug}
+  items={"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")}
+  slug={props.slug}
 />
 
 ## A
@@ -34,7 +34,7 @@ A tool that lets you write the most modern [JavaScript](#javascript), and on [bu
 
 The behind the scenes that the [public](#public) does not see. This often refers to the control panel of your [CMS](#cms). These are often powered by server-side programming languages such as Node.js, PHP, Go, ASP.net, Ruby, or Java.
 
-### Build
+### [Build](/docs/glossary/build/)
 
 In Gatsby, this is the process of taking your code and content and packaging it into a website that can be hosted and accessed. Commonly referred to as _build time_. See also: [backend](#backend) and [server-side](#server-side).
 
@@ -97,6 +97,10 @@ A database is a structured collection of data or content. Often a [CMS](#cms) wi
 ### Decoupled
 
 Decoupling describes the separation of different concerns. With [Gatsby](#gatsby) this most commonly means decoupling the [frontend](#frontend) from the [backend](#backend), like with [Decoupled Drupal](https://dri.es/how-to-decouple-drupal-in-2019) or [Headless WordPress](https://www.smashingmagazine.com/2018/10/headless-wordpress-decoupled/).
+
+### [Decoupled Drupal](/docs/glossary/decoupled-drupal)
+
+Decoupling refers to the practice of using Drupal as a [headless CMS](#headless-cms). A decoupled Drupal instance functions as a content API that returns JSON for your [frontend](#frontend) to consume.
 
 ### Deploy
 
@@ -202,11 +206,11 @@ Linting is the process of running a program that will analyze code for potential
 
 ## M
 
-### MDX
+### [MDX](/docs/glossary/mdx/)
 
 Extends [Markdown](#markdown) to support [React](#react) [components](#component) within your content.
 
-### Markdown
+### [Markdown](/docs/glossary/markdown/)
 
 A way of writing HTML content with plain text, using special characters to denote content types such as hash symbols for [headings](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements), and underscores and asterisks for text emphasis.
 
@@ -343,6 +347,10 @@ A UI refers to a User Interface. In the field of human-computer interaction, a U
 ### [webpack](/docs/glossary/webpack)
 
 A [JavaScript](#javascript) application that Gatsby uses to bundle your website's code up. This happens automatically on [build](#build).
+
+### [WPGraphQL](/docs/glossary/wpgraphql)
+
+A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's another way that you can use WordPress as a content source for Gatsby.
 
 ## X
 

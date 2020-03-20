@@ -109,29 +109,29 @@ you're using `gatsby-transformer-sharp` you'll find the fragments in
 So, for example if your query includes:
 
 ```graphql
-    image {
-        childImageSharp {
-            fluid(maxWidth: 1024) {
-                ...GatsbyImageSharpFluid
-            }
-        }
+image {
+  childImageSharp {
+    fluid(maxWidth: 1024) {
+      ...GatsbyImageSharpFluid
     }
+  }
+}
 ```
 
 ...it becomes:
 
 ```graphql
-    image {
-        childImageSharp {
-            fluid(maxWidth: 1024) {
-                base64
-                aspectRatio
-                src
-                srcSet
-                sizes
-            }
-        }
+image {
+  childImageSharp {
+    fluid(maxWidth: 1024) {
+      base64
+      aspectRatio
+      src
+      srcSet
+      sizes
     }
+  }
+}
 ```
 
 When you have the result, copy the `data` value from the output panel. Good
@@ -141,6 +141,7 @@ you will be defining it directly inside your test file:
 ```js:title=src/pages/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
+import { StaticQuery } from "gatsby"
 import Index from "../index"
 
 beforeEach(() => {

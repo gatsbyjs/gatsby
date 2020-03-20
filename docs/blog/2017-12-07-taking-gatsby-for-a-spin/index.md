@@ -21,7 +21,7 @@ GatsbyJS is based on React which means that you'll be writing almost everything 
 
 ### GraphQL
 
-Gatsby was my first introduction to [GraphQL](http://graphql.org/learn/) and I'm loving it already. GraphQL is a query language used by Gatsby to let you connect to all kinds of APIs. With it as an abstraction layer, you can pull in all the data you can think of and utilize it in your app. Gatsby comes with plugins to pull in data from several APIs, CMS systems and local files. With GraphQL, you're able to query data from all these sources in a clear and readable way. The data is instantly available in your components and that's just super cool. Also, it comes with a browser-based IDE called Graph*i*QL which starts along with your development environment. You can use it to see which queries are available, test them out, and see what data these queries return.
+Gatsby was my first introduction to [GraphQL](https://graphql.org/learn/) and I'm loving it already. GraphQL is a query language used by Gatsby to let you connect to all kinds of APIs. With it as an abstraction layer, you can pull in all the data you can think of and utilize it in your app. Gatsby comes with plugins to pull in data from several APIs, CMS systems and local files. With GraphQL, you're able to query data from all these sources in a clear and readable way. The data is instantly available in your components and that's just super cool. Also, it comes with a browser-based IDE called Graph*i*QL which starts along with your development environment. You can use it to see which queries are available, test them out, and see what data these queries return.
 
 ![Screenshot of GraphiQl](./grahiql_screenshot.png "GraphiQL")
 

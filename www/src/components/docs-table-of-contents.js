@@ -1,7 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import { colors, mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { Trans } from "@lingui/macro"
+import {
+  colors,
+  mediaQueries,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 function isUnderDepthLimit(depth, maxDepth) {
   if (maxDepth === null) {
@@ -86,7 +90,7 @@ function TableOfContents({ page, location }) {
           textTransform: `uppercase`,
         }}
       >
-        Table of Contents
+        <Trans>Table of Contents</Trans>
       </h2>
       <ul
         sx={{

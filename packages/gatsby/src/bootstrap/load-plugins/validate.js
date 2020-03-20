@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const semver = require(`semver`)
-const stringSimiliarity = require(`string-similarity`)
+const stringSimilarity = require(`string-similarity`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const resolveModuleExports = require(`../resolve-module-exports`)
@@ -48,7 +48,7 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
   )
 
   entries.forEach(entry => {
-    const similarities = stringSimiliarity.findBestMatch(
+    const similarities = stringSimilarity.findBestMatch(
       entry.exportName,
       currentAPIs[exportType]
     )

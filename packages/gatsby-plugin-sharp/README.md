@@ -101,11 +101,10 @@ a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
 plugin for Markdown content as gatsby-remark-images).
 
-When both a `maxWidth` and `maxHeight` are provided, sharp will use `COVER` as a fit strategy by default. This might not be ideal so you can now choose between `COVER`, `CONTAIN` and `FILL` as a fit strategy. To see them in action the [CSS property object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) comes close to its implementation.
-
-#### Note
-
-fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is assigned to [sharp.strategy][6]. The `cropFocus` option cannot be `ENTROPY` or `ATTENTION`
+When both a `maxWidth` and `maxHeight` are provided, sharp will [resize the image][6] using
+`COVER` as a fit strategy by default. You can choose between `COVER`, `CONTAIN`, `FILL`,
+`INSIDE`, and `OUTSIDE` as a fit strategy. See the [fit parameter below](#fit)
+for more details.
 
 #### Parameters
 
@@ -116,7 +115,6 @@ fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is assigned t
 - `pngQuality` (int)
 - `webpQuality` (int)
 - `srcSetBreakpoints` (array of int, default: [])
-- `fit` (string, default: '[sharp.fit.cover][6]')
 - `background` (string, default: 'rgba(0,0,0,1)')
 - [deprecated] `sizeByPixelDensity` (bool, default: false)
   - Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.
@@ -139,8 +137,10 @@ following:
 - `grayscale` (bool, default: false)
 - `duotone` (bool|obj, default: false)
 - `toFormat` (string, default: '')
-- `cropFocus` (string, default: '[sharp.strategy.attention][6]')
+- `cropFocus` (string, default: 'ATTENTION')
+- `fit` (string, default: 'COVER')
 - `pngCompressionSpeed` (int, default: 4)
+- `rotate` (int, default: 0)
 
 #### toFormat
 
@@ -151,7 +151,25 @@ Convert the source image to one of the following available options: `NO_CHANGE`,
 
 Change the cropping focus. Available options: `CENTER`, `NORTH`, `NORTHEAST`,
 `EAST`, `SOUTHEAST`, `SOUTH`, `SOUTHWEST`, `WEST`, `NORTHWEST`, `ENTROPY`,
-`ATTENTION`. See Sharp's [crop][6].
+`ATTENTION`. See Sharp's [resize][6].
+
+#### fit
+
+Select the fit strategy for sharp to use when resizing images. Available options
+are: `COVER`, `CONTAIN`, `FILL`, `INSIDE`, `OUTSIDE`. See Sharp's [resize][6].
+
+**Note:** The fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is
+set to `ENTROPY` or `ATTENTION`.
+
+The following image shows the effects of each fit option. You can see that the
+`INSIDE` option results in one dimension being smaller than requested, while
+the `OUTSIDE` option results in one dimension being larger than requested.
+![Sharp transform fit options](./sharp-transform-fit-options.png)
+
+#### pngCompressionSpeed
+
+Change the speed/quality tradeoff for PNG compression from 1 (brute-force) to
+10 (fastest). See pngquant's [options][19].
 
 #### rotate
 
@@ -357,3 +375,4 @@ If updating these doesn't fix the issue, your project probably uses other plugin
 [16]: https://github.com/mozilla/mozjpeg
 [17]: https://www.sno.phy.queensu.ca/~phil/exiftool/
 [18]: https://www.npmjs.com/package/color
+[19]: https://pngquant.org/#options

@@ -9,7 +9,14 @@ tags:
   - aws
 ---
 
-import { Link } from "gatsby"
+<!--
+    Below this, Link has been imported as GatsbyLink to get around a bug in prettier v1.19.1
+    where case sensitivity is not respected for components in MDX. Link is treated as <link>
+    html head tag by prettier which leads to an error.
+    Issue Link - https://github.com/prettier/prettier/issues/7548
+-->
+
+import { Link as GatsbyLink } from "gatsby"
 
 Are you a WordPress Developer?
 
@@ -40,7 +47,11 @@ So if you're a WordPress Developer and you've dismissed Gatsby as this year's Ne
 I think you may be surprised. I was skeptical myself, but I found one real difference between WordPress and Gatsby, and it has a true impact on your business:
 
 <Pullquote>
-Gatsby sites have a dramatically lower <Link to="/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby/">"total cost of ownership"</Link> than comparable WordPress sites.
+  Gatsby sites have a dramatically lower{" "}
+  <GatsbyLink to="/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby/">
+    "total cost of ownership"
+  </GatsbyLink>{" "}
+  than comparable WordPress sites.
 </Pullquote>
 
 That means more money in your pocket. Or more value and services you can pass on to your clients.
@@ -88,7 +99,8 @@ If your client needs ecommerce features on their site, Gatsby can pull in the pr
 In theory, break-fix for Gatsby should be easier to diagnose and solve. An issue with the build has nothing to do with a problem with the frontend, and vice versa. Gatsby's lower technical maintenance may be the difference between you taking on 5 client sites or 15.
 
 <Pullquote>
-Personally I keep forgetting about the static sites under my care because there's literally nothing to work on for them month-to-month.
+  Personally I keep forgetting about the static sites under my care because
+  there's literally nothing to work on for them month-to-month.
 </Pullquote>
 
 ## Freemium is cheaper than pay-per-year Plugins
@@ -110,7 +122,10 @@ Brian Webster of Delicious Simplicity shared that using Gatsby for client sites 
 [Says Brian](https://youtu.be/EfHPJK1TVmM):
 
 <Pullquote citation="Brian Webster">
-We're noticing an amazing thing happening when we're pitching clients and they hear about this tech stack. And as a result we're actually seeing our S.O.'s winning a lot more bids. There's a project I think we're going to move forward on and our budget came in significantly less than their three competing bids.
+  We're noticing an amazing thing happening when we're pitching clients and they
+  hear about this tech stack. And as a result we're actually seeing our S.O.'s
+  winning a lot more bids. There's a project I think we're going to move forward
+  on and our budget came in significantly less than their three competing bids.
 </Pullquote>
 
 Brian's prospective client even tried to ask his competition if they could match his approach. The competitors balked. If those shops don't adopt Gatsby, or something like it, they're going to lose a lot more business in the coming years.

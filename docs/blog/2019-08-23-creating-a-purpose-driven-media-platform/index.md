@@ -33,7 +33,13 @@ The stack used offers faster site performance, improved security and more cost-e
 The platform is receiving a nationwide digital and out of home (OOH) campaign to support the [Quit Cigarettes](https://uk.changeincorporated.com/quit-cigarettes) mission.
 
 <Pullquote citation="Toby Lee, AZ, Product Owner Change Incorporated">
-  “Your flexibility, professionalism, and high standards throughout have been very much appreciated. We started with an ambitious set of goals and a very tight deadline, and I was fully expecting we would have to look at compromises for what we were hoping to achieve. Thanks to your efforts we have a really solid foundation, technically, experientially, and visually, to continue building and iterating on what is already a great website (and dashboard!). On top of all that, it’s a pleasure working with you all. Great work, thank you!”
+  “Your flexibility, professionalism, and high standards throughout have been
+  very much appreciated. We started with an ambitious set of goals and a very
+  tight deadline, and I was fully expecting we would have to look at compromises
+  for what we were hoping to achieve. Thanks to your efforts we have a really
+  solid foundation, technically, experientially, and visually, to continue
+  building and iterating on what is already a great website (and dashboard!). On
+  top of all that, it’s a pleasure working with you all. Great work, thank you!”
 </Pullquote>
 
 ## The Full Story
@@ -61,7 +67,9 @@ Strong typography is especially crucial for a publishing platform. We wanted a s
 During our early exploration, our head of frontend development suggested a font budget of five files. Using a mixture of system fonts and variable fonts where appropriate, we were able to squeeze a few extra styles into this budget without loading more than five files. Working within this constraint really forced us to consider our choices. The end result is a performant site with consistent typography that feels at home on any device.
 
 <Pullquote citation="James Gilyead, AZ, Visual Designer Clearleft">
-It was a pleasure to work alongside fellow visual designer Luke on Change Incorporated. Having a full-time critique partner kept the designs on track, and Abstract helped us to present a unified vision to the project team.
+  It was a pleasure to work alongside fellow visual designer Luke on Change
+  Incorporated. Having a full-time critique partner kept the designs on track,
+  and Abstract helped us to present a unified vision to the project team.
 </Pullquote>
 
 In addition to using variable fonts, building the site from scratch gave us the opportunity to work with modern CSS features like grid layout and custom properties. Early on in the project we also invested some time in designing both a fluid responsive grid and a fluid typographic system. These worked together to elegantly scale the design to look great on any device, without relying on arbitrary breakpoints to resize the type.
@@ -89,7 +97,14 @@ This system means that in future, anything created within it should function as 
 The information architecture is non-hierarchical and based on a complex relationship tagging system. Some tags describe the theme of the campaign, some describe the topic, and above that, there are categories to group topics together. The idea behind topics and categories is that categories will remain consistent across every campaign but the topics can be bespoke per campaign, providing flexibility but not at the expense of consistency.
 
 <Pullquote citation="Dominique Delport, International President VICE MEDIA Global">
-VICE has always had a revolutionary spirit, so we are going to focus that effort into helping create the biggest measurable change that matters to our community. We have never shied away from taking risks to tell the tougher stories and uncover the facts, so while we are starting with a mission to get the UK to quit cigarettes, this is the start of a bigger global ambition through Change Incorporated where we will look at ending the use of single-use plastics, reducing sugar consumption and reducing our reliance on fossil fuels.
+  VICE has always had a revolutionary spirit, so we are going to focus that
+  effort into helping create the biggest measurable change that matters to our
+  community. We have never shied away from taking risks to tell the tougher
+  stories and uncover the facts, so while we are starting with a mission to get
+  the UK to quit cigarettes, this is the start of a bigger global ambition
+  through Change Incorporated where we will look at ending the use of single-use
+  plastics, reducing sugar consumption and reducing our reliance on fossil
+  fuels.
 </Pullquote>
 
 ## Commitment to the deadline

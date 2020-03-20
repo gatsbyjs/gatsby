@@ -45,7 +45,7 @@ Open the file at `src/pages/index.js`. The code in this file creates a component
 1.  Change the “Hello World!” text to “Hello Gatsby!” and save the file. If your windows are side-by-side, you can see that your code and content changes are reflected almost instantly in the browser after you save the file.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./02-demo-hot-reloading.mp4"></source>
+  <source type="video/mp4" src="./02-demo-hot-reloading.mp4" />
   <p>Sorry! Your browser doesn't support this video.</p>
 </video>
 
@@ -327,7 +327,7 @@ export default () => (
 After you save the file, you should see the contact page and be able to follow the link to the homepage.
 
 <video controls="controls" loop="true">
-  <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>
+  <source type="video/mp4" src="./10-linking-between-pages.mp4" />
   <p>Sorry! Your browser doesn't support this video.</p>
 </video>
 
