@@ -80,7 +80,7 @@ In your Gatsby project, you are going to have a lot of dependencies (which has t
 
 Content Security Policy is a security layer added in web applications to detect and prevent attacks, e.g. the XSS attack mentioned above.
 
-To add it to your Gatsby website, add the [plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-csp/) to your `gatsby-config.js` with the desired configuration. Note that
+To add it to your Gatsby website, add [gatsby-plugin-csp](https://www.gatsbyjs.org/packages/gatsby-plugin-csp/) to your `gatsby-config.js` with the desired configuration. Note that
 currently there is a [incompatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) with [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image) and other plugins.
 
 Also note that [it works in most of browsers](https://caniuse.com/#feat=mdn-http_headers_csp_content-security-policy).
