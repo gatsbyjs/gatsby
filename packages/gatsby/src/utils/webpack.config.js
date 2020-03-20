@@ -484,6 +484,7 @@ module.exports = async (
 
   if (stage === `build-javascript`) {
     const componentsCount = store.getState().components.size
+    const isCssModule = module => module.type === `css/mini-extract`
 
     const splitChunks = {
       chunks: `all`,
@@ -501,29 +502,26 @@ module.exports = async (
           ),
           priority: 40,
           // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
-          enforce: true,
+          // enforce: true,
         },
         // if a module is bigger than 160kb from node_modules we make a separate chunk for it
         lib: {
           test(module) {
             return (
+              !isCssModule(module) &&
               module.size() > 160000 &&
               /node_modules[/\\]/.test(module.identifier())
             )
           },
           name(module) {
             const hash = crypto.createHash(`sha1`)
-            if (module.type === `css/mini-extract`) {
-              module.updateHash(hash)
-            } else {
-              if (!module.libIdent) {
-                throw new Error(
-                  `Encountered unknown module type: ${module.type}. Please open an issue.`
-                )
-              }
-
-              hash.update(module.libIdent({ context: program.directory }))
+            if (!module.libIdent) {
+              throw new Error(
+                `Encountered unknown module type: ${module.type}. Please open an issue.`
+              )
             }
+
+            hash.update(module.libIdent({ context: program.directory }))
 
             return hash.digest(`hex`).substring(0, 8)
           },
@@ -539,21 +537,33 @@ module.exports = async (
         },
         // If a chunk is used in at least 2 components we create a separate chunk
         shared: {
+          test(module) {
+            return !isCssModule(module)
+          },
           name(module, chunks) {
             const hash = crypto
               .createHash(`sha1`)
               .update(chunks.reduce((acc, chunk) => acc + chunk.name, ``))
               .digest(`hex`)
 
-            if (module.type === `css/mini-extract`) {
-              return `styles.${hash}`
-            }
-
             return hash
           },
           priority: 10,
           minChunks: 2,
           reuseExistingChunk: true,
+        },
+        /**
+         * Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
+         * TODO make an exception for css-modules
+         */
+        styles: {
+          test(module) {
+            return isCssModule(module)
+          },
+
+          name: `styles`,
+          priority: 40,
+          enforce: true,
         },
       },
       maxInitialRequests: 25,
