@@ -104,7 +104,7 @@
     "moment": "^2.24.0",
     "name-all-modules-plugin": "^1.0.1",
     "normalize-path": "^2.1.1",
-    "null-loader": "^0.1.1",
+    "null-loader": "^3.0.0",
     "opentracing": "^0.14.4",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "p-defer": "^3.0.0",
