@@ -1,3 +1,22 @@
+- url: https://gatsby-wordpress-libre.netlify.com/
+  repo: https://github.com/armada-inc/gatsby-wordpress-libre-starter
+  description: A Gatsby starter for creating blogs from headless WordPress CMS.
+  tags:
+    - Blog
+    - SEO
+    - CMS:WordPress
+    - Styling:Other
+    - Pagination
+  features:
+    - WordPress Libre 2 skin
+    - Data sourcing from headless WordPress
+    - Responsive design
+    - SEO optimized
+    - OpenGraph structured data
+    - Twitter Cards meta
+    - Sitemap Generation
+    - XML Sitemaps
+    - Progressive Web App
 - url: https://delog-w3layouts.netlify.com/
   repo: https://github.com/W3Layouts/gatsby-starter-delog
   description: A Gatsby Starter built with Netlify CMS to launch your dream blog with a click.
