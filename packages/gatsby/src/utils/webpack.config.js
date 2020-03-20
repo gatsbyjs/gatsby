@@ -13,7 +13,7 @@ import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
 
 const apiRunnerNode = require(`./api-runner-node`)
-const createUtils = require(`./webpack-utils`)
+import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 
 // Four stages or modes:
@@ -37,7 +37,7 @@ module.exports = async (
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const { rules, loaders, plugins } = await createUtils({ stage, program })
+  const { rules, loaders, plugins } = createWebpackUtils(stage, program)
 
   const { assetPrefix, pathPrefix } = store.getState().config
 

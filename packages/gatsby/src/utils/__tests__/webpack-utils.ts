@@ -1,4 +1,11 @@
-const utils = require(`../webpack-utils`)
+import { createWebpackUtils } from "../webpack-utils"
+import { Stage, IProgram } from "../../commands/types"
+
+jest.mock(`../browserslist`, () => {
+  return {
+    getBrowsersList: (): string[] => [],
+  }
+})
 
 jest.mock(`babel-preset-gatsby/package.json`, () => {
   return {
@@ -7,13 +14,9 @@ jest.mock(`babel-preset-gatsby/package.json`, () => {
 })
 
 let config
-beforeAll(async () => {
-  config = await utils({
-    stage: `develop`,
-    program: {
-      browserslist: [],
-    },
-  })
+
+beforeAll(() => {
+  config = createWebpackUtils(Stage.Develop, {} as IProgram)
 })
 
 describe(`webpack utils`, () => {
@@ -23,7 +26,7 @@ describe(`webpack utils`, () => {
     })
 
     it(`returns default values without any options`, () => {
-      const rule = config.rules.js()
+      const rule = config.rules.js([])
 
       expect(rule).toMatchSnapshot({
         use: [

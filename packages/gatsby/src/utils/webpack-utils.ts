@@ -1,145 +1,144 @@
-// @flow
+import { Loader, RuleSetRule, Plugin } from "webpack"
+import { GraphQLSchema } from "graphql"
+import autoprefixer from "autoprefixer"
+import flexbugs from "postcss-flexbugs-fixes"
+import TerserPlugin from "terser-webpack-plugin"
+import MiniCssExtractPlugin from "mini-css-extract-plugin"
+import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
+import isWsl from "is-wsl"
+import { getBrowsersList } from "./browserslist"
 
-const autoprefixer = require(`autoprefixer`)
-const flexbugs = require(`postcss-flexbugs-fixes`)
-const TerserPlugin = require(`terser-webpack-plugin`)
-const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
-const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
-const ReactRefreshWebpackPlugin = require(`@pmmmwh/react-refresh-webpack-plugin`)
-const isWsl = require(`is-wsl`)
-
-const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
-const GatsbyWebpackEslintGraphqlSchemaReload = require(`./gatsby-webpack-eslint-graphql-schema-reload-plugin`)
+import GatsbyWebpackStatsExtractor from "./gatsby-webpack-stats-extractor"
+import GatsbyWebpackEslintGraphqlSchemaReload from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
 
 import { builtinPlugins } from "./webpack-plugins"
-const eslintConfig = require(`./eslint-config`)
+import { IProgram, Stage } from "../commands/types"
+import { eslintConfig } from "./eslint-config"
 
-type LoaderSpec = string | { loader: string, options?: Object }
-type LoaderResolver<T: Object> = (options?: T) => LoaderSpec
+type LoaderResolver<T = {}> = (options?: T) => Loader
 
-type Condition = string | RegExp | RegExp[]
+type LoaderOptions = Record<string, any>
+type RuleFactory<T = {}> = (options?: T & LoaderOptions) => RuleSetRule
 
-type Rule = {
-  test?: Condition,
-  use: LoaderSpec[],
-  exclude?: Condition,
-  include?: Condition,
+type ContextualRuleFactory<T = {}> = RuleFactory<T> & {
+  internal?: RuleFactory<T>
+  external?: RuleFactory<T>
 }
 
-type RuleFactory<T: Object> = (options?: T) => Rule
-
-type ContextualRuleFactory = RuleFactory<*> & {
-  internal: RuleFactory<*>,
-  external: RuleFactory<*>,
-}
-
-type PluginInstance = any
-type PluginFactory = (...args?: any) => PluginInstance
+type PluginFactory = (...args: any) => Plugin
 
 type BuiltinPlugins = typeof builtinPlugins
-
-type Stage = "develop" | "develop-html" | "build-javascript" | "build-html"
-
-/**
- * Configuration options for `createUtils`
- */
-export type WebpackUtilsOptions = { stage: Stage, program: any }
 
 /**
  * Utils that produce webpack `loader` objects
  */
-export type LoaderUtils = {
-  json: LoaderResolver<*>,
-  yaml: LoaderResolver<*>,
-  null: LoaderResolver<*>,
-  raw: LoaderResolver<*>,
+interface ILoaderUtils {
+  json: LoaderResolver
+  yaml: LoaderResolver
+  null: LoaderResolver
+  raw: LoaderResolver
 
-  style: LoaderResolver<*>,
-  css: LoaderResolver<*>,
+  style: LoaderResolver
+  css: LoaderResolver
   postcss: LoaderResolver<{
-    browsers?: string[],
-    plugins?: Array<any> | ((loader: any) => Array<any>),
-  }>,
+    browsers?: string[]
+    overrideBrowserslist?: string[]
+    plugins?: Plugin[] | ((loader: Loader) => Plugin[])
+  }>
 
-  file: LoaderResolver<*>,
-  url: LoaderResolver<*>,
-  js: LoaderResolver<*>,
-  dependencies: LoaderResovler<*>,
+  file: LoaderResolver
+  url: LoaderResolver
+  js: LoaderResolver
+  dependencies: LoaderResolver
 
-  miniCssExtract: LoaderResolver<*>,
-  imports: LoaderResolver<*>,
-  exports: LoaderResolver<*>,
+  miniCssExtract: LoaderResolver
+  imports: LoaderResolver
+  exports: LoaderResolver
 
-  eslint: LoaderResolver<*>,
+  eslint(schema: GraphQLSchema): Loader
 }
+
+interface IModuleThatUseGatsby {
+  name: string
+  path: string
+}
+
+type CssLoaderModuleOption = boolean | Record<string, any> | string
 
 /**
  * Utils that produce webpack rule objects
  */
-export type RuleUtils = {
+interface IRuleUtils {
   /**
    * Handles JavaScript compilation via babel
    */
-  js: RuleFactory<*>,
-  yaml: RuleFactory<*>,
-  fonts: RuleFactory<*>,
-  images: RuleFactory<*>,
-  miscAssets: RuleFactory<*>,
+  js: RuleFactory<{ modulesThatUseGatsby?: IModuleThatUseGatsby[] }>
+  dependencies: RuleFactory<{ modulesThatUseGatsby?: IModuleThatUseGatsby[] }>
+  yaml: RuleFactory
+  fonts: RuleFactory
+  images: RuleFactory
+  miscAssets: RuleFactory
+  media: RuleFactory
 
-  css: ContextualRuleFactory,
-  cssModules: RuleFactory<*>,
-  postcss: ContextualRuleFactory,
+  css: ContextualRuleFactory<{
+    browsers?: string[]
+    modules?: CssLoaderModuleOption
+  }>
+  cssModules: RuleFactory
+  postcss: ContextualRuleFactory<{ overrideBrowserOptions: string[] }>
 
-  eslint: RuleFactory<*>,
+  eslint: (schema: GraphQLSchema) => RuleSetRule
 }
 
-export type PluginUtils = BuiltinPlugins & {
-  extractText: PluginFactory,
-  uglify: PluginFactory,
-  moment: PluginFactory,
-  extractStats: PluginFactory,
+type PluginUtils = BuiltinPlugins & {
+  extractText: PluginFactory
+  uglify: PluginFactory
+  moment: PluginFactory
+  extractStats: PluginFactory
+  minifyJs: PluginFactory
+  minifyCss: PluginFactory
+  fastRefresh: PluginFactory
+  eslintGraphqlSchemaReload: PluginFactory
 }
 
 /**
  * webpack atoms namespace
  */
-export type WebpackUtils = {
-  loaders: LoaderUtils,
+interface IWebpackUtils {
+  loaders: ILoaderUtils
 
-  rules: RuleUtils,
+  rules: IRuleUtils
 
-  plugins: PluginUtils,
+  plugins: PluginUtils
 }
 
 /**
  * A factory method that produces an atoms namespace
  */
-module.exports = async ({
-  stage,
-  program,
-}: {
+export const createWebpackUtils = (
   stage: Stage,
-  program: any,
-}): Promise<WebpackUtilsOptions> => {
+  program: IProgram
+): IWebpackUtils => {
   const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
-  const supportedBrowsers = program.browserslist
+  const supportedBrowsers = getBrowsersList(program.directory)
 
   const PRODUCTION = !stage.includes(`develop`)
 
   const isSSR = stage.includes(`html`)
 
-  const makeExternalOnly = (original: RuleFactory<*>) => (
+  const makeExternalOnly = (original: RuleFactory) => (
     options = {}
-  ): Rule => {
+  ): RuleSetRule => {
     const rule = original(options)
     rule.include = vendorRegex
     return rule
   }
 
-  const makeInternalOnly = (original: RuleFactory<*>) => (
+  const makeInternalOnly = (original: RuleFactory) => (
     options = {}
-  ): Rule => {
+  ): RuleSetRule => {
     const rule = original(options)
     rule.exclude = vendorRegex
     return rule
@@ -147,7 +146,7 @@ module.exports = async ({
 
   let ident = 0
 
-  const loaders: LoaderUtils = {
+  const loaders: ILoaderUtils = {
     json: (options = {}) => {
       return {
         options,
@@ -220,7 +219,7 @@ module.exports = async ({
         options: {
           ident: `postcss-${++ident}`,
           sourceMap: !PRODUCTION,
-          plugins: loader => {
+          plugins: (loader: Loader): Plugin[] => {
             plugins =
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
@@ -273,7 +272,7 @@ module.exports = async ({
       }
     },
 
-    eslint: (schema = ``) => {
+    eslint: (schema: GraphQLSchema) => {
       const options = eslintConfig(schema)
 
       return {
@@ -300,17 +299,20 @@ module.exports = async ({
   /**
    * Rules
    */
-  const rules = {}
+  const rules = {} as IRuleUtils
 
   /**
    * JavaScript loader via babel, includes userland code
    * and packages that depend on `gatsby`
    */
   {
-    const js = ({ modulesThatUseGatsby = [], ...options } = {}) => {
+    const js = ({
+      modulesThatUseGatsby = [],
+      ...options
+    }: { modulesThatUseGatsby?: IModuleThatUseGatsby[] } = {}): RuleSetRule => {
       return {
         test: /\.(js|mjs|jsx)$/,
-        include: modulePath => {
+        include: (modulePath: string): boolean => {
           // when it's not coming from node_modules we treat it as a source file.
           if (!vendorRegex.test(modulePath)) {
             return true
@@ -332,7 +334,6 @@ module.exports = async ({
         ],
       }
     }
-
     rules.js = js
   }
 
@@ -342,7 +343,11 @@ module.exports = async ({
    * Excludes modules that use Gatsby since the `rules.js` already transpiles those
    */
   {
-    const dependencies = ({ modulesThatUseGatsby = [] } = {}) => {
+    const dependencies = ({
+      modulesThatUseGatsby = [],
+    }: {
+      modulesThatUseGatsby?: IModuleThatUseGatsby[]
+    } = {}): RuleSetRule => {
       const jsOptions = {
         babelrc: false,
         configFile: false,
@@ -360,7 +365,7 @@ module.exports = async ({
 
       return {
         test: /\.(js|mjs)$/,
-        exclude: modulePath => {
+        exclude: (modulePath: string): boolean => {
           if (vendorRegex.test(modulePath)) {
             // If dep uses Gatsby, exclude
             if (
@@ -386,24 +391,19 @@ module.exports = async ({
         use: [loaders.dependencies(jsOptions)],
       }
     }
-
     rules.dependencies = dependencies
   }
 
-  {
-    const eslint = schema => {
-      return {
-        enforce: `pre`,
-        test: /\.jsx?$/,
-        exclude: vendorRegex,
-        use: [loaders.eslint(schema)],
-      }
+  rules.eslint = (schema: GraphQLSchema): RuleSetRule => {
+    return {
+      enforce: `pre`,
+      test: /\.jsx?$/,
+      exclude: vendorRegex,
+      use: [loaders.eslint(schema)],
     }
-
-    rules.eslint = eslint
   }
 
-  rules.yaml = () => {
+  rules.yaml = (): RuleSetRule => {
     return {
       test: /\.ya?ml/,
       use: [loaders.json(), loaders.yaml()],
@@ -413,7 +413,7 @@ module.exports = async ({
   /**
    * Font loader
    */
-  rules.fonts = () => {
+  rules.fonts = (): RuleSetRule => {
     return {
       use: [loaders.url()],
       test: /\.(eot|otf|ttf|woff(2)?)(\?.*)?$/,
@@ -424,7 +424,7 @@ module.exports = async ({
    * Loads image assets, inlines images via a data URI if they are below
    * the size threshold
    */
-  rules.images = () => {
+  rules.images = (): RuleSetRule => {
     return {
       use: [loaders.url()],
       test: /\.(ico|svg|jpg|jpeg|png|gif|webp)(\?.*)?$/,
@@ -435,7 +435,7 @@ module.exports = async ({
    * Loads audio and video and inlines them via a data URI if they are below
    * the size threshold
    */
-  rules.media = () => {
+  rules.media = (): RuleSetRule => {
     return {
       use: [loaders.url()],
       test: /\.(mp4|webm|ogv|wav|mp3|m4a|aac|oga|flac)$/,
@@ -445,7 +445,7 @@ module.exports = async ({
   /**
    * Loads assets without inlining
    */
-  rules.miscAssets = () => {
+  rules.miscAssets = (): RuleSetRule => {
     return {
       use: [loaders.file()],
       test: /\.pdf$/,
@@ -456,14 +456,15 @@ module.exports = async ({
    * CSS style loader.
    */
   {
-    const css = ({ browsers, ...options } = {}) => {
+    const css: IRuleUtils["css"] = (options = {}): RuleSetRule => {
+      const { browsers, ...restOptions } = options
       const use = [
-        loaders.css({ ...options, importLoaders: 1 }),
+        loaders.css({ ...restOptions, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
       if (!isSSR)
         use.unshift(
-          loaders.miniCssExtract({ hmr: !PRODUCTION && !options.modules })
+          loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules })
         )
 
       return {
@@ -478,7 +479,7 @@ module.exports = async ({
     css.internal = makeInternalOnly(css)
     css.external = makeExternalOnly(css)
 
-    const cssModules = options => {
+    const cssModules: IRuleUtils["cssModules"] = (options): RuleSetRule => {
       const rule = css({ ...options, modules: true })
       delete rule.exclude
       rule.test = /\.module\.css$/
@@ -493,7 +494,7 @@ module.exports = async ({
    * PostCSS loader.
    */
   {
-    const postcss = options => {
+    const postcss: ContextualRuleFactory = (options): RuleSetRule => {
       return {
         test: /\.css$/,
         use: [loaders.css({ importLoaders: 1 }), loaders.postcss(options)],
@@ -508,15 +509,21 @@ module.exports = async ({
     rules.postcss = postcss
   }
   /**
+   * cast rules to IRuleUtils
+   */
+  /**
    * Plugins
    */
-  const plugins = { ...builtinPlugins }
+  const plugins = { ...builtinPlugins } as PluginUtils
 
   /**
    * Minify JavaScript code without regard for IE8. Attempts
    * to parallelize the work to save time. Generally only add in Production
    */
-  plugins.minifyJs = ({ terserOptions, ...options } = {}) =>
+  plugins.minifyJs = ({
+    terserOptions,
+    ...options
+  }: { terserOptions?: TerserPlugin.TerserPluginOptions } = {}): Plugin =>
     new TerserPlugin({
       cache: true,
       // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
@@ -608,9 +615,9 @@ module.exports = async ({
         ],
       },
     }
-  ) => new OptimizeCssAssetsPlugin(options)
+  ): OptimizeCssAssetsPlugin => new OptimizeCssAssetsPlugin(options)
 
-  plugins.fastRefresh = () =>
+  plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({
       disableRefreshCheck: true,
     })
@@ -619,23 +626,26 @@ module.exports = async ({
    * Extracts css requires into a single file;
    * includes some reasonable defaults
    */
-  plugins.extractText = options =>
+  plugins.extractText = (options: any): Plugin =>
     new MiniCssExtractPlugin({
       filename: `[name].[contenthash].css`,
       chunkFilename: `[name].[contenthash].css`,
       ...options,
     })
 
-  plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
+  plugins.moment = (): Plugin => plugins.ignore(/^\.\/locale$/, /moment$/)
 
-  plugins.extractStats = options => new GatsbyWebpackStatsExtractor(options)
+  plugins.extractStats = (options: any): GatsbyWebpackStatsExtractor =>
+    new GatsbyWebpackStatsExtractor(options)
 
-  plugins.eslintGraphqlSchemaReload = options =>
+  plugins.eslintGraphqlSchemaReload = (
+    options
+  ): GatsbyWebpackEslintGraphqlSchemaReload =>
     new GatsbyWebpackEslintGraphqlSchemaReload(options)
 
   return {
     loaders,
-    rules: (rules: RuleUtils),
-    plugins: (plugins: PluginUtils),
+    rules,
+    plugins,
   }
 }
