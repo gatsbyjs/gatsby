@@ -125,8 +125,12 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   }
 
   jest.doMock(`../query-runner`, () => {
-    const actualQueryRunner = jest.requireActual(`../query-runner`)
-    return jest.fn(actualQueryRunner)
+    const { queryRunner: actualQueryRunner } = jest.requireActual(
+      `../query-runner`
+    )
+    return {
+      queryRunner: jest.fn(actualQueryRunner),
+    }
   })
 
   jest.doMock(`../../utils/api-runner-node`, () => apiName => {
@@ -146,7 +150,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   const { store, emitter } = require(`../../redux`)
   const { saveState } = require(`../../db`)
   const reporter = require(`gatsby-cli/lib/reporter`)
-  const queryRunner = require(`../query-runner`)
+  const { queryRunner } = require(`../query-runner`)
   const { boundActionCreators } = require(`../../redux/actions`)
   const doubleBoundActionCreators = Object.keys(boundActionCreators).reduce(
     (acc, actionName) => {
@@ -430,7 +434,7 @@ describe(`query caching between builds`, () => {
             siteMetadata: {
               title: `My Site`,
               description: `Description of site
-            
+
               --edited
               edited content #${nodeChangeCounter++}
               `,
@@ -509,7 +513,7 @@ describe(`query caching between builds`, () => {
             id: `test-2`,
             slug: `bar`,
             content: `Dolor sit amet.
-            
+
             --edited
             edited content #${nodeChangeCounter++}
             `,
@@ -607,7 +611,7 @@ describe(`query caching between builds`, () => {
           createNotUsedNode({
             id: `not-used`,
             content: `Content
-            
+
             --edited
             edited content #${nodeChangeCounter++}`,
           })
@@ -679,7 +683,7 @@ describe(`query caching between builds`, () => {
             id: `test-1`,
             slug: `foo`,
             content: `Lorem ipsum.
-            
+
             --edited
             edited content #${nodeChangeCounter++}`,
           })
@@ -838,7 +842,7 @@ describe(`query caching between builds`, () => {
             siteMetadata: {
               title: `My Site`,
               description: `Description of site
-            
+
               --edited
               edited content #${nodeChangeCounter++}
               `,
