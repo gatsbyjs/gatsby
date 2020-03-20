@@ -1,35 +1,35 @@
 {
-	"cacheDirectory": true,
-	"babelrc": false,
-	"presets": [
-		["@babel/preset-env", {
-			"loose": true,
-			"modules": false,
-			"useBuiltIns": "usage",
-			"shippedProposals": true,
-			"targets": {
-				"browsers": [
-					"> 1%",
-					"IE >= 9",
-					"last 2 versions"
-				]
-			}
-		}],
-		["@babel/preset-react", {
-			"useBuiltIns": true,
-			"pragma": "React.createElement"
-		}],
-		"@babel/preset-flow"
-	],
-	"plugins": [
-		["@babel/plugin-proposal/class-properties", {
-			"loose": true
-		}],
-		"@babel/plugin-syntax-dynamic-import",
-	    ["@babel/plugin-transform-runtime", {
-			"helpers": true,
-			"regenerator": true,
-			"polyfill": false
-		}]
-	]
+  "cacheDirectory": true,
+  "babelrc": false,
+  "presets": [
+    ["@babel/preset-env", {
+      "loose": true,
+      "modules": false,
+      "useBuiltIns": "usage",
+      "shippedProposals": true,
+      "targets": {
+        "browsers": [
+          "> 1%",
+          "IE >= 9",
+          "last 2 versions"
+        ]
+      }
+    }],
+    ["@babel/preset-react", {
+      "useBuiltIns": true,
+      "pragma": "React.createElement"
+    }],
+    "@babel/preset-flow"
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal/class-properties", {
+      "loose": true
+    }],
+    "@babel/plugin-syntax-dynamic-import",
+      ["@babel/plugin-transform-runtime", {
+      "helpers": true,
+      "regenerator": true,
+      "polyfill": false
+    }]
+  ]
 }
