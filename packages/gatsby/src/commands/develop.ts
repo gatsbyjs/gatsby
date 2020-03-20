@@ -58,7 +58,7 @@ import {
   showFeedbackRequest,
 } from "../utils/feedback"
 
-import { BuildHTMLStage, IProgram } from "./types"
+import { BuildHTMLStage, IProgram, ICert } from "./types"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
@@ -401,12 +401,12 @@ module.exports = async (program: IProgram): Promise<void> => {
       )
     }
 
-    program.ssl = await getSslCert({
+    program.ssl = (await getSslCert({
       name: sslHost,
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
-    })
+    })) as ICert
   }
 
   // Start bootstrap process.
