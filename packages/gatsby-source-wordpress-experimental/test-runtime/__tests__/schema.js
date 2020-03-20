@@ -32,6 +32,27 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
     expect(result.data.__schema).toMatchSnapshot()
   })
 
+  test(`Type.where option works when set to filter for French posts`, async () => {
+    const result = await fetchGraphql({
+      url: `http://localhost:8000/___graphql`,
+      query: gql`
+        {
+          allWpTranslationFilterTest {
+            totalCount
+            nodes {
+              title
+            }
+          }
+        }
+      `,
+    })
+
+    expect(result.data.allWpTranslationFilterTest.totalCount).toEqual(1)
+    expect(result.data.allWpTranslationFilterTest.nodes[0].title).toEqual(
+      `French page`
+    )
+  })
+
   test(`Type.limit option works when set to 1`, async () => {
     const result = await fetchGraphql({
       url: `http://localhost:8000/___graphql`,

@@ -62,6 +62,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
     const settings = getTypeSettingsByType(nodesType)
 
+    // @todo this setting is no longer working
     if (settings.exclude) {
       continue
     }
@@ -81,6 +82,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     const nodeQuery = buildNodeQueryOnFieldName({
       fields: transformedFields,
       fieldName: singleFieldName,
+      settings,
     })
 
     if (
@@ -114,6 +116,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
         fields: transformedFields,
         fieldName: name,
         postTypes,
+        settings,
       })
 
       nodeListQueries = [nodeListQuery]

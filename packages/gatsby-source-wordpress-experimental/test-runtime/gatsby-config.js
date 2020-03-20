@@ -49,6 +49,19 @@ module.exports = {
           TypeLimit0Test: {
             limit: 0,
           },
+          TranslationFilterTest: {
+            where: `language: FR`,
+            beforeChangeNode: async ({ remoteNode, type }) => {
+              if (
+                type === `TranslationFilterTest` &&
+                remoteNode.language.slug !== `fr`
+              ) {
+                return {
+                  cancelUpdate: true,
+                }
+              }
+            },
+          },
           Post: {
             limit:
               process.env.NODE_ENV === `development`

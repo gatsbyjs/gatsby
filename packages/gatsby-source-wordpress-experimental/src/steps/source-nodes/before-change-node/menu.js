@@ -64,7 +64,7 @@ export const menuBeforeChangeNode = async ({
         remoteMenuItemNode.childItems.nodes.length
       ) {
         // recursively fetch child menu items
-        const childNodeIds = await menuBeforeChangeNode({
+        const { additionalNodeIds: childNodeIds } = await menuBeforeChangeNode({
           remoteNode: remoteMenuItemNode,
           actionType: `CREATE`,
           wpStore,
@@ -92,5 +92,5 @@ export const menuBeforeChangeNode = async ({
     })
   )
 
-  return additionalNodeIds
+  return { additionalNodeIds }
 }

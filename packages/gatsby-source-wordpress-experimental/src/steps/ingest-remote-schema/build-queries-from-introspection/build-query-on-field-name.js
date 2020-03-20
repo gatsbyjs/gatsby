@@ -4,6 +4,7 @@ export const buildNodesQueryOnFieldName = ({
   fields,
   fieldName,
   postTypes,
+  settings,
   queryVariables = ``,
   fieldVariables = ``,
 }) =>
@@ -20,7 +21,7 @@ export const buildNodesQueryOnFieldName = ({
         postTypes
           .map(postType => postType.fieldNames.plural)
           .includes(fieldName)
-          ? `, where: { parent: null }`
+          ? `, where: { parent: null ${settings.where ? settings.where : ``} }`
           : ``
       }, ${fieldVariables}`,
       fields: [

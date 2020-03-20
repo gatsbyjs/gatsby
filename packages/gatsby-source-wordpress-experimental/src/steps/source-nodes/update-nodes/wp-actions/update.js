@@ -85,7 +85,7 @@ export const createSingleNode = async ({
 
   const { createContentDigest } = helpers
 
-  const remoteNode = {
+  let remoteNode = {
     ...updatedNodeContent,
     id: id,
     parent: null,
@@ -119,33 +119,55 @@ export const createSingleNode = async ({
   })
 
   let additionalNodeIds
+  let cancelUpdate
 
   if (
     typeSettings.beforeChangeNode &&
     typeof typeSettings.beforeChangeNode === `function`
   ) {
-    additionalNodeIds = await typeSettings.beforeChangeNode({
-      actionType: actionType,
-      remoteNode,
-      actions,
-      helpers,
-      typeInfo,
-      fetchGraphql,
-      typeSettings,
-      buildTypeName,
-      wpStore: store,
-    })
+    const {
+      additionalNodeIds: receivedAdditionalNodeIds,
+      remoteNode: receivedRemoteNode,
+      cancelUpdate: receivedCancelUpdate,
+    } =
+      (await typeSettings.beforeChangeNode({
+        actionType: actionType,
+        remoteNode,
+        actions,
+        helpers,
+        fetchGraphql,
+        typeSettings,
+        buildTypeName,
+        type: typeInfo.nodesTypeName,
+        wpStore: store,
+      })) || {}
+
+    additionalNodeIds = receivedAdditionalNodeIds
+    cancelUpdate = receivedCancelUpdate
+
+    if (receivedRemoteNode) {
+      remoteNode = receivedRemoteNode
+    }
   }
 
-  await actions.createNode(remoteNode)
-
-  cachedNodeIds.push(remoteNode.id)
-
-  if (additionalNodeIds && additionalNodeIds.length) {
-    additionalNodeIds.forEach(id => cachedNodeIds.push(id))
+  if (cancelUpdate) {
+    return {
+      additionalNodeIds,
+      remoteNode: null,
+    }
   }
 
-  await helpers.cache.set(CREATED_NODE_IDS, cachedNodeIds)
+  if (remoteNode) {
+    await actions.createNode(remoteNode)
+
+    cachedNodeIds.push(remoteNode.id)
+
+    if (additionalNodeIds && additionalNodeIds.length) {
+      additionalNodeIds.forEach(id => cachedNodeIds.push(id))
+    }
+
+    await helpers.cache.set(CREATED_NODE_IDS, cachedNodeIds)
+  }
 
   return { additionalNodeIds, node: remoteNode }
 }

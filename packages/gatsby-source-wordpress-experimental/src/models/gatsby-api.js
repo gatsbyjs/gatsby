@@ -34,6 +34,10 @@ const defaultPluginOptions = {
             remoteNode.remoteFile = {
               id: createdMediaItem.id,
             }
+
+            return {
+              remoteNode,
+            }
           }
         }
       },
