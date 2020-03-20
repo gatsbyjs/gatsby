@@ -85,6 +85,9 @@
             - title: Deploying to Render
               link: /docs/deploying-to-render/
               breadcrumbTitle: Render
+            - title: Deploying to Tiiny Host
+              link: /docs/deploying-to-tiiny-host/
+              breadcrumbTitle: Tiiny Host
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge
