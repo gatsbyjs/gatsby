@@ -375,10 +375,10 @@ export const createWebpackUtils = (
             ) {
               return true
             }
-            // If dep is babel-runtime or core-js, exclude
+            // If dep is known library that doesn't need polyfilling, we don't.
             // TODO this needs rework, this is buggy as hell
             if (
-              /@babel(?:\/|\\{1,2})runtime|core-js|react|react-dom|scheduler|prop-types/.test(
+              /node_modules[\\/](runtime|core-js|react|react-dom|scheduler|prop-types)[\\/]/.test(
                 modulePath
               )
             ) {
