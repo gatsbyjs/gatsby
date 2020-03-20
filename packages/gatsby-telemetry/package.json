@@ -1,7 +1,7 @@
 {
   "name": "gatsby-telemetry",
   "description": "Gatsby Telemetry",
-  "version": "1.1.56",
+  "version": "1.2.0",
   "author": "Jarmo Isotalo <jarmo@isotalo.fi>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -14,7 +14,7 @@
     "configstore": "^5.0.1",
     "envinfo": "^7.5.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.0.34",
+    "gatsby-core-utils": "^1.1.0",
     "git-up": "4.0.1",
     "is-docker": "2.0.0",
     "lodash": "^4.17.15",
@@ -29,7 +29,7 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
     "babel-jest": "^24.9.0",
-    "babel-preset-gatsby-package": "^0.2.18",
+    "babel-preset-gatsby-package": "^0.3.0",
     "cross-env": "^5.2.1",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
