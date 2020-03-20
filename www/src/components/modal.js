@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Link, navigate, PageRenderer } from "gatsby"
+import { navigate, PageRenderer } from "gatsby"
+import Link from "./localized-link"
 import { useColorMode } from "theme-ui"
 import { Global } from "@emotion/core"
 import mousetrap from "mousetrap"

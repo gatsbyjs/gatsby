@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Component } from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
+import Link from "../components/localized-link"
 import { Helmet } from "react-helmet"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
