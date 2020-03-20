@@ -72,6 +72,21 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
+const deferredAction = type => (...args) => dispatch => {
+  emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+    type,
+    payload: args,
+  })
+}
+
+const NODE_MUTATION_ACTIONS = [`createNode`, `deleteNode`, `touchNode`]
+
+const deferActions = actions =>
+  NODE_MUTATION_ACTIONS.reduce((prev, next) => {
+    prev[next] = deferredAction(next)
+    return prev
+  }, actions)
+
 const getLocalReporter = (activity, reporter) =>
   activity
     ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
@@ -99,10 +114,15 @@ const runAPI = (plugin, api, args, activity) => {
       publicActions,
       restrictedActionsAvailableInAPI,
     } = require(`../redux/actions`)
-    const availableActions = {
+    let availableActions = {
       ...publicActions,
       ...(restrictedActionsAvailableInAPI[api] || {}),
     }
+
+    if (args.deferNodeMutation) {
+      availableActions = deferActions(availableActions)
+    }
+
     const boundActionCreators = bindActionCreators(
       availableActions,
       store.dispatch

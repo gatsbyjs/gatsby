@@ -115,13 +115,15 @@ module.exports = async (program: IProgram): Promise<void> => {
       recursionCount: 0,
       nodesMutatedDuringQueryRun: false,
       firstRun: true,
+      nodeMutationBatch: [],
+      runningBatch: [],
     })
   ).start()
 
   developService.onTransition(async (context, event) => {
-    if (context.changed) {
-      console.log(`on transition`, context.value, event)
-    }
+    // if (context.changed) {
+    console.log(`on transition`, context.value, event)
+    // }
   })
 
   /**
@@ -150,11 +152,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 
   emitter.on(`ENQUEUE_NODE_MUTATION`, event => {
-    if (developService.state.matches(`idle`)) {
-      // Drain the entire queue
-    } else {
-      // Add this action to queue
-    }
+    developService.send(`ADD_NODE_MUTATION`, event.payload)
   })
 
   // Start bootstrap process

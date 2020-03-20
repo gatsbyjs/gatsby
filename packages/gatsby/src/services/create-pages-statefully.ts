@@ -20,6 +20,7 @@ export async function createPagesStatefully({
       traceId: `initial-createPagesStatefully`,
       waitForCascadingActions: true,
       parentSpan: activity.span,
+      deferNodeMutation: true,
     },
     {
       activity,

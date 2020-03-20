@@ -13,6 +13,7 @@ export async function createPages({ parentSpan, graphqlRunner }): Promise<any> {
       traceId: `initial-createPages`,
       waitForCascadingActions: true,
       parentSpan: activity.span,
+      deferNodeMutation: true,
     },
     { activity }
   )

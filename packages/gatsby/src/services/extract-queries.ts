@@ -9,7 +9,10 @@ export async function extractQueries({ parentSpan }): Promise<any> {
     parentSpan,
   })
   activity.start()
-  await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
+  await apiRunnerNode(`onPreExtractQueries`, {
+    parentSpan: activity.span,
+    deferNodeMutation: true,
+  })
   activity.end()
 
   await extractQueriesAndWatch({ parentSpan })

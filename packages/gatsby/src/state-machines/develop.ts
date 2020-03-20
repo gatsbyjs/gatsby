@@ -1,4 +1,10 @@
-import { Machine, assign, DoneInvokeEvent } from "xstate"
+import {
+  Machine,
+  assign,
+  DoneInvokeEvent,
+  TransitionConfig,
+  AnyEventObject,
+} from "xstate"
 
 import { initialize } from "../services/initialize"
 import { customizeSchema } from "../services/customize-schema"
@@ -14,13 +20,29 @@ import { startWebpackServer } from "../services/start-webpack-server"
 import { writeOutRequires } from "../services/write-out-requires"
 
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
+import { Store } from "../.."
+import { actions } from "../redux/actions"
 
 const MAX_RECURSION = 2
+const NODE_MUTATION_BATCH_SIZE = 5
 
 interface IBuildContext {
   recursionCount: number
   nodesMutatedDuringQueryRun: boolean
   firstRun: boolean
+  nodeMutationBatch: any[]
+  runningBatch: any[]
+}
+
+const callRealApi = async (event, store: Store): Promise<any> => {
+  const { type, args } = event
+  if (type in actions) {
+    console.log(`dispatching`, type, args)
+    return actions[type](...args)((...dispatchArgs) =>
+      store.dispatch(...dispatchArgs)
+    )
+  }
+  console.log(`Invalid type`, type)
 }
 
 const assignMutatedNodes = assign<any, DoneInvokeEvent<any>>(
@@ -36,10 +58,25 @@ const context: IBuildContext = {
   recursionCount: 0,
   nodesMutatedDuringQueryRun: false,
   firstRun: true,
+  nodeMutationBatch: [],
+  runningBatch: [],
 }
 
 export const rageAgainstTheStateMachine = async (): Promise<void> => {
   console.error(`I won't do what you tell me!`)
+}
+
+/**
+ * Event used in all states where we're not ready to process node
+ * mutations. Instead we add it a batch to process when we're next idle
+ */
+const ADD_NODE_MUTATION: TransitionConfig<IBuildContext, AnyEventObject> = {
+  actions: assign({
+    nodeMutationBatch: (ctx, event) => [
+      ...ctx.nodeMutationBatch,
+      event.payload,
+    ],
+  }),
 }
 
 // eslint-disable-next-line new-cap
@@ -50,6 +87,7 @@ export const developMachine = Machine<any>(
     context,
     states: {
       initializing: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           src: initialize,
           onDone: {
@@ -71,6 +109,7 @@ export const developMachine = Machine<any>(
         },
       },
       customizingSchema: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           src: customizeSchema,
           id: `customizing-schema`,
@@ -83,6 +122,14 @@ export const developMachine = Machine<any>(
         },
       },
       sourcingNodes: {
+        on: {
+          ADD_NODE_MUTATION: {
+            invoke: {
+              src: ({ store }, { payload }): Promise<any> =>
+                callRealApi(payload, store),
+            },
+          },
+        },
         invoke: {
           src: sourceNodes,
           id: `sourcing-nodes`,
@@ -95,6 +142,7 @@ export const developMachine = Machine<any>(
         },
       },
       buildingSchema: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           id: `building-schema`,
           src: buildSchema,
@@ -113,6 +161,7 @@ export const developMachine = Machine<any>(
         },
       },
       creatingPages: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           id: `creating-pages`,
           src: createPages,
@@ -140,6 +189,7 @@ export const developMachine = Machine<any>(
         },
       },
       extractingQueries: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           id: `extracting-queries`,
           src: extractQueries,
@@ -154,6 +204,7 @@ export const developMachine = Machine<any>(
         },
       },
       calculatingDirtyQueries: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           id: `calculating-dirty-queries`,
           src: calculateDirtyQueries,
@@ -176,6 +227,7 @@ export const developMachine = Machine<any>(
         },
       },
       creatingPagesStatefully: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           src: createPagesStatefully,
           id: `creating-pages-statefully`,
@@ -188,6 +240,7 @@ export const developMachine = Machine<any>(
         },
       },
       runningStaticQueries: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           src: runStaticQueries,
           id: `running-static-queries`,
@@ -200,6 +253,7 @@ export const developMachine = Machine<any>(
         },
       },
       runningPageQueries: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           src: runPageQueries,
           id: `running-page-queries`,
@@ -253,6 +307,7 @@ export const developMachine = Machine<any>(
         },
       },
       waitingForJobs: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           src: waitUntilAllJobsComplete,
           id: `waiting-for-jobs`,
@@ -283,6 +338,7 @@ export const developMachine = Machine<any>(
       //   },
       // },
       refreshing: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           src: async (ctx, event): Promise<void> => {},
           id: `refreshing`,
@@ -311,6 +367,7 @@ export const developMachine = Machine<any>(
       // },
 
       writingRequires: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           src: writeOutRequires,
           id: `writing-requires`,
@@ -322,14 +379,14 @@ export const developMachine = Machine<any>(
           },
         },
       },
-
       runningWebpack: {
+        on: { ADD_NODE_MUTATION },
         invoke: {
           src: startWebpackServer,
           id: `running-webpack`,
           onDone: {
             target: `idle`,
-            actions: assign<any, DoneInvokeEvent<any>>((context, { data }) => {
+            actions: assign((context, { data }) => {
               const { compiler } = data
               return {
                 compiler,
@@ -344,26 +401,46 @@ export const developMachine = Machine<any>(
       },
 
       committingBatch: {
+        on: { ADD_NODE_MUTATION },
+        entry: {
+          actions: assign<IBuildContext>(context => {
+            return {
+              nodeMutationBatch: [],
+              runningBatch: context.nodeMutationBatch,
+            }
+          }),
+        },
         invoke: {
-          src: async (): Promise<any> => {
+          src: async ({ runningBatch, store }): Promise<any> =>
             // Consume the entire batch and run actions
-            return {}
+            Promise.all(
+              runningBatch.map(({ payload }) => callRealApi(payload, store))
+            ),
+          onDone: {
+            target: `buildingSchema`,
+            actions: assign({
+              runningBatch: [],
+            }),
           },
         },
       },
-
       // Doors are open for people to enter
       batchingNodeMutations: {
         on: {
+          "": {
+            cond: (ctx): boolean =>
+              ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
+            target: `committingBatch`,
+          },
           // More people enter same bus
           ADD_NODE_MUTATION: [
             {
-              cond: (): boolean => {},
+              ...ADD_NODE_MUTATION,
+              cond: (ctx): boolean =>
+                ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
               target: `committingBatch`,
             },
-            {
-              actions: assign(() => {}),
-            },
+            ADD_NODE_MUTATION,
           ],
         },
 
@@ -385,6 +462,10 @@ export const developMachine = Machine<any>(
           }),
         ],
         on: {
+          "": {
+            cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
+            target: `batchingNodeMutations`,
+          },
           WEBHOOK_RECEIVED: {
             target: `refreshing`,
             actions: assign((ctx, event) => {
@@ -392,25 +473,10 @@ export const developMachine = Machine<any>(
             }),
           },
           ADD_NODE_MUTATION: {
+            ...ADD_NODE_MUTATION,
             target: `batchingNodeMutations`,
           },
-          NODE_MUTATION_TRANSACTION: {
-            target: `buildingSchema`,
-            actions: assign((ctx, event) => {
-              console.log(`ENQUEUE_NODE_MUTATION`, { event })
-              // return { event: event.body }
-              return {}
-            }),
-          },
         },
-
-        //   ENQUEUE_PAGE_MUTATION: {
-        //     target: `batchingPageMutations`,
-        //   },
-        //   CREATE_TRANSACTION: {
-        //     target: `transactionRunning`,
-        //   },
-        // },
       },
       failed: {
         invoke: {

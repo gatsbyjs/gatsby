@@ -76,10 +76,15 @@ function deleteStaleNodes(state, nodes) {
   }
 }
 
-module.exports = async ({ webhookBody = {}, parentSpan } = {}) => {
+module.exports = async ({
+  webhookBody = {},
+  parentSpan,
+  deferNodeMutation,
+} = {}) => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
     waitForCascadingActions: true,
+    deferNodeMutation,
     parentSpan,
     webhookBody,
   })

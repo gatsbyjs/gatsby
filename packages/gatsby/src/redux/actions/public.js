@@ -890,13 +890,6 @@ const createNode = (
 }
 
 actions.createNode = (...args) => dispatch => {
-  emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-    type: `createNode`,
-    payload: args,
-  })
-}
-
-const createNodesImmediately = (...args) => {
   const actions = createNode(...args)
 
   dispatch(actions)
