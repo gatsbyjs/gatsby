@@ -1,9 +1,9 @@
 import { createWebpackUtils } from "../webpack-utils"
 import { Stage, IProgram } from "../../commands/types"
 
-jest.mock("../browserslist", () => {
+jest.mock(`../browserslist`, () => {
   return {
-    getBrowsersList: () => [],
+    getBrowsersList: (): string[] => [],
   }
 })
 
