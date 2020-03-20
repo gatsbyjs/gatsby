@@ -19,7 +19,7 @@ import { IReduxState } from "../redux/types"
 
 type Query = string | Source
 
-class GraphQLRunner {
+export class GraphQLRunner {
   parseCache: Map<Query, DocumentNode>
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -107,5 +107,3 @@ class GraphQLRunner {
     return Promise.resolve(result)
   }
 }
-
-module.exports = GraphQLRunner
