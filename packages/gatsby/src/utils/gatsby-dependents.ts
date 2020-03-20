@@ -1,7 +1,7 @@
 import { store } from "../redux"
 import { memoize, MemoizedFunction } from "lodash"
 
-import { createRequireFromPath } from "gatsby-core-utils/src"
+import { createRequireFromPath } from "gatsby-core-utils"
 import { join, dirname } from "path"
 import { PackageJson } from "../.."
 
