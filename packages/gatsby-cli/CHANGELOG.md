@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.13...gatsby-cli@2.11.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
 ## [2.10.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.12...gatsby-cli@2.10.13) (2020-03-18)
 
 ### Bug Fixes
