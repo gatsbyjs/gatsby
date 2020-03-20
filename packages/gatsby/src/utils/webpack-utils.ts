@@ -69,7 +69,7 @@ type CssLoaderModuleOption = boolean | Record<string, any> | string
 /**
  * Utils that produce webpack rule objects
  */
-export interface IRuleUtils {
+interface IRuleUtils {
   /**
    * Handles JavaScript compilation via babel
    */
@@ -91,7 +91,7 @@ export interface IRuleUtils {
   eslint: (schema: GraphQLSchema) => RuleSetRule
 }
 
-export type PluginUtils = BuiltinPlugins & {
+type PluginUtils = BuiltinPlugins & {
   extractText: PluginFactory
   uglify: PluginFactory
   moment: PluginFactory
@@ -105,7 +105,7 @@ export type PluginUtils = BuiltinPlugins & {
 /**
  * webpack atoms namespace
  */
-export interface IWebpackUtils {
+interface IWebpackUtils {
   loaders: ILoaderUtils
 
   rules: IRuleUtils
@@ -635,10 +635,12 @@ export const createWebpackUtils = (
 
   plugins.moment = (): Plugin => plugins.ignore(/^\.\/locale$/, /moment$/)
 
-  plugins.extractStats = (options: any): any =>
+  plugins.extractStats = (options: any): GatsbyWebpackStatsExtractor =>
     new GatsbyWebpackStatsExtractor(options)
 
-  plugins.eslintGraphqlSchemaReload = (options): any =>
+  plugins.eslintGraphqlSchemaReload = (
+    options
+  ): GatsbyWebpackEslintGraphqlSchemaReload =>
     new GatsbyWebpackEslintGraphqlSchemaReload(options)
 
   return {

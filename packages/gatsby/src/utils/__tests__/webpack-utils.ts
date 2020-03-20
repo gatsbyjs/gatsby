@@ -1,6 +1,12 @@
 import { createWebpackUtils } from "../webpack-utils"
 import { Stage, IProgram } from "../../commands/types"
 
+jest.mock("../browserslist", () => {
+  return {
+    getBrowsersList: () => [],
+  }
+})
+
 jest.mock(`babel-preset-gatsby/package.json`, () => {
   return {
     version: `1.0.0`,
@@ -33,12 +39,14 @@ describe(`webpack utils`, () => {
     describe(`include function`, () => {
       let js
       beforeAll(() => {
-        js = config.rules.js([
-          {
-            name: `gatsby-seo`,
-            path: `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo`,
-          },
-        ])
+        js = config.rules.js({
+          modulesThatUseGatsby: [
+            {
+              name: `gatsby-seo`,
+              path: `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo`,
+            },
+          ],
+        })
       })
 
       it(`includes source files from user code`, () => {
