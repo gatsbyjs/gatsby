@@ -34,7 +34,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Tokens
 
-This update moves the rudimentary tokens even closer to our current sole target, CSS. This e.g. means that instead of exporting an array of integers for `fontSizes` or `space`, we now provide `rem` values instead (while still making the v1 variants available — but we do have "soft" preferences regarding default units for CSS, which are emphasized by these breaking changes).  
+This update moves the rudimentary tokens even closer to our current sole target, CSS. This e.g. means that instead of exporting an array of integers for `fontSizes` or `space`, we now provide `rem` values instead (while still making the v1 variants available — but we do have "soft" preferences regarding default units for CSS, which are emphasized by these breaking changes).
+
 We currently only consume these tokens in the context of CSS, so let's make things a bit easier there:
 
 - `fontsSizes` exports `rem` values now; old values available at `fontSizesRaw`
