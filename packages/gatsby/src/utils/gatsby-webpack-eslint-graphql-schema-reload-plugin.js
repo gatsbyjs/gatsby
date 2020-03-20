@@ -6,7 +6,7 @@
  */
 const { store } = require(`../redux`)
 const eslintConfig = require(`./eslint-config`)
-const hasLocalEslint = require(`./local-eslint-config-finder`)
+const { hasLocalEslint } = require(`./local-eslint-config-finder`)
 
 const isEslintRule = rule => {
   const options = rule && rule.use && rule.use[0] && rule.use[0].options

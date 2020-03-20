@@ -12,5 +12,5 @@ For example, the package `gatsby` has a CHANGELOG.md in [`packages/gatsby/CHANGE
 
 [monorepo]: https://en.wikipedia.org/wiki/Monorepo
 [lerna]: https://github.com/lerna/lerna
-[babel]: https://github.com/babel/babel/
+[babel]: https://github.com/babel/babel/tree/master/packages
 [react]: https://github.com/facebook/react/tree/master/packages

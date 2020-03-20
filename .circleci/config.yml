@@ -144,6 +144,9 @@ commands:
       BENCHMARK_SITE_TYPE:
         type: string
         default: BLOG
+      BENCHMARK_BRANCH:
+        type: string
+        default: master
     steps:
       - checkout
       - run:
@@ -158,6 +161,7 @@ commands:
             BENCHMARK_CONTENT_SOURCE: << parameters.BENCHMARK_CONTENT_SOURCE >>
             BENCHMARK_REPO_NAME: << parameters.BENCHMARK_REPO_NAME >>
             BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
+            BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
             CI_NAME: circleci
       - run:
           command: npm install
@@ -171,6 +175,7 @@ commands:
             BENCHMARK_CONTENT_SOURCE: << parameters.BENCHMARK_CONTENT_SOURCE >>
             BENCHMARK_REPO_NAME: << parameters.BENCHMARK_REPO_NAME >>
             BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
+            BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
             CI_NAME: circleci
 
   e2e-test:
