@@ -152,6 +152,8 @@ commands:
       - run:
           command: npm install
           working_directory: << parameters.working_directory >>
+          environment:
+            NUM_PAGES: << parameters.NUM_PAGES >>
       - run:
           command: npm run build
           working_directory: << parameters.working_directory >>
@@ -166,6 +168,8 @@ commands:
       - run:
           command: npm install
           working_directory: << parameters.working_directory >>
+          environment:
+            NUM_PAGES: << parameters.NUM_PAGES >>
       - run:
           command: npm run build
           working_directory: << parameters.working_directory >>
