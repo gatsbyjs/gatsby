@@ -13,17 +13,14 @@ This tutorial assumes the following:
 - That you have an understanding of [Gatsby fundamentals](/tutorial/#gatsby-fundamentals)
 - An existing knowledge of [Gatsby themes](/docs/themes/what-are-gatsby-themes/)
 
-## Step 1: Create a new site using the hello world starter and change directory to "multiple-themes"
+## Create a new site using the hello world starter and change directory to "multiple-themes"
 
 ```shell
 gatsby new multiple-themes https://github.com/gatsbyjs/gatsby-starter-hello-world
-```
-
-```shell
 cd multiple-themes
 ```
 
-## Step 2: Install and compose the themes
+## Install and compose the themes
 
 This step composes [gatsby-theme-blog](/packages/gatsby-theme-blog/) and [gatsby-theme-notes](/packages/gatsby-theme-notes/).
 
@@ -69,20 +66,17 @@ module.exports = {
 }
 ```
 
-## Step 3: Run the site
+## Run the site
 
 Next, run the site and see what you have:
 
 ```shell
-cd multiple-themes
 gatsby develop
 ```
 
 ## Add content
 
 Behind the scenes, the two themes created content folders in the root directory of the site. In this step, you will add some content to these folders.
-
-Put an avatar image into `content/assets/` directory
 
 Add at least one post and one note:
 
@@ -111,14 +105,17 @@ Restart your development server:
 gatsby develop
 ```
 
-Now if you visit `http://localhost:8001/blog/hello-posts/` and `http://localhost:8001/notes/hello-notes` you should see your content.
+Now if you visit `http://localhost:8000/blog/hello-posts/` and `http://localhost:8000/notes/hello-notes` you should see your content.
 
-## Step 5: Put the blog posts on the homepage
+## Add an avatar image
 
-- Stop your development server, `CTRL + C`.
+Put an avatar image into `content/assets/` directory, this is used by `gatsby-theme-blog` for the bio component.
+
+## Put the blog posts on the homepage
+
 - Delete `src/pages/index.js`.
 - Change the theme options for the blog theme in `gatsby-config.js`.
-- Restart your development server with `gatsby develop`.
+- Restart your development server with `gatsby develop` to check that it worked.
 
 ```javascript:title=gatsby-config.js
 {
@@ -131,6 +128,8 @@ Now if you visit `http://localhost:8001/blog/hello-posts/` and `http://localhost
 ```
 
 ## Shadow the 'bio-content.js' component
+
+`src/gatsby-theme-blog/components/bio-content.js`
 
 It is possible to update the author bio information with a custom `bio-content.js` component using [theme shadowing](/docs/themes/shadowing/).
 
@@ -145,9 +144,7 @@ Your file structure should look like this:
     │   │   ├── bio-content.js // highlight-line
 ```
 
-`src/gatsby-theme-blog/components/bio-content.js`
-
-and your component could look like this:
+And your component could look like this:
 
 ```jsx:title=bio-content.js
 import React, { Fragment } from "react"
