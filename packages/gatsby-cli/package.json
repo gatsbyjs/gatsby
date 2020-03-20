@@ -83,5 +83,8 @@
   },
   "yargs": {
     "boolean-negation": false
+  },
+  "engines": {
+    "node": ">=10.13.0"
   }
 }
