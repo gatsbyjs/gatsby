@@ -91,7 +91,7 @@ Similar to `npm`, you can use the `yarn audit` command. It is available since v1
 
 ## Key Security
 
-Gatsby provides the capability of [fetching data from anywhere](https://www.gatsbyjs.org/docs/content-and-data/) and by that you should know that most of this data requires a key to access them. These keys should be stored in the server by using [Environment Variables](https://www.gatsbyjs.org/docs/environment-variables/) as this example below, fetching data from GitHub with an Authentication Header:
+Gatsby provides the capability of [fetching data from anywhere](/docs/content-and-data/) and by that you should know that most of this data requires a key to access them. These keys should be stored in the server by using [Environment Variables](/docs/environment-variables/) as this example below, fetching data from GitHub with an Authentication Header:
 
 ```js
     {
@@ -108,14 +108,14 @@ Gatsby provides the capability of [fetching data from anywhere](https://www.gats
     }
 ```
 
-Note: Whether you need to authenticate someone in your application, Gatsby has an [Authentication Tutorial](https://www.gatsbyjs.org/tutorial/authentication-tutorial) which helps doing this job in a secure way.
+Note: Whether you need to authenticate someone in your application, Gatsby has an [Authentication Tutorial](/tutorial/authentication-tutorial) which helps doing this job in a secure way.
 
 ## Content Security Policy (CSP)
 
 Content Security Policy is a security layer added in web applications to detect and prevent attacks, e.g. the XSS attack mentioned above.
 
-To add it to your Gatsby website, add [gatsby-plugin-csp](https://www.gatsbyjs.org/packages/gatsby-plugin-csp/) to your `gatsby-config.js` with the desired configuration. Note that
-currently there is a [incompatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](https://www.gatsbyjs.org/packages/gatsby-plugin-csp/) and [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image) and other plugins that generate hashes in inline styles.
+To add it to your Gatsby website, add [gatsby-plugin-csp](/packages/gatsby-plugin-csp/) to your `gatsby-config.js` with the desired configuration. Note that
+currently there is a [incompatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](/packages/gatsby-plugin-csp/) and [gatsby-image](/packages/gatsby-image) and other plugins that generate hashes in inline styles.
 
 Note:  Not all browsers support CSP, check [can-i-use](https://caniuse.com/#feat=mdn-http_headers_csp_content-security-policy) for more information.
 
