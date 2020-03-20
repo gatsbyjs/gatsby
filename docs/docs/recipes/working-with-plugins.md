@@ -3,13 +3,13 @@ title: "Recipes: Working with Plugins"
 tableOfContentsDepth: 1
 ---
 
-A [Gatsby plugin](/docs/what-is-a-plugin/) abstracts Gatsby APIs into an installable package. This means that modular chunks of Gatsby functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can add external data, transform data, add third-party services (e.g. Google Analytics, Stripe), and more.
+A [Gatsby plugin](/docs/what-is-a-plugin/) abstracts Gatsby APIs into an installable package. This means that modular chunks of Gatsby functionality aren’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can add external data, transform data, add third-party services (e.g. Google Analytics, Stripe), and more.
 
 ## Using a plugin
 
-Found a plugin you'd like to use on your project? Awesome! You can configure it for use by following the steps below. This recipe uses the [`gatsby-source-filesystem` plugin](/plugins/gatsby-source-filesystem) as the example because it is one of the most popular commonly used plugins.
+Found a plugin you'd like to use in your project? Awesome! You can configure it for use by following the steps below. This recipe uses the [`gatsby-source-filesystem` plugin](/plugins/gatsby-source-filesystem) as an example.
 
-> If you'd like to take a look at the available plugins you can install, check out the [plugin library](/plugins).
+> If you'd like to take a look at available plugins, check out the [plugin library](/plugins).
 
 ### Prerequisites
 
@@ -41,18 +41,18 @@ module.exports = {
 }
 ```
 
-_The instructions found in the README of the plugin you're using can you help you determine specifics about what configurations (if any) it requires. For this example to have an effect in your own site, you would need a folder of files at `src/images`._
+_The instructions found in the README of the plugin you're using can you help you determine specifics about what configurations (if any) it requires. For this example to have an effect in your own site, you would need to create the `src/images` folder and place files inside of it._
 
 3. Run `gatsby develop`, your plugin should run as your site builds.
 
 ### Additional resources
 
-- Learn more about configuring options or using default options in the [Using a Plugin in Your Site](/docs/using-a-plugin-in-your-site/) guide
-- See an example Gatsby site using this configuration in [the repo for the default Gatsby starter](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/gatsby-config.js)
+- Learn more about configuring options or using default options in the [Using a Plugin in Your Site](/docs/using-a-plugin-in-your-site/) guide.
+- See an example Gatsby site using this configuration in [the repo for the default Gatsby starter](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/gatsby-config.js).
 
 ## Creating a new plugin using a plugin starter
 
-If you want to create your own plugin with the minimal boilerplate Gatsby looks for in a plugin, you can get one started with the Gatsby plugin starter.
+If you want to create your own plugin you can get started with the Gatsby plugin starter.
 
 ### Prerequisites
 
@@ -82,7 +82,7 @@ my-plugin
 └── package.json
 ```
 
-2. Add the plugin to your site's `gatsby-config.js`, linking it your local plugin's root folder with `require.resolve`:
+2. Add the plugin to your site's `gatsby-config.js`, linking it to your local plugin's root folder with `require.resolve`. The path (or name of the plugin) should be to the directory name you used when generating the plugin:
 
 ```javascript:title=gatsby-site/gatsby-config.js
 module.exports = {

@@ -55,11 +55,11 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - [Using Google Fonts](/docs/recipes/styling-css#using-google-fonts)
 - [Using Font Awesome](/docs/recipes/styling-css#using-fontawesome)
 
-## [3. Working with starters](/docs/recipes/working-with-plugins)
+## [3. Working with plugins](/docs/recipes/working-with-plugins)
 
-[Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
+[Plugins](/docs/plugins/) are Node.js packages that implement Gatsby APIs that are maintained officially, or by the community.
 
-- [Using a starter](/docs/recipes/working-with-plugins#using-a-plugin)
+- [Using a plugin](/docs/recipes/working-with-plugins#using-a-plugin)
 - [Creating a new plugin using a plugin starter](/docs/recipes/working-with-plugins#creating-a-new-plugin-using-a-plugin-starter)
 
 ## [4. Working with starters](/docs/recipes/working-with-starters)

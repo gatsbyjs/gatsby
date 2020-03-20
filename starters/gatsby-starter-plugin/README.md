@@ -19,9 +19,9 @@ To get started creating a new plugin, you can follow these steps:
 gatsby new my-plugin https://github.com/gatsbyjs/gatsby-starter-plugin
 ```
 
-If you already have a Gatsby site, you can use it. Otherwise, you can [create a new Gatsby site](https://www.gatsbyjs.org/tutorial/part-zero/#create-a-gatsby-site) to use your plugin in with the `gatsby new` command again.
+If you already have a Gatsby site, you can use it. Otherwise, you can [create a new Gatsby site](https://www.gatsbyjs.org/tutorial/part-zero/#create-a-gatsby-site) to test your plugin.
 
-Your directory structure might look like a little like this:
+Your directory structure will look similar to this:
 
 ```
 /my-gatsby-site
@@ -56,13 +56,13 @@ module.exports = {
 
 The line `require.resolve('../my-plugin')` is what accesses the plugin based on its filepath on your computer, and adds it as a plugin when Gatsby runs.
 
-_You can use this method to test and develop your plugin before you publish it to a package registry like npm. Once it has been published you would instead install it and [add the plugin name to the array](https://www.gatsbyjs.org/docs/using-a-plugin-in-your-site/). You can read about other ways to connect your plugin to your site including using `npm link` or `yarn workspaces` in the [doc on creating local plugins](https://www.gatsbyjs.org/docs/creating-a-local-plugin/#developing-a-local-plugin-that-is-outside-your-project)._
+_You can use this method to test and develop your plugin before you publish it to a package registry like npm. Once published, you would instead install it and [add the plugin name to the array](https://www.gatsbyjs.org/docs/using-a-plugin-in-your-site/). You can read about other ways to connect your plugin to your site including using `npm link` or `yarn workspaces` in the [doc on creating local plugins](https://www.gatsbyjs.org/docs/creating-a-local-plugin/#developing-a-local-plugin-that-is-outside-your-project)._
 
 3. Verify the plugin was added correctly
 
-The plugin added by the starter has one API implemented in the `gatsby-node` file that will log a message to the console when you run `gatsby develop` or `gatsby build` in the site that implements your plugin.
+The plugin added by the starter implements a single API in the `gatsby-node` that logs a message to the console. When you run `gatsby develop` or `gatsby build` in the site that implements your plugin, you should see this message.
 
-You can verify your plugin was added to your site correctly by running `gatsby develop` in the site.
+You can verify your plugin was added to your site correctly by running `gatsby develop` for the site.
 
 You should now see a message logged to the console in the preinit phase of the Gatsby build process:
 
@@ -81,7 +81,7 @@ When you clone the site, the information in the `package.json` will need to be u
 
 ## 🧐 What's inside?
 
-These are the files and directories you'll see for a plugin using this starter. They are used because they are the same as the [files Gatsby looks for in plugins](https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)]
+This starter generates the [files Gatsby looks for in plugins](https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)].
 
 ```
 /my-plugin
