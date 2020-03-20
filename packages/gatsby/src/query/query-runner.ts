@@ -9,39 +9,38 @@ import { getCodeFrame } from "./graphql-errors"
 import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"
-import { ExecutionResultDataDefault } from "graphql/execution/execute"
 import { ExecutionResult } from "graphql"
 
 const resultHashes = new Map()
+
+type PageContext = any
 
 interface IQueryJob {
   id: string
   hash?: string
   query: string
   componentPath: string
-  context: {
-    path: any
-    context: any
-  }
+  context: PageContext
   isPage: boolean
   pluginCreatorId: string
+}
+
+interface IExecutionResult extends ExecutionResult {
+  pageContext?: PageContext
 }
 
 // Run query
 export const queryRunner = async (
   graphqlRunner: GraphQLRunner,
   queryJob: IQueryJob
-): Promise<ExecutionResult<ExecutionResultDataDefault>> => {
+): Promise<IExecutionResult> => {
   const { program } = store.getState()
 
-  const graphql = (
-    query: string,
-    context: any
-  ): Promise<ExecutionResult<ExecutionResultDataDefault>> =>
+  const graphql = (query: string, context: any): Promise<ExecutionResult> =>
     graphqlRunner.query(query, context)
 
   // Run query
-  let result: ExecutionResult<ExecutionResultDataDefault>
+  let result: IExecutionResult
   // Nothing to do if the query doesn't exist.
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
