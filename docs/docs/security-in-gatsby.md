@@ -74,7 +74,15 @@ Some third-party scripts like Google Tag Manager gives the possibility to add ar
 
 ## Check Your Dependencies
 
-In your Gatsby project, you are going to have a lot of dependencies (which has their own dependencies as well) in your `node_modules/`. Therefore, it is important to check if any of them has a security issue. NPM make this possible since v6 by executing the `npm audit` in the command line.
+In your Gatsby project, you are going to have a lot of dependencies (which has their own dependencies as well) in your `node_modules/`. Therefore, it is important to check if any of them has a security issue. 
+
+**Using `npm`**
+
+In npm, you can use the `npm audit` command to check your dependencies. It is available since v6. Check their [docs](https://docs.npmjs.com/cli/audit) for more options.
+
+**Using `yarn`**
+
+Similar to `npm`, you can use the `yarn audit` command. It is available since v1.12.0, not available in v2. Check their [docs](https://classic.yarnpkg.com/en/docs/cli/audit/) for more options.
 
 ## Content Security Policy (CSP)
 
