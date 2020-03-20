@@ -60,9 +60,14 @@ This could be prevented in three major ways:
 
 In addition to cookie validation, another approach could be added in the flow, such as an [OAuth2](https://oauth.net/2/).
 
-### Same-Site Cookies
+### Same-Site Cookies Directive
 
-Configure the created cookie in a way that it could be only sent by the same domain. [Most moderns browsers support it with a backward compatibility](https://caniuse.com/#feat=same-site-cookie-attribute).
+If you need to create cookies in your application, make sure to  protect them by adding the `SameSite` directive:
+
+`Set-Cookie: example=1; SameSite=Strict`
+
+It allows the server to make sure that the requests are not being sent by a **cross-site** domain.
+Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) regarding how a cookie could be configurated. [Most moderns browsers support it with a backward compatibility](https://caniuse.com/#feat=same-site-cookie-attribute).
 
 ### Anti-CSRF Tokens
 
