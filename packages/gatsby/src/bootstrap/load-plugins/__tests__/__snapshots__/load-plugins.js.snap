@@ -36,6 +36,8 @@ Array [
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
       "sourceNodes",
+      "createSchemaCustomization",
+      "createResolvers",
       "onCreatePage",
     ],
     "pluginOptions": Object {
@@ -220,6 +222,8 @@ Array [
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
       "sourceNodes",
+      "createSchemaCustomization",
+      "createResolvers",
       "onCreatePage",
     ],
     "pluginOptions": Object {
@@ -432,6 +436,8 @@ Array [
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
       "sourceNodes",
+      "createSchemaCustomization",
+      "createResolvers",
       "onCreatePage",
     ],
     "pluginOptions": Object {

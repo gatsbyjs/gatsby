@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.4.0...gatsby-transformer-sharp@2.4.1) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.19...gatsby-transformer-sharp@2.4.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.18...gatsby-transformer-sharp@2.3.19) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.17...gatsby-transformer-sharp@2.3.18) (2020-03-10)
+
+### Features
+
+- **gatsby-transformer-sharp:** add inside and outside fit opt… ([#14852](https://github.com/gatsbyjs/gatsby/issues/14852)) ([1aa2974](https://github.com/gatsbyjs/gatsby/commit/1aa2974)), closes [#13078](https://github.com/gatsbyjs/gatsby/issues/13078) [/github.com/gatsbyjs/gatsby/pull/13078#issuecomment-482247808](https://github.com//github.com/gatsbyjs/gatsby/pull/13078/issues/issuecomment-482247808)
+
+## [2.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.16...gatsby-transformer-sharp@2.3.17) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.15...gatsby-transformer-sharp@2.3.16) (2020-02-27)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.14...gatsby-transformer-sharp@2.3.15) (2020-02-26)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** Warn when using unsupported ext… ([#20782](https://github.com/gatsbyjs/gatsby/issues/20782)) ([4519c05](https://github.com/gatsbyjs/gatsby/commit/4519c05))
+
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.13...gatsby-transformer-sharp@2.3.14) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.12...gatsby-transformer-sharp@2.3.13) (2020-01-17)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** prevent duplicate copy of the same file ([#20620](https://github.com/gatsbyjs/gatsby/issues/20620)) ([93f0645](https://github.com/gatsbyjs/gatsby/commit/93f0645))
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.11...gatsby-transformer-sharp@2.3.12) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.9...gatsby-transformer-sharp@2.3.11) (2020-01-09)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** define required image fields as non-null in schema ([#20314](https://github.com/gatsbyjs/gatsby/issues/20314)) ([e3026c9](https://github.com/gatsbyjs/gatsby/commit/e3026c9))
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.9...gatsby-transformer-sharp@2.3.10) (2020-01-09)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** define required image fields as non-null in schema ([#20314](https://github.com/gatsbyjs/gatsby/issues/20314)) ([e3026c9](https://github.com/gatsbyjs/gatsby/commit/e3026c9))
+
 ## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.7...gatsby-transformer-sharp@2.3.9) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

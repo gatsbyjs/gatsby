@@ -14,7 +14,7 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
       description: `Copy file to static directory and return public url to it`,
       resolve: (file, fieldArgs, context) => {
         const details = getNodeAndSavePathDependency(file.id, context.path)
-        const fileName = `${file.name}-${file.internal.contentDigest}${details.ext}`
+        const fileName = `${file.internal.contentDigest}/${details.base}`
 
         const publicPath = path.join(
           process.cwd(),

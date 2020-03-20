@@ -25,8 +25,8 @@ Want to see a more advanced example of TinaCMS integrated with a Gatsby website?
 First we need to get a local development environment set up for the site. Please reference the Gatsby Starter Blog [README](https://github.com/gatsbyjs/gatsby-starter-blog/#readme) for extra notes on this.
 
 ```bash
-$ gatsby new tina-tutorial https://github.com/gatsbyjs/gatsby-starter-blog
-$ cd tina-tutorial
+gatsby new tina-tutorial https://github.com/gatsbyjs/gatsby-starter-blog
+cd tina-tutorial
 ```
 
 ## Install and Configure Tina
@@ -34,7 +34,7 @@ $ cd tina-tutorial
 As usual when setting up a new tool, we need to install a few packages. We will install `gatsby-plugin-tinacms`, which sets up the core Tina functionality. Along with that, we'll need the peer-dependency, `styled-components`, to keep the sidebar pretty. Since this site uses markdown, we'll install `gatsby-tinacms-remark`. And `gatsby-tinacms-git` will setup our Git API.
 
 ```bash
-$ yarn add gatsby-plugin-tinacms gatsby-tinacms-remark gatsby-tinacms-git styled-components
+yarn add gatsby-plugin-tinacms gatsby-tinacms-remark gatsby-tinacms-git styled-components
 ```
 
 After installing those packages, add `gatsby-plugin-tinacms` to the list of plugins in `gatsby-config.js`. We'll also pass options to tell Tina what plugins to use and when to hide the sidebar:
@@ -170,7 +170,7 @@ Editing in the sidebar works fine for many types of content. Yet, long-form cont
 
 3. Wrap `TinaField` around the element rendering content you want to edit inline. Pass in the `Wysiwyg` component to `TinaField`:
 
-   ```javascript
+   ```jsx
    <TinaField name="rawMarkdownBody" Component={Wysiwyg}>
      <section dangerouslySetInnerHTML={{ __html: post.html }} />
    </TinaField>
@@ -178,14 +178,16 @@ Editing in the sidebar works fine for many types of content. Yet, long-form cont
 
 4. Add a button anywhere on your page to toggle ‘edit’ mode. This button also serves as a flag to signal inline content editing. You'll only want this to display in production, so here you can see one way of rendering it conditionally.
 
-   ```
+   ```jsx
    const { isEditing, setIsEditing } = this.props
 
-   {process.env.NODE_ENV != "production" && (
-      <TinaButton primary onClick={() => setIsEditing(p => !p)}>
-        {isEditing ? "Preview" : "Edit"}
-      </TinaButton>
-    )}
+   {
+     process.env.NODE_ENV != "production" && (
+       <TinaButton primary onClick={() => setIsEditing(p => !p)}>
+         {isEditing ? "Preview" : "Edit"}
+       </TinaButton>
+     )
+   }
    ```
 
 The `liveRemarkForm` HOC is similar to `remarkForm`, they both return components where Tina can edit the data that they render. With `RemarkForm`, this data is edited in the sidebar. With `liveRemarkForm`, the data is edited on the page. The difference is, `liveRemarkForm` returns a component wrapped in a `TinaForm`. In 'edit-mode', the form displays on the page itself.
@@ -238,7 +240,7 @@ We will register the `content-creator` plugin in a component on the site. When t
 
 3. Export the component and plugin using `withPlugin()`.
 
-   ```
+   ```javascript
    export default withPlugin(Layout, CreateBlogPlugin)
    ```
 
@@ -256,7 +258,7 @@ When it's time to allow your editors to edit a site with Tina on a hosted server
 
 To get Tina working in Gatsby Cloud, you'll need to configure the following environment variables in your `Site Settings`:
 
-```
+```text
 GIT_AUTHOR_EMAIL
 GIT_AUTHOR_NAME
 SSH_KEY
@@ -270,6 +272,6 @@ Getting a development server running in the cloud solves the issue of accessing 
 
 ## Summary
 
-These are just some simple steps to get up and running with Tina, the possibilities don't end here. Make sure to check out [Tina Starter Grande](https://github.com/tinacms/tina-starter-grande) to see a more advacned implementation of Tina on a Gatsby website.
+These are just some simple steps to get up and running with Tina, the possibilities don't end here. Make sure to check out [Tina Starter Grande](https://github.com/tinacms/tina-starter-grande) to see a more advanced implementation of Tina on a Gatsby website.
 
 Hopefully you've found this introduction to TinaCMS useful. Feel free to tweet at [Tina 🦙](https://twitter.com/tina_cms) with feedback or questions. If you want to learn more, checkout the [documentation](https://tinacms.org/docs/getting-started/introduction). TinaCMS is open source; feel free to dig into the [source code](https://github.com/tinacms/tinacms). If you're interested in getting involved with the project, join our [community slack](https://join.slack.com/t/tinacms/shared_invite/enQtNzgxNDY1OTA3ODI3LTNkNWEwYjQyYTA2ZDZjZGQ2YmI5Y2ZlOWVmMjlkYmYxMzVmNjM0YTk2MWM2MTIzMmMxMDg3NWIxN2EzOWQ0NDM). If you get stuck, don't hesitate to ask questions on the [Tina Forum](https://community.tinacms.org/).

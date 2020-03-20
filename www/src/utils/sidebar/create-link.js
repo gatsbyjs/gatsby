@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import Link from "../../components/localized-link"
 
 import indention from "../../utils/sidebar/indention"
 
@@ -61,12 +61,12 @@ const createLink = ({
             }),
             ...(isActive && {
               color: `link.color`,
-              fontWeight: `medium`,
+              fontWeight: `semiBold`,
             }),
             ...(isParentOfActiveItem && {
               bg: `sidebar.itemBackgroundActive`,
               color: `link.color`,
-              fontWeight: `medium`,
+              fontWeight: `semiBold`,
             }),
             "&:hover": {
               bg: `sidebar.itemHoverBackground`,
@@ -87,8 +87,7 @@ const createLink = ({
             top: bulletOffsetTop,
             height: bulletSize,
             position: `absolute`,
-            transition: t =>
-              `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+            transition: `default`,
             width: bulletSize,
           },
           "&:before": {

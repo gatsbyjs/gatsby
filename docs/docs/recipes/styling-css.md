@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Styling with CSS"
+tableOfContentsDepth: 1
 ---
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
@@ -27,7 +28,7 @@ p {
 
 2. Import the global CSS file in the `gatsby-browser.js` file such as the following:
 
-```javascript:gatsby-browser.js
+```javascript:title=gatsby-browser.js
 import "./src/styles/global.css"
 ```
 
@@ -211,9 +212,9 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 
 Sass is an extension of CSS that gives you more advanced features like nested rules, variables, mixins, and more.
 
-Sass has 2 syntaxes. The most commonly used syntax is "SCSS", and is a superset of CSS. That means all valid CSS syntax, is valid SCSS syntax. SCSS files use the extension .scss
+Sass has 2 syntaxes. The most commonly used syntax is "SCSS", and is a superset of CSS. That means all valid CSS syntax, is valid SCSS syntax. SCSS files use the extension `.scss`
 
-Sass will compile .scss and .sass files to .css files for you, so you can write your stylesheets with more advanced features.
+Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can write your stylesheets with more advanced features.
 
 ### Prerequisites
 
@@ -257,7 +258,7 @@ import "./styles.scss"
 import "./styles.sass"
 ```
 
-_Note: You can use Sass/SCSS files as modules too, like mentioned in the previous recipe about CSS modules, with the difference that instead of .css the extensions have to be .scss or .sass_
+_Note: You can use Sass/SCSS files as modules too, like mentioned in the previous recipe about CSS modules, with the difference that instead of `.css` the extensions have to be `.scss` or `.sass`_
 
 ### Additional resources
 
@@ -276,7 +277,7 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
 
-```
+```text
 src/fonts/fontname.woff2
 ```
 
@@ -415,3 +416,44 @@ _NOTE: So for the above example, the relevant CSS declaration would be `font-fam
 - [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
 - [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)
 - [Live example on Kyle Mathews' blog](https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/)
+
+## Using Font Awesome
+
+Using [Font Awesome](https://fontawesome.com/) gives you access to thousands of icons for use on your site. Since Gatsby sites are React sites, it's recommended to use the [react-fontawesome](https://github.com/FortAwesome/react-fontawesome) SVG library.
+
+### Prerequisites
+
+- The [Gatsby CLI](/docs/gatsby-cli/) installed
+- A [Gatsby site](/docs/quick-start)
+
+### Directions
+
+1. Install the `react-fontawesome` dependencies.
+
+```shell
+npm install @fortawesome/fontawesome-svg-core  @fortawesome/free-brands-svg-icons @fortawesome/react-fontawesome
+```
+
+> Note that there are multiple icon libraries within `react-fontawesome`. You may also be interested in `free-regular-svg-icons` and `free-solid-svg-icons` which you would install the same way.
+
+2. Import the `FontAwesomeIcon` component and the icon you want to use. Then use the icon as a component directly in your JSX files:
+
+```jsx:title=index.js
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faReact } from "@fortawesome/free-brands-svg-icons"
+
+const IndexPage = () => (
+  <Layout>
+    <FontAwesomeIcon icon={faReact} /> //highlight-line
+  </Layout>
+)
+
+export default IndexPage
+```
+
+> This example imports a single, specific icon and uses it for improved performance. As an alternative, you can [import the icons and build a library](https://github.com/FortAwesome/react-fontawesome#build-a-library-to-reference-icons-throughout-your-app-more-conveniently).
+
+### Additional resources
+
+- [Font Awesome](https://fontawesome.com/)
+- [react-fontawesome](https://github.com/FortAwesome/react-fontawesome)

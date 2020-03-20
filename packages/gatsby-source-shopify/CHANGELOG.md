@@ -3,6 +3,80 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.1.0...gatsby-source-shopify@3.1.1) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.53...gatsby-source-shopify@3.1.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [3.0.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.52...gatsby-source-shopify@3.0.53) (2020-03-18)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.51...gatsby-source-shopify@3.0.52) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.51](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.50...gatsby-source-shopify@3.0.51) (2020-03-13)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.50](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.49...gatsby-source-shopify@3.0.50) (2020-03-13)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.48...gatsby-source-shopify@3.0.49) (2020-03-12)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.47...gatsby-source-shopify@3.0.48) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.46...gatsby-source-shopify@3.0.47) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.45...gatsby-source-shopify@3.0.46) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.44...gatsby-source-shopify@3.0.45) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.43...gatsby-source-shopify@3.0.44) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.42...gatsby-source-shopify@3.0.43) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.41...gatsby-source-shopify@3.0.42) (2020-01-29)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.40...gatsby-source-shopify@3.0.41) (2020-01-16)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.39...gatsby-source-shopify@3.0.40) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.37...gatsby-source-shopify@3.0.39) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.37...gatsby-source-shopify@3.0.38) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ## [3.0.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.36...gatsby-source-shopify@3.0.37) (2019-12-20)
 
 ### Features

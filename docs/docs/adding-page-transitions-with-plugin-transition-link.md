@@ -48,13 +48,13 @@ npm install --save gsap
 
 Then, import the AniLink component:
 
-```javascript
+```jsx
 import AniLink from "gatsby-plugin-transition-link/AniLink"
 ```
 
 Finally, make sure you provide your desired animation's name as a blank prop to `AniLink`:
 
-```javascript
+```jsx
 <AniLink paintDrip to="page-4">
   Go to Page 4
 </AniLink>
@@ -75,7 +75,7 @@ Additionally, you can specify a number of props and options on the `TransitionLi
 
 You can specify a `trigger` function that will handle the animation. This is useful for _imperative_ animation libraries like [animejs](https://animejs.com/) or [GSAP](https://greensock.com/gsap) that specify animations with function calls.
 
-```javascript
+```jsx
 <TransitionLink
   exit={{
     length: length,
@@ -99,7 +99,7 @@ You can specify a `trigger` function that will handle the animation. This is use
 
 The exiting and entering pages/templates involved in the transition will receive props indicating the current transition status, as well as the `exit` or `enter` props defined on the `TransitionLink`.
 
-```javascript
+```jsx
 const PageOrTemplate = ({ children, transitionStatus, entry, exit }) => {
   console.log(transitionStatus, entry, exit)
   return <div className={transitionStatus}>{children}</div>
@@ -112,7 +112,7 @@ If you want to access these props in one of your components instead of a page/te
 
 Here's an example using `TransitionState` and `react-pose` to trigger enter/exit transitions for a `Box` component.
 
-```javascript
+```jsx
 import { TransitionState } from "gatsby-plugin-transition-link"
 
 const Box = posed.div({

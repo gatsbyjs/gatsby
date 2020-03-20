@@ -21,7 +21,7 @@ describe(`Job actions/reducer`, () => {
   })
 
   it(`Allows you to set other info on the job`, () => {
-    let state = jobsReducer(
+    const state = jobsReducer(
       undefined,
       actions.createJob({ id: `test job`, word: `yo` })
     )

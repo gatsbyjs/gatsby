@@ -26,7 +26,7 @@ html {
 ```
 
 ```javascript:title=gatsby-browser.js
-import("./src/index.scss")
+import "./src/index.scss"
 ```
 
 ## Other options

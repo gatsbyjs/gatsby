@@ -3,6 +3,90 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.4.0...gatsby-source-drupal@3.4.1) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.30...gatsby-source-drupal@3.4.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [3.3.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.29...gatsby-source-drupal@3.3.30) (2020-03-18)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.28...gatsby-source-drupal@3.3.29) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency axios to ^0.19.2 ([#22317](https://github.com/gatsbyjs/gatsby/issues/22317)) ([91e780f](https://github.com/gatsbyjs/gatsby/commit/91e780f))
+
+## [3.3.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.27...gatsby-source-drupal@3.3.28) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.26...gatsby-source-drupal@3.3.27) (2020-03-13)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.25...gatsby-source-drupal@3.3.26) (2020-03-13)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** Add safety check for existence of datum. ([#22213](https://github.com/gatsbyjs/gatsby/issues/22213)) ([71b5d1e](https://github.com/gatsbyjs/gatsby/commit/71b5d1e))
+
+## [3.3.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.24...gatsby-source-drupal@3.3.25) (2020-03-12)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.23...gatsby-source-drupal@3.3.24) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.22...gatsby-source-drupal@3.3.23) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.21...gatsby-source-drupal@3.3.22) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.20...gatsby-source-drupal@3.3.21) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.19...gatsby-source-drupal@3.3.20) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.18...gatsby-source-drupal@3.3.19) (2020-02-14)
+
+### Features
+
+- **gatsby-source-drupal:** Add Drupal JSON:API Includes support ([#21380](https://github.com/gatsbyjs/gatsby/issues/21380)) ([ba3502e](https://github.com/gatsbyjs/gatsby/commit/ba3502e))
+
+## [3.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.17...gatsby-source-drupal@3.3.18) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.16...gatsby-source-drupal@3.3.17) (2020-01-29)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.15...gatsby-source-drupal@3.3.16) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.13...gatsby-source-drupal@3.3.15) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.13...gatsby-source-drupal@3.3.14) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
 ## [3.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.12...gatsby-source-drupal@3.3.13) (2019-12-20)
 
 **Note:** Version bump only for package gatsby-source-drupal

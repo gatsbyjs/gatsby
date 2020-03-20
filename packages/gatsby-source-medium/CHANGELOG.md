@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.23...gatsby-source-medium@2.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.22...gatsby-source-medium@2.1.23) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency axios to ^0.19.2 ([#22317](https://github.com/gatsbyjs/gatsby/issues/22317)) ([91e780f](https://github.com/gatsbyjs/gatsby/commit/91e780f))
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.21...gatsby-source-medium@2.1.22) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-source-medium
+
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.20...gatsby-source-medium@2.1.21) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-medium
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.19...gatsby-source-medium@2.1.20) (2020-03-02)
+
+### Bug Fixes
+
+- **gatsby-source-medium:** fix data fecthing & add limitation to readme ([#17547](https://github.com/gatsbyjs/gatsby/issues/17547)) ([3ba9f9c](https://github.com/gatsbyjs/gatsby/commit/3ba9f9c))
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.18...gatsby-source-medium@2.1.19) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-source-medium
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.17...gatsby-source-medium@2.1.18) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-medium
+
 ## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.15...gatsby-source-medium@2.1.17) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-source-medium

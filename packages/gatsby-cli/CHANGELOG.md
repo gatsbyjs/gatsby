@@ -3,6 +3,120 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.13...gatsby-cli@2.11.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.10.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.12...gatsby-cli@2.10.13) (2020-03-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** Fix import ([#22388](https://github.com/gatsbyjs/gatsby/issues/22388)) ([d65fb3c](https://github.com/gatsbyjs/gatsby/commit/d65fb3c))
+
+## [2.10.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.11...gatsby-cli@2.10.12) (2020-03-18)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.10...gatsby-cli@2.10.11) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.9...gatsby-cli@2.10.10) (2020-03-13)
+
+### Bug Fixes
+
+- make 11321 and 11330 error formatters backward compatible ([#22249](https://github.com/gatsbyjs/gatsby/issues/22249)) ([6b01efe](https://github.com/gatsbyjs/gatsby/commit/6b01efe))
+
+## [2.10.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.8...gatsby-cli@2.10.9) (2020-03-12)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.7...gatsby-cli@2.10.8) (2020-03-12)
+
+### Bug Fixes
+
+- **gatsby:** Show meaningful error when directory names are too long ([#21518](https://github.com/gatsbyjs/gatsby/issues/21518)) ([4404af1](https://github.com/gatsbyjs/gatsby/commit/4404af1))
+
+## [2.10.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.6...gatsby-cli@2.10.7) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.5...gatsby-cli@2.10.6) (2020-03-11)
+
+### Bug Fixes
+
+- **gatsby-cli:** Fix an import change that broke `gatsby new` ([#22161](https://github.com/gatsbyjs/gatsby/issues/22161)) ([29773a3](https://github.com/gatsbyjs/gatsby/commit/29773a3))
+
+## [2.10.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.4...gatsby-cli@2.10.5) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.3...gatsby-cli@2.10.4) (2020-03-09)
+
+### Bug Fixes
+
+- **gatsby-cli:** Update build script to properly handle .tsx files ([#22111](https://github.com/gatsbyjs/gatsby/issues/22111)) ([72750f3](https://github.com/gatsbyjs/gatsby/commit/72750f3))
+
+## [2.10.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.2...gatsby-cli@2.10.3) (2020-03-09)
+
+### Performance Improvements
+
+- **gatsby-cli:** avoid unnecesary rerenders for static messages in CLI ([#21955](https://github.com/gatsbyjs/gatsby/issues/21955)) ([5aff49d](https://github.com/gatsbyjs/gatsby/commit/5aff49d))
+
+## [2.10.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.1...gatsby-cli@2.10.2) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.0...gatsby-cli@2.10.1) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.9.0...gatsby-cli@2.10.0) (2020-03-03)
+
+### Features
+
+- **gatsby:** add react profiling option ([#21863](https://github.com/gatsbyjs/gatsby/issues/21863)) ([3e8f2c7](https://github.com/gatsbyjs/gatsby/commit/3e8f2c7))
+
+# [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.30...gatsby-cli@2.9.0) (2020-02-24)
+
+### Features
+
+- **gatsby-cli:** support for PREFIX_PATHS env variable ([#21627](https://github.com/gatsbyjs/gatsby/issues/21627)) ([7bc2c3b](https://github.com/gatsbyjs/gatsby/commit/7bc2c3b))
+
+## [2.8.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.29...gatsby-cli@2.8.30) (2020-02-17)
+
+### Bug Fixes
+
+- **gatsby-cli:** lower required react version ([#21522](https://github.com/gatsbyjs/gatsby/issues/21522)) ([41c620b](https://github.com/gatsbyjs/gatsby/commit/41c620b))
+
+## [2.8.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.28...gatsby-cli@2.8.29) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.27...gatsby-cli@2.8.28) (2020-01-29)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.26...gatsby-cli@2.8.27) (2020-01-14)
+
+### Bug Fixes
+
+- **gatsby-cli:** normalize case of windows drive letter ([#20437](https://github.com/gatsbyjs/gatsby/issues/20437)) ([3e9bf07](https://github.com/gatsbyjs/gatsby/commit/3e9bf07))
+
+## [2.8.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.25...gatsby-cli@2.8.26) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.23...gatsby-cli@2.8.25) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.23...gatsby-cli@2.8.24) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.8.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.22...gatsby-cli@2.8.23) (2020-01-06)
 
 ### Features

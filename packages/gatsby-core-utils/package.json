@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "1.0.25",
+  "version": "1.1.0",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -16,26 +16,29 @@
     "directory": "packages/gatsby-core-utils"
   },
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore **/__tests__",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__"
+    "build": "babel src --out-dir dist/ --ignore **/__tests__ --ignore **/__mocks__ --extensions \".ts\"",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__ --extensions \".ts\""
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "files": [
     "dist/",
-    "index.d.ts"
+    "dist/index.d.ts"
   ],
-  "types": "index.d.ts",
   "dependencies": {
     "ci-info": "2.0.0",
+    "configstore": "^5.0.1",
     "node-object-hash": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.14",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@types/ci-info": "2.0.0",
+    "babel-preset-gatsby-package": "^0.3.0",
+    "cross-env": "^5.2.1",
+    "typescript": "^3.8.3"
   }
 }

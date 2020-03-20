@@ -1,5 +1,6 @@
 ---
 title: "Recipes: Working with Images"
+tableOfContentsDepth: 1
 ---
 
 Access images as static resources, or automate the process of optimizing them through powerful plugins.
@@ -68,7 +69,7 @@ This is an **escape route** for [specific use cases](/docs/static-folder/#when-t
 
 1. Ensure that the image is in your `static` folder at the root of the project. Your project structure might look something like this:
 
-```
+```text
 ├── gatsby-config.js
 ├── src
 │   └── pages

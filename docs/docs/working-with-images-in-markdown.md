@@ -42,7 +42,7 @@ module.exports = {
 
 Then, in an example Markdown file, add a field called `featuredImage`:
 
-```md:title=src/pages/my-favorite-doggos.md
+```markdown:title=src/pages/my-favorite-doggos.md
 ---
 title: My Favorite Doggos
 featuredImage: pupperino.png
@@ -55,7 +55,7 @@ The next step will be to incorporate the data into a template with a GraphQL que
 
 ### Configuring for images and posts in different directories
 
-There are also occassions when you may want to source images from a different directory than where your Markdown posts or pages are located, such as in an external `/images` folder. You can set this up by specifying two distinct sources, one for the pages and the other for images:
+There are also occasions when you may want to source images from a different directory than where your Markdown posts or pages are located, such as in an external `/images` folder. You can set this up by specifying two distinct sources, one for the pages and the other for images:
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -81,7 +81,7 @@ module.exports = {
 
 Then, in a Markdown file, the path to a `featuredImage` would be relative to the page file (in this case, in an `/images` directory up a level):
 
-```md:title=src/pages/about.md
+```markdown:title=src/pages/about.md
 ---
 title: About
 featuredImage: ../images/team-cat.png
@@ -249,6 +249,6 @@ module.exports = {
 
 With the configurations above, you can use the default Markdown syntax for images. They will be processed by Sharp and appear as if you placed them in a `gatsby-image` component.
 
-```md
+```markdown
 ![Hopper The Rabbit](./rabbit-friend.png)
 ```
