@@ -502,7 +502,7 @@ module.exports = async (
           ),
           priority: 40,
           // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
-          // enforce: true,
+          enforce: true,
         },
         // if a module is bigger than 160kb from node_modules we make a separate chunk for it
         lib: {
@@ -552,10 +552,9 @@ module.exports = async (
           minChunks: 2,
           reuseExistingChunk: true,
         },
-        /**
-         * Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
-         * TODO make an exception for css-modules
-         */
+
+        // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
+        // TODO make an exception for css-modules
         styles: {
           test(module) {
             return isCssModule(module)

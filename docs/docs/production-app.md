@@ -21,7 +21,7 @@ The config is quite large, but here are some of the important values in the fina
 ```javascript
 {
   entry: {
-    app: ".cache/production-app"
+    app: `.cache/production-app`
   },
   output: {
     // e.g. app-2e49587d85e03a033f58.js
@@ -32,6 +32,7 @@ The config is quite large, but here are some of the important values in the fina
     publicPath: `/`
   },
   target: `web`,
+  devtool: `source-map`,
   mode: `production`,
   node: {
     ___filename: true
@@ -41,7 +42,37 @@ The config is quite large, but here are some of the important values in the fina
       // e.g. webpack-runtime-e402cdceeae5fad2aa61.js
       name: `webpack-runtime`
     },
-    splitChunks: false
+    splitChunks: {
+      chunks: `all`,
+      cacheGroups: {
+        // disable Webpack's default cacheGroup
+        default: false,
+        // disable Webpack's default vendor cacheGroup
+        vendors: false,
+        // Create a framework bundle that contains react libraries
+        // They hardly change so we bundle them to getter to improve caching
+        framework: {},
+        // Big modules that are over 160kb are moved to their own file to
+        // optimize browser parsing & execution
+        lib: {},
+        // All libraries that are used on all pages are moved into a common chunk
+        commons: {},
+        // When a module is used more than once we create a shared bundle to save user's bandwidth
+        shared: {},
+        // All css is bundled into one stylesheet
+        styles: {}
+      },
+      // Keep maximum initial requests to 25
+      maxInitialRequests: 25,
+      // A chunk should be at least 20kb to be considered into splitChunks
+      minSize: 20000
+    },
+    minimizers: [
+      // Minify javascript using Terser (https://terser.org/)
+      plugins.minifyJs(),
+      // Minify css by using cssnano (https://cssnano.co/)
+      plugins.minifyCss(),
+    ]
   }
   plugins: [
     // A custom webpack plugin that implements logic to write out chunk-map.json and webpack.stats.json
@@ -61,6 +92,14 @@ This bundle is produced from [production-app.js](https://github.com/gatsbyjs/gat
 ##### webpack-runtime-[contenthash].js
 
 This contains the small [webpack-runtime](https://webpack.js.org/concepts/manifest/#runtime) as a separate bundle (configured in `optimization` section). In practice, the app and webpack-runtime are always needed together.
+
+##### framework-[contenthash].js
+
+The framework bundle contains the react framework. We've noticed that the user hardly updates React to a newer version. Creating a separate bundle allows us to stay longer in the user's browser cache.
+
+##### commons-[contenthash].js
+
+Libraries used on every gatsby page are bundled into the commons javascript file. By bundling these all together, we make sure your user only needs to download this bundle once.
 
 ##### component---[name]-[contenthash].js
 
