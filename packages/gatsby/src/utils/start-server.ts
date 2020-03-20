@@ -1,11 +1,7 @@
-import url from "url"
-import fs from "fs"
-import openurl from "better-opn"
 import chokidar from "chokidar"
 
 import webpackHotMiddleware from "webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
-import glob from "glob"
 import express from "express"
 import got from "got"
 import webpack from "webpack"
@@ -15,61 +11,27 @@ import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
-import bootstrap from "../bootstrap"
 import { store } from "../redux"
-import { syncStaticDir } from "../utils/get-static-dir"
 import { buildHTML } from "../commands/build-html"
 import { withBasePath } from "../utils/path"
 import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
-import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
-import chalk from "chalk"
-import address from "address"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import * as WorkerPool from "../utils/worker/pool"
 import http from "http"
 import https from "https"
 
-import bootstrapSchemaHotReloader from "../bootstrap/schema-hot-reloader"
-import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import sourceNodes from "../utils/source-nodes"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
 import websocketManager from "../utils/websocket-manager"
-import getSslCert from "../utils/get-ssl-cert"
 import { slash } from "gatsby-core-utils"
-import { initTracer } from "../utils/tracer"
 import apiRunnerNode from "../utils/api-runner-node"
-import db from "../db"
-import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
-import onExit from "signal-exit"
-import queryUtil from "../query"
-import queryWatcher from "../query/query-watcher"
-import requiresWriter from "../bootstrap/requires-writer"
-import {
-  reportWebpackWarnings,
-  structureWebpackErrors,
-} from "../utils/webpack-error-utils"
-import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
-import {
-  userPassesFeedbackRequestHeuristic,
-  showFeedbackRequest,
-} from "../utils/feedback"
+import { Express } from "express"
 
 import { BuildHTMLStage, IProgram } from "../commands/types"
-
-import { developMachine } from "../state-machines/develop"
-import { interpret } from "xstate"
-
-import { printDeprecationWarnings } from "../utils/print-deprecation-warnings"
-import { printInstructions } from "../utils/print-instructions"
-import { prepareUrls } from "../utils/prepare-urls"
-// import { startServer } from "../utils/start-server"
-
-// checks if a string is a valid ip
-const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -79,7 +41,10 @@ interface IServer {
   webpackActivity: ActivityTracker
 }
 
-export async function startServer(program: IProgram): Promise<IServer> {
+export async function startServer(
+  program: IProgram,
+  app: Express
+): Promise<IServer> {
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
@@ -134,7 +99,6 @@ export async function startServer(program: IProgram): Promise<IServer> {
   /**
    * Set up the express app.
    **/
-  const app = express()
   app.use(telemetry.expressMiddleware(`DEVELOP`))
   app.use(
     webpackHotMiddleware(compiler, {
@@ -190,39 +154,6 @@ export async function startServer(program: IProgram): Promise<IServer> {
       }
     )
   )
-
-  /**
-   * Refresh external data sources.
-   * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
-   * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
-   **/
-  const REFRESH_ENDPOINT = `/__refresh`
-  const refresh = async (req: express.Request): Promise<void> => {
-    let activity = report.activityTimer(`createSchemaCustomization`, {})
-    activity.start()
-    await createSchemaCustomization({
-      refresh: true,
-    })
-    activity.end()
-    activity = report.activityTimer(`Refreshing source data`, {})
-    activity.start()
-    await sourceNodes({
-      webhookBody: req.body,
-    })
-    activity.end()
-  }
-  app.use(REFRESH_ENDPOINT, express.json())
-  app.post(REFRESH_ENDPOINT, (req, res) => {
-    const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
-    const refreshToken = process.env.GATSBY_REFRESH_TOKEN
-    const authorizedRefresh =
-      !refreshToken || req.headers.authorization === refreshToken
-
-    if (enableRefresh && authorizedRefresh) {
-      refresh(req)
-    }
-    res.end()
-  })
 
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
     launchEditor(req.query.fileName, req.query.lineNumber)

@@ -2,17 +2,12 @@ import { syncStaticDir } from "../utils/get-static-dir"
 import report from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
+import express from "express"
 
-import bootstrapSchemaHotReloader from "../bootstrap/schema-hot-reloader"
-import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
 import getSslCert from "../utils/get-ssl-cert"
 import { initTracer } from "../utils/tracer"
-import db from "../db"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
-import queryUtil from "../query"
-import queryWatcher from "../query/query-watcher"
-import requiresWriter from "../bootstrap/requires-writer"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
@@ -110,8 +105,11 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   }
 
+  const app = express()
+
   const developService = interpret(
     developMachine.withContext({
+      app,
       program,
       recursionCount: 0,
       nodesMutatedDuringQueryRun: false,
@@ -121,6 +119,31 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   developService.onTransition(async context => {
     console.log(`on transition`, context.value)
+  })
+
+  /**
+   * Refresh external data sources.
+   * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
+   * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
+   **/
+  const REFRESH_ENDPOINT = `/__refresh`
+  const refresh = async (req: express.Request): Promise<void> => {
+    console.log(`WEBHOOK`)
+    developService.send(`WEBHOOK_RECEIVED`, { body: req.body })
+  }
+  app.use(REFRESH_ENDPOINT, express.json())
+  app.post(REFRESH_ENDPOINT, (req, res) => {
+    const enableRefresh = true || process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
+    const refreshToken = process.env.GATSBY_REFRESH_TOKEN
+    const authorizedRefresh =
+      !refreshToken || req.headers.authorization === refreshToken
+
+    if (enableRefresh && authorizedRefresh) {
+      refresh(req)
+    }
+    res.end()
+
+    // TODO await transition
   })
 
   // Start bootstrap process

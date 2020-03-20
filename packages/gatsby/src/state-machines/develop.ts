@@ -126,7 +126,6 @@ export const developMachine = Machine<any>(
                   nodesMutatedDuringQueryRun:
                     context.nodesMutatedDuringQueryRun ||
                     !!event.data?.nodesMutated,
-                  firstRun: false,
                 }
               }),
             },
@@ -257,9 +256,15 @@ export const developMachine = Machine<any>(
         invoke: {
           src: waitUntilAllJobsComplete,
           id: `waiting-for-jobs`,
-          onDone: {
-            target: `runningWebpack`,
-          },
+          onDone: [
+            {
+              target: `runningWebpack`,
+              cond: (ctx): boolean => ctx.firstRun,
+            },
+            {
+              target: `idle`,
+            },
+          ],
           onError: {
             target: `idle`,
           },
@@ -277,18 +282,22 @@ export const developMachine = Machine<any>(
       //     },
       //   },
       // },
-      // transactionRunning: {
-      //   invoke: {
-      //     src: transactionRunning,
-      //     id: `transactionRunning`,
-      //     onDone: {
-      //       target: `customizingSchema`,
-      //     },
-      //     onError: {
-      //       target: `idle`,
-      //     },
-      //   },
-      // },
+      transactionRunning: {
+        invoke: {
+          src: async (ctx, event): Promise<void> =>
+            console.log(`transactiuon running`, event),
+          id: `transactionRunning`,
+          onDone: {
+            target: `customizingSchema`,
+            actions: assign({
+              refresh: true,
+            }),
+          },
+          onError: {
+            target: `failed`,
+          },
+        },
+      },
       // batchingPageMutations: {
       //   invoke: {
       //     src: batchingPageMutations,
@@ -325,6 +334,7 @@ export const developMachine = Machine<any>(
               const { compiler } = data
               return {
                 compiler,
+                firstRun: false,
               }
             }),
           },
@@ -335,10 +345,20 @@ export const developMachine = Machine<any>(
       },
 
       idle: {
-        // on: {
-        //   WEBHOOK_RECEIVED: {
-        //     target: `transactionRunning`,
-        //   },
+        entry: [
+          assign({
+            webhookBody: null,
+            refresh: false,
+          }),
+        ],
+        on: {
+          WEBHOOK_RECEIVED: {
+            target: `transactionRunning`,
+            actions: assign((ctx, event) => {
+              return { webhookBody: event.body }
+            }),
+          },
+        },
         //   ENQUEUE_NODE_MUTATION: {
         //     target: `transactionRunning`,
         //   },

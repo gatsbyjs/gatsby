@@ -13,8 +13,8 @@ import { printInstructions } from "../utils/print-instructions"
 import { prepareUrls } from "../utils/prepare-urls"
 import { startServer } from "../utils/start-server"
 
-export async function startWebpackServer({ program }): Promise<any> {
-  let { compiler, webpackActivity } = await startServer(program)
+export async function startWebpackServer({ program, app }): Promise<any> {
+  let { compiler, webpackActivity } = await startServer(program, app)
 
   compiler.hooks.watchRun.tapAsync(`log compiling`, function(_, done) {
     if (webpackActivity) {
@@ -30,7 +30,7 @@ export async function startWebpackServer({ program }): Promise<any> {
 
   let isFirstCompile = true
 
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     compiler.hooks.done.tapAsync(`print gatsby instructions`, async function(
       stats,
       done
