@@ -15,6 +15,7 @@ const {
   memoize,
 } = require(`lodash`)
 
+const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
@@ -229,17 +230,13 @@ export default (pagePath, callback) => {
     }
   }
 
-  const routerElement = createElement(
-    ServerLocation,
-    { url: `${__BASE_PATH__}${pagePath}` },
-    createElement(
-      Router,
-      {
-        id: `gatsby-focus-wrapper`,
-        baseuri: `${__BASE_PATH__}`,
-      },
-      createElement(RouteHandler, { path: `/*` })
-    )
+  const routerElement = (
+    <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+      <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
+        <RouteHandler path="/*" />
+      </Router>
+      <div {...RouteAnnouncerProps} />
+    </ServerLocation>
   )
 
   const bodyComponent = apiRunner(

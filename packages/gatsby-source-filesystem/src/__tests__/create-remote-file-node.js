@@ -48,11 +48,21 @@ beforeEach(() => {
   progressBar.tick.mockClear()
 })
 
+const createMockCache = () => {
+  return {
+    get: jest.fn(),
+    set: jest.fn(),
+    directory: __dirname,
+  }
+}
+
 describe(`create-remote-file-node`, () => {
+  const cache = createMockCache()
+
   const defaultArgs = {
     url: ``,
     store: {},
-    cache: {},
+    getCache: () => cache,
     createNode: jest.fn(),
     createNodeId: jest.fn(),
     reporter,
@@ -124,10 +134,6 @@ describe(`create-remote-file-node`, () => {
 
       return createRemoteFileNode({
         ...defaultArgs,
-        cache: {
-          get: jest.fn(),
-          set: jest.fn(),
-        },
         store: {
           getState: jest.fn(() => {
             return {
@@ -276,26 +282,34 @@ describe(`create-remote-file-node`, () => {
       )
     })
 
-    it(`throws on invalid inputs: cache`, () => {
+    it(`throws on invalid inputs: cache and getCache undefined`, () => {
       expect(() => {
         createRemoteFileNode({
           ...defaultArgs,
           cache: undefined,
+          getCache: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
-        `"cache must be the Gatsby cache, was undefined"`
+        `"Neither \\"cache\\" or \\"getCache\\" was passed. getCache must be function that return Gatsby cache, \\"cache\\" must be the Gatsby cache, was undefined"`
       )
     })
 
-    it(`throws on invalid inputs: store`, () => {
+    it(`doesn't throw when getCache is defined`, () => {
       expect(() => {
         createRemoteFileNode({
           ...defaultArgs,
-          store: undefined,
+          getCache: () => createMockCache(),
         })
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"store must be the redux store, was undefined"`
-      )
+      }).not.toThrow()
+    })
+
+    it(`doesn't throw when cache is defined`, () => {
+      expect(() => {
+        createRemoteFileNode({
+          ...defaultArgs,
+          cache: createMockCache(),
+        })
+      }).not.toThrow()
     })
   })
 })

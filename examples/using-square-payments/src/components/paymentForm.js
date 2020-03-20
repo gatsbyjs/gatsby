@@ -148,7 +148,7 @@ export default class PaymentForm extends Component {
         },
         cardNonceResponseReceived: (errors, nonce, cardData) => {
           if (errors) {
-            // Log errors from nonce generation to the Javascript console
+            // Log errors from nonce generation to the JavaScript console
             console.log("Encountered errors:")
             errors.forEach(function(error) {
               console.log("  " + error.message)

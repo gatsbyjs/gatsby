@@ -2,7 +2,8 @@ import path from "path"
 import os from "os"
 
 /**
- * @type {import('../index').joinPath}
+ * Joins all given path segments and converts
+ * @param paths A sequence of path segments
  */
 export function joinPath(...paths: string[]): string {
   const joinedPath = path.join(...paths)
@@ -70,19 +71,17 @@ const nodePaths = [
 ]
 
 /**
- * @type {import('../index').isNodeInternalModulePath}
+ * Checks if the file name matches a node path
+ * @param fileName File name
  */
 export const isNodeInternalModulePath = (fileName: string): boolean =>
   nodePaths.some(regTest => regTest.test(fileName))
 
 /**
- * slash
- * --
  * Convert Windows backslash paths to slash paths: foo\\bar ➔ foo/bar
  *
- *
- * @param  {String}          path
- * @return {String}          slashed path
+ * @param  path
+ * @return  slashed path
  */
 export function slash(path: string): string {
   const isExtendedLengthPath = /^\\\\\?\\/.test(path)

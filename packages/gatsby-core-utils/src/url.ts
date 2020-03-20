@@ -2,7 +2,8 @@ import path from "path"
 import os from "os"
 
 /**
- * @type {import('../index').urlResolve}
+ * Joins all given segments and converts using a forward slash (/) as a delimiter
+ * @param segments A sequence of segments
  */
 export function urlResolve(...segments: string[]): string {
   const joinedPath = path.join(...segments)

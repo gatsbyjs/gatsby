@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.13...gatsby-cli@2.11.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.10.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.12...gatsby-cli@2.10.13) (2020-03-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** Fix import ([#22388](https://github.com/gatsbyjs/gatsby/issues/22388)) ([d65fb3c](https://github.com/gatsbyjs/gatsby/commit/d65fb3c))
+
+## [2.10.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.11...gatsby-cli@2.10.12) (2020-03-18)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.10...gatsby-cli@2.10.11) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.9...gatsby-cli@2.10.10) (2020-03-13)
+
+### Bug Fixes
+
+- make 11321 and 11330 error formatters backward compatible ([#22249](https://github.com/gatsbyjs/gatsby/issues/22249)) ([6b01efe](https://github.com/gatsbyjs/gatsby/commit/6b01efe))
+
+## [2.10.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.8...gatsby-cli@2.10.9) (2020-03-12)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.10.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.7...gatsby-cli@2.10.8) (2020-03-12)
+
+### Bug Fixes
+
+- **gatsby:** Show meaningful error when directory names are too long ([#21518](https://github.com/gatsbyjs/gatsby/issues/21518)) ([4404af1](https://github.com/gatsbyjs/gatsby/commit/4404af1))
+
+## [2.10.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.6...gatsby-cli@2.10.7) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.10.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.5...gatsby-cli@2.10.6) (2020-03-11)
 
 ### Bug Fixes

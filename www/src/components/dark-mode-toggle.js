@@ -1,6 +1,8 @@
 import React from "react"
 import styled from "@emotion/styled"
 import { useColorMode } from "theme-ui"
+import { t } from "@lingui/macro"
+import { withI18n } from "@lingui/react"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
@@ -123,7 +125,7 @@ const MoonMask = styled.div`
   width: 24px;
 `
 
-function DarkModeToggle() {
+function DarkModeToggle({ i18n }) {
   const [colorMode, setColorMode] = useColorMode()
   const isDark = colorMode === `dark`
 
@@ -131,13 +133,14 @@ function DarkModeToggle() {
     event.preventDefault()
     setColorMode(isDark ? `light` : `dark`)
   }
+  const label = isDark ? t`Activate light mode` : t`Activate dark mode`
 
   return (
     <IconWrapper
       isDark={isDark}
       onClick={toggleColorMode}
-      aria-label={isDark ? `Activate light mode` : `Activate dark mode`}
-      title={isDark ? `Activate light mode` : `Activate dark mode`}
+      aria-label={label}
+      title={label}
     >
       <MoonOrSun isDark={isDark} />
       <MoonMask isDark={isDark} />
@@ -145,4 +148,4 @@ function DarkModeToggle() {
   )
 }
 
-export default DarkModeToggle
+export default withI18n()(DarkModeToggle)

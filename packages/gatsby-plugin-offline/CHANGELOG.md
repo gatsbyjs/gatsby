@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.42...gatsby-plugin-offline@3.1.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [3.0.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.41...gatsby-plugin-offline@3.0.42) (2020-03-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Run app-shell.js from user cache directory for pnp compatibility ([#22351](https://github.com/gatsbyjs/gatsby/issues/22351)) ([f8b7317](https://github.com/gatsbyjs/gatsby/commit/f8b7317))
+
+## [3.0.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.40...gatsby-plugin-offline@3.0.41) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.39...gatsby-plugin-offline@3.0.40) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 ## [3.0.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.38...gatsby-plugin-offline@3.0.39) (2020-03-10)
 
 **Note:** Version bump only for package gatsby-plugin-offline
