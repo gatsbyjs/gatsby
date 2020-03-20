@@ -209,6 +209,10 @@ exports.sourceNodes = async (
 
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
+
+    // A contentType can hold lots of entries which create nodes
+    // We wait until all nodes are created and processed until we handle the next one
+    // TODO add batching in gatsby-core
     await Promise.all(
       normalize.createNodesForContentType({
         contentTypeItem,
@@ -230,6 +234,7 @@ exports.sourceNodes = async (
   }
 
   for (let i = 0; i < assets.length; i++) {
+    // We wait for each asset to be process until handling the next one.
     await Promise.all(
       normalize.createAssetNodes({
         assetItem: assets[i],
