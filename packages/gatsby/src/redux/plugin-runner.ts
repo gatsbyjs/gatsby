@@ -1,7 +1,7 @@
 // Invoke plugins for certain actions.
 
-const { emitter } = require(`./index`)
-const apiRunnerNode = require(`../utils/api-runner-node`)
+import { emitter } from "./index"
+import apiRunnerNode from "../utils/api-runner-node"
 
 emitter.on(`CREATE_PAGE`, action => {
   const page = action.payload
