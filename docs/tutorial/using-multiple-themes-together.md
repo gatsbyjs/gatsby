@@ -13,6 +13,12 @@ This tutorial assumes the following:
 - That you have an understanding of [Gatsby fundamentals](/tutorial/#gatsby-fundamentals)
 - An existing knowledge of [Gatsby themes](/docs/themes/what-are-gatsby-themes/)
 
+## Example repository
+
+You can view a full working example of this tutorial on GitHub. Some code snippets in this tutorial are edited for length and the full code is available in the example repository for reference.
+
+[Using Multiple Themes Example Repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-multiple-themes)
+
 ## Create a new site using the hello world starter and change directory to "multiple-themes"
 
 ```shell
@@ -113,9 +119,9 @@ Put an avatar image into `content/assets/` directory, this is used by `gatsby-th
 
 ## Put the blog posts on the homepage
 
-- Delete `src/pages/index.js`.
-- Change the theme options for the blog theme in `gatsby-config.js`.
-- Restart your development server with `gatsby develop` to check that it worked.
+Delete `src/pages/index.js`.
+
+Change the theme options for the blog theme in `gatsby-config.js`:
 
 ```javascript:title=gatsby-config.js
 {
@@ -126,6 +132,8 @@ Put an avatar image into `content/assets/` directory, this is used by `gatsby-th
       },
     },
 ```
+
+Restart your development server with `gatsby develop` to test that it worked.
 
 ## Shadow the 'bio-content.js' component
 
@@ -165,14 +173,15 @@ export default () => (
 
 Your file structure should look like this:
 
+`src/gatsby-plugin-theme-ui/index.js`
+
 ```text
 └── src
     ├── gatsby-plugin-theme-ui
     │   ├── index.js //highlight-line
 ```
 
-`src/gatsby-plugin-theme-ui/index.js`
-and your component could look like this:
+And your component could look like this:
 
 ```javascript:title=index.js
 import merge from "deepmerge"
@@ -194,7 +203,7 @@ export default merge(defaultTheme, {
 })
 ```
 
-## Step 8: Add another theme
+## Add another theme
 
 Themes can be big, like `gatsby-theme-blog`, but they can also be a small discrete set of components or functions. A great example of this is [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.com/) which adds the ability to embed social media content and videos directly into your MDX files.
 
@@ -209,19 +218,7 @@ Update the `gatsby-config.js` file and add `gatsby-mdx-embed` as a plugin:
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Your Site Title`,
-    description: `A description for your blazing fast site, using multiple themes!`,
-    author: `Your name`,
-    social: [
-      {
-        name: `Twitter`,
-        url: `https://twitter.com/gatsbyjs`,
-      },
-      {
-        name: `GitHub`,
-        url: `https://github.com/gatsbyjs`,
-      },
-    ],
+    // Sitemetadata is unchanged.
   },
   plugins: [
     `@pauliescanlon/gatsby-mdx-embed`, // highlight-line
@@ -243,7 +240,7 @@ module.exports = {
 
 Test it out by adding a Youtube video to one of your blog posts:
 
-```mdx:title=content/posts/hello-posts.mdx
+```mdx:title=content/posts/video-post.mdx
 ---
 title: Jason and Jackson Talk Themes
 date: 2020-02-21
@@ -277,34 +274,13 @@ module.exports = {
         url: `/notes`,
       },
     ],
-    social: [
-      {
-        name: `Twitter`,
-        url: `https://twitter.com/gatsbyjs`,
-      },
-      {
-        name: `GitHub`,
-        url: `https://github.com/gatsbyjs`,
-      },
-    ],
     // highlight-end
+    social: [
+      // Social array is unchanged.
+    ],
   },
   plugins: [
-    `@pauliescanlon/gatsby-mdx-embed`,
-    {
-      resolve: `gatsby-theme-blog`,
-      options: {
-        // basePath defaults to `/`
-        basePath: `/`,
-      },
-    },
-    {
-      resolve: `gatsby-theme-notes`,
-      options: {
-        // basePath defaults to `/`
-        basePath: `/notes`,
-      },
-    },
+    // Plugins array is unchanged.
   ],
 }
 ```
@@ -377,7 +353,7 @@ export default () => {
 }
 ```
 
-When that is done the next step would be to shadow `header.js` from `gatsby-theme-blog` by creating `src/gatsby-theme-blog/components/header.js` :
+When that is done the next step would be to shadow `header.js` from `gatsby-theme-blog` by creating `src/gatsby-theme-blog/components/header.js`. You can copy and paste code from the original component as a starting point for your modified component.
 
 ```text
 └── src
@@ -387,6 +363,8 @@ When that is done the next step would be to shadow `header.js` from `gatsby-them
 ```
 
 Import the navigation menu and add it to the header:
+
+> This code snippet is edited for length the [full component can be viewed on GitHub.](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-multiple-themes/src/gatsby-theme-blog/components/header.js)
 
 ```jsx:title=header.js
 import React from "react"
@@ -398,86 +376,7 @@ import sun from "gatsby-theme-blog/assets/sun.png"
 import moon from "gatsby-theme-blog/assets/moon.png"
 import Navigation from "../../components/navigation" // highlight-line
 
-const rootPath = `${__PATH_PREFIX__}/`
-
-const Title = ({ children, location }) => {
-  if (location.pathname === rootPath) {
-    return (
-      <Styled.h1
-        css={css({
-          my: 0,
-          fontSize: 4,
-        })}
-      >
-        <Styled.a
-          as={Link}
-          css={css({
-            color: `inherit`,
-            boxShadow: `none`,
-            textDecoration: `none`,
-          })}
-          to={`/`}
-        >
-          {children}
-        </Styled.a>
-      </Styled.h1>
-    )
-  } else {
-    return (
-      <Styled.h3
-        as="p"
-        css={css({
-          my: 0,
-        })}
-      >
-        <Styled.a
-          as={Link}
-          css={css({
-            boxShadow: `none`,
-            textDecoration: `none`,
-            color: `primary`,
-          })}
-          to={`/`}
-        >
-          {children}
-        </Styled.a>
-      </Styled.h3>
-    )
-  }
-}
-
-const iconCss = [{ pointerEvents: `none`, margin: 4 }]
-
-const checkedIcon = (
-  <img
-    alt="moon indicating dark mode"
-    src={moon}
-    width="16"
-    height="16"
-    role="presentation"
-    css={iconCss}
-  />
-)
-
-const uncheckedIcon = (
-  <img
-    alt="sun indicating light mode"
-    src={sun}
-    width="16"
-    height="16"
-    role="presentation"
-    css={iconCss}
-  />
-)
-
-export default ({ children, title, ...props }) => {
-  const [colorMode, setColorMode] = useColorMode()
-  const isDark = colorMode === `dark`
-  const toggleColorMode = e => {
-    setColorMode(isDark ? `light` : `dark`)
-  }
-
-  return (
+// ... edited for length
     <header>
       <div
         css={css({
@@ -495,23 +394,14 @@ export default ({ children, title, ...props }) => {
             alignItems: `center`,
             mb: 4,
           })}
-        >
-          <Title {...props}>{title}</Title>
-          {children}
-          <Switch
-            aria-label="Toggle dark mode"
-            checkedIcon={checkedIcon}
-            uncheckedIcon={uncheckedIcon}
-            checked={isDark}
-            onChange={toggleColorMode}
-          />
-        </div>
-        {props.location.pathname === rootPath && <Bio />}
-      </div>
-    </header>
-  )
-}
+// ... edited for length
 ```
+
+Run `gatsby develop` and test the new navigation component.
+
+## Wrapping up
+
+This tutorial has introduced you to the idea of composing multiple themes together in a single Gatsby site. We have also reviewed component shadowing and Theme-UI. Gatsby Themes are an innovative rethink of the traditional website template concept and understanding their potential gives you a whole new set of tools as a developer. To keep diving deeper, check out the [Gatsby Theme docs](/docs/themes/) and some of the other resources listed below.
 
 ## What's next ?
 
@@ -519,8 +409,10 @@ export default ({ children, title, ...props }) => {
 
 ## Other resources
 
+- [Using Multiple Themes Example Repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-multiple-themes)
 - [Gatsby Themes Reference Guide](/docs/themes/)
 - [Egghead.io Course: Gatsby Theme Authoring (free)](https://egghead.io/courses/gatsby-theme-authoring)
+- [IBM and Gatsby Themes: Driving Impact Through Design](https://www.youtube.com/watch?v=I2nh2juOKxM)
 - [Setting up yarn workspaces for Gatsby theme development](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/#reach-skip-nav)
 - [What is component shadowing?](/blog/2019-04-29-component-shadowing/)
 - [Customizing styles in Gatsby themes with Theme-UI](/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui/)

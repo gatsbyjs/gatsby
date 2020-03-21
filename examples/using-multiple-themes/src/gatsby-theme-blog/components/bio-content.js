@@ -3,8 +3,8 @@ import { Styled } from "theme-ui"
 
 export default () => (
   <Fragment>
-    Words by <Styled.a href="http://example.com/">Super Person</Styled.a>.
+    Words by <Styled.a href="http://example.com/">Your Name</Styled.a>.
     <br />
-    Super bio, about a super person, who is clearly better than Best Person.{" "}
+    Change me. Your awesome bio, about how great you are!
   </Fragment>
 )
