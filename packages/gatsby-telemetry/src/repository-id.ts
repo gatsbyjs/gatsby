@@ -1,9 +1,20 @@
-const { createHash } = require(`crypto`)
-const { basename } = require(`path`)
-const { execSync } = require(`child_process`)
-const gitUp = require(`git-up`)
+import { createHash } from "crypto"
+import { basename } from "path"
+import { execSync } from "child_process"
+import gitUp from "git-up"
 
-const getRepositoryId = () => {
+interface IRepositoryData {
+  provider: string
+  owner?: string
+  name?: string
+}
+
+interface IRepositoryId {
+  repositoryId: string
+  repositoryData?: IRepositoryData | null
+}
+
+export const getRepositoryId = (): IRepositoryId => {
   const gitRepo = getGitRemoteWithGit() || getRepositoryFromNetlifyEnv()
   if (gitRepo) {
     return gitRepo
@@ -13,11 +24,11 @@ const getRepositoryId = () => {
   }
 }
 
-const getRepoMetadata = url => {
+export const getRepoMetadata = (url: string): IRepositoryData | null => {
   try {
     // This throws for invalid urls
     const { resource: provider, pathname } = gitUp(url)
-    const res = { provider: hash(provider) }
+    const res: IRepositoryData = { provider: hash(provider) }
 
     const userAndRepo = pathname.split(`/`)
     if (userAndRepo.length == 3) {
@@ -32,9 +43,9 @@ const getRepoMetadata = url => {
   return null
 }
 
-const getRepositoryIdFromPath = () => basename(process.cwd())
+const getRepositoryIdFromPath = (): string => basename(process.cwd())
 
-const getGitRemoteWithGit = () => {
+const getGitRemoteWithGit = (): IRepositoryId | null => {
   try {
     // we may live multiple levels in git repo
     const originBuffer = execSync(
@@ -54,10 +65,10 @@ const getGitRemoteWithGit = () => {
   return null
 }
 
-const getRepositoryFromNetlifyEnv = () => {
+const getRepositoryFromNetlifyEnv = (): IRepositoryId | null => {
   if (process.env.NETLIFY) {
     try {
-      const url = process.env.REPOSITORY_URL
+      const url = process.env.REPOSITORY_URL!
       const repoPart = url.split(`@`)[1]
       if (repoPart) {
         return {
@@ -72,12 +83,7 @@ const getRepositoryFromNetlifyEnv = () => {
   return null
 }
 
-const hash = str =>
+const hash = (str: string): string =>
   createHash(`sha256`)
     .update(str)
     .digest(`hex`)
-
-module.exports = {
-  getRepositoryId,
-  getRepoMetadata,
-}

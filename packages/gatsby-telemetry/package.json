@@ -51,11 +51,11 @@
     "directory": "packages/gatsby-telemetry"
   },
   "scripts": {
-    "build": "babel src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\"",
+    "build": "babel src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "jest": "jest",
     "postinstall": "node src/postinstall.js || true",
-    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\""
+    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\" --extensions \".ts,.js\""
   },
   "yargs": {
     "boolean-negation": false
