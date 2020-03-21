@@ -11,7 +11,7 @@ This tutorial covers how to compose multiple themes into a final site using [gat
 This tutorial assumes the following:
 
 - That you have an understanding of [Gatsby fundamentals](/tutorial/#gatsby-fundamentals)
-- An existing knowledge of [Gatsby themes](/docs/themes/what-are-gatsby-themes/)
+- An existing knowledge of [Gatsby Themes](/docs/themes/what-are-gatsby-themes/)
 
 ## Example repository
 
@@ -415,6 +415,6 @@ This tutorial has introduced you to the idea of composing multiple themes togeth
 - [IBM and Gatsby Themes: Driving Impact Through Design](https://www.youtube.com/watch?v=I2nh2juOKxM)
 - [Setting up yarn workspaces for Gatsby theme development](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/#reach-skip-nav)
 - [What is component shadowing?](/blog/2019-04-29-component-shadowing/)
-- [Customizing styles in Gatsby themes with Theme-UI](/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui/)
-- [Composing and styling Gatsby themes (with Brent Jackson) — Learn With Jason](https://www.youtube.com/watch?v=6Z4p-qjnKCQ)
+- [Customizing styles in Gatsby Themes with Theme-UI](/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui/)
+- [Composing and styling Gatsby Themes (with Brent Jackson) — Learn With Jason](https://www.youtube.com/watch?v=6Z4p-qjnKCQ)
 - [Build a Personal Site Using Gatsby Themes (with Will Johnson) — Learn With Jason](https://www.youtube.com/watch?v=vf2Dy_xKUno)

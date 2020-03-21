@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Using Mulitple themes
+  Using Multiple Themes
 </h1>
 
 This repository demonstrates how to use multiple themes in a Gatsby site
@@ -56,5 +56,5 @@ The site is now running at `http://localhost:8000`, you can see your first post 
 Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/). Here are some places to start:
 
 - [Gatsby Themes Reference Guide](/docs/themes/)
-- [Customizing styles in Gatsby themes with Theme-UI](/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui/)
+- [Customizing styles in Gatsby Themes with Theme-UI](/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui/)
 - [Build a Personal Site Using Gatsby Themes (with Will Johnson) — Learn With Jason](https://www.youtube.com/watch?v=vf2Dy_xKUno)
