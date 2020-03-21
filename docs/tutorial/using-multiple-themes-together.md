@@ -11,7 +11,7 @@ This tutorial covers how to compose multiple themes into a final site using [gat
 This tutorial assumes the following:
 
 - That you have an understanding of [Gatsby fundamentals](/tutorial/#gatsby-fundamentals)
-- An existing knowledge of [Gatsby themes](/docs/themes/what-are-gatsby-themes/)
+- An existing knowledge of [Gatsby Themes](/docs/themes/what-are-gatsby-themes/)
 
 ## Create a new site using the hello world starter and change directory to "multiple-themes"
 
