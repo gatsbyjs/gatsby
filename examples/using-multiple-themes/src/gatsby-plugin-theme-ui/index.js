@@ -3,14 +3,14 @@ import defaultTheme from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/index"
 
 export default merge(defaultTheme, {
   colors: {
-    text: "green",
-    primary: "salmon",
-    heading: "pink",
+    background: "ghostwhite",
+    text: "black",
+    primary: "mediumvioletred",
     modes: {
       dark: {
-        background: "blue",
-        primary: "teal",
-        highlight: "red",
+        background: "indigo",
+        text: "ghostwhite",
+        primary: "gold",
       },
     },
   },
