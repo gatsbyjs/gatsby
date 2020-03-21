@@ -4,13 +4,13 @@ date: 2020-03-23
 author: "Marcy Sutton"
 image: "images/web-creators-banner.png"
 imageTitle: Calling curious and creative developers
-excerpt: "Gatsby Web Creators is a free livestream series aimed at curious people aged 13 and up*, starting Wednesday, March 25. Twice a week for the next 5 weeks, Gatsby Learning Team members and their special guests will teach the basic skills involved for creating web pages, starting with HTML and CSS, and gradually building up to JavaScript.s"
+excerpt: "Gatsby Web Creators is a free livestream series aimed at curious people aged 13 and up, starting Wednesday, March 25. Twice a week for the next 5 weeks, Gatsby Learning Team members and their special guests will teach the basic skills involved for creating web pages, starting with HTML and CSS, and gradually building up to JavaScript."
 tags:
   - livestream
   - learning-to-code
 ---
 
-Gatsby Web Creators is a free livestream series aimed at curious people aged 13 and up\*, starting Wednesday, March 25. Twice a week for the next 5 weeks, Gatsby Learning Team members and their special guests will teach the basic skills involved for creating web pages, starting with HTML and CSS, and gradually building up to JavaScript.
+Gatsby Web Creators is a free livestream series aimed at curious people aged 13 and up, starting Wednesday, March 25. Twice a week for the next 5 weeks, Gatsby Learning Team members and their special guests will teach the basic skills involved for creating web pages, starting with HTML and CSS, and gradually building up to JavaScript.
 
 Streaming live on [Twitch](https://twitch.tv/gatsbyjs) and recorded for future viewing on [YouTube](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w), we’ll explore how to work with text, images, interactive elements, fancy widgets, custom styling, animation with CSS, playing with browser Developer Tools, and more. We’ll make good use of the time people are spending indoors and online to build up a foundation of skills over the coming weeks, showing how to create accessible web pages tailored to one's interests.
 
