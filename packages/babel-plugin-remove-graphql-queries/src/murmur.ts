@@ -1,7 +1,5 @@
 // murmurhash2 via https://gist.github.com/raycmorgan/588423
 
-
-
 export const murmurhash = (str: string, seed: number): number => {
   const m = 0x5bd1e995
   const r = 24
