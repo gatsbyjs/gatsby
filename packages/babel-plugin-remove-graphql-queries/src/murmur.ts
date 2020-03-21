@@ -3,11 +3,11 @@
 
 
 export const murmurhash = (str: string, seed: number): number => {
-  let m: number = 0x5bd1e995
-  let r: number = 24
+  const m = 0x5bd1e995
+  const r = 24
   let h: number = seed ^ str.length
   let length: number = str.length
-  let currentIndex: number = 0
+  let currentIndex = 0
 
   while (length >= 4) {
     let k: number = UInt32(str, currentIndex)
@@ -64,8 +64,8 @@ function UInt16(str: string, pos: number): number {
 function Umul32(n: number, m: number): number {
   n = n | 0
   m = m | 0
-  let nlo = n & 0xffff
-  let nhi = n >>> 16
-  let res = (nlo * m + (((nhi * m) & 0xffff) << 16)) | 0
+  const nlo = n & 0xffff
+  const nhi = n >>> 16
+  const res = (nlo * m + (((nhi * m) & 0xffff) << 16)) | 0
   return res
 }
