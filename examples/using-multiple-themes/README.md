@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Using Mulitple themes
+  Using Multiple Themes
 </h1>
 
 This repository demonstrates how to use multiple themes in a Gatsby site
