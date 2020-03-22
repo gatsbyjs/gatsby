@@ -3,7 +3,7 @@ const fs = require(`fs`)
 const traverse = require(`@babel/traverse`).default
 const get = require(`lodash/get`)
 const { codeFrameColumns } = require(`@babel/code-frame`)
-const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
+import { babelParseToAst } from "../utils/babel-parse-to-ast"
 const report = require(`gatsby-cli/lib/reporter`)
 
 const testRequireError = require(`../utils/test-require-error`).default
