@@ -79,7 +79,7 @@ So when the form is sent, the server will compare then and block the action if t
 
 ### Same-Site Cookies Directive
 
-If you need to create cookies in your application, make sure to  protect them by adding the `SameSite` directive:
+If you need to create cookies in your application, make sure to protect them by adding the `SameSite` directive:
 
 `Set-Cookie: example=1; SameSite=Strict`
 
@@ -92,7 +92,7 @@ Some third-party scripts like Google Tag Manager gives the possibility to add ar
 
 ## Check Your Dependencies
 
-In your Gatsby project, you are going to have a lot of dependencies (which has their own dependencies as well) in your `node_modules/`. Therefore, it is important to check if any of them has a security issue. 
+In your Gatsby project, you are going to have a lot of dependencies (which has their own dependencies as well) in your `node_modules/`. Therefore, it is important to check if any of them has a security issue.
 
 **Using `npm`**
 
@@ -130,14 +130,16 @@ Content Security Policy is a security layer added in web applications to detect 
 To add it to your Gatsby website, add [gatsby-plugin-csp](/packages/gatsby-plugin-csp/) to your `gatsby-config.js` with the desired configuration. Note that
 currently there is a [incompatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](/packages/gatsby-plugin-csp/) and [gatsby-image](/packages/gatsby-image) and other plugins that generate hashes in inline styles.
 
-Note:  Not all browsers support CSP, check [can-i-use](https://caniuse.com/#feat=mdn-http_headers_csp_content-security-policy) for more information.
+Note: Not all browsers support CSP, check [can-i-use](https://caniuse.com/#feat=mdn-http_headers_csp_content-security-policy) for more information.
 
 ## Other Resources
 
+- [Security for Modern Web Frameworks](https://www.gatsbyjs.org/blog/2019-04-06-security-for-modern-web-frameworks/)
 - [Docs ReactJS: DOM Elements](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
 - [OWASP XSS filter evasion cheatsheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet)
 - [Warn for javascript: URLs in DOM sinks #15047](https://github.com/facebook/react/pull/15047)
 - [How to prevent XSS attacks when using dangerouslySetInnerHTML in React](https://medium.com/@Jam3/how-to-prevent-xss-attacks-when-using-dangerouslysetinnerhtml-in-react-f669f778cebb)
 - [Exploiting XSS via Markdown](https://medium.com/taptuit/exploiting-xss-via-markdown-72a61e774bf8)
 - [Auditing package dependencies for security vulnerabilities](https://docs.npmjs.com/auditing-package-dependencies-for-security-vulnerabilities)
+- [CSRF tokens](https://portswigger.net/web-security/csrf/tokens)
 - [SameSite cookies explained](https://web.dev/samesite-cookies-explained/)
