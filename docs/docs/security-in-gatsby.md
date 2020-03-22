@@ -75,7 +75,7 @@ In a page you want to protect, your server will provide an encrypted, hard to gu
 </form>
 ```
 
-So when the form is sent, the server will compare then and block the action if they are not the same. Note that usually the malicious website won't have access because of [HTTP Acess Control](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
+So when the form is sent, the server will compare then and block the action if they are not the same. Note that usually the malicious website won't have access because of [HTTP Access Control](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
 
 ### Same-Site Cookies Directive
 
