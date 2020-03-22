@@ -59,6 +59,7 @@ starter:
   - Styling:PostCSS
   - Styling:SCSS
   - Styling:Tailwind
+  - Styling:Theme-UI
   - Styling:Milligram
   - Styling:Other
   - Styling:None
