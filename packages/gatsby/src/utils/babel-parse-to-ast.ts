@@ -1,5 +1,5 @@
-/* @flow */
-const parser = require(`@babel/parser`)
+import * as parser from "@babel/parser"
+import { File } from "@babel/types"
 
 const PARSER_OPTIONS = {
   allowImportExportEverywhere: true,
@@ -43,7 +43,7 @@ const PARSER_OPTIONS = {
   ],
 }
 
-export function getBabelParserOptions(filePath: string) {
+export function getBabelParserOptions(filePath: string): object {
   // Flow and TypeScript plugins can't be enabled simultaneously
   if (/\.tsx?/.test(filePath)) {
     const { plugins } = PARSER_OPTIONS
@@ -57,6 +57,6 @@ export function getBabelParserOptions(filePath: string) {
   return PARSER_OPTIONS
 }
 
-export function babelParseToAst(contents: string, filePath: string) {
+export function babelParseToAst(contents: string, filePath: string): File {
   return parser.parse(contents, getBabelParserOptions(filePath))
 }
