@@ -5223,7 +5223,7 @@
     - Color mode switching available by default.
     - SEO optimized to include social media images and Twitter handles.
     - React Scroll for one page, anchor based navigation is available.
-    - Code highlighting via Prism
+    - Code highlighting via Prism.
 - url: https://gatsby-starter-default-dark-mode.netlify.com/
   repo: https://github.com/alexandreramosdev/gatsby-starter-default-dark-mode
   description: A simple starter to get developing quickly with Gatsby, dark mode, and styled-components.
