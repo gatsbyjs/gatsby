@@ -83,7 +83,7 @@ If you need to create cookies in your application, make sure to protect them by 
 
 `Set-Cookie: example=1; SameSite=Strict`
 
-It allows the server to make sure that the requests are not being sent by a **cross-site** domain.
+It allows the server to make sure that the cookies are not being sent by a **cross-site** domain request.
 Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) regarding how a cookie could be configured. [Most moderns browsers support it with a backward compatibility](https://caniuse.com/#feat=same-site-cookie-attribute).
 
 ## Third-party Scripts
