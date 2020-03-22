@@ -14,15 +14,10 @@ interface IRepositoryId {
   repositoryData?: IRepositoryData | null
 }
 
-export const getRepositoryId = (): IRepositoryId => {
-  const gitRepo = getGitRemoteWithGit() || getRepositoryFromNetlifyEnv()
-  if (gitRepo) {
-    return gitRepo
-  } else {
-    const repo = getRepositoryIdFromPath()
-    return { repositoryId: `pwd:${hash(repo)}` }
-  }
-}
+const hash = (str: string): string =>
+  createHash(`sha256`)
+    .update(str)
+    .digest(`hex`)
 
 export const getRepoMetadata = (url: string): IRepositoryData | null => {
   try {
@@ -83,7 +78,12 @@ const getRepositoryFromNetlifyEnv = (): IRepositoryId | null => {
   return null
 }
 
-const hash = (str: string): string =>
-  createHash(`sha256`)
-    .update(str)
-    .digest(`hex`)
+export const getRepositoryId = (): IRepositoryId => {
+  const gitRepo = getGitRemoteWithGit() || getRepositoryFromNetlifyEnv()
+  if (gitRepo) {
+    return gitRepo
+  } else {
+    const repo = getRepositoryIdFromPath()
+    return { repositoryId: `pwd:${hash(repo)}` }
+  }
+}
