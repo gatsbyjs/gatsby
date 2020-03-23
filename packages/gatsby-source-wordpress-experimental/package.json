@@ -55,7 +55,7 @@
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore **/__tests__ --verbose",
-    "setup-test-runtime": "cd test-runtime && rm -rf ./node_modules/gatsby-source-wordpress-experimental && yarn install --check-files",
+    "setup-test-runtime": "yarn build && cd test-runtime && rm -rf ./node_modules/gatsby-source-wordpress-experimental && yarn install --check-files",
     "clean-test-runtime": "cd test-runtime && gatsby clean",
     "develop-test-runtime": "cd test-runtime && yarn develop",
     "build-test-runtime": "cd test-runtime && yarn build",
@@ -64,7 +64,7 @@
     "ci-develop": "yarn prepare && yarn test-develop",
     "test-schema": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./test-runtime/__tests__/schema.js && WPGQL_INCREMENT=true jest ./test-runtime/__tests__/schema.js",
     "test-build": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./test-runtime/__tests__/build.js && WPGQL_INCREMENT=true jest ./test-runtime/__tests__/build.js",
-    "test": "yarn test-schema && yarn test-build",
+    "test": "yarn setup-test-runtime && yarn test-schema && yarn test-build",
     "test-develop": "jest --watch"
   },
   "engines": {
