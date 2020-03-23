@@ -92,7 +92,16 @@ module.exports = {
 }
 ```
 
-3. Run `gatsby develop`. To verify the plugin starter loaded correctly in your site it will log a message to the console saying it "Loaded" before the `onPreInit` step finishes.
+3. Run `gatsby develop`. To verify the plugin starter loaded correctly in your site it will log a message to the console saying it "Loaded" before the `onPreInit` step finishes:
+
+```shell
+$ gatsby develop
+success open and validate gatsby-configs - 0.033s
+success load plugins - 0.074s
+Loaded gatsby-plugin-minimal
+success onPreInit - 0.016s
+...
+```
 
 4. Now you can implement [browser](/docs/browser-apis/), [server-side rendering](/docs/ssr-apis/), or [node APIs](/docs/node-apis/) and your site will run them each time it loads your plugin!
 
