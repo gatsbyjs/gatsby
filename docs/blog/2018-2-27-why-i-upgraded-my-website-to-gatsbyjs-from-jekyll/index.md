@@ -100,7 +100,7 @@ Because of the APIs exposed by Gatsby for interfacing with its internals, powerf
 
 The [Node.js APIs](/docs/node-apis/) let plugins extend or modify the heavy lifting performed by the Node.js process when compiling the application. Your gatsby-node.js file can export functions which modify the GraphQL data that is provided to React components when they are rendered. The APIs are also used by plugins to extend the internals of Gatsby e.g. the default webpack config can also be customized here.
 
-Take the example of what happens during the processing of markdown files into pages. The [gatsby-source-filesystem](/packages/gatsby-source-filesystem) plugin scans directories and from files it finds, creates File nodes. These File nodes are then processed by [gatsby-transformer-remark](https://github.com/gatsbyjs/gatsby/tree/a3fea82b4d4b4c644156e841401821933e8d694a/packages/gatsby-transformer-remark) , parsing the markup into HTML with the [Remark](https://remark.js.org/) markdown processor.
+Take the example of what happens during the processing of markdown files into pages. The [gatsby-source-filesystem](/packages/gatsby-source-filesystem) plugin scans directories and from files it finds, creates File nodes. These File nodes are then processed by [gatsby-transformer-remark](https://github.com/gatsbyjs/gatsby/tree/a3fea82b4d4b4c644156e841401821933e8d694a/packages/gatsby-transformer-remark), parsing the markup into HTML with the [Remark](https://remark.js.org/) markdown processor.
 
 #### Server-side Rendering APIs
 
