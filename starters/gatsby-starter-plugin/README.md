@@ -81,7 +81,7 @@ When you clone the site, the information in the `package.json` will need to be u
 
 ## 🧐 What's inside?
 
-This starter generates the [files Gatsby looks for in plugins](https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)].
+This starter generates the [files Gatsby looks for in plugins](https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/).
 
 ```text
 /my-plugin
