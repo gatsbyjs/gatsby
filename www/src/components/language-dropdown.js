@@ -5,6 +5,7 @@ import { MdTranslate } from "react-icons/md"
 import { Link } from "gatsby"
 import "@reach/menu-button/styles.css"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { useLocale } from "./I18nContext"
 
 import { langs, getLocaleAndBasePath, localizedPath } from "../utils/i18n"
 
@@ -29,11 +30,30 @@ const allLangs = [
   ...langs,
 ]
 
-function LangLink({ code, name, localName, pathname }) {
+function LangLink({ code, name, localName, current, pathname }) {
   const { basePath } = getLocaleAndBasePath(pathname)
   return (
-    <MenuLink as={Link} to={localizedPath(code, basePath)} sx={{ p: 3 }}>
-      {name} {localName}
+    <MenuLink
+      as={Link}
+      to={localizedPath(code, basePath)}
+      sx={{
+        px: 6,
+        py: 3,
+        "&[data-selected]": {
+          bg: `sidebar.itemHoverBackground`,
+          color: `navigation.linkHover`,
+        },
+      }}
+    >
+      <span
+        sx={{
+          fontWeight: current && `semiBold`,
+          color: current && `navigation.linkHover`,
+        }}
+      >
+        {name}
+      </span>
+      <span sx={{ ml: 2, color: `textMuted`, fontSize: 1 }}>{localName}</span>
     </MenuLink>
   )
 }
@@ -49,6 +69,7 @@ const menuPosition = (targetRect, popoverRect) => {
 }
 
 export default function LanguageDropdown({ pathname }) {
+  const locale = useLocale()
   return (
     <Menu>
       <MenuButton
@@ -56,6 +77,7 @@ export default function LanguageDropdown({ pathname }) {
           border: 0,
           background: `none`,
           cursor: `pointer`,
+          outline: `none`, // FIXME enable when tabbing
           ...navItemStyles,
         }}
       >
@@ -63,10 +85,20 @@ export default function LanguageDropdown({ pathname }) {
       </MenuButton>
       <MenuPopover
         position={menuPosition}
-        sx={{ width: `16rem`, border: 0, boxShadow: `shadows.floating` }}
+        sx={{
+          width: `16rem`,
+          bg: `background`,
+          borderWidth: `1px`,
+          borderColor: `ui.border`,
+          boxShadow: `dialog`,
+        }}
       >
         {allLangs.map(lang => (
-          <LangLink {...lang} pathname={pathname} />
+          <LangLink
+            {...lang}
+            current={locale === lang.code}
+            pathname={pathname}
+          />
         ))}
       </MenuPopover>
     </Menu>
