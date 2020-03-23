@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
+import { Trans } from "@lingui/macro"
 import { graphql } from "gatsby"
 import { MdCreate as EditIcon } from "react-icons/md"
 
@@ -20,9 +21,9 @@ export default class MarkdownPageFooter extends React.Component {
               this.props.packagePage ? `packages` : `docs`
             }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
           >
-            <EditIcon sx={{ marginRight: 2 }} />
-            {` `}
-            Edit this page on GitHub
+            <Trans>
+              <EditIcon sx={{ marginRight: 2 }} /> Edit this page on GitHub
+            </Trans>
           </a>
         )}
       </>

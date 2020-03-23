@@ -4,6 +4,7 @@ import loader, { PageResourceStatus } from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
+import { RouteAnnouncerProps } from "./route-announcer-props"
 import { navigate as reachNavigate } from "@reach/router"
 import { globalHistory } from "@reach/router/lib/history"
 import { parsePath } from "gatsby-link"
@@ -185,25 +186,7 @@ class RouteAnnouncer extends React.Component {
   }
 
   render() {
-    return (
-      <div
-        id="gatsby-announcer"
-        style={{
-          position: `absolute`,
-          top: 0,
-          width: 1,
-          height: 1,
-          padding: 0,
-          overflow: `hidden`,
-          clip: `rect(0, 0, 0, 0)`,
-          whiteSpace: `nowrap`,
-          border: 0,
-        }}
-        aria-live="assertive"
-        aria-atomic="true"
-        ref={this.announcementRef}
-      ></div>
-    )
+    return <div {...RouteAnnouncerProps} ref={this.announcementRef}></div>
   }
 }
 

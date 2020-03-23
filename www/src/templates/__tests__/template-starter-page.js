@@ -2,6 +2,7 @@ jest.mock(`../../components/layout`, () => jest.fn(({ children }) => children))
 import React from "react"
 import { render } from "@testing-library/react"
 import { ThemeProvider } from "theme-ui"
+import { I18nProvider } from "@lingui/react"
 
 import theme from "../../../src/gatsby-plugin-theme-ui"
 import StarterTemplate from "../template-starter-page"
@@ -66,9 +67,11 @@ const getProps = (starter = {}, fallback = {}) => {
 test(`it can be rendered`, () => {
   expect(() =>
     render(
-      <ThemeProvider theme={theme}>
-        <StarterTemplate {...getProps()} />
-      </ThemeProvider>
+      <I18nProvider>
+        <ThemeProvider theme={theme}>
+          <StarterTemplate {...getProps()} />
+        </ThemeProvider>
+      </I18nProvider>
     )
   ).not.toThrow()
 })
@@ -76,9 +79,11 @@ test(`it can be rendered`, () => {
 test(`it displays a screenshot`, () => {
   const props = getProps()
   const { getByAltText } = render(
-    <ThemeProvider theme={theme}>
-      <StarterTemplate {...props} />
-    </ThemeProvider>
+    <I18nProvider>
+      <ThemeProvider theme={theme}>
+        <StarterTemplate {...props} />
+      </ThemeProvider>
+    </I18nProvider>
   )
 
   expect(
@@ -107,9 +112,11 @@ test(`it falls back to fallback screenshot, if screenshot file not found`, () =>
 
   expect(() =>
     render(
-      <ThemeProvider theme={theme}>
-        <StarterTemplate {...props} />
-      </ThemeProvider>
+      <I18nProvider>
+        <ThemeProvider theme={theme}>
+          <StarterTemplate {...props} />
+        </ThemeProvider>
+      </I18nProvider>
     )
   ).not.toThrow()
 })
