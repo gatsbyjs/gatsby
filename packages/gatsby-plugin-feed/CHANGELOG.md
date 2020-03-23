@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.4.0...gatsby-plugin-feed@2.4.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
 # [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.29...gatsby-plugin-feed@2.4.0) (2020-03-20)
 
 ### Features
