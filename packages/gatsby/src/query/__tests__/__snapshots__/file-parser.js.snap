@@ -67,7 +67,6 @@ Array [
         "column": 0,
         "line": 6,
       },
-      "filename": true,
       "start": Position {
         "column": 33,
         "line": 2,
@@ -144,7 +143,6 @@ query PageQueryName {
         "column": 0,
         "line": 6,
       },
-      "filename": true,
       "start": Position {
         "column": 26,
         "line": 2,
@@ -221,7 +219,6 @@ query PageQueryIndirect {
         "column": 0,
         "line": 6,
       },
-      "filename": true,
       "start": Position {
         "column": 26,
         "line": 2,
@@ -294,7 +291,6 @@ query PageQueryIndirect2 {
         "column": 0,
         "line": 6,
       },
-      "filename": true,
       "start": Position {
         "column": 31,
         "line": 2,
@@ -371,7 +367,6 @@ query {
         "column": 48,
         "line": 4,
       },
-      "filename": true,
       "start": Position {
         "column": 19,
         "line": 4,
@@ -440,7 +435,6 @@ query {
         "column": 26,
         "line": 4,
       },
-      "filename": true,
       "start": Position {
         "column": 19,
         "line": 4,
@@ -513,7 +507,6 @@ query {
         "column": 48,
         "line": 4,
       },
-      "filename": true,
       "start": Position {
         "column": 19,
         "line": 4,
@@ -582,7 +575,6 @@ query {
         "column": 26,
         "line": 4,
       },
-      "filename": true,
       "start": Position {
         "column": 19,
         "line": 4,
@@ -655,7 +647,6 @@ query {
         "column": 48,
         "line": 4,
       },
-      "filename": true,
       "start": Position {
         "column": 19,
         "line": 4,
@@ -728,7 +719,6 @@ query {
         "column": 60,
         "line": 8,
       },
-      "filename": true,
       "start": Position {
         "column": 33,
         "line": 8,
@@ -873,7 +863,6 @@ query {
         "column": 0,
         "line": 9,
       },
-      "filename": true,
       "start": Position {
         "column": 35,
         "line": 2,
@@ -966,7 +955,6 @@ query {
         "column": 0,
         "line": 14,
       },
-      "filename": true,
       "start": Position {
         "column": 33,
         "line": 10,
@@ -1093,7 +1081,6 @@ query {
         "column": 0,
         "line": 12,
       },
-      "filename": true,
       "start": Position {
         "column": 22,
         "line": 4,
@@ -1251,7 +1238,6 @@ query {
         "column": 69,
         "line": 4,
       },
-      "filename": true,
       "start": Position {
         "column": 22,
         "line": 4,
@@ -1401,7 +1387,6 @@ query {
         "column": 82,
         "line": 5,
       },
-      "filename": true,
       "start": Position {
         "column": 33,
         "line": 5,
@@ -1474,7 +1459,6 @@ query {
         "column": 67,
         "line": 3,
       },
-      "filename": true,
       "start": Position {
         "column": 38,
         "line": 3,
@@ -1547,7 +1531,6 @@ query {
         "column": 67,
         "line": 4,
       },
-      "filename": true,
       "start": Position {
         "column": 38,
         "line": 4,
@@ -1620,7 +1603,6 @@ query {
         "column": 81,
         "line": 3,
       },
-      "filename": true,
       "start": Position {
         "column": 52,
         "line": 3,
@@ -1693,7 +1675,6 @@ query {
         "column": 82,
         "line": 3,
       },
-      "filename": true,
       "start": Position {
         "column": 53,
         "line": 3,
@@ -1843,7 +1824,6 @@ query {
         "column": 69,
         "line": 4,
       },
-      "filename": true,
       "start": Position {
         "column": 22,
         "line": 4,
@@ -1912,7 +1892,6 @@ query {
         "column": 51,
         "line": 3,
       },
-      "filename": true,
       "start": Position {
         "column": 38,
         "line": 3,
@@ -1981,7 +1960,6 @@ query {
         "column": 32,
         "line": 4,
       },
-      "filename": true,
       "start": Position {
         "column": 19,
         "line": 4,

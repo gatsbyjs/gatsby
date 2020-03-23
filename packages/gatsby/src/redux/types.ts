@@ -1,59 +1,206 @@
-import { GraphQLSchema } from "graphql"
 import { IProgram } from "../commands/types"
+import { GraphQLSchema } from "graphql"
+import { SchemaComposer } from "graphql-compose"
+
+type SystemPath = string
+type Identifier = string
+type StructuredLog = any // TODO this should come from structured log interface
 
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
-export interface IReduxNode {
-  id: string
-  internal: {
-    type: string
-  }
+export interface IGatsbyPage {
+  internalComponentName: string
+  path: string
+  matchPath: undefined | string
+  component: SystemPath
+  componentChunkName: string
+  isCreatedByStatefulCreatePages: boolean
+  context: {}
+  updatedAt: number
+  pluginCreator__NODE: Identifier
+  pluginCreatorId: Identifier
+  componentPath: SystemPath
 }
 
-export interface IReduxState {
-  status: ProgramStatus
-  nodes?: Map<string, IReduxNode>
-  nodesByType?: Map<any, any> // TODO
-  jobsV2: any // TODO
-  lastAction: ActionsUnion
-  componentDataDependencies: {
-    connections: any // TODO
-    nodes: any // TODO
+export interface IGatsbyConfig {
+  plugins?: {
+    // This is the name of the plugin like `gatsby-plugin-manifest
+    resolve: string
+    options: {
+      [key: string]: unknown
+    }
+  }[]
+  siteMetadata?: {
+    title?: string
+    author?: string
+    description?: string
   }
-  components: any // TODO
-  staticQueryComponents: any // TODO
-  webpackCompilationHash: any // TODO
-  pageDataStats: any // TODO
-  jobs: {
-    active: Array<any> // TODO
+  // @deprecated
+  polyfill?: boolean
+  developMiddleware?: any
+  proxy?: any
+  pathPrefix?: string
+}
+
+export interface IGatsbyNode {
+  id: Identifier
+  parent: Identifier
+  children: Identifier[]
+  internal: {
+    type: string
+    counter: number
+    owner: string
+    contentDigest: string
+    mediaType?: string
+    content?: string
+    description?: string
   }
-  schema: GraphQLSchema
-  schemaCustomization: any
-  config: {
-    developMiddleware: any
-    proxy: any
-  }
-  pageData: any
-  pages: any
-  babelrc: any
-  themes: any
-  flattenedPlugins: any
+  __gatsby_resolved: any // TODO
+  [key: string]: unknown
+}
+
+type GatsbyNodes = Map<string, IGatsbyNode>
+
+export interface IGatsbyState {
   program: IProgram
+  nodes: GatsbyNodes
+  nodesByType: Map<string, GatsbyNodes>
+  resolvedNodesCache: Map<string, any> // TODO
+  nodesTouched: Set<string>
+  lastAction: ActionsUnion
+  flattenedPlugins: {
+    resolve: SystemPath
+    id: Identifier
+    name: string
+    version: string
+    pluginOptions: {
+      plugins: []
+      [key: string]: unknown
+    }
+    nodeAPIs: (
+      | "onPreBoostrap"
+      | "onPostBoostrap"
+      | "onCreateWebpackConfig"
+      | "onCreatePage"
+      | "sourceNodes"
+      | "createPagesStatefully"
+      | "createPages"
+      | "onPostBuild"
+    )[]
+    browserAPIs: (
+      | "onRouteUpdate"
+      | "registerServiceWorker"
+      | "onServiceWorkerActive"
+      | "onPostPrefetchPathname"
+    )[]
+    ssrAPIs: ("onRenderBody" | "onPreRenderHTML")[]
+    pluginFilepath: SystemPath
+  }[]
+  config: IGatsbyConfig
+  pages: Map<string, IGatsbyPage>
+  schema: GraphQLSchema
+  status: {
+    plugins: {}
+    PLUGINS_HASH: Identifier
+  }
+  componentDataDependencies: {
+    nodes: Map<string, Set<string>>
+    connections: Map<string, Set<string>>
+  }
+  components: Map<
+    SystemPath,
+    {
+      componentPath: SystemPath
+      query: string
+      pages: Set<string>
+      isInBootstrap: boolean
+    }
+  >
+  staticQueryComponents: Map<
+    string,
+    {
+      name: string
+      componentPath: SystemPath
+      id: Identifier
+      query: string
+      hash: number
+    }
+  >
+  // @deprecated
+  jobs: {
+    active: any[] // TODO
+    done: any[] // TODO
+  }
+  jobsV2: {
+    incomplete: Map<any, any> // TODO
+    complete: Map<any, any>
+  }
+  webpack: any // TODO This should be the output from ./utils/webpack.config.js
+  webpackCompilationHash: string
+  redirects: any[] // TODO
+  babelrc: {
+    stages: {
+      develop: any // TODO
+      "develop-html": any // TODO
+      "build-html": any // TODO
+      "build-javascript": any // TODO
+    }
+  }
+  schemaCustomization: {
+    composer: SchemaComposer<any>
+    context: {} // TODO
+    fieldExtensions: {} // TODO
+    printConfig: any // TODO
+    thridPartySchemas: any[] // TODO
+    types: any[] // TODO
+  }
+  themes: any // TODO
+  logs: {
+    messages: StructuredLog[]
+    activities: {
+      [key: string]: {
+        id: Identifier
+        uuid: Identifier
+        text: string
+        type: string // TODO make enum
+        status: string // TODO make enum
+        startTime: [number, number]
+        statusText: string
+        current: undefined | any // TODO
+        total: undefined | any // TODO
+        duration: number
+      }
+    }
+    status: string // TODO make enum
+  }
+  inferenceMetadata: {
+    step: string // TODO make enum or union
+    typeMap: {
+      [key: string]: {
+        ignoredFields: Set<string>
+        total: number
+        dirty: boolean
+        fieldMap: any // TODO
+      }
+    }
+  }
+  pageDataStats: Map<SystemPath, number>
+  pageData: any
 }
 
 export interface ICachedReduxState {
-  nodes: IReduxState["nodes"]
-  status: IReduxState["status"]
-  componentDataDependencies: IReduxState["componentDataDependencies"]
-  components: IReduxState["components"]
-  jobsV2: IReduxState["jobsV2"]
-  staticQueryComponents: IReduxState["staticQueryComponents"]
-  webpackCompilationHash: IReduxState["webpackCompilationHash"]
-  pageDataStats: IReduxState["pageDataStats"]
-  pageData: IReduxState["pageData"]
+  nodes?: IGatsbyState["nodes"]
+  status: IGatsbyState["status"]
+  componentDataDependencies: IGatsbyState["componentDataDependencies"]
+  components: IGatsbyState["components"]
+  jobsV2: IGatsbyState["jobsV2"]
+  staticQueryComponents: IGatsbyState["staticQueryComponents"]
+  webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
+  pageDataStats: IGatsbyState["pageDataStats"]
+  pageData: IGatsbyState["pageData"]
 }
 
 export type ActionsUnion =
@@ -73,8 +220,8 @@ export interface ICreatePageDependencyAction {
   plugin: string
   payload: {
     path: string
-    nodeId: string
-    connection: string
+    nodeId?: string
+    connection?: string
   }
 }
 

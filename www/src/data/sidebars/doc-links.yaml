@@ -19,6 +19,8 @@
           link: /docs/recipes/pages-layouts/
         - title: Styling with CSS
           link: /docs/recipes/styling-css/
+        - title: Working with Plugins
+          link: /docs/recipes/working-with-plugins/
         - title: Working with Starters
           link: /docs/recipes/working-with-starters/
         - title: Working with Themes
@@ -85,6 +87,9 @@
             - title: Deploying to Render
               link: /docs/deploying-to-render/
               breadcrumbTitle: Render
+            - title: Deploying to Tiiny Host
+              link: /docs/deploying-to-tiiny-host/
+              breadcrumbTitle: Tiiny Host
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge

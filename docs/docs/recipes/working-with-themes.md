@@ -9,7 +9,7 @@ A [Gatsby theme](/docs/themes/what-are-gatsby-themes) abstracts Gatsby configura
 
 Found a theme you'd like to use on your project? Awesome! You can configure it for use by following the steps below.
 
-> If you'd like to take a look at more theme options, check out [list of themes](https://www.npmjs.com/search?q=gatsby-theme).
+> If you'd like to take a look at more theme options, check out this [list of themes](/plugins?=gatsby-theme).
 
 ### Prerequisites
 
@@ -32,11 +32,11 @@ cd {your-project-name}
 npm install gatsby-theme-blog
 ```
 
-3. Add theme to `gatsby.config.js`
+3. Add theme to `gatsby-config.js`
 
 Follow the instructions found in the README of the theme you're using to determine what configuration it requires.
 
-```shell
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -55,15 +55,15 @@ module.exports = {
 }
 ```
 
-4. Run `gatsby develop`, the theme should be available at `http://localhost:8000/{basePath}`
+4. Run `gatsby develop`, the theme should now be running on your site. In this case with the blog theme configured with the `basePath` to "/blog", it should be available at `http://localhost:8000/blog`.
 
-> To learn how to further customize a theme, check out the available paths on [Gatsby-theme-blog Documentation](https://www.npmjs.com/package/gatsby-theme-blog).
+> To learn how to further customize a theme, check out the available paths on [Gatsby-theme-blog Documentation](/packages/gatsby-theme-blog/#theme-options).
 
 ### Additional resources
 
-- To learn how to further customize a theme, check out the docs on [Gatsby theme shadowing.](https://www.gatsbyjs.org/docs/themes/shadowing/)
+- To learn how to further customize a theme, check out the docs on [Gatsby theme shadowing.](/docs/themes/shadowing/)
 
-- You can also [use multiple themes](https://www.gatsbyjs.org/docs/themes/using-multiple-gatsby-themes/) on a project.
+- You can also [use multiple themes](/docs/themes/using-multiple-gatsby-themes/) on a project.
 
 ## Creating a new site using a theme starter
 
