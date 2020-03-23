@@ -10100,3 +10100,18 @@
   built_by: Maxine Chen
   built_by_url: https://github.com/maxMaxineChen
   featured: false
+- title: Qovery
+  main_url: https://www.qovery.com
+  url: https://www.qovery.com
+  description: >
+    Qovery is a fully-managed Cloud platform for developer. We use Gatsby for https://www.qovery.com.
+  categories:
+    - Web Development
+    - Programming
+    - Documentation
+    - Deployment
+    - Hosting
+    - Technology
+  built_by: Qovery Team
+  built_by_url: https://www.qovery.com
+  featured: false
