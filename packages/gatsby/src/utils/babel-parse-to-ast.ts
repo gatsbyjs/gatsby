@@ -1,12 +1,10 @@
-import * as parser from "@babel/parser"
+import { parse, ParserOptions } from "@babel/parser"
 import { File } from "@babel/types"
 
-const PARSER_OPTIONS = {
+const PARSER_OPTIONS: ParserOptions = {
   allowImportExportEverywhere: true,
   allowReturnOutsideFunction: true,
   allowSuperOutsideMethod: true,
-  sourceType: `unambigious`,
-  sourceFilename: true,
   plugins: [
     `jsx`,
     `flow`,
@@ -43,13 +41,13 @@ const PARSER_OPTIONS = {
   ],
 }
 
-export function getBabelParserOptions(filePath: string): object {
+export function getBabelParserOptions(filePath: string): ParserOptions {
   // Flow and TypeScript plugins can't be enabled simultaneously
   if (/\.tsx?/.test(filePath)) {
     const { plugins } = PARSER_OPTIONS
     return {
       ...PARSER_OPTIONS,
-      plugins: plugins.map(plugin =>
+      plugins: plugins!.map(plugin =>
         plugin === `flow` ? `typescript` : plugin
       ),
     }
@@ -58,5 +56,5 @@ export function getBabelParserOptions(filePath: string): object {
 }
 
 export function babelParseToAst(contents: string, filePath: string): File {
-  return parser.parse(contents, getBabelParserOptions(filePath))
+  return parse(contents, getBabelParserOptions(filePath))
 }
