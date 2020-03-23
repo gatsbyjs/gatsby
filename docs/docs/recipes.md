@@ -55,13 +55,20 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - [Using Google Fonts](/docs/recipes/styling-css#using-google-fonts)
 - [Using Font Awesome](/docs/recipes/styling-css#using-fontawesome)
 
-## [3. Working with starters](/docs/recipes/working-with-starters)
+## [3. Working with plugins](/docs/recipes/working-with-plugins)
+
+[Plugins](/docs/plugins/) are Node.js packages that implement Gatsby APIs that are maintained officially, or by the community.
+
+- [Using a plugin](/docs/recipes/working-with-plugins#using-a-plugin)
+- [Creating a new plugin using a plugin starter](/docs/recipes/working-with-plugins#creating-a-new-plugin-using-a-plugin-starter)
+
+## [4. Working with starters](/docs/recipes/working-with-starters)
 
 [Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
 
 - [Using a starter](/docs/recipes/working-with-starters#using-a-starter)
 
-## [4. Working with themes](/docs/recipes/working-with-themes)
+## [5. Working with themes](/docs/recipes/working-with-themes)
 
 A Gatsby theme lets you centralize the look-and-feel of your site. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
@@ -69,7 +76,7 @@ A Gatsby theme lets you centralize the look-and-feel of your site. You can seaml
 - [Creating a new site using a theme starter](/docs/recipes/working-with-themes#creating-a-new-site-using-a-theme-starter)
 - [Building a new theme](/docs/recipes/working-with-themes#building-a-new-theme)
 
-## [5. Sourcing data](/docs/recipes/sourcing-data)
+## [6. Sourcing data](/docs/recipes/sourcing-data)
 
 Pull data from multiple locations, like the filesystem or database, into your Gatsby site.
 
@@ -80,7 +87,7 @@ Pull data from multiple locations, like the filesystem or database, into your Ga
 - [Pulling data from an external source and creating pages without GraphQL](/docs/recipes/sourcing-data#pulling-data-from-an-external-source-and-creating-pages-without-graphql)
 - [Sourcing content from Drupal](/docs/recipes/sourcing-data#sourcing-content-from-drupal)
 
-## [6. Querying data](/docs/recipes/querying-data)
+## [7. Querying data](/docs/recipes/querying-data)
 
 Gatsby lets you access your data across all sources using a single GraphQL interface.
 
@@ -94,7 +101,7 @@ Gatsby lets you access your data across all sources using a single GraphQL inter
 - [GraphQL Query Fragments](/docs/recipes/querying-data#graphql-query-fragments)
 - [Querying data client-side with fetch](/docs/recipes/querying-data#querying-data-client-side-with-fetch)
 
-## [7. Working with images](/docs/recipes/working-with-images)
+## [8. Working with images](/docs/recipes/working-with-images)
 
 Access images as static resources, or automate the process of optimizing them through powerful plugins.
 
@@ -103,14 +110,14 @@ Access images as static resources, or automate the process of optimizing them th
 - [Optimizing and querying local images with gatsby-image](/docs/recipes/working-with-images#optimizing-and-querying-local-images-with-gatsby-image)
 - [Optimizing and querying images in post frontmatter with gatsby-image](/docs/recipes/working-with-images#optimizing-and-querying-images-in-post-frontmatter-with-gatsby-image)
 
-## [8. Transforming data](/docs/recipes/transforming-data)
+## [9. Transforming data](/docs/recipes/transforming-data)
 
 Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more).
 
 - [Transforming Markdown into HTML](/docs/recipes/transforming-data#transforming-markdown-into-html)
 - [Transforming images into grayscale using GraphQL](/docs/recipes/transforming-data#transforming-images-into-grayscale-using-graphql)
 
-## [9. Deploying your site](/docs/recipes/deploying-your-site)
+## [10. Deploying your site](/docs/recipes/deploying-your-site)
 
 Showtime. Once you are happy with your site, you are ready to go live with it!
 
