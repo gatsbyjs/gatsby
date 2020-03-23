@@ -107,7 +107,7 @@ In my opinion, one of the coolest things about Gatsby.js is that you can "hook i
 
 `onPostBuild` runs right after the build completes. We can use it to prepare and copy the functions over to the right place, before it's handed off to Netlify.
 
-Learn more about Gatsby build hooks in [our documentation](https://www.gatsbyjs.org/docs/node-apis/).
+Learn more about Gatsby build hooks in [our documentation](/docs/node-apis/).
 
 ### Zip It and Ship It
 
