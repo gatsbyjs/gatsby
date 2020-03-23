@@ -112,7 +112,7 @@ Multiple themes are awesome!
 
 Restart your development server with `gatsby develop`. Now if you visit `http://localhost:8000/blog/hello-posts/` and `http://localhost:8000/notes/hello-notes` you should see your new content.
 
-### Add an avatar image
+## Add an avatar image
 
 Put an avatar image into the `content/assets/` directory, this is used by `gatsby-theme-blog` for the bio component. The file name can be `avatar.png` or `avatar.jpg`.
 
@@ -374,7 +374,6 @@ Your file structure should look like this:
 ```jsx:title=src/gatsby-theme-blog/components/header.js
 import React from "react"
 import Navigation from "../../components/navigation" // highlight-line
-
 ;<header>
   <div
     css={css({
