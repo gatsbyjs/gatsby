@@ -82,6 +82,9 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
+            - title: Deploying to Qovery
+              link: /docs/deploying-to-qovery/
+              breadcrumbTitle: Qovery
             - title: Deploying to Render
               link: /docs/deploying-to-render/
               breadcrumbTitle: Render
