@@ -88,7 +88,7 @@ Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/S
 
 ## Third-party Scripts
 
-Some third-party scripts like Google Tag Manager gives the possibility to add arbitrary JavaScript code on top of them as a [custom HTML tag](https://support.google.com/tagmanager/answer/6107167), which can be a malicious script. To avoid that, be sure to have a [access control](https://support.google.com/tagmanager/answer/6107011) management in these services.
+Some third-party scripts like Google Tag Manager give you the ability to [add arbitrary JavaScript](https://support.google.com/tagmanager/answer/6107167) to your site. This helps integrate third-party tools but can be misused to inject malicious code. To avoid this, be sure to [control access ](https://support.google.com/tagmanager/answer/6107011) to these services.
 
 ## Check Your Dependencies
 
