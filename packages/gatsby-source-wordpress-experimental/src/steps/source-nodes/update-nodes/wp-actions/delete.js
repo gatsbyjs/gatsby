@@ -47,17 +47,18 @@ const wpActionDELETE = async ({
       typeSettings.beforeChangeNode &&
       typeof typeSettings.beforeChangeNode === `function`
     ) {
-      const additionalNodeIds = await typeSettings.beforeChangeNode({
-        actionType: `DELETE`,
-        remoteNode: node,
-        actions,
-        helpers,
-        typeInfo,
-        fetchGraphql,
-        typeSettings,
-        buildTypeName,
-        wpStore: store,
-      })
+      const { additionalNodeIds } =
+        (await typeSettings.beforeChangeNode({
+          actionType: `DELETE`,
+          remoteNode: node,
+          actions,
+          helpers,
+          typeInfo,
+          fetchGraphql,
+          typeSettings,
+          buildTypeName,
+          wpStore: store,
+        })) || {}
 
       if (additionalNodeIds && additionalNodeIds.length) {
         additionalNodeIds.forEach(id => cachedNodeIds.push(id))

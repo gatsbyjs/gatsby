@@ -75,17 +75,18 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
         typeSettings.beforeChangeNode &&
         typeof typeSettings.beforeChangeNode === `function`
       ) {
-        const additionalNodeIds = await typeSettings.beforeChangeNode({
-          actionType: `CREATE_ALL`,
-          remoteNode,
-          actions,
-          helpers,
-          type: node.type,
-          fetchGraphql,
-          typeSettings,
-          buildTypeName,
-          wpStore: store,
-        })
+        const { additionalNodeIds } =
+          (await typeSettings.beforeChangeNode({
+            actionType: `CREATE_ALL`,
+            remoteNode,
+            actions,
+            helpers,
+            type: node.type,
+            fetchGraphql,
+            typeSettings,
+            buildTypeName,
+            wpStore: store,
+          })) || {}
 
         if (additionalNodeIds && additionalNodeIds.length) {
           additionalNodeIds.forEach(id => createdNodeIds.push(id))
