@@ -5,7 +5,7 @@
  * This plugin replaces options of eslint-plugin-graphql during develop
  */
 import { store } from "../redux"
-const eslintConfig = require(`./eslint-config`)
+import { eslintConfig } from "./eslint-config"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { RuleSetRule, Compiler, RuleSetQuery, RuleSetLoader } from "webpack"
 import { GraphQLSchema } from "graphql"
