@@ -1,20 +1,19 @@
-// @flow
-
-const path = require(`path`)
-const { store } = require(`../redux`)
-const fs = require(`fs`)
-const pageDataUtil = require(`../utils/page-data`)
+import path from "path"
+import { store } from "../redux"
+import fs from "fs"
+import pageDataUtil from "../utils/page-data"
+import telemetry from "gatsby-telemetry"
+import url from "url"
+import { createHash } from "crypto"
 import { normalizePagePath, denormalizePagePath } from "./normalize-page-path"
-const telemetry = require(`gatsby-telemetry`)
-const url = require(`url`)
-const { createHash } = require(`crypto`)
+import socketIO from "socket.io"
 
-type QueryResult = {
-  id: string,
-  result: object,
+interface IQueryResult {
+  id: string
+  result?: object
 }
 
-type QueryResultsMap = Map<string, QueryResult>
+type QueryResultsMap = Map<string, IQueryResult>
 
 /**
  * Get cached page query result for given page path.
@@ -24,7 +23,7 @@ type QueryResultsMap = Map<string, QueryResult>
 const getCachedPageData = async (
   pagePath: string,
   directory: string
-): QueryResult => {
+): Promise<IQueryResult | undefined> => {
   const { program, pages } = store.getState()
   const publicDir = path.join(program.directory, `public`)
   if (pages.has(denormalizePagePath(pagePath)) || pages.has(pagePath)) {
@@ -45,7 +44,7 @@ const getCachedPageData = async (
   return undefined
 }
 
-const hashPaths = paths => {
+const hashPaths = (paths?: string[]): undefined | Array<string | undefined> => {
   if (!paths) {
     return undefined
   }
@@ -100,10 +99,14 @@ const getRoomNameFromPath = (path: string): string => `path-${path}`
 class WebsocketManager {
   pageResults: QueryResultsMap
   staticQueryResults: QueryResultsMap
-  errors: Map<string, QueryResult>
+  errors: Map<string, string>
   isInitialised: boolean
   activePaths: Set<string>
-  programDir: string
+  connectedClients: number
+
+  // Initialized in init()
+  programDir!: string
+  websocket!: socketIO.Server
 
   constructor() {
     this.isInitialised = false
@@ -122,7 +125,13 @@ class WebsocketManager {
     this.connectedClients = 0
   }
 
-  init({ server, directory }) {
+  init({
+    server,
+    directory,
+  }: {
+    server: unknown
+    directory: string
+  }): socketIO.Server {
     this.programDir = directory
 
     const cachedStaticQueryResults = getCachedStaticQueryResults(
@@ -134,10 +143,10 @@ class WebsocketManager {
       ...cachedStaticQueryResults,
     ])
 
-    this.websocket = require(`socket.io`)(server)
+    this.websocket = socketIO(server)
 
     this.websocket.on(`connection`, s => {
-      let activePath = null
+      let activePath: string | null = null
       if (
         s &&
         s.handshake &&
@@ -169,7 +178,7 @@ class WebsocketManager {
         })
       })
 
-      const leaveRoom = path => {
+      const leaveRoom = (path: string): void => {
         s.leave(getRoomNameFromPath(path))
         const leftRoom = this.websocket.sockets.adapter.rooms[
           getRoomNameFromPath(path)
@@ -179,7 +188,7 @@ class WebsocketManager {
         }
       }
 
-      const getDataForPath = async path => {
+      const getDataForPath = async (path: string): Promise<void> => {
         if (!this.pageResults.has(path)) {
           try {
             const result = await getCachedPageData(path, this.programDir)
@@ -221,8 +230,9 @@ class WebsocketManager {
         this.activePaths.add(path)
       })
 
-      s.on(`disconnect`, s => {
-        leaveRoom(activePath)
+      s.on(`disconnect`, () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        leaveRoom(activePath!)
         this.connectedClients -= 1
       })
 
@@ -232,13 +242,15 @@ class WebsocketManager {
     })
 
     this.isInitialised = true
+
+    return this.websocket
   }
 
-  getSocket() {
-    return this.isInitialised && this.websocket
+  getSocket(): socketIO.Server | undefined {
+    return this.isInitialised ? this.websocket : undefined
   }
 
-  emitStaticQueryData(data: QueryResult) {
+  emitStaticQueryData(data: IQueryResult): void {
     this.staticQueryResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
@@ -258,7 +270,7 @@ class WebsocketManager {
     }
   }
 
-  emitPageData(data: QueryResult) {
+  emitPageData(data: IQueryResult): void {
     data.id = normalizePagePath(data.id)
     this.pageResults.set(data.id, data)
     if (this.isInitialised) {
@@ -278,7 +290,7 @@ class WebsocketManager {
       }
     }
   }
-  emitError(id: string, message?: string) {
+  emitError(id: string, message?: string): void {
     if (message) {
       this.errors.set(id, message)
     } else {
@@ -291,6 +303,4 @@ class WebsocketManager {
   }
 }
 
-const manager = new WebsocketManager()
-
-module.exports = manager
+export const websocketManager: WebsocketManager = new WebsocketManager()
