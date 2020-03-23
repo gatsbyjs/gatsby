@@ -1,5 +1,5 @@
 module.exports = {
-  arrowParens: 'avoid',
+  arrowParens: "avoid",
   semi: false,
   overrides: [
     {
@@ -13,10 +13,10 @@ module.exports = {
       },
     },
     {
-      "files": "docs/**/*.md",
-      "options": {
-        "parser": "mdx"
-      }
+      files: "docs/**/*.md",
+      options: {
+        parser: "mdx",
+      },
     },
   ],
 }
