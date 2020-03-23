@@ -4,7 +4,7 @@ date: 2020-03-25
 author: "Josh Comeau"
 excerpt: "An article detailing how to use Netlify Functions and Gatsby Cloud together, to tremendous effect!"
 tags: ["netlify", "serverless", "lambda", "gatsby cloud"]
-canonicalLink: https://joshwcomeau.com/gatsby/using-netlify-functions-with-gatsby-cloud/
+canonicalLink: https://joshwcomeau.com/gatsby/netlify-functions-and-gatsby-cloud/
 ---
 
 import netlifyFunctions from "./gatsby-cloud.png"
@@ -15,7 +15,7 @@ Case in point: when I was rebuilding my [personal blog](https://joshwcomeau.com/
 
 For these kinds of situations, _serverless functions_ are perfect. They let us write small bits of Node.js code without worrying about where that code will run.
 
-My personal blog is built and deployed with [Gatsby Cloud](https://www.gatsbyjs.com/), a CI service for Gatsby sites, and it's hosted by [Netlify](https://www.netlify.com/). I'm a very happy Netlify customer, and [Netlify Functions](https://www.netlify.com/products/functions/) seemed like the perfect service for my needs!
+My personal blog is built and deployed with [Gatsby Cloud](https://www.gatsbyjs.com/cloud), a CI service for Gatsby sites, and it's hosted by [Netlify](https://www.netlify.com/). I'm a very happy Netlify customer, and [Netlify Functions](https://www.netlify.com/products/functions/) seemed like the perfect service for my needs!
 
 Getting Gatsby Cloud and Netlify Functions to cooperate took a bit of tinkering, but happily it can be done! The solution I discovered feels robust and reliable, and my blog has been powered by these two services for several weeks now, without any issues.
 
@@ -60,7 +60,7 @@ exports.handler = async (event, context, callback) => {
 }
 ```
 
-When using Netlify for CI _and_ deployments, you can pop this code in a `/functions` directory and the functions will get built and shipped whenever you push to Github. No manual steps needed 💯
+When using Netlify for CI _and_ deployments, you can pop this code in a `/functions` directory and the functions will get built and shipped whenever you push to Github. No manual steps needed 💯.
 
 Learn more about Netlify Functions in [their documentation](https://docs.netlify.com/functions/overview/).
 
@@ -107,7 +107,7 @@ In my opinion, one of the coolest things about Gatsby.js is that you can "hook i
 
 `onPostBuild` runs right after the build completes. We can use it to prepare and copy the functions over to the right place, before it's handed off to Netlify.
 
-Learn more about Gatsby build hooks in [our documentation](https://www.gatsbyjs.org/docs/node-apis/).
+Learn more about Gatsby build hooks in [our documentation](/docs/node-apis/).
 
 ### Zip It and Ship It
 
@@ -115,7 +115,7 @@ Remember when I mentioned that Netlify brushes away the thorns of working with A
 
 Let's say we have two functions, `track-hit.js` and `like-content.js`. And let's assume that they both use `faunadb`, a Node module. We need to produce two `.zip` files, with the following contents:
 
-```
+```text
 .
 └── functions
     ├── track-hit.zip
