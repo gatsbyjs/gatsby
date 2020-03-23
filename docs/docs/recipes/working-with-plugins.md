@@ -23,7 +23,7 @@ Found a plugin you'd like to use in your project? Awesome! You can configure it 
 npm install gatsby-source-filesystem
 ```
 
-2. Add the plugin to your `gatsby.config.js`, and set any options it needs, the filesystem source plugin takes a `name` and `path` as options:
+2. Add the plugin to your `gatsby-config.js`, and set any options it needs, the filesystem source plugin takes a `name` and `path` as options:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
