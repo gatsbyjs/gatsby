@@ -18,11 +18,9 @@ type QueryResultsMap = Map<string, IQueryResult>
 /**
  * Get cached page query result for given page path.
  * @param {string} pagePath Path to a page.
- * @param {string} directory Root directory of current project.
  */
 const getCachedPageData = async (
-  pagePath: string,
-  directory: string
+  pagePath: string
 ): Promise<IQueryResult | undefined> => {
   const { program, pages } = store.getState()
   const publicDir = path.join(program.directory, `public`)
@@ -105,7 +103,6 @@ class WebsocketManager {
   connectedClients: number
 
   // Initialized in init()
-  programDir!: string
   websocket!: socketIO.Server
 
   constructor() {
@@ -115,7 +112,6 @@ class WebsocketManager {
     this.staticQueryResults = new Map()
     this.errors = new Map()
     // this.websocket
-    // this.programDir
 
     this.init = this.init.bind(this)
     this.getSocket = this.getSocket.bind(this)
@@ -132,11 +128,9 @@ class WebsocketManager {
     server: unknown
     directory: string
   }): socketIO.Server {
-    this.programDir = directory
-
     const cachedStaticQueryResults = getCachedStaticQueryResults(
       this.staticQueryResults,
-      this.programDir
+      directory
     )
     this.staticQueryResults = new Map([
       ...this.staticQueryResults,
@@ -191,7 +185,7 @@ class WebsocketManager {
       const getDataForPath = async (path: string): Promise<void> => {
         if (!this.pageResults.has(path)) {
           try {
-            const result = await getCachedPageData(path, this.programDir)
+            const result = await getCachedPageData(path)
 
             this.pageResults.set(path, result || { id: path })
           } catch (err) {
