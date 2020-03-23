@@ -10088,3 +10088,15 @@
   built_by: Sankarsan Kampa
   built_by_url: https://traction.one
   featured: false
+- title: Coronavirus COVID-19 Statistics Worldwide
+  url: https://maxmaxinechen.github.io/COVID19-Worldwide-Stats/
+  main_url: https://maxmaxinechen.github.io/COVID19-Worldwide-Stats/
+  source_url: https://github.com/maxMaxineChen/COVID19-Worldwide-Stats
+  description: >
+    A Coronavirus COVID-19 global data statistics application built by Gatsby + Material UI + Recharts
+  categories:
+    - Data
+    - Open Source
+  built_by: Maxine Chen
+  built_by_url: https://github.com/maxMaxineChen
+  featured: false
