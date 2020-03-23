@@ -4,7 +4,7 @@ title: Using Multiple Themes Together
 
 ## What this tutorial covers
 
-This tutorial covers how to compose multiple themes into a final site using [gatsby-theme-blog](/packages/gatsby-theme-blog/), [gatsby-theme-notes](/packages/gatsby-theme-notes/) and [gatsby-mdx-embed](/packages/@pauliescanlon/gatsby-mdx-embed/) as examples. It will also cover the concept of component shadowing with [Theme-UI](docs/theme-ui/) for styling.
+This tutorial covers how to compose multiple themes into a final site using [gatsby-theme-blog](/packages/gatsby-theme-blog/), [gatsby-theme-notes](/packages/gatsby-theme-notes/) and [gatsby-mdx-embed](/packages/@pauliescanlon/gatsby-mdx-embed/) as examples. It will also cover the concept of component shadowing with [Theme-UI](/docs/theme-ui/) for styling.
 
 ## Prerequisites
 
@@ -369,7 +369,7 @@ Your file structure should look like this:
 
 4. Import the navigation menu and add it to the header:
 
-> 💡 This code snippet is edited for length the [full component can be viewed on GitHub.](/examples/using-multiple-themes/src/gatsby-theme-blog/components/header.js)
+> 💡 This code snippet is edited for length the [full component can be viewed on GitHub.](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-multiple-themes/src/gatsby-theme-blog/components/header.js)
 
 ```jsx:title=src/gatsby-theme-blog/components/header.js
 import React from "react"
