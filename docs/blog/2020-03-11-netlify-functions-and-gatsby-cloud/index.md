@@ -15,7 +15,7 @@ Case in point: when I was rebuilding my [personal blog](https://joshwcomeau.com/
 
 For these kinds of situations, _serverless functions_ are perfect. They let us write small bits of Node.js code without worrying about where that code will run.
 
-My personal blog is built and deployed with [Gatsby Cloud](https://www.gatsbyjs.com/), a CI service for Gatsby sites, and it's hosted by [Netlify](https://www.netlify.com/). I'm a very happy Netlify customer, and [Netlify Functions](https://www.netlify.com/products/functions/) seemed like the perfect service for my needs!
+My personal blog is built and deployed with [Gatsby Cloud](https://www.gatsbyjs.com/cloud), a CI service for Gatsby sites, and it's hosted by [Netlify](https://www.netlify.com/). I'm a very happy Netlify customer, and [Netlify Functions](https://www.netlify.com/products/functions/) seemed like the perfect service for my needs!
 
 Getting Gatsby Cloud and Netlify Functions to cooperate took a bit of tinkering, but happily it can be done! The solution I discovered feels robust and reliable, and my blog has been powered by these two services for several weeks now, without any issues.
 
