@@ -5206,22 +5206,24 @@
   features:
     - All features same as gatsby-starter-default
     - Only support TypeScript using gatsby-typescript-plugin
-- url: https://gatsby-starter-catalyst-basic.netlify.com/
-  repo: https://github.com/ehowey/gatsby-starter-catalyst-basic
-  description: A barebones starter to accelerate the Gatsby development process. Based on Gatsby Theme Catalyst. Uses MDX and Theme-UI. Includes the core theme, a header theme, and footer theme.
+- url: https://gatsby-starter-catalyst.netlify.com/
+  repo: https://github.com/ehowey/gatsby-starter-catalyst
+  description: A boilerplate starter to accelerate your Gatsby development process. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme-UI for styling. Includes a core theme, a header theme, and a footer theme.
   tags:
     - MDX
-    - Styling:CSS-in-JS
+    - Styling:Theme-UI
     - SEO
     - PWA
   features:
-    - Based on Gatsby Theme Catalyst series of themes
-    - Theme-UI integration for easy to change design tokens
-    - Developer friendly, includes basic starting styles from Tailwind that can be used as a base to enable you to focus on other design elements
-    - Color mode switching available by default
-    - SEO optimized to include social media images and Twitter handles
-    - React Scroll for one page, anchor based navigation is available
-    - Code highlighting
+    - Based on Gatsby Theme Catalyst series of themes and starters.
+    - Theme options are used to enable some simple layout changes.
+    - Latent component shadowing allows for easy shadowing and swapping of layout components such as the header and footer.
+    - Theme-UI is deeply integrated with design tokens and variants throughout.
+    - Uses a Tailwind preset to enable you to focus on design elements.
+    - Color mode switching available by default.
+    - SEO optimized to include social media images and Twitter handles.
+    - React Scroll for one page, anchor based navigation is available.
+    - Code highlighting via Prism.
 - url: https://gatsby-starter-default-dark-mode.netlify.com/
   repo: https://github.com/alexandreramosdev/gatsby-starter-default-dark-mode
   description: A simple starter to get developing quickly with Gatsby, dark mode, and styled-components.
