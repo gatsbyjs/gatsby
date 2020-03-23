@@ -33,16 +33,17 @@ interface IBuildContext {
   nodeMutationBatch: any[]
   runningBatch: any[]
   deferNodeMutation: boolean
+  store?: Store
 }
 
 const callRealApi = async (event, store: Store): Promise<any> => {
   const { type, payload } = event
-  // console.log(type, args)
-  console.log(`dispatching`, type, payload, actions)
+  console.log(`dispatching`, type)
   if (type in actions) {
-    return actions[type](...payload)((...dispatchArgs) =>
+    return actions[type](...payload)((...dispatchArgs) => {
+      console.log(`doing dispatch`, dispatchArgs)
       store.dispatch(...dispatchArgs)
-    )
+    })
   }
   console.log(`Invalid type`, type)
   return null
@@ -84,6 +85,13 @@ const ADD_NODE_MUTATION: TransitionConfig<IBuildContext, AnyEventObject> = {
   }),
 }
 
+const skipDeferredApi: TransitionConfig<IBuildContext, AnyEventObject> = {
+  internal: true,
+  actions: [
+    async (ctx, event): Promise<void> => callRealApi(event.payload, ctx.store),
+  ],
+}
+
 // eslint-disable-next-line new-cap
 export const developMachine = Machine<any>(
   {
@@ -92,7 +100,7 @@ export const developMachine = Machine<any>(
     context,
     states: {
       initializing: {
-        on: { ADD_NODE_MUTATION },
+        on: { ADD_NODE_MUTATION: skipDeferredApi },
         invoke: {
           src: initialize,
           onDone: {
@@ -114,7 +122,7 @@ export const developMachine = Machine<any>(
         },
       },
       customizingSchema: {
-        on: { ADD_NODE_MUTATION },
+        on: { ADD_NODE_MUTATION: skipDeferredApi },
         invoke: {
           src: customizeSchema,
           id: `customizing-schema`,
@@ -128,11 +136,7 @@ export const developMachine = Machine<any>(
       },
       sourcingNodes: {
         on: {
-          ADD_NODE_MUTATION: {
-            actions: assign({
-              deferNodeMutation: true,
-            }),
-          },
+          ADD_NODE_MUTATION: skipDeferredApi,
         },
         invoke: {
           src: sourceNodes,
@@ -146,7 +150,7 @@ export const developMachine = Machine<any>(
         },
       },
       buildingSchema: {
-        on: { ADD_NODE_MUTATION },
+        on: { ADD_NODE_MUTATION: skipDeferredApi },
         invoke: {
           id: `building-schema`,
           src: buildSchema,

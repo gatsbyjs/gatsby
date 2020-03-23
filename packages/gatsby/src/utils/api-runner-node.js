@@ -72,18 +72,22 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const deferredAction = type => {
-  console.log(`type`, type)
-  return (...args) => {
-    console.log(`deferredAction`)
-    emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-      type,
-      payload: args,
-    })
-  }
+const deferredAction = type => (...args) => {
+  console.log(`deferredAction`, type, args)
+  emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+    type,
+    payload: args,
+  })
 }
 
-const NODE_MUTATION_ACTIONS = [`createNode`, `deleteNode`, `touchNode`]
+const NODE_MUTATION_ACTIONS = [
+  `createNode`,
+  `deleteNode`,
+  `deleteNodes`,
+  `touchNode`,
+  `createParentChildLink`,
+  `createNodeField`,
+]
 
 const deferActions = actions => {
   // console.log(`actual actions`, actions)
@@ -128,6 +132,9 @@ const runAPI = (plugin, api, args, activity) => {
     }
 
     // console.log({ deferNodeMutation: args.deferNodeMutation, availableActions })
+    if (args.deferNodeMutation) {
+      availableActions = deferActions(availableActions)
+    }
 
     const boundActionCreators = bindActionCreators(
       availableActions,
@@ -154,17 +161,6 @@ const runAPI = (plugin, api, args, activity) => {
     // Ideally this would be more abstracted and applied to more situations, but right now
     // this can be potentially breaking so targeting `createPages` API and `createPage` action
     let actions = doubleBoundActionCreators
-
-    console.log(
-      `In defer right beforre rewrite scope`,
-      api,
-      args.deferNodeMutation
-    )
-    if (args.deferNodeMutation) {
-      console.log(actions.createNode.toString())
-      actions = deferActions(actions)
-      console.log(actions.createNode.toString())
-    }
 
     let apiFinished = false
     if (api === `createPages`) {
@@ -209,7 +205,6 @@ const runAPI = (plugin, api, args, activity) => {
       }
     }
     const localReporter = getLocalReporter(activity, reporter)
-
     const apiCallArgs = [
       {
         ...args,

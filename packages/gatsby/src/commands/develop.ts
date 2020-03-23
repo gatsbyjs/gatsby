@@ -152,7 +152,6 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 
   emitter.on(`ENQUEUE_NODE_MUTATION`, event => {
-    console.log(`ENQUEUE_NODE_MUTATION`, event)
     developService.send(`ADD_NODE_MUTATION`, { payload: event })
   })
 
