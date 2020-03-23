@@ -5714,3 +5714,20 @@
     - SEO optimized
     - Robots.txt
     - OpenGraph structured data
+- url: https://gatsby-ecommerce-blog.netlify.com/
+  repo: https://github.com/billp72/ecommerce-blog-gatsby-starter
+  description: A Gatsby Starter built with Contenful CMS to launch your dream store and blog with a click.
+  tags:
+    - Blog
+    - SEO
+    - Markdown
+    - eCommerce
+    - CMS:Headless
+    - CMS:Contentful
+    - Styling:PostCSS
+  features:
+    - Advanced ecommerce and blog created for designer and developers
+    - Manage Ecommerce with Contenful CMS
+    - Option to add featured image and meta description while adding products
+    - create blog posts easily using static markdown pages
+    - PWA
