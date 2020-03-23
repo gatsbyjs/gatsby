@@ -216,7 +216,7 @@ gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 
 > 💡 What just happened?
 >
-> - `new` is a a gatsby command to create a new Gatsby project.
+> - `new` is a gatsby command to create a new Gatsby project.
 > - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
 > - Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
 
