@@ -20,6 +20,7 @@ const nodesTest = ({
   postBuildStateFromSecondRun,
   compareState,
 }) => {
+  // No new nodes were created yet since sourcing for second run hasn't happened yet
   {
     const diff = compareState(
       postBuildStateFromFirstRun,
@@ -29,6 +30,7 @@ const nodesTest = ({
     expect(diff.dirtyIds).toEqual([])
   }
 
+  // New source and transformer nodes were created as a result of the newly added plugin
   {
     const diff = compareState(
       postBuildStateFromFirstRun,

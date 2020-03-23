@@ -76,9 +76,15 @@ const nodesTest = ({
       diff.changes[`parent_childDeletionForFields`].oldValue
     ).toHaveProperty(`fields`, { foo: `bar` })
 
-    expect(
-      _.isEmpty(diff.changes[`parent_childDeletionForFields`].newValue.fields)
-    ).toBe(true)
+    if (process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION) {
+      expect(
+        diff.changes[`parent_childDeletionForFields`].newValue.fields
+      ).toEqual({})
+    } else {
+      expect(
+        diff.changes[`parent_childDeletionForFields`].newValue.fields
+      ).toBeUndefined()
+    }
   }
 }
 

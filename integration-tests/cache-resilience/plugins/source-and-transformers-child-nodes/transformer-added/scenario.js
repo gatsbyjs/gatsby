@@ -29,6 +29,7 @@ const nodesTest = ({
     expect(diff.dirtyIds).toEqual([])
   }
 
+  // Addition of a transformer plugin results in the new child Node and a changed parent Node
   {
     const diff = compareState(
       postBuildStateFromFirstRun,

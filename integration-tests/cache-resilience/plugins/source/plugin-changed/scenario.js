@@ -14,8 +14,7 @@ const nodesTest = ({
   postBuildStateFromSecondRun,
   compareState,
 }) => {
-  // node created by changed plugin is no longer in nodes store
-  // after cache invalidation
+  // Node created by changed plugin is removed during invalidation
   {
     const diff = compareState(
       postBuildStateFromFirstRun,
@@ -26,8 +25,7 @@ const nodesTest = ({
     expect(diff.deletions.INDEPENDENT_NODE_1).toBeTruthy()
   }
 
-  // node created by changed plugin is changed
-  // after second data sourcing
+  // Node created by changed plugin is recreated in second run
   {
     const diff = compareState(
       postBuildStateFromFirstRun,
@@ -43,20 +41,6 @@ const nodesTest = ({
       `foo`,
       `baz`
     )
-    expect(diff.changes[`INDEPENDENT_NODE_1`].diff).toMatchInlineSnapshot(`
-      "  Object {
-          \\"children\\": Array [],
-      -   \\"foo\\": \\"bar\\",
-      +   \\"foo\\": \\"baz\\",
-          \\"id\\": \\"INDEPENDENT_NODE_1\\",
-          \\"internal\\": Object {
-            \\"contentDigest\\": \\"0\\",
-            \\"owner\\": \\"source/plugin-changed/gatsby-source\\",
-            \\"type\\": \\"IndependentChanging\\",
-          },
-          \\"parent\\": null,
-        }"
-    `)
   }
 }
 const graphql = require(`lodash/head`)
@@ -78,19 +62,7 @@ const queriesFixtures = [
   },
 ]
 
-const queriesTest = ({ dataFirstRun, dataDiff }) => {
-  expect(dataFirstRun).toMatchInlineSnapshot(`
-    Object {
-      "allIndependentChanging": Object {
-        "nodes": Array [
-          Object {
-            "foo": "bar",
-            "id": "INDEPENDENT_NODE_1",
-          },
-        ],
-      },
-    }
-  `)
+const queriesTest = ({ dataDiff }) => {
   expect(dataDiff).toMatchInlineSnapshot(`
     "  Object {
         \\"allIndependentChanging\\": Object {
