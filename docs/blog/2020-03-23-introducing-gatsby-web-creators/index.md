@@ -22,8 +22,16 @@ We’re looking for curious individuals to join us in tinkering with web project
 
 For those feeling more shy who still want to get involved, there will be Glitch projects available for everyone to remix each week. The Twitch chat will also be available to participate from the [Gatsbyjs.com landing page](https://gatsbyjs.com/gatsby-web-creators) itself, and from the Twitch platform.
 
-## Where to find the latest schedule
+## Relevant dates and times
 
-For more information including the current content schedule, visit https://gatsbyjs.com/gatsby-web-creators.
+All streams will run Wednesdays and Fridays at 1pm ET/10am PT, on these dates:
+
+- March 25-27
+- April 1-3
+- April 8-10
+- April 15-17
+- April 22-24
+
+For more information including the up-to-date content schedule, visit https://gatsbyjs.com/gatsby-web-creators.
 
 Parents and participants can also ask us questions anytime by contacting [web-creators@gatsbyjs.com](mailto:web-creators@gatsbyjs.com) or on Twitter with [@AskGatsbyjs](https://twitter.com/askgatsbyjs).
