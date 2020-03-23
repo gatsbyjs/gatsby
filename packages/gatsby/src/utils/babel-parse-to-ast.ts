@@ -5,6 +5,7 @@ const PARSER_OPTIONS: ParserOptions = {
   allowImportExportEverywhere: true,
   allowReturnOutsideFunction: true,
   allowSuperOutsideMethod: true,
+  sourceType: `unambiguous`,
   plugins: [
     `jsx`,
     `flow`,
