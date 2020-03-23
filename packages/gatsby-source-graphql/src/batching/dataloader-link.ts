@@ -26,9 +26,14 @@ export function createDataloaderLink(options: IOptions): ApolloLink {
     return resolveResult(result)
   }
 
+  const concurrency =
+    Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 4
+
+  const maxBatchSize = Math.min(4, Math.round(concurrency / 5))
+
   const dataloader = new DataLoader(load, {
     cache: false,
-    maxBatchSize: 5,
+    maxBatchSize,
     batchScheduleFn: (callback): any => setTimeout(callback, 50),
     ...options.dataLoaderOptions,
   })
