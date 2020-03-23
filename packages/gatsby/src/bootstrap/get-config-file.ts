@@ -6,17 +6,18 @@ import path from "path"
 import { sync as existsSync } from "fs-exists-cached"
 
 function isNearMatch(
-  fileName: string,
+  fileName: string | undefined,
   configName: string,
   distance: number
 ): boolean {
+  if (!fileName) return false
   return levenshtein.get(fileName, configName) <= distance
 }
 
 export async function getConfigFile(
   rootDir: string,
   configName: string,
-  distance = 3
+  distance: number = 3
 ): Promise<{
   configModule: any
   configFilePath: string
@@ -31,7 +32,7 @@ export async function getConfigFile(
     const nearMatch = await fs.readdir(rootDir).then(files =>
       files.find(file => {
         const fileName = file.split(rootDir).pop()
-        return isNearMatch(fileName!, configName, distance)
+        return isNearMatch(fileName, configName, distance)
       })
     )
     if (!testRequireError(configPath, err)) {
