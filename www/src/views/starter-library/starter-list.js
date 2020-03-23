@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import Link from "../../components/localized-link"
 import { MdLaunch as LaunchDemoIcon, MdStar } from "react-icons/md"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import {

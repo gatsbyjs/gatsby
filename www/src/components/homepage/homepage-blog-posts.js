@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import { Link } from "gatsby"
+import Link from "../localized-link"
 import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import HomepageBlogPost from "./homepage-blog-post"

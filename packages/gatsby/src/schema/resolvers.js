@@ -2,7 +2,7 @@ const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
 const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
-const { getValueAt } = require(`../utils/get-value-at`)
+import { getValueAt } from "../utils/get-value-at"
 
 const findMany = typeName => (source, args, context, info) =>
   context.nodeModel.runQuery(

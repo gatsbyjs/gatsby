@@ -526,6 +526,10 @@ export interface GatsbyBrowser {
     args: ServiceWorkerArgs,
     options: PluginOptions
   ): any
+  onServiceWorkerUpdateReady?(
+    args: ServiceWorkerArgs,
+    options: PluginOptions
+  ): any
   registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
   replaceComponentRenderer?(
     args: ReplaceComponentRendererArgs,
@@ -1189,11 +1193,11 @@ export interface PackageJson {
         email: string
       }
   license?: string
-  dependencies?: Array<Record<string, string>>
-  devDependencies?: Array<Record<string, string>>
-  peerDependencies?: Array<Record<string, string>>
-  optionalDependecies?: Array<Record<string, string>>
-  bundledDependecies?: Array<Record<string, string>>
+  dependencies?: Record<string, string>
+  devDependencies?: Record<string, string>
+  peerDependencies?: Record<string, string>
+  optionalDependencies?: Record<string, string>
+  bundledDependencies?: Array<string>
   keywords?: string[]
 }
 

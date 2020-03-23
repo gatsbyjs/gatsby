@@ -45,6 +45,7 @@ image: node:latest
 cache:
   paths:
     - node_modules/
+    - .cache/
 
 pages:
   script:

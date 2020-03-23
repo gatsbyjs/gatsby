@@ -1,13 +1,13 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
-import Link from "gatsby-link"
 import Img from "gatsby-image"
 import styled from "@emotion/styled"
 import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
 import themeGet from "@styled-system/theme-get"
 import { useColorMode } from "theme-ui"
 
+import Link from "../../components/localized-link"
 import Layout from "../../components/guidelines/layout"
 import BoxWithBorder from "../../components/guidelines/box-with-border"
 import {
