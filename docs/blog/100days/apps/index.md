@@ -26,7 +26,7 @@ For example, if your project needs private routes, or sections of the site that 
 
 First, get familiar with how [Gatsby works for apps](/docs/adding-app-and-website-functionality/).
 
-Then [watch this helpful livestream](/blog/2019-03-21-add-auth0-to-gatsby-livestream/) that covers adding an authentication service called Auth0 to your site.
+Then [watch this helpful livestream](/blog/2019-03-21-add-auth0-to-gatsby-livestream/) that covers adding an authentication service called [Auth0](https://auth0.com/) to your site.
 
 Lastly, play with live examples of these features by signing in to the [Gatsby Swag Store](https://store.gatsbyjs.org/), and [Gatsby Cloud](https://gatsbyjs.com/cloud)
 
