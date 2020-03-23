@@ -91,6 +91,8 @@ export function merge(queries: ReadonlyArray<IQuery>): IQuery {
       if (isFragmentDefinition(def)) {
         // Theoretically it is possible to have fragments with the same name but different content
         // in different queries. But Gatsby validation doesn't allow this and we rely on this here
+        // One example where this can occur is in gatsby-node or GraphiQL queries
+        // (but those are usually not batched)
         mergedFragmentMap.set(def.name.value, def)
       }
     })
