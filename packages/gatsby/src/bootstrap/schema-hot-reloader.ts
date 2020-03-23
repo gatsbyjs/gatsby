@@ -7,6 +7,8 @@ import report from "gatsby-cli/lib/reporter"
 import { IGatsbyState } from "../redux/types"
 
 type TypeMap = IGatsbyState["inferenceMetadata"]["typeMap"]
+type SchemaCustomization = IGatsbyState["schemaCustomization"]
+type InferenceMetadata = IGatsbyState["inferenceMetadata"]
 
 const inferredTypesChanged = (
   typeMap: TypeMap,
@@ -18,15 +20,15 @@ const inferredTypesChanged = (
   )
 
 const schemaChanged = (
-  schemaCustomization: IGatsbyState["schemaCustomization"],
-  lastSchemaCustomization: IGatsbyState["schemaCustomization"]
+  schemaCustomization: SchemaCustomization,
+  lastSchemaCustomization: SchemaCustomization
 ): boolean =>
   [`fieldExtensions`, `printConfig`, `thirdPartySchemas`, `types`].some(
     key => schemaCustomization[key] !== lastSchemaCustomization[key]
   )
 
-let lastMetadata: IGatsbyState["inferenceMetadata"]
-let lastSchemaCustomization: IGatsbyState["schemaCustomization"]
+let lastMetadata: InferenceMetadata
+let lastSchemaCustomization: SchemaCustomization
 
 // API_RUNNING_QUEUE_EMPTY could be emitted multiple types
 // in a short period of time, so debounce seems reasonable
