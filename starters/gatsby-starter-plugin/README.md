@@ -44,7 +44,7 @@ With `my-gatsby-site` being your Gatsby site, and `my-plugin` being your plugin.
 
 Inside of the `gatsby-config.js` file of your site (in this case, `my-gatsby-site`), include the plugin in the `plugins` array:
 
-```javascript:title=gatsby-config.js
+```javascript
 module.exports = {
   plugins: [
     // other gatsby plugins
