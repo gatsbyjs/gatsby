@@ -64,7 +64,7 @@
     - MaterialUI Components
     - React Icons
 - url: https://authenticaysh.netlify.com/
-  repo: https://github.com/ben-siewert/gatsby-starter-auth-aws-amplify
+  repo: https://github.com/seabeams/gatsby-starter-auth-aws-amplify
   description: Full-featured Auth with AWS Amplify & AWS Cognito
   tags:
     - AWS

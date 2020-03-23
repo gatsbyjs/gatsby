@@ -516,10 +516,6 @@ export const createWebpackUtils = (
    */
   const plugins = { ...builtinPlugins } as PluginUtils
 
-  /**
-   * Minify JavaScript code without regard for IE8. Attempts
-   * to parallelize the work to save time. Generally only add in Production
-   */
   plugins.minifyJs = ({
     terserOptions,
     ...options
@@ -622,10 +618,6 @@ export const createWebpackUtils = (
       disableRefreshCheck: true,
     })
 
-  /**
-   * Extracts css requires into a single file;
-   * includes some reasonable defaults
-   */
   plugins.extractText = (options: any): Plugin =>
     new MiniCssExtractPlugin({
       filename: `[name].[contenthash].css`,

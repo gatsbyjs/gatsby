@@ -60,7 +60,7 @@ I noticed there were some more downsides to Amplify:
 
 - Gatsby allows you to have [routes that only exist on the client side](/docs/building-apps-with-gatsby/#client-only-routes--user-authentication).
 
-- Essentially, you declare a starting point — say for example: /users/, and anything past that starting point will get picked up by the client side. Once the client navigates to /users/1, it will dynamically fetch that user from some sort of API. This is great and allows for very hybrid, partially static, partially dynamic applications. However, when people directly navigate to /users/1, they will get a 404 because it simply does not exist on the serverside, which is kind of an issue.
+- Essentially, you declare a starting point — say for example: `/users/`, and anything past that starting point will get picked up by the client side. Once the client navigates to `/users/1`, it will dynamically fetch that user from some sort of API. This is great and allows for very hybrid, partially static, partially dynamic applications. However, when people directly navigate to `/users/1`, they will get a 404 because it simply does not exist on the serverside, which is kind of an issue.
 
 - We already had a CI service ourselves, and weren’t really interested in learning all these Amplify-specific things that we already had working ourselves just fine.
 
@@ -72,7 +72,7 @@ So, I decided to experiment a bit and a week later, launched a plugin that fixed
 
 - It applies the recommended caching headers by default which can also be fully customised.
 
-- If a client route is requested from the server side, it redirects them back to the starting point of the client route. (aka /users/1 now redirects to /users/ instead of 404'ing). Preferably we’d rewrite the url completely, but this is not possible with S3 and [gatsby-plugin-netlify](https://www.npmjs.com/package/gatsby-plugin-netlify) does exactly the same.
+- If a client route is requested from the server side, it redirects them back to the starting point of the client route. (aka `/users/1` now redirects to `/users/` instead of 404'ing). Preferably we’d rewrite the url completely, but this is not possible with S3 and [gatsby-plugin-netlify](https://www.npmjs.com/package/gatsby-plugin-netlify) does exactly the same.
 
 - Unlike Amplify, it can be ran from your own infrastructure (or an EC2 instance — in which case it won’t need any configuration because it uses the AWS SDK which can automatically resolve the needed credentials!)
 
