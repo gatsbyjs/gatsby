@@ -16,8 +16,12 @@ export function createDataloaderLink(options: IOptions): ApolloLink {
     const query = merge(keys)
     const result: object = await request(query, options)
     if (!isValidGraphQLResult(result)) {
-      const error = extractFirstError(result)
-      throw new Error(`Failed to load query batch: ${error}`)
+      const error: any = new Error(
+        `Failed to load query batch:\n${formatErrors(result)}`
+      )
+      error.name = `GraphQLError`
+      error.originalResult = result
+      throw error
     }
     return resolveResult(result)
   }
@@ -52,16 +56,26 @@ export function createDataloaderLink(options: IOptions): ApolloLink {
   )
 }
 
-function extractFirstError(result: any): string {
+function formatErrors(result: any): string {
   if (result?.errors?.length > 0) {
-    const { message, path = [] } = result.errors[0]
-    return `${message} (path: ${JSON.stringify(path)}`
+    return result.errors
+      .map(error => {
+        const { message, path = [] } = error
+        return path.length > 0
+          ? `${message} (path: ${JSON.stringify(path)})`
+          : message
+      })
+      .join(`\n`)
   }
-  return `Unknown error`
+  return `Unexpected GraphQL result`
 }
 
 function isValidGraphQLResult(response): response is IQueryResult {
-  return response?.data && (!response.errors || response.errors.length < 0)
+  return (
+    response &&
+    response.data &&
+    (!response.errors || response.errors.length === 0)
+  )
 }
 
 async function request(query: IQuery, options: IOptions): Promise<object> {
