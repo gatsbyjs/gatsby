@@ -42,10 +42,13 @@ const setup = version => {
 }
 
 describe(`error handling`, () => {
-  it(`panics on Node < 8.0.0`, () => {
-    const { reporter } = setup(`v6.0.0`)
+  it(`panics on Node < 10.13.0`, () => {
+    ;[`6.0.0`, `8.0.0`, `10.0.0`].forEach(version => {
+      const { reporter } = setup(version)
 
-    expect(reporter.panic).toHaveBeenCalledTimes(1)
+      expect(reporter.panic).toHaveBeenCalledTimes(1)
+      reporter.panic.mockClear()
+    })
   })
 
   it(`shows error with link to more info`, () => {
@@ -57,19 +60,19 @@ describe(`error handling`, () => {
   })
 })
 
-describe(`deprecation warning`, () => {
-  it(`warns on Node < 10.13.0`, () => {
-    const { reporter } = setup(`v10.12.0`)
+// describe(`deprecation warning`, () => {
+//   it(`warns on Node < 10.13.0`, () => {
+//     const { reporter } = setup(`v10.12.0`)
 
-    expect(reporter.warn).toHaveBeenCalledWith(
-      expect.stringContaining(`https://gatsby.dev/upgrading-node-js`)
-    )
-  })
-})
+//      expect(reporter.warn).toHaveBeenCalledWith(
+//       expect.stringContaining(`https://gatsby.dev/upgrading-node-js`)
+//     )
+//   })
+// })
 
 describe(`normal behavior`, () => {
-  it(`does not panic on Node >= 8.0.0`, () => {
-    ;[`8.0.0`, `8.9.0`, `10.0.0`, `12.0.0`, `13.0.0`].forEach(version => {
+  it(`does not panic on Node >= 10.13.0`, () => {
+    ;[`10.13.0`, `12.0.0`, `13.0.0`].forEach(version => {
       const { reporter } = setup(version)
 
       expect(reporter.panic).not.toHaveBeenCalled()

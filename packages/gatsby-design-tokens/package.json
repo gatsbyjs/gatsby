@@ -33,5 +33,8 @@
     "cross-env": "^5.2.1",
     "microbundle": "gatsbyjs/microbundle#brotli-try-catch-plus-dist",
     "preval.macro": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=10.13.0"
   }
 }
