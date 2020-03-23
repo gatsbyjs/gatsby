@@ -50,7 +50,7 @@ The config is quite large, but here are some of the important values in the fina
         // disable Webpack's default vendor cacheGroup
         vendors: false,
         // Create a framework bundle that contains react libraries
-        // They hardly change so we bundle them to getter to improve caching
+        // They hardly change so we bundle them together to improve
         framework: {},
         // Big modules that are over 160kb are moved to their own file to
         // optimize browser parsing & execution
@@ -59,18 +59,18 @@ The config is quite large, but here are some of the important values in the fina
         commons: {},
         // When a module is used more than once we create a shared bundle to save user's bandwidth
         shared: {},
-        // All css is bundled into one stylesheet
+        // All CSS is bundled into one stylesheet
         styles: {}
       },
       // Keep maximum initial requests to 25
       maxInitialRequests: 25,
-      // A chunk should be at least 20kb to be considered into splitChunks
+      // A chunk should be at least 20kb before using splitChunks
       minSize: 20000
     },
     minimizers: [
       // Minify javascript using Terser (https://terser.org/)
       plugins.minifyJs(),
-      // Minify css by using cssnano (https://cssnano.co/)
+      // Minify CSS by using cssnano (https://cssnano.co/)
       plugins.minifyCss(),
     ]
   }
@@ -95,11 +95,11 @@ This contains the small [webpack-runtime](https://webpack.js.org/concepts/manife
 
 ##### framework-[contenthash].js
 
-The framework bundle contains the react framework. We've noticed that React hardly gets upgraded to a newer version. Creating a separate bundle improves users' browser cache hit rate as this bundle is likely not going to be updated often.
+The framework bundle contains the React framework. Based on user behavior, React hardly gets upgraded to a newer version. Creating a separate bundle improves users' browser cache hit rate as this bundle is likely not going to be updated often.
 
 ##### commons-[contenthash].js
 
-Libraries used on every gatsby page are bundled into the commons javascript file. By bundling these all together, we make sure your user only needs to download this bundle once.
+Libraries used on every Gatsby page are bundled into the commons javascript file. By bundling these together, you can make sure your users only need to download this bundle once.
 
 ##### component---[name]-[contenthash].js
 
