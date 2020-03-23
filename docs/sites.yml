@@ -1153,7 +1153,7 @@
   main_url: https://ericjinks.com/
   url: https://ericjinks.com/
   featured: false
-  description: "Software engineer / web developer from the Gold Coast, Australia."
+  description: Software engineer / web developer from the Gold Coast, Australia.
   categories:
     - Portfolio
     - Blog
@@ -1223,7 +1223,7 @@
   categories:
     - Blog
     - Education
-  built_by: "Stephanie Langers (content), Adrian Wenke (development)"
+  built_by: Stephanie Langers (content), Adrian Wenke (development)
   built_by_url: https://twitter.com/AdrianWenke
 - title: Zensum
   main_url: https://zensum.se/
@@ -1529,7 +1529,7 @@
   main_url: https://frithir.com/
   url: https://frithir.com/
   featured: false
-  description: "I DRINK COFFEE, WRITE CODE AND IMPROVE MY DEVELOPMENT SKILLS EVERY DAY."
+  description: I DRINK COFFEE, WRITE CODE AND IMPROVE MY DEVELOPMENT SKILLS EVERY DAY.
   categories:
     - Design
     - Web Development
@@ -1775,7 +1775,7 @@
   main_url: https://confessions.tech
   url: https://confessions.tech
   source_url: https://github.com/JonathanSpeek/tech-confessions
-  description: "A guilt-free place for us to confess our tech sins \U0001F64F\n"
+  description: A guilt-free place for us to confess our tech sins \U0001F64F\n
   categories:
     - Community
     - Open Source
@@ -2096,7 +2096,7 @@
   featured: false
   categories:
     - Marketing
-- title: "Luciano Mammino's blog"
+- title: Luciano Mammino's blog
   description: >
     Tech & programming blog of Luciano Mammino a.k.a. "loige", Full-Stack Web Developer and International Speaker
   main_url: https://loige.co
@@ -2585,7 +2585,7 @@
   built_by: Masahiro Harada
   built_by_url: https://twitter.com/_Masahiro_H_
   featured: false
-- title: "Maxence Poutord's blog"
+- title: Maxence Poutord's blog
   description: >
     Tech & programming blog of Maxence Poutord, Software Engineer, Serial Traveler and Public Speaker
   main_url: https://www.maxpou.fr
@@ -2596,7 +2596,7 @@
     - Web Development
   built_by: Maxence Poutord
   built_by_url: https://www.maxpou.fr
-- title: "The Noted Project"
+- title: The Noted Project
   url: https://thenotedproject.org
   main_url: https://thenotedproject.org
   source_url: https://github.com/ianbusko/the-noted-project
@@ -2672,7 +2672,7 @@
   categories:
     - Gallery
     - Food
-  built_by: "Code for Münster during #MSHACK18"
+  built_by: Code for Münster during MSHACK18
   featured: false
 - title: Code Championship
   description: >
