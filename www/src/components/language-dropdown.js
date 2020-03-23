@@ -4,8 +4,25 @@ import { Menu, MenuButton, MenuPopover, MenuLink } from "@reach/menu-button"
 import { MdTranslate } from "react-icons/md"
 import { Link } from "gatsby"
 import "@reach/menu-button/styles.css"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 import { langs, getLocaleAndBasePath, localizedPath } from "../utils/i18n"
+
+const navItemTopOffset = `0.4rem`
+const navItemStyles = {
+  borderBottom: `2px solid transparent`,
+  color: `navigation.linkDefault`,
+  display: `block`,
+  fontSize: 3,
+  lineHeight: t => t.sizes.headerHeight,
+  [mediaQueries.md]: {
+    lineHeight: t => `calc(${t.sizes.headerHeight} - ${navItemTopOffset})`,
+  },
+  position: `relative`,
+  textDecoration: `none`,
+  zIndex: 1,
+  "&:hover, &:focus": { color: `navigation.linkHover` },
+}
 
 const allLangs = [
   { code: "en", name: "English", localName: "English" },
@@ -34,7 +51,14 @@ const menuPosition = (targetRect, popoverRect) => {
 export default function LanguageDropdown({ pathname }) {
   return (
     <Menu>
-      <MenuButton sx={{ bg: `background`, border: 0 }}>
+      <MenuButton
+        sx={{
+          border: 0,
+          background: `none`,
+          cursor: `pointer`,
+          ...navItemStyles,
+        }}
+      >
         <MdTranslate /> Languages
       </MenuButton>
       <MenuPopover
