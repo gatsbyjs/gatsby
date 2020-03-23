@@ -4,17 +4,22 @@ date: 2020-03-23
 author: "Marcy Sutton"
 image: "images/web-creators-banner.jpg"
 imageTitle: Calling curious and creative people
+showImageInArticle: false
 excerpt: "Gatsby Web Creators is a free livestream series aimed at curious people aged 13 and up, starting Wednesday, March 25. Twice a week for the next 5 weeks, Gatsby Learning Team members and their special guests will teach the basic skills involved for creating web pages, starting with HTML and CSS, and gradually building up to JavaScript."
 tags:
   - livestream
   - learning-to-code
 ---
 
-Gatsby Web Creators is a free livestream series aimed at curious people aged 13 and up, starting Wednesday, March 25. Twice a week for the next 5 weeks, Gatsby Learning Team members and their special guests will teach the basic skills involved for creating web pages, starting with HTML and CSS, and gradually building up to JavaScript.
+<img src="./images/octopus.png" alt="octopus" />
 
-Streaming live on [Twitch](https://twitch.tv/gatsbyjs) and recorded for future viewing on [YouTube](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w), we’ll explore how to work with text, images, interactive elements, fancy widgets, custom styling, animation with CSS, playing with browser Developer Tools, and more. We’ll make good use of the time people are spending indoors and online to build up a foundation of skills over the coming weeks, showing how to create accessible web pages tailored to one's interests.
+[Gatsby Web Creators](https://gatsbyjs.com/gatsby-web-creators) is a free livestream series aimed at curious people aged 13 and up, starting Wednesday, March 25. Twice a week for the next 5 weeks, Gatsby Learning Team members and their special guests will teach the basic skills involved for creating web pages, starting with HTML and CSS, and gradually building up to JavaScript.
+
+Streaming live on [Twitch](https://twitch.tv/gatsbyjs), we’ll explore how to work with text, images, interactive elements, fancy widgets, custom styling, animation with CSS, playing with browser Developer Tools, and more. We’ll make good use of the time people are spending indoors and online to build up a foundation of skills over the coming weeks, showing how to create accessible web pages tailored to one's interests.
 
 The only prerequisites for this series are a sense of curiosity and a desire to tinker, as well as a computer with an internet connection. The majority of these lessons will include live examples on [Glitch](https://glitch.com), a colorful tool for creating web apps and building a community. Glitch projects can be remixed and added to collections, and it provides automatic URLs for each project so participants can create and share their own web pages with ease.
+
+To join, go to our [Twitch page](https://twitch.tv/gatsbyjs) at the specified times (Weds. and Fri. at 1pm ET/10am PT). Note: you don't have to have a Twitch account to watch the streams. If you can't make it to the live sessions, they'll also be available as recordings on [YouTube](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w).
 
 ## Call for participants!
 
