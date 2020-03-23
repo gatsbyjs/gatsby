@@ -60,7 +60,7 @@ exports.handler = async (event, context, callback) => {
 }
 ```
 
-When using Netlify for CI _and_ deployments, you can pop this code in a `/functions` directory and the functions will get built and shipped whenever you push to Github. No manual steps needed 💯
+When using Netlify for CI _and_ deployments, you can pop this code in a `/functions` directory and the functions will get built and shipped whenever you push to Github. No manual steps needed 💯.
 
 Learn more about Netlify Functions in [their documentation](https://docs.netlify.com/functions/overview/).
 
@@ -115,7 +115,7 @@ Remember when I mentioned that Netlify brushes away the thorns of working with A
 
 Let's say we have two functions, `track-hit.js` and `like-content.js`. And let's assume that they both use `faunadb`, a Node module. We need to produce two `.zip` files, with the following contents:
 
-```
+```text
 .
 └── functions
     ├── track-hit.zip
