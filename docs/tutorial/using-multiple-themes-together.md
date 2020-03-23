@@ -17,7 +17,9 @@ This tutorial assumes the following:
 
 You can view a [full working example of this tutorial](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-multiple-themes) on GitHub. Some longer code snippets have been edited for length and the full code is available for reference in the example repository.
 
-## Create a new site using the hello world starter and change directory to "multiple-themes"
+## Create a new site
+
+Using the hello world starter create a new site and navigate to that directory.
 
 ```shell
 gatsby new multiple-themes https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -28,13 +30,13 @@ cd multiple-themes
 
 This step composes [gatsby-theme-blog](/packages/gatsby-theme-blog/) and [gatsby-theme-notes](/packages/gatsby-theme-notes/).
 
-Install the themes:
+1. Install the themes:
 
 ```shell
 npm install gatsby-theme-blog gatsby-theme-notes
 ```
 
-Edit `gatsby-config.js` to add the themes to the plugin array and to update the site metadata:
+2. Edit `gatsby-config.js` to add the themes to the plugin array and to update the site metadata:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -70,19 +72,23 @@ module.exports = {
 }
 ```
 
-Next, run the site and see what you have:
+3. Run the site:
 
 ```shell
 gatsby develop
 ```
 
+4. Checkout `localhost:8000` to see what is currently there.
+
 ## Add content
 
 Behind the scenes, the two themes created content folders in the root directory of the site. In this step, you will add some content to these folders.
 
-Add a post:
+### Add a post
 
-```mdx:title=content/posts/hello-posts.mdx
+Create a new file in `/content/posts`, like this one:
+
+```mdx:title=content/posts/hello-posts.md
 ---
 title: My first blog post
 date: 2020-02-15
@@ -91,9 +97,11 @@ date: 2020-02-15
 Multiple themes are great!
 ```
 
-Add a note:
+### Add a note
 
-```mdx:title=content/note/hello-notes.mdx
+Create a new file in `/content/notes`, like this one:
+
+```mdx:title=content/note/hello-notes.md
 ---
 title: My first note
 date: 2020-02-20
@@ -104,37 +112,39 @@ Multiple themes are awesome!
 
 Restart your development server with `gatsby develop`. Now if you visit `http://localhost:8000/blog/hello-posts/` and `http://localhost:8000/notes/hello-notes` you should see your new content.
 
-## Add an avatar image
+### Add an avatar image
 
 Put an avatar image into the `content/assets/` directory, this is used by `gatsby-theme-blog` for the bio component. The file name can be `avatar.png` or `avatar.jpg`.
 
 ## Put the blog posts on the homepage
 
-Delete `src/pages/index.js`.
+1. Delete the existing `src/pages/index.js` file.
 
-Change the theme options for the blog theme in `gatsby-config.js`:
+2. Change the theme options for the blog theme in `gatsby-config.js`:
 
 ```javascript:title=gatsby-config.js
 {
       resolve: `gatsby-theme-blog`,
       options: {
-        // basePath defaults to `/` so this could als be included without options as just `gatsby-theme-blog`,
+        // basePath defaults to `/` so this could also be included without options as just `gatsby-theme-blog`,
         basePath: `/`,
       },
     },
 ```
 
-Restart your development server with `gatsby develop` to test your new homepage.
+3. Restart your development server with `gatsby develop` to test your new homepage.
 
-## Shadow the 'bio-content.js' component
+## Shadow components
 
-It is possible to update the author bio information with a custom `bio-content.js` component using [theme shadowing](/docs/themes/shadowing/).
+Use [theme shadowing](/docs/themes/shadowing/) to customize components the theme provides for you.
+
+### Shadow `bio-content.js`
+
+The first component to update is `bio-content.js` which provides the content used in the `gatsby-theme-blog` `bio` component.
 
 > 💡 Don't forget to stop and restart your development server when adding a shadowed component for the first time.
 
-Your file structure should look like this:
-
-`src/gatsby-theme-blog/components/bio-content.js`
+In order to shadow the file you need to place it in the same location it exists within the theme. In this case, that means `src/gatsby-theme-blog/components/bio-content.js`. So you'll create a file structure that looks look like this:
 
 ```text
 └── src
@@ -143,7 +153,7 @@ Your file structure should look like this:
     │   │   ├── bio-content.js // highlight-line
 ```
 
-And your component could look like this:
+Feel free to make the text of your bio anything you like, but the component will look something like this:
 
 ```jsx:title=src/gatsby-theme-blog/components/bio-content.js
 import React, { Fragment } from "react"
@@ -158,13 +168,11 @@ export default () => (
 )
 ```
 
-## Shadow Theme-UI
+### Shadow Theme-UI
 
-`gatsby-theme-blog` and `gatsby-theme-notes` both use [Theme-UI](/docs/theme-ui/) design tokens to manage their styling: colors, font sizes, spacing, etc. We can use component shadowing to gain control over these design tokens in the final site.
+`gatsby-theme-blog` and `gatsby-theme-notes` both use [Theme-UI](/docs/theme-ui/) design tokens to manage their styling: colors, font sizes, spacing, etc. You can use component shadowing to gain control over these design tokens in the final site.
 
-Your file structure should look like this:
-
-`src/gatsby-plugin-theme-ui/index.js`
+As with your bio, you need to match the file structure of the theme. In this case, that's `src/gatsby-plugin-theme-ui/index.js` and the resulting structure will look like this:
 
 ```text
 └── src
@@ -172,7 +180,7 @@ Your file structure should look like this:
     │   ├── index.js //highlight-line
 ```
 
-And your component could look like this:
+Feel free to use whatever colors you like, but here is an example of what you could do.
 
 ```javascript:title=src/gatsby-plugin-theme-ui/index.js
 import merge from "deepmerge"
@@ -194,17 +202,19 @@ export default merge(defaultTheme, {
 })
 ```
 
+> Note that this example uses `deepmerge`. This allows you to use the Theme-UI configuration for any settings you don't override in this file.
+
 ## Add another theme
 
 Themes can be big, like `gatsby-theme-blog`, but they can also be a small discrete set of components or functions. A great example of this is [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.com/) which adds the ability to embed social media content and videos directly into your MDX files.
 
-Install the theme:
+1. Install the theme:
 
 ```shell
 npm install @pauliescanlon/gatsby-mdx-embed
 ```
 
-Update the `gatsby-config.js` file and add `gatsby-mdx-embed` as a plugin:
+2. Update the `gatsby-config.js` file and add `gatsby-mdx-embed` as a plugin:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -229,9 +239,9 @@ module.exports = {
 }
 ```
 
-Test it out by adding a Youtube video to one of your blog posts:
+3. Test it out by adding a Youtube video to one of your blog posts:
 
-```mdx:title=content/posts/video-post.mdx
+```mdx:title=content/posts/video-post.md
 ---
 title: Jason and Jackson Talk Themes
 date: 2020-02-21
@@ -246,7 +256,7 @@ Here is a video about composing and styling themes with J&J!
 
 Use component shadowing to add a navigation menu. You can read more about [creating dynamic navigation menus](/docs/creating-dynamic-navigation/) in the docs.
 
-Add a `menuLinks` array to `gatsby-config.js`:
+1. Add a `menuLinks` array to `gatsby-config.js`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -276,7 +286,7 @@ module.exports = {
 }
 ```
 
-Create the navigation component:
+2. Create the navigation component:
 
 ```jsx:title=src/components/navigation.js
 import React from "react"
@@ -344,7 +354,7 @@ export default () => {
 }
 ```
 
-When that is done the next step is to shadow `header.js` from `gatsby-theme-blog`. You can copy and paste code from the original component as a starting point for your new shadowed component.
+3. When that is done the next step is to shadow `header.js` from `gatsby-theme-blog`. You can copy and paste code from the original component as a starting point for your new shadowed component.
 
 Your file structure should look like this:
 
@@ -357,42 +367,29 @@ Your file structure should look like this:
     │   │   ├── header.js // highlight-line
 ```
 
-Import the navigation menu and add it to the header:
+4. Import the navigation menu and add it to the header:
 
-> 💡 This code snippet is edited for length the [full component can be viewed on GitHub.](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-multiple-themes/src/gatsby-theme-blog/components/header.js)
+> 💡 This code snippet is edited for length the [full component can be viewed on GitHub.](/examples/using-multiple-themes/src/gatsby-theme-blog/components/header.js)
 
 ```jsx:title=src/gatsby-theme-blog/components/header.js
 import React from "react"
-import { Link } from "gatsby"
-import { css, useColorMode, Styled } from "theme-ui"
-import Switch from "gatsby-theme-blog/src/components/switch"
-import Bio from "gatsby-theme-blog/src/components/bio"
-import sun from "gatsby-theme-blog/assets/sun.png"
-import moon from "gatsby-theme-blog/assets/moon.png"
 import Navigation from "../../components/navigation" // highlight-line
 
-// ...edited for length
-    <header>
-      <div
-        css={css({
-          maxWidth: `container`,
-          mx: `auto`,
-          px: 3,
-          pt: 4,
-        })}
-      >
-        <Navigation /> // highlight-line
-        <div
-          css={css({
-            display: `flex`,
-            justifyContent: `space-between`,
-            alignItems: `center`,
-            mb: 4,
-          })}
-// ...edited for length
+;<header>
+  <div
+    css={css({
+      maxWidth: `container`,
+      mx: `auto`,
+      px: 3,
+      pt: 4,
+    })}
+  >
+    <Navigation /> // highlight-line
+  </div>
+</header>
 ```
 
-Run `gatsby develop` and test the new navigation component.
+5. Run `gatsby develop` and test the new navigation component.
 
 ## Wrapping up
 
