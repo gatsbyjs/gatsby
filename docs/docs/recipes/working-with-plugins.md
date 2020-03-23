@@ -68,7 +68,7 @@ gatsby new my-plugin https://github.com/gatsbyjs/gatsby-starter-plugin
 
 The directory structure should look something like this:
 
-```
+```text
 gatsby-site
 └── gatsby-config.js
 └── src
