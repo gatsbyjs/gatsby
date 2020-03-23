@@ -1,4 +1,4 @@
-import { PackageJson } from "gatsby"
+import { PackageJson, Reporter } from "gatsby"
 
 export interface ICert {
   keyPath: string
@@ -13,6 +13,7 @@ export interface IProgram {
   openTracingConfigFile: string
   port: number
   host: string
+  report: Reporter
   [`cert-file`]?: string
   [`key-file`]?: string
   directory: string
@@ -21,7 +22,15 @@ export interface IProgram {
   ssl?: ICert
 }
 
+// @deprecated
 export enum BuildHTMLStage {
   DevelopHTML = `develop-html`,
+  BuildHTML = `build-html`,
+}
+
+export enum Stage {
+  Develop = `develop`,
+  DevelopHTML = `develop-html`,
+  BuildJavascript = `build-javascript`,
   BuildHTML = `build-html`,
 }

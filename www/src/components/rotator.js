@@ -3,9 +3,8 @@ import { jsx } from "theme-ui"
 
 import React, { Component } from "react"
 import Slider from "./slider"
-import Link from "gatsby-link"
-import MdNavigateBefore from "react-icons/lib/md/navigate-before"
-import MdNavigateNext from "react-icons/lib/md/navigate-next"
+import Link from "./localized-link"
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md"
 import { visuallyHidden } from "../utils/styles"
 
 const controlButtonStyles = {
