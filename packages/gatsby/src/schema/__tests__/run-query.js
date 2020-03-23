@@ -250,7 +250,7 @@ async function runFilter(filter) {
 }
 
 describe(`Filter fields`, () => {
-  it(`handles eq operator`, async () => {
+  it(`handles eq operator with number value`, async () => {
     let result = await runFilter({ hair: { eq: 2 } })
 
     expect(result.length).toEqual(1)

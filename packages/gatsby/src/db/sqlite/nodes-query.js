@@ -2,10 +2,15 @@
 // fields for each leaf property, separated with path separator stored in Λ
 // This means `{a: {b: 1, c: {d: 2}}` becomes `a.b` and `a.b.c.d`
 
+// v8.serialize instead of JSON.serialize to support nodes with circular refs
+const v8 = require(`v8`)
+
 const {
   ARRAY_PREFIX,
   MAIN_NODE,
   OBJECT_PREFIX,
+
+  SqliteNode,
 
   BOLD,
   GREEN,
@@ -27,6 +32,7 @@ const {
 } = require(`./nodes.js`)
 
 function translatePathToWhereClause(
+  table,
   path,
   op,
   processedValue,
@@ -47,6 +53,7 @@ function translatePathToWhereClause(
       if (isArrayField(path)) {
         // Special case; basically do `x in [value]` where x is an array
         return translatePathToWhereClause(
+          table,
           path,
           `in`,
           [processedValue],
@@ -58,10 +65,10 @@ function translatePathToWhereClause(
       preparedArgs.push(processedValue)
 
       if (originalValue === null) {
-        return `( \`${path}\` = ? or \`${path}\` is null )`
+        return `( ${table}.\`${path}\` = ? or ${table}.\`${path}\` is null )`
       }
 
-      return `\`${path}\` = ?`
+      return `${table}.\`${path}\` = ?`
 
     case `ne`:
       // Match nodes that do not have the property at all, except when checking
@@ -70,6 +77,7 @@ function translatePathToWhereClause(
       if (isArrayField(path)) {
         // Special case; basically do `x nin [value]` where x is an array
         return translatePathToWhereClause(
+          table,
           path,
           `nin`,
           [processedValue],
@@ -81,10 +89,10 @@ function translatePathToWhereClause(
       preparedArgs.push(processedValue)
 
       if (originalValue === null) {
-        return `( \`${path}\` != ? AND \`${path}\` IS NOT NULL )`
+        return `( ${table}.\`${path}\` != ? AND ${table}.\`${path}\` IS NOT NULL )`
       }
 
-      return `( \`${path}\` != ? OR \`${path}\` IS NULL )`
+      return `( ${table}.\`${path}\` != ? OR ${table}.\`${path}\` IS NULL )`
 
     case `lt`:
       // TODO: what is the expected behavior for non-numbers here? Especially string case
@@ -93,7 +101,7 @@ function translatePathToWhereClause(
         return `0` // "Always false"
       }
       preparedArgs.push(processedValue)
-      return `CAST( \`${path}\` as decimal ) < ?`
+      return `CAST( ${table}.\`${path}\` as decimal ) < ?`
 
     case `lte`:
       // TODO: what is the expected behavior for non-numbers here? Especially string case
@@ -101,10 +109,10 @@ function translatePathToWhereClause(
         // Note: null is not expected to match anything but itself
         // But the property must exist (NOT NULL)
         preparedArgs.push(processedValue)
-        return `( \`${path}\` = ? AND \`${path}\` NOT NULL )`
+        return `( ${table}.\`${path}\` = ? AND ${table}.\`${path}\` NOT NULL )`
       }
       preparedArgs.push(processedValue)
-      return `CAST( \`${path}\` as decimal ) <= ?`
+      return `CAST( ${table}.\`${path}\` as decimal ) <= ?`
 
     case `gt`:
       // TODO: what is the expected behavior for non-numbers here? Especially string case
@@ -113,7 +121,7 @@ function translatePathToWhereClause(
         return `0` // "Always false"
       }
       preparedArgs.push(processedValue)
-      return `CAST( \`${path}\` as decimal ) > ?`
+      return `CAST( ${table}.\`${path}\` as decimal ) > ?`
 
     case `gte`:
       // TODO: what is the expected behavior for non-numbers here? Especially string case
@@ -121,16 +129,16 @@ function translatePathToWhereClause(
         // Note: null is not expected to match anything but itself
         // But the property must exist (NOT NULL)
         preparedArgs.push(processedValue)
-        return `( \`${path}\` = ? AND \`${path}\` NOT NULL )`
+        return `( ${table}.\`${path}\` = ? AND ${table}.\`${path}\` NOT NULL )`
       }
       preparedArgs.push(processedValue)
-      return `CAST( \`${path}\` as decimal ) >= ?`
+      return `CAST( ${table}.\`${path}\` as decimal ) >= ?`
 
     case `regex`:
       // TODO: this will invoke a userland function that we defined in ./nodes.js. There is much room for improvement but I doubt it will ever scale.
       // Nodes that do not have this property at all should never match (NULL)
       preparedArgs.push(processedValue)
-      return `( \`${path}\` NOT NULL AND \`${path}\` REGEXP ? )`
+      return `( ${table}.\`${path}\` NOT NULL AND ${table}.\`${path}\` REGEXP ? )`
 
     case `in`: {
       // If the array contains null we need to special case it due to sqlite
@@ -156,15 +164,17 @@ function translatePathToWhereClause(
             // TODO: empty array
             x.push(
               `( ` +
-                `\`${f}\` ${
+                `${table}.\`${f}\` ${
                   specialNullCase ? `is null or` : `not null and`
-                } \`${f}\` in ( ${processedValue.map(() => `?`).join(`, `)} )` +
+                } ${table}.\`${f}\` in ( ${processedValue
+                  .map(() => `?`)
+                  .join(`, `)} )` +
                 ` )`
             )
           }
         })
 
-        return `\`${ARRAY_PREFIX + path}\` ${
+        return `${table}.\`${ARRAY_PREFIX + path}\` ${
           specialNullCase ? `is null or (` : `not null and (`
         } ${x.join(` OR `)} )`
       }
@@ -174,9 +184,11 @@ function translatePathToWhereClause(
       // You cannot bind an array so we'll have to manually scrub this in
       preparedArgs.push(...processedValue)
 
-      return `( \`${path}\` ${
+      return `( ${table}.\`${path}\` ${
         specialNullCase ? `is null or` : `not null and`
-      }  \`${path}\` in (${processedValue.map(() => `?`).join(`, `)}) )`
+      }  ${table}.\`${path}\` in (${processedValue
+        .map(() => `?`)
+        .join(`, `)}) )`
     }
 
     case `nin`: {
@@ -198,16 +210,16 @@ function translatePathToWhereClause(
             preparedArgs.push(...processedValue)
             // `f` must be `aΛbΛcΛ123` with a primitive value
             x.push(
-              `( \`${f}\` ${
+              `( ${table}.\`${f}\` ${
                 specialNullCase ? `is null or` : `not null and`
-              } \`${f}\` not in ( ${processedValue
+              } ${table}.\`${f}\` not in ( ${processedValue
                 .map(() => `?`)
                 .join(`, `)} ) )`
             )
           }
         })
 
-        return `\`${ARRAY_PREFIX + path}\` ${
+        return `${table}.\`${ARRAY_PREFIX + path}\` ${
           specialNullCase ? `not null and (` : `is null or (`
         } ${x.join(` AND `)} )`
       }
@@ -220,9 +232,11 @@ function translatePathToWhereClause(
       // We only check whether the first array field exists.
       // TODO: empty array
 
-      return `( \`${path}\` ${
+      return `( ${table}.\`${path}\` ${
         specialNullCase ? `not null and` : `is null or`
-      } \`${path}\` not in ( ${processedValue.map(() => `?`).join(`, `)} ) )`
+      } ${table}.\`${path}\` not in ( ${processedValue
+        .map(() => `?`)
+        .join(`, `)} ) )`
     }
 
     case `glob`: {
@@ -230,7 +244,7 @@ function translatePathToWhereClause(
       // the glob to a regex. So we use a custom function here for that
 
       preparedArgs.push(processedValue)
-      return `micromatch_glob(?, \`${path}\`)`
+      return `micromatch_glob(?, ${table}.\`${path}\`)`
     }
   }
   throw new Error(`sqlite runQuery: Unsupported op: \`` + op + `\``)
@@ -263,9 +277,16 @@ function sanitize(value) {
   return encodeJsToSqlite(value)
 }
 
-function expandElematch(path) {
+function expandElematch(path, queryJoinLines) /*: [Array<string>, string]*/ {
   log(`  -- expandElematch(` + path + `)`)
   let pieces = path.split(Λ)
+
+  log(
+    `Testing against these fields:\n` +
+      getKnownFields()
+        .map(s => `- ` + s + `\n`)
+        .join(``)
+  )
 
   // note: case insensitive, paths are lc
   if (!pieces.includes(`elemmatch`)) return [path]
@@ -276,6 +297,9 @@ function expandElematch(path) {
   // An `elemMatch` _should_ only apply to arrays, but it will work with any.
   // The arg must be a full path from array to leaf, not partial. It can be
   // a sub tree (at least one leaf must be specified in the query).
+
+  // Special case: `node.children` array of ids extrapolates into actual nodes
+  // Extra special: children.elemMatch.children recursively
 
   // { stuff: { elemMatch: { data: { tag: { eq: 5 } } } } }
   // -> match any object in the stuff array that has a subtree `[{data{tag{eq:5}}]`
@@ -334,6 +358,85 @@ function expandElematch(path) {
   // it is an array, and then there will be `_0`, `_1`, `_143` suffixes, or the
   // value is not an array and then we just want the one case without numbers.
 
+  if (pieces[0] === `children`) {
+    log(`  - Oh no, \`elemMatch\` on \`children\``)
+
+    // We have to do a left join on all children in this node and match on
+    // all of them. This might be recursive.
+
+    // { id: 1, children: [2, 5], a: b: 50 }
+    // { id: 2, children: [3, 4], a: b: 75 }
+    // { id: 3, children: [5], a: b: 100 }
+    // { id: 4, children: [], a: b: 75 }      // red herring
+    // { id: 5, children: [], a: b: 100 }     // red herring
+    // Filters:
+    // - a: eq: 50 -> id=1
+    // - children: elemMatch: a: b: eq: 75 -> id=2 (not 4!)
+    // - children: elemMatch: children: elemMatch: a: b: eq: 100 -> id=3 (not 5!)
+    // Paths:
+    // a.b
+    // children.elemMatch.a.b
+    // children.elemMatch.children.elemMatch.a.b
+
+    // The child field names are the same for any recursion depth
+    // This will be `children.0`, `children.1`, etc
+    let childrenFields = getKnownFields().filter(s =>
+      s.startsWith(`children` + Λ)
+    )
+
+    // If you manage to create a filter that reaches Z you're just testing it
+    let A = queryJoinLines.tableSymbol ?? `nodes`
+    let B = queryJoinLines.tableSymbol
+      ? String.fromCharCode(1 + A.charCodeAt(0))
+      : `A`
+    queryJoinLines.tableSymbol = B
+    queryJoinLines.joins.push(
+      `LEFT JOIN \`nodes\` AS ` +
+        B +
+        ` ON ` +
+        B +
+        `.\`id\` IN ( ` +
+        childrenFields.map(s => A + `.\`` + s + `\``).join(`, `) +
+        ` )`
+    )
+    pieces.shift() // Drop `children`
+
+    if (pieces[0] === `elemmatch`) {
+      // This was a `children.elemMatch.` filter. Drop the leading `elemMatch`
+      pieces.shift()
+    }
+    log(
+      `    - traversed one level, pieces=[` + pieces.join(`, `) + `], stuffs=`,
+      queryJoinLines
+    )
+    while (pieces[1] === `children`) {
+      // This is a nested children match and it should only select on the join
+
+      // If you manage to create a filter that reaches Z you're just testing it
+      let A = queryJoinLines.tableSymbol
+      let B = String.fromCharCode(1 + A.charCodeAt(0))
+      queryJoinLines.tableSymbol = B
+      queryJoinLines.joins.push(
+        `LEFT JOIN \`nodes\` AS ` +
+          B +
+          ` ON ` +
+          B +
+          `.\`id\` in ( ` +
+          childrenFields.map(s => A + `.\`` + s + `\``).join(`, `) +
+          ` )`
+      )
+
+      pieces.shift() // Drop `children`
+
+      if (pieces[0] === `elemmatch`) {
+        // This was a `children.elemMatch.` filter. Drop the leading `elemMatch`
+        pieces.shift()
+      }
+    }
+
+    log(`  - children join results:`, queryJoinLines)
+  }
+
   // `data.tags.elemmatch.tag.document.elemmatch.number` ->
   //    `/^data\.tags(?:\.\d+)?\.tag\.document(?:\.\d+)?\.number$/`
   // We assume the `elemMatch` operator cannot be the first of a filter ...
@@ -348,12 +451,6 @@ function expandElematch(path) {
       `$`
   )
   log(`regex=`, r)
-  log(
-    `Testing against these fields:\n` +
-      getKnownFields()
-        .map(s => `- ` + s + `\n`)
-        .join(``)
-  )
 
   let l = []
   getKnownFields().forEach(f => r.test(f) && l.push(f))
@@ -379,9 +476,12 @@ function expandElematch(path) {
  * @returns {promise} A promise that will eventually be resolved with
  * a collection of matching objects (even if `firstOnly` is true)
  */
-async function runQuery(query, ...args) {
+async function runQuery(query, gqlnfo, ...args) {
   log(PURPLE + `sqlite/nodes-query/` + BOLD + `runQuery:` + RESET, args)
   log(` `, query)
+
+  // log('gqlnfo:', query.gqlSchema);
+  log(`gqlnfo.gqlType.getFields:`, query.gqlType.getFields())
 
   // We care about queryArgs: {filter, sort, group, distinct}, firstOnly: bool, and nodeTypeNames: string[]
   // We'll also want to care about resolvedFields at some point
@@ -430,6 +530,8 @@ async function runQuery(query, ...args) {
   )
 
   let preparedArgs = []
+  // // Left join for `children` fields. The @ precedes A, probably a bad hack.
+  let queryJoinLines = { tableSymbol: undefined, joins: [] }
   let queryCondGroups = dottedFilter.map(([key, value]) => {
     // Assumes each field encodes the op as the last part aΛbΛcΛeq
     let lo = key.lastIndexOf(Λ)
@@ -444,21 +546,30 @@ async function runQuery(query, ...args) {
 
     // If a path contains elemMatch then it will pseudo-expand to multiple
     // paths, and return a hit if any of them match.
-    let targetPaths = expandElematch(path)
+    let targetPaths = expandElematch(path, queryJoinLines)
     if (targetPaths.length === 0) {
       // "Never match" (because the elemMatch didn't actually match any fields)
       return [`0`]
     }
 
     return targetPaths.map(t =>
-      translatePathToWhereClause(t, op, sansval, value, preparedArgs)
+      translatePathToWhereClause(
+        queryJoinLines.tableSymbol ?? `nodes`,
+        t,
+        op,
+        sansval,
+        value,
+        preparedArgs,
+        queryJoinLines
+      )
     )
   })
 
   let db = getdb()
   try {
     let query = `
-        SELECT \`${MAIN_NODE}\` FROM \`${NAME_TABLE}\`
+        SELECT \`nodes\`.\`${MAIN_NODE}\` FROM \`${NAME_TABLE}\`
+        ${queryJoinLines.joins.join(` \n`)}
       WHERE 1
         ${
           queryCondGroups.length
@@ -470,9 +581,10 @@ async function runQuery(query, ...args) {
         ${
           !nodeTypeNames
             ? ``
-            : `AND \`internal${Λ}type\` in (${nodeTypeNames.map(
-                s => `'` + encodeJsToSqlite(s) + `'`
-              )})`
+            : `AND \`nodes\`.\`internal${Λ}type\` in (${nodeTypeNames.map(s => {
+                preparedArgs.push(encodeJsToSqlite(s))
+                return `?`
+              })})`
         }
         ${
           // We can order by, `order` is either undefined (default to asc), a
@@ -485,7 +597,7 @@ async function runQuery(query, ...args) {
                   let o = (Array.isArray(order) ? order[i] : order) ?? `asc`
                   // sqlite handles NULL values (non-existing field) different
                   let nulls = o === `asc` ? `nulls last` : `nulls first`
-                  return `\`` + s + `\` ` + o + ` ` + nulls
+                  return `\`nodes\`.\`` + s + `\` ` + o + ` ` + nulls
                 })
                 .join(`, `)
             : ``
@@ -496,7 +608,7 @@ async function runQuery(query, ...args) {
     let nodes = db
       .prepare(query)
       .all(preparedArgs)
-      .map(json => JSON.parse(json.$gatsby_node$))
+      .map(json => SqliteNode(v8.deserialize(json.$gatsby_node$)))
 
     log(
       `  - runQuery returning`,
@@ -517,6 +629,7 @@ async function runQuery(query, ...args) {
         RESET +
         `\n`
     )
+    log(E.stack)
   }
 
   return null
@@ -529,34 +642,51 @@ function blot(obj, prefix = ``, paths = []) {
   // TODO: prevent cyclic loop issues
   if (!obj) return paths
 
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach(function recu(key) {
     let newPrefix = prefix + (prefix ? Λ : ``) + key
-    let v = obj[key]
-    if (
-      typeof v === `string` ||
-      typeof v === `number` ||
-      v === null ||
-      typeof v === `boolean` ||
-      v === undefined
-    ) {
-      paths.push([newPrefix, v])
-      return
-    }
-    if (Array.isArray(v)) {
-      // Arrays are a leaf node (`in` operator)
-      paths.push([newPrefix, v])
-      return
-    }
-    if (typeof v === `object`) {
-      // Not null, not array, assue plain object for the sake of it
-      blot(v, newPrefix, paths)
+
+    if (isArrayField(newPrefix)) {
+      log(`  -- \`` + newPrefix + `\` is an array so checking all array keys`)
+      let r = new RegExp(`^` + newPrefix + Λ + `\\d+$`)
+      getKnownFields().forEach(f => {
+        if (r.test(f)) {
+          log(`  ---> found \`` + f + `\`, processing now...`)
+          blat(paths, obj, key, f)
+        }
+      })
       return
     }
 
-    throw new Error(
-      `Cannot serialize this type: ` + typeof v + `(path=` + newPrefix + `)`
-    )
+    blat(paths, obj, key, newPrefix)
   })
 
   return paths
+}
+
+function blat(paths, obj, key, newPrefix) {
+  let v = obj[key]
+  if (
+    typeof v === `string` ||
+    typeof v === `number` ||
+    v === null ||
+    typeof v === `boolean` ||
+    v === undefined
+  ) {
+    paths.push([newPrefix, v])
+    return
+  }
+  if (Array.isArray(v)) {
+    // Arrays are a leaf node (`in` operator)
+    paths.push([newPrefix, v])
+    return
+  }
+  if (typeof v === `object`) {
+    // Not null, not array, assue plain object for the sake of it
+    blot(v, newPrefix, paths)
+    return
+  }
+
+  throw new Error(
+    `Cannot serialize this type: ` + typeof v + `(path=` + newPrefix + `)`
+  )
 }

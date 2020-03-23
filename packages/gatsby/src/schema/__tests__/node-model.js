@@ -44,12 +44,14 @@ describe(`NodeModel`, () => {
       })
 
       await build({})
+
       let schemaComposer
       ;({
         schemaCustomization: { composer: schemaComposer },
         schema,
       } = store.getState())
 
+      console.log(`Settign nodeModel now!`)
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
@@ -63,7 +65,7 @@ describe(`NodeModel`, () => {
     })
 
     describe(`getNodeById`, () => {
-      it(`returns node by id`, () => {
+      it(`returns node by id wo type`, () => {
         const result = nodeModel.getNodeById({ id: `person3` })
         expect(result.name).toBe(`Person3`)
         expect(result.email).toBeNull()
@@ -287,7 +289,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with cache`, cb: () => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => null }, // Always goes through sift
+      // { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createIndexCache }) => {
       describe(`runQuery [${desc}]`, () => {
         it(`returns first result only`, async () => {
@@ -840,6 +842,7 @@ describe(`NodeModel`, () => {
             contentDigest: `digest1`,
           },
         }
+        store.dispatch({ type: `DELETE_CACHE` }) // (Create db)
         actions.createNode(node, { name: `test` })(store.dispatch)
 
         await build({})
@@ -856,7 +859,7 @@ describe(`NodeModel`, () => {
         })
       })
 
-      it(`trackInlineObjectsInRootNode should not infinitely loop on a circular reference`, () => {
+      it(`trxxxackInlineObjectsInRootNode should not infinitely loop on a circular reference`, () => {
         const node = nodeModel.getAllNodes({ type: `Test` })[0]
         const copiedInlineObject = { ...node.inlineObject }
         nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)

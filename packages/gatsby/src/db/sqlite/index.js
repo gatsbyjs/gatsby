@@ -1,14 +1,36 @@
+
+
+
+
+
+was working to get the resolved fields stuff working. also added a SqliteNode check but that might not actually be necessary right now.
+next is to resolve the "SqliteError: no such column: nodes.frontmatter.authors.email" error, which implies the field was not detected as an array properly
+I resolved that but now I'm getting "    runQuery ran into an error: SqliteError: no such column: nodes.frontmatter.authors.0.email" and it seems
+as if it's trying to look up the field directly on the resolved nodes property first/too/only? tbd but now bailing on this appraoch
+comment this part out to get it working. Here's how you run the tests:
+
+clear; GATSBY_DB_NODES=sqlite  node  node_modules/.bin/jest --run-in-band packages/gatsby/src/schema/__tests__/queries.js -t 'handles selection set'
+
+
+
+
+
+
+
 // FYI: "blotting" is the process if flattening an object to a list of dotted
 // fields for each leaf property, separated with path separator stored in Λ
 // This means `{a: {b: 1, c: {d: 2}}` becomes `a.b` and `a.b.c.d`
 
 const BOLD = `\x1b[;1;1m`
 const GREEN = `\x1b[32m`
+const BLUE = `\x1b[34m`
 const PURPLE = `\x1b[35m`
 const RESET = `\x1b[0m`
 const RED = `\x1b[31m`
 
-const SILENT_LOG = false
+const SILENT_LOG = process.env.GATSBY_SQLITE_VERBOSE
+  ? process.env.GATSBY_SQLITE_VERBOSE !== `1`
+  : false
 const log = SILENT_LOG ? () => {} : console.debug // debug is an alias for log but is not wrapped by the framework meaning i can log inside a reducer o:)
 
 // Use Λ for a configurable field separator for flat object representation
@@ -21,11 +43,10 @@ const MAIN_NODE = `$gatsby_node$` // Entire node is serialized into this field
 const ARRAY_PREFIX = `$array$` // Field prefix for array field names
 const OBJECT_PREFIX = `` // Field prefix for object field names
 
-const SILENT_DB = false
-const dbLog = (...args) =>
-  (process.env.GATSBY_SQLITE_VERBOSE
-    ? process.env.GATSBY_SQLITE_VERBOSE === `1`
-    : !SILENT_DB) && console.debug(...args)
+const SILENT_DB = process.env.GATSBY_SQLITE_VERBOSE_DB
+  ? process.env.GATSBY_SQLITE_VERBOSE_DB !== `1`
+  : SILENT_LOG
+const dbLog = (...args) => SILENT_DB || console.debug(...args)
 
 async function start(...args) {
   console.lg(`sqlite/index/start`, args)
@@ -38,6 +59,14 @@ function saveState(...args) {
 function getDb(...args) {
   console.lg(`sqlite/index/getDb`, args)
 }
+
+function SqliteNode(node) {
+  // Hackity-tackity I want to recognize a Node easily
+  if (node instanceof SqliteNode) return node
+  if (!(this instanceof SqliteNode)) return new SqliteNode(node)
+  return Object.assign(this, node)
+}
+SqliteNode.prototype.constructor = SqliteNode
 
 function encodeJsToSqlite(v) {
   // https://www.sqlite.org/datatype3.html
@@ -61,7 +90,9 @@ function encodeJsToSqlite(v) {
       // TODO: add test for 1e100 kind of notations (exponent)
       // TODO: add test for .5 kind of notation (leading dot)
       // Since sqlite supports number types, let prepared statements encode them
-      return v
+
+      // Encode numbers as strings too. We use numbers for node-id x-references
+      return v.toFixed(20)
     case `string`:
       // Prefix with quote to signify a string value (vs null / bool)
       return `"` + v
@@ -99,6 +130,7 @@ function decodeSqliteToJs(v) {
       return null
     case `u`:
       return undefined // Shouldn't happen
+    case `-`:
     case `0`:
     case `1`:
     case `2`:
@@ -112,6 +144,7 @@ function decodeSqliteToJs(v) {
     case `.`: // `.5` is a valid float. sqlite may never do this tho..?
       // Numbers are turned into strings so encode them as such
       return parseFloat(v)
+
     default:
       throw new Error(
         `sqlite/nodes.js: Error: Unable to decode value, did not recognize encoding: \`` +
@@ -121,10 +154,25 @@ function decodeSqliteToJs(v) {
   }
 }
 
+
+function nodeStringDebug(node) {
+  // Prefer json.stringify over v8 because of legibility
+  try {
+    // Crashes on bad input (like circular refs)
+    return JSON.stringify(node)
+  } catch {
+    // Probably good on all other nodes
+    return v8.serialize(node).toString("utf8")
+  }
+  return String(node)
+}
+
 module.exports = {
   ARRAY_PREFIX,
   MAIN_NODE,
   OBJECT_PREFIX,
+
+  SqliteNode,
 
   start,
   getDb,
@@ -132,6 +180,7 @@ module.exports = {
 
   BOLD,
   GREEN,
+  BLUE,
   PURPLE,
   RESET,
   RED,
@@ -140,5 +189,6 @@ module.exports = {
   dbLog,
   decodeSqliteToJs,
   encodeJsToSqlite,
+  nodeStringDebug,
   Λ,
 }
