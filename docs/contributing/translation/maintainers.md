@@ -40,7 +40,7 @@ The Gatsby learning team is in charge of determining priorities for which docs s
 
 Don't be afraid to ask for help! If you're not sure about something, you can post in the `#localization` channel on the [Gatsby Discord](https://gatsby.dev/discord) or create an issue in the Gatsby repo.
 
-If it feels like there is too much work and you need help, you have the ability to to add more codeowners by editing the `CODEOWNERS` file in the repo. Are there any contributors who are making exceptional contributions? If so, consider making them a codeowner.
+If it feels like there is too much work and you need help, you have the ability to add more codeowners by editing the `CODEOWNERS` file in the repo. Are there any contributors who are making exceptional contributions? If so, consider making them a codeowner.
 
 We also understand that life sometimes gets in the way. If you find that you are no longer able to satisfy your codeowner duties, let the Gatsby team know so we can figure out the best path forward.
 
