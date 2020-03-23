@@ -6,6 +6,6 @@ export async function sourceNodes({ parentSpan }): Promise<any> {
     parentSpan,
   })
   activity.start()
-  await sourceNodesAndGc({ parentSpan: activity.span, deferNodeMutation: true })
+  await sourceNodesAndGc({ parentSpan: activity.span })
   activity.end()
 }

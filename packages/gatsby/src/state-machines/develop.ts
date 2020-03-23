@@ -32,17 +32,20 @@ interface IBuildContext {
   firstRun: boolean
   nodeMutationBatch: any[]
   runningBatch: any[]
+  deferNodeMutation: boolean
 }
 
 const callRealApi = async (event, store: Store): Promise<any> => {
-  const { type, args } = event
+  const { type, payload } = event
+  // console.log(type, args)
+  console.log(`dispatching`, type, payload, actions)
   if (type in actions) {
-    console.log(`dispatching`, type, args)
-    return actions[type](...args)((...dispatchArgs) =>
+    return actions[type](...payload)((...dispatchArgs) =>
       store.dispatch(...dispatchArgs)
     )
   }
   console.log(`Invalid type`, type)
+  return null
 }
 
 const assignMutatedNodes = assign<any, DoneInvokeEvent<any>>(
@@ -60,6 +63,7 @@ const context: IBuildContext = {
   firstRun: true,
   nodeMutationBatch: [],
   runningBatch: [],
+  deferNodeMutation: false,
 }
 
 export const rageAgainstTheStateMachine = async (): Promise<void> => {
@@ -71,11 +75,12 @@ export const rageAgainstTheStateMachine = async (): Promise<void> => {
  * mutations. Instead we add it a batch to process when we're next idle
  */
 const ADD_NODE_MUTATION: TransitionConfig<IBuildContext, AnyEventObject> = {
-  actions: assign({
-    nodeMutationBatch: (ctx, event) => [
-      ...ctx.nodeMutationBatch,
-      event.payload,
-    ],
+  actions: assign((ctx, event) => {
+    console.log(`event at node mutation add`, event)
+    return {
+      nodeMutationBatch: [...ctx.nodeMutationBatch, event.payload],
+      deferNodeMutation: true,
+    }
   }),
 }
 
@@ -124,10 +129,9 @@ export const developMachine = Machine<any>(
       sourcingNodes: {
         on: {
           ADD_NODE_MUTATION: {
-            invoke: {
-              src: ({ store }, { payload }): Promise<any> =>
-                callRealApi(payload, store),
-            },
+            actions: assign({
+              deferNodeMutation: true,
+            }),
           },
         },
         invoke: {
@@ -402,20 +406,28 @@ export const developMachine = Machine<any>(
 
       committingBatch: {
         on: { ADD_NODE_MUTATION },
-        entry: {
-          actions: assign<IBuildContext>(context => {
+        entry: [
+          assign(context => {
+            console.log(
+              `context at entry for cimmiting batch`,
+              context.runningBatch,
+              context.nodeMutationBatch
+            )
             return {
+              target: `buildingSchema`,
               nodeMutationBatch: [],
               runningBatch: context.nodeMutationBatch,
             }
           }),
-        },
+        ],
         invoke: {
-          src: async ({ runningBatch, store }): Promise<any> =>
+          src: async ({ runningBatch, store }): Promise<any> => {
             // Consume the entire batch and run actions
-            Promise.all(
-              runningBatch.map(({ payload }) => callRealApi(payload, store))
-            ),
+            console.log(`runningBatch`, runningBatch)
+            return Promise.all(
+              runningBatch.map(payload => callRealApi(payload, store))
+            )
+          },
           onDone: {
             target: `buildingSchema`,
             actions: assign({

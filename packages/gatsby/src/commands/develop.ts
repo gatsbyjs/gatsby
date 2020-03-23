@@ -122,7 +122,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   developService.onTransition(async (context, event) => {
     // if (context.changed) {
-    console.log(`on transition`, context.value, event)
+    console.log(`on transition`, context.value)
     // }
   })
 
@@ -133,7 +133,7 @@ module.exports = async (program: IProgram): Promise<void> => {
    **/
   const REFRESH_ENDPOINT = `/__refresh`
   const refresh = async (req: express.Request): Promise<void> => {
-    console.log(`WEBHOOK`)
+    // console.log(`WEBHOOK`)
     developService.send(`WEBHOOK_RECEIVED`, { body: req.body })
   }
   app.use(REFRESH_ENDPOINT, express.json())
@@ -152,7 +152,8 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 
   emitter.on(`ENQUEUE_NODE_MUTATION`, event => {
-    developService.send(`ADD_NODE_MUTATION`, event.payload)
+    console.log(`ENQUEUE_NODE_MUTATION`, event)
+    developService.send(`ADD_NODE_MUTATION`, { payload: event })
   })
 
   // Start bootstrap process
