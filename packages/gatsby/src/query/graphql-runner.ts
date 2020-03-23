@@ -9,13 +9,13 @@ import {
   ExecutionResult,
 } from "graphql"
 import { debounce } from "lodash"
-import nodeStore from "../db/nodes"
+import * as nodeStore from "../db/nodes"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
 import withResolverContext from "../schema/context"
 import { LocalNodeModel } from "../schema/node-model"
 import { Store } from "redux"
-import { IReduxState } from "../redux/types"
+import { IGatsbyState } from "../redux/types"
 
 type Query = string | Source
 
@@ -30,7 +30,7 @@ class GraphQLRunner {
   validDocuments: WeakSet<DocumentNode>
   scheduleClearCache: () => void
 
-  constructor(protected store: Store<IReduxState>) {
+  constructor(protected store: Store<IGatsbyState>) {
     const { schema, schemaCustomization } = this.store.getState()
 
     this.nodeModel = new LocalNodeModel({
