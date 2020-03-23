@@ -194,14 +194,15 @@ export const createWebpackUtils = (
 
     css: (options = {}) => {
       return {
-        loader: isSSR
-          ? require.resolve(`css-loader/locals`)
-          : require.resolve(`css-loader`),
+        loader: require.resolve(`css-loader`),
         options: {
           sourceMap: !PRODUCTION,
-          camelCase: `dashesOnly`,
-          // https://github.com/webpack-contrib/css-loader/issues/406
-          localIdentName: `[name]--[local]--[hash:base64:5]`,
+          localsConvention: `dashesOnly`,
+          modules: {
+            mode: false,
+            // https://github.com/webpack-contrib/css-loader/issues/406
+            localIdentName: `[name]--[local]--[hash:base64:5]`,
+          },
           ...options,
         },
       }
