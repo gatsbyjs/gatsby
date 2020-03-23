@@ -1,16 +1,24 @@
-const _ = require(`lodash`)
-const { slash } = require(`gatsby-core-utils`)
-const fs = require(`fs`)
-const path = require(`path`)
-const crypto = require(`crypto`)
-const glob = require(`glob`)
-const { warnOnIncompatiblePeerDependency } = require(`./validate`)
-const { store } = require(`../../redux`)
-const existsSync = require(`fs-exists-cached`).sync
+import _ from "lodash"
+import { slash } from "gatsby-core-utils"
+import fs from "fs"
+import path from "path"
+import crypto from "crypto"
+import glob from "glob"
+import { warnOnIncompatiblePeerDependency } from "./validate"
+import { store } from "../../redux"
+import { sync as existsSync } from "fs-exists-cached"
 import { createNodeId } from "../../utils/create-node-id"
-const { createRequireFromPath } = require(`gatsby-core-utils`)
+import { createRequireFromPath } from "gatsby-core-utils"
+import {
+  IPluginInfo,
+  PluginRef,
+  IPluginRefObject,
+  IPluginRefOptions,
+  ISiteConfig,
+} from "./types"
+import { PackageJson } from "../../.."
 
-function createFileContentHash(root, globPattern) {
+function createFileContentHash(root: string, globPattern: string): string {
   const hash = crypto.createHash(`md5`)
   const files = glob.sync(`${root}/${globPattern}`, { nodir: true })
 
@@ -25,33 +33,30 @@ function createFileContentHash(root, globPattern) {
  * Make sure key is unique to plugin options. E.g. there could
  * be multiple source-filesystem plugins, with different names
  * (docs, blogs).
- * @param {*} name Name of the plugin
- * @param {*} pluginObject
+ *
+ * @param name Name of the plugin
  */
-const createPluginId = (name, pluginObject = null) =>
+const createPluginId = (
+  name: string,
+  pluginObject: IPluginRefObject | null = null
+): string =>
   createNodeId(
     name + (pluginObject ? JSON.stringify(pluginObject.options) : ``),
     `Plugin`
   )
 
 /**
- * @typedef {Object} PluginInfo
- * @property {string} resolve The absolute path to the plugin
- * @property {string} name The plugin name
- * @property {string} version The plugin version (can be content hash)
- */
-
-/**
- * resolvePlugin
- * @param {string} pluginName
+ * @param pluginName
  * This can be a name of a local plugin, the name of a plugin located in
  * node_modules, or a Gatsby internal plugin. In the last case the pluginName
  * will be an absolute path.
- * @param {string} rootDir
+ * @param rootDir
  * This is the project location, from which are found the plugins
- * @return {PluginInfo}
  */
-function resolvePlugin(pluginName, rootDir) {
+export function resolvePlugin(
+  pluginName: string,
+  rootDir: string | null
+): IPluginInfo {
   // Only find plugins when we're not given an absolute path
   if (!existsSync(pluginName)) {
     // Find the plugin in the local plugins folder
@@ -61,7 +66,7 @@ function resolvePlugin(pluginName, rootDir) {
       if (existsSync(`${resolvedPath}/package.json`)) {
         const packageJSON = JSON.parse(
           fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-        )
+        ) as PackageJson
         const name = packageJSON.name || pluginName
         warnOnIncompatiblePeerDependency(name, packageJSON)
 
@@ -119,14 +124,17 @@ function resolvePlugin(pluginName, rootDir) {
   }
 }
 
-const loadPlugins = (config = {}, rootDir = null) => {
+export function loadPlugins(
+  config: ISiteConfig = {},
+  rootDir: string | null = null
+): IPluginInfo[] {
   // Instantiate plugins.
-  const plugins = []
+  const plugins: IPluginInfo[] = []
 
   // Create fake little site with a plugin for testing this
   // w/ snapshots. Move plugin processing to its own module.
   // Also test adding to redux store.
-  const processPlugin = plugin => {
+  function processPlugin(plugin: PluginRef): IPluginInfo {
     if (_.isString(plugin)) {
       const info = resolvePlugin(plugin, rootDir)
 
@@ -147,7 +155,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
       }
 
       // Plugins can have plugins.
-      const subplugins = []
+      const subplugins: IPluginInfo[] = []
       if (plugin.options.plugins) {
         plugin.options.plugins.forEach(p => {
           subplugins.push(processPlugin(p))
@@ -164,6 +172,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
         return {
           id: createPluginId(name, plugin),
           name,
+          version: `0.0.0-test`,
           pluginOptions: {
             plugins: [],
           },
@@ -232,7 +241,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
   const program = store.getState().program
 
   // default options for gatsby-plugin-page-creator
-  let pageCreatorOptions = {
+  let pageCreatorOptions: IPluginRefOptions | undefined = {
     path: slash(path.join(program.directory, `src/pages`)),
     pathCheck: false,
   }
@@ -241,7 +250,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
     const pageCreatorPlugin = config.plugins.find(
       plugin =>
         plugin.resolve === `gatsby-plugin-page-creator` &&
-        slash(plugin.options.path || ``) ===
+        slash((plugin.options && plugin.options.path) || ``) ===
           slash(path.join(program.directory, `src/pages`))
     )
     if (pageCreatorPlugin) {
@@ -273,9 +282,4 @@ const loadPlugins = (config = {}, rootDir = null) => {
   )
 
   return plugins
-}
-
-module.exports = {
-  loadPlugins,
-  resolvePlugin,
 }
