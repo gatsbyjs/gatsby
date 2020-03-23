@@ -1,9 +1,6 @@
 module.exports = {
-  endOfLine: "lf",
+  arrowParens: 'avoid',
   semi: false,
-  singleQuote: false,
-  tabWidth: 2,
-  trailingComma: "es5",
   overrides: [
     {
       // This file uses semicolons. It's needed here because `documentation`

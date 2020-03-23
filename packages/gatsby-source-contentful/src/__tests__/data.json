@@ -74,7 +74,7 @@
                 "chokidar": "^1.7.0",
                 "flow-bin": "^0.42.0",
                 "jest-cli": "^20.0.4",
-                "prettier": "^1.7.0",
+                "prettier": "2.0.4",
                 "babel-cli": "^6.26.0",
                 "cross-env": "^5.0.5",
                 "babel-jest": "^20.0.3",
