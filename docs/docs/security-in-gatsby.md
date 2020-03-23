@@ -8,7 +8,7 @@ By being a modern static site generator, Gatsby inherits several security princi
 
 Cross-Site Scripting is a type of attack that injects a script or a unexpected link to another site into the client side of the application.
 
-JSX elements automatically escapes HTML tags by design. So, when you try to inject them as the example below:
+JSX elements automatically escape HTML tags by design. So, when you try to inject them as the example below:
 
 ```js
 // highlight-next-line
