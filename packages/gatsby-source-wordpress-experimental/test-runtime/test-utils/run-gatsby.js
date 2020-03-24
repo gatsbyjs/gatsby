@@ -74,6 +74,12 @@ export const runGatsby = async () => {
   let gatsbyProcess
 
   beforeAll(async () => {
+    if (!process.env.WORDPRESS_BASIC_AUTH) {
+      // Please add the env var WORDPRESS_BASIC_AUTH. It should be a string in the following pattern:
+      // base64Encode(`${username}:${password}`)
+      process.exit(1)
+    }
+
     if (process.env.WPGQL_INCREMENT) {
       console.log(`sending mutation to WPGraphQL to test delta sync`)
       await mutateSchema()

@@ -11,6 +11,10 @@ require(`dotenv`).config({
   path: `./test-runtime/.env.development`,
 })
 
+require(`dotenv`).config({
+  path: `./test-runtime/credentials.env`,
+})
+
 describe(`[gatsby-source-wordpress-experimental] schema`, () => {
   runGatsby()
 

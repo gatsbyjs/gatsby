@@ -10,6 +10,10 @@ require(`dotenv`).config({
   path: `./test-runtime/.env.production`,
 })
 
+require(`dotenv`).config({
+  path: `./test-runtime/credentials.env`,
+})
+
 describe(`[gatsby-source-wordpress-experimental] build`, () => {
   incrementalIt(`builds successfully`, async done => {
     const gatsbyProcess = execa(`yarn`, [`build-test-runtime`])
