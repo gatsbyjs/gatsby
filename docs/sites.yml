@@ -1153,7 +1153,7 @@
   main_url: https://ericjinks.com/
   url: https://ericjinks.com/
   featured: false
-  description: "Software engineer / web developer from the Gold Coast, Australia."
+  description: Software engineer / web developer from the Gold Coast, Australia.
   categories:
     - Portfolio
     - Blog
@@ -1223,7 +1223,7 @@
   categories:
     - Blog
     - Education
-  built_by: "Stephanie Langers (content), Adrian Wenke (development)"
+  built_by: Stephanie Langers (content), Adrian Wenke (development)
   built_by_url: https://twitter.com/AdrianWenke
 - title: Zensum
   main_url: https://zensum.se/
@@ -1529,7 +1529,7 @@
   main_url: https://frithir.com/
   url: https://frithir.com/
   featured: false
-  description: "I DRINK COFFEE, WRITE CODE AND IMPROVE MY DEVELOPMENT SKILLS EVERY DAY."
+  description: I DRINK COFFEE, WRITE CODE AND IMPROVE MY DEVELOPMENT SKILLS EVERY DAY.
   categories:
     - Design
     - Web Development
@@ -1775,7 +1775,7 @@
   main_url: https://confessions.tech
   url: https://confessions.tech
   source_url: https://github.com/JonathanSpeek/tech-confessions
-  description: "A guilt-free place for us to confess our tech sins \U0001F64F\n"
+  description: A guilt-free place for us to confess our tech sins \U0001F64F\n
   categories:
     - Community
     - Open Source
@@ -2096,7 +2096,7 @@
   featured: false
   categories:
     - Marketing
-- title: "Luciano Mammino's blog"
+- title: Luciano Mammino's blog
   description: >
     Tech & programming blog of Luciano Mammino a.k.a. "loige", Full-Stack Web Developer and International Speaker
   main_url: https://loige.co
@@ -2585,7 +2585,7 @@
   built_by: Masahiro Harada
   built_by_url: https://twitter.com/_Masahiro_H_
   featured: false
-- title: "Maxence Poutord's blog"
+- title: Maxence Poutord's blog
   description: >
     Tech & programming blog of Maxence Poutord, Software Engineer, Serial Traveler and Public Speaker
   main_url: https://www.maxpou.fr
@@ -2596,7 +2596,7 @@
     - Web Development
   built_by: Maxence Poutord
   built_by_url: https://www.maxpou.fr
-- title: "The Noted Project"
+- title: The Noted Project
   url: https://thenotedproject.org
   main_url: https://thenotedproject.org
   source_url: https://github.com/ianbusko/the-noted-project
@@ -2672,7 +2672,7 @@
   categories:
     - Gallery
     - Food
-  built_by: "Code for Münster during #MSHACK18"
+  built_by: Code for Münster during MSHACK18
   featured: false
 - title: Code Championship
   description: >
@@ -7773,7 +7773,7 @@
   url: https://problem.studio
   main_url: https://problem.studio
   description: >
-    Problem Studio creates unique and fun web experiences. Our enemy is "boring" if ya know what we mean: overused Wordpress templates, the top 10 shopify templates, copy of a copy of a copy of a copy. We love to support design and marketing agencies and help realize their creations into a digital product. `
+    Problem Studio creates unique and fun web experiences. Our enemy is "boring" if ya know what we mean: overused WordPress templates, the top 10 shopify templates, copy of a copy of a copy of a copy. We love to support design and marketing agencies and help realize their creations into a digital product. `
   categories:
     - Agency
     - Business
@@ -10084,6 +10084,30 @@
     This application shows the near real-time status based on data from JHU CSSE.
   categories:
     - Data
+    - Directory
+  built_by: Sankarsan Kampa
+  built_by_url: https://traction.one
+  featured: false
+- title: Coronavirus COVID-19 Statistics Worldwide
+  url: https://maxmaxinechen.github.io/COVID19-Worldwide-Stats/
+  main_url: https://maxmaxinechen.github.io/COVID19-Worldwide-Stats/
+  source_url: https://github.com/maxMaxineChen/COVID19-Worldwide-Stats
+  description: >
+    A Coronavirus COVID-19 global data statistics application built by Gatsby + Material UI + Recharts
+  categories:
+    - Data
+    - Open Source
+  built_by: Maxine Chen
+  built_by_url: https://github.com/maxMaxineChen
+  featured: false
+- title: Folding@Home Stats
+  url: https://folding.traction.one/team?id=246252
+  main_url: https://folding.traction.one
+  description: >
+    Folding@Home Stats Report for Teams.
+  categories:
+    - Data
+    - Science
     - Directory
   built_by: Sankarsan Kampa
   built_by_url: https://traction.one

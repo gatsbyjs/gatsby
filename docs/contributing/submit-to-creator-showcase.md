@@ -34,8 +34,8 @@ There are only two major steps :)
     development using Static Site Generators, Headless CMS, CI / CD and CDN
     setup.
   location: Poland
-  website: "https://yourname.io/"
-  github: "https://github.com/githubusername"
+  website: https://yourname.io/
+  github: https://github.com/githubusername
   image: images/image.jpg
 
   # Right now, you can only answer true to either `for_hire` or for `hiring`, but not for both.

@@ -31,7 +31,7 @@ import * as WorkerPool from "../utils/worker/pool"
 import http from "http"
 import https from "https"
 
-import bootstrapSchemaHotReloader from "../bootstrap/schema-hot-reloader"
+import { bootstrapSchemaHotReloader } from "../bootstrap/schema-hot-reloader"
 import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
 import { developStatic } from "./develop-static"
 import withResolverContext from "../schema/context"

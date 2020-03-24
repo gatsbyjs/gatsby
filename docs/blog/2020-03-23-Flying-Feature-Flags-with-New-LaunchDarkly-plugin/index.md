@@ -23,7 +23,7 @@ Sounds simple enough, right? There are a whole host of use cases where you might
 
 We did all of the above in on our new Gatsby-based docs site! We had such a positive outcome from combining LaunchDarkly’s feature flag capabilities with Gatsby builds that it occurred to us others might want to do the same thing. So we got to work creating a plugin to make it super simple to use feature flags with Gatsby.
 
-The [LaunchDarkly plugin for Gatsby](https://www.gatsbyjs.org/packages/gatsby-plugin-launchdarkly/) makes it easy to start using feature flags in any Gatsby site. This plugin is powered by the [LaunchDarkly React SDK](https://docs.launchdarkly.com/docs/react-sdk-reference). This SDK uses [server-sent events](https://en.wikipedia.org/wiki/Server-sent_events) to stream feature flag updates to your site in realtime. With it you can control feature availability instantly without your users having to refresh the page.
+The [LaunchDarkly plugin for Gatsby](/packages/gatsby-plugin-launchdarkly/) makes it easy to start using feature flags in any Gatsby site. This plugin is powered by the [LaunchDarkly React SDK](https://docs.launchdarkly.com/docs/react-sdk-reference). This SDK uses [server-sent events](https://en.wikipedia.org/wiki/Server-sent_events) to stream feature flag updates to your site in realtime. With it you can control feature availability instantly without your users having to refresh the page.
 
 Here’s a quick demo of this plugin in action:
 
@@ -31,29 +31,30 @@ Here’s a quick demo of this plugin in action:
 
 The example in the video shows a simple page from the Gatsby default starter using the LaunchDarkly plugin. Here’s the code:
 
-```import React from "react"
+```jsx
+import React from "react"
 import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
 
-import { useFlags } from 'gatsby-plugin-launchdarkly'
+import { useFlags } from "gatsby-plugin-launchdarkly"
 
 const IndexPage = () => {
- const flags = useFlags()
- return (
-   <Layout>
-     <SEO title="Home" />
-     <h1>{ flags.helloWorld ? 'Hello World!' : '' }</h1>
-     <p>Welcome to your new Gatsby site.</p>
-     <p>Now go build something great.</p>
-     <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-       <Image />
-     </div>
-     <Link to="/page-2/">Go to page 2</Link>
-   </Layout>
- )
+  const flags = useFlags()
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <h1>{flags.helloWorld ? "Hello World!" : ""}</h1>
+      <p>Welcome to your new Gatsby site.</p>
+      <p>Now go build something great.</p>
+      <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
+        <Image />
+      </div>
+      <Link to="/page-2/">Go to page 2</Link>
+    </Layout>
+  )
 }
 
 export default IndexPage
