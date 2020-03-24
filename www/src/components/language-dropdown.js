@@ -69,7 +69,7 @@ function LangLink({ code, name, localName, current, pathname }) {
 const menuPosition = (targetRect, popoverRect) => {
   return {
     left: `${targetRect.right - popoverRect.width + window.pageXOffset}px`,
-    top: `${targetRect.top + targetRect.height + window.pageYOffset}px`,
+    top: `${targetRect.top + targetRect.height}px`,
   }
 }
 
@@ -88,7 +88,12 @@ export default function LanguageDropdown({ pathname }) {
       >
         <MdTranslate /> Languages
       </MenuButton>
-      <MenuPopover position={menuPosition}>
+      <MenuPopover
+        position={menuPosition}
+        sx={{
+          position: `fixed !important` /** FIXME figure out another way to override Reach styles */,
+        }}
+      >
         <MenuItems
           sx={{
             py: 0,
