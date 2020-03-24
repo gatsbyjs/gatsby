@@ -68,6 +68,7 @@ function LangLink({ code, name, localName, current, pathname }) {
 // https://github.com/reach/reach-ui/blob/master/packages/popover/src/index.tsx#L101
 const menuPosition = (targetRect, popoverRect) => {
   return {
+    position: `fixed`,
     left: `${targetRect.right - popoverRect.width + window.pageXOffset}px`,
     top: `${targetRect.top + targetRect.height}px`,
   }
@@ -88,12 +89,7 @@ export default function LanguageDropdown({ pathname }) {
       >
         <MdTranslate /> Languages
       </MenuButton>
-      <MenuPopover
-        position={menuPosition}
-        sx={{
-          position: `fixed !important` /** FIXME figure out another way to override Reach styles */,
-        }}
-      >
+      <MenuPopover position={menuPosition}>
         <MenuItems
           sx={{
             py: 0,
