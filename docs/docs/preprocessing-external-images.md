@@ -43,6 +43,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(`
     type MarkdownRemark implements Node {
       frontmatter: Frontmatter
+      featuredImg: File @link(from: "featuredImg___NODE")
     }
 
     type Frontmatter {
