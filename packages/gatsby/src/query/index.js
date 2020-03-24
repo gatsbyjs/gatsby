@@ -160,7 +160,7 @@ const groupQueryIds = queryIds => {
 
 const processQueries = async (queryJobs, activity) => {
   const queue = queryQueue.createBuildQueue()
-  await queryQueue.processBatch(queue, queryJobs, activity)
+  return await queryQueue.processBatch(queue, queryJobs, activity)
 }
 
 const createStaticQueryJob = (state, queryId) => {
@@ -200,7 +200,7 @@ const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
 
 const processStaticQueries = async (queryIds, { state, activity }) => {
   state = state || store.getState()
-  await processQueries(
+  return await processQueries(
     queryIds.map(id => createStaticQueryJob(state, id)),
     activity
   )
@@ -213,7 +213,7 @@ const processPageQueries = async (queryIds, { state, activity }) => {
   // `internal-data-bridge`, but the actual page object is only
   // created during `gatsby develop`.
   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
-  await processQueries(
+  return await processQueries(
     pages.map(page => createPageQueryJob(state, page)),
     activity
   )
@@ -340,25 +340,25 @@ const startListeningToDevelopQueue = () => {
       .catch(onFinish)
   })
 
-  emitter.on(`API_RUNNING_START`, () => {
-    report.pendingActivity({ id: `query-running` })
-  })
+  // emitter.on(`API_RUNNING_START`, () => {
+  //   report.pendingActivity({ id: `query-running` })
+  // })
 
-  emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)
-  ;[
-    `DELETE_CACHE`,
-    `CREATE_NODE`,
-    `DELETE_NODE`,
-    `DELETE_NODES`,
-    `SET_SCHEMA_COMPOSER`,
-    `SET_SCHEMA`,
-    `ADD_FIELD_TO_NODE`,
-    `ADD_CHILD_NODE_TO_PARENT_NODE`,
-  ].forEach(eventType => {
-    emitter.on(eventType, event => {
-      graphqlRunner = null
-    })
-  })
+  // emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)
+  // ;[
+  //   `DELETE_CACHE`,
+  //   `CREATE_NODE`,
+  //   `DELETE_NODE`,
+  //   `DELETE_NODES`,
+  //   `SET_SCHEMA_COMPOSER`,
+  //   `SET_SCHEMA`,
+  //   `ADD_FIELD_TO_NODE`,
+  //   `ADD_CHILD_NODE_TO_PARENT_NODE`,
+  // ].forEach(eventType => {
+  //   emitter.on(eventType, event => {
+  //     graphqlRunner = null
+  //   })
+  // })
 }
 
 const enqueueExtractedQueryId = pathname => {

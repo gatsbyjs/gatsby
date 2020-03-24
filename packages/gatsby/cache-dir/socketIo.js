@@ -31,8 +31,10 @@ export default function socketIo() {
         }
 
         socket.on(`message`, msg => {
+          console.log(`got`, msg)
           if (msg.type === `staticQueryResult`) {
             if (didDataChange(msg, staticQueryData)) {
+              console.log({ msg })
               staticQueryData = {
                 ...staticQueryData,
                 [msg.payload.id]: msg.payload.result,
@@ -40,6 +42,7 @@ export default function socketIo() {
             }
           } else if (msg.type === `pageQueryResult`) {
             if (didDataChange(msg, pageQueryData)) {
+              console.log({ msg })
               pageQueryData = {
                 ...pageQueryData,
                 [normalizePagePath(msg.payload.id)]: msg.payload.result,

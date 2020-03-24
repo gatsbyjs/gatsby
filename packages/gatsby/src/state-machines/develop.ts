@@ -250,6 +250,23 @@ export const developMachine = Machine<any>(
           id: `running-static-queries`,
           onDone: {
             target: `runningPageQueries`,
+            actions: [
+              ({ websocketManager }, { data: { results } }): void => {
+                if (results) {
+                  console.log(`running-static-queries`, {
+                    results,
+                    websocketManager,
+                  })
+                  results.forEach((result, id) => {
+                    // eslint-disable-next-line no-unused-expressions
+                    websocketManager?.emitStaticQueryData({
+                      result,
+                      id,
+                    })
+                  })
+                }
+              },
+            ],
           },
           onError: {
             target: `idle`,
@@ -264,6 +281,24 @@ export const developMachine = Machine<any>(
           onDone: [
             {
               target: `waitingForJobs`,
+              actions: [
+                ({ websocketManager }, { data: { results } }): void => {
+                  if (results) {
+                    console.log(`running-page-queries`, {
+                      results,
+                      websocketManager,
+                    })
+                    results.forEach((result, id) => {
+                      // eslint-disable-next-line no-unused-expressions
+                      websocketManager?.emitPageData({
+                        result,
+                        id,
+                      })
+                    })
+                  }
+                },
+              ],
+
               // cond: (context, event): boolean => {
               //   return !(
               //     context.nodesMutatedDuringQueryRun || event.data?.nodesMutated
@@ -391,10 +426,11 @@ export const developMachine = Machine<any>(
           onDone: {
             target: `idle`,
             actions: assign((context, { data }) => {
-              const { compiler } = data
+              const { compiler, websocketManager } = data
               return {
                 compiler,
                 firstRun: false,
+                websocketManager,
               }
             }),
           },

@@ -7,6 +7,7 @@ import express from "express"
 import getSslCert from "../utils/get-ssl-cert"
 import { initTracer } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
+// import { startListeningToDevelopQueue } from "../query"
 import onExit from "signal-exit"
 import {
   userPassesFeedbackRequestHeuristic,
@@ -155,6 +156,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     developService.send(`ADD_NODE_MUTATION`, { payload: event })
   })
 
+  // startListeningToDevelopQueue()
+
   // Start bootstrap process
 
   // Start the createPages hot reloader
@@ -174,7 +177,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   // requiresWriter.startListener()
   // db.startAutosave()
-  // queryUtil.startListeningToDevelopQueue()
+
   // queryWatcher.startWatchDeletePage()
 
   // Run webpack

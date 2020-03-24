@@ -26,7 +26,7 @@ import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import sourceNodes from "../utils/source-nodes"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
-import websocketManager from "../utils/websocket-manager"
+import websocketManager, { WebsocketManager } from "../utils/websocket-manager"
 import { slash } from "gatsby-core-utils"
 import apiRunnerNode from "../utils/api-runner-node"
 import { Express } from "express"
@@ -39,6 +39,7 @@ interface IServer {
   compiler: webpack.Compiler
   listener: http.Server | https.Server
   webpackActivity: ActivityTracker
+  websocketManager: WebsocketManager
 }
 
 export async function startServer(
@@ -258,8 +259,9 @@ export async function startServer(
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml(indexHTMLActivity)
-    socket.to(`clients`).emit(`reload`)
+    // eslint-disable-next-line no-unused-expressions
+    socket?.to(`clients`).emit(`reload`)
   })
 
-  return { compiler, listener, webpackActivity }
+  return { compiler, listener, webpackActivity, websocketManager }
 }

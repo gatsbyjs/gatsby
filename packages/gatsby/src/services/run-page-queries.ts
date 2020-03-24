@@ -5,7 +5,8 @@ export async function runPageQueries({
   parentSpan,
   queryIds,
   store,
-}): Promise<any> {
+}): Promise<object> {
+  let results = new Map()
   const { pageQueryIds } = queryIds
   const state = store.getState()
   const pageQueryIdsCount = pageQueryIds.filter(id => state.pages.has(id))
@@ -23,8 +24,9 @@ export async function runPageQueries({
 
   if (pageQueryIdsCount) {
     activity.start()
-    await processPageQueries(pageQueryIds, { state, activity })
+    results = await processPageQueries(pageQueryIds, { state, activity })
   }
 
   activity.done()
+  return { results }
 }

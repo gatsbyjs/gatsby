@@ -5,6 +5,8 @@
  * have global scope and can be used in any other query or fragment.
  */
 
+import websocketManager from "../utils/websocket-manager"
+
 const _ = require(`lodash`)
 
 const path = require(`path`)
@@ -44,7 +46,6 @@ const {
   default: errorParser,
   locInGraphQlToLocInFile,
 } = require(`./error-parser`)
-const websocketManager = require(`../utils/websocket-manager`)
 
 const overlayErrorID = `graphql-compiler`
 

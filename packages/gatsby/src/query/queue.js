@@ -1,13 +1,16 @@
+import websocketManager from "../utils/websocket-manager"
+
 const Queue = require(`better-queue`)
 const { store } = require(`../redux`)
 const FastMemoryStore = require(`../query/better-queue-custom-store`)
 const queryRunner = require(`../query/query-runner`)
-const websocketManager = require(`../utils/websocket-manager`)
+
 const GraphQLRunner = require(`./graphql-runner`)
 
 const createBaseOptions = () => {
   return {
     concurrent: 4,
+    // eslint-disable-next-line new-cap
     store: FastMemoryStore(),
   }
 }
@@ -84,6 +87,8 @@ const processBatch = async (queue, jobs, activity) => {
       queue = null
     }
 
+    const results = new Map()
+
     queue
       // Note: the first arg is the path, the second the error
       .on(`task_failed`, (...err) => {
@@ -94,10 +99,14 @@ const processBatch = async (queue, jobs, activity) => {
       //       `empty` fires when queue is empty (but tasks are still running)
       .on(`drain`, () => {
         gc()
-        resolve()
+        resolve(results)
       })
 
-    jobs.forEach(job => queue.push(job))
+    jobs.forEach(job =>
+      queue.push(job).on(`finish`, function(result) {
+        results.set(job.id, result)
+      })
+    )
   })
 }
 

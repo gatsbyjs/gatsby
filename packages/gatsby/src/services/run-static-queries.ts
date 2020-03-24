@@ -1,11 +1,13 @@
 import { processStaticQueries } from "../query"
 const reporter = require(`gatsby-cli/lib/reporter`)
 
+// eslint-disable-next-line consistent-return
 export async function runStaticQueries({
   parentSpan,
   queryIds,
   store,
-}): Promise<any> {
+}): Promise<object> {
+  let results = new Map()
   const { staticQueryIds } = queryIds
   const state = store.getState()
   const activity = reporter.createProgress(
@@ -20,8 +22,12 @@ export async function runStaticQueries({
 
   if (staticQueryIds.length) {
     activity.start()
-    await processStaticQueries(staticQueryIds, { state, activity })
+    results = await processStaticQueries(staticQueryIds, {
+      state,
+      activity,
+    })
   }
 
   activity.done()
+  return { results }
 }
