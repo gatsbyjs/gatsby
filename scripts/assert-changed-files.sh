@@ -6,6 +6,7 @@ MERGE_SUCCESS=1
 
 
 if [ "$IS_CI" = true ]; then
+  git config --local url."https://github.com/".insteadOf git@github.com:
   git config --local user.name "GatsbyJS Bot"
   git config --local user.email "core-team@gatsbyjs.com"
 
@@ -20,6 +21,7 @@ if [ "$IS_CI" = true ]; then
 
   git config --local --unset user.name
   git config --local --unset user.email
+  git config --local --unset url."https://github.com/".insteadOf
 fi
 
 FILES_COUNT="$(git diff-tree --no-commit-id --name-only -r "$CIRCLE_BRANCH" origin/master | grep -E "$GREP_PATTERN" -c)"
