@@ -517,6 +517,4 @@ describe(`Some plugins changed between gatsby runs`, () => {
       })
     })
   })
-
-  it.todo(`Jobs`)
 })

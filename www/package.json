@@ -149,6 +149,7 @@
     "lingui:build": "yarn lingui:extract && yarn lingui:compile"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.1.1",
     "@lingui/cli": "^2.9.1",
     "@lingui/macro": "^2.9.1",
     "@testing-library/react": "^8.0.9",

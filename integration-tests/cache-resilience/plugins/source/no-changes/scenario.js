@@ -26,7 +26,7 @@ const nodesTest = ({
     expect(diff.additions[`STABLE_NODE_1`]).toHaveProperty(`foo`, `bar`)
   }
 
-  // node created by not changed plugin is is still in nodes store after invalidation
+  // node created by unchanged plugin was not invalidated before data sourcing
   if (process.env.GATSBY_EXPERIMENTAL_SELECTIVE_CACHE_INVALIDATION) {
     const diff = compareState(
       postBuildStateFromFirstRun,
@@ -36,8 +36,7 @@ const nodesTest = ({
     expect(diff.dirtyIds).toEqual([])
   }
 
-  // node created by not changed plugin is is still in nodes store
-  // after second data sourcing
+  // node created by unchanged plugin was not invalidated after data sourcing
   {
     const diff = compareState(
       postBuildStateFromFirstRun,

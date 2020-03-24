@@ -20,6 +20,7 @@ const nodesTest = ({
   postBuildStateFromSecondRun,
   compareState,
 }) => {
+  // Source plugin was removed so both Nodes created by it and children are removed during invalidation
   {
     const diff = compareState(
       postBuildStateFromFirstRun,
@@ -37,6 +38,7 @@ const nodesTest = ({
     ).toBeTruthy()
   }
 
+  // Nodes are not recreated since source plugin was removed
   {
     const diff = compareState(
       postBuildStateFromFirstRun,

@@ -14,8 +14,7 @@ const nodesTest = ({
   postBuildStateFromSecondRun,
   compareState,
 }) => {
-  // node created by removed plugin is no longer in nodes store
-  // after cache invalidation
+  // Node created by deleted plugin is removed during invalidation
   {
     const diff = compareState(
       postBuildStateFromFirstRun,
@@ -26,7 +25,7 @@ const nodesTest = ({
     expect(diff.deletions.DELETION_NODE_1).toBeTruthy()
   }
 
-  // node created by removed plugin is no longer in nodes store
+  // Node created by removed plugin is no longer in nodes store
   // after second data sourcing
   {
     const diff = compareState(

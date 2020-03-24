@@ -16,6 +16,8 @@ const nodesTest = ({
   postBuildStateFromSecondRun,
   compareState,
 }) => {
+  // Source plugin was changed between first and second run and hence both the parent
+  // and child Node was removed during invalidation
   {
     const diff = compareState(
       postBuildStateFromFirstRun,
@@ -33,6 +35,7 @@ const nodesTest = ({
     expect(diff.deletions[`parent_parentChangeForTransformer`]).toBeTruthy()
   }
 
+  // Source plugin changed so final results of both builds are different
   {
     const diff = compareState(
       postBuildStateFromFirstRun,
@@ -44,24 +47,6 @@ const nodesTest = ({
       `parent_parentChangeForTransformer >>> Child`,
     ])
 
-    expect(diff.changes[`parent_parentChangeForTransformer >>> Child`].diff)
-      .toMatchInlineSnapshot(`
-      "  Object {
-      -   \\"bar\\": undefined,
-      +   \\"bar\\": \\"run-2\\",
-          \\"children\\": Array [],
-      -   \\"foo\\": \\"run-1\\",
-      +   \\"foo\\": undefined,
-          \\"id\\": \\"parent_parentChangeForTransformer >>> Child\\",
-          \\"internal\\": Object {
-      -     \\"contentDigest\\": \\"603e50c1fe96279688538ab046d1d70a\\",
-      +     \\"contentDigest\\": \\"f784f9722081b56fee8ca34708299a37\\",
-            \\"owner\\": \\"source-and-transformers-child-nodes/source-changed/gatsby-transformer\\",
-            \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
-          },
-          \\"parent\\": \\"parent_parentChangeForTransformer\\",
-        }"
-    `)
     expect(diff.changes[`parent_parentChangeForTransformer`].diff)
       .toMatchInlineSnapshot(`
       "  Object {
@@ -78,6 +63,24 @@ const nodesTest = ({
             \\"type\\": \\"Parent_ParentChangeForTransformer\\",
           },
           \\"parent\\": null,
+        }"
+    `)
+    expect(diff.changes[`parent_parentChangeForTransformer >>> Child`].diff)
+      .toMatchInlineSnapshot(`
+      "  Object {
+      -   \\"bar\\": undefined,
+      +   \\"bar\\": \\"run-2\\",
+          \\"children\\": Array [],
+      -   \\"foo\\": \\"run-1\\",
+      +   \\"foo\\": undefined,
+          \\"id\\": \\"parent_parentChangeForTransformer >>> Child\\",
+          \\"internal\\": Object {
+      -     \\"contentDigest\\": \\"603e50c1fe96279688538ab046d1d70a\\",
+      +     \\"contentDigest\\": \\"f784f9722081b56fee8ca34708299a37\\",
+            \\"owner\\": \\"source-and-transformers-child-nodes/source-changed/gatsby-transformer\\",
+            \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
+          },
+          \\"parent\\": \\"parent_parentChangeForTransformer\\",
         }"
     `)
   }

@@ -269,8 +269,8 @@ SEO.propTypes = {
   // highlight-start
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,
-    height: PropTypes.string.isRequired,
-    width: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
   }),
   // highlight-end
 }
@@ -424,8 +424,8 @@ SEO.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,
-    height: PropTypes.string.isRequired,
-    width: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
   }),
   // highlight-next-line
   pathname: PropTypes.string,
@@ -511,7 +511,6 @@ class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark
     const siteTitle = this.props.data.site.siteMetadata.title
-    const { previous, next } = this.props.pageContext
     const image = post.frontmatter.image
       ? post.frontmatter.image.childImageSharp.resize
       : null // highlight-line

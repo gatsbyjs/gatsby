@@ -15,8 +15,7 @@ const nodesTest = ({
   postBuildStateFromSecondRun,
   compareState,
 }) => {
-  // no node were created after first run
-  // node is created after first run
+  // No node was created because there is no plugin
   {
     const diff = compareState(
       preBootstrapStateFromFirstRun,
@@ -26,7 +25,7 @@ const nodesTest = ({
     expect(diff.dirtyIds).toEqual([])
   }
 
-  // node existed after cache invalidation
+  // No node so nothing to invalidate
   {
     const diff = compareState(
       postBuildStateFromFirstRun,
@@ -36,7 +35,7 @@ const nodesTest = ({
     expect(diff.dirtyIds).toEqual([])
   }
 
-  // node was created after second data sourcing
+  // Node was created by a plugin that was added
   {
     const diff = compareState(
       postBuildStateFromFirstRun,

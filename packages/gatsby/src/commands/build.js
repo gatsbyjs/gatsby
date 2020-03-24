@@ -8,7 +8,7 @@ import { buildProductionBundle } from "./build-javascript"
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
-const { initTracer, stopTracer } = require(`../utils/tracer`)
+import { initTracer, stopTracer } from "../utils/tracer"
 const db = require(`../db`)
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
@@ -16,7 +16,7 @@ const { store, readState } = require(`../redux`)
 const queryUtil = require(`../query`)
 import * as appDataUtil from "../utils/app-data"
 import * as WorkerPool from "../utils/worker/pool"
-const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
+import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,

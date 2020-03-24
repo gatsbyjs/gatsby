@@ -9,6 +9,7 @@ const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 import { getBrowsersList } from "../utils/browserslist"
+import { createSchemaCustomization } from "../utils/create-schema-customization"
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -18,8 +19,6 @@ const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const safeRemoveCache = require(`./cache/remove`)
 const removeStaleJobs = require(`./remove-stale-jobs`)
-// Add `util.promisify` polyfill for old node versions
-require(`util.promisify/shim`)()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -404,7 +403,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../utils/create-schema-customization`)({
+  await createSchemaCustomization({
     parentSpan: bootstrapSpan,
   })
   activity.end()

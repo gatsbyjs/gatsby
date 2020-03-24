@@ -1,9 +1,9 @@
 // @flow
 const { default: sift } = require(`sift`)
-const _ = require(`lodash`)
 const { prepareRegex } = require(`../utils/prepare-regex`)
 const { makeRe } = require(`micromatch`)
 import { getValueAt } from "../utils/get-value-at"
+import _ from "lodash"
 const {
   toDottedFields,
   objectToDottedField,
@@ -106,7 +106,7 @@ function handleMany(siftArgs, nodes) {
  * @param {Array<string>} chain Note: `$eq` is assumed to be the leaf prop here
  * @param {boolean | number | string} targetValue chain.a.b.$eq === targetValue
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
  * @returns {Array<Node> | undefined}
  */
 const runFlatFilterWithoutSift = (
@@ -129,11 +129,6 @@ const runFlatFilterWithoutSift = (
   // There are also cases (and tests) where id exists with a different type
   if (!nodesByKeyValue) {
     return undefined
-  }
-
-  if (chain.join(`,`) === `id`) {
-    // The `id` key is not indexed in Sets (because why) so don't spread it
-    return [nodesByKeyValue]
   }
 
   // In all other cases this must be a non-empty Set because the indexing
@@ -225,7 +220,7 @@ const applyFilters = (
  *
  * @param {Object} filter Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
  * @returns {Array|undefined} Collection of results
  */
 const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
@@ -263,9 +258,9 @@ exports.filterWithoutSift = filterWithoutSift
  *   will be limited to 1 if `firstOnly` is true
  */
 const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
-  let nodes = []
-
-  nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
+  const nodes = [].concat(
+    ...nodeTypeNames.map(typeName => addResolvedNodes(typeName))
+  )
 
   return _runSiftOnNodes(
     nodes,
