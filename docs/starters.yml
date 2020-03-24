@@ -5716,7 +5716,20 @@
     - SEO optimized
     - Robots.txt
     - OpenGraph structured data
-
+- url: https://seattleservicerelief.com/
+  repo: https://github.com/service-relief/gatsby-starter-service-relief
+  description: Localized index of resources for your city.
+  tags:
+    - Airtable
+    - Netlify
+    - SEO
+    - Styling:Tailwind
+  features:
+    - generates a static website using GatsbyJS
+    - uses Airtable to manage your listings and categories
+    - includes an Airtable form to collect local submissions and add them to Airtable for approval
+    - can be personalized to a city or region without touching a line of code
+    - one-click deployment via Netlify
 - url: https://shards-gatsby-starter.netlify.com/
   repo: https://github.com/wcisco17/gatsby-typescript-shards-starter
   description: Portfolio with Typescript and Shards UI
