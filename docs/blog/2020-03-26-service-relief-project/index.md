@@ -2,7 +2,7 @@
 title: The Service Relief Project
 date: 2020-03-26
 author: Bob Orchard
-excerpt: Shutdowns and social distancing ordinances have created instant hardship for many service workers. Fundraising efforts to help them have popped up in cities across the country. Here's a fast, easy and free way to launch a website directory of local fundraising efforts in your area to make it easy for donors to connect.
+excerpt: The Service Relief Project is a boilerplate for launching blazing-fast zero-cost directories of local resources to help your local businesses affected by mandated shutdowns around the world.
 tags:
   - community
   - gatsby-cloud
