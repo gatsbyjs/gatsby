@@ -10034,3 +10034,15 @@
   built_by: Sankarsan Kampa
   built_by_url: https://traction.one
   featured: false
+- title: COVID-19 Tracking and Projections
+  url: https://flattenthecurve.co.nz/
+  main_url: https://flattenthecurve.co.nz/
+  source_url: https://github.com/carlaiau/flatten-the-curve
+  description: >
+    Allowing non technical users to compare their country with other situations around the world. We present configurable cumulative graph curves. We compare your countries current status with other countries who have already been at your level and show you where they’ve ended up. Data via JHU. Further functionality added daily.
+  categories:
+    - Data
+    - Open Source
+  built_by: Carl Aiau
+  built_by_url: https://github.com/carlaiau
+  featured: false
