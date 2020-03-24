@@ -72,7 +72,7 @@ If you wish to create Gatsby Pages for each Lever.co jobs, you can modify your
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions

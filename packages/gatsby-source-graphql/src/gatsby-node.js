@@ -51,8 +51,8 @@ exports.sourceNodes = async (
     link = createHttpLink({
       uri: url,
       fetch,
-      headers,
       fetchOptions,
+      headers: typeof headers === `function` ? await headers() : headers,
     })
   }
 

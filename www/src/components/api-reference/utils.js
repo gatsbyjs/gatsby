@@ -4,7 +4,7 @@ import styled from "@emotion/styled"
 
 export const LinkBox = styled(`a`)`
   border-bottom: none !important;
-  border-radius: ${p => p.theme.radii[1]}px;
+  border-radius: ${p => p.theme.radii[1]};
   font-size: ${p => p.theme.fontSizes[0]} !important;
   color: ${p => p.theme.colors.text} !important;
   line-height: 22px;

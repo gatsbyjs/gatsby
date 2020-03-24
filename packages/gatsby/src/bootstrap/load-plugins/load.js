@@ -7,8 +7,8 @@ const glob = require(`glob`)
 const { warnOnIncompatiblePeerDependency } = require(`./validate`)
 const { store } = require(`../../redux`)
 const existsSync = require(`fs-exists-cached`).sync
-const createNodeId = require(`../../utils/create-node-id`)
-const createRequireFromPath = require(`../../utils/create-require-from-path`)
+import { createNodeId } from "../../utils/create-node-id"
+const { createRequireFromPath } = require(`gatsby-core-utils`)
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)

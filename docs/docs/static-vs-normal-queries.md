@@ -51,7 +51,7 @@ Babel traverses all of your source code looking for queries during query extract
 
 Code that is specific for querying the GraphQL server set up during build time is no longer relevant, and can be swapped out in exchange for the JSON data that has been extracted for each query.
 
-The imports related to GraphQL and query declarations are changed to imports for the JSON that correspond to the query result that Gatsby found when it ran the query. Consider the following component with with a static query written using the `useStaticQuery` hook:
+The imports related to GraphQL and query declarations are changed to imports for the JSON that correspond to the query result that Gatsby found when it ran the query. Consider the following component with a static query written using the `useStaticQuery` hook:
 
 ```jsx
 import { useStaticQuery, graphql } from "gatsby"

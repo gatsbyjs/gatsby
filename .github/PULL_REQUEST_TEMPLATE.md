@@ -4,7 +4,7 @@
 -->
 
 <!--
-  Is this a blog post? Check out the docs at https://www.gatsbyjs.org/contributing/blog-and-website-contributions/, and please mention if the blog post is pre-approved
+  Is this a blog post? Check out the docs at https://www.gatsbyjs.org/contributing/blog-contributions/, and please mention if the blog post is pre-approved
   by someone from Gatsby.
 -->
 

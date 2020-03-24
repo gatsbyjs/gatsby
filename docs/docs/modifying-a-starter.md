@@ -32,7 +32,7 @@ If you'd like to read descriptions of all of these files, as well as the other f
 
 ## Adding content
 
-How exactly you add content to your site will depend somewhat on your starter's structure. The default starter includes the `src/pages/` directory, which contains `404.js`, `index.js`, and `page-2.js`. Adding a JavaScript file to this directory will automatically create a new route available at `localhost:8000/[file-name]`. For example, if you'd like to add a page to share your speaking experience, you might include `speaking.js` in `src/pages/` as written below:
+How exactly you add content to your site will depend somewhat on your starter's structure. The default starter includes the `src/pages/` directory, which contains `404.js`, `index.js`, and `page-2.js`. Adding a JavaScript file to this directory will automatically create a new route available at `http://localhost:8000/[file-name]`. For example, if you'd like to add a page to share your speaking experience, you might include `speaking.js` in `src/pages/` as written below:
 
 ```jsx:title=src/pages/speaking.js
 import React from "react"
@@ -58,7 +58,7 @@ const SpeakingPage = () => (
 export default SpeakingPage
 ```
 
-At this point, you can navigate to `localhost:8000/speaking` in your browser to view this page! You can also [add pages from Markdown](/docs/adding-markdown-pages/) or [source data from a content management system](/docs/headless-cms/) (CMS) like WordPress. You may even choose a specific starter _because_ it's built to work well with a certain CMS. Try explicitly searching the [Gatsby Starter Library](/starters/) for your preferred system. Once there, check out the category filter. You'll see several options prefixed with "CMS:". Choose the option(s) that best fit your goals for the project.
+At this point, you can navigate to `http://localhost:8000/speaking` in your browser to view this page! You can also [add pages from Markdown](/docs/adding-markdown-pages/) or [source data from a content management system](/docs/headless-cms/) (CMS) like WordPress. You may even choose a specific starter _because_ it's built to work well with a certain CMS. Try explicitly searching the [Gatsby Starter Library](/starters/) for your preferred system. Once there, check out the category filter. You'll see several options prefixed with "CMS:". Choose the option(s) that best fit your goals for the project.
 
 ## Querying data
 

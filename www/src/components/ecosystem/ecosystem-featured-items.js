@@ -6,7 +6,7 @@ import {
   HorizontalScroller,
   HorizontalScrollerContent,
 } from "../shared/horizontal-scroller"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`

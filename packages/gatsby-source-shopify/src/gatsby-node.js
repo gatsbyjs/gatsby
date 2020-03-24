@@ -38,16 +38,24 @@ import {
 } from "./queries"
 
 export const sourceNodes = async (
-  { actions: { createNode, touchNode }, createNodeId, store, cache, reporter },
+  {
+    actions: { createNode, touchNode },
+    createNodeId,
+    store,
+    cache,
+    getCache,
+    reporter,
+  },
   {
     shopName,
     accessToken,
+    apiVersion = `2019-07`,
     verbose = true,
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],
   }
 ) => {
-  const client = createClient(shopName, accessToken)
+  const client = createClient(shopName, accessToken, apiVersion)
 
   // Convenience function to namespace console messages.
   const formatMsg = msg =>
@@ -63,6 +71,7 @@ export const sourceNodes = async (
       touchNode,
       store,
       cache,
+      getCache,
       reporter,
     }
 
@@ -153,7 +162,7 @@ const createNodes = async (
   await forEach(
     await queryAll(
       client,
-      [`shop`, NODE_TO_ENDPOINT_MAPPING[endpoint]],
+      [NODE_TO_ENDPOINT_MAPPING[endpoint]],
       query,
       paginationSize
     ),

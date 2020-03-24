@@ -71,6 +71,21 @@ class LocalNodeModel {
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
+    this.replaceTypeKeyValueCache()
+  }
+
+  /**
+   * Replace the cache either with the value passed on (mainly for tests) or
+   * an empty new Map.
+   *
+   * @param {undefined | Map<string, Map<string, Set<Node>> | Map<string, Node>>} map
+   *   (This cached is used in redux/nodes.js and caches a set of buckets (Sets)
+   *   of Nodes based on filter and tracks this for each set of types which are
+   *   actually queried. If the filter targets `id` directly, only one Node is
+   *   cached instead of a Set of Nodes.
+   */
+  replaceTypeKeyValueCache(map = new Map()) {
+    this._typedKeyValueIndexes = map // See redux/nodes.js for usage
   }
 
   withContext(context) {
@@ -222,11 +237,12 @@ class LocalNodeModel {
       gqlType,
       resolvedFields: fieldsToResolve,
       nodeTypeNames,
+      typedKeyValueIndexes: this._typedKeyValueIndexes,
     })
 
     let result = queryResult
-    if (args.firstOnly) {
-      if (result && result.length > 0) {
+    if (firstOnly) {
+      if (result?.length > 0) {
         result = result[0]
         this.trackInlineObjectsInRootNode(result)
       } else {

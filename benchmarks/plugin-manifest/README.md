@@ -1,7 +1,7 @@
 # gatsby-plugin-manifest performance tests
 
 - Setup: `yarn`
-- Run: `yarn test`
+- Run: `yarn bench`
 
 Benchmarks the current production version of the plugin unless you use `gatsby-dev`.
 

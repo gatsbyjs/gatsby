@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remove-stale-jobs should enqueue pending jobs 1`] = `
+Array [
+  undefined,
+]
+`;
+
+exports[`remove-stale-jobs should remove stale jobs from complete cache 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "contentDigest": "1234",
+    },
+    "plugin": undefined,
+    "traceId": undefined,
+    "type": "REMOVE_STALE_JOB_V2",
+  },
+]
+`;
+
+exports[`remove-stale-jobs should remove stale jobs from pending cache 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "contentDigest": "1234",
+    },
+    "plugin": undefined,
+    "traceId": undefined,
+    "type": "REMOVE_STALE_JOB_V2",
+  },
+]
+`;

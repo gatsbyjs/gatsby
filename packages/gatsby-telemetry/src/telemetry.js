@@ -7,7 +7,7 @@ const { join, sep } = require(`path`)
 const isDocker = require(`is-docker`)
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 const lodash = require(`lodash`)
-const { getRepositoryId } = require(`./repository-id`)
+const { getRepositoryId: _getRepositoryId } = require(`./repository-id`)
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -43,6 +43,13 @@ module.exports = class AnalyticsTracker {
       process.gatsbyTelemetrySessionId ||
       (process.gatsbyTelemetrySessionId = uuidv4())
     )
+  }
+
+  getRepositoryId() {
+    if (!this.repositoryId) {
+      this.repositoryId = _getRepositoryId()
+    }
+    return this.repositoryId
   }
 
   getTagsFromEnv() {
@@ -182,7 +189,7 @@ module.exports = class AnalyticsTracker {
       componentId: `gatsby-cli`,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
-      ...getRepositoryId(),
+      ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
   }

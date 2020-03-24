@@ -112,7 +112,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 ```
 
-Just like before, you can test this to make sure the pages were created as expected by starting your development server and visiting [localhost:8000/stuff](http://localhost:8000/stuff) to get a list of all of the available pages. Again, this is only available in a development environment since a live site will show a different 404 page. You should see an `/about` page and a `/sample-page` page in there. If so, your gatsby-node.js file worked and you can update the template to show the data you want.
+Just like before, you can test this to make sure the pages were created as expected by starting your development server and visiting `http://localhost:8000/stuff` to get a list of all of the available pages. Again, this is only available in a development environment since a live site will show a different 404 page. You should see an `/about` page and a `/sample-page` page in there. If so, your gatsby-node.js file worked and you can update the template to show the data you want.
 
 ![See a list of available pages](./images/gatsby1.png)
 
@@ -154,20 +154,15 @@ export const query = graphql`
 
 I mentioned at the end of [part two](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2) that configuring the gatsby-node.js file is probably the most difficult part of this whole thing. Since you worked your way through that already and understand how it works, setting up another content type was cake, right?
 
-<figure>
-<video autoplay muted loop width="400">
-  <source src="https://media.giphy.com/media/zcCGBRQshGdt6/giphy.mp4"/>
-</video>
-<figcaption>...That was easy</figcaption>
-</figure>
+https://giphy.com/gifs/reaction-office-space-that-was-easy-zcCGBRQshGdt6
 
-Now if you visit the about page at [http://localhost:8000/about](http://localhost:8000/about), you can see the data coming in from WordPress. If you inspect the page and look at the head, you can also see that the title and meta tags are being updated in the head because of the SEO component!
+Now if you visit the about page at `http://localhost:8000/about`, you can see the data coming in from WordPress. If you inspect the page and look at the head, you can also see that the title and meta tags are being updated in the head because of the SEO component!
 
 ## Creating pages in the pages directory
 
-Gatsby provides some awesome out-of-the-box routing. Anything you create in the `/pages` directory will automatically create a route for you. For instance, if you were to create a file called `gatsby-is-awesome.js`, Gatsby.js would see that and create a route called http://localhost:8000/gatsby-is-awesome.
+Gatsby provides some awesome out-of-the-box routing. Anything you create in the `/pages` directory will automatically create a route for you. For instance, if you were to create a file called `gatsby-is-awesome.js`, Gatsby.js would see that and create a route called `http://localhost:8000/gatsby-is-awesome`.
 
-You can also see that the starter default comes with a few pages already in the `/pages` directory. The index page is what will show when a user visits [http://localhost:8000/](http://localhost:8000/). There is also a file called page-2.js which is just a simple page to show how linking works. Finally, there is a 404.js available which is the 404 page that shows when your Gatsby site is live.
+You can also see that the starter default comes with a few pages already in the `/pages` directory. The index page is what will show when a user visits `http://localhost:8000/`. There is also a file called page-2.js which is just a simple page to show how linking works. Finally, there is a 404.js available which is the 404 page that shows when your Gatsby site is live.
 
 Since you want your blog to show up on the homepage, you can edit the file called `index.js` to do this. Let's take a look at this file before you make any changes:
 
@@ -277,12 +272,7 @@ And here's what it looks like when you visit the homepage of your blog:
 
 It's looking pretty good so far. You're getting pretty close to being done, you just have a few more things to change and you're ready to start blogging!
 
-<figure>
-  <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/qLWdMYX1NYF2g/giphy.mp4"/>
-  </video>
-  <figcaption>So close...</figcaption>
-</figure>
+https://giphy.com/gifs/twitter-file-maximum-qLWdMYX1NYF2g
 
 ## Changing the header component
 
@@ -493,7 +483,7 @@ module.exports = {
 }
 ```
 
-If you look at the code above, you'll notice you have added two new routes to the gatsby-source-wordpress. These routes are created automatically by the plugin inside of WordPress without any additional configuration. Remember, after making changes to files outside of the src folder, you need to restart your development server by running `gatsby develop`. After restarting, you can visit [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql) and query for the menu information, which will look like the screenshot below.
+If you look at the code above, you'll notice you have added two new routes to the gatsby-source-wordpress. These routes are created automatically by the plugin inside of WordPress without any additional configuration. Remember, after making changes to files outside of the src folder, you need to restart your development server by running `gatsby develop`. After restarting, you can visit `http://localhost:8000/___graphql` and query for the menu information, which will look like the screenshot below.
 
 ![GraphiQL query to get menu items from WordPress](./images/gatsby6.png)
 
@@ -581,4 +571,4 @@ Well done! You now have a functioning blog using WordPress and Gatsby. There are
 
 The [code for this post](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on GitHub.
 
-If you have any thoughts or questions, you can find me on twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!
+If you have any thoughts or questions, you can find me on Twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!

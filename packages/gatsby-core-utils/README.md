@@ -90,3 +90,17 @@ console.log({ CI_NAME })
 // {CI_NAME: "ZEIT Now"}
 // ...
 ```
+
+### createRequireFromPath
+
+A cross-version polyfill for Node's [`Module.createRequire`](https://nodejs.org/api/modules.html#modules_module_createrequire_filename).
+
+```js
+const { createRequireFromPath } = require("gatsby-core-utils")
+
+const requireUtil = createRequireFromPath("../src/utils/")
+
+// Require `../src/utils/some-tool`
+requireUtil("./some-tool")
+// ...
+```

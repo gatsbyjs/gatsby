@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import BlogPostChrome from "../../components/BlogPostChrome"
-var d3 = require(`d3`)
+const d3 = require(`d3`)
 
 // this is one method to export data and make it usable elsewhere
 export const frontmatter = {
@@ -71,10 +71,10 @@ class choroplethBase extends React.Component {
 
 export default choroplethBase
 
-var graph = {} // we namespace our d3 graph into setup and draw
+let graph = {} // we namespace our d3 graph into setup and draw
 
-var stateDataURL = `https://gist.githubusercontent.com/jbolda/52cd5926e9241d26489ec82fa2bddf37/raw/f409b82e51072ea23746325eff7aa85b7ef4ebbd/states.json`
-var statisticsDataURL = `https://gist.githubusercontent.com/jbolda/52cd5926e9241d26489ec82fa2bddf37/raw/f409b82e51072ea23746325eff7aa85b7ef4ebbd/stats.csv`
+const stateDataURL = `https://gist.githubusercontent.com/jbolda/52cd5926e9241d26489ec82fa2bddf37/raw/f409b82e51072ea23746325eff7aa85b7ef4ebbd/states.json`
+const statisticsDataURL = `https://gist.githubusercontent.com/jbolda/52cd5926e9241d26489ec82fa2bddf37/raw/f409b82e51072ea23746325eff7aa85b7ef4ebbd/stats.csv`
 
 graph.setup = (selection, measurements) => {
   // the path string is drawn expecting:

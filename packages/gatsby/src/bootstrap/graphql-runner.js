@@ -3,8 +3,25 @@ const stackTrace = require(`stack-trace`)
 const GraphQLRunner = require(`../query/graphql-runner`)
 const errorParser = require(`../query/error-parser`).default
 
+const { emitter } = require(`../redux`)
+
 module.exports = (store, reporter) => {
-  const runner = new GraphQLRunner(store)
+  // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
+  let runner = new GraphQLRunner(store)
+  ;[
+    `DELETE_CACHE`,
+    `CREATE_NODE`,
+    `DELETE_NODE`,
+    `DELETE_NODES`,
+    `SET_SCHEMA_COMPOSER`,
+    `SET_SCHEMA`,
+    `ADD_FIELD_TO_NODE`,
+    `ADD_CHILD_NODE_TO_PARENT_NODE`,
+  ].forEach(eventType => {
+    emitter.on(eventType, event => {
+      runner = new GraphQLRunner(store)
+    })
+  })
   return (query, context) =>
     runner.query(query, context).then(result => {
       if (result.errors) {

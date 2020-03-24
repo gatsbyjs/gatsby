@@ -112,6 +112,8 @@ export default ({ children }) => (
 > **Note**: the default export concept used in this code block is explained in more detail
 > in the docs below on [defining layouts](#defining-a-layout)
 
+You can read more about using React components from other libraries in the [Importing and Using components in MDX guide](/docs/mdx/importing-and-using-components/).
+
 ## Combining frontmatter and imports
 
 If you would like to include frontmatter metadata _and_ import components, the frontmatter needs to appear at the top of the file and then imports can follow:

@@ -38,10 +38,10 @@ Through client-side routing in Gatsby you can provide a location object instead 
 <Link to="/somepagecomponent"/>
 
 // but if you want to add some additional state
-<Link to={{
-  pathname: '/somepagecomponent',
-  state: {modal: true}
-}}>
+<Link
+  to={'/somepagecomponent'}
+  state={{modal: true}}
+/>
 ```
 
 Then from the receiving component you can conditionally render markup based on the `location` state.
@@ -64,6 +64,7 @@ The great thing is you can expect the `location` prop to be available to you on 
 
 ## Other resources
 
+- [Gatsby Link API](/docs/gatsby-link/)
 - [@reach/router docs](https://reach.tech/router/api/Location)
 - [react-router location docs](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/location.md)
 - [Hash Router](https://reacttraining.com/react-router/web/api/HashRouter)

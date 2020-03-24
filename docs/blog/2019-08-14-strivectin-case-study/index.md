@@ -111,19 +111,15 @@ Launch was effortless. We had the site living on a subdomain of strivectin.com s
 Felicity Sissener, the Chief Digital Officer at StriVectin had this to say about launch:
 
 <Pullquote>
-“This has also been the smoothest cut-over of my entire career- your team and work are top notch.”
+  “This has also been the smoothest cut-over of my entire career- your team and
+  work are top notch.”
 </Pullquote>
 
 We confidently ship code to production many times per day. At the time of writing this, we have not had a single site outage.
 
 StriVectin’s hosting costs have gone from \$2,000/month to just a few dollars per day. The servers will be decommissioned very soon.
 
-<figure>
-  <video autoplay muted loop width="300">
-    <source src="https://media.giphy.com/media/DC4g3SGNJpC/giphy.mp4"/>
-  </video>
-  <figcaption>Server smashing time</figcaption>
-</figure>
+https://giphy.com/gifs/DC4g3SGNJpC
 
 Feature development and maintenance is much simpler. The codebase was around 20,000 files on Magento and went down to around 300.
 

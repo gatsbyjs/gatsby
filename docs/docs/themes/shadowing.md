@@ -71,15 +71,18 @@ user-site
 
 Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui`. If you want to customize the implementation of any theme you can do so with shadowing.
 
-For example, to shadow `index.js` from `gatsby-plugin-theme-ui`, create a file named `user-site/src/gatsby-theme-blog/gatsby-plugin-theme-ui/index.js`.
+For example, to shadow `index.js` from `gatsby-plugin-theme-ui`, create a file named `user-site/src/gatsby-plugin-theme-ui/index.js`.
 
-```js:title=src/gatsby-theme-blog/gatsby-plugin-theme-ui/index.js
+```js:title=src/gatsby-plugin-theme-ui/index.js
+import baseTheme from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/index"
+
 export default {
+  ...baseTheme,
   fontSizes: [12, 14, 16, 24, 32, 48, 64, 96, 128],
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   colors: {
-    blue: `blue`,
-    red: `tomato`,
+    ...baseTheme.colors,
+    primary: `tomato`,
   },
 }
 ```
@@ -89,9 +92,8 @@ Which will result in the following directory tree:
 ```text
 user-site
 └── src
-    └── gatsby-theme-blog
-        └── gatsby-plugin-theme-ui
-            └──index.js // highlight-line
+    └── gatsby-plugin-theme-ui
+        └──index.js // highlight-line
 ```
 
 ## Any source file is shadowable

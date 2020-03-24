@@ -79,7 +79,7 @@ module.exports = {
 }
 ```
 
-The best way to create your queries now is to first develop them in _GraphiQL_ at <http://localhost:8000/___graphql> and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
+The best way to create your queries now is to first develop them in _GraphiQL_ at `http://localhost:8000/___graphql` and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
 
 ![Prismic Index Query](./images/prismic-index-query.jpg)
 

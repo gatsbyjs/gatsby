@@ -1,3 +1,8 @@
+jest.mock(`../browserslist`, () => {
+  return {
+    getBrowsersList: () => [],
+  }
+})
 jest.mock(`webpack`, () => {
   return {
     ...jest.requireActual(`webpack`),

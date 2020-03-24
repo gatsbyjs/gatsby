@@ -21,7 +21,7 @@ I'll also be referencing a wonderful article written by Josh Weaver, [Gatsby + C
 
 _**Let’s get into it.**_
 
-<div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/WDtCGLCXBAgow" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/tom-cruise-top-gun-WDtCGLCXBAgow">via GIPHY</a></p>
+https://giphy.com/gifs/tom-cruise-top-gun-WDtCGLCXBAgow
 
 ## My Requirements
 
@@ -58,7 +58,7 @@ With such a robust set of features, it is easy to see why Contentful is a popula
 
 While, a fully-customizable frontend may seem really flexible, _**there is NOTHING set up when you create a new project.**_ You will have to create your own content models for blog posts and use GraphQL to query for each blog post type you set up.
 
-<div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/16e1J9ztaZ3na"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/bored-kanye-west-16e1J9ztaZ3na">via GIPHY</a></p>
+https://giphy.com/gifs/bored-kanye-west-16e1J9ztaZ3na
 
 If you’re like me and have no previous experience with Contentful, expect a few headaches. Your first time working with the service will involve a great deal of trial and error to get content/posts into your Gatsby website. Couple this with being a GraphQL newbie (like me), and you will get frustrated..._**very quickly**_.
 
@@ -90,7 +90,7 @@ So, a service that works on top of GitHub where I, or anyone with a GitHub accou
 5.  Done. You can edit existing posts, preview posts, and commit any changes directly within the interface.
     set up a repository for the website
 
-<div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/l0HlDtKDqfGGQtwic"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed"  allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/emmys-emmy-awards-emmys-2016-l0HlDtKDqfGGQtwic">via GIPHY</a></p>
+https://giphy.com/gifs/emmys-emmy-awards-emmys-2016-l0HlDtKDqfGGQtwic
 
 _**Yes, there’s more.**_
 
@@ -136,7 +136,7 @@ With this process in place, content creators do not need to understand Markdown,
 
 _**It just works.**_ 🤙🏼
 
-<div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/3oFzmqDNycyhUcrjTW"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed"  allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/nba-celebrity-3oFzmqDNycyhUcrjTW">via GIPHY</a></p>
+https://giphy.com/gifs/nba-celebrity-3oFzmqDNycyhUcrjTW
 
 ## Concluding Thoughts
 

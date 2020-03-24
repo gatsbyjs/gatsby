@@ -49,7 +49,7 @@ Let’s begin! Navigate to an empty folder in the terminal and clone the repo by
 
 `git clone git@github.com:andrico1234/lerna-monorepo-starter.git`
 
-and navigate into the the `lerna-monorepo-starter` directory.
+and navigate into the `lerna-monorepo-starter` directory.
 
 Go to your GitHub account and create a new repo, this’ll be the repo that you push the site to so that Travis can run the pipeline. For those who need a refresher on how to [create a new repo](https://help.github.com/articles/creating-a-new-repository/). You may have to run `git remote remove origin` so you can point the code to your newly created repo.
 
@@ -62,9 +62,9 @@ git push -u origin master
 
 Commit and push regularly for best results.
 
-Navigate inside of the `lerna-monorepo-starter` directory and install the packages by running `yarn`. Once your packages have installed, run `yarn develop` to run the application on localhost:8000.
+Navigate inside of the `lerna-monorepo-starter` directory and install the packages by running `yarn`. Once your packages have installed, run `yarn develop` to run the application on `http://localhost:8000`.
 
-Open Chrome, and navigate to localhost:8000. You’ll find a simple application with a mock blog and a mock shop. Imagine this is a fleshed out application, we can make the assumption that the underlying logic behind the blog and the shop are different and that there are similarities with the styling and components.
+Open Chrome, and navigate to `http://localhost:8000`. You’ll find a simple application with a mock blog and a mock shop. Imagine this is a fleshed out application, we can make the assumption that the underlying logic behind the blog and the shop are different and that there are similarities with the styling and components.
 
 Go back to your IDE and you’ll see that we’re not pulling data from an external source. The data is being served locally via a couple of json files in the `data` directory. When we run the `develop` command Gatsby pulls the data from these json files and creates pages for them. You can take a look at how this being done by peeking inside of the `gatsby-node.js` file. This is because Gatsby builds the code and outputs a static site.
 

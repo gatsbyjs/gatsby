@@ -3,9 +3,8 @@ import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
 
 import Button from "../../components/button"
-import Layout from "../../components/layout"
+import PageWithSidebar from "../../components/page-with-sidebar"
 import EvaluationTable from "../../components/features/evaluation-table"
-import { itemListFeatures } from "../../utils/sidebar/item-list"
 import { getFeaturesData } from "../../utils/get-csv-features-data"
 import Container from "../../components/container"
 import FooterLinks from "../../components/shared/footer-links"
@@ -32,18 +31,14 @@ const CmsFeaturesPage = ({ data, location }) => {
   })
 
   const { sections, sectionHeaders } = getFeaturesData(
-    data.allGatsbyCmsSpecsCsv.edges
+    data.allGatsbyCmsSpecsCsv.nodes
   )
 
   return (
-    <Layout
-      location={location}
-      itemList={itemListFeatures}
-      enableScrollSync={true}
-    >
+    <PageWithSidebar location={location}>
       <Container>
         <main id={`reach-skip-nav`}>
-          <Breadcrumb location={location} itemList={itemListFeatures} />
+          <Breadcrumb location={location} />
           <FeaturesHeader />
           <h3>Comparison</h3>
           <p>
@@ -94,7 +89,7 @@ const CmsFeaturesPage = ({ data, location }) => {
         </main>
         <FooterLinks />
       </Container>
-    </Layout>
+    </PageWithSidebar>
   )
 }
 
@@ -103,16 +98,14 @@ export default CmsFeaturesPage
 export const pageQuery = graphql`
   query {
     allGatsbyCmsSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          WordPress
-          Drupal
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        WordPress
+        Drupal
+        Description
       }
     }
   }

@@ -34,9 +34,11 @@ Array [
               },
             },
             "sys": Object {
+              "contentful_id": "c6m5AJ9vMPKc8OUoQeoCS4o",
               "createdAt": "2017-06-27T09:35:36.172Z",
               "environment": Object {
                 "sys": Object {
+                  "contentful_id": "master",
                   "id": "master",
                   "linkType": "Environment",
                   "type": "Link",
@@ -46,6 +48,7 @@ Array [
               "revision": 1,
               "space": Object {
                 "sys": Object {
+                  "contentful_id": "rocybtov1ozk",
                   "id": "rocybtov1ozk",
                   "linkType": "Space",
                   "type": "Link",
@@ -64,6 +67,7 @@ Array [
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
             "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
             "linkType": "ContentType",
             "type": "Link",
@@ -73,6 +77,7 @@ Array [
         "createdAt": "2017-06-27T09:35:44.000Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -82,6 +87,7 @@ Array [
         "revision": 2,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -122,9 +128,11 @@ Array [
               },
             },
             "sys": Object {
+              "contentful_id": "c6t4HKjytPi0mYgs240wkG",
               "createdAt": "2017-06-27T09:35:36.633Z",
               "environment": Object {
                 "sys": Object {
+                  "contentful_id": "master",
                   "id": "master",
                   "linkType": "Environment",
                   "type": "Link",
@@ -134,6 +142,7 @@ Array [
               "revision": 1,
               "space": Object {
                 "sys": Object {
+                  "contentful_id": "rocybtov1ozk",
                   "id": "rocybtov1ozk",
                   "linkType": "Space",
                   "type": "Link",
@@ -152,6 +161,7 @@ Array [
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
             "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
             "linkType": "ContentType",
             "type": "Link",
@@ -161,6 +171,7 @@ Array [
         "createdAt": "2017-06-27T09:35:44.992Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -170,6 +181,7 @@ Array [
         "revision": 2,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -218,9 +230,11 @@ Array [
               },
             },
             "sys": Object {
+              "contentful_id": "c3wtvPBbBjiMKqKKga8I2Cu",
               "createdAt": "2017-06-27T09:35:37.178Z",
               "environment": Object {
                 "sys": Object {
+                  "contentful_id": "master",
                   "id": "master",
                   "linkType": "Environment",
                   "type": "Link",
@@ -230,6 +244,7 @@ Array [
               "revision": 1,
               "space": Object {
                 "sys": Object {
+                  "contentful_id": "rocybtov1ozk",
                   "id": "rocybtov1ozk",
                   "linkType": "Space",
                   "type": "Link",
@@ -255,6 +270,7 @@ Array [
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "sFzTZbSuM8coEwygeUYes",
             "id": "sFzTZbSuM8coEwygeUYes",
             "linkType": "ContentType",
             "type": "Link",
@@ -264,6 +280,7 @@ Array [
         "createdAt": "2017-06-27T09:35:43.997Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -273,6 +290,7 @@ Array [
         "revision": 2,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -339,9 +357,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               },
             },
             "sys": Object {
+              "contentful_id": "c2Y8LhXLnYAYqKCGEWG4EKI",
               "createdAt": "2017-06-27T09:35:37.012Z",
               "environment": Object {
                 "sys": Object {
+                  "contentful_id": "master",
                   "id": "master",
                   "linkType": "Environment",
                   "type": "Link",
@@ -351,6 +371,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "revision": 1,
               "space": Object {
                 "sys": Object {
+                  "contentful_id": "rocybtov1ozk",
                   "id": "rocybtov1ozk",
                   "linkType": "Space",
                   "type": "Link",
@@ -371,6 +392,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "sFzTZbSuM8coEwygeUYes",
             "id": "sFzTZbSuM8coEwygeUYes",
             "linkType": "ContentType",
             "type": "Link",
@@ -380,6 +402,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "createdAt": "2017-06-27T09:35:44.396Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -389,6 +412,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "revision": 2,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -432,9 +456,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               },
             },
             "sys": Object {
+              "contentful_id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
               "createdAt": "2017-06-27T09:35:36.168Z",
               "environment": Object {
                 "sys": Object {
+                  "contentful_id": "master",
                   "id": "master",
                   "linkType": "Environment",
                   "type": "Link",
@@ -444,6 +470,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "revision": 1,
               "space": Object {
                 "sys": Object {
+                  "contentful_id": "rocybtov1ozk",
                   "id": "rocybtov1ozk",
                   "linkType": "Space",
                   "type": "Link",
@@ -461,6 +488,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "sFzTZbSuM8coEwygeUYes",
             "id": "sFzTZbSuM8coEwygeUYes",
             "linkType": "ContentType",
             "type": "Link",
@@ -470,6 +498,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "createdAt": "2017-06-27T09:35:44.988Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -479,6 +508,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "revision": 2,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -527,9 +557,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     },
                   },
                   "sys": Object {
+                    "contentful_id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
                     "createdAt": "2017-06-27T09:35:36.168Z",
                     "environment": Object {
                       "sys": Object {
+                        "contentful_id": "master",
                         "id": "master",
                         "linkType": "Environment",
                         "type": "Link",
@@ -539,6 +571,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     "revision": 1,
                     "space": Object {
                       "sys": Object {
+                        "contentful_id": "rocybtov1ozk",
                         "id": "rocybtov1ozk",
                         "linkType": "Space",
                         "type": "Link",
@@ -556,14 +589,17 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "sys": Object {
               "contentType": Object {
                 "sys": Object {
+                  "contentful_id": "sFzTZbSuM8coEwygeUYes",
                   "id": "sFzTZbSuM8coEwygeUYes",
                   "linkType": "ContentType",
                   "type": "Link",
                 },
               },
+              "contentful_id": "JrePkDVYomE8AwcuCUyMi",
               "createdAt": "2017-06-27T09:35:44.988Z",
               "environment": Object {
                 "sys": Object {
+                  "contentful_id": "master",
                   "id": "master",
                   "linkType": "Environment",
                   "type": "Link",
@@ -573,6 +609,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "revision": 2,
               "space": Object {
                 "sys": Object {
+                  "contentful_id": "rocybtov1ozk",
                   "id": "rocybtov1ozk",
                   "linkType": "Space",
                   "type": "Link",
@@ -616,9 +653,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       },
                     },
                     "sys": Object {
+                      "contentful_id": "c6t4HKjytPi0mYgs240wkG",
                       "createdAt": "2017-06-27T09:35:36.633Z",
                       "environment": Object {
                         "sys": Object {
+                          "contentful_id": "master",
                           "id": "master",
                           "linkType": "Environment",
                           "type": "Link",
@@ -628,6 +667,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       "revision": 1,
                       "space": Object {
                         "sys": Object {
+                          "contentful_id": "rocybtov1ozk",
                           "id": "rocybtov1ozk",
                           "linkType": "Space",
                           "type": "Link",
@@ -646,14 +686,17 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "sys": Object {
                 "contentType": Object {
                   "sys": Object {
+                    "contentful_id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
                     "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
                     "linkType": "ContentType",
                     "type": "Link",
                   },
                 },
+                "contentful_id": "c24DPGBDeGEaYy8ms4Y8QMQ",
                 "createdAt": "2017-06-27T09:35:44.992Z",
                 "environment": Object {
                   "sys": Object {
+                    "contentful_id": "master",
                     "id": "master",
                     "linkType": "Environment",
                     "type": "Link",
@@ -663,6 +706,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 "revision": 2,
                 "space": Object {
                   "sys": Object {
+                    "contentful_id": "rocybtov1ozk",
                     "id": "rocybtov1ozk",
                     "linkType": "Space",
                     "type": "Link",
@@ -700,9 +744,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
               },
               "sys": Object {
+                "contentful_id": "wtrHxeu3zEoEce2MokCSi",
                 "createdAt": "2017-06-27T09:35:36.037Z",
                 "environment": Object {
                   "sys": Object {
+                    "contentful_id": "master",
                     "id": "master",
                     "linkType": "Environment",
                     "type": "Link",
@@ -712,6 +758,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 "revision": 1,
                 "space": Object {
                   "sys": Object {
+                    "contentful_id": "rocybtov1ozk",
                     "id": "rocybtov1ozk",
                     "linkType": "Space",
                     "type": "Link",
@@ -763,6 +810,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "c2PqfXUJwE8qSYKuM0U6w8M",
             "id": "c2PqfXUJwE8qSYKuM0U6w8M",
             "linkType": "ContentType",
             "type": "Link",
@@ -772,6 +820,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "createdAt": "2017-06-27T09:35:43.996Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -781,6 +830,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "revision": 2,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -830,9 +880,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     },
                   },
                   "sys": Object {
+                    "contentful_id": "c3wtvPBbBjiMKqKKga8I2Cu",
                     "createdAt": "2017-06-27T09:35:37.178Z",
                     "environment": Object {
                       "sys": Object {
+                        "contentful_id": "master",
                         "id": "master",
                         "linkType": "Environment",
                         "type": "Link",
@@ -842,6 +894,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     "revision": 1,
                     "space": Object {
                       "sys": Object {
+                        "contentful_id": "rocybtov1ozk",
                         "id": "rocybtov1ozk",
                         "linkType": "Space",
                         "type": "Link",
@@ -867,14 +920,17 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "sys": Object {
               "contentType": Object {
                 "sys": Object {
+                  "contentful_id": "sFzTZbSuM8coEwygeUYes",
                   "id": "sFzTZbSuM8coEwygeUYes",
                   "linkType": "ContentType",
                   "type": "Link",
                 },
               },
+              "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
               "createdAt": "2017-06-27T09:35:43.997Z",
               "environment": Object {
                 "sys": Object {
+                  "contentful_id": "master",
                   "id": "master",
                   "linkType": "Environment",
                   "type": "Link",
@@ -884,6 +940,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "revision": 2,
               "space": Object {
                 "sys": Object {
+                  "contentful_id": "rocybtov1ozk",
                   "id": "rocybtov1ozk",
                   "linkType": "Space",
                   "type": "Link",
@@ -927,9 +984,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       },
                     },
                     "sys": Object {
+                      "contentful_id": "c6m5AJ9vMPKc8OUoQeoCS4o",
                       "createdAt": "2017-06-27T09:35:36.172Z",
                       "environment": Object {
                         "sys": Object {
+                          "contentful_id": "master",
                           "id": "master",
                           "linkType": "Environment",
                           "type": "Link",
@@ -939,6 +998,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       "revision": 1,
                       "space": Object {
                         "sys": Object {
+                          "contentful_id": "rocybtov1ozk",
                           "id": "rocybtov1ozk",
                           "linkType": "Space",
                           "type": "Link",
@@ -957,14 +1017,17 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "sys": Object {
                 "contentType": Object {
                   "sys": Object {
+                    "contentful_id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
                     "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
                     "linkType": "ContentType",
                     "type": "Link",
                   },
                 },
+                "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
                 "createdAt": "2017-06-27T09:35:44.000Z",
                 "environment": Object {
                   "sys": Object {
+                    "contentful_id": "master",
                     "id": "master",
                     "linkType": "Environment",
                     "type": "Link",
@@ -974,6 +1037,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 "revision": 2,
                 "space": Object {
                   "sys": Object {
+                    "contentful_id": "rocybtov1ozk",
                     "id": "rocybtov1ozk",
                     "linkType": "Space",
                     "type": "Link",
@@ -1011,9 +1075,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
               },
               "sys": Object {
+                "contentful_id": "Xc0ny7GWsMEMCeASWO2um",
                 "createdAt": "2017-06-27T09:35:37.027Z",
                 "environment": Object {
                   "sys": Object {
+                    "contentful_id": "master",
                     "id": "master",
                     "linkType": "Environment",
                     "type": "Link",
@@ -1023,6 +1089,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 "revision": 1,
                 "space": Object {
                   "sys": Object {
+                    "contentful_id": "rocybtov1ozk",
                     "id": "rocybtov1ozk",
                     "linkType": "Space",
                     "type": "Link",
@@ -1072,6 +1139,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "c2PqfXUJwE8qSYKuM0U6w8M",
             "id": "c2PqfXUJwE8qSYKuM0U6w8M",
             "linkType": "ContentType",
             "type": "Link",
@@ -1081,6 +1149,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "createdAt": "2017-06-27T09:35:44.006Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -1090,6 +1159,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "revision": 2,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -1139,9 +1209,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     },
                   },
                   "sys": Object {
+                    "contentful_id": "c3wtvPBbBjiMKqKKga8I2Cu",
                     "createdAt": "2017-06-27T09:35:37.178Z",
                     "environment": Object {
                       "sys": Object {
+                        "contentful_id": "master",
                         "id": "master",
                         "linkType": "Environment",
                         "type": "Link",
@@ -1151,6 +1223,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     "revision": 1,
                     "space": Object {
                       "sys": Object {
+                        "contentful_id": "rocybtov1ozk",
                         "id": "rocybtov1ozk",
                         "linkType": "Space",
                         "type": "Link",
@@ -1176,14 +1249,17 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "sys": Object {
               "contentType": Object {
                 "sys": Object {
+                  "contentful_id": "sFzTZbSuM8coEwygeUYes",
                   "id": "sFzTZbSuM8coEwygeUYes",
                   "linkType": "ContentType",
                   "type": "Link",
                 },
               },
+              "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
               "createdAt": "2017-06-27T09:35:43.997Z",
               "environment": Object {
                 "sys": Object {
+                  "contentful_id": "master",
                   "id": "master",
                   "linkType": "Environment",
                   "type": "Link",
@@ -1193,6 +1269,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "revision": 2,
               "space": Object {
                 "sys": Object {
+                  "contentful_id": "rocybtov1ozk",
                   "id": "rocybtov1ozk",
                   "linkType": "Space",
                   "type": "Link",
@@ -1236,9 +1313,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       },
                     },
                     "sys": Object {
+                      "contentful_id": "c6m5AJ9vMPKc8OUoQeoCS4o",
                       "createdAt": "2017-06-27T09:35:36.172Z",
                       "environment": Object {
                         "sys": Object {
+                          "contentful_id": "master",
                           "id": "master",
                           "linkType": "Environment",
                           "type": "Link",
@@ -1248,6 +1327,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       "revision": 1,
                       "space": Object {
                         "sys": Object {
+                          "contentful_id": "rocybtov1ozk",
                           "id": "rocybtov1ozk",
                           "linkType": "Space",
                           "type": "Link",
@@ -1266,14 +1346,17 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "sys": Object {
                 "contentType": Object {
                   "sys": Object {
+                    "contentful_id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
                     "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
                     "linkType": "ContentType",
                     "type": "Link",
                   },
                 },
+                "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
                 "createdAt": "2017-06-27T09:35:44.000Z",
                 "environment": Object {
                   "sys": Object {
+                    "contentful_id": "master",
                     "id": "master",
                     "linkType": "Environment",
                     "type": "Link",
@@ -1283,6 +1366,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 "revision": 2,
                 "space": Object {
                   "sys": Object {
+                    "contentful_id": "rocybtov1ozk",
                     "id": "rocybtov1ozk",
                     "linkType": "Space",
                     "type": "Link",
@@ -1320,9 +1404,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
               },
               "sys": Object {
+                "contentful_id": "c10TkaLheGeQG6qQGqWYqUI",
                 "createdAt": "2017-06-27T09:35:36.032Z",
                 "environment": Object {
                   "sys": Object {
+                    "contentful_id": "master",
                     "id": "master",
                     "linkType": "Environment",
                     "type": "Link",
@@ -1332,6 +1418,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 "revision": 1,
                 "space": Object {
                   "sys": Object {
+                    "contentful_id": "rocybtov1ozk",
                     "id": "rocybtov1ozk",
                     "linkType": "Space",
                     "type": "Link",
@@ -1383,6 +1470,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "c2PqfXUJwE8qSYKuM0U6w8M",
             "id": "c2PqfXUJwE8qSYKuM0U6w8M",
             "linkType": "ContentType",
             "type": "Link",
@@ -1392,6 +1480,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "createdAt": "2017-06-27T09:35:44.049Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -1401,6 +1490,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "revision": 2,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -1470,9 +1560,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     },
                   },
                   "sys": Object {
+                    "contentful_id": "c2Y8LhXLnYAYqKCGEWG4EKI",
                     "createdAt": "2017-06-27T09:35:37.012Z",
                     "environment": Object {
                       "sys": Object {
+                        "contentful_id": "master",
                         "id": "master",
                         "linkType": "Environment",
                         "type": "Link",
@@ -1482,6 +1574,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     "revision": 1,
                     "space": Object {
                       "sys": Object {
+                        "contentful_id": "rocybtov1ozk",
                         "id": "rocybtov1ozk",
                         "linkType": "Space",
                         "type": "Link",
@@ -1504,14 +1597,17 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "sys": Object {
               "contentType": Object {
                 "sys": Object {
+                  "contentful_id": "sFzTZbSuM8coEwygeUYes",
                   "id": "sFzTZbSuM8coEwygeUYes",
                   "linkType": "ContentType",
                   "type": "Link",
                 },
               },
+              "contentful_id": "c4LgMotpNF6W20YKmuemW0a",
               "createdAt": "2017-06-27T09:35:44.396Z",
               "environment": Object {
                 "sys": Object {
+                  "contentful_id": "master",
                   "id": "master",
                   "linkType": "Environment",
                   "type": "Link",
@@ -1521,6 +1617,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "revision": 2,
               "space": Object {
                 "sys": Object {
+                  "contentful_id": "rocybtov1ozk",
                   "id": "rocybtov1ozk",
                   "linkType": "Space",
                   "type": "Link",
@@ -1564,9 +1661,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       },
                     },
                     "sys": Object {
+                      "contentful_id": "c6m5AJ9vMPKc8OUoQeoCS4o",
                       "createdAt": "2017-06-27T09:35:36.172Z",
                       "environment": Object {
                         "sys": Object {
+                          "contentful_id": "master",
                           "id": "master",
                           "linkType": "Environment",
                           "type": "Link",
@@ -1576,6 +1675,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       "revision": 1,
                       "space": Object {
                         "sys": Object {
+                          "contentful_id": "rocybtov1ozk",
                           "id": "rocybtov1ozk",
                           "linkType": "Space",
                           "type": "Link",
@@ -1594,14 +1694,17 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "sys": Object {
                 "contentType": Object {
                   "sys": Object {
+                    "contentful_id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
                     "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
                     "linkType": "ContentType",
                     "type": "Link",
                   },
                 },
+                "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
                 "createdAt": "2017-06-27T09:35:44.000Z",
                 "environment": Object {
                   "sys": Object {
+                    "contentful_id": "master",
                     "id": "master",
                     "linkType": "Environment",
                     "type": "Link",
@@ -1611,6 +1714,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 "revision": 2,
                 "space": Object {
                   "sys": Object {
+                    "contentful_id": "rocybtov1ozk",
                     "id": "rocybtov1ozk",
                     "linkType": "Space",
                     "type": "Link",
@@ -1648,9 +1752,11 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
               },
               "sys": Object {
+                "contentful_id": "KTRF62Q4gg60q6WCsWKw8",
                 "createdAt": "2017-06-27T09:35:37.064Z",
                 "environment": Object {
                   "sys": Object {
+                    "contentful_id": "master",
                     "id": "master",
                     "linkType": "Environment",
                     "type": "Link",
@@ -1660,6 +1766,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 "revision": 1,
                 "space": Object {
                   "sys": Object {
+                    "contentful_id": "rocybtov1ozk",
                     "id": "rocybtov1ozk",
                     "linkType": "Space",
                     "type": "Link",
@@ -1711,6 +1818,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "c2PqfXUJwE8qSYKuM0U6w8M",
             "id": "c2PqfXUJwE8qSYKuM0U6w8M",
             "linkType": "ContentType",
             "type": "Link",
@@ -1720,6 +1828,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "createdAt": "2017-06-27T09:35:44.130Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -1729,6 +1838,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "revision": 2,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -1822,6 +1932,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "jsonTest",
             "id": "jsonTest",
             "linkType": "ContentType",
             "type": "Link",
@@ -1831,6 +1942,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "createdAt": "2017-11-28T02:16:10.604Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -1840,6 +1952,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "revision": 3,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -1885,6 +1998,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "remarkTest",
             "id": "remarkTest",
             "linkType": "ContentType",
             "type": "Link",
@@ -1894,6 +2008,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "createdAt": "2018-05-28T08:49:06.230Z",
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -1903,6 +2018,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "revision": 1,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -1919,6 +2035,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "author": Object {
           "en-US": Object {
             "sys": Object {
+              "contentful_id": "qYfB1lzHTNpofY3Oqvjpk",
               "id": "qYfB1lzHTNpofY3Oqvjpk",
               "linkType": "Entry",
               "type": "Link",
@@ -1935,6 +2052,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "blogPost",
             "id": "blogPost",
             "linkType": "ContentType",
             "type": "Link",
@@ -1944,13 +2062,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "createdAt": "2019-09-09T06:54:07.673Z",
         "createdBy": Object {
           "sys": Object {
-            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "contentful_id": "2cRG5PXyp1roAoTOywZTW6",
+            "id": "c2cRG5PXyp1roAoTOywZTW6",
             "linkType": "User",
             "type": "Link",
           },
         },
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -1961,7 +2081,8 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "publishedAt": "2019-09-09T06:58:04.316Z",
         "publishedBy": Object {
           "sys": Object {
-            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "contentful_id": "2cRG5PXyp1roAoTOywZTW6",
+            "id": "c2cRG5PXyp1roAoTOywZTW6",
             "linkType": "User",
             "type": "Link",
           },
@@ -1970,6 +2091,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "publishedVersion": 11,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -1979,7 +2101,8 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "updatedAt": "2019-09-09T06:58:04.316Z",
         "updatedBy": Object {
           "sys": Object {
-            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "contentful_id": "2cRG5PXyp1roAoTOywZTW6",
+            "id": "c2cRG5PXyp1roAoTOywZTW6",
             "linkType": "User",
             "type": "Link",
           },
@@ -1994,6 +2117,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "favouritePost": Object {
           "en-US": Object {
             "sys": Object {
+              "contentful_id": "c5U1Lm7y197ZCNUI9USWPUV",
               "id": "c5U1Lm7y197ZCNUI9USWPUV",
               "linkType": "Entry",
               "type": "Link",
@@ -2007,6 +2131,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "sys": Object {
         "contentType": Object {
           "sys": Object {
+            "contentful_id": "author",
             "id": "author",
             "linkType": "ContentType",
             "type": "Link",
@@ -2016,13 +2141,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "createdAt": "2019-09-09T06:54:16.287Z",
         "createdBy": Object {
           "sys": Object {
-            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "contentful_id": "2cRG5PXyp1roAoTOywZTW6",
+            "id": "c2cRG5PXyp1roAoTOywZTW6",
             "linkType": "User",
             "type": "Link",
           },
         },
         "environment": Object {
           "sys": Object {
+            "contentful_id": "master",
             "id": "master",
             "linkType": "Environment",
             "type": "Link",
@@ -2033,7 +2160,8 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "publishedAt": "2019-09-09T06:54:38.816Z",
         "publishedBy": Object {
           "sys": Object {
-            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "contentful_id": "2cRG5PXyp1roAoTOywZTW6",
+            "id": "c2cRG5PXyp1roAoTOywZTW6",
             "linkType": "User",
             "type": "Link",
           },
@@ -2042,6 +2170,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "publishedVersion": 6,
         "space": Object {
           "sys": Object {
+            "contentful_id": "rocybtov1ozk",
             "id": "rocybtov1ozk",
             "linkType": "Space",
             "type": "Link",
@@ -2051,7 +2180,8 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "updatedAt": "2019-09-09T06:54:38.816Z",
         "updatedBy": Object {
           "sys": Object {
-            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "contentful_id": "2cRG5PXyp1roAoTOywZTW6",
+            "id": "c2cRG5PXyp1roAoTOywZTW6",
             "linkType": "User",
             "type": "Link",
           },
@@ -2851,12 +2981,12 @@ Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
+      "contentful_id": "7LAnCobuuWYSqks6wAwY2a",
       "createdAt": "2017-06-27T09:35:44.000Z",
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "02e98c9244b8e764cf21bdded81b0990",
+        "contentDigest": "12417e6f494308abf73ff50747ac4fc1",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "en-US",
@@ -2887,12 +3017,12 @@ Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c24DPGBDeGEaYy8ms4Y8QMQ",
+      "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ",
       "createdAt": "2017-06-27T09:35:44.992Z",
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c1b8684adfe71890b939785dcdd44dc5",
+        "contentDigest": "c290bd7b85b7c3fac4315191a7682a5a",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "en-US",
@@ -2995,12 +3125,12 @@ Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
+      "contentful_id": "7LAnCobuuWYSqks6wAwY2a",
       "createdAt": "2017-06-27T09:35:44.000Z",
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "7bb44b01f4c6cd1285c84ac7c4a0e842",
+        "contentDigest": "8d9d129087a8a0f8ce47c4e2e2f75ab0",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "de",
@@ -3031,12 +3161,12 @@ Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c24DPGBDeGEaYy8ms4Y8QMQ",
+      "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ",
       "createdAt": "2017-06-27T09:35:44.992Z",
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "8edc27b29b65d0277d8f83b0507b6ae0",
+        "contentDigest": "eecd9ce7ac4f23853eced4562de97ffd",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "de",
@@ -3139,12 +3269,12 @@ Array [
       ],
       "companyDescription___NODE": "uuid-from-gatsby",
       "companyName___NODE": "uuid-from-gatsby",
-      "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
+      "contentful_id": "651CQ8rLoIYCeY6G0QG22q",
       "createdAt": "2017-06-27T09:35:43.997Z",
       "email": "normann@normann-copenhagen.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "8809d9ec6e7c4d04f5f4bdb27fe17875",
+        "contentDigest": "9a12c336d1d442a8d029d3f46c210ce9",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3181,12 +3311,12 @@ Array [
       ],
       "companyDescription___NODE": "uuid-from-gatsby",
       "companyName___NODE": "uuid-from-gatsby",
-      "contentful_id": "c4LgMotpNF6W20YKmuemW0a",
+      "contentful_id": "4LgMotpNF6W20YKmuemW0a",
       "createdAt": "2017-06-27T09:35:44.396Z",
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "fa021c46fb99d3f1e62a34d43c595c68",
+        "contentDigest": "4828ce6aa9c5c1d7d06c0fd90d67e690",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3376,12 +3506,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       ],
       "companyDescription___NODE": "uuid-from-gatsby",
       "companyName___NODE": "uuid-from-gatsby",
-      "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
+      "contentful_id": "651CQ8rLoIYCeY6G0QG22q",
       "createdAt": "2017-06-27T09:35:43.997Z",
       "email": "normann@normann-copenhagen.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "cd7b30d625ce09679b94df6fb03ac23f",
+        "contentDigest": "4f008dd359a054eb647a75f9b27c1134",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3418,12 +3548,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       ],
       "companyDescription___NODE": "uuid-from-gatsby",
       "companyName___NODE": "uuid-from-gatsby",
-      "contentful_id": "c4LgMotpNF6W20YKmuemW0a",
+      "contentful_id": "4LgMotpNF6W20YKmuemW0a",
       "createdAt": "2017-06-27T09:35:44.396Z",
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "70a0ef39dd45e632e51e46ddc3d3a7e9",
+        "contentDigest": "bea6399774f4fe2ff73fcc1a708e6dd5",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3611,14 +3741,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c5KsDBWseXY6QegucYAoacS",
+      "contentful_id": "5KsDBWseXY6QegucYAoacS",
       "createdAt": "2017-06-27T09:35:43.996Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "d1960e0051921a808968db3013fdd3a5",
+        "contentDigest": "603718d6bc6a368183958015650b734d",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3663,14 +3793,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c3DVqIYj4dOwwcKu6sgqOgg",
+      "contentful_id": "3DVqIYj4dOwwcKu6sgqOgg",
       "createdAt": "2017-06-27T09:35:44.006Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "96681eb8899515d79c4272af16567dff",
+        "contentDigest": "73cac8563f8a27a1cd5bc5ffdf8de23c",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3713,14 +3843,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c6dbjWqNd9SqccegcqYq224",
+      "contentful_id": "6dbjWqNd9SqccegcqYq224",
       "createdAt": "2017-06-27T09:35:44.049Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "6da4cdd8222c0b142c7d226011ed1a73",
+        "contentDigest": "3baa1d3218598f206bed643466eebe7f",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3765,14 +3895,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c4BqrajvA8E6qwgkieoqmqO",
+      "contentful_id": "4BqrajvA8E6qwgkieoqmqO",
       "createdAt": "2017-06-27T09:35:44.130Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "7d0eeae46aa2cd73055b7b9619790294",
+        "contentDigest": "657f54f67770387eafbfe0a4e621f313",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3943,14 +4073,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c5KsDBWseXY6QegucYAoacS",
+      "contentful_id": "5KsDBWseXY6QegucYAoacS",
       "createdAt": "2017-06-27T09:35:43.996Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "861a5692e67c8ad9e34ccca6edf462d3",
+        "contentDigest": "f29a363c6e7e38d829b8d1ba01d4bbdc",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -3995,14 +4125,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c3DVqIYj4dOwwcKu6sgqOgg",
+      "contentful_id": "3DVqIYj4dOwwcKu6sgqOgg",
       "createdAt": "2017-06-27T09:35:44.006Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "1c090ee072862f9e46b3094f90102c52",
+        "contentDigest": "6af87b6b5615d1640d20c30cc2b79b48",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4045,14 +4175,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c6dbjWqNd9SqccegcqYq224",
+      "contentful_id": "6dbjWqNd9SqccegcqYq224",
       "createdAt": "2017-06-27T09:35:44.049Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "ed38df4ca0e933109e168122f3979064",
+        "contentDigest": "17f3e036c7b336714ee52712ec55105d",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4097,14 +4227,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c4BqrajvA8E6qwgkieoqmqO",
+      "contentful_id": "4BqrajvA8E6qwgkieoqmqO",
       "createdAt": "2017-06-27T09:35:44.130Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "2ca274f816b82fd6bd80575db97bf91b",
+        "contentDigest": "121384fecda462f3c1b6be675ca73215",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4298,11 +4428,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c71mfnH4QKsSsQmgoaQuq6O",
+      "contentful_id": "71mfnH4QKsSsQmgoaQuq6O",
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "032f8ab8b9a307af4ddb1a5689c93578",
+        "contentDigest": "9e5debf1a2680bd48389be83001fe63c",
         "type": "ContentfulJsonTest",
       },
       "jsonTest___NODE": "uuid-from-gatsby",
@@ -4426,11 +4556,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c71mfnH4QKsSsQmgoaQuq6O",
+      "contentful_id": "71mfnH4QKsSsQmgoaQuq6O",
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "7ee143015424e23a972893ca097cf0fc",
+        "contentDigest": "ebd88d160c13b2cc815ed84de2390160",
         "type": "ContentfulJsonTest",
       },
       "jsonTest___NODE": "uuid-from-gatsby",
@@ -4555,11 +4685,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "content___NODE": "uuid-from-gatsby",
-      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
+      "contentful_id": "4L2GhTsJtCseMYM8Wia64i",
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "d3a8e2dbc10fcc796a8a3d127ac59c8f",
+        "contentDigest": "d57d58e97f4e26d5bff6f2305e884562",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "en-US",
@@ -4658,11 +4788,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "content___NODE": "uuid-from-gatsby",
-      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
+      "contentful_id": "4L2GhTsJtCseMYM8Wia64i",
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "d6f28e186864e43be34ff25be4ff4af1",
+        "contentDigest": "21b9b9b3269fd711d94118aed5efac82",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "de",
@@ -4759,11 +4889,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
     Object {
       "author___NODE": "uuid-from-gatsby",
       "children": Array [],
-      "contentful_id": "c5U1Lm7y197ZCNUI9USWPUV",
+      "contentful_id": "5U1Lm7y197ZCNUI9USWPUV",
       "createdAt": "2019-09-09T06:54:07.673Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "9e6b508b1bb13b12d2c2113e3f92fd18",
+        "contentDigest": "d332db23c16a02df21cd8c07942e799c",
         "type": "ContentfulBlogPost",
       },
       "node_locale": "en-US",
@@ -4802,11 +4932,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
     Object {
       "author___NODE": "uuid-from-gatsby",
       "children": Array [],
-      "contentful_id": "c5U1Lm7y197ZCNUI9USWPUV",
+      "contentful_id": "5U1Lm7y197ZCNUI9USWPUV",
       "createdAt": "2019-09-09T06:54:07.673Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "dc411e8958e024059f44cf53a0a78246",
+        "contentDigest": "32286133e7b1522b212182cc11b3e6ec",
         "type": "ContentfulBlogPost",
       },
       "node_locale": "de",
@@ -7766,12 +7896,12 @@ Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
+      "contentful_id": "7LAnCobuuWYSqks6wAwY2a",
       "createdAt": "2017-06-27T09:35:44.000Z",
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "699e80c92afe6f185cb24943b573fd8f",
+        "contentDigest": "46efe516307baaf0d7772a18ea36ca05",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
@@ -7804,12 +7934,12 @@ Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c24DPGBDeGEaYy8ms4Y8QMQ",
+      "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ",
       "createdAt": "2017-06-27T09:35:44.992Z",
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "9a4b6f3526b193ea5ed496e76c5b3374",
+        "contentDigest": "3abdddde1c8ed8c20f4b0185bbef6af0",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
@@ -7910,12 +8040,12 @@ Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
+      "contentful_id": "7LAnCobuuWYSqks6wAwY2a",
       "createdAt": "2017-06-27T09:35:44.000Z",
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "e62b38be29fb84021f630a1593d81328",
+        "contentDigest": "e0beb5d9936c9ef61a090cd496eb0f09",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
@@ -7948,12 +8078,12 @@ Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c24DPGBDeGEaYy8ms4Y8QMQ",
+      "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ",
       "createdAt": "2017-06-27T09:35:44.992Z",
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "203ddf31c802c863f83280ac50663549",
+        "contentDigest": "c06f053f970ea120f4388b189c3c5860",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
@@ -8055,12 +8185,12 @@ Array [
       ],
       "companyDescription___NODE": "uuid-from-gatsby",
       "companyName___NODE": "uuid-from-gatsby",
-      "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
+      "contentful_id": "651CQ8rLoIYCeY6G0QG22q",
       "createdAt": "2017-06-27T09:35:43.997Z",
       "email": "normann@normann-copenhagen.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "a7d49255b850af6ea51d5208f6dbbc8b",
+        "contentDigest": "52063314118126faaaa927a446e4c3b2",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -8098,12 +8228,12 @@ Array [
       ],
       "companyDescription___NODE": "uuid-from-gatsby",
       "companyName___NODE": "uuid-from-gatsby",
-      "contentful_id": "c4LgMotpNF6W20YKmuemW0a",
+      "contentful_id": "4LgMotpNF6W20YKmuemW0a",
       "createdAt": "2017-06-27T09:35:44.396Z",
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "4ba097caf796e506b94f14173f5db035",
+        "contentDigest": "9ff55cfd9953f6423897110b63dd691e",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -8292,12 +8422,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       ],
       "companyDescription___NODE": "uuid-from-gatsby",
       "companyName___NODE": "uuid-from-gatsby",
-      "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
+      "contentful_id": "651CQ8rLoIYCeY6G0QG22q",
       "createdAt": "2017-06-27T09:35:43.997Z",
       "email": "normann@normann-copenhagen.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "033f2d7a1814d0966834fee13a0e3590",
+        "contentDigest": "07fc9f609bd467985c815bba53a55df5",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -8335,12 +8465,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       ],
       "companyDescription___NODE": "uuid-from-gatsby",
       "companyName___NODE": "uuid-from-gatsby",
-      "contentful_id": "c4LgMotpNF6W20YKmuemW0a",
+      "contentful_id": "4LgMotpNF6W20YKmuemW0a",
       "createdAt": "2017-06-27T09:35:44.396Z",
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "f48f0a41802cd1fc57426b76bf8a344a",
+        "contentDigest": "a376b123f951550806209e47abaebc04",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -8531,14 +8661,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c5KsDBWseXY6QegucYAoacS",
+      "contentful_id": "5KsDBWseXY6QegucYAoacS",
       "createdAt": "2017-06-27T09:35:43.996Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "cdd7272943ac92488a3433f2c16c58af",
+        "contentDigest": "90faf7a42abf75a8f7fe37436d1e0367",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -8583,14 +8713,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c3DVqIYj4dOwwcKu6sgqOgg",
+      "contentful_id": "3DVqIYj4dOwwcKu6sgqOgg",
       "createdAt": "2017-06-27T09:35:44.006Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "a6f432355936628e7c8e866982bc86d0",
+        "contentDigest": "1bcd10fb27ae44ab0ba3f544064a5e6c",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -8633,14 +8763,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c6dbjWqNd9SqccegcqYq224",
+      "contentful_id": "6dbjWqNd9SqccegcqYq224",
       "createdAt": "2017-06-27T09:35:44.049Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "c9c8c8ae09e1e049660ec70a47c93a8c",
+        "contentDigest": "0d7f32dbf24270f79fbf870d27696d5a",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -8685,14 +8815,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c4BqrajvA8E6qwgkieoqmqO",
+      "contentful_id": "4BqrajvA8E6qwgkieoqmqO",
       "createdAt": "2017-06-27T09:35:44.130Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "60f8475ba208bf95f90ac40cb33a9f87",
+        "contentDigest": "148e07132aaac6d709e56f84b447eafd",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -8863,14 +8993,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c5KsDBWseXY6QegucYAoacS",
+      "contentful_id": "5KsDBWseXY6QegucYAoacS",
       "createdAt": "2017-06-27T09:35:43.996Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "5bf97460a9e1fde7b0a1711c6ff051b5",
+        "contentDigest": "8b514a23fd2d2239b6b7b749e7dc1b92",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -8915,14 +9045,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c3DVqIYj4dOwwcKu6sgqOgg",
+      "contentful_id": "3DVqIYj4dOwwcKu6sgqOgg",
       "createdAt": "2017-06-27T09:35:44.006Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "b7edac0c238925cba6c9ceae81e8d10c",
+        "contentDigest": "d0e0661ae1ed61d2fbe0f5f251673c02",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -8965,14 +9095,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c6dbjWqNd9SqccegcqYq224",
+      "contentful_id": "6dbjWqNd9SqccegcqYq224",
       "createdAt": "2017-06-27T09:35:44.049Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "61ded63a08b7a01a650397e2781a3762",
+        "contentDigest": "3235603106e7770d30a222a8d6884419",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -9017,14 +9147,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c4BqrajvA8E6qwgkieoqmqO",
+      "contentful_id": "4BqrajvA8E6qwgkieoqmqO",
       "createdAt": "2017-06-27T09:35:44.130Z",
       "id": "uuid-from-gatsby",
       "image___NODE": Array [
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "329f31a4473c36588ba2264c2a34d174",
+        "contentDigest": "ede187df0a81a80643c8d0b507814b98",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -9218,11 +9348,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c71mfnH4QKsSsQmgoaQuq6O",
+      "contentful_id": "71mfnH4QKsSsQmgoaQuq6O",
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c7ca74e86a5944d21a136c4be651a19d",
+        "contentDigest": "f1215f4c5b68dc08ffc0404bdb4e9b69",
         "type": "ContentfulJsonTest",
       },
       "jsonTest___NODE": "uuid-from-gatsby",
@@ -9346,11 +9476,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [
         "uuid-from-gatsby",
       ],
-      "contentful_id": "c71mfnH4QKsSsQmgoaQuq6O",
+      "contentful_id": "71mfnH4QKsSsQmgoaQuq6O",
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "7fdc703cd9d8dc653cf92292efa62a28",
+        "contentDigest": "3a57e7b8bf657b0d263fdf1bfcdc0d50",
         "type": "ContentfulJsonTest",
       },
       "jsonTest___NODE": "uuid-from-gatsby",
@@ -9475,11 +9605,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "content___NODE": "uuid-from-gatsby",
-      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
+      "contentful_id": "4L2GhTsJtCseMYM8Wia64i",
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "87e6364b6d2d52f1f8cc60b8b5eb271f",
+        "contentDigest": "189c3b481f9ddbe73e8024f8e8619ecf",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "en-US",
@@ -9578,11 +9708,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "content___NODE": "uuid-from-gatsby",
-      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
+      "contentful_id": "4L2GhTsJtCseMYM8Wia64i",
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c65e5930a1fb36f8818c36b1b02c930c",
+        "contentDigest": "4c069c79589fc84ebd38cc638e985766",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "de",
@@ -9679,11 +9809,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
     Object {
       "author___NODE": "uuid-from-gatsby",
       "children": Array [],
-      "contentful_id": "c5U1Lm7y197ZCNUI9USWPUV",
+      "contentful_id": "5U1Lm7y197ZCNUI9USWPUV",
       "createdAt": "2019-09-09T06:54:07.673Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "d7322b133ec7a3ce0994700febad7ed1",
+        "contentDigest": "07de0f8061f6b3795851cf58d4990a30",
         "type": "ContentfulBlogPost",
       },
       "node_locale": "en-US",
@@ -9722,11 +9852,11 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
     Object {
       "author___NODE": "uuid-from-gatsby",
       "children": Array [],
-      "contentful_id": "c5U1Lm7y197ZCNUI9USWPUV",
+      "contentful_id": "5U1Lm7y197ZCNUI9USWPUV",
       "createdAt": "2019-09-09T06:54:07.673Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "084bbb753961c86aedd89c83b3abed25",
+        "contentDigest": "1550e7716a7f01d59c323314c9aa7966",
         "type": "ContentfulBlogPost",
       },
       "node_locale": "de",

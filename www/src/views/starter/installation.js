@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import Copy from "../../components/copy"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const StarterInstallation = ({ repoName, repoUrl }) => {
   const content = `gatsby new ${repoName || `my-gatsby-project`} ${repoUrl}`

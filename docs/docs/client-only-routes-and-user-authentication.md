@@ -35,11 +35,11 @@ const App = () => {
   return (
     <Layout>
       // highlight-start
-      <Router>
-        <Profile path="/app/profile" />
-        <Details path="/app/details" />
-        <Login path="/app/login" />
-        <Default path="/app" />
+      <Router basepath="/app">
+        <Profile path="/profile" />
+        <Details path="/details" />
+        <Login path="/login" />
+        <Default path="/" />
       </Router>
       // highlight-end
     </Layout>
@@ -49,7 +49,7 @@ const App = () => {
 export default App
 ```
 
-With routes nested under the `<Router />` from Reach Router, it will [render the component from the route that corresponds to the `location`](https://reach.tech/router/api/Router). In the case of the `/app/profile` path, the `Profile` component will be rendered.
+With routes nested under the `<Router />` from Reach Router, it will [render the component from the route that corresponds to the `location`](https://reach.tech/router/api/Router). In the case of the `/app/profile` path, the `Profile` component will be rendered, as its prefix matches the base path of `/app`, and the remaining part is identical to the child's path.
 
 ### Adjusting routes to account for authenticated users
 
@@ -68,13 +68,13 @@ import PrivateRoute from "../components/PrivateRoute" // highlight-line
 const App = () => {
   return (
     <Layout>
-      <Router>
+      <Router basepath="/app">
         // highlight-start
-        <PrivateRoute path="/app/profile" component={Profile} />
-        <PrivateRoute path="/app/details" component={Details} />
+        <PrivateRoute path="/profile" component={Profile} />
+        <PrivateRoute path="/details" component={Details} />
         // highlight-end
-        <Login path="/app/login" />
-        <Default path="/app" />
+        <Login path="/login" />
+        <Default path="/" />
       </Router>
     </Layout>
   )
@@ -141,8 +141,8 @@ If you are hosting on your own server, you can opt to configure the server to ha
 Consider the following router and route to serve as an example:
 
 ```jsx:title=src/pages/app.js
-<Router>
-  <Route path="/app/why-gatsby-is-awesome" />
+<Router basepath="/app">
+  <Route path="/why-gatsby-is-awesome" />
 </Router>
 ```
 

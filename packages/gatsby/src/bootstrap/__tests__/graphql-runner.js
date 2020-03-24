@@ -1,7 +1,12 @@
 jest.mock(`graphql`)
 
 const createGraphqlRunner = require(`../graphql-runner`)
-const { graphql } = require(`graphql`)
+const { execute, validate, parse } = require(`graphql`)
+
+parse.mockImplementation(() => {
+  return {}
+})
+validate.mockImplementation(() => [])
 
 const createStore = (schema = {}) => {
   return {
@@ -33,9 +38,9 @@ describe(`grapqhl-runner`, () => {
         gatsby: `is awesome`,
       },
     }
-    graphql.mockImplementation(() => Promise.resolve(expectation))
+    execute.mockImplementation(() => Promise.resolve(expectation))
 
-    const result = await graphqlRunner({}, {})
+    const result = await graphqlRunner(``, {})
     expect(reporter.panicOnBuild).not.toHaveBeenCalled()
     expect(result).toBe(expectation)
   })
@@ -51,9 +56,9 @@ describe(`grapqhl-runner`, () => {
         },
       ],
     }
-    graphql.mockImplementation(() => Promise.resolve(expectation))
+    execute.mockImplementation(() => Promise.resolve(expectation))
 
-    const result = await graphqlRunner({}, {})
+    const result = await graphqlRunner(``, {})
     expect(reporter.panicOnBuild).not.toHaveBeenCalled()
     expect(result).toBe(expectation)
   })
@@ -68,13 +73,13 @@ describe(`grapqhl-runner`, () => {
       message: `Cannot query field boyhowdy on RootQueryType`,
     }
 
-    graphql.mockImplementation(() =>
+    execute.mockImplementation(() =>
       Promise.resolve({
         errors: [errorObject],
       })
     )
 
-    await graphqlRunner({}, {})
+    await graphqlRunner(``, {})
     expect(reporter.panicOnBuild).toHaveBeenCalled()
     expect(reporter.panicOnBuild).toMatchSnapshot()
   })

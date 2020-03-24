@@ -47,7 +47,10 @@ Similarly, you could spend 10,000 hours becoming a kung fu master in performance
 In [Gatsby for apps](/blog/2018-11-07-gatsby-for-apps/), we recently explained:
 
 <Pullquote citation="Dustin Schau">
-  Gatsby is great for building web experiences that leverage the benefits of both so-called static sites and web applications — simultaneously. You don’t have to sacrifice the advantages of one approach to reap the benefits of the other.
+  Gatsby is great for building web experiences that leverage the benefits of
+  both so-called static sites and web applications — simultaneously. You don’t
+  have to sacrifice the advantages of one approach to reap the benefits of the
+  other.
 </Pullquote>
 
 When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then it hydrates into a React app.
@@ -79,7 +82,9 @@ Say you order delivery for dinner. It arrives, you eat. Later, you look at the m
 With Gatsby, your data can be sourced from just about anywhere -- content management systems, Markdown, APIs, databases, etc. A recent series on the Gatsby blog detailed the concept of the “[content mesh](/blog/2018-10-04-journey-to-the-content-mesh/)”:
 
 <Pullquote>
-  [Gatsby is] the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
+  [Gatsby is] the infrastructure layer for a decoupled website. The content mesh
+  stitches together content systems in a modern development environment while
+  optimizing website delivery for performance.
 </Pullquote>
 
 With Gatsby, you can source your data into a consolidated data layer, which you can query against directly. No matter where your data comes from, you can access it all from a single query. Get data from wherever it lives to the right place in your website in the right form exactly when it's needed.

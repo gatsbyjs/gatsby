@@ -34,8 +34,7 @@ module.exports = {
     `__tests__/fixtures`,
   ],
   transform: {
-    "^.+\\.js$": `<rootDir>/jest-transformer.js`,
-    "^.+\\.tsx?$": `<rootDir>/node_modules/ts-jest/preprocessor.js`,
+    "^.+\\.[jt]sx?$": `<rootDir>/jest-transformer.js`,
   },
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
@@ -52,7 +51,9 @@ module.exports = {
     },
   },
   collectCoverageFrom: coverageDirs,
-  reporters: [`default`].concat(useCoverage ? `jest-junit` : []),
+  reporters: process.env.CI
+    ? [[`jest-silent-reporter`, { useDots: true }]]
+    : [`default`].concat(useCoverage ? `jest-junit` : []),
   testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
 }

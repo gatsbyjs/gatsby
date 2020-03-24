@@ -41,7 +41,7 @@ exports.preprocessSource = require(`./gatsby/preprocess-source`)
  */
 exports.onCreateBabelConfig = ({ actions }) => {
   actions.setBabelPlugin({
-    name: `@babel/plugin-proposal-object-rest-spread`,
+    name: require.resolve(`@babel/plugin-proposal-object-rest-spread`),
   })
 }
 

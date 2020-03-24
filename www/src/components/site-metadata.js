@@ -2,6 +2,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql, useStaticQuery } from "gatsby"
 
+import { useLocale } from "./I18nContext"
 import gatsbyIcon from "../assets/gatsby-icon.png"
 
 const SiteMetadata = ({ pathname }) => {
@@ -20,10 +21,11 @@ const SiteMetadata = ({ pathname }) => {
       }
     }
   `)
+  const locale = useLocale()
 
   return (
     <Helmet defer={false} defaultTitle={title} titleTemplate={`%s | ${title}`}>
-      <html lang="en" />
+      <html lang={locale} />
       <link rel="canonical" href={`${siteUrl}${pathname}`} />
       <meta name="docsearch:version" content="2.0" />
       <meta
@@ -33,7 +35,7 @@ const SiteMetadata = ({ pathname }) => {
 
       <meta property="og:url" content={siteUrl} />
       <meta property="og:type" content="website" />
-      <meta property="og:locale" content="en" />
+      <meta property="og:locale" content={locale} />
       <meta property="og:site_name" content={title} />
       <meta property="og:image" content={`${siteUrl}${gatsbyIcon}`} />
       <meta property="og:image:width" content="512" />

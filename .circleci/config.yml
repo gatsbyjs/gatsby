@@ -7,7 +7,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "10"
+        default: "10.13"
     docker:
       - image: circleci/node:<< parameters.image >>
 
@@ -57,8 +57,8 @@ aliases:
       - <<: *install_node_modules
       - run: yarn list react
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
-      - run: yarn jest -w 1 --ci
-      - run: GATSBY_DB_NODES=loki yarn jest -w 1 --ci
+      - run: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+      - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
 
   e2e-test-workflow: &e2e-test-workflow
     filters:
@@ -69,7 +69,7 @@ aliases:
           - /blog.+/
     requires:
       - lint
-      - unit_tests_node8
+      - unit_tests_node10
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -130,6 +130,58 @@ commands:
             - slack/status:
               channel: eng-react-integration-status
 
+  run-benchmark:
+    parameters:
+      working_directory:
+        type: string
+      NUM_PAGES:
+        type: string
+      BENCHMARK_CONTENT_SOURCE:
+        type: string
+      BENCHMARK_REPO_NAME:
+        type: string
+        default: gatsbyjs/gatsby
+      BENCHMARK_SITE_TYPE:
+        type: string
+        default: BLOG
+      BENCHMARK_BRANCH:
+        type: string
+        default: master
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          working_directory: << parameters.working_directory >>
+          environment:
+            NUM_PAGES: << parameters.NUM_PAGES >>
+      - run:
+          command: npm run build
+          working_directory: << parameters.working_directory >>
+          environment:
+            BENCHMARK_BUILD_TYPE: COLD_START
+            NUM_PAGES: << parameters.NUM_PAGES >>
+            BENCHMARK_CONTENT_SOURCE: << parameters.BENCHMARK_CONTENT_SOURCE >>
+            BENCHMARK_REPO_NAME: << parameters.BENCHMARK_REPO_NAME >>
+            BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
+            BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
+            CI_NAME: circleci
+      - run:
+          command: npm install
+          working_directory: << parameters.working_directory >>
+          environment:
+            NUM_PAGES: << parameters.NUM_PAGES >>
+      - run:
+          command: npm run build
+          working_directory: << parameters.working_directory >>
+          environment:
+            BENCHMARK_BUILD_TYPE: WARM_START
+            NUM_PAGES: << parameters.NUM_PAGES >>
+            BENCHMARK_CONTENT_SOURCE: << parameters.BENCHMARK_CONTENT_SOURCE >>
+            BENCHMARK_REPO_NAME: << parameters.BENCHMARK_REPO_NAME >>
+            BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
+            BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
+            CI_NAME: circleci
+
   e2e-test:
     parameters:
       skip_file_change_test:
@@ -142,7 +194,10 @@ commands:
         type: string
       test_command:
         type: string
-        default: "" # if unset, e2e-test.sh specifies the command
+        default: "yarn test"
+      run_loki:
+        type: boolean
+        default: false
     steps:
       - <<: *attach_to_bootstrap
       # In case of failure, add these steps again. Cache probably got deleted
@@ -153,7 +208,17 @@ commands:
           condition: << parameters.skip_file_change_test >>
           steps:
             - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
-      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
+      - run:
+          name: Run tests (using defaults)
+          command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
+
+      - when:
+          condition: << parameters.run_loki >>
+          steps:
+            - run:
+                command: GATSBY_DB_NODES=loki << parameters.test_command >>
+                name: Run tests (using Loki)
+                working_directory: << parameters.test_path >>
 
 version: 2.1
 
@@ -166,7 +231,7 @@ jobs:
       - <<: *install_node_modules
       - <<: *persist_cache
       # persist our git checkout and node_modules as the next step (assert-changed-files) might exit this step
-      # when no files have changed (master). We still need to have these files for jobs like lint & unit_tests_node8
+      # when no files have changed (master). We still need to have these files for jobs like lint & unit_tests_node10
       - persist_to_workspace:
           root: ./
           paths:
@@ -189,12 +254,6 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - run: yarn typecheck
       - run: yarn check-repo-fields
-
-  unit_tests_node8:
-    executor:
-      name: node
-      image: "8"
-    <<: *test_template
 
   unit_tests_node10:
     executor: node
@@ -222,6 +281,13 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/long-term-caching
+
+  integration_tests_cache_resilience:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/cache-resilience
+          run_loki: true
 
   integration_tests_gatsby_pipeline:
     executor: node
@@ -321,47 +387,6 @@ jobs:
           command: yarn run update-source
           working_directory: ~/project/scripts/i18n
 
-  build_www:
-    docker:
-      - image: circleci/node:12
-    resource_class: xlarge # ++ RAM and CPU
-    steps:
-      - checkout
-      - restore_cache:
-          key: v2_www_public_dir
-      - restore_cache:
-          key: v2_www_cache_dir
-      - run:
-          command: yarn
-          working_directory: ~/project/www
-      - run:
-          # manually match cpu_count to vcpus available in resource_class
-          command: GATSBY_CPU_COUNT=8 yarn build
-          working_directory: ~/project/www
-      - save_cache:
-          key: v2_www_public_dir_{{ epoch }}
-          paths:
-            - ~/project/www/public
-      - save_cache:
-          key: v2_www_cache_dir_{{ epoch }}
-          paths:
-            - ~/project/www/.cache
-
-  deploy_www:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - restore_cache:
-          key: v2_www_public_dir
-      - run:
-          command: yarn add netlify-cli
-          working_directory: ~/project/www
-      - run:
-          command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI workflow https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID"
-          no_output_timeout: 2h
-          working_directory: ~/project/www
-
   windows_unit_tests:
     executor:
       name: win/vs2019
@@ -381,7 +406,7 @@ jobs:
           key: yarn-packages-v2-{{ checksum "yarn.lock" }}
       - run:
           name: "Run Tests"
-          command: yarn test
+          command: yarn jest -w 1 --ci
 
   bootstrap-with-experimental-react:
     executor: node
@@ -402,8 +427,175 @@ jobs:
           paths:
             - "*"
 
+  benchmark_markdown_id_512:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_id_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_id_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_id_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_id
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_slug_512:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_slug_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_slug_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_slug_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_slug
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_table_512:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_table
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_table_4096:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_table
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_table_8192:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_table
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_markdown_table_32768:
+    docker:
+      - image: "circleci/node:12"
+    resource_class: xlarge
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/markdown_table/benchmarks/markdown_table
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
+
 workflows:
   version: 2
+
+  benchmark:
+    jobs:
+      - benchmark_markdown_id_512
+      - benchmark_markdown_id_4096
+      - benchmark_markdown_id_8192
+      - benchmark_markdown_id_32768
+      - benchmark_markdown_slug_512
+      - benchmark_markdown_slug_4096
+      - benchmark_markdown_slug_8192
+      - benchmark_markdown_slug_32768
+      - benchmark_markdown_table_512
+      - benchmark_markdown_table_4096
+      - benchmark_markdown_table_8192
+      - benchmark_markdown_table_32768
+    triggers:
+      - schedule:
+          cron: 12 3 * * *
+          filters:
+            branches:
+              only:
+                - master
+
   nightly-react-next:
     triggers:
       - schedule:
@@ -453,30 +645,29 @@ workflows:
 
   build-test:
     jobs:
-      - windows_unit_tests
       - bootstrap
-      - lint:
-          requires:
-            - bootstrap
-      - unit_tests_node8:
+      - windows_unit_tests:
           <<: *ignore_docs
+      - lint:
           requires:
             - bootstrap
       - unit_tests_node10:
           <<: *ignore_docs
           requires:
             - lint
-            - unit_tests_node8
+            - bootstrap
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
             - lint
-            - unit_tests_node8
+            - bootstrap
       - unit_tests_www:
           requires:
             - lint
-            - unit_tests_node8
+            - bootstrap
       - integration_tests_long_term_caching:
+          <<: *e2e-test-workflow
+      - integration_tests_cache_resilience:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow
@@ -503,38 +694,8 @@ workflows:
             branches:
               only:
                 - master
-      - manual_www_approval:
-          type: approval
-          filters:
-            branches:
-              only:
-                - master
-      - build_www:
-          context: build_www
-          requires:
-            - manual_www_approval
-      - deploy_www:
-          requires:
-            - build_www
-          context: build_www
       - update_i18n_source:
           filters:
             branches:
               only:
                 - master
-  www_deploy:
-    triggers:
-      - schedule:
-          cron: "0 2,6,10,14,18,22 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build_www:
-          # Check CircleCI web ui for context details (env vars)
-          context: build_www
-      - deploy_www:
-          requires:
-            - build_www
-          context: build_www

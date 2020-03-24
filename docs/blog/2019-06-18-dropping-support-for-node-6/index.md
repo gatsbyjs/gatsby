@@ -89,7 +89,7 @@ We are very much cognizant that this change may introduce some measure of churn 
 
 [semver]: https://semver.org/
 [rfc]: https://github.com/gatsbyjs/rfcs/pull/24
-[node-8-docs]: /tutorial/part-zero/#-install-nodejs-and-npm
+[node-8-docs]: /tutorial/part-zero/#install-nodejs-for-your-appropriate-operating-system
 [vw-test-suite]: https://github.com/auchenberg/volkswagen
 [babel-preset-gatsby-package]: https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby-package
 [babel-preset-env]: https://babeljs.io/docs/en/babel-preset-env#targetsnode

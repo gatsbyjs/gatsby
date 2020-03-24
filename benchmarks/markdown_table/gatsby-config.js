@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: [`gatsby-transformer-remark`],
+  plugins: [`gatsby-plugin-benchmark-reporting`, `gatsby-transformer-remark`],
 }

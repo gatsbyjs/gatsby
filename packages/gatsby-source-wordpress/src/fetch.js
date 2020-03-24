@@ -53,6 +53,7 @@ async function fetch({
   _concurrentRequests,
   _includedRoutes,
   _excludedRoutes,
+  _restApiRoutePrefix,
   typePrefix,
   refactoredEntityTypes,
 }) {
@@ -65,7 +66,7 @@ async function fetch({
     url = `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}`
     _accessToken = await getWPCOMAccessToken(_auth)
   } else {
-    url = `${_siteURL}/wp-json`
+    url = `${_siteURL}/${_restApiRoutePrefix}`
     if (shouldUseJwt(_auth)) {
       _accessToken = await getJWToken(_auth, url)
     }

@@ -5,7 +5,7 @@ const path = require(`path`)
 const sitemap = require(`sitemap`)
 
 const { onPostBuild } = require(`../gatsby-node`)
-const internals = require(`../internals`)
+import * as internals from "../internals"
 const pathPrefix = ``
 
 beforeEach(() => {
