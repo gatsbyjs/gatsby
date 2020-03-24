@@ -3,6 +3,7 @@ import { jsx } from "theme-ui"
 import { Menu, MenuButton, MenuPopover, MenuLink } from "@reach/menu-button"
 import { MdTranslate } from "react-icons/md"
 import { Link } from "gatsby"
+import LocalizedLink from "./localized-link"
 import "@reach/menu-button/styles.css"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { useLocale } from "./I18nContext"
@@ -30,21 +31,19 @@ const allLangs = [
   ...langs,
 ]
 
+const menuLinkStyles = {
+  px: 6,
+  py: 3,
+  "&[data-selected]": {
+    bg: `sidebar.itemHoverBackground`,
+    color: `navigation.linkHover`,
+  },
+}
+
 function LangLink({ code, name, localName, current, pathname }) {
   const { basePath } = getLocaleAndBasePath(pathname)
   return (
-    <MenuLink
-      as={Link}
-      to={localizedPath(code, basePath)}
-      sx={{
-        px: 6,
-        py: 3,
-        "&[data-selected]": {
-          bg: `sidebar.itemHoverBackground`,
-          color: `navigation.linkHover`,
-        },
-      }}
-    >
+    <MenuLink as={Link} to={localizedPath(code, basePath)} sx={menuLinkStyles}>
       <span
         sx={{
           fontWeight: current && `semiBold`,
@@ -96,10 +95,22 @@ export default function LanguageDropdown({ pathname }) {
         {allLangs.map(lang => (
           <LangLink
             {...lang}
+            key={lang.code}
             current={locale === lang.code}
             pathname={pathname}
           />
         ))}
+        <MenuLink
+          as={LocalizedLink}
+          to="/languages"
+          sx={{
+            ...menuLinkStyles,
+            borderTop: `1px solid`,
+            borderColor: `ui.border`,
+          }}
+        >
+          More languages
+        </MenuLink>
       </MenuPopover>
     </Menu>
   )
