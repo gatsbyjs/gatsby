@@ -2,8 +2,6 @@
 
 IS_CI="${CI:-false}"
 GREP_PATTERN=$1
-MERGE_SUCCESS=1
-
 
 if [ "$IS_CI" = true ]; then
   git config --local url."https://github.com/".insteadOf git@github.com:
@@ -15,7 +13,6 @@ if [ "$IS_CI" = true ]; then
 
   if [ $? -ne 0 ]; then
     echo "Branch has conflicts with master, rolling back test."
-    MERGE_SUCCESS=0
     git merge --abort
   fi
 
@@ -26,10 +23,8 @@ fi
 
 FILES_COUNT="$(git diff-tree --no-commit-id --name-only -r "$CIRCLE_BRANCH" origin/master | grep -E "$GREP_PATTERN" -c)"
 
-if [ $MERGE_SUCCESS = 1 ]; then
-  # reset to previous state
-  git reset --hard HEAD@{1}
-fi
+# reset to previous state
+git reset --hard HEAD@{1}
 
 if [ "$FILES_COUNT" -eq 0 ]; then
   echo "0 files matching '$GREP_PATTERN'; exiting and marking successful."
