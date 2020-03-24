@@ -957,7 +957,13 @@ interface ActionOptions {
 }
 
 export interface BuildArgs extends ParentSpanPluginArgs {
-  graphql: Function
+  graphql<TData, TVariables = any>(
+    query: string,
+    variables?: TVariables
+  ): Promise<{
+    errors?: any
+    data?: TData
+  }>
 }
 
 export interface Actions {
