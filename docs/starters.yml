@@ -5716,3 +5716,15 @@
     - SEO optimized
     - Robots.txt
     - OpenGraph structured data
+- url: https://gatsby-starter-personality.netlify.com/
+  repo: https://github.com/matheusquintaes/gatsby-starter-personality
+  description: A free resposive Gatsby Starter
+  tags:
+    - Portfolio
+    - Gallery
+  features:
+    - SEO
+    - Page transition
+    - Fully responsive
+    - Styling: CSS-in-JS
+
