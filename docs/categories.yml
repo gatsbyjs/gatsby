@@ -53,6 +53,7 @@ starter:
   - Styling:Ant Design
   - Styling:Bootstrap
   - Styling:Bulma
+  - Styling:Shards
   - Styling:CSS-in-JS
   - Styling:Grommet
   - Styling:Material
