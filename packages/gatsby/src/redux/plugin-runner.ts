@@ -39,7 +39,7 @@ interface ICreatePageAction {
   }
 }
 
-export const startPluginRunner = () => {
+export const startPluginRunner = (): void => {
   emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
     const page = action.payload
     apiRunnerNode(
