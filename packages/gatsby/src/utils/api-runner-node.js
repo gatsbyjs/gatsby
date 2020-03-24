@@ -29,9 +29,11 @@ import errorParser from "./api-runner-error-parser"
 // metadata to actions they create.
 const boundPluginActionCreators = {}
 const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
-  const { traceId } = actionOptions
-  if (boundPluginActionCreators[plugin.name + api + traceId]) {
-    return boundPluginActionCreators[plugin.name + api + traceId]
+  const { traceId, deferNodeMutation } = actionOptions
+  const defer = deferNodeMutation ? `defer-node-mutation` : ``
+  const actionKey = plugin.name + api + traceId + defer
+  if (boundPluginActionCreators[actionKey]) {
+    return boundPluginActionCreators[actionKey]
   } else {
     const keys = Object.keys(boundActionCreators)
     const doubleBoundActionCreators = {}
@@ -51,9 +53,7 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
         }
       }
     }
-    boundPluginActionCreators[
-      plugin.name + api + traceId
-    ] = doubleBoundActionCreators
+    boundPluginActionCreators[actionKey] = doubleBoundActionCreators
     return doubleBoundActionCreators
   }
 }
@@ -73,7 +73,6 @@ const initAPICallTracing = parentSpan => {
 }
 
 const deferredAction = type => (...args) => {
-  console.log(`deferredAction`, type, args)
   emitter.emit(`ENQUEUE_NODE_MUTATION`, {
     type,
     payload: args,
@@ -126,20 +125,22 @@ const runAPI = (plugin, api, args, activity) => {
       publicActions,
       restrictedActionsAvailableInAPI,
     } = require(`../redux/actions`)
-    let availableActions = {
+    const availableActions = {
       ...publicActions,
       ...(restrictedActionsAvailableInAPI[api] || {}),
     }
 
     // console.log({ deferNodeMutation: args.deferNodeMutation, availableActions })
-    if (args.deferNodeMutation) {
-      availableActions = deferActions(availableActions)
-    }
 
-    const boundActionCreators = bindActionCreators(
+    let boundActionCreators = bindActionCreators(
       availableActions,
       store.dispatch
     )
+
+    if (args.deferNodeMutation) {
+      boundActionCreators = deferActions(boundActionCreators)
+    }
+
     const doubleBoundActionCreators = doubleBind(
       boundActionCreators,
       api,

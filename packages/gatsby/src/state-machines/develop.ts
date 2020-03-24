@@ -38,12 +38,8 @@ interface IBuildContext {
 
 const callRealApi = async (event, store: Store): Promise<any> => {
   const { type, payload } = event
-  console.log(`dispatching`, type)
   if (type in actions) {
-    return actions[type](...payload)((...dispatchArgs) => {
-      console.log(`doing dispatch`, dispatchArgs)
-      store.dispatch(...dispatchArgs)
-    })
+    return actions[type](...payload)(store.dispatch.bind(store))
   }
   console.log(`Invalid type`, type)
   return null
