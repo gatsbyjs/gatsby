@@ -299,7 +299,7 @@ module.exports = {
 #### Using with gatsby-plugin-offline
 
 If using this plugin with `gatsby-plugin-offline` you may find that your icons are not cached.
-The solution is setting your gatsby config with this
+In order to solve this, update your `gatsby-config.js` as follows:
 
 ```js
 {
