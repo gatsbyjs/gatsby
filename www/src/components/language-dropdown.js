@@ -1,6 +1,12 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Menu, MenuButton, MenuPopover, MenuLink } from "@reach/menu-button"
+import {
+  Menu,
+  MenuButton,
+  MenuPopover,
+  MenuItems,
+  MenuLink,
+} from "@reach/menu-button"
 import { MdTranslate } from "react-icons/md"
 import { Link } from "gatsby"
 import LocalizedLink from "./localized-link"
@@ -82,35 +88,39 @@ export default function LanguageDropdown({ pathname }) {
       >
         <MdTranslate /> Languages
       </MenuButton>
-      <MenuPopover
-        position={menuPosition}
-        sx={{
-          width: `16rem`,
-          bg: `background`,
-          borderWidth: `1px`,
-          borderColor: `ui.border`,
-          boxShadow: `dialog`,
-        }}
-      >
-        {allLangs.map(lang => (
-          <LangLink
-            {...lang}
-            key={lang.code}
-            current={locale === lang.code}
-            pathname={pathname}
-          />
-        ))}
-        <MenuLink
-          as={LocalizedLink}
-          to="/languages"
+      <MenuPopover position={menuPosition}>
+        <MenuItems
           sx={{
-            ...menuLinkStyles,
-            borderTop: `1px solid`,
+            py: 0,
+            fontSize: 2,
+            width: `16rem`,
+            bg: `background`,
+            borderWidth: `1px`,
             borderColor: `ui.border`,
+            boxShadow: `dialog`,
           }}
         >
-          More languages
-        </MenuLink>
+          {allLangs.map(lang => (
+            <LangLink
+              {...lang}
+              key={lang.code}
+              current={locale === lang.code}
+              pathname={pathname}
+            />
+          ))}
+          <MenuLink
+            as={LocalizedLink}
+            to="/languages"
+            key="allLangs"
+            sx={{
+              ...menuLinkStyles,
+              borderTop: `1px solid`,
+              borderColor: `ui.border`,
+            }}
+          >
+            More languages
+          </MenuLink>
+        </MenuItems>
       </MenuPopover>
     </Menu>
   )
