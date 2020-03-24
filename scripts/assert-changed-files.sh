@@ -17,6 +17,9 @@ if [ "$IS_CI" = true ]; then
     MERGE_SUCCESS=0
     git merge --abort
   fi
+
+  git config --unset user.name
+  git config --unset user.email
 fi
 
 FILES_COUNT="$(git diff-tree --no-commit-id --name-only -r "$CIRCLE_BRANCH" origin/master | grep -E "$GREP_PATTERN" -c)"
