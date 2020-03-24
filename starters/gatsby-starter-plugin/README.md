@@ -15,7 +15,7 @@ To get started creating a new plugin, you can follow these steps:
 
 1. Initialize a new plugin from the starter with `gatsby new`
 
-```
+```shell
 gatsby new my-plugin https://github.com/gatsbyjs/gatsby-starter-plugin
 ```
 
@@ -23,7 +23,7 @@ If you already have a Gatsby site, you can use it. Otherwise, you can [create a 
 
 Your directory structure will look similar to this:
 
-```
+```text
 /my-gatsby-site
 ├── gatsby-config.js
 └── /src
@@ -42,14 +42,14 @@ With `my-gatsby-site` being your Gatsby site, and `my-plugin` being your plugin.
 
 2. Include the plugin in a Gatsby site
 
-Inside of the `gatsby-config` file of your site (in this case, `my-gatsby-site`), include the plugin in the `plugins` array:
+Inside of the `gatsby-config.js` file of your site (in this case, `my-gatsby-site`), include the plugin in the `plugins` array:
 
-```
+```javascript
 module.exports = {
   plugins: [
     // other gatsby plugins
     // ...
-    require.resolve(`../my-plugin`)
+    require.resolve(`../my-plugin`),
   ],
 }
 ```
@@ -60,13 +60,13 @@ _You can use this method to test and develop your plugin before you publish it t
 
 3. Verify the plugin was added correctly
 
-The plugin added by the starter implements a single API in the `gatsby-node` that logs a message to the console. When you run `gatsby develop` or `gatsby build` in the site that implements your plugin, you should see this message.
+The plugin added by the starter implements a single Gatsby API in the `gatsby-node` that logs a message to the console. When you run `gatsby develop` or `gatsby build` in the site that implements your plugin, you should see this message.
 
 You can verify your plugin was added to your site correctly by running `gatsby develop` for the site.
 
 You should now see a message logged to the console in the preinit phase of the Gatsby build process:
 
-```
+```shell
 $ gatsby develop
 success open and validate gatsby-configs - 0.033s
 success load plugins - 0.074s
@@ -81,9 +81,9 @@ When you clone the site, the information in the `package.json` will need to be u
 
 ## 🧐 What's inside?
 
-This starter generates the [files Gatsby looks for in plugins](https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)].
+This starter generates the [files Gatsby looks for in plugins](https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/).
 
-```
+```text
 /my-plugin
 ├── .gitignore
 ├── gatsby-browser.js
