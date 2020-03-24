@@ -52,10 +52,7 @@ module.exports = {
           TranslationFilterTest: {
             where: `language: FR`,
             beforeChangeNode: async ({ remoteNode, type }) => {
-              if (
-                type === `TranslationFilterTest` &&
-                remoteNode.language.slug !== `fr`
-              ) {
+              if (remoteNode.language && remoteNode.language.slug !== `fr`) {
                 return {
                   cancelUpdate: true,
                 }
