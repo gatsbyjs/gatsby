@@ -6,8 +6,8 @@ MERGE_SUCCESS=1
 
 
 if [ "$IS_CI" = true ]; then
-  git config user.name "GatsbyJS Bot"
-  git config user.email "core-team@gatsbyjs.com"
+  git config --local user.name "GatsbyJS Bot"
+  git config --local user.email "core-team@gatsbyjs.com"
 
   git fetch origin
   git merge --no-edit origin/master
@@ -18,8 +18,8 @@ if [ "$IS_CI" = true ]; then
     git merge --abort
   fi
 
-  # git config --unset user.name
-  # git config --unset user.email
+  git config --local --unset user.name
+  git config --local --unset user.email
 fi
 
 FILES_COUNT="$(git diff-tree --no-commit-id --name-only -r "$CIRCLE_BRANCH" origin/master | grep -E "$GREP_PATTERN" -c)"
