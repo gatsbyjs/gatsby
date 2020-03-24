@@ -425,19 +425,6 @@
   categories:
     - Education
     - Entertainment
-- title: William Owen UK Portfolio / Blog
-  main_url: http://william-owen.co.uk/
-  url: http://william-owen.co.uk/
-  featured: false
-  description: >-
-    Over 20 years experience delivering customer-facing websites, internet-based
-    solutions and creative visual design for a wide range of companies and
-    organisations.
-  categories:
-    - Portfolio
-    - Blog
-  built_by: William Owen
-  built_by_url: https://twitter.com/twilowen
 - title: A4 纸网
   main_url: http://www.a4z.cn/
   url: http://www.a4z.cn/price
@@ -738,17 +725,6 @@
   categories:
     - Open Source
     - Government
-- title: Pravdomil
-  main_url: https://pravdomil.com/
-  url: https://pravdomil.com/
-  source_url: https://github.com/pravdomil/pravdomil.com
-  featured: false
-  description: >-
-    I’ve been working both as a product designer and frontend developer for over
-    5 years now. I particularly enjoy working with companies that try to meet
-    broad and unique user needs.
-  categories:
-    - Portfolio
 - title: Preston Richey Portfolio / Blog
   main_url: https://prestonrichey.com/
   url: https://prestonrichey.com/
@@ -960,14 +936,6 @@
     - Portfolio
     - Web Development
     - Blog
-- title: yerevancoder
-  main_url: https://yerevancoder.com/
-  url: https://forum.yerevancoder.com/categories
-  source_url: https://github.com/yerevancoder/yerevancoder.github.io
-  featured: false
-  categories:
-    - Blog
-    - Web Development
 - title: Ease
   main_url: https://www.ease.com/
   url: https://www.ease.com/
@@ -1440,14 +1408,6 @@
   categories:
     - Healthcare
   featured: false
-- title: Hubba
-  description: |
-    Buy wholesale products from thousands of independent, verified Brands.
-  main_url: https://join.hubba.com/
-  url: https://join.hubba.com/
-  categories:
-    - eCommerce
-  featured: false
 - title: HyperPlay
   description: |
     In Asean's 1st Ever LOL Esports X Music Festival
@@ -1848,18 +1808,6 @@
     - Web Development
   built_by: Mahipat Jadav
   built_by_url: https://mojaave.com/
-  featured: false
-- title: Insights
-  main_url: https://justaskusers.com/
-  url: https://justaskusers.com/
-  description: >
-    Insights helps user experience (UX) researchers conduct their research and
-    make sense of the findings.
-  categories:
-    - User Experience
-    - Design
-  built_by: Just Ask Users
-  built_by_url: https://justaskusers.com/
   featured: false
 - title: Mintfort
   main_url: https://mintfort.com/
@@ -4224,21 +4172,6 @@
   built_by: Patrik Szewczyk
   built_by_url: https://linkedin.com/in/thepatriczek/
   featured: false
-- title: Patrik Arvidsson's portfolio
-  url: https://www.patrikarvidsson.com
-  main_url: https://www.patrikarvidsson.com
-  source_url: https://github.com/patrikarvidsson/portfolio-gatsby-contentful
-  description: >
-    Personal portfolio site of Swedish interaction designer Patrik Arvidsson. Built with Gatsby, Tailwind CSS, Emotion JS and Contentful.
-  categories:
-    - Blog
-    - Design
-    - Portfolio
-    - Web Development
-    - Technology
-  built_by: Patrik Arvidsson
-  built_by_url: https://www.patrikarvidsson.com
-  featured: false
 - title: Jacob Cofman's Blog
   description: >
     Personal blog / portfolio about Jacob Cofman.
@@ -6166,7 +6099,6 @@
 - title: Daniel Spajic
   url: https://danieljs.tech/
   main_url: https://danieljs.tech/
-  source_url: https://github.com/dspacejs/portfolio
   description: >
     Passionate front-end developer with a deep, yet diverse skillset.
   categories:
@@ -6645,16 +6577,6 @@
     - Nonprofit
   built_by: Jacob Herper
   built_by_url: https://herper.io
-- title: deepThreads
-  main_url: https://deepthreads.com
-  url: https://deepthreads.com/
-  description: >
-    deepThreads is a shiny new website built with Gatsby v2.  We make art using deep learning along with print on demand providers to create some cool stuff!
-  categories:
-    - eCommerce
-  built_by: Kyle Kitlinski
-  built_by_url: https://github.com/k-kit
-  featured: false
 - title: Mill3 Studio
   main_url: https://mill3.studio/en/
   url: https://mill3.studio/en/
