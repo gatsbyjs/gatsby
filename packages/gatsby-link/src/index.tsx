@@ -1,12 +1,31 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link } from "@reach/router"
+import { Link, LinkProps, LinkGetProps } from "@reach/router"
 
 import { parsePath } from "./parse-path"
 
 export { parsePath }
 
-export function withPrefix(path) {
+export interface IGatsbyLinkState {
+  IOSupported: boolean
+}
+
+interface INavLinkPropTypes extends React.PropsWithoutRef<LinkProps<unknown>> {
+  activeClassName?: string
+  activeStyle?: {} | null
+  partiallyActive?: boolean
+}
+
+export interface IGatsbyLinkProps extends INavLinkPropTypes {
+  to: string
+}
+
+interface IOResult {
+  instance: IntersectionObserver
+  el: Element
+}
+
+export function withPrefix(path: string): string {
   return normalizePath(
     [
       typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
@@ -15,11 +34,11 @@ export function withPrefix(path) {
   )
 }
 
-export function withAssetPrefix(path) {
+export function withAssetPrefix(path: string): string {
   return [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
 }
 
-function normalizePath(path) {
+function normalizePath(path: string): string {
   return path.replace(/\/+/g, `/`)
 }
 
@@ -30,7 +49,7 @@ const NavLinkPropTypes = {
 }
 
 // Set up IntersectionObserver
-const createIntersectionObserver = (el, cb) => {
+const createIntersectionObserver = (el: Element, cb: () => void): IOResult => {
   const io = new window.IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (el === entry.target) {
@@ -49,8 +68,29 @@ const createIntersectionObserver = (el, cb) => {
   return { instance: io, el }
 }
 
-class GatsbyLink extends React.Component {
-  constructor(props) {
+function refIsObject<T>(
+  ref: React.Ref<T> | null | undefined
+): ref is React.RefObject<T> {
+  return !!(ref && ref.hasOwnProperty(`current`))
+}
+
+// Hack to get React.RefObject<T> to accept our assignments. Unfortunately, React declares RefObject as readonly.
+function asMutable<T>(ref: React.RefObject<T>): { current: T | null } {
+  return ref
+}
+
+class GatsbyLink extends React.Component<IGatsbyLinkProps, IGatsbyLinkState> {
+  io?: IOResult
+
+  propTypes: React.WeakValidationMap<IGatsbyLinkProps> = {
+    ...NavLinkPropTypes,
+    onClick: PropTypes.func,
+    to: PropTypes.string.isRequired,
+    replace: PropTypes.bool,
+    state: PropTypes.object,
+  }
+
+  constructor(props: IGatsbyLinkProps) {
     super(props)
     // Default to no support for IntersectionObserver
     let IOSupported = false
@@ -61,10 +101,9 @@ class GatsbyLink extends React.Component {
     this.state = {
       IOSupported,
     }
-    this.handleRef = this.handleRef.bind(this)
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: IGatsbyLinkProps) {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
       ___loader.enqueue(parsePath(this.props.to).pathname)
@@ -88,9 +127,9 @@ class GatsbyLink extends React.Component {
     instance.disconnect()
   }
 
-  handleRef(ref) {
-    if (this.props.innerRef && this.props.innerRef.hasOwnProperty(`current`)) {
-      this.props.innerRef.current = ref
+  handleRef: React.Ref<HTMLAnchorElement> = (ref: HTMLAnchorElement) => {
+    if (refIsObject(this.props.innerRef)) {
+      asMutable(this.props.innerRef).current = ref
     } else if (this.props.innerRef) {
       this.props.innerRef(ref)
     }
@@ -103,7 +142,7 @@ class GatsbyLink extends React.Component {
     }
   }
 
-  defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
+  defaultGetProps = ({ isPartiallyCurrent, isCurrent }: LinkGetProps): {} => {
     if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
@@ -112,7 +151,9 @@ class GatsbyLink extends React.Component {
         style: { ...this.props.style, ...this.props.activeStyle },
       }
     }
-    return null
+
+    // TODO: Reach typings state that getProps cannot return null.
+    return (null as unknown) as {}
   }
 
   render() {
@@ -146,7 +187,7 @@ class GatsbyLink extends React.Component {
         to={prefixedTo}
         state={state}
         getProps={getProps}
-        innerRef={this.handleRef}
+        innerRef={this.handleRef as React.Ref<HTMLAnchorElement>}
         onMouseEnter={e => {
           if (onMouseEnter) {
             onMouseEnter(e)
@@ -182,39 +223,37 @@ class GatsbyLink extends React.Component {
   }
 }
 
-GatsbyLink.propTypes = {
-  ...NavLinkPropTypes,
-  onClick: PropTypes.func,
-  to: PropTypes.string.isRequired,
-  replace: PropTypes.bool,
-  state: PropTypes.object,
-}
-
-const showDeprecationWarning = (functionName, altFunctionName, version) =>
+const showDeprecationWarning = (
+  functionName: string,
+  altFunctionName: string,
+  version: number
+) =>
   console.warn(
     `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
   )
 
-export default React.forwardRef((props, ref) => (
-  <GatsbyLink innerRef={ref} {...props} />
-))
+export default React.forwardRef<HTMLAnchorElement, IGatsbyLinkProps>(
+  (props: IGatsbyLinkProps, ref: React.Ref<HTMLAnchorElement>) => (
+    <GatsbyLink innerRef={ref} {...props} />
+  )
+)
 
-export const navigate = (to, options) => {
+export const navigate = (to: string, options: unknown) => {
   window.___navigate(withPrefix(to), options)
 }
 
-export const push = to => {
+export const push = (to: string) => {
   showDeprecationWarning(`push`, `navigate`, 3)
   window.___push(withPrefix(to))
 }
 
-export const replace = to => {
+export const replace = (to: string) => {
   showDeprecationWarning(`replace`, `navigate`, 3)
   window.___replace(withPrefix(to))
 }
 
 // TODO: Remove navigateTo for Gatsby v3
-export const navigateTo = to => {
+export const navigateTo = (to: string) => {
   showDeprecationWarning(`navigateTo`, `navigate`, 3)
   return push(to)
 }
