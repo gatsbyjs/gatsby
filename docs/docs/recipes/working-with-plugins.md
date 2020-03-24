@@ -11,6 +11,11 @@ Found a plugin you'd like to use in your project? Awesome! You can configure it 
 
 > If you'd like to take a look at available plugins, check out the [plugin library](/plugins).
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-install-and-use-a-plugin-in-a-gatsby-site"
+  lessonTitle="Install and use a plugin in a Gatsby site"
+/>
+
 ### Prerequisites
 
 - An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` file

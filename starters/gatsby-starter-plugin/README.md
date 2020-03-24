@@ -70,7 +70,7 @@ You should now see a message logged to the console in the preinit phase of the G
 $ gatsby develop
 success open and validate gatsby-configs - 0.033s
 success load plugins - 0.074s
-Loaded gatsby-plugin-minimal
+Loaded gatsby-starter-plugin
 success onPreInit - 0.016s
 ...
 ```
