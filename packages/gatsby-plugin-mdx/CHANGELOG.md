@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.1...gatsby-plugin-mdx@1.1.2) (2020-03-24)
+
+### Bug Fixes
+
+- **docs:** remove double words ([#22494](https://github.com/gatsbyjs/gatsby/issues/22494)) ([75f6ee2](https://github.com/gatsbyjs/gatsby/commit/75f6ee2))
+
 ## [1.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.0...gatsby-plugin-mdx@1.1.1) (2020-03-23)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
