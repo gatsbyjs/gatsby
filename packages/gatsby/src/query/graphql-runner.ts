@@ -157,8 +157,13 @@ export default class GraphQLRunner {
 
     if (this.stats) {
       this.stats.totalQueries++
-      this.stats.uniqueOperations.add(`${query}${JSON.stringify(context)}`)
-      this.stats.uniqueQueries.add(query)
+      let statsQuery = query
+      if (typeof statsQuery !== `string`) {
+        statsQuery = statsQuery.body
+      }
+      this.stats.uniqueOperations.add(`${statsQuery}${JSON.stringify(context)}`)
+
+      this.stats.uniqueQueries.add(statsQuery)
     }
 
     const document = this.parse(query)
