@@ -4,7 +4,11 @@ IS_CI="${CI:-false}"
 GREP_PATTERN=$1
 MERGE_SUCCESS=1
 
+
 if [ "$IS_CI" = true ]; then
+  git config user.name "GatsbyJS Bot"
+  git config user.email "core-team@gatsbyjs.com"
+
   git fetch origin
   git merge --no-edit origin/master
 
