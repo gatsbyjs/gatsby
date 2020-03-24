@@ -320,7 +320,7 @@ In order to solve this, update your `gatsby-config.js` as follows:
 }
 ```
 
-The `cache_busting_mode` is there since the query parameter cache busting would break workbox since it could never find the cached URLS.
+Updating `cache_busting_mode` is necessary. Otherwise, workbox will break while attempting to find the cached URLs. 
 And the `globPatterns` is there so offline will cache everything.
 
 #### Remove `theme-color` meta tag
