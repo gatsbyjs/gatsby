@@ -338,8 +338,6 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: git config --global user.name "GatsbyJS Bot"
-      - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
       - run: sh ./scripts/validate-starters.sh "starters/*"
 
