@@ -75,6 +75,7 @@ export const runGatsby = async () => {
 
   beforeAll(async () => {
     if (process.env.WPGQL_INCREMENT) {
+      console.log(`sending mutation to WPGraphQL to test delta sync`)
       await mutateSchema()
     } else {
       await resetSchema()
