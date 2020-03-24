@@ -39,6 +39,8 @@ const debouncedWriteRedirects = _.debounce(() => {
   }
 }, 250)
 
-emitter.on(`CREATE_REDIRECT`, () => {
-  debouncedWriteRedirects()
-})
+export const startRedirectListener = (): void => {
+  emitter.on(`CREATE_REDIRECT`, () => {
+    debouncedWriteRedirects()
+  })
+}
