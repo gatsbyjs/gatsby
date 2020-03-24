@@ -373,19 +373,25 @@ Your file structure should look like this:
 
 ```jsx:title=src/gatsby-theme-blog/components/header.js
 import React from "react"
+import { css } from "theme-ui"
 import Navigation from "../../components/navigation" // highlight-line
-;<header>
-  <div
-    css={css({
-      maxWidth: `container`,
-      mx: `auto`,
-      px: 3,
-      pt: 4,
-    })}
-  >
-    <Navigation /> // highlight-line
-  </div>
-</header>
+
+export default () => {
+  return (
+    <header>
+      <div
+        css={css({
+          maxWidth: `container`,
+          mx: `auto`,
+          px: 3,
+          pt: 4,
+        })}
+      >
+        <Navigation /> // highlight-line
+      </div>
+    </header>
+  )
+}
 ```
 
 5. Run `gatsby develop` and test the new navigation component.
