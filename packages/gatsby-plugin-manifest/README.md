@@ -302,6 +302,7 @@ If using this plugin with `gatsby-plugin-offline` you may find that your icons a
 In order to solve this, update your `gatsby-config.js` as follows:
 
 ```js
+// gatsby-config.js
 {
    resolve: 'gatsby-plugin-manifest',
    options: {
