@@ -49,7 +49,7 @@ The config is quite large, but here are some of the important values in the fina
         default: false,
         // disable Webpack's default vendor cacheGroup
         vendors: false,
-        // Create a framework bundle that contains react libraries
+        // Create a framework bundle that contains React libraries
         // They hardly change so we bundle them together to improve
         framework: {},
         // Big modules that are over 160kb are moved to their own file to
@@ -82,6 +82,8 @@ The config is quite large, but here are some of the important values in the fina
 ```
 
 There's a lot going on here. And this is just a sample of the output that doesn't include the loaders, rules, etc. We won't go over everything here, but most of it is geared towards proper code splitting of your application.
+
+The splitChunks section is the most complex part of our config as it configures how we generate the most optimized bundles for your website. We call this Granular Chunks as we try to make the generated javascript files as granular as we can by deduplicating all modules. You can read more about [SplitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#optimizationsplitchunks) and [chunks](https://webpack.js.org/concepts/under-the-hood/#chunks) on the [official webpack website](https://webpack.js.org/).
 
 Once Webpack has finished compilation, it will have produced a few key types of bundles:
 
@@ -128,7 +130,7 @@ To show how `production-app` works, let's imagine that you've just refreshed the
 */
 ```
 
-Then, the app, webpack-runtime, component, and data json bundles are loaded via `<link>` and `<script>` (see [HTML tag generation](/docs/html-generation/#5-add-preload-link-and-script-tags)). Now, your `production-app` code starts running.
+Then, the app, webpack-runtime, component, shared libraries, and data json bundles are loaded via `<link>` and `<script>` (see [HTML tag generation](/docs/html-generation/#5-add-preload-link-and-script-tags)). Now, your `production-app` code starts running.
 
 ### onClientEntry (api-runner-browser)
 
