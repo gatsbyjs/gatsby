@@ -8,7 +8,7 @@ import {
   renameSync,
   writeFileSync,
 } from "fs-extra"
-import { IReduxNode, ICachedReduxState } from "./types"
+import { IGatsbyNode, ICachedReduxState } from "./types"
 import { sync as globSync } from "glob"
 import report from "gatsby-cli/lib/reporter"
 
@@ -54,7 +54,7 @@ export function readFromCache(): ICachedReduxState {
     reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
   ).map(file => v8.deserialize(readFileSync(file)))
 
-  const nodes: [string, IReduxNode][] = [].concat(...chunks)
+  const nodes: [string, IGatsbyNode][] = [].concat(...chunks)
 
   if (!chunks.length && process.env.GATSBY_DB_NODES !== `loki`) {
     report.info(
@@ -69,7 +69,7 @@ export function readFromCache(): ICachedReduxState {
   return obj
 }
 
-function guessSafeChunkSize(values: [string, IReduxNode][]): number {
+function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
   // This attempts to prevent small sites with very large pages from OOMing.
@@ -106,7 +106,7 @@ function prepareCacheFolder(
 
   if (map) {
     // Now store the nodes separately, chunk size determined by a heuristic
-    const values: [string, IReduxNode][] = [...map.entries()]
+    const values: [string, IGatsbyNode][] = [...map.entries()]
     const chunkSize = guessSafeChunkSize(values)
     const chunks = Math.ceil(values.length / chunkSize)
 

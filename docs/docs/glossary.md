@@ -34,7 +34,7 @@ A tool that lets you write the most modern [JavaScript](#javascript), and on [bu
 
 The behind the scenes that the [public](#public) does not see. This often refers to the control panel of your [CMS](#cms). These are often powered by server-side programming languages such as Node.js, PHP, Go, ASP.net, Ruby, or Java.
 
-### Build
+### [Build](/docs/glossary/build/)
 
 In Gatsby, this is the process of taking your code and content and packaging it into a website that can be hosted and accessed. Commonly referred to as _build time_. See also: [backend](#backend) and [server-side](#server-side).
 

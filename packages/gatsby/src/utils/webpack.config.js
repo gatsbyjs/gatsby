@@ -10,11 +10,11 @@ const { getPublicPath } = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
 import { withBasePath, withTrailingSlash } from "./path"
-const getGatsbyDependents = require(`./gatsby-dependents`)
+import { getGatsbyDependents } from "./gatsby-dependents"
 
 const apiRunnerNode = require(`./api-runner-node`)
-const createUtils = require(`./webpack-utils`)
-const hasLocalEslint = require(`./local-eslint-config-finder`)
+import { createWebpackUtils } from "./webpack-utils"
+import { hasLocalEslint } from "./local-eslint-config-finder"
 
 // Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -37,7 +37,7 @@ module.exports = async (
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const { rules, loaders, plugins } = await createUtils({ stage, program })
+  const { rules, loaders, plugins } = createWebpackUtils(stage, program)
 
   const { assetPrefix, pathPrefix } = store.getState().config
 
