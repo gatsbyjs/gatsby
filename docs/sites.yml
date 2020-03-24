@@ -10100,3 +10100,15 @@
   built_by: Maxine Chen
   built_by_url: https://github.com/maxMaxineChen
   featured: false
+- title: Folding@Home Stats
+  url: https://folding.traction.one/team?id=246252
+  main_url: https://folding.traction.one
+  description: >
+    Folding@Home Stats Report for Teams.
+  categories:
+    - Data
+    - Science
+    - Directory
+  built_by: Sankarsan Kampa
+  built_by_url: https://traction.one
+  featured: false
