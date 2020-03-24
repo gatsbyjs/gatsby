@@ -35,11 +35,11 @@ Several tutorials, plugins and starters exist to help you get up and running wit
 
 ### Starters & Examples
 
-- [ecommerce-tutorial-with-stripe](https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe)
+- [Example site from the Gatsby Stripe tutorial](https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe)
 - [gatsby-starter-ecommerce](https://www.gatsbyjs.org/starters/parmsang/gatsby-starter-ecommerce/)
 - [gatsby-starter-stripe](https://www.gatsbyjs.org/starters/brxck/gatsby-starter-stripe/)
 
-### Stripe docs
+## Other resources
 
 - [Stripe website](https://stripe.com/)
 - [Stripe docs](https://stripe.com/docs)
