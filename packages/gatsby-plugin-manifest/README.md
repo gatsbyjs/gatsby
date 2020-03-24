@@ -321,7 +321,7 @@ In order to solve this, update your `gatsby-config.js` as follows:
 ```
 
 Updating `cache_busting_mode` is necessary. Otherwise, workbox will break while attempting to find the cached URLs. 
-And the `globPatterns` is there so offline will cache everything.
+Adding the `globPatterns` makes sure that the offline plugin will cache everything.
 
 #### Remove `theme-color` meta tag
 
