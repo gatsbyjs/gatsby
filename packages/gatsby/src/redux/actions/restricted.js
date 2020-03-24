@@ -239,7 +239,7 @@ import type GraphQLFieldExtensionDefinition from "../../schema/extensions"
  */
 actions.createFieldExtension = (
   extension: GraphQLFieldExtensionDefinition,
-  plugin: Plugin,
+  plugin?: Plugin,
   traceId?: string
 ) => (dispatch, getState) => {
   const { name } = extension || {}
