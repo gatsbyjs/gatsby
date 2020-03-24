@@ -5716,3 +5716,20 @@
     - SEO optimized
     - Robots.txt
     - OpenGraph structured data
+
+- url: https://shards-gatsby-starter.netlify.com/
+  repo: https://github.com/wcisco17/gatsby-typescript-shards-starter
+  description: Portfolio with Typescript and Shards UI
+  tags:
+    - Language:TypeScript
+    - Portfolio
+    - Netlify
+    - PWA
+    - Styling:Bootstrap
+  features:
+    - Portfollio Starter that includes Shards Ui component library and Typescript generator.
+    - Typescript
+    - Typescript Generator
+    - Styled-Components
+    - Shards UI
+    - Bootstrap
