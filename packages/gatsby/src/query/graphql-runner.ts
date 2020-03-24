@@ -40,7 +40,7 @@ interface IGraphQLRunnerStatResults {
   totalPluralRunQuery: number
   totalIndexHits: number
   totalNonSingleFilters: number
-  comparatorsUsed: { [comparator: string]: number }
+  comparatorsUsed: Array<{ comparator: string; amount: number }>
   uniqueFilterPaths: number
   uniqueSorts: number
 }
@@ -125,9 +125,12 @@ export default class GraphQLRunner {
 
   getStats(): IGraphQLRunnerStatResults | null {
     if (this.stats) {
-      const comparatorsUsedObj = {}
+      const comparatorsUsedObj: Array<{
+        comparator: string
+        amount: number
+      }> = []
       this.stats.comparatorsUsed.forEach((value, key) => {
-        comparatorsUsedObj[key] = value
+        comparatorsUsedObj.push({ comparator: key, amount: value })
       })
       return {
         totalQueries: this.stats.totalQueries,
