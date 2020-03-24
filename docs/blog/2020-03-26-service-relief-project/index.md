@@ -2,7 +2,7 @@
 title: The Service Relief Project
 date: 2020-03-26
 author: Bob Orchard
-excerpt: The Service Relief Project is a boilerplate for launching blazing-fast zero-cost directories of local resources to help your local businesses affected by mandated shutdowns around the world.
+excerpt: The Service Relief Project is a boilerplate for launching blazing-fast zero-cost directories of local resources to help donors find local fundraisers for workers and businesses in your area who've been affected by mandated shutdowns around the world.
 tags:
   - community
   - gatsby-cloud
