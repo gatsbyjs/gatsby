@@ -235,8 +235,11 @@ export const getNodesByTypedChain = (
   chain: string[],
   value: boolean | number | string,
   nodeTypeNames: string[],
-  typedKeyValueIndexes: Map<string, Map<string | number | boolean, IGatsbyNode>>
-): IGatsbyNode | undefined => {
+  typedKeyValueIndexes: Map<
+    string,
+    Map<string | number | boolean, Set<IGatsbyNode>>
+  >
+): Set<IGatsbyNode> | undefined => {
   const key = chain.join(`+`)
 
   const typedKey = nodeTypeNames.join(`,`) + `/` + key
