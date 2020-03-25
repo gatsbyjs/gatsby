@@ -16,14 +16,19 @@ export const fetchAndCreateSingleNode = async ({
   id,
   actionType,
   cachedNodeIds,
+  previewId = null,
+  token = null,
 }) => {
-  const { nodeQuery: query } = getQueryInfoBySingleFieldName(singleName) || {}
+  const { nodeQuery, previewQuery } =
+    getQueryInfoBySingleFieldName(singleName) || {}
+
+  const query = previewId ? previewQuery : nodeQuery
+
+  const {
+    helpers: { reporter, getNode },
+  } = getGatsbyApi()
 
   if (!query) {
-    const {
-      helpers: { reporter },
-    } = getGatsbyApi()
-
     reporter.log(``)
     reporter.warn(
       formatLogMessage(
@@ -35,11 +40,20 @@ export const fetchAndCreateSingleNode = async ({
     return { node: null }
   }
 
-  const { data } = await fetchGraphql({
+  const queryId = previewId ?? id
+
+  const headers = token
+    ? {
+        Authorization: `Bearer ${token}`,
+      }
+    : {}
+
+  let { data } = await fetchGraphql({
     query,
     variables: {
-      id,
+      id: queryId,
     },
+    headers,
   })
 
   // if we ask for a node that doesn't exist
@@ -47,10 +61,28 @@ export const fetchAndCreateSingleNode = async ({
     return { node: null }
   }
 
-  let createdNode
+  if (previewId) {
+    const existingNode = await getNode(id)
 
-  // returns an object { node, additionalNodeIds }
-  createdNode = await createSingleNode({
+    const originalFieldsToRetain = {
+      uri: existingNode.uri,
+      link: existingNode.link,
+      status: existingNode.status,
+      slug: existingNode.slug,
+      parent: existingNode.parent,
+      databaseId: existingNode.databaseId,
+      guid: existingNode.guid,
+      id,
+    }
+
+    data = {
+      ...data,
+      ...originalFieldsToRetain,
+    }
+  }
+
+  // returns an object
+  const createdNode = await createSingleNode({
     singleName,
     id,
     actionType,

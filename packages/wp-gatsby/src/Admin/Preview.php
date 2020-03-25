@@ -10,6 +10,11 @@ class Preview {
         return false;
       }
 
+      if ($post->post_type !== 'revision') {
+        return false;
+      }
+
+
       if ($post->post_type === 'action_monitor') {
         return false;
       }
@@ -48,17 +53,13 @@ class Preview {
 
       $referenced_node_single_name
         = $post_type_object->graphql_single_name ?? null;
-      $referenced_node_plural_name
-        = $post_type_object->graphql_plural_name ?? null;
 
       $post_body = [
         'preview' => true,
         'token' => $token,
-        'revision_post_id' => $post_ID,
+        'previewId' => $post_ID,
         'id' => $global_relay_id,
-        'post_id' => $original_post->ID,
-        'single_name' => $referenced_node_single_name,
-        'plural_name' => $referenced_node_plural_name
+        'singleName' => $referenced_node_single_name
       ];
 
       // @todo some special error handling here?
@@ -74,6 +75,7 @@ class Preview {
           'data_format' => 'body',
         ]
       );
+
     }, 10, 2 );
   }
 }

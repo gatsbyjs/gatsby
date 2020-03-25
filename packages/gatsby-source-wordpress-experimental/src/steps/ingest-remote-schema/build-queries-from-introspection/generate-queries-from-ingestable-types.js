@@ -85,6 +85,14 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       settings,
     })
 
+    const previewQuery = buildNodeQueryOnFieldName({
+      fields: transformedFields,
+      fieldName: singleFieldName,
+      fieldInputArguments: `id: $id, idType: DATABASE_ID`,
+      queryName: `PREVIEW_QUERY`,
+      settings,
+    })
+
     if (
       settings.nodeListQueries &&
       typeof settings.nodeListQueries === `function`
@@ -133,6 +141,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       },
       nodeListQueries,
       nodeQuery,
+      previewQuery,
       selectionSet,
       settings,
     }

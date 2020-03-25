@@ -100,13 +100,19 @@ const buildQuery = ({
   }
 `
 
-export const buildNodeQueryOnFieldName = ({ fields, fieldName }) =>
+export const buildNodeQueryOnFieldName = ({
+  fields,
+  fieldName,
+  variables = `$id: ID!`,
+  fieldInputArguments = `id: $id`,
+  queryName = `SINGLE_CONTENT_QUERY`,
+}) =>
   compress(
     buildQuery({
-      queryName: `SINGLE_CONTENT_QUERY`,
-      variables: `$id: ID!`,
+      queryName,
+      variables,
       fieldName,
-      fieldVariables: `id: $id`,
+      fieldVariables: fieldInputArguments,
       fields: fields,
     })
   )
