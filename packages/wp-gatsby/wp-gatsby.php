@@ -191,6 +191,11 @@ final class WP_Gatsby
         new \WP_Gatsby\Admin\Settings();
 
         /**
+         * Initialize Admin Previews
+         */
+        new \WP_Gatsby\Admin\Preview();
+
+        /**
          * Initialize Schema changes
          */
         new \WP_Gatsby\Schema\Schema();

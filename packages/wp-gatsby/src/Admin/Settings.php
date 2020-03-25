@@ -34,8 +34,8 @@ class Settings
     {
         $sections = [
         [
-        'id'    => 'wpgraphql_settings_basics',
-        'title' => __('Settings', 'wpgraphql_settings')
+        'id'    => 'wpgatsby_settings',
+        'title' => __('Settings', 'wpgatsby_settings')
         ]
         ];
         return $sections;
@@ -56,6 +56,16 @@ class Settings
         echo '</div>';
     }
 
+    static public function prefix_get_option( $option, $section, $default = '' ) {
+      $options = get_option( $section );
+
+      if ( isset( $options[$option] ) ) {
+          return $options[$option];
+      }
+
+      return $default;
+    }
+
     /**
      * Returns all the settings fields
      *
@@ -64,27 +74,25 @@ class Settings
     function get_settings_fields()
     {
         $settings_fields = [
-        'wpgraphql_settings_basics' => [
-        [
-        'name'              => 'preview_api_webhook',
-        'label'             => __('Preview Webhook', 'wpgraphql_settings'),
-        'desc'              => __('Enter your Gatsby Preview Webhook URL', 'wpgraphql_settings'),
-        'placeholder'       => __('https://', 'wpgraphql_settings'),
-        'type'              => 'text',
-        'sanitize_callback' => 'sanitize_text_field'
-        ],
-        [
-                    'name'              => 'builds_api_webhook',
-                    'label'             => __('Builds Webhook', 'wpgraphql_settings'),
-                    'desc'              => __('Enter your Gatsby Builds Webhook URL', 'wpgraphql_settings'),
-                    'placeholder'       => __('https://', 'wpgraphql_settings'),
-                    'type'              => 'text',
-                    'sanitize_callback' => 'sanitize_text_field'
-        ],
-        ]
+          'wpgatsby_settings' => [
+            [
+            'name'              => 'preview_api_webhook',
+            'label'             => __('Preview Webhook', 'wpgatsby_settings'),
+            'desc'              => __('Enter your Gatsby Preview Webhook URL', 'wpgatsby_settings'),
+            'placeholder'       => __('https://', 'wpgatsby_settings'),
+            'type'              => 'text',
+            'sanitize_callback' => 'sanitize_text_field'
+            ],
+            [
+              'name'              => 'builds_api_webhook',
+              'label'             => __('Builds Webhook', 'wpgatsby_settings'),
+              'desc'              => __('Enter your Gatsby Builds Webhook URL', 'wpgatsby_settings'),
+              'placeholder'       => __('https://', 'wpgatsby_settings'),
+              'type'              => 'text',
+              'sanitize_callback' => 'sanitize_text_field'
+            ],
+          ]
         ];
         return $settings_fields;
     }
-
-
 }

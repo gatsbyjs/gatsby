@@ -7,6 +7,7 @@
  *
  * @author  Tareq Hasan <tareq@weDevs.com>
  * @link    https://tareq.co Tareq Hasan
+ * @link    https://github.com/tareq1988/wordpress-settings-api-class
  * @example example/oop-example.php How to use the class
  */
 if (!class_exists('WPGraphQL_Settings_API')) :
