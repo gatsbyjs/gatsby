@@ -295,6 +295,12 @@ jobs:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
 
+  integration_tests_gatsby_cli:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/gatsby-cli
+
   integration_tests_structured_logging:
     executor: node
     steps:
@@ -672,6 +678,8 @@ workflows:
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow
       - integration_tests_structured_logging:
+          <<: *e2e-test-workflow
+      - integration_tests_gatsby_cli:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow

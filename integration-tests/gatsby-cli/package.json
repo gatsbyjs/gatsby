@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-cli-tests",
+  "version": "1.0.0",
+  "dependencies": {},
+  "license": "MIT",
+  "scripts": {
+    "pretest": "cd ../../packages/gatsby-cli && yarn build",
+    "test": "jest --config=../jest.config.js gatsby-cli/"
+  },
+  "devDependencies": {
+    "execa": "^1.0.0",
+    "fs-extra": "^7.0.1",
+    "jest": "^24.0.0",
+    "jest-cli": "^24.0.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  }
+}
