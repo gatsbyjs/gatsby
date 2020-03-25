@@ -6,7 +6,10 @@ import SEO from "../components/seo"
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <h1>If you click the skip link, the next tab should go to "Gatsby" in the footer.</h1>
+    <h1>
+      If you hit "tab" and click the skip link, the next tab should go to
+      "Gatsby" in the footer.
+    </h1>
     <p>Welcome to your new Gatsby site.</p>
     <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
       <Image />
