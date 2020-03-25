@@ -4,7 +4,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 
-import { Link } from "gatsby"
+import Link from "./localized-link"
 import Container from "./container"
 import MarkdownPageFooter from "./markdown-page-footer"
 import FooterLinks from "./shared/footer-links"

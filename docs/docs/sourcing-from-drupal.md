@@ -61,20 +61,11 @@ module.exports = {
 
 [“Decoupled Drupal”](https://www.acquia.com/drupal/decoupled-drupal) has become an increasingly popular approach to building enterprise-grade websites, and has the [full-throated support](https://dri.es/how-to-decouple-drupal-in-2018) of Drupal community leaders. Using Gatsby in a decoupled Drupal setup allows your team to access the powerful content modeling and access workflow capabilities of Drupal 8, as well as the powerful UI creation & performance toolset of Gatsby.
 
-## When is Drupal a great choice?
+## Configuring Gatsby Live Preview
 
-Many development teams, content teams, and client decision-makers are familiar with Drupal. Here are some scenarios in which Drupal is a great choice (and a few scenarios for which it’s not-so-great):
+The [Gatsby Drupal Module](https://www.drupal.org/project/gatsby) enhances the content editor experience when using Gatsby with Drupal as a data source. This module provides Gatsby live preview capabilities using your [Gatsby Cloud account](https://www.gatsbyjs.com/get-started) or on your [locally running Gatsby development server](/docs/running-a-gatsby-preview-server/).
 
-### Drupal is great for:
-
-- Complex page layouts or content modeling with multiple sections per page
-- Teams with multi-stage content creation and review processes
-- Development teams who value using popular, open-source technologies
-
-### Drupal is not-so-great for:
-
-- Content teams who require a slick content editing experience as it gets complex because of the multiple sections present
-- Teams requiring the use of Drupal UI Kit as this is constantly under development and sometimes doesn't work as expected
+While not required in order to build a Gatsby site that uses Drupal data, this module is the place where additional features are added to improve the Gatsby and Drupal integration.
 
 ## Interested in learning more?
 
@@ -86,3 +77,4 @@ Using Gatsby together with Drupal offers a powerful, full-featured, open-source,
 - Example site that demonstrates [how to build Gatsby sites that pull data from the Drupal CMS](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal).
 - Take a [free course on building a Gatsby site with Drupal](https://gatsbyguides.com/).
 - Read [Gatsby blog posts on Gatsby + Drupal](/blog/tags/drupal/).
+- Watch a [video series on getting started with Gatsby and Drupal](https://www.youtube.com/playlist?list=PL-Ve2ZZ1kZNT9BhQMMI9jUySfdnQ8-S3n).

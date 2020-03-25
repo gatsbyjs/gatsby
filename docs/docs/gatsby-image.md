@@ -8,17 +8,6 @@ Part of what makes Gatsby sites so fast is its recommended approach to handling 
 
 Demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
 
-## In this doc
-
-- [Setting up Gatsby Image](#setting-up-gatsby-image)
-- [Types of images with gatsby-image](#types-of-images-with-gatsby-image)
-  - [Fixed images and parameters](#images-with-a-fixed-width-and-height)
-  - [Fluid images and parameters](#images-that-stretch-across-a-fluid-container)
-  - [Resized images](#resized-images)
-  - [Shared query parameters](#shared-query-parameters)
-- [Image query fragments](#image-query-fragments)
-- [Gatsby Image props](#gatsby-image-props)
-
 ## Setting up Gatsby Image
 
 To start working with Gatsby Image, install the `gatsby-image` package along with necessary plugins `gatsby-transformer-sharp` and `gatsby-plugin-sharp`. Reference the packages in your `gatsby-config.js` file. You can also provide additional options to [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) in your config file.

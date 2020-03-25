@@ -1146,14 +1146,8 @@ export const theme = {
     default: "90vw",
     max: "540px",
   },
-  styles: {
-    Layout: {
-      color: "gray.2",
-      fontFamily: "body",
-      fontSize: 1,
-      lineHeight: "body",
-    },
-    Header: {
+  text: {
+    heading: {
       backgroundColor: "primary",
       color: "background",
       fontWeight: "bold",
@@ -1165,14 +1159,20 @@ export const theme = {
         color: "inherit",
       },
     },
-    Main: {
+  },
+  layout: {
+    container: {
       margin: "0 auto",
       maxWidth: "max",
       width: "default",
-    },
-    Container: {
       padding: 3,
+      color: "gray.2",
+      fontFamily: "body",
+      fontSize: 1,
+      lineHeight: "body",
     },
+  },
+  styles: {
     h1: {
       color: "gray.3",
       fontSize: 5,
@@ -1220,12 +1220,12 @@ export default theme
 
 Now, refactor the `layout.js` component in `gatsby-theme-events` to actually use Theme UI.
 
-First, import the `Layout`, `Header`, `Main`, and `Container` [components from Theme UI](https://theme-ui.com/layout).
+First, import the `Header`, and `Container` [components from Theme UI](https://theme-ui.com/components).
 
 ```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
 // highlight-next-line
-import { Layout as ThemeLayout, Header, Main, Container } from "theme-ui"
+import { Heading, Container } from "theme-ui"
 
 const Layout = ({ children }) => (
   <div>
@@ -1241,17 +1241,15 @@ Next, refactor the `layout.js` component to use the Theme UI components:
 
 ```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
-import { Layout as ThemeLayout, Header, Main, Container } from "theme-ui"
+import { Heading, Container } from "theme-ui"
 
 // highlight-start
 const Layout = ({ children }) => {
   return (
-    <ThemeLayout>
-      <Header>Gatsby Events Theme</Header>
-      <Main>
-        <Container>{children}</Container>
-      </Main>
-    </ThemeLayout>
+    <div>
+      <Heading>Gatsby Events Theme</Heading>
+      <Container>{children}</Container>
+    </div>
   )
 }
 // highlight-end
