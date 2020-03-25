@@ -28,6 +28,13 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "start": "npm run develop"
+    "start": "npm run develop",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "start-server-and-test develop http://localhost:8002 cy:open"
+  },
+  "devDependencies": {
+    "cypress": "^4.2.0",
+    "start-server-and-test": "^1.10.11"
   }
 }

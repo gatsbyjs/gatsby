@@ -47,6 +47,9 @@ export const onRouteUpdate = ({ location, prevLocation }) => {
 A quick look at the relevant files and directories you'll see in this example:
 
     .
+    ├── cypress/
+    │   ├── integration/
+    │   │   ├── skip-nav.test.js
     ├── src/
     │   ├── components/
     │   │   ├── header.css
@@ -66,6 +69,8 @@ A quick look at the relevant files and directories you'll see in this example:
 
 1.  **`/pages`**: This directory contains pages that will be automatically built and served by Gatsby. We've included three pages to demonstrate navigation between them and how our skip nav link behaves. All of these pages use the `Layout` component.
 1.  **`gatsby-browser.js`**: This file is where we tell the Gatsby to focus the skip navigation when we navigate to a new page.
+1.  **`/cypress**: This directory is where tests and [Cypress](https://www.cypress.io/) configuration live. We're going to focus on the test. If you want to learn more about using Cypress, check out our [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-cypress).
+1.  **`/integrations/skip-nav.test.js`**: runs two tests to ensure that we have a skip link and that the skip link is focused on page navigation.
 
 ### Running the example
 
@@ -78,3 +83,12 @@ A quick look at the relevant files and directories you'll see in this example:
 1. Your site is now running at `http://localhost:8000`!
 1. Press `tab` and you'll see the skip link!
 1. If you press `enter` and then `tab` again you'll see that you skipped over the rest of the navigation and are in the main content!
+
+### Runnings tests
+
+1. Use the CLI to run cypress tests
+   ```shell
+   npm run test:e2e
+   ```
+2. this will pop open a window with your tests
+3. click "Run all specs" in that window

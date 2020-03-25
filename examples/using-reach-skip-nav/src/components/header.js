@@ -19,7 +19,9 @@ const Header = ({ siteTitle }) => (
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/self-care">Self Care Tips</Link>
+            <Link to="/self-care" data-cy-page-link>
+              Self Care Tips
+            </Link>
           </li>
           <li>
             <Link to="/emergency-kit">Self Care Emergency Kit</Link>
