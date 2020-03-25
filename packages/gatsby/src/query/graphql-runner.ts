@@ -9,13 +9,13 @@ import {
   ExecutionResult,
 } from "graphql"
 import { debounce } from "lodash"
-import nodeStore from "../db/nodes"
+import * as nodeStore from "../db/nodes"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
 import withResolverContext from "../schema/context"
 import { LocalNodeModel } from "../schema/node-model"
 import { Store } from "redux"
-import { IReduxState } from "../redux/types"
+import { IGatsbyState } from "../redux/types"
 
 type Query = string | Source
 
@@ -59,7 +59,7 @@ export default class GraphQLRunner {
   stats: IGraphQLRunnerStats | null
 
   constructor(
-    protected store: Store<IReduxState>,
+    protected store: Store<IGatsbyState>,
     {
       collectStats,
     }: {

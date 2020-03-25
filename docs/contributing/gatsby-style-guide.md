@@ -308,10 +308,10 @@ You may also choose to include line highlighting in your code snippets, using th
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	siteMetadata: {
-		title: `GatsbyJS`, // highlight-line
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
+  siteMetadata: {
+    title: `GatsbyJS`, // highlight-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 ````
@@ -330,11 +330,11 @@ module.exports = {
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	siteMetadata: {
-		title: `GatsbyJS`,
-		// highlight-next-line
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
+  siteMetadata: {
+    title: `GatsbyJS`,
+    // highlight-next-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 ````
@@ -354,12 +354,12 @@ module.exports = {
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	// highlight-start
-	siteMetadata: {
-		title: `GatsbyJS`,
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
-	// highlight-end
+  // highlight-start
+  siteMetadata: {
+    title: `GatsbyJS`,
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
+  // highlight-end
 }
 ```
 ````
