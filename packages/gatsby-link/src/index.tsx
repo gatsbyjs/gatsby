@@ -17,7 +17,7 @@ export interface IGatsbyLinkState {
 }
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
-export interface GatsbyLinkProps<TState>
+export interface GatsbyLinkProps<TState = unknown>
   extends React.PropsWithoutRef<LinkProps<TState>> {
   /** A class to apply when this Link is active */
   activeClassName?: string
@@ -278,7 +278,7 @@ const GatsbyLink = React.forwardRef<
 >((props: GatsbyLinkProps<unknown>, ref: React.Ref<HTMLAnchorElement>) => (
   <GatsbyLinkInternal innerRef={ref} {...props} />
 ))
-type GatsbyLink<TState> = React.Component<
+type GatsbyLink<TState = unknown> = React.Component<
   GatsbyLinkProps<TState>,
   IGatsbyLinkState
 >
