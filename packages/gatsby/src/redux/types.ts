@@ -126,7 +126,7 @@ export interface IGatsbyState {
       componentPath: SystemPath
       id: Identifier
       query: string
-      hash: number
+      hash: string
     }
   >
   // @deprecated

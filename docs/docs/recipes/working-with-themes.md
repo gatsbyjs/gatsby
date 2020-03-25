@@ -55,7 +55,7 @@ module.exports = {
 }
 ```
 
-4. Run `gatsby develop`, the theme should now be running on your site. In this case with the blog theme configured with the `basePath` to "/blog", it should be available at `http://localhost:8000/blog`.
+4. Run `gatsby develop`, the theme should now be running on your site. In this case with the blog theme configured with the `basePath` to `"/blog"`, it should be available at `http://localhost:8000/blog`.
 
 > To learn how to further customize a theme, check out the available paths on [Gatsby-theme-blog Documentation](/packages/gatsby-theme-blog/#theme-options).
 
