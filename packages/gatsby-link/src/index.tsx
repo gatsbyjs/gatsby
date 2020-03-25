@@ -103,7 +103,7 @@ function refIsObject<T>(
 }
 
 // Hack to get React.RefObject<T> to accept our assignments. Unfortunately, React declares RefObject as readonly.
-function asMutable<T>(ref: React.RefObject<T>): { current: T | null } {
+function asMutable<T>(ref: React.RefObject<T>): React.MutableRefObject<T | null> {
   return ref
 }
 
