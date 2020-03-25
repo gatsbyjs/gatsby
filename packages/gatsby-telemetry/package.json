@@ -54,7 +54,8 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\" --extensions \".ts,.js\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir lib/",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "jest": "jest",
     "postinstall": "node src/postinstall.js || true",
     "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\" --extensions \".ts,.js\""
