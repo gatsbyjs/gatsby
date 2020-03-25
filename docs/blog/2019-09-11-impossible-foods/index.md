@@ -5,7 +5,7 @@ author: Hashim Warren
 excerpt: "Impossible Foods needed a website with new functionality, that could withstand surges in traffic. These challenges and requirements led the Impossible Foods team to adopt a Content Mesh approach to their website architecture."
 tags:
   - case-studies
-  - ecommerce
+  - E-commerce
 ---
 
 Impossible Foods’ mission is to restore biodiversity and reduce the impact of climate change by transforming the global food system. The company is doing that by releasing plant-based foods that taste more like beef, chicken, and fish than what consumers have come to expect from traditional meat alternatives.

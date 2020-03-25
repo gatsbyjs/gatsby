@@ -85,7 +85,7 @@ class IndexRoute extends React.Component {
         <Helmet>
           <meta
             name="Description"
-            content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
+            content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, E-commerce sites, full-blown apps, and more with Gatsby."
           />
         </Helmet>
         <main
