@@ -37,7 +37,7 @@ import { developStatic } from "./develop-static"
 import withResolverContext from "../schema/context"
 import sourceNodes from "../utils/source-nodes"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
-import websocketManager from "../utils/websocket-manager"
+import { websocketManager } from "../utils/websocket-manager"
 import getSslCert from "../utils/get-ssl-cert"
 import { slash } from "gatsby-core-utils"
 import { initTracer } from "../utils/tracer"
@@ -320,8 +320,7 @@ async function startServer(program: IProgram): Promise<IServer> {
     ? https.createServer(program.ssl, app)
     : new http.Server(app)
 
-  websocketManager.init({ server, directory: program.directory })
-  const socket = websocketManager.getSocket()
+  const socket = websocketManager.init({ server, directory: program.directory })
 
   const listener = server.listen(program.port, program.host)
 
