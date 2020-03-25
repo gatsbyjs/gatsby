@@ -217,10 +217,11 @@ Server logs (like from [Netlify analytics](https://www.netlify.com/products/anal
 
 ### Using with gatsby-plugin-manifest
 
-There is an issue with gatsby currently where this plugin will not cache icons when used with gatsby-plugin-manifest.
-You can set your gatsby config to be like this
+If using this plugin with `gatsby-plugin-manifest` you may find that your icons are not cached.
+In order to solve this, update your `gatsby-config.js` as follows:
 
 ```js
+// gatsby-config.js
 {
    resolve: 'gatsby-plugin-manifest',
    options: {
@@ -238,5 +239,5 @@ You can set your gatsby config to be like this
 }
 ```
 
-The `cache_busting_mode` is there since the query parameter cache busting would break workbox since it could never find the cached URLS.
-And the `globPatterns` is there so offline will cache everything.
+Updating `cache_busting_mode` is necessary. Otherwise, workbox will break while attempting to find the cached URLs.
+Adding the `globPatterns` makes sure that the offline plugin will cache everything.
