@@ -73,13 +73,11 @@ const HomepageLogoBanner = () => {
         }
         sort: { fields: publicURL }
       ) {
-        edges {
-          node {
-            base
-            childImageSharp {
-              fixed(quality: 75, height: 24) {
-                ...GatsbyImageSharpFixed_tracedSVG
-              }
+        nodes {
+          base
+          childImageSharp {
+            fixed(quality: 75, height: 24) {
+              ...GatsbyImageSharpFixed_tracedSVG
             }
           }
         }
@@ -93,7 +91,7 @@ const HomepageLogoBanner = () => {
         <Name>Trusted by</Name>
       </Title>
       <LogoGroup>
-        {data.allFile.edges.map(({ node: image }) => (
+        {data.allFile.nodes.map(image => (
           <Img
             alt={`${image.base.split(`.`)[0]}`}
             fixed={image.childImageSharp.fixed}

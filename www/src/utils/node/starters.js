@@ -79,6 +79,47 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   })
 }
 
+const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) => {
+  return githubApiClient
+    .request(
+      `
+    query {
+      repository(owner:"${owner}", name:"${repo}") {
+        name
+        stargazers {
+          totalCount
+        }
+        createdAt
+        pushedAt
+        owner {
+          login
+        }
+        nameWithOwner
+      }
+    }
+  `
+    )
+    .catch(async err => {
+      // we only try to do a fetch once because we want to track the new owner's username.
+      if (retry > 0) {
+        throw err
+      }
+
+      const githubUrl = `https://github.com/${owner}/${repo}`
+      const { url } = await fetch(githubUrl, { method: "HEAD" })
+      const { owner: newOwner, name: newRepo } = parseGHUrl(url)
+
+      reporter.warn(
+        `Starter showcase entry "${owner}/${repo}" was renamed to "${newOwner}/${newRepo}". Retrying....`
+      )
+
+      return fetchGithubData(
+        { owner: newOwner, repo: newRepo, reporter },
+        retry + 1
+      )
+    })
+}
+
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   if (node.internal.type === `StartersYaml` && node.repo) {
@@ -125,22 +166,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     } else {
       return Promise.all([
         getpkgjson(node.repo),
-        githubApiClient.request(`
-            query {
-              repository(owner:"${owner}", name:"${repoStub}") {
-                name
-                stargazers {
-                  totalCount
-                }
-                createdAt
-                pushedAt
-                owner {
-                  login
-                }
-                nameWithOwner
-              }
-            }
-          `),
+        fetchGithubData({ owner, repo: repoStub, reporter }),
       ])
         .then(results => {
           const [pkgjson, githubData] = results

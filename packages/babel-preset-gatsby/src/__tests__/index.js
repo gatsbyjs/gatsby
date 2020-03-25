@@ -1,7 +1,9 @@
-const preset = require(`../`)
 const path = require(`path`)
 
-expect.addSnapshotSerializer(require(`../utils/path-serializer`))
+const preset = require(`../`)
+import * as pathSerializer from "../utils/path-serializer"
+
+expect.addSnapshotSerializer(pathSerializer)
 
 describe(`babel-preset-gatsby`, () => {
   it.each([`build-stage`, `develop`, `build-javascript`, `build-html`])(

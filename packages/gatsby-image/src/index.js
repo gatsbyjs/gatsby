@@ -91,6 +91,14 @@ const getCurrentSrcData = currentData => {
     if (foundMedia !== -1) {
       return currentData[foundMedia]
     }
+
+    // No media matches, select first element without a media condition
+    const noMedia = currentData.findIndex(
+      image => typeof image.media === `undefined`
+    )
+    if (noMedia !== -1) {
+      return currentData[noMedia]
+    }
   }
   // Else return the first image.
   return currentData[0]
@@ -387,14 +395,18 @@ class Image extends React.Component {
         // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
         // imgLoaded and imgCached are in a 2nd setState call to be changed together,
         // avoiding initiating unnecessary animation frames from style changes.
-        this.setState({ isVisible: true }, () =>
+        this.setState({ isVisible: true }, () => {
           this.setState({
             imgLoaded: imageInCache,
             // `currentSrc` should be a string, but can be `undefined` in IE,
             // !! operator validates the value is not undefined/null/""
-            imgCached: !!this.imageRef.current.currentSrc,
+            // for lazyloaded components this might be null
+            // TODO fix imgCached behaviour as it's now false when it's lazyloaded
+            imgCached: !!(
+              this.imageRef.current && this.imageRef.current.currentSrc
+            ),
           })
-        )
+        })
       })
     }
   }

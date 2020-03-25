@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component } from "react"
-import FaAngleDown from "react-icons/lib/fa/angle-down"
-import FaAngleUp from "react-icons/lib/fa/angle-up"
+import { FaAngleDown, FaAngleUp } from "react-icons/fa"
 
 class Collapsible extends Component {
   state = {

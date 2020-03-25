@@ -72,4 +72,4 @@ After deployment, their [Rich result status reports](https://support.google.com/
 
 ## Additional resources
 
-You might also be interested in [blog posts about SEO in Gatsby](/blog/tags/seo/).
+You might also be interested in [blog posts about SEO in Gatsby](/blog/tags/seo/) and [an advanced tutorial about SEO and social sharing cards](/tutorial/seo-and-social-sharing-cards-tutorial/).

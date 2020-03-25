@@ -27,11 +27,12 @@ The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packa
 
 The options are as follows:
 
-- `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the `site.siteMetadata.siteUrl`. If you override the query, you probably will need to set a `serializer` to return the correct data for the sitemap.
+- `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom `resolveSiteUrl` function. If you override the query, you probably will also need to set a `serializer` to return the correct data for the sitemap. Due to how this plugin was built it is currently expected/required to fetch the page paths from `allSitePage`, but you may use the `allSitePage.edges.node` or `allSitePage.nodes` query structure.
 - `output` (string) The filepath and name. Defaults to `/sitemap.xml`.
 - `exclude` (array of strings) An array of paths to exclude from the sitemap.
 - `createLinkInHead` (boolean) Whether to populate the `<head>` of your site with a link to the sitemap.
 - `serialize` (function) Takes the output of the data query and lets you return an array of sitemap entries.
+- `resolveSiteUrl` (function) Takes the output of the data query and lets you return the site URL.
 
 We _ALWAYS_ exclude the following pages: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed.
 
@@ -53,24 +54,26 @@ plugins: [
       exclude: [`/category/*`, `/path/to/page`],
       query: `
         {
-          site {
-            siteMetadata {
+          wp {
+            generalSettings {
               siteUrl
             }
           }
 
           allSitePage {
-            edges {
-              node {
-                path
-              }
+            node {
+              path
             }
           }
       }`,
+      resolveSiteUrl: ({site, allSitePage}) => {
+        //Alternativly, you may also pass in an environment variable (or any location) at the beginning of your `gatsby-config.js`.
+        return site.wp.generalSettings.siteUrl
+      },
       serialize: ({ site, allSitePage }) =>
-        allSitePage.edges.map(edge => {
+        allSitePage.nodes.map(node => {
           return {
-            url: site.siteMetadata.siteUrl + edge.node.path,
+            url: `${site.wp.generalSettings.siteUrl}${node.path}`,
             changefreq: `daily`,
             priority: 0.7,
           }

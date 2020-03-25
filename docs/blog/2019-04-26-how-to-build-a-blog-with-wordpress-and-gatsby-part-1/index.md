@@ -91,11 +91,11 @@ One of the great functions in WordPress is the ability for users to easily creat
 ### WP Trigger Netlify Build
 
 <figure>
-<video autoplay muted loop>
-  <source src="./images/wp_netlify_build.webm"/>
-  <source src="./images/wp_netlify_build.mp4"/>
-</video>
-<figcaption>WP Trigger Netlify Build shows Netlify status</figcaption>
+  <video autoplay muted loop>
+    <source src="./images/wp_netlify_build.webm" />
+    <source src="./images/wp_netlify_build.mp4" />
+  </video>
+  <figcaption>WP Trigger Netlify Build shows Netlify status</figcaption>
 </figure>
 
 When I build a Gatsby website, I like to use Netlify to handle the deployment of the site. Netlify rebuilds whenever a new commit is pushed or merged to the master branch of the repository, but what about when someone updates their WordPress site?

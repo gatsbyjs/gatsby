@@ -30,9 +30,11 @@ excluded_files:
   - "**/*.ts"
   - "**/*.jsx"
   - "**/*.tsx"
+  - "*.po" # PO translation files
 # Any typos we should ignore?
 excluded_words:
   - typoci
   - xxs
   - agadoo
   - hevc
+  - oss

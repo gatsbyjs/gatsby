@@ -29,7 +29,7 @@ const {
   VariablesInAllowedPositionRule,
 } = require(`graphql`)
 
-const getGatsbyDependents = require(`../utils/gatsby-dependents`)
+import { getGatsbyDependents } from "../utils/gatsby-dependents"
 const { store } = require(`../redux`)
 import * as actions from "../redux/actions/internal"
 const { default: FileParser } = require(`./file-parser`)

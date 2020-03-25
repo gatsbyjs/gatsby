@@ -14,10 +14,8 @@ export default PeoplePage
 export const pageQuery = graphql`
   query {
     allCreatorsYaml(filter: { type: { eq: "individual" } }) {
-      edges {
-        node {
-          ...CreatorData
-        }
+      nodes {
+        ...CreatorData
       }
     }
   }

@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
+const child_process = require(`child_process`)
 const startersRedirects = require(`./starter-redirects.json`)
 const yaml = require(`js-yaml`)
 const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
@@ -18,7 +19,7 @@ exports.createPages = async helpers => {
   const { createRedirect } = actions
 
   redirects.forEach(redirect => {
-    createRedirect({ isPermanent: true, ...redirect })
+    createRedirect({ isPermanent: true, ...redirect, force: true })
   })
 
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
@@ -26,6 +27,7 @@ exports.createPages = async helpers => {
       fromPath: `/starters${fromSlug}`,
       toPath: `/starters${toSlug}`,
       isPermanent: true,
+      force: true,
     })
   })
 
@@ -35,6 +37,10 @@ exports.createPages = async helpers => {
 // Create slugs for files, set released status for blog posts.
 exports.onCreateNode = helpers => {
   sections.forEach(section => section.onCreateNode(helpers))
+}
+
+exports.onPostBootstrap = () => {
+  child_process.execSync(`yarn lingui:build`)
 }
 
 exports.onPostBuild = () => {

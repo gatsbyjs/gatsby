@@ -34,7 +34,9 @@ Building your marketing site on the JAMstack is an efficient and reliable way to
 Using a traditional CMS is more restrictive and opinionated than this. You're constrained to the platform you choose from the get-go and forced to accept additional "features" that you might not even need. While these platforms have provided us with an excellent way to publish websites in the past, it's changing for the future.
 
 <Pullquote>
-Thanks to progression with modern browsers, static site generators, APIs and content delivery networks, websites can be built as modular stacks that aren't tied to specific technologies.
+  Thanks to progression with modern browsers, static site generators, APIs and
+  content delivery networks, websites can be built as modular stacks that aren't
+  tied to specific technologies.
 </Pullquote>
 
 **Going back to the benefits:** better performance, higher security, cheaper to scale & a better experience. These aren't just developer benefits, they apply directly to the marketing team too. Better performance means better site engagement and improved SEO. Higher security means less chance of not hitting your stretch goal next June because the site got hacked. Cheaper to scale means there will be less roadblocks in your way when you want to add that Shopify store or when a big campaign sends 1M visitors to the site. Better experience — who wouldn't want that?
@@ -85,17 +87,21 @@ Since the SEO health of the site was so bad before, it took a few days for Googl
 In the first month after we launched, impressions in Google were up 44% and clicks were up 12%. By month two, impressions were up 73% and clicks 43%. Beyond this things started to stabilise a little on a MoM basis, but overall things are trending upward, with plenty of new search terms appearing in search console every week.
 
 <figure>
-  <img alt="Ghost Docs Website Performance" src="./images/googleanalytics.png" />
+  <img
+    alt="Ghost Docs Website Performance"
+    src="./images/googleanalytics.png"
+  />
   <figcaption>
-    Month 3 and 4 compared to the first two months after launching the new Docs site
+    Month 3 and 4 compared to the first two months after launching the new Docs
+    site
   </figcaption>
 </figure>
-
 <figure>
-  <img alt="Ghost Docs Website Growth" src="./images/googleanalyticsgrowth.png" />
-  <figcaption>
-    Growth over the past 6 months
-  </figcaption>
+  <img
+    alt="Ghost Docs Website Growth"
+    src="./images/googleanalyticsgrowth.png"
+  />
+  <figcaption>Growth over the past 6 months</figcaption>
 </figure>
 
 As always, there is still work to do to ensure the site ranks well for the most relevant terms, but right now the work put in upfront to improve the site is paying off handsomely. From a marketers perspective it was really exciting - I've never migrated a site with such instant success before.
