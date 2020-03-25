@@ -1,12 +1,37 @@
 import "@babel/polyfill"
 import React from "react"
-import { render, cleanup } from "@testing-library/react"
+import { render, cleanup, RenderResult } from "@testing-library/react"
 import {
   createMemorySource,
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
+import Link, {
+  navigate,
+  push,
+  replace,
+  withPrefix,
+  withAssetPrefix,
+  GatsbyLinkProps,
+} from ".."
+
+declare global {
+  // Reopen NodeJS.Global type to let tests populate global.XYZ
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace NodeJS {
+    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
+    interface Global {
+      __BASE_PATH__: string | undefined
+      __PATH_PREFIX__: string
+      ___navigate: Function
+      ___push: Function
+      ___replace: Function
+      ___loader: {
+        enqueue: Function
+      }
+    }
+  }
+}
 
 beforeEach(() => {
   global.__BASE_PATH__ = ``
@@ -15,37 +40,45 @@ beforeEach(() => {
 
 afterEach(cleanup)
 
-const getInstance = (props, pathPrefix = ``) => {
-  getWithPrefix()(pathPrefix)
-  return <Link {...props} />
-}
-
-const getNavigate = () => {
+const getNavigate = (): typeof navigate => {
   global.___navigate = jest.fn()
   return navigate
 }
 
-const getPush = () => {
+const getPush = (): typeof push => {
   global.___push = jest.fn()
   return push
 }
 
-const getReplace = () => {
+const getReplace = (): typeof replace => {
   global.___replace = jest.fn()
   return replace
 }
 
-const getWithPrefix = (pathPrefix = ``) => {
+const getWithPrefix = (pathPrefix = ``): typeof withPrefix => {
   global.__BASE_PATH__ = pathPrefix
   return withPrefix
 }
 
-const getWithAssetPrefix = (prefix = ``) => {
+const getWithAssetPrefix = (prefix = ``): typeof withAssetPrefix => {
   global.__PATH_PREFIX__ = prefix
   return withAssetPrefix
 }
 
-const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
+const getInstance = (props, pathPrefix = ``): JSX.Element => {
+  getWithPrefix()(pathPrefix)
+  return <Link {...props} />
+}
+
+const setup = ({
+  sourcePath = `/active`,
+  linkProps,
+  pathPrefix = ``,
+}: {
+  sourcePath?: string
+  linkProps?: GatsbyLinkProps & { ref?: React.Ref<HTMLAnchorElement> }
+  pathPrefix?: string
+} = {}): RenderResult & { link: HTMLElement } => {
   global.__BASE_PATH__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
@@ -244,7 +277,7 @@ describe(`navigate`, () => {
 describe(`ref forwarding`, () => {
   it(`forwards ref`, () => {
     const ref = jest.fn()
-    setup({ linkProps: { ref } })
+    setup({ linkProps: { to: `./`, ref } })
 
     expect(ref).toHaveBeenCalledTimes(1)
     expect(ref).toHaveBeenCalledWith(expect.any(HTMLElement))
@@ -252,15 +285,15 @@ describe(`ref forwarding`, () => {
 
   it(`remains backwards compatible with innerRef`, () => {
     const innerRef = jest.fn()
-    setup({ linkProps: { innerRef } })
+    setup({ linkProps: { to: `./`, innerRef } })
 
     expect(innerRef).toHaveBeenCalledTimes(1)
     expect(innerRef).toHaveBeenCalledWith(expect.any(HTMLElement))
   })
 
   it(`handles a RefObject (React >=16.4)`, () => {
-    const ref = React.createRef(null)
-    setup({ linkProps: { ref } })
+    const ref = React.createRef<HTMLAnchorElement>()
+    setup({ linkProps: { to: `./`, ref } })
 
     expect(ref.current).toEqual(expect.any(HTMLElement))
   })
@@ -272,7 +305,7 @@ describe(`state`, () => {
     const state = { myStateKey: `a state value` }
     getNavigate()
 
-    const { link } = setup({ linkProps: { state } })
+    const { link } = setup({ linkProps: { to, state } })
     link.click()
 
     expect(

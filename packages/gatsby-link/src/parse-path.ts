@@ -1,5 +1,5 @@
 export function parsePath(
-  path: string
+  path?: string
 ): { hash: string; search: string; pathname: string } {
   let pathname = path || `/`
   let search = ``

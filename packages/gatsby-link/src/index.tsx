@@ -113,7 +113,9 @@ class GatsbyLinkInternal<TState> extends React.Component<
 > {
   io?: IOResult
 
-  propTypes: React.WeakValidationMap<GatsbyLinkProps<TState>> = {
+  static readonly propTypes: React.WeakValidationMap<
+    GatsbyLinkProps<unknown>
+  > = {
     ...NavLinkPropTypes,
     onClick: PropTypes.func,
     to: PropTypes.string.isRequired,
