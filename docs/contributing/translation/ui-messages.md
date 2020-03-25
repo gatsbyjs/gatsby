@@ -76,7 +76,7 @@ msgstr: ""
 
 These represent text in interpolated strings:
 
-```
+```javascript
 t`${item.title} collapse`
 ```
 
