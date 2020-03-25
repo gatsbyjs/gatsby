@@ -8,7 +8,9 @@ This tutorial will walk you through the process of building a new e-commerce sit
 
 If you're willing to do a little more of the legwork yourself and make less than $1,500 in monthly sales, [Snipcart](https://snipcart.com/) may be a lower-cost option for you than other popular options like [Shopify](https://www.shopify.com/). Snipcart also requires far less configuration. Both options use [Stripe](https://stripe.com/) to handle payments, so be sure to factor _Stripe's_ fees into your calculations as well. (Stripe currently charges 2.9% + 30¢ for each transaction.)
 
-The setup described in this tutorial is particularly powerful thanks to [DatoCMS](https://www.datocms.com/). DatoCMS is a content management system (CMS) that allows you to decide exactly how your content should be organized. _You_ determine what information should be included in each product. You can get started with a free Developer account. You can always upgrade if you need to bring on additional team members or manage many different kinds of data.
+The setup described in this tutorial is particularly powerful thanks to [DatoCMS](https://www.datocms.com/). DatoCMS is a content management system (CMS) that allows you to decide exactly how your content should be organized.
+
+_You_ determine what information should be included in each product. You can get started with a free Developer account. You can always upgrade if you need to bring on additional team members or manage many different kinds of data.
 
 All of that mixed with the speed and security of a Gatsby site is a pretty awesome combination!
 
@@ -28,27 +30,41 @@ To edit code locally (affecting files stored on your computer), you'll need the 
 - [Git](https://git-scm.com/downloads): track changes to your code
 - [Gatsby command line interface (CLI)](https://www.gatsbyjs.org/tutorial/part-zero/#using-the-gatsby-cli): run Gatsby commands on your computer
 
-## Provisioning Your Site
+## Provisioning Your Site on Gatsby Cloud
 
-Begin with Gatsby. Once you have an account, log in and hit "Create new site". Since you're starting from scratch, choose "I don't have a Gatsby site yet" on the next screen. You'll be presented with a few different ready-made starters (Gatsby sites that you can copy). The one you want is labeled "Snipcart with DatoCMS".
+Begin with Gatsby Cloud. Once you have an account, you can log in and follow these instructions: 
+
+- Select the "Create new site" option. 
+
+- Since you're starting from scratch, choose "I don't have a Gatsby site yet" on the next screen. 
+
+- Select the starter  labeled "Snipcart with DatoCMS" from the list of ready-made starters (Gatsby sites that you can copy).
+
 
 At this point, you'll need to come up with a name for your project. This won't be customer-facing. This name will identify your site in Gatsby Cloud and your repository (repo) on GitHub. For now, associate this site with your personal GitHub account. If you're building this site for your company, you can always transfer the project over to a [GitHub organization](https://help.github.com/en/github/setting-up-and-managing-organizations-and-teams/about-organizations) later.
 
 ![Gatsby menu where you can create a new site asks What should we call your new project and choose a destination](/images/gatsby-new-site.png)
 
+### Connect site with DatoCMS 
+
 Authorize Gatsby to connect with your DatoCMS account and hit the "Start my site" button. Once this is done, you should see a link to the corresponding project in DatoCMS and repository on GitHub, both of which have been created for you. 
 
 ![Log into DatoCMS overlaid on top of the Gatsby UI](/images/dato-log-in.png)
 
-This automatic provisioning of your website is one of Gatsby Cloud's strengths. Integrations with content management systems like this make it possible for you to spin up and begin publishing content to new sites without ever touching any code.
+>This automatic provisioning of your website is one of Gatsby Cloud's strengths. Integrations with content management systems like this make it possible for you to spin up and begin publishing content to new sites without ever touching any code.
 
 ![celebratory screen titled successfully set up Gatsby provisioned Snipcart!](/images/successfully-set-up.png)
 
 ## Exploring the DatoCMS Project
 
-You can follow the link in Gatsby Cloud to go straight to your project in DatoCMS. Hit "Enter project" and select "Products" from the secondary navigation menu. You'll see a number of products already defined for you. You can delete or edit these as you'd like.
+After sucessfully linking the DatoCMS you can click on "Start my site" and 
+follow the link in Gatsby Cloud to go straight to your project in DatoCMS. 
+
+Click on  "Enter project" and select "Products" from the secondary navigation menu. You'll see a number of products already defined for you. You can delete or edit these as you'd like.
 
 ![edit product screen featuring a single sock product called street faces](/images/edit-product.png)
+
+### Editing models in DataCMS 
 
 Clicking on "Settings" in the primary navigation menu reveals the "Models" menu item. You create models in DatoCMS to determine what your data should look like. In the case of your sample Product model, each individual product has a name, image, and price. 
 
@@ -64,7 +80,7 @@ Even if you've never used Git/GitHub, there's no need to fear. You can edit indi
 
 ### Editing in GitHub
 
-If you're comfortable writing code in a text editor like [Visual Studio Code](https://code.visualstudio.com/) and using the command line, you can skip this section! 
+>If you're comfortable writing code in a text editor like [Visual Studio Code](https://code.visualstudio.com/) and using the command line, you can skip this section! 
 
 You can make small changes to the code from your browser by editing files directly in GitHub. Say, for example, that you always want to display prices in some other currency besides euros. To switch the symbols, head to your repository's page on GitHub and navigate to `src/pages/index.js`. 
 
@@ -88,10 +104,16 @@ The rest of this process is described in the context of using a text editor to m
 
 ### Editing Locally
 
-To edit your site's code locally, you'll first need to clone the project. Selecting the "Clone of download" button on your repository's main page will display a link for you to copy. Copy the project to your computer and install its dependencies, other JavaScript projects that your site relies on to work.
+You can edit your site's code locally, by follwing these steps: 
+- Clone the project by Selecting the "Clone of download" button on your repository's main page will display a link for you to copy. 
+
+- Copy the project to your computer and install its dependencies, other JavaScript projects that your site relies on to work.
+
+The above is achieved by runing this command after copying the link on GitHub. 
 
 ```shell
 git clone your-repo-link
+cd repo name
 npm install
 ```
 
@@ -106,7 +128,9 @@ In `gatsby-config.js`, you'll find an array of plugins already installed on your
 },
 ```
 
-In order to set this variable's value, create a new file in your project's root directory (the folder that contains the entire project) called `.env.development`. Add your DatoCMS API Token environment variable to this file. You can find your API token in Gatsby under Site Settings > Environment variables. Opening the "Edit" menu will allow you to copy the full token. Set that as the value in `.env.development`.
+In order to set this variable's value, create a new file in your project's root directory (the folder that contains the entire project) called `.env.development`. 
+
+Add your DatoCMS API Token environment variable to this file. You can find your API token in Gatsby under Site Settings > Environment variables. Opening the "Edit" menu will allow you to copy the full token. Set that as the value in `.env.development`.
 
 ```
 DATO_API_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -116,7 +140,11 @@ Now you should be able to run `gatsby develop` to run your site. If you're using
 
 ![sample shop has a bright blue, pink, and green gradient as a background. Stacking rings, rhodochrosite ring, and statement earrings have been added as products](/images/sample-with-products.png)
 
-Chances are you'll want to apply your own branding to this site, so try making some quick changes to strip away some of the strong design elements in this starter. Start with the background gradient. It's quite striking but might not be the best way to show off your own products. If you're not sure where to look for the code you'll need to change, search for the term "background" and see what comes up! In this case, you'll find one entry in the results that _also_ says something about a gradient...
+## Modifying layout
+
+Chances are you'll want to apply your own branding to this site, so try making some quick changes to strip away some of the strong design elements in this starter. Start with the background gradient. It's quite striking but might not be the best way to show off your own products. 
+
+If you're not sure where to look for the code you'll need to change, search for the term "background" and see what comes up! In this case, you'll find one entry in the results that _also_ says something about a gradient...
 
 ![searching the word background in VS Code reveals 7 instances in 5 files, including one in reset.scss](/images/background.png)
 
@@ -272,7 +300,9 @@ render={data => (
 )}
 ```
 
-Snipcart looks for those `data-item-*` attributes to understand which parts of your HTML represent products. Your Gatsby site is getting the data from DatoCMS, then both displaying it and making it available to Snipcart. When a user clicks on an element with these attributes, the corresponding product is added to their cart. The JavaScript that handles the checkout process is already taken care of by `gatsby-plugin-snipcart`, which comes installed with this starter. (Set `autopop` to false in `gatsby-config.js` to keep the shopping cart from popping up every time something is added.)
+Snipcart looks for those `data-item-*` attributes to understand which parts of your HTML represent products. Your Gatsby site is getting the data from DatoCMS, then both displaying it and making it available to Snipcart. When a user clicks on an element with these attributes, the corresponding product is added to their cart. 
+
+The JavaScript that handles the checkout process is already taken care of by `gatsby-plugin-snipcart`, which comes installed with this starter. (Set `autopop` to false in `gatsby-config.js` to keep the shopping cart from popping up every time something is added.)
 
 In the interest of keyboard accessibility, move the `data-item-*` attributes to the "Buy now" button which is not really a button. While you're there, make it a button! The resulting code should look something like this:
 
