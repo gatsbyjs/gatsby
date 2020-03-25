@@ -2,7 +2,7 @@ import Bluebird from "bluebird"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
-import telemetry from "gatsby-telemetry"
+import { addSiteMeasurement } from "gatsby-telemetry"
 import { chunk } from "lodash"
 import webpack from "webpack"
 
@@ -113,7 +113,7 @@ const doBuildPages = async (
   activity: IActivity,
   workerPool: IWorkerPool
 ): Promise<void> => {
-  telemetry.addSiteMeasurement(`BUILD_END`, {
+  addSiteMeasurement(`BUILD_END`, {
     pagesCount: pagePaths.length,
   })
 
