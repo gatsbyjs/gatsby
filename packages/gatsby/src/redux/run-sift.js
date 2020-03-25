@@ -294,9 +294,8 @@ exports.filterWithoutSift = filterWithoutSift
  *   will be limited to 1 if `firstOnly` is true
  */
 const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
-  const nodes = [].concat(
-    ...nodeTypeNames.map(typeName => addResolvedNodes(typeName))
-  )
+  let nodes /*: IGatsbyNode[]*/ = []
+  nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
 
   return _runSiftOnNodes(
     nodes,

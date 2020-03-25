@@ -124,8 +124,10 @@ export const getResolvedNode = (
   return node
 }
 
-export const addResolvedNodes = (typeName: string): IGatsbyNode[] => {
-  const resolvedNodes: IGatsbyNode[] = []
+export const addResolvedNodes = (
+  typeName: string,
+  resolvedNodes: IGatsbyNode[] = []
+): IGatsbyNode[] => {
   const { nodesByType, resolvedNodesCache } = store.getState()
   const nodes = nodesByType.get(typeName)
 
