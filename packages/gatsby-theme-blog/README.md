@@ -50,18 +50,22 @@ module.exports = {
 
    > Note that if you've changed the default `contentPath` in the configuration, you'll want to add your markdown files in the directory specified by that path.
 
-4. Run your site using `gatsby develop` and navigate to your blog posts. If you used the above configuration, your URL will be `http://localhost:8000/blog`
+4. Add an image with the file name `avatar` (can be jpg or png) inside the `/assets` directory to include a small image next to the footer on every post page.
+
+> Note that if you've changed the default `assetPath` in the configuration, you'll want to add your asset files in the directory specified by that path.
+
+5. Run your site using `gatsby develop` and navigate to your blog posts. If you used the above configuration, your URL will be `http://localhost:8000/blog`
 
 ## Usage
 
 ### Theme options
 
-| Key           | Default value    | Description                                                                                                                                                                    |
-| ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `basePath`    | `/`              | Root url for all blog posts                                                                                                                                                    |
-| `contentPath` | `content/posts`  | Location of blog posts                                                                                                                                                         |
-| `assetPath`   | `content/assets` | Location of assets                                                                                                                                                             |
-| `mdx`         | `true`           | Configure `gatsby-plugin-mdx`. Note that most sites will not need to use this flag. If your site has already configured `gatsby-plugin-mdx` separately, set this flag `false`. |
+| Key                      | Default value    | Description                                                                      |
+| ------------------------ | ---------------- | -------------------------------------------------------------------------------- |
+| `basePath`               | `/`              | Root url for all blog posts                                                      |
+| `contentPath`            | `content/posts`  | Location of blog posts                                                           |
+| `assetPath`              | `content/assets` | Location of assets                                                               |
+| `mdxOtherwiseConfigured` | `false`          | Set this flag `true` if `gatsby-plugin-mdx` is already configured for your site. |
 
 #### Example configuration
 

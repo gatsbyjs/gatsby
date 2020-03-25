@@ -53,8 +53,8 @@ class EvaluationTable extends Component {
                     [].concat([
                       <SectionHeaderBottom
                         options={options}
-                        display={row.node.Subcategory}
-                        category={row.node.Subcategory}
+                        display={row.Subcategory}
+                        category={row.Subcategory}
                         key={`section-header-${s}-bottom-${i}`}
                       />,
                       // table row with the name of the feature and corresponding scores
@@ -81,7 +81,7 @@ class EvaluationTable extends Component {
                             }}
                             id={
                               j === 0
-                                ? row.node.Feature.toLowerCase()
+                                ? row.Feature.toLowerCase()
                                     .split(` `)
                                     .join(`-`)
                                 : undefined
@@ -92,7 +92,7 @@ class EvaluationTable extends Component {
                               })
                             }}
                           >
-                            {renderCell(row.node[nodeProperty], j)}
+                            {renderCell(row[nodeProperty], j)}
                           </td>
                         ))}
                       </tr>,
@@ -117,7 +117,7 @@ class EvaluationTable extends Component {
                           {
                             <span
                               dangerouslySetInnerHTML={{
-                                __html: row.node.Description,
+                                __html: row.Description,
                               }}
                             />
                           }

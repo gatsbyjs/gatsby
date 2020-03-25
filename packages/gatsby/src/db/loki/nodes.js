@@ -1,6 +1,7 @@
 const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const { getDb, colls } = require(`./index`)
+import { createPageDependency } from "../../redux/actions/add-page-dependency"
 
 // ///////////////////////////////////////////////////////////////////
 // Node collection metadata
@@ -168,7 +169,6 @@ function getTypes() {
 function getNodeAndSavePathDependency(id, path) {
   invariant(id, `id is null`)
   invariant(id, `path is null`)
-  const createPageDependency = require(`../../redux/actions/add-page-dependency`)
   const node = getNode(id)
   createPageDependency({ path, nodeId: id })
   return node

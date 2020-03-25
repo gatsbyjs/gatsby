@@ -3,9 +3,6 @@ title: GraphQL API
 tableOfContentsDepth: 2
 ---
 
-import { GraphqlApiQuery } from "../../www/src/components/api-reference/doc-static-queries"
-import APIReference from "../../www/src/components/api-reference"
-
 A great advantage of Gatsby is a built-in data layer that combines all data sources you configure. Data is collected at [build time](/docs/glossary#build) and automatically assembled into a [schema](/docs/glossary#schema) that defines how data can be queried throughout your site.
 
 This doc serves as a reference for GraphQL features built into Gatsby, including methods for querying and sourcing data, and customizing GraphQL for your site's needs.
@@ -227,39 +224,9 @@ Fragments allow you to reuse parts of GraphQL queries. They also allow you to sp
 
 For more information, check out the docs guide on [using fragments in Gatsby](/docs/using-graphql-fragments/).
 
-### List of Gatsby fragments
+### Gatsby fragments
 
-Some fragments come included in Gatsby plugins, such as fragments for returning optimized image data in various formats with `gatsby-image` and `gatsby-transformer-sharp`, or data fragments with `gatsby-source-contentful`.
-
-#### Image sharp fragments
-
-The following fragments are available in any site with `gatsby-transformer-sharp` installed and included in your `gatsby-config.js`.
-
-Information on querying with these fragments is also listed in-depth in the [Gatsby image API docs](/docs/gatsby-image/), including options like resizing and recoloring.
-
-<GraphqlApiQuery>
-  {data => (
-    <APIReference
-      relativeFilePath={data.transformerSharp.nodes[0].relativePath}
-      docs={data.transformerSharp.nodes[0].childrenDocumentationJs}
-    />
-  )}
-</GraphqlApiQuery>
-
-#### Contentful fragments
-
-The following fragments are available in any site with `gatsby-source-contentful` installed and included in your `gatsby-config.js`. These fragments generally mirror the fragments outlined in the `gatsby-transformer-sharp` package.
-
-<GraphqlApiQuery>
-  {data => (
-    <APIReference
-      relativeFilePath={data.contentfulFragments.nodes[0].relativePath}
-      docs={data.contentfulFragments.nodes[0].childrenDocumentationJs}
-    />
-  )}
-</GraphqlApiQuery>
-
-**Note**: the above fragments are from officially maintained Gatsby starters; other plugins like `gatsby-source-datocms` and `gatsby-source-sanity` ship with fragments of their own. A list of those fragments can be found in the [`gatsby-image` README](/packages/gatsby-image#fragments).
+Some fragments come included in Gatsby plugins, such as fragments for returning optimized image data in various formats with `gatsby-image` and `gatsby-transformer-sharp`, or data fragments with `gatsby-source-contentful`. For more information on what plugins include fragments, see the [`gatsby-image` README](/packages/gatsby-image#fragments).
 
 ## Advanced customizations
 

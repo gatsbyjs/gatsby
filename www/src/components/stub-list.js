@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Link } from "gatsby"
+import Link from "./localized-link"
 
 import { itemListContributing, itemListDocs } from "../utils/sidebar/item-list"
 

@@ -2,12 +2,12 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
-import Layout from "../components/layout"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import Link from "../components/localized-link"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
@@ -42,7 +42,7 @@ class BlogPostTemplate extends React.Component {
       )
     }
     return (
-      <Layout location={this.props.location}>
+      <>
         <Container>
           {
             // TODO
@@ -64,8 +64,9 @@ class BlogPostTemplate extends React.Component {
               />
               <meta name="description" content={post.fields.excerpt} />
 
-              <meta property="og:description" content={post.fields.excerpt} />
               <meta name="twitter:description" content={post.fields.excerpt} />
+              <meta name="twitter:card" content={post.frontmatter.twittercard || 'summary'} />
+              <meta property="og:description" content={post.fields.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
               <meta property="og:url" content={href} />
               {post.frontmatter.image && (
@@ -223,7 +224,7 @@ class BlogPostTemplate extends React.Component {
           </Container>
           <FooterLinks />
         </div>
-      </Layout>
+      </>
     )
   }
 }
@@ -260,6 +261,7 @@ export const pageQuery = graphql`
         imageAuthorLink
         imageTitle
         showImageInArticle
+        twittercard
         author {
           id
           bio

@@ -16,7 +16,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 Web developers love Gatsby because a Gatsby site gives you rock solid performance, SEO, and sets you up for success in building an accessible site. However as you continue to develop your project, and your editors begin adding content to the site, all three of those site features may suffer.
 
-Over the next three challenges, we’ll ask you to enhance your site’s performance, SEO, and accessibility, starting with the accessibility of your forms and images.
+Over the next three challenges, we’ll ask you to enhance your site’s performance, [SEO](/blog/100days/seo), and accessibility, starting with the accessibility of your forms and images.
 
 As a Gatsby developer, you want to ensure that everyone can access your work, including users who rely on assistive technology to read and navigate your site. Two of the biggest sinkholes for these users are inaccessible forms and images. In previous prompts, we asked you to add images and forms to your project. Now that you have those elements on your site, we ask that you examine and ensure their accessibility.
 

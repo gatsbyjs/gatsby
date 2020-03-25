@@ -2,14 +2,20 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const { store } = require(`../redux`)
 
-const getFilePath = ({ publicDir }, pagePath) => {
-  const fixedPagePath = pagePath === `/` ? `index` : pagePath
-  return path.join(publicDir, `page-data`, fixedPagePath, `page-data.json`)
-}
+const fixedPagePath = pagePath => (pagePath === `/` ? `index` : pagePath)
+
+const getFilePath = ({ publicDir }, pagePath) =>
+  path.join(publicDir, `page-data`, fixedPagePath(pagePath), `page-data.json`)
+
 const read = async ({ publicDir }, pagePath) => {
   const filePath = getFilePath({ publicDir }, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
   return JSON.parse(rawPageData)
+}
+
+const remove = async ({ publicDir }, pagePath) => {
+  const filePath = getFilePath({ publicDir }, pagePath)
+  return fs.remove(filePath)
 }
 
 const write = async ({ publicDir }, page, result) => {
@@ -38,4 +44,6 @@ const write = async ({ publicDir }, page, result) => {
 module.exports = {
   read,
   write,
+  remove,
+  fixedPagePath,
 }

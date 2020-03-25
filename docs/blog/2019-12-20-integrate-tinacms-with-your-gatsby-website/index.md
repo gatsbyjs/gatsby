@@ -258,7 +258,7 @@ When it's time to allow your editors to edit a site with Tina on a hosted server
 
 To get Tina working in Gatsby Cloud, you'll need to configure the following environment variables in your `Site Settings`:
 
-```
+```text
 GIT_AUTHOR_EMAIL
 GIT_AUTHOR_NAME
 SSH_KEY

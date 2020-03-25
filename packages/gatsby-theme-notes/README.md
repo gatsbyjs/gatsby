@@ -45,14 +45,17 @@ module.exports = {
 ```
 
 3. Add notes to your site by creating `md` or `mdx` files inside `/content/notes`.
+
    > Note that if you've changed the default `contentPath` in the configuration, you'll want to add your markdown files in the directory specified by that path.
+
+4. Run your site using `gatsby develop` and navigate to your notes. If you used the above configuration, your URL will be `http://localhost:8000/notes`
 
 ### Options
 
-| Key                   | Default value    | Description                                                                                                                                                                    |
-| --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `basePath`            | `/`              | Root url for all notes pages                                                                                                                                                   |
-| `contentPath`         | `/content/notes` | Location of notes content                                                                                                                                                      |
-| `mdx`                 | `true`           | Configure `gatsby-plugin-mdx`. Note that most sites will not need to use this flag. If your site has already configured `gatsby-plugin-mdx` separately, set this flag `false`. |
-| `homeText`            | `~`              | Root text for notes breadcrumb trail                                                                                                                                           |
-| `breadcrumbSeparator` | `/`              | Separator for the breadcrumb trail                                                                                                                                             |
+| Key                      | Default value    | Description                                                                      |
+| ------------------------ | ---------------- | -------------------------------------------------------------------------------- |
+| `basePath`               | `/`              | Root url for all notes pages                                                     |
+| `contentPath`            | `/content/notes` | Location of notes content                                                        |
+| `mdxOtherwiseConfigured` | `false`          | Set this flag `true` if `gatsby-plugin-mdx` is already configured for your site. |
+| `homeText`               | `~`              | Root text for notes breadcrumb trail                                             |
+| `breadcrumbSeparator`    | `/`              | Separator for the breadcrumb trail                                               |

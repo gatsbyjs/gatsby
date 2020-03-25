@@ -293,7 +293,7 @@ describe(`requires-writer`, () => {
         expect(selectedPage).toMatchInlineSnapshot(`"/mp1/mp2"`)
       })
 
-      it(`will find path with dynamic paramter before path with wildcard`, async () => {
+      it(`will find path with dynamic parameter before path with wildcard`, async () => {
         const { allMatchingPages, selectedPage } = await testScenario(
           `/mp1/test`
         )
