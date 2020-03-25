@@ -20,83 +20,27 @@ Once logged into the Stripe dashboard, you can find your API keys under the Deve
 
 While testing, you must use the key(s) that include the word test. For production code, you will need to use the live keys. As the names imply, your publishable key may be included in code that you share publicly (for example, on the frontend, and in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 
-## Existing plugins and starters using Stripe
+## Resources for using Stripe
 
-Several plugins and starters exist to help you get up and running with Stripe.
+Several tutorials, plugins and starters exist to help you get up and running with Stripe.
+
+### Tutorials & Videos
+
+- [Gatsby E-commerce Tutorial](/tutorial/ecommerce-tutorial): A step-by-step tutorial for adding Stripe Checkout to your Gatsby site.
+- [Learn with Jason Episode](https://youtu.be/g4aCBNt5Pcg): Build an E-commerce Site Using Stripe and Gatsby.
 
 ### Plugins
 
-- [gatsby-plugin-stripe](https://www.gatsbyjs.org/packages/gatsby-plugin-stripe/)
-- [gatsby-source-stripe](https://www.gatsbyjs.org/packages/gatsby-source-stripe/)
-- [gatsby-plugin-stripe-checkout](https://www.gatsbyjs.org/packages/gatsby-plugin-stripe-checkout/)
+- [gatsby-source-stripe](https://www.gatsbyjs.org/packages/gatsby-source-stripe/): This plugin allows you to bring your product and SKU data into your Gatsby site at build time to be [used with Stripe Checkout](https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/#example-2-import-skus-via-source-plugin).
 
-### Starters
+### Starters & Examples
 
+- [Example site from the Gatsby Stripe tutorial](https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe)
 - [gatsby-starter-ecommerce](https://www.gatsbyjs.org/starters/parmsang/gatsby-starter-ecommerce/)
 - [gatsby-starter-stripe](https://www.gatsbyjs.org/starters/brxck/gatsby-starter-stripe/)
-
-## One-time transactions
-
-Stripe offers two solutions to create payment forms for one-time transactions. According to the Stripe documentation, "Checkout creates a secure, Stripe-hosted payment page that lets you collect payments with just a few lines of code". Stripe Elements is an alternative to Checkout if you need more control of the look and feel of the form.
-
-### Creating products
-
-Whether you're using Checkout or Elements, you'll need to create a product on Stripe. The Stripe [Product API](https://stripe.com/docs/api/products/create) can be used to create products, or you can use the dashboard to manually create products. Select Products in the navigation, click `+ New` and fill out the form with your product info. Once you create your product, you'll be able to add SKUs, view the product ID, and more.
-
-### Checkout
-
-The [Stripe Checkout documentation](https://stripe.com/docs/payments/checkout/one-time) provides detailed information on how to setup Checkout if you're interested. Because of how Gastby is rendered, there are a few changes you'll need to make like using the `gatsby-plugin-stripe`.
-
-Check out the [Gatsby E-Commerce Tutorial](https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/#installing-the-stripejs-plugin) to learn how to set up your account to use the "Checkout client-only integration", create products on the Stripe dashboard, and integrate Checkout with Gatsby. The tutorial will explain everything you need to start selling your products.
-
-### Stripe Elements
-
-Stripe Elements are prebuilt UI components that help you create checkout flows on the web. Unlike Checkout, Elements give you complete control over the payment experience. Elements require you to write both client-side and server-side code.
-
-React Stripe Elements is a wrapper around Stripe Elements that help you add Elements to React applications and manage the state and lifecycle of Elements. Documentation can be found at the [React Stripe Elements GitHub](https://github.com/stripe/react-stripe-elements).
-
-The Stripe documentation explains how to [accept a payment](https://stripe.com/docs/payments/accept-a-payment-charges#node) using Elements.
-
-As described in the documentation, you'll need to:
-
-1. Set up Stripe (client-side)
-2. Create a payment form with Elements (client-side)
-3. Create a token (client-side)
-4. Submit the token to your server (client-side)
-5. Create a charge with the token (server-side)
-
-Because of how Gatsby is rendered, you'll need to make sure the window is available before loading Stripe. One way to do this is using the `useState` hook to save an instance of Stripe and the useEffect hook to load Stripe if the window is not undefined. The code snippet below shows a small example of these changes. Instead of passing your API key to the `<StripeProvider />`, you'll pass the `stripe` variable.
-
-```javascript
-import { Elements, StripeProvider } from "react-stripe-elements"
-import CustomForm from "./CustomForm"
-
-const CheckoutForm = props => {
-  const [stripe, setStripe] = useState(null)
-  useEffect(() => {
-    if (typeof window !== undefined && typeof window.Stripe !== undefined) {
-      setStripe(window.Stripe("pk_YOUR_PUBLISHABLE_API_KEY"))
-    }
-  }, [])
-
-  return (
-    <StripeProvider stripe={stripe}>
-      <Elements>
-        <CustomForm />
-      </Elements>
-    </StripeProvider>
-  )
-}
-```
-
-## Recurring payments
-
-Stripe Billing is an excellent tool for creating recurring payments, even providing the ability to charge based on usage or tiered subscription plans. The [Billing documentation](https://stripe.com/docs/billing) explains the different options to set up recurring payments. The [Subscription documentation](https://stripe.com/docs/billing/subscriptions/set-up-subscription) shows how to create subscription plans, payment methods, and customers.
 
 ## Other resources
 
 - [Stripe website](https://stripe.com/)
-- [Stripe API documentation](https://stripe.com/docs/api)
-- [Stripe testing documentation](https://stripe.com/docs/testing).
-- [React Stripe Elements GitHub](https://github.com/stripe/react-stripe-elements)
-- [Making an e-commerce Gatsby Site with Stripe](https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/)
+- [Stripe docs](https://stripe.com/docs)
+- [Stripe testing docs](https://stripe.com/docs/testing)

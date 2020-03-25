@@ -7,7 +7,7 @@ As methodologies for building Gatsby Themes begin to formalize and standardize, 
 ## Naming
 
 It's required to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you
-can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing themes with `gatsby-theme` enables Gatsby in identifying theme packages for compilation.
+can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing themes with `gatsby-theme-` enables Gatsby in identifying theme packages for compilation.
 
 ## Initializing required directories
 
@@ -34,7 +34,7 @@ exports.onPreBootstrap = ({ store, reporter }) => {
 
 ## Separating queries and presentational components
 
-As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to override a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/page-query) or [StaticQuery](/docs/static-query).
+As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to shadow a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/page-query) or [StaticQuery](/docs/static-query).
 
 ### Page queries
 
