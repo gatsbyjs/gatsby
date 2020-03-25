@@ -194,7 +194,10 @@ commands:
         type: string
       test_command:
         type: string
-        default: "" # if unset, e2e-test.sh specifies the command
+        default: "yarn test"
+      run_loki:
+        type: boolean
+        default: false
     steps:
       - <<: *attach_to_bootstrap
       # In case of failure, add these steps again. Cache probably got deleted
@@ -205,7 +208,17 @@ commands:
           condition: << parameters.skip_file_change_test >>
           steps:
             - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
-      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
+      - run:
+          name: Run tests (using defaults)
+          command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
+
+      - when:
+          condition: << parameters.run_loki >>
+          steps:
+            - run:
+                command: GATSBY_DB_NODES=loki << parameters.test_command >>
+                name: Run tests (using Loki)
+                working_directory: << parameters.test_path >>
 
 version: 2.1
 
@@ -268,6 +281,13 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/long-term-caching
+
+  integration_tests_cache_resilience:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/cache-resilience
+          run_loki: true
 
   integration_tests_gatsby_pipeline:
     executor: node
@@ -646,6 +666,8 @@ workflows:
             - lint
             - bootstrap
       - integration_tests_long_term_caching:
+          <<: *e2e-test-workflow
+      - integration_tests_cache_resilience:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow
