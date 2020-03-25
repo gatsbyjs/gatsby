@@ -46,7 +46,7 @@ Here is where you can find more information on [Routing in Gatsby](/docs/routing
 
 ## Redux
 
-Redux is a state container and is used inside Gatsby to keep our internal state in one place. Redux gives us a predictable flow on how and when state updates are done. We can easily hook into these state transitions to update multiple actions to keep everything consistent.
+Redux is a state container and is used inside Gatsby to keep its internal state in one place. Redux provides a predictable flow on how and when state updates are done. Gatsby can easily hook into these state transitions to update multiple actions to keep everything consistent.
 
 When you implement a Gatsby [Node API](/docs/node-apis/), you are passed a collection of [actions](/docs/actions/). When using the supplied actions, you are manipulating state that is created, and relied upon, by Gatsby itself such as created pages and webpack config.
 
