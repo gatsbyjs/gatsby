@@ -182,7 +182,7 @@ exports.runSift = runFilterAndSort
  * running sift, but not as versatile and correct. If no nodes were found then
  * it falls back to filtering through sift.
  *
- * @param {Object | undefined} filterFields
+ * @param {Array<DbQuery> | undefined} filterFields
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
@@ -198,7 +198,7 @@ const applyFilters = (
   resolvedFields,
   stats
 ) => {
-  const filters = filterFields
+  const filters /*: Array<DbQuery>*/ = filterFields
     ? prefixResolvedFields(
         createDbQueriesFromObject(prepareQueryArgs(filterFields)),
         resolvedFields
@@ -206,7 +206,7 @@ const applyFilters = (
     : []
 
   if (stats) {
-    filters.forEach(filter => {
+    filters.forEach((filter /*: DbQuery*/) => {
       const filterStats = filterToStats(filter)
       const comparatorPath = filterStats.comparatorPath.join(`.`)
       stats.comparatorsUsed.set(
@@ -234,7 +234,11 @@ const applyFilters = (
   return filterWithSift(filters, firstOnly, nodeTypeNames, resolvedFields)
 }
 
-const filterToStats = (filter, filterPath = [], comparatorPath = []) => {
+const filterToStats = (
+  filter /*: DbQuery*/,
+  filterPath = [],
+  comparatorPath = []
+) => {
   if (filter.type === `elemMatch`) {
     return filterToStats(
       filter.nestedQuery,
@@ -254,7 +258,7 @@ const filterToStats = (filter, filterPath = [], comparatorPath = []) => {
  * indexes based on filter and types and returns any result it finds.
  * If conditions are not met or no nodes are found, returns undefined.
  *
- * @param {Object} filter Resolved. (Should be checked by caller to exist)
+ * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
  * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
  * @returns {Array|undefined} Collection of results
@@ -286,20 +290,20 @@ exports.filterWithoutSift = filterWithoutSift
 /**
  * Use sift to apply filters
  *
- * @param {Array<Object>} filter Resolved
+ * @param {Array<DbQuery>} filters Resolved
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
  * @returns {Array<Node> | undefined | null} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
  */
-const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
+const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
   let nodes /*: IGatsbyNode[]*/ = []
   nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
 
   return _runSiftOnNodes(
     nodes,
-    filter.map(f => dbQueryToSiftQuery(f)),
+    filters.map(f => dbQueryToSiftQuery(f)),
     firstOnly,
     nodeTypeNames,
     resolvedFields,
@@ -345,7 +349,7 @@ exports.runSiftOnNodes = runSiftOnNodes
  * Given a list of filtered nodes and sorting parameters, sort the nodes
  *
  * @param {Array<Node>} nodes Should be all nodes of given type(s)
- * @param {Array<Object>} filter Resolved
+ * @param {Array<DbQuery>} filters Resolved
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
@@ -355,7 +359,7 @@ exports.runSiftOnNodes = runSiftOnNodes
  */
 const _runSiftOnNodes = (
   nodes,
-  filter,
+  filters,
   firstOnly,
   nodeTypeNames,
   resolvedFields,
@@ -363,8 +367,8 @@ const _runSiftOnNodes = (
 ) => {
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
-  if (isEqId(filter)) {
-    const node = getNode(filter[0].id.$eq)
+  if (isEqId(filters)) {
+    const node = getNode(filters[0].id.$eq)
 
     if (
       !node ||
@@ -380,9 +384,9 @@ const _runSiftOnNodes = (
   }
 
   if (firstOnly) {
-    return handleFirst(filter, nodes)
+    return handleFirst(filters, nodes)
   } else {
-    return handleMany(filter, nodes)
+    return handleMany(filters, nodes)
   }
 }
 
