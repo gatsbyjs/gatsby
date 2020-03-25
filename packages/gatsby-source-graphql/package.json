@@ -10,6 +10,8 @@
     "@babel/runtime": "^7.8.7",
     "apollo-link": "1.2.13",
     "apollo-link-http": "^1.5.16",
+    "dataloader": "^2.0.0",
+    "graphql": "^14.6.0",
     "graphql-tools-fork": "^8.9.6",
     "invariant": "^2.2.4",
     "node-fetch": "^1.7.3",
