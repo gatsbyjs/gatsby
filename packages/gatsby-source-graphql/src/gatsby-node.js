@@ -8,6 +8,7 @@ const {
 const { createHttpLink } = require(`apollo-link-http`)
 const nodeFetch = require(`node-fetch`)
 const invariant = require(`invariant`)
+const { createDataloaderLink } = require(`./batching/dataloader-link`)
 
 const {
   NamespaceUnderFieldTransform,
@@ -29,6 +30,7 @@ exports.sourceNodes = async (
     createLink,
     createSchema,
     refetchInterval,
+    batch = false,
   } = options
 
   invariant(
@@ -48,12 +50,13 @@ exports.sourceNodes = async (
   if (createLink) {
     link = await createLink(options)
   } else {
-    link = createHttpLink({
+    const options = {
       uri: url,
       fetch,
       fetchOptions,
       headers: typeof headers === `function` ? await headers() : headers,
-    })
+    }
+    link = batch ? createDataloaderLink(options) : createHttpLink(options)
   }
 
   let introspectionSchema

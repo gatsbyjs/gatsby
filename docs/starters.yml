@@ -5716,6 +5716,17 @@
     - SEO optimized
     - Robots.txt
     - OpenGraph structured data
+- url: https://gatsby-starter-personality.netlify.com/
+  repo: https://github.com/matheusquintaes/gatsby-starter-personality
+  description: A free responsive Gatsby Starter
+  tags:
+    - Portfolio
+    - Gallery
+  features:
+    - SEO
+    - Page transition
+    - Fully responsive
+    - Styling:CSS-in-JS
 - url: https://seattleservicerelief.com/
   repo: https://github.com/service-relief/gatsby-starter-service-relief
   description: Localized index of resources for your city.
