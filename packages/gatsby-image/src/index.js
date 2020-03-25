@@ -552,7 +552,7 @@ class Image extends React.Component {
                 src={image.src}
                 crossOrigin={this.props.crossOrigin}
                 srcSet={image.srcSet}
-                style={{ imageStyle }}
+                style={imageStyle}
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
