@@ -94,4 +94,5 @@ export const TAGS_AND_DOCS = new Map([
   ],
   [`wordpress`, `/docs/sourcing-from-wordpress/`],
   [`100-Days-of-Gatsby`, ``],
+  [`lambda`, ``],
 ])
