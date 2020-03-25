@@ -106,8 +106,8 @@ function handleMany(siftArgs, nodes) {
  * @param {Array<string>} chain Note: `$eq` is assumed to be the leaf prop here
  * @param {boolean | number | string} targetValue chain.a.b.$eq === targetValue
  * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
- * @returns {Array<Node> | undefined}
+ * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @returns {Array<IGatsbyNode> | undefined}
  */
 const runFlatFilterWithoutSift = (
   chain,
@@ -132,7 +132,7 @@ const runFlatFilterWithoutSift = (
   }
 
   // In all other cases this must be a non-empty Set because the indexing
-  // mechanism does not create a Set unless there's a Node for it
+  // mechanism does not create a Set unless there's a IGatsbyNode for it
   return [...nodesByKeyValue]
 }
 
@@ -144,11 +144,11 @@ const runFlatFilterWithoutSift = (
  * @property {boolean} args.firstOnly true if you want to return only the first
  *   result found. This will return a collection of size 1. Not a single element
  * @property {{filter?: Object, sort?: Object} | undefined} args.queryArgs
- * @property {undefined | Map<string, Map<string | number | boolean, Node>>} args.typedKeyValueIndexes
+ * @property {undefined | Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} args.typedKeyValueIndexes
  *   May be undefined. A cache of indexes where you can look up Nodes grouped
  *   by a key: `types.join(',')+'/'+filterPath.join('+')`, which yields a Map
  *   which holds a Set of Nodes for the value that the filter is trying to eq
- *   against. If the property is `id` then there is no Set, it's just the Node.
+ *   against. If the property is `id` then there is no Set, it's just the IGatsbyNode.
  *   This object lives in query/query-runner.js and is passed down runQuery
  * @returns Collection of results. Collection will be limited to 1
  *   if `firstOnly` is true
@@ -185,10 +185,10 @@ exports.runSift = runFilterAndSort
  * @param {Array<DbQuery> | undefined} filterFields
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {undefined | Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
  * @param resolvedFields
- * @returns {Array<Node> | undefined} Collection of results. Collection will be
- *   limited to 1 if `firstOnly` is true
+ * @returns {Array<IGatsbyNode> | undefined} Collection of results. Collection
+ *   will be limited to 1 if `firstOnly` is true
  */
 const applyFilters = (
   filterFields,
@@ -260,7 +260,7 @@ const filterToStats = (
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
  * @returns {Array|undefined} Collection of results
  */
 const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
@@ -294,8 +294,8 @@ exports.filterWithoutSift = filterWithoutSift
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
- * @returns {Array<Node> | undefined | null} Collection of results. Collection
- *   will be limited to 1 if `firstOnly` is true
+ * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
+ *   Collection will be limited to 1 if `firstOnly` is true
  */
 const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
   let nodes /*: IGatsbyNode[]*/ = []
@@ -315,11 +315,11 @@ const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
  * Given a list of filtered nodes and sorting parameters, sort the nodes
  * Note: this entry point is used by GATSBY_DB_NODES=loki
  *
- * @param {Array<Node>} nodes Should be all nodes of given type(s)
+ * @param {Array<IGatsbyNode>} nodes Should be all nodes of given type(s)
  * @param args Legacy api arg, see _runSiftOnNodes
- * @param {?function(id: string): Node} getNode
- * @returns {Array<Node> | undefined | null} Collection of results. Collection
- *   will be limited to 1 if `firstOnly` is true
+ * @param {?function(id: string): IGatsbyNode | undefined} getNode
+ * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
+ *   Collection will be limited to 1 if `firstOnly` is true
  */
 const runSiftOnNodes = (nodes, args, getNode = siftGetNode) => {
   const {
@@ -348,14 +348,15 @@ exports.runSiftOnNodes = runSiftOnNodes
 /**
  * Given a list of filtered nodes and sorting parameters, sort the nodes
  *
- * @param {Array<Node>} nodes Should be all nodes of given type(s)
+ * @param {Array<IGatsbyNode>} nodes Should be all nodes of given type(s)
  * @param {Array<DbQuery>} filters Resolved
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
- * @param {function(id: string): Node} getNode Note: this is different for loki
- * @returns {Array<Node> | undefined | null} Collection of results. Collection
- *   will be limited to 1 if `firstOnly` is true
+ * @param {function(id: string): IGatsbyNode | undefined} getNode Note: this is
+ *   different for loki
+ * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
+ *   Collection will be limited to 1 if `firstOnly` is true
  */
 const _runSiftOnNodes = (
   nodes,
@@ -393,10 +394,10 @@ const _runSiftOnNodes = (
 /**
  * Given a list of filtered nodes and sorting parameters, sort the nodes
  *
- * @param {Array<Node> | undefined | null} nodes Pre-filtered list of nodes
+ * @param {Array<IGatsbyNode> | undefined | null} nodes Pre-filtered list of nodes
  * @param {Object | undefined} sort Sorting arguments
  * @param resolvedFields
- * @returns {Array<Node> | undefined | null} Same as input, except sorted
+ * @returns {Array<IGatsbyNode> | undefined | null} Same as input, except sorted
  */
 const sortNodes = (nodes, sort, resolvedFields, stats) => {
   if (!sort || nodes?.length <= 1) {
