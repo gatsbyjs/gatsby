@@ -13,7 +13,7 @@ Most recently, I had the opportunity to lead the first Gatsby project at Work & 
 Our project was to build a new website for [Whittle School & Studios](https://www.whittleschool.org/en). Whittle is an innovative educator that will soon open campuses in the United States and China.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./whittle.mp4"></source>
+  <source type="video/mp4" src="./whittle.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
@@ -73,7 +73,7 @@ Here’s a `modules` field on a `ContentPage` currently in use on production:
 
 ![modules field](./modules.png)
 
-Figuring out how to set this up in GraphQL took some trial and error, but we settled on using [inline fragments](http://graphql.org/learn/queries/#inline-fragments).
+Figuring out how to set this up in GraphQL took some trial and error, but we settled on using [inline fragments](https://graphql.org/learn/queries/#inline-fragments).
 
 The GraphQL looks like this:
 

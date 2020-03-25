@@ -68,7 +68,24 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
 
 const optimize = svg => {
   const SVGO = require(`svgo`)
-  const svgo = new SVGO({ multipass: true, floatPrecision: 0 })
+  const svgo = new SVGO({
+    multipass: true,
+    floatPrecision: 0,
+    plugins: [
+      {
+        removeViewBox: false,
+      },
+      {
+        addAttributesToSVGElement: {
+          attributes: [
+            {
+              preserveAspectRatio: `none`,
+            },
+          ],
+        },
+      },
+    ],
+  })
   return svgo.optimize(svg).then(({ data }) => data)
 }
 

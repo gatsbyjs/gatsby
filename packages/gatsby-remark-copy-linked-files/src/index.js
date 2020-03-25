@@ -223,10 +223,10 @@ module.exports = (
   visit(markdownAST, [`html`, `jsx`], node => {
     const $ = cheerio.load(node.value)
 
-    function processUrl({ url }) {
+    function processUrl({ url, isRequired }) {
       try {
         const ext = url.split(`.`).pop()
-        if (!options.ignoreFileExtensions.includes(ext)) {
+        if (!options.ignoreFileExtensions.includes(ext) || isRequired) {
           // The link object will be modified to the new location so we'll
           // use that data to update our ref
           const link = { url }
@@ -277,6 +277,14 @@ module.exports = (
       $(`video source[src], video[src]`),
       `src`
     ).forEach(processUrl)
+
+    // Handle video poster.
+    extractUrlAttributeAndElement(
+      $(`video[poster]`),
+      `poster`
+    ).forEach(extractedUrlAttributeAndElement =>
+      processUrl({ ...extractedUrlAttributeAndElement, isRequired: true })
+    )
 
     // Handle audio tags.
     extractUrlAttributeAndElement(

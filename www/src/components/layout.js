@@ -6,21 +6,27 @@ import { Global } from "@emotion/core"
 
 import { globalStyles } from "../utils/styles/global"
 import { breakpointGutter } from "../utils/styles"
-import Banner from "../components/banner"
-import Navigation from "../components/navigation"
-import MobileNavigation from "../components/navigation-mobile"
-import SiteMetadata from "../components/site-metadata"
-import SkipNavLink from "../components/skip-nav-link"
+import Banner from "./banner"
+import Navigation from "./navigation"
+import MobileNavigation from "./navigation-mobile"
+import SiteMetadata from "./site-metadata"
+import SkipNavLink from "./skip-nav-link"
 import "../assets/fonts/futura"
-import { defaultLang } from "../utils/i18n"
 
-export const LocaleContext = React.createContext(defaultLang)
+export default function DefaultLayout({ location, children }) {
+  if (location.state?.isModal) {
+    return (
+      <>
+        <SiteMetadata pathname={location.pathname} />
+        {children}
+      </>
+    )
+  }
 
-export default function DefaultLayout({ location, locale, children }) {
   return (
-    <LocaleContext.Provider value={locale || defaultLang}>
+    <>
       <Global styles={globalStyles} />
-      <SiteMetadata pathname={location.pathname} locale={locale} />
+      <SiteMetadata pathname={location.pathname} />
       <SkipNavLink />
       <Banner />
       <Navigation pathname={location.pathname} />
@@ -40,6 +46,6 @@ export default function DefaultLayout({ location, locale, children }) {
         {children}
       </div>
       <MobileNavigation />
-    </LocaleContext.Provider>
+    </>
   )
 }

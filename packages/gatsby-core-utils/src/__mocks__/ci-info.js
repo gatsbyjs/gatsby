@@ -10,6 +10,7 @@ function setIsCI(value) {
 function setName(name) {
   ciInfo.name = name
 }
+
 ciInfo.setIsCI = setIsCI
 ciInfo.setName = setName
 module.exports = ciInfo

@@ -24,7 +24,7 @@ Navigate inside of the project with `cd gatsby-site`.
 
 ### Add the source plugin
 
-Additionally, you need the the `gatsby-source-graphql` library. Because GraphCMS uses GraphQL natively, you will take advantage of Gatsby's ability to simply stitch two GraphQL APIs together, reducing the time required to transform content. There is no need to use a special gatsby-source-x-cms plugin, the GraphQL source plugin is all you need.
+Additionally, you need the `gatsby-source-graphql` library. Because GraphCMS uses GraphQL natively, you will take advantage of Gatsby's ability to simply stitch two GraphQL APIs together, reducing the time required to transform content. There is no need to use a special gatsby-source-x-cms plugin, the GraphQL source plugin is all you need.
 
 You can install this component with:
 
