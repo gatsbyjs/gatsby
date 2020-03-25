@@ -7,7 +7,8 @@ const GraphQLRunner = require(`./graphql-runner`)
 
 const createBaseOptions = () => {
   return {
-    concurrent: 4,
+    concurrent: Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 4,
+    // eslint-disable-next-line new-cap
     store: FastMemoryStore(),
   }
 }
@@ -67,8 +68,7 @@ const createDevelopQueue = getRunner => {
  * Note: queue is reused in develop so make sure to thoroughly cleanup hooks
  */
 const processBatch = async (queue, jobs, activity) => {
-  let numJobs = jobs.length
-  if (numJobs === 0) {
+  if (jobs.length === 0) {
     return Promise.resolve()
   }
 
