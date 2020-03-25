@@ -16,7 +16,8 @@ export interface IGatsbyLinkState {
   IOSupported: boolean
 }
 
-export interface IGatsbyLinkProps<TState>
+// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+export interface GatsbyLinkProps<TState>
   extends React.PropsWithoutRef<LinkProps<TState>> {
   /** A class to apply when this Link is active */
   activeClassName?: string
@@ -107,12 +108,12 @@ function asMutable<T>(ref: React.RefObject<T>): { current: T | null } {
 }
 
 class GatsbyLinkInternal<TState> extends React.Component<
-  IGatsbyLinkProps<TState>,
+  GatsbyLinkProps<TState>,
   IGatsbyLinkState
 > {
   io?: IOResult
 
-  propTypes: React.WeakValidationMap<IGatsbyLinkProps<TState>> = {
+  propTypes: React.WeakValidationMap<GatsbyLinkProps<TState>> = {
     ...NavLinkPropTypes,
     onClick: PropTypes.func,
     to: PropTypes.string.isRequired,
@@ -121,7 +122,7 @@ class GatsbyLinkInternal<TState> extends React.Component<
     state: PropTypes.object as any,
   }
 
-  constructor(props: IGatsbyLinkProps<TState>) {
+  constructor(props: GatsbyLinkProps<TState>) {
     super(props)
     // Default to no support for IntersectionObserver
     let IOSupported = false
@@ -134,7 +135,7 @@ class GatsbyLinkInternal<TState> extends React.Component<
     }
   }
 
-  componentDidUpdate(prevProps: IGatsbyLinkProps<TState>): void {
+  componentDidUpdate(prevProps: GatsbyLinkProps<TState>): void {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
       ___loader.enqueue(parsePath(this.props.to).pathname)
@@ -273,12 +274,12 @@ const showDeprecationWarning = (
  */
 const GatsbyLink = React.forwardRef<
   HTMLAnchorElement,
-  IGatsbyLinkProps<unknown>
->((props: IGatsbyLinkProps<unknown>, ref: React.Ref<HTMLAnchorElement>) => (
+  GatsbyLinkProps<unknown>
+>((props: GatsbyLinkProps<unknown>, ref: React.Ref<HTMLAnchorElement>) => (
   <GatsbyLinkInternal innerRef={ref} {...props} />
 ))
 type GatsbyLink<TState> = React.Component<
-  IGatsbyLinkProps<TState>,
+  GatsbyLinkProps<TState>,
   IGatsbyLinkState
 >
 
