@@ -107,7 +107,7 @@ const getRoomNameFromPath = (path: string): string => `path-${path}`
 
 class WebsocketManager {
   activePaths: Set<string> = new Set()
-  connectedClients: number = 0
+  connectedClients = 0
   errors: Map<string, string> = new Map()
   pageResults: PageResultsMap = new Map()
   staticQueryResults: QueryResultsMap = new Map()
@@ -224,9 +224,7 @@ class WebsocketManager {
     return this.websocket
   }
 
-  getSocket = (): socketIO.Server | undefined => {
-    return this.websocket
-  }
+  getSocket = (): socketIO.Server | undefined => this.websocket
 
   emitStaticQueryData = (data: IStaticQueryResult): void => {
     this.staticQueryResults.set(data.id, data)
