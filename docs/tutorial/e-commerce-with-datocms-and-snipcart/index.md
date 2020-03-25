@@ -88,9 +88,7 @@ You can make small changes to the code from your browser by editing files direct
 Select "Edit this file" (the pencil icon) from the menu. Where `product.price` is being displayed, you'll need to update the currency symbol.
 
 ```jsx:title=index.js
-<div className="Product__price">
-  ${product.price}
-</div>
+<div className="Product__price">${product.price}</div>
 ```
 
 Once you've made your change, you'll need to commit that change. A commit is like a snapshot in time or a save point in a video game. Add a message that concisely describes the changes you've made and then commit those changes.
