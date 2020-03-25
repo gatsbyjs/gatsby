@@ -18,25 +18,31 @@ import { runStaticQueries } from "../services/run-static-queries"
 import { runPageQueries } from "../services/run-page-queries"
 import { startWebpackServer } from "../services/start-webpack-server"
 import { writeOutRequires } from "../services/write-out-requires"
-
+import { WebsocketManager } from "../utils/websocket-manager"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { Store } from "../.."
 import { actions } from "../redux/actions"
+import { Compiler } from "webpack"
 
 const MAX_RECURSION = 2
 const NODE_MUTATION_BATCH_SIZE = 5
 
-interface IBuildContext {
+export interface IBuildContext {
   recursionCount: number
   nodesMutatedDuringQueryRun: boolean
   firstRun: boolean
   nodeMutationBatch: any[]
   runningBatch: any[]
-  deferNodeMutation: boolean
+  compiler?: Compiler
+  websocketManager?: WebsocketManager
   store?: Store
 }
 
-const callRealApi = async (event, store: Store): Promise<any> => {
+const callRealApi = async (event, store?: Store): Promise<any> => {
+  if (!store) {
+    console.error(`No store`)
+    return null
+  }
   const { type, payload } = event
   if (type in actions) {
     return actions[type](...payload)(store.dispatch.bind(store))
@@ -60,15 +66,48 @@ const context: IBuildContext = {
   firstRun: true,
   nodeMutationBatch: [],
   runningBatch: [],
-  deferNodeMutation: false,
 }
 
 export const rageAgainstTheStateMachine = async (): Promise<void> => {
   console.error(`I won't do what you tell me!`)
 }
 
+const emitPageDataToWebsocket = (
+  { websocketManager }: IBuildContext,
+  { data: { results } }: DoneInvokeEvent<any>
+): void => {
+  if (results) {
+    results.forEach((result, id) => {
+      // eslint-disable-next-line no-unused-expressions
+      websocketManager?.emitPageData({
+        result,
+        id,
+      })
+    })
+  }
+}
+
+const emitStaticQueryDataToWebsocket = (
+  { websocketManager }: IBuildContext,
+  { data: { results } }: DoneInvokeEvent<any>
+): void => {
+  if (results) {
+    console.log(`running-static-queries`, {
+      results,
+      websocketManager,
+    })
+    results.forEach((result, id) => {
+      // eslint-disable-next-line no-unused-expressions
+      websocketManager?.emitStaticQueryData({
+        result,
+        id,
+      })
+    })
+  }
+}
+
 /**
- * Event used in all states where we're not ready to process node
+ * Event handler used in all states where we're not ready to process node
  * mutations. Instead we add it a batch to process when we're next idle
  */
 const ADD_NODE_MUTATION: TransitionConfig<IBuildContext, AnyEventObject> = {
@@ -76,13 +115,30 @@ const ADD_NODE_MUTATION: TransitionConfig<IBuildContext, AnyEventObject> = {
     console.log(`event at node mutation add`, event)
     return {
       nodeMutationBatch: [...ctx.nodeMutationBatch, event.payload],
-      deferNodeMutation: true,
     }
   }),
 }
 
+/**
+ * When running queries we might add nodes (e.g from resolvers). If so we'll
+ * want to re-run queries and schema inference
+ */
+const runMutationAndMarkDirty: TransitionConfig<
+  IBuildContext,
+  AnyEventObject
+> = {
+  actions: [
+    assign<any, DoneInvokeEvent<any>>({
+      nodesMutatedDuringQueryRun: true,
+    }),
+    async (ctx, event): Promise<void> => callRealApi(event.payload, ctx.store),
+  ],
+}
+
+/**
+ * Handler for when we're inside handlers that should be able to mutate nodes
+ */
 const skipDeferredApi: TransitionConfig<IBuildContext, AnyEventObject> = {
-  internal: true,
   actions: [
     async (ctx, event): Promise<void> => callRealApi(event.payload, ctx.store),
   ],
@@ -165,7 +221,7 @@ export const developMachine = Machine<any>(
         },
       },
       creatingPages: {
-        on: { ADD_NODE_MUTATION },
+        on: { ADD_NODE_MUTATION: runMutationAndMarkDirty },
         invoke: {
           id: `creating-pages`,
           src: createPages,
@@ -207,6 +263,19 @@ export const developMachine = Machine<any>(
           },
         },
       },
+      writingRequires: {
+        on: { ADD_NODE_MUTATION },
+        invoke: {
+          src: writeOutRequires,
+          id: `writing-requires`,
+          onDone: {
+            target: `calculatingDirtyQueries`,
+          },
+          onError: {
+            target: `failed`,
+          },
+        },
+      },
       calculatingDirtyQueries: {
         on: { ADD_NODE_MUTATION },
         invoke: {
@@ -231,7 +300,7 @@ export const developMachine = Machine<any>(
         },
       },
       creatingPagesStatefully: {
-        on: { ADD_NODE_MUTATION },
+        on: { ADD_NODE_MUTATION: runMutationAndMarkDirty },
         invoke: {
           src: createPagesStatefully,
           id: `creating-pages-statefully`,
@@ -244,29 +313,13 @@ export const developMachine = Machine<any>(
         },
       },
       runningStaticQueries: {
-        on: { ADD_NODE_MUTATION },
+        on: { ADD_NODE_MUTATION: runMutationAndMarkDirty },
         invoke: {
           src: runStaticQueries,
           id: `running-static-queries`,
           onDone: {
             target: `runningPageQueries`,
-            actions: [
-              ({ websocketManager }, { data: { results } }): void => {
-                if (results) {
-                  console.log(`running-static-queries`, {
-                    results,
-                    websocketManager,
-                  })
-                  results.forEach((result, id) => {
-                    // eslint-disable-next-line no-unused-expressions
-                    websocketManager?.emitStaticQueryData({
-                      result,
-                      id,
-                    })
-                  })
-                }
-              },
-            ],
+            actions: [emitStaticQueryDataToWebsocket],
           },
           onError: {
             target: `idle`,
@@ -274,75 +327,56 @@ export const developMachine = Machine<any>(
         },
       },
       runningPageQueries: {
-        on: { ADD_NODE_MUTATION },
+        on: { ADD_NODE_MUTATION: runMutationAndMarkDirty },
         invoke: {
           src: runPageQueries,
           id: `running-page-queries`,
           onDone: [
             {
               target: `waitingForJobs`,
-              actions: [
-                ({ websocketManager }, { data: { results } }): void => {
-                  if (results) {
-                    console.log(`running-page-queries`, {
-                      results,
-                      websocketManager,
-                    })
-                    results.forEach((result, id) => {
-                      // eslint-disable-next-line no-unused-expressions
-                      websocketManager?.emitPageData({
-                        result,
-                        id,
-                      })
-                    })
-                  }
-                },
-              ],
-
-              // cond: (context, event): boolean => {
-              //   return !(
-              //     context.nodesMutatedDuringQueryRun || event.data?.nodesMutated
-              //   )
-              // },
+              actions: [emitPageDataToWebsocket],
             },
-            // {
-            //   actions: assign(ctx => {
-            //     return {
-            //       ...ctx,
-            //       recursionCount: ctx.recursionCount + 1,
-            //       // nodesMutatedDuringQueryRun: false, // Resetting
-            //     }
-            //   }),
-            //   target: `customizingSchema`,
-            //   cond: (ctx: IBuildContext): boolean =>
-            //     ctx.recursionCount < MAX_RECURSION,
-            // },
-            // {
-            //   actions: [
-            //     assign(ctx => {
-            //       return {
-            //         ...ctx,
-            //         recursionCount: 0,
-            //         // nodesMutatedDuringQueryRun: false, // Resetting
-            //       }
-            //     }),
-            //     {
-            //       type: `rage-against-the-state-machine`,
-            //     },
-            //   ],
-            //   target: `idle`,
-            // },
           ],
           onError: {
-            // actions: assign(ctx => {
-            //   return {
-            //     ...ctx,
-            //     recursionCount: 0,
-            //     // nodesMutatedDuringQueryRun: false, // Resetting
-            //   }
-            // }),
             target: `idle`,
           },
+        },
+      },
+      checkingForMutatedNodes: {
+        on: {
+          "": [
+            // Nothing was mutated. Moving to next state
+            {
+              target: `waitingForJobs`,
+              cond: (context): boolean => !context.nodesMutatedDuringQueryRun,
+            },
+            // Nodes were mutated. Starting again.
+            {
+              actions: assign(context => {
+                return {
+                  recursionCount: context.recursionCount + 1,
+                  nodesMutatedDuringQueryRun: false, // Resetting
+                }
+              }),
+              target: `customizingSchema`,
+              cond: (ctx): boolean => ctx.recursionCount < MAX_RECURSION,
+            },
+            // We seem to be stuck in a loop. Bailing.
+            {
+              actions: [
+                assign(() => {
+                  return {
+                    recursionCount: 0,
+                    nodesMutatedDuringQueryRun: false, // Resetting
+                  }
+                }),
+                {
+                  type: `rage-against-the-state-machine`,
+                },
+              ],
+              target: `idle`,
+            },
+          ],
         },
       },
       waitingForJobs: {
@@ -364,6 +398,7 @@ export const developMachine = Machine<any>(
           },
         },
       },
+
       // writingArtifacts: {
       //   invoke: {
       //     src: writingArtifacts,
@@ -376,22 +411,7 @@ export const developMachine = Machine<any>(
       //     },
       //   },
       // },
-      refreshing: {
-        on: { ADD_NODE_MUTATION },
-        invoke: {
-          src: async (ctx, event): Promise<void> => {},
-          id: `refreshing`,
-          onDone: {
-            target: `customizingSchema`,
-            actions: assign({
-              refresh: true,
-            }),
-          },
-          onError: {
-            target: `failed`,
-          },
-        },
-      },
+
       // batchingPageMutations: {
       //   invoke: {
       //     src: batchingPageMutations,
@@ -405,19 +425,6 @@ export const developMachine = Machine<any>(
       //   },
       // },
 
-      writingRequires: {
-        on: { ADD_NODE_MUTATION },
-        invoke: {
-          src: writeOutRequires,
-          id: `writing-requires`,
-          onDone: {
-            target: `calculatingDirtyQueries`,
-          },
-          onError: {
-            target: `failed`,
-          },
-        },
-      },
       runningWebpack: {
         on: { ADD_NODE_MUTATION },
         invoke: {
@@ -440,15 +447,92 @@ export const developMachine = Machine<any>(
         },
       },
 
+      // There is an empty bus and doors are closed
+      idle: {
+        entry: [
+          assign({
+            webhookBody: null,
+            refresh: false,
+            recursionCount: 0,
+            nodesMutatedDuringQueryRun: false,
+          }),
+        ],
+        on: {
+          "": {
+            cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
+            target: `batchingNodeMutations`,
+          },
+          WEBHOOK_RECEIVED: {
+            target: `refreshing`,
+            actions: assign((ctx, event) => {
+              return { webhookBody: event.body }
+            }),
+          },
+          ADD_NODE_MUTATION: {
+            ...ADD_NODE_MUTATION,
+            target: `batchingNodeMutations`,
+          },
+        },
+      },
+
+      refreshing: {
+        on: { ADD_NODE_MUTATION },
+        invoke: {
+          src: async (ctx, event): Promise<void> => {},
+          id: `refreshing`,
+          onDone: {
+            target: `customizingSchema`,
+            actions: assign({
+              refresh: true,
+            }),
+          },
+          onError: {
+            target: `failed`,
+          },
+        },
+      },
+
+      // Doors are open for people to enter
+      batchingNodeMutations: {
+        on: {
+          // Check if the batch is already full on entry
+          "": {
+            cond: (ctx): boolean =>
+              ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
+            target: `committingBatch`,
+          },
+          // More people enter same bus
+          ADD_NODE_MUTATION: [
+            // If this fills the batch then commit it
+            {
+              ...ADD_NODE_MUTATION,
+              cond: (ctx): boolean =>
+                ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
+              target: `committingBatch`,
+            },
+            // otherwise just add it to the batch
+            ADD_NODE_MUTATION,
+          ],
+        },
+
+        // Check if bus is either full or if enough time has passed since
+        // last passenger entered the bus
+
+        // Fallback
+        after: {
+          1000: `committingBatch`,
+        },
+      },
       committingBatch: {
         on: { ADD_NODE_MUTATION },
         entry: [
           assign(context => {
             console.log(
-              `context at entry for cimmiting batch`,
+              `context at entry for committing batch`,
               context.runningBatch,
               context.nodeMutationBatch
             )
+            // Move the contents of the batch into a batch for running
             return {
               target: `buildingSchema`,
               nodeMutationBatch: [],
@@ -472,60 +556,7 @@ export const developMachine = Machine<any>(
           },
         },
       },
-      // Doors are open for people to enter
-      batchingNodeMutations: {
-        on: {
-          "": {
-            cond: (ctx): boolean =>
-              ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
-            target: `committingBatch`,
-          },
-          // More people enter same bus
-          ADD_NODE_MUTATION: [
-            {
-              ...ADD_NODE_MUTATION,
-              cond: (ctx): boolean =>
-                ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
-              target: `committingBatch`,
-            },
-            ADD_NODE_MUTATION,
-          ],
-        },
 
-        // Check if bus is either full or if enough time has passed since
-        // last passenger entered the bus
-
-        // Fallback
-        after: {
-          1000: `committingBatch`,
-        },
-      },
-
-      // There is an empty bus and doors are closed
-      idle: {
-        entry: [
-          assign({
-            webhookBody: null,
-            refresh: false,
-          }),
-        ],
-        on: {
-          "": {
-            cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
-            target: `batchingNodeMutations`,
-          },
-          WEBHOOK_RECEIVED: {
-            target: `refreshing`,
-            actions: assign((ctx, event) => {
-              return { webhookBody: event.body }
-            }),
-          },
-          ADD_NODE_MUTATION: {
-            ...ADD_NODE_MUTATION,
-            target: `batchingNodeMutations`,
-          },
-        },
-      },
       failed: {
         invoke: {
           src: async (context, event): Promise<void> => {

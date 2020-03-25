@@ -2,6 +2,7 @@ import openurl from "better-opn"
 import report from "gatsby-cli/lib/reporter"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
+import { Compiler } from "webpack"
 
 import {
   reportWebpackWarnings,
@@ -12,8 +13,15 @@ import { printDeprecationWarnings } from "../utils/print-deprecation-warnings"
 import { printInstructions } from "../utils/print-instructions"
 import { prepareUrls } from "../utils/prepare-urls"
 import { startServer } from "../utils/start-server"
+import { WebsocketManager } from "../utils/websocket-manager"
 
-export async function startWebpackServer({ program, app }): Promise<any> {
+export async function startWebpackServer({
+  program,
+  app,
+}): Promise<{
+  compiler: Compiler
+  websocketManager: WebsocketManager
+}> {
   let { compiler, webpackActivity, websocketManager } = await startServer(
     program,
     app
