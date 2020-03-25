@@ -234,7 +234,7 @@ module.exports = async function build(program: BuildArgs) {
   activity = report.activityTimer(`onPostBuild`, { parentSpan: buildSpan })
   activity.start()
   await apiRunnerNode(`onPostBuild`, {
-    graphql: graphqlRunner,
+    graphql: bootstrapGraphQLRunner,
     parentSpan: buildSpan,
   })
   activity.end()
