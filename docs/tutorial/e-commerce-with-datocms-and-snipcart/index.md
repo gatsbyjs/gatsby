@@ -44,7 +44,7 @@ At this point, you'll need to come up with a name for your project. This won't b
 
 ![Gatsby menu where you can create a new site asks What should we call your new project and choose a destination](/images/gatsby-new-site.png)
 
-### Connect site with DatoCMS
+### Connecting to DatoCMS
 
 Authorize Gatsby to connect with your DatoCMS account and hit the "Start my site" button. Once this is done, you should see a link to the corresponding project in DatoCMS and repository on GitHub, both of which have been created for you.
 
@@ -63,7 +63,7 @@ Click on "Enter project" and select "Products" from the secondary navigation men
 
 ![edit product screen featuring a single sock product called street faces](/images/edit-product.png)
 
-### Editing models in DataCMS
+### Editing models in DatoCMS
 
 Clicking on "Settings" in the primary navigation menu reveals the "Models" menu item. You create models in DatoCMS to determine what your data should look like. In the case of your sample Product model, each individual product has a name, image, and price.
 
@@ -88,7 +88,9 @@ You can make small changes to the code from your browser by editing files direct
 Select "Edit this file" (the pencil icon) from the menu. Where `product.price` is being displayed, you'll need to update the currency symbol.
 
 ```jsx:title=index.js
-<div className="Product__price">${product.price}</div>
+<div className="Product__price">
+  ${product.price}
+</div>
 ```
 
 Once you've made your change, you'll need to commit that change. A commit is like a snapshot in time or a save point in a video game. Add a message that concisely describes the changes you've made and then commit those changes.
@@ -101,17 +103,17 @@ The rest of this process is described in the context of using a text editor to m
 
 ### Editing Locally
 
-You can edit your site's code locally, by follwing these steps:
+You can edit your site's code locally by following these steps:
 
-- Clone the project by Selecting the "Clone of download" button on your repository's main page will display a link for you to copy.
+- Clone the project by Selecting the "Clone or download" button on your repository's main page, which will display a link for you to copy.
 
 - Copy the project to your computer and install its dependencies, other JavaScript projects that your site relies on to work.
 
-The above is achieved by runing this command after copying the link on GitHub.
+The above is achieved by running these commands after copying the link on GitHub.
 
 ```shell
 git clone your-repo-link
-cd repo name
+cd your-repo-name
 npm install
 ```
 
@@ -138,7 +140,7 @@ Now you should be able to run `gatsby develop` to run your site. If you're using
 
 ![sample shop has a bright blue, pink, and green gradient as a background. Stacking rings, rhodochrosite ring, and statement earrings have been added as products](/images/sample-with-products.png)
 
-## Modifying layout
+## Modifying styles
 
 Chances are you'll want to apply your own branding to this site, so try making some quick changes to strip away some of the strong design elements in this starter. Start with the background gradient. It's quite striking but might not be the best way to show off your own products.
 
