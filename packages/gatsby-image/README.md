@@ -253,8 +253,6 @@ Their fragments are:
 - `GatsbySanityImageFluid`
 - `GatsbySanityImageFluid_noBase64`
 
-_Links to source code for fragment fields of official Gatsby plugins can be found in the [Gatsby GraphQL API](/docs/graphql-api/)_
-
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
 with `tracedSVG` at the end.
@@ -262,6 +260,9 @@ with `tracedSVG` at the end.
 If you want to automatically use WebP images when the browser supports the file
 format, use the `withWebp` fragments. If the browser doesn't support WebP,
 `gatsby-image` will fall back to the default image format.
+
+For more information about these options, please see the
+[Gatsby Image API](/docs/gatsby-image/#image-query-fragments).
 
 _Please see the
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#tracedsvg)
@@ -430,8 +431,6 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 | `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.                          |
 | `loading`              | `string`            | Set the browser's native lazy loading attribute. One of `lazy`, `eager` or `auto`. Defaults to `lazy`.                                        |
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`. Deprecated, use `loading` instead.                                                     |
-| `fixedImages`          | `array`             | An array of objects returned from `fixed` queries. When combined with `media` keys, allows for art directing `fixed` images.                  |
-| `fluidImages`          | `array`             | An array of objects returned from `fluid` queries. When combined with `media` keys, allows for art directing `fluid` images.                  |
 | `draggable`            | `bool`              | Set the img tag draggable to either `false`, `true`                                                                                           |
 | `itemProp`             | `string`            | Add an [`itemprop` schema.org structured data attribute](https://schema.org/docs/gs.html#microdata_itemprop) on the image.                    |
 

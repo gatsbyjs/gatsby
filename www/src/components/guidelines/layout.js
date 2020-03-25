@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { Global } from "@emotion/core"
@@ -8,15 +7,10 @@ import { Global } from "@emotion/core"
 import { globalStyles } from "../../utils/styles/global"
 import { Box } from "./system"
 import Header from "./header"
-import AnotherHeader from "../navigation"
-import Banner from "../banner"
 import Footer from "../shared/footer-links"
 
-// Import Futura PT typeface
-import "../../assets/fonts/futura"
-
-const Layout = ({ children, background, pathname, pageTitle }) => (
-  <React.Fragment>
+const Layout = ({ children, background, pageTitle }) => (
+  <Box bg="background" position="relative">
     <Global
       styles={{
         ".ReactModal__Overlay": {
@@ -36,35 +30,15 @@ const Layout = ({ children, background, pathname, pageTitle }) => (
     />
     <Global styles={globalStyles} />
     <Helmet>
-      <title>
-        {pageTitle ? `${pageTitle} | Guidelines | GatsbyJS` : `GatsbyJS`}
-      </title>
-      <meta name="twitter:site" content="@gatsbyjs" />
-      <meta name="og:type" content="website" />
-      <meta name="og:site_name" content="GatsbyJS" />
-      <link rel="canonical" href={`https://gatsbyjs.org${pathname}`} />
-      <html lang="en" />
+      <title>{pageTitle ? `${pageTitle} | Guidelines` : `Guidelines`}</title>
     </Helmet>
-    <Banner />
-    <AnotherHeader pathname={pathname} />
-    <Box
-      bg="background"
-      position="relative"
-      sx={{
-        pt: [
-          t => t.sizes.bannerHeight,
-          t => `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
-        ],
-      }}
-    >
-      {background && background}
-      <Header />
-      <Box as="main" className="main-body">
-        {children}
-        <Footer />
-      </Box>
+    {background && background}
+    <Header />
+    <Box as="main" className="main-body">
+      {children}
+      <Footer />
     </Box>
-  </React.Fragment>
+  </Box>
 )
 
 Layout.propTypes = {

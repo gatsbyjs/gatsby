@@ -1,0 +1,14 @@
+{
+  "data": [],
+  "links": {
+    "self": "http://fixture/jsonapi",
+    "file--file": "http://fixture/jsonapi/file/file",
+    "node--article": "http://fixture/jsonapi/node/article-includes",
+    "taxonomy_term--tags": {
+      "href": "http://fixture/jsonapi/taxonomy_term/tags"
+    },
+    "describedby": {
+      "href": "http://fixture/jsonapi/schema"
+    }
+  }
+}

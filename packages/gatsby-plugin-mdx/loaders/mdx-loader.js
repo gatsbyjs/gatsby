@@ -97,6 +97,7 @@ module.exports = async function(content) {
     cache,
     pathPrefix,
     pluginOptions,
+    ...helpers
   } = getOptions(this)
 
   const options = withDefaultOptions(pluginOptions)
@@ -161,6 +162,7 @@ ${contentWithoutFrontmatter}`
   }
 
   const { rawMDXOutput } = await genMdx({
+    ...helpers,
     isLoader: true,
     options,
     node: { ...mdxNode, rawBody: code },

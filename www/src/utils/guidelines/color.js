@@ -2,7 +2,7 @@ import { rgb as wcag } from "wcag-contrast"
 import hexRgb from "hex-rgb"
 import { normal } from "color-blend"
 
-import { colors } from "../../gatsby-plugin-theme-ui"
+import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // adapted from https://github.com/jxnblk/colorable 🙏
 const minimums = {

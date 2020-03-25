@@ -6,7 +6,7 @@ Example sites for benchmarking `gatsby`.
 
 The standard interface for running a benchmark is:
 
-```
+```shell
 cd {benchmark directory}
 export NUM_PAGES={n}
 npm install
@@ -19,6 +19,6 @@ Any `postinstall` script must ensure that previous benchmark runs do not interfe
 
 For example:
 
-```
+```text
 "postinstall": "del-cli ./generated && gatsby clean && npm run generate"
 ```

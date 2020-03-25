@@ -14,6 +14,7 @@
     "gatsby-source-filesystem": "^2.0.33",
     "gatsby-transformer-remark": "^2.3.12",
     "gatsby-transformer-sharp": "^2.1.19",
+    "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.6.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",

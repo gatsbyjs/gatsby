@@ -174,7 +174,7 @@ provided, they will still be handled by Gatsby's type inference.
 > Actions to customize Gatsby's schema generation are made available in the
 > [`createSchemaCustomization`](/docs/node-apis/#createSchemaCustomization)
 > (available in Gatsby v2.12 and above),
-> and [`sourcesNodes`](/docs/node-apis/#sourceNodes) APIs.
+> and [`sourceNodes`](/docs/node-apis/#sourceNodes) APIs.
 
 #### Opting out of type inference
 
@@ -461,7 +461,7 @@ out-of-the-box extension, so resolving a field to a default value (instead of
 tag to every blog post:
 
 ```js:title=gatsby-node.js
-exports.createSchemaCustomization = ({ action, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",

@@ -15,7 +15,7 @@ The easiest method for including video on a Gatsby site is to source an uploaded
 
 ## Embedding hosted videos in Markdown
 
-There are numerous Gatsby plugins for working with hosted video in your Markdown posts and pages. We recommend checking out the [gatsby-remark-embed-video](/packages/gatsby-remark-embed-video/?=video) plugin for sourcing from a variety of hosts like YouTube or vimeo.
+There are numerous Gatsby plugins for working with hosted video in your Markdown posts and pages. We recommend checking out the [gatsby-remark-embed-video](/packages/gatsby-remark-embed-video/?=video) plugin for sourcing from a variety of hosts like YouTube or Vimeo.
 
 ### Writing custom components for hosted video
 

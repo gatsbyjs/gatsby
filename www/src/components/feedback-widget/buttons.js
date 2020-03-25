@@ -7,7 +7,7 @@ import {
   fontSizes,
   radii,
   space,
-} from "../../gatsby-plugin-theme-ui"
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { formInputFocus, focusStyle } from "../../utils/styles"
 
 const rotation = keyframes`
@@ -24,7 +24,7 @@ const buttonStyles = css`
   align-items: center;
   background: ${colors.gatsby};
   border: none;
-  border-radius: ${radii[2]}px;
+  border-radius: ${radii[2]};
   color: ${colors.white};
   cursor: pointer;
   display: flex;
@@ -80,7 +80,7 @@ export const CloseButton = styled(`button`)`
 
 export const ToggleButtonLabel = styled(`span`)`
   align-items: center;
-  border-radius: ${p => p.theme.radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   display: flex;
   height: 2.5rem;
   padding: 0 ${p => p.theme.space[9]} 0 ${p => p.theme.space[3]};
@@ -144,7 +144,7 @@ export const ToggleButton = styled(`button`)`
   align-items: center;
   background: none;
   border: none;
-  border-radius: ${p => p.theme.radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   cursor: pointer;
   display: flex;
   padding: 0;

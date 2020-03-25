@@ -26,7 +26,6 @@ Object {
   "text": "query mockFileQuery {
   allDirectory {
     nodes {
-      id
       contents {
         __typename
         ... on File {
@@ -92,15 +91,12 @@ Object {
   "text": "query mockFileQuery {
   allDirectory {
     nodes {
-      id
       contents {
         __typename
         ... on Directory {
-          id
           contents {
             __typename
             ... on Directory {
-              id
               contents {
                 __typename
                 ... on Directory {
@@ -117,16 +113,13 @@ Object {
       }
       children {
         __typename
-        id
         children {
           __typename
-          id
           children {
             __typename
             id
           }
           ... on Directory {
-            id
             contents {
               __typename
               ... on File {
@@ -170,7 +163,6 @@ Object {
     ",
   "path": "mockFile",
   "text": "fragment DirectoryContents on Directory {
-  id
   contents {
     __typename
     ... on File {
@@ -186,7 +178,6 @@ Object {
 query mockFileQuery {
   allDirectory {
     nodes {
-      id
       ...DirectoryContents
     }
   }
@@ -223,9 +214,7 @@ Object {
   "text": "query mockFileQuery {
   allDirectory {
     nodes {
-      id
       ... on Directory {
-        id
         contents {
           __typename
           ... on File {
@@ -236,205 +225,6 @@ Object {
           __typename
           id
         }
-      }
-    }
-  }
-}
-",
-}
-`;
-
-exports[`Extra fields adds id field if type has it 1`] = `
-Object {
-  "hash": "hash",
-  "isHook": false,
-  "isStaticQuery": false,
-  "name": "mockFileQuery",
-  "originalText": "
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            __typename
-          }
-        }
-      }
-    ",
-  "path": "mockFile",
-  "text": "query mockFileQuery {
-  allDirectory {
-    nodes {
-      id
-      __typename
-    }
-  }
-}
-",
-}
-`;
-
-exports[`Extra fields adds id field in the query of arbitrary depth 1`] = `
-Object {
-  "hash": "hash",
-  "isHook": false,
-  "isStaticQuery": false,
-  "name": "mockFileQuery",
-  "originalText": "
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            contents {
-              ... on Directory {
-                contents {
-                  ... on Directory {
-                    contents {
-                      ... on File {
-                        __typename
-                      }
-                      ... on Directory {
-                        __typename
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            children {
-              children {
-                children {
-                  __typename
-                }
-                ... on Directory {
-                  contents {
-                    ... on File {
-                      __typename
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    ",
-  "path": "mockFile",
-  "text": "query mockFileQuery {
-  allDirectory {
-    nodes {
-      id
-      contents {
-        __typename
-        ... on Directory {
-          id
-          contents {
-            __typename
-            ... on Directory {
-              id
-              contents {
-                __typename
-                ... on File {
-                  id
-                  __typename
-                }
-                ... on Directory {
-                  id
-                  __typename
-                }
-              }
-            }
-          }
-        }
-      }
-      children {
-        __typename
-        id
-        children {
-          __typename
-          id
-          children {
-            id
-            __typename
-          }
-          ... on Directory {
-            id
-            contents {
-              __typename
-              ... on File {
-                id
-                __typename
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-",
-}
-`;
-
-exports[`Extra fields adds id field within fragment if type has it 1`] = `
-Object {
-  "hash": "hash",
-  "isHook": false,
-  "isStaticQuery": false,
-  "name": "mockFileQuery",
-  "originalText": "
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            ... Directory
-          }
-        }
-      }
-      fragment Directory on Directory {
-        __typename
-      }
-
-    ",
-  "path": "mockFile",
-  "text": "fragment Directory on Directory {
-  id
-  __typename
-}
-
-query mockFileQuery {
-  allDirectory {
-    nodes {
-      id
-      ...Directory
-    }
-  }
-}
-",
-}
-`;
-
-exports[`Extra fields adds id field within inline fragment if type has it 1`] = `
-Object {
-  "hash": "hash",
-  "isHook": false,
-  "isStaticQuery": false,
-  "name": "mockFileQuery",
-  "originalText": "
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            ... on Directory {
-              __typename
-            }
-          }
-        }
-      }
-    ",
-  "path": "mockFile",
-  "text": "query mockFileQuery {
-  allDirectory {
-    nodes {
-      id
-      ... on Directory {
-        id
-        __typename
       }
     }
   }
@@ -500,17 +290,14 @@ Object {
 }
 
 fragment Node on Node {
-  id
   __typename
 }
 
 fragment DirectoryContents on Directory {
-  id
   contents {
     __typename
   }
   children {
-    id
     __typename
   }
 }
@@ -518,7 +305,6 @@ fragment DirectoryContents on Directory {
 query mockFileQuery {
   allDirectory {
     nodes {
-      id
       contents {
         __typename
         ... on File {
@@ -527,17 +313,14 @@ query mockFileQuery {
         ...FileOrDirectory
       }
       children {
-        id
         __typename
         ...Node
       }
       ... on Directory {
-        id
         contents {
           __typename
         }
         children {
-          id
           __typename
         }
       }
@@ -595,7 +378,6 @@ Object {
 }
 
 fragment DirectoryContents on Directory {
-  id
   children {
     __typename: id
   }
@@ -616,193 +398,9 @@ query mockFileQuery {
         ...Node
       }
       ... on Directory {
-        id
         children {
           __typename: id
         }
-      }
-      ...DirectoryContents
-    }
-  }
-}
-",
-}
-`;
-
-exports[`Extra fields doesn't add id field twice 1`] = `
-Object {
-  "hash": "hash",
-  "isHook": false,
-  "isStaticQuery": false,
-  "name": "mockFileQuery",
-  "originalText": "
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            id
-            contents {
-              ... on File {
-                id
-              }
-              ... on Directory {
-                id
-              }
-            }
-            children {
-              id
-              ... Node
-            }
-            ... on Directory {
-              id
-              children {
-                id
-              }
-            }
-            ...DirectoryContents
-          }
-        }
-      }
-
-      fragment DirectoryContents on Directory {
-        contents {
-          ... on File {
-            id
-          }
-          ... on Directory {
-            id
-          }
-        }
-        children {
-          id
-        }
-      }
-
-      fragment Node on Node {
-        id
-      }
-    ",
-  "path": "mockFile",
-  "text": "fragment Node on Node {
-  __typename
-  id
-}
-
-fragment DirectoryContents on Directory {
-  id
-  contents {
-    __typename
-    ... on File {
-      id
-    }
-    ... on Directory {
-      id
-    }
-  }
-  children {
-    __typename
-    id
-  }
-}
-
-query mockFileQuery {
-  allDirectory {
-    nodes {
-      id
-      contents {
-        __typename
-        ... on File {
-          id
-        }
-        ... on Directory {
-          id
-        }
-      }
-      children {
-        __typename
-        id
-        ...Node
-      }
-      ... on Directory {
-        id
-        children {
-          __typename
-          id
-        }
-      }
-      ...DirectoryContents
-    }
-  }
-}
-",
-}
-`;
-
-exports[`Extra fields doesn't add id field when alias for id exists 1`] = `
-Object {
-  "hash": "hash",
-  "isHook": false,
-  "isStaticQuery": false,
-  "name": "mockFileQuery",
-  "originalText": "
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            contents {
-              ... on File {
-                id: absolutePath
-              }
-              ... on Directory {
-                id: absolutePath
-              }
-            }
-            ... on Directory {
-              id: absolutePath
-            }
-            ...DirectoryContents
-          }
-        }
-      }
-
-      fragment DirectoryContents on Directory {
-        contents {
-          ... on File {
-            id: absolutePath
-          }
-          ... on Directory {
-            id: absolutePath
-          }
-        }
-      }
-    ",
-  "path": "mockFile",
-  "text": "fragment DirectoryContents on Directory {
-  id
-  contents {
-    __typename
-    ... on File {
-      id: absolutePath
-    }
-    ... on Directory {
-      id: absolutePath
-    }
-  }
-}
-
-query mockFileQuery {
-  allDirectory {
-    nodes {
-      id
-      contents {
-        __typename
-        ... on File {
-          id: absolutePath
-        }
-        ... on Directory {
-          id: absolutePath
-        }
-      }
-      ... on Directory {
-        id: absolutePath
       }
       ...DirectoryContents
     }
@@ -838,7 +436,6 @@ Map {
 query mockFileQuery {
   allPostsJson {
     nodes {
-      id
       ...PostsJsonFragment
     }
   }
@@ -869,7 +466,6 @@ Object {
 query mockFileQuery {
   allPostsJson {
     nodes {
-      id
       ...PostsJsonFragment
     }
   }
@@ -903,7 +499,6 @@ Object {
 query mockFileQuery {
   allPostsJson {
     nodes {
-      id
       ...PostsJsonFragment
     }
   }
@@ -1050,14 +645,12 @@ Object {
 }
 
 fragment AnotherPostsJsonFragment on PostsJson {
-  id
   text
 }
 
 query mockFileQuery {
   allPostsJson {
     nodes {
-      id
       ...PostsJsonFragment
     }
   }
@@ -1095,7 +688,6 @@ Object {
 query mockFileQuery {
   allPostsJson {
     nodes {
-      id
       ...PostsJsonFragment
     }
   }

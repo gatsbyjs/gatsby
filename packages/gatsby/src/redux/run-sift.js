@@ -1,13 +1,16 @@
 // @flow
 const { default: sift } = require(`sift`)
-const _ = require(`lodash`)
-const prepareRegex = require(`../utils/prepare-regex`)
+const { prepareRegex } = require(`../utils/prepare-regex`)
 const { makeRe } = require(`micromatch`)
-const { getValueAt } = require(`../utils/get-value-at`)
+import { getValueAt } from "../utils/get-value-at"
+import _ from "lodash"
 const {
   toDottedFields,
   objectToDottedField,
   liftResolvedFields,
+  createDbQueriesFromObject,
+  prefixResolvedFields,
+  dbQueryToSiftQuery,
 } = require(`../db/common/query`)
 const {
   ensureIndexByTypedChain,
@@ -41,10 +44,9 @@ const prepareQueryArgs = (filterFields = {}) =>
   }, {})
 
 const getFilters = filters =>
-  Object.keys(filters).reduce(
-    (acc, key) => acc.push({ [key]: filters[key] }) && acc,
-    []
-  )
+  Object.keys(filters).map(key => {
+    return { [key]: filters[key] }
+  })
 
 /////////////////////////////////////////////////////////////////////
 // Run Sift
@@ -93,55 +95,6 @@ function handleMany(siftArgs, nodes) {
 }
 
 /**
- * Given an object, assert that it has exactly one leaf property and that this
- * leaf is a number, string, or boolean. Additionally confirms that the path
- * does not contain the special cased `elemMatch` name.
- * Returns undefined if not a flat path, if it contains `elemMatch`, or if the
- * leaf value was not a bool, number, or string.
- * If array, it contains the property path followed by the leaf value.
- * Returns `undefined` if any condition is not met
- *
- * Example: `{a: {b: {c: "x"}}}` is flat with a chain of `['a', 'b', 'c', 'x']`
- * Example: `{a: {b: "x", c: "y"}}` is not flat because x and y are 2 leafs
- *
- * @param {Object} obj
- * @returns {Array<string | number | boolean>|undefined}
- */
-const getFlatPropertyChain = obj => {
-  if (!obj) {
-    return undefined
-  }
-
-  let chain = []
-  let props = Object.getOwnPropertyNames(obj)
-  let next = obj
-  while (props.length === 1) {
-    const prop = props[0]
-    if (prop === `elemMatch`) {
-      // TODO: Support handling this special case without sift as well
-      return undefined
-    }
-    chain.push(prop)
-    next = next[prop]
-    if (
-      typeof next === `string` ||
-      typeof next === `number` ||
-      typeof next === `boolean`
-    ) {
-      chain.push(next)
-      return chain
-    }
-    if (!next) {
-      return undefined
-    }
-    props = Object.getOwnPropertyNames(next)
-  }
-
-  // This means at least one object in the chain had more than one property
-  return undefined
-}
-
-/**
  * Given the chain of a simple filter, return the set of nodes that pass the
  * filter. The chain should be a property chain leading to the property to
  * check, followed by the value to check against. Common example:
@@ -150,10 +103,10 @@ const getFlatPropertyChain = obj => {
  * A fast index is created if one doesn't exist yet so cold call is slower.
  * The empty result value is null if firstOnly is false, or else an empty array.
  *
- * @param {Array<string>} chain Note: `eq` is assumed to be the leaf prop here
- * @param {boolean | number | string} targetValue chain.chain.eq === targetValue
+ * @param {Array<string>} chain Note: `$eq` is assumed to be the leaf prop here
+ * @param {boolean | number | string} targetValue chain.a.b.$eq === targetValue
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
  * @returns {Array<Node> | undefined}
  */
 const runFlatFilterWithoutSift = (
@@ -176,11 +129,6 @@ const runFlatFilterWithoutSift = (
   // There are also cases (and tests) where id exists with a different type
   if (!nodesByKeyValue) {
     return undefined
-  }
-
-  if (chain.join(`,`) === `id`) {
-    // The `id` key is not indexed in Sets (because why) so don't spread it
-    return [nodesByKeyValue]
   }
 
   // In all other cases this must be a non-empty Set because the indexing
@@ -212,17 +160,19 @@ const runFilterAndSort = (args: Object) => {
     firstOnly = false,
     nodeTypeNames,
     typedKeyValueIndexes,
+    stats,
   } = args
 
-  let result = applyFilters(
+  const result = applyFilters(
     filter,
     firstOnly,
     nodeTypeNames,
     typedKeyValueIndexes,
-    resolvedFields
+    resolvedFields,
+    stats
   )
 
-  return sortNodes(result, sort, resolvedFields)
+  return sortNodes(result, sort, resolvedFields, stats)
 }
 
 exports.runSift = runFilterAndSort
@@ -232,7 +182,7 @@ exports.runSift = runFilterAndSort
  * running sift, but not as versatile and correct. If no nodes were found then
  * it falls back to filtering through sift.
  *
- * @param {Object | undefined} filter
+ * @param {Object | undefined} filterFields
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
@@ -241,74 +191,102 @@ exports.runSift = runFilterAndSort
  *   limited to 1 if `firstOnly` is true
  */
 const applyFilters = (
-  filter,
+  filterFields,
   firstOnly,
   nodeTypeNames,
   typedKeyValueIndexes,
-  resolvedFields
+  resolvedFields,
+  stats
 ) => {
-  let result
-  if (typedKeyValueIndexes) {
-    result = filterWithoutSift(filter, nodeTypeNames, typedKeyValueIndexes)
-    if (result) {
-      if (firstOnly) {
-        return result.slice(0, 1)
-      }
-      return result
+  const filters = filterFields
+    ? prefixResolvedFields(
+        createDbQueriesFromObject(prepareQueryArgs(filterFields)),
+        resolvedFields
+      )
+    : []
+
+  if (stats) {
+    filters.forEach(filter => {
+      const filterStats = filterToStats(filter)
+      const comparatorPath = filterStats.comparatorPath.join(`.`)
+      stats.comparatorsUsed.set(
+        comparatorPath,
+        (stats.comparatorsUsed.get(comparatorPath) || 0) + 1
+      )
+      stats.uniqueFilterPaths.add(filterStats.filterPath.join(`.`))
+    })
+    if (filters.length > 1) {
+      stats.totalNonSingleFilters++
     }
   }
 
-  return filterWithSift(filter, firstOnly, nodeTypeNames, resolvedFields)
+  const result = filterWithoutSift(filters, nodeTypeNames, typedKeyValueIndexes)
+  if (result) {
+    if (stats) {
+      stats.totalIndexHits++
+    }
+    if (firstOnly) {
+      return result.slice(0, 1)
+    }
+    return result
+  }
+
+  return filterWithSift(filters, firstOnly, nodeTypeNames, resolvedFields)
+}
+
+const filterToStats = (filter, filterPath = [], comparatorPath = []) => {
+  if (filter.type === `elemMatch`) {
+    return filterToStats(
+      filter.nestedQuery,
+      filterPath.concat(filter.path),
+      comparatorPath.concat([`elemMatch`])
+    )
+  } else {
+    return {
+      filterPath: filterPath.concat(filter.path),
+      comparatorPath: comparatorPath.concat(filter.query.comparator),
+    }
+  }
 }
 
 /**
- * Check if the filter is "flat" (single leaf) and an "eq". If so, uses custom
+ * Check if the filter is "flat" (single leaf) and an "$eq". If so, uses custom
  * indexes based on filter and types and returns any result it finds.
  * If conditions are not met or no nodes are found, returns undefined.
  *
- * @param {Object | undefined} filter
+ * @param {Object} filter Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
  * @returns {Array|undefined} Collection of results
  */
-const filterWithoutSift = (filter, nodeTypeNames, typedKeyValueIndexes) => {
-  if (!filter) {
+const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
+  // This can also be `$ne`, `$in` or any other grapqhl comparison op
+  if (
+    !typedKeyValueIndexes ||
+    filters.length !== 1 ||
+    filters[0].type === `elemMatch` ||
+    filters[0].query.comparator !== `$eq`
+  ) {
     return undefined
   }
 
-  // Filter can be any struct of {a: {b: {c: {eq: "x"}}}} and we want to confirm
-  // there is exactly one leaf in this structure and that this leaf is `eq`. The
-  // actual names are irrelevant, they are a chain of props on a Node.
-
-  let chainWithNeedle = getFlatPropertyChain(filter)
-  if (!chainWithNeedle) {
-    return undefined
-  }
-
-  // `chainWithNeedle` should now be like:
-  //   `filter = {this: {is: {the: {chain: {eq: needle}}}}}`
-  //  ->
-  //   `['this', 'is', 'the', 'chain', 'eq', needle]`
-  let targetValue = chainWithNeedle.pop()
-  let lastPath = chainWithNeedle.pop()
-
-  // This can also be `ne`, `in` or any other grapqhl comparison op
-  if (lastPath !== `eq`) {
-    return undefined
-  }
+  const filter = filters[0]
 
   return runFlatFilterWithoutSift(
-    chainWithNeedle,
-    targetValue,
+    filter.path,
+    filter.query.value,
     nodeTypeNames,
     typedKeyValueIndexes
   )
 }
 
+// Not a public API
+exports.filterWithoutSift = filterWithoutSift
+
 /**
  * Use sift to apply filters
  *
- * @param {Object | undefined} filter
+ * @param {Array<Object>} filter Resolved
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
@@ -316,13 +294,13 @@ const filterWithoutSift = (filter, nodeTypeNames, typedKeyValueIndexes) => {
  *   will be limited to 1 if `firstOnly` is true
  */
 const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
-  let nodes = []
-
-  nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
+  const nodes = [].concat(
+    ...nodeTypeNames.map(typeName => addResolvedNodes(typeName))
+  )
 
   return _runSiftOnNodes(
     nodes,
-    filter,
+    filter.map(f => dbQueryToSiftQuery(f)),
     firstOnly,
     nodeTypeNames,
     resolvedFields,
@@ -348,9 +326,13 @@ const runSiftOnNodes = (nodes, args, getNode = siftGetNode) => {
     nodeTypeNames,
   } = args
 
+  let siftFilter = getFilters(
+    liftResolvedFields(toDottedFields(prepareQueryArgs(filter)), resolvedFields)
+  )
+
   return _runSiftOnNodes(
     nodes,
-    filter,
+    siftFilter,
     firstOnly,
     nodeTypeNames,
     resolvedFields,
@@ -364,7 +346,7 @@ exports.runSiftOnNodes = runSiftOnNodes
  * Given a list of filtered nodes and sorting parameters, sort the nodes
  *
  * @param {Array<Node>} nodes Should be all nodes of given type(s)
- * @param {Object | undefined} filter
+ * @param {Array<Object>} filter Resolved
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
@@ -380,14 +362,10 @@ const _runSiftOnNodes = (
   resolvedFields,
   getNode
 ) => {
-  let siftFilter = getFilters(
-    liftResolvedFields(toDottedFields(prepareQueryArgs(filter)), resolvedFields)
-  )
-
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
-  if (isEqId(siftFilter)) {
-    const node = getNode(siftFilter[0].id.$eq)
+  if (isEqId(filter)) {
+    const node = getNode(filter[0].id.$eq)
 
     if (
       !node ||
@@ -403,9 +381,9 @@ const _runSiftOnNodes = (
   }
 
   if (firstOnly) {
-    return handleFirst(siftFilter, nodes)
+    return handleFirst(filter, nodes)
   } else {
-    return handleMany(siftFilter, nodes)
+    return handleMany(filter, nodes)
   }
 }
 
@@ -417,7 +395,7 @@ const _runSiftOnNodes = (
  * @param resolvedFields
  * @returns {Array<Node> | undefined | null} Same as input, except sorted
  */
-const sortNodes = (nodes, sort, resolvedFields) => {
+const sortNodes = (nodes, sort, resolvedFields, stats) => {
   if (!sort || nodes?.length <= 1) {
     return nodes
   }
@@ -425,19 +403,24 @@ const sortNodes = (nodes, sort, resolvedFields) => {
   // create functions that return the item to compare on
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.keys(dottedFields)
-  const sortFields = sort.fields
-    .map(field => {
-      if (
-        dottedFields[field] ||
-        dottedFieldKeys.some(key => field.startsWith(key))
-      ) {
-        return `__gatsby_resolved.${field}`
-      } else {
-        return field
-      }
-    })
-    .map(field => v => getValueAt(v, field))
+  const sortFields = sort.fields.map(field => {
+    if (
+      dottedFields[field] ||
+      dottedFieldKeys.some(key => field.startsWith(key))
+    ) {
+      return `__gatsby_resolved.${field}`
+    } else {
+      return field
+    }
+  })
+  const sortFns = sortFields.map(field => v => getValueAt(v, field))
   const sortOrder = sort.order.map(order => order.toLowerCase())
 
-  return _.orderBy(nodes, sortFields, sortOrder)
+  if (stats) {
+    sortFields.forEach(sortField => {
+      stats.uniqueSorts.add(sortField)
+    })
+  }
+
+  return _.orderBy(nodes, sortFns, sortOrder)
 }

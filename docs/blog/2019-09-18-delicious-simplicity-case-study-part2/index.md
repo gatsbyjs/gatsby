@@ -14,7 +14,8 @@ _In [Part One](/blog/2019-06-08-delicious-simplicity-case-study-part-1/) of this
 _Then came the opportunity to build a brand new Gatsby-from-scratch project, adding in the content management capability of Gatsby’s newest superpower: [Gatsby Preview](https://www.gatsbyjs.com/preview/)._
 
 <Pullquote>
-Now up and running on Gatsby, the Delicious Simplicity team was ready to take on a bigger challenge.
+  Now up and running on Gatsby, the Delicious Simplicity team was ready to take
+  on a bigger challenge.
 </Pullquote>
 
 The opportunity arrived in the form of Evie Magazine, a startup online-only lifestyle publication aimed at women. Evie’s editors planned a vibrant and dynamic content stream, meaning they would be adding to and updating the site constantly. To do this seamlessly on the browser side -- i.e., not interrupting user experience -- yet easily on the editorial side, they needed a way to preview changes live in the browser before deploying. Preferably one that did not involve spinning up a local server in the CLI. They were content creators, not coders, after all, and so expected the preview capability of a traditional CMS.
@@ -31,8 +32,9 @@ Great content by itself isn’t enough, she adds. It has to come in a great pack
 
 Preview does the job brilliantly. “Having a fully-functional ‘ghost’ copy of our site allows for seamless quality control and visual consistency. Preview puts user-friendly technical power in the hands of our non-technical editorial team.”
 
-<Pullquote> 
-“Preview puts user-friendly technical power in the hands of our non-technical editorial team.” 
+<Pullquote>
+  “Preview puts user-friendly technical power in the hands of our non-technical
+  editorial team.”
 </Pullquote>
 
 It also facilitates their primary job -- producing and sharing compelling, creative content. “The invaluable cherry on top is Preview’s ability to create live links for approval,” Brittany says. “This is key for when we are doing features on high-profile individuals, or content collaborations with other brands.”
