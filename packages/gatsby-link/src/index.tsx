@@ -1,6 +1,12 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, LinkProps, LinkGetProps, NavigateFn, NavigateOptions } from "@reach/router"
+import {
+  Link,
+  LinkProps,
+  LinkGetProps,
+  NavigateFn,
+  NavigateOptions,
+} from "@reach/router"
 
 import { parsePath } from "./parse-path"
 
@@ -35,7 +41,7 @@ interface IOResult {
  * After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in
  * development and production
  */
-export function withPrefix(path: string|number): string {
+export function withPrefix(path: string | number): string {
   return normalizePath(
     [
       typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
@@ -46,6 +52,17 @@ export function withPrefix(path: string|number): string {
 
 export function withAssetPrefix(path: string): string {
   return [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
+}
+
+/**
+ * Sometimes you need to navigate to pages programmatically, such as during form submissions. In these
+ * cases, `Link` won’t work.
+ */
+export const navigate: NavigateFn = async (
+  to: string | number,
+  options?: NavigateOptions<{}>
+) => {
+  window.___navigate(withPrefix(to), options)
 }
 
 function normalizePath(path: string): string {
@@ -100,7 +117,7 @@ class GatsbyLinkInternal<TState> extends React.Component<
     onClick: PropTypes.func,
     to: PropTypes.string.isRequired,
     replace: PropTypes.bool,
-    // eslint-disable-next-line no-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state: PropTypes.object as any,
   }
 
@@ -117,21 +134,21 @@ class GatsbyLinkInternal<TState> extends React.Component<
     }
   }
 
-  componentDidUpdate(prevProps: IGatsbyLinkProps<TState>) {
+  componentDidUpdate(prevProps: IGatsbyLinkProps<TState>): void {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
       ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
       ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     if (!this.io) {
       return
     }
@@ -156,7 +173,10 @@ class GatsbyLinkInternal<TState> extends React.Component<
     }
   }
 
-  defaultGetProps = ({ isPartiallyCurrent, isCurrent }: LinkGetProps): {} => {
+  readonly defaultGetProps = ({
+    isPartiallyCurrent,
+    isCurrent,
+  }: LinkGetProps): {} => {
     if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
@@ -170,20 +190,21 @@ class GatsbyLinkInternal<TState> extends React.Component<
     return (null as unknown) as {}
   }
 
-  render() {
+  render(): JSX.Element {
     const {
       to,
       getProps = this.defaultGetProps,
       onClick,
       onMouseEnter,
-      /* eslint-disable no-unused-vars */
+      /* eslint-disable @typescript-eslint/no-unused-vars */
+      // Explicitly destructure these away so our "rest" params don't include them.
       activeClassName: $activeClassName,
       activeStyle: $activeStyle,
       innerRef: $innerRef,
       partiallyActive,
       state,
       replace,
-      /* eslint-enable no-unused-vars */
+      /* eslint-enable @typescript-eslint/no-unused-vars */
       ...rest
     } = this.props
 
@@ -202,13 +223,13 @@ class GatsbyLinkInternal<TState> extends React.Component<
         state={state}
         getProps={getProps}
         innerRef={this.handleRef as React.Ref<HTMLAnchorElement>}
-        onMouseEnter={e => {
+        onMouseEnter={(e): void => {
           if (onMouseEnter) {
             onMouseEnter(e)
           }
           ___loader.hovering(parsePath(to).pathname)
         }}
-        onClick={e => {
+        onClick={(e): boolean => {
           if (onClick) {
             onClick(e)
           }
@@ -241,7 +262,7 @@ const showDeprecationWarning = (
   functionName: string,
   altFunctionName: string,
   version: number
-) =>
+): void =>
   console.warn(
     `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
   )
@@ -256,24 +277,18 @@ const GatsbyLink = React.forwardRef<
 >((props: IGatsbyLinkProps<unknown>, ref: React.Ref<HTMLAnchorElement>) => (
   <GatsbyLinkInternal innerRef={ref} {...props} />
 ))
-interface GatsbyLink<TState>
-  extends React.Component<IGatsbyLinkProps<TState>, IGatsbyLinkState> {}
+type GatsbyLink<TState> = React.Component<
+  IGatsbyLinkProps<TState>,
+  IGatsbyLinkState
+>
 
 export default GatsbyLink
-
-/**
- * Sometimes you need to navigate to pages programmatically, such as during form submissions. In these
- * cases, `Link` won’t work.
- */
-export const navigate: NavigateFn = async (to: string|number, options?: NavigateOptions<{}>) => {
-  window.___navigate(withPrefix(to), options)
-}
 
 /**
  * @deprecated
  * TODO: Remove for Gatsby v3
  */
-export const push = (to: string) => {
+export const push = (to: string): void => {
   showDeprecationWarning(`push`, `navigate`, 3)
   window.___push(withPrefix(to))
 }
@@ -282,7 +297,7 @@ export const push = (to: string) => {
  * @deprecated
  * TODO: Remove for Gatsby v3
  */
-export const replace = (to: string) => {
+export const replace = (to: string): void => {
   showDeprecationWarning(`replace`, `navigate`, 3)
   window.___replace(withPrefix(to))
 }
@@ -291,7 +306,7 @@ export const replace = (to: string) => {
  * @deprecated
  * TODO: Remove for Gatsby v3
  */
-export const navigateTo = (to: string) => {
+export const navigateTo = (to: string): void => {
   showDeprecationWarning(`navigateTo`, `navigate`, 3)
   return push(to)
 }
