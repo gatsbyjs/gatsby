@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import styled from "@emotion/styled"
 
-import MdCheckCircle from "react-icons/lib/md/check-circle"
+import { MdCheckCircle as CheckCircleIcon } from "react-icons/md"
 
 const Text = styled.span`
   color: ${p => p.theme.colors.link.color};
@@ -10,7 +10,7 @@ const Text = styled.span`
 
 const DefaultLanguageBadge = ({ children }) => (
   <Text>
-    <MdCheckCircle /> {children}
+    <CheckCircleIcon /> {children}
   </Text>
 )
 

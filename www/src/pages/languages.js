@@ -2,19 +2,19 @@
 import React from "react"
 import { jsx } from "theme-ui"
 import { Helmet } from "react-helmet"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 import styled from "@emotion/styled"
 
 import { langs, defaultLang } from "../utils/i18n"
 
+import Link from "../components/localized-link"
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
 import Breadcrumb from "../components/docs-breadcrumb"
 import LanguageTableRow from "../components/languages/language-table-row"
 
-import MdTranslate from "react-icons/lib/md/translate"
+import { MdTranslate as TranslateIcon } from "react-icons/md"
 
-const TranslateBackground = styled(MdTranslate)`
+const TranslateBackground = styled(TranslateIcon)`
   position: absolute;
   right: calc(100% + 2rem);
 
@@ -52,10 +52,7 @@ const LanguagesFooter = () => (
     </p>
     <p>
       Don't see your language above?{" "}
-      <OutboundLink href="https://www.gatsbyjs.org/contributing/translation/">
-        Let us know
-      </OutboundLink>
-      .
+      <Link to="/contributing/translation/">Let us know</Link>.
     </p>
   </section>
 )

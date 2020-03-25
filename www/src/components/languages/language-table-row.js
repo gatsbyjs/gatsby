@@ -5,10 +5,9 @@ import { css } from "@emotion/core"
 import { Link } from "gatsby"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-// import useHover from "../../hooks/use-hover"
+import { localizedPath } from "../../utils/i18n"
 
-import MdLaunch from "react-icons/lib/md/launch"
-// import ProgressBar from "../progress-bar"
+import { MdLaunch as LaunchIcon } from "react-icons/md"
 import DefaultLanguageBadge from "./default-language-badge"
 
 const LocalName = styled.strong`
@@ -100,14 +99,8 @@ const LanguageBadgeContainer = styled.div`
 `
 
 const LanguageTableRow = ({ lang, isDefault, isCurrent }) => {
-  // const [isHovered, hoverHandlers] = useHover()
-
   return (
-    <Row
-      isCurrent={isCurrent}
-      to={isDefault ? "/languages" : `/${lang.code}/languages`}
-      // {...hoverHandlers}
-    >
+    <Row isCurrent={isCurrent} to={localizedPath(lang.code, "/languages")}>
       <LanguageIdentification>
         <LocalName>{lang.localName}</LocalName>
         <span sx={{ width: "6rem", flex: 1 }}>{lang.name}</span>
@@ -117,22 +110,14 @@ const LanguageTableRow = ({ lang, isDefault, isCurrent }) => {
           {isDefault && (
             <DefaultLanguageBadge>Default language</DefaultLanguageBadge>
           )}
-          {/* TODO: implement switching the default language */}
-          {/* {!isDefault && isHovered && (
-          <DefaultLanguageBadge>Set as default</DefaultLanguageBadge>
-        )} */}
         </LanguageBadgeContainer>
-        {/* TODO: implement language progress */}
-        {/* <div sx={{ width: "8rem", mr: 2 }}>
-        {lang.code !== "en" && <ProgressBar progress={lang.progress} />}
-      </div> */}
         <MutedLink
           href={`https://github.com/gatsbyjs/gatsby-${lang.code}`}
-          onClick={event => {
-            event.stopPropagation()
-          }}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={event => event.stopPropagation()}
         >
-          Contribute <MdLaunch />
+          Contribute <LaunchIcon />
         </MutedLink>
       </LanguageMeta>
     </Row>
