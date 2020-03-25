@@ -1,5 +1,7 @@
 import path from "path"
 import { store } from "../redux"
+import { Server as HTTPSServer } from "https"
+import { Server as HTTPServer } from "http"
 import fs from "fs"
 import pageDataUtil from "../utils/page-data"
 import telemetry from "gatsby-telemetry"
@@ -8,12 +10,18 @@ import { createHash } from "crypto"
 import { normalizePagePath, denormalizePagePath } from "./normalize-page-path"
 import socketIO from "socket.io"
 
-interface IQueryResult {
+interface IPageQueryResult {
   id: string
-  result?: object
+  result: any // TODO: Improve this once we understand what the type is
 }
 
-type QueryResultsMap = Map<string, IQueryResult>
+interface IStaticQueryResult {
+  id: number
+  result: any // TODO: Improve this once we understand what the type is
+}
+
+type PageResultsMap = Map<string, IPageQueryResult>
+type QueryResultsMap = Map<number, IStaticQueryResult>
 
 /**
  * Get cached page query result for given page path.
@@ -21,7 +29,7 @@ type QueryResultsMap = Map<string, IQueryResult>
  */
 const getCachedPageData = async (
   pagePath: string
-): Promise<IQueryResult | undefined> => {
+): Promise<IPageQueryResult> => {
   const { program, pages } = store.getState()
   const publicDir = path.join(program.directory, `public`)
   if (pages.has(denormalizePagePath(pagePath)) || pages.has(pagePath)) {
@@ -39,7 +47,10 @@ const getCachedPageData = async (
     }
   }
 
-  return undefined
+  return {
+    id: pagePath,
+    result: undefined,
+  }
 }
 
 const hashPaths = (paths?: string[]): undefined | Array<string | undefined> => {
@@ -65,7 +76,7 @@ const getCachedStaticQueryResults = (
   resultsMap: QueryResultsMap,
   directory: string
 ): QueryResultsMap => {
-  const cachedStaticQueryResults = new Map()
+  const cachedStaticQueryResults: QueryResultsMap = new Map()
   const { staticQueryComponents } = store.getState()
   staticQueryComponents.forEach(staticQueryComponent => {
     // Don't read from file if results were already passed from query runner
@@ -95,39 +106,20 @@ const getCachedStaticQueryResults = (
 const getRoomNameFromPath = (path: string): string => `path-${path}`
 
 class WebsocketManager {
-  pageResults: QueryResultsMap
-  staticQueryResults: QueryResultsMap
-  errors: Map<string, string>
-  isInitialised: boolean
-  activePaths: Set<string>
-  connectedClients: number
+  activePaths: Set<string> = new Set()
+  connectedClients: number = 0
+  errors: Map<string, string> = new Map()
+  pageResults: PageResultsMap = new Map()
+  staticQueryResults: QueryResultsMap = new Map()
+  websocket: socketIO.Server | undefined
 
-  // Initialized in init()
-  websocket!: socketIO.Server
-
-  constructor() {
-    this.isInitialised = false
-    this.activePaths = new Set()
-    this.pageResults = new Map()
-    this.staticQueryResults = new Map()
-    this.errors = new Map()
-    // this.websocket
-
-    this.init = this.init.bind(this)
-    this.getSocket = this.getSocket.bind(this)
-    this.emitPageData = this.emitPageData.bind(this)
-    this.emitStaticQueryData = this.emitStaticQueryData.bind(this)
-    this.emitError = this.emitError.bind(this)
-    this.connectedClients = 0
-  }
-
-  init({
-    server,
+  init = ({
     directory,
+    server,
   }: {
-    server: unknown
     directory: string
-  }): socketIO.Server {
+    server: HTTPSServer | HTTPServer
+  }): socketIO.Server => {
     const cachedStaticQueryResults = getCachedStaticQueryResults(
       this.staticQueryResults,
       directory
@@ -139,15 +131,10 @@ class WebsocketManager {
 
     this.websocket = socketIO(server)
 
-    this.websocket.on(`connection`, s => {
+    this.websocket.on(`connection`, socket => {
       let activePath: string | null = null
-      if (
-        s &&
-        s.handshake &&
-        s.handshake.headers &&
-        s.handshake.headers.referer
-      ) {
-        const path = url.parse(s.handshake.headers.referer).path
+      if (socket?.handshake?.headers?.referer) {
+        const path = url.parse(socket.handshake.headers.referer).path
         if (path) {
           activePath = path
           this.activePaths.add(path)
@@ -157,13 +144,13 @@ class WebsocketManager {
       this.connectedClients += 1
       // Send already existing static query results
       this.staticQueryResults.forEach(result => {
-        this.websocket.send({
+        socket.send({
           type: `staticQueryResult`,
           payload: result,
         })
       })
       this.errors.forEach((message, errorID) => {
-        this.websocket.send({
+        socket.send({
           type: `overlayError`,
           payload: {
             id: errorID,
@@ -173,7 +160,8 @@ class WebsocketManager {
       })
 
       const leaveRoom = (path: string): void => {
-        s.leave(getRoomNameFromPath(path))
+        socket.leave(getRoomNameFromPath(path))
+        if (!this.websocket) return
         const leftRoom = this.websocket.sockets.adapter.rooms[
           getRoomNameFromPath(path)
         ]
@@ -187,7 +175,7 @@ class WebsocketManager {
           try {
             const result = await getCachedPageData(path)
 
-            this.pageResults.set(path, result || { id: path })
+            this.pageResults.set(path, result)
           } catch (err) {
             console.log(err.message)
 
@@ -195,19 +183,18 @@ class WebsocketManager {
           }
         }
 
-        this.websocket.send({
+        socket.send({
           type: `pageQueryResult`,
           why: `getDataForPath`,
           payload: this.pageResults.get(path),
         })
 
-        const clientsCount = this.connectedClients
-        if (clientsCount && clientsCount > 0) {
+        if (this.connectedClients > 0) {
           telemetry.trackCli(
             `WEBSOCKET_PAGE_DATA_UPDATE`,
             {
               siteMeasurements: {
-                clientsCount,
+                clientsCount: this.connectedClients,
                 paths: hashPaths(Array.from(this.activePaths)),
               },
             },
@@ -216,45 +203,42 @@ class WebsocketManager {
         }
       }
 
-      s.on(`getDataForPath`, getDataForPath)
+      socket.on(`getDataForPath`, getDataForPath)
 
-      s.on(`registerPath`, path => {
-        s.join(getRoomNameFromPath(path))
+      socket.on(`registerPath`, (path: string): void => {
+        socket.join(getRoomNameFromPath(path))
         activePath = path
         this.activePaths.add(path)
       })
 
-      s.on(`disconnect`, () => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        leaveRoom(activePath!)
+      socket.on(`disconnect`, (): void => {
+        if (activePath) leaveRoom(activePath)
         this.connectedClients -= 1
       })
 
-      s.on(`unregisterPath`, path => {
+      socket.on(`unregisterPath`, (path: string): void => {
         leaveRoom(path)
       })
     })
 
-    this.isInitialised = true
-
     return this.websocket
   }
 
-  getSocket(): socketIO.Server | undefined {
-    return this.isInitialised ? this.websocket : undefined
+  getSocket = (): socketIO.Server | undefined => {
+    return this.websocket
   }
 
-  emitStaticQueryData(data: IQueryResult): void {
+  emitStaticQueryData = (data: IStaticQueryResult): void => {
     this.staticQueryResults.set(data.id, data)
-    if (this.isInitialised) {
+
+    if (this.websocket) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
-      const clientsCount = this.connectedClients
-      if (clientsCount && clientsCount > 0) {
+      if (this.connectedClients > 0) {
         telemetry.trackCli(
           `WEBSOCKET_EMIT_STATIC_PAGE_DATA_UPDATE`,
           {
             siteMeasurements: {
-              clientsCount,
+              clientsCount: this.connectedClients,
               paths: hashPaths(Array.from(this.activePaths)),
             },
           },
@@ -264,18 +248,19 @@ class WebsocketManager {
     }
   }
 
-  emitPageData(data: IQueryResult): void {
+  emitPageData = (data: IPageQueryResult): void => {
     data.id = normalizePagePath(data.id)
     this.pageResults.set(data.id, data)
-    if (this.isInitialised) {
+
+    if (this.websocket) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
-      const clientsCount = this.connectedClients
-      if (clientsCount && clientsCount > 0) {
+
+      if (this.connectedClients > 0) {
         telemetry.trackCli(
           `WEBSOCKET_EMIT_PAGE_DATA_UPDATE`,
           {
             siteMeasurements: {
-              clientsCount,
+              clientsCount: this.connectedClients,
               paths: hashPaths(Array.from(this.activePaths)),
             },
           },
@@ -284,14 +269,15 @@ class WebsocketManager {
       }
     }
   }
-  emitError(id: string, message?: string): void {
+
+  emitError = (id: string, message?: string): void => {
     if (message) {
       this.errors.set(id, message)
     } else {
       this.errors.delete(id)
     }
 
-    if (this.isInitialised) {
+    if (this.websocket) {
       this.websocket.send({ type: `overlayError`, payload: { id, message } })
     }
   }
