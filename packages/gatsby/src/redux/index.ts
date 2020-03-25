@@ -62,7 +62,7 @@ export const configureStore = (
     applyMiddleware(thunk, multi)
   )
 
-export const store = configureStore(readState())
+export const store: Store = configureStore(readState())
 
 // Persist state.
 export const saveState = (): void => {
