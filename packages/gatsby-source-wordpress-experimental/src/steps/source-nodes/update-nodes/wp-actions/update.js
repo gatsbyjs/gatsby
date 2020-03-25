@@ -75,8 +75,8 @@ export const fetchAndCreateSingleNode = async ({
       id,
     }
 
-    data = {
-      ...data,
+    data[singleName] = {
+      ...data[singleName],
       ...originalFieldsToRetain,
     }
   }
