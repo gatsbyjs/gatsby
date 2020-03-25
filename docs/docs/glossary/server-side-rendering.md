@@ -11,7 +11,7 @@ _Server-side rendering_ means using a server to generate HTML from JavaScript mo
 
 Server-side rendering with JavaScript works similarly to other server-side languages such as PHP or .NET, but with [Node.js](/docs/glossary/node/) as the runtime environment. When the server receives a request, it parses the JavaScript modules and data required to generate a response, and returns a rendered HTML page to the browser.
 
-Single-page applications use client-side rendering. All URL requests are redirected to the same, bare-bones HTML document, like the examle that follows.
+Single-page applications use client-side rendering. All URL requests are redirected to the same, bare-bones HTML document, like the example that follows.
 
 ```sql
 <!DOCTYPE html>
@@ -32,9 +32,9 @@ Single-page applications use client-side rendering. All URL requests are redirec
 Client-side rendering fills in the rest. Views for specific URLs are managed by a JavaScript routing mechanism. Each URL request triggers a DOM update instead of a network request. As a result, sites that use client-side rendering can feel "snappier" and more responsive to user actions. However, client-side rendering has two significant drawbacks.
 
 1. Site visitors have to wait for the JavaScript bundle to load and for the browser to build the DOM before any content is visible. They may see a blank page or loading image while JavaScript loads.
-2. Your bare bones HTML document lacks keyword, description, and social media metadata (e.g. [OpenGraph](https://ogp.me/)) necessary for search engine optimization and social media sharing.
+2. Your bare bones HTML document lacks the keyword, description, and social media metadata (e.g. [OpenGraph](https://ogp.me/)) necessary for search engine optimization and social media sharing.
 
-Server-side rendering addresses both concerns by creating HTML at run time (i.e., when the server receives a browser request). Search engines can index your URLs, and visitors can share them on Facebook or Twitter.
+Server-side rendering addresses both concerns by creating HTML at _run time_, when the server receives a browser request). Search engines can index your URLs. Visitors can share them on Facebook or Twitter.
 
 Gatsby uses [server-side rendering APIs](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#why-server-side-render) to generate static HTML at [build time](/docs/glossary/build/), when you use the `gatsby build` command. Gatsby-rendered HTML pages give you the SEO and social sharing advantages of server-side rendering with the speed and security of a [static site generator](/docs/glossary/static-site-generator/).
 
