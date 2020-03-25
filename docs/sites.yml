@@ -10046,3 +10046,15 @@
   built_by: Carl Aiau
   built_by_url: https://github.com/carlaiau
   featured: false
+- title: Takeout Tracker
+  main_url: https://www.takeouttracker.com/
+  url: https://www.takeouttracker.com/
+  featured: false
+  categories:
+    - Data
+    - Open Source
+    - Food
+    - Directory
+    - Nonprofit
+  built_by: Corey Ward
+  built_by_url: http://www.coreyward.me/
