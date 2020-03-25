@@ -1,0 +1,147 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2020-02-20 15:22-0800\n"
+"Mime-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ja\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/components/dark-mode-toggle.js:136
+msgid "Activate light mode"
+msgstr ""
+
+#: src/components/dark-mode-toggle.js:136
+msgid "Activate dark mode"
+msgstr ""
+
+#: src/components/docs-table-of-contents.js:93
+msgid "Table of Contents"
+msgstr "目次"
+
+#: src/components/guide-list.js:47
+msgid "In this section:"
+msgstr ""
+
+#: src/components/markdown-page-footer.js:24
+msgid "<0/> Edit this page on GitHub"
+msgstr ""
+
+#: src/components/navigation-mobile.js:45
+#: src/components/navigation.js:86
+msgid "Docs"
+msgstr ""
+
+#: src/components/navigation-mobile.js:46
+msgid "Tutorials"
+msgstr ""
+
+#: src/components/navigation-mobile.js:47
+#: src/components/navigation.js:88
+msgid "Plugins"
+msgstr ""
+
+#: src/components/navigation-mobile.js:48
+#: src/components/navigation.js:90
+msgid "Blog"
+msgstr ""
+
+#: src/components/navigation-mobile.js:49
+#: src/components/navigation.js:91
+msgid "Showcase"
+msgstr ""
+
+#: src/components/navigation.js:87
+msgid "Tutorial"
+msgstr ""
+
+#: src/components/navigation.js:89
+msgid "Features"
+msgstr ""
+
+#: src/components/navigation.js:92
+msgid "Contributing"
+msgstr ""
+
+#: src/components/navigation.js:164
+msgid "Gatsby, Back to homepage"
+msgstr ""
+
+#: src/components/navigation.js:174
+msgid "Gatsby Logo"
+msgstr ""
+
+#: src/components/navigation.js:180
+msgid "Primary Navigation"
+msgstr ""
+
+#: src/components/prev-and-next.js:37
+msgid "pagination"
+msgstr ""
+
+#: src/components/prev-and-next.js:51
+msgid "Previous"
+msgstr "前"
+
+#: src/components/prev-and-next.js:84
+msgid "Next"
+msgstr "次"
+
+#: src/components/search-form/search-form.js:149
+#: src/components/search-form/search-form.js:150
+msgid "Search gatsbyjs.org"
+msgstr ""
+
+#: src/components/search-form/search-form.js:151
+msgid "Hit 's' to search docs"
+msgstr ""
+
+#: src/components/shared/egghead-embed.js:39
+msgid "Video hosted on <0>egghead.io</0>"
+msgstr ""
+
+#: src/components/shared/footer-links.js:7
+msgid "Accessibility Statement"
+msgstr "アクセシビリティ方針"
+
+#: src/components/shared/footer-links.js:8
+msgid "Code of Conduct"
+msgstr "行動規範"
+
+#: src/components/shared/footer-links.js:9
+msgid "Logo & Assets"
+msgstr ""
+
+#: src/components/sidebar/button-expand-all.js:42
+msgid "Collapse All"
+msgstr ""
+
+#: src/components/sidebar/button-expand-all.js:51
+msgid "Expand All"
+msgstr ""
+
+#: src/components/sidebar/section-title.js:142
+msgid "{0} collapse"
+msgstr ""
+
+#: src/components/sidebar/section-title.js:142
+msgid "{0} expand"
+msgstr ""
+
+#: src/components/sidebar/sidebar.js:203
+msgid "Secondary Navigation"
+msgstr ""
+
+#: src/components/sidebar/sticky-responsive-sidebar.js:106
+msgid "Show Secondary Navigation"
+msgstr ""
+
+#: src/components/skip-nav-link.js:31
+msgid "Skip to main content"
+msgstr ""

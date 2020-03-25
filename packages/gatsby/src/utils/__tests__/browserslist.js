@@ -4,7 +4,7 @@ jest.mock(`browserslist/node`, () => {
   }
 })
 const path = require(`path`)
-const getBrowsersList = require(`../browserslist`)
+import { getBrowsersList } from "../browserslist"
 const { findConfig: mockedFindConfig } = require(`browserslist/node`)
 
 const BASE = path.resolve(`.`)

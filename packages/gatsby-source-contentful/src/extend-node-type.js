@@ -1,3 +1,7 @@
+const fs = require(`fs`)
+const path = require(`path`)
+const crypto = require(`crypto`)
+
 const Promise = require(`bluebird`)
 const {
   GraphQLObjectType,
@@ -11,9 +15,23 @@ const {
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
-const path = require(`path`)
 
 const cacheImage = require(`./cache-image`)
+
+// By default store the images in `.cache` but allow the user to override
+// and store the image cache away from the gatsby cache. After all, the gatsby
+// cache is more likely to go stale than the images (which never go stale)
+// Note that the same image might be requested multiple times in the same run
+
+if (process.env.GATSBY_REMOTE_CACHE) {
+  console.warn(
+    `Please be aware that the \`GATSBY_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
+  )
+}
+const REMOTE_CACHE_FOLDER =
+  process.env.GATSBY_REMOTE_CACHE ??
+  path.join(process.cwd(), `.cache/remote_cache`)
+const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
 
 const {
   ImageFormatType,
@@ -34,10 +52,26 @@ const getBase64Image = imageProps => {
   if (!imageProps) return null
 
   const requestUrl = `https:${imageProps.baseUrl}?w=20`
-  // TODO add caching.
+
+  // Note: sha1 is unsafe for crypto but okay for this particular case
+  const shasum = crypto.createHash(`sha1`)
+  shasum.update(`requestUrl`)
+  const urlSha = shasum.digest(`hex`)
+
+  // TODO: Find the best place for this step. This is definitely not it.
+  fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
+
+  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha)
+
+  if (fs.existsSync(cacheFile)) {
+    // TODO: against dogma, confirm whether readFileSync is indeed slower
+    return fs.promises.readFile(cacheFile, `utf8`)
+  }
+
   return new Promise(resolve => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
-      resolve(body)
+      // TODO: against dogma, confirm whether writeFileSync is indeed slower
+      fs.promises.writeFile(cacheFile, body).then(() => resolve(body))
     })
   })
 }
