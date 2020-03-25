@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, LinkProps, LinkGetProps } from "@reach/router"
+import { Link, LinkProps, LinkGetProps, NavigateFn, NavigateOptions } from "@reach/router"
 
 import { parsePath } from "./parse-path"
 
@@ -10,13 +10,18 @@ export interface IGatsbyLinkState {
   IOSupported: boolean
 }
 
-interface INavLinkPropTypes extends React.PropsWithoutRef<LinkProps<unknown>> {
+export interface IGatsbyLinkProps<TState>
+  extends React.PropsWithoutRef<LinkProps<TState>> {
+  /** A class to apply when this Link is active */
   activeClassName?: string
-  activeStyle?: {} | null
-  partiallyActive?: boolean
-}
 
-export interface IGatsbyLinkProps extends INavLinkPropTypes {
+  /** Inline styles for when this Link is active */
+  activeStyle?: {}
+
+  /** Class the link as highlighted if there is a partial match via a the `to` being prefixed to the current url */
+  partiallyActive?: boolean
+
+  /** The URL you want to link to */
   to: string
 }
 
@@ -25,7 +30,12 @@ interface IOResult {
   el: Element
 }
 
-export function withPrefix(path: string): string {
+/**
+ * It is common to host sites in a sub-directory of a site. Gatsby lets you set the path prefix for your site.
+ * After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in
+ * development and production
+ */
+export function withPrefix(path: string|number): string {
   return normalizePath(
     [
       typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
@@ -79,18 +89,22 @@ function asMutable<T>(ref: React.RefObject<T>): { current: T | null } {
   return ref
 }
 
-class GatsbyLink extends React.Component<IGatsbyLinkProps, IGatsbyLinkState> {
+class GatsbyLinkInternal<TState> extends React.Component<
+  IGatsbyLinkProps<TState>,
+  IGatsbyLinkState
+> {
   io?: IOResult
 
-  propTypes: React.WeakValidationMap<IGatsbyLinkProps> = {
+  propTypes: React.WeakValidationMap<IGatsbyLinkProps<TState>> = {
     ...NavLinkPropTypes,
     onClick: PropTypes.func,
     to: PropTypes.string.isRequired,
     replace: PropTypes.bool,
-    state: PropTypes.object,
+    // eslint-disable-next-line no-any
+    state: PropTypes.object as any,
   }
 
-  constructor(props: IGatsbyLinkProps) {
+  constructor(props: IGatsbyLinkProps<TState>) {
     super(props)
     // Default to no support for IntersectionObserver
     let IOSupported = false
@@ -103,7 +117,7 @@ class GatsbyLink extends React.Component<IGatsbyLinkProps, IGatsbyLinkState> {
     }
   }
 
-  componentDidUpdate(prevProps: IGatsbyLinkProps) {
+  componentDidUpdate(prevProps: IGatsbyLinkProps<TState>) {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
       ___loader.enqueue(parsePath(this.props.to).pathname)
@@ -232,27 +246,51 @@ const showDeprecationWarning = (
     `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
   )
 
-export default React.forwardRef<HTMLAnchorElement, IGatsbyLinkProps>(
-  (props: IGatsbyLinkProps, ref: React.Ref<HTMLAnchorElement>) => (
-    <GatsbyLink innerRef={ref} {...props} />
-  )
-)
+/**
+ * This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other
+ * domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
+ */
+const GatsbyLink = React.forwardRef<
+  HTMLAnchorElement,
+  IGatsbyLinkProps<unknown>
+>((props: IGatsbyLinkProps<unknown>, ref: React.Ref<HTMLAnchorElement>) => (
+  <GatsbyLinkInternal innerRef={ref} {...props} />
+))
+interface GatsbyLink<TState>
+  extends React.Component<IGatsbyLinkProps<TState>, IGatsbyLinkState> {}
 
-export const navigate = (to: string, options: unknown) => {
+export default GatsbyLink
+
+/**
+ * Sometimes you need to navigate to pages programmatically, such as during form submissions. In these
+ * cases, `Link` won’t work.
+ */
+export const navigate: NavigateFn = async (to: string|number, options?: NavigateOptions<{}>) => {
   window.___navigate(withPrefix(to), options)
 }
 
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
 export const push = (to: string) => {
   showDeprecationWarning(`push`, `navigate`, 3)
   window.___push(withPrefix(to))
 }
 
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
 export const replace = (to: string) => {
   showDeprecationWarning(`replace`, `navigate`, 3)
   window.___replace(withPrefix(to))
 }
 
-// TODO: Remove navigateTo for Gatsby v3
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
 export const navigateTo = (to: string) => {
   showDeprecationWarning(`navigateTo`, `navigate`, 3)
   return push(to)
