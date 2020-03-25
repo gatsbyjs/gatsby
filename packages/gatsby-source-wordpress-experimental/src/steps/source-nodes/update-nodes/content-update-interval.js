@@ -15,6 +15,10 @@ const refetcher = async msRefetchInterval => {
  * so we can update Gatsby nodes when data changes
  */
 const startPollingForContentUpdates = (helpers, pluginOptions) => {
+  if (process.env.WP_DISABLE_POLLING) {
+    return
+  }
+
   const { verbose } = store.getState().gatsbyApi.pluginOptions
 
   const msRefetchInterval =
@@ -32,16 +36,4 @@ const startPollingForContentUpdates = (helpers, pluginOptions) => {
   refetcher(msRefetchInterval)
 }
 
-const maybeStartPollingForContentUpdates = (helpers, pluginOptions) => {
-  if (
-    process.env.RUNNER_TYPE === `PREVIEW` ||
-    process.env.ENABLE_GATSBY_REFRESH_ENDPOINT ||
-    process.env.WP_DISABLE_POLLING
-  ) {
-    return
-  }
-
-  startPollingForContentUpdates(helpers, pluginOptions)
-}
-
-export { startPollingForContentUpdates, maybeStartPollingForContentUpdates }
+export { startPollingForContentUpdates }

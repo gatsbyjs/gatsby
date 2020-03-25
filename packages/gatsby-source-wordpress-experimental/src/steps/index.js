@@ -6,5 +6,5 @@ export { sourcePreviews } from "~/steps/source-nodes/update-nodes/source-preview
 export { sourceNodes, createContentTypeNodes } from "~/steps/source-nodes"
 export { createSchemaCustomization } from "~/steps/create-schema-customization"
 export { setImageNodeIdCache } from "~/steps/set-image-node-id-cache"
-export { maybeStartPollingForContentUpdates } from "~/steps/source-nodes/update-nodes/content-update-interval"
+export { startPollingForContentUpdates } from "~/steps/source-nodes/update-nodes/content-update-interval"
 export { checkIfSchemaHasChanged } from "~/steps/ingest-remote-schema/diff-schemas"
