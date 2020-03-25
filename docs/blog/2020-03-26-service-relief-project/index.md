@@ -113,7 +113,10 @@ Over the next hour and a half, we developed a prototype using the following tool
 
 In our off-hours over the next 5 days, **6 team members made 76 commits, merged 11 pull requests, and made 19 releases**. In addition, Amberley Romo [created an outstanding readme](https://github.com/service-relief/service-relief/blob/master/examples/starter/README.md) for how to build your own Service Relief website.
 
-### Get Involved <a name="help"></a>
+### The Ripple Effect
+Within 48 hours of launching the Service Relief Project site and starter, local fundraising information sites have been launched in _eleven_ more states beyond the initial Seattle site! From Provo, Utah, to Sioux Falls, South Dakota and from Austin, Texas to Asheville, North Carolina - and half a dozen more places in between - people have been able to use our project to quickly launch their own service worker relief sites. 
+
+### How to Get Involved <a name="help"></a>
 
 What started as a project to help a friend help his community has turned into a worldwide project to help small businesses affected by the mandated shutdowns around the world.
 
