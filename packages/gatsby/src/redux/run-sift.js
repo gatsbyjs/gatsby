@@ -103,37 +103,95 @@ function handleMany(siftArgs, nodes) {
  * A fast index is created if one doesn't exist yet so cold call is slower.
  * The empty result value is null if firstOnly is false, or else an empty array.
  *
- * @param {Array<string>} chain Note: `$eq` is assumed to be the leaf prop here
- * @param {boolean | number | string} targetValue chain.a.b.$eq === targetValue
+ * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
  * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
  * @returns {Array<IGatsbyNode> | undefined}
  */
-const runFlatFilterWithoutSift = (
-  chain,
-  targetValue,
+const runFlatFiltersWithoutSift = (
+  filters,
   nodeTypeNames,
   typedKeyValueIndexes
 ) => {
-  ensureIndexByTypedChain(chain, nodeTypeNames, typedKeyValueIndexes)
-
-  const nodesByKeyValue = getNodesByTypedChain(
-    chain,
-    targetValue,
+  const caches = getBucketsForFilters(
+    filters,
     nodeTypeNames,
     typedKeyValueIndexes
   )
 
-  // If we couldn't find the needle then maybe sift can, for example if the
-  // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
-  // There are also cases (and tests) where id exists with a different type
-  if (!nodesByKeyValue) {
+  if (!caches) {
+    // Let Sift take over as fallback
     return undefined
   }
 
-  // In all other cases this must be a non-empty Set because the indexing
-  // mechanism does not create a Set unless there's a IGatsbyNode for it
-  return [...nodesByKeyValue]
+  // Put smallest last (we'll pop it)
+  caches.sort((a, b) => b.length - a.length)
+  // Iterate on the set with the fewest elements and create the intersection
+  const needles = caches.pop()
+  // Take the intersection of the retrieved caches-by-value
+  const result = []
+
+  // This _can_ still be expensive but the set of nodes should be limited ...
+  needles.forEach(node => {
+    if (caches.every(cache => cache.has(node))) {
+      // Every cache set contained this node so keep it
+      result.push(node)
+    }
+  })
+
+  // TODO: do we cache this result? I'm not sure how likely it is to be reused
+  // Consider the case of {a: {eq: 5}, b: {eq: 10}}, do we cache the [5,10]
+  // case for all value pairs? How likely is that to ever be reused?
+
+  return result
+}
+
+/**
+ * @param {Array<DbQuery>} filters
+ * @param {Array<string>} nodeTypeNames
+ * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @returns {Array<Set<IGatsbyNode>> | undefined} Undefined means at least one
+ *   cache was not found. Must fallback to sift.
+ */
+const getBucketsForFilters = (filters, nodeTypeNames, typedKeyValueIndexes) => {
+  const caches /*: Array<Map<string|number|boolean, Set<IGatsbyNode>>>*/ = []
+
+  // Fail fast while trying to create and get the value-cache for each path
+  let every = filters.every((filter /*: DbQuery*/) => {
+    let {
+      path: chain,
+      query: { value: targetValue },
+    } = filter
+
+    ensureIndexByTypedChain(chain, nodeTypeNames, typedKeyValueIndexes)
+
+    const nodesByKeyValue = getNodesByTypedChain(
+      chain,
+      targetValue,
+      nodeTypeNames,
+      typedKeyValueIndexes
+    )
+
+    // If we couldn't find the needle then maybe sift can, for example if the
+    // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
+    // There are also cases (and tests) where id exists with a different type
+    if (!nodesByKeyValue) {
+      return false
+    }
+
+    // In all other cases this must be a non-empty Set because the indexing
+    // mechanism does not create a Set unless there's a IGatsbyNode for it
+    caches.push(nodesByKeyValue)
+
+    return true
+  })
+
+  if (every) {
+    return caches
+  }
+
+  // "failed at least one"
+  return undefined
 }
 
 /**
@@ -267,21 +325,15 @@ const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
   // This can also be `$ne`, `$in` or any other grapqhl comparison op
   if (
     !typedKeyValueIndexes ||
-    filters.length !== 1 ||
-    filters[0].type === `elemMatch` ||
-    filters[0].query.comparator !== `$eq`
+    filters.length === 0 || // TODO: we should special case this
+    filters.some(
+      filter => filter.type === `elemMatch` || filter.query.comparator !== `$eq`
+    )
   ) {
     return undefined
   }
 
-  const filter = filters[0]
-
-  return runFlatFilterWithoutSift(
-    filter.path,
-    filter.query.value,
-    nodeTypeNames,
-    typedKeyValueIndexes
-  )
+  return runFlatFiltersWithoutSift(filters, nodeTypeNames, typedKeyValueIndexes)
 }
 
 // Not a public API
