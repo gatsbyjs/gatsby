@@ -59,6 +59,7 @@
     "gatsby-source-airtable": "^2.1.0",
     "gatsby-source-filesystem": "^2.1.56",
     "gatsby-source-git": "^1.0.2",
+    "gatsby-transformer-gitinfo": "^1.1.0",
     "gatsby-source-npm-package-search": "^2.1.25",
     "gatsby-transformer-csv": "^2.1.28",
     "gatsby-transformer-documentationjs": "^4.1.27",
