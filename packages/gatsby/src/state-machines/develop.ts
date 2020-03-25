@@ -131,7 +131,10 @@ const runMutationAndMarkDirty: TransitionConfig<
     assign<any, DoneInvokeEvent<any>>({
       nodesMutatedDuringQueryRun: true,
     }),
-    async (ctx, event): Promise<void> => callRealApi(event.payload, ctx.store),
+    async (ctx, event): Promise<void> => {
+      console.log(`calling real api and mareking dirty`)
+      return callRealApi(event.payload, ctx.store)
+    },
   ],
 }
 
@@ -229,14 +232,6 @@ export const developMachine = Machine<any>(
             {
               target: `creatingPagesStatefully`,
               cond: (context): boolean => context.firstRun,
-              actions: assign<any, DoneInvokeEvent<any>>((context, event) => {
-                return {
-                  // TODO: Get this correctly from createPages
-                  nodesMutatedDuringQueryRun:
-                    context.nodesMutatedDuringQueryRun ||
-                    !!event.data?.nodesMutated,
-                }
-              }),
             },
             {
               target: `extractingQueries`,
@@ -333,7 +328,7 @@ export const developMachine = Machine<any>(
           id: `running-page-queries`,
           onDone: [
             {
-              target: `waitingForJobs`,
+              target: `checkingForMutatedNodes`,
               actions: [emitPageDataToWebsocket],
             },
           ],
@@ -348,7 +343,13 @@ export const developMachine = Machine<any>(
             // Nothing was mutated. Moving to next state
             {
               target: `waitingForJobs`,
-              cond: (context): boolean => !context.nodesMutatedDuringQueryRun,
+              cond: (context): boolean => {
+                console.log(
+                  `checking for mutated nodes`,
+                  context.nodesMutatedDuringQueryRun
+                )
+                return !context.nodesMutatedDuringQueryRun
+              },
             },
             // Nodes were mutated. Starting again.
             {
