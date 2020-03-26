@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace WP_Gatsby\Schema;
+namespace WPGatsby\Schema;
 
 /**
  * Modifies the schema
@@ -8,7 +8,7 @@ namespace WP_Gatsby\Schema;
 class Schema
 {
     /**
-     * 
+     *
      */
     function __construct()
     {

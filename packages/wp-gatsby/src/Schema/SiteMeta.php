@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace WP_Gatsby\Schema;
+namespace WPGatsby\Schema;
 
 /**
  * Adds info about the current site
@@ -8,14 +8,14 @@ namespace WP_Gatsby\Schema;
 class SiteMeta
 {
     /**
-     * 
+     *
      */
     function __construct()
     {
         add_action(
             'graphql_register_types', function () {
                 $this->registerFields();
-            } 
+            }
         );
     }
 

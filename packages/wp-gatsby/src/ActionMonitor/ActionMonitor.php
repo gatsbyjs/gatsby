@@ -1,6 +1,6 @@
 <?php
 
-namespace WP_Gatsby\ActionMonitor;
+namespace WPGatsby\ActionMonitor;
 
 use GraphQLRelay\Relay;
 
@@ -634,7 +634,7 @@ class ActionMonitor
                         'type' => 'String',
                         'description' => __(
                             'The type of action (CREATE, UPDATE, DELETE)',
-                            'WP_Gatsby'
+                            'WPGatsby'
                         ),
                         'resolve' => function ($post) {
                             $action_type
@@ -650,7 +650,7 @@ class ActionMonitor
                         'type' => 'String',
                         'description' => __(
                             'The post status of the post that triggered this action',
-                            'WP_Gatsby'
+                            'WPGatsby'
                         ),
                         'resolve' => function ($post) {
                             $referenced_node_status = get_post_meta(
@@ -669,7 +669,7 @@ class ActionMonitor
                         'type' => 'String',
                         'description' => __(
                             'The post ID of the post that triggered this action',
-                            'WP_Gatsby'
+                            'WPGatsby'
                         ),
                         'resolve' => function ($post) {
                             $referenced_node_id = get_post_meta(
@@ -688,7 +688,7 @@ class ActionMonitor
                         'type' => 'String',
                         'description' => __(
                             'The global relay ID of the post that triggered this action',
-                            'WP_Gatsby'
+                            'WPGatsby'
                         ),
                         'resolve' => function ($post) {
                             $referenced_node_relay_id = get_post_meta(
@@ -707,7 +707,7 @@ class ActionMonitor
                         'type' => 'String',
                         'description' => __(
                             'The WPGraphQL single name of the referenced post',
-                            'WP_Gatsby'
+                            'WPGatsby'
                         ),
                         'resolve' => function ($post) {
                             $referenced_node_single_name = get_post_meta(
@@ -726,7 +726,7 @@ class ActionMonitor
                         'type' => 'String',
                         'description' => __(
                             'The WPGraphQL plural name of the referenced post',
-                            'WP_Gatsby'
+                            'WPGatsby'
                         ),
                         'resolve' => function ($post) {
                             $referenced_node_plural_name = get_post_meta(
@@ -783,12 +783,12 @@ class ActionMonitor
          */
 
         $labels = array(
-            "name" => __("Action Monitor", "WP_Gatsby"),
-            "singular_name" => __("Action Monitor", "WP_Gatsby"),
+            "name" => __("Action Monitor", "WPGatsby"),
+            "singular_name" => __("Action Monitor", "WPGatsby"),
         );
 
         $args = array(
-            "label" => __("Action Monitor", "WP_Gatsby"),
+            "label" => __("Action Monitor", "WPGatsby"),
             "labels" => $labels,
             "description" => "Used to keep a log of actions in WordPress for cache invalidation in gatsby-source-wpgraphql.",
             "public" => false,

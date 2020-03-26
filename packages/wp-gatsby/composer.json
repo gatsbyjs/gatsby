@@ -16,7 +16,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "WP_Gatsby\\": "src/"
+      "WPGatsby\\": "src/"
     },
     "classmap": [
       "src/"
@@ -25,7 +25,10 @@
   "config": {
     "optimize-autoloader": true
   },
-  "require": {},
+  "require": {
+    "firebase/php-jwt": "^5.2",
+    "ircmaxell/random-lib": "^1.2"
+  },
   "scripts": {
     "phpcs-i": [
       "php ./vendor/bin/phpcs -i"

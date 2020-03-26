@@ -21,27 +21,27 @@ if (! defined('ABSPATH') ) {
 require __DIR__ . "/lib/wp-settings-api.php";
 
 /**
- * The one true WP_Gatsby class
+ * The one true WPGatsby class
  */
-final class WP_Gatsby
+final class WPGatsby
 {
 
     /**
-     * Instance of the main WP_Gatsby class
+     * Instance of the main WPGatsby class
      *
-     * @var WP_Gatsby $instance
+     * @var WPGatsby $instance
      */
     private static $instance;
 
     /**
-     * Returns instance of the main WP_Gatsby class
+     * Returns instance of the main WPGatsby class
      *
-     * @return WP_Gatsby
+     * @return WPGatsby
      */
     public static function instance()
     {
-        if (! isset(self::$instance) && ! ( self::$instance instanceof WP_Gatsby ) ) {
-            self::$instance = new WP_Gatsby();
+        if (! isset(self::$instance) && ! ( self::$instance instanceof WPGatsby ) ) {
+            self::$instance = new WPGatsby();
             self::$instance->setup_constants();
 
             $minimum_php_version_met = self::$instance->min_php_version_check();
@@ -188,23 +188,27 @@ final class WP_Gatsby
         /**
          * Initialize Admin Settings
          */
-        new \WP_Gatsby\Admin\Settings();
+        new \WPGatsby\Admin\Settings();
 
         /**
          * Initialize Admin Previews
          */
-        new \WP_Gatsby\Admin\Preview();
+        new \WPGatsby\Admin\Preview();
 
         /**
          * Initialize Schema changes
          */
-        new \WP_Gatsby\Schema\Schema();
+        new \WPGatsby\Schema\Schema();
 
         /**
          * Initialize Action Monitor
          */
-        new \WP_Gatsby\ActionMonitor\ActionMonitor();
+        new \WPGatsby\ActionMonitor\ActionMonitor();
 
+        /**
+         * Initialize Action Monitor
+         */
+        new \WPGatsby\GraphQL\ParseAuthToken();
     }
 
 }
@@ -212,7 +216,7 @@ final class WP_Gatsby
 if (! function_exists('gatsby_init') ) {
     function gatsby_init()
     {
-        return WP_Gatsby::instance();
+        return WPGatsby::instance();
     }
 }
 

@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace WP_Gatsby\Schema;
+namespace WPGatsby\Schema;
 
 /**
  * Adds a PostTypes root field to the WPGraphQL schema
@@ -23,7 +23,7 @@ class PostTypes
     ];
 
     /**
-     * 
+     *
      */
     function __construct()
     {
@@ -31,7 +31,7 @@ class PostTypes
             'graphql_register_types', function () {
                 $this->registerObjectTypes();
                 $this->registerFields();
-            } 
+            }
         );
     }
 
@@ -53,14 +53,14 @@ class PostTypes
                               name
                               type {
                                 name
-                              } 
+                              }
                             }
                           }
                         }
                       } '
                     ]
                 );
-                
+
                 $root_fields = $graphql['data']['__schema']['queryType']['fields'];
 
                 // Get all available GQL post types, excluding blacklisted types like revisions.
@@ -68,8 +68,8 @@ class PostTypes
                 $allowed_post_types = \WPGraphQL::get_allowed_post_types();
 
                 if (! empty($allowed_post_types) && is_array($allowed_post_types)) {
-                    foreach ($allowed_post_types as $allowed_post_type) { 
-                  
+                    foreach ($allowed_post_types as $allowed_post_type) {
+
                       $is_blacklisted = in_array($allowed_post_type, $this->_blacklisted_post_types);
                       $is_processed = !empty($possible_types[ $allowed_post_type ]);
 
@@ -98,7 +98,7 @@ class PostTypes
 
                     }
                 }
-                
+
                 return $possible_types;
             },
             ]
@@ -116,12 +116,12 @@ class PostTypes
                 'fields' => [
                     'singular' => [
                         'type' => 'String',
-                        'description' 
+                        'description'
                             => 'The singular GraphQL field name of the post type'
                     ],
                     'plural' => [
                         'type' => 'String',
-                        'description' 
+                        'description'
                             => 'The plural GraphQL field name of the post type'
                     ],
                 ]
@@ -135,7 +135,7 @@ class PostTypes
                 'fields' => [
                     'fieldNames' => [
                         'type' => 'PostTypeInfoGraphQLFieldNames',
-                        'description' => 'GraphQL field names for the post type' 
+                        'description' => 'GraphQL field names for the post type'
                     ],
                     'typeName' => [
                         'type' => 'String',

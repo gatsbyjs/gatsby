@@ -5,7 +5,7 @@
   global $wp;
   $page_path = add_query_arg( array(), $wp->request );
 
-  $preview_url = \WP_Gatsby\Admin\Preview::get_gatsby_preview_instance_url();
+  $preview_url = \WPGatsby\Admin\Preview::get_gatsby_preview_instance_url();
   $frontend_url = "$preview_url$page_path";
 ?>
 

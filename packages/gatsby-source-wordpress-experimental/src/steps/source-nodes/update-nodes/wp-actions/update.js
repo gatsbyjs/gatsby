@@ -44,16 +44,19 @@ export const fetchAndCreateSingleNode = async ({
 
   const headers = token
     ? {
-        Authorization: `Bearer ${token}`,
+        // don't change this header..
+        // underscores and the word auth are being
+        // stripped on the php side for some reason
+        WPGatsbyPreview: token,
       }
     : {}
 
   let { data } = await fetchGraphql({
+    headers,
     query,
     variables: {
       id: queryId,
     },
-    headers,
   })
 
   // if we ask for a node that doesn't exist

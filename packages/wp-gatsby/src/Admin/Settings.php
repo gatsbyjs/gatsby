@@ -1,5 +1,5 @@
 <?php
-namespace WP_Gatsby\Admin;
+namespace WPGatsby\Admin;
 
 class Settings
 {
@@ -66,13 +66,30 @@ class Settings
       return $default;
     }
 
+    private static function generate_secret() {
+      $factory = new \RandomLib\Factory;
+      $generator = $factory->getMediumStrengthGenerator();
+      $secret = $generator->generateString(50);
+
+      return $secret;
+    }
+
+    private static function get_default_secret() {
+      $default_secret = \WPGatsby\Admin\Preview::get_setting( 'preview_jwt_secret' );
+
+      if ( !$default_secret ) {
+        $default_secret = self::generate_secret();
+      }
+
+      return $default_secret;
+    }
+
     /**
      * Returns all the settings fields
      *
      * @return array settings fields
      */
-    function get_settings_fields()
-    {
+    function get_settings_fields() {
         $settings_fields = [
           'wpgatsby_settings' => [
             [
@@ -90,6 +107,14 @@ class Settings
               'placeholder'       => __('https://', 'wpgatsby_settings'),
               'type'              => 'text',
               'sanitize_callback' => 'sanitize_text_field'
+            ],
+            [
+              'name'              => 'preview_jwt_secret',
+              'label'             => __('Preview JWT Secret', 'wpgatsby_settings'),
+              'desc'              => __('This secret is used in the encoding and decoding of the JWT token. If the Secret were ever changed on the server, ALL tokens that were generated with the previous Secret would become invalid. So, if you wanted to invalidate all user tokens, you can change the Secret on the server and all previously issued tokens would become invalid and require users to re-authenticate.', 'wpgatsby_settings'),
+              'type'              => 'password',
+              'sanitize_callback' => 'sanitize_text_field',
+              'default'           => self::get_default_secret(),
             ],
           ]
         ];
