@@ -3,7 +3,7 @@ title: "Migrating from Magento Enterprise to Gatsby"
 date: 2019-08-14
 author: Thomas Slade
 tags:
-  - E-commerce
+  - e-commerce
   - case-studies
   - marketing
   - headless-cms
