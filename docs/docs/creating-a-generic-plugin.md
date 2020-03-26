@@ -4,7 +4,7 @@ title: Creating a Generic Plugin
 
 This section aims to explain the structure of a Gatsby plugin and the files you need to create one.
 
-The idea of a generic plugin is to lay more emphasis on the makeup of a Plugin rather than the specific labels( source,transformer, local) that are [selected based on functionality](docs/naming-a-plugin/). As seen in the [what is a plugin doc](/docs/what-is-a-plugin/), a plugin is a piece of software that acts as an add-on and gives a Gatsby site additional functionality.
+The idea of a generic plugin is to lay more emphasis on the makeup of a plugin rather than the specific labels ([source](/docs/creating-a-source-plugin/), [transformer](/docs/creating-a-transformer-plugin/), [local](https://www.gatsbyjs.org/docs/creating-a-local-plugin/)) that are [selected based on functionality](/docs/naming-a-plugin/). As seen in the [what is a plugin doc](/docs/what-is-a-plugin/), a plugin is a piece of software that acts as an add-on and gives a Gatsby site additional functionality.
 
 Plugins contain a file, usually in the project root, called `package.json` - this file holds various metadata relevant to the project. The `package.json` file is also used to provide information to npm that identifies the project and allows npm to handle the project's dependencies.
 
