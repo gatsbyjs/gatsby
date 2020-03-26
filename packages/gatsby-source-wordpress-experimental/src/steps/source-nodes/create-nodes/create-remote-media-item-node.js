@@ -1,8 +1,17 @@
+import fs from "fs-extra"
+import path from "path"
+
 import retry from "async-retry"
-import { createRemoteFileNode } from "gatsby-source-filesystem"
+
+import {
+  createRemoteFileNode,
+  createFileNodeFromBuffer,
+} from "gatsby-source-filesystem"
+
 import store from "~/store"
-import { getHelpers } from "~/utils/get-gatsby-api"
+import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { formatLogMessage } from "~/utils/format-log-message"
+import urlToPath from "~/utils/url-to-path"
 
 export const getFileNodeMetaBySourceUrl = sourceUrl => {
   const fileNodesMetaByUrls = store.getState().imageNodes.nodeMetaByUrl
@@ -34,7 +43,7 @@ export const getFileNodeByMediaItemNode = async ({
 }
 
 export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
-  const helpers = getHelpers()
+  const { helpers, pluginOptions } = getGatsbyApi()
   const existingNode = await getFileNodeByMediaItemNode({
     mediaItemNode,
     helpers,
@@ -58,20 +67,52 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
     return null
   }
 
+  const hardCachedFileRelativePath = urlToPath(mediaItemUrl)
+  const hardCachedMediaFilesDirectory = `${process.cwd()}/.wordpress-cache`
+
+  const hardCachedFilePath =
+    hardCachedMediaFilesDirectory + hardCachedFileRelativePath
+
   let remoteFileNode
 
   try {
     // Otherwise we need to download it
     remoteFileNode = await retry(
       async () => {
-        const node = await createRemoteFileNode({
-          url: mediaItemUrl,
+        const createFileNodeRequirements = {
           parentNodeId: mediaItemNode.id,
           store: gatsbyStore,
           cache,
           createNode,
           createNodeId,
           reporter,
+        }
+
+        if (
+          process.env.NODE_ENV === `development` &&
+          pluginOptions.develop.hardCacheMediaFiles
+        ) {
+          // check for file in .wordpress-cache/wp-content
+          // if it exists, use that to create a node from instead of
+          // fetching from wp
+          try {
+            const buffer = await fs.readFile(hardCachedFilePath)
+            const node = await createFileNodeFromBuffer({
+              buffer,
+              ...createFileNodeRequirements,
+            })
+
+            if (node) {
+              return node
+            }
+          } catch (e) {
+            // ignore errors, we'll download the image below if it doesn't exist
+          }
+        }
+
+        const node = await createRemoteFileNode({
+          url: mediaItemUrl,
+          ...createFileNodeRequirements,
         })
 
         return node
@@ -104,6 +145,20 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
     sourceUrl: mediaItemUrl,
     modifiedGmt,
   })
+
+  if (
+    process.env.NODE_ENV === `development` &&
+    pluginOptions.develop.hardCacheMediaFiles
+  ) {
+    try {
+      // make sure the directory exists
+      await fs.ensureDir(path.dirname(hardCachedFilePath))
+      // copy our downloaded file to our existing directory
+      await fs.copyFile(remoteFileNode.absolutePath, hardCachedFilePath)
+    } catch (e) {
+      helpers.reporter.panic(e)
+    }
+  }
 
   // and use it
   return remoteFileNode

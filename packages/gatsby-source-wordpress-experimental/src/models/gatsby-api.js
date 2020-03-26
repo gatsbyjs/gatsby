@@ -16,6 +16,7 @@ const defaultPluginOptions = {
   },
   develop: {
     nodeUpdateInterval: 300,
+    hardCacheMediaFiles: false,
   },
   schema: {
     queryDepth: 10,
