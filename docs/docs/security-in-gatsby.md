@@ -21,7 +21,7 @@ When you try to inject the JSX element above it will render `hello <script src='
 
 On the other hand, fields in your application may need to render inner HTML tags, such as a content field in a blog or a comment in a comments section, that are built into rich-text editors.
 
-That's when you expose your application to XSS attacks, since the way to render these HTML tags is by using an HTML parser (e.g. [html-react-parser](https://github.com/remarkablemark/html-react-parser)) or using the `dangerouslySetInnerHTML` prop, as this example below:
+In order to render those HTML tags you need to use an HTML parser (e.g. [html-react-parser](https://github.com/remarkablemark/html-react-parser)) or the `dangerouslySetInnerHTML` prop, like so:
 
 ```js
 const CommentRenderer = comment => (
@@ -29,16 +29,16 @@ const CommentRenderer = comment => (
   <p dangerouslySetInnerHTML={{ __html: comment }} />
 ) // dangerous indeed.
 ```
+That's when you expose your application to XSS attacks. 
+### **How can you prevent cross-site scripting?**
 
-**How can it be prevented?**
-
-The most straightforward way to prevent the XSS attack is to sanitize the innerHTML string before dangerously setting it. Fortunately, there are npm packages that does the job, like [sanitize-html](https://www.npmjs.com/package/sanitize-html) and [DOMPurify](https://github.com/cure53/DOMPurify).
+The most straightforward way to prevent a XSS attack is to sanitize the innerHTML string before dangerously setting it. Fortunately, there are npm packages that can accomplish this; packages like [sanitize-html](https://www.npmjs.com/package/sanitize-html) and [DOMPurify](https://github.com/cure53/DOMPurify).
 
 ## Cross-Site Request Forgery (CSRF)
 
 A web application that use cookies could be attacked by the CSRF exploit, which deceives the browser to execute actions by the user's name without notice. By default, the browser "trusts" all the activity made validating the user's identity and therefore sending the associated cookies in every request.
 
-For example, assume that the comments done in your blog are sent in a form like this below:
+For example, assume that the comments in your blog are sent in a form similar to this one:
 
 ```html
 <form action="http://mywebsite.com/blog/addcoment" method="POST">
@@ -60,11 +60,11 @@ A malicious website could inspect your site and copy it to theirs. If the user a
 </form>
 ```
 
-**How can it be prevented?**
+### **How can you prevent cross-site request forgery?**
 
-### CSRF Tokens
+#### CSRF Tokens
 
-In a page you want to protect, your server will provide an encrypted, hard to guess **token**, which is tied to the user's session and thus will be required to be sent back in the POST form:
+If you want to protect a page your server will provide an encrypted, hard to guess **token**. That token is tied to a user's session and is must be included in every POST request. See the following example:
 
 ```js
 <form action="http://mywebsite.com/blog/addcoment" method="POST">
@@ -75,36 +75,36 @@ In a page you want to protect, your server will provide an encrypted, hard to gu
 </form>
 ```
 
-So when the form is sent, the server will compare them and block the action if they are not the same. Note that usually the malicious website won't have access to this CSRF token because of [HTTP Access Control](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
+When the form is sent, the server will compare the token received with the stored token and block the action if they are not the same. This works because malicious websites don't have access to the CSRF token due to [HTTP Access Control](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
 
-### Same-Site Cookies Directive
+#### Same-Site Cookies Directive
 
 If you need to create cookies in your application, make sure to protect them by adding the `SameSite` directive:
 
 `Set-Cookie: example=1; SameSite=Strict`
 
 It allows the server to make sure that the cookies are not being sent by a **cross-site** domain request.
-Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) regarding how a cookie could be configured. You can checkout current browser support over on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
+Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
 
 ## Third-party Scripts
 
-Some third-party scripts like Google Tag Manager give you the ability to [add arbitrary JavaScript](https://support.google.com/tagmanager/answer/6107167) to your site. This helps integrate third-party tools but can be misused to inject malicious code. To avoid this, be sure to [control access ](https://support.google.com/tagmanager/answer/6107011) to these services.
+Some third-party scripts like Google Tag Manager give you the ability to [add arbitrary JavaScript](https://support.google.com/tagmanager/answer/6107167) to your site. This helps integrate third-party tools but can be misused to inject malicious code. To avoid this, be sure to [control access](https://support.google.com/tagmanager/answer/6107011) to these services.
 
 ## Check Your Dependencies
 
-In your Gatsby project, you are going to have a lot of dependencies (which has their own dependencies as well) in your `node_modules/`. Therefore, it is important to check if any of them has a security issue.
+In your Gatsby project, you are going to have some dependencies that get stored in `node_modules/`. Therefore, it is important to check if any of them, or their dependencies, have security vulnerabilities.
 
-**Using `npm`**
+### Using npm
 
 In npm, you can use the `npm audit` command to check your dependencies. It is available since v6. Check their [docs](https://docs.npmjs.com/cli/audit) for more options.
 
-**Using `yarn`**
+### Using yarn
 
-Similar to `npm`, you can use the `yarn audit` command. It is available since v1.12.0, not available in v2. Check their [docs](https://classic.yarnpkg.com/en/docs/cli/audit/) for more options.
+Similar to npm, you can use the `yarn audit` command. It is available starting with version `1.12.0` though it is not yet available in version 2. Check the [yarn docs](https://classic.yarnpkg.com/en/docs/cli/audit/) for more options.
 
 ## Key Security
 
-Gatsby provides the capability of [fetching data from various APIs](/docs/content-and-data/) and those APIs often require a key to access them. These keys should be stored in the build environment using [Environment Variables](/docs/environment-variables/) as shown below when fetching data from GitHub with an Authentication Header:
+Gatsby allows you to [fetch data from various APIs](/docs/content-and-data/) and those APIs often require a key to access them. These keys should be stored in your build environment using [Environment Variables](/docs/environment-variables/). See the following example for fetching data from GitHub with an Authentication Header:
 
 ```js
     {
@@ -121,7 +121,7 @@ Gatsby provides the capability of [fetching data from various APIs](/docs/conten
     }
 ```
 
-Note: Whether you need to authenticate someone in your application, Gatsby has an [Authentication Tutorial](/tutorial/authentication-tutorial) which helps doing this job in a secure way.
+> Note that Gatsby has an [Authentication Tutorial](/tutorial/authentication-tutorial) if you need assistance with setting up authentication on your Gatsby site in a secure way.
 
 ## Content Security Policy (CSP)
 
@@ -130,7 +130,7 @@ Content Security Policy is a security layer added in web applications to detect 
 To add it to your Gatsby website, add [gatsby-plugin-csp](/packages/gatsby-plugin-csp/) to your `gatsby-config.js` with the desired configuration. Note that
 currently there is a [incompatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](/packages/gatsby-plugin-csp/) and [gatsby-image](/packages/gatsby-image) and other plugins that generate hashes in inline styles.
 
-Note: Not all browsers support CSP, check [can-i-use](https://caniuse.com/#feat=mdn-http_headers_csp_content-security-policy) for more information.
+> Note that not all browsers support CSP, check [can-i-use](https://caniuse.com/#feat=mdn-http_headers_csp_content-security-policy) for more information.
 
 ## Other Resources
 
