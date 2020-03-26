@@ -660,7 +660,7 @@
               link: /docs/how-code-splitting-works/
         - title: Resource Handling & Service Workers
           link: /docs/resource-handling-and-service-workers/
-        - title: Data Storage (Redux)*
+        - title: Data Storage (Redux)
           link: /docs/data-storage-redux/
         - title: Build Caching
           link: /docs/build-caching/
