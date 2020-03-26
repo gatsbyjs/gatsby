@@ -19,7 +19,7 @@ const User = () => <p> hello {username}</p>
 
 When you try to inject the JSX element above it will render `hello <script src='https://path/to/badness.js'></script>` as a string inside the p tag.
 
-In other hand, there could be some fields in your application that you will need to render the inner HTML tags, such as a content field in a blog or a comment in a comments section, that are built in rich-text editors.
+On the other hand, fields in your application may need to render inner HTML tags, such as a content field in a blog or a comment in a comments section, that are built into rich-text editors.
 
 That's when you expose your application to XSS attacks, since the way to render these HTML tags is by using an HTML parser (e.g. [html-react-parser](https://github.com/remarkablemark/html-react-parser)) or using the `dangerouslySetInnerHTML` prop, as this example below:
 
