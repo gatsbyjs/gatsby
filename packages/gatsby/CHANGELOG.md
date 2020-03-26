@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.20.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.6...gatsby@2.20.7) (2020-03-26)
+
+### Features
+
+- **gatsby:** enable granular chunks ([#22253](https://github.com/gatsbyjs/gatsby/issues/22253)) ([0f02ea7](https://github.com/gatsbyjs/gatsby/commit/0f02ea7))
+
 ## [2.20.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.5...gatsby@2.20.6) (2020-03-25)
 
 ### Features
