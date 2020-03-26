@@ -17,4 +17,21 @@ describe(`gatsby-plugin-preact`, () => {
       },
     })
   })
+
+  it(`does not invoke setWebpackConfig when stage is develop`, () => {
+    const actions = { setWebpackConfig: jest.fn() }
+
+    onCreateWebpackConfig({ stage: `develop`, actions })
+
+    expect(actions.setWebpackConfig).not.toHaveBeenCalled()
+  })
+
+  it(`sets the correct webpack config when stage is develop and fast-refresh is used`, () => {
+    const actions = { setWebpackConfig: jest.fn() }
+
+    process.env.GATSBY_HOT_LOADER = `fast-refresh`
+    onCreateWebpackConfig({ stage: `develop`, actions })
+
+    expect(actions.setWebpackConfig).toHaveBeenCalled()
+  })
 })
