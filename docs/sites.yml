@@ -425,19 +425,6 @@
   categories:
     - Education
     - Entertainment
-- title: William Owen UK Portfolio / Blog
-  main_url: http://william-owen.co.uk/
-  url: http://william-owen.co.uk/
-  featured: false
-  description: >-
-    Over 20 years experience delivering customer-facing websites, internet-based
-    solutions and creative visual design for a wide range of companies and
-    organisations.
-  categories:
-    - Portfolio
-    - Blog
-  built_by: William Owen
-  built_by_url: https://twitter.com/twilowen
 - title: A4 纸网
   main_url: http://www.a4z.cn/
   url: http://www.a4z.cn/price
@@ -738,17 +725,6 @@
   categories:
     - Open Source
     - Government
-- title: Pravdomil
-  main_url: https://pravdomil.com/
-  url: https://pravdomil.com/
-  source_url: https://github.com/pravdomil/pravdomil.com
-  featured: false
-  description: >-
-    I’ve been working both as a product designer and frontend developer for over
-    5 years now. I particularly enjoy working with companies that try to meet
-    broad and unique user needs.
-  categories:
-    - Portfolio
 - title: Preston Richey Portfolio / Blog
   main_url: https://prestonrichey.com/
   url: https://prestonrichey.com/
@@ -960,14 +936,6 @@
     - Portfolio
     - Web Development
     - Blog
-- title: yerevancoder
-  main_url: https://yerevancoder.com/
-  url: https://forum.yerevancoder.com/categories
-  source_url: https://github.com/yerevancoder/yerevancoder.github.io
-  featured: false
-  categories:
-    - Blog
-    - Web Development
 - title: Ease
   main_url: https://www.ease.com/
   url: https://www.ease.com/
@@ -1153,7 +1121,7 @@
   main_url: https://ericjinks.com/
   url: https://ericjinks.com/
   featured: false
-  description: "Software engineer / web developer from the Gold Coast, Australia."
+  description: Software engineer / web developer from the Gold Coast, Australia.
   categories:
     - Portfolio
     - Blog
@@ -1223,7 +1191,7 @@
   categories:
     - Blog
     - Education
-  built_by: "Stephanie Langers (content), Adrian Wenke (development)"
+  built_by: Stephanie Langers (content), Adrian Wenke (development)
   built_by_url: https://twitter.com/AdrianWenke
 - title: Zensum
   main_url: https://zensum.se/
@@ -1440,14 +1408,6 @@
   categories:
     - Healthcare
   featured: false
-- title: Hubba
-  description: |
-    Buy wholesale products from thousands of independent, verified Brands.
-  main_url: https://join.hubba.com/
-  url: https://join.hubba.com/
-  categories:
-    - eCommerce
-  featured: false
 - title: HyperPlay
   description: |
     In Asean's 1st Ever LOL Esports X Music Festival
@@ -1529,7 +1489,7 @@
   main_url: https://frithir.com/
   url: https://frithir.com/
   featured: false
-  description: "I DRINK COFFEE, WRITE CODE AND IMPROVE MY DEVELOPMENT SKILLS EVERY DAY."
+  description: I DRINK COFFEE, WRITE CODE AND IMPROVE MY DEVELOPMENT SKILLS EVERY DAY.
   categories:
     - Design
     - Web Development
@@ -1775,7 +1735,7 @@
   main_url: https://confessions.tech
   url: https://confessions.tech
   source_url: https://github.com/JonathanSpeek/tech-confessions
-  description: "A guilt-free place for us to confess our tech sins \U0001F64F\n"
+  description: A guilt-free place for us to confess our tech sins \U0001F64F\n
   categories:
     - Community
     - Open Source
@@ -1848,18 +1808,6 @@
     - Web Development
   built_by: Mahipat Jadav
   built_by_url: https://mojaave.com/
-  featured: false
-- title: Insights
-  main_url: https://justaskusers.com/
-  url: https://justaskusers.com/
-  description: >
-    Insights helps user experience (UX) researchers conduct their research and
-    make sense of the findings.
-  categories:
-    - User Experience
-    - Design
-  built_by: Just Ask Users
-  built_by_url: https://justaskusers.com/
   featured: false
 - title: Mintfort
   main_url: https://mintfort.com/
@@ -2096,7 +2044,7 @@
   featured: false
   categories:
     - Marketing
-- title: "Luciano Mammino's blog"
+- title: Luciano Mammino's blog
   description: >
     Tech & programming blog of Luciano Mammino a.k.a. "loige", Full-Stack Web Developer and International Speaker
   main_url: https://loige.co
@@ -2585,7 +2533,7 @@
   built_by: Masahiro Harada
   built_by_url: https://twitter.com/_Masahiro_H_
   featured: false
-- title: "Maxence Poutord's blog"
+- title: Maxence Poutord's blog
   description: >
     Tech & programming blog of Maxence Poutord, Software Engineer, Serial Traveler and Public Speaker
   main_url: https://www.maxpou.fr
@@ -2596,7 +2544,7 @@
     - Web Development
   built_by: Maxence Poutord
   built_by_url: https://www.maxpou.fr
-- title: "The Noted Project"
+- title: The Noted Project
   url: https://thenotedproject.org
   main_url: https://thenotedproject.org
   source_url: https://github.com/ianbusko/the-noted-project
@@ -2672,7 +2620,7 @@
   categories:
     - Gallery
     - Food
-  built_by: "Code for Münster during #MSHACK18"
+  built_by: Code for Münster during MSHACK18
   featured: false
 - title: Code Championship
   description: >
@@ -4223,21 +4171,6 @@
     - Portfolio
   built_by: Patrik Szewczyk
   built_by_url: https://linkedin.com/in/thepatriczek/
-  featured: false
-- title: Patrik Arvidsson's portfolio
-  url: https://www.patrikarvidsson.com
-  main_url: https://www.patrikarvidsson.com
-  source_url: https://github.com/patrikarvidsson/portfolio-gatsby-contentful
-  description: >
-    Personal portfolio site of Swedish interaction designer Patrik Arvidsson. Built with Gatsby, Tailwind CSS, Emotion JS and Contentful.
-  categories:
-    - Blog
-    - Design
-    - Portfolio
-    - Web Development
-    - Technology
-  built_by: Patrik Arvidsson
-  built_by_url: https://www.patrikarvidsson.com
   featured: false
 - title: Jacob Cofman's Blog
   description: >
@@ -6166,7 +6099,6 @@
 - title: Daniel Spajic
   url: https://danieljs.tech/
   main_url: https://danieljs.tech/
-  source_url: https://github.com/dspacejs/portfolio
   description: >
     Passionate front-end developer with a deep, yet diverse skillset.
   categories:
@@ -6645,16 +6577,6 @@
     - Nonprofit
   built_by: Jacob Herper
   built_by_url: https://herper.io
-- title: deepThreads
-  main_url: https://deepthreads.com
-  url: https://deepthreads.com/
-  description: >
-    deepThreads is a shiny new website built with Gatsby v2.  We make art using deep learning along with print on demand providers to create some cool stuff!
-  categories:
-    - eCommerce
-  built_by: Kyle Kitlinski
-  built_by_url: https://github.com/k-kit
-  featured: false
 - title: Mill3 Studio
   main_url: https://mill3.studio/en/
   url: https://mill3.studio/en/
@@ -7773,7 +7695,7 @@
   url: https://problem.studio
   main_url: https://problem.studio
   description: >
-    Problem Studio creates unique and fun web experiences. Our enemy is "boring" if ya know what we mean: overused Wordpress templates, the top 10 shopify templates, copy of a copy of a copy of a copy. We love to support design and marketing agencies and help realize their creations into a digital product. `
+    Problem Studio creates unique and fun web experiences. Our enemy is "boring" if ya know what we mean: overused WordPress templates, the top 10 shopify templates, copy of a copy of a copy of a copy. We love to support design and marketing agencies and help realize their creations into a digital product. `
   categories:
     - Agency
     - Business
@@ -9299,7 +9221,7 @@
   main_url: https://www.erudicat.com
   url: https://www.erudicat.com
   description: >
-    ErudiCAT is an educational platform created to help PMP certification candidates to prepare for the exam. There are hundreds of sample questions and PMP mock exam.
+    ErudiCAT is an educational platform created to help PMP certification candidates to prepare for the exam. There are 1k+ sample questions and PMP Exam Simulator. Upon completion, there are statistics and performance chart available. Performance reports are saved in users' accounts and may be used later to review questions. The PMP Exam Simulator has a unique feature of Time Acceleration. It makes the Mock Exam even tougher and makes training even more advanced.
   categories:
     - Education
     - Web Development
@@ -10077,3 +9999,62 @@
   built_by: Kelvin DeCosta
   built_by_url: https://github.com/kelvindecosta
   featured: false
+- title: Coronavirus (COVID-19) Tracker
+  url: https://coronavirus.traction.one/
+  main_url: https://coronavirus.traction.one/
+  description: >
+    This application shows the near real-time status based on data from JHU CSSE.
+  categories:
+    - Data
+    - Directory
+  built_by: Sankarsan Kampa
+  built_by_url: https://traction.one
+  featured: false
+- title: Coronavirus COVID-19 Statistics Worldwide
+  url: https://maxmaxinechen.github.io/COVID19-Worldwide-Stats/
+  main_url: https://maxmaxinechen.github.io/COVID19-Worldwide-Stats/
+  source_url: https://github.com/maxMaxineChen/COVID19-Worldwide-Stats
+  description: >
+    A Coronavirus COVID-19 global data statistics application built by Gatsby + Material UI + Recharts
+  categories:
+    - Data
+    - Open Source
+  built_by: Maxine Chen
+  built_by_url: https://github.com/maxMaxineChen
+  featured: false
+- title: Folding@Home Stats
+  url: https://folding.traction.one/team?id=246252
+  main_url: https://folding.traction.one
+  description: >
+    Folding@Home Stats Report for Teams.
+  categories:
+    - Data
+    - Science
+    - Directory
+  built_by: Sankarsan Kampa
+  built_by_url: https://traction.one
+  featured: false
+- title: COVID-19 Tracking and Projections
+  url: https://flattenthecurve.co.nz/
+  main_url: https://flattenthecurve.co.nz/
+  source_url: https://github.com/carlaiau/flatten-the-curve
+  description: >
+    Allowing non technical users to compare their country with other situations around the world. We present configurable cumulative graph curves. We compare your countries current status with other countries who have already been at your level and show you where they’ve ended up. Data via JHU. Further functionality added daily.
+  categories:
+    - Data
+    - Open Source
+  built_by: Carl Aiau
+  built_by_url: https://github.com/carlaiau
+  featured: false
+- title: Takeout Tracker
+  main_url: https://www.takeouttracker.com/
+  url: https://www.takeouttracker.com/
+  featured: false
+  categories:
+    - Data
+    - Open Source
+    - Food
+    - Directory
+    - Nonprofit
+  built_by: Corey Ward
+  built_by_url: http://www.coreyward.me/

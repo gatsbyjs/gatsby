@@ -26,7 +26,7 @@ Configure its options:
 {
   resolve: "@pasdo501/gatsby-source-woocommerce",
   options: {
-    // Base URL of Wordpress site
+    // Base URL of WordPress site
     api: 'wordpress.domain',
     // true if using https. false otherwise.
     https: false,
