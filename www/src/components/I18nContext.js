@@ -7,7 +7,9 @@ import { I18nProvider as LinguiProvider } from "@lingui/react"
 const LocaleContext = React.createContext(defaultLang)
 
 export function I18nProvider({ locale = defaultLang, children }) {
-  const catalog = require(`../data/locales/${locale}/messages.js`)
+  const catalog = !!process.env.LOCALES
+    ? require(`../data/locales/${locale}/messages.js`)
+    : {}
   return (
     <LocaleContext.Provider value={locale}>
       <LinguiProvider language={locale} catalogs={{ [locale]: catalog }}>

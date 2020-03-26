@@ -72,7 +72,11 @@ To find or create a new typography theme, you can visit [Typography.js](https://
 
 ## Installing Typography themes
 
-Typography.js has built in themes that can save time when defining your website's font styling. The Funston theme, maintained by Typography, is one of the built in themes. To install the Funston theme from npm, run the command: `npm install typography-theme-funston --save`
+Typography.js has built in themes that can save time when defining your website's font styling. The Funston theme, maintained by Typography, is one of the built in themes. To install the Funston theme from npm, run the command:
+
+```shell
+npm install typography-theme-funston
+```
 
 To use the theme, edit the `typography.js` file that you created before and inform Typography of the new configuration:
 

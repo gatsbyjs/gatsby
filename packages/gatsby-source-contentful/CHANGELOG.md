@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.2.4...gatsby-source-contentful@2.2.5) (2020-03-26)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** Add cache for remote thumnails ([#22551](https://github.com/gatsbyjs/gatsby/issues/22551)) ([7abf4d7](https://github.com/gatsbyjs/gatsby/commit/7abf4d7))
+
+## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.2.3...gatsby-source-contentful@2.2.4) (2020-03-24)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.2.2...gatsby-source-contentful@2.2.3) (2020-03-23)
+
+### Bug Fixes
+
+- **gatsby-plugin-contentful:** wait for contentTypes to be created) ([#22307](https://github.com/gatsbyjs/gatsby/issues/22307)) ([75b041e](https://github.com/gatsbyjs/gatsby/commit/75b041e))
+
 ## [2.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.2.1...gatsby-source-contentful@2.2.2) (2020-03-20)
 
 **Note:** Version bump only for package gatsby-source-contentful

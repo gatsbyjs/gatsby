@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.20.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.6...gatsby@2.20.7) (2020-03-26)
+
+### Features
+
+- **gatsby:** enable granular chunks ([#22253](https://github.com/gatsbyjs/gatsby/issues/22253)) ([0f02ea7](https://github.com/gatsbyjs/gatsby/commit/0f02ea7))
+
+## [2.20.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.5...gatsby@2.20.6) (2020-03-25)
+
+### Features
+
+- **gatsby-telemetry:** Make build collect GraphQL/Sift query data for telemetry ([#22540](https://github.com/gatsbyjs/gatsby/issues/22540)) ([1bec140](https://github.com/gatsbyjs/gatsby/commit/1bec140))
+
+## [2.20.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.4...gatsby@2.20.5) (2020-03-25)
+
+### Features
+
+- **gatsby-source-graphql:** Query batching ([#22347](https://github.com/gatsbyjs/gatsby/issues/22347)) ([2a4c7fd](https://github.com/gatsbyjs/gatsby/commit/2a4c7fd))
+
+## [2.20.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.3...gatsby@2.20.4) (2020-03-24)
+
+### Bug Fixes
+
+- **docs:** remove double words ([#22494](https://github.com/gatsbyjs/gatsby/issues/22494)) ([75f6ee2](https://github.com/gatsbyjs/gatsby/commit/75f6ee2))
+
+## [2.20.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.2...gatsby@2.20.3) (2020-03-23)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.20.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.1...gatsby@2.20.2) (2020-03-20)
 
 **Note:** Version bump only for package gatsby
@@ -197,7 +225,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby:** Fix static query parsing for for a special case ([#21551](https://github.com/gatsbyjs/gatsby/issues/21551)) ([dd344ac](https://github.com/gatsbyjs/gatsby/commit/dd344ac))
+- **gatsby:** Fix static query parsing for a special case ([#21551](https://github.com/gatsbyjs/gatsby/issues/21551)) ([dd344ac](https://github.com/gatsbyjs/gatsby/commit/dd344ac))
 
 ## [2.19.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.17...gatsby@2.19.18) (2020-02-17)
 
