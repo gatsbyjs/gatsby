@@ -4,25 +4,37 @@ const _ = require(`lodash`)
 const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
 import { getValueAt } from "../utils/get-value-at"
 
-const findMany = typeName => (source, args, context, info) =>
-  context.nodeModel.runQuery(
+const findMany = typeName => (source, args, context, info) => {
+  if (context.stats) {
+    context.stats.totalRunQuery++
+    context.stats.totalPluralRunQuery++
+  }
+
+  return context.nodeModel.runQuery(
     {
       query: args,
       firstOnly: false,
       type: info.schema.getType(typeName),
+      stats: context.stats,
     },
     { path: context.path, connectionType: typeName }
   )
+}
 
-const findOne = typeName => (source, args, context, info) =>
-  context.nodeModel.runQuery(
+const findOne = typeName => (source, args, context, info) => {
+  if (context.stats) {
+    context.stats.totalRunQuery++
+  }
+  return context.nodeModel.runQuery(
     {
       query: { filter: args },
       firstOnly: true,
       type: info.schema.getType(typeName),
+      stats: context.stats,
     },
     { path: context.path }
   )
+}
 
 const findManyPaginated = typeName => async (source, args, context, info) => {
   // Peek into selection set and pass on the `field` arg of `group` and
@@ -164,8 +176,17 @@ const link = (options = {}, fieldConfig) => async (
     }
   }, fieldValue)
 
+  const firstOnly = !(returnType instanceof GraphQLList)
+
+  if (context.stats) {
+    context.stats.totalRunQuery++
+    if (firstOnly) {
+      context.stats.totalPluralRunQuery++
+    }
+  }
+
   const result = await context.nodeModel.runQuery(
-    { query: args, firstOnly: !(returnType instanceof GraphQLList), type },
+    { query: args, firstOnly, type, stats: context.stats },
     { path: context.path }
   )
   if (

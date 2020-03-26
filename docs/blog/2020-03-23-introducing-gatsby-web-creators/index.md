@@ -2,8 +2,9 @@
 title: Introducing Gatsby Web Creators
 date: 2020-03-23
 author: "Marcy Sutton"
-image: "images/abstract-social-sq.png"
+image: "images/gatsby-web-creators.jpg"
 imageTitle: Calling curious and creative people
+twittercard: "summary_large_image"
 showImageInArticle: false
 excerpt: "Gatsby Web Creators is a free livestream series aimed at curious people aged 13 and up, starting Wednesday, March 25. Twice a week for the next 5 weeks, Gatsby Learning Team members and their special guests will teach the basic skills involved for creating web pages, starting with HTML and CSS, and gradually building up to JavaScript."
 tags:
@@ -13,7 +14,7 @@ tags:
 
 <img src="./images/octopus.png" alt="octopus" />
 
-[Gatsby Web Creators](https://gatsbyjs.com/gatsby-web-creators) is a free livestream series aimed at curious people aged 13 and up, starting Wednesday, March 25. Twice a week for the next 5 weeks, Gatsby Learning Team members and their special guests will teach the basic skills involved for creating web pages, starting with HTML and CSS, and gradually building up to JavaScript.
+[Gatsby Web Creators](https://gatsbyjs.com/gatsby-web-creators) is a free livestream series aimed at curious people aged 13 and up, starting Wednesday, March 25. For an hour twice a week for the next 5 weeks, Gatsby Learning Team members and their special guests will teach the basic skills involved for creating web pages, starting with HTML and CSS, and gradually building up to JavaScript.
 
 Streaming live on [Twitch](https://twitch.tv/gatsbyjs), we’ll explore how to work with text, images, interactive elements, fancy widgets, custom styling, animation with CSS, playing with browser Developer Tools, and more. We’ll make good use of the time people are spending indoors and online to build up a foundation of skills over the coming weeks, showing how to create accessible web pages tailored to one's interests.
 
