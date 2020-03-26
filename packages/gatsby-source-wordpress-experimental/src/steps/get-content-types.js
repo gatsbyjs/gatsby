@@ -9,7 +9,14 @@ import { formatLogMessage } from "~/utils/format-log-message"
  * This func is temporary until support for this added in WPGQL
  * see https://github.com/wp-graphql/wp-graphql/issues/1045
  */
-export const createContentTypeNodes = async (_, pluginOptions) => {
+export const createContentTypeNodes = async (
+  { webhookBody: { preview } },
+  pluginOptions
+) => {
+  if (preview) {
+    return
+  }
+
   const state = store.getState()
 
   const { nodeQueries, fieldBlacklist } = state.remoteSchema

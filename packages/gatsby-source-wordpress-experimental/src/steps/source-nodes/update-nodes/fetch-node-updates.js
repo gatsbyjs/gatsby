@@ -3,6 +3,14 @@ import { fetchAndRunWpActions } from "./wp-actions"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 
+export const touchValidNodes = async () => {
+  const { helpers } = getGatsbyApi()
+  const { cache, actions } = helpers
+
+  let validNodeIds = await cache.get(CREATED_NODE_IDS)
+  validNodeIds.forEach(nodeId => actions.touchNode({ nodeId }))
+}
+
 /**
  * fetchAndApplyNodeUpdates
  *
@@ -46,8 +54,7 @@ const fetchAndApplyNodeUpdates = async ({ since, intervalRefetching }) => {
     // so they don't get garbage collected
     !intervalRefetching
   ) {
-    let validNodeIds = await cache.get(CREATED_NODE_IDS)
-    validNodeIds.forEach(nodeId => actions.touchNode({ nodeId }))
+    await touchValidNodes()
   }
 
   if (!intervalRefetching) {
