@@ -29,7 +29,7 @@ Date of interview: December 13 2018
 
 **Q:** Any plans for custom hooks in Gatsby? — alexanderson1993
 
-**A:** No plans just yet for custom hooks — most of our efforts with Gatsby are making integrations with custom data services (CMSs, E-commerce, etc.) really smooth along with making builds super scalable and fast — React hooks are an amazing improvement for client-side React code but not sure yet if there's any hooks we'd want to build ourselves.
+**A:** No plans just yet for custom hooks — most of our efforts with Gatsby are making integrations with custom data services (CMSs, e-commerce, etc.) really smooth along with making builds super scalable and fast — React hooks are an amazing improvement for client-side React code but not sure yet if there's any hooks we'd want to build ourselves.
 
 — kylemathews
 
