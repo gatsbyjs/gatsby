@@ -62,7 +62,7 @@ However, if your job is to build custom WordPress solutions for large sites, the
 
 ## Hosting for Gatsby sites starts at \$0
 
-Last year I built a WordPress website for an event. I used a few popular membership and E-commerce plugins to get the job done. The price of hosting and plugins were all obscured from the client. I was paid a fee, and then I turned around and paid for hosting and plugins, and pocketed the margin.
+Last year I built a WordPress website for an event. I used a few popular membership and e-commerce plugins to get the job done. The price of hosting and plugins were all obscured from the client. I was paid a fee, and then I turned around and paid for hosting and plugins, and pocketed the margin.
 
 I even collected an affiliate fee from the server host. Again, if site maintenance is your bread-and-butter, then you know this model. Every nickel counts.
 
