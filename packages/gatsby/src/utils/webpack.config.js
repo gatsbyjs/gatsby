@@ -464,7 +464,7 @@ module.exports = async (
     // and server (see
     // https://github.com/defunctzombie/package-browser-field-spec); setting
     // the target tells webpack which file to include, ie. browser vs main.
-    target: stage === `build-html` || stage === `develop-html` ? `node` : `web`,
+    target: `web`,
 
     devtool: getDevtool(),
     // Turn off performance hints as we (for now) don't want to show the normal
