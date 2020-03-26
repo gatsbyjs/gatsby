@@ -5,7 +5,30 @@ use GraphQLRelay\Relay;
 
 class Preview {
   function __construct() {
-    add_action( 'save_post', function( $post_ID, $post ) {
+    add_action( 'save_post', [$this, 'post_to_preview_instance'], 10, 2 );
+    add_filter('template_include', [$this, 'setup_preview_template'], 1, 1);
+  }
+
+  public function setup_preview_template( $template ) {
+    if ( is_preview() ) {
+      return plugin_dir_path(__FILE__) . 'includes/preview-template.php';
+    }
+
+    return $template;
+  }
+
+  static function get_gatsby_preview_instance_url() {
+    $wpgatsby_settings = get_option('wpgatsby_settings');
+    $preview_url = $wpgatsby_settings['preview_api_webhook'];
+
+    if (substr($preview_url, -1) !== '/') {
+      $preview_url = "$preview_url/";
+    }
+
+    return $preview_url;
+  }
+
+  public function post_to_preview_instance( $post_ID, $post ) {
       if ($post->post_status === 'auto-draft') {
         return false;
       }
@@ -19,12 +42,7 @@ class Preview {
         return false;
       }
 
-      $wpgatsby_settings = get_option('wpgatsby_settings');
-      $preview_url = $wpgatsby_settings['preview_api_webhook'];
-
-      if (substr($preview_url, -1) !== '/') {
-        $preview_url = "$preview_url/";
-      }
+      $preview_url = $this::get_gatsby_preview_instance_url();
 
       $preview_url = "${preview_url}__refresh";
 
@@ -76,8 +94,7 @@ class Preview {
         ]
       );
 
-    }, 10, 2 );
-  }
+    }
 }
 
 ?>
