@@ -70,7 +70,7 @@ After the event, my client no longer needed the membership and E-commerce featur
 
 The hosting cost? [Zero dollars and zero cents.](https://www.netlify.com/pricing/)
 
-That project opened my eyes. The client had a low traffic website, and they barely used the membership and E-commerce functionality I added. Yet, I signed them up with my favorite WordPress host, with pricing that started at \$115 a month, not including the cost of premium plugins. The next time I had a similar project, which was earlier this year, I grabbed Netlify from the beginning.
+That project opened my eyes. The client had a low traffic website, and they barely used the membership and e-commerce functionality I added. Yet, I signed them up with my favorite WordPress host, with pricing that started at \$115 a month, not including the cost of premium plugins. The next time I had a similar project, which was earlier this year, I grabbed Netlify from the beginning.
 
 The cheaper hosting for static sites, like the ones Gatsby can produce, can be a game changer for your business model. That's because the client is willing to pay for an all-inclusive package, and doesn't care if you use an inexpensive static site host, or a costly WordPress host. By making the right choice your profit can increase from day one, and accelerate if you keep the project over months or years.
 
