@@ -18,7 +18,7 @@ To initialize a `package.json` for your project, run the following command:
 
 Once you've run the command you'll see a series of options listed in the command-line interface (CLI). Those you select are stored in your `package.json` which contains some of the [files Gatsby looks for in a Plugin](/docs/files-gatsby-looks-for-in-a-plugin)
 
-## What happens in a Generic Plugin?
+## What happens in a generic plugin?
 
 In a generic plugin the `gatsby-node.js` file enables the use of [gatsby node APIs](/docs/node-apis/). These APIs, such as `createPage`, `createResolvers`, and `sourceNodes`, manipulate the Node(s) in a Gatsby site. A [Node](/docs/node-creation/) is the smallest unit of data in Gatsby. You can create a Node using the [createNode](/docs/actions/#createNode) action.
 
