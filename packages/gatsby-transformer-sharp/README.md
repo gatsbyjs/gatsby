@@ -42,7 +42,7 @@ Each image file is parsed into a node of type `ImageSharp`.
 
 `checkSupportedExtensions` [boolean][optional]
 
-Sharp only supports certain image formats (see Parsing algorithm) and hence throws a warning when you e.g. use a .gif in an `ImageSharp` query. You'll need to use `publicURL` instead. With this option you can disable the warning behavior.
+Sharp only supports certain image formats (see the Parsing algorithm section above) and hence throws a warning when you e.g. use a .gif in an `ImageSharp` query. You'll need to use `publicURL` instead. With this option you can disable the warning behavior.
 
 ```javascript
 // In your gatsby-config.js
