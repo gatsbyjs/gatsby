@@ -231,6 +231,23 @@ export const ensureIndexByTypedChain = (
     }
     set.add(node)
   })
+
+  if (comparator === "$lte") {
+    const entries = [...byKeyValue.buckets.entries()] // Iterator<v, set>
+    entries.sort(([a], [b]) => (a <= b ? -1 : a > b ? 1 : 0))
+    const arr: Array<IGatsbyNode> = []
+    const offsets = new Map()
+    entries.forEach(([v, bucket]) => {
+      // Record the first index containing node with as filter value v
+      offsets.set(v, [arr.length, bucket.size])
+      // We could do `arr.push(...bucket)` here but that's not safe with very
+      // large sets, so we use a regular loop
+      bucket.forEach(node => arr.push(node))
+    })
+
+    byKeyValue.opCache.nodesOrderedByValue = arr
+    byKeyValue.opCache.valueToIndexOffset = offsets
+  }
 }
 
 /**
@@ -267,5 +284,28 @@ export const getNodesByTypedChain = (
   const typedKey = nodeTypeNames.join(`,`) + `/` + comparator + `/` + key
 
   const byTypedKey = filterCache?.get(typedKey)
-  return byTypedKey?.buckets.get(value)
+
+  if (!byTypedKey) {
+    // This can happen for various edge case reasons. It means we have to go
+    // through Sift now.
+    return undefined
+  }
+
+  if (comparator === "$eq") {
+    return byTypedKey.buckets.get(value)
+  }
+
+  // TODO: add explicit support for a filter with from-to range, in which case there's a lt/lte and gt/gte and the returned sets won't be unnecessarily large
+
+  if (comparator === "$lte") {
+    // Note: we fully map all values so loc must exist. Same for opCache
+    const loc = byTypedKey.opCache.valueToIndexOffset!.get(value)
+    return new Set(byTypedKey.opCache.nodesOrderedByValue!.slice(0, loc![0] + loc![1]))
+  }
+
+  throw new Error(
+    "Unknown comparator trying to fetch bucket cache. Supported comparators should be whitelisted but received `" +
+      comparator +
+      "`, anyways"
+  )
 }
