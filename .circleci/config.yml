@@ -298,8 +298,13 @@ jobs:
   integration_tests_gatsby_cli:
     executor: node
     steps:
-      - e2e-test:
-          test_path: integration-tests/gatsby-cli
+      - <<: *attach_to_bootstrap
+      - run:
+          name: Assert Changed Files
+          command: ./scripts/assert-changed-files.sh "packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*"
+      - run:
+          name: Run tests (using defaults)
+          command: cd integration-tests/gatsby-cli && yarn test
 
   integration_tests_structured_logging:
     executor: node
