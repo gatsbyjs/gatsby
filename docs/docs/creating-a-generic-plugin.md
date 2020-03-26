@@ -1,28 +1,28 @@
 ---
-title: Creating a Generic plugin
+title: Creating a Generic Plugin
 ---
 
-This section is aimed at explaining the structure of a Gatsby plugin and the files you need to create one.
+This section aims to explain the structure of a Gatsby plugin and the files you need to create one.
 
-As seen in the [what is a plugin doc](/docs/what-is-a-plugin/), a plugin is a piece of software that acts as an add-on and gives a Gatsby site additional functionality.
+The idea of a generic plugin is to lay more emphasis on the makeup of a Plugin rather than the specific labels( source,transformer, local) that are [selected based on functionality](docs/naming-a-plugin/). As seen in the [what is a plugin doc](/docs/what-is-a-plugin/), a plugin is a piece of software that acts as an add-on and gives a Gatsby site additional functionality.
 
 Plugins contain a file, usually in the project root, called `package.json` - this file holds various metadata relevant to the project. The `package.json` file is also used to provide information to npm that identifies the project and allows npm to handle the project's dependencies.
 
 ## Initializing your plugin project
 
-In order to initialize a `package.json` for your project, run the following command:
+To initialize a `package.json` for your project, run the following command:
 
 ```shell
   npm init
 ```
 
-Once you've run the command you'll see a series of options listed in the command line interface (CLI). Those you select are stored in your `package.json` which contains some of the [files Gatsby looks for in a Plugin](/docs/files-gatsby-looks-for-in-a-plugin)
+Once you've run the command you'll see a series of options listed in the command-line interface (CLI). Those you select are stored in your `package.json` which contains some of the [files Gatsby looks for in a Plugin](/docs/files-gatsby-looks-for-in-a-plugin)
 
 ## What happens in a Generic Plugin?
 
-In a generic plugin the `gatsby-node.js` file enables the use of [gatsby node APIs](/docs/node-apis/). These APIs, such as `createPage`, `createResolvers`, and `sourceNodes`, manipulate the Node(s) in a Gatsby site. A [Node](/docs/node-creation/) is the smallest unit of data in Gatsby. You can create a Nodes using the [createNode](/docs/actions/#createNode) action.
+In a generic plugin the `gatsby-node.js` file enables the use of [gatsby node APIs](/docs/node-apis/). These APIs, such as `createPage`, `createResolvers`, and `sourceNodes`, manipulate the Node(s) in a Gatsby site. A [Node](/docs/node-creation/) is the smallest unit of data in Gatsby. You can create a Node using the [createNode](/docs/actions/#createNode) action.
 
-IIn `gatsby-node.js` you can carry out functions with these APIs, such as:
+In `gatsby-node.js` you can carry out functions with these APIs, such as:
 
 - Loading API keys
 - Sending calls to APIs
