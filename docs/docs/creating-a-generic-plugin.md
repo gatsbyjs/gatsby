@@ -1,5 +1,5 @@
 ---
-title: Creating a Generic plugin
+title: Creating a Generic Plugin
 ---
 
 This section is aimed at explaining the structure of a Gatsby plugin and the files you need to create one.
