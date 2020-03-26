@@ -2,7 +2,7 @@
 title: Security in Gatsby
 ---
 
-By being a modern static site generator, Gatsby inherits several security principles that comes with this approach. However, even with this, your users could be exposed to malicious attacks. In this page, you will see what they are and how you could prevent them.
+By taking advantage of the benefits of static content, Gatsby inherits several security principles. However, even with this, your users can be exposed to malicious attacks. Read on for further information on potential attack vectors and how you could prevent them.
 
 ## Cross-Site Scripting (XSS)
 
