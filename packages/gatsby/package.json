@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.20.6",
+  "version": "2.20.7",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -150,6 +150,7 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/runtime": "^7.8.7",
+    "@types/socket.io": "^2.1.4",
     "babel-preset-gatsby-package": "^0.3.1",
     "cross-env": "^5.2.1",
     "documentation": "^12.1.4",
