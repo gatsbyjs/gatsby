@@ -263,6 +263,8 @@
                   link: /docs/naming-a-plugin/
                 - title: Files Gatsby Looks for in a Plugin
                   link: /docs/files-gatsby-looks-for-in-a-plugin/
+                - title: Creating a Generic Plugin
+                  link: /docs/creating-a-generic-plugin/
                 - title: Creating a Local Plugin
                   link: /docs/creating-a-local-plugin/
                 - title: Creating a Source Plugin
