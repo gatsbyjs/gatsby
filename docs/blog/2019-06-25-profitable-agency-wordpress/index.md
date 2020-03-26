@@ -66,7 +66,7 @@ Last year I built a WordPress website for an event. I used a few popular members
 
 I even collected an affiliate fee from the server host. Again, if site maintenance is your bread-and-butter, then you know this model. Every nickel counts.
 
-After the event, my client no longer needed the membership and E-commerce features. And they weren't enthusiastic about paying me for ongoing support. So, instead of haggling over a price, or handing over the project and losing their business forever, I turned the WordPress project into a static site that I host on Netlify.
+After the event, my client no longer needed the membership and e-commerce features. And they weren't enthusiastic about paying me for ongoing support. So, instead of haggling over a price, or handing over the project and losing their business forever, I turned the WordPress project into a static site that I host on Netlify.
 
 The hosting cost? [Zero dollars and zero cents.](https://www.netlify.com/pricing/)
 
