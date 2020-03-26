@@ -590,7 +590,7 @@ workflows:
       - benchmark_markdown_table_32768
     triggers:
       - schedule:
-          cron: 12 3 * * *
+          cron: 22 16 * * *
           filters:
             branches:
               only:
