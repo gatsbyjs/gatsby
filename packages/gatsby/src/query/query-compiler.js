@@ -44,7 +44,7 @@ const {
   default: errorParser,
   locInGraphQlToLocInFile,
 } = require(`./error-parser`)
-const websocketManager = require(`../utils/websocket-manager`)
+const { websocketManager } = require(`../utils/websocket-manager`)
 
 const overlayErrorID = `graphql-compiler`
 
