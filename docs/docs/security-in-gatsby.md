@@ -17,7 +17,7 @@ const username = `<script src='https://path/to/badness.js'></script>`
 const User = () => <p> hello {username}</p>
 ```
 
-it will render `hello <script src='https://path/to/badness.js'></script>` as a string inside the p tag.
+When you try to inject the JSX element above it will render `hello <script src='https://path/to/badness.js'></script>` as a string inside the p tag.
 
 In other hand, there could be some fields in your application that you will need to render the inner HTML tags, such as a content field in a blog or a comment in a comments section, that are built in rich-text editors.
 
