@@ -156,26 +156,41 @@ export const addResolvedNodes = (
  */
 export const ensureIndexByTypedChain = (
   chain: string[],
+  comparator: string, // $eq, $lte, etc
   nodeTypeNames: string[],
-  typedKeyValueIndexes: Map<
+  filterCache: Map<
     string,
-    Map<string | number | boolean, Set<IGatsbyNode>>
+    {
+      buckets: Map<string | number | boolean, Set<IGatsbyNode>>
+      opCache: {
+        nodesOrderedByValue?: Array<IGatsbyNode>
+        valueToIndexOffset?: Map<string | number | boolean, [number, number]>
+      }
+    }
   >
 ): void => {
   const chained = chain.join(`+`)
 
-  const nodeTypeNamePrefix = nodeTypeNames.join(`,`) + `/`
-  // The format of the typedKey is `type,type/path+to+eqobj`
-  const typedKey = nodeTypeNamePrefix + chained
+  // The format of the typedKey is `type,type/$eq/path+to+eqobj`
+  const typedKey = nodeTypeNames.join(`,`) + `/` + comparator + `/` + chained
 
-  if (typedKeyValueIndexes.has(typedKey)) {
+  if (filterCache.has(typedKey)) {
     return
   }
 
   const { nodes, resolvedNodesCache } = store.getState()
 
-  const byKeyValue = new Map<string | number | boolean, Set<IGatsbyNode>>()
-  typedKeyValueIndexes.set(typedKey, byKeyValue)
+  const byKeyValue: {
+    buckets: Map<string | number | boolean, Set<IGatsbyNode>>
+    opCache: {
+      nodesOrderedByValue?: Array<IGatsbyNode>
+      valueToIndexOffset?: Map<string | number | boolean, [number, number]>
+    }
+  } = {
+    buckets: new Map<string | number | boolean, Set<IGatsbyNode>>(),
+    opCache: {},
+  }
+  filterCache.set(typedKey, byKeyValue)
 
   nodes.forEach(node => {
     if (!nodeTypeNames.includes(node.internal.type)) {
@@ -209,10 +224,10 @@ export const ensureIndexByTypedChain = (
       return
     }
 
-    let set = byKeyValue.get(v)
+    let set = byKeyValue.buckets.get(v)
     if (!set) {
       set = new Set()
-      byKeyValue.set(v, set)
+      byKeyValue.buckets.set(v, set)
     }
     set.add(node)
   })
@@ -233,17 +248,24 @@ export const ensureIndexByTypedChain = (
  */
 export const getNodesByTypedChain = (
   chain: string[],
+  comparator: string, // $eq, $nin, etc
   value: boolean | number | string,
   nodeTypeNames: string[],
-  typedKeyValueIndexes: Map<
+  filterCache: Map<
     string,
-    Map<string | number | boolean, Set<IGatsbyNode>>
+    {
+      buckets: Map<string | number | boolean, Set<IGatsbyNode>>
+      opCache: {
+        nodesOrderedByValue?: Array<IGatsbyNode>
+        valueToIndexOffset?: Map<string | number | boolean, [number, number]>
+      }
+    }
   >
 ): Set<IGatsbyNode> | undefined => {
   const key = chain.join(`+`)
 
-  const typedKey = nodeTypeNames.join(`,`) + `/` + key
+  const typedKey = nodeTypeNames.join(`,`) + `/` + comparator + `/` + key
 
-  const byTypedKey = typedKeyValueIndexes?.get(typedKey)
-  return byTypedKey?.get(value)
+  const byTypedKey = filterCache?.get(typedKey)
+  return byTypedKey?.buckets.get(value)
 }

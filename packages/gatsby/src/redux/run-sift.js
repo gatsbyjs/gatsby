@@ -19,6 +19,39 @@ const {
   getNode: siftGetNode,
 } = require(`./nodes`)
 
+/**
+ * This is the main cache structure for precomputing fast filters
+ *
+ * The idea is that the first time a filter is requested, the code computes
+ * a map with buckets for each value of the filter. So all nodes where the
+ * filter finds `5` go in one Set, for all values found this way.
+ *
+ * This results in a map of a map of a set of nodes. The outer map will map the
+ * filter to an inner map of value to set of nodes with that value ("buckets").
+ *
+ * For `eq` that's sufficient for an O(1) lookup. For other ops additional
+ * computation is required, which we cache in the opCache below.
+ *
+ * For the <, <=, >, >=, and != we maintain an ordered list of values as well as
+ * a reverse value-to-index lookup. This way we can create slices to get the set
+ * of nodes according to the operator.
+ *
+ * TODO: regex/glob/elemMatch
+ *
+ *
+ * Keep sync with gatsby/src/schema/node-model.js
+ * @typedef {Map<
+    string,
+    {
+      buckets: Map<string | number | boolean, Set<IGatsbyNode>>,
+      opCache: {
+        nodesOrderedByValue?: Array<IGatsbyNode>
+        valueToIndexOffset?: Map<string | number | boolean, number>
+      }
+    }
+  >} filterCache
+ */
+
 /////////////////////////////////////////////////////////////////////
 // Parse filter
 /////////////////////////////////////////////////////////////////////
@@ -105,19 +138,11 @@ function handleMany(siftArgs, nodes) {
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {filterCache} filterCache
  * @returns {Array<IGatsbyNode> | undefined}
  */
-const runFlatFiltersWithoutSift = (
-  filters,
-  nodeTypeNames,
-  typedKeyValueIndexes
-) => {
-  const caches = getBucketsForFilters(
-    filters,
-    nodeTypeNames,
-    typedKeyValueIndexes
-  )
+const runFlatFiltersWithoutSift = (filters, nodeTypeNames, filterCache) => {
+  const caches = getBucketsForFilters(filters, nodeTypeNames, filterCache)
 
   if (!caches) {
     // Let Sift take over as fallback
@@ -149,27 +174,28 @@ const runFlatFiltersWithoutSift = (
 /**
  * @param {Array<DbQuery>} filters
  * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {filterCache} filterCache
  * @returns {Array<Set<IGatsbyNode>> | undefined} Undefined means at least one
  *   cache was not found. Must fallback to sift.
  */
-const getBucketsForFilters = (filters, nodeTypeNames, typedKeyValueIndexes) => {
+const getBucketsForFilters = (filters, nodeTypeNames, filterCache) => {
   const caches /*: Array<Map<string|number|boolean, Set<IGatsbyNode>>>*/ = []
 
   // Fail fast while trying to create and get the value-cache for each path
   let every = filters.every((filter /*: DbQuery*/) => {
     let {
       path: chain,
-      query: { value: targetValue },
+      query: { comparator, value: targetValue },
     } = filter
 
-    ensureIndexByTypedChain(chain, nodeTypeNames, typedKeyValueIndexes)
+    ensureIndexByTypedChain(chain, comparator, nodeTypeNames, filterCache)
 
     const nodesByKeyValue = getNodesByTypedChain(
       chain,
+      comparator,
       targetValue,
       nodeTypeNames,
-      typedKeyValueIndexes
+      filterCache
     )
 
     // If we couldn't find the needle then maybe sift can, for example if the
@@ -202,7 +228,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, typedKeyValueIndexes) => {
  * @property {boolean} args.firstOnly true if you want to return only the first
  *   result found. This will return a collection of size 1. Not a single element
  * @property {{filter?: Object, sort?: Object} | undefined} args.queryArgs
- * @property {undefined | Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} args.typedKeyValueIndexes
+ * @property {undefined | filterCache} args.filterCache
  *   May be undefined. A cache of indexes where you can look up Nodes grouped
  *   by a key: `types.join(',')+'/'+filterPath.join('+')`, which yields a Map
  *   which holds a Set of Nodes for the value that the filter is trying to eq
@@ -211,13 +237,13 @@ const getBucketsForFilters = (filters, nodeTypeNames, typedKeyValueIndexes) => {
  * @returns Collection of results. Collection will be limited to 1
  *   if `firstOnly` is true
  */
-const runFilterAndSort = (args: Object) => {
+const runFilterAndSort = args => {
   const {
     queryArgs: { filter, sort } = { filter: {}, sort: {} },
     resolvedFields = {},
     firstOnly = false,
     nodeTypeNames,
-    typedKeyValueIndexes,
+    filterCache,
     stats,
   } = args
 
@@ -225,7 +251,7 @@ const runFilterAndSort = (args: Object) => {
     filter,
     firstOnly,
     nodeTypeNames,
-    typedKeyValueIndexes,
+    filterCache,
     resolvedFields,
     stats
   )
@@ -243,7 +269,7 @@ exports.runSift = runFilterAndSort
  * @param {Array<DbQuery> | undefined} filterFields
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {undefined | filterCache} filterCache
  * @param resolvedFields
  * @returns {Array<IGatsbyNode> | undefined} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
@@ -252,7 +278,7 @@ const applyFilters = (
   filterFields,
   firstOnly,
   nodeTypeNames,
-  typedKeyValueIndexes,
+  filterCache,
   resolvedFields,
   stats
 ) => {
@@ -278,7 +304,7 @@ const applyFilters = (
     }
   }
 
-  const result = filterWithoutSift(filters, nodeTypeNames, typedKeyValueIndexes)
+  const result = filterWithoutSift(filters, nodeTypeNames, filterCache)
   if (result) {
     if (stats) {
       stats.totalIndexHits++
@@ -318,22 +344,26 @@ const filterToStats = (
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {undefined | filterCache} filterCache
  * @returns {Array|undefined} Collection of results
  */
-const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
+const filterWithoutSift = (filters, nodeTypeNames, filterCache) => {
   // This can also be `$ne`, `$in` or any other grapqhl comparison op
   if (
-    !typedKeyValueIndexes ||
+    !filterCache ||
     filters.length === 0 || // TODO: we should special case this
-    filters.some(
-      filter => filter.type === `elemMatch` || filter.query.comparator !== `$eq`
-    )
+    filters.some((filter /*: DbQuery*/) => {
+      if (filter.type === `elemMatch`) {
+        return true
+      }
+
+      return ![`$eq`].includes(filter.query.comparator)
+    })
   ) {
     return undefined
   }
 
-  return runFlatFiltersWithoutSift(filters, nodeTypeNames, typedKeyValueIndexes)
+  return runFlatFiltersWithoutSift(filters, nodeTypeNames, filterCache)
 }
 
 // Not a public API
