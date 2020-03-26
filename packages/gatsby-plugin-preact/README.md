@@ -29,4 +29,4 @@ You can enable Preact in development by telling it to replace `react-hot-loader`
     GATSBY_HOT_LOADER=fast-refresh gatsby develop
   ```
 
-Note that Preact doesn't actually support `fast-refresh` so by switching, you loose hot realoading capabilities :(
+Note that Preact doesn't actually support `fast-refresh` so by switching, you loose hot reloading capabilities :(
