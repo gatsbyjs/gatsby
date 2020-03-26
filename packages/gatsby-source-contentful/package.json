@@ -49,7 +49,7 @@
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel --verbose -w src --out-dir . --ignore **/__tests__"
   },
   "engines": {
     "node": ">=10.13.0"
