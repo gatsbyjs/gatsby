@@ -16,11 +16,11 @@ const { slash } = require(`gatsby-core-utils`)
 
 const { store, emitter } = require(`../redux/`)
 const { boundActionCreators } = require(`../redux/actions`)
-const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const queryUtil = require(`./index`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
+import queryCompiler from "./query-compiler"
 
 const getQueriesSnapshot = () => {
   const state = store.getState()
