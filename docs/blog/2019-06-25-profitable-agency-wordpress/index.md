@@ -94,7 +94,7 @@ Because WordPress plugins are writing to the same database, using the same platf
 
 Gatsby is different. Consider this example:
 
-If your client needs E-commerce features on their site, Gatsby can pull in the product data and shopping cart functionality from two different services, if you so choose. Those two services are not produced by the same server, or writing to the same database. So a problem with one may not affect the other.
+If your client needs e-commerce features on their site, Gatsby can pull in the product data and shopping cart functionality from two different services, if you so choose. Those two services are not produced by the same server, or writing to the same database. So a problem with one may not affect the other.
 
 In theory, break-fix for Gatsby should be easier to diagnose and solve. An issue with the build has nothing to do with a problem with the frontend, and vice versa. Gatsby's lower technical maintenance may be the difference between you taking on 5 client sites or 15.
 
