@@ -11,7 +11,7 @@ _Server-side rendering_ means using a server to generate HTML from JavaScript mo
 
 Server-side rendering with JavaScript works similarly to other server-side languages such as PHP or .NET, but with [Node.js](/docs/glossary/node/) as the runtime environment. When the server receives a request, it parses the JavaScript modules and data required to generate a response, and returns a rendered HTML page to the browser.
 
-Single-page applications use client-side rendering. All URL requests are redirected to the same, bare-bones HTML document, like the example that follows.
+Single-page applications use client-side rendering. All URL requests are redirected to the same bare-bones HTML document, like the example that follows.
 
 ```html
 <!DOCTYPE html>
