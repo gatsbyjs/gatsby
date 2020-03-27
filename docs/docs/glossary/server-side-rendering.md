@@ -13,7 +13,7 @@ Server-side rendering with JavaScript works similarly to other server-side langu
 
 Single-page applications use client-side rendering. All URL requests are redirected to the same, bare-bones HTML document, like the example that follows.
 
-```sql
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
