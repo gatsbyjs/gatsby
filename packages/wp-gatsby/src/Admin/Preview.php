@@ -5,13 +5,18 @@ use GraphQLRelay\Relay;
 
 class Preview {
   function __construct() {
-    add_action( 'save_post', [$this, 'post_to_preview_instance'], 10, 2 );
-    add_filter( 'template_include', [$this, 'setup_preview_template'], 1, 1 );
+    add_action( 'save_post', [ $this, 'post_to_preview_instance' ], 10, 2 );
+    add_filter( 'template_include', [ $this, 'setup_preview_template' ], 1, 99 );
   }
 
   public function setup_preview_template( $template ) {
-    if ( is_preview() ) {
+    $is_preview = is_preview();
+    $preview_url = \WPGatsby\Admin\Preview::get_gatsby_preview_instance_url();
+
+    if ( $is_preview && $preview_url ) {
       return plugin_dir_path( __FILE__ ) . 'includes/preview-template.php';
+    } elseif ( $is_preview && !$preview_url ) {
+      return plugin_dir_path( __FILE__ ) . 'includes/no-preview-url-set.php';
     }
 
     return $template;
@@ -26,6 +31,10 @@ class Preview {
   static function get_gatsby_preview_instance_url() {
     $preview_url = self::get_setting( 'preview_api_webhook' );
 
+    if ( !$preview_url || !filter_var( $preview_url, FILTER_VALIDATE_URL ) ) {
+      return false;
+    }
+
     if ( substr($preview_url, -1) !== '/' ) {
       $preview_url = "$preview_url/";
     }
@@ -39,11 +48,6 @@ class Preview {
       }
 
       if ( $post->post_type !== 'revision' ) {
-        return false;
-      }
-
-
-      if ( $post->post_type === 'action_monitor' ) {
         return false;
       }
 
@@ -77,10 +81,6 @@ class Preview {
         'singleName' => $referenced_node_single_name
       ];
 
-      // @todo some special error handling here?
-      // are there built in WP toast messages we can send?
-      // or just throw an error here if there's no response mbe
-      // $preview_response =
       wp_remote_post(
         $preview_url,
         [
@@ -90,7 +90,6 @@ class Preview {
           'data_format' => 'body',
         ]
       );
-
     }
 }
 
