@@ -11,7 +11,7 @@ NPM packages, installing plugins, creating pages, etc.
 It's designed to be extensible so new capabilities can be added which allow
 Recipes to automate more things.
 
-We choose MDX to allow for a literate programming style of writing recipes
+We chose MDX to allow for a literate programming style of writing recipes
 which enables us to port our dozens of recipes from https://www.gatsbyjs.org/docs/recipes/
 as well as in the future, entire tutorials.
 
@@ -66,11 +66,12 @@ Setup my site with my favorite techs
 Setting up Typescript and ThemeUI.
 
 import Typescript from "gatsby/typescript"
+
 <TypeScript props="can be passed to recipes" />
 
 import ThemeUI from "gatsby/theme-ui"
-<ThemeUI /
->
+
+<ThemeUI />
 ```
 
 # Motivation
