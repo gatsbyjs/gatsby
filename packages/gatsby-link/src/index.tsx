@@ -225,13 +225,13 @@ class GatsbyLinkInternal<TState> extends React.Component<
         state={state}
         getProps={getProps}
         innerRef={this.handleRef as React.Ref<HTMLAnchorElement>}
-        onMouseEnter={(e): void => {
+        onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
           if (onMouseEnter) {
             onMouseEnter(e)
           }
           ___loader.hovering(parsePath(to).pathname)
         }}
-        onClick={(e): boolean => {
+        onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): boolean => {
           if (onClick) {
             onClick(e)
           }
