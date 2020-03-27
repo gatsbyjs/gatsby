@@ -110,7 +110,7 @@ In your Gatsby project, you are going to have some dependencies that get stored 
 
 ### Using npm
 
-In npm, you can use the `npm audit` command to check your dependencies. It is available since v6. Check their [docs](https://docs.npmjs.com/cli/audit) for more options.
+In npm, you can use the `npm audit` command to check your dependencies. This command is available in all npm versions greater than `6.0.0`. Check [npm docs](https://docs.npmjs.com/cli/audit) for more options.
 
 ### Using yarn
 
