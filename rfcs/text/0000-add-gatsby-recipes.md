@@ -99,14 +99,14 @@ Recipes follows a client/server model. The client can be the web IDE or a CLI
 or any other client that implements the server APIs. The client interprets the
 recipe's React components in a manner appropriate to the environment.
 
-Servers provide the ability to execute actions. They may provide basic
-actions like writing to disk, git operations, npm operations, etc. Providers
-provide support for different actions e.g. Gatsby is itself a provider and
-supports many Gatsby-specific actions like installing plugins, shadowing theme
-files, creating pages, etc. A client can connect to multiple servers so a future Gatsby
-Desktop could provide additional actions like installing a starter, running
-`gatsby develop` etc. The client must validate recipes to ensure the servers
-provide the necessary capabilities to execute the recipe.
+Servers provide the ability to execute actions. They may provide basic actions
+like writing to disk, git operations, npm operations, etc. Providers provide
+support for different actions e.g. Gatsby is itself a provider and supports
+many Gatsby-specific actions like installing plugins, shadowing theme files,
+creating pages, etc. A client can connect to multiple servers so a future
+Gatsby Desktop app could provide additional actions like installing a starter,
+running `gatsby develop` etc. The client must validate recipes to ensure the
+servers provide the necessary capabilities to execute the recipe.
 
 Clients provide a GUI that walk people people through executing recipes. As
 recipes are executed, they create actions which are sent to the server to be
