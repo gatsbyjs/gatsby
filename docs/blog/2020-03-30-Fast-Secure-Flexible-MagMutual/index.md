@@ -4,14 +4,14 @@ date: 2020-03-30
 author: Tara Arnold
 excerpt: MagMutual’s web team built their new site using Gatsby, harnessed to Drupal 8, to deliver easily managed content and customer experience, incredibly fast.
 tags:
-  - Drupal
-  - Gatsby
-  - Netlify
+  - drupal
+  - gatsby
+  - netlify
 ---
 
 MagMutual, a leading professional healthcare liability insurer, needed to redesign and re-platform the company’s website to further its core mission: to serve and protect policyholders.
 
-![ ](./MagMutual_design.png)
+![](./MagMutual_design.png)
 
 To achieve the company's vision for their new site, MagMutual collaborated with Mediacurrent, the Atlanta-based open source development and digital marketing agency. The new magmutual.com united Drupal and Gatsby to form a fully open source, enterprise-grade system that empowers MagMutual’s web team to closely yet easily manage content and customer experience.
 
