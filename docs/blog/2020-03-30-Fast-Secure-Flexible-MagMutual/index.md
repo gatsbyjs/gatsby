@@ -77,6 +77,7 @@ Developer velocity: Self-documented API for developers increases efficiency.
 Mediacurrent’s development approach is built on high standards for web accessibility. This project inspired us to find the best accessibility tooling in the React ecosystem.
 
 ![](./Gastby_a11y_web.png)
+
 Adding built-in accessibility testing to the living style guide created visibility for all project stakeholders to hold the team accountable for accessibility issues. To share what we learned with the wider Gatsby community, we open sourced a Gatsby starter with built-in accessibility tools.
 
 ### Final Thoughts
