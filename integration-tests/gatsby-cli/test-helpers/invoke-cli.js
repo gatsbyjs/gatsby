@@ -12,6 +12,7 @@ export function invokeCli(...args) {
       (error, stdout, stderr) => {
         const logs = [stdout, stderr].join("")
         if (error) {
+          console.error(err)
           return resolve([1, logs])
         }
         resolve([0, logs])
