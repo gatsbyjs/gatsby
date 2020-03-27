@@ -1,5 +1,5 @@
 ---
-title: Fast, Secure, and Flexible':' MagMutual.com Taps the Power of Gatsby + Drupal 8
+title: Fast, Secure, and Flexible: MagMutual.com Taps the Power of Gatsby + Drupal 8
 date: 2020-03-30
 author: Tara Arnold
 excerpt: MagMutual’s web team built their new site using Gatsby, harnessed to Drupal 8, to deliver easily managed content and customer experience, incredibly fast.
@@ -44,7 +44,7 @@ A decoupled design approach offers limitless possibilities to evolve the site wi
 
 In this video, hear from project leaders Bob Kepford, Director of Development at Mediacurrent and Ben Robertson, Senior Software Engineer at Gatsby about their development approach and results of the new site.
 
-<div style="position: relative; display: block; max-width: 960px;"><div style="padding-top: 56.25%;"><iframe src="https://players.brightcove.net/1027729815001/befDVqJZ_default/index.html?videoId=6133184295001" allowfullscreen="" allow="encrypted-media" style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%;"></iframe></div></div>
+https://players.brightcove.net/1027729815001/befDVqJZ_default/index.html?videoId=6133184295001
 
 ## MagMutual on the JAMstack
 Drupal 8, Gatsby, and a [serverless framework with GraphQL](https://www.mediacurrent.com/blog/5-reasons-why-you-should-consider-graphql-server) helped MagMutual achieve its immediate vision for the new site while they reap the innovation potential of these robust open source software communities.
