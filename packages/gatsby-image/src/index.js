@@ -238,6 +238,18 @@ const listenToIntersections = (el, cb) => {
   }
 }
 
+const convertToCSSString = styleObject => {
+  if (!styleObject) return ""
+
+  const cssProps = Object.keys(styleObject)
+  const jsToCSSProp = capitalLetter => `-${capitalLetter[0].toLowerCase()}`
+
+  return cssProps.reduce((cssString, propName) => {
+    const propAsCSS = propName.replace(/([A-Z])/g, jsToCSSProp)
+    return cssString + `${propAsCSS}:${styleObject[propName]};`
+  }, "")
+}
+
 const noscriptImg = props => {
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
@@ -253,7 +265,9 @@ const noscriptImg = props => {
     : ``
   const loading = props.loading ? `loading="${props.loading}" ` : ``
   const draggable = props.draggable ? `draggable="${props.draggable}" ` : ``
-  const style = props.imgStyle ? `style="${props.imgStyle}` : `style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"`
+  const style = `style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center;${convertToCSSString(
+    props.imgStyle
+  )}"`
 
   const sources = generateNoscriptSources(props.imageVariants)
 
