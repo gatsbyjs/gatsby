@@ -10058,3 +10058,19 @@
     - Nonprofit
   built_by: Corey Ward
   built_by_url: http://www.coreyward.me/
+- title: Illustration Hunt
+  main_url: https://illustrationhunt.com/
+  url: https://illustrationhunt.com/
+  featured: false
+  categories:
+    - Data
+    - Design
+    - Entertainment
+    - Productivity
+    - User Experience
+    - Programming
+    - Gallery
+    - Human Resources
+    - Library
+  built_by: Gilbish Kosma
+  built_by_url: https://www.gil20.me/
