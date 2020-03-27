@@ -3,7 +3,7 @@ const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const { setStore } = require(`./reporter/redux`)
-const didYouMean = require(`./did-you-mean`)
+const { didYouMean } = require(`./did-you-mean`)
 const { getLocalGatsbyVersion } = require(`./util/version`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
@@ -379,7 +379,7 @@ module.exports = argv => {
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
       handler: handlerP(({ rootPath, starter }) => {
-        const initStarter = require(`./init-starter`)
+        const { initStarter } = require(`./init-starter`)
         return initStarter(starter, { rootPath })
       }),
     })
@@ -400,11 +400,12 @@ Using a plugin:
 Creating a plugin:
 - Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin/)
 - Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)
+- Creating a Generic Plugin (https://www.gatsbyjs.org/docs/creating-a-generic-plugin/)
 - Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin/)
 - Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
 - Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
 - Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
-- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/docs/pixabay-source-plugin-tutorial/)
+- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/tutorial/pixabay-source-plugin-tutorial/)
 - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
 - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
           `)

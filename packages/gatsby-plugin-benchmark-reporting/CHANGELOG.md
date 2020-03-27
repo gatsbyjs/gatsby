@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.1.0...gatsby-plugin-benchmark-reporting@0.1.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+# [0.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.13...gatsby-plugin-benchmark-reporting@0.1.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [0.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.12...gatsby-plugin-benchmark-reporting@0.0.13) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.11...gatsby-plugin-benchmark-reporting@0.0.12) (2020-03-09)
+
+### Features
+
+- **gatsby-plugin-benchmark-reporting:** allow passing a secret to benchmark reporting endpoint ([#22108](https://github.com/gatsbyjs/gatsby/issues/22108)) ([5bd889e](https://github.com/gatsbyjs/gatsby/commit/5bd889e))
+
 ## [0.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.0.10...gatsby-plugin-benchmark-reporting@0.0.11) (2020-03-07)
 
 **Note:** Version bump only for package gatsby-plugin-benchmark-reporting

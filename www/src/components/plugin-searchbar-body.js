@@ -11,8 +11,8 @@ import {
   ToggleRefinement,
 } from "react-instantsearch-dom"
 import { navigate as reachNavigate } from "@reach/router"
-import { Link } from "gatsby"
-import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
+import Link from "../components/localized-link"
+import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
 import AlgoliaLogo from "../assets/vendor-logos/algolia.svg"
 import GatsbyIcon from "./gatsby-monogram"
 import { debounce, unescape } from "lodash-es"

@@ -54,7 +54,7 @@ Current partners have reported development timelines of 2-3 days when the conten
 
 If you have a GraphQL-based API, you **may not need to build an integration at all** -- Gatsby supports integration with GraphQL APIs via so-called ["schema stitching"](/blog/2018-09-25-announcing-graphql-stitching-support/).
 
-If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](/docs/creating-plugins/) and [source plugin tutorial](/docs/pixabay-source-plugin-tutorial/).
+If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](/docs/creating-plugins/) and [source plugin tutorial](/tutorial/pixabay-source-plugin-tutorial/).
 
 If you still have questions, please [raise an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://gatsby.dev/discord), or reach out to our team at [developer-relations@gatsbyjs.com](mailto:developer-relations@gatsbyjs.com).
 

@@ -13,7 +13,7 @@ const next = {
   link: `/blog/100days/seo/`,
 }
 
-test(`it can be rendered without when prev and next are null `, () => {
+test(`it can be rendered when prev and next are null `, () => {
   expect(() =>
     render(
       <ThemeProvider theme={theme}>

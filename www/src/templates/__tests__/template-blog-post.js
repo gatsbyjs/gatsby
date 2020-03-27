@@ -96,7 +96,7 @@ test(`it can be rendered`, () => {
   ).not.toThrow()
 })
 
-test(`It can display post image`, () => {
+test(`It displays information about author`, () => {
   const props = getProps({
     image: {
       childImageSharp: {

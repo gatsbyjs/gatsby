@@ -47,6 +47,7 @@ If you have a server from one of the following providers, you should read the in
 - [Aerobatic](/docs/deploying-to-aerobatic)
 - [Heroku](/docs/deploying-to-heroku)
 - [ZEIT Now](/docs/deploying-to-zeit-now)
+- [Cloudflare Workers](/docs/deploying-to-cloudflare-workers)
 - [GitLab Pages](/docs/deploying-to-gitlab-pages)
 - [Netlify](/docs/deploying-to-netlify)
 - [Render](/docs/deploying-to-render)

@@ -308,10 +308,10 @@ You may also choose to include line highlighting in your code snippets, using th
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	siteMetadata: {
-		title: `GatsbyJS`, // highlight-line
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
+  siteMetadata: {
+    title: `GatsbyJS`, // highlight-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 ````
@@ -330,11 +330,11 @@ module.exports = {
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	siteMetadata: {
-		title: `GatsbyJS`,
-		// highlight-next-line
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
+  siteMetadata: {
+    title: `GatsbyJS`,
+    // highlight-next-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 ````
@@ -354,12 +354,12 @@ module.exports = {
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	// highlight-start
-	siteMetadata: {
-		title: `GatsbyJS`,
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
-	// highlight-end
+  // highlight-start
+  siteMetadata: {
+    title: `GatsbyJS`,
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
+  // highlight-end
 }
 ```
 ````
@@ -377,9 +377,12 @@ module.exports = {
 
 ### Capitalize proper nouns
 
-Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in Guide articles.
+Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in blog posts, docs, and other learning materials on this website.
 
+- Gatsby
+- GraphQL
 - JavaScript (capital letters in "J" and "S" and no abbreviations)
+- Markdown
 - Node.js
 
 A full-stack developer (adjective form with a dash) works on the full stack
