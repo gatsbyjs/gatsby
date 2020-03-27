@@ -17,7 +17,7 @@ const username = `<script src='https://path/to/badness.js'></script>`
 const User = () => <p> hello {username}</p>
 ```
 
-When you try to inject the JSX element above it will render `hello <script src='https://path/to/badness.js'></script>` as a string inside the p tag.
+When you try to inject the JSX element above, it will render `hello <script src='https://path/to/badness.js'></script>` as a string inside the `p` tag.
 
 On the other hand, fields in your application may need to render inner HTML tags, such as a content field in a blog or a comment in a comments section, that are built into rich-text editors.
 
@@ -49,7 +49,7 @@ For example, assume that the comments in your blog are sent in a form similar to
 </form>
 ```
 
-A malicious website could inspect your site and copy this snippet to theirs. If the user are logged in, the associated cookies is sent with the form and the server can not distinguish the origin of it. Even worse, the form could be sent when the page loads with informations you don't control:
+A malicious website could inspect your site and copy this snippet to theirs. If the user is logged in, the associated cookies are sent with the form and the server can not distinguish the origin of it. Even worse, the form could be sent when the page loads with information you don't control:
 
 ```js
 // highlight-next-line
@@ -66,7 +66,7 @@ A malicious website could inspect your site and copy this snippet to theirs. If 
 
 #### Don't use GET requests to modify data
 
-Actions that do not simply read data should be handled in a POST request. In the example above, if the `/blog/addcomment` accepts a GET request, the CSRF attack can be done using a `<img />` tag:
+Actions that do not simply read data should be handled in a POST request. In the example above, if the `/blog/addcomment` endpoint accepts a GET request, the CSRF attack can be done using an `<img />` tag:
 
 ```html
 <img src="http://mywebsite.com/blog/addcomment?comment=unwanted%20comment" />
@@ -89,11 +89,11 @@ When the form is sent, the server will compare the token received with the store
 
 #### Same-Site Cookies Attribute
 
-This cookie attribute is targeted to prevent CSRF attacks. If you need to create a cookie in your application, make sure to protect them by this attribute, that could be of `Strict` or `Lax` type:
+This cookie attribute is targeted to prevent CSRF attacks. If you need to create a cookie in your application, make sure to protect them by using this attribute, that could be of `Strict` or `Lax` type:
 
 `Set-Cookie: example=1; SameSite=Strict`
 
-It allows the server to make sure that the cookies are not being sent by a **cross-site** domain request.
+Using the `SameSite` attribute allows the server to make sure that the cookies are not being sent by a **cross-site** domain request.
 Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
 
 Quoting [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute):
@@ -137,14 +137,14 @@ Gatsby allows you to [fetch data from various APIs](/docs/content-and-data/) and
 
 ### Storing keys in client-side
 
-Sometimes in your Gatsby website, you will need display sensitive data or handle authenticated routes (e.g. a page that shows a user's orders in your ecommerce). Gatsby has an [Authentication Tutorial](/tutorial/authentication-tutorial) if you need assistance with setting up authentication flow. Use cookies to store the credentials in client-side, preferably with `SameSite` attribute listed above. Check out [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies) to further explanation about these attributes and how to configure them.
+Sometimes in your Gatsby website, you will need display sensitive data or handle authenticated routes (e.g. a page that shows a user's orders in your ecommerce). Gatsby has an [Authentication Tutorial](/tutorial/authentication-tutorial) if you need assistance with setting up authentication flow. Use cookies to store the credentials client-side, preferably with the `SameSite` attribute listed above. Check out [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies) to further understand these attributes and how to configure them.
 
 ## Content Security Policy (CSP)
 
 Content Security Policy is a security layer added in web applications to detect and prevent attacks, e.g. the XSS attack mentioned above.
 
 To add it to your Gatsby website, add [gatsby-plugin-csp](/packages/gatsby-plugin-csp/) to your `gatsby-config.js` with the desired configuration. Note that
-currently there is a [incompatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](/packages/gatsby-plugin-csp/) and [gatsby-image](/packages/gatsby-image) and other plugins that generate hashes in inline styles.
+currently there is a [compatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](/packages/gatsby-plugin-csp/) and other plugins that generate hashes in inline styles, including [gatsby-image](/packages/gatsby-image).
 
 > Note that not all browsers support CSP, check [can-i-use](https://caniuse.com/#feat=mdn-http_headers_csp_content-security-policy) for more information.
 
