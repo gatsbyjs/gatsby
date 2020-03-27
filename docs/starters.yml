@@ -1,3 +1,22 @@
+- url: https://gatsby-wordpress-libre.netlify.com/
+  repo: https://github.com/armada-inc/gatsby-wordpress-libre-starter
+  description: A Gatsby starter for creating blogs from headless WordPress CMS.
+  tags:
+    - Blog
+    - SEO
+    - CMS:WordPress
+    - Styling:Other
+    - Pagination
+  features:
+    - WordPress Libre 2 skin
+    - Data sourcing from headless WordPress
+    - Responsive design
+    - SEO optimized
+    - OpenGraph structured data
+    - Twitter Cards meta
+    - Sitemap Generation
+    - XML Sitemaps
+    - Progressive Web App
 - url: https://delog-w3layouts.netlify.com/
   repo: https://github.com/W3Layouts/gatsby-starter-delog
   description: A Gatsby Starter built with Netlify CMS to launch your dream blog with a click.
@@ -45,7 +64,7 @@
     - MaterialUI Components
     - React Icons
 - url: https://authenticaysh.netlify.com/
-  repo: https://github.com/ben-siewert/gatsby-starter-auth-aws-amplify
+  repo: https://github.com/seabeams/gatsby-starter-auth-aws-amplify
   description: Full-featured Auth with AWS Amplify & AWS Cognito
   tags:
     - AWS
@@ -5091,7 +5110,7 @@
     - Emotion
     - Roboto Typeface
     - SEO
-    - Typescript
+    - TypeScript
 - url: https://flex.arshad.io
   repo: https://github.com/arshad/gatsby-starter-flex
   description: A Gatsby starter for the Flex theme.
@@ -5187,22 +5206,24 @@
   features:
     - All features same as gatsby-starter-default
     - Only support TypeScript using gatsby-typescript-plugin
-- url: https://gatsby-starter-catalyst-basic.netlify.com/
-  repo: https://github.com/ehowey/gatsby-starter-catalyst-basic
-  description: A barebones starter to accelerate the Gatsby development process. Based on Gatsby Theme Catalyst. Uses MDX and Theme-UI. Includes the core theme, a header theme, and footer theme.
+- url: https://gatsby-starter-catalyst.netlify.com/
+  repo: https://github.com/ehowey/gatsby-starter-catalyst
+  description: A boilerplate starter to accelerate your Gatsby development process. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme-UI for styling. Includes a core theme, a header theme, and a footer theme.
   tags:
     - MDX
-    - Styling:CSS-in-JS
+    - Styling:Theme-UI
     - SEO
     - PWA
   features:
-    - Based on Gatsby Theme Catalyst series of themes
-    - Theme-UI integration for easy to change design tokens
-    - Developer friendly, includes basic starting styles from Tailwind that can be used as a base to enable you to focus on other design elements
-    - Color mode switching available by default
-    - SEO optimized to include social media images and Twitter handles
-    - React Scroll for one page, anchor based navigation is available
-    - Code highlighting
+    - Based on Gatsby Theme Catalyst series of themes and starters.
+    - Theme options are used to enable some simple layout changes.
+    - Latent component shadowing allows for easy shadowing and swapping of layout components such as the header and footer.
+    - Theme-UI is deeply integrated with design tokens and variants throughout.
+    - Uses a Tailwind preset to enable you to focus on design elements.
+    - Color mode switching available by default.
+    - SEO optimized to include social media images and Twitter handles.
+    - React Scroll for one page, anchor based navigation is available.
+    - Code highlighting via Prism.
 - url: https://gatsby-starter-default-dark-mode.netlify.com/
   repo: https://github.com/alexandreramosdev/gatsby-starter-default-dark-mode
   description: A simple starter to get developing quickly with Gatsby, dark mode, and styled-components.
@@ -5695,18 +5716,45 @@
     - SEO optimized
     - Robots.txt
     - OpenGraph structured data
-- url: https://5e72f0811444bb6f63ca27d9--ecstatic-jepsen-33bcc4.netlify.com/
-  repo: https://github.com/billp72/ecommerce-blog-contentful-starter
-  description: A Gatsby Starter built with Contenful CMS to launch your dream store and blog with a click.
+- url: https://gatsby-starter-personality.netlify.com/
+  repo: https://github.com/matheusquintaes/gatsby-starter-personality
+  description: A free responsive Gatsby Starter
   tags:
-    - Blog
-    - eCommerce
-    - Snipcart
-    - Markdown
-    - PWA
-    - CMS:Contentful
+    - Portfolio
+    - Gallery
   features:
-    - Advanced ecommerce and blog created for designer and developers
-    - Manage Ecommerce with Contenful CMS
-    - Option to add featured image and meta description while adding products
-    - create blog posts easily using static markdown pages
+    - SEO
+    - Page transition
+    - Fully responsive
+    - Styling:CSS-in-JS
+- url: https://seattleservicerelief.com/
+  repo: https://github.com/service-relief/gatsby-starter-service-relief
+  description: Localized index of resources for your city.
+  tags:
+    - Airtable
+    - Netlify
+    - SEO
+    - Styling:Tailwind
+  features:
+    - generates a static website using GatsbyJS
+    - uses Airtable to manage your listings and categories
+    - includes an Airtable form to collect local submissions and add them to Airtable for approval
+    - can be personalized to a city or region without touching a line of code
+    - one-click deployment via Netlify
+- url: https://shards-gatsby-starter.netlify.com/
+  repo: https://github.com/wcisco17/gatsby-typescript-shards-starter
+  description: Portfolio with Typescript and Shards UI
+  tags:
+    - Language:TypeScript
+    - Portfolio
+    - Netlify
+    - PWA
+    - Styling:Bootstrap
+  features:
+    - Portfollio Starter that includes Shards Ui component library and Typescript generator.
+    - Typescript
+    - Typescript Generator
+    - Styled-Components
+    - Shards UI
+    - Bootstrap
+

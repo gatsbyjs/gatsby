@@ -19,6 +19,8 @@
           link: /docs/recipes/pages-layouts/
         - title: Styling with CSS
           link: /docs/recipes/styling-css/
+        - title: Working with Plugins
+          link: /docs/recipes/working-with-plugins/
         - title: Working with Starters
           link: /docs/recipes/working-with-starters/
         - title: Working with Themes
@@ -85,6 +87,9 @@
             - title: Deploying to Render
               link: /docs/deploying-to-render/
               breadcrumbTitle: Render
+            - title: Deploying to Tiiny Host
+              link: /docs/deploying-to-tiiny-host/
+              breadcrumbTitle: Tiiny Host
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge
@@ -258,6 +263,8 @@
                   link: /docs/naming-a-plugin/
                 - title: Files Gatsby Looks for in a Plugin
                   link: /docs/files-gatsby-looks-for-in-a-plugin/
+                - title: Creating a Generic Plugin
+                  link: /docs/creating-a-generic-plugin/
                 - title: Creating a Local Plugin
                   link: /docs/creating-a-local-plugin/
                 - title: Creating a Source Plugin
@@ -655,7 +662,7 @@
               link: /docs/how-code-splitting-works/
         - title: Resource Handling & Service Workers
           link: /docs/resource-handling-and-service-workers/
-        - title: Data Storage (Redux)*
+        - title: Data Storage (Redux)
           link: /docs/data-storage-redux/
         - title: Build Caching
           link: /docs/build-caching/
@@ -768,6 +775,8 @@
           link: /docs/glossary/node/
         - title: React
           link: /docs/glossary/react/
+        - title: Server Side Rendering
+          link: /docs/glossary/server-side-rendering/
         - title: Static Site Generator
           link: /docs/glossary/static-site-generator/
         - title: webpack

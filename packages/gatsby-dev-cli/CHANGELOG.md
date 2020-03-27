@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.6.0...gatsby-dev-cli@2.6.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.47...gatsby-dev-cli@2.6.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
 ## [2.5.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.46...gatsby-dev-cli@2.5.47) (2020-03-16)
 
 **Note:** Version bump only for package gatsby-dev-cli
@@ -323,7 +333,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- check for for both unix and win32 path separators ([#8837](https://github.com/gatsbyjs/gatsby/issues/8837)) ([57cd191](https://github.com/gatsbyjs/gatsby/commit/57cd191))
+- check for both unix and win32 path separators ([#8837](https://github.com/gatsbyjs/gatsby/issues/8837)) ([57cd191](https://github.com/gatsbyjs/gatsby/commit/57cd191))
 
 <a name="2.4.4"></a>
 

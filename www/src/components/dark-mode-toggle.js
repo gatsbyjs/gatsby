@@ -133,7 +133,7 @@ function DarkModeToggle({ i18n }) {
     event.preventDefault()
     setColorMode(isDark ? `light` : `dark`)
   }
-  const label = isDark ? t`Activate light mode` : t`Activate dark mode`
+  const label = i18n._(isDark ? t`Activate light mode` : t`Activate dark mode`)
 
   return (
     <IconWrapper
