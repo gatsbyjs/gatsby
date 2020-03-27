@@ -14,6 +14,8 @@ describe("gatsby new", () => {
     it("creates a gatsby site", async () => {
       const [code, logs] = await invokeCli("new", siteName)
 
+      console.log(logs)
+
       expect(code).toBe(0)
       expect(logs).toMatchInlineSnapshot(`
         "info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-default.git
