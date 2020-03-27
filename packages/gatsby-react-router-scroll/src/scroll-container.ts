@@ -70,7 +70,10 @@ export class ScrollContainer extends React.Component<IScrollContainerProps> {
     this.context.scrollBehavior.unregisterElement(this.scrollKey)
   }
 
-  shouldUpdateScroll = (prevRouterProps, routerProps): boolean | ScrollTarget => {
+  shouldUpdateScroll = (
+    prevRouterProps,
+    routerProps
+  ): boolean | ScrollTarget => {
     const { shouldUpdateScroll } = this.props
     if (!shouldUpdateScroll) {
       return true
