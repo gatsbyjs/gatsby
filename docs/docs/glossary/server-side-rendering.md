@@ -36,7 +36,7 @@ Client-side rendering fills in the rest. Views for specific URLs are managed by 
 
 Server-side rendering addresses both concerns by creating HTML at _run time_, when the server receives a browser request). Search engines can index your URLs. Visitors can share them on Facebook or Twitter.
 
-Instead of server-side rendering, Gatsby creates static HTML at [build time](/docs/glossary/build/) when you use `gatsby build`. Gatsby-rendered HTML pages give you the SEO and social sharing advantages of server-side rendering with the speed and security of a [static site generator](/docs/glossary/static-site-generator/).
+Instead of purely server-side rendering, Gatsby uses the same APIs to create static HTML at [build time](/docs/glossary/build/) when you use `gatsby build`. Gatsby-rendered HTML pages give you the SEO and social sharing advantages of server-side rendering with the speed and security of a [static site generator](/docs/glossary/static-site-generator/).
 
 ### Learn more
 
