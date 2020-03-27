@@ -138,7 +138,7 @@ Would be happy to hear ideas about potential drawbacks.
 
 # Alternatives
 
-Simple code generators was one pontential design but we wished for a lot more power
+Simple code generators was one potential design but we wished for a lot more power
 than they provided e.g. multi-step recipes and the ability to run recipes in both
 the client and browser.
 
