@@ -33,6 +33,8 @@ aliases:
       key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
       paths:
         - ~/.cache
+        - ~/node_modules
+        # TODO: Cache all packages node_modules
 
   attach_to_bootstrap: &attach_to_bootstrap
     attach_workspace:
