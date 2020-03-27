@@ -189,8 +189,7 @@ class GatsbyLinkInternal<TState> extends React.Component<
       }
     }
 
-    // TODO: Reach typings state that getProps cannot return null.
-    return (null as unknown) as {}
+    return {}
   }
 
   render(): JSX.Element {
