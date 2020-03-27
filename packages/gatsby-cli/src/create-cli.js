@@ -1,6 +1,8 @@
 const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
+const respawn = require(`respawn`)
+const chokidar = require(`chokidar`)
 const report = require(`./reporter`)
 const { setStore } = require(`./reporter/redux`)
 const { didYouMean } = require(`./did-you-mean`)
@@ -71,8 +73,28 @@ function buildLocalCommands(cli, isLocalSite) {
           `There was a problem loading the local ${command} command. Gatsby may not be installed in your site's "node_modules" directory. Perhaps you need to run "npm install"? You might need to delete your "package-lock.json" as well.`
         )
 
-      report.verbose(`loading local command from: ${cmdPath}`)
-      return require(cmdPath)
+      if (command === `develop`) {
+        return args => {
+          const tmpFile = require(`tmp`).fileSync()
+          require(`fs`).writeFileSync(
+            tmpFile.name,
+            `const cmd = require("${cmdPath}");
+const args = ${JSON.stringify(args)};
+cmd(args);`
+          )
+          const monitor = respawn([`node`, tmpFile.name], {
+            env: process.env,
+          })
+          chokidar
+            .watch(path.join(process.cwd(), `gatsby-config.js`))
+            .on(`change`, () => {
+              monitor.stop(() => monitor.start())
+            })
+        }
+      } else {
+        report.verbose(`loading local command from: ${cmdPath}`)
+        return require(cmdPath)
+      }
     } catch (err) {
       cli.showHelp()
       return report.panic(
