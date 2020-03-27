@@ -1,5 +1,6 @@
 ---
 title: Build an E-commerce Site with Gatsby, DatoCMS, and Snipcart
+canonicalLink: https://aisha.codes/e-commerce-with-gatsby-datocms-snipcart/
 ---
 
 This tutorial will walk you through the process of building a new e-commerce site and beginning to customize it. It is meant to be approachable for both developers and business owners (who are not necessarily developers).
