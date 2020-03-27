@@ -253,7 +253,7 @@ const noscriptImg = props => {
     : ``
   const loading = props.loading ? `loading="${props.loading}" ` : ``
   const draggable = props.draggable ? `draggable="${props.draggable}" ` : ``
-  const style = props.imageStyle ? `style="${props.imageStyle}` : `style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"`
+  const style = props.imgStyle ? `style="${props.imgStyle}` : `style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"`
 
   const sources = generateNoscriptSources(props.imageVariants)
 
@@ -566,7 +566,7 @@ class Image extends React.Component {
                   alt,
                   title,
                   loading,
-                  imageStyle,
+                  imgStyle,
                   ...image,
                   imageVariants,
                 }),
