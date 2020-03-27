@@ -1,13 +1,28 @@
+import { ILocationBase } from "./scroll-context";
+
 const STATE_KEY_PREFIX = `@@scroll|`
 const GATSBY_ROUTER_SCROLL_STATE = `___GATSBY_REACT_ROUTER_SCROLL`
 
-export default class SessionStorage {
-  read(location, key) {
-    const stateKey = this.getStateKey(location, key)
+type ScrollPosition = [number, number];
+
+interface ILocation extends ILocationBase {
+  key?: string
+  pathname?: string
+}
+
+export class SessionStorage {
+  read(
+    location: ILocation,
+    key: string | null
+  ): ScrollPosition | null | undefined {
+    const stateKey = SessionStorage.getStateKey(location, key)
 
     try {
       const value = window.sessionStorage.getItem(stateKey)
-      return JSON.parse(value)
+      if (value) {
+        return JSON.parse(value) as ScrollPosition
+      }
+      throw ReferenceError
     } catch (e) {
       if (process.env.NODE_ENV !== `production`) {
         console.warn(
@@ -15,31 +30,25 @@ export default class SessionStorage {
         )
       }
 
-      if (
-        window &&
-        window[GATSBY_ROUTER_SCROLL_STATE] &&
-        window[GATSBY_ROUTER_SCROLL_STATE][stateKey]
-      ) {
-        return window[GATSBY_ROUTER_SCROLL_STATE][stateKey]
+      if (window?.[GATSBY_ROUTER_SCROLL_STATE]?.[stateKey]) {
+        return window[GATSBY_ROUTER_SCROLL_STATE][stateKey] as ScrollPosition
       }
 
-      return {}
+      return null
     }
   }
 
-  save(location, key, value) {
-    const stateKey = this.getStateKey(location, key)
+  save(location: ILocation, key: string | null, value): void {
+    const stateKey = SessionStorage.getStateKey(location, key)
     const storedValue = JSON.stringify(value)
 
     try {
       window.sessionStorage.setItem(stateKey, storedValue)
     } catch (e) {
-      if (window && window[GATSBY_ROUTER_SCROLL_STATE]) {
-        window[GATSBY_ROUTER_SCROLL_STATE][stateKey] = JSON.parse(storedValue)
-      } else {
+      if (!window?.[GATSBY_ROUTER_SCROLL_STATE]) {
         window[GATSBY_ROUTER_SCROLL_STATE] = {}
-        window[GATSBY_ROUTER_SCROLL_STATE][stateKey] = JSON.parse(storedValue)
       }
+      window[GATSBY_ROUTER_SCROLL_STATE][stateKey] = JSON.parse(storedValue)
 
       if (process.env.NODE_ENV !== `production`) {
         console.warn(
@@ -49,7 +58,7 @@ export default class SessionStorage {
     }
   }
 
-  getStateKey(location, key) {
+  static getStateKey(location: ILocation, key: string | null): string {
     const locationKey = location.key || location.pathname
     const stateKeyBase = `${STATE_KEY_PREFIX}${locationKey}`
     return key === null || typeof key === `undefined`

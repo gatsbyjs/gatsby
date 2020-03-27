@@ -1,22 +1,28 @@
-import React from "react"
+import React, { ReactChildren } from "react"
 import ReactDOM from "react-dom"
 import warning from "warning"
 import PropTypes from "prop-types"
+import { ScrollContext } from "./scroll-context"
 
-const propTypes = {
-  scrollKey: PropTypes.string.isRequired,
-  shouldUpdateScroll: PropTypes.func,
-  children: PropTypes.element.isRequired,
+interface IScrollContainerProps {
+  scrollKey: string
+  shouldUpdateScroll: any
+  children: ReactChildren
 }
 
-const contextTypes = {
-  // This is necessary when rendering on the client. However, when rendering on
-  // the server, this container will do nothing, and thus does not require the
-  // scroll behavior context.
-  scrollBehavior: PropTypes.object,
+interface IScrollContainerContext {
+  scrollBehavior: ScrollContext
 }
 
-class ScrollContainer extends React.Component {
+export class ScrollContainer extends React.Component<IScrollContainerProps> {
+  static contextTypes = {
+    scrollBehavior: PropTypes.object,
+  }
+  context!: IScrollContainerContext
+
+  scrollKey: string
+  domNode: Element | Text | null | undefined
+
   constructor(props, context) {
     super(props, context)
 
@@ -25,7 +31,7 @@ class ScrollContainer extends React.Component {
     this.scrollKey = props.scrollKey
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.context.scrollBehavior.registerElement(
       this.props.scrollKey,
       ReactDOM.findDOMNode(this), // eslint-disable-line react/no-find-dom-node
@@ -39,7 +45,7 @@ class ScrollContainer extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps): void {
     warning(
       prevProps.scrollKey === this.props.scrollKey,
       `<ScrollContainer> does not support changing scrollKey.`
@@ -55,11 +61,11 @@ class ScrollContainer extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.context.scrollBehavior.unregisterElement(this.scrollKey)
   }
 
-  shouldUpdateScroll = (prevRouterProps, routerProps) => {
+  shouldUpdateScroll = (prevRouterProps, routerProps): boolean => {
     const { shouldUpdateScroll } = this.props
     if (!shouldUpdateScroll) {
       return true
@@ -73,12 +79,7 @@ class ScrollContainer extends React.Component {
     )
   }
 
-  render() {
+  render(): ReactChildren {
     return this.props.children
   }
 }
-
-ScrollContainer.propTypes = propTypes
-ScrollContainer.contextTypes = contextTypes
-
-export default ScrollContainer
