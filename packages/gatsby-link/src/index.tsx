@@ -103,7 +103,9 @@ function refIsObject<T>(
 }
 
 // Hack to get React.RefObject<T> to accept our assignments. Unfortunately, React declares RefObject as readonly.
-function asMutable<T>(ref: React.RefObject<T>): React.MutableRefObject<T | null> {
+function asMutable<T>(
+  ref: React.RefObject<T>
+): React.MutableRefObject<T | null> {
   return ref
 }
 
@@ -225,13 +227,17 @@ class GatsbyLinkInternal<TState> extends React.Component<
         state={state}
         getProps={getProps}
         innerRef={this.handleRef as React.Ref<HTMLAnchorElement>}
-        onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
+        onMouseEnter={(
+          e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+        ): void => {
           if (onMouseEnter) {
             onMouseEnter(e)
           }
           ___loader.hovering(parsePath(to).pathname)
         }}
-        onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): boolean => {
+        onClick={(
+          e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+        ): boolean => {
           if (onClick) {
             onClick(e)
           }
