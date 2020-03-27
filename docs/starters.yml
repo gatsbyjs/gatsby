@@ -5655,7 +5655,7 @@
   repo: https://github.com/GraphCMS/gatsby-graphcms-ecommerce-starter
   description: Swag store built with GraphCMS, Stripe, Gatsby, Postmark and Printful.
   tags:
-    - E-Commerce
+    - E-commerce
     - i18n
     - Netlify
     - Styling:Tailwind
