@@ -29,31 +29,33 @@ const CommentRenderer = comment => (
   <p dangerouslySetInnerHTML={{ __html: comment }} />
 ) // dangerous indeed.
 ```
-That's when you expose your application to XSS attacks. 
+
+That's when you expose your application to XSS attacks.
+
 ### **How can you prevent cross-site scripting?**
 
 The most straightforward way to prevent a XSS attack is to sanitize the innerHTML string before dangerously setting it. Fortunately, there are npm packages that can accomplish this; packages like [sanitize-html](https://www.npmjs.com/package/sanitize-html) and [DOMPurify](https://github.com/cure53/DOMPurify).
 
 ## Cross-Site Request Forgery (CSRF)
 
-A web application that use cookies could be attacked by the CSRF exploit, which deceives the browser to execute actions by the user's name without notice. By default, the browser "trusts" all the activity made validating the user's identity and therefore sending the associated cookies in every request.
+Cross-Site request forgery is a type of exploit that which deceives the browser to execute unauthorized actions. By default, in any request made, the browser automatically appends any stored cookies of the destination domain. Combining this with a crafted request, an malicious website can read and write data without the user's action or knowledge.
 
 For example, assume that the comments in your blog are sent in a form similar to this one:
 
 ```html
-<form action="http://mywebsite.com/blog/addcoment" method="POST">
+<form action="http://mywebsite.com/blog/addcomment" method="POST">
   <input type="text" name="comment" />
   <input type="submit" />
 </form>
 ```
 
-A malicious website could inspect your site and copy it to theirs. If the user are logged in, it still works because when the form is sent, the associated cookies goes with it and the action is made. Even worse, the form could be sent when the page loads with informations you don't control:
+A malicious website could inspect your site and copy this snippet to theirs. If the user are logged in, the associated cookies is sent with the form and the server can not distinguish the origin of it. Even worse, the form could be sent when the page loads with informations you don't control:
 
 ```js
 // highlight-next-line
 <body onload="document.csrf.submit()">
 <!-- ... -->
-<form action="http://mywebsite.com/blog/addcoment" method="POST" name="csrf" >
+<form action="http://mywebsite.com/blog/addcomment" method="POST" name="csrf">
   // highlight-next-line
   <input type="hidden" name="comment" value="Hey visit http://maliciouswebsite.com, it's pretty nice" />
   <input type="submit" />
@@ -61,6 +63,14 @@ A malicious website could inspect your site and copy it to theirs. If the user a
 ```
 
 ### **How can you prevent cross-site request forgery?**
+
+#### Don't use GET requests to modify data
+
+Actions that do not simply read data should be handled in a POST request. In the example above, if the `/blog/addcomment` accepts a GET request, the CSRF attack can be done using a `<img />` tag:
+
+```html
+<img src="http://mywebsite.com/blog/addcomment?comment=unwanted%20comment" />
+```
 
 #### CSRF Tokens
 
@@ -75,16 +85,20 @@ If you want to protect a page your server will provide an encrypted, hard to gue
 </form>
 ```
 
-When the form is sent, the server will compare the token received with the stored token and block the action if they are not the same. This works because malicious websites don't have access to the CSRF token due to [HTTP Access Control](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
+When the form is sent, the server will compare the token received with the stored token and block the action if they are not the same. Make sure that malicious websites don't have access to the CSRF token by using [HTTP Access Control](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
 
-#### Same-Site Cookies Directive
+#### Same-Site Cookies Attribute
 
-If you need to create cookies in your application, make sure to protect them by adding the `SameSite` directive:
+This cookie atribute is targeted to prevent CSRF attacks. If you need to create a cookie in your application, make sure to protect them by this attribute, that could be of `Strict` or `Lax` type:
 
 `Set-Cookie: example=1; SameSite=Strict`
 
 It allows the server to make sure that the cookies are not being sent by a **cross-site** domain request.
 Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
+
+Quoting [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute):
+
+> It is important to note that this attribute should be implemented as an additional layer defense in depth concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following section. This attribute should not replace having a CSRF Token. Instead, it should co-exist with that token in order to protect the user in a more robust way. Also remember that any Cross-Site Scripting (XSS) can be used to defeat all CSRF mitigation techniques!
 
 ## Third-party Scripts
 
@@ -104,7 +118,7 @@ Similar to npm, you can use the `yarn audit` command. It is available starting w
 
 ## Key Security
 
-Gatsby allows you to [fetch data from various APIs](/docs/content-and-data/) and those APIs often require a key to access them. These keys should be stored in your build environment using [Environment Variables](/docs/environment-variables/). See the following example for fetching data from GitHub with an Authentication Header:
+Gatsby allows you to [fetch data from various APIs](/docs/content-and-data/) and those APIs often require a key to access them. These keys should be stored in your build environment using [Environment Variables](/docs/environment-variables/). See the following example for fetching data from GitHub with an Authorization Header:
 
 ```js
     {
@@ -121,7 +135,9 @@ Gatsby allows you to [fetch data from various APIs](/docs/content-and-data/) and
     }
 ```
 
-> Note that Gatsby has an [Authentication Tutorial](/tutorial/authentication-tutorial) if you need assistance with setting up authentication on your Gatsby site in a secure way.
+### Storing keys in client-side
+
+Sometimes in your Gatsby website, you will need display sensitive data or handle authenticated routes (e.g. a page that shows a user's orders in your ecommerce). Gatsby has an [Authentication Tutorial](/tutorial/authentication-tutorial) if you need assistance with setting up authentication flow. Use cookies to store the credentials in client-side, preferably with `SameSite` attribute listed above. Check out [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies) to further explanation about these attributes and how to configure them.
 
 ## Content Security Policy (CSP)
 
