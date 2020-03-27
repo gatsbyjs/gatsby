@@ -38,7 +38,7 @@ The most straightforward way to prevent a XSS attack is to sanitize the innerHTM
 
 ## Cross-Site Request Forgery (CSRF)
 
-Cross-Site request forgery is a type of exploit that which deceives the browser to execute unauthorized actions. By default, in any request made, the browser automatically appends any stored cookies of the destination domain. Combining this with a crafted request, an malicious website can read and write data without the user's action or knowledge.
+Cross-Site request forgery is a type of exploit that deceives the browser into executing unauthorized actions. By default, in any request made, the browser automatically appends any stored cookies of the destination domain. Combining this with a crafted request, a malicious website can read and write data without the user's action or knowledge.
 
 For example, assume that the comments in your blog are sent in a form similar to this one:
 
@@ -74,7 +74,7 @@ Actions that do not simply read data should be handled in a POST request. In the
 
 #### CSRF Tokens
 
-If you want to protect a page your server will provide an encrypted, hard to guess **token**. That token is tied to a user's session and is must be included in every POST request. See the following example:
+If you want to protect a page your server will provide an encrypted, hard to guess **token**. That token is tied to a user's session and must be included in every POST request. See the following example:
 
 ```js
 <form action="http://mywebsite.com/blog/addcoment" method="POST">
