@@ -1,15 +1,14 @@
 import spawn from "cross-spawn"
-
-// in linux environments joining with the __dirname causes ENONT results from OS
-// read operations. but in bash environments its required.
-const getOSAppropriatePath = path =>
-  process.env.CI ? path : join(__dirname, path)
+import { join } from "path"
 
 export function invokeCli(...args) {
-  const results = spawn.sync(getOSAppropriatePath("./gatsby-cli.js"), args, {
-    cwd: getOSAppropriatePath("../execution-folder"),
-    shell: !!process.env.CI,
-  })
+  const results = spawn.sync(
+    "node",
+    [join(__dirname, "./gatsby-cli2.js"), ...args],
+    {
+      cwd: join(__dirname, "../execution-folder"),
+    }
+  )
 
   if (results.error) {
     console.log(results.error)

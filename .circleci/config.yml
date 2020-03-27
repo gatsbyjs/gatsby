@@ -303,6 +303,7 @@ jobs:
       - checkout
       - <<: *restore_cache
       - <<: *install_node_modules
+      - <<: *persist_cache
       - run:
           name: Assert Changed Files
           command: ./scripts/assert-changed-files.sh "packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*"

@@ -34,8 +34,8 @@ describe("gatsby new", () => {
         warning \\"gatsby > @typescript-eslint/eslint-plugin > tsutils@3.17.1\\" has unmet peer dependency \\"typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta\\".
         "
       `)
+      expect(code).toBe(0)
     })
-    expect(code).toBe(0)
   })
 
   describe("theme starter", () => {
