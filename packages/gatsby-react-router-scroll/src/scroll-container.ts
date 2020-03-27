@@ -2,11 +2,16 @@ import React, { ReactChildren } from "react"
 import ReactDOM from "react-dom"
 import warning from "warning"
 import PropTypes from "prop-types"
-import { ScrollContext, IShouldUpdateScroll } from "./scroll-context"
+import {
+  ScrollContext,
+  IShouldUpdateScroll,
+  IHistory,
+  ScrollTarget,
+} from "./scroll-context"
 
 interface IScrollContainerProps {
   scrollKey: string
-  shouldUpdateScroll: IShouldUpdateScroll
+  shouldUpdateScroll: IShouldUpdateScroll<IHistory>
   children: ReactChildren
 }
 
@@ -65,7 +70,7 @@ export class ScrollContainer extends React.Component<IScrollContainerProps> {
     this.context.scrollBehavior.unregisterElement(this.scrollKey)
   }
 
-  shouldUpdateScroll = (prevRouterProps, routerProps): boolean => {
+  shouldUpdateScroll = (prevRouterProps, routerProps): boolean | ScrollTarget => {
     const { shouldUpdateScroll } = this.props
     if (!shouldUpdateScroll) {
       return true

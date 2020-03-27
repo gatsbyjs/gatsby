@@ -10,14 +10,21 @@ export interface ILocationBase {
   hash?: string
 }
 
+export type ScrollPosition = [number, number]
+
 export type ScrollTarget = ScrollPosition | string | boolean | null | undefined
 
 export interface IShouldUpdateScroll<TContext> {
   (prevContext: TContext | null, context: TContext): ScrollTarget
 }
 
+export interface IHistory {
+  location: ILocationBase
+  history: history
+}
+
 interface IScrollBehaviorProps {
-  shouldUpdateScroll: IShouldUpdateScroll
+  shouldUpdateScroll: IShouldUpdateScroll<IHistory>
   children: ReactChildren
   location: ILocationBase
 }
@@ -68,12 +75,15 @@ export class ScrollContext extends React.Component<IScrollBehaviorProps, {}> {
     this.scrollBehavior.stop()
   }
 
-  getRouterProps(): { location: ILocationBase; history: history } {
+  getRouterProps(): IHistory {
     const { location } = this.props
     return { location, history }
   }
 
-  shouldUpdateScroll = (prevRouterProps, routerProps): boolean => {
+  shouldUpdateScroll = (
+    prevRouterProps,
+    routerProps
+  ): boolean | ScrollTarget => {
     const { shouldUpdateScroll } = this.props
     if (!shouldUpdateScroll) {
       return true
@@ -90,7 +100,7 @@ export class ScrollContext extends React.Component<IScrollBehaviorProps, {}> {
   registerElement = (
     key: string,
     element: Element | Text | null,
-    shouldUpdateScroll: IShouldUpdateScroll
+    shouldUpdateScroll: IShouldUpdateScroll<IHistory>
   ): void => {
     this.scrollBehavior.registerElement(
       key,
