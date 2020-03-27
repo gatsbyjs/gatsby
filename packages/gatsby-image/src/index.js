@@ -670,6 +670,7 @@ class Image extends React.Component {
                   alt,
                   title,
                   loading,
+                  imgStyle,
                   ...image,
                   imageVariants,
                 }),
