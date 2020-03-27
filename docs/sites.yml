@@ -13,7 +13,7 @@
   description: >
     Online shop for women's body care and hair removal products.
   categories:
-    - eCommerce
+    - E-commerce
     - Featured
   featured: true
 - title: IDEO
@@ -52,7 +52,7 @@
   main_url: https://ca.braun.com/en-ca
   url: https://ca.braun.com/en-ca
   categories:
-    - eCommerce
+    - E-commerce
     - Featured
   featured: true
 - title: NYC Pride 2019 | WorldPride NYC | Stonewall50
@@ -103,7 +103,7 @@
   description: >-
     E-commerce site for jewellery designer Theodora Warre, built using Gatsby + Shopify + Prismic + Matter.js
   categories:
-    - eCommerce
+    - E-commerce
     - Marketing
   built_by: Pierre Nel
   built_by_url: https://pierre.io
@@ -218,7 +218,7 @@
   url: https://cajunbowfishing.com/
   featured: false
   categories:
-    - eCommerce
+    - E-commerce
     - Sports
   built_by: Escalade Sports
   built_by_url: https://www.escaladesports.com/
@@ -253,7 +253,7 @@
   url: https://justdoit.nike.com/
   featured: true
   categories:
-    - eCommerce
+    - E-commerce
     - Featured
 - title: AirBnB Cereal
   main_url: https://airbnb.design/cereal
@@ -431,7 +431,7 @@
   source_url: https://github.com/hiooyUI/hiooyui.github.io
   featured: false
   categories:
-    - eCommerce
+    - E-commerce
 - title: Steve Meredith's Portfolio
   main_url: http://www.stevemeredith.com/
   url: http://www.stevemeredith.com/
@@ -739,7 +739,7 @@
   url: https://put.io/
   featured: false
   categories:
-    - eCommerce
+    - E-commerce
     - Technology
 - title: The Rick and Morty API
   main_url: https://rickandmortyapi.com/
@@ -1088,7 +1088,7 @@
   url: https://www.prideofthemeadows.com/
   featured: false
   categories:
-    - eCommerce
+    - E-commerce
     - Food
     - Blog
   built_by: Caldera Digital
@@ -1792,7 +1792,7 @@
   description: |
     Video game comparison website for the UK, build with GatsbyJS.
   categories:
-    - eCommerce
+    - E-commerce
   built_by: Koen Kamphuis
   built_by_url: https://koenkamphuis.com/
   featured: false
@@ -1843,7 +1843,7 @@
   url: https://eworld.herokuapp.com/
   featured: false
   categories:
-    - eCommerce
+    - E-commerce
     - Technology
 - title: It's a Date
   description: >
@@ -2190,7 +2190,7 @@
   url: https://www.goldedgetraining.co.uk
   main_url: https://www.goldedgetraining.co.uk
   description: >
-    AAT approved online distance learning accountancy training provider. Branded landing page / mini brochure promoting competitor differentiators, student testimonials, offers, service benefits and features. Designed to both inform potential students and encourage visits to company eCommerce site or direct company contact.
+    AAT approved online distance learning accountancy training provider. Branded landing page / mini brochure promoting competitor differentiators, student testimonials, offers, service benefits and features. Designed to both inform potential students and encourage visits to company e-commerce site or direct company contact.
   categories:
     - Education
     - Learning
@@ -2202,7 +2202,7 @@
 - title: Gatsby Manor
   description: >
     We build themes for gatsby. We have themes for all projects including personal,
-    portfolio, ecommerce, landing pages and more. We also run an in-house
+    portfolio, e-commerce, landing pages and more. We also run an in-house
     web dev and design studio. If you cannot find what you want, we can build it for you!
     Email us at gatsbymanor@gmail.com with questions.
   main_url: https://www.gatsbymanor.com
@@ -2256,7 +2256,7 @@
   description: >
     EZAgrar.at is the homepage of the biggest agricultural machinery dealership in Austria. In total 8 pages will be built for this client reusing a lot of components between them.
   categories:
-    - eCommerce
+    - E-commerce
     - Marketing
   built_by: MangoART
   built_by_url: https://www.mangoart.at
@@ -2444,7 +2444,7 @@
   main_url: https://beararchery.com/
   url: https://beararchery.com/
   categories:
-    - eCommerce
+    - E-commerce
     - Sports
   built_by: Escalade Sports
   built_by_url: https://www.escaladesports.com/
@@ -3018,7 +3018,7 @@
   description: >
     Give your corporate events the food and quality it deserves, thanks to the know-how of the best local artisans.
   categories:
-    - eCommerce
+    - E-commerce
     - Food
     - Event
   built_by: Monbanquet.fr
@@ -3121,7 +3121,7 @@
   categories:
     - Education
     - Learning
-    - eCommerce
+    - E-commerce
     - Marketing
     - Technology
     - Web Development
@@ -3308,7 +3308,7 @@
   main_url: https://www.escaladesports.com/
   url: https://www.escaladesports.com/
   categories:
-    - eCommerce
+    - E-commerce
     - Sports
   built_by: Escalade Sports
   built_by_url: https://www.escaladesports.com/
@@ -4012,7 +4012,7 @@
   description: >
     Weingut Goeschl is a family winery located in Gols, Burgenland in Austria (Österreich)
   categories:
-    - eCommerce
+    - E-commerce
     - Business
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
@@ -4308,10 +4308,10 @@
   main_url: https://headless.page/
   url: https://headless.page/
   description: >
-    Headless.page is a directory of eCommerce sites featuring headless architecture, PWA features and / or the latest JavaScript technology.
+    Headless.page is a directory of e-commerce sites featuring headless architecture, PWA features and / or the latest JavaScript technology.
   categories:
     - Directory
-    - eCommerce
+    - E-commerce
   built_by: Subscribe Pro
   built_by_url: https://www.subscribepro.com/
   featured: false
@@ -4419,7 +4419,7 @@
     Discover industry-defining wellness content and trusted organic hemp CBD products safely supporting wellness, stress, mood, skin health, and balance.
   categories:
     - Blog
-    - eCommerce
+    - E-commerce
     - Education
   built_by: The Couch
   built_by_url: https://thecouch.nyc
@@ -4902,7 +4902,7 @@
   description: >
     foodtruck style coffee by pro cyclist Robert Gesink. The site has a webshop with merchandise and coffee beans.
   categories:
-    - eCommerce
+    - E-commerce
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
 - title: Pella Windows and Doors
@@ -5007,7 +5007,7 @@
   main_url: https://peter.macinkovic.id.au/
   source_url: https://github.com/inkovic/peter-macinkovic-static-site
   description: >
-    Personal Website and Blog of eCommerce SEO Specialist and Digital Marketer Peter Macinkovic.
+    Personal Website and Blog of e-commerce SEO Specialist and Digital Marketer Peter Macinkovic.
   categories:
     - SEO
     - Marketing
@@ -5681,7 +5681,7 @@
   description: >
     Online shop for Carine Roitfeld parfume
   categories:
-    - eCommerce
+    - E-commerce
   built_by: Ask Phill
   built_by_url: https://askphill.com
 - title: EngineHub.org
@@ -5808,7 +5808,7 @@
   description: >
     The Coffee Collective website is a JAM-stack based, multilingual, multi currency website/shop selling coffee, related products and subscriptions.
   categories:
-    - eCommerce
+    - E-commerce
     - Food
   built_by: Remotely (Anders Hallundbæk)
   built_by_url: https://remotely.dk
@@ -5830,7 +5830,7 @@
   description: >-
     Online store for Canvas 1839 products, including pharmacological-grade CBD oil and relief cream.
   categories:
-    - eCommerce
+    - E-commerce
     - Marketing
   built_by: Corey Ward
   built_by_url: http://www.coreyward.me/
@@ -5862,7 +5862,7 @@
   description: >-
     March and Ash is a customer-focused, licensed cannabis dispensary located in Mission Valley.
   categories:
-    - eCommerce
+    - E-commerce
     - Business
     - Blog
   built_by: Blueyellow
@@ -5922,7 +5922,7 @@
   categories:
     - Blog
     - Education
-    - eCommerce
+    - E-commerce
     - API
     - Community
     - Learning
@@ -6045,7 +6045,7 @@
   description: >
     Im schönen Kreis 6 in Zürich kreiert Nicole Cartier Blumenkompositionen anhand Charaktereigenschaften oder Geschichten zur Person an. Für wen ist Dein Blumenstrauss gedacht? Einzigartige Floristik Blumensträusse, Blumenabos, Events, Shootings. Site designed by https://www.stolfo.co
   categories:
-    - eCommerce
+    - E-commerce
     - Design
   built_by: Bejamas
   built_by_url: https://bejamas.io/
@@ -6156,7 +6156,7 @@
     - Programming
     - Community
     - Open Source
-    - eCommerce
+    - E-commerce
   built_by: Marcel Hauri
   built_by_url: https://marcelhauri.ch
   featured: false
@@ -6265,7 +6265,7 @@
     Carbon8 is a Not for Profit charity that supports Aussie farmers to transition to regenerative agriculture practices and rebuild the carbon (organic matter) in their soil from 1% to 8%.
   categories:
     - Nonprofit
-    - eCommerce
+    - E-commerce
   built_by: Little & Big
   built_by_url: https://www.littleandbig.com.au/
   featured: false
@@ -6374,7 +6374,7 @@
     - Programming
     - Community
     - Open Source
-    - eCommerce
+    - E-commerce
   built_by: Lars Roettig
   built_by_url: https://larsroettig.dev/
   featured: false
@@ -6617,7 +6617,7 @@
     - Technology
     - User Experience
     - Web Development
-    - eCommerce
+    - E-commerce
     - WordPress
   built_by: Fullstack HQ
   built_by_url: https://fullstackhq.com/
@@ -6735,12 +6735,12 @@
   main_url: https://delinx.digital
   url: https://delinx.digital/solutions
   description: >
-    Delinx.digital is a software development oriented digital agency based in Sofia, Bulgaria. We develop bespoke software solutions using  WordPress, WooCommerce, Shopify, eCommerce, React.js, Node.js, PHP, Laravel and many other technologies.
+    Delinx.digital is a software development oriented digital agency based in Sofia, Bulgaria. We develop bespoke software solutions using  WordPress, WooCommerce, Shopify, e-commerce, React.js, Node.js, PHP, Laravel and many other technologies.
   categories:
     - Agency
     - Web Development
     - Design
-    - eCommerce
+    - E-commerce
     - WordPress
   featured: false
 - title: Cameron Nuckols - Articles, Book Notes, and More
@@ -6770,7 +6770,7 @@
   description: >
     Skirtcraft sells unisex skirts with large pockets, made in the USA. Site built with TypeScript and styled-components, with Tumblr-sourced blog posts.
   categories:
-    - eCommerce
+    - E-commerce
     - Blog
   built_by: Joe Quarion
   built_by_url: https://github.com/jqrn
@@ -6781,7 +6781,7 @@
   description: >
     Vermarc Sport offers a wide range of cycle clothing, cycling jerseys, bib shorts, rain gear and accessories, as well for the summer, the mid-season (autumn / spring) and the winter.
   categories:
-    - eCommerce
+    - E-commerce
   built_by: BrikL
   built_by_url: https://github.com/Brikl
 - title: Cole Ruche
@@ -7190,7 +7190,7 @@
   featured: false
   categories:
     - Blog
-    - eCommerce
+    - E-commerce
     - Web Development
 - title: Mentimeter
   url: https://www.mentimeter.com/
@@ -7289,7 +7289,7 @@
   categories:
     - Nonprofit
     - Community
-    - eCommerce
+    - E-commerce
   built_by: Little & Big
   built_by_url: https://www.littleandbig.com.au/
   featured: false
@@ -7758,7 +7758,7 @@
   description: >
     Sainsbury’s is an almost 150 year old supermarket chain in the United Kingdom.
   categories:
-    - eCommerce
+    - E-commerce
     - Food
   featured: true
 - title: Haxzie, Portfolio and Blog
@@ -8039,7 +8039,7 @@
   url: https://www.opentechiz.com/
   featured: false
   description: >
-    An agile software development company in Vietnam, providing wide range service from ecommerce development, mobile development, automation testing and cloud deployment with kubernets
+    An agile software development company in Vietnam, providing wide range service from e-commerce development, mobile development, automation testing and cloud deployment with kubernets
   categories:
     - Web Development
     - Mobile Development
@@ -8350,10 +8350,10 @@
   url: https://docs.subscribepro.com/
   main_url: https://docs.subscribepro.com/
   description: >
-    Subscribe Pro is a subscription commerce solution that enables brands to quickly add subscription commerce models such as box, subscribe-and-save, autoship and similar to their existing eCommerce websites.
+    Subscribe Pro is a subscription commerce solution that enables brands to quickly add subscription commerce models such as box, subscribe-and-save, autoship and similar to their existing e-commerce websites.
   categories:
     - Documentation
-    - eCommerce
+    - E-commerce
     - API
     - Technology
     - Web Development
@@ -8377,7 +8377,7 @@
     Cloud-based, SEO focused website builder - helping local businesses and startups reach audiences faster.
   featured: false
   categories:
-    - eCommerce
+    - E-commerce
     - SEO
     - Business
 - title: ToolsDB
@@ -8788,7 +8788,7 @@
     - WordPress
     - Entertainment
     - Event
-    - eCommerce
+    - E-commerce
   built_by: Bare Advertising & Communications
   built_by_url: https://www.bare.ca/
   featured: false
@@ -9391,7 +9391,7 @@
   description: >
     Smile is an online store for buying CBD products that keep you balanced and happy
   categories:
-    - eCommerce
+    - E-commerce
     - WordPress
   built_by: Waverly Lab
   built_by_url: https://waverlylab.com
@@ -9761,7 +9761,7 @@
   description: >
     We are an IT company that specializes in e-commerce and website development on different platforms such as Magento, WordPress, and Umbraco. We are also known for custom software development, web design and mobile app solutions for iOS and Android.
   categories:
-    - eCommerce
+    - E-commerce
     - Web Development
     - Programming
     - Mobile Development

@@ -455,11 +455,11 @@
   tags:
     - Styling:Other
     - Stripe
-    - eCommerce
+    - E-commerce
     - PWA
     - Authentication
   features:
-    - Uses the Moltin eCommerce Api
+    - Uses the Moltin e-commerce Api
     - Stripe checkout
     - Semantic-UI
     - Styled components
@@ -1964,11 +1964,11 @@
     - Fully instrumented for successful PROD deployments
 - url: https://gatsby-shopify-starter.netlify.com/
   repo: https://github.com/AlexanderProd/gatsby-shopify-starter
-  description: Kick off your next, ecommerce experience with this Gatsby starter. It is based on the default Gatsby starter to be easily modifiable.
+  description: Kick off your next, e-commerce experience with this Gatsby starter. It is based on the default Gatsby starter to be easily modifiable.
   tags:
     - CMS:Headless
     - SEO
-    - eCommerce
+    - E-commerce
     - Styling:CSS-in-JS
   features:
     - Shopping Cart
@@ -2321,7 +2321,7 @@
   description: A minimal starter to create a storefront with Gatsby, Stripe, & Netlify Functions.
   tags:
     - Stripe
-    - eCommerce
+    - E-commerce
     - Styling:None
   features:
     - Statically generate based on Stripe inventory
@@ -2709,7 +2709,7 @@
   description: A localized Gatsby starter application powered by Cosmic JS.
   tags:
     - CMS:Cosmic JS
-    - eCommerce
+    - E-commerce
   features:
     - Stores products, orders using Cosmic JS as a database and a server
 - url: https://harshil1712.github.io/gatsby-starter-googlesheets/
@@ -2979,9 +2979,9 @@
     - PWA
 - url: https://oneshopper.netlify.com
   repo: https://github.com/rohitguptab/OneShopper
-  description: This Starter is created for Ecommerce site with Gatsby + Contentful and snipcart
+  description: This Starter is created for e-commerce site with Gatsby + Contentful and snipcart
   tags:
-    - eCommerce
+    - E-commerce
     - CMS:Contentful
     - Blog
     - SEO
@@ -3311,7 +3311,7 @@
   repo: https://github.com/issydennis/gatsby-snipcart
   description: A simple e-commerce shop built using Gatsby and Snipcart.
   tags:
-    - eCommerce
+    - E-commerce
     - Styling:CSS-in-JS
     - Markdown
   features:
@@ -4697,7 +4697,7 @@
     - Shopify
     - SEO
     - PWA
-    - eCommerce
+    - E-commerce
     - Styling:CSS-in-JS
   features:
     - Gatsby Storefront
@@ -5376,7 +5376,7 @@
     - Square
     - Netlify
     - SEO
-    - eCommerce
+    - E-commerce
   features:
     - Serverless
     - Gatsby
@@ -5655,7 +5655,7 @@
   repo: https://github.com/GraphCMS/gatsby-graphcms-ecommerce-starter
   description: Swag store built with GraphCMS, Stripe, Gatsby, Postmark and Printful.
   tags:
-    - eCommerce
+    - E-commerce
     - i18n
     - Netlify
     - Styling:Tailwind
