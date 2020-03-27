@@ -86,6 +86,6 @@ Adding built-in accessibility testing to the living style guide created visibili
 MagMutual serves the intersection of two rapidly evolving industries: insurance and healthcare. With a resilient, yet nimble framework in place for MagMutual.com, the company can face the future with confidence.
 
 ## Resources
-See the [complete case study for MagMutual.com](https://www.mediacurrent.com/work/case-study/magmutual-drupal-8-gatsby).
-Learn more about some of the development tools used for this project in our webinar, [Rain + GatsbyJS: Fast-Tracking to Drupal 8](https://www.mediacurrent.com/videos/webinar-recording-rain-gatsbyjs-fast-tracking-drupal-8).
-Planning for a decoupled Drupal/Gatsby project and not sure where to start? [Mediacurrent can help](https://www.mediacurrent.com/contact-us).
+* See the [complete case study for MagMutual.com](https://www.mediacurrent.com/work/case-study/magmutual-drupal-8-gatsby).
+* Learn more about some of the development tools used for this project in our webinar, [Rain + GatsbyJS: Fast-Tracking to Drupal 8](https://www.mediacurrent.com/videos/webinar-recording-rain-gatsbyjs-fast-tracking-drupal-8).
+* Planning for a decoupled Drupal/Gatsby project and not sure where to start? [Mediacurrent can help](https://www.mediacurrent.com/contact-us).
