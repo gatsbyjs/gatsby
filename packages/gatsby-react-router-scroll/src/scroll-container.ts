@@ -2,28 +2,24 @@ import React, { ReactChildren } from "react"
 import ReactDOM from "react-dom"
 import warning from "warning"
 import PropTypes from "prop-types"
-import {
-  ScrollContext,
-  IShouldUpdateScroll,
-  IHistory,
-  ScrollTarget,
-} from "./scroll-context"
+import { ShouldUpdateScroll, ScrollTarget } from "scroll-behavior"
+import { ScrollContext, IHistory } from "./scroll-context"
 
-interface IScrollContainerProps {
+interface IProps {
   scrollKey: string
-  shouldUpdateScroll: IShouldUpdateScroll<IHistory>
+  shouldUpdateScroll: ShouldUpdateScroll<IHistory>
   children: ReactChildren
 }
 
-interface IScrollContainerContext {
+interface IContext {
   scrollBehavior: ScrollContext
 }
 
-export class ScrollContainer extends React.Component<IScrollContainerProps> {
+export class ScrollContainer extends React.Component<IProps> {
   static contextTypes = {
     scrollBehavior: PropTypes.object,
   }
-  context!: IScrollContainerContext
+  context!: IContext
 
   scrollKey: string
   domNode: Element | Text | null | undefined

@@ -1,16 +1,16 @@
-import { ILocationBase, ScrollPosition } from "./scroll-context"
+import { LocationBase, ScrollPosition } from "scroll-behavior"
 
 const STATE_KEY_PREFIX = `@@scroll|`
 const GATSBY_ROUTER_SCROLL_STATE = `___GATSBY_REACT_ROUTER_SCROLL`
 
-interface ILocation extends ILocationBase {
+interface ILocation extends LocationBase {
   key?: string
   pathname?: string
 }
 
 export class SessionStorage {
   read(
-    location: ILocation,
+    location: LocationBase,
     key: string | null
   ): ScrollPosition | null | undefined {
     const stateKey = SessionStorage.getStateKey(location, key)
@@ -36,7 +36,7 @@ export class SessionStorage {
     }
   }
 
-  save(location: ILocation, key: string | null, value): void {
+  save(location: LocationBase, key: string | null, value): void {
     const stateKey = SessionStorage.getStateKey(location, key)
     const storedValue = JSON.stringify(value)
 
@@ -56,7 +56,7 @@ export class SessionStorage {
     }
   }
 
-  static getStateKey(location: ILocation, key: string | null): string {
+  static getStateKey(location: ILocation, key?: string | null): string {
     const locationKey = location.key || location.pathname
     const stateKeyBase = `${STATE_KEY_PREFIX}${locationKey}`
     return key === null || typeof key === `undefined`

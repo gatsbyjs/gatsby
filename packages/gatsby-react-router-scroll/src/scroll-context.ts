@@ -1,40 +1,30 @@
 import React, { ReactChildren } from "react"
-import ScrollBehavior from "scroll-behavior"
+import ScrollBehavior, {
+  LocationBase,
+  ScrollTarget,
+  ShouldUpdateScroll,
+} from "scroll-behavior"
 import PropTypes from "prop-types"
-import { globalHistory as history } from "@reach/router/lib/history"
+import { globalHistory as history, History } from "@reach/router"
 import { SessionStorage } from "./state-storage"
 
-// A copy of the not-exposed interface in scroll-behavior
-export interface ILocationBase {
-  action: "PUSH" | string
-  hash?: string
-}
-
-export type ScrollPosition = [number, number]
-
-export type ScrollTarget = ScrollPosition | string | boolean | null | undefined
-
-export interface IShouldUpdateScroll<TContext> {
-  (prevContext: TContext | null, context: TContext): ScrollTarget
-}
-
 export interface IHistory {
-  location: ILocationBase
-  history: history
+  location?: LocationBase
+  history?: History
 }
 
-interface IScrollBehaviorProps {
-  shouldUpdateScroll: IShouldUpdateScroll<IHistory>
+interface IProps {
+  shouldUpdateScroll: ShouldUpdateScroll<IHistory>
   children: ReactChildren
-  location: ILocationBase
+  location: LocationBase
 }
 
-interface IScrollBehaviorContextContext {
+interface IContext {
   scrollBehavior: ScrollContext
 }
 
-export class ScrollContext extends React.Component<IScrollBehaviorProps, {}> {
-  scrollBehavior: ScrollBehavior<history, history>
+export class ScrollContext extends React.Component<IProps, {}> {
+  scrollBehavior: ScrollBehavior<LocationBase, IHistory>
   static childContextTypes = {
     scrollBehavior: PropTypes.object.isRequired,
   }
@@ -45,12 +35,12 @@ export class ScrollContext extends React.Component<IScrollBehaviorProps, {}> {
     this.scrollBehavior = new ScrollBehavior({
       addTransitionHook: history.listen,
       stateStorage: new SessionStorage(),
-      getCurrentLocation: (): ILocationBase => this.props.location,
+      getCurrentLocation: (): LocationBase => this.props.location,
       shouldUpdateScroll: this.shouldUpdateScroll,
     })
   }
 
-  getChildContext(): IScrollBehaviorContextContext {
+  getChildContext(): IContext {
     return {
       scrollBehavior: this,
     }
@@ -100,7 +90,7 @@ export class ScrollContext extends React.Component<IScrollBehaviorProps, {}> {
   registerElement = (
     key: string,
     element: Element | Text | null,
-    shouldUpdateScroll: IShouldUpdateScroll<IHistory>
+    shouldUpdateScroll: ShouldUpdateScroll<IHistory>
   ): void => {
     this.scrollBehavior.registerElement(
       key,
