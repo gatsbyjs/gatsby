@@ -44,7 +44,7 @@ A decoupled design approach offers limitless possibilities to evolve the site wi
 
 In this video, hear from project leaders Bob Kepford, Director of Development at Mediacurrent and Ben Robertson, Senior Software Engineer at Gatsby about their development approach and results of the new site.
 
-[![Site development approach](https://res.cloudinary.com/marcomontalbano/image/upload/v1583779053/video_to_markdown/images/youtube--kCidJJf75CA-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/embed/kCidJJf75CA "LaunchDarkly feature flag plugin")
+[![Site development approach](https://players.brightcove.net/1027729815001/befDVqJZ_default/index.html?videoId=6133184295001.jpg)](https://players.brightcove.net/1027729815001/befDVqJZ_default/index.html?videoId=6133184295001 "MagMutual.com site development approach")
 
 <div style="position: relative; display: block; max-width: 960px;"><div style="padding-top: 56.25%;"><iframe src="https://players.brightcove.net/1027729815001/befDVqJZ_default/index.html?videoId=6133184295001" allowfullscreen="" allow="encrypted-media" style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%;"></iframe></div></div>
 
