@@ -1,9 +1,9 @@
-import { ILocationBase } from "./scroll-context";
+import { ILocationBase } from "./scroll-context"
 
 const STATE_KEY_PREFIX = `@@scroll|`
 const GATSBY_ROUTER_SCROLL_STATE = `___GATSBY_REACT_ROUTER_SCROLL`
 
-type ScrollPosition = [number, number];
+type ScrollPosition = [number, number]
 
 interface ILocation extends ILocationBase {
   key?: string
