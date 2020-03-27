@@ -16,16 +16,16 @@ Single-page applications use client-side rendering. All URL requests are redirec
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,user-scalable=yes">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,user-scalable=yes" />
     <title>My Single Page App</title>
-    <link rel="stylesheet" type="text/css" href="./style.css">
-</head>
-<body>
-   <main id="app"></main>
-   <script type="text/javascript" src="./js.js"></script>
-</body>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body>
+    <main id="app"></main>
+    <script type="text/javascript" src="./js.js"></script>
+  </body>
 </html>
 ```
 
