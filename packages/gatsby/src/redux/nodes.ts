@@ -124,8 +124,10 @@ export const getResolvedNode = (
   return node
 }
 
-export const addResolvedNodes = (typeName: string): IGatsbyNode[] => {
-  const resolvedNodes: IGatsbyNode[] = []
+export const addResolvedNodes = (
+  typeName: string,
+  resolvedNodes: IGatsbyNode[] = []
+): IGatsbyNode[] => {
   const { nodesByType, resolvedNodesCache } = store.getState()
   const nodes = nodesByType.get(typeName)
 
@@ -233,8 +235,11 @@ export const getNodesByTypedChain = (
   chain: string[],
   value: boolean | number | string,
   nodeTypeNames: string[],
-  typedKeyValueIndexes: Map<string, Map<string | number | boolean, IGatsbyNode>>
-): IGatsbyNode | undefined => {
+  typedKeyValueIndexes: Map<
+    string,
+    Map<string | number | boolean, Set<IGatsbyNode>>
+  >
+): Set<IGatsbyNode> | undefined => {
   const key = chain.join(`+`)
 
   const typedKey = nodeTypeNames.join(`,`) + `/` + key
