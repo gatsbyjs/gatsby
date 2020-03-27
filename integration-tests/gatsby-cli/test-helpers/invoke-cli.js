@@ -4,7 +4,6 @@ import { join } from "path"
 export function invokeCli(...args) {
   const child = child_process.spawn(join(__dirname, "./gatsby-cli.js"), args, {
     cwd: join(__dirname, "../execution-folder"),
-    shell: true,
   })
 
   const logs = []
