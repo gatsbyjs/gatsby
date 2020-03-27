@@ -14,7 +14,6 @@ describe("gatsby new", () => {
     it("creates a gatsby site", () => {
       const [code, logs] = invokeCli("new", siteName)
 
-      expect(code).toBe(0)
       expect(logs).toMatchInlineSnapshot(`
         "info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-default.git
         success Created starter directory layout
@@ -36,6 +35,7 @@ describe("gatsby new", () => {
         "
       `)
     })
+    expect(code).toBe(0)
   })
 
   describe("theme starter", () => {
@@ -52,7 +52,6 @@ describe("gatsby new", () => {
         "gatsbyjs/gatsby-starter-blog"
       )
 
-      expect(code).toBe(0)
       expect(logs).toMatchInlineSnapshot(`
         "info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-blog.git
         success Created starter directory layout
@@ -73,6 +72,7 @@ describe("gatsby new", () => {
         warning \\"gatsby > @typescript-eslint/eslint-plugin > tsutils@3.17.1\\" has unmet peer dependency \\"typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta\\".
         "
       `)
+      expect(code).toBe(0)
     })
   })
 
@@ -86,7 +86,6 @@ describe("gatsby new", () => {
     it("fails to create a gatsby site", () => {
       const [code, logs] = invokeCli("new", siteName, "tHiS-Is-A-fAkE-sTaRtEr")
 
-      expect(code).toBe(1)
       expect(logs).toMatchInlineSnapshot(`
         "
          ERROR
@@ -105,6 +104,7 @@ describe("gatsby new", () => {
         [0m
         "
       `)
+      expect(code).toBe(1)
     })
   })
 })
