@@ -1,5 +1,6 @@
 import { Span } from "opentracing"
 import webpack from "webpack"
+import flatMap from "lodash/flatMap"
 
 import webpackConfig from "../utils/webpack.config"
 
@@ -32,7 +33,7 @@ export const buildProductionBundle = async (
       if (stats.hasErrors()) {
         const flattenStatsErrors = (stats: webpack.Stats): Error[] => [
           ...stats.compilation.errors,
-          ...stats.compilation.children.flatMap(child =>
+          ...flatMap(stats.compilation.children, child =>
             flattenStatsErrors(child.getStats())
           ),
         ]
