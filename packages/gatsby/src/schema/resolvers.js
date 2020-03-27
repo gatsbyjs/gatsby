@@ -74,7 +74,7 @@ const group = (source, args, context, info) => {
         acc[key] = (acc[key] || []).concat(node)
       })
     return acc
-  }, {})
+  }, Object.create(null))
   return Object.keys(groupedResults)
     .sort()
     .reduce((acc, fieldValue) => {
