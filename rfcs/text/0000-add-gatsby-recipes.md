@@ -130,10 +130,8 @@ Recipes for a site are persisted in a `recipes.mdx` file.
 
 # Drawbacks
 
-Not sure if there is any :-D
-
-It does have implementation cost obviously but the engineering is straightforward
-for such a large boost to Gatsby's capabilities.
+The main drawback is this is one more thing to learn to use Gatsby. But should
+remove the need to learn a lot of other things :-D
 
 Would be happy to hear ideas about potential drawbacks.
 
