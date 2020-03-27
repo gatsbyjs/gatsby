@@ -21,7 +21,7 @@ StriVectin wanted to move to a platform that allowed them more freedom and flexi
 
 ## Elevar goals
 
-After aligning with the client’s goals, we came up with some of our own. Speed and performance were paramount since our own data across hundreds of E-commerce stores show that speed correlates to conversion rate. We also wanted to invest in thinking through each user interaction, design choice, and an advanced analytics tracking solution for all marketing partners.
+After aligning with the client’s goals, we came up with some of our own. Speed and performance were paramount since our own data across hundreds of e-commerce stores show that speed correlates to conversion rate. We also wanted to invest in thinking through each user interaction, design choice, and an advanced analytics tracking solution for all marketing partners.
 
 Most developers struggle with the steep learning curve associated with Magento. The codebase is roughly 20,000 files! Our team wanted to Improve DX (Developer Experience). We’ve experienced attacks first-hand in Magento, and the constant paranoia associated with security patch release cycles. We wanted to reduce this exposure.
 

@@ -228,7 +228,7 @@ Now you can add the plugin configuration in your `gatsby-config` file:
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby e-commerce Starter`,
+    title: `Gatsby E-commerce Starter`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

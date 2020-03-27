@@ -27,7 +27,7 @@ Themes solve the problems that traditional starters experience:
 
 - Sites created using a Gatsby theme can adopt upstream changes to the theme -- themes are versioned packages that can be updated like any other package.
 - You can create multiple sites that consume the same theme. To make updates across those sites, you can update the central theme and bump the version in the sites through `package.json` files (rather than spending the time to tediously update the functionality of each individual site).
-- Themes are composable. You could install a blog theme alongside a notes theme, alongside an e-commerce theme (and so forth)
+- Themes are composable. You could install a blog theme alongside a notes theme, alongside an E-commerce theme (and so forth)
 
 > A Gatsby theme is effectively a composable Gatsby config. They provide a higher-level approach to working with Gatsby that abstracts away the complex or repetitive parts into a reusable package.
 
