@@ -51,7 +51,8 @@ for Emotion during Gatsby's server side rendering.
 You can now use Emotion in your site!
 ```
 
-Recipes are run from the CLI like `gatsby recipes gatsby/emotion`.
+Recipes are run from the CLI like `gatsby recipes gatsby/emotion` or
+`gatsby recipes gatsby/google-analytics G-xxxxxxxxxxx`.
 
 You can also run `gatsby recipes` to see a list of available recipes
 to select one to run.
