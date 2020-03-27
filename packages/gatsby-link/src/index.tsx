@@ -199,7 +199,7 @@ class GatsbyLinkInternal<TState> extends React.Component<
       onClick,
       onMouseEnter,
       /* eslint-disable @typescript-eslint/no-unused-vars */
-      // Explicitly destructure these away so our "rest" params don't include them.
+      // Explicitly destructure these away so our "rest" params doesn't include them.
       activeClassName: $activeClassName,
       activeStyle: $activeStyle,
       innerRef: $innerRef,
