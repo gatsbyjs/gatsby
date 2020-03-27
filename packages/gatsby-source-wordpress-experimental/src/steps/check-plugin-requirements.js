@@ -15,7 +15,11 @@ const isWpGatsby = async () =>
     panicOnError: true,
   })
 
-const ensurePluginRequirementsAreMet = async () => {
+const ensurePluginRequirementsAreMet = async (helpers, _pluginOptions) => {
+  if (helpers.traceId === `refresh-createSchemaCustomization`) {
+    return
+  }
+
   await isWpGatsby()
 }
 

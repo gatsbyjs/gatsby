@@ -1,6 +1,10 @@
 import store from "~/store"
 
 const setGatsbyApiToState = (helpers, pluginOptions) => {
+  if (helpers.traceId === `refresh-createSchemaCustomization`) {
+    return
+  }
+
   //
   // add the plugin options and Gatsby API helpers to our store
   // to access them more easily
