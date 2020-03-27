@@ -13,8 +13,8 @@ Combine it with a source of products (like a CMS or an e-commerce platform like 
 To get started, you'll need:
 
 - a Gatsby site with [`gatsby-plugin-snipcart`](/packages/gatsby-plugin-snipcart/) installed
-- A [Snipcart](https://snipcart.com/) account
-- Products to sell (test data is fine!)
+- a [Snipcart](https://snipcart.com/) account
+- products to sell (test data is fine!)
 
 ## Installing the Plugin
 
@@ -24,6 +24,8 @@ Keep paragraphs short (around 1-4 sentences). People are more likely to read
 several short paragraphs instead of a huge block of text.
 
 ## Adding Products
+
+Adding products with Snipcart involves adding a set of attributes to your HTML. 
 
 ## Example
 
