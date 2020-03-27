@@ -35,7 +35,7 @@ Emotion CSS in JS library
 
 Installing necessary packages
 
-<InstallPackages
+<NPMInstallPackages
   name={["gatsby-plugin-emotion", "@emotion/core", "@emotion/styled"]}
 />
 
@@ -44,7 +44,7 @@ Installing necessary packages
 Adding `gatsby-plugin-emotion` to your `gatsby-config.js`. It provides support
 for Emotion during Gatsby's server side rendering.
 
-<InstallGatsbyPlugin name="gatsby-plugin-emotion" />
+<GatsbyInstallPlugin name="gatsby-plugin-emotion" />
 
 ---
 
