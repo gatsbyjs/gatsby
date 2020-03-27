@@ -2,9 +2,13 @@ import child_process from "child_process"
 import { join } from "path"
 
 export function invokeCli(...args) {
-  const child = child_process.spawn(join(__dirname, "./gatsby-cli.js"), args, {
-    cwd: join(__dirname, "../execution-folder"),
-  })
+  const child = child_process.execFile(
+    join(__dirname, "./gatsby-cli.js"),
+    args,
+    {
+      cwd: join(__dirname, "../execution-folder"),
+    }
+  )
 
   const logs = []
 
