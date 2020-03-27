@@ -89,7 +89,7 @@ When the form is sent, the server will compare the token received with the store
 
 #### Same-Site Cookies Attribute
 
-This cookie atribute is targeted to prevent CSRF attacks. If you need to create a cookie in your application, make sure to protect them by this attribute, that could be of `Strict` or `Lax` type:
+This cookie attribute is targeted to prevent CSRF attacks. If you need to create a cookie in your application, make sure to protect them by this attribute, that could be of `Strict` or `Lax` type:
 
 `Set-Cookie: example=1; SameSite=Strict`
 
