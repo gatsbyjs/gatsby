@@ -3,7 +3,7 @@ title: "Flamingo, women’s body care brand from Harry’s, chooses Gatsby for c
 date: 2019-01-30
 author: Linda Watkins
 tags:
-  - E-commerce
+  - e-commerce
   - case-studies
   - marketing
 image: "./images/flamingo.png"
