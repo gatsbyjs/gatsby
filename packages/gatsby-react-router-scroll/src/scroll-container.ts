@@ -2,11 +2,11 @@ import React, { ReactChildren } from "react"
 import ReactDOM from "react-dom"
 import warning from "warning"
 import PropTypes from "prop-types"
-import { ScrollContext } from "./scroll-context"
+import { ScrollContext, IShouldUpdateScroll } from "./scroll-context"
 
 interface IScrollContainerProps {
   scrollKey: string
-  shouldUpdateScroll: any
+  shouldUpdateScroll: IShouldUpdateScroll
   children: ReactChildren
 }
 

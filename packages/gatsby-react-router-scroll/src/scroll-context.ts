@@ -10,8 +10,14 @@ export interface ILocationBase {
   hash?: string
 }
 
+export type ScrollTarget = ScrollPosition | string | boolean | null | undefined
+
+export interface IShouldUpdateScroll<TContext> {
+  (prevContext: TContext | null, context: TContext): ScrollTarget
+}
+
 interface IScrollBehaviorProps {
-  shouldUpdateScroll: any
+  shouldUpdateScroll: IShouldUpdateScroll
   children: ReactChildren
   location: ILocationBase
 }
@@ -84,7 +90,7 @@ export class ScrollContext extends React.Component<IScrollBehaviorProps, {}> {
   registerElement = (
     key: string,
     element: Element | Text | null,
-    shouldUpdateScroll: any
+    shouldUpdateScroll: IShouldUpdateScroll
   ): void => {
     this.scrollBehavior.registerElement(
       key,
