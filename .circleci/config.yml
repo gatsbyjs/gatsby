@@ -300,6 +300,7 @@ jobs:
   integration_tests_gatsby_cli:
     executor: node
     steps:
+      - <<: *attach_to_bootstrap
       # - run:
       #     name: Assert Changed Files
       #     command: ./scripts/assert-changed-files.sh "packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*"
