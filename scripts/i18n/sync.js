@@ -208,8 +208,6 @@ async function syncTranslationRepo(code) {
     syncLabel = repository.label
   }
 
-  // process.exit(0)
-
   // TODO exit early if this fails
   // Compare these changes
   const baseHash = shell
