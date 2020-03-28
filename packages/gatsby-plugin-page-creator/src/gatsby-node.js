@@ -6,12 +6,12 @@ const existsSync = require(`fs-exists-cached`).sync
 
 const glob = Promise.promisify(globCB)
 
-const {
+import {
   createPath,
   validatePath,
   ignorePath,
   watchDirectory,
-} = require(`gatsby-page-utils`)
+} from "gatsby-page-utils"
 
 // Path creator.
 // Auto-create pages.
