@@ -300,10 +300,6 @@ jobs:
   integration_tests_gatsby_cli:
     executor: node
     steps:
-      - checkout
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
       - run:
           name: Assert Changed Files
           command: ./scripts/assert-changed-files.sh "packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*"
@@ -661,7 +657,7 @@ workflows:
 
   build-test:
     jobs:
-      # - bootstrap
+      - bootstrap
       # - windows_unit_tests:
       #     <<: *ignore_docs
       # - lint:
@@ -689,7 +685,9 @@ workflows:
       #     <<: *e2e-test-workflow
       # - integration_tests_structured_logging:
       #     <<: *e2e-test-workflow
-      - integration_tests_gatsby_cli
+      - integration_tests_gatsby_cli:
+          requires:
+            - bootstrap
       # - e2e_tests_path-prefix:
       #     <<: *e2e-test-workflow
       # - e2e_tests_gatsby-image:
