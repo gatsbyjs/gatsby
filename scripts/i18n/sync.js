@@ -14,6 +14,7 @@ const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${host}/${owner}/${sourceRepo}`
 const sourceRepoGitUrl = `${sourceRepoUrl}.git`
+const syncLabel = `sync`
 
 // get the git short hash
 function getShortHash(hash) {
@@ -36,9 +37,17 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
 async function getRepository(owner, name) {
   const { repository } = await graphql(
     `
-      query($owner: String!, $name: String!) {
+      query($owner: String!, $name: String!, $syncLabel: String!) {
         repository(owner: $owner, name: $name) {
           id
+          pullRequests(labels: [$syncLabel], first: 1) {
+            nodes {
+              id
+            }
+          }
+          label(name: $syncLabel) {
+            id
+          }
         }
       }
     `,
@@ -48,10 +57,34 @@ async function getRepository(owner, name) {
       },
       owner,
       name,
+      syncLabel,
     }
   )
   return repository
 }
+
+async function createLabel(input) {
+  const { createLabel } = await graphql(
+    `
+      mutation($input: CreateLabelInput!) {
+        createLabel(input: $input) {
+          label {
+            id
+          }
+        }
+      }
+    `,
+    {
+      headers: {
+        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
+        accept: `application/vnd.github.bane-preview+json`,
+      },
+      input,
+    }
+  )
+  return createLabel.label
+}
+
 async function createPullRequest(input) {
   const { createPullRequest } = await graphql(
     `
@@ -127,6 +160,33 @@ async function syncTranslationRepo(code) {
   shell.exec(`git fetch source master`)
 
   // TODO don't run the sync script if there is a current PR from the bot
+  const repository = await getRepository(owner, transRepoName)
+
+  if (repository.pullRequests.nodes.length > 0) {
+    logger.info(
+      `There are currently open sync pull requests. Please ask the language maintainers to merge the existing PR(s) in before opening another one. Exiting...`
+    )
+    process.exit(0)
+  }
+
+  logger.info(`No currently open sync pull requests.`)
+
+  let syncLabelId
+  if (!repository.label) {
+    logger.info(
+      `Repository does not have a "${syncLabel}" label. Creating one...`
+    )
+    const label = await createLabel({
+      repositoryId: repository.id,
+      name: syncLabel,
+      description: `Sync with translation source. Used by @gatsbybot to track open sync pull requests.`,
+      color: `fbca04`,
+    })
+    syncLabelId = label.id
+  } else {
+    logger.info(`Repository has an existing ${syncLabel} label.`)
+    syncLabelId = repository.label.id
+  }
 
   // TODO exit early if this fails
   // Compare these changes
@@ -155,8 +215,6 @@ async function syncTranslationRepo(code) {
   shell.exec(`git ci --no-edit`)
 
   shell.exec(`git push -u origin ${syncBranch}`)
-
-  const repository = await getRepository(owner, transRepoName)
 
   logger.info(`Creating sync pull request`)
   // TODO if there is already an existing PR, don't create a new one and exit early
