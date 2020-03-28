@@ -17,7 +17,7 @@ const {
   objectToDottedField,
   liftResolvedFields,
 } = require(`../common/query`)
-const { getValueAt } = require(`../../utils/get-value-at`)
+import { getValueAt } from "../../utils/get-value-at"
 const { runSiftOnNodes } = require(`../../redux/run-sift`)
 
 // Takes a raw graphql filter and converts it into a mongo-like args

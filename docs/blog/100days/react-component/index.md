@@ -29,7 +29,7 @@ Learn how to [import and use almost any React component](/docs/adding-react-comp
 
 Next, follow [Formik’s step-by-step tutorial](https://jaredpalmer.com/formik/docs/tutorial) for creating a newsletter signup form.
 
-Lastly, familiarize yourself with the [acessibility guidelines regarding forms](/docs/building-a-contact-form/#creating-an-accessible-form), and ensure your form meets those standards.
+Lastly, familiarize yourself with the [accessibility guidelines regarding forms](/docs/building-a-contact-form/#creating-an-accessible-form), and ensure your form meets those standards.
 
 ### What to Do If You Need Help
 

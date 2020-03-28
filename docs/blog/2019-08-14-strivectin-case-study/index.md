@@ -3,7 +3,7 @@ title: "Migrating from Magento Enterprise to Gatsby"
 date: 2019-08-14
 author: Thomas Slade
 tags:
-  - ecommerce
+  - e-commerce
   - case-studies
   - marketing
   - headless-cms
@@ -13,7 +13,7 @@ showImageInArticle: true
 
 [StriVectin](https://www.strivectin.com), founded in 2002, sells lab-tested, anti-aging skincare products. They offer direct-to-consumer products online and are stocked in thousands of retailers globally. Their first site went live on Magento Enterprise in 2011. During this time, the customer base has grown more than 10x. This growth introduced technical obstacles. Site outages became a constant problem during marketing events and press releases. The site performance was sluggish—even when utilizing a CDN, browser cache, and Magento’s page cache.
 
-The performance and stability concerns needed resolution in order for StriVectin to succeed. [Elevar](https://getelevar.com/?utm_source=gatsbyjs&utm_medium=blog&utm_campaign=casestudy&utm_content=casestudy), an ecommerce data analysis and optimization company, helped with implementation which included designing, building, and launching. Fast forward to July 2019 and a new, blazing-fast site launched using Gatsby. Day-to-day concerns with site outages, instability, or “the site is slow for me” are now a thing of the past!
+The performance and stability concerns needed resolution in order for StriVectin to succeed. [Elevar](https://getelevar.com/?utm_source=gatsbyjs&utm_medium=blog&utm_campaign=casestudy&utm_content=casestudy), an e-commerce data analysis and optimization company, helped with implementation which included designing, building, and launching. Fast forward to July 2019 and a new, blazing-fast site launched using Gatsby. Day-to-day concerns with site outages, instability, or “the site is slow for me” are now a thing of the past!
 
 ## Client goals
 
@@ -21,7 +21,7 @@ StriVectin wanted to move to a platform that allowed them more freedom and flexi
 
 ## Elevar goals
 
-After aligning with the client’s goals, we came up with some of our own. Speed and performance were paramount since our own data across hundreds of eCommerce stores show that speed correlates to conversion rate. We also wanted to invest in thinking through each user interaction, design choice, and an advanced analytics tracking solution for all marketing partners.
+After aligning with the client’s goals, we came up with some of our own. Speed and performance were paramount since our own data across hundreds of e-commerce stores show that speed correlates to conversion rate. We also wanted to invest in thinking through each user interaction, design choice, and an advanced analytics tracking solution for all marketing partners.
 
 Most developers struggle with the steep learning curve associated with Magento. The codebase is roughly 20,000 files! Our team wanted to Improve DX (Developer Experience). We’ve experienced attacks first-hand in Magento, and the constant paranoia associated with security patch release cycles. We wanted to reduce this exposure.
 

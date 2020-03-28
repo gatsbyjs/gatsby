@@ -38,6 +38,28 @@ It recognizes files with the following extensions as images.
 
 Each image file is parsed into a node of type `ImageSharp`.
 
+## Configuration options
+
+`checkSupportedExtensions` [boolean][optional]
+
+Sharp only supports certain image formats (see the Parsing algorithm section above) and hence throws a warning when you e.g. use a .gif in an `ImageSharp` query. You'll need to use `publicURL` instead. With this option you can disable the warning behavior.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-transformer-sharp`,
+      options: {
+        // The option defaults to true
+        checkSupportedExtensions: false,
+      },
+    },
+  ],
+}
+```
+
 ## Troubleshooting
 
 ### Incompatible library version: sharp.node requires version X or later, but Z provides version Y

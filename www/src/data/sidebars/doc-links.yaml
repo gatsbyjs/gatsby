@@ -19,6 +19,8 @@
           link: /docs/recipes/pages-layouts/
         - title: Styling with CSS
           link: /docs/recipes/styling-css/
+        - title: Working with Plugins
+          link: /docs/recipes/working-with-plugins/
         - title: Working with Starters
           link: /docs/recipes/working-with-starters/
         - title: Working with Themes
@@ -76,12 +78,18 @@
             - title: Deploying to ZEIT Now
               link: /docs/deploying-to-zeit-now/
               breadcrumbTitle: ZEIT Now
+            - title: Deploying to Cloudflare Workers
+              link: /docs/deploying-to-cloudflare-workers/
+              breadcrumbTitle: Cloudflare Workers
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
             - title: Deploying to Render
               link: /docs/deploying-to-render/
               breadcrumbTitle: Render
+            - title: Deploying to Tiiny Host
+              link: /docs/deploying-to-tiiny-host/
+              breadcrumbTitle: Tiiny Host
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge
@@ -121,6 +129,8 @@
             - title: Using Environment Variables
               link: /docs/environment-variables/
               breadcrumbTitle: Environment Variables
+            - title: Running a Gatsby Preview Server
+              link: /docs/running-a-gatsby-preview-server/
             - title: Using ESLint
               link: /docs/eslint/
               breadcrumbTitle: ESLint
@@ -253,6 +263,8 @@
                   link: /docs/naming-a-plugin/
                 - title: Files Gatsby Looks for in a Plugin
                   link: /docs/files-gatsby-looks-for-in-a-plugin/
+                - title: Creating a Generic Plugin
+                  link: /docs/creating-a-generic-plugin/
                 - title: Creating a Local Plugin
                   link: /docs/creating-a-local-plugin/
                 - title: Creating a Source Plugin
@@ -263,10 +275,6 @@
                   link: /docs/configuring-usage-with-plugin-options/
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
-                - title: Pixabay Image Source Plugin Tutorial
-                  link: /tutorial/pixabay-source-plugin-tutorial/
-                - title: Remark Plugin Tutorial
-                  link: /tutorial/remark-plugin-tutorial/
                 - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Themes
@@ -654,7 +662,7 @@
               link: /docs/how-code-splitting-works/
         - title: Resource Handling & Service Workers
           link: /docs/resource-handling-and-service-workers/
-        - title: Data Storage (Redux)*
+        - title: Data Storage (Redux)
           link: /docs/data-storage-redux/
         - title: Build Caching
           link: /docs/build-caching/
@@ -745,6 +753,10 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: Build
+          link: /docs/glossary/build/
+        - title: Content Delivery Network
+          link: /docs/glossary/content-delivery-network/
         - title: Continuous Deployment
           link: /docs/glossary/continuous-deployment/
         - title: Decoupled Drupal
@@ -765,6 +777,8 @@
           link: /docs/glossary/node/
         - title: React
           link: /docs/glossary/react/
+        - title: Server Side Rendering
+          link: /docs/glossary/server-side-rendering/
         - title: Static Site Generator
           link: /docs/glossary/static-site-generator/
         - title: webpack

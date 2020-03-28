@@ -73,7 +73,7 @@ Here’s a `modules` field on a `ContentPage` currently in use on production:
 
 ![modules field](./modules.png)
 
-Figuring out how to set this up in GraphQL took some trial and error, but we settled on using [inline fragments](http://graphql.org/learn/queries/#inline-fragments).
+Figuring out how to set this up in GraphQL took some trial and error, but we settled on using [inline fragments](https://graphql.org/learn/queries/#inline-fragments).
 
 The GraphQL looks like this:
 
