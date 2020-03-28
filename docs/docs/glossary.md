@@ -76,6 +76,10 @@ A component can include components within it. In fact, [pages](#page) and [templ
 
 The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option set in config is your sites metadata that can power your SEO meta tags.
 
+### [Content Delivery Network](/docs/glossary/content-delivery-network)
+
+A content delivery network (CDN) is a highly distributed network of servers that stores copies of your content in locations that are closer to your site's visitors. Content delivery networks improve your site's performance by reducing the time needed to complete a network request.
+
 ### [Continuous Deployment](/docs/glossary/continuous-deployment)
 
 Continuous deployment (CD) automates the process of releasing changes to your project. A continuous deployment workflow automatically builds and tests your project, and publishes your changes only when they pass the required tests.
