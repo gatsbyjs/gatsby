@@ -181,7 +181,6 @@ async function syncTranslationRepo(code) {
   shell.exec(`git remote add source ${sourceRepoGitUrl}`)
   shell.exec(`git fetch source master`)
 
-  // TODO don't run the sync script if there is a current PR from the bot
   const repository = await getRepository(owner, transRepoName)
 
   if (repository.pullRequests.nodes.length > 0) {
