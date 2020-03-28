@@ -1,6 +1,11 @@
-const mm = require(`micromatch`)
+import * as mm from "micromatch"
 
-module.exports = (path, ignore) => {
+interface IIgnoreOptions {
+  patterns: string | ReadonlyArray<string>
+  options: mm.Options
+}
+
+export function ignorePath(path: string, ignore?: IIgnoreOptions): boolean {
   // Don't do anything if no ignore patterns
   if (!ignore) return false
   const settings = {
@@ -11,8 +16,8 @@ module.exports = (path, ignore) => {
   if (!ignore.patterns) {
     if (Array.isArray(ignore) && ignore.length > 0) {
       settings.patterns = ignore
-    } else if (typeof ignore != `object`) {
-      settings.patterns = ignore.toString()
+    } else if (typeof ignore === `string`) {
+      settings.patterns = ignore
     } else {
       return false
     }

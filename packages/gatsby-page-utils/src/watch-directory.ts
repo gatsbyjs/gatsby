@@ -1,9 +1,13 @@
-const Promise = require(`bluebird`)
-const chokidar = require(`chokidar`)
+import * as chokidar from "chokidar"
 const { slash } = require(`gatsby-core-utils`)
 
-module.exports = async (path, glob, onNewFile, onRemovedFile) =>
-  new Promise((resolve, reject) => {
+export function watchDirectory(
+  path: string,
+  glob: string | ReadonlyArray<string>,
+  onNewFile: (path: string) => void,
+  onRemovedFile: (path: string) => void
+): Promise<void> {
+  return new Promise(resolve => {
     chokidar
       .watch(glob, { cwd: path })
       .on(`add`, path => {
@@ -16,3 +20,4 @@ module.exports = async (path, glob, onNewFile, onRemovedFile) =>
       })
       .on(`ready`, () => resolve())
   })
+}

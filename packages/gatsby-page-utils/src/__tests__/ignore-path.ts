@@ -1,4 +1,4 @@
-const ignorePath = require(`../ignore-path`)
+import { ignorePath } from "../ignore-path"
 
 describe(`ignore-path`, () => {
   it(`does not filter files without an ignore object`, () => {
