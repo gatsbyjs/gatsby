@@ -1,5 +1,6 @@
 import { transform } from "@babel/core"
 import preset from "babel-preset-gatsby-package"
+import plugin from "../"
 
 const trim = s =>
   s
@@ -11,6 +12,7 @@ const babel = (code, esm = false) =>
   transform(code, {
     filename: `noop.js`,
     presets: [preset],
+    plugins: [plugin],
     babelrc: false,
     configFile: false,
     sourceType: `module`,
@@ -32,11 +34,11 @@ describe(`optimize-hook-destructuring`, () => {
     )
 
     expect(output).toMatch(trim`
-      var _useState=useState(0),count=_useState[0],setCount=_useState[1];
+    \"use strict\";var _react=require(\"react\");const{0:count,1:setCount}=(0,_react.useState)(0);
     `)
 
     expect(output).toMatchInlineSnapshot(
-      `"import{useState}from'react';var _useState=useState(0),count=_useState[0],setCount=_useState[1];"`
+      `"\\"use strict\\";var _react=require(\\"react\\");const{0:count,1:setCount}=(0,_react.useState)(0);"`
     )
   })
 })
