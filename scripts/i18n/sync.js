@@ -14,7 +14,7 @@ const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${host}/${owner}/${sourceRepo}`
 const sourceRepoGitUrl = `${sourceRepoUrl}.git`
-const syncLabel = `sync`
+const syncLabelName = `sync`
 
 // get the git short hash
 function getShortHash(hash) {
@@ -57,7 +57,7 @@ async function getRepository(owner, name) {
       },
       owner,
       name,
-      syncLabel,
+      syncLabel: syncLabelName,
     }
   )
   return repository
@@ -106,6 +106,28 @@ async function createPullRequest(input) {
     }
   )
   return createPullRequest.pullRequest
+}
+
+async function addLabelToPullRequest(pullRequest, label) {
+  await graphql(
+    `
+      mutation($input: AddLabelsToLabelableInput!) {
+        addLabelsToLabelable(input: $input) {
+          clientMutationId
+        }
+      }
+    `,
+    {
+      headers: {
+        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
+        accept: `application/vnd.github.bane-preview+json`,
+      },
+      input: {
+        labelableId: pullRequest.id,
+        labelIds: [label.id],
+      },
+    }
+  )
 }
 
 function conflictPRBody(conflictFiles, comparisonUrl, prNumber) {
@@ -171,21 +193,20 @@ async function syncTranslationRepo(code) {
 
   logger.info(`No currently open sync pull requests.`)
 
-  let syncLabelId
+  let syncLabel
   if (!repository.label) {
     logger.info(
-      `Repository does not have a "${syncLabel}" label. Creating one...`
+      `Repository does not have a "${syncLabelName}" label. Creating one...`
     )
-    const label = await createLabel({
+    syncLabel = await createLabel({
       repositoryId: repository.id,
-      name: syncLabel,
+      name: syncLabelName,
       description: `Sync with translation source. Used by @gatsbybot to track open sync pull requests.`,
       color: `fbca04`,
     })
-    syncLabelId = label.id
   } else {
-    logger.info(`Repository has an existing ${syncLabel} label.`)
-    syncLabelId = repository.label.id
+    logger.info(`Repository has an existing ${syncLabelName} label.`)
+    syncLabel = repository.label
   }
 
   // TODO exit early if this fails
@@ -218,7 +239,7 @@ async function syncTranslationRepo(code) {
 
   logger.info(`Creating sync pull request`)
   // TODO if there is already an existing PR, don't create a new one and exit early
-  const { number: syncPRNumber } = await createPullRequest({
+  const syncPR = await createPullRequest({
     repositoryId: repository.id,
     baseRefName: `master`,
     headRefName: syncBranch,
@@ -293,15 +314,19 @@ async function syncTranslationRepo(code) {
 
   logger.info(`Creating conflicts pull request`)
   // TODO assign codeowners as reviewers
-  await createPullRequest({
+  const conflictsPR = await createPullRequest({
     repositoryId: repository.id,
     baseRefName: `master`,
     headRefName: conflictBranch,
     title: `(sync) Resolve conflicts with ${sourceRepo} @ ${shortHash}`,
-    body: conflictPRBody(conflictFiles, comparisonUrl, syncPRNumber),
+    body: conflictPRBody(conflictFiles, comparisonUrl, syncPR.number),
     maintainerCanModify: true,
     draft: true,
   })
+
+  logger.info(`Adding ${syncLabelName} lables to created pull requests...`)
+  await addLabelToPullRequest(syncPR, syncLabel)
+  await addLabelToPullRequest(conflictsPR, syncLabel)
 }
 
 const [langCode] = process.argv.slice(2)
