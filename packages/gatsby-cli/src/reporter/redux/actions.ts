@@ -102,7 +102,7 @@ const delayedCall = (fn: voidFunc, timeout: number): voidFunc => {
   return clear
 }
 
-const actions: IActionTypes = {
+export const actions: IActionTypes = {
   createLog: ({
     level,
     text,

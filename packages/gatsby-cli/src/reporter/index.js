@@ -3,7 +3,7 @@
 const semver = require(`semver`)
 const { isCI } = require(`gatsby-core-utils`)
 const signalExit = require(`signal-exit`)
-const reporterActions = require(`./redux/actions`)
+import { actions as reporterActions } from "./redux/actions"
 
 const { LogLevels, ActivityStatuses, ActivityTypes } = require(`./constants`)
 
