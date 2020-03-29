@@ -2,7 +2,7 @@
 title: Adding a Shopping Cart with Snipcart
 ---
 
-Snipcart is a shopping cart solution designed to be dropped neatly into any web project. Including it in your project allows any HTML you write to instantly become a "buy button" with the addition of several Snipcart-specific attributes. 
+Snipcart is a shopping cart solution designed to be dropped neatly into any web project. Including it in your project allows any HTML you write to instantly become a "buy button" with the addition of several Snipcart-specific attributes.
 
 Combine it with a source of products (like a CMS or an e-commerce platform like [Etsy](https://www.etsy.com/)) and a payment processer (like [Stripe](https://www.stripe.com/)) to build a complete e-commerce experience for your customers.
 
@@ -29,7 +29,7 @@ Adding products with Snipcart involves writing HTML representing your product an
 </section>
 ```
 
-Including this information allows a visitor to see what you have for sale, but they can't do anything with that information quite yet. You'll need a way for customers to add individual items to their cart. Try adding a button with the following attributes. 
+Including this information allows a visitor to see what you have for sale, but they can't do anything with that information quite yet. You'll need a way for customers to add individual items to their cart. Try adding a button with the following attributes.
 
 ```html
 <section>
@@ -37,11 +37,13 @@ Including this information allows a visitor to see what you have for sale, but t
   <p>$19.99</p>
   <p>Wear one or seventeen! These rings are fun to mix and match.</p>
   <!-- highlight-start -->
-  <button class="snipcart-add-item"
+  <button
+    class="snipcart-add-item"
     data-item-id="silver-stacking-ring"
     data-item-price="19.99"
     data-item-url="/"
-    data-item-name="Silver Stacking Ring">
+    data-item-name="Silver Stacking Ring"
+  >
     Add to cart
   </button>
   <!-- highlight-end -->
@@ -50,7 +52,7 @@ Including this information allows a visitor to see what you have for sale, but t
 
 Snipcart uses these attributes (`data-item-*`) to figure out what your customer is trying to buy and how much to charge them. The ID, price, URL, and name attributes are all required but there are several others that you can add to enhance the shopping cart.
 
-Importantly, `data-item-url` denotes the URL of the webpage displaying the product(s). Snipcart needs to crawl this page to validate the order. The web crawler looks for the HTML element with the `snipcart-add-item` CSS class as well as the `data-item-id` and checks what it finds there against whatever is in the cart. 
+Importantly, `data-item-url` denotes the URL of the webpage displaying the product(s). Snipcart needs to crawl this page to validate the order. The web crawler looks for the HTML element with the `snipcart-add-item` CSS class as well as the `data-item-id` and checks what it finds there against whatever is in the cart.
 
 Note that, while you're testing, a `data-item-url` value of `"/"` is fine. For the checkout flow to work, you will eventually need to replace this with the actual URL at which you've published your catalogue or product page.
 
@@ -67,12 +69,16 @@ Building on the stacking ring example, suppose that you wanted to give your cust
   <h2>Silver Stacking Ring</h2>
   <p>$19.99</p>
   <p>Wear one or seventeen! These rings are fun to mix and match.</p>
-  <button class="snipcart-add-item"
+  <button
+    class="snipcart-add-item"
     data-item-id="silver-stacking-ring"
     data-item-price="19.99"
     data-item-url="/"
     data-item-name="Silver Stacking Ring"
-    <!-- highlight-start -->
+    <!--
+    highlight-start
+    --
+  >
     data-item-custom1-name="Size"
     data-item-custom1-options="6|6.5|7|7.5|8|8.5|9">
     <!-- highlight-end -->
@@ -88,16 +94,19 @@ You can add multiple custom fields by incrementing the index of the `data-item-c
   <h2>Silver Stacking Ring</h2>
   <p>$19.99</p>
   <p>Wear one or seventeen! These rings are fun to mix and match.</p>
-  <button class="snipcart-add-item"
+  <button
+    class="snipcart-add-item"
     data-item-id="silver-stacking-ring"
     data-item-price="19.99"
     data-item-url="/"
     data-item-name="Silver Stacking Ring"
     data-item-custom1-name="Size"
     data-item-custom1-options="6|6.5|7|7.5|8|8.5|9"
-    <!-- highlight-start -->
-    data-item-custom2-name="This is a gift"
-    data-item-custom2-type="checkbox">
+    <!--
+    highlight-start
+    --
+  >
+    data-item-custom2-name="This is a gift" data-item-custom2-type="checkbox">
     <!-- highlight-end -->
     Add to cart
   </button>
@@ -106,19 +115,23 @@ You can add multiple custom fields by incrementing the index of the `data-item-c
 
 ### Selling digital products
 
-Snipcart enables the sale of digital goods. To sell a file, you'll need to upload it to your Snipcart dashboard and then add the resulting guid as the value of the  `data-item-file-guid` attribute to your product's markup. You can specify a file access expiry in days and a maximum number of downloads per order from the dashboard.
+Snipcart enables the sale of digital goods. To sell a file, you'll need to upload it to your Snipcart dashboard and then add the resulting guid as the value of the `data-item-file-guid` attribute to your product's markup. You can specify a file access expiry in days and a maximum number of downloads per order from the dashboard.
 
 ```html
 <section>
   <h2>Silver Stacking Ring</h2>
   <p>$19.99</p>
   <p>Wear one or seventeen! These rings are fun to mix and match.</p>
-  <button class="snipcart-add-item"
+  <button
+    class="snipcart-add-item"
     data-item-id="silver-stacking-ring"
     data-item-price="19.99"
     data-item-url="/"
     data-item-name="Silver Stacking Ring"
-    <!-- highlight-start -->
+    <!--
+    highlight-start
+    --
+  >
     data-item-file-guid="your-digital-product-guid">
     <!-- highlight-end -->
     Add to cart
