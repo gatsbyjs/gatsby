@@ -130,3 +130,57 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 ### Additional resources
 
 - [Hosting on Cloudflare](/docs/deploying-to-cloudflare-workers)
+
+## Setting up google analytics
+
+### Using gatsby-plugin-google-analytics to track the activity of your Gatsby Site
+gatsby-plugin-google-analytics is a very popular plugin that provides insights in the access patters of your website
+
+### Prerequisites
+- A [Gatsby site](/docs/quick-start) with `gatsby-config.js` and an `index.js` page
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+- A Domain ex: [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
+
+#### Verify the domain in search.google.com
+
+1. [Verify the domain](https://search.google.com/search-console/not-verified) by clicking on **Search Property** > **Add Property**. Type in your domain, and press Continue. 
+2. Create a **TXT** record in the DNS configuration for example [on AWS](https://www.entrustdatacard.com/knowledgebase/how-to-create-a-txt-record-on-amazon-aws-route-53-for-entrust-email-validation-method)
+
+#### Linking the domain to Google analytics admin
+
+1. Log in to [Analytics](https://analytics.google.com/analytics/)
+2. Click Admin.
+3. Select **Create Property** in Property column
+4. Choose **Web**
+5. Fill in the details and click Create.
+
+#### Getting the analytics tracking id
+
+1. Sign in to your Analytics account.
+2. Click Admin.
+3. Select an account from the menu in the ACCOUNT column.
+4. Select a property from the menu in the PROPERTY column.
+5. Under PROPERTY, click Tracking Info > Tracking Code. Your Tracking ID is displayed at the top of the page.
+
+#### Using the id in the plugin
+
+1. ```npm install --save gatsby-plugin-google-analytics```
+2. in gatsby-config.js add
+   
+```js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        // replace "UA-XXXXXXXXX-X" with your own Tracking ID
+        trackingId: "UA-XXXXXXXXX-X",
+      },
+    },
+  ],
+}`
+```
+
+### Additional resources
+- [adding-analytics](https://www.gatsbyjs.org/docs/adding-analytics/)
+
