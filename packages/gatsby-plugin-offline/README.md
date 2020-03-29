@@ -214,3 +214,30 @@ Alternatively you can have a look at the `/public/index.html` file in your proje
 ### App shell and server logs
 
 Server logs (like from [Netlify analytics](https://www.netlify.com/products/analytics/)) may show a large number of pageviews to a route like `/offline-plugin-app-shell-fallback/index.html`, this is a result of `gatsby-plugin-offline` adding an [app shell](https://developers.google.com/web/fundamentals/architecture/app-shell) to the page. The app shell is a minimal amount of user interface that can be cached offline for reliable performance loading on repeat visits. The shell can be loaded from the cache, and the content of the site loaded into the shell by the service worker.
+
+### Using with gatsby-plugin-manifest
+
+If using this plugin with `gatsby-plugin-manifest` you may find that your icons are not cached.
+In order to solve this, update your `gatsby-config.js` as follows:
+
+```js
+// gatsby-config.js
+{
+   resolve: 'gatsby-plugin-manifest',
+   options: {
+      icon: 'icon.svg',
+      cache_busting_mode: 'none'
+   }
+},
+{
+   resolve: 'gatsby-plugin-offline',
+   options: {
+      workboxConfig: {
+         globPatterns: ['**/*']
+      }
+   }
+}
+```
+
+Updating `cache_busting_mode` is necessary. Otherwise, workbox will break while attempting to find the cached URLs.
+Adding the `globPatterns` makes sure that the offline plugin will cache everything.

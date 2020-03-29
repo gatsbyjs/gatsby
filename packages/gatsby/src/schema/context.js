@@ -9,6 +9,7 @@ const withResolverContext = ({
   context,
   customContext,
   nodeModel,
+  stats,
 }) => {
   const nodeStore = require(`../db/nodes`)
 
@@ -28,6 +29,7 @@ const withResolverContext = ({
     nodeModel: nodeModel.withContext({
       path: context ? context.path : undefined,
     }),
+    stats,
   }
 }
 

@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Static } from "ink"
-import isTTY from "../../../util/is-tty"
+import { isTTY } from "../../../util/is-tty"
 import { trackBuildError } from "gatsby-telemetry"
 
 import { Spinner } from "../ink/components/spinner"
