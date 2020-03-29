@@ -14,14 +14,17 @@ export default function({
   types: typeof BabelTypes
 }): PluginObj<any> {
   const visitor = {
-    CallExpression(path: NodePath<BabelTypes.CallExpression>, state: any) {
+    CallExpression(
+      path: NodePath<BabelTypes.CallExpression>,
+      state: any
+    ): void {
       const onlyBuiltIns = state.opts.onlyBuiltIns
 
       // if specified, options.lib is a list of libraries that provide hook functions
       const libs =
         state.opts.lib &&
         (state.opts.lib === true
-          ? ["react", "preact/hooks"]
+          ? [`react`, `preact/hooks`]
           : [].concat(state.opts.lib))
 
       // skip function calls that are not the init of a variable declaration:
@@ -36,7 +39,7 @@ export default function({
       if (libs) {
         const binding = path.scope.getBinding(hookName)
         // not an import
-        if (!binding || binding.kind !== "module") return
+        if (!binding || binding.kind !== `module`) return
 
         const specifier = (binding.path.parent as BabelTypes.ImportDeclaration)
           .source.value
@@ -56,10 +59,10 @@ export default function({
   }
 
   return {
-    name: "optimize-hook-destructuring",
+    name: `optimize-hook-destructuring`,
     visitor: {
       // this is a workaround to run before preset-env destroys destructured assignments
-      Program(path, state) {
+      Program(path: NodePath<BabelTypes.Program>, state: any): void {
         path.traverse(visitor, state)
       },
     },
