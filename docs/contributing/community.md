@@ -19,18 +19,18 @@ size, disability, ethnicity, gender identity and expression, level of
 experience, nationality, personal appearance, race, religion, or sexual identity
 and orientation.
 
-[Read the full code of conduct](/contributing/code-of-conduct/)
+[Read the full code of conduct](docs/contributing/../../code-of-conduct.md)
 
 ## Ways to Contribute
 
 The Gatsby community welcomes contributions. Please refer to the guides below on how to make sure your contributions get accepted:
 
-- [How to Contribute](/contributing/how-to-contribute/)
-- [How to File an Issue](/contributing/how-to-file-an-issue/)
-- [How to Open a Pull Request](/contributing/how-to-open-a-pull-request/)
-- [Make feature requests with an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
-- [Gatsby Style Guide](/contributing/gatsby-style-guide/)
-- [Gatsby Translations](/contributing/gatsby-docs-translation-guide/)
+- [How to Contribute](docs/contributing/../../how-to-contribute.md)
+- [How to File an Issue](docs/contributing/../../how-to-file-an-issue.md)
+- [How to Open a Pull Request](docs/contributing/../../how-to-open-a-pull-request.md)
+- [Make feature requests with an RFC](../blog/2018-04-06-introducing-gatsby-rfc-process/index.md)
+- [Gatsby Style Guide](/docs/contributing/gatsby-style-guide.md)
+- [Gatsby Translations](/docs/contributing/translation/index.md)
 
 ## Gatsby news
 
@@ -76,10 +76,10 @@ tagged with `gatsby` or
 
 ## Learn More About Gatsby:
 
-- [Why Contribute to Gatsby?](/contributing/why-contribute-to-gatsby/)
-- [Gatsby Community Events](/contributing/events/)
-- [Where to Participate in the Community?](/contributing/where-to-participate/)
-- [Organize a Gatsby Event](/contributing/organize-a-gatsby-event/)
-- [How to Run a Gatsby Workshop](/contributing/how-to-run-a-gatsby-workshop/)
-- [How to Pitch Gatsby](/contributing/how-to-pitch-gatsby/)
-- [Blog posts on the Gatsby community](/blog/tags/community/)
+- [Why Contribute to Gatsby?](docs/contributing/../../why-contribute-to-gatsby.md)
+- [Gatsby Community Events](docs/contributing/../../events.md)
+- [Where to Participate in the Community?](docs/contributing/../../where-to-participate.md)
+- [Organize a Gatsby Event](docs/contributing/../../organize-a-gatsby-event.md)
+- [How to Run a Gatsby Workshop](docs/contributing/../../how-to-run-a-gatsby-workshop.md)
+- [How to Pitch Gatsby](docs/contributing/../../how-to-pitch-gatsby.md)
+- [Blog posts on the Gatsby community](../../docs/blog/)
