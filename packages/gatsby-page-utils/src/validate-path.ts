@@ -7,8 +7,8 @@ const jsonYamlExtTest = /\.(json|ya?ml)$/
 // https://github.com/facebook/jest/blob/v24.0.0-alpha.4/packages/jest-config/src/Defaults.js#L71
 function isTestFile(filePath: string): boolean {
   const testPatterns = [
-    `**/__tests__/**/*.(js|ts)?(x)`,
-    `**/(*.)+(spec|test).(js|ts)?(x)`,
+    `**/__tests__/**/*.(js|ts|jsx|tsx)`,
+    `**/(*.)+(spec|test).(js|ts|jsx|tsx)`,
   ]
 
   return mm.isMatch(filePath, testPatterns)
