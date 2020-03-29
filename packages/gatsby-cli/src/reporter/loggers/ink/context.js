@@ -1,6 +1,8 @@
 import React, { useState, useEffect, createContext } from "react"
 
-import { getStore, onLogAction } from "../../redux/index"
+import ReporterStore from "../../redux/index"
+
+const { getStore, onLogAction } = ReporterStore
 
 const StoreStateContext = createContext(getStore().getState())
 

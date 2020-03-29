@@ -1,8 +1,10 @@
-import { onLogAction } from "../../redux/index"
+import ReporterStore from "../../redux/index"
 import stripAnsi from "strip-ansi"
 import _ from "lodash"
 
 const { Actions, LogLevels } = require(`../../constants`)
+
+const { onLogAction } = ReporterStore
 
 onLogAction(action => {
   const sanitizedAction = {

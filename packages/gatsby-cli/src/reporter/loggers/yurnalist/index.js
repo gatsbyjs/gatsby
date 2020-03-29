@@ -1,4 +1,4 @@
-import { onLogAction } from "../../redux/index"
+import ReporterStore from "../../redux/index"
 import {
   Actions,
   LogLevels,
@@ -10,6 +10,7 @@ const { createReporter } = require(`yurnalist`)
 const ProgressBar = require(`progress`)
 const chalk = require(`chalk`)
 
+const { onLogAction } = ReporterStore
 const yurnalist = createReporter({ emoji: true, verbose: true })
 
 const activities = {}
