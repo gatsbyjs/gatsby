@@ -10075,6 +10075,18 @@
     - Library
   built_by: Gilbish Kosma
   built_by_url: https://www.gil20.me/
+- title: Crushing WFH
+  url: https://crushingwfh.com/
+  main_url: https://crushingwfh.com/
+  source_url: https://github.com/tiagofsanchez/wfh-tools
+  description: >
+    A directory of tools to help anyone to work from home in a productive manner
+  categories:
+    - Directory
+    - Open Source
+  built_by: Tiago Sanchez
+  built_by_url: https://www.tiagofsanchez.com/
+  featured: false
 - title: Martin Container
   main_url: https://www.container.com/
   url: https://www.container.com/
