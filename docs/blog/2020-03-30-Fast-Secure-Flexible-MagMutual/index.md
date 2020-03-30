@@ -1,5 +1,5 @@
 ---
-title: 'Fast, Secure, and Flexible: MagMutual.com Taps the Power of Gatsby + Drupal 8'
+title: "Fast, Secure, and Flexible: MagMutual.com Taps the Power of Gatsby + Drupal 8"
 date: 2020-03-30
 author: Tara Arnold
 excerpt: "MagMutual’s web team built their new site using Gatsby, harnessed to Drupal 8, to deliver easily managed content and customer experience, incredibly fast."
