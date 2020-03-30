@@ -59,6 +59,11 @@ _The instructions found in the README of the plugin you're using can you help yo
 
 If you want to create your own plugin you can get started with the Gatsby plugin starter.
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-get-started-writing-a-gatsby-plugin-using-the-plugin-starter"
+  lessonTitle="Get started writing a Gatsby plugin using the plugin starter"
+/>
+
 ### Prerequisites
 
 - An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` file
