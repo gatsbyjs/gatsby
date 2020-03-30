@@ -42,11 +42,11 @@ module.exports = {
 }
 ```
 
-Then start building pages in Builder.io, hit publish, and they will be incluced in your Gatsby site on each new build!
+Then start building pages in Builder.io, hit publish, and they will be included in your Gatsby site on each new build!
 
 ### Using your components in the editor
 
-See this [design systems example](/examples/react-design-system) for lots of examples using your deisgn system + custom components
+See this [design systems example](/examples/react-design-system) for lots of examples using your design system + custom components
 
 👉**Tip: want to limit page building to only your components? Try [components only mode](https://builder.io/c/docs/guides/components-only-mode)**
 
