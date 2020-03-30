@@ -145,10 +145,7 @@
     "webpack-merge": "^4.2.2",
     "webpack-stats-plugin": "^0.3.1",
     "xstate": "^4.8.0",
-    "yaml-loader": "^0.5.0",
-    "zipkin": "^0.19.2",
-    "zipkin-transport-http": "^0.19.2",
-    "zipkin-javascript-opentracing": "^2.1.0"
+    "yaml-loader": "^0.5.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -161,7 +158,10 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.2",
-    "xhr-mock": "^2.5.1"
+    "xhr-mock": "^2.5.1",
+    "zipkin": "^0.19.2",
+    "zipkin-transport-http": "^0.19.2",
+    "zipkin-javascript-opentracing": "^2.1.0"
   },
   "engines": {
     "node": ">=10.13.0"
