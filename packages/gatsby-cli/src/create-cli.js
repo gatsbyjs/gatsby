@@ -23,14 +23,15 @@ const handlerP = fn => (...args) => {
   )
 }
 
-const rootFile = path => path.join(process.cwd(), path)
+const rootFile = filePath => path.join(process.cwd(), filePath)
 
-const spawnScriptMonitor = script => {
+const createControllableScript = script => {
   const tmpFile = require(`tmp`).fileSync()
   require(`fs`).writeFileSync(tmpFile.name, script)
 
   return respawn([`node`, tmpFile.name], {
     env: process.env,
+    stdio: `inherit`,
   })
 }
 
@@ -86,11 +87,13 @@ function buildLocalCommands(cli, isLocalSite) {
 
       if (command === `develop`) {
         return args => {
-          const script = spawnScriptMonitor(`
+          const script = createControllableScript(`
             const cmd = require("${cmdPath}");
             const args = ${JSON.stringify(args)};
             cmd(args);
           `)
+
+          script.start()
 
           chokidar
             .watch([rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)])
