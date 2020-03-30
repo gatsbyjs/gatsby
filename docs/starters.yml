@@ -5757,3 +5757,36 @@
     - Styled-Components
     - Shards UI
     - Bootstrap
+- url: https://serene-ramanujan-285722.netlify.com/
+  repo: https://github.com/kunalJa/gatsby-starter-math-blog
+  description: A responsive math focused blog with MDX and Latex built in
+  tags:
+    - MDX
+    - Blog
+    - PWA
+    - Storybook
+    - Styling:Other
+    - SEO
+  features:
+    - Mobile friendly and fully responsive
+    - Easy to configure (just change site.config.js)
+    - MDX
+    - Latex with Katex
+    - Storybook with tested components included
+    - Uses Tachyons for styling
+    - Easy to create new posts
+- url: https://gatsby-starter-canada-pandemic.netlify.com/
+  repo: https://github.com/masoudkarimif/gatsby-starter-canada-pandemic
+  description: A Gatsby starter template for covering pandemics in Canada
+  tags:
+    - AWS
+    - Onepage
+    - Styling:Milligram
+  features:
+    - Interactive SVG map using D3
+    - Responsive design
+    - Styled 404 page
+    - Google Analytics support
+    - Includes React Helmet
+    - Clean minimalist design
+    - Completely customizable using only gatsby-config.js file
