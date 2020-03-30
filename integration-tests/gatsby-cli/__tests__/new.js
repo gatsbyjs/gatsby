@@ -11,12 +11,6 @@ describe("gatsby new", () => {
       removeFolder(siteName)
     })
 
-    it("outputs the folder we are in", () => {
-      const [, logs] = invokeCli("ls", siteName)
-
-      expect(logs).toBe(0)
-    })
-
     it("creates a gatsby site", () => {
       const [code, logs] = invokeCli("new", siteName)
 

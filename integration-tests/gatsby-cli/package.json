@@ -7,7 +7,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "pretest": "cd ../../packages/gatsby-cli && yarn build",
+    "pretest": "mkdir ./execution-folder && cd ../../packages/gatsby-cli && yarn build",
     "test": "jest --config=../jest.config.js gatsby-cli/"
   },
   "devDependencies": {
