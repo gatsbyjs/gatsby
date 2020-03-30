@@ -5757,3 +5757,16 @@
     - Styled-Components
     - Shards UI
     - Bootstrap
+- url: https://builderio.github.io/gatsby-starter-builder/
+  repo: https://github.com/BuilderIO/gatsby-starter-builder
+  description: Gatsby starter with drag + drop page building with your React components via Builder.io
+  tags:
+    - Website
+    - CMS:Builder.io
+    - CMS:Headless
+  features:
+    - Builder.io integration with sample pages/header/footer.
+    - Drag and drop page editing and creations.
+    - Lots of built-in templates, widgets, or bring in your own custom components.
+    - Uses @builder.io/gatsby plugin to dynamically create pages published on the editor.
+    - SEO
