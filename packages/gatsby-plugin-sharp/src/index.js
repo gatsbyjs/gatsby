@@ -304,14 +304,6 @@ async function generateBase64({ file, args = {}, reporter }) {
     args.toFormat = forceBase64Format
   }
 
-  console.log({
-    src: file.absolutePath,
-    width: options.width,
-    height: options.height,
-    position: options.cropFocus,
-    fit: options.fit,
-    background: options.background,
-  })
   pipeline
     .resize({
       width: options.width,

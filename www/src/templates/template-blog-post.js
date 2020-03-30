@@ -1,12 +1,13 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import BlogPostMetadata from "../components/blog-post-metadata"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import Link from "../components/localized-link"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
@@ -195,7 +196,7 @@ export const pageQuery = graphql`
         tags
         image {
           childImageSharp {
-            resize(width: 1500, height: 1500) {
+            resize(width: 1500) {
               src
             }
             fluid(maxWidth: 786) {
@@ -207,6 +208,7 @@ export const pageQuery = graphql`
         imageAuthorLink
         imageTitle
         showImageInArticle
+        twittercard
         author {
           id
           bio

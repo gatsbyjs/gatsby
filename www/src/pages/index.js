@@ -82,7 +82,7 @@ class IndexRoute extends React.Component {
 
     return (
       <>
-        <PageMetadata description="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby." />
+        <PageMetadata description="Blazing fast modern site generator for React. Go beyond static sites: build blogs, e-commerce sites, full-blown apps, and more with Gatsby." />
         <main
           id={`reach-skip-nav`}
           css={{

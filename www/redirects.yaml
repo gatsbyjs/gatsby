@@ -76,9 +76,9 @@
   toPath: /docs/creating-a-transformer-plugin/
 - fromPath: /docs/plugin-authoring/
   toPath: /docs/how-plugins-work/
-- fromPath: /tutorial/theme-tutorials
-  toPath: /tutorial/plugin-and-theme-tutorials
-- fromPath: docs/remark-plugin-tutorial.md
+- fromPath: /tutorial/theme-tutorials/
+  toPath: /tutorial/plugin-and-theme-tutorials/
+- fromPath: /docs/remark-plugin-tutorial/
   toPath: /tutorial/remark-plugin-tutorial/
 - fromPath: /docs/source-plugin-tutorial/
   toPath: /tutorial/pixabay-source-plugin-tutorial/
@@ -130,6 +130,8 @@
   toPath: /docs/data-fetching/
 - fromPath: /docs/centralizing-your-sites-navigation/
   toPath: /docs/creating-dynamic-navigation/
+- fromPath: /newsletter/
+  toPath: /contributing/community/
   # This redirects from a now removed stub that showed up in the first page of Google results.
   # Can be removed if SEO is no longer impacted.
 - fromPath: /docs/rendering-sidebar-navigation-dynamically/

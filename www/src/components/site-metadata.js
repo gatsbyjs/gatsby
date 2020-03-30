@@ -2,11 +2,13 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import useSiteMetadata from "../hooks/use-site-metadata"
 
+import { useLocale } from "./I18nContext"
 import gatsbyIcon from "../assets/gatsby-icon.png"
 
 const SiteMetadata = ({ pathname, locale }) => {
   const { siteUrl, title, twitter } = useSiteMetadata()
 
+  const locale = useLocale()
   // Note: `location.href` isn't available on server-side so we must get it from `pathname`:
   // https://css-tricks.com/how-to-the-get-current-page-url-in-gatsby/#article-header-id-4
   const href = `${siteUrl}${pathname}`

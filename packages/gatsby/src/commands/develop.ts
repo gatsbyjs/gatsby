@@ -16,7 +16,7 @@ import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
 import bootstrap from "../bootstrap"
-import { store, emitter } from "../redux"
+import { store } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
 import { buildHTML } from "./build-html"
 import { withBasePath } from "../utils/path"
@@ -27,17 +27,17 @@ import chalk from "chalk"
 import address from "address"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
-import WorkerPool from "../utils/worker/pool"
+import * as WorkerPool from "../utils/worker/pool"
 import http from "http"
 import https from "https"
 
-import bootstrapSchemaHotReloader from "../bootstrap/schema-hot-reloader"
+import { bootstrapSchemaHotReloader } from "../bootstrap/schema-hot-reloader"
 import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
 import { developStatic } from "./develop-static"
 import withResolverContext from "../schema/context"
 import sourceNodes from "../utils/source-nodes"
-import createSchemaCustomization from "../utils/create-schema-customization"
-import websocketManager from "../utils/websocket-manager"
+import { createSchemaCustomization } from "../utils/create-schema-customization"
+import { websocketManager } from "../utils/websocket-manager"
 import getSslCert from "../utils/get-ssl-cert"
 import { slash } from "gatsby-core-utils"
 import { initTracer } from "../utils/tracer"
@@ -52,34 +52,16 @@ import {
   reportWebpackWarnings,
   structureWebpackErrors,
 } from "../utils/webpack-error-utils"
+import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
 
 import { BuildHTMLStage, IProgram } from "./types"
-import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "../utils/jobs-manager"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
-
-const waitUntilAllJobsComplete = (): Promise<void> => {
-  const jobsV1Promise = new Promise(resolve => {
-    const onEndJob = (): void => {
-      if (store.getState().jobs.active.length === 0) {
-        resolve()
-        emitter.off(`END_JOB`, onEndJob)
-      }
-    }
-    emitter.on(`END_JOB`, onEndJob)
-    onEndJob()
-  })
-
-  return Promise.all([
-    jobsV1Promise,
-    waitUntilAllJobsV2Complete(),
-  ]).then(() => {})
-}
 
 // const isInteractive = process.stdout.isTTY
 
@@ -216,7 +198,7 @@ async function startServer(program: IProgram): Promise<IServer> {
 
   /**
    * Refresh external data sources.
-   * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
+   * This behavior is disabled by default, but the ENABLE_GATSBY_REFRESH_ENDPOINT env var enables it
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
   const REFRESH_ENDPOINT = `/__refresh`
@@ -338,8 +320,7 @@ async function startServer(program: IProgram): Promise<IServer> {
     ? https.createServer(program.ssl, app)
     : new http.Server(app)
 
-  websocketManager.init({ server, directory: program.directory })
-  const socket = websocketManager.getSocket()
+  const socket = websocketManager.init({ server, directory: program.directory })
 
   const listener = server.listen(program.port, program.host)
 

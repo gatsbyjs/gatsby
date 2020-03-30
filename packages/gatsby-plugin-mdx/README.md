@@ -36,10 +36,11 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
       - [Imports](#imports)
       - [Shortcodes](#shortcodes)
       - [Gatsby remark plugins](#gatsby-remark-plugins)
-      - [MD plugins](#md-plugins)
-      - [HAST plugins](#hast-plugins)
+      - [Remark plugins](#remark-plugins)
+      - [Rehype plugins](#rehype-plugins)
       - [Media types](#media-types)
         - [Explanation](#explanation)
+      - [shouldBlockNodeFromTransformation](#shouldblocknodefromtransformation)
     - [Components](#components)
       - [MDXProvider](#mdxprovider)
         - [Related](#related)
@@ -357,7 +358,7 @@ Using a string reference is also supported for `gatsbyRemarkPlugins`.
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
 ```
 
-#### MD plugins
+#### Remark plugins
 
 This is a configuration option that is [mirrored from the core MDX
 processing pipeline](https://mdxjs.com/plugins). It enables the use of
@@ -379,7 +380,7 @@ module.exports = {
 }
 ```
 
-#### HAST plugins
+#### Rehype plugins
 
 This is a configuration option that is [mirrored from the core MDX
 processing pipeline](https://mdxjs.com/plugins). It enables the use of
@@ -512,7 +513,7 @@ The following components can be customized with the MDXProvider:
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
 
-It's important to define the `components` you pass in in a stable way
+It's important to define the `components` you pass in a stable way
 so that the references don't change if you want to be able to navigate
 to a hash. That's why we defined `components` outside of any render
 functions in these examples.

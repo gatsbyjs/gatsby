@@ -427,19 +427,23 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       })
     })
 
-    it(`ignores cache for multi-query`, () => {
+    it(`supports multi-query`, () => {
       const filter = {
         slog: { $eq: `def` },
         deep: { flat: { search: { chain: { $eq: 300 } } } },
       }
 
-      const result = filterWithoutSift(
+      const results = filterWithoutSift(
         createDbQueriesFromObject(filter),
         [typeName],
         new Map()
       )
 
-      expect(result).toBe(undefined)
+      // Count is irrelevant as long as it is non-zero and they all match filter
+      expect(Array.isArray(results)).toBe(true)
+      expect(results.length).toEqual(1)
+      expect(results[0].slog).toEqual(`def`)
+      expect(results[0].deep.flat.search.chain).toEqual(300)
     })
 
     it(`ignores elemMatch`, () => {

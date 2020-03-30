@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
-import { Link } from "gatsby"
+import Link from "../../components/localized-link"
 
 import {
   showcaseList,

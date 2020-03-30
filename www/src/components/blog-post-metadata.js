@@ -10,7 +10,14 @@ import useSiteMetadata from "../hooks/use-site-metadata"
  *  - https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/markup
  */
 export default function BlogPostMetadata({ post }) {
-  const { canonicalLink, title, image, author, rawDate } = post.frontmatter
+  const {
+    canonicalLink,
+    title,
+    image,
+    author,
+    rawDate,
+    twittercard,
+  } = post.frontmatter
   const { siteUrl } = useSiteMetadata()
   return (
     <PageMetadata
@@ -26,6 +33,7 @@ export default function BlogPostMetadata({ post }) {
       {canonicalLink && <meta property="og:url" content={canonicalLink} />}
       <link rel="author" href={`${siteUrl}${author.fields.slug}`} />
       <meta name="author" content={author.id} />
+      <meta name="twitter:card" content={twittercard || "summary"} />
       <meta name="twitter:creator" content={author.twitter} />
       <meta property="article:author" content={author.id} />
       <meta property="article:published_time" content={rawDate} />
