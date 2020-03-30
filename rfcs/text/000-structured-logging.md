@@ -39,15 +39,15 @@ Example usage in a gatsby-node.js file:
 ```js
 exports.onCreateNode = ({ actions, reporter }) => {
   // Supports the existing 'reporter' API
-  reporter.info(`I am a log message, this is freeform text`);
+  reporter.info(`I am a log message, this is freeform text`)
 
   // Using a new 'log' action instead of the existing reporter API
-  const { log } = actions;
+  const { log } = actions
   log({
     message: `I am a log message, this is freeform text`,
-    type: `info`
-  });
-};
+    type: `info`,
+  })
+}
 ```
 
 [See this proof of concept for more examples](https://github.com/m-allanson/gatsby/pull/43/files?utf8=✓&diff=unified&w=1), including how activity timers could work. Note that these examples are not in any way final - the implementation of this RFC could take a totally different approach.

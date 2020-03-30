@@ -44,7 +44,7 @@ export default HomePage
 The first thing to do is import `graphql` from Gatsby. At the top of `index.js` add:
 
 ```diff:title=src/pages/index.js
-import React from 'react'
+import * as React from 'react'
 + import { graphql } from 'gatsby'
 
 const HomePage = () => {
@@ -100,7 +100,7 @@ To start, update the `HomePage` component to destructure `data` from props.
 The `data` prop contains the results of the GraphQL query, and matches the shape you would expect. With this in mind, the updated `HomePage` markup looks like:
 
 ```diff:title=src/pages/index.js
-import React from 'react'
+import * as React from 'react'
 import { graphql } from 'gatsby'
 
 - const HomePage = () => {

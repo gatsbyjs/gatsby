@@ -1,5 +1,5 @@
 - Start Date: 2019-02-07)
-- RFC PR: 
+- RFC PR:
 - Gatsby Issue:
 
 # Summary
@@ -17,6 +17,7 @@ A lot of this information already lives on the "How to Contribute" page, but it'
 I propose that we add some pages to the existing contributor documentation and move some content around. Here is an IA diagram that (briefly) reflects the current structure and what I think we should add (open for discussion, of course):
 
 Docs
+
 - Guides
 - Ecosystem
 - API Reference
@@ -26,34 +27,35 @@ Docs
 - Advanced Tutorials
 
 Contributing
+
 - Community
-    - Why Contribute to Gatsby?
-    - Pair Programming Sessions
-    - Free Swag for Contributors
-    - Where to Participate in the Community
-    - How to Run a Gatsby Workshop
-    - How to Pitch Gatsby
+  - Why Contribute to Gatsby?
+  - Pair Programming Sessions
+  - Free Swag for Contributors
+  - Where to Participate in the Community
+  - How to Run a Gatsby Workshop
+  - How to Pitch Gatsby
 - Code of Conduct
 - Gatsby Style Guide
 - How to Contribute
-    * How to File an Issue
-    * How to Label an Issue
-    * Triaging GitHub Issues
-    * Docs Contributions
-    * Blog & Website Contributions
-    * Code Contributions
-    * Setting up your Local Dev Environment
-    * Community Contributions
-        - Submit to Site Showcase
-        - Submit to Creator Showcase
-        - Submit to Starter Library
-        - Submit to Plugin Library
+  - How to File an Issue
+  - How to Label an Issue
+  - Triaging GitHub Issues
+  - Docs Contributions
+  - Blog & Website Contributions
+  - Code Contributions
+  - Setting up your Local Dev Environment
+  - Community Contributions
+    - Submit to Site Showcase
+    - Submit to Creator Showcase
+    - Submit to Starter Library
+    - Submit to Plugin Library
 - RFC Process
-- Gatsby's Governance Model*
+- Gatsby's Governance Model\*
 
 # Drawbacks
 
-Why should we *not* do this? Please consider:
+Why should we _not_ do this? Please consider:
 
 - we will need some redirects so people who have bookmarked things don't get 404s
 - there will be a user adjustment required to learn the new locations of things
@@ -68,4 +70,4 @@ If we implement this, I will move some pages and content around and fill in miss
 
 # Unresolved questions
 
-How do people feel about this idea? 
+How do people feel about this idea?
