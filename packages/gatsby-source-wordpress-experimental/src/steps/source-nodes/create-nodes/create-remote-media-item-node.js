@@ -120,7 +120,7 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
       {
         retries: 10,
         factor: 2,
-        minTimeout: 1000,
+        minTimeout: 3000,
         maxTimeout: 60000,
         onRetry: error => {
           helpers.reporter.error(error)

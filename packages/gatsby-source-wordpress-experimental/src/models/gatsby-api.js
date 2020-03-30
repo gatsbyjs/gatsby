@@ -21,6 +21,7 @@ const defaultPluginOptions = {
   schema: {
     queryDepth: 10,
     typePrefix: `Wp`,
+    timeout: 30 * 1000, // 30 seconds
   },
   type: {
     MediaItem: {

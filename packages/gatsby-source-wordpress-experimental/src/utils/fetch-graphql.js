@@ -10,8 +10,6 @@ const http = rateLimit(axios.create(), {
   maxRPS: process.env.GATSBY_CONCURRENT_DOWNLOAD || 50,
 })
 
-const timeout = 30 * 1000
-
 const handleGraphQLErrors = async ({
   query,
   variables,
@@ -106,7 +104,7 @@ const genericError = ({ url }) =>
     `Please ensure the following statements are true`
   )} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress backend`
 
-const handleFetchErrors = ({ e, reporter, url }) => {
+const handleFetchErrors = ({ e, reporter, url, timeout }) => {
   if (e.message.includes(`timeout of ${timeout}ms exceeded`)) {
     reporter.error(e)
     reporter.panic(
@@ -157,6 +155,8 @@ const fetchGraphql = async ({
     url = pluginOptionsUrl
   }
 
+  const timeout = pluginOptions.schema.timeout
+
   let response
 
   try {
@@ -170,7 +170,7 @@ const fetchGraphql = async ({
       )
     }
   } catch (e) {
-    handleFetchErrors({ e, reporter, url })
+    handleFetchErrors({ e, reporter, url, timeout })
   }
 
   if (!ignoreGraphQLErrors) {
@@ -182,6 +182,7 @@ const fetchGraphql = async ({
       panicOnError,
       reporter,
       url,
+      timeout,
     })
   }
 
