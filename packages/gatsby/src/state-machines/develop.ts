@@ -25,7 +25,8 @@ import { actions } from "../redux/actions"
 import { Compiler } from "webpack"
 
 const MAX_RECURSION = 2
-const NODE_MUTATION_BATCH_SIZE = 5
+const NODE_MUTATION_BATCH_SIZE = 20
+const NODE_MUTATION_BATCH_TIMEOUT = 5000
 
 export interface IBuildContext {
   recursionCount: number
@@ -92,10 +93,6 @@ const emitStaticQueryDataToWebsocket = (
   { data: { results } }: DoneInvokeEvent<any>
 ): void => {
   if (results) {
-    console.log(`running-static-queries`, {
-      results,
-      websocketManager,
-    })
     results.forEach((result, id) => {
       // eslint-disable-next-line no-unused-expressions
       websocketManager?.emitStaticQueryData({
@@ -112,7 +109,6 @@ const emitStaticQueryDataToWebsocket = (
  */
 const ADD_NODE_MUTATION: TransitionConfig<IBuildContext, AnyEventObject> = {
   actions: assign((ctx, event) => {
-    console.log(`event at node mutation add`, event)
     return {
       nodeMutationBatch: [...ctx.nodeMutationBatch, event.payload],
     }
@@ -517,11 +513,11 @@ export const developMachine = Machine<any>(
         },
 
         // Check if bus is either full or if enough time has passed since
-        // last passenger entered the bus
+        // first passenger entered the bus
 
         // Fallback
         after: {
-          1000: `committingBatch`,
+          [NODE_MUTATION_BATCH_TIMEOUT]: `committingBatch`,
         },
       },
       committingBatch: {
