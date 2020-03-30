@@ -85,7 +85,7 @@ const paginatedWpNodeFetch = async ({
 
   if (
     hasNextPage &&
-    (!settings.limit || settings.limit < allContentNodes.length)
+    (!settings.limit || settings.limit > allContentNodes.length)
   ) {
     return paginatedWpNodeFetch({
       ...variables,
