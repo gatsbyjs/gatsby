@@ -15,7 +15,7 @@ component composition.
 Currently sites might have a global layout components like:
 
 ```jsx
-import React from 'react'
+import React from "react"
 
 export default ({ children }) => (
   <div>
@@ -29,8 +29,8 @@ After this RFC is implemented, people would import the same component into each
 page component e.g.
 
 ```jsx
-import React from 'react'
-import Layout from '../components/layout'
+import React from "react"
+import Layout from "../components/layout"
 
 export default ({ props }) => (
   <Layout>
@@ -43,14 +43,14 @@ export default ({ props }) => (
 
 There are several motivations for eliminating the special layout component:
 
-* It's frequently confusing to people used to React as it breaks the normal component composition model
-* It has a number of limitations e.g. we don't support multiple levels of layouts e.g. a global header and footer and then on some pages, a sidebar menu. Currently you have to stuff both levels into a single layout component with a lot of
-conditional logic keyed to pathnames.
-* Communicating between the layout and page components is non-standard and hard to understand
-* It significantly complicates Gatsby's codebase and client runtime
-* It reduces the effectiveness of our new code splitting setup in Gatsby v2 and prevents some potential code splitting/loading improvements
-* It makes Gatsby page transitions work oddly compared to normal React and relatively
-difficult to do well
+- It's frequently confusing to people used to React as it breaks the normal component composition model
+- It has a number of limitations e.g. we don't support multiple levels of layouts e.g. a global header and footer and then on some pages, a sidebar menu. Currently you have to stuff both levels into a single layout component with a lot of
+  conditional logic keyed to pathnames.
+- Communicating between the layout and page components is non-standard and hard to understand
+- It significantly complicates Gatsby's codebase and client runtime
+- It reduces the effectiveness of our new code splitting setup in Gatsby v2 and prevents some potential code splitting/loading improvements
+- It makes Gatsby page transitions work oddly compared to normal React and relatively
+  difficult to do well
 
 So it short, it complicates learning and using Gatsby for users as well as
 maintaining our codebase for maintainers — all for no benefit over using normal
@@ -61,7 +61,7 @@ we realize we've badly reimplemented a basic React pattern :-)
 
 # Detailed design
 
-V1 layout components are normal components in all respect *except* they, like
+V1 layout components are normal components in all respect _except_ they, like
 page components, can query for data. People sometimes use this to query data in
 layouts like the site title, etc. for setting site metadata with react-helmet.
 
@@ -82,21 +82,21 @@ pattern as they too needed to include queries.
 For static queries in v2 layout components, I propose the following pattern:
 
 ```jsx
-import React from 'react'
-import Helmet from 'react-helmet'
-import { StaticQuery } from 'gatsby'
+import React from "react"
+import Helmet from "react-helmet"
+import { StaticQuery } from "gatsby"
 
 export default class ExampleComponent extends React.Component {
-  render () {
-    <StaticQuery
+  render() {
+    ;<StaticQuery
       query={graphql`
         {
-           site {
-             siteMetadata {
-               title
-             }
-           }
-       }
+          site {
+            siteMetadata {
+              title
+            }
+          }
+        }
       `}
       render={staticData => (
         <div>
@@ -121,14 +121,14 @@ Then in production, we'd do a cool optimization. We'd have a babel plugin which
 compiles the above into something that looks like:
 
 ```jsx
-import React from 'react'
-import Helmet from 'react-helmet'
-import { StaticData } from 'gatsby'
-import staticData12513 from './staticData12513'
+import React from "react"
+import Helmet from "react-helmet"
+import { StaticData } from "gatsby"
+import staticData12513 from "./staticData12513"
 
 export default class ExampleComponent extends React.Component {
-  render () {
-    <StaticQuery
+  render() {
+    ;<StaticQuery
       data={staticData12513}
       render={staticData => (
         <div>
@@ -148,11 +148,11 @@ It'll also enable new types of components that you can now attach not just marku
 
 # Drawbacks
 
-* Requires implementing the new StaticQuery feature — which isn't trivial — and means
- more code to maintain.
-* It's a breaking change so we'd need to educate existing users of layouts who'll need to migrate v1 sites.
- This could involve inventing new patterns to handle more complex cases like
- i18n
+- Requires implementing the new StaticQuery feature — which isn't trivial — and means
+  more code to maintain.
+- It's a breaking change so we'd need to educate existing users of layouts who'll need to migrate v1 sites.
+  This could involve inventing new patterns to handle more complex cases like
+  i18n
 
 # Alternatives
 
@@ -161,8 +161,8 @@ are mediocre but get the job done more-or-less.
 
 # Adoption strategy
 
-* Add how to update to the v2 migration guide
-* Update any relevant docs/tutorials
+- Add how to update to the v2 migration guide
+- Update any relevant docs/tutorials
 
 Fortunately it's very easy to migrate to this new setup. Most people
 can just leave their existing layout component as is (other than making
