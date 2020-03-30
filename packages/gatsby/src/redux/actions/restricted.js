@@ -22,7 +22,7 @@ const actions = {}
  */
 actions.addThirdPartySchema = (
   { schema }: { schema: GraphQLSchema },
-  plugin: Plugin,
+  plugin?: Plugin,
   traceId?: string
 ) => {
   return {
@@ -181,7 +181,7 @@ actions.createTypes = (
     | GraphQLOutputType
     | GatsbyGraphQLType
     | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
-  plugin: Plugin,
+  plugin?: Plugin,
   traceId?: string
 ) => {
   return {
@@ -239,7 +239,7 @@ import type GraphQLFieldExtensionDefinition from "../../schema/extensions"
  */
 actions.createFieldExtension = (
   extension: GraphQLFieldExtensionDefinition,
-  plugin: Plugin,
+  plugin?: Plugin,
   traceId?: string
 ) => (dispatch, getState) => {
   const { name } = extension || {}
@@ -299,7 +299,7 @@ actions.printTypeDefinitions = (
     exclude?: { types?: Array<string>, plugins?: Array<string> },
     withFieldTypes?: boolean,
   },
-  plugin: Plugin,
+  plugin?: Plugin,
   traceId?: string
 ) => {
   return {
@@ -347,7 +347,7 @@ actions.printTypeDefinitions = (
  */
 actions.createResolverContext = (
   context: object,
-  plugin: Plugin,
+  plugin?: Plugin,
   traceId?: string
 ) => dispatch => {
   if (!context || typeof context !== `object`) {

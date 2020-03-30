@@ -40,7 +40,10 @@ exports.onCreateNode = helpers => {
 }
 
 exports.onPostBootstrap = () => {
-  child_process.execSync(`yarn lingui:build`)
+  // Compile language strings if locales are enabled
+  if (!!process.env.LOCALES) {
+    child_process.execSync(`yarn lingui:build`)
+  }
 }
 
 exports.onPostBuild = () => {
