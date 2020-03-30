@@ -430,7 +430,6 @@ jobs:
   benchmark_markdown_id_512:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
@@ -442,7 +441,6 @@ jobs:
   benchmark_markdown_id_4096:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
@@ -454,7 +452,6 @@ jobs:
   benchmark_markdown_id_8192:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
@@ -466,7 +463,6 @@ jobs:
   benchmark_markdown_id_32768:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
@@ -478,7 +474,6 @@ jobs:
   benchmark_markdown_slug_512:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
@@ -490,7 +485,6 @@ jobs:
   benchmark_markdown_slug_4096:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
@@ -502,7 +496,6 @@ jobs:
   benchmark_markdown_slug_8192:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
@@ -514,7 +507,6 @@ jobs:
   benchmark_markdown_slug_32768:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
@@ -526,7 +518,6 @@ jobs:
   benchmark_markdown_table_512:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
@@ -538,7 +529,6 @@ jobs:
   benchmark_markdown_table_4096:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
@@ -550,7 +540,6 @@ jobs:
   benchmark_markdown_table_8192:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
@@ -562,7 +551,6 @@ jobs:
   benchmark_markdown_table_32768:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_table/benchmarks/markdown_table
@@ -590,7 +578,7 @@ workflows:
       - benchmark_markdown_table_32768
     triggers:
       - schedule:
-          cron: 12 3 * * *
+          cron: 22 16 * * *
           filters:
             branches:
               only:

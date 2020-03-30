@@ -129,7 +129,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   /**
    * Refresh external data sources.
-   * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
+   * This behavior is disabled by default, but the ENABLE_GATSBY_REFRESH_ENDPOINT env var enables it
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
   const REFRESH_ENDPOINT = `/__refresh`

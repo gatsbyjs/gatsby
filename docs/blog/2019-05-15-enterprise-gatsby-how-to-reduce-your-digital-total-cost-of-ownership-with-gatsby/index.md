@@ -5,7 +5,7 @@ author: Preston So
 excerpt: "At Gatsby, we’ve heard many questions about whether Gatsby is truly ready for the enterprise. The short answer is yes or very soon, depending on your requirements."
 tags:
   - accessibility
-  - ecommerce
+  - e-commerce
   - enterprise
   - performance
   - security

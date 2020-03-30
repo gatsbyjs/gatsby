@@ -86,7 +86,7 @@ Case studies like the ones above can help show (not just tell) a team member or 
 
 **Case Studies and Other Resources:**
 
-[Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical ecommerce launch, 5X faster page loads](/blog/2019-01-30-flamingo-case-study/)
+[Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical e-commerce launch, 5X faster page loads](/blog/2019-01-30-flamingo-case-study/)
 [Beyond Static: Hapticmedia uses Gatsby to a build dynamic web app](/blog/2019-02-05-hapticmedia-case-study/)
 [Youfit uses Gatsby to increase lead generation by 60%](/blog/2018-11-16-youfit-case-study/)
 [SendGrid Knowledge Center cuts page load times in half with Gatsby](/blog/2018-09-27-sendgrid-knowledge-center-cuts-page-load-times-in-half-with-gatsby/)
