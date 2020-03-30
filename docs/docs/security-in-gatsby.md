@@ -30,9 +30,9 @@ const CommentRenderer = comment => (
 ) // dangerous indeed.
 ```
 
-That's when you expose your application to XSS attacks.
+That is when you expose your application to XSS attacks.
 
-### **How can you prevent cross-site scripting?**
+### How can you prevent cross-site scripting?
 
 The most straightforward way to prevent a XSS attack is to sanitize the innerHTML string before dangerously setting it. Fortunately, there are npm packages that can accomplish this; packages like [sanitize-html](https://www.npmjs.com/package/sanitize-html) and [DOMPurify](https://github.com/cure53/DOMPurify).
 
@@ -49,7 +49,7 @@ For example, assume that the comments in your blog are sent in a form similar to
 </form>
 ```
 
-A malicious website could inspect your site and copy this snippet to theirs. If the user is logged in, the associated cookies are sent with the form and the server can not distinguish the origin of it. Even worse, the form could be sent when the page loads with information you don't control:
+A malicious website could inspect your site and copy this snippet to theirs. If the user is logged in, the associated cookies are sent with the form and the server cannot distinguish the origin of it. Even worse, the form could be sent when the page loads with information you don't control:
 
 ```js
 // highlight-next-line
@@ -62,7 +62,7 @@ A malicious website could inspect your site and copy this snippet to theirs. If 
 </form>
 ```
 
-### **How can you prevent cross-site request forgery?**
+### How can you prevent cross-site request forgery?
 
 #### Don't use GET requests to modify data
 
@@ -98,9 +98,7 @@ Set-Cookie: example=1; SameSite=Strict
 Using the `SameSite` attribute allows the server to make sure that the cookies are not being sent by a **cross-site** domain request.
 Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
 
-Quoting [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute):
-
-This cookie attribute is not a replacement for CSRF Token (and vice-versa). They can work together as security layers in your website. Also, any Cross-Site Scripting (XSS) attack can be use to defeat these CSRF mitigation techniques. Check out [OWASP CSRF prevention cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute) for more information.
+This cookie attribute is not a replacement for a CSRF Token (and vice-versa). They can work together as security layers in your website. Otherwise, a Cross-Site Scripting attack can be used to defeat these CSRF mitigation techniques. Check out [OWASP CSRF prevention cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute) for more information.
 
 ## Third-party Scripts
 
