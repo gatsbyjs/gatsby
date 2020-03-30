@@ -5776,7 +5776,7 @@
     - Uses Tachyons for styling
     - Easy to create new posts
 - url: https://gatsby-starter-canada-pandemic.netlify.com/
-  repo: https://github.com/masoudkarimif/gatsby-starter-canada-pandemic/
+  repo: https://github.com/masoudkarimif/gatsby-starter-canada-pandemic
   description: A Gatsby starter template for covering pandemics in Canada
   tags:
     - AWS
