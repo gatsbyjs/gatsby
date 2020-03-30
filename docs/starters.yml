@@ -5757,6 +5757,24 @@
     - Styled-Components
     - Shards UI
     - Bootstrap
+- url: https://gatsby-sanity-developer-portfolio-starter.jacobneterer.com/
+  repo: https://github.com/jneterer/gatsby-sanity-developer-portfolio-starter
+  description: A Gatsby + Sanity CMS starter project for developer portfolios. Also built using TailwindCSS, SCSS, and Typescript.
+  tags:
+    - CMS:sanity.io
+    - Portfolio
+    - Styling:Tailwind
+    - Styling:SCSS
+    - Language:TypeScript
+    - Netlify
+    - SEO
+  features:
+    - Developer portfolio using Gatsby + Sanity CMS
+    - Edit your profile, projects, and tags all in Sanity CMS without any code commits
+    - TailwindCSS and SCSS for styling
+    - Typescript for easier debugging and development, strict types, etc
+    - Netlify for hosting
+    - SEO Capabilities
 - url: https://serene-ramanujan-285722.netlify.com/
   repo: https://github.com/kunalJa/gatsby-starter-math-blog
   description: A responsive math focused blog with MDX and Latex built in
