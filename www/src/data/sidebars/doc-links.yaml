@@ -610,7 +610,7 @@
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
           link: /docs/graphql-concepts/
-        - title: Security in Gatsby*
+        - title: Security in Gatsby
           link: /docs/security-in-gatsby/
         - title: Theme Shadowing
           link: /docs/how-shadowing-works/
