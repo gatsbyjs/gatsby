@@ -1,6 +1,6 @@
 ---
-title: Docs & Blog Components
-tableOfContentsDepth: 2
+Title: Docs & Blog Components
+TableOfContentsDepth: 2
 ---
 
 The Gatsbyjs.org site has a handful of components that have been developed to facilitate writing new content for the blog and the docs. There are also components that help organize and lay out content in various pages across the website.
