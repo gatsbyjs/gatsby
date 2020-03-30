@@ -9,7 +9,7 @@
     "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "postinstall": "npx willit --type=\"mdx\" --level=${BENCHMARK_LEVEL}",
+    "postinstall": "del-cli src/articles && gatsby clean && willit --type=mdx --num-pages=${NUM_PAGES:-512}",
     "start": "npm run develop",
     "serve": "gatsby serve"
   },
@@ -17,6 +17,7 @@
     "sharp": "0.25.1"
   },
   "dependencies": {
+    "del-cli": "^3.0.0",
     "@mdx-js/mdx": "^1.5.7",
     "@mdx-js/react": "^1.5.7",
     "dotenv": "^8.2.0",
@@ -34,11 +35,12 @@
   "devDependencies": {
     "cross-env": "^7.0.0",
     "gatsby-plugin-benchmark-reporting": "*",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "willit": "^0.0.3"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/benchmark/mdx"
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/mdx"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
