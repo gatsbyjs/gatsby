@@ -23,6 +23,17 @@ const handlerP = fn => (...args) => {
   )
 }
 
+const rootFile = path => path.join(process.cwd(), path)
+
+const spawnScriptMonitor = script => {
+  const tmpFile = require(`tmp`).fileSync()
+  require(`fs`).writeFileSync(tmpFile.name, script)
+
+  return respawn([`node`, tmpFile.name], {
+    env: process.env,
+  })
+}
+
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
   const defaultPort = `8000`
@@ -75,20 +86,16 @@ function buildLocalCommands(cli, isLocalSite) {
 
       if (command === `develop`) {
         return args => {
-          const tmpFile = require(`tmp`).fileSync()
-          require(`fs`).writeFileSync(
-            tmpFile.name,
-            `const cmd = require("${cmdPath}");
-const args = ${JSON.stringify(args)};
-cmd(args);`
-          )
-          const monitor = respawn([`node`, tmpFile.name], {
-            env: process.env,
-          })
+          const script = spawnScriptMonitor(`
+            const cmd = require("${cmdPath}");
+            const args = ${JSON.stringify(args)};
+            cmd(args);
+          `)
+
           chokidar
-            .watch(path.join(process.cwd(), `gatsby-config.js`))
+            .watch([rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)])
             .on(`change`, () => {
-              monitor.stop(() => monitor.start())
+              script.stop(() => script.start())
             })
         }
       } else {
