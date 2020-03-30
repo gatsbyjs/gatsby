@@ -41,6 +41,15 @@ it("generates a type property if a type prop is provided", () => {
   })
 })
 
+it("generates twitter:card data if twitterCard prop is provided", () => {
+  render(<PageMetadata twitterCard="summary_large_image" />)
+  const contents = Helmet.peek()
+  expect(contents.metaTags).toContainEqual({
+    name: "twitter:card",
+    content: "summary_large_image",
+  })
+})
+
 it("generates twitter label data if timeToRead prop is provided", () => {
   render(<PageMetadata timeToRead={2} />)
   const contents = Helmet.peek()
