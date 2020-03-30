@@ -18,6 +18,9 @@ const defaultPluginOptions = {
     nodeUpdateInterval: 300,
     hardCacheMediaFiles: false,
   },
+  production: {
+    hardCacheMediaFiles: false,
+  },
   schema: {
     queryDepth: 10,
     typePrefix: `Wp`,

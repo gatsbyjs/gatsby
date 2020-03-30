@@ -73,6 +73,12 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
   const hardCachedFilePath =
     hardCachedMediaFilesDirectory + hardCachedFileRelativePath
 
+  const hardCacheMediaFiles =
+    (process.env.NODE_ENV === `development` &&
+      pluginOptions.develop.hardCacheMediaFiles) ||
+    (process.env.NODE_ENV === `production` &&
+      pluginOptions.production.hardCacheMediaFiles)
+
   let remoteFileNode
 
   try {
@@ -88,10 +94,7 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
           reporter,
         }
 
-        if (
-          process.env.NODE_ENV === `development` &&
-          pluginOptions.develop.hardCacheMediaFiles
-        ) {
+        if (hardCacheMediaFiles) {
           // check for file in .wordpress-cache/wp-content
           // if it exists, use that to create a node from instead of
           // fetching from wp
@@ -146,10 +149,7 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
     modifiedGmt,
   })
 
-  if (
-    process.env.NODE_ENV === `development` &&
-    pluginOptions.develop.hardCacheMediaFiles
-  ) {
+  if (hardCacheMediaFiles) {
     try {
       // make sure the directory exists
       await fs.ensureDir(path.dirname(hardCachedFilePath))
