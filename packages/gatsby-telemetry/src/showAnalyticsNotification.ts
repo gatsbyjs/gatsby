@@ -1,4 +1,4 @@
-import boxen, { BorderStyle } from 'boxen'
+import boxen, { BorderStyle } from "boxen"
 
 const defaultConfig = {
   padding: 1,
@@ -21,6 +21,6 @@ const defaultMessage =
 export const showAnalyticsNotification = (
   config = defaultConfig,
   message = defaultMessage
-) => {
+): void => {
   console.log(boxen(message, config))
 }
