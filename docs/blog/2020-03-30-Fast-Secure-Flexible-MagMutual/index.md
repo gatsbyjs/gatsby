@@ -1,8 +1,8 @@
 ---
-title: Fast, Secure, and Flexible':' MagMutual.com Taps the Power of Gatsby + Drupal 8
+title: "Fast, Secure, and Flexible: MagMutual.com Taps the Power of Gatsby + Drupal 8"
 date: 2020-03-30
 author: Tara Arnold
-excerpt: MagMutual’s web team built their new site using Gatsby, harnessed to Drupal 8, to deliver easily managed content and customer experience, incredibly fast.
+excerpt: "MagMutual’s web team built their new site using Gatsby, harnessed to Drupal 8, to deliver easily managed content and customer experience, incredibly fast."
 tags:
   - drupal
   - gatsby
@@ -59,25 +59,25 @@ Drupal 8, Gatsby, and a [serverless framework with GraphQL](https://www.mediacur
 
 From a security perspective, he continued, Drupal gave MagMutual a highly secure platform to protect customer information. Meanwhile, Gatsby removes server-side rendering from the equation and reduces touchpoints for attacks.
 
-### Why Drupal 8?
+### _Why Drupal 8?_
 
 - **Flexible integrations:** Bringing user data together into a centralized platform reduces website support costs and ensures a full, accurate view of customer interactions.
 - **Content creation features:** Drupal 8 empowers the marketing team to take ownership of content updates and page creation sitewide.
 - **Drupal JSON API:** Increases performance flexibility.
 
-### Why Gatsby?
+### _Why Gatsby?_
 
 - **Speed:** Gatsby’s performance optimization toolset delivers a fast, high-performing site.
 - **Powerful UI Creation:** A component library creates a unified design system.
 - **Increased Developer Efficiency:** Full control over the markup made for a more productive build process (versus keeping Drupal monolithic). Gatsby uses GraphQL at build time to access content, so when we built the APIs we needed for the account portion of the site GraphQL was a natural choice. This made it easier to bring on new developers to the team - we could tell them to use the same syntax.
 
-### Why Apollo GraphQL Server?
+### _Why Apollo GraphQL Server?_
 
 Central data source: Creates a single data source for your website, aggregating data from multiple data sources.
 Data integrity: Apollo removes the need to sync data from different sources so it can be displayed on the website. Data is queried and retrieved in real-time using a simple API.
 Developer velocity: Self-documented API for developers increases efficiency.
 
-### Why Netlify?
+### _Why Netlify?_
 
 - **Gatsby host:** Netlify provides hosting of the Gatsby site.
 - **Workflow:** Continuous integration and capabilities to set up production and test environments in the same place.
