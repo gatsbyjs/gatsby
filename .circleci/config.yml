@@ -298,6 +298,7 @@ jobs:
           test_path: integration-tests/gatsby-pipeline
 
   integration_tests_gatsby_cli:
+    <<: *e2e-executor
     executor: node
     steps:
       - <<: *attach_to_bootstrap
