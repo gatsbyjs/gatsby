@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component } from "react"
-import { Link } from "gatsby"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
 import { useColorMode } from "theme-ui"
@@ -16,6 +15,7 @@ import {
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
+import Link from "../../components/localized-link"
 
 const featuredSitesCard = {
   display: `flex`,

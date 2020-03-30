@@ -2,7 +2,7 @@
 title: Deploying to Cloudflare Workers
 ---
 
-[Cloudflare Workers](https://workers.cloudflare.com/) is a serverless platform for creating entirely new applications or augmenting existing ones without configuring or maintaining infrastructure. With [Workers Sites](https://developers.cloudflare.com/workers/sites/start-from-existing/) you can deploy any static site including your Gatsby projects to a domain on Cloudflare or for free with on your [workers.dev](workers.dev) subdomain.
+[Cloudflare Workers](https://workers.cloudflare.com/) is a serverless platform for creating entirely new applications or augmenting existing ones without configuring or maintaining infrastructure. With [Workers Sites](https://developers.cloudflare.com/workers/sites/start-from-existing/) you can deploy any static site including your Gatsby projects to a domain on Cloudflare or for free on your [workers.dev](https://workers.dev) subdomain.
 
 To enable the KV store required to serve the Gatsby files, you'll need the [Workers Unlimited plan](https://developers.cloudflare.com/workers/about/pricing/) for \$5/month.
 
