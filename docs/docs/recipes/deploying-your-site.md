@@ -134,16 +134,18 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 ## Setting up google analytics
 
 ### Using gatsby-plugin-google-analytics to track the activity of your Gatsby Site
+
 gatsby-plugin-google-analytics is a very popular plugin that provides insights in the access patters of your website
 
 ### Prerequisites
+
 - A [Gatsby site](/docs/quick-start) with `gatsby-config.js` and an `index.js` page
 - The [Gatsby CLI](/docs/gatsby-cli) installed
 - A Domain ex: [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
 
 #### Verify the domain in search.google.com
 
-1. [Verify the domain](https://search.google.com/search-console/not-verified) by clicking on **Search Property** > **Add Property**. Type in your domain, and press Continue. 
+1. [Verify the domain](https://search.google.com/search-console/not-verified) by clicking on **Search Property** > **Add Property**. Type in your domain, and press Continue.
 2. Create a **TXT** record in the DNS configuration for example [on AWS](https://www.entrustdatacard.com/knowledgebase/how-to-create-a-txt-record-on-amazon-aws-route-53-for-entrust-email-validation-method)
 
 #### Linking the domain to Google analytics admin
@@ -164,9 +166,9 @@ gatsby-plugin-google-analytics is a very popular plugin that provides insights i
 
 #### Using the id in the plugin
 
-1. ```npm install --save gatsby-plugin-google-analytics```
+1. `npm install --save gatsby-plugin-google-analytics`
 2. in gatsby-config.js add
-   
+
 ```js
 module.exports = {
   plugins: [
@@ -182,5 +184,5 @@ module.exports = {
 ```
 
 ### Additional resources
-- [adding-analytics](https://www.gatsbyjs.org/docs/adding-analytics/)
 
+- [adding-analytics](https://www.gatsbyjs.org/docs/adding-analytics/)
