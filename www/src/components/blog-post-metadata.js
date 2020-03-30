@@ -26,6 +26,7 @@ export default function BlogPostMetadata({ post }) {
       type="article"
       timeToRead={post.timeToRead}
       image={image?.childImageSharp.resize}
+      twitterCard={twittercard || "summary"}
     >
       {/* These are populated when the article is published elsewhere and has a
       canonical link to that location */}
@@ -33,7 +34,6 @@ export default function BlogPostMetadata({ post }) {
       {canonicalLink && <meta property="og:url" content={canonicalLink} />}
       <link rel="author" href={`${siteUrl}${author.fields.slug}`} />
       <meta name="author" content={author.id} />
-      <meta name="twitter:card" content={twittercard || "summary"} />
       <meta name="twitter:creator" content={author.twitter} />
       <meta property="article:author" content={author.id} />
       <meta property="article:published_time" content={rawDate} />

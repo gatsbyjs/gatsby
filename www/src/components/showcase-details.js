@@ -262,9 +262,8 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
             title={`${site.title}: Showcase`}
             description={site.description || site.main_url}
             image={screenshotFile.resize}
-          >
-            <meta name="twitter:card" content="summary_large_image" />
-          </PageMetadata>
+            twitterCard="summary_large_image"
+          />
           <div
             sx={{
               p: gutter,

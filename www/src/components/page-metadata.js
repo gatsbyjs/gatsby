@@ -10,6 +10,7 @@ export default function PageMetadata({
   timeToRead,
   image,
   type,
+  twitterCard,
 }) {
   const { siteUrl } = useSiteMetadata()
   // <Helmet> doesn't support JSX fragments so we can't bundle the tags based on
@@ -21,6 +22,7 @@ export default function PageMetadata({
       {description && <meta name="description" content={description} />}
       {description && <meta property="og:description" content={description} />}
       {type && <meta property="og:type" content={type} />}
+      {twitterCard && <meta name="twitter:card" content={twitterCard} />}
       {/* Used by slack to display rich previews */}
       {timeToRead && <meta name="twitter:label1" content="Reading time" />}
       {timeToRead && (
