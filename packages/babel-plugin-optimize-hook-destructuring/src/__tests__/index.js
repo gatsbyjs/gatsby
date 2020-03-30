@@ -1,5 +1,5 @@
 import { transform } from "@babel/core"
-import preset from "babel-preset-gatsby-package"
+import preset from "babel-preset-gatsby"
 import plugin from "../"
 
 const trim = s =>
@@ -8,7 +8,7 @@ const trim = s =>
     .trim()
     .replace(/^\s+/gm, ``)
 
-const babel = (code, esm = false) =>
+const babel = code =>
   transform(code, {
     filename: `noop.js`,
     presets: [preset],
@@ -19,7 +19,7 @@ const babel = (code, esm = false) =>
     compact: true,
     caller: {
       name: `tests`,
-      supportsStaticESM: esm,
+      supportsStaticESM: true,
     },
   }).code
 
@@ -29,8 +29,7 @@ describe(`optimize-hook-destructuring`, () => {
       trim`
       import { useState } from 'react';
       const [count, setCount] = useState(0);
-    `,
-      true
+    `
     )
 
     expect(output).toMatch(trim`
