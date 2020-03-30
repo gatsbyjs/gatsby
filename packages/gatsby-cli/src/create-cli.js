@@ -97,8 +97,15 @@ function buildLocalCommands(cli, isLocalSite) {
 
           chokidar
             .watch([rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)])
-            .on(`change`, () => {
-              script.stop(() => script.start())
+            .on(`change`, filePath => {
+              const activity = report.activityTimer(
+                `${path.basename(filePath)} changed, restarting gatsby develop`
+              )
+              activity.start()
+              script.stop(() => {
+                activity.end()
+                script.start()
+              })
             })
         }
       } else {
