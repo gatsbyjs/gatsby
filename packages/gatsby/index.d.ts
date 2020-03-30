@@ -1100,7 +1100,7 @@ export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
   createFieldExtension(
     extension: object,
-    plugin: ActionPlugin,
+    plugin?: ActionPlugin,
     traceId?: string
   ): void
 }

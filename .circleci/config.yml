@@ -194,7 +194,10 @@ commands:
         type: string
       test_command:
         type: string
-        default: "" # if unset, e2e-test.sh specifies the command
+        default: "yarn test"
+      run_loki:
+        type: boolean
+        default: false
     steps:
       - <<: *attach_to_bootstrap
       # In case of failure, add these steps again. Cache probably got deleted
@@ -205,7 +208,17 @@ commands:
           condition: << parameters.skip_file_change_test >>
           steps:
             - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
-      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
+      - run:
+          name: Run tests (using defaults)
+          command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
+
+      - when:
+          condition: << parameters.run_loki >>
+          steps:
+            - run:
+                command: GATSBY_DB_NODES=loki << parameters.test_command >>
+                name: Run tests (using Loki)
+                working_directory: << parameters.test_path >>
 
 version: 2.1
 
@@ -268,6 +281,13 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/long-term-caching
+
+  integration_tests_cache_resilience:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/cache-resilience
+          run_loki: true
 
   integration_tests_gatsby_pipeline:
     executor: node
@@ -410,7 +430,6 @@ jobs:
   benchmark_markdown_id_512:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
@@ -422,7 +441,6 @@ jobs:
   benchmark_markdown_id_4096:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
@@ -434,7 +452,6 @@ jobs:
   benchmark_markdown_id_8192:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
@@ -446,7 +463,6 @@ jobs:
   benchmark_markdown_id_32768:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
@@ -458,7 +474,6 @@ jobs:
   benchmark_markdown_slug_512:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
@@ -470,7 +485,6 @@ jobs:
   benchmark_markdown_slug_4096:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
@@ -482,7 +496,6 @@ jobs:
   benchmark_markdown_slug_8192:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
@@ -494,7 +507,6 @@ jobs:
   benchmark_markdown_slug_32768:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
@@ -506,7 +518,6 @@ jobs:
   benchmark_markdown_table_512:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
@@ -518,7 +529,6 @@ jobs:
   benchmark_markdown_table_4096:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
@@ -530,7 +540,6 @@ jobs:
   benchmark_markdown_table_8192:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
@@ -542,7 +551,6 @@ jobs:
   benchmark_markdown_table_32768:
     docker:
       - image: "circleci/node:12"
-    resource_class: xlarge
     steps:
       - run-benchmark:
           working_directory: benchmarks/markdown_table/benchmarks/markdown_table
@@ -570,7 +578,7 @@ workflows:
       - benchmark_markdown_table_32768
     triggers:
       - schedule:
-          cron: 12 3 * * *
+          cron: 22 16 * * *
           filters:
             branches:
               only:
@@ -646,6 +654,8 @@ workflows:
             - lint
             - bootstrap
       - integration_tests_long_term_caching:
+          <<: *e2e-test-workflow
+      - integration_tests_cache_resilience:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow

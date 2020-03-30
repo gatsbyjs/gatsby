@@ -7,7 +7,7 @@ tags:
   - releases
 ---
 
-Effective in Gatsby v2.20.0, we are making a potentially breaking change and dropping support for Node 8. The new minimal Node version that Gatsby supports is 10.13.0. We are doing it in a minor release as per [Gatsby Node Support Policy](https://www.gatsbyjs.org/docs/upgrading-node-js/#gatsbys-nodejs-support-policy).
+Effective in Gatsby v2.20.0, we are making a potentially breaking change and dropping support for Node 8. The new minimal Node version that Gatsby supports is 10.13.0. We are doing it in a minor release as per [Gatsby Node Support Policy](/docs/upgrading-node-js/#gatsbys-nodejs-support-policy).
 
 Node 8 reached end of life in December of 2019. There were deprecation warnings about it in previous Gatsby versions. Less than 3% of Gatsby users are still using Node 8. Some libraries that Gatsby or Gatsby plugins depend on have dropped Node 8. This meant that we were locked into using an older version of packages and couldn't apply the latest bugfixes (that was a case with, e.g., `sharp` or `got`). Some performance and memory improvements were only possible with newer versions of Node too.
 
@@ -17,4 +17,4 @@ Evaluating all those factors, we decided that it's better to drop Node 8 support
 
 You should be fine if you have already upgraded your Node version to 10.13.0 or higher as you won't be affected.
 
-Otherwise, follow the [Upgrading your Node guide](https://www.gatsbyjs.org/docs/upgrading-node-js).
+Otherwise, follow the [Upgrading your Node guide](/docs/upgrading-node-js).

@@ -21,7 +21,7 @@ msgstr "Activate light mode"
 msgid "Activate dark mode"
 msgstr "Activate dark mode"
 
-#: src/components/docs-table-of-contents.js:93
+#: src/components/docs-table-of-contents.js:142
 msgid "Table of Contents"
 msgstr "Table of Contents"
 
@@ -34,7 +34,7 @@ msgid "<0/> Edit this page on GitHub"
 msgstr "<0/> Edit this page on GitHub"
 
 #: src/components/navigation-mobile.js:45
-#: src/components/navigation.js:86
+#: src/components/navigation.js:88
 msgid "Docs"
 msgstr "Docs"
 
@@ -43,53 +43,53 @@ msgid "Tutorials"
 msgstr "Tutorials"
 
 #: src/components/navigation-mobile.js:47
-#: src/components/navigation.js:88
+#: src/components/navigation.js:90
 msgid "Plugins"
 msgstr "Plugins"
 
 #: src/components/navigation-mobile.js:48
-#: src/components/navigation.js:90
+#: src/components/navigation.js:92
 msgid "Blog"
 msgstr "Blog"
 
 #: src/components/navigation-mobile.js:49
-#: src/components/navigation.js:91
+#: src/components/navigation.js:93
 msgid "Showcase"
 msgstr "Showcase"
 
-#: src/components/navigation.js:87
+#: src/components/navigation.js:89
 msgid "Tutorial"
 msgstr "Tutorial"
 
-#: src/components/navigation.js:89
+#: src/components/navigation.js:91
 msgid "Features"
 msgstr "Features"
 
-#: src/components/navigation.js:92
+#: src/components/navigation.js:94
 msgid "Contributing"
 msgstr "Contributing"
 
-#: src/components/navigation.js:164
+#: src/components/navigation.js:166
 msgid "Gatsby, Back to homepage"
 msgstr "Gatsby, Back to homepage"
 
-#: src/components/navigation.js:174
+#: src/components/navigation.js:176
 msgid "Gatsby Logo"
 msgstr "Gatsby Logo"
 
-#: src/components/navigation.js:180
+#: src/components/navigation.js:182
 msgid "Primary Navigation"
 msgstr "Primary Navigation"
 
-#: src/components/prev-and-next.js:37
+#: src/components/prev-and-next.js:39
 msgid "pagination"
 msgstr "pagination"
 
-#: src/components/prev-and-next.js:51
+#: src/components/prev-and-next.js:53
 msgid "Previous"
 msgstr "Previous"
 
-#: src/components/prev-and-next.js:84
+#: src/components/prev-and-next.js:86
 msgid "Next"
 msgstr "Next"
 
@@ -118,11 +118,11 @@ msgstr "Code of Conduct"
 msgid "Logo & Assets"
 msgstr "Logo & Assets"
 
-#: src/components/sidebar/button-expand-all.js:42
+#: src/components/sidebar/button-expand-all.js:41
 msgid "Collapse All"
 msgstr "Collapse All"
 
-#: src/components/sidebar/button-expand-all.js:51
+#: src/components/sidebar/button-expand-all.js:50
 msgid "Expand All"
 msgstr "Expand All"
 
