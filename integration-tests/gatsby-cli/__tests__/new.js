@@ -7,9 +7,7 @@ describe("gatsby new", () => {
   describe("default starter", () => {
     const siteName = "gatsby-default"
 
-    afterAll(() => {
-      removeFolder(siteName)
-    })
+    afterAll(() => removeFolder(siteName))
 
     it("creates a gatsby site", () => {
       const [code, logs] = invokeCli("new", siteName)
@@ -41,9 +39,7 @@ describe("gatsby new", () => {
   describe("theme starter", () => {
     const siteName = "gatsby-blog"
 
-    afterAll(() => {
-      removeFolder(siteName)
-    })
+    afterAll(() => removeFolder(siteName))
 
     it("creates a gatsby site", () => {
       const [code, logs] = invokeCli(
@@ -79,9 +75,7 @@ describe("gatsby new", () => {
   describe("invalid starter", () => {
     const siteName = "gatsby-invalid"
 
-    afterAll(() => {
-      removeFolder(siteName)
-    })
+    afterAll(() => removeFolder(siteName))
 
     it("fails to create a gatsby site", () => {
       const [code, logs] = invokeCli("new", siteName, "tHiS-Is-A-fAkE-sTaRtEr")
