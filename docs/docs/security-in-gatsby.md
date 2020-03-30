@@ -91,14 +91,16 @@ When the form is sent, the server will compare the token received with the store
 
 This cookie attribute is targeted to prevent CSRF attacks. If you need to create a cookie in your application, make sure to protect them by using this attribute, that could be of `Strict` or `Lax` type:
 
-`Set-Cookie: example=1; SameSite=Strict`
+```
+Set-Cookie: example=1; SameSite=Strict
+```
 
 Using the `SameSite` attribute allows the server to make sure that the cookies are not being sent by a **cross-site** domain request.
 Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
 
 Quoting [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute):
 
-> It is important to note that this attribute should be implemented as an additional layer defense in depth concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following section. This attribute should not replace having a CSRF Token. Instead, it should co-exist with that token in order to protect the user in a more robust way. Also remember that any Cross-Site Scripting (XSS) can be used to defeat all CSRF mitigation techniques!
+This cookie attribute is not a replacement for CSRF Token (and vice-versa). They can work together as security layers in your website. Also, any Cross-Site Scripting (XSS) attack can be use to defeat these CSRF mitigation techniques. Check out [OWASP CSRF prevention cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute) for more information.
 
 ## Third-party Scripts
 
@@ -153,6 +155,7 @@ currently there is a [compatibility issue](https://github.com/gatsbyjs/gatsby/is
 - [Security for Modern Web Frameworks](https://www.gatsbyjs.org/blog/2019-04-06-security-for-modern-web-frameworks/)
 - [Docs ReactJS: DOM Elements](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
 - [OWASP XSS filter evasion cheatsheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet)
+- [OWASP CSRF prevention cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute)
 - [Warn for javascript: URLs in DOM sinks #15047](https://github.com/facebook/react/pull/15047)
 - [How to prevent XSS attacks when using dangerouslySetInnerHTML in React](https://medium.com/@Jam3/how-to-prevent-xss-attacks-when-using-dangerouslysetinnerhtml-in-react-f669f778cebb)
 - [Exploiting XSS via Markdown](https://medium.com/taptuit/exploiting-xss-via-markdown-72a61e774bf8)
