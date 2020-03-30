@@ -24,7 +24,7 @@ The broad areas discussed were:
 - Target (area of responsibility): Use GitHub projects
 - Roadmap: Use GitHub Milestones
 
-At a minimum every new issue should have a _Type_ label applied to it, everything else is optional.  Labelling can be fluid - a lot of issues might start with the label 'type: discussion', before being changed to a more specific _type_.
+At a minimum every new issue should have a _Type_ label applied to it, everything else is optional. Labelling can be fluid - a lot of issues might start with the label 'type: discussion', before being changed to a more specific _type_.
 
 Taking that information along with the existing repo structure gives a setup something like this:
 
@@ -64,28 +64,28 @@ We talked about using GitHub's Milestones as a way of defining a roadmap however
 
 There are 20 existing labels. While we're adding new labels, it makes sense to revisit the existing ones. Having a small, clearly defined set of labels makes it much more likely that the labelling system will be used. Here's what I propose should happen to each of them:
 
-| Label  | Destiny | Notes |
-|---|---|---|
-| API/Plugins | ❌delete | too specific (currently applied to 66 issues) |
-| bug | ✅keep |  rename to `type: bug` or similar |
-| Documentation | ✅keep | rename to `type: documentation` or similar |
-| DX | ❌delete |  too specific (currently applied to 13 issues) |
-| Feature Request | ✅keep | rename to `type: feature` or similar |
-| good first issue | ✅keep | exact name is used by GitHub, don't rename |
-| GraphQL | ❌delete | too specific (currently applied to 13 issues) |
-| Hacktoberfest | ✅keep | exact name is used by Hacktoberfest, don't rename  |
-| Help Wanted for Plugins | ❌delete |  too specific (currently applied to 4 issues) |
-| Help Wanted in Core | ✅keep | rename to `help wanted` or similar |
-| needs-repro | ✅keep | rename to `needs repro` or similar |
-| performance | ❌delete | too specific (currently applied to 4 issues) |
-| question | ✅keep | rename to `type: discussion` or similar |
-| review | ❌delete | ~~~Used by wafflebot? Investigate this~~~ No longer used |
-| stale? |  ✅keep | Used by stalebot to close stale issues. Maybe rename to `bot: stale?` |
-| upstream-issue | ❌delete | I'm 50/50 on this one. There are only two issues using it so have opted to delete it |
-| UX Design | ❌delete | redundant - add all issues with this label to the 'UX' project before deleting the label |
-| v0 | ❌delete | it's never been used |
-| v1  | ❌delete | We _could_ keep this but I don't think it adds much value (currently applied to 8 issues) |
-| v2  | ❌delete | redundant - add all issues with this label to the 'v2' project before deleting the label (currently applied to 7 issues) |
+| Label                   | Destiny  | Notes                                                                                                                    |
+| ----------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------ |
+| API/Plugins             | ❌delete | too specific (currently applied to 66 issues)                                                                            |
+| bug                     | ✅keep   | rename to `type: bug` or similar                                                                                         |
+| Documentation           | ✅keep   | rename to `type: documentation` or similar                                                                               |
+| DX                      | ❌delete | too specific (currently applied to 13 issues)                                                                            |
+| Feature Request         | ✅keep   | rename to `type: feature` or similar                                                                                     |
+| good first issue        | ✅keep   | exact name is used by GitHub, don't rename                                                                               |
+| GraphQL                 | ❌delete | too specific (currently applied to 13 issues)                                                                            |
+| Hacktoberfest           | ✅keep   | exact name is used by Hacktoberfest, don't rename                                                                        |
+| Help Wanted for Plugins | ❌delete | too specific (currently applied to 4 issues)                                                                             |
+| Help Wanted in Core     | ✅keep   | rename to `help wanted` or similar                                                                                       |
+| needs-repro             | ✅keep   | rename to `needs repro` or similar                                                                                       |
+| performance             | ❌delete | too specific (currently applied to 4 issues)                                                                             |
+| question                | ✅keep   | rename to `type: discussion` or similar                                                                                  |
+| review                  | ❌delete | ~~~Used by wafflebot? Investigate this~~~ No longer used                                                                 |
+| stale?                  | ✅keep   | Used by stalebot to close stale issues. Maybe rename to `bot: stale?`                                                    |
+| upstream-issue          | ❌delete | I'm 50/50 on this one. There are only two issues using it so have opted to delete it                                     |
+| UX Design               | ❌delete | redundant - add all issues with this label to the 'UX' project before deleting the label                                 |
+| v0                      | ❌delete | it's never been used                                                                                                     |
+| v1                      | ❌delete | We _could_ keep this but I don't think it adds much value (currently applied to 8 issues)                                |
+| v2                      | ❌delete | redundant - add all issues with this label to the 'v2' project before deleting the label (currently applied to 7 issues) |
 
 ### Implementation steps
 
@@ -127,4 +127,3 @@ As a follow on from this, it'd be interesting to explore automated contributor o
 # Unresolved questions
 
 - Do we need to create any additional projects to assign issues to?
-
