@@ -189,9 +189,18 @@ module.exports = class AnalyticsTracker {
       componentId: `gatsby-cli`,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
+      dbEngine: this.getDbEngine(),
       ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
+  }
+
+  getDbEngine() {
+    if (process.env.GATSBY_DB_NODES === `loki`) {
+      return `loki`
+    } else {
+      return `redux`
+    }
   }
 
   getMachineId() {

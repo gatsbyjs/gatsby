@@ -1,5 +1,10 @@
-import { GraphQLSchema } from "graphql"
 import { IProgram } from "../commands/types"
+import { GraphQLSchema } from "graphql"
+import { SchemaComposer } from "graphql-compose"
+
+type SystemPath = string
+type Identifier = string
+type StructuredLog = any // TODO this should come from structured log interface
 
 export interface IGatsbyPlugin {
   name: string
@@ -9,6 +14,20 @@ export interface IGatsbyPlugin {
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
+}
+
+export interface IGatsbyPage {
+  internalComponentName: string
+  path: string
+  matchPath?: string
+  component: SystemPath
+  context: Record<string, any>
+  componentChunkName: string
+  isCreatedByStatefulCreatePages: boolean
+  updatedAt: number
+  pluginCreator__NODE?: Identifier
+  pluginCreatorId?: Identifier
+  componentPath?: SystemPath
 }
 
 export interface IJob {
@@ -22,19 +41,8 @@ export interface IJobV2 {
   args: Record<string, any> // TODO
 }
 
-export interface IPage {
-  path: string
-  matchPath?: string
-  component: string
-  context: Record<string, any> // TODO
-  internalComponentName: string
-  componentChunkName: string
-  updatedAt: number
-  isCreatedByStatefulCreatePages: boolean
-}
-
 export type IPageInput = Pick<
-  IPage,
+  IGatsbyPage,
   "path" | "component" | "context" | "matchPath"
 >
 
@@ -53,22 +61,44 @@ export interface IPageDataRemove {
   id: string
 }
 
-export interface IReduxNode {
-  id: string
-  parent: string | null
-  children: IReduxNode["id"][]
+export interface IGatsbyConfig {
+  plugins?: {
+    // This is the name of the plugin like `gatsby-plugin-manifest
+    resolve: string
+    options: {
+      [key: string]: unknown
+    }
+  }[]
+  siteMetadata?: {
+    title?: string
+    author?: string
+    description?: string
+  }
+  // @deprecated
+  polyfill?: boolean
+  developMiddleware?: any
+  proxy?: any
+  pathPrefix?: string
+}
+
+export interface IGatsbyNode {
+  id: Identifier
+  parent: Identifier | null
+  children: Identifier[]
   fields: any
   array?: any[]
   internal: {
-    owner: string
-    counter: number
     fieldOwners: any // TODO
-    mediaType: string
     type: string
-    content: any
+    counter: number
+    owner: string
     contentDigest: string
-    description: string
+    mediaType?: string
+    content?: string
+    description?: string
   }
+  __gatsby_resolved: any // TODO
+  [key: string]: unknown
 }
 
 export interface IGatsbyError {
@@ -82,48 +112,145 @@ export interface IGatsbyError {
   location?: any // TODO
 }
 
-export interface IReduxState {
-  status: ProgramStatus
-  nodes?: Map<string, IReduxNode>
-  nodesByType?: Map<any, any> // TODO
-  jobsV2: any // TODO
-  lastAction: ActionsUnion
-  componentDataDependencies: {
-    connections: any // TODO
-    nodes: any // TODO
-  }
-  components: any // TODO
-  staticQueryComponents: any // TODO
-  webpackCompilationHash: any // TODO
-  pageDataStats: any // TODO
-  jobs: {
-    active: Array<any> // TODO
-  }
-  schema: GraphQLSchema
-  schemaCustomization: any
-  config: {
-    developMiddleware: any
-    proxy: any
-    pathPrefix: string
-  }
-  pageData: any
-  pages: Map<string, IPage>
-  babelrc: any
-  themes: any
-  flattenedPlugins: any
+type GatsbyNodes = Map<string, IGatsbyNode>
+
+export interface IGatsbyState {
   program: IProgram
+  nodes: GatsbyNodes
+  nodesByType: Map<string, GatsbyNodes>
+  resolvedNodesCache: Map<string, any> // TODO
+  nodesTouched: Set<string>
+  lastAction: ActionsUnion
+  flattenedPlugins: {
+    resolve: SystemPath
+    id: Identifier
+    name: string
+    version: string
+    pluginOptions: {
+      plugins: []
+      [key: string]: unknown
+    }
+    nodeAPIs: (
+      | "onPreBoostrap"
+      | "onPostBoostrap"
+      | "onCreateWebpackConfig"
+      | "onCreatePage"
+      | "sourceNodes"
+      | "createPagesStatefully"
+      | "createPages"
+      | "onPostBuild"
+    )[]
+    browserAPIs: (
+      | "onRouteUpdate"
+      | "registerServiceWorker"
+      | "onServiceWorkerActive"
+      | "onPostPrefetchPathname"
+    )[]
+    ssrAPIs: ("onRenderBody" | "onPreRenderHTML")[]
+    pluginFilepath: SystemPath
+  }[]
+  config: IGatsbyConfig
+  pages: Map<string, IGatsbyPage>
+  schema: GraphQLSchema
+  status: {
+    plugins: {}
+    PLUGINS_HASH: Identifier
+  }
+  componentDataDependencies: {
+    nodes: Map<string, Set<string>>
+    connections: Map<string, Set<string>>
+  }
+  components: Map<
+    SystemPath,
+    {
+      componentPath: SystemPath
+      query: string
+      pages: Set<string>
+      isInBootstrap: boolean
+    }
+  >
+  staticQueryComponents: Map<
+    number,
+    {
+      name: string
+      componentPath: SystemPath
+      id: Identifier
+      query: string
+      hash: string
+    }
+  >
+  // @deprecated
+  jobs: {
+    active: any[] // TODO
+    done: any[] // TODO
+  }
+  jobsV2: {
+    incomplete: Map<any, any> // TODO
+    complete: Map<any, any>
+  }
+  webpack: any // TODO This should be the output from ./utils/webpack.config.js
+  webpackCompilationHash: string
+  redirects: any[] // TODO
+  babelrc: {
+    stages: {
+      develop: any // TODO
+      "develop-html": any // TODO
+      "build-html": any // TODO
+      "build-javascript": any // TODO
+    }
+  }
+  schemaCustomization: {
+    composer: SchemaComposer<any>
+    context: {} // TODO
+    fieldExtensions: {} // TODO
+    printConfig: any // TODO
+    thridPartySchemas: any[] // TODO
+    types: any[] // TODO
+  }
+  themes: any // TODO
+  logs: {
+    messages: StructuredLog[]
+    activities: {
+      [key: string]: {
+        id: Identifier
+        uuid: Identifier
+        text: string
+        type: string // TODO make enum
+        status: string // TODO make enum
+        startTime: [number, number]
+        statusText: string
+        current: undefined | any // TODO
+        total: undefined | any // TODO
+        duration: number
+      }
+    }
+    status: string // TODO make enum
+  }
+  inferenceMetadata: {
+    step: string // TODO make enum or union
+    typeMap: {
+      [key: string]: {
+        ignoredFields: Set<string>
+        total: number
+        dirty: boolean
+        fieldMap: any // TODO
+      }
+    }
+  }
+  pageDataStats: Map<SystemPath, number>
+  pageData: any
 }
 
 export interface ICachedReduxState {
-  nodes: IReduxState["nodes"]
-  status: IReduxState["status"]
-  componentDataDependencies: IReduxState["componentDataDependencies"]
-  components: IReduxState["components"]
-  jobsV2: IReduxState["jobsV2"]
-  staticQueryComponents: IReduxState["staticQueryComponents"]
-  webpackCompilationHash: IReduxState["webpackCompilationHash"]
-  pageDataStats: IReduxState["pageDataStats"]
-  pageData: IReduxState["pageData"]
+  nodes?: IGatsbyState["nodes"]
+  status: IGatsbyState["status"]
+  componentDataDependencies: IGatsbyState["componentDataDependencies"]
+  components: IGatsbyState["components"]
+  jobsV2: IGatsbyState["jobsV2"]
+  staticQueryComponents: IGatsbyState["staticQueryComponents"]
+  webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
+  pageDataStats: IGatsbyState["pageDataStats"]
+  pageData: IGatsbyState["pageData"]
 }
 
 export type ActionsUnion =
@@ -166,27 +293,27 @@ export interface ICreatePageAction extends IActionOptions {
   type: `CREATE_PAGE`
   plugin?: IGatsbyPlugin
   contextModified: boolean
-  payload: IPage
+  payload: IGatsbyPage
 }
 
 export interface ICreateNodeAction extends IActionOptions {
   type: `CREATE_NODE`
   plugin?: IGatsbyPlugin
-  oldNode: IReduxNode
-  payload: IReduxNode
+  oldNode: IGatsbyNode
+  payload: IGatsbyNode
 }
 
 export interface ICreateNodeFieldAction extends IActionOptions {
   type: `ADD_FIELD_TO_NODE`
   plugin: IGatsbyPlugin
-  payload: IReduxNode
+  payload: IGatsbyNode
   addedField: string
 }
 
 export interface ICreateParentChildLinkAction {
   type: `ADD_CHILD_NODE_TO_PARENT_NODE`
   plugin?: IGatsbyPlugin
-  payload: IReduxNode
+  payload: IGatsbyNode
 }
 
 export interface ISetWebpackConfigAction {
@@ -265,7 +392,7 @@ export interface ISetPluginStatusAction {
 export interface ITouchNodeAction extends IActionOptions {
   type: `TOUCH_NODE`
   plugin?: IGatsbyPlugin
-  payload: IReduxNode["id"]
+  payload: IGatsbyNode["id"]
 }
 
 export interface IValidationErrorAction {
@@ -281,13 +408,13 @@ export interface IDeletePageAction {
 export interface IDeleteNodeAction extends IActionOptions {
   type: `DELETE_NODE`
   plugin?: IGatsbyPlugin
-  payload: IReduxNode // TODO
+  payload: IGatsbyNode // TODO
 }
 
 export interface IDeleteNodesAction {
   type: `DELETE_NODES`
   plugin: IGatsbyPlugin
-  fullNodes: IReduxNode[]
+  fullNodes: IGatsbyNode[]
   payload: string[]
 }
 
@@ -306,8 +433,8 @@ export interface ICreatePageDependencyAction {
   plugin: string
   payload: {
     path: string
-    nodeId: string
-    connection: string
+    nodeId?: string
+    connection?: string
   }
 }
 

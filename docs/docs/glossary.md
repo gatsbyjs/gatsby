@@ -34,7 +34,7 @@ A tool that lets you write the most modern [JavaScript](#javascript), and on [bu
 
 The behind the scenes that the [public](#public) does not see. This often refers to the control panel of your [CMS](#cms). These are often powered by server-side programming languages such as Node.js, PHP, Go, ASP.net, Ruby, or Java.
 
-### Build
+### [Build](/docs/glossary/build/)
 
 In Gatsby, this is the process of taking your code and content and packaging it into a website that can be hosted and accessed. Commonly referred to as _build time_. See also: [backend](#backend) and [server-side](#server-side).
 
@@ -75,6 +75,10 @@ A component can include components within it. In fact, [pages](#page) and [templ
 ### Config
 
 The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option set in config is your sites metadata that can power your SEO meta tags.
+
+### [Content Delivery Network](/docs/glossary/content-delivery-network)
+
+A content delivery network (CDN) is a highly distributed network of servers that stores copies of your content in locations that are closer to your site's visitors. Content delivery networks improve your site's performance by reducing the time needed to complete a network request.
 
 ### [Continuous Deployment](/docs/glossary/continuous-deployment)
 
@@ -294,7 +298,11 @@ An exact representation of how data is stored in a system, such as tables and fi
 
 ### Server-side
 
-The server-side part of the [client-server relationship](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) refers to operations performed by a computer program which manages access to a centralized resource or service in a computer network. Gatsby uses the server-side technology [Node.js](#nodejs) to compile pages at build time, as opposed to serving them at [browser runtime](#runtime) with [client-side](#client-side) JavaScript. See also: [frontend](#frontend) and [backend](#backend).
+The server-side part of the [client-server relationship](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) refers to operations performed by a computer program which manages access to a centralized resource or service in a computer network. See also: [frontend](#frontend) and [backend](#backend).
+
+### [Server-side rendering](/docs/glossary/server-side-rendering/)
+
+Using a [Node.js](#nodejs)-based server to generate HTML in response to a request from a user agent such as a browser. Gatsby uses the server-side technology [Node.js](#nodejs) to compile pages at build time, as opposed to serving them at [browser runtime](#runtime) with [client-side](#client-side) JavaScript.
 
 ### Source Code
 
