@@ -22,8 +22,25 @@ export const GatsbyCLI = {
         return [
           results.status,
           createLogsMatcher(results.output.toString().split("\n")),
-          results.output.toString().split("\n"),
         ]
+      },
+
+      invokeAsync: (...args) => {
+        const res = spawn(
+          join(__dirname, `../../../packages/gatsby-cli/lib/index.js`),
+          args,
+          {
+            cwd: join(__dirname, `../`, `./${relativeCwd}`),
+          }
+        )
+
+        const logs = []
+
+        res.stdout.on("data", data => {
+          logs.push(data.toString())
+        })
+
+        return [res, () => createLogsMatcher(logs)]
       },
     }
   },
