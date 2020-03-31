@@ -21,7 +21,7 @@ Installing the plugin adds Snipcart's shopping cart JavaScript for you, so you c
 
 Adding products with Snipcart involves writing HTML representing your product and adding a set of attributes to that HTML. You might write something similar to the following code block for each item in your catalogue.
 
-```html
+```jsx
 <section>
   <h2>Silver Stacking Ring</h2>
   <p>$19.99</p>
@@ -31,7 +31,7 @@ Adding products with Snipcart involves writing HTML representing your product an
 
 Including this information allows a visitor to see what you have for sale, but they can't do anything with that information quite yet. You'll need a way for customers to add individual items to their cart. Try adding a button with the following attributes.
 
-```html
+```jsx
 <section>
   <h2>Silver Stacking Ring</h2>
   <p>$19.99</p>
@@ -64,7 +64,7 @@ Snipcart refers to variations like size and color as "product options" or "custo
 
 Building on the stacking ring example, suppose that you wanted to give your customer a choice between available sizes. You would do this by adding a custom field with a name and options.
 
-```html
+```jsx
 <section>
   <h2>Silver Stacking Ring</h2>
   <p>$19.99</p>
@@ -89,7 +89,7 @@ Building on the stacking ring example, suppose that you wanted to give your cust
 
 You can add multiple custom fields by incrementing the index of the `data-item-custom` attribute. Perhaps you want customers to have the ability to mark each item in their cart as a gift.
 
-```html
+```jsx
 <section>
   <h2>Silver Stacking Ring</h2>
   <p>$19.99</p>
@@ -117,7 +117,7 @@ You can add multiple custom fields by incrementing the index of the `data-item-c
 
 Snipcart enables the sale of digital goods. To sell a file, you'll need to upload it to your Snipcart dashboard and then add the resulting guid as the value of the `data-item-file-guid` attribute to your product's markup. You can specify a file access expiry in days and a maximum number of downloads per order from the dashboard.
 
-```html
+```jsx
 <section>
   <h2>Silver Stacking Ring</h2>
   <p>$19.99</p>
@@ -159,8 +159,8 @@ By default, the shopping cart will pop up every time a customer adds a product. 
 
 If you choose to prevent this popup, you'll need to give your customers some other way to access their shopping carts. Create a "show cart" button by giving a `button` element a class of `snipcart-checkout`.
 
-```html
-<button class="snipcart-checkout">View Cart</button>
+```jsx
+<button className="snipcart-checkout">View Cart</button>
 ```
 
 ### Styling the cart
