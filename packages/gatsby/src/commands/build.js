@@ -7,6 +7,7 @@ import { buildHTML } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const GraphQLRunner = require(`../query/graphql-runner`).default
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
 import { initTracer, stopTracer } from "../utils/tracer"
 const db = require(`../db`)
@@ -63,22 +64,25 @@ module.exports = async function build(program: BuildArgs) {
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
-  const { graphqlRunner } = await bootstrap({
+  const { graphqlRunner: bootstrapGraphQLRunner } = await bootstrap({
     ...program,
     parentSpan: buildSpan,
   })
+
+  const graphqlRunner = new GraphQLRunner(store, { collectStats: true })
 
   const {
     processPageQueries,
     processStaticQueries,
   } = queryUtil.getInitialQueryProcessors({
     parentSpan: buildSpan,
+    graphqlRunner,
   })
 
   await processStaticQueries()
 
   await apiRunnerNode(`onPreBuild`, {
-    graphql: graphqlRunner,
+    graphql: bootstrapGraphQLRunner,
     parentSpan: buildSpan,
   })
 
@@ -146,6 +150,7 @@ module.exports = async function build(program: BuildArgs) {
     telemetry.addSiteMeasurement(`BUILD_END`, {
       bundleStats: telemetry.aggregateStats(bundleSizes),
       pageDataStats: telemetry.aggregateStats(pageDataSizes),
+      queryStats: graphqlRunner.getStats(),
     })
   }
 
@@ -229,7 +234,7 @@ module.exports = async function build(program: BuildArgs) {
   activity = report.activityTimer(`onPostBuild`, { parentSpan: buildSpan })
   activity.start()
   await apiRunnerNode(`onPostBuild`, {
-    graphql: graphqlRunner,
+    graphql: bootstrapGraphQLRunner,
     parentSpan: buildSpan,
   })
   activity.end()

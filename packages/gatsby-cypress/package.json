@@ -1,6 +1,6 @@
 {
   "name": "gatsby-cypress",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Cypress tools for Gatsby projects",
   "main": "index.js",
   "repository": {
@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
-    "babel-preset-gatsby-package": "^0.3.0",
+    "babel-preset-gatsby-package": "^0.3.1",
     "cross-env": "^5.2.1"
   },
   "keywords": [

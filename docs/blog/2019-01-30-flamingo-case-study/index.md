@@ -3,7 +3,7 @@ title: "Flamingo, women’s body care brand from Harry’s, chooses Gatsby for c
 date: 2019-01-30
 author: Linda Watkins
 tags:
-  - ecommerce
+  - e-commerce
   - case-studies
   - marketing
 image: "./images/flamingo.png"
@@ -79,7 +79,7 @@ Flamingo was able to achieve their sales and brand awareness goals with the new 
 
 **3) Seamless Integration with the CMS (Contentful):** The marketing leads and content creators are able to update most branded content (copy and images) on the site with zero developer involvement. This enables the team to work without interruption while giving their brand team the flexibility to make quick updates based on customer feedback.
 
-## Inspiring a New Frontier of e-commerce
+## Inspiring a New Frontier of E-commerce
 
 Harry’s had a website that was working, but the web team knew it could do better for Flamingo – it could move to the edge and head for a new frontier in e-commerce.
 
