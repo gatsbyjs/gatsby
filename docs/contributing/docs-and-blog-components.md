@@ -208,7 +208,7 @@ You can read more about writing in Markdown in the [Markdown syntax guide](/docs
 
 ### Frontmatter
 
-[Frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) is a set of key value pairs that are injected into when building Markdown and MDX files. While authoring new docs and blog posts, it may be helpful to understand what frontmatter is available to you and how Gatsby expects it to be used.
+[Frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) is a set of key-value pairs in your Markdown and MDX files that defines the metadata for a page. While authoring new docs and blog posts for the Gatsby site, it may be helpful to understand what frontmatter is available to you.
 
 #### General
 
