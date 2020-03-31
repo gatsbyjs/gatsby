@@ -5808,3 +5808,17 @@
     - Includes React Helmet
     - Clean minimalist design
     - Completely customizable using only gatsby-config.js file
+- url: https://gatsby-starter-reason-blog.netlify.com/
+  repo: https://github.com/mukul-rathi/gatsby-starter-reason-blog
+  description: The Gatsby Starter Blog using ReasonML!
+  tags:
+    - Blog
+    - Styling:CSS-in-JS
+    - Language:Other
+  features:
+    - Basic setup for a full-featured type-safe blog
+    - ReasonML support out-of-the-box
+    - ReasonReact v3 JSX syntax
+    - CSS-in-Reason support
+    - StaticQuery GraphQL support in ReasonML
+    - Similar to gatsby-starter-blog
