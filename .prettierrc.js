@@ -18,7 +18,8 @@ module.exports = {
     {
       "files": "docs/**/*.md",
       "options": {
-        "parser": "mdx"
+        "parser": "mdx",
+        "proseWrap": "never"
       }
     },
   ],
