@@ -10075,6 +10075,16 @@
     - Library
   built_by: Gilbish Kosma
   built_by_url: https://www.gil20.me/
+- title: Monolit
+  url: https://monolit.hr
+  main_url: https://monolit.hr
+  description: >
+    Standard business website with sliders and contact form.
+  categories:
+    - Business
+  built_by: Devnet
+  built_by_url: https://devnet.hr
+  featured: false
 - title: Andrew Zeller
   main_url: https://zeller.io
   source_url: https://github.com/ajzeller/zellerio_gatsby
