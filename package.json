@@ -10,12 +10,14 @@
     "@types/cache-manager": "^2.10.2",
     "@types/eslint": "^6.1.8",
     "@types/express": "^4.17.3",
+    "@types/fast-levenshtein": "^0.0.1",
     "@types/fs-extra": "^8.1.0",
     "@types/got": "^9.6.9",
     "@types/jest": "^24.9.1",
     "@types/joi": "^14.3.4",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.30",
+    "@types/node-fetch": "^2.5.5",
     "@types/stack-trace": "^0.0.29",
     "@types/webpack": "^4.41.7",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
@@ -131,8 +133,5 @@
   ],
   "resolutions": {
     "write-file-atomic": "2.4.3"
-  },
-  "dependencies": {
-    "@types/node-fetch": "^2.5.5"
   }
 }
