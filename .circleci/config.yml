@@ -33,8 +33,6 @@ aliases:
       key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
       paths:
         - ~/.cache
-        - ~/node_modules
-        # TODO: Cache all packages node_modules
 
   attach_to_bootstrap: &attach_to_bootstrap
     attach_workspace:
@@ -302,9 +300,9 @@ jobs:
     executor: node
     steps:
       - <<: *attach_to_bootstrap
-      # - run:
-      #     name: Assert Changed Files
-      #     command: ./scripts/assert-changed-files.sh "packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*"
+      - run:
+          name: Assert Changed Files
+          command: ./scripts/assert-changed-files.sh "packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*"
       - run:
           name: Run tests (using defaults)
           command: cd integration-tests/gatsby-cli && yarn && yarn test
@@ -660,59 +658,59 @@ workflows:
   build-test:
     jobs:
       - bootstrap
-      # - windows_unit_tests:
-      #     <<: *ignore_docs
-      # - lint:
-      #     requires:
-      #       - bootstrap
-      # - unit_tests_node10:
-      #     <<: *ignore_docs
-      #     requires:
-      #       - lint
-      #       - bootstrap
-      # - unit_tests_node12:
-      #     <<: *ignore_docs
-      #     requires:
-      #       - lint
-      #       - bootstrap
-      # - unit_tests_www:
-      #     requires:
-      #       - lint
-      #       - bootstrap
-      # - integration_tests_long_term_caching:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_cache_resilience:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_gatsby_pipeline:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_structured_logging:
-      #     <<: *e2e-test-workflow
+      - windows_unit_tests:
+          <<: *ignore_docs
+      - lint:
+          requires:
+            - bootstrap
+      - unit_tests_node10:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - bootstrap
+      - unit_tests_node12:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - bootstrap
+      - unit_tests_www:
+          requires:
+            - lint
+            - bootstrap
+      - integration_tests_long_term_caching:
+          <<: *e2e-test-workflow
+      - integration_tests_cache_resilience:
+          <<: *e2e-test-workflow
+      - integration_tests_gatsby_pipeline:
+          <<: *e2e-test-workflow
+      - integration_tests_structured_logging:
+          <<: *e2e-test-workflow
       - integration_tests_gatsby_cli:
           requires:
             - bootstrap
-      # - e2e_tests_path-prefix:
-      #     <<: *e2e-test-workflow
-      # - e2e_tests_gatsby-image:
-      #     <<: *e2e-test-workflow
-      # - e2e_tests_development_runtime:
-      #     <<: *e2e-test-workflow
-      # - e2e_tests_production_runtime:
-      #     <<: *e2e-test-workflow
-      # - themes_e2e_tests_production_runtime:
-      #     <<: *e2e-test-workflow
-      # - themes_e2e_tests_development_runtime:
-      #     <<: *e2e-test-workflow
-      # - starters_validate:
-      #     <<: *ignore_master
-      # - starters_publish:
-      #     requires:
-      #       - bootstrap
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      # - update_i18n_source:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+      - e2e_tests_path-prefix:
+          <<: *e2e-test-workflow
+      - e2e_tests_gatsby-image:
+          <<: *e2e-test-workflow
+      - e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - starters_validate:
+          <<: *ignore_master
+      - starters_publish:
+          requires:
+            - bootstrap
+          filters:
+            branches:
+              only:
+                - master
+      - update_i18n_source:
+          filters:
+            branches:
+              only:
+                - master
