@@ -1,9 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-function OutboundLink(props) {
+const OutboundLink = React.forwardRef(({ children, ...props }, ref) => {
   return (
     <a
+      ref={ref}
       {...props}
       onClick={e => {
         if (typeof props.onClick === `function`) {
