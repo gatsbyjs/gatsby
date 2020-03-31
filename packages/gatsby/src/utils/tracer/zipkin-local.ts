@@ -2,9 +2,10 @@ import zipkin from "zipkin"
 import { HttpLogger } from "zipkin-transport-http"
 import ZipkinTracer from "zipkin-javascript-opentracing"
 import fetch from "node-fetch"
+import { ZipkinBatchRecorder, ZipkinHttpLogger } from "./zipkin-types"
 
-let logger
-let recorder
+let logger: ZipkinHttpLogger
+let recorder: ZipkinBatchRecorder
 
 /**
  * Create and return an open-tracing compatible tracer. See
@@ -14,13 +15,13 @@ export const create = (): ZipkinTracer => {
   logger = new HttpLogger({
     // endpoint of local docker zipkin instance
     endpoint: `http://localhost:9411/api/v1/spans`,
-  })
+  }) as ZipkinHttpLogger
 
   recorder = new zipkin.BatchRecorder({
     logger,
     // timeout = 60 hours, must be longer than site's build time
     timeout: 60 * 60 * 60 * 1000000,
-  })
+  }) as ZipkinBatchRecorder
 
   const tracer = new ZipkinTracer({
     localServiceName: `gatsby`,
@@ -44,33 +45,31 @@ export const create = (): ZipkinTracer => {
 // cleared off their processing queue before the node.js process
 // exits. Code is mostly the same as the zipkin processQueue
 // implementation.
-const _processQueue = async (): Promise<true> => {
-  const self = logger
-  if (self.queue.length > 0) {
-    const postBody = `[${self.queue.join(`,`)}]`
-    return await fetch(self.endpoint, {
-      method: `POST`,
-      body: postBody,
-      headers: self.headers,
-      timeout: self.timeout,
-    })
-      .then(response => {
-        if (response.status !== 202) {
-          const err =
-            `Unexpected response while sending Zipkin data, status:` +
-            `${response.status}, body: ${postBody}`
+const _processQueue = async (): Promise<void> => {
+  if (logger.queue.length > 0) {
+    const postBody = `[${logger.queue.join(`,`)}]`
+    try {
+      const response = await fetch(logger.endpoint, {
+        method: `POST`,
+        body: postBody,
+        headers: logger.headers,
+        timeout: logger.timeout,
+      })
 
-          if (self.errorListenerSet) self.emit(`error`, new Error(err))
-          else console.error(err)
-        }
-      })
-      .catch(error => {
-        const err = `Error sending Zipkin data ${error}`
-        if (self.errorListenerSet) self.emit(`error`, new Error(err))
+      if (response.status !== 202) {
+        const err =
+          `Unexpected response while sending Zipkin data, status:` +
+          `${response.status}, body: ${postBody}`
+
+        if (logger.errorListenerSet) logger.emit(`error`, new Error(err))
         else console.error(err)
-      })
+      }
+    } catch (error) {
+      const err = `Error sending Zipkin data ${error}`
+      if (logger.errorListenerSet) logger.emit(`error`, new Error(err))
+      else console.error(err)
+    }
   }
-  return true
 }
 
 /**
@@ -78,7 +77,7 @@ const _processQueue = async (): Promise<true> => {
  * exits. For Zipkin HTTP, we must manually process any spans still on
  * the queue
  */
-export const stop = async (): Promise<true> => {
+export const stop = async (): Promise<void> => {
   // First, write all partial spans to the http logger
   recorder.partialSpans.forEach((span, id) => {
     if (recorder._timedOut(span)) {
@@ -87,5 +86,5 @@ export const stop = async (): Promise<true> => {
   })
 
   // Then tell http logger to process all spans in its queue
-  return await _processQueue()
+  await _processQueue()
 }
