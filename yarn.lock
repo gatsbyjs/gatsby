@@ -3993,6 +3993,14 @@
   dependencies:
     "@types/node" "*"
 
+"@types/node-fetch@^2.5.5":
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.5.tgz#cd264e20a81f4600a6c52864d38e7fef72485e92"
+  integrity sha512-IWwjsyYjGw+em3xTvWVQi5MgYKbRs0du57klfTaZkv/B24AEQ/p/IopNeqIYNy3EsfHOpg8ieQSDomPcsYMHpA==
+  dependencies:
+    "@types/node" "*"
+    form-data "^3.0.0"
+
 "@types/node@*":
   version "12.6.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.6.8.tgz#e469b4bf9d1c9832aee4907ba8a051494357c12c"
@@ -24774,6 +24782,26 @@ zen-observable-ts@^0.8.20:
 zen-observable@^0.8.0:
   version "0.8.9"
   resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.8.9.tgz#0475c760ff0eda046bbdfa4dc3f95d392807ac53"
+
+zipkin-javascript-opentracing@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/zipkin-javascript-opentracing/-/zipkin-javascript-opentracing-2.1.0.tgz#05aed5ff7b609f60ca54020de7f3b0b6c0b0a973"
+  integrity sha512-Rzvy7kas6RXNDH0qjh2QcCv76nPIO2yjg17OzmqccNEmvePFEqFYpiwfLQ2ClBlYwj7p4PsquY2OxtA825k3nw==
+
+zipkin-transport-http@^0.19.2:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/zipkin-transport-http/-/zipkin-transport-http-0.19.2.tgz#11ccd3c8e322ebe2e16074e4c2ffb87925c20807"
+  integrity sha512-44ySrHXAr42fTYJmHYkSD3Wy246l6C0Lyw6y9MGHRKw74ZEPFE4R7FmpyR4YHzLuRJP0BF4YoaFGjh0x/2B1yw==
+  dependencies:
+    zipkin "^0.19.2"
+
+zipkin@^0.19.2:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/zipkin/-/zipkin-0.19.2.tgz#bfc4d9a3dc175751434327c686d86530faa6ad8f"
+  integrity sha512-nUgb+FGuchirCsUK7IL/pQKwo1QVm7lSnDvjlql7jO1zSPodDqHhCnEs4gy+AXbotPy0niDmjcl/dhIzpFR3+Q==
+  dependencies:
+    base64-js "^1.1.2"
+    is-promise "^2.1.0"
 
 zwitch@^1.0.0:
   version "1.0.3"
