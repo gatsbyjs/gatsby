@@ -2,7 +2,6 @@ import { resolve, parse } from "path"
 import { performance } from "perf_hooks"
 
 import { createContentDigest } from "gatsby-core-utils"
-import { createRemoteFileNode } from "gatsby-source-filesystem"
 import { pathExists, stat, copy, writeFile } from "fs-extra"
 import ffmpeg from "fluent-ffmpeg"
 import fg from "fast-glob"
@@ -12,6 +11,8 @@ import imageminMozjpeg from "imagemin-mozjpeg"
 import PQueue from "p-queue"
 import sharp from "sharp"
 
+import { cacheContentfulVideo } from "./helpers"
+
 import profileH264 from "./profiles/h264"
 import profileH265 from "./profiles/h265"
 import profileVP9 from "./profiles/vp9"
@@ -19,9 +20,17 @@ import profileWebP from "./profiles/webp"
 import profileGif from "./profiles/gif"
 
 export default class FFMPEG {
-  constructor({ rootDir, cacheDir, ffmpegPath, ffprobePath, profiles }) {
+  constructor({
+    rootDir,
+    cacheDirOriginal,
+    cacheDirConverted,
+    ffmpegPath,
+    ffprobePath,
+    profiles,
+  }) {
     this.queue = new PQueue({ concurrency: 1 })
-    this.cacheDir = cacheDir
+    this.cacheDirOriginal = cacheDirOriginal
+    this.cacheDirConverted = cacheDirConverted
     this.rootDir = rootDir
     this.profiles = profiles
 
@@ -83,15 +92,7 @@ export default class FFMPEG {
   }
 
   // Analyze video and download if neccessary
-  analyzeVideo = async ({
-    video,
-    fieldArgs,
-    type,
-    store,
-    cache,
-    createNode,
-    createNodeId,
-  }) => {
+  analyzeVideo = async ({ video, fieldArgs, type }) => {
     let path
     let contentDigest = video.internal.contentDigest
 
@@ -100,42 +101,15 @@ export default class FFMPEG {
     }
 
     if (type === `ContentfulAsset`) {
-      const {
-        file: { url, fileName },
-      } = video
-      const { ext } = parse(fileName)
-
-      // Download video from Contentful for further processing
-      // Ghetto retry till this is fixed: https://github.com/gatsbyjs/gatsby/issues/22010
-      let tries = 0
-      let fileNode
-      while (!fileNode) {
-        try {
-          console.log(`Downloading https:${url}`)
-          fileNode = await this.queue.add(() =>
-            createRemoteFileNode({
-              url: `https:${url}`,
-              store,
-              cache,
-              createNode,
-              createNodeId,
-              ext,
-            })
-          )
-        } catch (e) {
-          tries++
-
-          if (tries === 3) {
-            e.message = `Download of https:${url} failed after three times:\n${e.message}`
-            throw e
-          }
-
-          console.log(`Unable to download https:${url}\nRetrying (${tries}/3)`)
-        }
-      }
-
-      path = fileNode.absolutePath
-      contentDigest = fileNode.internal.contentDigest
+      path = await cacheContentfulVideo({
+        video,
+        cacheDir: this.cacheDirOriginal,
+      })
+      contentDigest = createContentDigest([
+        video.contentful_id,
+        video.file.url,
+        video.file.details.size,
+      ])
     }
 
     if (!path) {
@@ -209,6 +183,8 @@ export default class FFMPEG {
   takeScreenshots = async ({ fieldArgs, publicPath }) => {
     const { screenshots, screenshotWidth } = fieldArgs
 
+    console.log({ screenshots })
+
     if (!screenshots) {
       return null
     }
@@ -216,7 +192,7 @@ export default class FFMPEG {
     const { dir: publicDir, name } = parse(publicPath)
 
     const screenshotPatternCache = resolve(
-      this.cacheDir,
+      this.cacheDirConverted,
       `${name}-screenshot-*.png`
     )
     const screenshotPatternPublic = resolve(
@@ -246,7 +222,7 @@ export default class FFMPEG {
           .screenshots({
             timestamps,
             filename: `${name}-screenshot-%ss.png`,
-            folder: this.cacheDir,
+            folder: this.cacheDirConverted,
             size: `${screenshotWidth}x?`,
           })
       })
@@ -258,22 +234,27 @@ export default class FFMPEG {
         const { name: screenshotName } = parse(rawScreenshotPath)
         const publicScreenshotPath = resolve(publicDir, `${screenshotName}.jpg`)
 
-        const jpgBuffer = await sharp(rawScreenshotPath)
-          .jpeg({
-            quality: 60,
-            progressive: true,
+        try {
+          const jpgBuffer = await sharp(rawScreenshotPath)
+            .jpeg({
+              quality: 60,
+              progressive: true,
+            })
+            .toBuffer()
+
+          const optimizedBuffer = await imagemin.buffer(jpgBuffer, {
+            plugins: [imageminMozjpeg()],
           })
-          .toBuffer()
 
-        const optimizedBuffer = await imagemin.buffer(jpgBuffer, {
-          plugins: [imageminMozjpeg()],
-        })
-
-        await writeFile(publicScreenshotPath, optimizedBuffer)
+          await writeFile(publicScreenshotPath, optimizedBuffer)
+        } catch (err) {
+          console.log(`Unable to convert png screenshots to jpegs`)
+          throw err
+        }
       }
-    }
 
-    console.log(`[FFMPEG] Finished taking screenshots`)
+      console.log(`[FFMPEG] Finished copying screenshots`)
+    }
 
     const latestFiles = await fg([screenshotPatternPublic])
 
@@ -306,7 +287,7 @@ export default class FFMPEG {
     }
 
     const filename = `${name}-${profileName}.${profile.extension}`
-    const cachePath = resolve(this.cacheDir, filename)
+    const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
     return this.convertVideo({
@@ -321,7 +302,7 @@ export default class FFMPEG {
 
   createH264 = async ({ publicDir, path, name, fieldArgs, info }) => {
     const filename = `${name}-h264.mp4`
-    const cachePath = resolve(this.cacheDir, filename)
+    const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
     return this.convertVideo({
@@ -336,7 +317,7 @@ export default class FFMPEG {
 
   createH265 = async ({ publicDir, path, name, fieldArgs, info }) => {
     const filename = `${name}-h265.mp4`
-    const cachePath = resolve(this.cacheDir, filename)
+    const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
     return this.convertVideo({
@@ -351,7 +332,7 @@ export default class FFMPEG {
 
   createVP9 = async ({ publicDir, path, name, fieldArgs, info }) => {
     const filename = `${name}-vp9.webm`
-    const cachePath = resolve(this.cacheDir, filename)
+    const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
     return this.convertVideo({
@@ -366,7 +347,7 @@ export default class FFMPEG {
 
   createWebP = async ({ publicDir, path, name, fieldArgs, info }) => {
     const filename = `${name}-webp.webp`
-    const cachePath = resolve(this.cacheDir, filename)
+    const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
     return this.convertVideo({
@@ -381,7 +362,7 @@ export default class FFMPEG {
 
   createGif = async ({ publicDir, path, name, fieldArgs, info }) => {
     const filename = `${name}-gif.gif`
-    const cachePath = resolve(this.cacheDir, filename)
+    const cachePath = resolve(this.cacheDirConverted, filename)
     const publicPath = resolve(publicDir, filename)
 
     const absolutePath = await this.convertVideo({

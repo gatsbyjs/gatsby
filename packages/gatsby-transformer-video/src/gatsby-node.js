@@ -77,15 +77,16 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 }
 
 exports.createResolvers = async (
-  { createResolvers, store, cache, createNodeId, actions },
+  { createResolvers, store },
   { ffmpegPath, ffprobePath, downloadBinaries = true, profiles = {} }
 ) => {
-  const { createNode } = actions
-
   const program = store.getState().program
   const rootDir = program.directory
-  const cacheDir = resolve(rootDir, CACHE_FOLDER_VIDEOS)
-  await ensureDir(cacheDir)
+  const cacheDirOriginal = resolve(rootDir, CACHE_FOLDER_VIDEOS, `original`)
+  const cacheDirConverted = resolve(rootDir, CACHE_FOLDER_VIDEOS, `converted`)
+
+  await ensureDir(cacheDirOriginal)
+  await ensureDir(cacheDirConverted)
 
   const alreadyInstalled = await libsInstalled({ platform })
 
@@ -105,7 +106,8 @@ exports.createResolvers = async (
 
   const ffmpeg = new FFMPEG({
     rootDir,
-    cacheDir,
+    cacheDirOriginal,
+    cacheDirConverted,
     ffmpegPath,
     ffprobePath,
     profiles,
@@ -135,13 +137,9 @@ exports.createResolvers = async (
     }
 
     const metadata = await ffmpeg.analyzeVideo({
-      store,
-      cache,
-      createNode,
-      createNodeId,
-      type,
       video,
       fieldArgs,
+      type,
     })
 
     if (!metadata) {

@@ -28,7 +28,6 @@
     "fast-glob": "^3.2.2",
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^8.1.0",
-    "gatsby-plugin-sharp": "^2.4.0",
     "imagemin": "^7.0.0",
     "imagemin-giflossy": "^5.0.0",
     "imagemin-mozjpeg": "^8.0.0",
