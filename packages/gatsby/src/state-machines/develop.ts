@@ -33,6 +33,7 @@ export interface IBuildContext {
   nodesMutatedDuringQueryRun: boolean
   firstRun: boolean
   nodeMutationBatch: any[]
+  filesDirty: boolean
   runningBatch: any[]
   compiler?: Compiler
   websocketManager?: WebsocketManager
@@ -48,7 +49,7 @@ const callRealApi = async (event, store?: Store): Promise<any> => {
   if (type in actions) {
     return actions[type](...payload)(store.dispatch.bind(store))
   }
-  console.log(`Invalid type`, type)
+  // console.log(`Invalid type`, type)
   return null
 }
 
@@ -105,12 +106,24 @@ const emitStaticQueryDataToWebsocket = (
 
 /**
  * Event handler used in all states where we're not ready to process node
- * mutations. Instead we add it a batch to process when we're next idle
+ * mutations. Instead we add it to a batch to process when we're next idle
  */
 const ADD_NODE_MUTATION: TransitionConfig<IBuildContext, AnyEventObject> = {
   actions: assign((ctx, event) => {
     return {
       nodeMutationBatch: [...ctx.nodeMutationBatch, event.payload],
+    }
+  }),
+}
+
+/**
+ * Event handler used in all states where we're not ready to process a file change
+ * Instead we add it to a batch to process when we're next idle
+ */
+const SOURCE_FILE_CHANGED: TransitionConfig<IBuildContext, AnyEventObject> = {
+  actions: assign((ctx, event) => {
+    return {
+      filesDirty: true,
     }
   }),
 }
@@ -128,7 +141,7 @@ const runMutationAndMarkDirty: TransitionConfig<
       nodesMutatedDuringQueryRun: true,
     }),
     async (ctx, event): Promise<void> => {
-      console.log(`calling real api and mareking dirty`)
+      // console.log(`calling real api and mareking dirty`)
       return callRealApi(event.payload, ctx.store)
     },
   ],
@@ -255,7 +268,10 @@ export const developMachine = Machine<any>(
         },
       },
       writingRequires: {
-        on: { ADD_NODE_MUTATION },
+        on: {
+          ADD_NODE_MUTATION,
+          SOURCE_FILE_CHANGED,
+        },
         invoke: {
           src: writeOutRequires,
           id: `writing-requires`,
@@ -268,7 +284,16 @@ export const developMachine = Machine<any>(
         },
       },
       calculatingDirtyQueries: {
-        on: { ADD_NODE_MUTATION },
+        on: {
+          "": [
+            {
+              cond: (ctx): boolean => ctx.filesDirty,
+              target: `extractingQueries`,
+            },
+          ],
+          ADD_NODE_MUTATION,
+          SOURCE_FILE_CHANGED,
+        },
         invoke: {
           id: `calculating-dirty-queries`,
           src: calculateDirtyQueries,
@@ -279,6 +304,7 @@ export const developMachine = Machine<any>(
                 (context, { data }) => {
                   const { queryIds } = data
                   return {
+                    filesDirty: false,
                     queryIds,
                   }
                 }
@@ -291,7 +317,16 @@ export const developMachine = Machine<any>(
         },
       },
       creatingPagesStatefully: {
-        on: { ADD_NODE_MUTATION: runMutationAndMarkDirty },
+        on: {
+          "": [
+            {
+              cond: (ctx): boolean => ctx.filesDirty,
+              target: `extractingQueries`,
+            },
+          ],
+          ADD_NODE_MUTATION: runMutationAndMarkDirty,
+          SOURCE_FILE_CHANGED,
+        },
         invoke: {
           src: createPagesStatefully,
           id: `creating-pages-statefully`,
@@ -304,7 +339,16 @@ export const developMachine = Machine<any>(
         },
       },
       runningStaticQueries: {
-        on: { ADD_NODE_MUTATION: runMutationAndMarkDirty },
+        on: {
+          "": [
+            {
+              cond: (ctx): boolean => ctx.filesDirty,
+              target: `extractingQueries`,
+            },
+          ],
+          ADD_NODE_MUTATION: runMutationAndMarkDirty,
+          SOURCE_FILE_CHANGED,
+        },
         invoke: {
           src: runStaticQueries,
           id: `running-static-queries`,
@@ -318,7 +362,16 @@ export const developMachine = Machine<any>(
         },
       },
       runningPageQueries: {
-        on: { ADD_NODE_MUTATION: runMutationAndMarkDirty },
+        on: {
+          "": [
+            {
+              cond: (ctx): boolean => ctx.filesDirty,
+              target: `extractingQueries`,
+            },
+          ],
+          ADD_NODE_MUTATION: runMutationAndMarkDirty,
+          SOURCE_FILE_CHANGED,
+        },
         invoke: {
           src: runPageQueries,
           id: `running-page-queries`,
@@ -340,10 +393,10 @@ export const developMachine = Machine<any>(
             {
               target: `waitingForJobs`,
               cond: (context): boolean => {
-                console.log(
-                  `checking for mutated nodes`,
-                  context.nodesMutatedDuringQueryRun
-                )
+                // console.log(
+                //   `checking for mutated nodes`,
+                //   context.nodesMutatedDuringQueryRun
+                // )
                 return !context.nodesMutatedDuringQueryRun
               },
             },
@@ -377,7 +430,10 @@ export const developMachine = Machine<any>(
         },
       },
       waitingForJobs: {
-        on: { ADD_NODE_MUTATION },
+        on: {
+          ADD_NODE_MUTATION,
+          SOURCE_FILE_CHANGED,
+        },
         invoke: {
           src: waitUntilAllJobsComplete,
           id: `waiting-for-jobs`,
@@ -423,7 +479,10 @@ export const developMachine = Machine<any>(
       // },
 
       runningWebpack: {
-        on: { ADD_NODE_MUTATION },
+        on: {
+          ADD_NODE_MUTATION,
+          SOURCE_FILE_CHANGED,
+        },
         invoke: {
           src: startWebpackServer,
           id: `running-webpack`,
@@ -455,10 +514,18 @@ export const developMachine = Machine<any>(
           }),
         ],
         on: {
-          "": {
-            cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
-            target: `batchingNodeMutations`,
-          },
+          "": [
+            // Node mutations are prioritised because we don't want
+            // to run queries on data that is stale
+            {
+              cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
+              target: `batchingNodeMutations`,
+            },
+            {
+              cond: (ctx): boolean => ctx.filesDirty,
+              target: `extractingQueries`,
+            },
+          ],
           WEBHOOK_RECEIVED: {
             target: `refreshing`,
             actions: assign((ctx, event) => {
@@ -468,6 +535,9 @@ export const developMachine = Machine<any>(
           ADD_NODE_MUTATION: {
             ...ADD_NODE_MUTATION,
             target: `batchingNodeMutations`,
+          },
+          SOURCE_FILE_CHANGED: {
+            target: `extractingQueries`,
           },
         },
       },
@@ -524,11 +594,11 @@ export const developMachine = Machine<any>(
         on: { ADD_NODE_MUTATION },
         entry: [
           assign(context => {
-            console.log(
-              `context at entry for committing batch`,
-              context.runningBatch,
-              context.nodeMutationBatch
-            )
+            // console.log(
+            //   `context at entry for committing batch`,
+            //   context.runningBatch,
+            //   context.nodeMutationBatch
+            // )
             // Move the contents of the batch into a batch for running
             return {
               target: `buildingSchema`,
@@ -540,7 +610,7 @@ export const developMachine = Machine<any>(
         invoke: {
           src: async ({ runningBatch, store }): Promise<any> => {
             // Consume the entire batch and run actions
-            console.log(`runningBatch`, runningBatch)
+            // console.log(`runningBatch`, runningBatch)
             return Promise.all(
               runningBatch.map(payload => callRealApi(payload, store))
             )

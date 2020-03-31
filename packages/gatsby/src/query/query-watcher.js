@@ -216,9 +216,9 @@ const watchComponent = componentPath => {
   }
 }
 
-const debounceCompile = _.debounce(() => {
-  updateStateAndRunQueries()
-}, 100)
+// const debounceCompile = _.debounce(() => {
+//   updateStateAndRunQueries()
+// }, 100)
 
 const watch = async rootDir => {
   if (watcher) return
@@ -237,8 +237,9 @@ const watch = async rootDir => {
       ...packagePaths,
     ])
     .on(`change`, path => {
-      report.pendingActivity({ id: `query-extraction` })
-      debounceCompile()
+      // report.pendingActivity({ id: `query-extraction` })
+      // debounceCompile()
+      emitter.emit(`SOURCE_FILE_CHANGED`, { path })
     })
 
   filesToWatch.forEach(filePath => watcher.add(filePath))

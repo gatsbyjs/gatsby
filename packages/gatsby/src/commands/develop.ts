@@ -157,6 +157,11 @@ module.exports = async (program: IProgram): Promise<void> => {
     developService.send(`ADD_NODE_MUTATION`, { payload: event })
   })
 
+  emitter.on(`SOURCE_FILE_CHANGED`, event => {
+    console.log({ event })
+    developService.send(`SOURCE_FILE_CHANGED`, { payload: event })
+  })
+
   // require(`../redux/actions`).boundActionCreators.setProgramStatus(
   //   `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   // )
