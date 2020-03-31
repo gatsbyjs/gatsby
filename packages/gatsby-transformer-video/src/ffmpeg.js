@@ -183,8 +183,6 @@ export default class FFMPEG {
   takeScreenshots = async ({ fieldArgs, publicPath }) => {
     const { screenshots, screenshotWidth } = fieldArgs
 
-    console.log({ screenshots })
-
     if (!screenshots) {
       return null
     }
