@@ -158,7 +158,10 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.2",
-    "xhr-mock": "^2.5.1"
+    "xhr-mock": "^2.5.1",
+    "zipkin": "^0.19.2",
+    "zipkin-transport-http": "^0.19.2",
+    "zipkin-javascript-opentracing": "^2.1.0"
   },
   "engines": {
     "node": ">=10.13.0"
