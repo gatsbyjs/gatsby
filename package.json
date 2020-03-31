@@ -128,12 +128,5 @@
   },
   "workspaces": [
     "packages/*"
-  ],
-  "resolutions": {
-    "**/gatsby-cli/configstore/write-file-atomic": "3.0.3",
-    "**/gatsby-core-utils/configstore/write-file-atomic": "3.0.3",
-    "**/gatsby-dev-cli/configstore/write-file-atomic": "3.0.3",
-    "**/gatsby-telemetry/configstore/write-file-atomic": "3.0.3",
-    "write-file-atomic": "2.4.3"
-  }
+  ]
 }
