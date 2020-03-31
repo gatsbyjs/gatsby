@@ -1,7 +1,7 @@
 import { join } from "path"
 import { exec } from "child_process"
 
-const root = join(__dirname, "../execution-folder")
+const root = join(__dirname, "..")
 
 // Executes a shell command and return it as a Promise.
 function pExec(command) {
