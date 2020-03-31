@@ -10130,6 +10130,17 @@
     - Web Development
   built_by: Jason Zheng
   built_by_url: https://github.com/bilafish
+- title: Bonsaiilabs
+  main_url: https://bonsaiilabs.com/
+  url: https://bonsaiilabs.com/
+  description: >
+    We are a team of two, creating software for startups and enabling learners with our visualize, break, and solve approach.
+  featured: false
+  categories:
+    - Education
+    - Consulting
+  built_by: Bonsaiilabs Team
+  built_by_url: https://bonsaiilabs.com/team
 - title: Tyson
   main_url: https://www.tyson.com
   url: https://www.tyson.com
