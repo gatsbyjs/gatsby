@@ -612,7 +612,7 @@
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
           link: /docs/graphql-concepts/
-        - title: Security in Gatsby*
+        - title: Security in Gatsby
           link: /docs/security-in-gatsby/
         - title: Theme Shadowing
           link: /docs/how-shadowing-works/
@@ -757,6 +757,8 @@
       items:
         - title: Build
           link: /docs/glossary/build/
+        - title: Content Delivery Network
+          link: /docs/glossary/content-delivery-network/
         - title: Continuous Deployment
           link: /docs/glossary/continuous-deployment/
         - title: Decoupled Drupal
@@ -777,6 +779,8 @@
           link: /docs/glossary/node/
         - title: React
           link: /docs/glossary/react/
+        - title: Server Side Rendering
+          link: /docs/glossary/server-side-rendering/
         - title: Static Site Generator
           link: /docs/glossary/static-site-generator/
         - title: webpack

@@ -35,7 +35,7 @@ export const TAGS_AND_DOCS = new Map([
   [`documentation`, `/docs/`],
   [`documentation-sites`, ``],
   [`drupal`, `/docs/sourcing-from-drupal/`],
-  [`ecommerce`, ``],
+  [`e-commerce`, ``],
   [`enterprise`, `/docs/gatsby-in-the-enterprise/`],
   [`gatsby-apis`, `/docs/api-reference/`],
   [`gatsby-cloud`, ``],

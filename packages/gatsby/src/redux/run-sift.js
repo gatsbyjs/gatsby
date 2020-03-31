@@ -103,37 +103,95 @@ function handleMany(siftArgs, nodes) {
  * A fast index is created if one doesn't exist yet so cold call is slower.
  * The empty result value is null if firstOnly is false, or else an empty array.
  *
- * @param {Array<string>} chain Note: `$eq` is assumed to be the leaf prop here
- * @param {boolean | number | string} targetValue chain.a.b.$eq === targetValue
+ * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
- * @returns {Array<Node> | undefined}
+ * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @returns {Array<IGatsbyNode> | undefined}
  */
-const runFlatFilterWithoutSift = (
-  chain,
-  targetValue,
+const runFlatFiltersWithoutSift = (
+  filters,
   nodeTypeNames,
   typedKeyValueIndexes
 ) => {
-  ensureIndexByTypedChain(chain, nodeTypeNames, typedKeyValueIndexes)
-
-  const nodesByKeyValue = getNodesByTypedChain(
-    chain,
-    targetValue,
+  const caches = getBucketsForFilters(
+    filters,
     nodeTypeNames,
     typedKeyValueIndexes
   )
 
-  // If we couldn't find the needle then maybe sift can, for example if the
-  // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
-  // There are also cases (and tests) where id exists with a different type
-  if (!nodesByKeyValue) {
+  if (!caches) {
+    // Let Sift take over as fallback
     return undefined
   }
 
-  // In all other cases this must be a non-empty Set because the indexing
-  // mechanism does not create a Set unless there's a Node for it
-  return [...nodesByKeyValue]
+  // Put smallest last (we'll pop it)
+  caches.sort((a, b) => b.length - a.length)
+  // Iterate on the set with the fewest elements and create the intersection
+  const needles = caches.pop()
+  // Take the intersection of the retrieved caches-by-value
+  const result = []
+
+  // This _can_ still be expensive but the set of nodes should be limited ...
+  needles.forEach(node => {
+    if (caches.every(cache => cache.has(node))) {
+      // Every cache set contained this node so keep it
+      result.push(node)
+    }
+  })
+
+  // TODO: do we cache this result? I'm not sure how likely it is to be reused
+  // Consider the case of {a: {eq: 5}, b: {eq: 10}}, do we cache the [5,10]
+  // case for all value pairs? How likely is that to ever be reused?
+
+  return result
+}
+
+/**
+ * @param {Array<DbQuery>} filters
+ * @param {Array<string>} nodeTypeNames
+ * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @returns {Array<Set<IGatsbyNode>> | undefined} Undefined means at least one
+ *   cache was not found. Must fallback to sift.
+ */
+const getBucketsForFilters = (filters, nodeTypeNames, typedKeyValueIndexes) => {
+  const caches /*: Array<Map<string|number|boolean, Set<IGatsbyNode>>>*/ = []
+
+  // Fail fast while trying to create and get the value-cache for each path
+  let every = filters.every((filter /*: DbQuery*/) => {
+    let {
+      path: chain,
+      query: { value: targetValue },
+    } = filter
+
+    ensureIndexByTypedChain(chain, nodeTypeNames, typedKeyValueIndexes)
+
+    const nodesByKeyValue = getNodesByTypedChain(
+      chain,
+      targetValue,
+      nodeTypeNames,
+      typedKeyValueIndexes
+    )
+
+    // If we couldn't find the needle then maybe sift can, for example if the
+    // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
+    // There are also cases (and tests) where id exists with a different type
+    if (!nodesByKeyValue) {
+      return false
+    }
+
+    // In all other cases this must be a non-empty Set because the indexing
+    // mechanism does not create a Set unless there's a IGatsbyNode for it
+    caches.push(nodesByKeyValue)
+
+    return true
+  })
+
+  if (every) {
+    return caches
+  }
+
+  // "failed at least one"
+  return undefined
 }
 
 /**
@@ -144,11 +202,11 @@ const runFlatFilterWithoutSift = (
  * @property {boolean} args.firstOnly true if you want to return only the first
  *   result found. This will return a collection of size 1. Not a single element
  * @property {{filter?: Object, sort?: Object} | undefined} args.queryArgs
- * @property {undefined | Map<string, Map<string | number | boolean, Node>>} args.typedKeyValueIndexes
+ * @property {undefined | Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} args.typedKeyValueIndexes
  *   May be undefined. A cache of indexes where you can look up Nodes grouped
  *   by a key: `types.join(',')+'/'+filterPath.join('+')`, which yields a Map
  *   which holds a Set of Nodes for the value that the filter is trying to eq
- *   against. If the property is `id` then there is no Set, it's just the Node.
+ *   against. If the property is `id` then there is no Set, it's just the IGatsbyNode.
  *   This object lives in query/query-runner.js and is passed down runQuery
  * @returns Collection of results. Collection will be limited to 1
  *   if `firstOnly` is true
@@ -182,13 +240,13 @@ exports.runSift = runFilterAndSort
  * running sift, but not as versatile and correct. If no nodes were found then
  * it falls back to filtering through sift.
  *
- * @param {Object | undefined} filterFields
+ * @param {Array<DbQuery> | undefined} filterFields
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {undefined | Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
  * @param resolvedFields
- * @returns {Array<Node> | undefined} Collection of results. Collection will be
- *   limited to 1 if `firstOnly` is true
+ * @returns {Array<IGatsbyNode> | undefined} Collection of results. Collection
+ *   will be limited to 1 if `firstOnly` is true
  */
 const applyFilters = (
   filterFields,
@@ -198,7 +256,7 @@ const applyFilters = (
   resolvedFields,
   stats
 ) => {
-  const filters = filterFields
+  const filters /*: Array<DbQuery>*/ = filterFields
     ? prefixResolvedFields(
         createDbQueriesFromObject(prepareQueryArgs(filterFields)),
         resolvedFields
@@ -206,7 +264,7 @@ const applyFilters = (
     : []
 
   if (stats) {
-    filters.forEach(filter => {
+    filters.forEach((filter /*: DbQuery*/) => {
       const filterStats = filterToStats(filter)
       const comparatorPath = filterStats.comparatorPath.join(`.`)
       stats.comparatorsUsed.set(
@@ -234,7 +292,11 @@ const applyFilters = (
   return filterWithSift(filters, firstOnly, nodeTypeNames, resolvedFields)
 }
 
-const filterToStats = (filter, filterPath = [], comparatorPath = []) => {
+const filterToStats = (
+  filter /*: DbQuery*/,
+  filterPath = [],
+  comparatorPath = []
+) => {
   if (filter.type === `elemMatch`) {
     return filterToStats(
       filter.nestedQuery,
@@ -254,30 +316,24 @@ const filterToStats = (filter, filterPath = [], comparatorPath = []) => {
  * indexes based on filter and types and returns any result it finds.
  * If conditions are not met or no nodes are found, returns undefined.
  *
- * @param {Object} filter Resolved. (Should be checked by caller to exist)
+ * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
  * @returns {Array|undefined} Collection of results
  */
 const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
   // This can also be `$ne`, `$in` or any other grapqhl comparison op
   if (
     !typedKeyValueIndexes ||
-    filters.length !== 1 ||
-    filters[0].type === `elemMatch` ||
-    filters[0].query.comparator !== `$eq`
+    filters.length === 0 || // TODO: we should special case this
+    filters.some(
+      filter => filter.type === `elemMatch` || filter.query.comparator !== `$eq`
+    )
   ) {
     return undefined
   }
 
-  const filter = filters[0]
-
-  return runFlatFilterWithoutSift(
-    filter.path,
-    filter.query.value,
-    nodeTypeNames,
-    typedKeyValueIndexes
-  )
+  return runFlatFiltersWithoutSift(filters, nodeTypeNames, typedKeyValueIndexes)
 }
 
 // Not a public API
@@ -286,21 +342,20 @@ exports.filterWithoutSift = filterWithoutSift
 /**
  * Use sift to apply filters
  *
- * @param {Array<Object>} filter Resolved
+ * @param {Array<DbQuery>} filters Resolved
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
- * @returns {Array<Node> | undefined | null} Collection of results. Collection
- *   will be limited to 1 if `firstOnly` is true
+ * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
+ *   Collection will be limited to 1 if `firstOnly` is true
  */
-const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
-  const nodes = [].concat(
-    ...nodeTypeNames.map(typeName => addResolvedNodes(typeName))
-  )
+const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
+  let nodes /*: IGatsbyNode[]*/ = []
+  nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
 
   return _runSiftOnNodes(
     nodes,
-    filter.map(f => dbQueryToSiftQuery(f)),
+    filters.map(f => dbQueryToSiftQuery(f)),
     firstOnly,
     nodeTypeNames,
     resolvedFields,
@@ -312,11 +367,11 @@ const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
  * Given a list of filtered nodes and sorting parameters, sort the nodes
  * Note: this entry point is used by GATSBY_DB_NODES=loki
  *
- * @param {Array<Node>} nodes Should be all nodes of given type(s)
+ * @param {Array<IGatsbyNode>} nodes Should be all nodes of given type(s)
  * @param args Legacy api arg, see _runSiftOnNodes
- * @param {?function(id: string): Node} getNode
- * @returns {Array<Node> | undefined | null} Collection of results. Collection
- *   will be limited to 1 if `firstOnly` is true
+ * @param {?function(id: string): IGatsbyNode | undefined} getNode
+ * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
+ *   Collection will be limited to 1 if `firstOnly` is true
  */
 const runSiftOnNodes = (nodes, args, getNode = siftGetNode) => {
   const {
@@ -345,18 +400,19 @@ exports.runSiftOnNodes = runSiftOnNodes
 /**
  * Given a list of filtered nodes and sorting parameters, sort the nodes
  *
- * @param {Array<Node>} nodes Should be all nodes of given type(s)
- * @param {Array<Object>} filter Resolved
+ * @param {Array<IGatsbyNode>} nodes Should be all nodes of given type(s)
+ * @param {Array<DbQuery>} filters Resolved
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
- * @param {function(id: string): Node} getNode Note: this is different for loki
- * @returns {Array<Node> | undefined | null} Collection of results. Collection
- *   will be limited to 1 if `firstOnly` is true
+ * @param {function(id: string): IGatsbyNode | undefined} getNode Note: this is
+ *   different for loki
+ * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
+ *   Collection will be limited to 1 if `firstOnly` is true
  */
 const _runSiftOnNodes = (
   nodes,
-  filter,
+  filters,
   firstOnly,
   nodeTypeNames,
   resolvedFields,
@@ -364,8 +420,8 @@ const _runSiftOnNodes = (
 ) => {
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
-  if (isEqId(filter)) {
-    const node = getNode(filter[0].id.$eq)
+  if (isEqId(filters)) {
+    const node = getNode(filters[0].id.$eq)
 
     if (
       !node ||
@@ -381,19 +437,19 @@ const _runSiftOnNodes = (
   }
 
   if (firstOnly) {
-    return handleFirst(filter, nodes)
+    return handleFirst(filters, nodes)
   } else {
-    return handleMany(filter, nodes)
+    return handleMany(filters, nodes)
   }
 }
 
 /**
  * Given a list of filtered nodes and sorting parameters, sort the nodes
  *
- * @param {Array<Node> | undefined | null} nodes Pre-filtered list of nodes
+ * @param {Array<IGatsbyNode> | undefined | null} nodes Pre-filtered list of nodes
  * @param {Object | undefined} sort Sorting arguments
  * @param resolvedFields
- * @returns {Array<Node> | undefined | null} Same as input, except sorted
+ * @returns {Array<IGatsbyNode> | undefined | null} Same as input, except sorted
  */
 const sortNodes = (nodes, sort, resolvedFields, stats) => {
   if (!sort || nodes?.length <= 1) {
