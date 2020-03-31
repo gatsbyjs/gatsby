@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.20.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.8...gatsby@2.20.9) (2020-03-30)
+
+### Bug Fixes
+
+- **gatsby:** Collect nested webpack compilation stats errors ([#22598](https://github.com/gatsbyjs/gatsby/issues/22598)) ([3986380](https://github.com/gatsbyjs/gatsby/commit/3986380)), closes [#22597](https://github.com/gatsbyjs/gatsby/issues/22597)
+
+## [2.20.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.7...gatsby@2.20.8) (2020-03-27)
+
+### Bug Fixes
+
+- **gatsby:** Mark plugin parameter as optional for actions ([#22546](https://github.com/gatsbyjs/gatsby/issues/22546)) ([6d1356c](https://github.com/gatsbyjs/gatsby/commit/6d1356c))
+
+## [2.20.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.6...gatsby@2.20.7) (2020-03-26)
+
+### Features
+
+- **gatsby:** enable granular chunks ([#22253](https://github.com/gatsbyjs/gatsby/issues/22253)) ([0f02ea7](https://github.com/gatsbyjs/gatsby/commit/0f02ea7))
+
+## [2.20.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.5...gatsby@2.20.6) (2020-03-25)
+
+### Features
+
+- **gatsby-telemetry:** Make build collect GraphQL/Sift query data for telemetry ([#22540](https://github.com/gatsbyjs/gatsby/issues/22540)) ([1bec140](https://github.com/gatsbyjs/gatsby/commit/1bec140))
+
+## [2.20.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.4...gatsby@2.20.5) (2020-03-25)
+
+### Features
+
+- **gatsby-source-graphql:** Query batching ([#22347](https://github.com/gatsbyjs/gatsby/issues/22347)) ([2a4c7fd](https://github.com/gatsbyjs/gatsby/commit/2a4c7fd))
+
 ## [2.20.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.3...gatsby@2.20.4) (2020-03-24)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 const stackTrace = require(`stack-trace`)
 
-const GraphQLRunner = require(`../query/graphql-runner`)
+const GraphQLRunner = require(`../query/graphql-runner`).default
 const errorParser = require(`../query/error-parser`).default
 
 const { emitter } = require(`../redux`)
