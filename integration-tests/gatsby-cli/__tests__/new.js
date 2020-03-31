@@ -16,7 +16,7 @@ describe(`gatsby new`, () => {
     }
   })
 
-  afterAll(() => removeFolder(dir))
+  afterAll(() => removeFolder("execution-folder"))
 
   it(`a default starter creates a gatsby site`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke(`new`, `gatsby-default`)

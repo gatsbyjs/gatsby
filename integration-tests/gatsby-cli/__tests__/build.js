@@ -33,7 +33,6 @@ describe(`gatsby build`, () => {
     logs.should.contain(`success extract queries from components`)
     logs.should.contain(`success write out requires`)
     logs.should.contain(`success write out redirect data`)
-    logs.should.contain(`success Build manifest and related icons`)
     logs.should.contain(`success onPostBootstrap`)
     logs.should.contain(`info bootstrap finished`)
     logs.should.contain(
