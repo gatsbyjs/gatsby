@@ -1,5 +1,6 @@
 import spawn from "cross-spawn"
 import { join } from "path"
+import { createLogsMatcher } from "./matcher"
 
 export function invokeCli(...args) {
   const results = spawn.sync(
@@ -11,9 +12,11 @@ export function invokeCli(...args) {
   )
 
   if (results.error) {
-    console.log(results.error)
-    return [1, results.error.toString()]
+    return [1, createLogsMatcher(results.error.toString().split("\n"))]
   }
 
-  return [results.status, results.output.join("")]
+  return [
+    results.status,
+    createLogsMatcher(results.output.toString().split("\n")),
+  ]
 }
