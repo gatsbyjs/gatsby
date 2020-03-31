@@ -17,4 +17,4 @@ As the co-founder and CEO of Gatsby, Kyle Mathews kicked off Gatsby Days LA 2020
 
 Kyle also shared his vision for the future of Gatsby, highlighting some of the “missing pieces” that are current focus areas for the company. For example, to help speed development, Gatsby is looking to significantly expand the collection of Gatsby themes, which provide building blocks for quickly adding functionality to websites. With help from a fast-growing community, Gatsby anticipates increasing contributions of themes, plugins, docs, and more.
 
-https://www.youtube.com/watch?v=9Ta7L4rN3x4
+[![Gatsby Days Los Angeles: Kickoff/Keynote video](https://res.cloudinary.com/marcomontalbano/image/upload/v1585686057/video_to_markdown/images/youtube--9Ta7L4rN3x4-c05b58ac6eb4c4700831b2b3070cd403.jpg)](http://www.youtube.com/watch?v=9Ta7L4rN3x4 "Gatsby Days Los Angeles - Kickoff/Keynote video and future of Gatsby")
