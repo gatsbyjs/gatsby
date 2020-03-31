@@ -128,5 +128,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@types/node-fetch": "^2.5.5"
+  }
 }
