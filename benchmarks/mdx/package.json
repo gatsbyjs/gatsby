@@ -1,0 +1,46 @@
+{
+  "name": "gatsby-benchmark-mdx",
+  "private": true,
+  "description": "An example site to benchmark MDX",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "postinstall": "npx willit --type=\"mdx\" --level=${BENCHMARK_LEVEL}",
+    "start": "npm run develop",
+    "serve": "gatsby serve"
+  },
+  "resolutions": {
+    "sharp": "0.25.1"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^1.5.7",
+    "@mdx-js/react": "^1.5.7",
+    "dotenv": "^8.2.0",
+    "gatsby": "^2.19.35",
+    "gatsby-image": "^2.2.40",
+    "gatsby-plugin-mdx": "^1.0.82",
+    "gatsby-plugin-page-creator": "^2.1.45",
+    "gatsby-plugin-sharp": "^2.4.12",
+    "gatsby-remark-images": "^3.1.49",
+    "gatsby-source-filesystem": "^2.1.48",
+    "gatsby-transformer-sharp": "^2.3.14",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0",
+    "gatsby-plugin-benchmark-reporting": "*",
+    "prettier": "^1.19.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/benchmark/mdx"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  }
+}
