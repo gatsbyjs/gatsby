@@ -23,7 +23,7 @@ describe(`gatsby develop`, () => {
     const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(`develop`)
 
     // 2. Wait for the build process to finish
-    await timeout(10)
+    await timeout(30)
 
     // 3. kill the `gatsby develop` command so we can get logs
     spawn.sync("kill", [childProcess.pid])
