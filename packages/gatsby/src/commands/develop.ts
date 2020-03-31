@@ -19,6 +19,7 @@ import { IProgram } from "./types"
 import { developMachine } from "../state-machines/develop"
 import { interpret } from "xstate"
 import { emitter } from "../redux"
+import { saveState, startAutosave } from "../db"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
@@ -156,29 +157,12 @@ module.exports = async (program: IProgram): Promise<void> => {
     developService.send(`ADD_NODE_MUTATION`, { payload: event })
   })
 
-  // startListeningToDevelopQueue()
-
-  // Start bootstrap process
-
-  // Start the createPages hot reloader
-  // bootstrapPageHotReloader(graphqlRunner)
-
-  // Start the schema hot reloader.
-  // bootstrapSchemaHotReloader()
-
-  // Run initial queries
-
   // require(`../redux/actions`).boundActionCreators.setProgramStatus(
   //   `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   // )
-  // await db.saveState()
+  await saveState()
 
-  // Await jobs
-
-  // requiresWriter.startListener()
-  // db.startAutosave()
+  startAutosave()
 
   // queryWatcher.startWatchDeletePage()
-
-  // Run webpack
 }
