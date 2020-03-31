@@ -1,71 +1,71 @@
-import { invokeCli, removeFolder } from "../test-helpers"
+import { GatsbyCLI, removeFolder } from "../test-helpers"
+import fs from "fs"
+import { join } from "path"
 
 const MAX_TIMEOUT = 2147483647
 jest.setTimeout(MAX_TIMEOUT)
 
-describe("gatsby new", () => {
-  describe("default starter", () => {
-    const siteName = "gatsby-default"
+const cwd = `execution-folder`
 
-    afterAll(() => removeFolder(siteName))
-
-    it("creates a gatsby site", () => {
-      const [code, logs] = invokeCli("new", siteName)
-
-      logs.should.contain(
-        `info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-default.git`
-      )
-      logs.should.contain(`success Created starter directory layout`)
-      logs.should.contain(`info Installing packages...`)
-      logs.should.contain(`success Saved lockfile.`)
-      logs.should.contain(
-        `Your new Gatsby site has been successfully bootstrapped. Start developing it by running:`
-      )
-      logs.should.contain(`  cd gatsby-default`)
-      logs.should.contain(`  gatsby develop`)
-      expect(code).toBe(0)
-    })
+describe(`gatsby new`, () => {
+  // make folder for us to create sites into
+  const dir = join(__dirname, "../execution-folder")
+  beforeAll(() => {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir)
+    }
   })
 
-  describe("theme starter", () => {
-    const siteName = "gatsby-blog"
+  afterAll(() => removeFolder("execution-folder"))
 
-    afterAll(() => removeFolder(siteName))
+  it(`a default starter creates a gatsby site`, () => {
+    const [code, logs] = GatsbyCLI.from(cwd).invoke(`new`, `gatsby-default`)
 
-    it("creates a gatsby site", () => {
-      const [code, logs] = invokeCli(
-        "new",
-        siteName,
-        "gatsbyjs/gatsby-starter-blog"
-      )
-
-      logs.should.contain(
-        `info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-blog.git`
-      )
-      logs.should.contain(`success Created starter directory layout`)
-      logs.should.contain(`info Installing packages...`)
-      logs.should.contain(`success Saved lockfile.`)
-      logs.should.contain(
-        `Your new Gatsby site has been successfully bootstrapped. Start developing it by running:`
-      )
-      logs.should.contain(`  cd gatsby-blog`)
-      logs.should.contain(`  gatsby develop`)
-      expect(code).toBe(0)
-    })
+    logs.should.contain(
+      `info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-default.git`
+    )
+    logs.should.contain(`success Created starter directory layout`)
+    logs.should.contain(`info Installing packages...`)
+    logs.should.contain(`success Saved lockfile.`)
+    logs.should.contain(
+      `Your new Gatsby site has been successfully bootstrapped. Start developing it by running:`
+    )
+    logs.should.contain(`  cd gatsby-default`)
+    logs.should.contain(`  gatsby develop`)
+    expect(code).toBe(0)
   })
 
-  describe("invalid starter", () => {
-    const siteName = "gatsby-invalid"
+  it(`a theme starter creates a gatsby site`, () => {
+    const [code, logs] = GatsbyCLI.from(cwd).invoke(
+      `new`,
+      `gatsby-blog`,
+      `gatsbyjs/gatsby-starter-blog`
+    )
 
-    afterAll(() => removeFolder(siteName))
+    logs.should.contain(
+      `info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-blog.git`
+    )
+    logs.should.contain(`success Created starter directory layout`)
+    logs.should.contain(`info Installing packages...`)
+    logs.should.contain(`success Saved lockfile.`)
+    logs.should.contain(
+      `Your new Gatsby site has been successfully bootstrapped. Start developing it by running:`
+    )
+    logs.should.contain(`  cd gatsby-blog`)
+    logs.should.contain(`  gatsby develop`)
+    expect(code).toBe(0)
+  })
 
-    it("fails to create a gatsby site", () => {
-      let [code, logs] = invokeCli("new", siteName, "tHiS-Is-A-fAkE-sTaRtEr")
+  it(`an invalid starter fails to create a gatsby site`, () => {
+    const [code, logs] = GatsbyCLI.from(cwd).invoke(
+      `new`,
+      `gatsby-invalid`,
+      `tHiS-Is-A-fAkE-sTaRtEr`
+    )
 
-      logs.should.contain(`Error`)
-      logs.should.contain(`starter tHiS-Is-A-fAkE-sTaRtEr doesn't exist`)
+    logs.should.contain(`Error`)
+    logs.should.contain(`starter tHiS-Is-A-fAkE-sTaRtEr doesn't exist`)
 
-      expect(code).toBe(1)
-    })
+    expect(code).toBe(1)
   })
 })
