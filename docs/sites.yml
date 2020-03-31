@@ -10130,3 +10130,75 @@
     - Web Development
   built_by: Jason Zheng
   built_by_url: https://github.com/bilafish
+- title: Tyson
+  main_url: https://www.tyson.com
+  url: https://www.tyson.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Hillshire Farm
+  main_url: https://www.hillshirefarm.com
+  url: https://www.hillshirefarm.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Hillshire Snacking
+  main_url: https://www.hillshiresnacking.com
+  url: https://www.hillshiresnacking.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Jimmy Dean
+  main_url: https://www.jimmydean.com
+  url: https://www.jimmydean.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Aidells
+  main_url: https://www.aidells.com
+  url: https://www.aidells.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: State Fair
+  main_url: https://www.corndogs.com
+  url: https://www.corndogs.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Nudges
+  main_url: https://www.nudgesdogtreats.com
+  url: https://www.nudgesdogtreats.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Tyson Ingredient Solutions
+  main_url: https://www.tysoningredientsolutions.com
+  url: https://www.tysoningredientsolutions.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Wright Brand
+  main_url: https://www.wrightbrand.com
+  url: https://www.wrightbrand.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
