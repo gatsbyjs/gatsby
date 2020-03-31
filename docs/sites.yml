@@ -10130,3 +10130,15 @@
     - Web Development
   built_by: Jason Zheng
   built_by_url: https://github.com/bilafish
+- title: Fluiditype
+  url: https://www.fluiditype.com/
+  main_url: https://www.fluiditype.com/
+  source_url: https://github.com/sboriskirov/fluiditype
+  description: >
+    Fluditype is small CSS library focusing on pure typographic fluidity. Recommend to be used for blogs, portfolios, documentation & and simplistic text websites.
+  categories:
+    - Open Source
+    - Design
+  built_by: Boris Kirov
+  built_by_url: www.boriskirov.com
+  featured: false
