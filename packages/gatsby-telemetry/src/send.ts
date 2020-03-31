@@ -1,8 +1,8 @@
-const Telemetry = require(`./telemetry`)
+import { Telemetry } from "./telemetry"
 const instance = new Telemetry()
 
-const flush = _ => {
-  instance.sendEvents().catch(e => {
+const flush = (): void => {
+  instance.sendEvents().catch(() => {
     // ignore
   })
 }

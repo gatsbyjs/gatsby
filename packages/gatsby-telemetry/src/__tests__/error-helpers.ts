@@ -1,4 +1,4 @@
-const { sanitizeError, cleanPaths } = require(`../error-helpers`)
+import { sanitizeError, cleanPaths } from "../error-helpers"
 
 describe(`Errors Helpers`, () => {
   describe(`sanitizeError`, () => {
@@ -90,7 +90,7 @@ describe(`Errors Helpers`, () => {
       expect(sanitizedErrorString).toEqual(
         expect.not.stringContaining(`sidharthachatterjee`)
       )
-      expect(sanitizedErrorString.match(/\$SNIP/g).length).toBe(4)
+      expect(sanitizedErrorString.match(/\$SNIP/g)!.length).toBe(4)
 
       mockCwd.mockRestore()
     })

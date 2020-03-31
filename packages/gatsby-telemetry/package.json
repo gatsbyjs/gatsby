@@ -28,6 +28,8 @@
   "devDependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
+    "@types/node-fetch": "^2.5.5",
+    "@types/uuid": "^7.0.2",
     "babel-jest": "^24.9.0",
     "babel-preset-gatsby-package": "^0.4.4",
     "cross-env": "^5.2.1",

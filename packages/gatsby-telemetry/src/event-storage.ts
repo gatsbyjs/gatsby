@@ -1,21 +1,33 @@
-const os = require(`os`)
-const path = require(`path`)
-const Store = require(`./store`)
-const fetch = require(`node-fetch`)
-const Configstore = require(`configstore`)
-const { ensureDirSync } = require(`fs-extra`)
+import os from "os"
+import path from "path"
+import { Store } from "./store"
+import fetch from "node-fetch"
+import Configstore from "configstore"
+import { ensureDirSync } from "fs-extra"
 
-const isTruthy = require(`./is-truthy`)
+import { isTruthy } from "./is-truthy"
 
-/* The events data collection is a spooled process that
+interface IConfigTypes {
+  "telemetry.machineId": string
+  "telemetry.enabled": boolean
+}
+
+/**
+ * The events data collection is a spooled process that
  * buffers events to a local fs based buffer
  * which then is asynchronously flushed to the server.
  * This both increases the fault tolerancy and allows collection
  * to continue even when working offline.
  */
-module.exports = class EventStorage {
-  analyticsApi =
+export class EventStorage {
+  private analyticsApi =
     process.env.GATSBY_TELEMETRY_API || `https://analytics.gatsbyjs.com/events`
+  private config: Configstore
+  private store: Store
+  private verbose: boolean
+  private debugEvents: boolean
+  private disabled: boolean
+
   constructor() {
     try {
       this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
@@ -23,12 +35,24 @@ module.exports = class EventStorage {
       // This should never happen
       this.config = {
         get: key => this.config[key],
-        set: (key, value) => (this.config[key] = value),
-        all: this.config,
+        set: (key: string | [string, unknown][], value?: unknown) => {
+          // This function has two overloads.
+          // 1. (key: string, value: unknown)
+          // 2. (values: [string, unknown][])
+          if (typeof key === `string`) {
+            this.config[key] = value
+          } else {
+            for (const [k, v] of key) {
+              this.config[k] = v
+            }
+          }
+        },
         path: path.join(os.tmpdir(), `gatsby`),
-        "telemetry.enabled": true,
-        "telemetry.machineId": `not-a-machine-id`,
-      }
+      } as Configstore
+
+      this.config.all = this.config
+      this.config[`telemetry.machineId`] = `not-a-machine-id`
+      this.config[`telemetry.enabled`] = true
     }
 
     const baseDir = path.dirname(this.config.path)
@@ -45,11 +69,11 @@ module.exports = class EventStorage {
     this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
   }
 
-  isTrackingDisabled() {
+  isTrackingDisabled(): boolean {
     return this.disabled
   }
 
-  addEvent(event) {
+  addEvent(event: unknown): void {
     if (this.disabled) {
       return
     }
@@ -68,7 +92,7 @@ module.exports = class EventStorage {
     this.store.appendToBuffer(eventString + `\n`)
   }
 
-  async sendEvents() {
+  async sendEvents(): Promise<void> {
     return this.store.startFlushEvents(async eventsData => {
       const events = eventsData
         .split(`\n`)
@@ -79,7 +103,7 @@ module.exports = class EventStorage {
     })
   }
 
-  async submitEvents(events) {
+  async submitEvents(events: unknown): Promise<boolean> {
     try {
       const res = await fetch(this.analyticsApi, {
         method: `POST`,
@@ -95,7 +119,7 @@ module.exports = class EventStorage {
     }
   }
 
-  getUserAgent() {
+  getUserAgent(): string {
     try {
       const { name, version } = require(`../package.json`)
       return `${name}:${version}`
@@ -104,14 +128,17 @@ module.exports = class EventStorage {
     }
   }
 
-  getConfig(key) {
+  getConfig<TKey extends keyof IConfigTypes>(key: TKey): IConfigTypes[TKey] {
     if (key) {
       return this.config.get(key)
     }
     return this.config.all
   }
 
-  updateConfig(key, value) {
+  updateConfig<TKey extends keyof IConfigTypes>(
+    key: TKey,
+    value: IConfigTypes[TKey] | undefined
+  ): void {
     return this.config.set(key, value)
   }
 }

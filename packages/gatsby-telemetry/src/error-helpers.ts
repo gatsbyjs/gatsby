@@ -1,8 +1,9 @@
-const { sep } = require(`path`)
+import { sep } from "path"
 
 // Removes all user paths
-const regexpEscape = str => str.replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`)
-const cleanPaths = (str, separator = sep) => {
+const regexpEscape = (str: string): string =>
+  str.replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`)
+export const cleanPaths = (str: string, separator = sep): string => {
   const stack = process.cwd().split(separator)
 
   while (stack.length > 1) {
@@ -20,7 +21,10 @@ const cleanPaths = (str, separator = sep) => {
 }
 
 // Takes an Error and returns a sanitized JSON String
-const sanitizeError = (error, pathSeparator = sep) => {
+export const sanitizeError = (
+  error: { [x: string]: unknown; stderr?: unknown; stdout?: unknown },
+  pathSeparator = sep
+): string => {
   // Convert Buffers to Strings
   if (error.stderr) error.stderr = String(error.stderr)
   if (error.stdout)
@@ -36,9 +40,4 @@ const sanitizeError = (error, pathSeparator = sep) => {
 
   // Removes all user paths
   return cleanPaths(errorString, pathSeparator)
-}
-
-module.exports = {
-  sanitizeError,
-  cleanPaths,
 }

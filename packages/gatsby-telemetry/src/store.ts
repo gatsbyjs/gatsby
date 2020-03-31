@@ -1,18 +1,20 @@
-const path = require(`path`)
-const {
+import path from "path"
+import {
   appendFileSync,
   readFileSync,
   renameSync,
   existsSync,
   unlinkSync,
-} = require(`fs`)
+} from "fs"
 
-module.exports = class Store {
-  constructor(baseDir) {
+export class Store {
+  private bufferFilePath: string
+
+  constructor(baseDir: string) {
     this.bufferFilePath = path.join(baseDir, `events.json`)
   }
 
-  appendToBuffer(event) {
+  appendToBuffer(event: string): void {
     try {
       appendFileSync(this.bufferFilePath, event, `utf8`)
     } catch (e) {
@@ -20,7 +22,9 @@ module.exports = class Store {
     }
   }
 
-  async startFlushEvents(flushOperation) {
+  async startFlushEvents(
+    flushOperation: (contents: string) => Promise<boolean>
+  ): Promise<void> {
     // Unique temporary file name across multiple concurrent Gatsby instances
     const now = `${Date.now()}-${process.pid}`
     let success = false

@@ -1,6 +1,8 @@
 // Returns true for `true`, true, positive numbers
 // Returns false for `false`, false, 0, negative integers and anything else
-const isTruthy = value => {
+export const isTruthy = (
+  value: boolean | string | undefined | null
+): boolean => {
   // Return if Boolean
   if (typeof value === `boolean`) return value
 
@@ -19,5 +21,3 @@ const isTruthy = value => {
   // Default to false
   return false
 }
-
-module.exports = isTruthy
