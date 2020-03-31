@@ -25,17 +25,10 @@ describe(`gatsby develop`, () => {
     // 2. Wait for the build process to finish
     await timeout(10)
 
-    // 3. Get the process identifier for what is running on port 8000
-    const res = spawn.sync("lsof", ["-i", ":8000", "-t"])
-    const portPID = Number(/\d+/.exec(res.output?.toString())[0])
-
-    // 4. kill the `gatsby develop` command so we can get logs
+    // 3. kill the `gatsby develop` command so we can get logs
     spawn.sync("kill", [childProcess.pid])
 
-    // 5. Make sure the process we started was the one on gatsby port
-    expect(portPID).toEqual(childProcess.pid)
-
-    // 6. Make sure logs for the user contain expected results
+    // 4. Make sure logs for the user contain expected results
     const logs = getLogs()
     logs.should.contain(`success open and validate gatsby-configs`)
     logs.should.contain(`success load plugins`)
