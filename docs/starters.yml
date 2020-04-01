@@ -5818,9 +5818,9 @@
     - Language:TypeScript
     - Styling:CSS-in-JS
   features:
-    - Mobile friendly and fully responsive
     - Emoji (emojione)
     - Code syntax highlighting (atom-one-light Style)
+    - Mobile friendly and fully responsive
     - Comment feature ( utterances)
     - Post side PostTOC
     - Simple fresh design like Medium
