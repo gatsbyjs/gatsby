@@ -5814,12 +5814,9 @@
   tags:
     - Blog
     - Netlify
-    - utterance
     - SEO
-    - 404 page
     - Language:TypeScript
-    - Medium
-    - Styling:Styled-component
+    - Styling:CSS-in-JS
   features:
     - Mobile friendly and fully responsive
     - Emoji (emojione)
