@@ -1,8 +1,8 @@
 ---
-title: 'Gatsby Days LA 2020 Video 2: GatsbyJS CEO and Co-founder Kyle Mathews Shares His Vision for Gatsby’s Future'
+title: 'Gatsby Days LA 2020 Video 2: Live demo of Gatsby + Contentful developer workflow'
 date: 2020-04-01
 author: Greg Thomas
-excerpt: "Learn how Gatsby helps developers create high-performance, accessible websites through this Gatsby Days LA 2020 presentation from Gatsby’s Head of Product."
+excerpt: "Watch in real time as Dustin Schau, Gatsby's head of product, updates a fully accessible Gatsby-built site using the Contentful headless CMS and then deploys to a CDN."
 tags:
   - gatsby-days
   - contentful
@@ -17,4 +17,5 @@ Dustin Shau, Gatsby's Head of Product, is a dedicated open source developer. He 
 
 Watch Dustin demonstrate the impressive build-time performance of Gatsby and Gatsby Cloud by walking through typical developer workflows, including updating a website using Contentful's headless CMS and then rapidly deploying the results through a content delivery network (CDN). And discover how Gatsby enables developers to quickly incorporate accessibility capabilities—such as a SkipNav function—to deliver inclusive web experiences to the widest possible audience.
 
-[![Gatsby Days Los Angeles: Kickoff/Keynote video](https://res.cloudinary.com/marcomontalbano/image/upload/v1585686057/video_to_markdown/images/youtube--9Ta7L4rN3x4-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=9Ta7L4rN3x4 "Gatsby Days Los Angeles: Kickoff/Keynote video")
+
+[![Gatsby Days LA Video 2: What's next for Gatsby and Gatsby Cloud](https://res.cloudinary.com/marcomontalbano/image/upload/v1585776287/video_to_markdown/images/youtube--zbR47FqMJYY-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=zbR47FqMJYY "Gatsby Days LA Video 2: What's next for Gatsby and Gatsby Cloud")
