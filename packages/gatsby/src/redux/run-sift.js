@@ -354,18 +354,31 @@ const filterToStats = (
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>> | null | undefined} typedKeyValueIndexes
  * @returns {Array|undefined} Collection of results
  */
 const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
   // This can also be `$ne`, `$in` or any other grapqhl comparison op
+
+  if (!typedKeyValueIndexes) {
+    // If no filter cache is passed on, explicitly don't use one
+    return undefined
+  }
+
+  if (filters.length === 0) {
+    // If no filters are given, go through Sift. This does not appear to be
+    // slower than shortcutting it here.
+    return undefined
+  }
+
   if (
-    !typedKeyValueIndexes ||
-    filters.length === 0 || // TODO: we should special case this
     filters.some(
-      filter => filter.type === `elemMatch` || filter.query.comparator !== `$eq`
+      filter =>
+        filter.type === `elemMatch` ||
+        ![`$eq`].includes(filter.query.comparator)
     )
   ) {
+    // If there's a filter with non-supported op, stop now.
     return undefined
   }
 
