@@ -27,6 +27,22 @@ class ActionMonitor
         $this->monitorActions();
     }
 
+    function garbageCollectActions() {
+      $posts = get_posts( [
+        'numberposts' => -1,
+        'post_type' => 'action_monitor',
+        'date_query' => [
+          'before' => date( "Y-m-d H:i:s", strtotime( '-7 days' ) ),
+        ],
+      ]);
+
+      if( !empty( $posts ) ) {
+        foreach( $posts as $post ) {
+          wp_delete_post( $post->ID );
+        }
+      }
+    }
+
     // $args = [$action_type, $title, $status, $node_id, $relay_id, $graphql_single_name, $graphql_plural_name]
     function insertNewAction($args) {
       if (
@@ -90,6 +106,8 @@ class ActionMonitor
             'post_status' => 'publish'
           ] );
       }
+
+      $this->garbageCollectActions();
     }
 
     /**
