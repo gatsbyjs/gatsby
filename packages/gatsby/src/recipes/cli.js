@@ -24,8 +24,21 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 
-module.exports = recipe => {
-  let recipePath = path.join(__dirname, recipe)
+const isRelative = path => {
+  if (path.slice(0, 1) == `.`) {
+    return true
+  }
+
+  return false
+}
+
+module.exports = ({ recipe, projectRoot }) => {
+  let recipePath
+  if (isRelative(recipe)) {
+    recipePath = path.join(projectRoot, recipe)
+  } else {
+    let recipePath = path.join(__dirname, recipe)
+  }
   if (recipePath.slice(-4) !== `.mdx`) {
     recipePath += `.mdx`
   }
