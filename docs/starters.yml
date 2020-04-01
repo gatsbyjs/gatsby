@@ -5822,7 +5822,6 @@
     - Styling:Styled-component
   features:
     - Mobile friendly and fully responsive
-    - Code highlight with Use "NanumSquareRounds" Code font
     - Emoji (emojione)
     - Code syntax highlighting (atom-one-light Style)
     - Comment feature ( utterances)
