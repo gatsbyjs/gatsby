@@ -168,50 +168,72 @@ export const ensureIndexByTypedChain = (
     return
   }
 
-  const { nodes, resolvedNodesCache } = store.getState()
+  const state = store.getState()
+  const resolvedNodesCache = state.resolvedNodesCache
 
   const filterCache: FilterCache = new Map()
   filtersCache.set(cacheKey, filterCache)
 
-  nodes.forEach(node => {
-    if (!nodeTypeNames.includes(node.internal.type)) {
-      return
-    }
+  // We cache the subsets of nodes by type, but only one type. So if searching
+  // through one node type we can prevent a search through all nodes, otherwise
+  // it's probably faster to loop through all nodes. Perhaps. Maybe.
 
-    // There can be a filter that targets `__gatsby_resolved` so fix that first
-    if (!node.__gatsby_resolved) {
-      const typeName = node.internal.type
-      const resolvedNodes = resolvedNodesCache.get(typeName)
-      node.__gatsby_resolved = resolvedNodes?.get(node.id)
-    }
+  if (nodeTypeNames.length === 1) {
+    getNodesByType(nodeTypeNames[0]).forEach(node => {
+      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
+    })
+  } else {
+    // Here we must first filter for the node type
+    // This loop is expensive at scale (!)
+    state.nodes.forEach(node => {
+      if (!nodeTypeNames.includes(node.internal.type)) {
+        return
+      }
 
-    let v = node as any
-    let i = 0
-    while (i < chain.length && v) {
-      const nextProp = chain[i++]
-      v = v[nextProp]
-    }
+      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
+    })
+  }
+}
 
-    if (
-      (typeof v !== `string` &&
-        typeof v !== `number` &&
-        typeof v !== `boolean`) ||
-      i !== chain.length
-    ) {
-      // Not sure whether this is supposed to happen, but this means that either
-      // - The node chain ended with `undefined`, or
-      // - The node chain ended in something other than a primitive, or
-      // - A part in the chain in the object was not an object
-      return
-    }
+const addNodeToFilterCache = (
+  node: IGatsbyNode,
+  chain: Array<string>,
+  filterCache: FilterCache,
+  resolvedNodesCache
+): void => {
+  // There can be a filter that targets `__gatsby_resolved` so fix that first
+  if (!node.__gatsby_resolved) {
+    const typeName = node.internal.type
+    const resolvedNodes = resolvedNodesCache.get(typeName)
+    node.__gatsby_resolved = resolvedNodes?.get(node.id)
+  }
 
-    let set = filterCache.get(v)
-    if (!set) {
-      set = new Set()
-      filterCache.set(v, set)
-    }
-    set.add(node)
-  })
+  let v = node as any
+  let i = 0
+  while (i < chain.length && v) {
+    const nextProp = chain[i++]
+    v = v[nextProp]
+  }
+
+  if (
+    (typeof v !== `string` &&
+      typeof v !== `number` &&
+      typeof v !== `boolean`) ||
+    i !== chain.length
+  ) {
+    // Not sure whether this is supposed to happen, but this means that either
+    // - The node chain ended with `undefined`, or
+    // - The node chain ended in something other than a primitive, or
+    // - A part in the chain in the object was not an object
+    return
+  }
+
+  let set = filterCache.get(v)
+  if (!set) {
+    set = new Set()
+    filterCache.set(v, set)
+  }
+  set.add(node)
 }
 
 /**
