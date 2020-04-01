@@ -21,7 +21,7 @@ starter:
   - CMS:Other
   - Disqus
   - Documentation
-  - eCommerce
+  - E-commerce
   - Firebase
   - Gallery
   - Google Sheets
@@ -80,6 +80,7 @@ site:
   - Design System
   - Directory
   - Documentation
+  - E-commerce
   - Education
   - Entertainment
   - Entrepreneurship
@@ -120,4 +121,3 @@ site:
   - Video
   - Web Development
   - WordPress
-  - eCommerce

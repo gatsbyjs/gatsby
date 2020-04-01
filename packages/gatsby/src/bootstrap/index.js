@@ -13,11 +13,12 @@ const telemetry = require(`gatsby-telemetry`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 import { getBrowsersList } from "../utils/browserslist"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
+import { startPluginRunner } from "../redux/plugin-runner"
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
-const getConfigFile = require(`./get-config-file`)
+import { getConfigFile } from "./get-config-file"
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const removeStaleJobs = require(`./remove-stale-jobs`)
@@ -66,7 +67,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Start plugin runner which listens to the store
   // and invokes Gatsby API based on actions.
-  require(`../redux/plugin-runner`)
+  startPluginRunner()
 
   const directory = slash(args.directory)
 

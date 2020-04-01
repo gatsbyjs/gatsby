@@ -296,6 +296,33 @@ module.exports = {
 }
 ```
 
+#### Using with gatsby-plugin-offline
+
+If using this plugin with `gatsby-plugin-offline` you may find that your icons are not cached.
+In order to solve this, update your `gatsby-config.js` as follows:
+
+```js
+// gatsby-config.js
+{
+   resolve: 'gatsby-plugin-manifest',
+   options: {
+      icon: 'icon.svg',
+      cache_busting_mode: 'none'
+   }
+},
+{
+   resolve: 'gatsby-plugin-offline',
+   options: {
+      workboxConfig: {
+         globPatterns: ['**/*']
+      }
+   }
+}
+```
+
+Updating `cache_busting_mode` is necessary. Otherwise, workbox will break while attempting to find the cached URLs.
+Adding the `globPatterns` makes sure that the offline plugin will cache everything.
+
 #### Remove `theme-color` meta tag
 
 By default a `<meta content={theme_color} name="theme-color" />` tag is inserted into the html output. This can be problematic if you want to programmatically control that tag (e.g. when implementing light/dark themes in your project). You can set `theme_color_in_head` plugin option to `false` to opt-out of this behavior.
