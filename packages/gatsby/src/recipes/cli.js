@@ -416,5 +416,6 @@ module.exports = recipe => {
 
   const Recipe = () => <Wrapper steps={stepsAsMDX} />
 
-  render(<Recipe />)
+  // Enable experimental mode for more efficient reconciler and renderer
+  render(<Recipe />, { experimental: true })
 }
