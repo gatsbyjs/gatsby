@@ -1,13 +1,17 @@
-const Joi = require(`@hapi/joi`)
+import Joi from "@hapi/joi"
+import { GatsbyConfig, Node } from "../../"
+import { IGatsbyPage } from "../redux/types"
 
-const stripTrailingSlash = chain => chain.replace(/(\w)\/+$/, `$1`)
+const stripTrailingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
+  chain.replace(/(\w)\/+$/, `$1`)
+
 // only add leading slash on relative urls
-const addLeadingSlash = chain =>
+const addLeadingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
   chain.when(Joi.string().uri({ relativeOnly: true }), {
     then: chain.replace(/^([^/])/, `/$1`),
   })
 
-export const gatsbyConfigSchema = Joi.object()
+export const gatsbyConfigSchema: Joi.ObjectSchema<GatsbyConfig> = Joi.object()
   .keys({
     __experimentalThemes: Joi.array(),
     polyfill: Joi.boolean().default(true),
@@ -73,7 +77,7 @@ export const gatsbyConfigSchema = Joi.object()
     }
   )
 
-export const pageSchema = Joi.object()
+export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()
   .keys({
     path: Joi.string().required(),
     matchPath: Joi.string(),
@@ -85,7 +89,7 @@ export const pageSchema = Joi.object()
   })
   .unknown()
 
-export const nodeSchema = Joi.object()
+export const nodeSchema: Joi.ObjectSchema<Node> = Joi.object()
   .keys({
     id: Joi.string().required(),
     children: Joi.array().items(Joi.string(), Joi.object().forbidden()),

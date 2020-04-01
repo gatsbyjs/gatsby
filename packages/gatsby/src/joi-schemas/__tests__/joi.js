@@ -1,4 +1,4 @@
-const { gatsbyConfigSchema, nodeSchema } = require(`../joi`)
+import { gatsbyConfigSchema, nodeSchema } from "../joi"
 
 describe(`gatsby config`, () => {
   it(`returns empty pathPrefix when not set`, async () => {
