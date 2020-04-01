@@ -180,33 +180,14 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
 
   // Fail fast while trying to create and get the value-cache for each path
   let every = filters.every((filter /*: DbQuery*/) => {
-    let {
-      path: chain,
-      query: { value: targetValue },
-    } = filter
-
     let cacheKey = createTypedFilterCacheKey(nodeTypeNames, filter)
-
-    ensureIndexByTypedChain(cacheKey, chain, nodeTypeNames, filtersCache)
-
-    const filterCache = getFilterCacheByTypedChain(
+    getBucketsForQueryFilter(
       cacheKey,
-      targetValue,
-      filtersCache
+      filter,
+      nodeTypeNames,
+      filtersCache,
+      filterCaches
     )
-
-    // If we couldn't find the needle then maybe sift can, for example if the
-    // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
-    // There are also cases (and tests) where id exists with a different type
-    if (!filterCache) {
-      return false
-    }
-
-    // In all other cases this must be a non-empty Set because the indexing
-    // mechanism does not create a Set unless there's a IGatsbyNode for it
-    filterCaches.push(filterCache)
-
-    return true
   })
 
   if (every) {
@@ -215,6 +196,50 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
 
   // "failed at least one"
   return undefined
+}
+
+/**
+ * Fetch all buckets for given query filter. That means it's not elemMatch.
+ *
+ * @param {FilterCacheKey} cacheKey
+ * @param {IDbQueryQuery} filter
+ * @param {Array<string>} nodeTypeNames
+ * @param {FiltersCache} filtersCache
+ * @param {Set<FilterCache>} filterCaches
+ * @returns {boolean} false means soft fail, filter must go through Sift
+ */
+const getBucketsForQueryFilter = (
+  cacheKey,
+  filter,
+  nodeTypeNames,
+  filtersCache,
+  filterCaches
+) => {
+  let {
+    path: chain,
+    query: { value: targetValue },
+  } = filter
+
+  ensureIndexByTypedChain(cacheKey, chain, nodeTypeNames, filtersCache)
+
+  const filterCache = getFilterCacheByTypedChain(
+    cacheKey,
+    targetValue,
+    filtersCache
+  )
+
+  // If we couldn't find the needle then maybe sift can, for example if the
+  // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
+  // There are also cases (and tests) where id exists with a different type
+  if (!filterCache) {
+    return false
+  }
+
+  // In all other cases this must be a non-empty Set because the indexing
+  // mechanism does not create a Set unless there's a IGatsbyNode for it
+  filterCaches.push(filterCache)
+
+  return true
 }
 
 /**
