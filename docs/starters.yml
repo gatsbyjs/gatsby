@@ -5814,7 +5814,7 @@
   tags:
     - Blog
     - Netlify
-    - utteranc
+    - utterance
     - SEO
     - 404 page
     - Language:TypeScript
@@ -5822,10 +5822,10 @@
     - Styling:Styled-component
   features:
     - Mobile friendly and fully responsive
-    - Code highlight with NanumSquareRounds Code font
+    - Code highlight with Use "NanumSquareRounds" Code font
     - Emoji (emojione)
     - Code syntax highlighting (atom-one-light Style)
     - Comment feature ( utterances)
     - Post side PostTOC
-    - Simple fresh design like Medium 
+    - Simple fresh design like Medium
     - Readability
