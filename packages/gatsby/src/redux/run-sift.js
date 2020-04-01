@@ -29,6 +29,7 @@ const {
  */
 const createTypedFilterCacheKey = (typeNames, filter) => {
   // Note: while `elemMatch` is a special case, in the key it's just `elemMatch`
+  // (This function is future proof for elemMatch support, won't receive it yet)
   let f = filter
   let comparator = ``
   let paths /*: Array<string>*/ = []
