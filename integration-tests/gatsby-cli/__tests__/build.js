@@ -6,10 +6,8 @@ jest.setTimeout(MAX_TIMEOUT)
 describe(`gatsby build`, () => {
   const cwd = `gatsby-sites/gatsby-build`
 
-  beforeAll(() => removeFolder(`${cwd}/.cache`))
-  beforeAll(() => removeFolder(`${cwd}/public`))
-  afterAll(() => removeFolder(`${cwd}/.cache`))
-  afterAll(() => removeFolder(`${cwd}/public`))
+  beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
+  afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
   it(`creates a built gatsby site`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke(`build`)

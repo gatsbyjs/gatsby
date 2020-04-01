@@ -13,10 +13,8 @@ jest.setTimeout(MAX_TIMEOUT)
 describe(`gatsby develop`, () => {
   const cwd = `gatsby-sites/gatsby-develop`
 
-  beforeAll(() => removeFolder(`${cwd}/.cache`))
-  beforeAll(() => removeFolder(`${cwd}/public`))
-  afterAll(() => removeFolder(`${cwd}/.cache`))
-  afterAll(() => removeFolder(`${cwd}/public`))
+  beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
+  afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
   it(`starts a gatsby site on port 8000`, async () => {
     // 1. Start the `gatsby develop` command
