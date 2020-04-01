@@ -7,7 +7,6 @@ const declare = require(`@babel/helper-plugin-utils`).declare
 const create = ({ root }, { name }) => {
   const configPath = path.join(root, `gatsby-config.js`)
   const configSrc = fs.readFileSync(configPath)
-  console.log({ configPath, configSrc })
 
   const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
     pluginOrThemeName: name,
