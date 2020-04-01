@@ -2,16 +2,16 @@ const redish = `#c5484d`
 
 module.exports = {
   siteMetadata: {
-    title: "Bricolage",
-    author: "Kyle Mathews",
-    homeCity: "San Francisco",
+    title: `Bricolage`,
+    author: `Kyle Mathews`,
+    homeCity: `San Francisco`,
   },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/pages`,
-        name: "pages",
+        name: `pages`,
       },
     },
     `gatsby-transformer-sharp`,
@@ -38,9 +38,9 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
           },
-          "gatsby-remark-prismjs",
-          "gatsby-remark-copy-linked-files",
-          "gatsby-remark-smartypants",
+          `gatsby-remark-prismjs`,
+          `gatsby-remark-copy-linked-files`,
+          `gatsby-remark-smartypants`,
         ],
       },
     },
@@ -54,13 +54,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: "Bricolage",
-        short_name: "Bricolage",
-        icon: "static/logo.png",
-        start_url: "/",
+        name: `Bricolage`,
+        short_name: `Bricolage`,
+        icon: `static/logo.png`,
+        start_url: `/`,
         background_color: redish,
         theme_color: redish,
-        display: "minimal-ui",
+        display: `minimal-ui`,
       },
     },
     `gatsby-plugin-offline`,
