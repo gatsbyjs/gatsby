@@ -1,6 +1,6 @@
-const path = require(`path`)
+import * as path from "path"
 
-const { createFileNode } = require(`../create-file-node`)
+import { createFileNode } from "../create-file-node"
 
 // FIXME: This test needs to not use snapshots because of file differences
 // and locations across users and CI systems

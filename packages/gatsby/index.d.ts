@@ -1,5 +1,6 @@
 import * as React from "react"
 import { EventEmitter } from "events"
+import { CachingConfig } from "cache-manager"
 import { WindowLocation, NavigateFn } from "@reach/router"
 import { createContentDigest } from "gatsby-core-utils"
 import {
@@ -717,7 +718,7 @@ export interface GatsbySSR {
 }
 
 export interface PluginOptions {
-  plugins: unknown[]
+  plugins?: unknown[]
   [key: string]: unknown
 }
 
@@ -1163,6 +1164,7 @@ export interface Cache {
   store: {
     create: Function
   }
+  readonly directory: string
   cache: {
     getAndPassUp: Function
     wrap: Function
@@ -1173,6 +1175,8 @@ export interface Cache {
     del: Function
     reset: Function
   }
+  get<T = unknown>(key): Promise<T | undefined>
+  set<T>(key: string, value: T, args?: CachingConfig): Promise<T | undefined>
 }
 
 export interface Tracing {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 jest.mock(`fs-extra`, () => {
   return {
     createWriteStream: jest.fn(() => {
@@ -40,9 +41,9 @@ const progressBar = {
 }
 reporter.createProgress.mockImplementation(() => progressBar)
 
-const got = require(`got`)
-const createRemoteFileNode = require(`../create-remote-file-node`)
-const { createFileNode } = require(`../create-file-node`)
+import got from "got"
+import { createRemoteFileNode } from "../create-remote-file-node"
+import { createFileNode } from "../create-file-node"
 
 beforeEach(() => {
   progressBar.tick.mockClear()
@@ -260,39 +261,30 @@ describe(`create-remote-file-node`, () => {
   })
 
   describe(`validation`, () => {
-    it(`throws on invalid inputs: createNode`, () => {
-      expect(() => {
+    it(`throws on invalid inputs: createNode`, () =>
+      expect(
         createRemoteFileNode({
           ...defaultArgs,
           createNode: undefined,
         })
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"createNode must be a function, was undefined"`
-      )
-    })
+      ).rejects.toThrowError())
 
-    it(`throws on invalid inputs: createNodeId`, () => {
-      expect(() => {
+    it(`throws on invalid inputs: createNodeId`, () =>
+      expect(
         createRemoteFileNode({
           ...defaultArgs,
           createNodeId: undefined,
         })
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"createNodeId must be a function, was undefined"`
-      )
-    })
+      ).rejects.toThrowError())
 
-    it(`throws on invalid inputs: cache and getCache undefined`, () => {
-      expect(() => {
+    it(`throws on invalid inputs: cache and getCache undefined`, () =>
+      expect(
         createRemoteFileNode({
           ...defaultArgs,
           cache: undefined,
           getCache: undefined,
         })
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"Neither \\"cache\\" or \\"getCache\\" was passed. getCache must be function that return Gatsby cache, \\"cache\\" must be the Gatsby cache, was undefined"`
-      )
-    })
+      ).rejects.toThrowError())
 
     it(`doesn't throw when getCache is defined`, () => {
       expect(() => {

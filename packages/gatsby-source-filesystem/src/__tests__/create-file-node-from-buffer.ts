@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { ensureDir, writeFile } from "fs-extra"
+import { createFileNode } from "../create-file-node"
+import { createFileNodeFromBuffer } from "../create-file-node-from-buffer"
+
 jest.mock(`fs-extra`, () => {
   return {
     ensureDir: jest.fn(() => true),
@@ -16,10 +21,6 @@ jest.mock(`../create-file-node`, () => {
     }),
   }
 })
-
-const { ensureDir, writeFile } = require(`fs-extra`)
-const { createFileNode } = require(`../create-file-node`)
-const createFileNodeFromBuffer = require(`../create-file-node-from-buffer`)
 
 const createMockBuffer = content => {
   const buffer = Buffer.alloc(content.length)

@@ -1,9 +1,19 @@
-const mockFS = {
-  existsSync: jest.fn(() => true),
-}
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import chokidar from "chokidar"
+import { createFileNode } from "../create-file-node"
+import mitt from "mitt"
+import * as gatsbyNode from "../gatsby-node"
 
-jest.mock(`fs`, () => mockFS)
-jest.mock(`fs-extra`, () => mockFS)
+jest.mock(`fs`, () => {
+  return {
+    existsSync: jest.fn(() => true),
+  }
+})
+jest.mock(`fs-extra`, () => {
+  return {
+    existsSync: jest.fn(() => true),
+  }
+})
 
 jest.mock(`path`, () => {
   return {
@@ -22,13 +32,6 @@ jest.mock(`chokidar`, () => {
     watch: jest.fn(),
   }
 })
-
-const chokidar = require(`chokidar`)
-const { createFileNode } = require(`../create-file-node`)
-
-const mitt = require(`mitt`)
-
-const gatsbyNode = require(`../gatsby-node`)
 
 const createApi = () => {
   return {

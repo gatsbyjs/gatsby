@@ -1,30 +1,67 @@
-const chokidar = require(`chokidar`)
-const fs = require(`fs`)
-const path = require(`path`)
-const { Machine, interpret } = require(`xstate`)
+import * as chokidar from "chokidar"
+import * as fs from "fs"
+import * as path from "path"
+import { Machine, interpret, Interpreter, EventObject } from "xstate"
+import { PluginOptions, SourceNodesArgs } from "gatsby"
+import { createFileNode } from "./create-file-node"
 
-const { createFileNode } = require(`./create-file-node`)
+interface IStateSchema {
+  states: {
+    BOOTSTRAP: {
+      states: {
+        BOOTSTRAPPING: {}
+        BOOTSTRAPPED: {}
+      }
+    }
+    CHOKIDAR: {
+      states: {
+        NOT_READY: {}
+        READY: {}
+      }
+    }
+  }
+}
+
+// export type TBootstrapEvent = "BOOTSTRAPPING" | "BOOTSTRAP_FINISHED"
+// export interface IBootstrapEvent extends EventObject {
+//   type: TBootstrapEvent
+// }
+
+export type TEvent =
+  | "BOOTSTRAPPING"
+  | "BOOTSTRAP_FINISHED"
+  | "NOT_READY"
+  | "CHOKIDAR_READY"
+  | "CHOKIDAR_ADD"
+  | "CHOKIDAR_CHANGE"
+  | "CHOKIDAR_UNLINK"
+export interface ITagEvent extends EventObject {
+  type: TEvent
+  resolve?: () => void
+  reject?: () => void
+  pathType?: string
+  path?: string
+}
 
 /**
  * Create a state machine to manage Chokidar's not-ready/ready states.
  */
-const createFSMachine = (
-  { actions: { createNode, deleteNode }, getNode, createNodeId, reporter },
-  pluginOptions
-) => {
-  const createAndProcessNode = path => {
-    const fileNodePromise = createFileNode(
-      path,
-      createNodeId,
-      pluginOptions
-    ).then(fileNode => {
+function createFSMachine(
+  {
+    actions: { createNode, deleteNode },
+    getNode,
+    createNodeId,
+    reporter,
+  }: SourceNodesArgs,
+  pluginOptions: PluginOptions
+): Interpreter<{}, IStateSchema, ITagEvent> {
+  const createAndProcessNode = (path: string): Promise<null> =>
+    createFileNode(path, createNodeId, pluginOptions).then(fileNode => {
       createNode(fileNode)
       return null
     })
-    return fileNodePromise
-  }
 
-  const deletePathNode = path => {
+  const deletePathNode = (path: string): void => {
     const node = getNode(createNodeId(path))
     // It's possible the node was never created as sometimes tools will
     // write and then immediately delete temporary files to the file system.
@@ -36,10 +73,10 @@ const createFSMachine = (
   // For every path that is reported before the 'ready' event, we throw them
   // into a queue and then flush the queue when 'ready' event arrives.
   // After 'ready', we handle the 'add' event without putting it into a queue.
-  let pathQueue = []
-  const flushPathQueue = () => {
-    let queue = pathQueue.slice()
-    pathQueue = null
+  let pathQueue: Array<{ op: string; path: string }> = []
+  const flushPathQueue = (): Promise<Array<void | null>> => {
+    const queue = pathQueue.slice()
+    pathQueue = []
     return Promise.all(
       // eslint-disable-next-line consistent-return
       queue.map(({ op, path }) => {
@@ -53,13 +90,7 @@ const createFSMachine = (
     )
   }
 
-  const log = expr => (ctx, action, meta) => {
-    if (meta.state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
-      reporter.info(expr(ctx, action, meta))
-    }
-  }
-
-  const fsMachine = Machine(
+  const fsMachine = Machine<{}, IStateSchema, ITagEvent>(
     {
       id: `fs`,
       type: `parallel`,
@@ -92,30 +123,13 @@ const createFSMachine = (
             READY: {
               on: {
                 CHOKIDAR_ADD: {
-                  actions: [
-                    `createAndProcessNode`,
-                    log(
-                      (_, { pathType, path }) => `added ${pathType} at ${path}`
-                    ),
-                  ],
+                  actions: [`createAndProcessNode`],
                 },
                 CHOKIDAR_CHANGE: {
-                  actions: [
-                    `createAndProcessNode`,
-                    log(
-                      (_, { pathType, path }) =>
-                        `changed ${pathType} at ${path}`
-                    ),
-                  ],
+                  actions: [`createAndProcessNode`],
                 },
                 CHOKIDAR_UNLINK: {
-                  actions: [
-                    `deletePathNode`,
-                    log(
-                      (_, { pathType, path }) =>
-                        `deleted ${pathType} at ${path}`
-                    ),
-                  ],
+                  actions: [`deletePathNode`],
                 },
               },
             },
@@ -125,20 +139,30 @@ const createFSMachine = (
     },
     {
       actions: {
-        createAndProcessNode(_, { pathType, path }) {
-          createAndProcessNode(path).catch(err => reporter.error(err))
+        createAndProcessNode(_, { pathType, path }, meta): void {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          createAndProcessNode(path!).catch(err => reporter.error(err))
+          if (meta?.state?.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
+            reporter.info(`add or changed ${pathType} at ${path}`)
+          }
         },
-        deletePathNode(_, { pathType, path }, { state }) {
-          deletePathNode(path)
+        deletePathNode(_, { pathType, path }, meta): void {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          deletePathNode(path!)
+          if (meta?.state?.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
+            reporter.info(`deleted ${pathType} at ${path}`)
+          }
         },
-        flushPathQueue(_, { resolve, reject }) {
+        flushPathQueue(_, { resolve, reject }): void {
           flushPathQueue().then(resolve, reject)
         },
-        queueNodeDeleting(_, { path }) {
-          pathQueue.push({ op: `delete`, path })
+        queueNodeDeleting(_, { path }): void {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          pathQueue.push({ op: `delete`, path: path! })
         },
-        queueNodeProcessing(_, { path }) {
-          pathQueue.push({ op: `upsert`, path })
+        queueNodeProcessing(_, { path }): void {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          pathQueue.push({ op: `upsert`, path: path! })
         },
       },
     }
@@ -146,12 +170,15 @@ const createFSMachine = (
   return interpret(fsMachine).start()
 }
 
-exports.sourceNodes = (api, pluginOptions) => {
+export function sourceNodes(
+  api: SourceNodesArgs,
+  options: PluginOptions & { path: string; ignore?: string[] }
+): Promise<void> {
   // Validate that the path exists.
-  if (!fs.existsSync(pluginOptions.path)) {
+  if (!fs.existsSync(options.path)) {
     api.reporter.panic(`
 The path passed to gatsby-source-filesystem does not exist on your file system:
-${pluginOptions.path}
+${options.path}
 Please pick a path to an existing directory.
 See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `)
@@ -159,11 +186,11 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
 
   // Validate that the path is absolute.
   // Absolute paths are required to resolve images correctly.
-  if (!path.isAbsolute(pluginOptions.path)) {
-    pluginOptions.path = path.resolve(process.cwd(), pluginOptions.path)
+  if (!path.isAbsolute(options.path)) {
+    options.path = path.resolve(process.cwd(), options.path)
   }
 
-  const fsMachine = createFSMachine(api, pluginOptions)
+  const fsMachine = createFSMachine(api, options)
 
   // Once bootstrap is finished, we only let one File node update go through
   // the system at a time.
@@ -171,7 +198,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     fsMachine.send(`BOOTSTRAP_FINISHED`)
   })
 
-  const watcher = chokidar.watch(pluginOptions.path, {
+  const watcher = chokidar.watch(options.path, {
     ignored: [
       `**/*.un~`,
       `**/.DS_Store`,
@@ -182,7 +209,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `**/bower_components`,
       `**/node_modules`,
       `../**/dist/**`,
-      ...(pluginOptions.ignore || []),
+      ...(options.ignore || []),
     ],
   })
 
@@ -213,4 +240,4 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
   })
 }
 
-exports.setFieldsOnGraphQLNodeType = require(`./extend-file-node`)
+export { extendFileNode as setFieldsOnGraphQLNodeType } from "./extend-file-node"

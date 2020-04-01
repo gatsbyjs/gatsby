@@ -1,55 +1,23 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const fileType = require(`file-type`)
+import * as fs from "fs-extra"
+import * as path from "path"
+import fileType from "file-type"
+import { createContentDigest } from "gatsby-core-utils"
+import { createFileNode } from "./create-file-node"
+import { createFilePath } from "./utils"
+import { IFileSystemNode, ICreateFileNodeFromBufferArgs } from "../"
 
-const { createFileNode } = require(`./create-file-node`)
-const { createFilePath } = require(`./utils`)
-const { createContentDigest } = require(`gatsby-core-utils`)
-const cacheId = hash => `create-file-node-from-buffer-${hash}`
-
-/********************
- * Type Definitions *
- ********************/
+const cacheId = (hash: string): string => `create-file-node-from-buffer-${hash}`
 
 /**
- * @typedef {GatsbyCache}
- * @see gatsby/packages/gatsby/utils/cache.js
- */
-
-/**
- * @typedef {CreateFileNodeFromBufferPayload}
- * @typedef {Object}
- * @description Create File Node From Buffer Payload
- *
- * @param  {Buffer} options.buffer
- * @param  {String} options.hash
- * @param  {GatsbyCache} options.cache
- * @param  {Function} options.getCache
- * @param  {Function} options.createNode
- */
-
-/**
- * writeBuffer
- * --
  * Write the contents of `buffer` to `filename`
- *
- *
- * @param {String} filename
- * @param {Buffer} buffer
- * @returns {Promise<void>}
  */
-const writeBuffer = (filename, buffer) =>
+const writeBuffer = (filename: string, buffer: Buffer): Promise<void> =>
   new Promise((resolve, reject) => {
     fs.writeFile(filename, buffer, err => (err ? reject(err) : resolve()))
   })
 
 /**
- * processBufferNode
- * --
  * Write the buffer contents out to disk and return the fileNode
- *
- * @param {CreateFileNodeFromBufferPayload} options
- * @return {Promise<Object>} Resolves with the fileNode
  */
 async function processBufferNode({
   buffer,
@@ -60,7 +28,9 @@ async function processBufferNode({
   createNodeId,
   ext,
   name,
-}) {
+}: ICreateFileNodeFromBufferArgs & { hash: string; name: string }): Promise<
+  IFileSystemNode
+> {
   const pluginCacheDir = cache.directory
 
   // See if there's a cache file for this buffer's contents from
@@ -78,17 +48,17 @@ async function processBufferNode({
     filename = createFilePath(path.join(pluginCacheDir, hash), name, ext)
 
     // Cache the buffer contents
-    await writeBuffer(filename, buffer)
+    await writeBuffer(filename as string, buffer)
 
     // Save the cache file path for future use
     await cache.set(cacheId(hash), filename)
   }
 
   // Create the file node.
-  const fileNode = await createFileNode(filename, createNodeId, {})
+  const fileNode = await createFileNode(filename as string, createNodeId, {})
   fileNode.internal.description = `File "Buffer<${hash}>"`
   fileNode.hash = hash
-  fileNode.parent = parentNodeId
+  fileNode.parent = parentNodeId as string
   // Override the default plugin as gatsby-source-filesystem needs to
   // be the owner of File nodes or there'll be conflicts if any other
   // File nodes are created through normal usages of
@@ -103,31 +73,21 @@ async function processBufferNode({
  */
 const processingCache = {}
 
-/***************
- * Entry Point *
- ***************/
-
 /**
- * createFileNodeFromBuffer
- * --
- *
  * Cache a buffer's contents to disk
  * First checks cache to ensure duplicate buffers aren't processed
- *
- * @param {CreateFileNodeFromBufferPayload} options
- * @return {Promise<Object>}                  Returns the created node
  */
-module.exports = ({
+export function createFileNodeFromBuffer({
   buffer,
   hash,
   cache,
   createNode,
   getCache,
-  parentNodeId = null,
+  parentNodeId,
   createNodeId,
   ext,
   name = hash,
-}) => {
+}: ICreateFileNodeFromBufferArgs): Promise<IFileSystemNode> {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
   // see gatsbyjs/gatsby#6643
@@ -165,13 +125,14 @@ module.exports = ({
 
   const bufferCachePromise = processBufferNode({
     buffer,
-    hash,
+    hash: hash as string,
     cache,
+    getCache,
     createNode,
     parentNodeId,
     createNodeId,
     ext,
-    name,
+    name: name as string,
   })
 
   processingCache[hash] = bufferCachePromise

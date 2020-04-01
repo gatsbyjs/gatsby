@@ -1,58 +1,30 @@
-const fs = require(`fs-extra`)
-const got = require(`got`)
-const { createContentDigest } = require(`gatsby-core-utils`)
-const path = require(`path`)
-const { isWebUri } = require(`valid-url`)
-const Queue = require(`better-queue`)
-const readChunk = require(`read-chunk`)
-const fileType = require(`file-type`)
-const { createProgress } = require(`./utils`)
-
-const { createFileNode } = require(`./create-file-node`)
-const {
+import * as fs from "fs-extra"
+import * as path from "path"
+import got from "got"
+import { isWebUri } from "valid-url"
+import Queue from "better-queue"
+import readChunk from "read-chunk"
+import fileType from "file-type"
+import { createContentDigest } from "gatsby-core-utils"
+import {
+  createProgress,
   getRemoteFileExtension,
   getRemoteFileName,
   createFilePath,
-} = require(`./utils`)
-const cacheId = url => `create-remote-file-node-${url}`
+  IProgressReport,
+} from "./utils"
+import { createFileNode } from "./create-file-node"
+import { IFileSystemNode, ICreateRemoteFileNodeArgs } from "../"
 
-let bar
+interface IHTTPOptions {
+  auth?: string
+}
+
+const cacheId = (url: string): string => `create-remote-file-node-${url}`
+
+let bar: IProgressReport | undefined
 // Keep track of the total number of jobs we push in the queue
 let totalJobs = 0
-
-/********************
- * Type Definitions *
- ********************/
-
-/**
- * @typedef {GatsbyCache}
- * @see gatsby/packages/gatsby/utils/cache.js
- */
-
-/**
- * @typedef {Reporter}
- * @see gatsby/packages/gatsby-cli/lib/reporter.js
- */
-
-/**
- * @typedef {Auth}
- * @type {Object}
- * @property {String} htaccess_pass
- * @property {String} htaccess_user
- */
-
-/**
- * @typedef {CreateRemoteFileNodePayload}
- * @typedef {Object}
- * @description Create Remote File Node Payload
- *
- * @param  {String} options.url
- * @param  {GatsbyCache} options.cache
- * @param  {Function} options.createNode
- * @param  {Function} options.getCache
- * @param  {Auth} [options.auth]
- * @param  {Reporter} [options.reporter]
- */
 
 const STALL_RETRY_LIMIT = 3
 const STALL_TIMEOUT = 30000
@@ -72,8 +44,8 @@ const CONNECTION_TIMEOUT = 30000
  */
 const queue = new Queue(pushToQueue, {
   id: `url`,
-  merge: (old, _, cb) => cb(old),
-  concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
+  merge: (old, _, cb): void => cb(old, _),
+  concurrent: (process.env.GATSBY_CONCURRENT_DOWNLOAD || 200) as number,
 })
 
 // when the queue is empty we stop the progressbar
@@ -85,22 +57,12 @@ queue.on(`drain`, () => {
 })
 
 /**
- * @callback {Queue~queueCallback}
- * @param {*} error
- * @param {*} result
- */
-
-/**
- * pushToQueue
- * --
  * Handle tasks that are pushed in to the Queue
- *
- *
- * @param  {CreateRemoteFileNodePayload}          task
- * @param  {Queue~queueCallback}  cb
- * @return {Promise<null>}
  */
-async function pushToQueue(task, cb) {
+async function pushToQueue<T>(
+  task: ICreateRemoteFileNodeArgs & { parentNodeId: string },
+  cb: (err: string | null, node?: IFileSystemNode) => T
+): Promise<T> {
   try {
     const node = await processRemoteNode(task)
     return cb(null, node)
@@ -114,23 +76,23 @@ async function pushToQueue(task, cb) {
  ******************/
 
 /**
- * requestRemoteNode
- * --
  * Download the requested file
- *
- * @param  {String}   url
- * @param  {Headers}  headers
- * @param  {String}   tmpFilename
- * @param  {Object}   httpOpts
- * @param  {number}   attempt
- * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
+ * Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
-const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
-  new Promise((resolve, reject) => {
+function requestRemoteNode(
+  url: string,
+  headers: { [key: string]: string },
+  tmpFilename: string,
+  httpOpts?: IHTTPOptions,
+  attempt = 1
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> {
+  return new Promise((resolve, reject) => {
     let timeout
 
     // Called if we stall for 30s without receiving any data
-    const handleTimeout = async () => {
+    const handleTimeout = async (): Promise<void> => {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       fsWriteStream.close()
       fs.removeSync(tmpFilename)
       if (attempt < STALL_RETRY_LIMIT) {
@@ -143,7 +105,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       }
     }
 
-    const resetTimeout = () => {
+    const resetTimeout = (): void => {
       if (timeout) {
         clearTimeout(timeout)
       }
@@ -152,7 +114,9 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     const responseStream = got.stream(url, {
       headers,
       timeout: CONNECTION_TIMEOUT,
-      retries: CONNECTION_RETRY_LIMIT,
+      retry: {
+        retries: CONNECTION_RETRY_LIMIT,
+      },
       ...httpOpts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
@@ -185,30 +149,30 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       })
     })
   })
+}
 
 /**
- * processRemoteNode
- * --
  * Request the remote file and return the fileNode
- *
- * @param {CreateRemoteFileNodePayload} options
- * @return {Promise<Object>} Resolves with the fileNode
  */
 async function processRemoteNode({
   url,
   cache,
   createNode,
   parentNodeId,
-  auth = {},
+  auth,
   httpHeaders = {},
   createNodeId,
   ext,
   name,
-}) {
+}: ICreateRemoteFileNodeArgs & { parentNodeId: string }): Promise<
+  IFileSystemNode
+> {
   const pluginCacheDir = cache.directory
   // See if there's response headers for this url
   // from a previous request.
-  const cachedHeaders = await cache.get(cacheId(url))
+  const cachedHeaders = (await cache.get(cacheId(url))) as {
+    etag?: string
+  }
 
   const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
@@ -217,7 +181,7 @@ async function processRemoteNode({
 
   // Add htaccess authentication if passed in. This isn't particularly
   // extensible. We should define a proper API that we validate.
-  const httpOpts = {}
+  const httpOpts = {} as IHTTPOptions
   if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
     httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
   }
@@ -263,7 +227,7 @@ async function processRemoteNode({
   const fileNode = await createFileNode(filename, createNodeId, {})
   fileNode.internal.description = `File "${url}"`
   fileNode.url = url
-  fileNode.parent = parentNodeId
+  fileNode.parent = parentNodeId as string
   // Override the default plugin as gatsby-source-filesystem needs to
   // be the owner of File nodes or there'll be conflicts if any other
   // File nodes are created through normal usages of
@@ -278,15 +242,11 @@ async function processRemoteNode({
  */
 const processingCache = {}
 /**
- * pushTask
- * --
  * pushes a task in to the Queue and the processing cache
- *
- * Promisfy a task in queue
- * @param {CreateRemoteFileNodePayload} task
- * @return {Promise<Object>}
  */
-const pushTask = task =>
+const pushTask = (
+  task: ICreateRemoteFileNodeArgs
+): Promise<ICreateRemoteFileNodeArgs> =>
   new Promise((resolve, reject) => {
     queue
       .push(task)
@@ -298,34 +258,24 @@ const pushTask = task =>
       })
   })
 
-/***************
- * Entry Point *
- ***************/
-
 /**
- * createRemoteFileNode
- * --
- *
  * Download a remote file
  * First checks cache to ensure duplicate requests aren't processed
  * Then pushes to a queue
- *
- * @param {CreateRemoteFileNodePayload} options
- * @return {Promise<Object>}                  Returns the created node
  */
-module.exports = ({
+export async function createRemoteFileNode({
   url,
   cache,
   createNode,
   getCache,
-  parentNodeId = null,
+  parentNodeId,
   auth = {},
   httpHeaders = {},
   createNodeId,
-  ext = null,
-  name = null,
+  ext,
+  name,
   reporter,
-}) => {
+}: ICreateRemoteFileNodeArgs): Promise<IFileSystemNode> {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
   // see gatsbyjs/gatsby#6643
@@ -363,22 +313,26 @@ module.exports = ({
   }
 
   totalJobs += 1
-  bar.total = totalJobs
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  bar!.total = totalJobs
 
   const fileDownloadPromise = pushTask({
     url,
     cache,
     createNode,
+    getCache,
     parentNodeId,
     createNodeId,
     auth,
     httpHeaders,
     ext,
     name,
+    reporter,
   })
 
   processingCache[url] = fileDownloadPromise.then(node => {
-    bar.tick()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    bar!.tick()
 
     return node
   })

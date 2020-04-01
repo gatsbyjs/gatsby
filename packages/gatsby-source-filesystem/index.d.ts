@@ -1,110 +1,90 @@
-import { Node, Store, Cache } from "gatsby"
+import { Node, Store, Cache, Actions, Reporter, PluginOptions } from 'gatsby'
+import * as path from "path"
+import * as fs from "fs-extra"
 
 /**
  * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilepath
  */
-export function createFilePath(args: CreateFilePathArgs): string
+export function createFilePath(args: ICreateFilePathArgs): string
 
 /**
  * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createremotefilenode
  */
 export function createRemoteFileNode(
-  args: CreateRemoteFileNodeArgs
-): Promise<FileSystemNode>
+  args: ICreateRemoteFileNodeArgs
+): Promise<IFileSystemNode>
 
 /**
  * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilenodefrombuffer
  */
 export function createFileNodeFromBuffer(
-  args: CreateFileNodeFromBufferArgs
-): Promise<FileSystemNode>
+  args: ICreateFileNodeFromBufferArgs
+): Promise<IFileSystemNode>
 
-export interface CreateFilePathArgs {
+export interface ICreateFilePathArgs {
   node: Node
   getNode: Function
   basePath?: string
   trailingSlash?: boolean
 }
 
-export interface CreateRemoteFileNodeArgs {
+interface ICreateNodeAbstract {
+  store?: Store
+  cache: Cache
+  getCache: (directory: string) => Cache
+  createNode: Actions["createNode"]
+  createNodeId: Function
+  parentNodeId?: string
+  ext?: string
+  name?: string
+}
+
+export interface IHtaccesAuthentication {
+  htaccess_user?: string
+  htaccess_pass?: string
+}
+
+export interface ICreateRemoteFileNodeArgs extends ICreateNodeAbstract {
   url: string
-  store: Store
-  cache: Cache["cache"]
-  createNode: Function
-  createNodeId: Function
-  parentNodeId?: string
-  auth?: {
-    htaccess_user: string
-    htaccess_pass: string
-  }
+  auth: IHtaccesAuthentication
   httpHeaders?: object
-  ext?: string
-  name?: string
-  reporter: object
+  reporter: Reporter
 }
 
-export interface CreateFileNodeFromBufferArgs {
+export interface ICreateFileNodeFromBufferArgs extends ICreateNodeAbstract{
   buffer: Buffer
-  store: Store
-  cache: Cache["cache"]
-  createNode: Function
-  createNodeId: Function
-  parentNodeId?: string
   hash?: string
-  ext?: string
-  name?: string
 }
 
-export interface FileSystemNode extends Node {
-  absolutePath: string
-  accessTime: string
-  birthTime: Date
-  changeTime: string
-  extension: string
-  modifiedTime: string
-  prettySize: string
+type ID = string
+type NodeLink = string
+type DateTime = number
+
+interface IFileInternal {
+  content?: string
+  contentDigest: string
+  description?: string
+  fieldOwners?: Array<string>
+  ignoreType?: boolean
+  mediaType?: string
+  type: string
+}
+
+export interface IFileSystemNode extends Node, path.ParsedPath, fs.Stats {
+  sourceInstanceName: string
   relativeDirectory: string
   relativePath: string
-  sourceInstanceName: string
-
-  // parsed path typings
-  base: string
-  dir: string
-  ext: string
-  name: string
-  root: string
-
-  // stats
-  atime: Date
-  atimeMs: number
-  /**
-   * @deprecated Use `birthTime` instead
-   */
-  birthtime: Date
-  /**
-   * @deprecated Use `birthTime` instead
-   */
-  birthtimeMs: number
-  ctime: Date
-  ctimeMs: number
-  gid: number
-  mode: number
-  mtime: Date
-  mtimeMs: number
+  absolutePath: string
+  extension: string
   size: number
-  uid: number
-}
 
-export interface FileSystemConfig {
-  resolve: "gatsby-source-filesystem"
-  options: FileSystemOptions
-}
+  prettySize: string
+  modifiedTime: DateTime
+  accessTime: DateTime
+  changeTime: DateTime
+  birthTime: DateTime
 
-/**
- * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=filesy#options
- */
-interface FileSystemOptions {
-  name: string
-  path: string
-  ignore?: string[]
+  parent: NodeLink
+  children: Array<NodeLink>
+  internal: Node["internal"] & IFileInternal
 }

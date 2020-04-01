@@ -1,8 +1,19 @@
-const { GraphQLString } = require(`gatsby/graphql`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
+import * as fs from "fs-extra"
+import * as path from "path"
+import { GraphQLString } from "gatsby/graphql"
 
-module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
+export function extendFileNode({
+  type,
+  getNodeAndSavePathDependency,
+  pathPrefix = ``,
+}): {
+  publicURL?: {
+    type: GraphQLString
+    args: { [key: string]: string }
+    description: string
+    resolve: (file, fieldArgs, context) => string
+  }
+} {
   if (type.name !== `File`) {
     return {}
   }
@@ -12,7 +23,7 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
       type: GraphQLString,
       args: {},
       description: `Copy file to static directory and return public url to it`,
-      resolve: (file, fieldArgs, context) => {
+      resolve: (file, _fieldArgs, context): string => {
         const details = getNodeAndSavePathDependency(file.id, context.path)
         const fileName = `${file.internal.contentDigest}/${details.base}`
 

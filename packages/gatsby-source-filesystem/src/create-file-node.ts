@@ -1,16 +1,21 @@
-const path = require(`path`)
-const fs = require(`fs-extra`)
-const mime = require(`mime`)
-const prettyBytes = require(`pretty-bytes`)
+import * as path from "path"
+import * as fs from "fs-extra"
+import * as mime from "mime"
+import prettyBytes from "pretty-bytes"
+import md5File from "md5-file/promise"
+import { PluginOptions } from "gatsby"
+import { createContentDigest, slash } from "gatsby-core-utils"
+import { IFileSystemNode } from "../"
 
-const md5File = require(`bluebird`).promisify(require(`md5-file`))
-const { createContentDigest, slash } = require(`gatsby-core-utils`)
-
-exports.createFileNode = async (
-  pathToFile,
-  createNodeId,
-  pluginOptions = {}
-) => {
+export async function createFileNode(
+  pathToFile: string,
+  createNodeId: Function,
+  pluginOptions: PluginOptions & {
+    plugins?: unknown[]
+    path?: string
+    name?: string
+  }
+): Promise<IFileSystemNode> {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
   const slashedFile = {
@@ -73,5 +78,5 @@ exports.createFileNode = async (
       ...slashedFile,
       ...stats,
     })
-  )
+  ) as IFileSystemNode
 }

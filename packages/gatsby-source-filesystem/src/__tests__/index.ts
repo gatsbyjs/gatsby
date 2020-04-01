@@ -1,10 +1,11 @@
-const path = require(`path`)
-const { loadNodeContent } = require(`../`)
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import * as path from "path"
+import { loadNodeContent } from "../"
 
 describe(`gatsby-source-filesystem`, () => {
   it(`can load the content of a file`, async () => {
     const content = await loadNodeContent({
-      absolutePath: path.join(__dirname, `../index.js`),
+      absolutePath: path.join(__dirname, `../index.ts`),
     })
 
     expect(content.length).toBeGreaterThan(0)

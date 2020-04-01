@@ -1,12 +1,12 @@
 jest.mock(`gatsby-cli/lib/reporter`)
 jest.mock(`progress`)
-const {
+import {
   getRemoteFileExtension,
   getRemoteFileName,
   createProgress,
-} = require(`../utils`)
+} from "../utils"
 const reporter = require(`gatsby-cli/lib/reporter`)
-const progress = require(`progress`)
+import progress from "progress"
 
 describe(`create remote file node`, () => {
   it(`can correctly retrieve file name and extensions`, () => {

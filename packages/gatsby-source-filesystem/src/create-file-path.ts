@@ -1,9 +1,19 @@
-const path = require(`path`)
-const { slash } = require(`gatsby-core-utils`)
+import * as path from "path"
+import { Node } from "gatsby"
+import { slash } from "gatsby-core-utils"
+import { ICreateFilePathArgs, IFileSystemNode } from "../"
 
-function findFileNode({ node, getNode }) {
+function findFileNode({
+  node,
+  getNode,
+}: {
+  node: Node
+  getNode: Function
+  basePath?: string
+  trailingSlash?: boolean
+}): IFileSystemNode {
   // Find the file node.
-  let fileNode = node
+  let fileNode = node as IFileSystemNode
 
   let whileCount = 0
   while (
@@ -26,12 +36,12 @@ function findFileNode({ node, getNode }) {
   return fileNode
 }
 
-module.exports = ({
+export function createFilePath({
   node,
   getNode,
   basePath = `src/pages`,
   trailingSlash = true,
-}) => {
+}: ICreateFilePathArgs): undefined | string {
   // Find the File node
   const fileNode = findFileNode({ node, getNode })
   if (!fileNode) return undefined
