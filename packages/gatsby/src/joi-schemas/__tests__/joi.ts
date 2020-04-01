@@ -133,7 +133,8 @@ describe(`node schema`, () => {
 
     const { error } = nodeSchema.validate(node)
     expect(error).toBeTruthy()
-    expect(error.message).toMatchSnapshot()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    expect(error!.message).toMatchSnapshot()
   })
 
   it(`doesn't allow unknown internal fields`, async () => {
@@ -152,6 +153,7 @@ describe(`node schema`, () => {
 
     const { error } = nodeSchema.validate(node)
     expect(error).toBeTruthy()
-    expect(error.message).toMatchSnapshot()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    expect(error!.message).toMatchSnapshot()
   })
 })
