@@ -1,10 +1,12 @@
+import { IBuildContext } from "../state-machines/develop"
+
 const reporter = require(`gatsby-cli/lib/reporter`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 
 export async function createPagesStatefully({
   parentSpan,
   graphqlRunner,
-}): Promise<any> {
+}: IBuildContext): Promise<any> {
   // A variant on createPages for plugins that want to
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)

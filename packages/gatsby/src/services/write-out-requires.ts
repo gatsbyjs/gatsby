@@ -1,8 +1,12 @@
 import requiresWriter from "../bootstrap/requires-writer"
+import { IBuildContext } from "../state-machines/develop"
 
 const reporter = require(`gatsby-cli/lib/reporter`)
 
-export async function writeOutRequires({ store, parentSpan }): Promise<any> {
+export async function writeOutRequires({
+  store,
+  parentSpan,
+}: IBuildContext): Promise<any> {
   // Write out files.
   const activity = reporter.activityTimer(`write out requires`, {
     parentSpan,

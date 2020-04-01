@@ -1,12 +1,16 @@
 import { processPageQueries } from "../query"
+import { IBuildContext } from "../state-machines/develop"
 const reporter = require(`gatsby-cli/lib/reporter`)
 
 export async function runPageQueries({
   parentSpan,
   queryIds,
   store,
-}): Promise<object> {
+}: IBuildContext): Promise<object> {
   let results = new Map()
+  if (!queryIds || !store) {
+    return { results: [] }
+  }
   const { pageQueryIds } = queryIds
   const state = store.getState()
   const pageQueryIdsCount = pageQueryIds.filter(id => state.pages.has(id))

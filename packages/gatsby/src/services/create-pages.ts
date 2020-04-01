@@ -1,7 +1,12 @@
+import { IBuildContext } from "../state-machines/develop"
+
 const reporter = require(`gatsby-cli/lib/reporter`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 
-export async function createPages({ parentSpan, graphqlRunner }): Promise<any> {
+export async function createPages({
+  parentSpan,
+  graphqlRunner,
+}: IBuildContext): Promise<any> {
   const activity = reporter.activityTimer(`createPages`, {
     parentSpan,
   })

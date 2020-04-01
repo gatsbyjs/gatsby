@@ -1,8 +1,13 @@
+import { IBuildContext } from "../state-machines/develop"
+
 const { build } = require(`../schema`)
 const report = require(`gatsby-cli/lib/reporter`)
 const createGraphqlRunner = require(`../bootstrap/graphql-runner`)
 
-export async function buildSchema({ store, parentSpan }): Promise<any> {
+export async function buildSchema({
+  store,
+  parentSpan,
+}: IBuildContext): Promise<any> {
   const activity = report.activityTimer(`building schema`, {
     parentSpan,
   })

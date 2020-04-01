@@ -1,11 +1,12 @@
 const reporter = require(`gatsby-cli/lib/reporter`)
 import { createSchemaCustomization } from "../utils/create-schema-customization"
+import { IBuildContext } from "../state-machines/develop"
 
 export async function customizeSchema({
   parentSpan,
   refresh,
   webhookBody,
-}): Promise<any> {
+}: IBuildContext): Promise<any> {
   const activity = reporter.activityTimer(`createSchemaCustomization`, {
     parentSpan,
   })
