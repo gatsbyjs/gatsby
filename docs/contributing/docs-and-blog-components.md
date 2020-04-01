@@ -224,11 +224,11 @@ You can read more about writing in Markdown in the [Markdown syntax guide](/docs
 
 - `date` (string)
 
-  The blog post's date. GraphQL converts the string to a Date object and renders it with the format `MMMM Do YYYY`.
+  The blog post's date in the format of `YYYY-MM-DD`.
 
 - `canonicalLink` (string)
 
-  The canonical link. Gatsby renders the value in `<link rel="canonical">`.
+  The URL to the original piece of content. This is useful for SEO attribution when cross-posting blog posts across domains. Google [offers an explanation](https://support.google.com/webmasters/answer/139066?hl=en) if you're interested in learning more.
 
 - `tags` (array)
 
@@ -241,7 +241,6 @@ You can read more about writing in Markdown in the [Markdown syntax guide](/docs
   - Facebook and `twitterCard: summary` support an aspect ratio of 1:1.
   - LinkedIn supports an aspect ratio of 1.91:1 and `twitterCard: summary_large_image` supports an aspect ratio of 2:1
   - Gatsby resizes the image to 1500x1500 and renders the URL in the `og:image` and `twitter:image` metadata.
-  - If `showImageInArticle` is true, Gatsby renders an image with the width of 786px in the hero of the blog post.
 
 - `imageAuthor` (string)
 
@@ -253,14 +252,14 @@ You can read more about writing in Markdown in the [Markdown syntax guide](/docs
 
 - `showImageInArticle` (boolean, default false)
 
-  Determines if the `image` is displayed as a hero in the blog post.
+  Determines if the `image` is displayed as a hero in the blog post. Gatsby renders it as a fluid image with a width of 786px.
 
 - `twitterCard` (string)
 
   A choice between: `summary` or `summary_large_image` that Gatsby renders in the `twitter:card` metadata.
 
-  - `summary` - The Summary Card can be used for many kinds of web content, from blog posts and news articles, to products and restaurants. It is designed to give the reader a preview of the content before clicking through to your website.
-  - `summary_large_image` - The Summary Card with Large Image features a large, full-width prominent image alongside a tweet. It is designed to give the reader a rich photo experience, and clicking on the image brings the user to your website.
+  - `summary` - displays the post as a snapshot that includes a thumbnail, title, and description to convey its content.
+  - `summary_large_image` - displays the post as a large, full-width image that conveys the visual aspect.
 
 - `author` (string)
 
