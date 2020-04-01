@@ -206,6 +206,89 @@ New docs and blog posts are added to the [docs](https://github.com/gatsbyjs/gats
 
 You can read more about writing in Markdown in the [Markdown syntax guide](/docs/mdx/markdown-syntax).
 
+### Frontmatter
+
+[Frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) is a set of key-value pairs in your Markdown and MDX files that defines the metadata for a page. While authoring new docs and blog posts for the Gatsby site, it may be helpful to understand what frontmatter is available to you.
+
+#### General
+
+- `title` (string)
+
+  The title of the doc or blog post. Gatsby renders the value in `og:title`, `<title>` and `<h1>`.
+
+- `excerpt` (string)
+
+  The excerpt for the post. Gatsby renders the value in `description`, `og:description`, and `twitter:description`.
+
+#### Blog Posts
+
+- `date` (string)
+
+  The blog post's date in the format of `YYYY-MM-DD`.
+
+- `canonicalLink` (string)
+
+  The URL to the original piece of content. This is useful for SEO attribution when cross-posting blog posts across domains. Google [offers an explanation](https://support.google.com/webmasters/answer/139066?hl=en) if you're interested in learning more.
+
+- `tags` (array)
+
+  The blog post's related tags. Gatsby renders the [YAML array/list](https://en.wikipedia.org/wiki/YAML#Basic_components) as links to tag archives and creates the archive if it doesn't exist.
+
+- `image` (string)
+
+  The relative path to the image.
+
+  - Facebook and `twitterCard: summary` support an aspect ratio of 1:1.
+  - LinkedIn supports an aspect ratio of 1.91:1 and `twitterCard: summary_large_image` supports an aspect ratio of 2:1
+  - Gatsby resizes the image to 1500x1500 and renders the URL in the `og:image` and `twitter:image` metadata.
+
+- `imageAuthor` (string)
+
+  The name of the image's author. Gatsby renders the value in an `<a>` tag only if `imageAuthorLink` is defined.
+
+- `imageAuthorLink` (string)
+
+  The link to the image's author. Gatsby renders the value in an `<a>` tag only if `imageAuthor` is defined.
+
+- `showImageInArticle` (boolean, default false)
+
+  Determines if the `image` is displayed as a hero in the blog post. Gatsby renders it as a fluid image with a width of 786px.
+
+- `twitterCard` (string)
+
+  A choice between: `summary` or `summary_large_image` that Gatsby renders in the `twitter:card` metadata.
+
+  - `summary` - displays the post as a snapshot that includes a thumbnail, title, and description to convey its content.
+  - `summary_large_image` - displays the post as a large, full-width image that conveys the visual aspect.
+
+- `author` (string)
+
+  The author's name, which is also the `id` in the `/docs/blog/author.yaml` file. Gatsby renders a link to the author's archive page.
+
+#### Documentation
+
+- `description` (string, default `excerpt`)
+
+  A description of the doc. Gatsby renders the value in the `description` and `og:description` metadata.
+
+- `issue` (string)
+
+  The issue URL relating to a stub on GitHub. Gatsby renders a link to the stub.
+
+- `disableTableOfContents` - (boolean)
+
+  Determines if the table of contents is output.
+
+- `tableOfContentsDepth` - (integer)
+
+  The number of levels to render the table of contents.
+
+#### Relevant Links
+
+- [About Twitter Cards](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards)
+- [Facebook Sharing - Best Practices](https://developers.facebook.com/docs/sharing/best-practices#images)
+- [Making Your Website Shareable on LinkedIn](https://www.linkedin.com/help/linkedin/answer/46687/making-your-website-shareable-on-linkedin?lang=en)
+
 ### Code blocks
 
 Code can be formatted using regular Markdown syntax, but the docs site has additional enhancements that can be used thanks to various Gatsby plugins that aren't all native Markdown.
