@@ -3,6 +3,8 @@ import { IGatsbyNode } from "./types"
 import { createPageDependency } from "./actions/add-page-dependency"
 
 export type FilterCacheKey = string
+export type FilterCache = Map<string | number | boolean, Set<IGatsbyNode>>
+export type FiltersCache = Map<FilterCacheKey, FilterCache>
 
 /**
  * Get all nodes from redux store.
@@ -160,19 +162,16 @@ export const ensureIndexByTypedChain = (
   cacheKey: FilterCacheKey,
   chain: string[],
   nodeTypeNames: string[],
-  typedKeyValueIndexes: Map<
-    FilterCacheKey,
-    Map<string | number | boolean, Set<IGatsbyNode>>
-  >
+  filtersCache: FiltersCache
 ): void => {
-  if (typedKeyValueIndexes.has(cacheKey)) {
+  if (filtersCache.has(cacheKey)) {
     return
   }
 
   const { nodes, resolvedNodesCache } = store.getState()
 
-  const byKeyValue = new Map<string | number | boolean, Set<IGatsbyNode>>()
-  typedKeyValueIndexes.set(cacheKey, byKeyValue)
+  const filterCache: FilterCache = new Map()
+  filtersCache.set(cacheKey, filterCache)
 
   nodes.forEach(node => {
     if (!nodeTypeNames.includes(node.internal.type)) {
@@ -206,10 +205,10 @@ export const ensureIndexByTypedChain = (
       return
     }
 
-    let set = byKeyValue.get(v)
+    let set = filterCache.get(v)
     if (!set) {
       set = new Set()
-      byKeyValue.set(v, set)
+      filterCache.set(v, set)
     }
     set.add(node)
   })
@@ -228,14 +227,11 @@ export const ensureIndexByTypedChain = (
  * The only exception is `id`, since internally there can be at most one node
  * per `id` so there's a minor optimization for that (no need for Sets).
  */
-export const getNodesByTypedChain = (
+export const getFilterCacheByTypedChain = (
   cacheKey: FilterCacheKey,
   value: boolean | number | string,
-  typedKeyValueIndexes: Map<
-    FilterCacheKey,
-    Map<string | number | boolean, Set<IGatsbyNode>>
-  >
+  filtersCache: FiltersCache
 ): Set<IGatsbyNode> | undefined => {
-  const byTypedKey = typedKeyValueIndexes?.get(cacheKey)
+  const byTypedKey = filtersCache?.get(cacheKey)
   return byTypedKey?.get(value)
 }
