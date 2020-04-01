@@ -4,18 +4,38 @@ const babel = require(`@babel/core`)
 
 const declare = require(`@babel/helper-plugin-utils`).declare
 
+const isDefaultExport = node => {
+  if (!node || node.type !== `MemberExpression`) {
+    return false
+  }
+
+  const { object, property } = node
+
+  if (object.type !== `Identifier` || object.name !== `module`) return false
+  if (property.type !== `Identifier` || property.name !== `exports`)
+    return false
+
+  return true
+}
+
+const addPluginToConfig = (src, pluginName) => {
+  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
+    pluginOrThemeName: pluginName,
+    shouldAdd: true,
+  })
+
+  const { code } = babel.transform(src, {
+    plugins: [addPlugins.plugin],
+  })
+
+  return code
+}
+
 const create = ({ root }, { name }) => {
   const configPath = path.join(root, `gatsby-config.js`)
   const configSrc = fs.readFileSync(configPath)
 
-  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
-    pluginOrThemeName: name,
-    shouldAdd: true,
-  })
-
-  const { code } = babel.transform(configSrc, {
-    plugins: [addPlugins.plugin],
-  })
+  const code = addPluginToConfig(configSrc, name)
 
   fs.writeFileSync(configPath, code)
 }
@@ -57,10 +77,16 @@ class BabelPluginAddPluginsToGatsbyConfig {
       const { types: t } = api
       return {
         visitor: {
-          Program({ node }) {
-            const plugins = node.body[0].expression.right.properties.find(
-              p => p.key.name === `plugins`
-            )
+          ExpressionStatement(path) {
+            const { node } = path
+            const { left, right } = node.expression
+
+            if (!isDefaultExport(left)) {
+              return
+            }
+
+            const plugins = right.properties.find(p => p.key.name === `plugins`)
+
             if (shouldAdd) {
               const exists = plugins.value.elements.some(
                 node => node.value === pluginOrThemeName
@@ -73,6 +99,8 @@ class BabelPluginAddPluginsToGatsbyConfig {
                 node => node.value !== pluginOrThemeName
               )
             }
+
+            path.stop()
           },
         },
       }
@@ -89,10 +117,16 @@ class BabelPluginGetPluginsFromGatsbyConfig {
 
       return {
         visitor: {
-          Program: ({ node }) => {
-            const plugins = node.body[0].expression.right.properties.find(
-              p => p.key.name === `plugins`
-            )
+          ExpressionStatement: path => {
+            const { node } = path
+            const { left, right } = node.expression
+
+            if (!isDefaultExport(left)) {
+              return
+            }
+
+            const plugins = right.properties.find(p => p.key.name === `plugins`)
+
             plugins.value.elements.forEach(node => {
               // TODO: handle { resolve: 'thing' }
               this.state.push(node.value)
@@ -103,6 +137,8 @@ class BabelPluginGetPluginsFromGatsbyConfig {
     })
   }
 }
+
+module.exports.addPluginToConfig = addPluginToConfig
 
 module.exports.create = create
 module.exports.update = create
