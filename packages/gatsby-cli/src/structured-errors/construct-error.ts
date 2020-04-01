@@ -1,6 +1,5 @@
-import Joi from "@hapi/joi"
 import stackTrace from "stack-trace"
-import errorSchema from "./error-schema"
+import { errorSchema } from "./error-schema"
 import { errorMap, defaultError, IErrorMapEntry, ErrorId } from "./error-map"
 import { sanitizeStructuredStackTrace } from "../reporter/errors"
 
@@ -13,12 +12,12 @@ interface IConstructError {
   }
 }
 
-interface ILocationPosition {
+export interface ILocationPosition {
   line: number
   column: number
 }
 
-interface IStructuredError {
+export interface IStructuredError {
   code?: string
   text: string
   stack: {
@@ -63,7 +62,7 @@ const constructError = ({
   }
 
   // validate
-  const { error } = Joi.validate(structuredError, errorSchema)
+  const { error } = errorSchema.validate(structuredError)
   if (error !== null) {
     console.log(`Failed to validate error`, error)
     process.exit(1)
