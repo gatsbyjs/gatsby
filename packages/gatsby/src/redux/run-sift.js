@@ -15,6 +15,7 @@ const {
 } = require(`../db/common/query`)
 const {
   ensureIndexByTypedChain,
+  ensureIndexByElemMatch,
   getFilterCacheByTypedChain,
   addResolvedNodes,
   getNode: siftGetNode,
@@ -46,7 +47,7 @@ const createTypedFilterCacheKey = (typeNames, filter) => {
   }
 
   // Note: the separators (`,` and `/`) are arbitrary but must be different
-  return typeNames.join(`,`) + `/` + comparator + `/` + paths.join(`,`)
+  return typeNames.join(`,`) + `/` + paths.join(`,`) + `/` + comparator
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -181,13 +182,27 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
   // Fail fast while trying to create and get the value-cache for each path
   let every = filters.every((filter /*: DbQuery*/) => {
     let cacheKey = createTypedFilterCacheKey(nodeTypeNames, filter)
-    getBucketsForQueryFilter(
-      cacheKey,
-      filter,
-      nodeTypeNames,
-      filtersCache,
-      filterCaches
-    )
+    if (filter.type === `query`) {
+      // (Let TS warn us if a new query type gets added)
+      const q /*: IDbQueryQuery */ = filter
+      return getBucketsForQueryFilter(
+        cacheKey,
+        q,
+        nodeTypeNames,
+        filtersCache,
+        filterCaches
+      )
+    } else {
+      // (Let TS warn us if a new query type gets added)
+      const q /*: IDbQueryElemMatch*/ = filter
+      return collectBucketForElemMatch(
+        cacheKey,
+        q,
+        nodeTypeNames,
+        filtersCache,
+        filterCaches
+      )
+    }
   })
 
   if (every) {
@@ -205,7 +220,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
  * @param {IDbQueryQuery} filter
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
- * @param {Set<FilterCache>} filterCaches
+ * @param {Array<FilterCache>} filterCaches
  * @returns {boolean} false means soft fail, filter must go through Sift
  */
 const getBucketsForQueryFilter = (
@@ -220,7 +235,9 @@ const getBucketsForQueryFilter = (
     query: { value: targetValue },
   } = filter
 
-  ensureIndexByTypedChain(cacheKey, chain, nodeTypeNames, filtersCache)
+  if (!filtersCache.has(cacheKey)) {
+    ensureIndexByTypedChain(cacheKey, chain, nodeTypeNames, filtersCache)
+  }
 
   const filterCache = getFilterCacheByTypedChain(
     cacheKey,
@@ -238,6 +255,70 @@ const getBucketsForQueryFilter = (
   // In all other cases this must be a non-empty Set because the indexing
   // mechanism does not create a Set unless there's a IGatsbyNode for it
   filterCaches.push(filterCache)
+
+  return true
+}
+
+/**
+ * @param {string} typedKey
+ * @param {IDbQueryElemMatch} filter
+ * @param {Array<string>} nodeTypeNames
+ * @param {FiltersCache} filtersCache
+ * @param {Array<FilterCache>} filterCaches Matching node sets are put in this array
+ */
+const collectBucketForElemMatch = (
+  typedKey,
+  filter,
+  nodeTypeNames,
+  filtersCache,
+  filterCaches
+) => {
+  let comparator = ``
+  let targetValue = null
+  let f /*: DbQuery*/ = filter
+  while (f) {
+    if (f.type === `elemMatch`) {
+      const q /*: IDbQueryElemMatch */ = f
+      f = q.nestedQuery
+    } else {
+      const q /*: IDbQueryQuery */ = f
+      comparator = q.query.comparator
+      targetValue = q.query.value
+      break
+    }
+  }
+
+  if (
+    ![
+      `$eq`,
+      // "$lte",
+      // "$gte",
+    ].includes(comparator)
+  ) {
+    return false
+  }
+
+  if (!filtersCache.has(typedKey)) {
+    ensureIndexByElemMatch(typedKey, filter, nodeTypeNames, filterCaches)
+  }
+
+  const nodesByKeyValue /*: Set<IGatsbyNode> | undefined*/ = getFilterCacheByTypedChain(
+    typedKey,
+    comparator,
+    targetValue,
+    filtersCache
+  )
+
+  // If we couldn't find the needle then maybe sift can, for example if the
+  // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
+  // There are also cases (and tests) where id exists with a different type
+  if (!nodesByKeyValue) {
+    return false
+  }
+
+  // In all other cases this must be a non-empty Set because the indexing
+  // mechanism does not create a Set unless there's a IGatsbyNode for it
+  filterCaches.push(nodesByKeyValue)
 
   return true
 }

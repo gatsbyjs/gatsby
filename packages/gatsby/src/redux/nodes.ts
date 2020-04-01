@@ -1,6 +1,7 @@
 import { store } from "./"
 import { IGatsbyNode } from "./types"
 import { createPageDependency } from "./actions/add-page-dependency"
+import { IDbQueryElemMatch } from "../db/common/query"
 
 export type FilterCacheKey = string
 export type FilterCache = Map<string | number | boolean, Set<IGatsbyNode>>
@@ -164,10 +165,6 @@ export const ensureIndexByTypedChain = (
   nodeTypeNames: string[],
   filtersCache: FiltersCache
 ): void => {
-  if (filtersCache.has(cacheKey)) {
-    return
-  }
-
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
 
@@ -180,7 +177,7 @@ export const ensureIndexByTypedChain = (
 
   if (nodeTypeNames.length === 1) {
     getNodesByType(nodeTypeNames[0]).forEach(node => {
-      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
+      addNodeToFilterCache(node, node, chain, filterCache, resolvedNodesCache)
     })
   } else {
     // Here we must first filter for the node type
@@ -190,13 +187,14 @@ export const ensureIndexByTypedChain = (
         return
       }
 
-      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
+      addNodeToFilterCache(node, node, chain, filterCache, resolvedNodesCache)
     })
   }
 }
 
 const addNodeToFilterCache = (
   node: IGatsbyNode,
+  valueOffset: any,
   chain: Array<string>,
   filterCache: FilterCache,
   resolvedNodesCache
@@ -208,7 +206,9 @@ const addNodeToFilterCache = (
     node.__gatsby_resolved = resolvedNodes?.get(node.id)
   }
 
-  let v = node as any
+  // - for plain query, valueOffset === node
+  // - for elemMatch, valueOffset is sub-tree of the node to continue matching
+  let v = valueOffset as any
   let i = 0
   while (i < chain.length && v) {
     const nextProp = chain[i++]
@@ -234,6 +234,107 @@ const addNodeToFilterCache = (
     filterCache.set(v, set)
   }
   set.add(node)
+}
+
+export const ensureIndexByElemMatch = (
+  cacheKey: FilterCacheKey,
+  filter: IDbQueryElemMatch,
+  nodeTypeNames: Array<string>,
+  filtersCache: FiltersCache
+) => {
+  // Given an elemMatch filter, generate the cache that contains all nodes that
+  // matches a given value for that sub-query
+
+  const state = store.getState()
+  const { resolvedNodesCache } = state
+
+  const filterCache: FilterCache = new Map()
+  filtersCache.set(cacheKey, filterCache)
+
+  if (nodeTypeNames.length === 1) {
+    getNodesByType(nodeTypeNames[0]).forEach(node => {
+      addNodeToBucketWithElemMatch(
+        node,
+        node,
+        filter,
+        filterCache,
+        resolvedNodesCache
+      )
+    })
+  } else {
+    // Expensive at scale
+    state.nodes.forEach(node => {
+      if (!nodeTypeNames.includes(node.internal.type)) {
+        return
+      }
+
+      addNodeToBucketWithElemMatch(
+        node,
+        node,
+        filter,
+        filterCache,
+        resolvedNodesCache
+      )
+    })
+  }
+}
+
+const addNodeToBucketWithElemMatch = (
+  node: IGatsbyNode,
+  valueAtCurrentStep: any, // Arbitrary step on the path inside the node
+  filter: IDbQueryElemMatch,
+  filterCache: FilterCache,
+  resolvedNodesCache
+) => {
+  // There can be a filter that targets `__gatsby_resolved` so fix that first
+  if (!node.__gatsby_resolved) {
+    const typeName = node.internal.type
+    const resolvedNodes = resolvedNodesCache.get(typeName)
+    node.__gatsby_resolved = resolvedNodes?.get(node.id)
+  }
+
+  const { path, nestedQuery } = filter
+
+  // Find the value to apply elemMatch to
+  let i = 0
+  while (i < path.length && valueAtCurrentStep) {
+    const nextProp = path[i++]
+    valueAtCurrentStep = valueAtCurrentStep[nextProp]
+  }
+
+  if (path.length !== i) {
+    // Found undefined before the end of the path, so let Sift take over
+    return
+  }
+
+  // `v` should now be an elemMatch target, probably an array (but maybe not)
+
+  if (Array.isArray(valueAtCurrentStep)) {
+    // Note: We need to check all elements because the node may need to be added
+    // to multiple buckets (`{a:[{b:3},{b:4}]}`, for `a.elemMatch.b/eq` that
+    // node ends up in buckets for value 3 and 4. This may lead to duplicate
+    // work when elements resolve to the same value, but that can't be helped.
+    valueAtCurrentStep.forEach(elem => {
+      if (nestedQuery.type === "elemMatch") {
+        addNodeToBucketWithElemMatch(
+          node,
+          elem,
+          nestedQuery,
+          filterCache,
+          resolvedNodesCache
+        )
+      } else {
+        // Now take same route as non-elemMatch filters would take
+        addNodeToFilterCache(
+          node,
+          valueAtCurrentStep,
+          nestedQuery.path,
+          filterCache,
+          resolvedNodesCache
+        )
+      }
+    })
+  }
 }
 
 /**
