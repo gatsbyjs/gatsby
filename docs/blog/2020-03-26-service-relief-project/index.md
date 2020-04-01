@@ -16,7 +16,7 @@ We woke up and the world was utterly changed. It's easy to be overwhelmed. I sat
 
 State-mandated social distancing shutdowns are being rolled out across the country, closing down bars, entertainment venues, and restaurants - taking the livelihoods of countless service workers with them. "Shelter in place" orders also prevent independent workers like pet sitters and house cleaners from being able to do their jobs. And as independent small businesses classified as "nonessential," like bookstores and art galleries, are forced to close they also find themselves in the same increasingly dire situation.
 
-Wonderfully, though, fundraisers are popping up all over the place to provide some emergency relief. Through them I saw a way to help out':' creating a fast, free and above all easy way for communities to gather local relief fundraisers in a single website, where donors can easily find and contribute. It turns out I wasn't the only one with this idea!
+Wonderfully, though, fundraisers are popping up all over the place to provide some emergency relief. Through them I saw a way to help out: creating a fast, free and above all easy way for communities to gather local relief fundraisers in a single website, where donors can easily find and contribute. It turns out I wasn't the only one with this idea!
 
 **In this post: **
 
