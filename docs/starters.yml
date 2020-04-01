@@ -5815,8 +5815,8 @@
     - Blog
     - Netlify
     - SEO
-    - Language:TypeScript
     - Styling:CSS-in-JS
+    - Language:TypeScript
   features:
     - Emoji (emojione)
     - Code syntax highlighting (atom-one-light Style)
