@@ -7,9 +7,9 @@ const OutboundLink = React.forwardRef(({ children, ...props }, ref) => (
     {...props}
     onClick={e => {
       if (typeof props.onClick === `function`) {
-        props.onClick(e);
+        props.onClick(e)
       }
-      let redirect = true;
+      let redirect = true
       if (
         e.button !== 0 ||
         e.altKey ||
@@ -18,10 +18,10 @@ const OutboundLink = React.forwardRef(({ children, ...props }, ref) => (
         e.shiftKey ||
         e.defaultPrevented
       ) {
-        redirect = false;
+        redirect = false
       }
       if (props.target && props.target.toLowerCase() !== `_self`) {
-        redirect = false;
+        redirect = false
       }
       if (window.gtag) {
         window.gtag(`event`, `click`, {
@@ -30,17 +30,17 @@ const OutboundLink = React.forwardRef(({ children, ...props }, ref) => (
           transport_type: redirect ? `beacon` : ``,
           event_callback: function() {
             if (redirect) {
-              document.location = props.href;
+              document.location = props.href
             }
           },
-        });
+        })
       } else {
         if (redirect) {
-          document.location = props.href;
+          document.location = props.href
         }
       }
 
-      return false;
+      return false
     }}
   >
     {children}
