@@ -11,7 +11,7 @@ const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const { slash } = require(`gatsby-core-utils`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
-const sanitizeNode = require(`../../db/sanitize-node`)
+import { sanitizeNode } from "../../db/sanitize-node"
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)

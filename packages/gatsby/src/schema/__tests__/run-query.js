@@ -1,4 +1,4 @@
-const { runQuery: nodesQuery } = require(`../../db/nodes`)
+import { runQuery as nodesQuery } from "../../db/nodes"
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()

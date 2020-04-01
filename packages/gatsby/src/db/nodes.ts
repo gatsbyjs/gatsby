@@ -1,26 +1,16 @@
-/* @flow */
-const _ = require(`lodash`)
-const { store } = require(`../redux`)
+import _ from "lodash"
+import { Node } from "gatsby"
+import { store } from "../redux"
+import * as reduxNodes from "../redux/nodes"
 
-interface NodeStore {
-  getNodes: () => Array<any>;
-  getNode: (id: string) => any | undefined;
-  getNodesByType: (type: string) => Array<any>;
-  getTypes: () => Array<string>;
-  hasNodeChanged: (id: string, digest: string) => boolean;
-  getNodeAndSavePathDependency: (id: string, path: string) => any | undefined;
-  runQuery: (args: {
-    gqlType: GraphQLType,
-    queryArgs: Object,
-    firstOnly: boolean,
-    resolvedFields: Object,
-    nodeTypeNames: Array<string>,
-  }) => any | undefined;
-}
+type TDatabaseNodes = `loki` | `redux`
 
-const backend = process.env.GATSBY_DB_NODES || `redux`
-let nodesDb: NodeStore
+export const backend = (process.env.GATSBY_DB_NODES ||
+  `redux`) as TDatabaseNodes
+
+let nodesDb: typeof reduxNodes
 let runQuery
+
 switch (backend) {
   case `redux`:
     nodesDb = require(`../redux/nodes`)
@@ -36,15 +26,10 @@ switch (backend) {
     )
 }
 
-module.exports = { ...nodesDb, runQuery, backend }
-
 /**
  * Get content for a node from the plugin that created it.
- *
- * @param {Object} node
- * @returns {promise}
  */
-module.exports.loadNodeContent = node => {
+export function loadNodeContent(node: Node): Promise<string> {
   if (_.isString(node.internal.content)) {
     return Promise.resolve(node.internal.content)
   } else {
@@ -66,4 +51,25 @@ module.exports.loadNodeContent = node => {
       })
     })
   }
+}
+
+const {
+  getNodes,
+  getNode,
+  getNodesByType,
+  getTypes,
+  hasNodeChanged,
+  getNodeAndSavePathDependency,
+  saveResolvedNodes,
+} = nodesDb
+
+export {
+  getNodes,
+  getNode,
+  getNodesByType,
+  getTypes,
+  hasNodeChanged,
+  getNodeAndSavePathDependency,
+  saveResolvedNodes,
+  runQuery,
 }

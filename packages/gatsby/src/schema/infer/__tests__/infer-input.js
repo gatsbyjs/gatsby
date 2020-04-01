@@ -4,7 +4,7 @@ const { graphql } = require(`graphql`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildSchema } = require(`../../schema`)
 const { LocalNodeModel } = require(`../../node-model`)
-const nodeStore = require(`../../../db/nodes`)
+import * as nodeStore from "../../../db/nodes"
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 import { createPageDependency } from "../../../redux/actions/add-page-dependency"

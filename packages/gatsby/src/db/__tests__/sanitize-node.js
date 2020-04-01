@@ -1,4 +1,4 @@
-const sanitizeNode = require(`../sanitize-node`)
+import { sanitizeNode } from "../sanitize-node"
 
 describe(`node sanitization`, () => {
   let testNode
