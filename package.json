@@ -18,6 +18,7 @@
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.30",
     "@types/node-fetch": "^2.5.5",
+    "@types/react": "^16.9.31",
     "@types/stack-trace": "^0.0.29",
     "@types/webpack": "^4.41.7",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
