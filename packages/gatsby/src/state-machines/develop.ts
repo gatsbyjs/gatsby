@@ -33,7 +33,7 @@ export interface IBuildContext {
   nodesMutatedDuringQueryRun: boolean
   firstRun: boolean
   nodeMutationBatch: any[]
-  filesDirty: boolean
+  filesDirty?: boolean
   runningBatch: any[]
   compiler?: Compiler
   websocketManager?: WebsocketManager
@@ -140,10 +140,9 @@ const runMutationAndMarkDirty: TransitionConfig<
     assign<any, DoneInvokeEvent<any>>({
       nodesMutatedDuringQueryRun: true,
     }),
-    async (ctx, event): Promise<void> => {
+    async (ctx, event): Promise<void> =>
       // console.log(`calling real api and mareking dirty`)
-      return callRealApi(event.payload, ctx.store)
-    },
+      callRealApi(event.payload, ctx.store),
   ],
 }
 
@@ -392,13 +391,7 @@ export const developMachine = Machine<any>(
             // Nothing was mutated. Moving to next state
             {
               target: `waitingForJobs`,
-              cond: (context): boolean => {
-                // console.log(
-                //   `checking for mutated nodes`,
-                //   context.nodesMutatedDuringQueryRun
-                // )
-                return !context.nodesMutatedDuringQueryRun
-              },
+              cond: (context): boolean => !context.nodesMutatedDuringQueryRun,
             },
             // Nodes were mutated. Starting again.
             {
@@ -608,13 +601,11 @@ export const developMachine = Machine<any>(
           }),
         ],
         invoke: {
-          src: async ({ runningBatch, store }): Promise<any> => {
+          src: async ({ runningBatch, store }): Promise<any> =>
             // Consume the entire batch and run actions
-            // console.log(`runningBatch`, runningBatch)
-            return Promise.all(
+            Promise.all(
               runningBatch.map(payload => callRealApi(payload, store))
-            )
-          },
+            ),
           onDone: {
             target: `buildingSchema`,
             actions: assign({
