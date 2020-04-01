@@ -58,7 +58,6 @@ class BabelPluginAddPluginsToGatsbyConfig {
       return {
         visitor: {
           Program({ node }) {
-            console.log(node.body[0].expression)
             const plugins = node.body[0].expression.right.properties.find(
               p => p.key.name === `plugins`
             )
