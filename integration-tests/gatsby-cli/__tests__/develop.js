@@ -1,6 +1,5 @@
 import spawn from "cross-spawn"
-import { GatsbyCLI, removeFolder } from "../test-helpers"
-import strip from "strip-ansi"
+import { GatsbyCLI } from "../test-helpers"
 
 const timeout = seconds =>
   new Promise(resolve => {
@@ -21,7 +20,7 @@ describe(`gatsby develop`, () => {
     const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(`develop`)
 
     // 2. Wait for the build process to finish
-    await timeout(30)
+    await timeout(10)
 
     // 3. kill the `gatsby develop` command so we can get logs
     spawn.sync("kill", [childProcess.pid])

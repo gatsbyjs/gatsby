@@ -1,4 +1,4 @@
-import { GatsbyCLI, removeFolder } from "../test-helpers"
+import { GatsbyCLI } from "../test-helpers"
 
 const MAX_TIMEOUT = 2147483647
 jest.setTimeout(MAX_TIMEOUT)
