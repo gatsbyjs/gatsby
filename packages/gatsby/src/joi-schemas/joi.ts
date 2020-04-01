@@ -1,6 +1,5 @@
 import Joi from "@hapi/joi"
-import { GatsbyConfig, Node } from "../../"
-import { IGatsbyPage } from "../redux/types"
+import { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types"
 
 const stripTrailingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
   chain.replace(/(\w)\/+$/, `$1`)
@@ -11,7 +10,7 @@ const addLeadingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
     then: chain.replace(/^([^/])/, `/$1`),
   })
 
-export const gatsbyConfigSchema: Joi.ObjectSchema<GatsbyConfig> = Joi.object()
+export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
   .keys({
     __experimentalThemes: Joi.array(),
     polyfill: Joi.boolean().default(true),
@@ -89,7 +88,7 @@ export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()
   })
   .unknown()
 
-export const nodeSchema: Joi.ObjectSchema<Node> = Joi.object()
+export const nodeSchema: Joi.ObjectSchema<IGatsbyNode> = Joi.object()
   .keys({
     id: Joi.string().required(),
     children: Joi.array().items(Joi.string(), Joi.object().forbidden()),
