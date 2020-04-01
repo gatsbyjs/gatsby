@@ -29,7 +29,6 @@ module.exports = recipe => {
   if (recipePath.slice(-4) !== `.mdx`) {
     recipePath += `.mdx`
   }
-  console.log({ recipePath })
   const recipeSrc = fs.readFileSync(recipePath, `utf8`)
 
   const GRAPHQL_ENDPOINT = `http://localhost:4000/graphql`
