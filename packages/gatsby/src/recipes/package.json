@@ -1,0 +1,45 @@
+{
+  "name": "@webmesh/cli",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "graphql": "node graphql"
+  },
+  "bin": {
+    "webmesh": "index.js"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "1.5.7",
+    "@mdx-js/react": "1.5.7",
+    "@mdx-js/runtime": "^1.5.7",
+    "@webmesh/gatsby": "0.0.1",
+    "better-queue": "^3.8.10",
+    "execa": "^4.0.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "gatsby-plugin-theme-ui": "^0.3.0",
+    "graphql": "^14.6.0",
+    "graphql-subscriptions": "^1.1.0",
+    "humanize-list": "^1.0.1",
+    "import-jsx": "^3.1.0",
+    "ink": "^2.3.0",
+    "ink-spinner": "^3.0.1",
+    "lodash.flatten": "^4.4.0",
+    "lodash.groupby": "^4.6.0",
+    "mkdirp": "^1.0.3",
+    "node-fetch": "^2.6.0",
+    "react": "16.13.1",
+    "read-package-tree": "^5.3.1",
+    "remark-stringify": "^7.0.4",
+    "simplified-jsx-to-json": "^0.1.0",
+    "subscriptions-transport-ws": "^0.9.16",
+    "theme-ui": "^0.3.1",
+    "undefined": "^0.1.0",
+    "unist-util-visit": "^2.0.2",
+    "urql": "^1.9.5",
+    "ws": "^7.2.3"
+  }
+}

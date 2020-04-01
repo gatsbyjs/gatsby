@@ -1,0 +1,45 @@
+# Add a custom ESLint config
+
+ESLint is an open source JavaScript linting utility. Code linting is a type of
+static analysis that is frequently used to find problematic patterns. There are
+code linters for most programming languages, and compilers sometimes
+incorporate linting into the compilation process.
+
+JavaScript, being a dynamic and loosely-typed language, is especially prone to
+developer error. Without the benefit of a compilation process, JavaScript code
+is typically executed in order to find syntax or other errors. Linting tools
+like ESLint allow developers to discover problems with their JavaScript code
+without executing it.
+
+## How to use ESLint
+
+Gatsby ships with a built-in ESLint setup. For most users,
+our built-in ESlint setup is all you need. If you know however that you’d like
+to customize your ESlint config e.g. your company has their own custom ESlint
+setup, this shows how this can be done.
+
+You’ll replicate (mostly) the ESLint config Gatsby ships with so you can then
+add additional presets, plugins, and rules.
+
+---
+
+Installing necessary packages
+
+<NPMPackage name="eslint-config-react-app" dev={true} />
+
+---
+
+<File
+  path=".eslintrc.js"
+  content='module.exports = {
+  globals: {
+    __PATH_PREFIX__: true,
+  },
+  extends: `react-app`,
+}
+' />
+
+---
+
+ESlint is now installed! You can edit the eslint config by opening
+`.eslintrc.js` in your code editor.
