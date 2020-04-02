@@ -1,8 +1,6 @@
 const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
-const respawn = require(`respawn`)
-const chokidar = require(`chokidar`)
 const report = require(`./reporter`)
 const { setStore } = require(`./reporter/redux`)
 const { didYouMean } = require(`./did-you-mean`)
@@ -21,18 +19,6 @@ const handlerP = fn => (...args) => {
     () => process.exit(0),
     err => report.panic(err)
   )
-}
-
-const rootFile = filePath => path.join(process.cwd(), filePath)
-
-const createControllableScript = script => {
-  const tmpFile = require(`tmp`).fileSync()
-  require(`fs`).writeFileSync(tmpFile.name, script)
-
-  return respawn([`node`, tmpFile.name], {
-    env: process.env,
-    stdio: `inherit`,
-  })
 }
 
 function buildLocalCommands(cli, isLocalSite) {
@@ -85,33 +71,8 @@ function buildLocalCommands(cli, isLocalSite) {
           `There was a problem loading the local ${command} command. Gatsby may not be installed in your site's "node_modules" directory. Perhaps you need to run "npm install"? You might need to delete your "package-lock.json" as well.`
         )
 
-      if (command === `develop`) {
-        return args => {
-          const script = createControllableScript(`
-            const cmd = require("${cmdPath}");
-            const args = ${JSON.stringify(args)};
-            cmd(args);
-          `)
-
-          script.start()
-
-          chokidar
-            .watch([rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)])
-            .on(`change`, filePath => {
-              const activity = report.activityTimer(
-                `${path.basename(filePath)} changed, restarting gatsby develop`
-              )
-              activity.start()
-              script.stop(() => {
-                activity.end()
-                script.start()
-              })
-            })
-        }
-      } else {
-        report.verbose(`loading local command from: ${cmdPath}`)
-        return require(cmdPath)
-      }
+      report.verbose(`loading local command from: ${cmdPath}`)
+      return require(cmdPath)
     } catch (err) {
       cli.showHelp()
       return report.panic(
