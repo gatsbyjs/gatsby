@@ -80,7 +80,7 @@ gatsby's eslint rules or use other tools they will not know how to resolve these
 will complain. But if you are using yarn 1 or 2, then the best practice is to set them
 in package.json as shown below:
 
-```js:title=gatsby-node.js
+```js
 {
   "dependencies": {
       "hooks": "link:./src/hooks",
