@@ -4,13 +4,16 @@ title: Adding a Shopping Cart with Snipcart
 
 Snipcart is a shopping cart solution designed to be dropped neatly into any web project. Including it in your project allows any HTML you write to instantly become a "buy button" with the addition of several Snipcart-specific attributes.
 
-Combine it with a source of products (like a CMS or an e-commerce platform like [Etsy](https://www.etsy.com/)) and a payment processer (like [Stripe](https://www.stripe.com/)) to build a complete e-commerce experience for your customers.
+Combine it with a source of products (like a CMS or an e-commerce platform like [Etsy](https://www.etsy.com/)) and a payment processor (like [Stripe](https://www.stripe.com/)) to build a complete e-commerce experience for your customers.
 
 ## Prerequisites
 
-To get started, you'll need
+To get started, you'll need to have the following set up: 
 
-- a Gatsby site with [`gatsby-plugin-snipcart`](/packages/gatsby-plugin-snipcart/) installed
+- A Gatsby site with [`gatsby-plugin-snipcart`](/packages/gatsby-plugin-snipcart/) installed
+- A [Snipcart](https://snipcart.com/) account
+- A Snipcart test API key
+- A list of products to sell
 - a [Snipcart](https://snipcart.com/) account
 - your Snipcart test API key
 - products to sell
@@ -54,7 +57,7 @@ Snipcart uses these attributes (`data-item-*`) to figure out what your customer 
 
 Importantly, `data-item-url` denotes the URL of the webpage displaying the product(s). Snipcart needs to crawl this page to validate the order. The web crawler looks for the HTML element with the `snipcart-add-item` CSS class as well as the `data-item-id` and checks what it finds there against whatever is in the cart.
 
-Note that, while you're testing, a `data-item-url` value of `"/"` is fine. For the checkout flow to work, you will eventually need to replace this with the actual URL at which you've published your catalogue or product page.
+> Note that, while you're testing, a `data-item-url` value of `"/"` is fine. For the checkout flow to work, you will eventually need to replace this with the actual URL at which you've published your catalog or product page.
 
 To learn more about defining products, see the [Snipcart documentation](https://docs.snipcart.com/v3/setup/products).
 
@@ -75,13 +78,11 @@ Building on the stacking ring example, suppose that you wanted to give your cust
     data-item-price="19.99"
     data-item-url="/"
     data-item-name="Silver Stacking Ring"
-    <!--
-    highlight-start
-    --
-  >
+    <!--highlight-start-->
     data-item-custom1-name="Size"
-    data-item-custom1-options="6|6.5|7|7.5|8|8.5|9">
+    data-item-custom1-options="6|6.5|7|7.5|8|8.5|9"
     <!-- highlight-end -->
+    >
     Add to cart
   </button>
 </section>
@@ -102,11 +103,9 @@ You can add multiple custom fields by incrementing the index of the `data-item-c
     data-item-name="Silver Stacking Ring"
     data-item-custom1-name="Size"
     data-item-custom1-options="6|6.5|7|7.5|8|8.5|9"
-    <!--
-    highlight-start
-    --
-  >
-    data-item-custom2-name="This is a gift" data-item-custom2-type="checkbox">
+    <!--highlight-start-->
+    data-item-custom2-name="This is a gift" data-item-custom2-type="checkbox"
+   >
     <!-- highlight-end -->
     Add to cart
   </button>
@@ -128,10 +127,7 @@ Snipcart enables the sale of digital goods. To sell a file, you'll need to uploa
     data-item-price="19.99"
     data-item-url="/"
     data-item-name="Silver Stacking Ring"
-    <!--
-    highlight-start
-    --
-  >
+    <!--highlight-start-->
     data-item-file-guid="your-digital-product-guid">
     <!-- highlight-end -->
     Add to cart
@@ -145,7 +141,7 @@ Using Snipcart allows you to retain nearly complete control over your customers'
 
 ### Preventing automatic popups
 
-By default, the shopping cart will pop up every time a customer adds a product. To prevent this bahavior, set the value of `autopop` to `false` in your `gatsby-config.js` file.
+By default, the shopping cart will pop up every time a customer adds a product. To prevent this behavior, set the value of `autopop` to `false` in your `gatsby-config.js` file.
 
 ```js:title=gatsby-config.js
 {
