@@ -5812,7 +5812,7 @@
   repo: https://github.com/BuilderIO/gatsby-starter-builder
   description: Gatsby starter with drag + drop page building with your React components via Builder.io
   tags:
-    - CMS:Builder.io
+    - CMS:Other
     - CMS:Headless
   features:
     - Builder.io integration with sample pages/header/footer.
