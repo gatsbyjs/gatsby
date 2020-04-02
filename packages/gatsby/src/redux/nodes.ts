@@ -2,6 +2,8 @@ import { store } from "./"
 import { IGatsbyNode } from "./types"
 import { createPageDependency } from "./actions/add-page-dependency"
 
+export type FilterCacheKey = string
+
 /**
  * Get all nodes from redux store.
  */
@@ -155,27 +157,22 @@ export const addResolvedNodes = (
  * looping over all the nodes, when the number of pages (/nodes) scale up.
  */
 export const ensureIndexByTypedChain = (
+  cacheKey: FilterCacheKey,
   chain: string[],
   nodeTypeNames: string[],
   typedKeyValueIndexes: Map<
-    string,
+    FilterCacheKey,
     Map<string | number | boolean, Set<IGatsbyNode>>
   >
 ): void => {
-  const chained = chain.join(`+`)
-
-  const nodeTypeNamePrefix = nodeTypeNames.join(`,`) + `/`
-  // The format of the typedKey is `type,type/path+to+eqobj`
-  const typedKey = nodeTypeNamePrefix + chained
-
-  if (typedKeyValueIndexes.has(typedKey)) {
+  if (typedKeyValueIndexes.has(cacheKey)) {
     return
   }
 
   const { nodes, resolvedNodesCache } = store.getState()
 
   const byKeyValue = new Map<string | number | boolean, Set<IGatsbyNode>>()
-  typedKeyValueIndexes.set(typedKey, byKeyValue)
+  typedKeyValueIndexes.set(cacheKey, byKeyValue)
 
   nodes.forEach(node => {
     if (!nodeTypeNames.includes(node.internal.type)) {
@@ -232,18 +229,13 @@ export const ensureIndexByTypedChain = (
  * per `id` so there's a minor optimization for that (no need for Sets).
  */
 export const getNodesByTypedChain = (
-  chain: string[],
+  cacheKey: FilterCacheKey,
   value: boolean | number | string,
-  nodeTypeNames: string[],
   typedKeyValueIndexes: Map<
-    string,
+    FilterCacheKey,
     Map<string | number | boolean, Set<IGatsbyNode>>
   >
 ): Set<IGatsbyNode> | undefined => {
-  const key = chain.join(`+`)
-
-  const typedKey = nodeTypeNames.join(`,`) + `/` + key
-
-  const byTypedKey = typedKeyValueIndexes?.get(typedKey)
+  const byTypedKey = typedKeyValueIndexes?.get(cacheKey)
   return byTypedKey?.get(value)
 }
