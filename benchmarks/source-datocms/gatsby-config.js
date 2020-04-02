@@ -23,7 +23,7 @@ module.exports = {
         apiToken: process.env.DATOCMS_API_TOKEN,
         previewMode: false,
         disableLiveReload: false,
-        apiUrl: "https://site-api.datocms.com",
+        apiUrl: `https://site-api.datocms.com`,
       },
     },
   ],

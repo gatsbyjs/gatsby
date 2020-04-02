@@ -3,8 +3,8 @@ const kebabCase = require(`lodash.kebabcase`)
 exports.onCreateNode = ({ actions, node }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === "node__article") {
-    createNodeField({ node, name: "slug", value: kebabCase(node.title) })
+  if (node.internal.type === `node__article`) {
+    createNodeField({ node, name: `slug`, value: kebabCase(node.title) })
   }
 }
 
