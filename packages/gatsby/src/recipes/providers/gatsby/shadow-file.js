@@ -26,7 +26,7 @@ const create = async ({ root }, { theme, path: filePath }) => {
   const fullPath = path.join(root, filePath)
   const { dir } = path.parse(fullPath)
 
-  if (fileExists(fullPath)) {
+  if (fileExists({ root }, { path: filePath })) {
     return
   }
 
