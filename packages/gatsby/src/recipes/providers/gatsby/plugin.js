@@ -19,24 +19,28 @@ const isDefaultExport = node => {
 }
 
 const getValueFromLiteral = node => {
-  if (node.type === 'StringLiteral') {
+  if (node.type === `StringLiteral`) {
     return node.value
   }
 
-  if (node.type === 'TemplateLiteral') {
+  if (node.type === `TemplateLiteral`) {
     return node.quasis[0].value.raw
   }
+
+  return null
 }
 
 const getNameForPlugin = node => {
-  if (node.type === 'StringLiteral' || node.type === 'TemplateLiteral') {
+  if (node.type === `StringLiteral` || node.type === `TemplateLiteral`) {
     return getValueFromLiteral(node)
   }
 
-  if (node.type === 'ObjectExpression') {
-    const resolve = node.properties.find(p => p.key.name  === 'resolve')
+  if (node.type === `ObjectExpression`) {
+    const resolve = node.properties.find(p => p.key.name === `resolve`)
     return resolve ? getValueFromLiteral(resolve.value) : null
   }
+
+  return null
 }
 
 const addPluginToConfig = (src, pluginName) => {

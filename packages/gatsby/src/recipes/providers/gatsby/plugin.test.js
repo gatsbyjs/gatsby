@@ -19,15 +19,15 @@ test(`retrieves plugins from a config`, () => {
   const result = getPluginsFromConfig(src)
 
   expect(result).toEqual([
-    "gatsby-source-filesystem",
-    "gatsby-transformer-sharp",
-    "gatsby-plugin-emotion",
-    "gatsby-plugin-typography",
-    "gatsby-transformer-remark",
-    "gatsby-plugin-sharp",
-    "gatsby-plugin-google-analytics",
-    "gatsby-plugin-manifest",
-    "gatsby-plugin-offline",
-    "gatsby-plugin-react-helmet"
+    `gatsby-source-filesystem`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-emotion`,
+    `gatsby-plugin-typography`,
+    `gatsby-transformer-remark`,
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-google-analytics`,
+    `gatsby-plugin-manifest`,
+    `gatsby-plugin-offline`,
+    `gatsby-plugin-react-helmet`,
   ])
 })
