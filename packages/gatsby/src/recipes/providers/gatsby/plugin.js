@@ -18,6 +18,27 @@ const isDefaultExport = node => {
   return true
 }
 
+const getValueFromLiteral = node => {
+  if (node.type === 'StringLiteral') {
+    return node.value
+  }
+
+  if (node.type === 'TemplateLiteral') {
+    return node.quasis[0].value.raw
+  }
+}
+
+const getNameForPlugin = node => {
+  if (node.type === 'StringLiteral' || node.type === 'TemplateLiteral') {
+    return getValueFromLiteral(node)
+  }
+
+  if (node.type === 'ObjectExpression') {
+    const resolve = node.properties.find(p => p.key.name  === 'resolve')
+    return resolve ? getValueFromLiteral(resolve.value) : null
+  }
+}
+
 const addPluginToConfig = (src, pluginName) => {
   const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
     pluginOrThemeName: pluginName,
@@ -29,6 +50,16 @@ const addPluginToConfig = (src, pluginName) => {
   })
 
   return code
+}
+
+const getPluginsFromConfig = src => {
+  const getPlugins = new BabelPluginGetPluginsFromGatsbyConfig()
+
+  babel.transform(src, {
+    plugins: [getPlugins.plugin],
+  })
+
+  return getPlugins.state
 }
 
 const create = ({ root }, { name }) => {
@@ -44,13 +75,7 @@ const read = ({ root }) => {
   const configPath = path.join(root, `gatsby-config.js`)
   const configSrc = fs.readFileSync(configPath)
 
-  const getPlugins = new BabelPluginGetPluginsFromGatsbyConfig()
-
-  babel.transform(configSrc, {
-    plugins: [getPlugins.plugin],
-  })
-
-  return getPlugins.state
+  return getPluginsFromConfig(configSrc)
 }
 
 const destroy = ({ root }, { name }) => {
@@ -88,9 +113,8 @@ class BabelPluginAddPluginsToGatsbyConfig {
             const plugins = right.properties.find(p => p.key.name === `plugins`)
 
             if (shouldAdd) {
-              const exists = plugins.value.elements.some(
-                node => node.value === pluginOrThemeName
-              )
+              const pluginNames = plugins.value.elements.map(getNameForPlugin)
+              const exists = pluginNames.includes(node.value)
               if (!exists) {
                 plugins.value.elements.push(t.stringLiteral(pluginOrThemeName))
               }
@@ -127,9 +151,8 @@ class BabelPluginGetPluginsFromGatsbyConfig {
 
             const plugins = right.properties.find(p => p.key.name === `plugins`)
 
-            plugins.value.elements.forEach(node => {
-              // TODO: handle { resolve: 'thing' }
-              this.state.push(node.value)
+            plugins.value.elements.map(node => {
+              this.state.push(getNameForPlugin(node))
             })
           },
         },
@@ -139,6 +162,7 @@ class BabelPluginGetPluginsFromGatsbyConfig {
 }
 
 module.exports.addPluginToConfig = addPluginToConfig
+module.exports.getPluginsFromConfig = getPluginsFromConfig
 
 module.exports.create = create
 module.exports.update = create
