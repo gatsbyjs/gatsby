@@ -29,7 +29,7 @@ class Preview {
   }
 
   static function get_gatsby_preview_instance_url() {
-    $preview_url = self::get_setting( 'preview_api_webhook' );
+    $preview_url = self::get_setting( 'preview_instance_url' );
 
     if ( !$preview_url || !filter_var( $preview_url, FILTER_VALIDATE_URL ) ) {
       return false;
@@ -42,18 +42,41 @@ class Preview {
     return $preview_url;
   }
 
+  static function get_gatsby_preview_webhook() {
+    $preview_webhook = self::get_setting( 'preview_api_webhook' );
+
+    if (
+      !$preview_webhook ||
+      !filter_var( $preview_webhook, FILTER_VALIDATE_URL )
+    ) {
+      return false;
+    }
+
+    if ( substr($preview_webhook, -1) !== '/' ) {
+      $preview_webhook = "$preview_webhook/";
+    }
+
+    return $preview_webhook;
+  }
+
   public function post_to_preview_instance( $post_ID, $post ) {
+      if ( $post->post_type === 'action_monitor' ) {
+        return;
+      }
+
       if ( $post->post_status === 'auto-draft' ) {
-        return false;
+        return;
+      }
+
+      if ( $post->post_status === 'draft' ) {
+        return;
       }
 
       if ( $post->post_type !== 'revision' ) {
-        return false;
+        return;
       }
 
-      $preview_url = $this::get_gatsby_preview_instance_url();
-
-      $preview_url = "${preview_url}__refresh";
+      $preview_webhook = $this::get_gatsby_preview_webhook();
 
       $token = \WPGatsby\GraphQL\Auth::get_token();
 
@@ -63,11 +86,13 @@ class Preview {
 
       $original_post = get_post( $post->post_parent );
 
-      $post_type_object = \get_post_type_object( $original_post->post_type );
+      $post_type_object = $original_post
+        ? \get_post_type_object( $original_post->post_type )
+        : \get_post_type_object( $post->post_type );
 
       $global_relay_id = Relay::toGlobalId(
           $post_type_object->name,
-          absint( $original_post->ID )
+          absint( $original_post->ID ?? $post_ID )
       );
 
       $referenced_node_single_name
@@ -82,7 +107,7 @@ class Preview {
       ];
 
       wp_remote_post(
-        $preview_url,
+        $preview_webhook,
         [
           'body' => wp_json_encode( $post_body ),
           'headers' => ['Content-Type' => 'application/json; charset=utf-8'],

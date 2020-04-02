@@ -91,6 +91,16 @@ class Settings
       $settings_fields = [
         'wpgatsby_settings' => [
           [
+          'name'              => 'preview_instance_url',
+          'label'             => __('Preview Instance', 'wpgatsby_settings'),
+          'desc'              => __('Enter your Gatsby Preview instance URL. Must begin with http:// or https://.', 'wpgatsby_settings'),
+          'placeholder'       => __('https://', 'wpgatsby_settings'),
+          'type'              => 'text',
+          'sanitize_callback' => function( $input ) {
+              return $this->sanitize_url_field( $input );
+            }
+          ],
+          [
           'name'              => 'preview_api_webhook',
           'label'             => __('Preview Webhook', 'wpgatsby_settings'),
           'desc'              => __('Enter your Gatsby Preview Webhook URL. Must begin with http:// or https://.', 'wpgatsby_settings'),
@@ -101,16 +111,6 @@ class Settings
             }
           ],
           [
-            'name'              => 'builds_api_webhook',
-            'label'             => __('Builds Webhook', 'wpgatsby_settings'),
-            'desc'              => __('Enter your Gatsby Builds Webhook URL. Must begin with http:// or https://.', 'wpgatsby_settings'),
-            'placeholder'       => __('https://', 'wpgatsby_settings'),
-            'type'              => 'text',
-            'sanitize_callback' => function( $input ) {
-                return $this->sanitize_url_field( $input );
-              }
-          ],
-          [
             'name'              => 'preview_jwt_secret',
             'label'             => __('Preview JWT Secret', 'wpgatsby_settings'),
             'desc'              => __('This secret is used in the encoding and decoding of the JWT token. If the Secret were ever changed on the server, ALL tokens that were generated with the previous Secret would become invalid. So, if you wanted to invalidate all user tokens, you can change the Secret on the server and all previously issued tokens would become invalid and require users to re-authenticate.', 'wpgatsby_settings'),
@@ -118,6 +118,16 @@ class Settings
             'sanitize_callback' => 'sanitize_text_field',
             'default'           => self::get_default_secret(),
           ],
+          // [
+          //   'name'              => 'builds_api_webhook',
+          //   'label'             => __('Builds Webhook', 'wpgatsby_settings'),
+          //   'desc'              => __('Enter your Gatsby Builds Webhook URL. Must begin with http:// or https://.', 'wpgatsby_settings'),
+          //   'placeholder'       => __('https://', 'wpgatsby_settings'),
+          //   'type'              => 'text',
+          //   'sanitize_callback' => function( $input ) {
+          //       return $this->sanitize_url_field( $input );
+          //     }
+          // ],
         ]
       ];
       return $settings_fields;

@@ -2,11 +2,14 @@
 
   wp_head();
 
-  global $wp;
-  $page_path = add_query_arg( array(), $wp->request );
+  global $post;
+  $revision = array_values( wp_get_post_revisions( $post->ID ) )[0] ?? null;
+  $revision_url = get_the_permalink( $revision );
+  $revision_path = str_ireplace( get_home_url(), '', $revision_url );
 
   $preview_url = \WPGatsby\Admin\Preview::get_gatsby_preview_instance_url();
-  $frontend_url = "$preview_url$page_path";
+  $preview_url = rtrim( $preview_url, '/' );
+  $frontend_url = "$preview_url$revision_path";
 ?>
 
 <html lang="en">
