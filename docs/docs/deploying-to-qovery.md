@@ -22,7 +22,8 @@ Qovery include the following:
 - Managed storage (S3).
 - Custom URL redirects and rewrites.
 
-## Assumptions
+## Prerequisites
+To get started, you'll need:
 
 - You have an account with GitHub, GitLab or Bitbucket.
 - You have completed the Quick Start or have a Gatsby website you are ready to deploy and share with the world.
@@ -32,23 +33,26 @@ Qovery include the following:
 
 You can set up a Gatsby site on Qovery in five quick steps:
 
-**1/** Sign up
+**1/** Install the Qovery CLI
+Here is [how to install the Qovery CLI](https://docs.qovery.com/extending-qovery/cli) documentation
+
+**2/** Sign up
 
 ```bash
 # Sign up with Github, Gitlab, Bitbucket
 $ qovery auth
 ```
 
-**2/** Configure your project and generate a .qovery.yml
+**3/** Configure your project and generate a .qovery.yml
 
 ```bash
 # generate the .qovery.yml at the root of your project directory
 $ qovery init
 ```
 
-**3/** Add this Dockerfile at the root of your repository
+**4/** Add this Dockerfile at the root of your repository
 
-```dockerfile
+```Dockerfile
 FROM node:12-buster as build
 
 RUN yarn global add gatsby-cli
