@@ -2,7 +2,9 @@ import path from "path"
 import respawn from "respawn"
 import chokidar from "chokidar"
 import resolveCwd from "resolve-cwd"
+import getPort from "get-port"
 import report from "gatsby-cli/lib/reporter"
+import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
 
 const rootFile = (filePath: string): string =>
@@ -24,15 +26,28 @@ const createControllableScript = (script: string): IRespawnMonitor => {
   })
 }
 
-module.exports = (program: IProgram): void => {
-  const developProcess = resolveCwd.silent(
+module.exports = async (program: IProgram): Promise<void> => {
+  const developProcessPath = resolveCwd.silent(
     `gatsby/dist/commands/develop-process`
   )
+  // Run the actual develop server on a random port, and the proxy on the program port
+  // which users will access
+  const userPort = program.port
+  const randomPort = await getPort()
+  console.log({ userPort, randomPort })
   const script = createControllableScript(report.stripIndent`
-    const cmd = require("${developProcess}");
-    const args = ${JSON.stringify(program)};
+    const cmd = require("${developProcessPath}");
+    const args = ${JSON.stringify({
+      ...program,
+      port: randomPort,
+    })};
     cmd(args);
   `)
+
+  startDevelopProxy({
+    proxyPort: userPort,
+    targetPort: randomPort,
+  })
 
   script.start()
 
