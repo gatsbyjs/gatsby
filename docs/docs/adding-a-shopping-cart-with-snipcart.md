@@ -22,7 +22,7 @@ Installing the plugin adds Snipcart's shopping cart JavaScript for you, so you c
 
 ## Defining Products
 
-Adding products with Snipcart involves writing HTML representing your product and adding a set of attributes to that HTML. You might write something similar to the following code block for each item in your catalogue.
+Adding products with Snipcart involves writing HTML representing your product and adding a set of attributes to that HTML. You might write something similar to the following code block for each item in your catalog. This code could be part of a page like `index.js` or anywhere else you list a product.
 
 ```jsx
 <section>
