@@ -5,7 +5,7 @@ const React = require(`react`)
 const { useState } = require(`react`)
 const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
-const MDX = require('@mdx-js/runtime')
+const MDX = require(`@mdx-js/runtime`)
 const humanizeList = require(`humanize-list`)
 const {
   createClient,
@@ -19,7 +19,7 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 
-const parser = require('./parser')
+const parser = require(`./parser`)
 
 const isRelative = path => {
   if (path.slice(0, 1) == `.`) {
@@ -30,17 +30,20 @@ const isRelative = path => {
 }
 
 const log = (label, textOrObj) => {
-  const text = typeof textOrObj === 'string' ? textOrObj : JSON.stringify(textOrObj, null, 2)
+  const text =
+    typeof textOrObj === `string`
+      ? textOrObj
+      : JSON.stringify(textOrObj, null, 2)
 
-  let contents = ''
+  let contents = ``
   try {
-    contents = fs.readFileSync('recipe-client.log', 'utf8')
+    contents = fs.readFileSync(`recipe-client.log`, `utf8`)
   } catch (e) {
     // File doesn't exist yet
   }
 
-  contents += label + ': ' + text + '\n'
-  fs.writeFileSync('recipe-client.log', contents)
+  contents += label + `: ` + text + `\n`
+  fs.writeFileSync(`recipe-client.log`, contents)
 }
 
 module.exports = ({ recipe, projectRoot }) => {
@@ -53,7 +56,7 @@ module.exports = ({ recipe, projectRoot }) => {
   if (recipePath.slice(-4) !== `.mdx`) {
     recipePath += `.mdx`
   }
-  
+
   const recipeSrc = fs.readFileSync(recipePath, `utf8`)
   const GRAPHQL_ENDPOINT = `http://localhost:4000/graphql`
 
@@ -81,7 +84,7 @@ module.exports = ({ recipe, projectRoot }) => {
   const {
     commands: allCommands,
     stepsAsMdx: stepsAsMDX,
-    stepsAsMdxWithoutJsx: stepsAsMDXNoJSX
+    stepsAsMdxWithoutJsx: stepsAsMDXNoJSX,
   } = parser(recipeSrc)
 
   const Div = props => (
@@ -144,9 +147,9 @@ module.exports = ({ recipe, projectRoot }) => {
     })
 
     if (process.env.DEBUG) {
-      log('subscriptionResponse', subscriptionResponse)
-      log('lastKeyPress', lastKeyPress)
-      log('state', state)
+      log(`subscriptionResponse`, subscriptionResponse)
+      log(`lastKeyPress`, lastKeyPress)
+      log(`state`, state)
     }
 
     return (

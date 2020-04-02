@@ -4,7 +4,7 @@ const remarkParse = require(`remark-parse`)
 const remarkStringify = require(`remark-stringify`)
 const jsxToJson = require(`simplified-jsx-to-json`)
 const visit = require(`unist-util-visit`)
-const remove = require('unist-util-remove')
+const remove = require(`unist-util-remove`)
 
 const asRoot = nodes => {
   return {
@@ -78,7 +78,7 @@ const toMdx = nodes => {
 
 const toMdxWithoutJsx = nodes => {
   const stepAst = asRoot(nodes)
-  visit(stepAst, 'jsx', (node, index, parent) => {
+  visit(stepAst, `jsx`, (node, index, parent) => {
     parent.children.splice(index, 1)
   })
   // remove(stepAst, 'jsx')
@@ -94,6 +94,6 @@ module.exports = src => {
     steps,
     commands: extractCommands(steps),
     stepsAsMdx: steps.map(toMdx),
-    stepsAsMdxWithoutJsx: steps.map(toMdxWithoutJsx)
+    stepsAsMdxWithoutJsx: steps.map(toMdxWithoutJsx),
   }
 }
