@@ -1,6 +1,6 @@
 ---
 title: 'Gatsby Days LA 2020 Video 2: Live demo of Gatsby + Contentful developer workflow'
-date: 2020-04-01
+date: 2020-04-02
 author: Greg Thomas
 excerpt: "Watch in real time as Dustin Schau, Gatsby's head of product, updates a fully accessible Gatsby-built site using the Contentful headless CMS and then deploys to a CDN."
 tags:
