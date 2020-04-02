@@ -7,15 +7,31 @@ const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 const destroyFile = promisify(fs.unlink)
 
-const create = async ({ root }, { path: filePath, content, children }) => {
+const fileExists = ({ root }, { path: filePath }) => {
+  const fullPath = path.join(root, filePath)
+  try {
+    fs.accessSync(fullPath, fs.constants.F_OK)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+const create = async ({ root }, { path: filePath, content, overwrite }) => {
   const fullPath = path.join(root, filePath)
   const { dir } = path.parse(fullPath)
 
-  content = content || children
+  const alreadyExists = await fileExists({ root }, { path: filePath })
+
+  if (alreadyExists && !overwrite) {
+    return
+  }
 
   await mkdirp(dir)
   await writeFile(fullPath, content)
 }
+
+const update = (context, cmd) => create(context, { ...cmd, overwrite: true })
 
 const read = async ({ root }, { path: filePath }) => {
   const fullPath = path.join(root, filePath)
@@ -29,7 +45,9 @@ const destroy = async ({ root }, { path: filePath }) => {
   await destroyFile(fullPath)
 }
 
+module.exports.exists = fileExists
+
 module.exports.create = create
-module.exports.update = create
+module.exports.update = update
 module.exports.read = read
 module.exports.destroy = destroy
