@@ -29,6 +29,7 @@
 - [x] Don't shadow existing files (overwrite)
 - [x] Handle object style plugins
 - [x] Improve gatsby-config test
+- [ ] use yarn/npm based on the user config
 
 ## Near-ish future
 
