@@ -192,13 +192,13 @@ export const ensureIndexByTypedChain = (
   }
 }
 
-const addNodeToFilterCache = (
+function addNodeToFilterCache(
   node: IGatsbyNode,
   valueOffset: any,
   chain: Array<string>,
   filterCache: FilterCache,
   resolvedNodesCache
-): void => {
+): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
   if (!node.__gatsby_resolved) {
     const typeName = node.internal.type
@@ -241,7 +241,7 @@ export const ensureIndexByElemMatch = (
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
-) => {
+): void => {
   // Given an elemMatch filter, generate the cache that contains all nodes that
   // matches a given value for that sub-query
 
@@ -279,13 +279,13 @@ export const ensureIndexByElemMatch = (
   }
 }
 
-const addNodeToBucketWithElemMatch = (
+function addNodeToBucketWithElemMatch(
   node: IGatsbyNode,
   valueAtCurrentStep: any, // Arbitrary step on the path inside the node
   filter: IDbQueryElemMatch,
   filterCache: FilterCache,
   resolvedNodesCache
-) => {
+): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
   if (!node.__gatsby_resolved) {
     const typeName = node.internal.type
@@ -315,7 +315,7 @@ const addNodeToBucketWithElemMatch = (
     // node ends up in buckets for value 3 and 4. This may lead to duplicate
     // work when elements resolve to the same value, but that can't be helped.
     valueAtCurrentStep.forEach(elem => {
-      if (nestedQuery.type === "elemMatch") {
+      if (nestedQuery.type === `elemMatch`) {
         addNodeToBucketWithElemMatch(
           node,
           elem,
