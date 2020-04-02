@@ -1,33 +1,35 @@
-const fs = require(`fs`)
 const path = require(`path`)
 
-const { addPluginToConfig, getPluginsFromConfig } = require(`./plugin`)
+const plugin = require(`./plugin`)
 
-const CONFIG_PATH = path.join(__dirname, `./fixtures/gatsby-config.js`)
+const root = path.join(__dirname, `./fixtures`)
+const name = `gatsby-plugin-foo`
 
-test(`adds a plugin to a gatsby config`, () => {
-  const src = fs.readFileSync(CONFIG_PATH, `utf8`)
+describe(`gatsby-config`, () => {
+  test(`adds a plugin to a gatsby config`, async () => {
+    await plugin.create({ root }, { name })
 
-  const result = addPluginToConfig(src, `gatsby-plugin-foo`)
+    const result = await plugin.read({ root })
 
-  expect(getPluginsFromConfig(result)).toContain(`gatsby-plugin-foo`)
-})
+    expect(result).toContain(`gatsby-plugin-foo`)
 
-test(`retrieves plugins from a config`, () => {
-  const src = fs.readFileSync(CONFIG_PATH, `utf8`)
+    await plugin.destroy({ root }, { name })
+  })
 
-  const result = getPluginsFromConfig(src)
+  test(`retrieves plugins from a config`, async () => {
+    const result = await plugin.read({ root })
 
-  expect(result).toEqual([
-    `gatsby-source-filesystem`,
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-emotion`,
-    `gatsby-plugin-typography`,
-    `gatsby-transformer-remark`,
-    `gatsby-plugin-sharp`,
-    `gatsby-plugin-google-analytics`,
-    `gatsby-plugin-manifest`,
-    `gatsby-plugin-offline`,
-    `gatsby-plugin-react-helmet`,
-  ])
+    expect(result).toEqual([
+      `gatsby-source-filesystem`,
+      `gatsby-transformer-sharp`,
+      `gatsby-plugin-emotion`,
+      `gatsby-plugin-typography`,
+      `gatsby-transformer-remark`,
+      `gatsby-plugin-sharp`,
+      `gatsby-plugin-google-analytics`,
+      `gatsby-plugin-manifest`,
+      `gatsby-plugin-offline`,
+      `gatsby-plugin-react-helmet`,
+    ])
+  })
 })

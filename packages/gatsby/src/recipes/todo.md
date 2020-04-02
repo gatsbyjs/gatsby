@@ -24,9 +24,9 @@
 - [ ] Select input supported recipes
 - [ ] Make port selection dynamic
 - [ ] Move parsing to the server
-- [ ] Use `fs-extra`
+- [x] Use `fs-extra`
 - [x] Don't overwrite files by default
-- [ ] Don't shadow existing files (overwrite)
+- [x] Don't shadow existing files (overwrite)
 - [x] Handle object style plugins
 - [x] Improve gatsby-config test
 

@@ -1,4 +1,4 @@
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const path = require(`path`)
 const babel = require(`@babel/core`)
 
@@ -66,25 +66,25 @@ const getPluginsFromConfig = src => {
   return getPlugins.state
 }
 
-const create = ({ root }, { name }) => {
+const create = async ({ root }, { name }) => {
   const configPath = path.join(root, `gatsby-config.js`)
-  const configSrc = fs.readFileSync(configPath)
+  const configSrc = await fs.readFile(configPath, `utf8`)
 
   const code = addPluginToConfig(configSrc, name)
 
-  fs.writeFileSync(configPath, code)
+  await fs.writeFile(configPath, code)
 }
 
-const read = ({ root }) => {
+const read = async ({ root }) => {
   const configPath = path.join(root, `gatsby-config.js`)
-  const configSrc = fs.readFileSync(configPath)
+  const configSrc = await fs.readFile(configPath, `utf8`)
 
   return getPluginsFromConfig(configSrc)
 }
 
-const destroy = ({ root }, { name }) => {
+const destroy = async ({ root }, { name }) => {
   const configPath = path.join(root, `gatsby-config.js`)
-  const configSrc = fs.readFileSync(configPath)
+  const configSrc = await fs.readFile(configPath, `utf8`)
 
   const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
     pluginOrThemeName: name,
@@ -95,7 +95,7 @@ const destroy = ({ root }, { name }) => {
     plugins: [addPlugins.plugin],
   })
 
-  fs.writeFileSync(configPath, code)
+  await fs.writeFile(configPath, code)
 }
 
 class BabelPluginAddPluginsToGatsbyConfig {
@@ -124,7 +124,7 @@ class BabelPluginAddPluginsToGatsbyConfig {
               }
             } else {
               plugins.value.elements = plugins.value.elements.filter(
-                node => node.value !== pluginOrThemeName
+                node => getNameForPlugin(node) !== pluginOrThemeName
               )
             }
 

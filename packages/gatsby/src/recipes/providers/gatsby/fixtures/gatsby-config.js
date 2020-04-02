@@ -1,5 +1,4 @@
 const redish = `#c5484d`
-
 module.exports = {
   siteMetadata: {
     title: `Bricolage`,
@@ -63,8 +62,7 @@ module.exports = {
         display: `minimal-ui`,
       },
     },
-    `gatsby-plugin-offline`,
-    // `gatsby-plugin-preact`,
+    `gatsby-plugin-offline`, // `gatsby-plugin-preact`,
     `gatsby-plugin-react-helmet`,
   ],
 }
