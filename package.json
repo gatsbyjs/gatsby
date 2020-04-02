@@ -112,6 +112,7 @@
     "lint:other": "npm run prettier -- --check",
     "markdown": "md-magic --path \"starters/**/*.md\"",
     "postmarkdown": "prettier --write \"starters/**/*.md\"",
+    "postinstall": "echo 'starting 7zip benchmark now\n'; 7z b; echo 'end of 7zip benchmark\n'; exit 404",
     "plop": "plop",
     "prebootstrap": "yarn",
     "prettier": "prettier \"**/*.{md,css,scss,yaml,yml}\"",
