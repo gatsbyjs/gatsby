@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<!-- Copyright 2013 the V8 project authors. Scroll to the end for full license -->
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" value="IE=edge"/>
+<meta charset="utf-8"/>
+<title>Octane 2.0 JavaScript Benchmark</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta name="description"
+  content="Octane 2.0 JavaScript Benchmark - the Javascript benchmark for the modern web">
+<meta name="author" content="Octane Team Google">
+<!-- twitter bootstrap code -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<!-- Octane benchmark code -->
+<script type="text/javascript" src="base.js"></script>
+<script type="text/javascript" src="richards.js"></script>
+<script type="text/javascript" src="deltablue.js"></script>
+<script type="text/javascript" src="crypto.js"></script>
+<script type="text/javascript" src="raytrace.js"></script>
+<script type="text/javascript" src="earley-boyer.js"></script>
+<script type="text/javascript" src="regexp.js"></script>
+<script type="text/javascript" src="splay.js"></script>
+<script type="text/javascript" src="navier-stokes.js"></script>
+<script type="text/javascript" src="pdfjs.js"></script>
+<script type="text/javascript" src="mandreel.js"></script>
+<script type="text/javascript" src="gbemu-part1.js"></script>
+<script type="text/javascript" src="gbemu-part2.js"></script>
+<script type="text/javascript" src="code-load.js"></script>
+<script type="text/javascript" src="box2d.js"></script>
+<script type="text/javascript" src="zlib.js"></script>
+<script type="text/javascript" src="zlib-data.js"></script>
+<script type="text/javascript" src="typescript.js"></script>
+<script type="text/javascript" src="typescript-input.js"></script>
+<script type="text/javascript" src="typescript-compiler.js"></script>
+
+<script type="text/javascript">
+  var completed = 0;
+  var benchmarks = BenchmarkSuite.CountBenchmarks();
+  var success = true;
+  var latencyBenchmarks = ["Splay", "Mandreel"];
+  var skipBenchmarks =
+          typeof skipBenchmarks === "undefined" ? [] : skipBenchmarks;
+
+  function ShowBox(name) {
+    var box = document.getElementById("Box-" + name);
+    box.style.visibility = 'visible';
+    var bar = document.getElementById("progress-bar").style.width = ""
+        + ((++completed) / benchmarks) * 100 + "%";
+    latencyBenchmarks.forEach(function(entry) {
+      if (name.valueOf() === entry.valueOf()) {
+        var box1 = document.getElementById("Box-" + name + "Latency");
+        box1.style.visibility = 'visible';
+      }
+    });
+  }
+
+  function AddResult(name, result) {
+    console.log(name + ': ' + result);
+    var box = document.getElementById("Result-" + name);
+    box.innerHTML = result;
+  }
+
+  function AddError(name, error) {
+    console.log(name + ": " + error.message);
+    if (error == "TypedArrayUnsupported") {
+      AddResult(name, '<b>Unsupported<\/b>');
+    } else if (error == "PerformanceNowUnsupported") {
+      AddResult(name, '<b>Timer error<\/b>');
+    } else {
+      AddResult(name, '<b>Error</b>');
+    }
+    success = false;
+  }
+
+  function AddScore(score) {
+    var status = document.getElementById("main-banner");
+    if (success) {
+      status.innerHTML = "Octane Score: " + score;
+    } else {
+      status.innerHTML = "Octane Score (incomplete): " + score;
+    }
+    document.getElementById("progress-bar-container").style.visibility = 'hidden';
+    document.getElementById("bottom-text").style.visibility = 'visible';
+    document.getElementById("inside-anchor").removeChild(document.getElementById("bar-appendix"));
+    document.getElementById("alertbox").style.visibility = 'hidden';
+  }
+
+  function Run() {
+    document.getElementById("main-banner").innerHTML = "Running Octane...";
+    // append the progress bar elements..
+    document.getElementById("bar-appendix").innerHTML = "<br/><div class=\"progress progress-striped\" id=\"progress-bar-container\" style=\"visibility:hidden\"><div class=\"bar\"style=\"width: 0%;\" id=\"progress-bar\"></div></div>";
+    var anchor = document.getElementById("run-octane");
+    var parent = document.getElementById("main-container");
+    parent.appendChild(document.getElementById("inside-anchor"));
+    parent.removeChild(anchor);
+
+    document.getElementById("startup-text").innerHTML="";
+
+    document.getElementById("progress-bar-container").style.visibility = 'visible';
+
+    BenchmarkSuite.RunSuites({
+      NotifyStart : ShowBox,
+      NotifyError : AddError,
+      NotifyResult : AddResult,
+      NotifyScore : AddScore
+    },
+    skipBenchmarks);
+  }
+
+  function CheckCompatibility() {
+    // If no Typed Arrays support, show warning label.
+    var hasTypedArrays = typeof Uint8Array != "undefined"
+        && typeof Float64Array != "undefined"
+        && typeof (new Uint8Array(0)).subarray != "undefined";
+
+    if (!hasTypedArrays) {
+      console.log("Typed Arrays not supported");
+      document.getElementById("alertbox").style.display="block";
+    }
+    if (window.document.URL.indexOf('skip_zlib=1') >= 0)
+      skipBenchmarks.push("zlib");
+    if (window.document.URL.indexOf('auto=1') >= 0)
+      Run();
+  }
+
+  function Load() {
+    setTimeout(CheckCompatibility, 200);
+  }
+</script>
+<!-- end Octane benchmark code -->
+
+<!-- Le styles -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<style>
+body {
+  padding-top: 60px;
+  /* 60px to make the container go all the way to the bottom of the topbar */
+}
+</style>
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- Le fav and touch icons -->
+<!-- TODO update icons -->
+<link rel="shortcut icon" href="ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+  href="ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+  href="ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+  href="ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+  href="ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body onLoad="Load()">
+
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+
+      <div class="container">
+
+        <a class="brand" href="#">Octane 2.0</a>
+        <!--/.nav-collapse -->
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="alert" style="display:none" id="alertbox">
+       <strong>Warning</strong> This JavaScript engine does not support Typed Arrays. You might want to run the <a href="http://v8.googlecode.com/svn/data/benchmarks/v7/run.html">V8 benchmark v7</a> instead.
+    </div>
+    <div id="main-container">
+    <a id="run-octane" href="javascript:Run()">
+      <div class="hero-unit" id="inside-anchor">
+        <h1 align="center" id="main-banner">Start Octane 2.0</h1>
+        <div id="bar-appendix"></div>
+      </div>
+    </a>
+    </div>
+
+    <div id="startup-text" style="color:white;" align="center">
+      Welcome to Octane 2.0, a JavaScript benchmark for the modern web. For more accurate results, <a href="http://developers.google.com/octane/benchmark">start the browser anew</a> before running the test. 
+    <br/><br/>
+      <a href="http://developers.google.com/octane/benchmark#whatsnew" target="_blank">What's new in Octane 2.0</a> - <a href="http://developers.google.com/octane/">Documentation</a> - <a href="http://octane-benchmark.googlecode.com/svn/tags/v1/index.html">Run Octane v1</a>
+    </div>
+
+
+    <div class="header"></div>
+
+    <div class="content">
+      <div class="row">
+        <div class="span3">
+          <div class="box" id="Box-Richards" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#richards"
+              target="_blank" style="float:left; color:#994520">Richards</a>
+   
+            <span class="p-result" id="Result-Richards" style="float:right">...</span>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Core
+              language features</span>
+          </div>
+
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-DeltaBlue" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#deltablue"
+              target="_blank" style="float:left; color:#994520">Deltablue</a>
+           
+            <p class="p-result" id="Result-DeltaBlue" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Core
+              language features</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-Crypto" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#crypto"
+              target="_blank" style="float:left; color:#994520">Crypto</a>
+           
+            <p class="p-result" id="Result-Crypto" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Bit &
+              Math operations</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-RayTrace" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#raytrace"
+              target="_blank" style="float:left; color:#994520">Raytrace</a>
+   
+            <p class="p-result" id="Result-RayTrace" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Core
+              language features</span>
+          </div>
+        </div>
+
+      </div>
+      <!-- /row -->
+
+      <div class="row">
+
+        <div class="span3">
+          <div class="box" id="Box-EarleyBoyer" style="visibility: hidden;">
+            <a
+              href="http://developers.google.com/octane/benchmark#earleyboyer"
+              target="_blank" style="float:left; color:#994520">EarleyBoyer</a>
+           
+            <p class="p-result" id="Result-EarleyBoyer" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Memory
+              & GC</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-RegExp" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#regexp"
+              target="_blank" style="float:left; color:#994520">Regexp</a>
+           
+            <p class="p-result" id="Result-RegExp" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Strings
+              & arrays</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-Splay" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#splay"
+              target="_blank" style="float:left; color:#994520">Splay</a>
+           
+            <p class="p-result" id="Result-Splay" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Memory
+              & GC</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-SplayLatency" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#splaylatency"
+              target="_blank" style="float:left; color:#994520">SplayLatency</a>
+
+            <p class="p-result" id="Result-SplayLatency" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">GC latency
+            </span>
+          </div>
+        </div>
+
+      </div>
+      <!-- /row -->
+
+      <div class="row">
+        <div class="span3">
+          <div class="box" id="Box-NavierStokes" style="visibility: hidden;">
+            <a
+              href="http://developers.google.com/octane/benchmark#navierstokes"
+              target="_blank" style="float:left; color:#994520">NavierStokes</a>
+
+            <p class="p-result" id="Result-NavierStokes" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Strings
+              & arrays</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-PdfJS" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#pdfjs"
+              target="_blank" style="float:left; color:#994520">pdf.js</a>
+           
+            <p class="p-result" id="Result-PdfJS" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Strings
+              & arrays</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-Mandreel" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#mandreel"
+              target="_blank" style="float:left; color:#994520">Mandreel</a>
+           
+            <p class="p-result" id="Result-Mandreel" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Virtual
+              machine</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-MandreelLatency" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#mandreellatency"
+              target="_blank" style="float:left; color:#994520">MandreelLatency</a>
+
+            <p class="p-result" id="Result-MandreelLatency" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Compiler latency
+            </span>
+          </div>
+        </div>
+
+      </div>
+      <!-- /row -->
+
+      <div class="row">
+        <div class="span3">
+          <div class="box" id="Box-Gameboy" style="visibility: hidden;">
+            <a
+              href="http://developers.google.com/octane/benchmark#gameboyemulator"
+              target="_blank" style="float:left; color:#994520">GB Emulator</a>
+
+            <p class="p-result" id="Result-Gameboy" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Virtual
+              machine</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-CodeLoad" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#codeload"
+              target="_blank" style="float:left; color:#994520">CodeLoad</a>
+
+            <p class="p-result" id="Result-CodeLoad" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Loading
+              & Parsing</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-Box2D" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#box2d"
+              target="_blank" style="float:left; color:#994520">Box2DWeb</a>
+           
+            <p class="p-result" id="Result-Box2D" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Bit &
+              Math operations</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-zlib" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#zlib"
+              target="_blank" style="float:left; color:#994520">zlib</a>
+           
+            <p class="p-result" id="Result-zlib" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">asm.js</span>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="box" id="Box-Typescript" style="visibility: hidden;">
+            <a href="http://developers.google.com/octane/benchmark#typescript"
+              target="_blank" style="float:left; color:#994520">Typescript</a>
+           
+            <p class="p-result" id="Result-Typescript" style="float:right">...</p>
+            <span class="label-simple"
+              style="position: absolute; bottom: 3px; left: 3px;">Virtual machine & GC
+            </span>
+          </div>
+        </div>
+
+      </div>
+      <!-- /row -->
+
+    </div>
+    <!-- /content -->
+
+    <div id="bottom-text" style="color:white; visibility:hidden" align="center">
+      <br></br>
+       The final score is the <a href="http://en.wikipedia.org/wiki/Geometric_mean#Properties">geometric mean</a> of the single scores. We suggest to restart the browser before repeating the test.
+    </div>
+
+  </div>
+  <!-- /container -->
+
+</body>
+</html>
+
+<!--
+// Copyright 2013 the V8 project authors (http://code.google.com/p/v8/). 
+// All rights reserved.
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+//       copyright notice, this list of conditions and the following
+//       disclaimer in the documentation and/or other materials provided
+//       with the distribution.
+//     * Neither the name of Google Inc. nor the names of its
+//       contributors may be used to endorse or promote products derived
+//       from this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
