@@ -18,6 +18,8 @@
 ## Friday (alpha)
 
 - [x] Handle `dev` in NPMPackage
+- [ ] Make `dependencyType` in NPMPackage an enum
+- [ ] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
 - [ ] Step by step design
 - [ ] Select input supported recipes
 - [ ] Make port selection dynamic
