@@ -1,7 +1,14 @@
-const emptySpaceToCauseFailure = "     "
+import strip from "strip-ansi"
 
-export const createLogsMatcher = logs => {
+export const createLogsMatcher = output => {
+  const logs = output.map(strip)
+
   return {
+    // Useful for debuggging
+    logOutput() {
+      console.log(logs.join("\n"))
+    },
+
     should: {
       contain: match => {
         const foundMatch = logs.reduce(

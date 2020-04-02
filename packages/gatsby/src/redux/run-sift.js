@@ -1,4 +1,5 @@
 // @flow
+
 const { default: sift } = require(`sift`)
 const { prepareRegex } = require(`../utils/prepare-regex`)
 const { makeRe } = require(`micromatch`)
@@ -18,6 +19,35 @@ const {
   addResolvedNodes,
   getNode: siftGetNode,
 } = require(`./nodes`)
+
+/**
+ * Creates a key for the filterCache
+ *
+ * @param {Array<string>} typeNames
+ * @param {DbQuery} filter
+ * @returns {FilterCacheKey} (a string: `types.join()/path.join()/operator` )
+ */
+const createTypedFilterCacheKey = (typeNames, filter) => {
+  // Note: while `elemMatch` is a special case, in the key it's just `elemMatch`
+  // (This function is future proof for elemMatch support, won't receive it yet)
+  let f = filter
+  let comparator = ``
+  let paths /*: Array<string>*/ = []
+  while (f) {
+    paths.push(...f.path)
+    if (f.type === `elemMatch`) {
+      let q /*: IDbQueryElemMatch*/ = f
+      f = q.nestedQuery
+    } else {
+      let q /*: IDbQueryQuery*/ = f
+      comparator = q.query.comparator
+      break
+    }
+  }
+
+  // Note: the separators (`,` and `/`) are arbitrary but must be different
+  return typeNames.join(`,`) + `/` + comparator + `/` + paths.join(`,`)
+}
 
 /////////////////////////////////////////////////////////////////////
 // Parse filter
@@ -105,7 +135,7 @@ function handleMany(siftArgs, nodes) {
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
  * @returns {Array<IGatsbyNode> | undefined}
  */
 const runFlatFiltersWithoutSift = (
@@ -149,7 +179,7 @@ const runFlatFiltersWithoutSift = (
 /**
  * @param {Array<DbQuery>} filters
  * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
  * @returns {Array<Set<IGatsbyNode>> | undefined} Undefined means at least one
  *   cache was not found. Must fallback to sift.
  */
@@ -163,12 +193,18 @@ const getBucketsForFilters = (filters, nodeTypeNames, typedKeyValueIndexes) => {
       query: { value: targetValue },
     } = filter
 
-    ensureIndexByTypedChain(chain, nodeTypeNames, typedKeyValueIndexes)
+    let cacheKey = createTypedFilterCacheKey(nodeTypeNames, filter)
+
+    ensureIndexByTypedChain(
+      cacheKey,
+      chain,
+      nodeTypeNames,
+      typedKeyValueIndexes
+    )
 
     const nodesByKeyValue = getNodesByTypedChain(
-      chain,
+      cacheKey,
       targetValue,
-      nodeTypeNames,
       typedKeyValueIndexes
     )
 
@@ -202,7 +238,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, typedKeyValueIndexes) => {
  * @property {boolean} args.firstOnly true if you want to return only the first
  *   result found. This will return a collection of size 1. Not a single element
  * @property {{filter?: Object, sort?: Object} | undefined} args.queryArgs
- * @property {undefined | Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} args.typedKeyValueIndexes
+ * @property {undefined | Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} args.typedKeyValueIndexes
  *   May be undefined. A cache of indexes where you can look up Nodes grouped
  *   by a key: `types.join(',')+'/'+filterPath.join('+')`, which yields a Map
  *   which holds a Set of Nodes for the value that the filter is trying to eq
@@ -243,7 +279,7 @@ exports.runSift = runFilterAndSort
  * @param {Array<DbQuery> | undefined} filterFields
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {undefined | Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
  * @param resolvedFields
  * @returns {Array<IGatsbyNode> | undefined} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
@@ -318,7 +354,7 @@ const filterToStats = (
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {Map<string, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
  * @returns {Array|undefined} Collection of results
  */
 const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
