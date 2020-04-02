@@ -2,10 +2,10 @@ const fs = require(`fs`)
 const path = require(`path`)
 
 const React = require(`react`)
-const { useState } = require(`react`)
+const { useState, useContext } = require(`react`)
 const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
-const Link = require('ink-link')
+const Link = require(`ink-link`)
 const MDX = require(`@mdx-js/runtime`)
 const humanizeList = require(`humanize-list`)
 const {
@@ -22,6 +22,19 @@ const ws = require(`ws`)
 
 const parser = require(`./parser`)
 
+const PlanDescribe = ({ resourceName }) => {
+  const { planForNextStep = [] } = usePlan()
+  const plans = planForNextStep.filter(p => p.resourceName === resourceName)
+
+  return (
+    <Box>
+      {plans.map((stepPlan, i) => (
+        <Text key={i}>{stepPlan.describe}</Text>
+      ))}
+    </Box>
+  )
+}
+
 const components = {
   inlineCode: Text,
   h1: props => <Text bold underline {...props} />,
@@ -31,8 +44,14 @@ const components = {
   h5: props => <Text bold underline {...props} />,
   h6: props => <Text bold underline {...props} />,
   a: ({ href, children }) => <Link url={href}>{children}</Link>,
-  paragraph: props => <Box width="100%" flexDirection="row" textWrap="wrap" {...props} />,
-  File: () => <Text>File: FIX ME</Text>
+  paragraph: props => (
+    <Box width="100%" flexDirection="row" textWrap="wrap" {...props} />
+  ),
+  Config: () => null,
+  GatsbyPlugin: () => <PlanDescribe resourceName='GatsbyPlugin' />,
+  NPMPackage: () => <PlanDescribe resourceName='NPMPackage' />,
+  File: () => <PlanDescribe resourceName='File' />,
+  ShadowFile: () => <PlanDescribe resourceName='ShadowFile' />
 }
 
 const isRelative = path => {
@@ -59,6 +78,9 @@ const log = (label, textOrObj) => {
   contents += label + `: ` + text + `\n`
   fs.writeFileSync(`recipe-client.log`, contents)
 }
+
+const PlanContext = React.createContext({})
+const usePlan = () => useContext(PlanContext)
 
 module.exports = ({ recipe, projectRoot }) => {
   let recipePath
@@ -150,11 +172,10 @@ module.exports = ({ recipe, projectRoot }) => {
       (data &&
         data.operation &&
         data.operation.planForNextStep &&
-        JSON.parse(data.operation.planForNextStep)) || []
+        JSON.parse(data.operation.planForNextStep)) ||
+      []
 
     const state = data && data.operation && data.operation.state
-
-    log('next step', planForNextStep)
 
     useInput((_, key) => {
       setLastKeyPress(key)
@@ -176,14 +197,9 @@ module.exports = ({ recipe, projectRoot }) => {
     }
 
     return (
-      <>
-        <MDX components={components}>
-          {stepsAsMDXNoJSX[currentStep]}
-        </MDX>
+      <PlanContext.Provider value={{planForNextStep}}>
+        <MDX components={components}>{stepsAsMDX[currentStep]}</MDX>
         <Div />
-        {planForNextStep.map((stepPlan, i) => (
-          <Text key={i}>{stepPlan.describe}</Text>
-        ))}
         <Text>Press enter to apply!</Text>
         {operation.map((command, i) => (
           <Div key={i}>
@@ -196,7 +212,7 @@ module.exports = ({ recipe, projectRoot }) => {
             <Text>Your recipe is served! Press enter to exit.</Text>
           </Div>
         ) : null}
-      </>
+      </PlanContext.Provider>
     )
   }
 

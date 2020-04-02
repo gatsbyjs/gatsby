@@ -38,7 +38,7 @@ const configResource = {
   read: () => {},
   update: () => {},
   destroy: () => {},
-  plan: () => {}
+  plan: () => {},
 }
 
 const componentResourceMapping = {
@@ -61,29 +61,25 @@ queue.on(`task_finish`, async () => {
     queue.pause()
   }
 
-  const nextId = queue._store._queue[1]
+  const nextId = queue._store._queue[0]
   const task = queue._store._tasks[nextId]
   const { plan, ...cmds } = task
 
   let planForNextStep = []
   const commandPlans = Object.entries(cmds).map(async ([key, val]) => {
-    console.log(key)
     const resource = componentResourceMapping[key]
-    console.log({ resource })
     if (!resource || !resource.plan) {
       return
     }
 
     if (resource && resource.config && resource.config.batch) {
       const cmdPlan = await resource.plan(context, val)
-      planForNextStep.push(cmdPlan)
+      planForNextStep.push({ resourceName: key, cmdPlan })
     } else {
-      console.log(cmds[key])
       await asyncForEach(cmds[key], async cmd => {
         try {
           const commandPlan = await resource.plan(context, cmd)
-          console.log({ commandPlan })
-          planForNextStep.push(commandPlan)
+          planForNextStep.push({ resourceName: key, ...commandPlan })
         } catch (e) {
           console.log(e)
         }
@@ -93,7 +89,7 @@ queue.on(`task_finish`, async () => {
 
   await Promise.all(commandPlans)
 
-  emitOperation('progress', plan, planForNextStep)
+  emitOperation(`progress`, plan, planForNextStep)
 })
 
 const readPackage = async () => {
@@ -105,7 +101,7 @@ const emitOperation = (state = `progress`, data, plan = []) => {
   pubsub.publish(`operation`, {
     state,
     data: JSON.stringify(data),
-    planForNextStep: JSON.stringify(plan)
+    planForNextStep: JSON.stringify(plan),
   })
 }
 
@@ -169,7 +165,7 @@ const OperationType = new GraphQLObjectType({
     state: { type: OperationStateEnumType },
     step: { type: GraphQLInt },
     data: { type: GraphQLString },
-    planForNextStep: { type: GraphQLString }
+    planForNextStep: { type: GraphQLString },
   },
 })
 

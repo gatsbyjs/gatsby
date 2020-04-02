@@ -181,6 +181,6 @@ module.exports.plan = async ({ root }, { name }) => {
   return {
     currentState: src,
     newState: newContents,
-    describe: `Adds ${name} to gatsby-config.js`
+    describe: `Configure ${name}`,
   }
 }
