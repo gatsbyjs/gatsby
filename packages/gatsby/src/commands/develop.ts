@@ -16,7 +16,7 @@ import {
 
 import { IProgram } from "./types"
 
-import { developMachine } from "../state-machines/develop"
+import { developMachine, INITIAL_CONTEXT } from "../state-machines/develop"
 import { interpret } from "xstate"
 import { emitter } from "../redux"
 import { saveState, startAutosave } from "../db"
@@ -112,17 +112,13 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const developService = interpret(
     developMachine.withContext({
+      ...INITIAL_CONTEXT,
       app,
       program,
-      recursionCount: 0,
-      nodesMutatedDuringQueryRun: false,
-      firstRun: true,
-      nodeMutationBatch: [],
-      runningBatch: [],
     })
   ).start()
 
-  developService.onTransition(async (context, event) => {
+  developService.onTransition(async context => {
     // if (context.changed) {
     console.log(`on transition`, context.value)
     // }

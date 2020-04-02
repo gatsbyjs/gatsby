@@ -1,54 +1,49 @@
-import {
-  Machine,
-  assign,
-  DoneInvokeEvent,
-  TransitionConfig,
-  AnyEventObject,
-} from "xstate"
-
+import { Machine, assign, DoneInvokeEvent } from "xstate"
 import { initialize } from "../services/initialize"
-
+import { Express } from "express"
 import { startWebpackServer } from "../services/start-webpack-server"
 import { WebsocketManager } from "../utils/websocket-manager"
 import { Store } from "../.."
-import { actions } from "../redux/actions"
 import { Compiler } from "webpack"
 import { dataLayerStates } from "./data-layer"
 import { Span } from "opentracing"
 import GraphQLRunner from "../query/graphql-runner"
 import { queryStates } from "./queries"
 import { idleStates } from "./waiting"
+import {
+  skipDeferredApi,
+  ADD_NODE_MUTATION,
+  SOURCE_FILE_CHANGED,
+} from "./shared-transition-configs"
+import { IProgram } from "../commands/types"
+import { IGroupedQueryIds } from "../services/calculate-dirty-queries"
+
+export interface IMutationAction {
+  type: string
+  // These are the arguments passed to apiRunnerNode
+  payload: unknown[]
+}
 
 export interface IBuildContext {
+  program?: IProgram
+  app?: Express
   recursionCount: number
   nodesMutatedDuringQueryRun: boolean
   firstRun: boolean
-  nodeMutationBatch: any[]
+  nodeMutationBatch: IMutationAction[]
   filesDirty?: boolean
-  runningBatch: any[]
+  runningBatch: IMutationAction[]
   compiler?: Compiler
   websocketManager?: WebsocketManager
   store?: Store
   parentSpan?: Span
   graphqlRunner?: GraphQLRunner
   refresh?: boolean
-  webhookBody?: Record<string, any>
-  queryIds?: { staticQueryIds: string[]; pageQueryIds: string[] }
+  webhookBody?: Record<string, unknown>
+  queryIds?: IGroupedQueryIds
 }
 
-export const callRealApi = async (event, store?: Store): Promise<any> => {
-  if (!store) {
-    console.error(`No store`)
-    return null
-  }
-  const { type, payload } = event
-  if (type in actions) {
-    return actions[type](...payload)(store.dispatch.bind(store))
-  }
-  return null
-}
-
-const context: IBuildContext = {
+export const INITIAL_CONTEXT: IBuildContext = {
   recursionCount: 0,
   nodesMutatedDuringQueryRun: false,
   firstRun: true,
@@ -56,68 +51,11 @@ const context: IBuildContext = {
   runningBatch: [],
 }
 
-/**
- * Event handler used in all states where we're not ready to process node
- * mutations. Instead we add it to a batch to process when we're next idle
- */
-export const ADD_NODE_MUTATION: TransitionConfig<
-  IBuildContext,
-  AnyEventObject
-> = {
-  actions: assign((ctx, event) => {
-    return {
-      nodeMutationBatch: [...ctx.nodeMutationBatch, event.payload],
-    }
-  }),
-}
-
-/**
- * Event handler used in all states where we're not ready to process a file change
- * Instead we add it to a batch to process when we're next idle
- */
-export const SOURCE_FILE_CHANGED: TransitionConfig<
-  IBuildContext,
-  AnyEventObject
-> = {
-  actions: assign((ctx, event) => {
-    return {
-      filesDirty: true,
-    }
-  }),
-}
-
-/**
- * When running queries we might add nodes (e.g from resolvers). If so we'll
- * want to re-run queries and schema inference
- */
-export const runMutationAndMarkDirty: TransitionConfig<
-  IBuildContext,
-  AnyEventObject
-> = {
-  actions: [
-    assign<any, DoneInvokeEvent<any>>({
-      nodesMutatedDuringQueryRun: true,
-    }),
-    async (ctx, event): Promise<void> =>
-      // console.log(`calling real api and mareking dirty`)
-      callRealApi(event.payload, ctx.store),
-  ],
-}
-
-/**
- * Handler for when we're inside handlers that should be able to mutate nodes
- */
-const skipDeferredApi: TransitionConfig<IBuildContext, AnyEventObject> = {
-  actions: [
-    async (ctx, event): Promise<void> => callRealApi(event.payload, ctx.store),
-  ],
-}
-
 // eslint-disable-next-line new-cap
-export const developMachine = Machine<any>({
+export const developMachine = Machine<IBuildContext>({
   id: `build`,
   initial: `initializing`,
-  context,
+  context: INITIAL_CONTEXT,
   states: {
     initializing: {
       on: { ADD_NODE_MUTATION: skipDeferredApi },
@@ -125,7 +63,10 @@ export const developMachine = Machine<any>({
         src: initialize,
         onDone: {
           target: `initializingDataLayer`,
-          actions: assign<any, DoneInvokeEvent<any>>((context, event) => {
+          actions: assign<
+            IBuildContext,
+            DoneInvokeEvent<{ store: Store; bootstrapSpan: Span }>
+          >((_context, event) => {
             const { store, bootstrapSpan } = event.data
             return {
               store,
@@ -160,7 +101,7 @@ export const developMachine = Machine<any>({
         id: `running-webpack`,
         onDone: {
           target: `waiting`,
-          actions: assign((context, { data }) => {
+          actions: assign((_context, { data }) => {
             const { compiler, websocketManager } = data
             return {
               compiler,
@@ -182,8 +123,8 @@ export const developMachine = Machine<any>({
 
     failed: {
       invoke: {
-        src: async (_context: IBuildContext, event): Promise<void> => {
-          console.error(event)
+        src: async (_context, event): Promise<void> => {
+          console.error(`I won't build what you tell me`, event)
         },
       },
     },

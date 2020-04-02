@@ -6,7 +6,7 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 export async function createPages({
   parentSpan,
   graphqlRunner,
-}: IBuildContext): Promise<any> {
+}: IBuildContext): Promise<void> {
   const activity = reporter.activityTimer(`createPages`, {
     parentSpan,
   })

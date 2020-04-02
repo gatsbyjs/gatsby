@@ -6,7 +6,7 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 export async function createPagesStatefully({
   parentSpan,
   graphqlRunner,
-}: IBuildContext): Promise<any> {
+}: IBuildContext): Promise<void> {
   // A variant on createPages for plugins that want to
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)

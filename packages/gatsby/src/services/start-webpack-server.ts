@@ -14,14 +14,18 @@ import { printInstructions } from "../utils/print-instructions"
 import { prepareUrls } from "../utils/prepare-urls"
 import { startServer } from "../utils/start-server"
 import { WebsocketManager } from "../utils/websocket-manager"
+import { IBuildContext } from "../state-machines/develop"
 
 export async function startWebpackServer({
   program,
   app,
-}): Promise<{
+}: IBuildContext): Promise<{
   compiler: Compiler
   websocketManager: WebsocketManager
 }> {
+  if (!program || !app) {
+    throw new Error(`Missing required params`)
+  }
   let { compiler, webpackActivity, websocketManager } = await startServer(
     program,
     app

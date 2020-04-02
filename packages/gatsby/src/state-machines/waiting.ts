@@ -1,5 +1,6 @@
 import { MachineConfig, assign } from "xstate"
-import { IBuildContext, ADD_NODE_MUTATION, callRealApi } from "./develop"
+import { IBuildContext } from "./develop"
+import { ADD_NODE_MUTATION, callRealApi } from "./shared-transition-configs"
 
 const NODE_MUTATION_BATCH_SIZE = 20
 const NODE_MUTATION_BATCH_TIMEOUT = 5000

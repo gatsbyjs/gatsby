@@ -1,11 +1,12 @@
 import { MachineConfig, DoneInvokeEvent, assign } from "xstate"
-import { IBuildContext, runMutationAndMarkDirty } from "./develop"
+import { IBuildContext } from "./develop"
 import { extractQueries } from "../services/extract-queries"
 import { writeOutRequires } from "../services/write-out-requires"
 import { calculateDirtyQueries } from "../services/calculate-dirty-queries"
 import { runStaticQueries } from "../services/run-static-queries"
 import { runPageQueries } from "../services/run-page-queries"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
+import { runMutationAndMarkDirty } from "./shared-transition-configs"
 
 const MAX_RECURSION = 2
 

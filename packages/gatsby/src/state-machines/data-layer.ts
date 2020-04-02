@@ -3,8 +3,9 @@ import { sourceNodes } from "../services/source-nodes"
 import { DoneInvokeEvent, assign, MachineConfig } from "xstate"
 import { createPages } from "../services/create-pages"
 import { buildSchema } from "../services/build-schema"
-import { runMutationAndMarkDirty, IBuildContext } from "./develop"
+import { IBuildContext } from "./develop"
 import { createPagesStatefully } from "../services/create-pages-statefully"
+import { runMutationAndMarkDirty } from "./shared-transition-configs"
 
 const assignMutatedNodes = assign<any, DoneInvokeEvent<any>>(
   (context, event) => {

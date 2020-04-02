@@ -27,7 +27,7 @@ emitter.on(`DELETE_NODE`, action => {
   queuedDirtyActions.push({ payload: action.payload })
 })
 
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 // Calculate dirty static/page queries
 
 const popExtractedQueries = () => {
@@ -203,7 +203,7 @@ const processStaticQueries = async (
   { state, activity, graphqlRunner }
 ) => {
   state = state || store.getState()
-  return await processQueries(
+  return processQueries(
     queryIds.map(id => createStaticQueryJob(state, id)),
     {
       activity,
@@ -222,7 +222,7 @@ const processPageQueries = async (
   // `internal-data-bridge`, but the actual page object is only
   // created during `gatsby develop`.
   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
-  return await processQueries(
+  return processQueries(
     pages.map(page => createPageQueryJob(state, page)),
     {
       activity,
@@ -291,7 +291,7 @@ const createPageQueryJob = (state, page) => {
   }
 }
 
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 // Listener for gatsby develop
 
 // Initialized via `startListening`

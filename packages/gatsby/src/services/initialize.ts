@@ -10,6 +10,8 @@ const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 import { getBrowsersList } from "../utils/browserslist"
+import { Store } from "../.."
+import { Span } from "opentracing"
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`../bootstrap/load-plugins`)
 const loadThemes = require(`../bootstrap/load-themes`)
@@ -20,7 +22,7 @@ const preferDefault = require(`../bootstrap/prefer-default`)
 const removeStaleJobs = require(`../bootstrap/remove-stale-jobs`)
 
 // Show stack trace on unhandled promises.
-process.on(`unhandledRejection`, (reason, p) => {
+process.on(`unhandledRejection`, reason => {
   report.panic(reason)
 })
 
@@ -29,7 +31,9 @@ process.on(`unhandledRejection`, (reason, p) => {
 // Otherwise leave commented out.
 // require(`../bootstrap/log-line-function`)
 
-export async function initialize(context): Promise<any> {
+export async function initialize(
+  context
+): Promise<{ store: Store; bootstrapSpan: Span }> {
   const args = context.program
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
@@ -78,7 +82,7 @@ export async function initialize(context): Promise<any> {
     }
   })
 
-  const onEndJob = () => {
+  const onEndJob = (): void => {
     if (activityForJobs && store.getState().jobs.active.length === 0) {
       activityForJobs.end()
       activityForJobs = null
@@ -316,7 +320,7 @@ export async function initialize(context): Promise<any> {
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
   // out api-runners for them.
-  const hasAPIFile = (env, plugin) => {
+  const hasAPIFile = (env, plugin): string | undefined => {
     // The plugin loader has disabled SSR APIs for this plugin. Usually due to
     // multiple implementations of an API that can only be implemented once
     if (env === `ssr` && plugin.skipSSR === true) return undefined
