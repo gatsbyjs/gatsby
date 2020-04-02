@@ -37,7 +37,7 @@ module.exports = ({ recipe, projectRoot }) => {
   if (isRelative(recipe)) {
     recipePath = path.join(projectRoot, recipe)
   } else {
-    let recipePath = path.join(__dirname, recipe)
+    recipePath = path.join(__dirname, recipe)
   }
   if (recipePath.slice(-4) !== `.mdx`) {
     recipePath += `.mdx`

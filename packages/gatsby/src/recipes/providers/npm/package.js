@@ -1,9 +1,42 @@
 const execa = require(`execa`)
+const _ = require(`lodash`)
 
-const getPackageNames = cmds => cmds.map(n => n.name)
+const getPackageNames = packages => packages.map(n => n.name)
+const asyncForEach = async (array, callback) => {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
 
-const create = async ({ root }, cmds) => {
-  await execa(`yarn`, [`add`, `-W`, ...getPackageNames(cmds)], { cwd: root })
+const create = async ({ root }, packages) => {
+  const types = _.groupBy(packages, c => c.dependencyType)
+
+  // Run install for each dependency type
+  await asyncForEach(Object.keys(types), async type => {
+    let typeFlag = ``
+    if (type === `dev`) {
+      typeFlag = `--dev`
+    }
+    const command = [
+      `yarn`,
+      [`add`, `-W`, typeFlag, ...getPackageNames(types[type])],
+      {
+        cwd: root,
+      },
+    ]
+
+    let commands
+    if (typeFlag !== ``) {
+      commands = [`add`, `-W`, typeFlag, ...getPackageNames(types[type])]
+    } else {
+      commands = [`add`, `-W`, ...getPackageNames(types[type])]
+    }
+
+    const { stdout } = await execa(`yarn`, commands, {
+      cwd: root,
+    })
+    console.log(stdout)
+  })
 }
 
 const read = async (_, { name }) => {
@@ -11,14 +44,16 @@ const read = async (_, { name }) => {
   return stdout
 }
 
-const update = async (_, cmds) => {
-  await execa(`yarn`, [`upgrade`, `-W`, ...getPackageNames(cmds)], {
+const update = async (_, packages) => {
+  await execa(`yarn`, [`upgrade`, `-W`, ...getPackageNames(packages)], {
     cwd: root,
   })
 }
 
-const destroy = async (_, cmds) => {
-  await execa(`yarn`, [`remove`, `-W`, ...getPackageNames(cmds)], { cwd: root })
+const destroy = async (_, packages) => {
+  await execa(`yarn`, [`remove`, `-W`, ...getPackageNames(packages)], {
+    cwd: root,
+  })
 }
 
 module.exports.create = create

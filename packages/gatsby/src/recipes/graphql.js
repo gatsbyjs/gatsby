@@ -69,6 +69,7 @@ const applyStep = plan => async step => {
   const commandsForStep = Object.keys(step).map(async key => {
     const resource = componentResourceMapping[key]
     if (resource && resource.config && resource.config.batch) {
+      console.log(`resource.create`, { context, step: step[key] })
       await resource.create(context, step[key])
 
       step[key].map((_, i) => {

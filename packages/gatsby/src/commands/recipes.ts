@@ -1,6 +1,7 @@
 import telemetry from "gatsby-telemetry"
 import execa from "execa"
 import path from "path"
+import fs from "fs"
 
 module.exports = async (program: IProgram): Promise<void> => {
   const recipe = program._[1]
@@ -8,7 +9,8 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   // Start GraphQL serve
   let subprocess
-  subprocess = execa(`node`, [`node_modules/gatsby/dist/recipes/graphql.js`], {
+  const scriptPath = path.join(program.directory, `node_modules/gatsby/dist/recipes/graphql.js`)
+  subprocess = execa(`node`, [scriptPath], {
     cwd: program.directory,
     all: true,
   })
@@ -17,6 +19,15 @@ module.exports = async (program: IProgram): Promise<void> => {
       forceKillAfterTimeout: 2000,
     })
   )
+  // Log server output to a file.
+  if (process.env.DEBUG) {
+    const logFile = path.join(program.directory, './recipe-server.log')
+    fs.writeFileSync(logFile, `\n-----\n${new Date().toJSON()}\n`)
+    const writeStream = fs.createWriteStream(logFile, {flags:'a'});
+    subprocess.stdout.pipe(writeStream)
+    // subprocess.stderr.pipe(writeStream)
+  }
+
   let started = false
   subprocess.stdout.on("data", data => {
     if (!started) {
@@ -24,9 +35,6 @@ module.exports = async (program: IProgram): Promise<void> => {
       runRecipe({ recipe, projectRoot: program.directory })
       started = true
     }
-  })
-  subprocess.stderr.on("data", data => {
-    console.log(`Received err chunk: ${data}`)
   })
 
   // Run command

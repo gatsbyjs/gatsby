@@ -10,14 +10,14 @@
 
 ## Near future
 
-- [ ] Make it support relative paths for custom recipes (./src/recipes/foo.mdx)
+- [x] Make it support relative paths for custom recipes (./src/recipes/foo.mdx)
 - [ ] Document the supported components and trivial guide on recipe authoring (help)
 - [ ] Theme UI preset selection (runs dependent install and file write)
 - [ ] Move to more random port
 
 ## Friday (alpha)
 
-- [ ] Handle `dev` in NPMPackage
+- [x] Handle `dev` in NPMPackage
 - [ ] Step by step design
 - [ ] Select input supported recipes
 - [ ] Make port selection dynamic
