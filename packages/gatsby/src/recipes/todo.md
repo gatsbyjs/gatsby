@@ -23,10 +23,7 @@
 - [ ] Step by step design
 - [ ] Select input supported recipes
 - [ ] Make port selection dynamic
-- [ ] Move parsing to the server
 - [x] Use `fs-extra`
-- [x] Don't overwrite files by default
-- [x] Don't shadow existing files (overwrite)
 - [x] Handle object style plugins
 - [x] Improve gatsby-config test
 - [ ] use yarn/npm based on the user config
@@ -34,3 +31,4 @@
 ## Near-ish future
 
 - [ ] Make a proper "Config" provider to add recipes dir, store data, etc.
+- [ ] Move parsing to the server

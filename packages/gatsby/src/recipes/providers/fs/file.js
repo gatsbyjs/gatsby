@@ -12,21 +12,15 @@ const fileExists = ({ root }, { path: filePath }) => {
   }
 }
 
-const create = async ({ root }, { path: filePath, content, overwrite }) => {
+const create = async ({ root }, { path: filePath, content }) => {
   const fullPath = path.join(root, filePath)
   const { dir } = path.parse(fullPath)
-
-  const alreadyExists = await fileExists({ root }, { path: filePath })
-
-  if (alreadyExists && !overwrite) {
-    return
-  }
 
   await mkdirp(dir)
   await fs.writeFile(fullPath, content)
 }
 
-const update = (context, cmd) => create(context, { ...cmd, overwrite: true })
+const update = create
 
 const read = async ({ root }, { path: filePath }) => {
   const fullPath = path.join(root, filePath)
