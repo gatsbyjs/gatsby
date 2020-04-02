@@ -23,6 +23,7 @@
 - [ ] Step by step design
 - [ ] Select input supported recipes
 - [ ] Make port selection dynamic
+- [ ] use yarn/npm based on the user config
 
 ## Near-ish future
 
