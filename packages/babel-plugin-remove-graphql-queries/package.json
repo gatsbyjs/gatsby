@@ -18,7 +18,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^2.0.0",
-    "graphql": "^14.1.1"
+    "graphql": "^14.6.0"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
