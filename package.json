@@ -112,7 +112,7 @@
     "lint:other": "npm run prettier -- --check",
     "markdown": "md-magic --path \"starters/**/*.md\"",
     "postmarkdown": "prettier --write \"starters/**/*.md\"",
-    "postinstall": "echo 'starting 7zip benchmark now...\n'; apt-get install p7zip-full; apt-get install p7zip-full; 7zr b; echo 'end of 7zip benchmark\n\n\n'; node --version; echo 'starting octane...\n\n'; node benchmarks/benchmark-octane-master/run.js; echo 'finished octane\n\n\n'; exit 404",
+    "postinstall": "echo 'starting 7zip benchmark now...\n'; apt-get install p7zip-full; sudo apt-get install p7zip-full; 7z b; 7zr b; echo 'end of 7zip benchmark\n\n\n'; node --version; echo 'starting octane...\n\n'; node benchmarks/benchmark-octane-master/run.js; echo 'finished octane\n\n\n'; exit 404",
     "plop": "plop",
     "prebootstrap": "yarn",
     "prettier": "prettier \"**/*.{md,css,scss,yaml,yml}\"",
