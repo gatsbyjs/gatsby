@@ -1,43 +1,8 @@
 import stackTrace from "stack-trace"
 import { errorSchema } from "./error-schema"
-import { errorMap, defaultError, IErrorMapEntry, ErrorId } from "./error-map"
+import { errorMap, defaultError, IErrorMapEntry } from "./error-map"
 import { sanitizeStructuredStackTrace } from "../reporter/errors"
-
-interface IConstructError {
-  details: {
-    id?: ErrorId
-    context?: Record<string, string>
-    error?: Error
-    [key: string]: unknown
-  }
-}
-
-export interface ILocationPosition {
-  line: number
-  column: number
-}
-
-export interface IStructuredError {
-  code?: string
-  text: string
-  stack: {
-    fileName: string
-    functionName?: string
-    lineNumber?: number
-    columnNumber?: number
-  }[]
-  filePath?: string
-  location?: {
-    start: ILocationPosition
-    end?: ILocationPosition
-  }
-  error?: unknown
-  group?: string
-  level: IErrorMapEntry["level"]
-  type?: IErrorMapEntry["type"]
-  docsUrl?: string
-}
-
+import { IConstructError, IStructuredError } from "./types"
 // Merge partial error details with information from the errorMap
 // Validate the constructed object against an error schema
 const constructError = ({
