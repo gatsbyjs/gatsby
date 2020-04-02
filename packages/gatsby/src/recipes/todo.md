@@ -23,8 +23,13 @@
 - [ ] Step by step design
 - [ ] Select input supported recipes
 - [ ] Make port selection dynamic
+- [ ] Move parsing to the server
+- [ ] Use `fs-extra`
+- [x] Don't overwrite files by default
+- [ ] Don't shadow existing files (overwrite)
+- [x] Handle object style plugins
+- [x] Improve gatsby-config test
 
 ## Near-ish future
 
 - [ ] Make a proper "Config" provider to add recipes dir, store data, etc.
-- [ ] Client sends the MDX file to the server (maybe?)
