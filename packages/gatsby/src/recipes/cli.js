@@ -2,15 +2,10 @@ const fs = require(`fs`)
 const path = require(`path`)
 
 const React = require(`react`)
-const { useState, useContext, useEffect } = require(`react`)
+const { useState } = require(`react`)
 const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
-const unified = require(`unified`)
-const remarkMdx = require(`remark-mdx`)
-const remarkParse = require(`remark-parse`)
-const remarkStringify = require(`remark-stringify`)
-const jsxToJson = require(`simplified-jsx-to-json`)
-const visit = require(`unist-util-visit`)
+const MDX = require('@mdx-js/runtime')
 const humanizeList = require(`humanize-list`)
 const {
   createClient,
@@ -24,12 +19,28 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 
+const parser = require('./parser')
+
 const isRelative = path => {
   if (path.slice(0, 1) == `.`) {
     return true
   }
 
   return false
+}
+
+const log = (label, textOrObj) => {
+  const text = typeof textOrObj === 'string' ? textOrObj : JSON.stringify(textOrObj, null, 2)
+
+  let contents = ''
+  try {
+    contents = fs.readFileSync('recipe-client.log', 'utf8')
+  } catch (e) {
+    // File doesn't exist yet
+  }
+
+  contents += label + ': ' + text + '\n'
+  fs.writeFileSync('recipe-client.log', contents)
 }
 
 module.exports = ({ recipe, projectRoot }) => {
@@ -42,8 +53,8 @@ module.exports = ({ recipe, projectRoot }) => {
   if (recipePath.slice(-4) !== `.mdx`) {
     recipePath += `.mdx`
   }
+  
   const recipeSrc = fs.readFileSync(recipePath, `utf8`)
-
   const GRAPHQL_ENDPOINT = `http://localhost:4000/graphql`
 
   const subscriptionClient = new SubscriptionClient(
@@ -67,75 +78,18 @@ module.exports = ({ recipe, projectRoot }) => {
     ],
   })
 
+  const {
+    commands: allCommands,
+    stepsAsMdx: stepsAsMDX,
+    stepsAsMdxWithoutJsx: stepsAsMDXNoJSX
+  } = parser(recipeSrc)
+
   const Div = props => (
     <Box width={80} textWrap="wrap" flexDirection="column" {...props} />
   )
 
-  const u = unified()
-    .use(remarkParse)
-    .use(remarkStringify)
-    .use(remarkMdx)
-
-  const ast = u.parse(recipeSrc)
-
-  const steps = []
-  let index = 0
-  ast.children.forEach(node => {
-    if (node.type === `thematicBreak`) {
-      index++
-      return
-    }
-
-    steps[index] = steps[index] || []
-    steps[index].push(node)
-  })
-
-  const asRoot = nodes => {
-    return {
-      type: `root`,
-      children: nodes,
-    }
-  }
-
-  const stepsAsMDX = steps.map(nodes => {
-    const stepAst = asRoot(nodes)
-    return u.stringify(stepAst)
-  })
-
-  const toJson = value => {
-    const obj = {}
-    jsxToJson(value).forEach(([type, props = {}]) => {
-      if (type === `\n`) {
-        return
-      }
-      obj[type] = obj[type] || []
-      obj[type].push(props)
-    })
-    return obj
-  }
-
-  const allCommands = steps
-    .map(nodes => {
-      const stepAst = asRoot(nodes)
-      let cmds = []
-      visit(stepAst, `jsx`, node => {
-        const jsx = node.value
-        cmds = cmds.concat(toJson(jsx))
-      })
-      return cmds
-    })
-    .reduce((acc, curr) => {
-      const cmdByName = {}
-      curr.map(v => {
-        Object.entries(v).forEach(([key, value]) => {
-          cmdByName[key] = cmdByName[key] || []
-          cmdByName[key] = cmdByName[key].concat(value)
-        })
-      })
-      return [...acc, cmdByName]
-    }, [])
-
   const RecipeInterpreter = ({ commands }) => {
+    const [currentStep, setCurrentStep] = useState(0)
     const [lastKeyPress, setLastKeyPress] = useState(``)
     const { exit } = useApp()
     const [subscriptionResponse] = useSubscription(
@@ -152,13 +106,18 @@ module.exports = ({ recipe, projectRoot }) => {
       (_prev, now) => now
     )
     const [_, createOperation] = useMutation(`
-    mutation ($commands: String!) {
-      createOperation(commands: $commands)
-    }
-  `)
+      mutation ($commands: String!) {
+        createOperation(commands: $commands)
+      }
+    `)
+    const [__, applyOperationStep] = useMutation(`
+      mutation {
+        applyOperationStep
+      }
+    `)
 
-    subscriptionClient.connectionCallback = () => {
-      createOperation({ commands: JSON.stringify(commands) })
+    subscriptionClient.connectionCallback = async () => {
+      await createOperation({ commands: JSON.stringify(commands) })
     }
 
     const { data } = subscriptionResponse
@@ -178,25 +137,25 @@ module.exports = ({ recipe, projectRoot }) => {
         exit()
         // TODO figure out why exiting ink isn't enough.
         process.exit()
+      } else if (key.return) {
+        setCurrentStep(currentStep + 1)
+        applyOperationStep()
       }
     })
 
+    if (process.env.DEBUG) {
+      log('subscriptionResponse', subscriptionResponse)
+      log('lastKeyPress', lastKeyPress)
+      log('state', state)
+    }
+
     return (
       <>
-        <Div>
-          {process.env.DEBUG ? (
-            <Text>{JSON.stringify(subscriptionResponse, null, 2)}</Text>
-          ) : null}
-        </Div>
-        <Div>
-          {process.env.DEBUG ? (
-            <Text>Last Key Press: {JSON.stringify(lastKeyPress, null, 2)}</Text>
-          ) : null}
-        </Div>
-        <Div>{process.env.DEBUG ? <Text>STATE: {state}</Text> : null}</Div>
+        <MDX>{stepsAsMDXNoJSX[currentStep]}</MDX>
+        <Div />
+        <Text>Press enter to apply!</Text>
         {operation.map((command, i) => (
           <Div key={i}>
-            <Step command={command} />
             <Div />
           </Div>
         ))}

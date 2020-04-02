@@ -6,15 +6,17 @@ const {
   GraphQLString,
   GraphQLList,
   GraphQLEnumType,
+  GraphQLInt,
   execute,
   subscribe,
 } = require(`graphql`)
-const { PubSub, withFilter } = require(`graphql-subscriptions`)
+const { PubSub } = require(`graphql-subscriptions`)
 const { SubscriptionServer } = require(`subscriptions-transport-ws`)
 const { createServer } = require(`http`)
 const fs = require(`fs`)
 const path = require(`path`)
 const { promisify } = require(`util`)
+const Queue = require('better-queue')
 
 const fileResource = require(`./providers/fs/file`)
 const gatsbyPluginResource = require(`./providers/gatsby/plugin`)
@@ -29,14 +31,30 @@ const read = promisify(fs.readFile)
 const pubsub = new PubSub()
 const PORT = 4000
 
+let queue = new Queue(
+  async (action, cb) => {
+    console.log({ action })
+    await applyStep(action)
+    cb()
+  }
+)
+
+queue.pause()
+queue.on('task_finish', () => {
+  if (queue.length > 1) {
+    queue.pause()
+  }
+})
+
 const readPackage = async () => {
   const contents = await read(path.join(SITE_ROOT, `package.json`), `utf8`)
   return JSON.parse(contents)
 }
 
-const emitOperation = (state = `progress`, data) => {
+const emitOperation = (state = `progress`, data, step = 0) => {
   pubsub.publish(`operation`, {
     state,
+    step,
     data: JSON.stringify(data),
   })
 }
@@ -65,7 +83,7 @@ const asyncForEach = async (array, callback) => {
   }
 }
 
-const applyStep = plan => async step => {
+const applyStep = async ({ plan, ...step }) => {
   const commandsForStep = Object.keys(step).map(async key => {
     const resource = componentResourceMapping[key]
     if (resource && resource.config && resource.config.batch) {
@@ -96,11 +114,13 @@ const applyStep = plan => async step => {
   await Promise.all(commandsForStep)
 }
 
-const applyPlan = async plan => {
-  await asyncForEach(plan, applyStep(plan))
-  setTimeout(() => {
-    emitOperation(`success`, plan)
-  }, 1)
+const applyPlan = plan => {
+  plan.forEach(step => queue.push({ plan, ...step }))
+
+  queue.on('drain', () => {
+    console.log('whhhhhhyyy')
+    emitOperation(`success`, plan, plan.length - 1)
+  })
 }
 
 const OperationStateEnumType = new GraphQLEnumType({
@@ -116,6 +136,7 @@ const OperationType = new GraphQLObjectType({
   name: `Operation`,
   fields: {
     state: { type: OperationStateEnumType },
+    step: { type: GraphQLInt },
     data: { type: GraphQLString },
   },
 })
@@ -215,6 +236,12 @@ const rootMutationType = new GraphQLObjectType({
           applyPlan(JSON.parse(args.commands))
         },
       },
+      applyOperationStep: {
+        type: GraphQLString,
+        resolve: () => {
+          queue.resume()
+        }
+      }
     }
   },
 })
@@ -227,24 +254,6 @@ const rootSubscriptionType = new GraphQLObjectType({
         type: OperationType,
         subscribe: () => pubsub.asyncIterator(`operation`),
         resolve: payload => payload,
-      },
-      npmPackageUpdated: {
-        type: NPMPackageType,
-        args: {
-          name: {
-            type: GraphQLString,
-          },
-        },
-        subscribe: withFilter(
-          () => pubsub.asyncIterator(`npmPackageUpdated`),
-          (payload, variables) =>
-            true || payload.npmPackageUpdated.dependencies[variables.name]
-        ),
-        resolve: () => {
-          return {
-            version: `${Math.random()}`,
-          }
-        },
       },
     }
   },
