@@ -1,11 +1,6 @@
 const path = require(`path`)
-const fs = require(`fs`)
-const { promisify } = require(`util`)
+const fs = require(`fs-extra`)
 const mkdirp = require(`mkdirp`)
-
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
-const destroyFile = promisify(fs.unlink)
 
 const create = async ({ root }, { theme, path: filePath }) => {
   const relativePathInTheme = filePath.replace(theme + `/`, ``)
@@ -16,13 +11,13 @@ const create = async ({ root }, { theme, path: filePath }) => {
     relativePathInTheme
   )
 
-  const contents = await readFile(fullFilePathToShadow, `utf8`)
+  const contents = await fs.readFile(fullFilePathToShadow, `utf8`)
 
   const fullPath = path.join(root, filePath)
   const { dir } = path.parse(fullPath)
 
   await mkdirp(dir)
-  await writeFile(fullPath, contents)
+  await fs.writeFile(fullPath, contents)
 }
 
 const read = async ({ root }, { theme, path: filePath }) => {
@@ -34,13 +29,13 @@ const read = async ({ root }, { theme, path: filePath }) => {
     relativePathInTheme
   )
 
-  const contents = await readFile(fullFilePathToShadow, `utf8`)
+  const contents = await fs.readFile(fullFilePathToShadow, `utf8`)
   return contents
 }
 
-const destroy = async ({ root }, { theme, path: filePath }) => {
+const destroy = async ({ root }, { path: filePath }) => {
   const fullPath = path.join(root, filePath)
-  await destroyFile(fullPath)
+  await fs.unlink(fullPath)
 }
 
 module.exports.create = create
