@@ -5,6 +5,7 @@ const React = require(`react`)
 const { useState } = require(`react`)
 const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
+const Link = require('ink-link')
 const MDX = require(`@mdx-js/runtime`)
 const humanizeList = require(`humanize-list`)
 const {
@@ -20,6 +21,19 @@ const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 
 const parser = require(`./parser`)
+
+const components = {
+  inlineCode: Text,
+  h1: props => <Text bold underline {...props} />,
+  h2: props => <Text bold underline {...props} />,
+  h3: props => <Text bold underline {...props} />,
+  h4: props => <Text bold underline {...props} />,
+  h5: props => <Text bold underline {...props} />,
+  h6: props => <Text bold underline {...props} />,
+  a: ({ href, children }) => <Link url={href}>{children}</Link>,
+  paragraph: props => <Box width="100%" flexDirection="row" textWrap="wrap" {...props} />,
+  File: () => <Text>File: FIX ME</Text>
+}
 
 const isRelative = path => {
   if (path.slice(0, 1) == `.`) {
@@ -102,6 +116,7 @@ module.exports = ({ recipe, projectRoot }) => {
           operation {
             state
             data
+            planForNextStep
           }
         }
       `,
@@ -131,7 +146,15 @@ module.exports = ({ recipe, projectRoot }) => {
         JSON.parse(data.operation.data)) ||
       commands
 
+    const planForNextStep =
+      (data &&
+        data.operation &&
+        data.operation.planForNextStep &&
+        JSON.parse(data.operation.planForNextStep)) || []
+
     const state = data && data.operation && data.operation.state
+
+    log('next step', planForNextStep)
 
     useInput((_, key) => {
       setLastKeyPress(key)
@@ -154,8 +177,13 @@ module.exports = ({ recipe, projectRoot }) => {
 
     return (
       <>
-        <MDX>{stepsAsMDXNoJSX[currentStep]}</MDX>
+        <MDX components={components}>
+          {stepsAsMDXNoJSX[currentStep]}
+        </MDX>
         <Div />
+        {planForNextStep.map((stepPlan, i) => (
+          <Text key={i}>{stepPlan.describe}</Text>
+        ))}
         <Text>Press enter to apply!</Text>
         {operation.map((command, i) => (
           <Div key={i}>

@@ -4,7 +4,6 @@ const remarkParse = require(`remark-parse`)
 const remarkStringify = require(`remark-stringify`)
 const jsxToJson = require(`simplified-jsx-to-json`)
 const visit = require(`unist-util-visit`)
-const remove = require(`unist-util-remove`)
 
 const asRoot = nodes => {
   return {
@@ -81,7 +80,6 @@ const toMdxWithoutJsx = nodes => {
   visit(stepAst, `jsx`, (node, index, parent) => {
     parent.children.splice(index, 1)
   })
-  // remove(stepAst, 'jsx')
   return u.stringify(stepAst)
 }
 

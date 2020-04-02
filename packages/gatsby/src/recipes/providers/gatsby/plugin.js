@@ -172,3 +172,15 @@ module.exports.create = create
 module.exports.update = create
 module.exports.read = read
 module.exports.destroy = destroy
+
+module.exports.plan = async ({ root }, { name }) => {
+  const configPath = path.join(root, `gatsby-config.js`)
+  const src = await fs.readFile(configPath, `utf8`)
+  const newContents = addPluginToConfig(src, name)
+
+  return {
+    currentState: src,
+    newState: newContents,
+    describe: `Adds ${name} to gatsby-config.js`
+  }
+}
