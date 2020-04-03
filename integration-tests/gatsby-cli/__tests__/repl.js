@@ -8,23 +8,23 @@ const timeout = seconds =>
 const MAX_TIMEOUT = 2147483647
 jest.setTimeout(MAX_TIMEOUT)
 
-describe(`gatsby develop`, () => {
-  const cwd = `gatsby-sites/gatsby-develop`
+describe(`gatsby repl`, () => {
+  const cwd = `gatsby-sites/gatsby-repl`
 
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
   afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
   it(`starts a gatsby site on port 8000`, async () => {
     // 1. Start the `gatsby develop` command
-    const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(`develop`)
+    const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(`repl`)
 
     // 2. Wait for the build process to finish
-    await timeout(10)
+    await timeout(4)
 
-    // 3. kill the `gatsby develop` command so we can get logs
+    // 3. Kill the repl
     childProcess.kill()
 
-    // 4. Make sure logs for the user contain expected results
+    // 4. Make assertions
     const logs = getLogs()
     logs.should.contain(`success open and validate gatsby-configs`)
     logs.should.contain(`success load plugins`)
@@ -44,23 +44,8 @@ describe(`gatsby develop`, () => {
     logs.should.contain(`success write out redirect data`)
     logs.should.contain(`success onPostBootstrap`)
     logs.should.contain(`info bootstrap finished`)
-    // These don't fire in CI. Need to figure out how to make it work. Might not be possible
-    // logs.should.contain(
-    //   `You can now view gatsby-starter-default in the browser.`
-    // )
-    // logs.should.contain(`http://localhost:8000/`)
-    // logs.should.contain(
-    //   `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
-    // )
-    // logs.should.contain(`http://localhost:8000/___graphql`)
-    // logs.should.contain(`Note that the development build is not optimized.`)
-    // logs.should.contain(`To create a production build, use gatsby build`)
-  })
 
-  it.skip(`starts a gatsby site on port 9000 with -p 9000`, () => {})
-  it.skip(`starts a gatsby site at a diffent host with -h`, () => {})
-  it.skip(`starts a gatsby site with ssl using -S`, () => {})
-  it.skip(`starts a gatsby site with cert file using -c`, () => {})
-  it.skip(`starts a gatsby site with key file using -k`, () => {})
-  it.skip(`starts a gatsby site with -open-tracing-config-file`, () => {})
+    // This is the actual repl prompt
+    logs.should.contain(`gatsby >`)
+  })
 })
