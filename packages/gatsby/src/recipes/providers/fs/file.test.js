@@ -37,5 +37,7 @@ describe(`file resource`, () => {
     const result = await file.plan({ root }, { path: filePath, content })
 
     expect(result.describe).toEqual(`Write ${filePath}`)
+
+    await file.destroy({ root }, { path: filePath })
   })
 })
