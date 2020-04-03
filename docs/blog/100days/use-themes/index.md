@@ -18,15 +18,15 @@ For the final two challenges you will explore using and creating Gatsby Themes!
 
 So far you’ve created a Gatsby site from scratch, and added features for usage on a single site. Gatsby Themes opens up the possibility to leverage good ideas from the Gatsby ecosystem, and share your own configurations and designs. You can think of Gatsby Themes as handy website kits that can be shared, customized, and stacked together.
 
-Before you dive into creating, our resources will guide you to the philosophy behind Gatsby Themes and common use cases. Then we’ll show you how to use a theme before you explore creating your own next week.
+Before you dive into creating a theme, our resources below will point you to the philosophy behind Gatsby Themes and common use cases. Then we’ll show you how to use a theme in your poject. And next week you'll explore creating your own theme!
 
 ### Gatsby Theme Usage Resources
 
 #### Theme Philosophy
 
-[Why Gatsby Themes](/blog/2019-01-31-why-themes) Kyle Mathews gives a short intro into Themes, and why this functionality was added to Gatsby
+[Why Gatsby Themes](/blog/2019-01-31-why-themes) Kyle Mathews gives a short intro into Gatsby Themes, and why this functionality was added to Gatsby
 
-[What are Gatsby Themes](https://youtu.be/LBpNwUU3QVI) Chris Biscardi presents a high level view of how Themes work in Gatsby
+[What are Gatsby Themes](https://youtu.be/LBpNwUU3QVI) Chris Biscardi presents a high level view of how themes work in Gatsby
 
 [Using Theme for Distributed Docs](/blog/2019-07-03-using-themes-for-distributed-docs/) The Apollo team explains how and why they use Gatsby Themes
 
@@ -34,7 +34,7 @@ Before you dive into creating, our resources will guide you to the philosophy be
 
 [Discover a Gatsby Theme](/plugins/?=gatsby-theme) Browse Gatsby’s plugin repository to find the right theme for your project
 
-[Use a Gatsby Theme](/docs/themes/using-a-gatsby-theme/) Step-by-step guide to the conventions of Gatsby Theme usage (hint: shadow and extend, don’t fork 🙂 )
+[Use a Gatsby Theme](/docs/themes/using-a-gatsby-theme/) Step-by-step guide to the conventions of Gatsby Theme usage (hint: "shadow and extend", don’t fork 🙂 )
 
 ### What to Do If You Need Help
 
