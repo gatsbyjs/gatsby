@@ -23,6 +23,7 @@ const gatsbyPluginResource = require(`./providers/gatsby/plugin`)
 const gatsbyShadowFileResource = require(`./providers/gatsby/shadow-file`)
 const npmPackageResource = require(`./providers/npm/package`)
 const npmPackageScriptResource = require(`./providers/npm/script`)
+const npmPackageJsonResource = require('./providers/npm/package-json')
 
 const SITE_ROOT = process.cwd()
 
@@ -48,6 +49,7 @@ const componentResourceMapping = {
   Config: configResource,
   NPMPackage: npmPackageResource,
   NPMScript: npmPackageScriptResource,
+  NPMPackageJson: npmPackageJsonResource,
 }
 
 let queue = new Queue(async (action, cb) => {
@@ -61,7 +63,7 @@ queue.on(`task_finish`, async () => {
     queue.pause()
   }
 
-  const nextId = queue._store._queue[0]
+  const nextId = queue._store._queue[1]
   const task = queue._store._tasks[nextId]
   const { plan, ...cmds } = task
 
@@ -74,7 +76,7 @@ queue.on(`task_finish`, async () => {
 
     if (resource && resource.config && resource.config.batch) {
       const cmdPlan = await resource.plan(context, val)
-      planForNextStep.push({ resourceName: key, cmdPlan })
+      planForNextStep.push({ resourceName: key, ...cmdPlan })
     } else {
       await asyncForEach(cmds[key], async cmd => {
         try {
@@ -88,6 +90,8 @@ queue.on(`task_finish`, async () => {
   })
 
   await Promise.all(commandPlans)
+  console.log('full operation', JSON.stringify(plan, null, 2))
+  console.log('step plan', JSON.stringify(planForNextStep, null, 2))
 
   emitOperation(`progress`, plan, planForNextStep)
 })
@@ -115,7 +119,6 @@ const applyStep = async ({ plan, ...step }) => {
   const commandsForStep = Object.keys(step).map(async key => {
     const resource = componentResourceMapping[key]
     if (resource && resource.config && resource.config.batch) {
-      console.log(`resource.create`, { context, step: step[key] })
       await resource.create(context, step[key])
 
       step[key].map((_, i) => {
