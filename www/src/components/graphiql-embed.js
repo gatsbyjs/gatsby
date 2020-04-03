@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useLayoutEffect } from "react"
 
-const VIDEO_RATIO = 2 / 3
+const ASPECT_RATIO = 2 / 3
 
 const GraphiQLEmbed = ({ title, url, query }) => {
   const encodedQuery = encodeURIComponent(query)
@@ -29,7 +29,7 @@ const GraphiQLEmbed = ({ title, url, query }) => {
       title={title}
       src={`${url}?query=${encodedQuery}&explorerIsOpen=false`}
       width={iframeWidth}
-      height={iframeWidth * VIDEO_RATIO}
+      height={iframeWidth * ASPECT_RATIO}
       loading="lazy"
     />
   )
