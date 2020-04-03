@@ -6,6 +6,13 @@ type SystemPath = string
 type Identifier = string
 type StructuredLog = any // TODO this should come from structured log interface
 
+export interface IRedirect {
+  fromPath: string
+  isPermanent: boolean
+  redirectInBrowser: boolean
+  toPath: string
+}
+
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
@@ -140,7 +147,7 @@ export interface IGatsbyState {
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
-  redirects: any[] // TODO
+  redirects: IRedirect[]
   babelrc: {
     stages: {
       develop: any // TODO
@@ -302,4 +309,9 @@ export interface IRemoveStaleJobAction {
   plugin: Plugin
   traceId?: string
   payload: { contentDigest: string }
+}
+
+export interface ICreateRedirectAction {
+  type: `CREATE_REDIRECT`
+  payload: IRedirect
 }
