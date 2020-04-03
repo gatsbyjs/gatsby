@@ -1,3 +1,4 @@
+import crypto from "crypto"
 import {
   parse,
   validate,
@@ -164,9 +165,20 @@ export default class GraphQLRunner {
       if (typeof statsQuery !== `string`) {
         statsQuery = statsQuery.body
       }
-      this.stats.uniqueOperations.add(`${statsQuery}${JSON.stringify(context)}`)
+      this.stats.uniqueOperations.add(
+        crypto
+          .createHash(`sha1`)
+          .update(statsQuery)
+          .update(JSON.stringify(context))
+          .digest(`hex`)
+      )
 
-      this.stats.uniqueQueries.add(statsQuery)
+      this.stats.uniqueQueries.add(
+        crypto
+          .createHash(`sha1`)
+          .update(statsQuery)
+          .digest(`hex`)
+      )
     }
 
     const document = this.parse(query)

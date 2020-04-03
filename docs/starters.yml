@@ -5757,3 +5757,80 @@
     - Styled-Components
     - Shards UI
     - Bootstrap
+- url: https://gatsby-sanity-developer-portfolio-starter.jacobneterer.com/
+  repo: https://github.com/jneterer/gatsby-sanity-developer-portfolio-starter
+  description: A Gatsby + Sanity CMS starter project for developer portfolios. Also built using TailwindCSS, SCSS, and Typescript.
+  tags:
+    - CMS:sanity.io
+    - Portfolio
+    - Styling:Tailwind
+    - Styling:SCSS
+    - Language:TypeScript
+    - Netlify
+    - SEO
+  features:
+    - Developer portfolio using Gatsby + Sanity CMS
+    - Edit your profile, projects, and tags all in Sanity CMS without any code commits
+    - TailwindCSS and SCSS for styling
+    - Typescript for easier debugging and development, strict types, etc
+    - Netlify for hosting
+    - SEO Capabilities
+- url: https://serene-ramanujan-285722.netlify.com/
+  repo: https://github.com/kunalJa/gatsby-starter-math-blog
+  description: A responsive math focused blog with MDX and Latex built in
+  tags:
+    - MDX
+    - Blog
+    - PWA
+    - Storybook
+    - Styling:Other
+    - SEO
+  features:
+    - Mobile friendly and fully responsive
+    - Easy to configure (just change site.config.js)
+    - MDX
+    - Latex with Katex
+    - Storybook with tested components included
+    - Uses Tachyons for styling
+    - Easy to create new posts
+- url: https://gatsby-starter-canada-pandemic.netlify.com/
+  repo: https://github.com/masoudkarimif/gatsby-starter-canada-pandemic
+  description: A Gatsby starter template for covering pandemics in Canada
+  tags:
+    - AWS
+    - Onepage
+    - Styling:Milligram
+  features:
+    - Interactive SVG map using D3
+    - Responsive design
+    - Styled 404 page
+    - Google Analytics support
+    - Includes React Helmet
+    - Clean minimalist design
+    - Completely customizable using only gatsby-config.js file
+- url: https://builderio.github.io/gatsby-starter-builder/
+  repo: https://github.com/BuilderIO/gatsby-starter-builder
+  description: Gatsby starter with drag + drop page building with your React components via Builder.io
+  tags:
+    - CMS:Other
+    - CMS:Headless
+  features:
+    - Builder.io integration with sample pages/header/footer.
+    - Drag and drop page editing and creations.
+    - Lots of built-in templates, widgets, or bring in your own custom components.
+    - Uses @builder.io/gatsby plugin to dynamically create pages published on the editor.
+    - SEO
+- url: https://gatsby-starter-reason-blog.netlify.com/
+  repo: https://github.com/mukul-rathi/gatsby-starter-reason-blog
+  description: The Gatsby Starter Blog using ReasonML!
+  tags:
+    - Blog
+    - Styling:CSS-in-JS
+    - Language:Other
+  features:
+    - Basic setup for a full-featured type-safe blog
+    - ReasonML support out-of-the-box
+    - ReasonReact v3 JSX syntax
+    - CSS-in-Reason support
+    - StaticQuery GraphQL support in ReasonML
+    - Similar to gatsby-starter-blog
