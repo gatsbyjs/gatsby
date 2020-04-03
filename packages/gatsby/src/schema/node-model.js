@@ -201,7 +201,7 @@ class LocalNodeModel {
    * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies) {
-    const { query, firstOnly, type } = args || {}
+    const { query, firstOnly, type, stats } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -238,6 +238,7 @@ class LocalNodeModel {
       resolvedFields: fieldsToResolve,
       nodeTypeNames,
       typedKeyValueIndexes: this._typedKeyValueIndexes,
+      stats,
     })
 
     let result = queryResult

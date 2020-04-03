@@ -22,7 +22,7 @@ If you followed along with the [Unit testing guide](/docs/unit-testing) you'll h
 
 ```diff:title=jest-preprocess.js
 const babelOptions = {
-  presets: ["babel-preset-gatsby"],
+~  presets: ["babel-preset-gatsby", "@emotion/babel-preset-css-prop"],
 +  plugins: [
 +    "emotion",
 +  ],
