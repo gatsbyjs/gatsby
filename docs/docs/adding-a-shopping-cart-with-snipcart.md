@@ -8,7 +8,7 @@ Combine it with a source of products (like a CMS or an e-commerce platform like 
 
 ## Prerequisites
 
-To get started, you'll need to have the following set up: 
+To get started, you'll need to have the following set up:
 
 - A Gatsby site with [`gatsby-plugin-snipcart`](/packages/gatsby-plugin-snipcart/) installed
 - A [Snipcart](https://snipcart.com/) account
