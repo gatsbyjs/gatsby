@@ -1,27 +1,30 @@
-/* @flow */
-const levenshtein = require(`fast-levenshtein`)
-const fs = require(`fs-extra`)
+import levenshtein from "fast-levenshtein"
+import fs from "fs-extra"
 import { testRequireError } from "../utils/test-require-error"
-const report = require(`gatsby-cli/lib/reporter`)
-const path = require(`path`)
-const existsSync = require(`fs-exists-cached`).sync
+import report from "gatsby-cli/lib/reporter"
+import path from "path"
+import { sync as existsSync } from "fs-exists-cached"
 
 function isNearMatch(
-  fileName: string,
+  fileName: string | undefined,
   configName: string,
   distance: number
 ): boolean {
+  if (!fileName) return false
   return levenshtein.get(fileName, configName) <= distance
 }
 
-module.exports = async function getConfigFile(
+export async function getConfigFile(
   rootDir: string,
   configName: string,
   distance: number = 3
-) {
+): Promise<{
+  configModule: any
+  configFilePath: string
+}> {
   const configPath = path.join(rootDir, configName)
-  let configModule
-  let configFilePath
+  let configFilePath = ``
+  let configModule: any
   try {
     configFilePath = require.resolve(configPath)
     configModule = require(configFilePath)

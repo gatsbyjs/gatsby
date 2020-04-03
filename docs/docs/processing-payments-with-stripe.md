@@ -31,13 +31,13 @@ Several tutorials, plugins and starters exist to help you get up and running wit
 
 ### Plugins
 
-- [gatsby-source-stripe](https://www.gatsbyjs.org/packages/gatsby-source-stripe/): This plugin allows you to bring your product and SKU data into your Gatsby site at build time to be [used with Stripe Checkout](https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/#example-2-import-skus-via-source-plugin).
+- [gatsby-source-stripe](/packages/gatsby-source-stripe/): This plugin allows you to bring your product and SKU data into your Gatsby site at build time to be [used with Stripe Checkout](/tutorial/ecommerce-tutorial/#example-2-import-skus-via-source-plugin).
 
 ### Starters & Examples
 
 - [Example site from the Gatsby Stripe tutorial](https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe)
-- [gatsby-starter-ecommerce](https://www.gatsbyjs.org/starters/parmsang/gatsby-starter-ecommerce/)
-- [gatsby-starter-stripe](https://www.gatsbyjs.org/starters/brxck/gatsby-starter-stripe/)
+- [gatsby-starter-ecommerce](/starters/parmsang/gatsby-starter-ecommerce/)
+- [gatsby-starter-stripe](/starters/brxck/gatsby-starter-stripe/)
 
 ## Other resources
 

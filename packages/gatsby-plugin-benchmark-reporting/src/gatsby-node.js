@@ -157,11 +157,6 @@ class BenchMeta {
       `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`
     )
 
-    const pageCount = glob(`**/**.json`, {
-      cwd: `./public/page-data`,
-      nocase: true,
-    }).length
-
     const benchmarkMetadata = this.getMetadata()
 
     return {
@@ -181,7 +176,7 @@ class BenchMeta {
         webpack: webpackVersion,
       },
       counts: {
-        pages: pageCount,
+        pages: parseInt(process.env.NUM_PAGES),
         jpgs: jpgCount,
         pngs: pngCount,
         gifs: gifCount,
