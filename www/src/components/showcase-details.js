@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
+import Link from "./localized-link"
 import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
@@ -13,10 +14,9 @@ import ShareMenu from "./share-menu"
 import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
 
-import MdArrowUpward from "react-icons/lib/md/arrow-upward"
-import MdLink from "react-icons/lib/md/link"
 import FeaturedIcon from "../assets/icons/featured-sites-icons"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { MdArrowUpward, MdLink } from "react-icons/md"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 
 const gutter = 6
 const gutterDesktop = 8

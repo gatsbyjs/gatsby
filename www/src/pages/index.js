@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
@@ -85,7 +85,7 @@ class IndexRoute extends React.Component {
         <Helmet>
           <meta
             name="Description"
-            content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
+            content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, e-commerce sites, full-blown apps, and more with Gatsby."
           />
         </Helmet>
         <main

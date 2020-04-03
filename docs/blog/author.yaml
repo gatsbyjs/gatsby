@@ -3,7 +3,7 @@
   avatar: avatars/kyle-mathews.jpeg
   twitter: "@kylemathews"
 - id: Dustin Schau
-  bio: Software Engineer @ GatsbyJS. Likes all things JavaScript, and travel. Doesn't totally suck 👋
+  bio: Head of Product @ GatsbyJS. Likes all things JavaScript, and travel. Doesn't totally suck 👋
   avatar: avatars/dustin-schau.png
   twitter: "@schaudustin"
 - id: Kostas Bariotis
@@ -161,7 +161,7 @@
   avatar: avatars/khaled-garbaya.jpg
   twitter: "@khaled_garbaya"
 - id: Mikhail Novikov
-  bio: GraphQL sommelier. Did Reindex, GraphQL Delegation, Schema Stitching, Launchpad. Organizer @GraphQLFinland.
+  bio: Gatsby Core Tech Lead
   avatar: avatars/freiksenet.jpg
   twitter: "@freiksenet"
 - id: Horacio Herrera
@@ -212,7 +212,7 @@
   avatar: avatars/muhammad-muhsin.jpg
   twitter: "@muhsinlk"
 - id: Ondrej Polesny
-  bio: Full-stack developer, speaker and trainer with passion for anything new and intriguing. Opensource contributor. Dev evangelist @ Kentico Cloud.
+  bio: Full-stack developer, speaker and trainer with passion for anything new and intriguing. Opensource contributor. Dev evangelist @ Kentico Kontent.
   avatar: avatars/ondrej-polesny.jpg
   twitter: "@ondrabus"
 - id: John O’Nolan
@@ -388,3 +388,18 @@
   bio: Engineer on TypeScript at Microsoft
   avatar: avatars/orta-therox.jpg
   twitter: "@orta"
+- id: Aisha Blake
+  bio: Teacher, speaker, and community organizer who learned to code via Neopets. Loves theater, karaoke, and dogs.
+  avatar: avatars/aisha-blake.jpg
+  twitter: "@AishaBlake"
+- id: Rich Manalang
+  bio: Principal developer advocate at LaunchDarkly
+  avatar: avatars/rich-manalang.jpeg
+  twitter: "@rmanalan"
+- id: Bob Orchard
+  bio: Semi-stack developer with a design background. Senior Product Manager at Gatsby Cloud. I love to make things with my hands, travel, and tinker with new tech.
+  avatar: avatars/bob-orchard.jpg
+  twitter: "@boborchard"
+- id: Greg Thomas
+  bio: "Writer, musician, historian, and dedicated service provider for the dog."
+  avatar: avatars/greg-thomas.jpg

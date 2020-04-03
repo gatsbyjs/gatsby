@@ -1,0 +1,43 @@
+{
+  "name": "gatsby-benchmark-contentful",
+  "private": true,
+  "description": "Benchmark site for sourcing from Contentful",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "clean": "gatsby clean",
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "serve": "gatsby serve",
+    "setup": "cross-env NODE_ENV=development node bin/setup.js",
+    "start": "npm run develop",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  },
+  "dependencies": {
+    "contentful-management": "^5.14.0",
+    "dotenv": "^8.2.0",
+    "gatsby": "^2.19.7",
+    "gatsby-image": "^2.2.40",
+    "gatsby-plugin-sharp": "^2.4.5",
+    "gatsby-source-contentful": "^2.1.88",
+    "gatsby-source-drupal": "^3.3.18",
+    "gatsby-source-filesystem": "^2.1.48",
+    "gatsby-transformer-sharp": "^2.3.14",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "chalk": "^2.4.2",
+    "cross-env": "^7.0.0",
+    "gatsby-plugin-benchmark-reporting": "*",
+    "prettier": "^1.19.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby/benchmarks/source-contentful"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  }
+}

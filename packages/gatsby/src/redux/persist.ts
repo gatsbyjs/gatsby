@@ -8,7 +8,7 @@ import {
   renameSync,
   writeFileSync,
 } from "fs-extra"
-import { IReduxNode, ICachedReduxState } from "./types"
+import { IGatsbyNode, ICachedReduxState } from "./types"
 import { sync as globSync } from "glob"
 import report from "gatsby-cli/lib/reporter"
 
@@ -54,9 +54,9 @@ export function readFromCache(): ICachedReduxState {
     reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
   ).map(file => v8.deserialize(readFileSync(file)))
 
-  const nodes: [string, IReduxNode][] = [].concat(...chunks)
+  const nodes: [string, IGatsbyNode][] = [].concat(...chunks)
 
-  if (!chunks.length) {
+  if (!chunks.length && process.env.GATSBY_DB_NODES !== `loki`) {
     report.info(
       `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
     )
@@ -69,7 +69,7 @@ export function readFromCache(): ICachedReduxState {
   return obj
 }
 
-function guessSafeChunkSize(values: [string, IReduxNode][]): number {
+function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
   // This attempts to prevent small sites with very large pages from OOMing.
@@ -88,7 +88,7 @@ function guessSafeChunkSize(values: [string, IReduxNode][]): number {
   // Max size of a Buffer is 2gb (yeah, we're assuming 64bit system)
   // https://stackoverflow.com/questions/8974375/whats-the-maximum-size-of-a-node-js-buffer
   // Use 1.5gb as the target ceiling, allowing for some margin of error
-  return Math.floor((150 * 1024 * 1024 * 1024) / maxSize)
+  return Math.floor((1.5 * 1024 * 1024 * 1024) / maxSize)
 }
 
 function prepareCacheFolder(
@@ -106,7 +106,7 @@ function prepareCacheFolder(
 
   if (map) {
     // Now store the nodes separately, chunk size determined by a heuristic
-    const values: [string, IReduxNode][] = [...map.entries()]
+    const values: [string, IGatsbyNode][] = [...map.entries()]
     const chunkSize = guessSafeChunkSize(values)
     const chunks = Math.ceil(values.length / chunkSize)
 

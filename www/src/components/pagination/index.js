@@ -2,8 +2,10 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { navigate } from "gatsby"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-import ArrowBackIcon from "react-icons/lib/md/arrow-back"
+import {
+  MdArrowForward as ArrowForwardIcon,
+  MdArrowBack as ArrowBackIcon,
+} from "react-icons/md"
 import PaginationLink from "./PaginationLink"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
@@ -61,12 +63,12 @@ class Pagination extends React.Component {
           }}
         >
           <PaginationLink to={prevPageLink} sx={prevNextLinkStyles}>
-            <ArrowBackIcon style={{ verticalAlign: `sub` }} />
+            <ArrowBackIcon />
             Newer posts
           </PaginationLink>
           <PaginationLink to={nextPageLink} sx={prevNextLinkStyles}>
             Older posts
-            <ArrowForwardIcon style={{ verticalAlign: `sub` }} />
+            <ArrowForwardIcon />
           </PaginationLink>
         </div>
         <div

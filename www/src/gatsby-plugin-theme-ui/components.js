@@ -16,6 +16,7 @@ import Events from "../components/events/events"
 import StubList from "../components/stub-list"
 import LangList from "../components/lang-list"
 import GraphiQLEmbed from "../components/graphiql-embed"
+import ScriptLoader from "../components/script-loader"
 
 export default {
   GuideList,
@@ -32,6 +33,7 @@ export default {
   StubList,
   LangList,
   GraphiQLEmbed,
+  ScriptLoader,
   a: MdxLink,
   pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
 }

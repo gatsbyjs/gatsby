@@ -126,18 +126,44 @@ Hyperlinks should contain the clearest words to indicate where the link will lea
 ```markdown
 <!-- Good -->
 
-[Gatsby's docs](https://www.gatsbyjs.org/docs/)
+[Gatsby Cloud](https://www.gatsbyjs.com/cloud/)
 
 <!-- Bad -->
 
-[here](https://www.gatsbyjs.org/docs/ "Gatsby's docs")
+[here](https://www.gatsbyjs.com/cloud/ "Gatsby Cloud")
 ```
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
 
+### Use relative hyperlinks for local links
+
+When referencing another page within [gatsbyjs.org](https://www.gatsbyjs.org/) hyperlinks should use relative paths (not include the full domain). This guarantees that all links function when running locally or in preview.
+
+```markdown
+<!-- Good -->
+
+[Gatsby's glossary](/docs/glossary)
+
+<!-- Bad -->
+
+[Gatsby's glossary](https://www.gatsbyjs.org/docs/glossary)
+```
+
+Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be referenced using an absolute path (domain included). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)
+
 ### Mark localhost URLs as code strings
 
 Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs on Gatsbyjs.org.
+
+```markdown
+<!-- Good -->
+
+open your site with `http://localhost:8000/`
+
+<!-- Bad -->
+
+open your site with [http://localhost:8000/](http://localhost:8000/)
+```
 
 ### Indicate when something is optional
 
@@ -282,10 +308,10 @@ You may also choose to include line highlighting in your code snippets, using th
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	siteMetadata: {
-		title: `GatsbyJS`, // highlight-line
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
+  siteMetadata: {
+    title: `GatsbyJS`, // highlight-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 ````
@@ -304,11 +330,11 @@ module.exports = {
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	siteMetadata: {
-		title: `GatsbyJS`,
-		// highlight-next-line
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
+  siteMetadata: {
+    title: `GatsbyJS`,
+    // highlight-next-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 ````
@@ -328,12 +354,12 @@ module.exports = {
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	// highlight-start
-	siteMetadata: {
-		title: `GatsbyJS`,
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
-	// highlight-end
+  // highlight-start
+  siteMetadata: {
+    title: `GatsbyJS`,
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
+  // highlight-end
 }
 ```
 ````
@@ -351,9 +377,12 @@ module.exports = {
 
 ### Capitalize proper nouns
 
-Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in Guide articles.
+Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in blog posts, docs, and other learning materials on this website.
 
+- Gatsby
+- GraphQL
 - JavaScript (capital letters in "J" and "S" and no abbreviations)
+- Markdown
 - Node.js
 
 A full-stack developer (adjective form with a dash) works on the full stack
