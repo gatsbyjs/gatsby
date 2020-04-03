@@ -32,4 +32,10 @@ describe(`gatsby-config`, () => {
       `gatsby-plugin-react-helmet`,
     ])
   })
+
+  test(`plan returns a description`, async () => {
+    const result = await plugin.plan({ root }, { name })
+
+    expect(result.describe).toEqual(`Configure ${name}`)
+  })
 })

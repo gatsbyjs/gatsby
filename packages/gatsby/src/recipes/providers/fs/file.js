@@ -40,3 +40,13 @@ module.exports.create = create
 module.exports.update = update
 module.exports.read = read
 module.exports.destroy = destroy
+
+module.exports.plan = async (context, { path: filePath, content }) => {
+  const src = await read(context, { path: filePath, content })
+
+  return {
+    currentState: src,
+    newState: content,
+    describe: `Write ${filePath}`,
+  }
+}
