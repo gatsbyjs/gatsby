@@ -1,5 +1,6 @@
 const fs = require(`fs`)
 const path = require(`path`)
+const { inspect } = require(`util`)
 
 const React = require(`react`)
 const { useState, useContext } = require(`react`)
@@ -36,22 +37,33 @@ const PlanDescribe = ({ resourceName }) => {
 }
 
 const components = {
-  inlineCode: Text,
+  inlineCode: props => (
+    // log(`inlineCode`, { props })
+    <Text {...props} />
+  ),
   h1: props => <Text bold underline {...props} />,
   h2: props => <Text bold underline {...props} />,
   h3: props => <Text bold underline {...props} />,
   h4: props => <Text bold underline {...props} />,
   h5: props => <Text bold underline {...props} />,
   h6: props => <Text bold underline {...props} />,
-  a: ({ href, children }) => <Link url={href}>{children}</Link>,
-  paragraph: props => (
-    <Box width="100%" flexDirection="row" textWrap="wrap" {...props} />
-  ),
+  a: ({ href, children }) => {
+    log(`Link`, { href, children })
+    return <Link url={href}>{children}</Link>
+  },
+  p: props => {
+    log(`paragraph`, { props })
+    return <Box width="100%" flexDirection="row" textWrap="wrap" {...props} />
+  },
+  li: props => {
+    log(`li`, { props })
+    return <Text>* {props.children}</Text>
+  },
   Config: () => null,
-  GatsbyPlugin: () => <PlanDescribe resourceName='GatsbyPlugin' />,
-  NPMPackage: () => <PlanDescribe resourceName='NPMPackage' />,
-  File: () => <PlanDescribe resourceName='File' />,
-  ShadowFile: () => <PlanDescribe resourceName='ShadowFile' />
+  GatsbyPlugin: () => <PlanDescribe resourceName="GatsbyPlugin" />,
+  NPMPackage: () => <PlanDescribe resourceName="NPMPackage" />,
+  File: () => <PlanDescribe resourceName="File" />,
+  ShadowFile: () => <PlanDescribe resourceName="ShadowFile" />,
 }
 
 const isRelative = path => {
@@ -64,9 +76,7 @@ const isRelative = path => {
 
 const log = (label, textOrObj) => {
   const text =
-    typeof textOrObj === `string`
-      ? textOrObj
-      : JSON.stringify(textOrObj, null, 2)
+    typeof textOrObj === `string` ? textOrObj : inspect(textOrObj, null, 2)
 
   let contents = ``
   try {
@@ -191,13 +201,12 @@ module.exports = ({ recipe, projectRoot }) => {
     })
 
     if (process.env.DEBUG) {
-      log(`subscriptionResponse`, subscriptionResponse)
-      log(`lastKeyPress`, lastKeyPress)
-      log(`state`, state)
+      // log(`subscriptionResponse`, subscriptionResponse)
+      // log(`state`, state)
     }
 
     return (
-      <PlanContext.Provider value={{planForNextStep}}>
+      <PlanContext.Provider value={{ planForNextStep }}>
         <MDX components={components}>{stepsAsMDX[currentStep]}</MDX>
         <Div />
         <Text>Press enter to apply!</Text>
