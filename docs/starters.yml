@@ -5836,7 +5836,7 @@
     - Similar to gatsby-starter-blog
 - url: https://gatsby-redux-toolkit-typescript.netlify.com/
   repo: https://github.com/saimirkapaj/gatsby-redux-toolkit-typescript-starter
-  description: Gatsby Starter using Redux-Toolkit, Typescript, Styled Components and Talwind CSS.
+  description: Gatsby Starter using Redux-Toolkit, Typescript, Styled Components and Tailwind CSS.
   tags:
     - Redux-Toolkit
     - Language:TypeScript
