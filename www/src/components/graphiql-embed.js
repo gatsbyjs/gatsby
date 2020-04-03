@@ -4,6 +4,7 @@ const ASPECT_RATIO = 2 / 3
 
 const GraphiQLEmbed = ({ title, url, query }) => {
   const encodedQuery = encodeURIComponent(query)
+  const graphiqlURL = url || 'https://711808k40x.sse.codesandbox.io/___graphql'
 
   const [iframeWidth, setIframeWidth] = useState(0)
   const iframeRef = useRef()
@@ -27,7 +28,7 @@ const GraphiQLEmbed = ({ title, url, query }) => {
       ref={iframeRef}
       className="graphiql-embed"
       title={title}
-      src={`${url}?query=${encodedQuery}&explorerIsOpen=false`}
+      src={`${graphiqlURL}?query=${encodedQuery}&explorerIsOpen=false`}
       width={iframeWidth}
       height={iframeWidth * ASPECT_RATIO}
       loading="lazy"

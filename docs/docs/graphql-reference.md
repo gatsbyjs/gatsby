@@ -16,7 +16,6 @@ Start with the basics, pulling up the site `title` from your `gatsby-config.js`'
 
 <GraphiQLEmbed
   title="A basic query"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   site {
     siteMetadata {
@@ -35,7 +34,6 @@ Gatsby structures its content as collections of `nodes`, which are connected to 
 
 <GraphiQLEmbed
   title="A longer query"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allSitePlugin {
     totalCount
@@ -59,7 +57,6 @@ If you're using Gatsby version `2.2.0` or later, you can remove `edges` and `nod
 
 <GraphiQLEmbed
   title="A longer query with nodes"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allSitePlugin {
     totalCount
@@ -81,7 +78,6 @@ There are several ways to reduce the number of results from a query. Here `total
 
 <GraphiQLEmbed
   title="Using limit"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(limit: 3) {
     totalCount
@@ -103,7 +99,6 @@ Skip over a number of results. In this query `skip` is used to omit the first 3 
 
 <GraphiQLEmbed
   title="Using skip"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(skip: 3) {
     totalCount
@@ -125,7 +120,6 @@ In this query `filter` and the `ne` (not equals) operator is used to show only r
 
 <GraphiQLEmbed
   title="Using a filter"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(
     filter: {
@@ -157,7 +151,6 @@ In this query the fields `categories` and `title` are filtered to find the book 
 
 <GraphiQLEmbed
   title="Using multiple filters"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(
     filter: {
@@ -188,7 +181,6 @@ You can also combine the mentioned operators. This query filters on `/History/` 
 
 <GraphiQLEmbed
   title="Using multiple operators in filters"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(
     filter: {
@@ -231,7 +223,6 @@ _In the playground below the list, there is an example query with a description 
 
 <GraphiQLEmbed
   title="Complete list of possible operators"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   # eq: I want all the titles that match "Fantastic Beasts and Where to Find Them"
   example_eq: allMarkdownRemark(
@@ -364,7 +355,6 @@ The ordering of your results can be specified with `sort`. Here the results are 
 
 <GraphiQLEmbed
   title="Using sort"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(
     sort: {
@@ -390,7 +380,6 @@ You can also sort on multiple fields but the `sort` keyword can only be used onc
 
 <GraphiQLEmbed
   title="Sorting on multiple fields"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(
     sort: {
@@ -418,7 +407,6 @@ By default, sort `fields` will be sorted in ascending order. Optionally, you can
 
 <GraphiQLEmbed
   title="Setting sorting order"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(
     sort: {
@@ -448,7 +436,6 @@ Dates can be formatted using the `formatString` function.
 
 <GraphiQLEmbed
   title="Formatting dates"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(
     filter: {frontmatter: {date: {ne: null}}}
@@ -472,7 +459,6 @@ You can also pass in a `locale` to adapt the output to your language. The above 
 
 <GraphiQLEmbed
   title="Using locale"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(
     filter: {frontmatter: {date: {ne: null}}}
@@ -499,7 +485,6 @@ Dates also accept the `fromNow` and `difference` function. The former returns a 
 
 <GraphiQLEmbed
   title="Using date functions"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   one: allMarkdownRemark(
     filter: {frontmatter: {date: {ne: null}}}
@@ -537,7 +522,6 @@ Excerpts accept three options: `pruneLength`, `truncate`, and `format`. `format`
 
 <GraphiQLEmbed
   title="Using excerpts"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(
     filter: {frontmatter: {date: {ne: null}}}
@@ -566,7 +550,6 @@ This query combines sorting, filtering, limiting and formatting together.
 
 <GraphiQLEmbed
   title="Combining sorting, filtering, limiting and formatting"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(
     limit: 3
@@ -596,7 +579,6 @@ To add variables to page component queries, pass these in the `context` object [
 
 <GraphiQLEmbed
   title="Using query variables"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`query GetBlogPosts(
   $limit: Int, $filter: MarkdownRemarkFilterInput, $sort: MarkdownRemarkSortInput
 ) {
@@ -626,7 +608,6 @@ The query below gets you all categories (`fieldValue`) applied to a book and how
 
 <GraphiQLEmbed
   title="Grouping values"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(filter: {frontmatter: {title: {ne: ""}}}) {
     group(field: frontmatter___categories) {
@@ -659,8 +640,7 @@ The query below defines a fragment to get the site title, and then uses the frag
 
 <GraphiQLEmbed
   title="Using fragments"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
-  query={`fragment fragmentName on Site {
+    query={`fragment fragmentName on Site {
   siteMetadata {
     title
   }
@@ -680,7 +660,6 @@ Want to run two queries on the same datasource? You can do this by aliasing your
 
 <GraphiQLEmbed
   title="Using aliases"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   someEntries: allMarkdownRemark(skip: 3, limit: 3) {
     edges {
@@ -714,7 +693,6 @@ Try changing variable `withDate` in the example query below:
 
 <GraphiQLEmbed
   title="Using conditionals"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`query GetBlogPosts ($withDate:Boolean = false) {
   allMarkdownRemark(limit: 3, skip: 1) {
     edges {
@@ -736,7 +714,6 @@ You can use those directives on any level of the query and even on fragments. Ta
 
 <GraphiQLEmbed
   title="Using conditionals: Advanced"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`query GetBlogPosts ($preview:Boolean = true) {
   allMarkdownRemark(limit: 3, skip: 1) {
     edges {

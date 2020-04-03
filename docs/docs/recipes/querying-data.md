@@ -201,7 +201,6 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
 
 <GraphiQLEmbed
   title="Limiting returned data"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allSitePage(limit: 3) {
     edges {
@@ -271,7 +270,6 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 
 <GraphiQLEmbed
   title="Sorting data"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allSitePage(sort: {fields: path, order: ASC}) {
     edges {
@@ -345,7 +343,6 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 
 <GraphiQLEmbed
   title="Filtering data"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   allMarkdownRemark(filter: {frontmatter: {categories: {eq: "magical creatures"}}}) {
     edges {
@@ -410,7 +407,6 @@ If you would like to run two queries on the same datasource, you can use an alia
 
 <GraphiQLEmbed
   title="Using aliases"
-  url="https://711808k40x.sse.codesandbox.io/___graphql"
   query={`{
   fileCount: allFile { 
     totalCount
