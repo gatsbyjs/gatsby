@@ -17,7 +17,7 @@ Dealing with images on the web have always been a problem as unoptimized images 
 ## Solutions 
 Cloudinary provides a couple of amazing solutions to this problem by offering the following solutions: 
 - Remote storage and delivery of images via CDN
-- Wider range of transformations over [gatsby-image](/doc/using-gatsby-image).
+- Wider range of transformations over [gatsby-image](/docs/using-gatsby-image/).
 - [Digital Asset Management](https://cloudinary.com/documentation/digital_asset_management_overview) for enterprise assets 
 
 ## Gatsby-Source-plugin 
