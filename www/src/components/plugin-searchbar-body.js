@@ -25,6 +25,7 @@ import { visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import removeMD from "remove-markdown"
 import SkipNavLink from "./skip-nav-link"
+import { FaUsers as CommunityIcon } from "react-icons/fa"
 
 // This is for the urlSync
 const updateAfter = 700
@@ -407,13 +408,17 @@ const Result = ({ hit, pathname, query }) => {
           }}
         >
           {hit.repository &&
-            hit.name[0] !== `@` &&
-            hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
-              0 && (
-              <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`}>
-                <GatsbyIcon />
-              </span>
-            )}
+          hit.name[0] !== `@` &&
+          hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
+            0 ? (
+            <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`}>
+              <GatsbyIcon />
+            </span>
+          ) : (
+            <span sx={{ mr: 1 }} alt={`Community Gatsby Plugin`}>
+              <CommunityIcon />
+            </span>
+          )}
           <span
             css={{
               width: `5em`,
