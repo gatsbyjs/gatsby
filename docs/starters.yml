@@ -1869,9 +1869,9 @@
     - Full Render Control with Portable Text
     - gatsby-image support
     - Content types for company info, pages, projects, people, and blog posts
-- url: https://gatsby-theme-oss.netlify.com/
-  repo: https://github.com/robinmetral/gatsby-theme-oss
-  description: A Gatsby theme to showcase your open-source projects.
+- url: https://gatsby-starter-oss.netlify.com/
+  repo: https://github.com/robinmetral/gatsby-starter-oss
+  description: A Gatsby starter to showcase your open-source projects.
   tags:
     - Portfolio
     - Styling:Theme-UI
@@ -1882,10 +1882,11 @@
     - Testing
     - Linting
   features:
-    - Pull your pinned repos from GitHub
-    - Style using Theme UI and Emotion
-    - Use as a starter or as a Gatsby Theme
-    - 100/100 Lighthouse scores
+    - 🐙🐈 Pull your pinned repos from GitHub
+    - 👩‍🎤 Style with Emotion
+    - ✨ Themeable with Theme UI
+    - 🚀 Powered by gatsby-theme-oss
+    - 💯 100/100 Lighthouse scores
 - url: https://gatsby-starter-docz.netlify.com/
   repo: https://github.com/RobinCsl/gatsby-starter-docz
   description: Simple starter where building your own documentation with Docz is possible
