@@ -75,13 +75,10 @@ export const fetchAndCreateSingleNode = async ({
 
   if (previewId && existingNode) {
     const originalFieldsToRetain = {
-      uri: existingNode.uri,
-      link: existingNode.link,
       status: existingNode.status,
       slug: existingNode.slug,
       parent: existingNode.parent,
       databaseId: existingNode.databaseId,
-      guid: existingNode.guid,
       id,
     }
 
