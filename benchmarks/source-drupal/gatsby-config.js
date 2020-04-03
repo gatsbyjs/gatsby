@@ -20,7 +20,7 @@ module.exports = {
     {
       resolve: `gatsby-source-drupal`,
       options: {
-        baseUrl: process.env.GATSBY_DRUPAL_BASE_URL,
+        baseUrl: process.env.BENCHMARK_DRUPAL_BASE_URL,
         // Auth needed for POST
       },
     },

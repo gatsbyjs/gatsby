@@ -22,8 +22,8 @@ if (!fs.existsSync(inputDir)) {
 
 const locale = `en-US`
 const contentfulConfig = {
-  spaceId: process.env.CONTENTFUL_SPACE_ID,
-  managementToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
+  spaceId: process.env.BENCHMARK_CONTENTFUL_SPACE_ID,
+  managementToken: process.env.BENCHMARK_CONTENTFUL_MANAGEMENT_TOKEN,
 }
 
 const { spaceId, managementToken } = contentfulConfig
