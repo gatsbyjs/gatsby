@@ -3,11 +3,8 @@ import { Box, Static } from "ink"
 import { isTTY } from "../../../util/is-tty"
 import { trackBuildError } from "gatsby-telemetry"
 import { Spinner } from "./components/spinner"
-import {
-  ProgressBar,
-  IProps as IProgressbarProps,
-} from "./components/progress-bar"
-import { Message, IProps as IMessageProps } from "./components/messages"
+import { ProgressBar, IProgressbarProps } from "./components/progress-bar"
+import { Message, IMessageProps } from "./components/messages"
 import { Error as ErrorComponent, IErrorDetails } from "./components/error"
 import Develop from "./components/develop"
 import {
@@ -18,15 +15,17 @@ import {
 
 const showProgress = isTTY()
 
-interface IActivity
-  extends Pick<IProgressbarProps, "total" | "current" | "startTime"> {
+interface IActivity {
   id: string
   text: string
+  total: IProgressbarProps["total"]
+  current: IProgressbarProps["current"]
+  startTime: IProgressbarProps["startTime"]
   status: ActivityStatuses
   type: ActivityTypes
 }
 
-interface IProps {
+interface ICLIProps {
   logs: {
     messages: Array<IErrorDetails | IMessageProps>
     activities: Record<string, IActivity>
@@ -34,13 +33,13 @@ interface IProps {
   showStatusBar: boolean
 }
 
-interface IState {
+interface ICLIState {
   hasError: boolean
   error?: Error
 }
 
-class CLI extends React.Component<IProps, IState> {
-  readonly state: IState = {
+class CLI extends React.Component<ICLIProps, ICLIState> {
+  readonly state: ICLIState = {
     hasError: false,
   }
   memoizedReactElementsForMessages: React.ReactElement[] = []
@@ -55,7 +54,7 @@ class CLI extends React.Component<IProps, IState> {
     })
   }
 
-  static getDerivedStateFromError(error: Error): IState {
+  static getDerivedStateFromError(error: Error): ICLIState {
     return { hasError: true, error }
   }
 

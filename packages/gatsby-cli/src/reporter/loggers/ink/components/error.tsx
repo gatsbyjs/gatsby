@@ -51,36 +51,37 @@ export interface IErrorDetails {
   docsUrl: string
 }
 
-export interface IProps {
+export interface IErrorProps {
   details: IErrorDetails
 }
 
-export const Error: FunctionComponent<IProps> = React.memo(({ details }) => (
-  // const stackLength = get(details, `stack.length`, 0
+export const Error: FunctionComponent<IErrorProps> = React.memo(
+  ({ details }) => (
+    // const stackLength = get(details, `stack.length`, 0
 
-  <Box marginY={1} flexDirection="column">
-    <Box flexDirection="column">
+    <Box marginY={1} flexDirection="column">
       <Box flexDirection="column">
-        <Box>
-          <Box marginRight={1}>
-            <Color black bgRed>
-              {` ${details.level} `}
-              {details.code ? `#${details.code} ` : ``}
-            </Color>
-            <Color red>{details.type ? ` ` + details.type : ``}</Color>
+        <Box flexDirection="column">
+          <Box>
+            <Box marginRight={1}>
+              <Color black bgRed>
+                {` ${details.level} `}
+                {details.code ? `#${details.code} ` : ``}
+              </Color>
+              <Color red>{details.type ? ` ` + details.type : ``}</Color>
+            </Box>
           </Box>
+          <Box marginTop={1}>{details.text}</Box>
+          {details.filePath && (
+            <Box marginTop={1}>
+              File:{` `}
+              <File filePath={details.filePath} location={details.location} />
+            </Box>
+          )}
         </Box>
-        <Box marginTop={1}>{details.text}</Box>
-        {details.filePath && (
-          <Box marginTop={1}>
-            File:{` `}
-            <File filePath={details.filePath} location={details.location} />
-          </Box>
-        )}
+        <DocsLink docsUrl={details.docsUrl} />
       </Box>
-      <DocsLink docsUrl={details.docsUrl} />
-    </Box>
-    {/* TODO: use this to replace errorFormatter.render in reporter.error func
+      {/* TODO: use this to replace errorFormatter.render in reporter.error func
       {stackLength > 0 && (
         <Box>
           <Color>
@@ -95,5 +96,6 @@ export const Error: FunctionComponent<IProps> = React.memo(({ details }) => (
           </Color>
         </Box>
       )} */}
-  </Box>
-))
+    </Box>
+  )
+)

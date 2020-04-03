@@ -28,13 +28,13 @@ enum mapConstantToStatus {
   CANCELLED = `Cancelled`,
 }
 
-interface IProps {
+interface IDevelopProps {
   pagesCount: number
   appName: string
   status: keyof mapConstantToStatus
 }
 
-const Develop: React.FC<IProps> = ({ pagesCount, appName, status }) => {
+const Develop: React.FC<IDevelopProps> = ({ pagesCount, appName, status }) => {
   const [width] = useTerminalResize()
 
   return (
