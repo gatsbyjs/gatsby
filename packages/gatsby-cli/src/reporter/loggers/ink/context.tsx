@@ -1,18 +1,20 @@
 import React, { useState, useEffect, createContext } from "react"
-
-import { getStore, onLogAction } from "../../redux/index"
+import { getStore, onLogAction } from "../../redux"
 
 const StoreStateContext = createContext(getStore().getState())
 
-export const StoreStateProvider = ({ children }) => {
+export const StoreStateProvider: React.FC = ({
+  children,
+}): React.ReactElement => {
   const [state, setState] = useState(getStore().getState())
 
-  useEffect(() => {
-    const unsubscribe = onLogAction(() => {
-      setState(getStore().getState())
-    })
-    return unsubscribe
-  }, [])
+  useEffect(
+    () =>
+      onLogAction(() => {
+        setState(getStore().getState())
+      }),
+    []
+  )
 
   return (
     <StoreStateContext.Provider value={state}>

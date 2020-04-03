@@ -7,7 +7,7 @@ const minWidth = 10
 
 const getLength = (prop: string | number): number => String(prop).length
 
-interface IProps {
+export interface IProps {
   message: string
   current: number
   total: number

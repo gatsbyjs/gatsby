@@ -2,23 +2,50 @@ import React from "react"
 import { Box, Static } from "ink"
 import { isTTY } from "../../../util/is-tty"
 import { trackBuildError } from "gatsby-telemetry"
-
-import { Spinner } from "../ink/components/spinner"
-import { ProgressBar } from "../ink/components/progress-bar"
-import { Message } from "../ink/components/messages"
-import { Error } from "./components/error"
-import Develop from "../ink/components/develop"
+import { Spinner } from "./components/spinner"
+import {
+  ProgressBar,
+  IProps as IProgressbarProps,
+} from "./components/progress-bar"
+import { Message, IProps as IMessageProps } from "./components/messages"
+import { Error as ErrorComponent, IErrorDetails } from "./components/error"
+import Develop from "./components/develop"
+import {
+  ActivityLogLevels,
+  ActivityStatuses,
+  ActivityTypes,
+} from "../../constants"
 
 const showProgress = isTTY()
 
-class CLI extends React.Component {
-  state = {
+interface IActivity
+  extends Pick<IProgressbarProps, "total" | "current" | "startTime"> {
+  id: string
+  text: string
+  status: ActivityStatuses
+  type: ActivityTypes
+}
+
+interface IProps {
+  logs: {
+    messages: Array<IErrorDetails | IMessageProps>
+    activities: Record<string, IActivity>
+  }
+  showStatusBar: boolean
+}
+
+interface IState {
+  hasError: boolean
+  error?: Error
+}
+
+class CLI extends React.Component<IProps, IState> {
+  readonly state: IState = {
     hasError: false,
   }
+  memoizedReactElementsForMessages: React.ReactElement[] = []
 
-  memoizedReactElementsForMessages = []
-
-  componentDidCatch(error, info) {
+  componentDidCatch(error: Error, info: React.ErrorInfo): void {
     trackBuildError(`INK`, {
       error: {
         stack: info.componentStack,
@@ -28,11 +55,11 @@ class CLI extends React.Component {
     })
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(error: Error): IState {
     return { hasError: true, error }
   }
 
-  render() {
+  render(): React.ReactElement {
     const {
       logs: { messages, activities },
       showStatusBar,
@@ -40,12 +67,12 @@ class CLI extends React.Component {
 
     const { hasError, error } = this.state
 
-    if (hasError) {
+    if (hasError && error) {
       // You can render any custom fallback UI
       return (
         <Box flexDirection="row">
           <Message
-            level="ACTIVITY_FAILED"
+            level={ActivityLogLevels.Failed}
             text={`We've encountered an error: ${error.message}`}
           />
         </Box>
@@ -68,16 +95,16 @@ class CLI extends React.Component {
         const msg = messages[index]
         this.memoizedReactElementsForMessages.push(
           msg.level === `ERROR` ? (
-            <Error details={msg} key={index} />
+            <ErrorComponent details={msg as IErrorDetails} key={index} />
           ) : (
-            <Message key={index} {...msg} />
+            <Message key={index} {...(msg as IMessageProps)} />
           )
         )
       }
     }
 
-    const spinners = []
-    const progressBars = []
+    const spinners: Array<IActivity> = []
+    const progressBars: Array<IActivity> = []
     if (showProgress) {
       Object.keys(activities).forEach(activityName => {
         const activity = activities[activityName]

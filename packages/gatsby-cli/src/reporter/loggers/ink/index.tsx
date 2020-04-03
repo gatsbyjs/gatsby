@@ -1,10 +1,9 @@
 import React, { useContext } from "react"
 import { render } from "ink"
 import StoreStateContext, { StoreStateProvider } from "./context"
-
 import CLI from "./cli"
 
-const ConnectedCLI = () => {
+const ConnectedCLI: React.FC = (): React.ReactElement => {
   const state = useContext(StoreStateContext)
   const showStatusBar =
     state.program &&

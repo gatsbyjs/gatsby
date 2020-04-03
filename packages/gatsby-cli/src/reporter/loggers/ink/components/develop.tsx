@@ -3,31 +3,38 @@ import { Box, Color, StdoutContext } from "ink"
 import StoreStateContext from "../context"
 
 // Track the width and height of the terminal. Responsive app design baby!
-const useTerminalResize = () => {
+const useTerminalResize = (): Array<number> => {
   const { stdout } = useContext(StdoutContext)
   const [sizes, setSizes] = useState([stdout.columns, stdout.rows])
   useEffect(() => {
-    stdout.on(`resize`, () => {
+    const resizeListener = (): void => {
       setSizes([stdout.columns, stdout.rows])
-    })
-    return () => {
-      stdout.off(`resize`)
+    }
+    stdout.on(`resize`, resizeListener)
+    return (): void => {
+      stdout.off(`resize`, resizeListener)
     }
   }, [stdout])
 
   return sizes
 }
 
-const mapConstantToStatus = {
-  IN_PROGRESS: `In Progress`,
-  NOT_STARTED: `Not Started`,
-  INTERRUPTED: `Interrupted`,
-  FAILED: `Failed`,
-  SUCCESS: `Success`,
-  CANCELLED: `Cancelled`,
+enum mapConstantToStatus {
+  IN_PROGRESS = `In Progress`,
+  NOT_STARTED = `Not Started`,
+  INTERRUPTED = `Interrupted`,
+  FAILED = `Failed`,
+  SUCCESS = `Success`,
+  CANCELLED = `Cancelled`,
 }
 
-const Develop = ({ pagesCount, appName, status }) => {
+interface IProps {
+  pagesCount: number
+  appName: string
+  status: keyof mapConstantToStatus
+}
+
+const Develop: React.FC<IProps> = ({ pagesCount, appName, status }) => {
   const [width] = useTerminalResize()
 
   return (
@@ -44,7 +51,7 @@ const Develop = ({ pagesCount, appName, status }) => {
   )
 }
 
-const ConnectedDevelop = () => {
+const ConnectedDevelop: React.FC = () => {
   const state = useContext(StoreStateContext)
 
   return (
