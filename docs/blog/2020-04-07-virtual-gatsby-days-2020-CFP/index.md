@@ -8,7 +8,7 @@ tags:
   - community
   - gatsby-cloud
 ---
-Whether we gather in person or online, Gatsby Days conferences are all about the experiences and perspectives of the community.
+Whether we gather in person or online, Gatsby Days conferences are all about the collective experiences and perspectives of the amazing Gatsby community 💜.
 
 The next Gatsby Days will take place on June 2-4, 2020, from 1:00-3:00pm EST each day. This is a virtual event and will be live-streamed on YouTube. This means all speakers will need a computer, decent internet connection, and some kind of microphone/camera setup (the camera in your computer is great!) All speakers will receive a $500.00 stipend from Gatsby following the conference.
 
