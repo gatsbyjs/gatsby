@@ -63,20 +63,23 @@
 
     <script async>
       function showError() {
-        const iframe = document.querySelector('#preview')
-        iframe.style.display = "none"
+        document.addEventListener("DOMContentLoaded", function() {
+          try {
+            const iframe = document.querySelector('#preview')
+            iframe.style.display = "none"
+          } catch(e) {}
 
-        const content = document.querySelector('.content')
-        content.style.display = "block"
+          try {
+            const content = document.querySelector('.content')
+            content.style.display = "block"
+          } catch(e) {}
+        })
       }
 
-      fetch("<?php echo $frontend_url; ?>").then(function(response) {
-        if (response.status !== 200) {
+      fetch("<?php echo $frontend_url; ?>", { mode: 'no-cors' })
+        .catch(e => {
           showError()
-        }
-      }).catch(e => {
-        showError()
-      });
+        });
     </script>
 </head>
 
