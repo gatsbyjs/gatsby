@@ -14,7 +14,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 ## Challenge 14: Spin Up a New Site with a Gatsby Theme
 
-For the final two challenges you will explore using and creating Gatsby Themes! 
+For the final two challenges you will explore using and creating Gatsby Themes!
 
 So far you’ve created a Gatsby site from scratch, and added features for usage on a single site. Gatsby Themes opens up the possibility to leverage good ideas from the Gatsby ecosystem, and share your own configurations and designs. You can think of Gatsby Themes as handy website kits that can be shared, customized, and stacked together.
 
