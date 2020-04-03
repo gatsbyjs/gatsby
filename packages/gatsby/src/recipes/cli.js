@@ -25,7 +25,7 @@ const parser = require(`./parser`)
 
 const PlanDescribe = ({ resourceName }) => {
   const { planForNextStep = [] } = usePlan()
-  log('step plan', planForNextStep)
+  log("step plan", planForNextStep)
   const plans = planForNextStep.filter(p => p.resourceName === resourceName)
 
   return (
