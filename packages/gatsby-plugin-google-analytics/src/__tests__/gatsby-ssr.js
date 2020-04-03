@@ -172,6 +172,20 @@ describe(`gatsby-plugin-google-analytics`, () => {
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
           expect(result).not.toContain(`allowAdFeatures`)
         })
+
+        it(`should defer script after the site render`, () => {
+          const { setPostBodyComponents } = setup({})
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).toContain(`defer=1;`)
+        })
+
+        it(`should run script in an async task`, () => {
+          const { setPostBodyComponents } = setup({})
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).toContain(`async=1;`)
+        })
       })
     })
   })
