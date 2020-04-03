@@ -25,12 +25,13 @@ const parser = require(`./parser`)
 
 const PlanDescribe = ({ resourceName }) => {
   const { planForNextStep = [] } = usePlan()
+  log('step plan', planForNextStep)
   const plans = planForNextStep.filter(p => p.resourceName === resourceName)
 
   return (
     <Box>
       {plans.map((stepPlan, i) => (
-        <Text key={i}>{stepPlan.describe}</Text>
+        <Text key={i}>{stepPlan.describe || resourceName}</Text>
       ))}
     </Box>
   )
@@ -48,13 +49,13 @@ const components = {
   h5: props => <Text bold underline {...props} />,
   h6: props => <Text bold underline {...props} />,
   a: ({ href, children }) => {
-    log(`Link`, { href, children })
+    //log(`Link`, { href, children })
     return <Link url={href}>{children}</Link>
   },
   strong: props => <Text bold {...props} />,
   em: props => <Text italic {...props} />,
   p: props => {
-    log(`paragraph`, { props })
+    //log(`paragraph`, { props })
     return (
       <Box
         width="100%"
@@ -66,12 +67,21 @@ const components = {
     )
   },
   li: props => {
-    log(`li`, { props })
+    //log(`li`, { props })
     return <Text>* {props.children}</Text>
   },
   Config: () => null,
   GatsbyPlugin: () => <PlanDescribe resourceName="GatsbyPlugin" />,
-  NPMPackage: () => <PlanDescribe resourceName="NPMPackage" />,
+  NPMPackageJson: () => <PlanDescribe resourceName="NPMPackageJson" />,
+  NPMPackage: ({ name }) => {
+    // const { planForNextStep = [] } = usePlan()
+
+    return (
+      <Box>
+        <Text>{name}</Text>
+    </Box>
+    )
+  },
   File: () => <PlanDescribe resourceName="File" />,
   ShadowFile: () => <PlanDescribe resourceName="ShadowFile" />,
 }
@@ -139,8 +149,7 @@ module.exports = ({ recipe, projectRoot }) => {
 
   const {
     commands: allCommands,
-    stepsAsMdx: stepsAsMDX,
-    stepsAsMdxWithoutJsx: stepsAsMDXNoJSX,
+    stepsAsMdx: stepsAsMDX
   } = parser(recipeSrc)
 
   const Div = props => (
