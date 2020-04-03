@@ -9,7 +9,8 @@ _We provide similar documentation available with the gatsby-cli [README](https:/
 
 ## How to use gatsby-cli
 
-The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally. The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
+The `gatsby-cli` is packaged as an executable that can be used globally. It should be installed globally either via [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) to use it locally by running any of the command:
+`npm install -g gatsby-cli` or `yarn global add gatsby-cli`
 
 Run `gatsby --help` for full help.
 
