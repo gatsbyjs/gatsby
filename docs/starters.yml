@@ -5838,10 +5838,9 @@
   repo: https://github.com/saimirkapaj/gatsby-redux-toolkit-typescript-starter
   description: Gatsby Starter using Redux-Toolkit, Typescript, Styled Components and Tailwind CSS.
   tags:
-    - Redux-Toolkit
+    - Redux
     - Language:TypeScript
-    - Styling:Tailwind CSS
-    - Styled Components
+    - Styling:Tailwind
   features:
     - Redux-Toolkit using Slices (Reducing Redux Boilerplate)
     - Typescript
