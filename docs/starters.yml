@@ -5834,3 +5834,23 @@
     - CSS-in-Reason support
     - StaticQuery GraphQL support in ReasonML
     - Similar to gatsby-starter-blog
+- url: https://gatsby-redux-toolkit-typescript.netlify.com/
+  repo: https://github.com/saimirkapaj/gatsby-redux-toolkit-typescript-starter
+  description: Gatsby Starter using Redux-Toolkit, Typescript, Styled Components and Talwind CSS.
+  tags:
+    - Redux-Toolkit
+    - Language:TypeScript
+    - Styling:Tailwind CSS
+    - Styled Components
+  features:
+    - Redux-Toolkit using Slices (Reducing Redux Boilerplate)
+    - Typescript
+    - Styled Components
+    - Tailwind CSS
+    - Removes unused CSS with Purgecss
+    - React Font Awesome
+    - Responsive Design
+    - Change between light and dark themes 
+    - SEO
+    - React Helmet
+    - Offline Support
