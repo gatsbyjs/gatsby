@@ -446,7 +446,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "512"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -457,7 +457,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "4096"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -468,7 +468,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "8192"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -479,7 +479,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "32768"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -490,7 +490,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "512"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -501,7 +501,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "4096"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -512,7 +512,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "8192"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -523,7 +523,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "32768"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -534,7 +534,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
           NUM_PAGES: "512"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -545,7 +545,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
           NUM_PAGES: "4096"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -556,7 +556,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
           NUM_PAGES: "8192"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -567,8 +567,52 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_table/benchmarks/markdown_table
           NUM_PAGES: "32768"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_mdx_512:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/mdx
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_mdx_4096:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/mdx
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_mdx_8192:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/mdx
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_mdx_32768:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/mdx
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
           BENCHMARK_SITE_TYPE: BLOG
 
 workflows:
@@ -588,6 +632,10 @@ workflows:
       - benchmark_markdown_table_4096
       - benchmark_markdown_table_8192
       - benchmark_markdown_table_32768
+      - benchmark_mdx_512
+      - benchmark_mdx_4096
+      - benchmark_mdx_8192
+      - benchmark_mdx_32768
     triggers:
       - schedule:
           cron: 22 16 * * *
