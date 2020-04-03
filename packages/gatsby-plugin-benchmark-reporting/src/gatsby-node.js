@@ -176,7 +176,7 @@ class BenchMeta {
         webpack: webpackVersion,
       },
       counts: {
-        pages: process.env.NUM_PAGES,
+        pages: parseInt(process.env.NUM_PAGES),
         jpgs: jpgCount,
         pngs: pngCount,
         gifs: gifCount,
