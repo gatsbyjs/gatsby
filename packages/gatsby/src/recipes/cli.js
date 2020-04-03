@@ -43,11 +43,11 @@ const components = {
     <Text {...props} />
   ),
   h1: props => <Text bold underline {...props} />,
-  h2: props => <Text bold underline {...props} />,
-  h3: props => <Text bold underline {...props} />,
-  h4: props => <Text bold underline {...props} />,
-  h5: props => <Text bold underline {...props} />,
-  h6: props => <Text bold underline {...props} />,
+  h2: props => <Text bold {...props} />,
+  h3: props => <Text bold italic {...props} />,
+  h4: props => <Text bold {...props} />,
+  h5: props => <Text bold {...props} />,
+  h6: props => <Text bold {...props} />,
   a: ({ href, children }) => {
     //log(`Link`, { href, children })
     return <Link url={href}>{children}</Link>
@@ -79,7 +79,7 @@ const components = {
     return (
       <Box>
         <Text>{name}</Text>
-    </Box>
+      </Box>
     )
   },
   File: () => <PlanDescribe resourceName="File" />,
@@ -147,10 +147,7 @@ module.exports = ({ recipe, projectRoot }) => {
     ],
   })
 
-  const {
-    commands: allCommands,
-    stepsAsMdx: stepsAsMDX
-  } = parser(recipeSrc)
+  const { commands: allCommands, stepsAsMdx: stepsAsMDX } = parser(recipeSrc)
 
   const Div = props => (
     <Box width={80} textWrap="wrap" flexDirection="column" {...props} />
