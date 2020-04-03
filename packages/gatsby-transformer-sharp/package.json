@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.8.7",
     "bluebird": "^3.7.2",
     "fs-extra": "^8.1.0",
-    "potrace": "^2.1.2",
+    "potrace": "^2.1.5",
     "probe-image-size": "^4.1.1",
     "semver": "^5.7.1",
     "sharp": "^0.25.1"
