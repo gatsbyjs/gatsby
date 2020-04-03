@@ -20,8 +20,6 @@ const restrictedNodeFields = [
 
 describe(`Process contentful data (by name)`, () => {
   let entryList
-  let resolvable
-  let foreignReferenceMap
 
   it(`builds entry list`, () => {
     entryList = normalize.buildEntryList({
@@ -31,33 +29,11 @@ describe(`Process contentful data (by name)`, () => {
     expect(entryList).toMatchSnapshot()
   })
 
-  it(`builds list of resolvable data`, () => {
-    resolvable = normalize.buildResolvableSet({
-      assets: currentSyncData.assets,
-      entryList,
-      defaultLocale,
-      locales,
-    })
-    expect(resolvable).toMatchSnapshot()
-  })
-
-  it(`builds foreignReferenceMap`, () => {
-    foreignReferenceMap = normalize.buildForeignReferenceMap({
-      contentTypeItems,
-      entryList,
-      resolvable,
-      defaultLocale,
-      locales,
-      space,
-      useNameForId: true,
-    })
-    expect(foreignReferenceMap).toMatchSnapshot()
-  })
-
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const foreignReferenceMap = new Map()
     contentTypeItems.forEach((contentTypeItem, i) => {
       entryList[i].forEach(normalize.fixIds)
       normalize.createNodesForContentType({
@@ -67,7 +43,6 @@ describe(`Process contentful data (by name)`, () => {
         entries: entryList[i],
         createNode,
         createNodeId,
-        resolvable,
         foreignReferenceMap,
         defaultLocale,
         locales,
@@ -99,8 +74,6 @@ describe(`Process contentful data (by name)`, () => {
 
 describe(`Process contentful data (by id)`, () => {
   let entryList
-  let resolvable
-  let foreignReferenceMap
 
   it(`builds entry list`, () => {
     entryList = normalize.buildEntryList({
@@ -110,33 +83,11 @@ describe(`Process contentful data (by id)`, () => {
     expect(entryList).toMatchSnapshot()
   })
 
-  it(`builds list of resolvable data`, () => {
-    resolvable = normalize.buildResolvableSet({
-      assets: currentSyncData.assets,
-      entryList,
-      defaultLocale,
-      locales,
-    })
-    expect(resolvable).toMatchSnapshot()
-  })
-
-  it(`builds foreignReferenceMap`, () => {
-    foreignReferenceMap = normalize.buildForeignReferenceMap({
-      contentTypeItems,
-      entryList,
-      resolvable,
-      defaultLocale,
-      locales,
-      space,
-      useNameForId: false,
-    })
-    expect(foreignReferenceMap).toMatchSnapshot()
-  })
-
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const foreignReferenceMap = new Map()
     contentTypeItems.forEach((contentTypeItem, i) => {
       entryList[i].forEach(normalize.fixIds)
       normalize.createNodesForContentType({
@@ -146,7 +97,6 @@ describe(`Process contentful data (by id)`, () => {
         entries: entryList[i],
         createNode,
         createNodeId,
-        resolvable,
         foreignReferenceMap,
         defaultLocale,
         locales,
