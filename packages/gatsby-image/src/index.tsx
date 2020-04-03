@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react"
+import React, { CSSProperties, ReactEventHandler } from "react"
 
 type Loading = "lazy" | "eager"
 type CrossOrigin = "anonymous" | "use-credentials" | ""
@@ -56,7 +56,6 @@ interface INoscriptImgProps {
 type ImageVariants = IFixedObject | IFluidObject
 
 // If you modify these propTypes, please don't forget to update following files as well:
-// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/index.d.ts
 // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/README.md#gatsby-image-props
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md#gatsby-image-props
 export interface IGatsbyImageProps {
@@ -77,7 +76,7 @@ export interface IGatsbyImageProps {
   placeholderClassName?: string
   backgroundColor?: string | boolean
   onLoad?: () => void
-  onError?: (event: any) => void
+  onError?: ReactEventHandler<HTMLImageElement>
   onStartLoad?: (param: { wasCached: boolean }) => void
   Tag?: string | React.ReactType
   itemProp?: string
