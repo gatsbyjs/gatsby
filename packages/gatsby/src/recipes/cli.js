@@ -51,9 +51,19 @@ const components = {
     log(`Link`, { href, children })
     return <Link url={href}>{children}</Link>
   },
+  strong: props => <Text bold {...props} />,
+  em: props => <Text italic {...props} />,
   p: props => {
     log(`paragraph`, { props })
-    return <Box width="100%" flexDirection="row" textWrap="wrap" {...props} />
+    return (
+      <Box
+        width="100%"
+        marginBottom={1}
+        flexDirection="row"
+        textWrap="wrap"
+        {...props}
+      />
+    )
   },
   li: props => {
     log(`li`, { props })
@@ -208,7 +218,7 @@ module.exports = ({ recipe, projectRoot }) => {
     return (
       <PlanContext.Provider value={{ planForNextStep }}>
         <MDX components={components}>{stepsAsMDX[currentStep]}</MDX>
-        <Div />
+        <Text>{` `}</Text>
         <Text>Press enter to apply!</Text>
         {operation.map((command, i) => (
           <Div key={i}>
@@ -438,6 +448,7 @@ module.exports = ({ recipe, projectRoot }) => {
 
   const Wrapper = () => (
     <Provider value={client}>
+      <Text>{` `}</Text>
       <RecipeInterpreter commands={allCommands} />
     </Provider>
   )
