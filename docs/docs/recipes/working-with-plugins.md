@@ -97,7 +97,7 @@ my-plugin
 ```javascript:title=gatsby-site/gatsby-config.js
 module.exports = {
   plugins: [
-    require.resolve(`../my-plugin), // highlight-line
+    require.resolve(`../my-plugin`), // highlight-line
   ],
 }
 ```
