@@ -1,5 +1,6 @@
 const execa = require(`execa`)
 const _ = require(`lodash`)
+const humanizeList = require('humanize-list')
 
 const getPackageNames = packages => packages.map(n => n.name)
 const asyncForEach = async (array, callback) => {
@@ -9,6 +10,7 @@ const asyncForEach = async (array, callback) => {
 }
 
 const create = async ({ root }, packages) => {
+  return
   const types = _.groupBy(packages, c => c.dependencyType)
 
   // Run install for each dependency type
@@ -62,4 +64,14 @@ module.exports.read = read
 module.exports.destroy = destroy
 module.exports.config = {
   batch: true,
+}
+
+module.exports.plan = (_, packages) => {
+  const packageNames = getPackageNames(packages)
+
+  return {
+    currentState: [],
+    newState: [packageNames],
+    describe: `Install ${humanizeList(packageNames)}`
+  }
 }

@@ -8,24 +8,23 @@ This recipe helps you start developing with the [Theme UI](https://theme-ui.com)
 
 Install packages.
 
-<NPMPackage name="gatsby-plugin-theme-ui" />
 <NPMPackage name="theme-ui" />
+<NPMPackage name="gatsby-plugin-theme-ui" />
 
 ---
 
-Add the plugin `gatsby-plugin-theme-ui` to your `gatsby-config.js` and
-shadowing the Theme UI config file into your source.
+Add the plugin `gatsby-plugin-theme-ui` to your `gatsby-config.js`.
 
 <GatsbyPlugin name="gatsby-plugin-theme-ui" />
 
 ---
 
+Write out Theme UI configuration files.
+
 <ShadowFile
   theme="gatsby-plugin-theme-ui"
   path="src/gatsby-plugin-theme-ui/index.js"
 />
-
----
 
 <File
   content="export default {}"
@@ -35,3 +34,6 @@ shadowing the Theme UI config file into your source.
 ---
 
 You're ready to get started!
+
+- Read the docs: https://theme-ui.com
+- Learn about the theme specification: https://system-ui.com
