@@ -61,6 +61,13 @@ export const fetchAndCreateSingleNode = async ({
 
   // if we ask for a node that doesn't exist
   if (!data || (data && data[singleName] === null)) {
+    reporter.log(``)
+    reporter.warn(
+      formatLogMessage(
+        `${queryId} ${singleName} was updated, but no data was returned for this node.`
+      )
+    )
+    reporter.log(``)
     return { node: null }
   }
 
@@ -85,7 +92,7 @@ export const fetchAndCreateSingleNode = async ({
   }
 
   // returns an object
-  const createdNode = await createSingleNode({
+  const { additionalNodeIds, node } = await createSingleNode({
     singleName,
     id,
     actionType,
@@ -93,7 +100,17 @@ export const fetchAndCreateSingleNode = async ({
     cachedNodeIds,
   })
 
-  return createdNode || null
+  if (previewId) {
+    reporter.log(``)
+    reporter.info(
+      formatLogMessage(
+        `Preview for ${singleName} ${previewId} was updated at ${node.uri}.`
+      )
+    )
+    reporter.log(``)
+  }
+
+  return { node, additionalNodeIds } || null
 }
 
 export const createSingleNode = async ({
