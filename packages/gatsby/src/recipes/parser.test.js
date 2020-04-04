@@ -3,8 +3,8 @@ const path = require(`path`)
 
 const parser = require(`./parser`)
 
-const fixturePath = path.join(__dirname, "prettier-git-hook.mdx")
-const fixtureSrc = fs.readFileSync(fixturePath, "utf8")
+const fixturePath = path.join(__dirname, `prettier-git-hook.mdx`)
+const fixtureSrc = fs.readFileSync(fixturePath, `utf8`)
 
 test(`returns a set of commands`, () => {
   const result = parser(fixtureSrc)

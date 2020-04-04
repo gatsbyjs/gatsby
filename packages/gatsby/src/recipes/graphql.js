@@ -14,10 +14,10 @@ const { createServer } = require(`http`)
 const fs = require(`fs`)
 const path = require(`path`)
 const { promisify } = require(`util`)
-const Queue = require(`better-queue`)
 const { interpret } = require(`xstate`)
 
 const recipeMachine = require(`./recipe-machine`)
+const gatsbyPluginResource = require('./providers/gatsby/plugin')
 
 const SITE_ROOT = process.cwd()
 
@@ -25,13 +25,6 @@ const read = promisify(fs.readFile)
 
 const pubsub = new PubSub()
 const PORT = 4000
-
-let queue = new Queue(async (action, cb) => {
-  await applyStep(action)
-  cb()
-})
-
-queue.pause()
 
 const readPackage = async () => {
   const contents = await read(path.join(SITE_ROOT, `package.json`), `utf8`)
@@ -164,7 +157,7 @@ const rootQueryType = new GraphQLObjectType({
       allGatsbyConfigPlugin: {
         type: new GraphQLList(GatsbyConfigPluginType),
         resolve: async () => {
-          const plugins = gatsbyPluginResource.read({ root })
+          const plugins = gatsbyPluginResource.read({ root: SITE_ROOT })
           return plugins.map(async name => {
             return { name }
           })
@@ -185,7 +178,7 @@ const rootMutationType = new GraphQLObjectType({
         },
         resolve: (_data, args) => {
           const commands = JSON.parse(args.commands)
-          console.log('received operation', commands)
+          console.log(`received operation`, commands)
           applyPlan(commands)
         },
       },
@@ -195,7 +188,7 @@ const rootMutationType = new GraphQLObjectType({
           event: { type: GraphQLString },
         },
         resolve: (_, args) => {
-          console.log('event received', args)
+          console.log(`event received`, args)
           service.send(args.event)
         },
       },

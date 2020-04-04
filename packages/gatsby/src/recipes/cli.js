@@ -144,7 +144,7 @@ module.exports = ({ recipe, projectRoot }) => {
     if (process.env.DEBUG) {
       console.log(e)
     }
-    console.log('Unable to parse ', recipe)
+    console.log(`Unable to parse `, recipe)
     process.exit()
   }
 
