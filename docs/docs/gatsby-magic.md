@@ -46,16 +46,13 @@ Here is where you can find more information on [Routing in Gatsby](/docs/routing
 
 ## Redux
 
-Redux is a state management library often used together with React apps. Gatsby is also a React application and uses Redux behind-the-scenes to manage the state of your site. You don’t have to do anything with Redux directly in Gatsby for it to work.
+Redux is a state container and is used inside Gatsby to keep its internal state in one place. Redux provides a predictable flow on how and when state updates are done. Gatsby can easily hook into these state transitions to update multiple actions to keep everything consistent.
 
-Redux helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test; that’s why Gatsby uses it as a core technology under the hood. On top of that, Redux provides a great developer experience, such as [live code editing combined with a time-traveling debugger](https://github.com/reduxjs/redux-devtools). Redux is bundled with Gatsby by default to provide automatic state management, and it’s also available as a standalone package on npm.
+When you implement a Gatsby [Node API](/docs/node-apis/), you are passed a collection of [actions](/docs/actions/). When using the supplied actions, you are manipulating state that is created, and relied upon, by Gatsby itself such as created pages and webpack config.
 
-In order to use Redux for custom state management in a Gatsby site, you'll need to hook into two of Gatsby's extension points:
+Once the build is complete, the work of Redux is done and it is not part of the bundle delivered to the browser unless required independently by the application itself.
 
-- Wrap the root element in your Gatsby markup once using `wrapRootElement`, an API supporting both Gatsby’s server rendering and browser JavaScript processes.
-- Create a custom Redux store with reducers and initial state, providing your own state management functionality outside of Gatsby.
-
-Check out the Using Redux example with [./gatsby-ssr.js](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-ssr.js) and [./gatsby-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-browser.js) files to see how this is implemented. You can also check out more information on the official [Redux](https://redux.js.org/introduction/getting-started) docs.
+If using a data store such as Redux in your Gatsby application, check out [Adding a Redux Store](/docs/adding-redux-store).
 
 ## GraphQL queries
 
@@ -63,7 +60,7 @@ GraphQL is a query language (the QL part of its name) that Gatsby uses to genera
 
 Using a special syntax, you describe the data you want in your component and then that data is given to you, such as site metadata from your `gatsby-config.js`, connected WordPress posts, Markdown files, images, and more. Gatsby uses GraphQL to enable components to declare the data they need and apply it to render on a page. Using GraphQL in Gatsby provides many [benefits](/docs/why-gatsby-uses-graphql/), such as the ability to return data from multiple sources in one query, and transform that data at the same time (such as using Gatsby Image).
 
-Here is how you get started using GraphQL in Gatsby: [https://www.gatsbyjs.org/tutorial/part-four/](/tutorial/part-four/)
+Here is how you get started using GraphQL in Gatsby: [/tutorial/part-four/](/tutorial/part-four/)
 
 ## webpack
 
@@ -71,7 +68,7 @@ webpack is an open-source JavaScript module bundler that Gatsby uses under the h
 
 When Gatsby creates its default webpack config, a function is called allowing you to modify the config using a package called webpack-merge. Gatsby does multiple webpack builds with a somewhat different configuration; each build type is referred to as a “stage”.
 
-You can learn more about [webpack](https://www.gatsbyjs.org/docs/webpack-and-ssr/) including how to [add a custom webpack Config](https://www.gatsbyjs.org/docs/add-custom-webpack-config/) in Gatsby by visiting the docs.
+You can learn more about [webpack](/docs/webpack-and-ssr/) including how to [add a custom webpack Config](/docs/add-custom-webpack-config/) in Gatsby by visiting the docs.
 
 ## Gatsby Cloud
 

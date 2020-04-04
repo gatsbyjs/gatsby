@@ -130,6 +130,8 @@
   toPath: /docs/data-fetching/
 - fromPath: /docs/centralizing-your-sites-navigation/
   toPath: /docs/creating-dynamic-navigation/
+- fromPath: /newsletter/
+  toPath: /contributing/community/
   # This redirects from a now removed stub that showed up in the first page of Google results.
   # Can be removed if SEO is no longer impacted.
 - fromPath: /docs/rendering-sidebar-navigation-dynamically/

@@ -71,7 +71,7 @@ Categories currently include both _type of site_ (structure) and the _content of
 - Blog
 - Directory
 - Documentation
-- eCommerce
+- E-commerce
 - Education
 - Portfolio
 - Gallery

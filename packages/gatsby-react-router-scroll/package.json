@@ -1,7 +1,7 @@
 {
   "name": "gatsby-react-router-scroll",
   "description": "React Router scroll management forked from https://github.com/ytase/react-router-scroll for Gatsby",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "author": "Jimmy Jia",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -15,7 +15,7 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
     "babel-plugin-dev-expression": "^0.2.2",
-    "babel-preset-gatsby-package": "^0.3.0",
+    "babel-preset-gatsby-package": "^0.3.1",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll#readme",

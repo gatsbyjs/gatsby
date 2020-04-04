@@ -7,7 +7,7 @@ const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
-const GraphQLRunner = require(`./graphql-runner`)
+const GraphQLRunner = require(`./graphql-runner`).default
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
@@ -158,8 +158,8 @@ const groupQueryIds = queryIds => {
   }
 }
 
-const processQueries = async (queryJobs, activity) => {
-  const queue = queryQueue.createBuildQueue()
+const processQueries = async (queryJobs, { activity, graphqlRunner }) => {
+  const queue = queryQueue.createBuildQueue(graphqlRunner)
   await queryQueue.processBatch(queue, queryJobs, activity)
 }
 
@@ -198,15 +198,24 @@ const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
   }
 }
 
-const processStaticQueries = async (queryIds, { state, activity }) => {
+const processStaticQueries = async (
+  queryIds,
+  { state, activity, graphqlRunner }
+) => {
   state = state || store.getState()
   await processQueries(
     queryIds.map(id => createStaticQueryJob(state, id)),
-    activity
+    {
+      activity,
+      graphqlRunner,
+    }
   )
 }
 
-const processPageQueries = async (queryIds, { state, activity }) => {
+const processPageQueries = async (
+  queryIds,
+  { state, activity, graphqlRunner }
+) => {
   state = state || store.getState()
   // Make sure we filter out pages that don't exist. An example is
   // /dev-404-page/, whose SitePage node is created via
@@ -215,11 +224,14 @@ const processPageQueries = async (queryIds, { state, activity }) => {
   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
   await processQueries(
     pages.map(page => createPageQueryJob(state, page)),
-    activity
+    {
+      activity,
+      graphqlRunner,
+    }
   )
 }
 
-const getInitialQueryProcessors = ({ parentSpan } = {}) => {
+const getInitialQueryProcessors = ({ parentSpan, graphqlRunner } = {}) => {
   const state = store.getState()
   const queryIds = calcInitialDirtyQueryIds(state)
   const { staticQueryIds, pageQueryIds } = groupQueryIds(queryIds)
@@ -235,7 +247,7 @@ const getInitialQueryProcessors = ({ parentSpan } = {}) => {
       activity = createQueryRunningActivity(queryjobsCount, parentSpan)
     }
 
-    await fn(queryIds, { state, activity })
+    await fn(queryIds, { state, activity, graphqlRunner })
 
     processedQueuesCount++
     // if both page and static queries are done, finish activity
