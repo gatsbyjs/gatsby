@@ -41,6 +41,14 @@ const destroy = async ({ root }, { name }) => {
   await writePackageJson(root, pkg)
 }
 
+module.exports.plan = async context => {
+  return {
+    currentState: ``,
+    newState: ``,
+    describe: `do stuff`,
+  }
+}
+
 module.exports.create = create
 module.exports.update = create
 module.exports.read = read

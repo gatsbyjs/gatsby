@@ -15,18 +15,22 @@
 - [ ] Theme UI preset selection (runs dependent install and file write)
 - [ ] Move to more random port
 
-## Friday (alpha)
+## alpha
 
 - [x] Handle `dev` in NPMPackage
 - [ ] Make `dependencyType` in NPMPackage an enum
 - [ ] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
-- [ ] Step by step design
+- [x] Step by step design
 - [ ] Select input supported recipes
 - [ ] Make port selection dynamic
 - [x] Use `fs-extra`
 - [x] Handle object style plugins
 - [x] Improve gatsby-config test
 - [ ] use yarn/npm based on the user config
+- [x] convert to xstate
+- [ ] reasonably test resources
+- [ ] add Joi for validating resource objects
+- [ ] handle error states
 
 ## Near-ish future
 
