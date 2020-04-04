@@ -10234,3 +10234,13 @@
     - Food
     - Marketing
   built_by: Tyson Foods, Inc.
+- title: TSUKUTTEMITA LAB
+  main_url: https://create.kayac.com/
+  url: https://create.kayac.com/
+  description: KAYAC private works
+  featured: false
+  categories:
+    - Portfolio
+    - Technology
+    - Entertainment
+  built_by: KAYAC inc.
