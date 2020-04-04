@@ -1,6 +1,8 @@
 import fetchGraphql from "gatsby-source-wordpress-experimental/utils/fetch-graphql"
 import { introspectionQuery } from "gatsby-source-wordpress-experimental/utils/graphql-queries"
 
+import compress from "graphql-query-compress"
+
 import { runGatsby } from "../test-utils/run-gatsby"
 import gql from "gatsby-source-wordpress-experimental/utils/gql"
 import { incrementalIt } from "../test-utils/incremental-it"
@@ -67,6 +69,63 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
       expect(
         !!result.data.__schema.types.find(type => type.name === `Wp${typeName}`)
       ).toBe(false)
+    })
+  })
+
+  test(`Type.excludeFieldNames removes fields from the schema on types by field names`, async () => {
+    const excludeFieldsOnTypesGroups = [
+      {
+        typeName: `Page`,
+        fieldNames: [`enclosure`],
+      },
+      {
+        typeName: `User`,
+        fieldNames: [
+          `extraCapabilities`,
+          `capKey`,
+          `description`,
+          `email`,
+          `registeredDate`,
+        ],
+      },
+    ]
+
+    const query = `
+        {
+          ${excludeFieldsOnTypesGroups
+            .map(
+              group => `
+                ${group.typeName}: __type(name: "Wp${group.typeName}") {
+                  fields {
+                    name
+                  }
+                }
+              `
+            )
+            .join(` `)}
+        }
+      `
+
+    const result = await fetchGraphql({
+      url: `http://localhost:8000/___graphql`,
+      query,
+    })
+
+    // for all our test type names
+    excludeFieldsOnTypesGroups.forEach(excludeGroup => {
+      // get that type from the Gatsby schema
+      const typeInSchema = result.data[excludeGroup.typeName]
+
+      // for each excluded field on our type
+      excludeGroup.fieldNames.forEach(fieldName => {
+        // expect that the type in our Gatsby schema doesn't have a field
+        // with this excluded name
+        const fieldNameExistsOnType = !!typeInSchema.fields
+          .map(field => field.name)
+          .includes(fieldName)
+
+        expect(fieldNameExistsOnType).toBe(false)
+      })
     })
   })
 
@@ -313,8 +372,6 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
                 avatar {
                   url
                 }
-                capKey
-                capabilities
                 comments {
                   nodes {
                     content

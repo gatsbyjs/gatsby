@@ -36,10 +36,29 @@ const getAliasedFieldName = ({ fieldAliases, field }) =>
     ? fieldAliases[field.name]
     : field.name
 
-const excludeField = ({ field, fieldName, thisTypeSettings, fieldBlacklist }) =>
+const excludeField = ({
+  field,
+  fieldName,
+  thisTypeSettings,
+  fieldBlacklist,
+  parentTypeSettings,
+  parentInterfacesImplementingTypeSettings,
+}) =>
   // this field wasn't previously fetched, so we shouldn't
   // add it to our schema
   !fieldOfTypeWasFetched(field.type) ||
+  // this field was excluded on it's parent fields Type
+  (parentTypeSettings.excludeFieldNames &&
+    parentTypeSettings.excludeFieldNames.includes(fieldName)) ||
+  // this field is on an interface type and one of the implementing types has this field excluded on it.
+  (parentInterfacesImplementingTypeSettings &&
+    parentInterfacesImplementingTypeSettings.find(
+      typeSetting =>
+        typeSetting.excludeFieldNames &&
+        typeSetting.excludeFieldNames.find(
+          excludedFieldName => fieldName === excludedFieldName
+        )
+    )) ||
   // the type of this field was excluded via plugin options
   thisTypeSettings.exclude ||
   // node interface types are created elsewhere
@@ -60,17 +79,38 @@ const excludeField = ({ field, fieldName, thisTypeSettings, fieldBlacklist }) =>
  * with proper node linking and type namespacing
  * also filters out unusable fields and types
  */
-export const transformFields = ({ fields, fieldAliases, fieldBlacklist }) => {
+export const transformFields = ({
+  fields,
+  fieldAliases,
+  fieldBlacklist,
+  parentType,
+  parentInterfacesImplementingTypes,
+}) => {
   if (!fields || !fields.length) {
     return null
   }
+
+  const parentTypeSettings = getTypeSettingsByType(parentType)
+
+  const parentInterfacesImplementingTypeSettings = parentInterfacesImplementingTypes
+    ? parentInterfacesImplementingTypes.map(type => getTypeSettingsByType(type))
+    : null
 
   return fields.reduce((fieldsObject, field) => {
     const thisTypeSettings = getTypeSettingsByType(field.type)
 
     const fieldName = getAliasedFieldName({ fieldAliases, field })
 
-    if (excludeField({ field, fieldName, thisTypeSettings, fieldBlacklist })) {
+    if (
+      excludeField({
+        field,
+        fieldName,
+        thisTypeSettings,
+        fieldBlacklist,
+        parentTypeSettings,
+        parentInterfacesImplementingTypeSettings,
+      })
+    ) {
       return fieldsObject
     }
 

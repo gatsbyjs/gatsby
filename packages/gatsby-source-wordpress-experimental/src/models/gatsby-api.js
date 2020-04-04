@@ -26,6 +26,7 @@ const defaultPluginOptions = {
     typePrefix: `Wp`,
     timeout: 30 * 1000, // 30 seconds
   },
+  excludeFields: [`editLock`, `revisionOf`],
   type: {
     ActionMonitorAction: {
       exclude: true,
@@ -47,6 +48,18 @@ const defaultPluginOptions = {
     },
     UserToUserRoleConnection: {
       exclude: true,
+    },
+    Page: {
+      excludeFieldNames: [`enclosure`],
+    },
+    User: {
+      excludeFieldNames: [
+        `extraCapabilities`,
+        `capKey`,
+        `description`,
+        `email`,
+        `registeredDate`,
+      ],
     },
     MediaItem: {
       lazyNodes: false,

@@ -1,5 +1,6 @@
 import store from "~/store"
 import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
+import { fieldIsExcludedOnParentType } from "~/steps/ingest-remote-schema/is-excluded"
 
 const transformFragments = ({
   possibleTypes,
@@ -35,6 +36,7 @@ const transformFragments = ({
           if (typeInfo) {
             const fields = recursivelyTransformFields({
               fields: typeInfo.fields,
+              parentType: type,
               depth,
             })
 
@@ -127,6 +129,7 @@ function transformField({
 
     const transformedFields = recursivelyTransformFields({
       fields: listOfType.fields,
+      parentType: fieldType,
       depth,
     })
 
@@ -185,6 +188,7 @@ function transformField({
 
   if (fields) {
     const transformedFields = recursivelyTransformFields({
+      parentType: fieldType,
       fields,
       depth,
     })
@@ -204,6 +208,7 @@ function transformField({
 
     const transformedFields = recursivelyTransformFields({
       fields: typeInfo.fields,
+      parentType: fieldType,
       depth,
     })
 
@@ -225,15 +230,15 @@ function transformField({
   return false
 }
 
-const recursivelyTransformFields = ({ fields, depth = 0 }) => {
+const recursivelyTransformFields = ({ fields, parentType, depth = 0 }) => {
   const {
-    gatsbyApi: {
-      pluginOptions: {
-        schema: { queryDepth },
-      },
-    },
+    gatsbyApi: { pluginOptions },
     remoteSchema: { fieldBlacklist, fieldAliases, typeMap, gatsbyNodesInfo },
   } = store.getState()
+
+  const {
+    schema: { queryDepth },
+  } = pluginOptions
 
   if (depth >= queryDepth) {
     return null
@@ -241,6 +246,10 @@ const recursivelyTransformFields = ({ fields, depth = 0 }) => {
 
   return fields
     ? fields
+        .filter(
+          field =>
+            !fieldIsExcludedOnParentType({ pluginOptions, field, parentType })
+        )
         .map(field => {
           const transformedField = transformField({
             maxDepth: queryDepth,

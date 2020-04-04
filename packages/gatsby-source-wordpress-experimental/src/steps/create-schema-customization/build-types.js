@@ -1,6 +1,6 @@
 import store from "~/store"
 import { transformFields } from "./transform-fields"
-import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-type-excluded"
+import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import {
   buildTypeName,
   fieldOfTypeWasFetched,
@@ -43,9 +43,21 @@ const interfaceType = ({
   fieldBlacklist,
 }) => {
   const state = store.getState()
-  const { nodeInterfaceTypes } = state.remoteSchema.ingestibles
+  const { ingestibles, typeMap } = state.remoteSchema
+  const { nodeInterfaceTypes } = ingestibles
+
+  const allTypes = typeMap.values()
+
+  const implementingTypes = Array.from(allTypes)
+    .filter(
+      ({ interfaces }) =>
+        interfaces &&
+        interfaces.find(singleInterface => singleInterface.name === type.name)
+    )
+    .map(type => typeMap.get(type.name))
 
   const transformedFields = transformFields({
+    parentInterfacesImplementingTypes: implementingTypes,
     fields: type.fields,
     gatsbyNodeTypes,
     fieldAliases,
@@ -89,6 +101,7 @@ const objectType = typeBuilderApi => {
     name: buildTypeName(type.name),
     fields: transformFields({
       fields: type.fields,
+      parentType: type,
       gatsbyNodeTypes,
       fieldAliases,
       fieldBlacklist,

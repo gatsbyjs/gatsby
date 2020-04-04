@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the local Gatsby schema 1`] = `"699f3a65957b7c8479255dc7580d4ad0"`;
+exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the local Gatsby schema 1`] = `"51a4e7671c6111b45e02271f70036479"`;
 
 exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the remote WPGraphQL schema 1`] = `"3366518915098a00f14ec80987afa8a0"`;
 
@@ -686,8 +686,6 @@ Object {
             "avatar": Object {
               "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
             },
-            "capKey": null,
-            "capabilities": null,
             "comments": Object {
               "nodes": Array [],
             },
@@ -717,8 +715,6 @@ Object {
             "avatar": Object {
               "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
             },
-            "capKey": null,
-            "capabilities": null,
             "comments": Object {
               "nodes": Array [],
             },

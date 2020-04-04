@@ -4,7 +4,7 @@ import { fieldOfTypeWasFetched } from "./helpers"
 
 import buildType from "./build-types"
 import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
-import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-type-excluded"
+import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 
 /**
  * createSchemaCustomization

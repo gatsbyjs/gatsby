@@ -48,6 +48,7 @@ const buildNonNodeQueries = async () => {
       // recursively transform fields
       const transformedFields = recursivelyTransformFields({
         fields: type.fields,
+        parentType: field.type,
       })
 
       if (transformedFields) {

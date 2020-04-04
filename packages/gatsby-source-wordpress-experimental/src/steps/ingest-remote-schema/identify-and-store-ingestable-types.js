@@ -1,5 +1,5 @@
 import store from "~/store"
-import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-type-excluded"
+import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 
 const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const nodeListFilter = field => field.name === `nodes`

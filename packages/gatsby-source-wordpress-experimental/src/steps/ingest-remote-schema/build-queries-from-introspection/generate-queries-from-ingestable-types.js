@@ -74,7 +74,10 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
     const singleFieldName = singleTypeInfo.name
 
-    const transformedFields = recursivelyTransformFields({ fields })
+    const transformedFields = recursivelyTransformFields({
+      fields,
+      parentType: type,
+    })
 
     const selectionSet = buildSelectionSet(transformedFields)
 
