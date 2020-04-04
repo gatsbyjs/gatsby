@@ -10,6 +10,47 @@ const http = rateLimit(axios.create(), {
   maxRPS: process.env.GATSBY_CONCURRENT_DOWNLOAD || 50,
 })
 
+const handleErrors = async ({
+  variables,
+  pluginOptions,
+  reporter,
+  responseJSON,
+  query,
+  panicOnError,
+}) => {
+  if (
+    variables &&
+    Object.keys(variables).length &&
+    pluginOptions.debug.graphql.showQueryVarsOnError
+  ) {
+    reporter.error(
+      formatLogMessage(`GraphQL vars: ${JSON.stringify(variables)}`)
+    )
+  }
+
+  if (pluginOptions.debug.graphql.showQueryOnError) {
+    reporter.error(formatLogMessage(`GraphQL query: ${gqlPrettier(query)}`))
+  }
+
+  if (pluginOptions.debug.graphql.copyQueryOnError) {
+    await clipboardy.write(gqlPrettier(query))
+  }
+
+  if (!responseJSON) {
+    return
+  }
+
+  if (
+    !responseJSON.data ||
+    panicOnError ||
+    pluginOptions.debug.graphql.panicOnError
+  ) {
+    reporter.panic(
+      formatLogMessage(`Encountered errors. See above for details.`)
+    )
+  }
+}
+
 const handleGraphQLErrors = async ({
   query,
   variables,
@@ -73,29 +114,14 @@ const handleGraphQLErrors = async ({
     }
   }
 
-  if (
-    variables &&
-    Object.keys(variables).length &&
-    pluginOptions.debug.graphql.showQueryVarsOnError
-  ) {
-    reporter.error(
-      formatLogMessage(`GraphQL vars: ${JSON.stringify(variables)}`)
-    )
-  }
-
-  if (pluginOptions.debug.graphql.showQueryOnError) {
-    reporter.error(formatLogMessage(`GraphQL query: ${gqlPrettier(query)}`))
-  }
-
-  if (pluginOptions.debug.graphql.copyQueryOnError) {
-    await clipboardy.write(gqlPrettier(query))
-  }
-
-  if (!json.data || panicOnError || pluginOptions.debug.graphql.panicOnError) {
-    reporter.panic(
-      formatLogMessage(`Encountered errors. See above for details.`)
-    )
-  }
+  await handleErrors({
+    responseJSON: json,
+    variables,
+    pluginOptions,
+    reporter,
+    query,
+    panicOnError,
+  })
 }
 
 // @todo add a link to docs page for debugging
@@ -104,7 +130,23 @@ const genericError = ({ url }) =>
     `Please ensure the following statements are true`
   )} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress backend`
 
-const handleFetchErrors = ({ e, reporter, url, timeout }) => {
+const handleFetchErrors = async ({
+  e,
+  reporter,
+  url,
+  timeout,
+  variables,
+  pluginOptions,
+  query,
+}) => {
+  await handleErrors({
+    panicOnError: false,
+    reporter,
+    variables,
+    pluginOptions,
+    query,
+  })
+
   if (e.message.includes(`timeout of ${timeout}ms exceeded`)) {
     reporter.error(e)
     reporter.panic(
@@ -124,7 +166,11 @@ const handleFetchErrors = ({ e, reporter, url, timeout }) => {
       })
     )
   } else {
-    reporter.panic(formatLogMessage(e.toString(), { useVerboseStyle: true }))
+    reporter.panic(
+      formatLogMessage(`${e.toString()} \n\n${genericError({ url })}`, {
+        useVerboseStyle: true,
+      })
+    )
   }
 }
 
@@ -170,7 +216,15 @@ const fetchGraphql = async ({
       )
     }
   } catch (e) {
-    handleFetchErrors({ e, reporter, url, timeout })
+    await handleFetchErrors({
+      e,
+      reporter,
+      url,
+      timeout,
+      variables,
+      pluginOptions,
+      query,
+    })
   }
 
   if (!ignoreGraphQLErrors) {
