@@ -67,6 +67,8 @@ const getPluginsFromConfig = src => {
 }
 
 const create = async ({ root }, { name }) => {
+  // TODO make this more robust.
+  return
   const configPath = path.join(root, `gatsby-config.js`)
   const configSrc = await fs.readFile(configPath, `utf8`)
 

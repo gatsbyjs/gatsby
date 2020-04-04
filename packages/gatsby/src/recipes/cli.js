@@ -25,63 +25,48 @@ const parser = require(`./parser`)
 
 const PlanDescribe = ({ resourceName }) => {
   const { planForNextStep = [] } = usePlan()
-  log("step plan", planForNextStep)
   const plans = planForNextStep.filter(p => p.resourceName === resourceName)
 
   return (
     <Box>
       {plans.map((stepPlan, i) => (
-        <Text key={i}>{stepPlan.describe || resourceName}</Text>
+        <Text key={i}>{stepPlan.describe || `* ${resourceName}`}</Text>
       ))}
     </Box>
   )
 }
 
 const components = {
-  inlineCode: props => (
-    // log(`inlineCode`, { props })
-    <Text {...props} />
-  ),
+  inlineCode: props => <Text {...props} />,
   h1: props => <Text bold underline {...props} />,
   h2: props => <Text bold {...props} />,
   h3: props => <Text bold italic {...props} />,
   h4: props => <Text bold {...props} />,
   h5: props => <Text bold {...props} />,
   h6: props => <Text bold {...props} />,
-  a: ({ href, children }) => {
-    //log(`Link`, { href, children })
-    return <Link url={href}>{children}</Link>
-  },
+  a: ({ href, children }) => <Link url={href}>{children}</Link>,
   strong: props => <Text bold {...props} />,
   em: props => <Text italic {...props} />,
-  p: props => {
-    //log(`paragraph`, { props })
-    return (
-      <Box
-        width="100%"
-        marginBottom={1}
-        flexDirection="row"
-        textWrap="wrap"
-        {...props}
-      />
-    )
-  },
-  li: props => {
-    //log(`li`, { props })
-    return <Text>* {props.children}</Text>
-  },
+  p: props => (
+    <Box
+      width="100%"
+      marginBottom={1}
+      flexDirection="row"
+      textWrap="wrap"
+      {...props}
+    />
+  ),
+  li: props => <Text>* {props.children}</Text>,
   Config: () => null,
   GatsbyPlugin: () => <PlanDescribe resourceName="GatsbyPlugin" />,
   NPMPackageJson: () => <PlanDescribe resourceName="NPMPackageJson" />,
-  NPMPackage: ({ name }) => {
+  NPMPackage: ({ name }) => (
     // const { planForNextStep = [] } = usePlan()
 
-    return (
-      <Box>
-        <Text>{name}</Text>
-      </Box>
-    )
-  },
+    <Box>
+      <Text>* {name}</Text>
+    </Box>
+  ),
   File: () => <PlanDescribe resourceName="File" />,
   ShadowFile: () => <PlanDescribe resourceName="ShadowFile" />,
 }
@@ -108,6 +93,11 @@ const log = (label, textOrObj) => {
   contents += label + `: ` + text + `\n`
   fs.writeFileSync(`recipe-client.log`, contents)
 }
+
+log(
+  `started client`,
+  `======================================= ${new Date().toJSON()}`
+)
 
 const PlanContext = React.createContext({})
 const usePlan = () => useContext(PlanContext)
@@ -163,8 +153,6 @@ module.exports = ({ recipe, projectRoot }) => {
         subscription {
           operation {
             state
-            data
-            planForNextStep
           }
         }
       `,
@@ -176,9 +164,9 @@ module.exports = ({ recipe, projectRoot }) => {
         createOperation(commands: $commands)
       }
     `)
-    const [__, applyOperationStep] = useMutation(`
-      mutation {
-        applyOperationStep
+    const [__, sendEvent] = useMutation(`
+      mutation($event: String!) {
+        sendEvent(event: $event)
       }
     `)
 
@@ -186,61 +174,60 @@ module.exports = ({ recipe, projectRoot }) => {
       await createOperation({ commands: JSON.stringify(commands) })
     }
 
-    const { data } = subscriptionResponse
-    const operation =
-      (data &&
-        data.operation &&
-        data.operation.data &&
-        JSON.parse(data.operation.data)) ||
-      commands
-
-    const planForNextStep =
-      (data &&
-        data.operation &&
-        data.operation.planForNextStep &&
-        JSON.parse(data.operation.planForNextStep)) ||
-      []
-
-    const state = data && data.operation && data.operation.state
+    const state = (subscriptionResponse.data &&
+      JSON.parse(subscriptionResponse.data.operation.state)) || {
+      state: `waitingForData`,
+    }
 
     useInput((_, key) => {
       setLastKeyPress(key)
-      if (key.return && state === `SUCCESS`) {
+      if (key.return && state.value === `SUCCESS`) {
         subscriptionClient.close()
         exit()
         // TODO figure out why exiting ink isn't enough.
         process.exit()
       } else if (key.return) {
-        setCurrentStep(currentStep + 1)
-        applyOperationStep()
+        // setCurrentStep(currentStep + 1)
+        sendEvent({ event: `CONTINUE` })
       }
     })
 
+    log(`render`, new Date().toJSON())
+
+    if (!subscriptionResponse.data) {
+      return null
+    }
+
+    if (state.value === `done`) {
+      process.exit()
+    }
+
     if (process.env.DEBUG) {
-      // log(`subscriptionResponse`, subscriptionResponse)
-      // log(`state`, state)
+      log(`state`, state)
     }
 
     return (
-      <PlanContext.Provider value={{ planForNextStep }}>
-        <MDX components={components}>{stepsAsMDX[currentStep]}</MDX>
+      <PlanContext.Provider value={{ planForNextStep: state.plan }}>
+        <MDX components={components}>
+          {stepsAsMDX[state.context.currentStep]}
+        </MDX>
         <Text>{` `}</Text>
         <Text>Press enter to apply!</Text>
-        {operation.map((command, i) => (
-          <Div key={i}>
-            <Div />
-          </Div>
-        ))}
-        {state === `SUCCESS` ? (
-          <Div>
-            <Text> </Text>
-            <Text>Your recipe is served! Press enter to exit.</Text>
-          </Div>
-        ) : null}
       </PlanContext.Provider>
     )
   }
 
+  // {operation.map((command, i) => (
+  // <Div key={i}>
+  // <Div />
+  // </Div>
+  // ))}
+  // {state === `SUCCESS` ? (
+  // <Div>
+  // <Text> </Text>
+  // <Text>Your recipe is served! Press enter to exit.</Text>
+  // </Div>
+  // ) : null}
   const StateIndicator = ({ state }) => {
     if (state === `complete`) {
       return <Text> ✅ </Text>

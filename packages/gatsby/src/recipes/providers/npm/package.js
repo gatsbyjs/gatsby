@@ -1,6 +1,6 @@
 const execa = require(`execa`)
 const _ = require(`lodash`)
-const humanizeList = require('humanize-list')
+const humanizeList = require(`humanize-list`)
 
 const getPackageNames = packages => packages.map(n => n.name)
 const asyncForEach = async (array, callback) => {
@@ -9,8 +9,13 @@ const asyncForEach = async (array, callback) => {
   }
 }
 
-const create = async ({ root }, packages) => {
-  return
+const create = async ({ root }, packages) =>
+  new Promise(resolve => {
+    setTimeout(() => {
+      resolve()
+    }, 1000)
+  })
+/*
   const types = _.groupBy(packages, c => c.dependencyType)
 
   // Run install for each dependency type
@@ -39,7 +44,7 @@ const create = async ({ root }, packages) => {
     })
     console.log(stdout)
   })
-}
+  */
 
 const read = async (_, { name }) => {
   const { stdout } = await execa(`yarn`, [`why`, name], { cwd: root })
@@ -72,6 +77,6 @@ module.exports.plan = (_, packages) => {
   return {
     currentState: [],
     newState: [packageNames],
-    describe: `Install ${humanizeList(packageNames)}`
+    describe: `Install ${humanizeList(packageNames)}`,
   }
 }

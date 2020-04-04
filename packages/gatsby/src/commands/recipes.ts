@@ -25,7 +25,6 @@ module.exports = async (program: IProgram): Promise<void> => {
     fs.writeFileSync(logFile, `\n-----\n${new Date().toJSON()}\n`)
     const writeStream = fs.createWriteStream(logFile, {flags:'a'});
     subprocess.stdout.pipe(writeStream)
-    // subprocess.stderr.pipe(writeStream)
   }
 
   let started = false

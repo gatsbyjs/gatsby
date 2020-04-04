@@ -13,6 +13,7 @@ const fileExists = ({ root }, { path: filePath }) => {
 }
 
 const create = async ({ root }, { path: filePath, content }) => {
+  console.log(`hi File create`)
   const fullPath = path.join(root, filePath)
   const { dir } = path.parse(fullPath)
 
@@ -44,6 +45,7 @@ module.exports.destroy = destroy
 module.exports.plan = async (context, { path: filePath, content }) => {
   const src = await read(context, { path: filePath, content })
 
+  console.log(`making file plan`)
   return {
     currentState: src,
     newState: content,

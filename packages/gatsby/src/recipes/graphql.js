@@ -17,40 +17,17 @@ const fs = require(`fs`)
 const path = require(`path`)
 const { promisify } = require(`util`)
 const Queue = require(`better-queue`)
+const { interpret } = require(`xstate`)
 
-const fileResource = require(`./providers/fs/file`)
-const gatsbyPluginResource = require(`./providers/gatsby/plugin`)
-const gatsbyShadowFileResource = require(`./providers/gatsby/shadow-file`)
-const npmPackageResource = require(`./providers/npm/package`)
-const npmPackageScriptResource = require(`./providers/npm/script`)
-const npmPackageJsonResource = require('./providers/npm/package-json')
+const recipeMachine = require(`./recipe-machine`)
 
 const SITE_ROOT = process.cwd()
+const context = { root: SITE_ROOT }
 
 const read = promisify(fs.readFile)
 
 const pubsub = new PubSub()
 const PORT = 4000
-
-const context = { root: SITE_ROOT }
-
-const configResource = {
-  create: () => {},
-  read: () => {},
-  update: () => {},
-  destroy: () => {},
-  plan: () => {},
-}
-
-const componentResourceMapping = {
-  File: fileResource,
-  GatsbyPlugin: gatsbyPluginResource,
-  ShadowFile: gatsbyShadowFileResource,
-  Config: configResource,
-  NPMPackage: npmPackageResource,
-  NPMScript: npmPackageScriptResource,
-  NPMPackageJson: npmPackageJsonResource,
-}
 
 let queue = new Queue(async (action, cb) => {
   await applyStep(action)
@@ -67,32 +44,6 @@ queue.on(`task_finish`, async () => {
   const task = queue._store._tasks[nextId]
   const { plan, ...cmds } = task
 
-  let planForNextStep = []
-  const commandPlans = Object.entries(cmds).map(async ([key, val]) => {
-    const resource = componentResourceMapping[key]
-    if (!resource || !resource.plan) {
-      return
-    }
-
-    if (resource && resource.config && resource.config.batch) {
-      const cmdPlan = await resource.plan(context, val)
-      planForNextStep.push({ resourceName: key, ...cmdPlan })
-    } else {
-      await asyncForEach(cmds[key], async cmd => {
-        try {
-          const commandPlan = await resource.plan(context, cmd)
-          planForNextStep.push({ resourceName: key, ...commandPlan })
-        } catch (e) {
-          console.log(e)
-        }
-      })
-    }
-  })
-
-  await Promise.all(commandPlans)
-  console.log('full operation', JSON.stringify(plan, null, 2))
-  console.log('step plan', JSON.stringify(planForNextStep, null, 2))
-
   emitOperation(`progress`, plan, planForNextStep)
 })
 
@@ -101,11 +52,9 @@ const readPackage = async () => {
   return JSON.parse(contents)
 }
 
-const emitOperation = (state = `progress`, data, plan = []) => {
+const emitOperation = state => {
   pubsub.publish(`operation`, {
-    state,
-    data: JSON.stringify(data),
-    planForNextStep: JSON.stringify(plan),
+    state: JSON.stringify(state),
   })
 }
 
@@ -115,60 +64,51 @@ const asyncForEach = async (array, callback) => {
   }
 }
 
-const applyStep = async ({ plan, ...step }) => {
-  const commandsForStep = Object.keys(step).map(async key => {
-    const resource = componentResourceMapping[key]
-    if (resource && resource.config && resource.config.batch) {
-      await resource.create(context, step[key])
-
-      step[key].map((_, i) => {
-        step[key][i].state = `complete`
-      })
-      emitOperation(`progress`, plan)
-      return
-    }
-
-    // Run serially for now until we optimize the steps in an operation
-    await asyncForEach(step[key], async (cmd, i) => {
-      try {
-        await resource.create(context, cmd)
-        step[key][i].state = `complete`
-        emitOperation(`progress`, plan)
-      } catch (e) {
-        step[key][i].state = `error`
-        step[key][i].errorMessage = e.toString()
-        emitOperation(`progress`, plan)
-      }
-    })
-  })
-
-  await Promise.all(commandsForStep)
-}
-
+// only one service can run at a time.
+let service
 const applyPlan = plan => {
-  plan.forEach(step => queue.push({ plan, ...step }))
+  // plan.forEach(step => queue.push({ plan, ...step }))
 
-  queue.on(`drain`, () => {
-    emitOperation(`success`, plan)
+  // queue.on(`drain`, () => {
+  // emitOperation(`success`, plan)
+  // })
+  const initialState = {
+    context: { steps: plan, currentStep: 0 },
+    value: `init`,
+  }
+  emitOperation(initialState)
+
+  // Interpret the machine, and add a listener for whenever a transition occurs.
+  service = interpret(
+    recipeMachine.withContext(initialState.context)
+  ).onTransition(state => {
+    // Don't emit again unless there's a state change.
+    console.log(`===onTransition`, { event: state.event, state: state.value })
+    if (state.changed) {
+      console.log(`===state.changed`, {
+        state: state.value,
+        currentStep: state.context.currentStep,
+      })
+      emitOperation({
+        context: state.context,
+        lastEvent: state.event,
+        value: state.value,
+      })
+    }
   })
-}
 
-const OperationStateEnumType = new GraphQLEnumType({
-  name: `OperationStateEnum`,
-  values: {
-    RUNNING: { value: `progress` },
-    SUCCESS: { value: `success` },
-    ERROR: { value: `error` },
-  },
-})
+  // Start the service
+  try {
+    service.start()
+  } catch (e) {
+    console.log(`recipe machine failed to start`, e)
+  }
+}
 
 const OperationType = new GraphQLObjectType({
   name: `Operation`,
   fields: {
-    state: { type: OperationStateEnumType },
-    step: { type: GraphQLInt },
-    data: { type: GraphQLString },
-    planForNextStep: { type: GraphQLString },
+    state: { type: GraphQLString },
   },
 })
 
@@ -267,10 +207,13 @@ const rootMutationType = new GraphQLObjectType({
           applyPlan(JSON.parse(args.commands))
         },
       },
-      applyOperationStep: {
+      sendEvent: {
         type: GraphQLString,
-        resolve: () => {
-          queue.resume()
+        args: {
+          event: { type: GraphQLString },
+        },
+        resolve: (_, args) => {
+          service.send(args.event)
         },
       },
     }
