@@ -1,6 +1,5 @@
 const path = require(`path`)
 const isOnline = require(`is-online`)
-const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
 const normalize = require(`./normalize`)
@@ -69,8 +68,8 @@ exports.sourceNodes = async (
       }
     })
 
-    console.log(`Using Contentful Offline cache ⚠️`)
-    console.log(
+    reporter.info(`Using Contentful Offline cache ⚠️`)
+    reporter.info(
       `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
     )
 
@@ -88,9 +87,8 @@ exports.sourceNodes = async (
   let syncToken
   if (
     !pluginConfig.get(`forceFullSync`) &&
-    store.getState().status.plugins &&
-    store.getState().status.plugins[`gatsby-source-contentful`] &&
-    store.getState().status.plugins[`gatsby-source-contentful`][
+    store.getState()?.status?.plugins &&
+    store.getState()?.status?.plugins[`gatsby-source-contentful`][
       createSyncToken()
     ]
   ) {
@@ -121,24 +119,53 @@ exports.sourceNodes = async (
   // are "updated" so will get the now deleted reference removed.
 
   function deleteContentfulNode(node) {
-    const localizedNodes = locales
-      .map(locale => {
-        const nodeId = createNodeId(
-          normalize.makeId({
-            spaceId: space.sys.id,
-            id: node.sys.id,
-            currentLocale: locale.code,
-            defaultLocale,
-          })
-        )
-        return getNode(nodeId)
-      })
-      .filter(node => node)
+    locales.forEach(locale => {
+      const nodeId = createNodeId(
+        normalize.makeId({
+          spaceId: space.sys.id,
+          id: node.sys.id,
+          currentLocale: locale.code,
+          defaultLocale,
+        })
+      )
+      const gatsbyNode = getNode(nodeId)
 
-    localizedNodes.forEach(node => {
-      // touchNode first, to populate typeOwners & avoid erroring
-      touchNode({ nodeId: node.id })
-      deleteNode({ node })
+      if (gatsbyNode) {
+        Object.keys(gatsbyNode).forEach(field => {
+          // we only care about ___NODE as they are links to other ones
+          if (!field.includes(`___NODE`)) {
+            return
+          }
+
+          // remove foreignReferences to this node
+          ;[].concat(gatsbyNode[field]).forEach(value => {
+            const referencedNode = getNode(value)
+
+            if (referencedNode) {
+              const possibleReferences =
+                referencedNode[`${gatsbyNode.parent.toLowerCase()}___NODE`]
+
+              if (
+                possibleReferences &&
+                possibleReferences.indexOf(gatsbyNode.id) > -1
+              ) {
+                possibleReferences.splice(
+                  possibleReferences.indexOf(gatsbyNode.id),
+                  1
+                )
+              }
+            }
+          })
+        })
+
+        // touchNode first, to populate typeOwners & avoid erroring
+        touchNode({
+          nodeId: gatsbyNode.id,
+        })
+        deleteNode({
+          node: gatsbyNode,
+        })
+      }
     })
   }
 
@@ -152,10 +179,10 @@ exports.sourceNodes = async (
 
   const assets = currentSyncData.assets
 
-  console.log(`Updated entries `, currentSyncData.entries.length)
-  console.log(`Deleted entries `, currentSyncData.deletedEntries.length)
-  console.log(`Updated assets `, currentSyncData.assets.length)
-  console.log(`Deleted assets `, currentSyncData.deletedAssets.length)
+  reporter.info(`Updated entries `, currentSyncData.entries.length)
+  reporter.info(`Deleted entries `, currentSyncData.deletedEntries.length)
+  reporter.info(`Updated assets `, currentSyncData.assets.length)
+  reporter.info(`Deleted assets `, currentSyncData.deletedAssets.length)
   console.timeEnd(`Fetch Contentful data`)
 
   // Update syncToken
@@ -166,59 +193,9 @@ exports.sourceNodes = async (
   newState[createSyncToken()] = nextSyncToken
   setPluginStatus(newState)
 
-  // Create map of resolvable ids so we can check links against them while creating
-  // links.
-  const resolvable = normalize.buildResolvableSet({
-    existingNodes,
-    entryList,
-    assets,
-    defaultLocale,
-    locales,
-    space,
-  })
-
-  // Build foreign reference map before starting to insert any nodes
-  const foreignReferenceMap = normalize.buildForeignReferenceMap({
-    contentTypeItems,
-    entryList,
-    resolvable,
-    defaultLocale,
-    locales,
-    space,
-    useNameForId: pluginConfig.get(`useNameForId`),
-  })
-
-  const newOrUpdatedEntries = []
-  entryList.forEach(entries => {
-    entries.forEach(entry => {
-      newOrUpdatedEntries.push(entry.sys.id)
-    })
-  })
-
-  // Update existing entry nodes that weren't updated but that need reverse
-  // links added.
-  existingNodes
-    .filter(n => _.includes(newOrUpdatedEntries, n.id))
-    .forEach(n => {
-      if (foreignReferenceMap[n.id]) {
-        foreignReferenceMap[n.id].forEach(foreignReference => {
-          // Add reverse links
-          if (n[foreignReference.name]) {
-            n[foreignReference.name].push(foreignReference.id)
-            // It might already be there so we'll uniquify after pushing.
-            n[foreignReference.name] = _.uniq(n[foreignReference.name])
-          } else {
-            // If is one foreign reference, there can always be many.
-            // Best to be safe and put it in an array to start with.
-            n[foreignReference.name] = [foreignReference.id]
-          }
-        })
-      }
-    })
-
+  const foreignReferenceMap = new Map()
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
-
     // A contentType can hold lots of entries which create nodes
     // We wait until all nodes are created and processed until we handle the next one
     // TODO add batching in gatsby-core
@@ -231,7 +208,6 @@ exports.sourceNodes = async (
         entries: entryList[i],
         createNode,
         createNodeId,
-        resolvable,
         foreignReferenceMap,
         defaultLocale,
         locales,
@@ -240,6 +216,18 @@ exports.sourceNodes = async (
         richTextOptions: pluginConfig.get(`richText`),
       })
     )
+  }
+
+  // Add referenced values
+  for (let [key, references] of foreignReferenceMap) {
+    const node = getNode(key)
+    if (node) {
+      for (const field in references) {
+        node[field] = (node[field] || []).concat(
+          references[field].filter(reference => !!getNode(reference))
+        )
+      }
+    }
   }
 
   for (let i = 0; i < assets.length; i++) {
