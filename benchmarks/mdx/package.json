@@ -36,7 +36,7 @@
     "cross-env": "^7.0.0",
     "gatsby-plugin-benchmark-reporting": "*",
     "prettier": "^1.19.1",
-    "willit": "^0.0.3"
+    "willit": "*"
   },
   "repository": {
     "type": "git",
