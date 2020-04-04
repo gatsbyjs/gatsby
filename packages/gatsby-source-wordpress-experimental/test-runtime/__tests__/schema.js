@@ -37,6 +37,39 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
     expect(createContentDigest(result.data.__schema)).toMatchSnapshot()
   })
 
+  test(`Type.exclude option removes types from the schema`, async () => {
+    const result = await fetchGraphql({
+      url: `http://localhost:8000/___graphql`,
+      query: gql`
+        {
+          __schema {
+            types {
+              name
+            }
+          }
+        }
+      `,
+    })
+
+    const excludedTypes = [
+      `ActionMonitorAction`,
+      `UserToActionMonitorActionConnection`,
+      `Plugin`,
+      `PostFormat`,
+      `Theme`,
+      `UserRole`,
+      `UserToUserRoleConnection`,
+    ]
+
+    // make sure our schema doesn't have any of the default excluded types
+    // in ../../src/models/gatsby-api
+    excludedTypes.forEach(typeName => {
+      expect(
+        !!result.data.__schema.types.find(type => type.name === `Wp${typeName}`)
+      ).toBe(false)
+    })
+  })
+
   test(`Type.where option works when set to filter for French posts`, async () => {
     const result = await fetchGraphql({
       url: `http://localhost:8000/___graphql`,
