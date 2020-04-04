@@ -1,9 +1,9 @@
 import { MachineConfig, assign } from "xstate"
 import { IBuildContext } from "./develop"
-import { ADD_NODE_MUTATION, callRealApi } from "./shared-transition-configs"
+import { callRealApi } from "./actions"
 
-const NODE_MUTATION_BATCH_SIZE = 20
-const NODE_MUTATION_BATCH_TIMEOUT = 5000
+const NODE_MUTATION_BATCH_SIZE = 100
+const NODE_MUTATION_BATCH_TIMEOUT = 1000
 
 const extractQueriesIfDirty = {
   cond: (ctx): boolean => !!ctx.filesDirty,
@@ -28,7 +28,7 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
           // Node mutations are prioritised because we don't want
           // to run queries on data that is stale
           {
-            cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
+            cond: (ctx): boolean => !!ctx.nodeMutationBatch?.length,
             target: `batchingNodeMutations`,
           },
           extractQueriesIfDirty,
@@ -40,7 +40,7 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
           }),
         },
         ADD_NODE_MUTATION: {
-          ...ADD_NODE_MUTATION,
+          actions: `addNodeMutation`,
           target: `batchingNodeMutations`,
         },
         SOURCE_FILE_CHANGED: {
@@ -78,13 +78,15 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
         ADD_NODE_MUTATION: [
           // If this fills the batch then commit it
           {
-            ...ADD_NODE_MUTATION,
+            actions: [`addNodeMutation`],
             cond: (ctx): boolean =>
               ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
             target: `committingBatch`,
           },
           // otherwise just add it to the batch
-          ADD_NODE_MUTATION,
+          {
+            actions: `addNodeMutation`,
+          },
         ],
       },
 

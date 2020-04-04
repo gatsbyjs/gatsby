@@ -108,7 +108,7 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
         id: `running-static-queries`,
         onDone: {
           target: `runningPageQueries`,
-          actions: [emitStaticQueryDataToWebsocket],
+          actions: emitStaticQueryDataToWebsocket,
         },
         onError: {
           target: `#build.waiting`,
@@ -126,7 +126,7 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
         onDone: [
           {
             target: `checkingForMutatedNodes`,
-            actions: [emitPageDataToWebsocket],
+            actions: emitPageDataToWebsocket,
           },
         ],
         onError: {
