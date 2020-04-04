@@ -64,25 +64,28 @@ class Preview {
         return;
       }
 
-      if ( $post->post_status === 'auto-draft' ) {
-        return;
-      }
-
       if ( $post->post_status === 'draft' ) {
         return;
       }
 
-      if ( $post->post_type !== 'revision' ) {
+      $is_new_post_draft =
+        $post->post_status === 'auto-draft' &&
+        $post->post_date_gmt === '0000-00-00 00:00:00';
+
+      $is_revision = $post->post_type === 'revision';
+
+      if (!$is_new_post_draft && !$is_revision) {
         return;
       }
-
-      $preview_webhook = $this::get_gatsby_preview_webhook();
 
       $token = \WPGatsby\GraphQL\Auth::get_token();
 
       if ( !$token ) {
+        // @todo error message?
         return;
       }
+
+      $preview_webhook = $this::get_gatsby_preview_webhook();
 
       $original_post = get_post( $post->post_parent );
 
@@ -98,14 +101,22 @@ class Preview {
       $referenced_node_single_name
         = $post_type_object->graphql_single_name ?? null;
 
+      $graphql_endpoint = apply_filters( 'graphql_endpoint', 'graphql' );
+
+      $graphql_url = get_home_url() . '/' . ltrim( $graphql_endpoint, '/' );
+
       $post_body = [
         'preview' => true,
         'token' => $token,
         'previewId' => $post_ID,
         'id' => $global_relay_id,
-        'singleName' => $referenced_node_single_name
+        'singleName' => $referenced_node_single_name,
+        'isNewPostDraft' => $is_new_post_draft,
+        'isRevision' => $is_revision,
+        'remoteUrl' => $graphql_url
       ];
 
+      // @todo error message if this doesn't work?
       wp_remote_post(
         $preview_webhook,
         [

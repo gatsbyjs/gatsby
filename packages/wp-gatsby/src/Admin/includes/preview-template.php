@@ -1,15 +1,36 @@
 <?php
+  use GraphQLRelay\Relay;
 
   wp_head();
 
   global $post;
-  $revision = array_values( wp_get_post_revisions( $post->ID ) )[0] ?? null;
-  $revision_url = get_the_permalink( $revision );
-  $revision_path = str_ireplace( get_home_url(), '', $revision_url );
+  $post_id = $post->ID;
+  $revision = array_values( wp_get_post_revisions( $post_id ) )[0] ?? null;
+
+  $post_type_object = \get_post_type_object( $post->post_type );
+
+  $global_relay_id = Relay::toGlobalId(
+    $post_type_object->name,
+    absint( $post_id )
+  );
+
+  $referenced_node_single_name
+    = $post_type_object->graphql_single_name ?? null;
+
+  $post_url = get_the_permalink( $post );
+  $path = str_ireplace( get_home_url(), '', $post_url );
+
+  // if the post parent has a ? in it's url, this is a new draft
+  // and or the post has no proper permalink that Gatsby can use.
+  // so we will create one /post_graphql_name/post_db_id
+  // this same logic is on the Gatsby side to account for this situation.
+  if ( strpos( $path, '?' ) ) {
+    $path = "/$referenced_node_single_name/$post_id";
+  }
 
   $preview_url = \WPGatsby\Admin\Preview::get_gatsby_preview_instance_url();
   $preview_url = rtrim( $preview_url, '/' );
-  $frontend_url = "$preview_url$revision_path";
+  $frontend_url = "$preview_url$path";
 ?>
 
 <html lang="en">

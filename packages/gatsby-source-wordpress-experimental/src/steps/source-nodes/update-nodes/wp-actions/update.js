@@ -6,16 +6,41 @@ import { getQueryInfoBySingleFieldName } from "../../helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { CREATED_NODE_IDS } from "~/constants"
 // import { findConnectedNodeIds } from "~/steps/source-nodes/create-nodes/create-nodes"
+
+import { atob } from "atob"
+
 import {
   buildTypeName,
   getTypeSettingsByType,
 } from "~/steps/create-schema-customization/helpers"
+
+const getDbIdFromRelayId = relayId =>
+  atob(relayId)
+    .split(`:`)
+    .reverse()[0]
+
+const normalizeUri = ({ uri, id, singleName }) => {
+  // if this is a draft url which could look like
+  // /?p=543534 or /?page=4324
+  // so we will create a proper path that Gatsby can handle
+  // /post_graphql_name/post_db_id
+  // this same logic is on the WP side in the preview template
+  // to account for this situation.
+  if (uri.includes(`?`)) {
+    const dbId = getDbIdFromRelayId(id)
+
+    return `/${singleName}/${dbId}`
+  }
+
+  return uri
+}
 
 export const fetchAndCreateSingleNode = async ({
   singleName,
   id,
   actionType,
   cachedNodeIds,
+  isNewPostDraft,
   previewId = null,
   token = null,
 }) => {
@@ -59,8 +84,10 @@ export const fetchAndCreateSingleNode = async ({
     },
   })
 
+  let remoteNode = data[singleName]
+
   // if we ask for a node that doesn't exist
-  if (!data || (data && data[singleName] === null)) {
+  if (!data || (data && remoteNode === null)) {
     reporter.log(``)
     reporter.warn(
       formatLogMessage(
@@ -68,6 +95,7 @@ export const fetchAndCreateSingleNode = async ({
       )
     )
     reporter.log(``)
+
     return { node: null }
   }
 
@@ -75,18 +103,29 @@ export const fetchAndCreateSingleNode = async ({
 
   if (previewId && existingNode) {
     const originalFieldsToRetain = {
+      uri: existingNode.uri,
+      link: existingNode.link,
       status: existingNode.status,
       slug: existingNode.slug,
       parent: existingNode.parent,
       databaseId: existingNode.databaseId,
+      guid: existingNode.guid,
       id,
     }
 
-    data[singleName] = {
-      ...data[singleName],
+    remoteNode = {
+      ...remoteNode,
       ...originalFieldsToRetain,
     }
   }
+
+  remoteNode.uri = normalizeUri({
+    uri: remoteNode.uri,
+    singleName,
+    id,
+  })
+
+  data[singleName] = remoteNode
 
   // returns an object
   const { additionalNodeIds, node } = await createSingleNode({
@@ -97,11 +136,19 @@ export const fetchAndCreateSingleNode = async ({
     cachedNodeIds,
   })
 
-  if (previewId) {
+  if (previewId && !isNewPostDraft) {
     reporter.log(``)
     reporter.info(
       formatLogMessage(
         `Preview for ${singleName} ${previewId} was updated at ${node.uri}.`
+      )
+    )
+    reporter.log(``)
+  } else if (isNewPostDraft) {
+    reporter.log(``)
+    reporter.info(
+      formatLogMessage(
+        `Blank node for ${singleName} draft ${previewId} was created at ${node.uri}.`
       )
     )
     reporter.log(``)
