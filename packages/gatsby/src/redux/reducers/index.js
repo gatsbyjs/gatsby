@@ -59,7 +59,7 @@ module.exports = {
   jobsV2: require(`./jobsv2`),
   webpack: require(`./webpack`),
   webpackCompilationHash: require(`./webpack-compilation-hash`),
-  redirects: require(`./redirects`),
+  redirects: require(`./redirects`).default,
   babelrc: require(`./babelrc`),
   schemaCustomization: require(`./schema-customization`),
   themes: require(`./themes`),
