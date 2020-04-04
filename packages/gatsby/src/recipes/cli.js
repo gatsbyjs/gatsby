@@ -8,7 +8,6 @@ const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`@mdx-js/runtime`)
-const humanizeList = require(`humanize-list`)
 const {
   createClient,
   useMutation,
@@ -154,6 +153,32 @@ module.exports = ({ recipe, projectRoot }) => {
     <Box width={80} textWrap="wrap" flexDirection="column" {...props} />
   )
 
+  class ErrorBoundary extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = { hasError: false }
+    }
+
+    static getDerivedStateFromError(error) {
+      // Update state so the next render will show the fallback UI.
+      return { hasError: true }
+    }
+
+    componentDidCatch(error, errorInfo) {
+      // You can also log the error to an error reporting service
+      log(`error`, { error, errorInfo })
+    }
+
+    render() {
+      if (this.state.hasError) {
+        // You can render any custom fallback UI
+        return <h1>Something went wrong.</h1>
+      }
+
+      return this.props.children
+    }
+  }
+
   const RecipeInterpreter = ({ commands }) => {
     const [lastKeyPress, setLastKeyPress] = useState(``)
     const { exit } = useApp()
@@ -197,7 +222,6 @@ module.exports = ({ recipe, projectRoot }) => {
         // TODO figure out why exiting ink isn't enough.
         process.exit()
       } else if (key.return) {
-        // setCurrentStep(currentStep + 1)
         sendEvent({ event: `CONTINUE` })
       }
     })
@@ -214,16 +238,19 @@ module.exports = ({ recipe, projectRoot }) => {
 
     if (process.env.DEBUG) {
       log(`state`, state)
+      log(`plan`, state.context.plan)
     }
 
     return (
-      <PlanContext.Provider value={{ planForNextStep: state.plan }}>
-        <MDX components={components}>
-          {stepsAsMDX[state.context.currentStep]}
-        </MDX>
-        <Text>{` `}</Text>
-        <Text>Press enter to apply!</Text>
-      </PlanContext.Provider>
+      <ErrorBoundary>
+        <PlanContext.Provider value={{ planForNextStep: state.plan }}>
+          <MDX components={components}>
+            {stepsAsMDX[state.context.currentStep]}
+          </MDX>
+          <Text>{` `}</Text>
+          <Text>Press enter to apply!</Text>
+        </PlanContext.Provider>
+      </ErrorBoundary>
     )
   }
 

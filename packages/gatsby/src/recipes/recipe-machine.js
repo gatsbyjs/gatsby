@@ -6,28 +6,26 @@ const applyPlan = require(`./apply-plan`)
 const recipeMachine = Machine(
   {
     id: `recipe`,
-    initial: `init`,
+    initial: `creatingPlan`,
     context: {
       currentStep: 0,
       steps: [],
       plan: [],
     },
     states: {
-      init: {
-        on: {
-          CONTINUE: `creatingPlan`,
-        },
-      },
       creatingPlan: {
+        entry: [`deleteOldPlan`],
         invoke: {
           id: `createPlan`,
-          src: (context, event) => {
-            console.log(`invoking createPlan promise`, { context, event })
-            return createPlan(context)
+          src: async (context, event) => {
+            const result = await createPlan(context)
+            return result
           },
           onDone: {
             target: `present plan`,
-            actions: assign({ plan: (context, event) => event.data }),
+            actions: assign({
+              plan: (context, event) => event.data,
+            }),
           },
           onError: {
             target: `failure`,
@@ -39,9 +37,13 @@ const recipeMachine = Machine(
         "": `done`,
       },
       "present plan": {
-        entry: [`incrementStep`],
         on: {
           CONTINUE: `applyingPlan`,
+        },
+        meta: {
+          test: (_, state) => {
+            expect(state.context.plan).toBeTruthy()
+          },
         },
       },
       applyPlan: {
@@ -51,8 +53,6 @@ const recipeMachine = Machine(
         invoke: {
           id: `applyPlan`,
           src: async (context, event) => {
-            console.log(`invoking applyingPlan`, { context })
-
             if (context.plan.length == 0) {
               return
             }
@@ -69,6 +69,7 @@ const recipeMachine = Machine(
         },
       },
       hasAnotherStep: {
+        entry: [`incrementStep`],
         on: {
           "": [
             {
@@ -98,16 +99,17 @@ const recipeMachine = Machine(
           currentStep: context.currentStep + 1,
         }
       }),
+      deleteOldPlan: assign((context, event) => {
+        return {
+          plan: [],
+        }
+      }),
     },
     guards: {
-      hasNextStep: (context, event) => {
-        console.log(`GUARDS:::::hasNextStep`, context, event)
-        return context.currentStep + 1 < context.steps.length
-      },
-      atLastStep: (context, event) => {
-        console.log(`GUARDS:::::atLastStep`)
-        return context.currentStep + 1 === context.steps.length
-      },
+      hasNextStep: (context, event) =>
+        context.currentStep < context.steps.length,
+      atLastStep: (context, event) =>
+        context.currentStep === context.steps.length,
     },
   }
 )
