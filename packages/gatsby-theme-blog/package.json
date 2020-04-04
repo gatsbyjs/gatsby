@@ -27,7 +27,7 @@
     "gatsby-plugin-emotion": "^4.2.0",
     "gatsby-plugin-feed": "^2.4.0",
     "gatsby-plugin-react-helmet": "^3.2.0",
-    "gatsby-plugin-theme-ui": "^0.2.53",
+    "gatsby-plugin-theme-ui": "^0.3.0",
     "gatsby-plugin-twitter": "^2.2.0",
     "gatsby-theme-blog-core": "^1.3.2",
     "mdx-utils": "0.2.0",
