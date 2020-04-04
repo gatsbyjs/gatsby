@@ -117,7 +117,7 @@ function SEO({ description, lang, meta }) {
         // highlight-start
         {
           name: "keywords",
-          content: data.site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(","),
         },
         // highlight-end
       ]}
@@ -176,7 +176,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
   // highlight-start
   const image =
     metaImage && metaImage.src
-      ? `${data.site.siteMetadata.siteUrl}${metaImage.src}`
+      ? `${site.siteMetadata.siteUrl}${metaImage.src}`
       : null
   // highlight-end
 
@@ -194,7 +194,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
         },
         {
           name: "keywords",
-          content: data.site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(","),
         },
         {
           property: `og:title`,
@@ -318,12 +318,10 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
   const metaDescription = description || site.siteMetadata.description
   const image =
     metaImage && metaImage.src
-      ? `${data.site.siteMetadata.siteUrl}${metaImage.src}`
+      ? `${site.siteMetadata.siteUrl}${metaImage.src}`
       : null
   // highlight-start
-  const canonical = pathname
-    ? `${data.site.siteMetadata.siteUrl}${pathname}`
-    : null
+  const canonical = pathname ? `${site.siteMetadata.siteUrl}${pathname}` : null
   // highlight-end
 
   return (
@@ -352,7 +350,7 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
         },
         {
           name: "keywords",
-          content: data.site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(","),
         },
         {
           property: `og:title`,
