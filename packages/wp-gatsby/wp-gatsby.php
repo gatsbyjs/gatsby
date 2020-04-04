@@ -206,7 +206,7 @@ final class WPGatsby
         new \WPGatsby\ActionMonitor\ActionMonitor();
 
         /**
-         * Initialize Action Monitor
+         * Initialize Auth token parser
          */
         new \WPGatsby\GraphQL\ParseAuthToken();
     }
