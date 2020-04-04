@@ -4,6 +4,7 @@ import { introspectionQuery } from "gatsby-source-wordpress-experimental/utils/g
 import { runGatsby } from "../test-utils/run-gatsby"
 import gql from "gatsby-source-wordpress-experimental/utils/gql"
 import { incrementalIt } from "../test-utils/incremental-it"
+import { createContentDigest } from "gatsby-core-utils"
 
 jest.setTimeout(100000)
 
@@ -24,7 +25,7 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
       url: process.env.WPGRAPHQL_URL,
     })
 
-    expect(result.data.__schema).toMatchSnapshot()
+    expect(createContentDigest(result.data.__schema)).toMatchSnapshot()
   })
 
   it(`hasn't altered the local Gatsby schema`, async () => {
@@ -33,7 +34,7 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
       query: introspectionQuery,
     })
 
-    expect(result.data.__schema).toMatchSnapshot()
+    expect(createContentDigest(result.data.__schema)).toMatchSnapshot()
   })
 
   test(`Type.where option works when set to filter for French posts`, async () => {
