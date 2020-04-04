@@ -49,14 +49,10 @@ it(`it should switch to done after the final apply step`, done => {
   const service = interpret(
     recipeMachine.withContext(initialContext)
   ).onTransition(state => {
+    // Keep simulating moving onto the next step
     if (state.value === `present plan`) {
       service.send(`CONTINUE`)
     }
-    // console.log(`===onTransition`, {
-    // event: state.event,
-    // state: state.value,
-    // context: state.context,
-    // })
     if (state.value === `done`) {
       const fullPath = path.join(process.cwd(), filePath)
       const fileExists = fs.pathExistsSync(fullPath)
