@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.8.7",
-    "scroll-behavior": "^0.9.12",
+    "scroll-behavior": "^0.11.0",
     "warning": "^3.0.0"
   },
   "devDependencies": {
