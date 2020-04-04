@@ -62,7 +62,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
     const settings = getTypeSettingsByType(nodesType)
 
-    // @todo this setting is no longer working
     if (settings.exclude) {
       continue
     }

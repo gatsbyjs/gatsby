@@ -1,5 +1,6 @@
 import { createRemoteMediaItemNode } from "~/steps/source-nodes/create-nodes/create-remote-media-item-node"
 
+// @todo move this to plugin options
 export const objectTypeFilters = [
   {
     typeName: `MediaItem`,

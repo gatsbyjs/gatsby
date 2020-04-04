@@ -4,6 +4,7 @@ import { fieldOfTypeWasFetched } from "./helpers"
 
 import buildType from "./build-types"
 import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
+import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-type-excluded"
 
 /**
  * createSchemaCustomization
@@ -37,7 +38,10 @@ const createSchemaCustomization = async ({ actions, schema }) => {
 
   // create Gatsby node types
   remoteSchema.introspectionData.__schema.types.forEach(type => {
-    if (fieldOfTypeWasFetched(type)) {
+    if (
+      fieldOfTypeWasFetched(type) &&
+      !typeIsExcluded({ pluginOptions, typeName: type.name })
+    ) {
       switch (type.kind) {
         case `UNION`:
           buildType.unionType({ ...typeBuilderApi, type })

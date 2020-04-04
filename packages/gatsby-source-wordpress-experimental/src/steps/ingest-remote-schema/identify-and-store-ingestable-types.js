@@ -1,4 +1,5 @@
 import store from "~/store"
+import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-type-excluded"
 
 const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const nodeListFilter = field => field.name === `nodes`
@@ -25,7 +26,10 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
     Object.entries(pluginOptions.type).forEach(([typeName, typeSettings]) => {
       // our lazy types won't initially be fetched,
       // so we need to mark them as fetched here
-      if (typeSettings.lazyNodes) {
+      if (
+        typeSettings.lazyNodes &&
+        !typeIsExcluded({ pluginOptions, typeName })
+      ) {
         const lazyType = typeMap.get(typeName)
         store.dispatch.remoteSchema.addFetchedType(lazyType)
       }
@@ -37,6 +41,10 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
   )
 
   for (const interfaceType of interfaces) {
+    if (typeIsExcluded({ pluginOptions, typeName: interfaceType.name })) {
+      continue
+    }
+
     store.dispatch.remoteSchema.addFetchedType(interfaceType)
 
     if (interfaceType.fields) {
@@ -61,6 +69,10 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
 
     if (fieldHasNonNullArgs) {
       // we can't know what those args should be, so skip this field
+      continue
+    }
+
+    if (typeIsExcluded({ pluginOptions, typeName: field.type.name })) {
       continue
     }
 

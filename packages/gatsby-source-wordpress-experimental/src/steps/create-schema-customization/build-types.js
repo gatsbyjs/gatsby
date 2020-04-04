@@ -1,5 +1,6 @@
 import store from "~/store"
 import { transformFields } from "./transform-fields"
+import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-type-excluded"
 import {
   buildTypeName,
   fieldOfTypeWasFetched,
@@ -7,13 +8,16 @@ import {
   filterObjectType,
 } from "./helpers"
 
-const unionType = ({ typeDefs, schema, type }) => {
+const unionType = ({ typeDefs, schema, type, pluginOptions }) => {
   typeDefs.push(
     schema.buildUnionType({
       name: buildTypeName(type.name),
-      types: type.possibleTypes.map(possibleType =>
-        buildTypeName(possibleType.name)
-      ),
+      types: type.possibleTypes
+        .filter(
+          possibleType =>
+            !typeIsExcluded({ pluginOptions, typeName: possibleType.name })
+        )
+        .map(possibleType => buildTypeName(possibleType.name)),
       resolveType: node => {
         if (node.type) {
           return buildTypeName(node.type)
