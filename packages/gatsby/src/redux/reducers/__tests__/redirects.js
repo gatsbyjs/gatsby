@@ -3,7 +3,7 @@ let reducer
 describe(`redirects`, () => {
   beforeEach(() => {
     jest.isolateModules(() => {
-      reducer = require(`../redirects`)
+      reducer = require(`../redirects`).default
     })
   })
   it(`lets you redirect to an internal url`, () => {
@@ -15,7 +15,7 @@ describe(`redirects`, () => {
       },
     }
 
-    let state = reducer(undefined, action)
+    const state = reducer(undefined, action)
 
     expect(state).toEqual([
       {
@@ -34,7 +34,7 @@ describe(`redirects`, () => {
       },
     }
 
-    let state = reducer(undefined, action)
+    const state = reducer(undefined, action)
 
     expect(state).toEqual([
       {
