@@ -8,7 +8,6 @@ const { render, Box, Text, useInput, useApp } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`@mdx-js/runtime`)
-const humanizeList = require(`humanize-list`)
 const {
   createClient,
   useMutation,

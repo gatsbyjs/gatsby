@@ -5,8 +5,8 @@ const applyPlan = require(`./apply-plan`)
 
 const recipeMachine = Machine(
   {
-    id: "recipe",
-    initial: "creatingPlan",
+    id: `recipe`,
+    initial: `creatingPlan`,
     context: {
       currentStep: 0,
       steps: [],
@@ -14,23 +14,21 @@ const recipeMachine = Machine(
     },
     states: {
       creatingPlan: {
-        entry: ["deleteOldPlan"],
+        entry: [`deleteOldPlan`],
         invoke: {
-          id: "createPlan",
+          id: `createPlan`,
           src: async (context, event) => {
             const result = await createPlan(context)
             return result
           },
           onDone: {
-            target: "present plan",
+            target: `present plan`,
             actions: assign({
-              plan: (context, event) => {
-                return event.data
-              },
+              plan: (context, event) => event.data,
             }),
           },
           onError: {
-            target: "failure",
+            target: `failure`,
             actions: assign({ error: (context, event) => event.data }),
           },
         },
@@ -40,7 +38,7 @@ const recipeMachine = Machine(
       },
       "present plan": {
         on: {
-          CONTINUE: "applyingPlan",
+          CONTINUE: `applyingPlan`,
         },
         meta: {
           test: (_, state) => {
@@ -53,7 +51,7 @@ const recipeMachine = Machine(
       },
       applyingPlan: {
         invoke: {
-          id: "applyPlan",
+          id: `applyPlan`,
           src: async (context, event) => {
             if (context.plan.length == 0) {
               return
@@ -65,32 +63,32 @@ const recipeMachine = Machine(
           },
           onDone: `hasAnotherStep`,
           onError: {
-            target: "failure",
+            target: `failure`,
             actions: assign({ error: (context, event) => event.data }),
           },
         },
       },
       hasAnotherStep: {
-        entry: ["incrementStep"],
+        entry: [`incrementStep`],
         on: {
           "": [
             {
-              target: "creatingPlan",
+              target: `creatingPlan`,
               // The 'searchValid' guard implementation details are
               // specified in the machine config
-              cond: "hasNextStep",
+              cond: `hasNextStep`,
             },
             {
-              target: "done",
+              target: `done`,
               // The 'searchValid' guard implementation details are
               // specified in the machine config
-              cond: "atLastStep",
+              cond: `atLastStep`,
             },
           ],
         },
       },
       done: {
-        type: "final",
+        type: `final`,
       },
     },
   },
@@ -108,12 +106,10 @@ const recipeMachine = Machine(
       }),
     },
     guards: {
-      hasNextStep: (context, event) => {
-        return context.currentStep < context.steps.length
-      },
-      atLastStep: (context, event) => {
-        return context.currentStep === context.steps.length
-      },
+      hasNextStep: (context, event) =>
+        context.currentStep < context.steps.length,
+      atLastStep: (context, event) =>
+        context.currentStep === context.steps.length,
     },
   }
 )

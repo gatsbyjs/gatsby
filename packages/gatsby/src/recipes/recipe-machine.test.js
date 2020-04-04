@@ -1,8 +1,6 @@
-const { interpret, Machine } = require(`xstate`)
-const { createModel } = require("@xstate/test")
+const { interpret } = require(`xstate`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-// const { createModel } = require("@xstate/graph")
 
 const recipeMachine = require(`./recipe-machine`)
 

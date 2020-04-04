@@ -17,7 +17,7 @@ const { promisify } = require(`util`)
 const { interpret } = require(`xstate`)
 
 const recipeMachine = require(`./recipe-machine`)
-const gatsbyPluginResource = require("./providers/gatsby/plugin")
+const gatsbyPluginResource = require(`./providers/gatsby/plugin`)
 
 const SITE_ROOT = process.cwd()
 
