@@ -50,7 +50,8 @@ $ qovery auth
 $ qovery init
 ```
 
-**4/** Add this Dockerfile at the root of your repository
+**4/** Add this Dockerfile at the root of your project directory
+You can achieve this by running `touch Dockerfile` in your terminal and add the code block below to this file.
 
 ```Dockerfile
 FROM node:12-buster as build
