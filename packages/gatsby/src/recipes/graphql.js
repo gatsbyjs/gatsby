@@ -5,8 +5,6 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLList,
-  GraphQLEnumType,
-  GraphQLInt,
   execute,
   subscribe,
 } = require(`graphql`)
@@ -22,7 +20,6 @@ const { interpret } = require(`xstate`)
 const recipeMachine = require(`./recipe-machine`)
 
 const SITE_ROOT = process.cwd()
-const context = { root: SITE_ROOT }
 
 const read = promisify(fs.readFile)
 
@@ -35,17 +32,6 @@ let queue = new Queue(async (action, cb) => {
 })
 
 queue.pause()
-queue.on(`task_finish`, async () => {
-  if (queue.length > 1) {
-    queue.pause()
-  }
-
-  const nextId = queue._store._queue[1]
-  const task = queue._store._tasks[nextId]
-  const { plan, ...cmds } = task
-
-  emitOperation(`progress`, plan, planForNextStep)
-})
 
 const readPackage = async () => {
   const contents = await read(path.join(SITE_ROOT, `package.json`), `utf8`)
@@ -56,12 +42,6 @@ const emitOperation = state => {
   pubsub.publish(`operation`, {
     state: JSON.stringify(state),
   })
-}
-
-const asyncForEach = async (array, callback) => {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array)
-  }
 }
 
 // only one service can run at a time.
@@ -204,7 +184,9 @@ const rootMutationType = new GraphQLObjectType({
           commands: { type: GraphQLString },
         },
         resolve: (_data, args) => {
-          applyPlan(JSON.parse(args.commands))
+          const commands = JSON.parse(args.commands)
+          console.log('received operation', commands)
+          applyPlan(commands)
         },
       },
       sendEvent: {
@@ -213,6 +195,7 @@ const rootMutationType = new GraphQLObjectType({
           event: { type: GraphQLString },
         },
         resolve: (_, args) => {
+          console.log('event received', args)
           service.send(args.event)
         },
       },

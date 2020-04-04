@@ -31,6 +31,7 @@
 - [ ] reasonably test resources
 - [ ] add Joi for validating resource objects
 - [ ] handle error states
+- [x] handle template strings in JSX parser
 
 ## Near-ish future
 

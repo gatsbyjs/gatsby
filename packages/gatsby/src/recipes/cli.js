@@ -137,14 +137,24 @@ module.exports = ({ recipe, projectRoot }) => {
     ],
   })
 
-  const { commands: allCommands, stepsAsMdx: stepsAsMDX } = parser(recipeSrc)
+  let parsed = {}
+  try {
+    parsed = parser(recipeSrc)
+  } catch (e) {
+    if (process.env.DEBUG) {
+      console.log(e)
+    }
+    console.log('Unable to parse ', recipe)
+    process.exit()
+  }
+
+  const { commands: allCommands, stepsAsMdx: stepsAsMDX } = parsed
 
   const Div = props => (
     <Box width={80} textWrap="wrap" flexDirection="column" {...props} />
   )
 
   const RecipeInterpreter = ({ commands }) => {
-    const [currentStep, setCurrentStep] = useState(0)
     const [lastKeyPress, setLastKeyPress] = useState(``)
     const { exit } = useApp()
     const [subscriptionResponse] = useSubscription(
@@ -237,207 +247,6 @@ module.exports = ({ recipe, projectRoot }) => {
       return <Spinner />
     }
   }
-
-  const Config = ({ commands }) => {
-    const cmd = commands[0] // Config should only be called once.
-
-    const verb = cmd.state !== `complete` ? `Setting` : `Set`
-    return (
-      <Div>
-        <Box>
-          <StateIndicator state={cmd.state} />
-          <Text> </Text>
-          <Text>
-            {verb} up plan for {cmd.name}
-          </Text>
-        </Box>
-      </Div>
-    )
-  }
-
-  const NPMPackage = ({ commands }) => {
-    const incomplete = commands.some(c => c.state !== `complete`)
-    const names = commands.map(c => c.name)
-
-    if (incomplete) {
-      return (
-        <Div>
-          <Text>Installing packages</Text>
-          {commands.map(cmd => (
-            <Div key={cmd.name}>
-              <Box>
-                <Text> </Text>
-                <StateIndicator state={cmd.state} />
-                <Text> </Text>
-                <Text>{cmd.name}</Text>
-              </Box>
-            </Div>
-          ))}
-        </Div>
-      )
-    }
-
-    return (
-      <Div>
-        <Box>
-          <StateIndicator state="complete" />
-          <Text> </Text>
-          <Text>Installed {humanizeList(names)}</Text>
-        </Box>
-      </Div>
-    )
-  }
-
-  const NPMScript = ({ commands }) => {
-    const incomplete = commands.some(c => c.state !== `complete`)
-    const names = commands.map(c => c.name)
-
-    if (incomplete) {
-      return (
-        <Div>
-          <Text>Adding scripts</Text>
-          {commands.map(cmd => (
-            <Div key={cmd.name}>
-              <Box>
-                <Text> </Text>
-                <StateIndicator state={cmd.state} />
-                <Text> </Text>
-                <Text>{cmd.name}</Text>
-              </Box>
-            </Div>
-          ))}
-        </Div>
-      )
-    }
-
-    return (
-      <Div>
-        <Box>
-          <StateIndicator state="complete" />
-          <Text> </Text>
-          <Text>Added scripts for {humanizeList(names)}</Text>
-        </Box>
-      </Div>
-    )
-  }
-
-  const GatsbyPlugin = ({ commands }) => {
-    const incomplete = commands.some(c => c.state !== `complete`)
-    const names = commands.map(c => c.name)
-
-    if (incomplete) {
-      return (
-        <Div>
-          <Text>Configuring plugins</Text>
-          {commands.map(cmd => (
-            <Div key={cmd.name}>
-              <Box>
-                <Text> </Text>
-                <StateIndicator state={cmd.state} />
-                <Text> </Text>
-                <Text>{cmd.name}</Text>
-              </Box>
-            </Div>
-          ))}
-        </Div>
-      )
-    }
-
-    return (
-      <Div>
-        <Box>
-          <StateIndicator state="complete" />
-          <Text> </Text>
-          <Text>Configured {humanizeList(names)}</Text>
-        </Box>
-      </Div>
-    )
-  }
-
-  const ShadowFile = ({ commands }) => {
-    const incomplete = commands.some(c => c.state !== `complete`)
-    const paths = commands.map(c => c.path)
-
-    if (incomplete) {
-      return (
-        <Div>
-          <Text>Shadowing files</Text>
-          {commands.map(cmd => (
-            <Div key={cmd.path}>
-              <Box>
-                <Text> </Text>
-                <StateIndicator state={cmd.state} />
-                <Text> </Text>
-                <Text>{cmd.path}</Text>
-              </Box>
-            </Div>
-          ))}
-        </Div>
-      )
-    }
-
-    return (
-      <Div>
-        <Box>
-          <StateIndicator state="complete" />
-          <Text> </Text>
-          <Text>Shadowed {humanizeList(paths)}</Text>
-        </Box>
-      </Div>
-    )
-  }
-
-  const File = ({ commands }) => {
-    const incomplete = commands.some(c => c.state !== `complete`)
-    const paths = commands.map(c => c.path)
-
-    if (incomplete) {
-      return (
-        <Div>
-          <Text>Writing files</Text>
-          {commands.map(cmd => (
-            <Div key={cmd.path}>
-              <Box>
-                <Text> </Text>
-                <StateIndicator state={cmd.state} />
-                <Text> </Text>
-                <Text>{cmd.path}</Text>
-              </Box>
-            </Div>
-          ))}
-        </Div>
-      )
-    }
-
-    return (
-      <Div>
-        <Box>
-          <StateIndicator state="complete" />
-          <Text> </Text>
-          <Text>Created file {humanizeList(paths)}</Text>
-        </Box>
-      </Div>
-    )
-  }
-
-  const Step = ({ command }) =>
-    Object.entries(command).map(([cmdName, cmds], i) => {
-      if (cmdName === `Config`) {
-        return <Config key={i} commands={cmds} />
-      } else if (cmdName === `NPMPackage`) {
-        return <NPMPackage key={i} commands={cmds} />
-      } else if (cmdName === `NPMScript`) {
-        return <NPMScript key={i} commands={cmds} />
-      } else if (cmdName === `GatsbyPlugin`) {
-        return <GatsbyPlugin key={i} commands={cmds} />
-      } else if (cmdName === `ShadowFile`) {
-        return <ShadowFile key={i} commands={cmds} />
-      } else if (cmdName === `File`) {
-        return <File key={i} commands={cmds} />
-      } else {
-        return <Text key={i}>{cmdName}</Text>
-      }
-    })
 
   const Wrapper = () => (
     <Provider value={client}>

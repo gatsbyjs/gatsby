@@ -2,8 +2,9 @@ const unified = require(`unified`)
 const remarkMdx = require(`remark-mdx`)
 const remarkParse = require(`remark-parse`)
 const remarkStringify = require(`remark-stringify`)
-const jsxToJson = require(`simplified-jsx-to-json`)
 const visit = require(`unist-util-visit`)
+
+const jsxToJson = require(`./jsx-to-json`)
 
 const asRoot = nodes => {
   return {
