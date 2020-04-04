@@ -24,24 +24,25 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator#readme",
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
-    "bluebird": "^3.7.2",
-    "fs-exists-cached": "^1.0.0",
-    "gatsby-page-utils": "^0.1.1",
-    "glob": "^7.1.6",
-    "lodash": "^4.17.15",
-    "micromatch": "^3.1.10"
+    "@babel/runtime": "7.9.2",
+    "bluebird": "3.7.2",
+    "fs-exists-cached": "1.0.0",
+    "gatsby-page-utils": "0.1.1",
+    "glob": "7.1.6",
+    "lodash": "4.17.15",
+    "micromatch": "3.1.10"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "babel-preset-gatsby-package": "^0.3.1",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.9.0",
+    "babel-preset-gatsby-package": "0.3.1",
+    "cross-env": "7.0.2"
   },
   "peerDependencies": {
     "gatsby": "^2.0.0"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=13.2.1",
+    "yarn": ">=1.22.4"
   }
 }

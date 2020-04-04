@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from "react"
-import path from "path"
+import * as React from "react"
+import * as path from "path"
 import { Color, Box } from "ink"
 import { get } from "lodash"
 
@@ -7,12 +7,15 @@ interface IFileProps {
   filePath: string
   location: string
 }
-const File: FunctionComponent<IFileProps> = ({ filePath, location }) => {
+
+function File({ filePath, location }: IFileProps): JSX.Element {
   const lineNumber = get(location, `start.line`)
 
   let locString = ``
+
   if (typeof lineNumber !== `undefined`) {
     locString += `:${lineNumber}`
+
     const columnNumber = get(location, `start.column`)
     if (typeof columnNumber !== `undefined`) {
       locString += `:${columnNumber}`
@@ -30,10 +33,13 @@ const File: FunctionComponent<IFileProps> = ({ filePath, location }) => {
 interface IDocsLinkProps {
   docsUrl: string
 }
-const DocsLink: FunctionComponent<IDocsLinkProps> = ({ docsUrl }) => {
+const DocsLink = ({ docsUrl }: IDocsLinkProps): JSX.Element => {
   // TODO: when there's no specific docsUrl, add helpful message describing how
   // to submit an issue
-  if (docsUrl === `https://gatsby.dev/issue-how-to`) return null
+  if (docsUrl === `https://gatsby.dev/issue-how-to`) {
+    return <></>
+  }
+
   return (
     <Box marginTop={1}>
       See our docs page for more info on this error: {docsUrl}
@@ -53,8 +59,8 @@ interface IErrorProps {
   }
 }
 
-export const Error: FunctionComponent<IErrorProps> = React.memo(
-  ({ details }) => (
+function Error({ details }: IErrorProps): JSX.Element {
+  return (
     // const stackLength = get(details, `stack.length`, 0
 
     <Box marginY={1} flexDirection="column">
@@ -96,4 +102,6 @@ export const Error: FunctionComponent<IErrorProps> = React.memo(
       )} */}
     </Box>
   )
-)
+}
+
+export default React.memo(Error)

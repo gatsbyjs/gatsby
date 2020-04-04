@@ -1,4 +1,4 @@
-import _ from "lodash"
+import * as _ from "lodash"
 
 export const prepareRegex = (str: string): RegExp => {
   const exploded = str.split(`/`)

@@ -1,4 +1,4 @@
-import path from "path"
+import * as path from "path"
 import browserslist from "browserslist/node"
 
 const installedGatsbyVersion = (directory: string): number | undefined => {

@@ -1,15 +1,15 @@
-import url from "url"
-import fs from "fs"
+import * as url from "url"
+import * as fs from "fs"
 import openurl from "better-opn"
-import chokidar from "chokidar"
+import * as chokidar from "chokidar"
 
 import webpackHotMiddleware from "webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
-import glob from "glob"
-import express from "express"
-import got from "got"
-import webpack from "webpack"
-import graphqlHTTP from "express-graphql"
+import * as glob from "glob"
+import * as express from "express"
+import * as got from "got"
+import * as webpack from "webpack"
+import * as graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
@@ -24,12 +24,12 @@ import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
-import address from "address"
+import * as address from "address"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import * as WorkerPool from "../utils/worker/pool"
-import http from "http"
-import https from "https"
+import * as http from "http"
+import * as https from "https"
 
 import { bootstrapSchemaHotReloader } from "../bootstrap/schema-hot-reloader"
 import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
@@ -274,7 +274,7 @@ async function startServer(program: IProgram): Promise<IServer> {
           .pipe(
             got
               .stream(proxiedUrl, { headers, method, decompress: false })
-              .on(`response`, response =>
+              .on(`response`, (response) =>
                 res.writeHead(response.statusCode || 200, response.headers)
               )
               .on(`error`, (err, _, response) => {
@@ -305,7 +305,7 @@ async function startServer(program: IProgram): Promise<IServer> {
 
   // Render an HTML page and serve it.
   app.use((_, res) => {
-    res.sendFile(directoryPath(`public/index.html`), err => {
+    res.sendFile(directoryPath(`public/index.html`), (err) => {
       if (err) {
         res.status(500).end()
       }
@@ -325,7 +325,7 @@ async function startServer(program: IProgram): Promise<IServer> {
   const listener = server.listen(program.port, program.host)
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
+  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map((path) =>
     slash(directoryPath(path))
   )
 
@@ -573,15 +573,15 @@ module.exports = async (program: IProgram): Promise<void> => {
 
     glob
       .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })
-      .forEach(file => {
+      .forEach((file) => {
         const fileText = fs.readFileSync(file)
-        const matchingApis = deprecatedApis.filter(api =>
+        const matchingApis = deprecatedApis.filter((api) =>
           fileText.includes(api)
         )
-        matchingApis.forEach(api => deprecatedLocations[api].push(file))
+        matchingApis.forEach((api) => deprecatedLocations[api].push(file))
       })
 
-    deprecatedApis.forEach(api => {
+    deprecatedApis.forEach((api) => {
       if (deprecatedLocations[api].length) {
         console.log(
           `%s %s %s %s`,
@@ -593,7 +593,7 @@ module.exports = async (program: IProgram): Promise<void> => {
           )
         )
         console.log()
-        deprecatedLocations[api].forEach(file => console.log(file))
+        deprecatedLocations[api].forEach((file) => console.log(file))
         console.log()
       }
     })
@@ -603,7 +603,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   //   console.log(`set invalid`, args, this)
   // })
 
-  compiler.hooks.watchRun.tapAsync(`log compiling`, function(_, done) {
+  compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
       webpackActivity.end()
     }
@@ -618,7 +618,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tapAsync(`print gatsby instructions`, function(
+  compiler.hooks.done.tapAsync(`print gatsby instructions`, function (
     stats,
     done
   ) {

@@ -5,9 +5,8 @@ import {
   Store,
   Middleware,
 } from "redux"
-import _ from "lodash"
 
-import mitt from "mitt"
+import * as mitt from "mitt"
 import thunk from "redux-thunk"
 import reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
@@ -23,7 +22,7 @@ export const readState = (): IGatsbyState => {
     if (state.nodes) {
       // re-create nodesByType
       state.nodesByType = new Map()
-      state.nodes.forEach(node => {
+      state.nodes.forEach((node) => {
         const { type } = node.internal
         if (!state.nodesByType.has(type)) {
           state.nodesByType.set(type, new Map())
@@ -48,7 +47,7 @@ export const readState = (): IGatsbyState => {
 /**
  * Redux middleware handling array of actions
  */
-const multi: Middleware = ({ dispatch }) => next => (
+const multi: Middleware = ({ dispatch }) => (next) => (
   action: ActionsUnion
 ): ActionsUnion | ActionsUnion[] =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)

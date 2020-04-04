@@ -1,6 +1,6 @@
 import Cache from "../cache"
-import fs from "fs-extra"
-import manager from "cache-manager"
+import * as fs from "fs-extra"
+import * as manager from "cache-manager"
 
 const mockErrorValue = jest.fn()
 const mockResultValue = jest.fn()

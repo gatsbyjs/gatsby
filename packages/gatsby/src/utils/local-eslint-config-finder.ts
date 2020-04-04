@@ -1,7 +1,7 @@
-import path from "path"
-import glob from "glob"
-import debug from "debug"
-import report from "gatsby-cli/lib/reporter"
+import * as path from "path"
+import * as glob from "glob"
+import * as debug from "debug"
+import * as report from "gatsby-cli/lib/reporter"
 
 const log = debug(`gatsby:webpack-eslint-config`)
 

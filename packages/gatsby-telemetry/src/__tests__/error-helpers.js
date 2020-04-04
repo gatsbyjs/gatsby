@@ -31,21 +31,21 @@ describe(`Errors Helpers`, () => {
     })
 
     it(`Sanitizes current path from error stacktraces`, () => {
-      const errormessage = `this is a test`
+      const errorMessage = `this is a test`
       let e
       try {
-        throw new Error(errormessage)
+        throw new Error(errorMessage)
       } catch (error) {
         e = error
       }
       expect(e).toBeDefined()
-      expect(e.message).toEqual(errormessage)
+      expect(e.message).toEqual(errorMessage)
       expect(e.stack).toEqual(expect.stringContaining(process.cwd()))
 
       const sanitizedErrorString = sanitizeError(e)
 
       expect(sanitizedErrorString).toEqual(
-        expect.stringContaining(errormessage)
+        expect.stringContaining(errorMessage)
       )
       expect(sanitizedErrorString).toEqual(
         expect.not.stringContaining(process.cwd().replace(`\\`, `\\\\`))
@@ -53,10 +53,10 @@ describe(`Errors Helpers`, () => {
     })
 
     it(`Sanitizes a section of the current path from error stacktraces`, () => {
-      const errormessage = `this is a test`
+      const errorMessage = `this is a test`
 
       const e = {
-        message: errormessage,
+        message: errorMessage,
         stack: `
         Error: this is an error
           at Object.<anonymous> (/Users/sidharthachatterjee/Code/gatsby-site/gatsby-config.js:1:32)
@@ -75,7 +75,7 @@ describe(`Errors Helpers`, () => {
       }
 
       expect(e).toBeDefined()
-      expect(e.message).toEqual(errormessage)
+      expect(e.message).toEqual(errorMessage)
       expect(e.stack).toBeDefined()
 
       const mockCwd = jest
@@ -86,7 +86,7 @@ describe(`Errors Helpers`, () => {
 
       const sanitizedErrorString = sanitizeError(e, `/`)
 
-      expect(sanitizedErrorString.includes(errormessage)).toBe(true)
+      expect(sanitizedErrorString.includes(errorMessage)).toBe(true)
       expect(sanitizedErrorString).toEqual(
         expect.not.stringContaining(`sidharthachatterjee`)
       )
@@ -98,7 +98,7 @@ describe(`Errors Helpers`, () => {
   describe(`cleanPaths`, () => {
     it.each([`gatsby-config.js`, `src/pages/index.js`])(
       `should clean path on unix: %s`,
-      filePath => {
+      (filePath) => {
         const cwdMockPath = `/Users/username/gatsby-site`
         const fullPath = `${cwdMockPath}/${filePath}`
 
@@ -106,9 +106,9 @@ describe(`Errors Helpers`, () => {
           .spyOn(process, `cwd`)
           .mockImplementation(() => cwdMockPath)
 
-        const errormessage = `This path ${fullPath} is a test ${fullPath}`
+        const errorMessage = `This path ${fullPath} is a test ${fullPath}`
 
-        expect(cleanPaths(errormessage, `/`)).toBe(
+        expect(cleanPaths(errorMessage, `/`)).toBe(
           `This path $SNIP/${filePath} is a test $SNIP/${filePath}`
         )
         mockCwd.mockRestore()
@@ -117,7 +117,7 @@ describe(`Errors Helpers`, () => {
 
     it.each([`gatsby-config.js`, `src\\pages\\index.js`])(
       `should clean path on windows: %s`,
-      filePath => {
+      (filePath) => {
         const cwdMockPath = `C:\\Users\\username\\gatsby-site`
         const fullPath = `${cwdMockPath}\\${filePath}`
 
@@ -125,9 +125,9 @@ describe(`Errors Helpers`, () => {
           .spyOn(process, `cwd`)
           .mockImplementation(() => cwdMockPath)
 
-        const errormessage = `This path ${fullPath} is a test ${fullPath}`
+        const errorMessage = `This path ${fullPath} is a test ${fullPath}`
 
-        expect(cleanPaths(errormessage, `\\`)).toBe(
+        expect(cleanPaths(errorMessage, `\\`)).toBe(
           `This path $SNIP\\${filePath} is a test $SNIP\\${filePath}`
         )
         mockCwd.mockRestore()

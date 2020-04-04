@@ -1,15 +1,15 @@
-import Bluebird from "bluebird"
-import fs from "fs-extra"
-import reporter from "gatsby-cli/lib/reporter"
+import * as Bluebird from "bluebird"
+import * as fs from "fs-extra"
+import * as reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
-import telemetry from "gatsby-telemetry"
+import * as telemetry from "gatsby-telemetry"
 import { chunk } from "lodash"
-import webpack from "webpack"
+import * as webpack from "webpack"
 
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
-import { BuildHTMLStage, IProgram } from "./types"
+import { BuildHTMLStage, IProgram } from "../types"
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
@@ -40,11 +40,11 @@ const doBuildRenderer = async (
   return `${directory}/public/render-page.js`
 }
 
-const buildRenderer = async (
+async function buildRenderer(
   program: IProgram,
   stage: BuildHTMLStage,
   parentSpan: IActivity
-): Promise<string> => {
+): Promise<string> {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
     parentSpan,
@@ -53,7 +53,7 @@ const buildRenderer = async (
   return doBuildRenderer(program, config)
 }
 
-const deleteRenderer = async (rendererPath: string): Promise<void> => {
+async function deleteRenderer(rendererPath: string): Promise<void> {
   try {
     await fs.remove(rendererPath)
     await fs.remove(`${rendererPath}.map`)
@@ -79,7 +79,7 @@ const renderHTMLQueue = async (
   // const start = process.hrtime()
   const segments = chunk(pages, 50)
 
-  await Bluebird.map(segments, async pageSegment => {
+  await Bluebird.map(segments, async (pageSegment) => {
     await workerPool.renderHTML({
       envVars,
       htmlComponentRendererPath,
@@ -92,12 +92,12 @@ const renderHTMLQueue = async (
   })
 }
 
-const doBuildPages = async (
+async function doBuildPages(
   rendererPath: string,
   pagePaths: string[],
   activity: IActivity,
   workerPool: IWorkerPool
-): Promise<void> => {
+): Promise<void> {
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: pagePaths.length,
   })
@@ -114,7 +114,7 @@ const doBuildPages = async (
   }
 }
 
-export const buildHTML = async ({
+export async function buildHTML({
   program,
   stage,
   pagePaths,
@@ -126,7 +126,7 @@ export const buildHTML = async ({
   pagePaths: string[]
   activity: IActivity
   workerPool: IWorkerPool
-}): Promise<void> => {
+}): Promise<void> {
   const rendererPath = await buildRenderer(program, stage, activity.span)
   await doBuildPages(rendererPath, pagePaths, activity, workerPool)
   await deleteRenderer(rendererPath)

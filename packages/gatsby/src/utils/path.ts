@@ -1,4 +1,4 @@
-import path from "path"
+import * as path from "path"
 import { joinPath, createContentDigest } from "gatsby-core-utils"
 
 export const withBasePath = (basePath: string) => (
@@ -57,7 +57,7 @@ export const tooLongSegmentsInPath = (path: string): Array<string> => {
 }
 
 export const truncatePath = (path: string): string =>
-  path.replace(pathSegmentRe, match => {
+  path.replace(pathSegmentRe, (match) => {
     if (isNameTooLong(match)) {
       return (
         match.slice(0, SLICING_INDEX) +

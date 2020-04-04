@@ -1,5 +1,5 @@
-import fs from "fs-extra"
-import Promise from "bluebird"
+import * as fs from "fs-extra"
+import * as Promise from "bluebird"
 import { join } from "path"
 import { getPageHtmlFilePath } from "../../utils/page-html"
 

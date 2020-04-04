@@ -1,6 +1,6 @@
 // Forked from physical-cpu-count package from npm
-import os from "os"
-import childProcess from "child_process"
+import * as os from "os"
+import * as childProcess from "child_process"
 
 function exec(command: string): string {
   const output = childProcess.execSync(command, { encoding: `utf8` })

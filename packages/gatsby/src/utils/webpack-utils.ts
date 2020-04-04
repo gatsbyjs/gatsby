@@ -6,7 +6,7 @@ import TerserPlugin from "terser-webpack-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
-import isWsl from "is-wsl"
+import * as isWsl from "is-wsl"
 import { getBrowsersList } from "./browserslist"
 
 import GatsbyWebpackStatsExtractor from "./gatsby-webpack-stats-extractor"

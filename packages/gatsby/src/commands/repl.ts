@@ -1,4 +1,4 @@
-import repl from "repl"
+import * as repl from "repl"
 import { graphql } from "graphql"
 import bootstrap from "../bootstrap"
 import { trackCli } from "gatsby-telemetry"

@@ -1,22 +1,24 @@
-import path from "path"
+import * as path from "path"
 import { store } from "../redux"
 import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
-import fs from "fs"
+import * as fs from "fs"
 import pageDataUtil from "../utils/page-data"
-import telemetry from "gatsby-telemetry"
-import url from "url"
+import * as telemetry from "gatsby-telemetry"
+import * as url from "url"
 import { createHash } from "crypto"
 import { normalizePagePath, denormalizePagePath } from "./normalize-page-path"
-import socketIO from "socket.io"
+import * as socketIO from "socket.io"
 
 interface IPageQueryResult {
   id: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   result: any // TODO: Improve this once we understand what the type is
 }
 
 interface IStaticQueryResult {
   id: number
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   result: any // TODO: Improve this once we understand what the type is
 }
 

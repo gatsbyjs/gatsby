@@ -1,3 +1,5 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../../tsconfig.json",
+  "exclude": ["node_modules", "src/__tests__", "src/__mocks__", "dist"],
+  "types": ["socket-io", "semver", "fast-levenshtein"]
 }

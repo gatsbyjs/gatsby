@@ -1,5 +1,5 @@
 import { slash } from "gatsby-core-utils"
-import path from "path"
+import * as path from "path"
 import { Tracer, initGlobalTracer } from "opentracing"
 
 let tracerProvider

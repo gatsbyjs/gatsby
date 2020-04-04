@@ -28,22 +28,23 @@
     "gatsby": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.9.0",
+    "cross-env": "7.0.2"
   },
   "dependencies": {
-    "babel-preset-gatsby-package": "^0.3.1",
-    "chalk": "^2.4.2",
-    "gatsby-node-helpers": "^0.3.0",
-    "gatsby-source-filesystem": "^2.2.2",
-    "graphql-request": "^1.8.2",
-    "lodash": "^4.17.15",
-    "p-iteration": "^1.1.8",
-    "prettyjson": "^1.2.1"
+    "babel-preset-gatsby-package": "0.3.1",
+    "chalk": "2.4.2",
+    "gatsby-node-helpers": "0.3.0",
+    "gatsby-source-filesystem": "2.2.2",
+    "graphql-request": "1.8.2",
+    "lodash": "4.17.15",
+    "p-iteration": "1.1.8",
+    "prettyjson": "1.2.1"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=13.2.1",
+    "yarn": ">=1.22.4"
   },
   "main": "index.js"
 }

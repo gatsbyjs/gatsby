@@ -1,5 +1,5 @@
-import crypto, { BinaryLike } from "crypto"
-import objectHash from "node-object-hash"
+import * as crypto from "crypto"
+import * as objectHash from "node-object-hash"
 
 const hasher = objectHash({
   coerce: false,
@@ -13,7 +13,7 @@ const hasher = objectHash({
   },
 })
 
-const hashPrimitive = (input: BinaryLike | string): string =>
+const hashPrimitive = (input: crypto.BinaryLike | string): string =>
   crypto
     .createHash(`md5`)
     .update(input)
@@ -27,7 +27,7 @@ const hashPrimitive = (input: BinaryLike | string): string =>
  */
 
 export const createContentDigest = (
-  input: BinaryLike | string | any
+  input: crypto.BinaryLike | string | any
 ): string => {
   if (typeof input === `object`) {
     return hasher.hash(input)

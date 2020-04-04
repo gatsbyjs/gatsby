@@ -6,18 +6,18 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.8.7"
-  },
   "peerDependencies": {
-    "graphql": "^14.1.1"
+    "graphql": "^14.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "7.9.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "babel-preset-gatsby-package": "^0.3.1",
-    "cross-env": "^5.2.1",
-    "graphql": "^14.6.0"
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.9.0",
+    "babel-preset-gatsby-package": "0.3.1",
+    "cross-env": "7.0.2",
+    "graphql": "14.6.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit#readme",
   "keywords": [
@@ -37,6 +37,7 @@
     "watch": "babel -w src --out-dir dist"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=13.2.1",
+    "yarn": ">=1.22.4"
   }
 }

@@ -2,7 +2,8 @@ import {
   setFeedbackDisabledValue,
   showFeedbackRequest,
 } from "../utils/feedback"
-import { IProgram } from "./types"
+
+import { IProgram } from "../types"
 
 // This is because we splat command line arguments onto this object.
 // A good refactor would be to put this inside a key like `cliArgs`

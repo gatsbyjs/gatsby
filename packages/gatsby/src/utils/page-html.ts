@@ -1,5 +1,5 @@
-import fs from "fs-extra"
-import path from "path"
+import * as fs from "fs-extra"
+import * as path from "path"
 
 const checkForHtmlSuffix = (pagePath: string): boolean =>
   !/\.(html?)$/i.test(pagePath)

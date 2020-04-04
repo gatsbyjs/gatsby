@@ -5,7 +5,8 @@ import {
   truncatePath,
   tooLongSegmentsInPath,
 } from "../path"
-import os from "os"
+
+import * as os from "os"
 
 describe(`paths`, () => {
   describe(`joinPath`, () => {

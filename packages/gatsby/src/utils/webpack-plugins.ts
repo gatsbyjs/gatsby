@@ -1,4 +1,5 @@
-import webpack, { Plugin } from "webpack"
+import * as webpack from "webpack"
+import { Plugin } from "webpack"
 
 const plugin = (
   name: string,

@@ -15,7 +15,7 @@ const inferredTypesChanged = (
   prevTypeMap: TypeMap
 ): boolean =>
   Object.keys(typeMap).some(
-    type =>
+    (type) =>
       typeMap[type].dirty && !haveEqualFields(typeMap[type], prevTypeMap[type])
   )
 
@@ -24,7 +24,7 @@ const schemaChanged = (
   lastSchemaCustomization: SchemaCustomization
 ): boolean =>
   [`fieldExtensions`, `printConfig`, `thirdPartySchemas`, `types`].some(
-    key => schemaCustomization[key] !== lastSchemaCustomization[key]
+    (key) => schemaCustomization[key] !== lastSchemaCustomization[key]
   )
 
 let lastMetadata: InferenceMetadata
@@ -43,17 +43,26 @@ const maybeRebuildSchema = debounce(async (): Promise<void> => {
   }
 
   const activity = report.activityTimer(`rebuild schema`)
+
   activity.start()
+
   lastMetadata = cloneDeep(inferenceMetadata)
+
   lastSchemaCustomization = schemaCustomization
+
   await rebuild({ parentSpan: activity })
+
   await updateStateAndRunQueries(false, { parentSpan: activity })
+
   activity.end()
 }, 1000)
 
 export const bootstrapSchemaHotReloader = (): void => {
   const { inferenceMetadata, schemaCustomization } = store.getState()
+
   lastMetadata = cloneDeep(inferenceMetadata)
+
   lastSchemaCustomization = schemaCustomization
+
   emitter.on(`API_RUNNING_QUEUE_EMPTY`, maybeRebuildSchema)
 }

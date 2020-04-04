@@ -1,5 +1,5 @@
-import fs from "fs-extra"
-import path from "path"
+import * as fs from "fs-extra"
+import * as path from "path"
 
 import {
   userPassesFeedbackRequestHeuristic,
@@ -15,7 +15,7 @@ module.exports = async function clean(program: IProgram): Promise<void> {
   report.info(`Deleting ${directories.join(`, `)}`)
 
   await Promise.all(
-    directories.map(dir => fs.remove(path.join(directory, dir)))
+    directories.map((dir) => fs.remove(path.join(directory, dir)))
   )
 
   report.info(`Successfully deleted directories`)

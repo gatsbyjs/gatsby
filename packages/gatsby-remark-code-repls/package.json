@@ -7,19 +7,19 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
-    "lz-string": "^1.4.4",
-    "normalize-path": "^2.1.1",
-    "npm-package-arg": "^6.1.1",
-    "recursive-readdir": "^2.2.2",
-    "unist-util-map": "^1.0.5",
-    "urijs": "^1.19.2"
+    "@babel/runtime": "7.9.2",
+    "lz-string": "1.4.4",
+    "normalize-path": "2.1.1",
+    "npm-package-arg": "6.1.1",
+    "recursive-readdir": "2.2.2",
+    "unist-util-map": "1.0.5",
+    "urijs": "1.19.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "babel-preset-gatsby-package": "^0.3.1",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.9.0",
+    "babel-preset-gatsby-package": "0.3.1",
+    "cross-env": "7.0.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls#readme",
   "keywords": [
@@ -46,6 +46,7 @@
     "watch": "babel -w src --out-dir . --ignore **/__tests__"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=13.2.1",
+    "yarn": ">=1.22.4"
   }
 }

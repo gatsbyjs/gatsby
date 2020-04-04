@@ -1,5 +1,5 @@
-import Module from "module"
-import path from "path"
+import * as Module from "module"
+import * as path from "path"
 
 /**
  * We need to use private Module methods in this polyfill

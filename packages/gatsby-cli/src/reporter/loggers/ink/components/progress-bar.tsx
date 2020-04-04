@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { Box } from "ink"
 import { calcElapsedTime } from "../../../../util/calc-elapsed-time"
 
@@ -14,7 +14,7 @@ interface IProps {
   startTime: [number, number]
 }
 
-export function ProgressBar({
+function ProgressBar({
   message,
   current,
   total,
@@ -53,3 +53,5 @@ export function ProgressBar({
     </Box>
   )
 }
+
+export default React.memo(ProgressBar)

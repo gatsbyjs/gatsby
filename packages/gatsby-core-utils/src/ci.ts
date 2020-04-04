@@ -1,4 +1,4 @@
-import ci from "ci-info"
+import * as ci from "ci-info"
 
 const CI_DEFINITIONS = [
   envFromCIandCIName,

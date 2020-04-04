@@ -1,5 +1,5 @@
-import fs from "fs-extra"
-import path from "path"
+import * as fs from "fs-extra"
+import * as path from "path"
 
 import {
   remove as removePageHtmlFile,
@@ -75,17 +75,17 @@ export const removePageFiles = async (
   publicDir: string,
   pageKeys: string[]
 ): Promise<void> => {
-  const removePages = pageKeys.map(pagePath =>
+  const removePages = pageKeys.map((pagePath) =>
     removePageHtmlFile({ publicDir }, pagePath)
   )
 
-  const removePageData = pageKeys.map(pagePath =>
+  const removePageData = pageKeys.map((pagePath) =>
     removePageDataFile({ publicDir }, pagePath)
   )
 
   return Promise.all([...removePages, ...removePageData]).then(() => {
     // Sort removed pageKeys by nested directories and remove if empty.
-    sortedPageKeysByNestedLevel(pageKeys).forEach(pagePath => {
+    sortedPageKeysByNestedLevel(pageKeys).forEach((pagePath) => {
       checkAndRemoveEmptyDir(publicDir, pagePath)
     })
   })

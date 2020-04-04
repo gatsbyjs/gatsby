@@ -26,15 +26,16 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-design-tokens#readme",
   "dependencies": {
-    "hex2rgba": "^0.0.1"
+    "hex2rgba": "0.0.1"
   },
   "devDependencies": {
-    "agadoo": "^1.1.0",
-    "cross-env": "^5.2.1",
+    "agadoo": "1.1.0",
+    "cross-env": "7.0.2",
     "microbundle": "gatsbyjs/microbundle#brotli-try-catch-plus-dist",
-    "preval.macro": "^3.0.0"
+    "preval.macro": "3.0.0"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=13.2.1",
+    "yarn": ">=1.22.4"
   }
 }

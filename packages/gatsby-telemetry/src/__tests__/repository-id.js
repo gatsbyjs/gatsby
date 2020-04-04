@@ -2,10 +2,7 @@ const { createHash } = require(`crypto`)
 jest.mock(`child_process`)
 const { getRepositoryId, getRepoMetadata } = require(`../repository-id`)
 
-const hash = str =>
-  createHash(`sha256`)
-    .update(str)
-    .digest(`hex`)
+const hash = (str) => createHash(`sha256`).update(str).digest(`hex`)
 
 describe(`Repository ID Helpers`, () => {
   it(`getRepositoryId from git`, () => {
@@ -85,7 +82,7 @@ describe(`Repository ID Helpers`, () => {
       `https://github.com/user/repo.git`,
       `https://x-access-token:v1.6xxxxxxxxxxxxxxxxx@github.com/user/repo`,
       `git@github.com:user/repo.git`,
-    ].map(url => {
+    ].map((url) => {
       it(`works with github urls ${url}`, () => {
         const metadata = getRepoMetadata(url)
         expect(metadata).toEqual({

@@ -1,4 +1,5 @@
 jest.mock(`../event-storage`)
+
 const eventStore = require(`../event-storage`)
 const Telemetry = require(`../telemetry`)
 

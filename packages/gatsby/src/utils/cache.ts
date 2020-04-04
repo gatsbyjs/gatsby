@@ -1,12 +1,10 @@
-import manager, {
-  Store,
-  StoreConfig,
-  CachingConfig,
-  MultiCache,
-} from "cache-manager"
-import fs from "fs-extra"
+import * as manager from "cache-manager"
+
+import { Store, StoreConfig, CachingConfig, MultiCache } from "cache-manager"
+
+import * as fs from "fs-extra"
 import fsStore from "cache-manager-fs-hash"
-import path from "path"
+import * as path from "path"
 
 const MAX_CACHE_SIZE = 250
 const TTL = Number.MAX_SAFE_INTEGER
@@ -49,7 +47,7 @@ export default class Cache {
       },
     ]
 
-    const caches = configs.map(cache => manager.caching(cache))
+    const caches = configs.map((cache) => manager.caching(cache))
 
     this.cache = manager.multiCaching(caches)
 
@@ -57,7 +55,7 @@ export default class Cache {
   }
 
   get<T = unknown>(key): Promise<T | undefined> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!this.cache) {
         throw new Error(
           `Cache wasn't initialised yet, please run the init method first`
@@ -74,13 +72,13 @@ export default class Cache {
     value: T,
     args: CachingConfig = { ttl: TTL }
   ): Promise<T | undefined> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!this.cache) {
         throw new Error(
           `Cache wasn't initialised yet, please run the init method first`
         )
       }
-      this.cache.set(key, value, args, err => {
+      this.cache.set(key, value, args, (err) => {
         resolve(err ? undefined : value)
       })
     })

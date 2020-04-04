@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { Box } from "ink"
 import InkSpinner from "ink-spinner"
 
@@ -6,11 +6,15 @@ interface IProps {
   text: string
   statusText?: string
 }
-export function Spinner({ text, statusText }: IProps): JSX.Element {
-  let label = text
-  if (statusText) {
-    label += ` — ${statusText}`
-  }
+
+function Spinner({ text, statusText }: IProps): JSX.Element {
+  const label = React.useMemo(function factory() {
+    if (statusText !== undefined) {
+      return text + ` — ${statusText}`
+    }
+
+    return text
+  }, [text, statusText])
 
   return (
     <Box>
@@ -18,3 +22,5 @@ export function Spinner({ text, statusText }: IProps): JSX.Element {
     </Box>
   )
 }
+
+export default React.memo(Spinner)

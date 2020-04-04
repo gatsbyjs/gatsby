@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import EnsureResources from "../ensure-resources"
 import { render, getNodeText, cleanup } from "@testing-library/react"
 

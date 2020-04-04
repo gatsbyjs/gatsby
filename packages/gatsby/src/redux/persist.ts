@@ -1,5 +1,5 @@
-import path from "path"
-import v8 from "v8"
+import * as path from "path"
+import * as v8 from "v8"
 import {
   existsSync,
   mkdtempSync,
@@ -10,7 +10,7 @@ import {
 } from "fs-extra"
 import { IGatsbyNode, ICachedReduxState } from "./types"
 import { sync as globSync } from "glob"
-import report from "gatsby-cli/lib/reporter"
+import * as report from "gatsby-cli/lib/reporter"
 
 const getLegacyCacheFile = (): string =>
   // TODO: remove this legacy stuff in v3 (fairly benign change but still)
@@ -52,7 +52,7 @@ export function readFromCache(): ICachedReduxState {
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const chunks = globSync(
     reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
-  ).map(file => v8.deserialize(readFileSync(file)))
+  ).map((file) => v8.deserialize(readFileSync(file)))
 
   const nodes: [string, IGatsbyNode][] = [].concat(...chunks)
 

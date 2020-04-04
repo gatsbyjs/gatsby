@@ -7,16 +7,18 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
-    "object-fit-images": "^3.2.4",
-    "prop-types": "^15.7.2"
+    "@babel/runtime": "7.9.2",
+    "object-fit-images": "3.2.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "@testing-library/react": "^9.5.0",
-    "babel-preset-gatsby-package": "^0.3.1",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.9.0",
+    "@testing-library/react": "10.0.1",
+    "babel-preset-gatsby-package": "0.3.1",
+    "cross-env": "7.0.2"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image#readme",
   "keywords": [
@@ -37,6 +39,7 @@
     "watch": "babel -w src --out-dir . --ignore **/__tests__"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=13.2.1",
+    "yarn": ">=1.22.4"
   }
 }

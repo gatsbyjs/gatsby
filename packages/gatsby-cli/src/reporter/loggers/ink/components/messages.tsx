@@ -1,70 +1,78 @@
-import React, { FunctionComponent } from "react"
+import * as React  from "react"
 import { Box, Color, ColorProps } from "ink"
 
 import { ActivityLogLevels, LogLevels } from "../../../constants"
 
-const ColorSwitcher: FunctionComponent<ColorProps> = ({
-  children,
-  ...props
-}) => <Color {...props}>{children}</Color>
+{/* <Color {...props}>{text}</Color> */}
 
-const createLabel = (
-  text: string,
-  color: string
-): FunctionComponent<ColorProps> => (...props): JSX.Element => (
-  <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
-)
+interface LabelProps {
+  text: string
+  color: 'green' | 'yellow' | 'gray' | 'blue' | 'red'
+  colorProps?: ColorProps
+}
 
-const getLabel = (
+function Label({ text, color, colorProps }: LabelProps): JSX.Element {
+  const memoColor = React.useMemo(function factory() {
+    return { [color]: true }
+  }, [color])
+
+  return (
+    <Color {...colorProps} {...memoColor} >{text}</Color>
+    // <ColorSwitcher {...{ [color]: true, ...props }} text={text} />
+  )
+}
+
+interface TextLabelProps {
   level: ActivityLogLevels | LogLevels
-): ReturnType<typeof createLabel> => {
+}
+
+function TextLabel({ level }: TextLabelProps): JSX.Element {
   switch (level) {
     case ActivityLogLevels.Success:
     case LogLevels.Success:
-      return createLabel(`success`, `green`)
+      return <Label text={`success`} color={`green`} />
     case LogLevels.Warning:
-      return createLabel(`warn`, `yellow`)
+      return <Label text={`warn`} color={`yellow`} />
     case LogLevels.Debug:
-      return createLabel(`verbose`, `gray`)
+      return <Label text={`verbose`} color={`gray`} />
     case LogLevels.Info:
-      return createLabel(`info`, `blue`)
+      return <Label text={`info`} color={`blue`} />
     case ActivityLogLevels.Failed:
-      return createLabel(`failed`, `red`)
+      return <Label text={`failed`} color={`red`} />
     case ActivityLogLevels.Interrupted:
-      return createLabel(`not finished`, `gray`)
+      return <Label text={`not finished`} color={`gray`} />
 
     default:
-      return createLabel(level, `blue`)
+      return <Label text={level} color={`blue`} />
   }
 }
 
-interface IProps {
+interface Props {
   level: ActivityLogLevels | LogLevels
   text: string
   duration: number
   statusText: string
 }
-export const Message = React.memo<IProps>(
-  ({ level, text, duration, statusText }) => {
-    let message = text
-    if (duration) {
-      message += ` - ${duration.toFixed(3)}s`
-    }
-    if (statusText) {
-      message += ` - ${statusText}`
-    }
-    if (!level || level === `LOG`) {
-      return <>{message}</>
-    }
 
-    const TextLabel = getLabel(level)
-
-    return (
-      <Box textWrap="wrap" flexDirection="row">
-        <TextLabel />
-        {` `}
-        {message}
-      </Box>
-    )
+function Message({ level, text, duration, statusText }: Props): JSX.Element {
+  let message = text
+  if (duration) {
+    message += ` - ${duration.toFixed(3)}s`
   }
-)
+  if (statusText) {
+    message += ` - ${statusText}`
+  }
+  if (!level || level === `LOG`) {
+    return <>{message}</>
+  }
+
+  return (
+    <Box textWrap="wrap" flexDirection="row">
+      <TextLabel level={level}/>
+      {` `}
+      {message}
+    </Box>
+  )
+}
+
+export default React.memo(Message)

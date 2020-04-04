@@ -1,5 +1,5 @@
 import { kebabCase } from "lodash"
-import path from "path"
+import * as path from "path"
 import { store } from "../redux"
 
 export const generateComponentChunkName = (componentPath: string): string => {

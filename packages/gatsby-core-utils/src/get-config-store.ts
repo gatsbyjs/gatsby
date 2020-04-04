@@ -1,4 +1,4 @@
-import Configstore from "configstore"
+import * as Configstore from "configstore"
 
 let config: Configstore
 /**

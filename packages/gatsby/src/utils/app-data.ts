@@ -1,5 +1,5 @@
-import fs from "fs-extra"
-import path from "path"
+import * as fs from "fs-extra"
+import * as path from "path"
 
 const APP_DATA_JSON = `app-data.json`
 

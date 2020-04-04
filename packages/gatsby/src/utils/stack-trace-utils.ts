@@ -1,4 +1,5 @@
-import stackTrace, { StackFrame } from "stack-trace"
+import * as stackTrace from "stack-trace"
+import { StackFrame } from "stack-trace"
 import { codeFrameColumns } from "@babel/code-frame"
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -15,7 +16,7 @@ const getNonGatsbyCallSite = (): StackFrame | undefined =>
   stackTrace
     .get()
     .find(
-      callSite =>
+      (callSite) =>
         callSite &&
         callSite.getFileName() &&
         !callSite.getFileName().includes(gatsbyLocation) &&
