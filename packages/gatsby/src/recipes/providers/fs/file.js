@@ -13,19 +13,23 @@ const fileExists = ({ root }, { path: filePath }) => {
 }
 
 const create = async ({ root }, { path: filePath, content }) => {
-  console.log(`hi File create`)
   const fullPath = path.join(root, filePath)
   const { dir } = path.parse(fullPath)
 
   await mkdirp(dir)
   await fs.writeFile(fullPath, content)
+
+  return { path: fullPath, content }
 }
 
 const update = create
 
 const read = async ({ root }, { path: filePath }) => {
   const fullPath = path.join(root, filePath)
-  const content = await fs.readFile(fullPath, `utf8`)
+  let content = ``
+  if (fileExists({ root }, { path: filePath })) {
+    content = await fs.readFile(fullPath, `utf8`)
+  }
 
   return { content }
 }
@@ -45,7 +49,6 @@ module.exports.destroy = destroy
 module.exports.plan = async (context, { path: filePath, content }) => {
   const src = await read(context, { path: filePath, content })
 
-  console.log(`making file plan`)
   return {
     currentState: src,
     newState: content,

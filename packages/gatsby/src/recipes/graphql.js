@@ -17,7 +17,7 @@ const { promisify } = require(`util`)
 const { interpret } = require(`xstate`)
 
 const recipeMachine = require(`./recipe-machine`)
-const gatsbyPluginResource = require('./providers/gatsby/plugin')
+const gatsbyPluginResource = require("./providers/gatsby/plugin")
 
 const SITE_ROOT = process.cwd()
 
@@ -56,7 +56,12 @@ const applyPlan = plan => {
     recipeMachine.withContext(initialState.context)
   ).onTransition(state => {
     // Don't emit again unless there's a state change.
-    console.log(`===onTransition`, { event: state.event, state: state.value })
+    console.log(`===onTransition`, {
+      event: state.event,
+      state: state.value,
+      context: state.context,
+      plan: state.context.plan,
+    })
     if (state.changed) {
       console.log(`===state.changed`, {
         state: state.value,

@@ -9,20 +9,13 @@ const asyncForEach = async (array, callback) => {
 }
 
 module.exports = async context => {
-  console.log(`createPlan`, context)
   const planForNextStep = []
 
-  // If we're at the end
-  console.log(`createPlan`, {
-    currentStep: context.currentStep,
-    length: context.steps.length,
-  })
-  if (context.currentStep + 1 >= context.steps.length) {
-    console.log(`we're at end`)
+  if (context.currentStep >= context.steps.length) {
     return planForNextStep
   }
 
-  const cmds = context.steps[context.currentStep + 1]
+  const cmds = context.steps[context.currentStep]
   const commandPlans = Object.entries(cmds).map(async ([key, val]) => {
     const resource = resources[key]
 

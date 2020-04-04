@@ -26,6 +26,8 @@
     "@reach/router": "^1.3.3",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
+    "@xstate/graph": "^1.0.0",
+    "@xstate/test": "^0.3.0",
     "acorn": "^7.1.1",
     "acorn-jsx": "^5.2.0",
     "address": "1.1.2",

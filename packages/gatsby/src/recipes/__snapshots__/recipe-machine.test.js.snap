@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should create plan for File resources 1`] = `
+Array [
+  Object {
+    "currentState": Object {
+      "content": "",
+    },
+    "describe": "Write ./hi.md",
+    "newState": "#yo",
+    "resource": Array [
+      Object {
+        "content": "#yo",
+        "path": "./hi.md",
+      },
+    ],
+    "resourceName": "File",
+  },
+]
+`;
