@@ -27,6 +27,27 @@ const defaultPluginOptions = {
     timeout: 30 * 1000, // 30 seconds
   },
   type: {
+    ActionMonitorAction: {
+      exclude: true,
+    },
+    UserToActionMonitorActionConnection: {
+      exclude: true,
+    },
+    Plugin: {
+      exclude: true,
+    },
+    PostFormat: {
+      exclude: true,
+    },
+    Theme: {
+      exclude: true,
+    },
+    UserRole: {
+      exclude: true,
+    },
+    UserToUserRoleConnection: {
+      exclude: true,
+    },
     MediaItem: {
       lazyNodes: false,
       beforeChangeNode: async ({ remoteNode, actionType }) => {
@@ -49,9 +70,6 @@ const defaultPluginOptions = {
     },
     ContentNode: {
       nodeInterface: true,
-    },
-    ActionMonitorAction: {
-      limit: 1,
     },
     Menu: {
       /**
