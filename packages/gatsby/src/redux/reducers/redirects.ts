@@ -23,7 +23,7 @@ function add(redirect: IRedirect): void {
   samePathRedirects.push(redirect)
 }
 
-export const redirectsReducer = (
+const redirectsReducer = (
   state: IGatsbyState["redirects"] = [],
   action: ICreateRedirectAction
 ): IGatsbyState["redirects"] => {
@@ -45,3 +45,5 @@ export const redirectsReducer = (
       return state
   }
 }
+
+export default redirectsReducer
