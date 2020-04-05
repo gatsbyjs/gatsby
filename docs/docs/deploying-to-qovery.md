@@ -8,7 +8,7 @@ title: Deploying to Qovery
 
 > Trusted by developers from great companies - Google, Red Hat, Elastic and more
 
-Qovery include the following:
+**Qovery include the following:**
 
 - Continuous, automatic builds & deploys from GitHub, Gitlab and Bitbucket.
 - [Custom domains](https://docs.qovery.com/services/network/dns).
@@ -33,16 +33,16 @@ To get started, you'll need:
 
 You can set up a Gatsby site on Qovery in five quick steps:
 
-**1/** Install the Qovery CLI - [how to install the Qovery CLI](https://docs.qovery.com/extending-qovery/cli)
+**1/** **Install the Qovery CLI** - [how to install the Qovery CLI](https://docs.qovery.com/extending-qovery/cli)
 
-**2/** Sign up
+**2/** **Sign up**
 
 ```bash
 # Sign up with Github, Gitlab or Bitbucket
 $ qovery auth
 ```
 
-**3/** Initialize Qovery in your Gatsby project
+**3/** **Initialize Qovery in your Gatsby project**
 
 ```bash
 # generate the .qovery.yml at the root of your project directory
@@ -54,7 +54,7 @@ $ qovery init
 ### IMPORTANT
 Qovery needs access to your repository to clone and build your application. During `qovery init` you'll be asked to grant Qovery permissions to your codebase. This is mandatory for build and deployment process to work correctly.
 
-**4/** Create a Dockerfile at the root of your project using the following script:
+**4/** **Create a Dockerfile at the root of your project using the following script:**
 
 ```Dockerfile
 $ echo "FROM node:12-buster as build
@@ -71,7 +71,7 @@ COPY --from=build /app/public /pub
 EXPOSE 80" >> Dockerfile
 ```
 
-**4/** Commit and push your changes
+**4/** **Your site is being deployed**
 
 ```bash
 # Git commit and push your code
@@ -80,7 +80,7 @@ $ git commit -m "add .qovery.yml and Dockerfile files"
 $ git push -u origin master
 ```
 
-**5/** Your site is being deployed
+**5/** **Your site is being deployed**
 
 You can check the status of deployment using:
 
