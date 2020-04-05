@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.3...gatsby-plugin-sharp@2.5.4) (2020-04-04)
+
+### Bug Fixes
+
+- **dependencies:** bump potrace version ([#22803](https://github.com/gatsbyjs/gatsby/issues/22803)) ([7a8f016](https://github.com/gatsbyjs/gatsby/commit/7a8f016))
+
 ## [2.5.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.2...gatsby-plugin-sharp@2.5.3) (2020-03-24)
 
 ### Bug Fixes
