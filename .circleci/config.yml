@@ -615,6 +615,94 @@ jobs:
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
           BENCHMARK_SITE_TYPE: BLOG
 
+  benchmark_contentful_512:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-contentful
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-contentful
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_contentful_4096:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-contentful
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-contentful
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_contentful_8192:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-contentful
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-contentful
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_contentful_32768:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-contentful
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-contentful
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_datocms_512:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-datocms
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-datocms
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_datocms_4096:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-datocms
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-datocms
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_datocms_8192:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-datocms
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-datocms
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_datocms_32768:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-datocms
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-datocms
+          BENCHMARK_SITE_TYPE: BLOG
+
 workflows:
   version: 2
 
@@ -636,6 +724,14 @@ workflows:
       - benchmark_mdx_4096
       - benchmark_mdx_8192
       - benchmark_mdx_32768
+      - benchmark_contentful_512
+      - benchmark_contentful_4096
+      - benchmark_contentful_8192
+      - benchmark_contentful_32768
+      - benchmark_datocms_512
+      - benchmark_datocms_4096
+      - benchmark_datocms_8192
+      - benchmark_datocms_32768
     triggers:
       - schedule:
           cron: 22 16 * * *
