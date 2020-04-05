@@ -6,10 +6,10 @@ import {
   getPageHtmlFilePath,
 } from "../utils/page-html"
 import { remove as removePageDataFile, fixedPagePath } from "../utils/page-data"
-import { IReduxState } from "../redux/types"
+import { IGatsbyState } from "../redux/types"
 
 export const getChangedPageDataKeys = (
-  state: IReduxState,
+  state: IGatsbyState,
   cachedPageData: Map<string, string>
 ): string[] => {
   if (cachedPageData && state.pageData) {
@@ -31,7 +31,7 @@ export const getChangedPageDataKeys = (
 }
 
 export const collectRemovedPageData = (
-  state: IReduxState,
+  state: IGatsbyState,
   cachedPageData: Map<string, string>
 ): string[] => {
   if (cachedPageData && state.pageData) {
