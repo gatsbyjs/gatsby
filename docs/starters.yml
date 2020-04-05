@@ -5839,3 +5839,20 @@
     - CSS-in-Reason support
     - StaticQuery GraphQL support in ReasonML
     - Similar to gatsby-starter-blog
+- url: https://gatsby-starter-songc.netlify.com/
+  repo: https://github.com/FFM-TEAM/gatsby-starter-song
+  description: A Gatsby starter for blog style with fresh UI.
+  tags:
+    - Blog
+    - Netlify
+    - SEO
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+  features:
+    - Emoji (emojione)
+    - Code syntax highlighting (atom-one-light Style)
+    - Mobile friendly and fully responsive
+    - Comment feature ( utterances)
+    - Post side PostTOC
+    - Simple fresh design like Medium
+    - Readability
