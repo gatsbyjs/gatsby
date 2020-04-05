@@ -1869,19 +1869,24 @@
     - Full Render Control with Portable Text
     - gatsby-image support
     - Content types for company info, pages, projects, people, and blog posts
-- url: https://gatsby-starter-under-construction.netlify.com/
-  repo: https://github.com/robinmetral/gatsby-starter-under-construction
-  description: Blazing fast "Under Construction" page with a blazing quick setup.
+- url: https://gatsby-starter-oss.netlify.com/
+  repo: https://github.com/robinmetral/gatsby-starter-oss
+  description: A Gatsby starter to showcase your open-source projects.
   tags:
-    - Onepage
+    - Portfolio
+    - Styling:Theme-UI
     - Styling:CSS-in-JS
-    - SEO
+    - Onepage
     - PWA
+    - SEO
+    - Testing
+    - Linting
   features:
-    - Configure everything in gatsby-config.js
-    - Creative CSS3 background patterns by Lea Verou
-    - Built-in Google Fonts support
-    - Social icons with react-social-icons
+    - 🐙🐈 Pull your pinned repos from GitHub
+    - 👩‍🎤 Style with Emotion
+    - ✨ Themeable with Theme UI
+    - 🚀 Powered by gatsby-theme-oss
+    - 💯 100/100 Lighthouse scores
 - url: https://gatsby-starter-docz.netlify.com/
   repo: https://github.com/RobinCsl/gatsby-starter-docz
   description: Simple starter where building your own documentation with Docz is possible
