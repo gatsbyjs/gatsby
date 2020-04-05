@@ -10260,6 +10260,16 @@
     - Food
     - Marketing
   built_by: Tyson Foods, Inc.
+- title: The Gauntlet Coverage of COVID-19 in Canada
+  url: https://covid19.thegauntlet.ca
+  main_url: https://covid19.thegauntlet.ca
+  description: >
+    Tracking The Spread of Coronavirus in Canada
+  categories:
+    - Media
+    - Education
+  built_by: Masoud Karimi
+  built_by_url: https://github.com/masoudkarimif
 - title: Zestard Technologies
   main_url: https://www.zestard.com
   url: https://www.zestard.com
