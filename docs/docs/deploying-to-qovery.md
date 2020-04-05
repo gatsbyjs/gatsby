@@ -4,7 +4,7 @@ title: Deploying to Qovery
 
 ## Introduction
 
-[Qovery](https://www.qovery.com) is a fully-managed cloud platform where you can host your modern applications. It can not only build and host your Gatsby site, but also take care of your backend applications, databases, message brokers and other services.
+[Qovery](https://www.qovery.com) is a fully-managed cloud platform where you can host your modern applications. It can not only build and host your Gatsby site but also take care of your backend applications, databases, message brokers and other services.
 
 > Trusted by developers from great companies - Google, Red Hat, Elastic and more
 
@@ -52,7 +52,7 @@ $ qovery init
 `qovery init` is an interactive script that will help you configure your application deployment. You can read more about this process [here](https://docs.qovery.com/quickstart/getting-started#qovery-initialization).
 
 ### IMPORTANT
-Qovery needs access to your repository to clone and build your application. During `qovery init` you'll be asked to grant Qovery permissions to your codebase. This is mandatory for build and deployment process to work correctly.
+Qovery needs access to your repository to clone and build your application. During `qovery init` you'll be asked to grant Qovery permissions to your codebase. This is mandatory for the build and deployment process to work correctly.
 
 **4/** **Create a Dockerfile at the root of your project using the following script:**
 
