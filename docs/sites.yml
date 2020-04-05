@@ -10234,3 +10234,16 @@
     - Food
     - Marketing
   built_by: Tyson Foods, Inc.
+- title: mrkaluzny
+  main_url: https://mrkaluzny.com
+  url: https://mrkaluzny.com
+  description: >
+    Web designer and web developer specializing in providing services for SME sector.
+  featured: false
+  categories:
+    - Web Development
+    - Programming
+    - Business
+    - Portfolio
+    - Freelance
+  built_by: Wojciech Kaluzny
