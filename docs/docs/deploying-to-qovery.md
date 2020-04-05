@@ -4,7 +4,7 @@ title: Deploying to Qovery
 
 ## Introduction
 
-[Qovery](https://www.qovery.com) is a fully-managed Cloud platform where you can host your modern application (web, database, broker, storage).
+[Qovery](https://www.qovery.com) is a fully-managed cloud platform where you can host your modern applications. It can not only build and host your Gatsby site, but also take care of your backend applications, databases, message brokers and other services.
 
 > Trusted by developers from great companies - Google, Red Hat, Elastic and more
 
@@ -16,7 +16,7 @@ Qovery include the following:
 - Microservices support.
 - Auto-scaling support.
 - Native HTTP/2 support.
-- [Isolated environment](https://docs.qovery.com/extending-qovery/branches-and-environments) per git branch.
+- [Isolated environments](https://docs.qovery.com/extending-qovery/branches-and-environments) per git branch.
 - Managed databases (PostgreSQL, MySQL, MongoDB, Elasticsearch, Redis, Memcached, Cassandra).
 - Managed brokers (RabbitMQ, Kafka).
 - Managed storage (S3).
@@ -25,36 +25,39 @@ Qovery include the following:
 ## Prerequisites
 To get started, you'll need:
 
-- You have an account with GitHub, GitLab or Bitbucket.
-- You have completed the Quick Start or have a Gatsby website you are ready to deploy and share with the world.
-- You have a Qovery account. You can sign up at [start.qovery.com](https://start.qovery.com).
+- GitHub, GitLab or Bitbucket account.
+- Gatsby website you want to share with the world.
+- Qovery account. You can [sign up here](https://start.qovery.com).
 
 ## Deploy your application
 
 You can set up a Gatsby site on Qovery in five quick steps:
 
-**1/** Install the Qovery CLI
-Here is [how to install the Qovery CLI](https://docs.qovery.com/extending-qovery/cli) documentation
+**1/** Install the Qovery CLI - [how to install the Qovery CLI](https://docs.qovery.com/extending-qovery/cli)
 
 **2/** Sign up
 
 ```bash
-# Sign up with Github, Gitlab, Bitbucket
+# Sign up with Github, Gitlab or Bitbucket
 $ qovery auth
 ```
 
-**3/** Configure your project and generate a .qovery.yml
+**3/** Initialize Qovery in your Gatsby project
 
 ```bash
 # generate the .qovery.yml at the root of your project directory
 $ qovery init
 ```
 
-**4/** Add this Dockerfile at the root of your project directory
-You can achieve this by running `touch Dockerfile` in your terminal and add the code block below to this file.
+`qovery init` is an interactive script that will help you configure your application deployment. You can read more about this process [here](https://docs.qovery.com/quickstart/getting-started#qovery-initialization).
+
+### IMPORTANT
+Qovery needs access to your repository to clone and build your application. During `qovery init` you'll be asked to grant Qovery permissions to your codebase. This is mandatory for build and deployment process to work correctly.
+
+**4/** Create a Dockerfile at the root of your project using the following script:
 
 ```Dockerfile
-FROM node:12-buster as build
+$ echo "FROM node:12-buster as build
 
 RUN yarn global add gatsby-cli
 WORKDIR /app
@@ -65,10 +68,10 @@ RUN gatsby build
 FROM gatsbyjs/gatsby
 COPY --from=build /app/public /pub
 
-EXPOSE 80
+EXPOSE 80" >> Dockerfile
 ```
 
-**4/** Git commit, push and your Gatsby site is deployed
+**4/** Commit and push your changes
 
 ```bash
 # Git commit and push your code
@@ -77,7 +80,9 @@ $ git commit -m "add .qovery.yml and Dockerfile files"
 $ git push -u origin master
 ```
 
-**5/** Get your public URL
+**5/** Your site is being deployed
+
+You can check the status of deployment using:
 
 ```bash
 $ qovery status
@@ -93,7 +98,7 @@ You can also choose to [disable auto deploys](https://docs.qovery.com/extending-
 
 ## Environments
 
-Qovery brings the powerful [concept of environment](https://docs.qovery.com/extending-qovery/branches-and-environments) to never break the production and safely develop new feature.
+Qovery brings the powerful [concept of environments](https://docs.qovery.com/extending-qovery/branches-and-environments) to never break the production and safely develop new features.
 
 ## Custom Domains
 
