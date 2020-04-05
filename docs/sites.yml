@@ -10234,3 +10234,15 @@
     - Food
     - Marketing
   built_by: Tyson Foods, Inc.
+- title: Hanare Cafe in Toshijima, Toba, Japan
+  main_url: https://hanarecafe.com
+  url: https://hanarecafe.com
+  source_url: https://github.com/mnishiguchi/hanarecafe-gatsby
+  description: >
+    A website for a cafe/bakery located in Toshijima, a beautiful sightseeing spot just a 20-minutes ferry ride from downtown Toba, Japan.
+  categories:
+    - Food
+    - Travel
+  built_by: Masatoshi Nishiguchi
+  built_by_url: https://mnishiguchi.com
+  featured: false
