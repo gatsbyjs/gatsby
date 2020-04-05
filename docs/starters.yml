@@ -5855,6 +5855,16 @@
     - CSS-in-Reason support
     - StaticQuery GraphQL support in ReasonML
     - Similar to gatsby-starter-blog
+- url: https://mik3y.github.io/gatsby-starter-basic-bootstrap/
+  repo: https://github.com/mik3y/gatsby-starter-basic-bootstrap
+  description: A barebones starter featuring react-bootstrap and deliberately little else
+  tags:
+    - Styling:Bootstrap
+    - Styling:SCSS
+  features:
+    - Uses react-bootstrap, sass, and little else
+    - Skeleton starter, based on gatsby-starter-default
+    - Optional easy integration of themes from Bootswatch.com
 - url: https://gatsby-starter-songc.netlify.com/
   repo: https://github.com/FFM-TEAM/gatsby-starter-song
   description: A Gatsby starter for blog style with fresh UI.
