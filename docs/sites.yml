@@ -9978,6 +9978,18 @@
   built_by: Built by Rebels Ltd.
   built_by_url: https://builtbyrebels.com/
   featured: false
+- title: OCIUS
+  url: https://www.ocius.com.au/
+  main_url: https://www.ocius.com.au/
+  source_url: https://github.com/ocius/website
+  description: >
+    Ocius Technology Ltd (formerly Solar Sailor Holdings Ltd) is an Australian public unlisted company with Research and Development facilities at the University of NSW.
+  categories:
+    - Business
+    - Technology
+    - Science
+  built_by: Sergey Monin
+  built_by_url: https://build-in-saratov.com/
 - title: Kosmos & Kaos
   main_url: https://www.kosmosogkaos.is/
   url: https://www.kosmosogkaos.is/
