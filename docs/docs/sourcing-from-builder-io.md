@@ -12,7 +12,7 @@ title: Sourcing from Builder.io
 
 ### Fresh project:
 
-To start on a fresh project quickly, take a look at our [Gatsby starter](https://github.com/BuilderIO/gatsby-starter-builder)
+To start on a fresh project quickly, take a look at the [BuilderIO Gatsby starter](/starters/BuilderIO/gatsby-starter-builder/)
 
 ```shell
 gatsby new my-builder-site https://github.com/BuilderIO/gatsby-starter-builder
