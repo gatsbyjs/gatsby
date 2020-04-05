@@ -23,7 +23,6 @@ gatsby new my-builder-site https://github.com/BuilderIO/gatsby-starter-builder
 Make a free account over at [Builder.io](https://www.builder.io/) and grab your public API key from your [organization page](https://builder.io/account/organization) and:
 
 ```javascript:title=gatsby-config.js
-
 const path = require("path")
 module.exports = {
   plugins: [
