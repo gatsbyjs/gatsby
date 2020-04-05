@@ -32,8 +32,10 @@
 - [ ] add Joi for validating resource objects
 - [ ] handle error states
 - [x] handle template strings in JSX parser
+- [ ] integration test for each resource (read, create, update, delete)
 
 ## Near-ish future
 
 - [ ] Make a proper "Config" provider to add recipes dir, store data, etc.
 - [ ] Move parsing to the server
+- [ ] init.js for providers to setup clients

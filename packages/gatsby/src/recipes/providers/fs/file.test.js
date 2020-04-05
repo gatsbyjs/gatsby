@@ -1,4 +1,6 @@
+const Joi = require(`@hapi/joi`)
 const file = require(`./file`)
+const resourceSchema = require(`../resource-schema`)
 
 const root = __dirname
 const content = `Hello, world!`
@@ -39,5 +41,36 @@ describe(`file resource`, () => {
     expect(result.describe).toEqual(`Write ${filePath}`)
 
     await file.destroy({ root }, { path: filePath })
+  })
+
+  test(`e2e file resource test`, async () => {
+    const filePath = `file.txt`
+    const createPlan = await file.plan({ root }, { path: filePath, content })
+    expect(createPlan).toMatchSnapshot()
+    const createResponse = await file.create(
+      { root },
+      { path: filePath, content }
+    )
+    const validateResult = Joi.validate(createResponse, {
+      ...file.validate(),
+      ...resourceSchema,
+    })
+    expect(validateResult.error).toBeNull()
+
+    expect(createResponse).toMatchSnapshot()
+    const readResponse = await file.read({ root }, { path: filePath })
+    expect(readResponse).toMatchSnapshot()
+    const updatePlan = await file.plan(
+      { root },
+      { path: filePath, content: content + `1` }
+    )
+    expect(updatePlan).toMatchSnapshot()
+    const updateResponse = await file.update(
+      { root },
+      { path: filePath, content: content + `1` }
+    )
+    expect(updateResponse).toMatchSnapshot()
+    const destroyReponse = await file.destroy({ root }, { path: filePath })
+    expect(destroyReponse).toMatchSnapshot()
   })
 })
