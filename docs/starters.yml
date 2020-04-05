@@ -5838,9 +5838,10 @@
   repo: https://github.com/Miloshinjo/gatsby-ts-tw-styled-eslint-starter
   description: Gatsby starter with Typescript, TailwindCSS, @emotion/styled and eslint.
   tags:
-    - Typescript
+    - Linting
     - Styling:CSS-in-JS
-    - TailwindCSS
+    - Styling:Tailwind
+    - Language:TypeScript
   features:
     - Typescript support
     - CSS-in-JS with @emotion/styled (like styled components)
