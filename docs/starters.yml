@@ -1,3 +1,19 @@
+- url: https://22boxes-gatsby-uno.netlify.com/
+  repo: https://github.com/iamtherealgd/gatsby-starter-22boxes-uno
+  description: A Gatsby starter for creating blogs and showcasing your work
+  tags:
+    - Blog
+    - Portfolio
+    - Similar to gatsby-starter-blog
+    - Markdown
+    - SEO
+    - Showcase
+    - Landing pages for work
+  features:
+    - Work and About pages
+    - Work page with blog type content management
+    - Personal webiste to create content and put your portfolio items
+    - Landing pages for your work items, not just links
 - url: https://gatsby-wordpress-libre.netlify.com/
   repo: https://github.com/armada-inc/gatsby-wordpress-libre-starter
   description: A Gatsby starter for creating blogs from headless WordPress CMS.
