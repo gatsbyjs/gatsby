@@ -299,12 +299,11 @@ const collectBucketForElemMatch = (
   }
 
   if (!filtersCache.has(typedKey)) {
-    ensureIndexByElemMatch(typedKey, filter, nodeTypeNames, filterCaches)
+    ensureIndexByElemMatch(typedKey, filter, nodeTypeNames, filtersCache)
   }
 
   const nodesByKeyValue /*: Set<IGatsbyNode> | undefined*/ = getFilterCacheByTypedChain(
     typedKey,
-    comparator,
     targetValue,
     filtersCache
   )
@@ -468,7 +467,7 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   if (
     filters.some(
       filter =>
-        filter.type === `elemMatch` ||
+        filter.type !== `elemMatch` &&
         ![`$eq`].includes(filter.query.comparator)
     )
   ) {
