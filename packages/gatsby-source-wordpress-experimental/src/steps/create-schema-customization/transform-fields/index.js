@@ -31,9 +31,14 @@ const handleCustomScalars = field => {
 
 // this is used to alias fields that conflict with Gatsby node fields
 // for ex Gatsby and WPGQL both have a `parent` field
-const getAliasedFieldName = ({ fieldAliases, field }) =>
+export const getAliasedFieldName = ({ fieldAliases, field }) =>
   fieldAliases && fieldAliases[field.name]
     ? fieldAliases[field.name]
+    : field.name
+
+export const returnAliasedFieldName = ({ fieldAliases, field }) =>
+  fieldAliases && fieldAliases[field.name]
+    ? `${fieldAliases[field.name]}: ${field.name}`
     : field.name
 
 const excludeField = ({

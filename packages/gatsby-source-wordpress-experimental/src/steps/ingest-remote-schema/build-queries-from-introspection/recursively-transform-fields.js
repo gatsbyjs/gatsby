@@ -1,6 +1,7 @@
 import store from "~/store"
 import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
 import { fieldIsExcludedOnParentType } from "~/steps/ingest-remote-schema/is-excluded"
+import { returnAliasedFieldName } from "~/steps/create-schema-customization/transform-fields"
 
 const transformFragments = ({
   possibleTypes,
@@ -83,10 +84,7 @@ function transformField({
 
   // this is used to alias fields that conflict with Gatsby node fields
   // for ex Gatsby and WPGQL both have a `parent` field
-  const fieldName =
-    fieldAliases && fieldAliases[field.name]
-      ? `${fieldAliases[field.name]}: ${field.name}`
-      : field.name
+  const fieldName = returnAliasedFieldName({ fieldAliases, field })
 
   if (
     fieldBlacklist.includes(field.name) ||
