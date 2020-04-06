@@ -1,44 +1,8 @@
-import Joi from "@hapi/joi"
 import stackTrace from "stack-trace"
-import errorSchema from "./error-schema"
-import { errorMap, defaultError, IErrorMapEntry, ErrorId } from "./error-map"
+import { errorSchema } from "./error-schema"
+import { errorMap, defaultError, IErrorMapEntry } from "./error-map"
 import { sanitizeStructuredStackTrace } from "../reporter/errors"
-
-interface IConstructError {
-  details: {
-    id?: ErrorId
-    context?: Record<string, string>
-    error?: Error
-    [key: string]: unknown
-  }
-}
-
-interface ILocationPosition {
-  line: number
-  column: number
-}
-
-interface IStructuredError {
-  code?: string
-  text: string
-  stack: {
-    fileName: string
-    functionName?: string
-    lineNumber?: number
-    columnNumber?: number
-  }[]
-  filePath?: string
-  location?: {
-    start: ILocationPosition
-    end?: ILocationPosition
-  }
-  error?: unknown
-  group?: string
-  level: IErrorMapEntry["level"]
-  type?: IErrorMapEntry["type"]
-  docsUrl?: string
-}
-
+import { IConstructError, IStructuredError } from "./types"
 // Merge partial error details with information from the errorMap
 // Validate the constructed object against an error schema
 const constructError = ({
@@ -63,7 +27,7 @@ const constructError = ({
   }
 
   // validate
-  const { error } = Joi.validate(structuredError, errorSchema)
+  const { error } = errorSchema.validate(structuredError)
   if (error !== null) {
     console.log(`Failed to validate error`, error)
     process.exit(1)

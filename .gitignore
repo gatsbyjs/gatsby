@@ -28,6 +28,7 @@ build/Release
 node_modules
 examples/biz-website/public/
 examples/blog/public/
+integration-tests/gatsby-cli/execution-folder/*
 *.un~
 dist
 bin/published.js

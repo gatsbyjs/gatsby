@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.2.2...gatsby-telemetry@1.2.3) (2020-04-01)
+
+### Bug Fixes
+
+- **telemetry:** fix isTrackingEnabled always truthy ([#22613](https://github.com/gatsbyjs/gatsby/issues/22613)) ([5aaf296](https://github.com/gatsbyjs/gatsby/commit/5aaf296)), closes [#22531](https://github.com/gatsbyjs/gatsby/issues/22531)
+
 ## [1.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.2.1...gatsby-telemetry@1.2.2) (2020-03-25)
 
 ### Features
