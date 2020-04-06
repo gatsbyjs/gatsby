@@ -610,7 +610,7 @@
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
           link: /docs/graphql-concepts/
-        - title: Security in Gatsby*
+        - title: Security in Gatsby
           link: /docs/security-in-gatsby/
         - title: Theme Shadowing
           link: /docs/how-shadowing-works/
@@ -767,6 +767,8 @@
           link: /docs/glossary/headless-cms/
         - title: Headless WordPress
           link: /docs/glossary/headless-wordpress/
+        - title: Hydration
+          link: /docs/glossary/hydration/
         - title: JAMStack
           link: /docs/glossary/jamstack/
         - title: Markdown

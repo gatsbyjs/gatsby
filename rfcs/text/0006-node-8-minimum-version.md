@@ -49,38 +49,37 @@ As far as documentation goes, we will (minimally) be able to make the following 
 
 - Document `async` / `await`
 
-    ```diff
-    -exports.createPages = function createPages({ graphql }) {
-    -  return new Promise((resolve, reject) => {
-    -    return graphql(`
-    -      {
-    -        site {
-    -          siteMetadata {
-    -            title
-    -          }
-    +exports.createPages = async function createPages({ graphql }) {
-    +  const result = await graphql(`
-    +    {
-    +      site {
-    +        siteMetadata {
-    +          title
-            }
+  ```diff
+  -exports.createPages = function createPages({ graphql }) {
+  -  return new Promise((resolve, reject) => {
+  -    return graphql(`
+  -      {
+  -        site {
+  -          siteMetadata {
+  -            title
+  -          }
+  +exports.createPages = async function createPages({ graphql }) {
+  +  const result = await graphql(`
+  +    {
+  +      site {
+  +        siteMetadata {
+  +          title
           }
-    -    `)
-    -      .then(result => {
-    -        // do something with result
-    -        resolve()
-    -      })
-    -  })
-    +    }
-    +  `)
-    +
-    +  // do something with result
-    }
-    ```
+        }
+  -    `)
+  -      .then(result => {
+  -        // do something with result
+  -        resolve()
+  -      })
+  -  })
+  +    }
+  +  `)
+  +
+  +  // do something with result
+  }
+  ```
 
 Both _seem_ like small changes, but in practice both of these have led to much confusion and clarification.
-
 
 # Drawbacks
 
@@ -96,8 +95,8 @@ There aren't really any reasonable alternatives. A library must eventually be de
 
 The impact of _not_ doing this is two-fold:
 
-1) The _engineering cost_ of not being able to use a growing number of libraries that require Node 8 or greater
-1) The _support cost_ of answering questions/concerns re: possibly confusing APIs, global installs, and general just many experiencing _more issues_ on Node 6
+1. The _engineering cost_ of not being able to use a growing number of libraries that require Node 8 or greater
+1. The _support cost_ of answering questions/concerns re: possibly confusing APIs, global installs, and general just many experiencing _more issues_ on Node 6
 
 # Adoption strategy
 

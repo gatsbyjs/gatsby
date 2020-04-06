@@ -9256,8 +9256,9 @@
 - title: Miyamado Jinja
   main_url: https://www.miyamadojinja.com
   url: https://www.miyamadojinja.com
+  source_url: https://github.com/mnishiguchi/miyamadojinja
   description: >
-    Miyamado Jinja is a Japanses Shinto Shrine in Yokkaichi, Mie, Japan.
+    Miyamado Jinja is a Japanese Shinto Shrine in Yokkaichi, Mie, Japan.
   categories:
     - Nonprofit
     - Travel
@@ -9977,6 +9978,32 @@
   built_by: Built by Rebels Ltd.
   built_by_url: https://builtbyrebels.com/
   featured: false
+- title: OCIUS
+  url: https://www.ocius.com.au/
+  main_url: https://www.ocius.com.au/
+  source_url: https://github.com/ocius/website
+  description: >
+    Ocius Technology Ltd (formerly Solar Sailor Holdings Ltd) is an Australian public unlisted company with Research and Development facilities at the University of NSW.
+  categories:
+    - Business
+    - Technology
+    - Science
+  built_by: Sergey Monin
+  built_by_url: https://build-in-saratov.com/
+- title: Kosmos & Kaos
+  main_url: https://www.kosmosogkaos.is/
+  url: https://www.kosmosogkaos.is/
+  description: >
+    A carefully designed user experience is good business.
+  categories:
+    - Design
+    - Consulting
+    - Agency
+    - Web Development
+    - JavaScript
+  built_by: Kosmos & Kaos
+  built_by_url: https://www.kosmosogkaos.is/
+  featured: false
 - title: Design Portfolio of Richard Bruskowski
   main_url: https://bruskowski.design/
   url: https://bruskowski.design/
@@ -10074,3 +10101,246 @@
     - Library
   built_by: Gilbish Kosma
   built_by_url: https://www.gil20.me/
+- title: Monolit
+  url: https://monolit.hr
+  main_url: https://monolit.hr
+  description: >
+    Standard business website with sliders and contact form.
+  categories:
+    - Business
+  built_by: Devnet
+  built_by_url: https://devnet.hr
+  featured: false
+- title: Andrew Zeller
+  main_url: https://zeller.io
+  source_url: https://github.com/ajzeller/zellerio_gatsby
+  url: https://zeller.io
+  featured: false
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Andrew Zeller
+  built_by_url: https://zeller.io
+- title: Crushing WFH
+  url: https://crushingwfh.com/
+  main_url: https://crushingwfh.com/
+  source_url: https://github.com/tiagofsanchez/wfh-tools
+  description: >
+    A directory of tools to help anyone to work from home in a productive manner
+  categories:
+    - Directory
+    - Open Source
+  built_by: Tiago Sanchez
+  built_by_url: https://www.tiagofsanchez.com/
+  featured: false
+- title: Martin Container
+  main_url: https://www.container.com/
+  url: https://www.container.com/
+  featured: false
+  categories:
+    - Business
+  built_by: Vincit California
+  built_by_url: https://www.vincit.com/
+- title: Urban Armor Gear
+  main_url: https://www.urbanarmorgear.com/
+  url: https://www.urbanarmorgear.com/
+  featured: false
+  categories:
+    - E-commerce
+  built_by: Vincit California
+  built_by_url: https://www.vincit.com/
+- title: Jason Zheng's Portfolio
+  main_url: https://jasonzy.com
+  url: https://jasonzy.com
+  source_url: https://github.com/bilafish/portfolio-site
+  description: >
+    Hey there, I'm Jason! I'm a front-end web developer from the sunny island
+    of Singapore. This is my first Gatsby site developed using Gatsby and
+    Netlify CMS. Feel free to get in touch if you're interested to collaborate
+    or engage me on any projects. If you just want to say hello, that's cool
+    too.
+  featured: false
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Jason Zheng
+  built_by_url: https://github.com/bilafish
+- title: Fluiditype
+  url: https://www.fluiditype.com/
+  main_url: https://www.fluiditype.com/
+  description: >
+    Fluditype is small CSS library focusing on pure typographic fluidity. Recommend to be used for blogs, portfolios, documentation & and simplistic text websites.
+  categories:
+    - Open Source
+    - Design
+  built_by: Boris Kirov
+  built_by_url: https://www.boriskirov.com
+  featured: false
+- title: Bonsaiilabs
+  main_url: https://bonsaiilabs.com/
+  url: https://bonsaiilabs.com/
+  description: >
+    We are a team of two, creating software for startups and enabling learners with our visualize, break, and solve approach.
+  featured: false
+  categories:
+    - Education
+    - Consulting
+  built_by: Bonsaiilabs Team
+  built_by_url: https://bonsaiilabs.com/team
+- title: Tyson
+  main_url: https://www.tyson.com
+  url: https://www.tyson.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Hillshire Farm
+  main_url: https://www.hillshirefarm.com
+  url: https://www.hillshirefarm.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Hillshire Snacking
+  main_url: https://www.hillshiresnacking.com
+  url: https://www.hillshiresnacking.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Jimmy Dean
+  main_url: https://www.jimmydean.com
+  url: https://www.jimmydean.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Aidells
+  main_url: https://www.aidells.com
+  url: https://www.aidells.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: State Fair
+  main_url: https://www.corndogs.com
+  url: https://www.corndogs.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Nudges
+  main_url: https://www.nudgesdogtreats.com
+  url: https://www.nudgesdogtreats.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Tyson Ingredient Solutions
+  main_url: https://www.tysoningredientsolutions.com
+  url: https://www.tysoningredientsolutions.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Wright Brand
+  main_url: https://www.wrightbrand.com
+  url: https://www.wrightbrand.com
+  featured: false
+  categories:
+    - Food
+    - Marketing
+  built_by: Tyson Foods, Inc.
+- title: Brad Garropy
+  url: https://bradgarropy.com
+  main_url: https://bradgarropy.com
+  source_url: https://github.com/bradgarropy/bradgarropy.com
+  categories:
+    - Blog
+    - Education
+    - Entertainment
+    - JavaScript
+    - Open Source
+    - Portfolio
+    - Programming
+    - SEO
+    - Technology
+    - Web Development
+  built_by: Brad Garropy
+  built_by_url: https://twitter.com/bradgarropy
+- title: mrkaluzny
+  main_url: https://mrkaluzny.com
+  url: https://mrkaluzny.com
+  description: >
+    Web designer and web developer specializing in providing services for SME sector.
+  featured: false
+  categories:
+    - Web Development
+    - Programming
+    - Business
+    - Portfolio
+    - Freelance
+  built_by: Wojciech Kaluzny
+- title: The COVID Tracking Project
+  url: https://covidtracking.com/
+  main_url: https://covidtracking.com/
+  source_url: https://github.com/COVID19Tracking/website
+  description: >
+    The COVID Tracking Project collects and publishes the most complete testing data available for US states and territories.
+  categories:
+    - Media
+    - Healthcare
+  built_by: The COVID Tracking Project Web Team
+  built_by_url: https://github.com/COVID19Tracking/website/graphs/contributors
+- title: The Gauntlet Coverage of COVID-19 in Canada
+  url: https://covid19.thegauntlet.ca
+  main_url: https://covid19.thegauntlet.ca
+  description: >
+    Tracking The Spread of Coronavirus in Canada
+  categories:
+    - Media
+    - Education
+  built_by: Masoud Karimi
+  built_by_url: https://github.com/masoudkarimif
+- title: Zestard Technologies
+  main_url: https://www.zestard.com
+  url: https://www.zestard.com
+  description: >
+    Zestard Technologies is an eCommerce Specialist company focusing on Magento & Shopify as a core expertise.
+  categories:
+    - Web Development
+    - WordPress
+    - Technology
+    - Agency
+    - E-commerce
+  built_by: Zestard Technologies
+  built_by_url: https://www.zestard.com
+- title: Kostas Vrouvas
+  main_url: https://kosvrouvas.com
+  url: https://kosvrouvas.com
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Kostas Vrouvas
+- title: Hanare Cafe in Toshijima, Toba, Japan
+  main_url: https://hanarecafe.com
+  url: https://hanarecafe.com
+  source_url: https://github.com/mnishiguchi/hanarecafe-gatsby
+  description: >
+    A website for a cafe/bakery located in Toshijima, a beautiful sightseeing spot just a 20-minutes ferry ride from downtown Toba, Japan.
+  categories:
+    - Food
+    - Travel
+  built_by: Masatoshi Nishiguchi
+  built_by_url: https://mnishiguchi.com
+  featured: false
