@@ -1,5 +1,5 @@
 ---
-title: 'Gatsby Days LA 2020 Video 3: Slash Build Times with Gatsby Builds Best Practices'
+title: "Gatsby Days LA 2020 Video 3: Slash Build Times with Gatsby Builds Best Practices"
 date: 2020-04-03
 author: Greg Thomas
 excerpt: "React developer Grant Gladwell tells how he identified best practices for using Gatsby Builds to cut build time for image-heavy websites by a factor of five."
@@ -10,6 +10,7 @@ tags:
   - drupal
   - gatsby-cloud
 ---
+
 _Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool, joining us at our next Gatsby Days—currently scheduled for October 19th in Amsterdam—would also be pretty awesome)._
 
 Grant Gladwell is a React developer dedicated to employing modern technologies in cutting-edge projects. During his time at the digital experience agency Third and Grove, Grant was part of the team that integrated Drupal and Gatsby to create the agency’s fast, yet content-rich website. He also helped build Gatsby Preview + Drupal—a live preview module for Drupal that can be used with Gatsby Cloud.

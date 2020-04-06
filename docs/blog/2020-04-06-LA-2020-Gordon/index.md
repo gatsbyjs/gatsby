@@ -1,5 +1,5 @@
 ---
-title: 'Gatsby Days LA 2020 Video 4: Methodologies for Building Highly Dynamic WordPress Sites Using Gatsby'
+title: "Gatsby Days LA 2020 Video 4: Methodologies for Building Highly Dynamic WordPress Sites Using Gatsby"
 date: 2020-04-06
 author: Greg Thomas
 excerpt: "What are the best options for integrating comments and other dynamic elements into your WordPress website? Zac Gordon evaluates key approaches."
@@ -10,7 +10,8 @@ tags:
   - drupal
   - gatsby-cloud
 ---
-_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-4th—would be pretty awesome, too 💜.  Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
+
+_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-4th—would be pretty awesome, too 💜. Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
 
 Zac Gordon is a community builder at [Strattic](https://www.strattic.com/) the serverless WordPress host Strattic and an educator who has taught courses on building with JavaScript and Gatsby in WordPress for high schools, colleges, bootcamps, and online learning sites. He is particularly excited to discuss ways the evolving [content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/) is pushing WordPress and the web forward by enabling developers to capitalize on best-of-breed microservices.
 
