@@ -166,12 +166,6 @@ commands:
             BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
             CI_NAME: circleci
             GATSBY_CPU_COUNT: 2
-
-      - run:
-          command: npm install
-          working_directory: << parameters.working_directory >>
-          environment:
-            NUM_PAGES: << parameters.NUM_PAGES >>
       - run:
           command: npm run build
           working_directory: << parameters.working_directory >>
