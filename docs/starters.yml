@@ -4,11 +4,8 @@
   tags:
     - Blog
     - Portfolio
-    - Similar to gatsby-starter-blog
     - Markdown
     - SEO
-    - Showcase
-    - Landing pages for work
   features:
     - Work and About pages
     - Work page with blog type content management
@@ -4432,7 +4429,7 @@
     - HTML5UP
     - Styling:SCSS
   features:
-    - Kentico Kontent Caas plafrorm as the data source
+    - Kentico Kontent CaaS platform as the data source
     - Landing page divided by section.
     - Support for code syntax highlighting
     - Includes plugins for easy, beautiful typography
@@ -5882,3 +5879,23 @@
     - Post side PostTOC
     - Simple fresh design like Medium
     - Readability
+- url: https://gatsby-starter-kontent-lumen.netlify.com/
+  repo: https://github.com/Kentico/gatsby-starter-kontent-lumen
+  description: A minimal, lightweight, and mobile-first starter for creating blogs uses Gatsby and Kentico Kontent CMS. Inspired by Lumen.
+  tags:
+    - SEO
+    - CMS:Headless
+    - CMS:Kontent
+    - Netlify
+    - Styling:SCSS
+    - Blog
+  features:
+    - Kentico Kontent CaaS platform as the data source.
+    - Mobile-First approach in development.
+    - Archive organized by tags and categories.
+    - Automatic Sitemap generation.
+    - Lost Grid.
+    - Beautiful typography inspired by matejlatin/Gutenberg.
+    - Stylesheet built using Sass and BEM-Style naming.
+    - Syntax highlighting in code blocks.
+    - Google Analytics support.
