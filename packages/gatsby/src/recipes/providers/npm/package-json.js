@@ -1,7 +1,7 @@
 const fs = require(`fs`)
 const path = require(`path`)
 const { promisify } = require(`util`)
-const Joi = require('@hapi/joi')
+const Joi = require(`@hapi/joi`)
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
@@ -32,7 +32,7 @@ const read = async ({ root }, id) => {
   const pkg = await readPackageJson(root)
 
   if (!pkg[id]) {
-    return
+    return undefined
   }
 
   return {
@@ -51,7 +51,12 @@ const destroy = async ({ root }, { id }) => {
 module.exports.validate = () => {
   return {
     name: Joi.string(),
-    value: Joi.alternatives().try(Joi.object(), Joi.string(), Joi.number(), Joi.array())
+    value: Joi.alternatives().try(
+      Joi.object(),
+      Joi.string(),
+      Joi.number(),
+      Joi.array()
+    ),
   }
 }
 
@@ -59,13 +64,13 @@ module.exports.plan = async ({ root }, { id, name, value }) => {
   const key = id || name
   const currentState = readPackageJson(root)
   const newState = { ...currentState, [key]: value }
-  
+
   return {
     id: key,
     name,
     currentState: JSON.stringify(currentState, null, 2),
     newState: JSON.stringify(newState, null, 2),
-    describe: `Add ${key} to package.json`
+    describe: `Add ${key} to package.json`,
   }
 }
 

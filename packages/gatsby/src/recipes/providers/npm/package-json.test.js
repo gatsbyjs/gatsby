@@ -1,18 +1,18 @@
-const path = require('path')
+const path = require(`path`)
 
 const pkgJson = require(`./package-json`)
 const resourceTestHelper = require(`../resource-test-helper`)
 
-const root = path.join(__dirname, 'fixtures')
+const root = path.join(__dirname, `fixtures`)
 
-const name = "husky"
+const name = `husky`
 const initialValue = {
-  "hooks": {}
+  hooks: {},
 }
 const updateValue = {
-  "hooks": {
-    "pre-commit": "lint-staged"
-  }
+  hooks: {
+    "pre-commit": `lint-staged`,
+  },
 }
 
 describe(`packageJson resource`, () => {

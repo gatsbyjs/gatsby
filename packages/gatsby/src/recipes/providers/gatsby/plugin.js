@@ -87,7 +87,7 @@ const read = async ({ root }, id) => {
   if (name) {
     return { id, name }
   } else {
-    return null
+    return undefined
   }
 }
 

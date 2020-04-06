@@ -32,6 +32,8 @@ const read = async (context, id) => {
   let content = ``
   if (fileExists(id)) {
     content = await fs.readFile(id, `utf8`)
+  } else {
+    return undefined
   }
 
   return { id, path: id, content }
@@ -52,7 +54,7 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
   const currentResource = await read(context, fullPath)
 
   return {
-    currentState: currentResource.content,
+    currentState: currentResource && currentResource.content,
     newState: content,
     describe: `Write ${fullPath}`,
   }
