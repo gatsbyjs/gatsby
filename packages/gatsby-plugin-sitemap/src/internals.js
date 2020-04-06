@@ -20,9 +20,7 @@ export function filterQuery(
     throw new Error(errors.join(`, `))
   }
 
-  // site shouldn't be included in "otherData but isn't needed either."
-  // eslint-disable-next-line no-unused-vars
-  const { allSitePage, site, ...otherData } = data
+  const { allSitePage, ...otherData } = data
 
   let { allPages, originalType } = getNodes(allSitePage)
 
@@ -57,6 +55,7 @@ export function filterQuery(
   siteUrl = withoutTrailingSlash(siteUrl)
 
   return {
+    ...otherData,
     allSitePage: {
       [originalType]:
         originalType === `nodes`
@@ -66,7 +65,6 @@ export function filterQuery(
             }),
     },
     site: { siteMetadata: { siteUrl } },
-    ...otherData,
   }
 }
 
