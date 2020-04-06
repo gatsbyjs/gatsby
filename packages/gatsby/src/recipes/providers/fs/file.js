@@ -3,8 +3,7 @@ const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const Joi = require(`@hapi/joi`)
 
-const fileExists = ({ root }, { path: filePath }) => {
-  const fullPath = path.join(root, filePath)
+const fileExists = fullPath => {
   try {
     fs.accessSync(fullPath, fs.constants.F_OK)
     return true
@@ -13,41 +12,49 @@ const fileExists = ({ root }, { path: filePath }) => {
   }
 }
 
-const create = async ({ root }, { path: filePath, content }) => {
+const create = async ({ root }, { id, path: filePath, content }) => {
   const fullPath = path.join(root, filePath)
   const { dir } = path.parse(fullPath)
 
   await mkdirp(dir)
+
   await fs.writeFile(fullPath, content)
 
-  // TODO make the ID relative to the root of the git repo.
-  return { id: fullPath, path: fullPath, content }
+  return await read({ root }, fullPath)
 }
 
-const update = create
+const update = async (context, resource) => {
+  await fs.writeFile(resource.id, resource.content)
+  return await read(context, resource.id)
+}
 
-const read = async ({ root }, { path: filePath }) => {
-  const fullPath = path.join(root, filePath)
+const read = async (context, id) => {
   let content = ``
-  if (fileExists({ root }, { path: filePath })) {
-    content = await fs.readFile(fullPath, `utf8`)
+  if (fileExists(id)) {
+    content = await fs.readFile(id, `utf8`)
   }
 
-  return { content }
+  return { id, path: id, content }
 }
 
-const destroy = async ({ root }, { path: filePath }) => {
-  const fullPath = path.join(root, filePath)
-  await fs.unlink(fullPath)
+const destroy = async (context, fileResource) => {
+  await fs.unlink(fileResource.path)
 }
 
-module.exports.plan = async (context, { path: filePath, content }) => {
-  const src = await read(context, { path: filePath, content })
+// TODO pass action to plan
+module.exports.plan = async (context, { id, path: filePath, content }) => {
+  let fullPath
+  if (!id) {
+    fullPath = path.join(context.root, filePath)
+  } else {
+    fullPath = id
+  }
+  const currentResource = await read(context, fullPath)
 
   return {
-    currentState: src,
+    currentState: currentResource.content,
     newState: content,
-    describe: `Write ${filePath}`,
+    describe: `Write ${fullPath}`,
   }
 }
 
