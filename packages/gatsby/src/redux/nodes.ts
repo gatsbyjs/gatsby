@@ -177,7 +177,7 @@ export const ensureIndexByTypedChain = (
 
   if (nodeTypeNames.length === 1) {
     getNodesByType(nodeTypeNames[0]).forEach(node => {
-      addNodeToFilterCache(node, node, chain, filterCache, resolvedNodesCache)
+      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
     })
   } else {
     // Here we must first filter for the node type
@@ -187,17 +187,17 @@ export const ensureIndexByTypedChain = (
         return
       }
 
-      addNodeToFilterCache(node, node, chain, filterCache, resolvedNodesCache)
+      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
     })
   }
 }
 
 function addNodeToFilterCache(
   node: IGatsbyNode,
-  valueOffset: any,
   chain: Array<string>,
   filterCache: FilterCache,
-  resolvedNodesCache
+  resolvedNodesCache,
+  valueOffset: any = node
 ): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
   if (!node.__gatsby_resolved) {
@@ -327,10 +327,10 @@ function addNodeToBucketWithElemMatch(
         // Now take same route as non-elemMatch filters would take
         addNodeToFilterCache(
           node,
-          valueAtCurrentStep,
           nestedQuery.path,
           filterCache,
-          resolvedNodesCache
+          resolvedNodesCache,
+          valueAtCurrentStep
         )
       }
     })
