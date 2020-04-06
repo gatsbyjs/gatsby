@@ -537,7 +537,11 @@ export interface GatsbyBrowser {
     args: ReplaceComponentRendererArgs,
     options: PluginOptions
   ): any
-  replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): any
+  replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): (
+    element: React.DOMElement<React.DOMAttributes<Element>, Element>,
+    container: Element,
+    callback: () => {}
+  ) => void
   shouldUpdateScroll?(args: ShouldUpdateScrollArgs, options: PluginOptions): any
   wrapPageElement?(
     args: WrapPageElementBrowserArgs,
