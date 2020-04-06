@@ -4,9 +4,9 @@ exports[`packageJson resource e2e package resource test: PackageJson create 1`] 
 Object {
   "id": "husky",
   "name": "husky",
-  "value": Object {
-    "hooks": Object {},
-  },
+  "value": "{
+  \\"hooks\\": {}
+}",
 }
 `;
 
@@ -17,9 +17,7 @@ Object {
   "id": "husky",
   "name": "husky",
   "newState": "{
-  \\"husky\\": {
-    \\"hooks\\": {}
-  }
+  \\"husky\\": \\"{\\\\n  \\\\\\"hooks\\\\\\": {}\\\\n}\\"
 }",
 }
 `;
@@ -30,11 +28,11 @@ exports[`packageJson resource e2e package resource test: PackageJson update 1`] 
 Object {
   "id": "husky",
   "name": "husky",
-  "value": Object {
-    "hooks": Object {
-      "pre-commit": "lint-staged",
-    },
-  },
+  "value": "{
+  \\"hooks\\": {
+    \\"pre-commit\\": \\"lint-staged\\"
+  }
+}",
 }
 `;
 
@@ -45,11 +43,7 @@ Object {
   "id": "husky",
   "name": "husky",
   "newState": "{
-  \\"husky\\": {
-    \\"hooks\\": {
-      \\"pre-commit\\": \\"lint-staged\\"
-    }
-  }
+  \\"husky\\": \\"{\\\\n  \\\\\\"hooks\\\\\\": {\\\\n    \\\\\\"pre-commit\\\\\\": \\\\\\"lint-staged\\\\\\"\\\\n  }\\\\n}\\"
 }",
 }
 `;

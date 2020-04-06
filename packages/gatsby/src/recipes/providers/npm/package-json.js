@@ -21,7 +21,7 @@ const writePackageJson = async (root, obj) => {
 
 const create = async ({ root }, { name, value }) => {
   const pkg = await readPackageJson(root)
-  pkg[name] = value
+  pkg[name] = JSON.parse(value)
 
   await writePackageJson(root, pkg)
 
@@ -38,7 +38,7 @@ const read = async ({ root }, id) => {
   return {
     id,
     name: id,
-    value: pkg[id],
+    value: JSON.stringify(pkg[id], null, 2),
   }
 }
 
@@ -51,12 +51,7 @@ const destroy = async ({ root }, { id }) => {
 module.exports.validate = () => {
   return {
     name: Joi.string(),
-    value: Joi.alternatives().try(
-      Joi.object(),
-      Joi.string(),
-      Joi.number(),
-      Joi.array()
-    ),
+    value: Joi.string(),
   }
 }
 

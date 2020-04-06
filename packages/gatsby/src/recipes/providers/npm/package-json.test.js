@@ -6,14 +6,22 @@ const resourceTestHelper = require(`../resource-test-helper`)
 const root = path.join(__dirname, `fixtures`)
 
 const name = `husky`
-const initialValue = {
-  hooks: {},
-}
-const updateValue = {
-  hooks: {
-    "pre-commit": `lint-staged`,
+const initialValue = JSON.stringify(
+  {
+    hooks: {},
   },
-}
+  null,
+  2
+)
+const updateValue = JSON.stringify(
+  {
+    hooks: {
+      "pre-commit": `lint-staged`,
+    },
+  },
+  null,
+  2
+)
 
 describe(`packageJson resource`, () => {
   test(`e2e package resource test`, async () => {
