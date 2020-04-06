@@ -5852,6 +5852,19 @@
     - CSS-in-Reason support
     - StaticQuery GraphQL support in ReasonML
     - Similar to gatsby-starter-blog
+- url: https://gatsby-ts-tw-styled-eslint.netlify.com
+  repo: https://github.com/Miloshinjo/gatsby-ts-tw-styled-eslint-starter
+  description: Gatsby starter with Typescript, TailwindCSS, @emotion/styled and eslint.
+  tags:
+    - Linting
+    - Styling:CSS-in-JS
+    - Styling:Tailwind
+    - Language:TypeScript
+  features:
+    - Typescript support
+    - CSS-in-JS with @emotion/styled (like styled components)
+    - TailwindCSS (1.2) support
+    - eslint with airbnb settings
 - url: https://mik3y.github.io/gatsby-starter-basic-bootstrap/
   repo: https://github.com/mik3y/gatsby-starter-basic-bootstrap
   description: A barebones starter featuring react-bootstrap and deliberately little else
