@@ -636,13 +636,6 @@ workflows:
       - benchmark_mdx_4096
       - benchmark_mdx_8192
       - benchmark_mdx_32768
-    triggers:
-      - schedule:
-          cron: 22 16 * * *
-          filters:
-            branches:
-              only:
-                - master
 
   nightly-react-next:
     triggers:
