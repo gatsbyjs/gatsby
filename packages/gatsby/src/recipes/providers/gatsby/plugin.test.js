@@ -10,10 +10,10 @@ const name = `gatsby-plugin-foo`
 const configPath = path.join(root, `gatsby-config.js`)
 
 describe(`gatsby-plugin resource`, () => {
-  test(`e2e file resource test`, async () => {
+  test(`e2e plugin resource test`, async () => {
     await resourceTestHelper({
       resourceModule: plugin,
-      resourceName: `File`,
+      resourceName: `GatsbyPlugin`,
       context: { root },
       initialObject: { id: name, name },
       partialUpdate: { id: name },
