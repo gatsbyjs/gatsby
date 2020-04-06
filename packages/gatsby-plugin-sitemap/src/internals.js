@@ -14,14 +14,15 @@ export function filterQuery(
   pathPrefix,
   resolveSiteUrl = defaultOptions.resolveSiteUrl
 ) {
-  const {
-    errors,
-    data: { allSitePage, site, ...otherData },
-  } = results
+  const { errors, data } = results
 
   if (errors) {
     throw new Error(errors.join(`, `))
   }
+
+  // site shouldn't be included in "otherData but isn't needed either."
+  // eslint-disable-next-line no-unused-vars
+  const { allSitePage, site, ...otherData } = data
 
   let { allPages, originalType } = getNodes(allSitePage)
 
@@ -44,7 +45,7 @@ export function filterQuery(
 
   // siteUrl Validation
 
-  let siteUrl = resolveSiteUrl(site)
+  let siteUrl = resolveSiteUrl(data)
 
   if (!siteUrl || siteUrl.trim().length == 0) {
     throw new Error(
@@ -104,7 +105,7 @@ export const defaultOptions = {
       }
     })
   },
-  resolveSiteUrl: data => data.siteMetadata.siteUrl,
+  resolveSiteUrl: data => data.site.siteMetadata.siteUrl,
 }
 
 function getNodes(results) {
