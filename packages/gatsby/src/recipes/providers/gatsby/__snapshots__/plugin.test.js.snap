@@ -1,5 +1,50 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`gatsby-plugin resource all returns an array of plugins 1`] = `
+Array [
+  Object {
+    "id": "gatsby-source-filesystem",
+    "name": "gatsby-source-filesystem",
+  },
+  Object {
+    "id": "gatsby-transformer-sharp",
+    "name": "gatsby-transformer-sharp",
+  },
+  Object {
+    "id": "gatsby-plugin-emotion",
+    "name": "gatsby-plugin-emotion",
+  },
+  Object {
+    "id": "gatsby-plugin-typography",
+    "name": "gatsby-plugin-typography",
+  },
+  Object {
+    "id": "gatsby-transformer-remark",
+    "name": "gatsby-transformer-remark",
+  },
+  Object {
+    "id": "gatsby-plugin-sharp",
+    "name": "gatsby-plugin-sharp",
+  },
+  Object {
+    "id": "gatsby-plugin-google-analytics",
+    "name": "gatsby-plugin-google-analytics",
+  },
+  Object {
+    "id": "gatsby-plugin-manifest",
+    "name": "gatsby-plugin-manifest",
+  },
+  Object {
+    "id": "gatsby-plugin-offline",
+    "name": "gatsby-plugin-offline",
+  },
+  Object {
+    "id": "gatsby-plugin-react-helmet",
+    "name": "gatsby-plugin-react-helmet",
+  },
+]
+`;
+
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create 1`] = `
 Object {
   "id": "gatsby-plugin-foo",
