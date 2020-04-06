@@ -1,14 +1,21 @@
-const stackTrace = require(`stack-trace`)
+import stackTrace from 'stack-trace'
+import { Store } from 'redux'
 
-const GraphQLRunner = require(`../query/graphql-runner`).default
-const errorParser = require(`../query/error-parser`).default
+import GraphQLRunner from '../query/graphql-runner'
+import errorParser from '../query/error-parser'
 
-const { emitter } = require(`../redux`)
+import { emitter } from '../redux'
+import { IGatsbyState } from '../redux/types'
+import { Reporter } from '../..'
 
-module.exports = (store, reporter) => {
+import { ExecutionResult, Source } from '../../graphql'
+import { ExecutionResultDataDefault } from 'graphql/execution/execute'
+
+const graphQLRunner = (store: Store<IGatsbyState>, reporter: Reporter): (query: string | Source, context: Record<string, any>) => Promise<ExecutionResult<ExecutionResultDataDefault>> => {
   // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
   let runner = new GraphQLRunner(store)
-  ;[
+  
+  const eventTypes: string[] = [
     `DELETE_CACHE`,
     `CREATE_NODE`,
     `DELETE_NODE`,
@@ -17,11 +24,14 @@ module.exports = (store, reporter) => {
     `SET_SCHEMA`,
     `ADD_FIELD_TO_NODE`,
     `ADD_CHILD_NODE_TO_PARENT_NODE`,
-  ].forEach(eventType => {
-    emitter.on(eventType, event => {
+  ]
+  
+  eventTypes.forEach(type => {
+    emitter.on(type, () => {
       runner = new GraphQLRunner(store)
     })
   })
+
   return (query, context) =>
     runner.query(query, context).then(result => {
       if (result.errors) {
@@ -30,15 +40,15 @@ module.exports = (store, reporter) => {
             // Find the file where graphql was called.
             const file = stackTrace
               .parse(e)
-              .find(file => /createPages/.test(file.functionName))
+              .find(file => /createPages/.test(file.getFunctionName()))
 
             if (file) {
               const structuredError = errorParser({
                 message: e.message,
                 location: {
-                  start: { line: file.lineNumber, column: file.columnNumber },
+                  start: { line: file.getLineNumber(), column: file.getColumnNumber() },
                 },
-                filePath: file.fileName,
+                filePath: file.getFileName(),
               })
               structuredError.context = {
                 ...structuredError.context,
@@ -60,3 +70,5 @@ module.exports = (store, reporter) => {
       return result
     })
 }
+
+export default graphQLRunner
