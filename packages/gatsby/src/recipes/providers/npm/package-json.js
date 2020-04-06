@@ -1,6 +1,7 @@
 const fs = require(`fs`)
 const path = require(`path`)
 const { promisify } = require(`util`)
+const Joi = require(`@hapi/joi`)
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
@@ -20,23 +21,52 @@ const writePackageJson = async (root, obj) => {
 
 const create = async ({ root }, { name, value }) => {
   const pkg = await readPackageJson(root)
-  pkg[name] = value
+  pkg[name] = JSON.parse(value)
+
   await writePackageJson(root, pkg)
+
+  return await read({ root }, name)
 }
 
-const read = async ({ root }, { name }) => {
+const read = async ({ root }, id) => {
   const pkg = await readPackageJson(root)
 
+  if (!pkg[id]) {
+    return undefined
+  }
+
   return {
-    name,
-    value: pkg[name],
+    id,
+    name: id,
+    value: JSON.stringify(pkg[id], null, 2),
   }
 }
 
-const destroy = async ({ root }, { name }) => {
+const destroy = async ({ root }, { id }) => {
   const pkg = await readPackageJson(root)
-  delete pkg[name]
+  delete pkg[id]
   await writePackageJson(root, pkg)
+}
+
+module.exports.validate = () => {
+  return {
+    name: Joi.string(),
+    value: Joi.string(),
+  }
+}
+
+module.exports.plan = async ({ root }, { id, name, value }) => {
+  const key = id || name
+  const currentState = readPackageJson(root)
+  const newState = { ...currentState, [key]: value }
+
+  return {
+    id: key,
+    name,
+    currentState: JSON.stringify(currentState, null, 2),
+    newState: JSON.stringify(newState, null, 2),
+    describe: `Add ${key} to package.json`,
+  }
 }
 
 module.exports.create = create

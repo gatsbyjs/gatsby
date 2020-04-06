@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create-types 1`] = `
+Object {
+  "file": Object {
+    "args": Object {
+      "id": Object {
+        "type": "String",
+      },
+    },
+    "resolve": [Function],
+    "type": "File",
+  },
+  "gatsbyPlugin": Object {
+    "args": Object {
+      "id": Object {
+        "type": "String",
+      },
+    },
+    "resolve": [Function],
+    "type": "GatsbyPlugin",
+  },
+  "npmPackageJson": Object {
+    "args": Object {
+      "id": Object {
+        "type": "String",
+      },
+    },
+    "resolve": [Function],
+    "type": "NPMPackageJson",
+  },
+}
+`;

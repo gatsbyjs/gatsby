@@ -1,23 +1,36 @@
-const path = require('path')
+const path = require(`path`)
+
 const pkgJson = require(`./package-json`)
+const resourceTestHelper = require(`../resource-test-helper`)
 
-const root = path.join(__dirname, 'fixtures')
+const root = path.join(__dirname, `fixtures`)
 
-const name = "husky"
-const value = {
-  "hooks": {
-    "pre-commit": "lint-staged"
-  }
-}
+const name = `husky`
+const initialValue = JSON.stringify(
+  {
+    hooks: {},
+  },
+  null,
+  2
+)
+const updateValue = JSON.stringify(
+  {
+    hooks: {
+      "pre-commit": `lint-staged`,
+    },
+  },
+  null,
+  2
+)
 
-describe('package-json', () => {
-  test(`create a config object`, async () => {
-    await pkgJson.create({ root }, { name, value })
-
-    const result = await pkgJson.read({ root }, { name, value })
-
-    expect(result).toEqual({ name, value })
-
-    await pkgJson.destroy({ root }, { name, value })
+describe(`packageJson resource`, () => {
+  test(`e2e package resource test`, async () => {
+    await resourceTestHelper({
+      resourceModule: pkgJson,
+      resourceName: `PackageJson`,
+      context: { root },
+      initialObject: { name, value: initialValue },
+      partialUpdate: { value: updateValue },
+    })
   })
 })

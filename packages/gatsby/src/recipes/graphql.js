@@ -4,32 +4,21 @@ const {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLList,
   execute,
   subscribe,
 } = require(`graphql`)
 const { PubSub } = require(`graphql-subscriptions`)
 const { SubscriptionServer } = require(`subscriptions-transport-ws`)
 const { createServer } = require(`http`)
-const fs = require(`fs`)
-const path = require(`path`)
-const { promisify } = require(`util`)
 const { interpret } = require(`xstate`)
 
 const recipeMachine = require(`./recipe-machine`)
-const gatsbyPluginResource = require(`./providers/gatsby/plugin`)
+const createTypes = require(`./create-types`)
 
 const SITE_ROOT = process.cwd()
 
-const read = promisify(fs.readFile)
-
 const pubsub = new PubSub()
 const PORT = 4000
-
-const readPackage = async () => {
-  const contents = await read(path.join(SITE_ROOT, `package.json`), `utf8`)
-  return JSON.parse(contents)
-}
 
 const emitOperation = state => {
   pubsub.publish(`operation`, {
@@ -40,11 +29,6 @@ const emitOperation = state => {
 // only one service can run at a time.
 let service
 const applyPlan = plan => {
-  // plan.forEach(step => queue.push({ plan, ...step }))
-
-  // queue.on(`drain`, () => {
-  // emitOperation(`success`, plan)
-  // })
   const initialState = {
     context: { steps: plan, currentStep: 0 },
     value: `init`,
@@ -90,86 +74,11 @@ const OperationType = new GraphQLObjectType({
   },
 })
 
-const NPMPackageScriptType = new GraphQLObjectType({
-  name: `NPMPackageScript`,
-  fields: {
-    name: { type: GraphQLString },
-    script: { type: GraphQLString },
-  },
-})
-
-const NPMPackageType = new GraphQLObjectType({
-  name: `NPMPackage`,
-  fields: {
-    name: { type: GraphQLString },
-    version: { type: GraphQLString },
-    path: { type: GraphQLString },
-    scripts: { type: new GraphQLList(NPMPackageScriptType) },
-  },
-})
-
-const GatsbyConfigPluginType = new GraphQLObjectType({
-  name: `GatsbyConfigPlugin`,
-  fields: {
-    name: { type: GraphQLString },
-    version: { type: GraphQLString },
-  },
-})
+const types = createTypes()
 
 const rootQueryType = new GraphQLObjectType({
   name: `Root`,
-  fields: () => {
-    return {
-      npmPackage: {
-        type: NPMPackageType,
-        args: {
-          name: {
-            type: GraphQLString,
-          },
-        },
-        resolve: async (_, args) => {
-          // TODO: peer/dev
-          const { dependencies } = await readPackage()
-          const version = dependencies[args.name]
-          return { name: args.name, version }
-        },
-      },
-      allNpmPackage: {
-        type: new GraphQLList(NPMPackageType),
-        resolve: async () => {
-          const { dependencies } = await readPackage()
-
-          return Object.entries(dependencies).map(([name, version]) => {
-            return {
-              name,
-              version,
-            }
-          })
-        },
-      },
-      allNpmPackageScripts: {
-        type: new GraphQLList(NPMPackageScriptType),
-        resolve: async () => {
-          const { scripts } = await readPackage()
-          return Object.entries(scripts).map(([name, script]) => {
-            return {
-              name,
-              script,
-            }
-          })
-        },
-      },
-      allGatsbyConfigPlugin: {
-        type: new GraphQLList(GatsbyConfigPluginType),
-        resolve: async () => {
-          const plugins = gatsbyPluginResource.read({ root: SITE_ROOT })
-          return plugins.map(async name => {
-            return { name }
-          })
-        },
-      },
-    }
-  },
+  fields: () => types,
 })
 
 const rootMutationType = new GraphQLObjectType({
@@ -230,6 +139,7 @@ app.use(
   graphqlHTTP({
     schema,
     graphiql: true,
+    context: { root: SITE_ROOT },
   })
 )
 

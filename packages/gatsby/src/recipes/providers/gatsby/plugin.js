@@ -75,7 +75,7 @@ const create = async ({ root }, { name }) => {
 
   await fs.writeFile(configPath, code)
 
-  return { id: name, name }
+  return await read({ root }, name)
 }
 
 const read = async ({ root }, id) => {
@@ -87,7 +87,7 @@ const read = async ({ root }, id) => {
   if (name) {
     return { id, name }
   } else {
-    return null
+    return undefined
   }
 }
 

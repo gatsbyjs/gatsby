@@ -1,6 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-plugin resource e2e file resource test 1`] = `
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create 1`] = `
+Object {
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create plan 1`] = `
 Object {
   "currentState": "const redish = \`#c5484d\`;
 module.exports = {
@@ -112,14 +119,16 @@ module.exports = {
 }
 `;
 
-exports[`gatsby-plugin resource e2e file resource test 2`] = `
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin destroy 1`] = `undefined`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update 1`] = `
 Object {
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
 }
 `;
 
-exports[`gatsby-plugin resource e2e file resource test 3`] = `
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update plan 1`] = `
 Object {
   "currentState": "const redish = \`#c5484d\`;
 module.exports = {
@@ -230,12 +239,3 @@ module.exports = {
 };",
 }
 `;
-
-exports[`gatsby-plugin resource e2e file resource test 4`] = `
-Object {
-  "id": "gatsby-plugin-foo",
-  "name": "gatsby-plugin-foo",
-}
-`;
-
-exports[`gatsby-plugin resource e2e file resource test 5`] = `undefined`;
