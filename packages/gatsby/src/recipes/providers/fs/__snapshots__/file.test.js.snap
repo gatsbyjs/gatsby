@@ -3,33 +3,39 @@
 exports[`file resource e2e file resource test: File create 1`] = `
 Object {
   "content": "Hello, world!",
-  "id": "/Users/johno-mini/c/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
-  "path": "/Users/johno-mini/c/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
+  "id": "file.txt",
+  "path": "file.txt",
 }
 `;
 
 exports[`file resource e2e file resource test: File create plan 1`] = `
 Object {
   "currentState": undefined,
-  "describe": "Write /Users/johno-mini/c/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
+  "describe": "Write file.txt",
   "newState": "Hello, world!",
 }
 `;
 
-exports[`file resource e2e file resource test: File destroy 1`] = `undefined`;
+exports[`file resource e2e file resource test: File destroy 1`] = `
+Object {
+  "content": "Hello, world!1",
+  "id": "file.txt",
+  "path": "file.txt",
+}
+`;
 
 exports[`file resource e2e file resource test: File update 1`] = `
 Object {
   "content": "Hello, world!1",
-  "id": "/Users/johno-mini/c/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
-  "path": "/Users/johno-mini/c/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
+  "id": "file.txt",
+  "path": "file.txt",
 }
 `;
 
 exports[`file resource e2e file resource test: File update plan 1`] = `
 Object {
-  "currentState": "Hello, world!",
-  "describe": "Write /Users/johno-mini/c/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
+  "currentState": undefined,
+  "describe": "Write file.txt",
   "newState": "Hello, world!1",
 }
 `;

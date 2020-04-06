@@ -3,6 +3,8 @@ const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const Joi = require(`@hapi/joi`)
 
+const makePath = (root, relativePath) => path.join(root, relativePath)
+
 const fileExists = fullPath => {
   try {
     fs.accessSync(fullPath, fs.constants.F_OK)
@@ -13,25 +15,28 @@ const fileExists = fullPath => {
 }
 
 const create = async ({ root }, { id, path: filePath, content }) => {
-  const fullPath = path.join(root, filePath)
+  const fullPath = makePath(root, filePath)
   const { dir } = path.parse(fullPath)
 
   await mkdirp(dir)
 
   await fs.writeFile(fullPath, content)
 
-  return await read({ root }, fullPath)
+  return await read({ root }, filePath)
 }
 
 const update = async (context, resource) => {
-  await fs.writeFile(resource.id, resource.content)
+  const fullPath = makePath(context.root, resource.id)
+  await fs.writeFile(fullPath, resource.content)
   return await read(context, resource.id)
 }
 
 const read = async (context, id) => {
+  const fullPath = makePath(context.root, id)
+
   let content = ``
-  if (fileExists(id)) {
-    content = await fs.readFile(id, `utf8`)
+  if (fileExists(fullPath)) {
+    content = await fs.readFile(fullPath, `utf8`)
   } else {
     return undefined
   }
@@ -40,7 +45,9 @@ const read = async (context, id) => {
 }
 
 const destroy = async (context, fileResource) => {
-  await fs.unlink(fileResource.path)
+  const fullPath = makePath(context.root, fileResource.id)
+  await fs.unlink(fullPath)
+  return fileResource
 }
 
 // TODO pass action to plan
@@ -48,15 +55,16 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
   let fullPath
   if (!id) {
     fullPath = path.join(context.root, filePath)
+    fullPath = makePath(context.root, filePath)
   } else {
-    fullPath = id
+    fullPath = makePath(context.root, id)
   }
   const currentResource = await read(context, fullPath)
 
   return {
     currentState: currentResource && currentResource.content,
     newState: content,
-    describe: `Write ${fullPath}`,
+    describe: `Write ${filePath}`,
   }
 }
 
