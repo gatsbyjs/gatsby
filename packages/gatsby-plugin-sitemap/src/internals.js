@@ -14,13 +14,16 @@ export function filterQuery(
   pathPrefix,
   resolveSiteUrl = defaultOptions.resolveSiteUrl
 ) {
-  const { errors, data } = results
+  const {
+    errors,
+    data: { allSitePage, site, ...otherData },
+  } = results
 
   if (errors) {
     throw new Error(errors.join(`, `))
   }
 
-  let { allPages, originalType } = getNodes(data.allSitePage)
+  let { allPages, originalType } = getNodes(allSitePage)
 
   // Removing excluded paths
   allPages = allPages.filter(
@@ -41,7 +44,7 @@ export function filterQuery(
 
   // siteUrl Validation
 
-  let siteUrl = resolveSiteUrl(data)
+  let siteUrl = resolveSiteUrl(site)
 
   if (!siteUrl || siteUrl.trim().length == 0) {
     throw new Error(
@@ -62,6 +65,7 @@ export function filterQuery(
             }),
     },
     site: { siteMetadata: { siteUrl } },
+    ...otherData,
   }
 }
 
@@ -100,7 +104,7 @@ export const defaultOptions = {
       }
     })
   },
-  resolveSiteUrl: data => data.site.siteMetadata.siteUrl,
+  resolveSiteUrl: data => data.siteMetadata.siteUrl,
 }
 
 function getNodes(results) {
