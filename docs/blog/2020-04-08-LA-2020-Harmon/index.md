@@ -1,5 +1,5 @@
 ---
-title: 'Gatsby Days LA 2020 Video 6: Set Up and Sell Things Fast with Gatsby + Shopify'
+title: "Gatsby Days LA 2020 Video 6: Set Up and Sell Things Fast with Gatsby + Shopify"
 date: 2020-04-08
 author: Greg Thomas
 excerpt: "Trevor Harmon from Shopify gives a step-by-step walkthrough for a sample site, showing how to set up a Shopify store, then pull data into Gatsby and use it to create pages."
@@ -9,7 +9,8 @@ tags:
   - shopify
   - plug-ins
 ---
-_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-3rd—would be pretty awesome, too 💜.  Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
+
+_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-3rd—would be pretty awesome, too 💜. Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
 
 Speed is everything in e-commerce. A single extra second of load time can cost an online retailer 7% in lost sales every year. To keep customers engaged and revenues flowing, you need to ensure your site is fast.
 
