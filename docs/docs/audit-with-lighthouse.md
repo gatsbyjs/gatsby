@@ -44,7 +44,7 @@ Now run your first Lighthouse test.
 
 ## Using Gatsby Cloud
 
-If you use [Gatsby Cloud](https://www.gatsbyjs.com/cloud) a Lighthouse audit runs automatically, every time your site builds. In Cloud, every code commit to GitHub triggers a build, allowing you to see any shifts in your scores and what code changes caused them.
+If you use [Gatsby Cloud](https://www.gatsbyjs.com/cloud), a Lighthouse audit runs automatically every time your site builds. In Cloud, every code commit to GitHub triggers a build, allowing you to see any shifts in your scores and what code changes caused them.
 
 ![Lighthouse audit in Cloud](./images/cloud-lighthouse.png)
 
