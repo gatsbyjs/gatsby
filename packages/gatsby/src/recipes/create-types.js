@@ -1,26 +1,38 @@
 const Joi2GQL = require(`joi2gql`)
 const Joi = require(`@hapi/joi`)
-const { GraphQLString } = require(`graphql`)
+const { GraphQLString, GraphQLObjectType, GraphQLList } = require(`graphql`)
 const _ = require(`lodash`)
 
 const resources = require(`./resources`)
+const resourceSchema = require(`./providers/resource-schema`)
+
+const typeNameToHumanName = name => {
+  if (name.endsWith(`Connection`)) {
+    return `all` + name.replace(/Connection$/, ``)
+  } else {
+    return _.camelCase(name)
+  }
+}
 
 module.exports = () => {
-  const types = Object.entries(resources)
-    .map(([resourceName, resource]) => {
+  const resourceTypes = Object.entries(resources).map(
+    ([resourceName, resource]) => {
       if (!resource.validate) {
         return undefined
       }
 
-      const joiSchema = Joi.object().keys(resource.validate())
+      const types = []
 
-      const config = {
+      const joiSchema = Joi.object().keys({
+        ...resource.validate(),
+        ...resourceSchema,
+      })
+
+      const type = Joi2GQL.transmuteType(joiSchema, {
         name: resourceName,
-      }
+      })
 
-      const type = Joi2GQL.transmuteType(joiSchema, config)
-
-      return {
+      const resourceType = {
         type,
         args: {
           id: { type: GraphQLString },
@@ -28,10 +40,38 @@ module.exports = () => {
         resolve: async (_root, args, context) =>
           await resource.read(context, args.id),
       }
-    })
+      types.push(resourceType)
+
+      if (resource.all) {
+        const connectionTypeName = resourceName + `Connection`
+
+        const ConnectionType = new GraphQLObjectType({
+          name: connectionTypeName,
+          fields: {
+            nodes: { type: new GraphQLList(type) },
+          },
+        })
+
+        const connectionType = {
+          type: ConnectionType,
+          resolve: async (_root, _args, context) => {
+            const nodes = await resource.all(context)
+            return { nodes }
+          },
+        }
+
+        types.push(connectionType)
+      }
+
+      return types
+    }
+  )
+
+  const types = _.flatten(resourceTypes)
     .filter(Boolean)
     .reduce((acc, curr) => {
-      acc[_.camelCase(curr.type.toString())] = curr
+      const typeName = typeNameToHumanName(curr.type.toString())
+      acc[typeName] = curr
       return acc
     }, {})
 

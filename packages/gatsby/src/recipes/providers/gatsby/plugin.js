@@ -182,6 +182,20 @@ module.exports.update = create
 module.exports.read = read
 module.exports.destroy = destroy
 
+module.exports.all = async ({ root }) => {
+  const configPath = path.join(root, `gatsby-config.js`)
+  const src = await fs.readFile(configPath, `utf8`)
+  const plugins = getPluginsFromConfig(src)
+
+  // TODO: Consider mapping to read function
+  return plugins.map(name => {
+    return {
+      id: name,
+      name,
+    }
+  })
+}
+
 module.exports.validate = () => {
   return {
     name: Joi.string(),
