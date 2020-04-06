@@ -2,5 +2,4 @@
 title: Organize a Gatsby Event
 ---
 
-__IMPORATANT NOTE ON COMMUNITY EVENTS: Promotion and support of Gatsby community events is currently suspended due to COVID-19. Stay tuned for updates on when our community events program will resume.__
-
+**IMPORATANT NOTE ON COMMUNITY EVENTS: Promotion and support of Gatsby community events is currently suspended due to COVID-19. Stay tuned for updates on when our community events program will resume.**
