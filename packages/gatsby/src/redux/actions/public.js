@@ -72,7 +72,6 @@ const findChildren = initialChildren => {
 }
 
 import type { Plugin } from "./types"
-import { emitter } from ".."
 
 type Job = {
   id: string,
