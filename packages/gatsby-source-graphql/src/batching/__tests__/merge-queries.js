@@ -1,5 +1,5 @@
-import { print, parse } from "graphql"
-import { IQuery, merge, resolveResult } from "../merge-queries"
+const { print, parse } = require(`graphql`)
+const { merge, resolveResult } = require(`../merge-queries`)
 
 describe(`Query merging`, () => {
   it(`merges simple queries`, () => {
@@ -213,7 +213,7 @@ describe(`Resolving merged query results`, () => {
   })
 
   it(`throws on unexpected results`, () => {
-    const shouldThrow = (): void => {
+    const shouldThrow = () => {
       resolveResult({
         data: {
           gatsby0_foo: `foo`,
@@ -225,10 +225,8 @@ describe(`Resolving merged query results`, () => {
   })
 })
 
-type QueryFixture = [string, object]
-
-function fromFixtures(fixtures: QueryFixture[]): IQuery[] {
-  return fixtures.map(([query, variables]: QueryFixture) => {
+function fromFixtures(fixtures) {
+  return fixtures.map(([query, variables]) => {
     return {
       query: parse(query),
       variables,
