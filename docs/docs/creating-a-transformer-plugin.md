@@ -102,6 +102,8 @@ Now you have a `File` node to work with:
 
 Now, transform the newly created `File` nodes by hooking into the `onCreateNode` API in `gatsby-node.js`.
 
+#### Convert yaml into JSON for storage in Gatsby nodes
+
 If you're following along in an example project, install the following packages:
 
 ```shell
@@ -158,20 +160,46 @@ function transformObject(obj, id, type) {
     ...obj,
     id,
     children: [],
-    parent: node.id,
+    parent: null,
     internal: {
       contentDigest: createContentDigest(obj),
       type,
     },
   }
   createNode(yamlNode)
-  createParentChildLink({ parent: node, child: yamlNode })
 }
 ```
 
 Above, you create a `yamlNode` object with the shape expected by the [`createNode` action](/docs/actions/#createNode).
 
-You then create a link between the parent node (file) and the child node (yaml content).
+#### Creating the transformer relationship
+
+You then need to create a link between the parent node (file) and the child node (yaml content) using the `createParentChildLink` function after adding the parent node's id to the `yamlNode`:
+
+```javascript
+function transformObject(obj, id, type) {
+  const yamlNode = {
+    ...obj,
+    id,
+    children: [],
+    parent: node.id, // highlight-line
+    internal: {
+      contentDigest: createContentDigest(obj),
+      type,
+    },
+  }
+  createNode(yamlNode)
+  createParentChildLink({ parent: node, child: yamlNode }) // highlight-line
+}
+```
+
+Another example of a transformation relationship is the `gatsby-source-filesystem` plugin used with the `gatsby-transformer-remark` plugin, which transforms a parent `File` node's markdown string into a `MarkdownRemark` node. The Remark transformer plugin adds its newly created child node as a child of the parent node using the action [`createParentChildLink`](/docs/actions/#createParentChildLink). Transformation relationships like this are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `File` node and wouldn't ever exist if the parent `File` node hadn't been created.
+
+Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on) with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there are no nodes left over that were derived from older versions of data but shouldn't exist any longer.
+
+_For examples of other plugins creating transformation relationships, you can see the [`gatsby-transformer-remark` plugin](https://github.com/gatsbyjs/gatsby/blob/72077527b4acd3f2109ed5a2fcb780cddefee35a/packages/gatsby-transformer-remark/src/on-node-create.js#L39-L67) (from the above example) or the [`gatsby-transformer-sharp` plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25)._
+
+#### Created new nodes from the derived data
 
 In your updated `gatsby-node.js`, you'll then iterate through the parsed YAML content, using the helper function to transform each into a new node:
 
@@ -226,6 +254,8 @@ async function onCreateNode({
 
 exports.onCreateNode = onCreateNode
 ```
+
+#### Query for the transformed data
 
 Now you can query for your new nodes containing our transformed YAML data:
 
