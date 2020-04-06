@@ -1,6 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const babel = require(`@babel/core`)
+const Joi = require(`@hapi/joi`)
 
 const declare = require(`@babel/helper-plugin-utils`).declare
 
@@ -67,21 +68,27 @@ const getPluginsFromConfig = src => {
 }
 
 const create = async ({ root }, { name }) => {
-  // TODO make this more robust.
-  return
   const configPath = path.join(root, `gatsby-config.js`)
   const configSrc = await fs.readFile(configPath, `utf8`)
 
   const code = addPluginToConfig(configSrc, name)
 
   await fs.writeFile(configPath, code)
+
+  return { id: name, name }
 }
 
-const read = async ({ root }) => {
+const read = async ({ root }, id) => {
   const configPath = path.join(root, `gatsby-config.js`)
   const configSrc = await fs.readFile(configPath, `utf8`)
 
-  return getPluginsFromConfig(configSrc)
+  const name = getPluginsFromConfig(configSrc).find(name => name === id)
+
+  if (name) {
+    return { id, name }
+  } else {
+    return null
+  }
 }
 
 const destroy = async ({ root }, { name }) => {
@@ -120,7 +127,7 @@ class BabelPluginAddPluginsToGatsbyConfig {
 
             if (shouldAdd) {
               const pluginNames = plugins.value.elements.map(getNameForPlugin)
-              const exists = pluginNames.includes(node.value)
+              const exists = pluginNames.includes(pluginOrThemeName)
               if (!exists) {
                 plugins.value.elements.push(t.stringLiteral(pluginOrThemeName))
               }
@@ -175,14 +182,23 @@ module.exports.update = create
 module.exports.read = read
 module.exports.destroy = destroy
 
-module.exports.plan = async ({ root }, { name }) => {
+module.exports.validate = () => {
+  return {
+    name: Joi.string(),
+  }
+}
+
+module.exports.plan = async ({ root }, { id, name }) => {
+  const fullName = id || name
   const configPath = path.join(root, `gatsby-config.js`)
   const src = await fs.readFile(configPath, `utf8`)
-  const newContents = addPluginToConfig(src, name)
+  const newContents = addPluginToConfig(src, fullName)
 
   return {
+    id: fullName,
+    name,
     currentState: src,
     newState: newContents,
-    describe: `Configure ${name}`,
+    describe: `Configure ${fullName}`,
   }
 }

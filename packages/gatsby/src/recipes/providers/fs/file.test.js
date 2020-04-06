@@ -1,5 +1,3 @@
-const Joi = require(`@hapi/joi`)
-
 const file = require(`./file`)
 const resourceTestHelper = require(`../resource-test-helper`)
 

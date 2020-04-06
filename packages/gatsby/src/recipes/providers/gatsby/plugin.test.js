@@ -1,41 +1,35 @@
+const fs = require(`fs-extra`)
 const path = require(`path`)
 
 const plugin = require(`./plugin`)
+const { addPluginToConfig, getPluginsFromConfig } = require(`./plugin`)
+const resourceTestHelper = require(`../resource-test-helper`)
 
 const root = path.join(__dirname, `./fixtures`)
 const name = `gatsby-plugin-foo`
+const configPath = path.join(root, `gatsby-config.js`)
 
-describe(`gatsby-config`, () => {
-  test(`adds a plugin to a gatsby config`, async () => {
-    await plugin.create({ root }, { name })
-
-    const result = await plugin.read({ root })
-
-    expect(result).toContain(`gatsby-plugin-foo`)
-
-    await plugin.destroy({ root }, { name })
+describe(`gatsby-plugin resource`, () => {
+  test(`e2e file resource test`, async () => {
+    await resourceTestHelper({
+      resourceModule: plugin,
+      resourceName: `File`,
+      context: { root },
+      initialObject: { id: name, name },
+      partialUpdate: { id: name },
+    })
   })
 
-  test(`retrieves plugins from a config`, async () => {
-    const result = await plugin.read({ root })
+  test(`does not add the same plugin twice by default`, async () => {
+    const configSrc = await fs.readFile(configPath, `utf8`)
+    const newConfigSrc = addPluginToConfig(
+      configSrc,
+      `gatsby-plugin-react-helmet`
+    )
+    const plugins = getPluginsFromConfig(newConfigSrc)
 
-    expect(result).toEqual([
-      `gatsby-source-filesystem`,
-      `gatsby-transformer-sharp`,
-      `gatsby-plugin-emotion`,
-      `gatsby-plugin-typography`,
-      `gatsby-transformer-remark`,
-      `gatsby-plugin-sharp`,
-      `gatsby-plugin-google-analytics`,
-      `gatsby-plugin-manifest`,
-      `gatsby-plugin-offline`,
-      `gatsby-plugin-react-helmet`,
-    ])
-  })
+    const result = [...new Set(plugins)]
 
-  test(`plan returns a description`, async () => {
-    const result = await plugin.plan({ root }, { name })
-
-    expect(result.describe).toEqual(`Configure ${name}`)
+    expect(result).toEqual(plugins)
   })
 })
