@@ -10260,6 +10260,23 @@
     - Food
     - Marketing
   built_by: Tyson Foods, Inc.
+- title: Brad Garropy
+  url: https://bradgarropy.com
+  main_url: https://bradgarropy.com
+  source_url: https://github.com/bradgarropy/bradgarropy.com
+  categories:
+    - Blog
+    - Education
+    - Entertainment
+    - JavaScript
+    - Open Source
+    - Portfolio
+    - Programming
+    - SEO
+    - Technology
+    - Web Development
+  built_by: Brad Garropy
+  built_by_url: https://twitter.com/bradgarropy
 - title: mrkaluzny
   main_url: https://mrkaluzny.com
   url: https://mrkaluzny.com
