@@ -165,6 +165,8 @@ commands:
             BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
             BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
             CI_NAME: circleci
+            GATSBY_CPU_COUNT: 2
+
       - run:
           command: npm install
           working_directory: << parameters.working_directory >>
@@ -181,6 +183,7 @@ commands:
             BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
             BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
             CI_NAME: circleci
+            GATSBY_CPU_COUNT: 2
 
   e2e-test:
     parameters:
