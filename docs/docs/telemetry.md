@@ -34,7 +34,7 @@ Specifically, we collect the following information for _all_ telemetry events:
 
 - Timestamp of the occurrence.
 - Command invoked (e.g. `build` or `develop`).
-- Gatsby machine ID: This is generated with UUID and stored in global gatsby config at ` ~/.config/gatsby/config.json`.
+- Gatsby machine ID: This is generated with UUID and stored in global gatsby config at `~/.config/gatsby/config.json`.
 - Unique session ID: This is generated on each run with UUID.
 - One-way hash of the current working directory or a hash of the git remote.
 - General OS level information (operating system, version, CPU architecture, and whether the command is run inside a CI).
