@@ -90,6 +90,7 @@ exports.sourceNodes = async (
   if (
     !pluginConfig.get(`forceFullSync`) &&
     store.getState()?.status?.plugins &&
+    store.getState()?.status?.plugins[`gatsby-source-contentful`] &&
     store.getState()?.status?.plugins[`gatsby-source-contentful`][
       createSyncToken()
     ]
@@ -189,6 +190,8 @@ exports.sourceNodes = async (
       node[field] = node[field].filter(nodeId => !value[field].includes(nodeId))
     }
 
+    // gatsby creates the owner
+    delete node.internal.owner
     node.internal.contentDigest = createContentDigest(stringify(node))
 
     promises.push(createNode(node))
@@ -266,6 +269,8 @@ exports.sourceNodes = async (
         ...nodeValues,
       }
 
+      // gatsby creates the owner
+      delete node.internal.owner
       newNode.internal.contentDigest = createContentDigest(stringify(newNode))
       promises.push(createNode(newNode))
     }
