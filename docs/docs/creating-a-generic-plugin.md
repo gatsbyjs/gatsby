@@ -36,16 +36,16 @@ In `gatsby-node.js` you can carry out functions with these APIs, such as:
 [sourceNodes](/docs/node-apis/#sourceNodes) is a life-cycle API that a plugin can use to create Nodes. An example of how to implement a function using `sourceNodes` is shown below:
 
 ```javascript:title=gatsby-node.js
-exports.sourceNodes = ({ actions, createNodeId, createContentDigest })=>{
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const nodeData = {
-    title : "Test Node",
-    description:"Testing the node "
+    title: "Test Node",
+    description: "Testing the node ",
   }
   const newNode = {
     ...nodeData,
-    id: createNodeId("TestNode-testid")
-    internal :{
-      type: "TestNode"
+    id: createNodeId("TestNode-testid"),
+    internal: {
+      type: "TestNode",
       contentDigest: createContentDigest(nodeData),
     },
   }
