@@ -144,6 +144,7 @@
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.2",
     "webpack-stats-plugin": "^0.3.1",
+    "ws": "7.2.3",
     "xstate": "^4.8.0",
     "yaml-loader": "^0.5.0"
   },
@@ -151,6 +152,7 @@
     "@babel/cli": "^7.8.4",
     "@babel/runtime": "^7.8.7",
     "@types/socket.io": "^2.1.4",
+    "@types/ws": "5.1.0",
     "babel-preset-gatsby-package": "^0.3.1",
     "cross-env": "^5.2.1",
     "documentation": "^12.1.4",

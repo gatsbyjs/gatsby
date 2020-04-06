@@ -4199,6 +4199,14 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
+"@types/ws@5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-5.1.0.tgz#a6382c1ad2dc3a68d0650fbb4ce214ca78f2e5bf"
+  integrity sha512-iT73Caj1QRK48+jOicM/aN+tNAFRWSeLZKkdbchctxKQU5ozzx141BnzVm1E6aIA9abBa1yWYvfdZdnC/smdPQ==
+  dependencies:
+    "@types/events" "*"
+    "@types/node" "*"
+
 "@types/yargs-parser@*":
   version "13.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-13.0.0.tgz#453743c5bbf9f1bed61d959baab5b06be029b2d0"
@@ -24340,6 +24348,11 @@ write@^0.2.1:
   dependencies:
     mkdirp "^0.5.1"
 
+ws@7.2.3, ws@^7.2.1:
+  version "7.2.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.3.tgz#a5411e1fb04d5ed0efee76d26d5c46d830c39b46"
+  integrity sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ==
+
 ws@^5.2.0:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/ws/-/ws-5.2.2.tgz#dffef14866b8e8dc9133582514d1befaf96e980f"
@@ -24359,11 +24372,6 @@ ws@^7.0.0, ws@^7.1.2:
   integrity sha512-gftXq3XI81cJCgkUiAVixA0raD9IVmXqsylCrjRygw4+UOOGzPoxnQ6r/CnVL9i+mDncJo94tSkyrtuuQVBmrg==
   dependencies:
     async-limiter "^1.0.0"
-
-ws@^7.2.1:
-  version "7.2.3"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.3.tgz#a5411e1fb04d5ed0efee76d26d5c46d830c39b46"
-  integrity sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ==
 
 ws@~6.1.0:
   version "6.1.4"

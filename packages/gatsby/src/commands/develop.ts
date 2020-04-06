@@ -3,7 +3,7 @@ import report from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
-
+import WebSocket from "ws"
 import getSslCert from "../utils/get-ssl-cert"
 import { initTracer } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
@@ -109,7 +109,6 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   const app = express()
-
   const developService = interpret(
     developMachine.withContext({
       ...INITIAL_CONTEXT,
@@ -122,6 +121,38 @@ module.exports = async (program: IProgram): Promise<void> => {
     // if (context.changed) {
     console.log(`on transition`, context.value)
     // }
+  })
+
+  const wss = new WebSocket.Server({ port: 8080 })
+
+  wss.on(`connection`, function(ws, req) {
+    console.log(`WS`)
+
+    ws.on(`open`, () => {
+      console.log(`open`)
+    })
+
+    ws.on(`message`, msg => {
+      console.log(`msg`, msg)
+      ws.send(
+        JSON.stringify({
+          event: `SET_MACHINE`,
+          config: developMachine.config,
+          options: developMachine.options,
+          state: developService.state.value,
+        })
+      )
+    })
+    let last = developService.state
+    developService.onTransition(async context => {
+      if (context.changed && !last.matches(context)) {
+        if (ws.readyState === WebSocket.OPEN) {
+          last = context
+          console.log(`sending message`, context.value)
+          ws.send(JSON.stringify({ event: `SET_STATE`, state: context.value }))
+        }
+      }
+    })
   })
 
   /**
