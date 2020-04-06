@@ -1,4 +1,5 @@
 import crypto from "crypto"
+import v8 from "v8"
 import {
   parse,
   validate,
@@ -169,7 +170,7 @@ export default class GraphQLRunner {
         crypto
           .createHash(`sha1`)
           .update(statsQuery)
-          .update(JSON.stringify(context))
+          .update(v8.serialize(context))
           .digest(`hex`)
       )
 
