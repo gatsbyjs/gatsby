@@ -43,9 +43,9 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest })=>{
   }
   const newNode = {
     ...nodeData,
-    id: createNodeId("TestNode-testid")
+    id: createNodeId("TestNode-testid"),
     internal :{
-      type: "TestNode"
+      type: "TestNode",
       contentDigest: createContentDigest(nodeData),
     },
   }
