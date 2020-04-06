@@ -79,7 +79,91 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       parentType: type,
     })
 
-    const selectionSet = buildSelectionSet(transformedFields)
+    const recursivelyAliasFragments = field =>
+      field.fragments.map(fragment => {
+        // for each of this fragments fields
+        fragment.fields = fragment.fields.map(fragmentField => {
+          if (typeof fragmentField === `string`) {
+            return fragmentField
+          }
+
+          // compare it against each field of each other fragment
+          let updatedFragmentField = fragmentField
+
+          field.fragments.forEach(possiblyConflictingFragment => {
+            // don't compare this fragment against itself
+            if (possiblyConflictingFragment.name === fragment.name) {
+              return
+            }
+
+            possiblyConflictingFragment.fields.forEach(
+              possiblyConflictingField => {
+                const fieldNamesMatch =
+                  fragmentField.fieldName === possiblyConflictingField.fieldName
+
+                const fieldTypeKindsDontMatch =
+                  possiblyConflictingField?.fieldType?.kind !==
+                  fragmentField?.fieldType?.kind
+
+                const fieldTypeNamesDontMatch =
+                  possiblyConflictingField?.fieldType?.name !==
+                  fragmentField?.fieldType?.name
+
+                // if the fields have the same name but a different type kind
+                // alias them
+                if (
+                  fieldNamesMatch &&
+                  (fieldTypeKindsDontMatch || fieldTypeNamesDontMatch)
+                ) {
+                  const autoAliasedFieldName = `${fragmentField.fieldName}__typename_${fragmentField.fieldType.name}: ${fragmentField.fieldName}`
+
+                  updatedFragmentField = {
+                    ...fragmentField,
+                    fieldName: autoAliasedFieldName,
+                  }
+
+                  return
+                }
+              }
+            )
+          })
+          // if the fields have the same name but a different type AND the field has sub fields, compare those sub fields against any fragment fields subfields where the field name matches
+          // if any subfields have conflicting types, alias them
+
+          if (updatedFragmentField.fragments) {
+            updatedFragmentField.fragments = recursivelyAliasFragments(
+              updatedFragmentField
+            )
+          }
+
+          return updatedFragmentField
+        })
+
+        return fragment
+      })
+
+    const aliasConflictingFields = async ({ transformedFields }) => {
+      transformedFields = transformedFields.map(field => {
+        // we only have conflicting fields in fragments
+        // if there are no fragments, do nothing
+        if (!field.fragments) {
+          return field
+        }
+
+        field.fragments = recursivelyAliasFragments(field)
+
+        return field
+      })
+
+      return transformedFields
+    }
+
+    const aliasedTransformedFields = await aliasConflictingFields({
+      transformedFields,
+      parentType: type,
+    })
+
+    const selectionSet = buildSelectionSet(aliasedTransformedFields)
 
     const nodeQuery = buildNodeQueryOnFieldName({
       fields: transformedFields,
