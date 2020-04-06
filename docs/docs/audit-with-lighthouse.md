@@ -48,7 +48,7 @@ If you use [Gatsby Cloud](https://www.gatsbyjs.com/cloud), a Lighthouse audit ru
 
 ![Lighthouse audit in Cloud](./images/cloud-lighthouse.png)
 
-## Next Steps
+## Next steps
 
 As you can see, Gatsby's performance is excellent out of the box but we're missing some things for PWA, Accessibility, Best Practices, and SEO that will improve your scores (and in the process make your site much more friendly to visitors and search engines).
 
