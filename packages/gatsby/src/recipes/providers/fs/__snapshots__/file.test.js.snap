@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`file resource e2e file resource test 1`] = `
+Object {
+  "currentState": "",
+  "describe": "Write /Users/kylemathews/programs/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
+  "newState": "Hello, world!",
+}
+`;
+
+exports[`file resource e2e file resource test 2`] = `
+Object {
+  "content": "Hello, world!",
+  "id": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
+  "path": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
+}
+`;
+
+exports[`file resource e2e file resource test 3`] = `
+Object {
+  "currentState": "Hello, world!",
+  "describe": "Write /Users/kylemathews/programs/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
+  "newState": "Hello, world!1",
+}
+`;
+
+exports[`file resource e2e file resource test 4`] = `
+Object {
+  "content": "Hello, world!1",
+  "id": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
+  "path": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/recipes/providers/fs/file.txt",
+}
+`;
+
+exports[`file resource e2e file resource test 5`] = `undefined`;
