@@ -6,6 +6,8 @@ const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { createPluginConfig, validateOptions } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
+const stringify = require(`json-stringify-safe`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 const conflictFieldPrefix = `contentful`
 
@@ -118,7 +120,7 @@ exports.sourceNodes = async (
   // TODO figure out if entries referencing now deleted entries/assets
   // are "updated" so will get the now deleted reference removed.
 
-  function deleteContentfulNode(node) {
+  function deleteContentfulNode(referencesToRemove, node) {
     locales.forEach(locale => {
       const nodeId = createNodeId(
         normalize.makeId({
@@ -130,51 +132,74 @@ exports.sourceNodes = async (
       )
       const gatsbyNode = getNode(nodeId)
 
-      if (gatsbyNode) {
-        Object.keys(gatsbyNode).forEach(field => {
-          // we only care about ___NODE as they are links to other ones
-          if (!field.includes(`___NODE`)) {
+      if (!gatsbyNode) {
+        return
+      }
+
+      Object.keys(gatsbyNode).forEach(field => {
+        // we only care about ___NODE as they are links to other ones
+        if (!field.endsWith(`___NODE`)) {
+          return
+        }
+
+        //   // remove foreignReferences to this node
+        ;[].concat(gatsbyNode[field]).forEach(value => {
+          const fieldKey = `${gatsbyNode.parent.toLowerCase()}___NODE`
+          const referencedNode = getNode(value)
+
+          // child -> parent relations are always arrays so we add some extra checks
+          if (
+            !referencedNode ||
+            !Array.isArray(referencedNode[fieldKey]) ||
+            !referencedNode[fieldKey].includes(gatsbyNode.id)
+          ) {
             return
           }
 
-          // remove foreignReferences to this node
-          ;[].concat(gatsbyNode[field]).forEach(value => {
-            const referencedNode = getNode(value)
-
-            if (referencedNode) {
-              const possibleReferences =
-                referencedNode[`${gatsbyNode.parent.toLowerCase()}___NODE`]
-
-              if (
-                possibleReferences &&
-                possibleReferences.indexOf(gatsbyNode.id) > -1
-              ) {
-                possibleReferences.splice(
-                  possibleReferences.indexOf(gatsbyNode.id),
-                  1
-                )
-              }
-            }
-          })
+          const nodeToUpdate = referencesToRemove.get(value) || {}
+          nodeToUpdate[fieldKey] = nodeToUpdate[fieldKey] || []
+          nodeToUpdate[fieldKey].push(gatsbyNode.id)
+          referencesToRemove.set(value, nodeToUpdate)
         })
+      })
 
-        // touchNode first, to populate typeOwners & avoid erroring
-        touchNode({
-          nodeId: gatsbyNode.id,
-        })
-        deleteNode({
-          node: gatsbyNode,
-        })
-      }
+      // touchNode first, to populate typeOwners & avoid erroring
+      touchNode({
+        nodeId: gatsbyNode.id,
+      })
+      deleteNode({
+        node: gatsbyNode,
+      })
     })
   }
 
-  currentSyncData.deletedEntries.forEach(deleteContentfulNode)
-  currentSyncData.deletedAssets.forEach(deleteContentfulNode)
+  const referencesToRemove = new Map()
+  currentSyncData.deletedEntries.forEach(
+    deleteContentfulNode.bind(deleteContentfulNode, referencesToRemove)
+  )
+  currentSyncData.deletedAssets.forEach(
+    deleteContentfulNode.bind(deleteContentfulNode, referencesToRemove)
+  )
+
+  // remove all references
+  let promises = []
+  for await (const [key, value] of referencesToRemove) {
+    const node = { ...getNode(key) }
+    for (const field in value) {
+      node[field] = node[field].filter(nodeId => !value[field].includes(nodeId))
+    }
+
+    node.internal.contentDigest = createContentDigest(stringify(node))
+
+    promises.push(createNode(node))
+  }
+  // wait for all create nodes to finish
+  await Promise.all(promises)
 
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
   )
+
   existingNodes.forEach(n => touchNode({ nodeId: n.id }))
 
   const assets = currentSyncData.assets
@@ -219,16 +244,33 @@ exports.sourceNodes = async (
   }
 
   // Add referenced values
+  promises = []
   for (let [key, references] of foreignReferenceMap) {
     const node = getNode(key)
+    const nodeValues = {}
     if (node) {
       for (const field in references) {
-        node[field] = (node[field] || []).concat(
-          references[field].filter(reference => !!getNode(reference))
-        )
+        nodeValues[field] = []
+        if (node[field]) {
+          nodeValues[field] = node[field]
+        }
+        references[field].forEach(reference => {
+          if (getNode(reference)) {
+            nodeValues[field].push(reference)
+          }
+        })
       }
+
+      const newNode = {
+        ...node,
+        ...nodeValues,
+      }
+
+      newNode.internal.contentDigest = createContentDigest(stringify(newNode))
+      promises.push(createNode(newNode))
     }
   }
+  await Promise.all(promises)
 
   for (let i = 0; i < assets.length; i++) {
     // We wait for each asset to be process until handling the next one.

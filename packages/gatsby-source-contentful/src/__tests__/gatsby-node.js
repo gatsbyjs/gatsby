@@ -262,12 +262,13 @@ describe(`gatsby-node`, () => {
 
     expect(currentNodeMap.has(removedBlogPostId)).toBeTruthy()
     expect(currentNodeMap.has(removedBlogPostIdNl)).toBeTruthy()
+    const authorId = getNode(removedBlogPostId)[`author___NODE`]
+    const authorIdNl = getNode(removedBlogPostIdNl)[`author___NODE`]
 
-    const author = getNode(getNode(removedBlogPostId)[`author___NODE`])
-    const authorNl = getNode(getNode(removedBlogPostIdNl)[`author___NODE`])
-
-    expect(author[`blog post___NODE`]).toContain(removedBlogPostId)
-    expect(authorNl[`blog post___NODE`]).toContain(removedBlogPostIdNl)
+    expect(getNode(authorId)[`blog post___NODE`]).toContain(removedBlogPostId)
+    expect(getNode(authorIdNl)[`blog post___NODE`]).toContain(
+      removedBlogPostIdNl
+    )
 
     // remove blog post
     await gatsbyNode.sourceNodes({
@@ -284,8 +285,12 @@ describe(`gatsby-node`, () => {
     expect(currentNodeMap.has(removedBlogPostId)).toBeFalsy()
     expect(currentNodeMap.has(removedBlogPostIdNl)).toBeFalsy()
 
-    expect(author[`blog post___NODE`]).not.toContain(removedBlogPostId)
-    expect(authorNl[`blog post___NODE`]).not.toContain(removedBlogPostIdNl)
+    expect(getNode(authorId)[`blog post___NODE`]).not.toContain(
+      removedBlogPostId
+    )
+    expect(getNode(authorIdNl)[`blog post___NODE`]).not.toContain(
+      removedBlogPostIdNl
+    )
 
     expect(currentNodeMap).toMatchSnapshot()
   })
