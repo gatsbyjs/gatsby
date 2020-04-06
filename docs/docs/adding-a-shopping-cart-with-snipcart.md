@@ -2,9 +2,9 @@
 title: Adding a Shopping Cart with Snipcart
 ---
 
-Snipcart is a shopping cart solution designed to be dropped neatly into any web project. Including it in your project allows any HTML you write to instantly become a "buy button" with the addition of several Snipcart-specific attributes.
+Snipcart is a shopping cart solution designed to drop neatly into any web project. Including it in your project allows any HTML you write to instantly become a "buy button" with the addition of several Snipcart-specific attributes.
 
-Combine it with a source of products (like a CMS or an e-commerce platform like [Etsy](https://www.etsy.com/)) and a payment processor (like [Stripe](https://www.stripe.com/)) to build a complete e-commerce experience for your customers.
+Combine it with a source of products (like a CMS or an e-commerce platform such as [Etsy](https://www.etsy.com/)) and a payment processor (like [Stripe](https://www.stripe.com/)) to build a complete e-commerce experience for your customers.
 
 ## Prerequisites
 
@@ -14,9 +14,6 @@ To get started, you'll need to have the following set up:
 - A [Snipcart](https://snipcart.com/) account
 - A Snipcart test API key
 - A list of products to sell
-- a [Snipcart](https://snipcart.com/) account
-- your Snipcart test API key
-- products to sell
 
 Installing the plugin adds Snipcart's shopping cart JavaScript for you, so you can get right to building your e-commerce site. It's okay if you're not sure what you'd like to sell quite yet. Using sample products is fine to begin with!
 
@@ -53,7 +50,7 @@ Including this information allows a visitor to see what you have for sale, but t
 </section>
 ```
 
-Snipcart uses these attributes (`data-item-*`) to figure out what your customer is trying to buy and how much to charge them. The ID, price, URL, and name attributes are all required but there are several others that you can add to enhance the shopping cart.
+Snipcart uses these attributes (`data-item-*`) to figure out what your customer is trying to buy and how much to charge them. The ID, price, URL, and name attributes are all required but there are several other attributes that you can add to enhance the shopping cart.
 
 Importantly, `data-item-url` denotes the URL of the webpage displaying the product(s). Snipcart needs to crawl this page to validate the order. The web crawler looks for the HTML element with the `snipcart-add-item` CSS class as well as the `data-item-id` and checks what it finds there against whatever is in the cart.
 
