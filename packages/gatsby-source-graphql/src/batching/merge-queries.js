@@ -1,35 +1,9 @@
-import {
-  visit,
-  visitInParallel,
-  Kind,
-  DocumentNode,
-  VariableNode,
-  SelectionNode,
-  FragmentSpreadNode,
-  FragmentDefinitionNode,
-  InlineFragmentNode,
-  FieldNode,
-  NameNode,
-  OperationDefinitionNode,
-  Visitor,
-  ASTKindToNode,
-  VariableDefinitionNode,
-  DirectiveNode,
-} from "graphql"
-import _ from "lodash"
-
-export interface IQuery {
-  query: DocumentNode
-  variables: object
-}
-
-export interface IQueryResult {
-  data: object
-}
+const { visit, visitInParallel, Kind } = require(`graphql`)
+const _ = require(`lodash`)
 
 const Prefix = {
-  create: (index: number): string => `gatsby${index}_`,
-  parseKey: (prefixedKey: string): { index: number; originalKey: string } => {
+  create: index => `gatsby${index}_`,
+  parseKey: prefixedKey => {
     const match = /^gatsby([\d]+)_(.*)$/.exec(prefixedKey)
     if (!match || match.length !== 3 || isNaN(Number(match[1])) || !match[2]) {
       throw new Error(`Unexpected data key: ${prefixedKey}`)
@@ -74,13 +48,13 @@ const Prefix = {
  *   }
  *   fragment FooQuery on Query { baz }
  */
-export function merge(queries: ReadonlyArray<IQuery>): IQuery {
-  const mergedVariables: object = {}
-  const mergedVariableDefinitions: VariableDefinitionNode[] = []
-  const mergedSelections: SelectionNode[] = []
-  const mergedFragmentMap: Map<string, FragmentDefinitionNode> = new Map()
+export function merge(queries) {
+  const mergedVariables = {}
+  const mergedVariableDefinitions = []
+  const mergedSelections = []
+  const mergedFragmentMap = new Map()
 
-  queries.forEach((query: IQuery, index: number) => {
+  queries.forEach((query, index) => {
     const prefixedQuery = prefixQueryParts(Prefix.create(index), query)
 
     prefixedQuery.query.definitions.forEach(def => {
@@ -99,7 +73,7 @@ export function merge(queries: ReadonlyArray<IQuery>): IQuery {
     Object.assign(mergedVariables, prefixedQuery.variables)
   })
 
-  const mergedQueryDefinition: OperationDefinitionNode = {
+  const mergedQueryDefinition = {
     kind: Kind.OPERATION_DEFINITION,
     operation: `query`,
     variableDefinitions: mergedVariableDefinitions,
@@ -121,72 +95,60 @@ export function merge(queries: ReadonlyArray<IQuery>): IQuery {
 /**
  * Split and transform result of the query produced by the `merge` function
  */
-export function resolveResult(mergedQueryResult: IQueryResult): IQueryResult[] {
+export function resolveResult(mergedQueryResult) {
   const data = mergedQueryResult.data
 
-  return Object.keys(data).reduce(
-    (acc: IQueryResult[], prefixedKey: string): IQueryResult[] => {
-      const { index, originalKey } = Prefix.parseKey(prefixedKey)
-      if (!acc[index]) acc[index] = { data: {} }
-      acc[index].data[originalKey] = data[prefixedKey]
-      return acc
-    },
-    []
-  )
+  return Object.keys(data).reduce((acc, prefixedKey) => {
+    const { index, originalKey } = Prefix.parseKey(prefixedKey)
+    if (!acc[index]) acc[index] = { data: {} }
+    acc[index].data[originalKey] = data[prefixedKey]
+    return acc
+  }, [])
 }
 
 const Visitors = {
-  detectFragmentsWithVariables: (
-    fragmentsWithVariables: Set<string>
-  ): Visitor<ASTKindToNode> => {
+  detectFragmentsWithVariables: fragmentsWithVariables => {
     let currentFragmentName
     return {
       [Kind.FRAGMENT_DEFINITION]: {
-        enter: (def: FragmentDefinitionNode): void => {
+        enter: def => {
           currentFragmentName = def.name.value
         },
-        leave: (): void => {
+        leave: () => {
           currentFragmentName = null
         },
       },
-      [Kind.VARIABLE]: (): void => {
+      [Kind.VARIABLE]: () => {
         if (currentFragmentName) {
           fragmentsWithVariables.add(currentFragmentName)
         }
       },
     }
   },
-  prefixVariables: (prefix: string): Visitor<ASTKindToNode> => {
+  prefixVariables: prefix => {
     return {
-      [Kind.VARIABLE]: (variable: VariableNode): VariableNode =>
-        prefixNodeName(variable, prefix),
+      [Kind.VARIABLE]: variable => prefixNodeName(variable, prefix),
     }
   },
-  prefixFragmentNames: (
-    prefix: string,
-    fragmentNames: Set<string>
-  ): Visitor<ASTKindToNode> => {
+  prefixFragmentNames: (prefix, fragmentNames) => {
     return {
-      [Kind.FRAGMENT_DEFINITION]: (
-        def: FragmentDefinitionNode
-      ): FragmentDefinitionNode | void =>
+      [Kind.FRAGMENT_DEFINITION]: def =>
         fragmentNames.has(def.name.value) ? prefixNodeName(def, prefix) : def,
-
-      [Kind.FRAGMENT_SPREAD]: (def: FragmentSpreadNode): FragmentSpreadNode =>
+      [Kind.FRAGMENT_SPREAD]: def =>
         fragmentNames.has(def.name.value) ? prefixNodeName(def, prefix) : def,
     }
   },
 }
 
-function prefixQueryParts(prefix: string, query: IQuery): IQuery {
-  let document: DocumentNode = aliasTopLevelFields(prefix, query.query)
+function prefixQueryParts(prefix, query) {
+  let document = aliasTopLevelFields(prefix, query.query)
   const variableNames = Object.keys(query.variables)
 
   if (variableNames.length === 0) {
     return { ...query, query: document }
   }
 
-  const fragmentsWithVariables: Set<string> = new Set()
+  const fragmentsWithVariables = new Set()
 
   document = visit(
     document,
@@ -211,7 +173,7 @@ function prefixQueryParts(prefix: string, query: IQuery): IQuery {
         [Kind.INLINE_FRAGMENT]: [`selectionSet`],
         [Kind.FIELD]: [`selectionSet`],
         [Kind.SELECTION_SET]: [`selections`],
-      } as any
+      }
     )
   }
 
@@ -231,9 +193,9 @@ function prefixQueryParts(prefix: string, query: IQuery): IQuery {
  *
  * @see aliasFieldsInSelection for implementation details
  */
-function aliasTopLevelFields(prefix: string, doc: DocumentNode): DocumentNode {
+function aliasTopLevelFields(prefix, doc) {
   const transformer = {
-    [Kind.OPERATION_DEFINITION]: (def): OperationDefinitionNode => {
+    [Kind.OPERATION_DEFINITION]: def => {
       const { selections } = def.selectionSet
       return {
         ...def,
@@ -244,7 +206,7 @@ function aliasTopLevelFields(prefix: string, doc: DocumentNode): DocumentNode {
       }
     },
   }
-  return visit(doc, transformer, { [Kind.DOCUMENT]: [`definitions`] } as any)
+  return visit(doc, transformer, { [Kind.DOCUMENT]: [`definitions`] })
 }
 
 /**
@@ -267,26 +229,18 @@ function aliasTopLevelFields(prefix: string, doc: DocumentNode): DocumentNode {
  *     ... on Query { gatsby1_bar: bar }
  *   }
  */
-function aliasFieldsInSelection(
-  prefix: string,
-  selections: ReadonlyArray<SelectionNode>,
-  document: DocumentNode
-): SelectionNode[] {
-  return _.flatMap(selections, (selection: SelectionNode): SelectionNode[] => {
+function aliasFieldsInSelection(prefix, selections, document) {
+  return _.flatMap(selections, selection => {
     switch (selection.kind) {
       case Kind.INLINE_FRAGMENT:
         return [aliasFieldsInInlineFragment(prefix, selection, document)]
-
       case Kind.FRAGMENT_SPREAD: {
         const inlineFragment = inlineFragmentSpread(selection, document)
         return [
           addSkipDirective(selection),
           aliasFieldsInInlineFragment(prefix, inlineFragment, document),
-          // Keep original spread in selection with @skip(if: true)
-          // otherwise if this was a single fragment usage the query will fail validation
         ]
       }
-
       case Kind.FIELD:
       default:
         return [aliasField(selection, prefix)]
@@ -294,12 +248,8 @@ function aliasFieldsInSelection(
   })
 }
 
-interface INodeWithDirectives {
-  readonly directives?: ReadonlyArray<DirectiveNode>
-}
-
-function addSkipDirective<T extends INodeWithDirectives>(node: T): T {
-  const skipDirective: DirectiveNode = {
+function addSkipDirective(node) {
+  const skipDirective = {
     kind: Kind.DIRECTIVE,
     name: { kind: Kind.NAME, value: `skip` },
     arguments: [
@@ -325,11 +275,7 @@ function addSkipDirective<T extends INodeWithDirectives>(node: T): T {
  * To
  *   ... on Query { gatsby1_foo: foo, ... on Query { gatsby1_bar: foo } }
  */
-function aliasFieldsInInlineFragment(
-  prefix: string,
-  fragment: InlineFragmentNode,
-  document: DocumentNode
-): InlineFragmentNode {
+function aliasFieldsInInlineFragment(prefix, fragment, document) {
   const { selections } = fragment.selectionSet
   return {
     ...fragment,
@@ -350,10 +296,7 @@ function aliasFieldsInInlineFragment(
  * Transforms to:
  *   query { ... on Query { bar } }
  */
-function inlineFragmentSpread(
-  spread: FragmentSpreadNode,
-  document: DocumentNode
-): InlineFragmentNode {
+function inlineFragmentSpread(spread, document) {
   const fragment = document.definitions.find(
     def =>
       def.kind === Kind.FRAGMENT_DEFINITION &&
@@ -362,8 +305,7 @@ function inlineFragmentSpread(
   if (!fragment) {
     throw new Error(`Fragment ${spread.name.value} does not exist`)
   }
-  const { typeCondition, selectionSet } = fragment as FragmentDefinitionNode
-
+  const { typeCondition, selectionSet } = fragment
   return {
     kind: Kind.INLINE_FRAGMENT,
     typeCondition,
@@ -372,10 +314,7 @@ function inlineFragmentSpread(
   }
 }
 
-function prefixNodeName<T extends { name: NameNode }>(
-  namedNode: T,
-  prefix: string
-): T {
+function prefixNodeName(namedNode, prefix) {
   return {
     ...namedNode,
     name: {
@@ -392,7 +331,7 @@ function prefixNodeName<T extends { name: NameNode }>(
  *   { foo } -> { gatsby1_foo: foo }
  *   { foo: bar } -> { gatsby1_foo: bar }
  */
-function aliasField(field: FieldNode, aliasPrefix: string): FieldNode {
+function aliasField(field, aliasPrefix) {
   const aliasNode = field.alias ? field.alias : field.name
   return {
     ...field,
@@ -403,10 +342,10 @@ function aliasField(field: FieldNode, aliasPrefix: string): FieldNode {
   }
 }
 
-function isQueryDefinition(def): def is OperationDefinitionNode {
+function isQueryDefinition(def) {
   return def.kind === Kind.OPERATION_DEFINITION && def.operation === `query`
 }
 
-function isFragmentDefinition(def): def is FragmentDefinitionNode {
+function isFragmentDefinition(def) {
   return def.kind === Kind.FRAGMENT_DEFINITION
 }
