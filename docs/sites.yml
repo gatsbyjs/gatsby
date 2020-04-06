@@ -9978,6 +9978,32 @@
   built_by: Built by Rebels Ltd.
   built_by_url: https://builtbyrebels.com/
   featured: false
+- title: OCIUS
+  url: https://www.ocius.com.au/
+  main_url: https://www.ocius.com.au/
+  source_url: https://github.com/ocius/website
+  description: >
+    Ocius Technology Ltd (formerly Solar Sailor Holdings Ltd) is an Australian public unlisted company with Research and Development facilities at the University of NSW.
+  categories:
+    - Business
+    - Technology
+    - Science
+  built_by: Sergey Monin
+  built_by_url: https://build-in-saratov.com/
+- title: Kosmos & Kaos
+  main_url: https://www.kosmosogkaos.is/
+  url: https://www.kosmosogkaos.is/
+  description: >
+    A carefully designed user experience is good business.
+  categories:
+    - Design
+    - Consulting
+    - Agency
+    - Web Development
+    - JavaScript
+  built_by: Kosmos & Kaos
+  built_by_url: https://www.kosmosogkaos.is/
+  featured: false
 - title: Design Portfolio of Richard Bruskowski
   main_url: https://bruskowski.design/
   url: https://bruskowski.design/
@@ -10140,6 +10166,17 @@
     - Web Development
   built_by: Jason Zheng
   built_by_url: https://github.com/bilafish
+- title: Fluiditype
+  url: https://www.fluiditype.com/
+  main_url: https://www.fluiditype.com/
+  description: >
+    Fluditype is small CSS library focusing on pure typographic fluidity. Recommend to be used for blogs, portfolios, documentation & and simplistic text websites.
+  categories:
+    - Open Source
+    - Design
+  built_by: Boris Kirov
+  built_by_url: https://www.boriskirov.com
+  featured: false
 - title: Bonsaiilabs
   main_url: https://bonsaiilabs.com/
   url: https://bonsaiilabs.com/
@@ -10240,4 +10277,70 @@
     - Web Development
   built_by: Brad Garropy
   built_by_url: https://twitter.com/bradgarropy
+- title: mrkaluzny
+  main_url: https://mrkaluzny.com
+  url: https://mrkaluzny.com
+  description: >
+    Web designer and web developer specializing in providing services for SME sector.
+  featured: false
+  categories:
+    - Web Development
+    - Programming
+    - Business
+    - Portfolio
+    - Freelance
+  built_by: Wojciech Kaluzny
+- title: The COVID Tracking Project
+  url: https://covidtracking.com/
+  main_url: https://covidtracking.com/
+  source_url: https://github.com/COVID19Tracking/website
+  description: >
+    The COVID Tracking Project collects and publishes the most complete testing data available for US states and territories.
+  categories:
+    - Media
+    - Healthcare
+  built_by: The COVID Tracking Project Web Team
+  built_by_url: https://github.com/COVID19Tracking/website/graphs/contributors
+- title: The Gauntlet Coverage of COVID-19 in Canada
+  url: https://covid19.thegauntlet.ca
+  main_url: https://covid19.thegauntlet.ca
+  description: >
+    Tracking The Spread of Coronavirus in Canada
+  categories:
+    - Media
+    - Education
+  built_by: Masoud Karimi
+  built_by_url: https://github.com/masoudkarimif
+- title: Zestard Technologies
+  main_url: https://www.zestard.com
+  url: https://www.zestard.com
+  description: >
+    Zestard Technologies is an eCommerce Specialist company focusing on Magento & Shopify as a core expertise.
+  categories:
+    - Web Development
+    - WordPress
+    - Technology
+    - Agency
+    - E-commerce
+  built_by: Zestard Technologies
+  built_by_url: https://www.zestard.com
+- title: Kostas Vrouvas
+  main_url: https://kosvrouvas.com
+  url: https://kosvrouvas.com
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Kostas Vrouvas
+- title: Hanare Cafe in Toshijima, Toba, Japan
+  main_url: https://hanarecafe.com
+  url: https://hanarecafe.com
+  source_url: https://github.com/mnishiguchi/hanarecafe-gatsby
+  description: >
+    A website for a cafe/bakery located in Toshijima, a beautiful sightseeing spot just a 20-minutes ferry ride from downtown Toba, Japan.
+  categories:
+    - Food
+    - Travel
+  built_by: Masatoshi Nishiguchi
+  built_by_url: https://mnishiguchi.com
   featured: false

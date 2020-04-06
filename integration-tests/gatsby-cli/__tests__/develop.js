@@ -1,4 +1,3 @@
-import spawn from "cross-spawn"
 import { GatsbyCLI } from "../test-helpers"
 
 const timeout = seconds =>
@@ -23,7 +22,7 @@ describe(`gatsby develop`, () => {
     await timeout(10)
 
     // 3. kill the `gatsby develop` command so we can get logs
-    spawn.sync("kill", [childProcess.pid])
+    childProcess.kill()
 
     // 4. Make sure logs for the user contain expected results
     const logs = getLogs()

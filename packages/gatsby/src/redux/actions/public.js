@@ -14,7 +14,7 @@ const { hasNodeChanged, getNode } = require(`../../db/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
-const joiSchemas = require(`../../joi-schemas/joi`)
+import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const {
   getCommonDir,
@@ -744,7 +744,7 @@ const createNode = (
 
   trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
-  const result = Joi.validate(node, joiSchemas.nodeSchema)
+  const result = Joi.validate(node, nodeSchema)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
       const errorObj = {
