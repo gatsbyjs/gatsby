@@ -9,7 +9,7 @@ Plugins are generally used to abstract functionality in Gatsby. In this case `ga
 
 If you already have some images hosted on Cloudinary and would like to leverage on the plugin system of Gatsby this plugin is for you. 
 
-> Here's a [demo site that uses the gatsby-source-cloudinary](https://gsc-sample.netlify.com) showcasing  optimized images in a masonry grid, served from Cloudinary
+> Here's a [demo site that uses the gatsby-source-cloudinary](https://gsc-sample.netlify.com) showcasing optimized images in a masonry grid, served from Cloudinary.
 
 ## The problem with handling images on the web
 
