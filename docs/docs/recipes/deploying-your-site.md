@@ -150,7 +150,7 @@ gatsby-plugin-google-analytics is a very popular plugin that provides insights i
 
 ### Linking the domain to Google Analytics admin
 
-1. Log in to [Analytics](https://analytics.google.com/analytics/)
+1. Log into [Google Analytics](https://analytics.google.com/analytics/).
 2. Click Admin.
 3. Select **Create Property** in Property column
 4. Choose **Web**.
