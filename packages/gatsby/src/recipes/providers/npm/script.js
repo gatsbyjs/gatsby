@@ -60,7 +60,7 @@ module.exports.all = async ({ root }) => {
   const scripts = pkg.scripts || {}
 
   return Object.entries(scripts).map(arr => {
-    return { name: arr[0], command: arr[1] }
+    return { name: arr[0], command: arr[1], id: arr[0] }
   })
 }
 
