@@ -85,7 +85,7 @@ EXPOSE 80" >> Dockerfile
 You can check the status of deployment using:
 
 ```bash
-$ qovery status
+qovery status
 ```
 
 That's it! Your site will be live on your Qovery URL (which looks like `yoursite.qovery.io`) as soon as the build is done.
