@@ -13,17 +13,17 @@ const applyPlan = async stepPlan =>
     const resource = resources[resourcePlan.resourceName]
 
     if (resource.config?.serial) {
-      return await asyncForEach(resourcePlan.resource, r =>
+      return await asyncForEach(resourcePlan.resourceDefinitions, r =>
         resource.create(ctx, r)
       )
     }
 
     if (resource.config?.batch) {
-      return await resource.create(ctx, resourcePlan.resource)
+      return await resource.create(ctx, resourcePlan.resourceDefinitions)
     }
 
     return await Promise.all(
-      resourcePlan.resource.map(r => resource.create(ctx, r))
+      resourcePlan.resourceDefinitions.map(r => resource.create(ctx, r))
     )
   })
 
