@@ -10,7 +10,7 @@ Gatsby Cloud is a platform of stable, trusted tools launched by the team behind 
 
 - [**Autoprovisioning**](https://www.gatsbyjs.com/docs/autoprovisioning) that empowers new users to create projects in minutes with a Content Management System (CMS), sample content, and connected Gatsby starter.
 - [**Real-time Preview**](https://www.gatsbyjs.com/docs/viewing-preview/) to simplify content creation and collaboration. Preview offers a private playground for developers, designers, marketers, and content creators by providing a shareable temporary URL for viewing changes immediately and in context. With instant updates triggered by a CMS or webhooks, it’s a shareable, hot-reloading preview.
-- **Numerous CMS Integrations** many of which are automatic
+- **Numerous CMS Integrations**, many of which are automatic
 - **Builds** is the fastest continuous deployment solution for Gatsby sites and apps- up to 20x faster build times compared to other solutions. Build with Gatsby and deploy to your favorite CDN.
 - **Reports** provide automated Lighthouse performance checks and deploy previews to fix errors before they’re published.
 
