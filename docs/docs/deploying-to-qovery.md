@@ -75,7 +75,7 @@ EXPOSE 80" >> Dockerfile
 
 ```bash
 # Git commit and push your code
-$ git add .qovery.yml Dockerfile
+ git add .qovery.yml Dockerfile
 $ git commit -m "add .qovery.yml and Dockerfile files"
 $ git push -u origin master
 ```
