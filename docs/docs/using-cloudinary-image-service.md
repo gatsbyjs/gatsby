@@ -37,7 +37,7 @@ Before using the `gatsby-source-cloudinary` plugin you should do the following:
 
 ### Using gatsby-source-cloudinary
 
-Add the plugin to your project in these steps : 
+Add the plugin to your project.
 
 1. Install `gatsby-source-cloudinary` 
 
