@@ -39,3 +39,4 @@
 - [ ] Make a proper "Config" provider to add recipes dir, store data, etc.
 - [ ] Move parsing to the server
 - [ ] init.js for providers to setup clients
+- [ ] validate resource config
