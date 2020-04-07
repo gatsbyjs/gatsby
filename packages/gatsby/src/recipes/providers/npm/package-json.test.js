@@ -33,4 +33,20 @@ describe(`packageJson resource`, () => {
       partialUpdate: { value: updateValue },
     })
   })
+
+  test(`handles object values`, async () => {
+    const result = await pkgJson.create(
+      {
+        root,
+      },
+      {
+        name,
+        value: JSON.parse(initialValue),
+      }
+    )
+
+    expect(result).toMatchSnapshot()
+
+    await pkgJson.destroy({ root }, result)
+  })
 })

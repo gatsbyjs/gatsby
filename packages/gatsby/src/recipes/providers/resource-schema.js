@@ -1,4 +1,4 @@
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 
 // heh
 // createResource —> when comes from the user

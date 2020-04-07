@@ -21,7 +21,7 @@ const writePackageJson = async (root, obj) => {
 
 const create = async ({ root }, { name, value }) => {
   const pkg = await readPackageJson(root)
-  pkg[name] = JSON.parse(value)
+  pkg[name] = typeof value === `string` ? JSON.parse(value) : value
 
   await writePackageJson(root, pkg)
 
