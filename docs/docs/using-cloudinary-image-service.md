@@ -1,7 +1,7 @@
 ---
 title: Using Cloudinary image service for media optimization  
 ---
-`Cloudinary` is a cloud-based end-to-end media management platform that provides solutions to help site creators serve optimized media files(images and videos) to their audiences. It also provides a lot of optional transformations that can be carried out on these media assets.  
+Cloudinary is a cloud-based end-to-end media management platform that provides solutions to help site creators serve optimized media files(images and videos) to their audiences. It also provides a lot of optional transformations that can be carried out on these media assets.  
 
 In this guide you will take a look at the  [gatsby-source-cloudinary](/packages/gatsby-source-cloudinary/) and [gatsby-transformer-cloudinary](/packages/gatsby-transformer-cloudinary/) which are used to improve the experience of handling images on Gatsby sites.
 
@@ -9,7 +9,7 @@ Plugins are generally used to abstract functionality in Gatsby. In this case `ga
 
 If you already have some images hosted on Cloudinary and would like to leverage on the plugin system of Gatsby this plugin is for you. 
 
-> Here's a [demo site that uses the gatsby-source-cloudinary](https://gsc-sample.netlify.com) showcasing  optimized images in a masonry grid, served from [Cloudinary](https://cloudinary.com) 
+> Here's a [demo site that uses the gatsby-source-cloudinary](https://gsc-sample.netlify.com) showcasing  optimized images in a masonry grid, served from Cloudinary
 
 ## The problem with handling images on the web
 
