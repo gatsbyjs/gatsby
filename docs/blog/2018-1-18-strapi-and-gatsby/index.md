@@ -99,7 +99,7 @@ _Requirements: please make sure [Node 10](https://nodejs.org/en/download/) (or h
 
 Install Strapi using npm:
 
-```bash
+```shell
 npm i strapi@alpha -g
 ```
 
@@ -109,13 +109,13 @@ _Note: Strapi v3 is still an alpha version, but it will be fine for this tutoria
 
 Create a directory named `tutorial`:
 
-```bash
+```shell
 mkdir tutorial
 ```
 
 Navigate into `tutorial`and then, using a single command, set-up and start your project inside your `tutorial` folder:
 
-```bash
+```shell
 cd tutorial
 strapi new cms --quickstart
 ```
@@ -138,13 +138,13 @@ After installation, and initial use, you will often close your project and work 
 
 Enter inside your project folder, on the command line, (in this case `tutorial/`, :
 
-```bash
+```shell
 cd cms
 ```
 
 From `cms/`, launch the Strapi server:
 
-```bash
+```shell
 strapi start
 ```
 
@@ -215,7 +215,7 @@ _Important links from Video:_
 
 First, install Gatsby CLI:
 
-```bash
+```shell
 npm install --global gatsby-cli
 ```
 
@@ -223,7 +223,7 @@ npm install --global gatsby-cli
 
 In the folder `tutorial` that you previously created, generate your brand new blog:
 
-```bash
+```shell
 gatsby new blog
 ```
 
@@ -231,13 +231,13 @@ gatsby new blog
 
 Enter in your project's folder:
 
-```bash
+```shell
 cd blog
 ```
 
 Start the server:
 
-```bash
+```shell
 gatsby develop
 ```
 
@@ -255,7 +255,7 @@ In this example, we are using Strapi. Obviously, we are going to need a source p
 
 Let's install it:
 
-```bash
+```shell
 npm install --save gatsby-source-strapi
 ```
 

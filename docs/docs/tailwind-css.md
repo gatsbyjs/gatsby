@@ -96,7 +96,7 @@ module.exports = {
 
 **Option 2**: Install stable `tailwind.macro` and use Tailwind 0.7.4
 
-```bash
+```shell
 // Remove tailwind 1.0.0+ if you've already installed it
 npm uninstall tailwindcss
 

@@ -177,7 +177,7 @@ The Gatsby monorepo, which hosts this package, also contains the source for gats
 
 Follow the [official guide](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/#fork-clone-and-branch-the-repository) to clone/fork and set up the Gatsby monorepo. This will roughly look like this:
 
-```bash
+```shell
 # clone the repo/your fork
 git clone https://github.com/gatsbyjs/gatsby.git
 cd gatsby
@@ -196,19 +196,19 @@ git checkout -b topics/new-feature-name
 
 Assuming `gatsby-cli` [is installed](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/#gatsby-functional-changes), let's install [`gatsby-dev-cli`](<(https://www.npmjs.com/package/gatsby-dev-cli)>) with
 
-```bash
+```shell
 yarn global add gatsby-dev-cli
 ```
 
 `gatsby-dev-cli` needs to know where your local Gatsby repository lives; navigate to its root folder, get the absolute path to it via `pwd`, and tell `gatsby-dev-cli` about it with
 
-```bash
+```shell
 gatsby-dev --set-path-to-repo /path-to-local-gatsby/gatsby
 ```
 
 ### 2. Get `www` running on `localhost`
 
-```bash
+```shell
 cd /path-to-local-gatsby/gatsby/www
 
 yarn # to install dependencies

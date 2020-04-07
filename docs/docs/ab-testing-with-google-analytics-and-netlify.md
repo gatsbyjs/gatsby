@@ -25,7 +25,7 @@ The following example changes the color of the header for a site using [Gatsby's
 
 Once you're finished with your first variation, commit your changes to `master`, [create a new remote repository on GitHub](https://help.github.com/en/github/getting-started-with-github/create-a-repo) if you don't have one already, and push your changes.
 
-```bash
+```shell
 git add src/components/header.js
 git commit -m "Change header background color"
 git remote add origin [your remote repo URL]
@@ -34,7 +34,7 @@ git push -u origin master
 
 To create your second variation, create a new branch.
 
-```bash
+```shell
 git checkout -b heading-variation
 ```
 

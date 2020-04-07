@@ -380,14 +380,14 @@ By default, every line gets a prompt appended to the start, this behaviour can b
 to the language.
 
 ````
-```bash{outputLines: 2-10,12}
+```shell{outputLines: 2-10,12}
 ````
 
 The user and host used in the appended prompt is pulled from the `prompt.user` and `prompt.host` values,
 unless explicitly overridden by the `promptUser` and `promptHost` options in the snippet, e.g.:
 
 ````
-```bash{promptUser: alice}{promptHost: dev.localhost}
+```shell{promptUser: alice}{promptHost: dev.localhost}
 ````
 
 ### Line hiding

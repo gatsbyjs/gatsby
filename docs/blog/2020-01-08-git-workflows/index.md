@@ -84,7 +84,7 @@ Our `pt1` PR is approved (🎉), but now we have to reconcile our `pt2` branch. 
 
 We check out the `pt2` branch and rebase it onto the updated `pt1` branch:
 
-```bash
+```shell
 $ git checkout feat/headless-cms-pt2
 $ git rebase feat/headless-cms-pt1
 ```
@@ -103,7 +103,7 @@ In this alternative flow, we're _leveraging_ Git to show us what work needs to b
 
 Once we've fixed all the conflicts, we can finish up our rebase by running the following:
 
-```bash
+```shell
 # stage all the changes we just made
 $ git add .
 
@@ -127,7 +127,7 @@ You'll notice that our `C` commit—the only commit in our `pt2` branch—has be
 
 Because we've rewritten the history, by turning `C` into `E`, we need to force-push to update our PR on GitHub:
 
-```bash
+```shell
 $ git push origin feat/headless-cms-pt2 -f
 ```
 
@@ -226,7 +226,7 @@ The Git history pollution isn't a huge deal, since we'll have the chance to squa
 
 If you do wind up squash-merging a branch, you'll need to manually snip out the duplicate commits. You can do this with an [interactive rebase](https://hackernoon.com/beginners-guide-to-interactive-rebasing-346a3f9c3a6d):
 
-```bash
+```shell
 $ git checkout feat/headless-cms-pt2
 $ git rebase -i feat/headless-cms
 # A popup will open, presenting you with a list of commits.
@@ -240,7 +240,7 @@ The work we're doing in this example to migrate to a headless CMS might take a w
 
 To accomplish this, we'll do some more local rebasing:
 
-```bash
+```shell
 # Update our local state
 $ git checkout master
 $ git pull origin master
