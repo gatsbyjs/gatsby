@@ -3,7 +3,6 @@ import report from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
-import WebSocket from "ws"
 import getSslCert from "../utils/get-ssl-cert"
 import { initTracer } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
@@ -20,6 +19,7 @@ import { developMachine, INITIAL_CONTEXT } from "../state-machines/develop"
 import { interpret } from "xstate"
 import { emitter } from "../redux"
 import { saveState, startAutosave } from "../db"
+import { startStateMachineServer } from "../utils/state-machine-server"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
@@ -123,42 +123,15 @@ module.exports = async (program: IProgram): Promise<void> => {
     // }
   })
 
-  const wss = new WebSocket.Server({ port: 8080 })
-
-  wss.on(`connection`, ws => {
-    console.log(`WS`)
-
-    ws.on(`open`, () => {
-      console.log(`open`)
-    })
-
-    ws.on(`message`, (msg: WebSocket.Data) => {
-      if (typeof msg !== `string`) {
-        return
-      }
-      const message = JSON.parse(msg)
-      if (message?.type === `GET_MACHINE`) {
-        ws.send(
-          JSON.stringify({
-            event: `SET_MACHINE`,
-            config: developMachine.config,
-            options: developMachine.options,
-            state: developService.state.value,
-          })
-        )
-      }
-    })
-    let last = developService.state
-    developService.onTransition(async context => {
-      if (context.changed && !last.matches(context)) {
-        if (ws.readyState === WebSocket.OPEN) {
-          last = context
-          console.log(`sending message`, context.value)
-          ws.send(JSON.stringify({ event: `SET_STATE`, state: context.value }))
-        }
-      }
-    })
-  })
+  if (process.env.GATSBY_EXPERIMENTAL_STATE_MACHINE_SERVER) {
+    const envVar = process.env.GATSBY_STATE_MACHINE_PORT
+    const xstatePort = envVar ? parseInt(envVar) : 8080
+    const port = await detectPortInUseAndPrompt(xstatePort)
+    if (port) {
+      startStateMachineServer(developService, port)
+      report.log(`Sending state machine updates from ws://localhost:${port}`)
+    }
+  }
 
   /**
    * Refresh external data sources.
