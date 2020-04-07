@@ -84,7 +84,7 @@ EXPOSE 80" >> Dockerfile
 
 You can check the status of deployment using:
 
-```bash
+```shell
 qovery status
 ```
 
