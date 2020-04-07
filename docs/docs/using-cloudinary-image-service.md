@@ -36,7 +36,7 @@ In this guide you will take a look at the [gatsby-source-plugin](/packages/gatsb
 
 Here's a [Demo site for source plugin](https://gsc-sample.netlify.com) showcasing optimized images in a masonry grid, served from [Cloudinary](https://cloudinary.com)
 
-The `gatsby-source-plugin` is helpful if you already have some images hosted on `Cloudinary` and would like to leverage on the plugin system of Gatsby.
+The `gatsby-source-plugin` is helpful if you already have some images hosted on Cloudinary and would like to leverage on the plugin system of Gatsby.
 
 ## Problem
 
