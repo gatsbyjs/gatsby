@@ -6,12 +6,16 @@ import util from "util"
 import { reporter as gatsbyReporter } from "./reporter"
 
 export const patchConsole = (reporter: typeof gatsbyReporter): void => {
-  console.log = (format: any, ...args: any[]) =>
+  console.log = (format: any, ...args: any[]): void => {
     reporter.log(util.format(format, ...args))
-  console.warn = (format: any, ...args: any[]) =>
+  }
+  console.warn = (format: any, ...args: any[]): void => {
     reporter.warn(util.format(format, ...args))
-  console.info = (format: any, ...args: any[]) =>
+  }
+  console.info = (format: any, ...args: any[]): void => {
     reporter.info(util.format(format, ...args))
-  console.error = (format: any, ...args: any[]) =>
+  }
+  console.error = (format: any, ...args: any[]): void => {
     reporter.error(util.format(format, ...args))
+  }
 }

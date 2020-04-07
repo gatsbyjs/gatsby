@@ -2,8 +2,10 @@ import reporterActions from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
+import { IStructuredError } from "../structured-errors/types"
+import { ErrorMeta } from "./types"
 
-export interface ICreateProgressReporterArguments {
+interface ICreateProgressReporterArguments {
   id: string
   text: string
   start: number
@@ -12,7 +14,19 @@ export interface ICreateProgressReporterArguments {
   reporter: typeof gatsbyReporter
 }
 
-export type ProgressReporter = ReturnType<typeof createProgressReporter>
+export interface IProgressReporter {
+  start(): void
+  setStatus(statusText: string): void
+  tick(increment?: number): void
+  panicOnBuild(
+    arg: any,
+    ...otherArgs: any[]
+  ): IStructuredError | IStructuredError[]
+  panic(arg: any, ...otherArgs: any[]): void
+  done(): void
+  total: number
+  span: Span
+}
 
 export const createProgressReporter = ({
   id,
@@ -21,7 +35,7 @@ export const createProgressReporter = ({
   total,
   span,
   reporter,
-}: ICreateProgressReporterArguments) => {
+}: ICreateProgressReporterArguments): IProgressReporter => {
   let lastUpdateTime = 0
   let unflushedProgress = 0
   let unflushedTotal = 0
@@ -43,7 +57,7 @@ export const createProgressReporter = ({
   }
 
   return {
-    start() {
+    start(): void {
       reporterActions.startActivity({
         id,
         text,
@@ -65,21 +79,20 @@ export const createProgressReporter = ({
       updateProgress()
     },
 
-    // TODO: I wish this could also be typed better,
-    // but our usages are sooo across the board right now
-    panicOnBuild(arg: any, ...otherArgs: any[]) {
+    panicOnBuild(
+      errorMeta: ErrorMeta,
+      error?: Error | Error[]
+    ): IStructuredError | IStructuredError[] {
       span.finish()
 
       reporterActions.setActivityErrored({
         id,
       })
 
-      return reporter.panicOnBuild(arg, ...otherArgs)
+      return reporter.panicOnBuild(errorMeta, error)
     },
 
-    // TODO: I wish this could also be typed better,
-    // but our usages are sooo across the board right now
-    panic(arg: any, ...otherArgs: any[]) {
+    panic(errorMeta: ErrorMeta, error?: Error | Error[]): void {
       span.finish()
 
       reporterActions.endActivity({
@@ -87,7 +100,7 @@ export const createProgressReporter = ({
         status: ActivityStatuses.Failed,
       })
 
-      return reporter.panic(arg, ...otherArgs)
+      return reporter.panic(errorMeta, error)
     },
 
     done(): void {

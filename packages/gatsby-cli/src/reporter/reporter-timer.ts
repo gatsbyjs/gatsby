@@ -6,22 +6,34 @@ import reporterActions from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
+import { IStructuredError } from "../structured-errors/types"
+import { ErrorMeta } from "./types"
 
-export interface ICreateTimerReporterArgumnents {
+interface ICreateTimerReporterArguments {
   text: string
   id: string
   span: Span
   reporter: typeof gatsbyReporter
 }
 
-export type TimerReporter = ReturnType<typeof createTimerReporter>
+export interface ITimerReporter {
+  start(): void
+  setStatus(statusText: string): void
+  panicOnBuild(
+    arg: any,
+    ...otherArgs: any[]
+  ): IStructuredError | IStructuredError[]
+  panic(arg: any, ...otherArgs: any[]): void
+  end(): void
+  span: Span
+}
 
 export const createTimerReporter = ({
   text,
   id,
   span,
   reporter,
-}: ICreateTimerReporterArgumnents) => {
+}: ICreateTimerReporterArguments): ITimerReporter => {
   return {
     start(): void {
       reporterActions.startActivity({
@@ -30,26 +42,28 @@ export const createTimerReporter = ({
         type: ActivityTypes.Spinner,
       })
     },
+
     setStatus(statusText: string): void {
       reporterActions.setActivityStatusText({
         id,
         statusText,
       })
     },
-    // TODO: I wish this could also be typed better,
-    // but our usages are sooo across the board right now
-    panicOnBuild(arg: any, ...otherArgs: any[]) {
+
+    panicOnBuild(
+      errorMeta: ErrorMeta,
+      error?: Error | Error[]
+    ): IStructuredError | IStructuredError[] {
       span.finish()
 
       reporterActions.setActivityErrored({
         id,
       })
 
-      return reporter.panicOnBuild(arg, ...otherArgs)
+      return reporter.panicOnBuild(errorMeta, error)
     },
-    // TODO: I wish this could also be typed better,
-    // but our usages are sooo across the board right now
-    panic(arg: any, ...otherArgs: any[]) {
+
+    panic(errorMeta: ErrorMeta, error?: Error | Error[]): void {
       span.finish()
 
       reporterActions.endActivity({
@@ -57,8 +71,9 @@ export const createTimerReporter = ({
         status: ActivityStatuses.Failed,
       })
 
-      return reporter.panic(arg, ...otherArgs)
+      return reporter.panic(errorMeta, error)
     },
+
     end(): void {
       span.finish()
 
@@ -67,6 +82,7 @@ export const createTimerReporter = ({
         status: ActivityStatuses.Success,
       })
     },
+
     span,
   }
 }

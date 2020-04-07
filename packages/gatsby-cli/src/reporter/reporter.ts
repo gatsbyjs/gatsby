@@ -7,23 +7,17 @@ import reporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
-import { prematureEnd } from "./short-circut"
+import { prematureEnd } from "./catch-exit-signals"
 import { IStructuredError } from "../structured-errors/types"
-import { createTimerReporter, TimerReporter } from "./reporter-timer"
-import { createPhantomReporter, PhantomReporter } from "./reporter-phantom"
-import { createProgressReporter, ProgressReporter } from "./reporter-progress"
+import { createTimerReporter, ITimerReporter } from "./reporter-timer"
+import { createPhantomReporter, IPhantomReporter } from "./reporter-phantom"
+import { createProgressReporter, IProgressReporter } from "./reporter-progress"
+import { ErrorMeta, CreateLogAction } from "./types"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
 
-type ErrorMeta = {
-  id: string
-  error?: Error
-  context: Record<string, any>
-  [id: string]: any
-}
-
-type ActivityArgs = {
+interface IActivityArgs {
   id?: string
   parentSpan?: Span
 }
@@ -70,18 +64,18 @@ class Reporter {
   /**
    * Log arguments and exit process with status 1.
    */
-  panic(errorMeta: string | ErrorMeta | Error, error?: Error | Error[]): void {
-    const reporterError = reporter.error(errorMeta, error)
+  panic(errorMeta: ErrorMeta, error?: Error | Error[]): void {
+    const reporterError = this.error(errorMeta, error)
     trackError(`GENERAL_PANIC`, { error: reporterError })
     prematureEnd()
     process.exit(1)
   }
 
   panicOnBuild(
-    errorMeta: string | ErrorMeta | Error,
+    errorMeta: ErrorMeta,
     error?: Error | Error[]
   ): IStructuredError | IStructuredError[] {
-    const reporterError = reporter.error(errorMeta, error)
+    const reporterError = this.error(errorMeta, error)
     trackError(`BUILD_PANIC`, { error: reporterError })
     if (process.env.gatsby_executing_command === `build`) {
       prematureEnd()
@@ -93,7 +87,7 @@ class Reporter {
   // TODO: I wish this could also be typed better,
   // but our usages are sooo across the board right now
   error(
-    errorMeta: string | ErrorMeta | Error,
+    errorMeta: ErrorMeta,
     error?: Error | Error[]
   ): IStructuredError | IStructuredError[] {
     let details: {
@@ -135,7 +129,7 @@ class Reporter {
       // 4.
       //    reporter.error(errorMeta);
     } else if (typeof errorMeta === `object`) {
-      details = Object.assign({}, errorMeta as ErrorMeta)
+      details = { ...errorMeta }
       // 5.
       //    reporter.error('foo');
     } else if (typeof errorMeta === `string`) {
@@ -173,13 +167,13 @@ class Reporter {
     }
   }
 
-  success = (text: string) =>
+  success = (text: string): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Success, text })
-  info = (text: string) =>
+  info = (text: string): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Info, text })
-  warn = (text: string) =>
+  warn = (text: string): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Warning, text })
-  log = (text: string) =>
+  log = (text: string): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Log, text })
 
   pendingActivity = reporterActions.createPendingActivity
@@ -194,7 +188,10 @@ class Reporter {
   /**
    * Time an activity.
    */
-  activityTimer(text: string, activityArgs: ActivityArgs = {}): TimerReporter {
+  activityTimer(
+    text: string,
+    activityArgs: IActivityArgs = {}
+  ): ITimerReporter {
     let { parentSpan, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     if (!id) {
@@ -203,7 +200,7 @@ class Reporter {
 
     const span = tracer.startSpan(text, spanArgs)
 
-    return createTimerReporter({ text, id, span, reporter })
+    return createTimerReporter({ text, id, span, reporter: this })
   }
 
   /**
@@ -215,15 +212,11 @@ class Reporter {
    * `complete` (or `failure`) when complete. Activities do just this! However, they
    * are visible to the user. So this function can be used to create a _hidden_ activity
    * that while not displayed in the CLI, still triggers a change in process status.
-   *
-   * @param {string} text - Name of activity.
-   * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
-   * @returns {ActivityTracker} The activity tracker.
    */
   phantomActivity(
     text: string,
-    activityArgs: ActivityArgs = {}
-  ): PhantomReporter {
+    activityArgs: IActivityArgs = {}
+  ): IPhantomReporter {
     let { parentSpan, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     if (!id) {
@@ -237,18 +230,13 @@ class Reporter {
 
   /**
    * Create a progress bar for an activity
-   * @param {string} text - Name of activity.
-   * @param {number} total - Total items to be processed.
-   * @param {number} start - Start count to show.
-   * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
-   * @returns {ActivityTracker} The activity tracker.
    */
   createProgress(
     text: string,
     total = 0,
     start = 0,
-    activityArgs: ActivityArgs = {}
-  ): ProgressReporter {
+    activityArgs: IActivityArgs = {}
+  ): IProgressReporter {
     let { parentSpan, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     if (!id) {
@@ -256,7 +244,14 @@ class Reporter {
     }
     const span = tracer.startSpan(text, spanArgs)
 
-    return createProgressReporter({ id, text, total, start, span, reporter })
+    return createProgressReporter({
+      id,
+      text,
+      total,
+      start,
+      span,
+      reporter: this,
+    })
   }
 
   // This method was called in older versions of gatsby, so we need to keep it to avoid
