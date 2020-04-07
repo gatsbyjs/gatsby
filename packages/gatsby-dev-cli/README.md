@@ -33,7 +33,7 @@ watchers to build Gatsby source code.
 
 ## revert cloned files
 
-To revert the cloned code by `gatsby-dev` you can remove the `node_modules` directory or run:
+If you've recently run `gatsby-dev` your `node_modules` will be out of sync with current published packages. In order to undo this, you can remove the `node_modules` directory or run:
 
 ```shell
 git checkout package.json; yarn --force
