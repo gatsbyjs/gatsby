@@ -166,7 +166,7 @@ gatsby-plugin-google-analytics is a very popular plugin that provides insights i
 
 ### Using the ID in the plugin
 
-1. `npm install --save gatsby-plugin-google-analytics`
+1. Run `npm install gatsby-plugin-google-analytics` in your terminal.
 2. Add the following to your `gatsby-config.js` file.
 
 ```javascript:title="gatsby-config.js"
