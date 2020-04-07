@@ -73,7 +73,7 @@ EXPOSE 80" >> Dockerfile
 
 **4/** **Your site is being deployed**
 
-```bash
+```shell
 # Git commit and push your code
  git add .qovery.yml Dockerfile
  git commit -m "add .qovery.yml and Dockerfile files"
