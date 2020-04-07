@@ -143,7 +143,7 @@ gatsby-plugin-google-analytics is a very popular plugin that provides insights i
 - The [Gatsby CLI](/docs/gatsby-cli) installed
 - A Domain ex: [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
 
-#### Verify the domain in search.google.com
+### Verify the domain in search.google.com
 
 1. [Verify the domain](https://search.google.com/search-console/not-verified) by clicking on **Search Property** > **Add Property**. Type in your domain, and press Continue.
 2. Create a **TXT** record in the DNS configuration for example [on AWS](https://www.entrustdatacard.com/knowledgebase/how-to-create-a-txt-record-on-amazon-aws-route-53-for-entrust-email-validation-method)
