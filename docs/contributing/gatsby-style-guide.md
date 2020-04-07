@@ -384,6 +384,7 @@ Proper nouns should use correct capitalization when possible. Below is a list of
 - JavaScript (capital letters in "J" and "S" and no abbreviations)
 - Markdown
 - Node.js
+- webpack ([should always in lower-case letters, even at the beginning of a sentence](https://webpack.js.org/branding/#the-name))
 
 A full-stack developer (adjective form with a dash) works on the full stack
 (noun form with no dash). The same goes with many other compound terms.

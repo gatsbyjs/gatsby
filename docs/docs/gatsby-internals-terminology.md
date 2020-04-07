@@ -189,7 +189,7 @@ export const pageQuery = graphql`
 `
 ```
 
-## Webpack stuff
+## webpack stuff
 
 ### /.cache/async-requires.js
 

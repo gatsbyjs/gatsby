@@ -89,7 +89,7 @@ At companies, 43% said this was crucial. “It's f\*cking fast to dev with, ulti
 Many people still marked these values as crucial things that Gatsby gives them. Just not as many people marked these as crucial as the top three values listed above, though we know they are still crucial to some! Here they are:
 
 - Best of both worlds: Gatsby empowers creators to build web experiences that leverage the benefits of both static sites (SEO friendly, fast) and web applications (dynamic data, interactive) — simultaneously.
-- Build with modern tools: Leverage the power of the latest web technologies including React, Webpack, GraphQL, modern JavaScript, and more.
+- Build with modern tools: Leverage the power of the latest web technologies including React, webpack, GraphQL, modern JavaScript, and more.
 - Bring your own content: Gatsby consolidates your data (source agnostic- CMS, static files, database, etc.) into a single, predictable, queryable layer.
 - Low to no hosting costs: Gatsby eliminates the need for traditional hosting costs because the site is hosted on the edge (Content Delivery Network).
 - Instantly scalable: No servers and no databases to manage with a website that never goes down because it’s built on the edge, instantly scaling for traffic spikes.

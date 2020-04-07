@@ -26,17 +26,17 @@ The entry point to webpack (`production-app.js`) [references ./async-requires.js
 
 ## Chunk bundle naming
 
-Great! You've told webpack where you want to code split. But how will these be named on disk? Webpack gives you the ability to customize this via the [chunkFilename](https://webpack.js.org/configuration/output/#output-chunkfilename) configuration in the [output](https://webpack.js.org/configuration/output/) section, which is set by Gatsby in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L135) as:
+Great! You've told webpack where you want to code split. But how will these be named on disk? webpack gives you the ability to customize this via the [chunkFilename](https://webpack.js.org/configuration/output/#output-chunkfilename) configuration in the [output](https://webpack.js.org/configuration/output/) section, which is set by Gatsby in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L135) as:
 
 ```text
 [name]-[contenthash].js
 ```
 
-Content hash is simply a hash of the contents of the chunk that was code split. But what about `name`? You haven't told webpack the "name" of the chunk, other than the filename, which can't be a name since it has slashes in it. Normally, Webpack would replace `[name]` with `[id]` (see [webpack docs](https://webpack.js.org/configuration/output/#output-chunkfilename)). But, it gives us the opportunity to specify the name instead as a comment in the `import block`. In the example above, that's what the `/* webpackChunkName: "component---src-blog-js" */` is doing.
+Content hash is simply a hash of the contents of the chunk that was code split. But what about `name`? You haven't told webpack the "name" of the chunk, other than the filename, which can't be a name since it has slashes in it. Normally, webpack would replace `[name]` with `[id]` (see [webpack docs](https://webpack.js.org/configuration/output/#output-chunkfilename)). But, it gives us the opportunity to specify the name instead as a comment in the `import block`. In the example above, that's what the `/* webpackChunkName: "component---src-blog-js" */` is doing.
 
 ## Primer on chunkGroups and chunks
 
-Before we go on to show how Gatsby maps components to the generated bundle names, you should understand how webpack chunks work. A chunk group represents a logical code split, e.g. a Gatsby page, or the Gatsby core app. The chunk groups might share a bunch of code or libraries. Webpack detects these and creates shared pieces of code. These are chunks, e.g. there might be a chunk for React and other libraries. Then there would be the leftover chunks of core Gatsby JS code for the particular chunk group. This is most easily explained by the below graph.
+Before we go on to show how Gatsby maps components to the generated bundle names, you should understand how webpack chunks work. A chunk group represents a logical code split, e.g. a Gatsby page, or the Gatsby core app. The chunk groups might share a bunch of code or libraries. webpack detects these and creates shared pieces of code. These are chunks, e.g. there might be a chunk for React and other libraries. Then there would be the leftover chunks of core Gatsby JS code for the particular chunk group. This is most easily explained by the below graph.
 
 ```dot
 digraph {
@@ -75,7 +75,7 @@ digraph {
 }
 ```
 
-In the above graph, you can see 3 chunk groups: 2 pages and the core Gatsby app. The two pages share a bunch of libraries. Webpack found these common dependencies and created chunks for them. These chunks are id 0 and 1. And you'll see that both page `chunkGroups` depend on them. Each page also depends on its own chunk which represents the page's core code (from its src code in the Gatsby site). These would be id 7 for `component---src-blog-1-js` and 8 for `component---src-blog-2-js`.
+In the above graph, you can see 3 chunk groups: 2 pages and the core Gatsby app. The two pages share a bunch of libraries. webpack found these common dependencies and created chunks for them. These chunks are id 0 and 1. And you'll see that both page `chunkGroups` depend on them. Each page also depends on its own chunk which represents the page's core code (from its src code in the Gatsby site). These would be id 7 for `component---src-blog-1-js` and 8 for `component---src-blog-2-js`.
 
 You can also see the chunk group for `app`. It turns out that this shares no dependencies with the pages. But it does include the webpack runtime whose name is declared in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L390).
 
@@ -83,7 +83,7 @@ Remember that the chunk group name was assigned by the `/* webpackChunkName: ...
 
 ## Referencing chunks in build HTML
 
-Webpack can now split your code into different bundles, and you've named them appropriately. But those bundles will still be named with a content hash. E.g. for a component `component--src-blog-js`, the output chunk bundle might be named something like `component--src-blog-js-2e49587d85e03a033f58.js`. Webpack will replace `import()` calls with links to the generated bundle filenames. This works great for your pure JavaScript bundles. But things get complicated when generating your page HTML files.
+webpack can now split your code into different bundles, and you've named them appropriately. But those bundles will still be named with a content hash. E.g. for a component `component--src-blog-js`, the output chunk bundle might be named something like `component--src-blog-js-2e49587d85e03a033f58.js`. webpack will replace `import()` calls with links to the generated bundle filenames. This works great for your pure JavaScript bundles. But things get complicated when generating your page HTML files.
 
 HTML file generation is covered under the [Page HTML Generation](/docs/html-generation/) docs. In summary, webpack builds `static-entry.js` which produces a `render-page.js` bundle. This is a function that accepts a page and renders its HTML. The HTML is enough to drive a site, and enhance SEO, but once the page is loaded, Gatsby also loads the JavaScript bundle so that page rendering occurs clientside from then on. This gives the advantage of fast initial page loads combined with client side rendering for future page clicks.
 

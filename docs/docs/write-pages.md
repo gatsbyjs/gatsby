@@ -12,7 +12,7 @@ title: Write Out Pages
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-This is one of the last bootstrap stages before we hand off to webpack to perform code optimization and code splitting. Webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the Redux information that was built up during bootstrap. So instead, we create dynamic JavaScript and JSON files that are dependent on by the webpack application in the `.cache` directory (see [Building the JavaScript App](/docs/production-app/)).
+This is one of the last bootstrap stages before we hand off to webpack to perform code optimization and code splitting. webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the Redux information that was built up during bootstrap. So instead, we create dynamic JavaScript and JSON files that are dependent on by the webpack application in the `.cache` directory (see [Building the JavaScript App](/docs/production-app/)).
 
 You can think of this step as taking all the data that was generated during bootstrap and saving it to disk for consumption by webpack.
 
@@ -149,4 +149,4 @@ It is also used by [Page HTML Generation](/docs/html-generation/) in two ways:
 1. `static-entry.js` produces a `page-renderer.js` webpack bundle that generates the HTML for a path. It requires `data.json` and uses the `pages` to lookup the page for the page.
 2. To get the `jsonName` from the page object, and uses it to construct a resource path for the actual json result by looking it up in `data.json.dataPaths[jsonName]`.
 
-Now that Gatsby has written out page data, it can start on the [Webpack section](/docs/webpack-and-ssr/).
+Now that Gatsby has written out page data, it can start on the [webpack section](/docs/webpack-and-ssr/).

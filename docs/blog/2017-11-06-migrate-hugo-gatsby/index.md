@@ -39,7 +39,7 @@ to classical CMS comparing to Gatsby workflows.
 As it's an older ecosystem, when you need a ready plugin or a theme for quick
 gratification, it's more likely to find something ready online for Hugo.
 
-Gatsby, on the other hand, is based on React, GraphQL, Webpack and its way of
+Gatsby, on the other hand, is based on React, GraphQL, webpack and its way of
 thinking is closer to how a developer would approach the problems from a
 single-page-application point of view.
 
@@ -59,7 +59,7 @@ For me, using Gatsby is
 [valuable learning experience](https://kalinchernev.github.io/learn-gatsbyjs)
 and it has also been so easy to work with, it feels "unfair". For example, the
 plugin system of Gatsby keeps me sane and productive, even in cases where I know
-only the briefest overview concepts of Webpack. Without Gatsby, I might have
+only the briefest overview concepts of webpack. Without Gatsby, I might have
 spent hours and days configuring what Gatsby provides out of the box.
 
 Last, but not least, the biggest benefit of using Gatsby compared to Hugo, is

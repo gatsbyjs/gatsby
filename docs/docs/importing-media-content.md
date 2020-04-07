@@ -6,7 +6,7 @@ title: Importing Media Content
 
 ## Images, SVG, and PDFs
 
-- [Image graphics can be imported](/docs/importing-assets-into-files/) with Webpack and queried with GraphQL.
+- [Image graphics can be imported](/docs/importing-assets-into-files/) with webpack and queried with GraphQL.
 - Images can also be [included from the `static folder`](/docs/static-folder/).
 - SVG content can be embedded into JSX. Here's a [handy JSX converter](https://transform.tools/svg-to-jsx).
 - SVG can be included in `img` tags or CSS backgrounds. [SVG Tips from CSS Tricks](https://css-tricks.com/using-svg/).
@@ -22,4 +22,4 @@ The HTML5 `<canvas>` element provides a space for 2-dimensional drawing in a web
 
 [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL), on the other hand, creates a 3-dimensional space in a web environment using the `<canvas>` element. Libraries like [Three.js](https://threejs.org/) are often used to enable WebGL experiences in React apps.
 
-> Using canvas and/or WebGL may require modifying your Webpack config. Do you have experience with making this work in your Gatsby site? Contribute to the docs by adding more details to this page.
+> Using canvas and/or WebGL may require modifying your webpack config. Do you have experience with making this work in your Gatsby site? Contribute to the docs by adding more details to this page.

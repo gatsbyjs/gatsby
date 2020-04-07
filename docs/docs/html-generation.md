@@ -18,7 +18,7 @@ The high level process is:
 1. Build a `render-page.js` that takes a page path and renders its HTML
 1. For each page in redux, call `render-page.js`
 
-## Webpack
+## webpack
 
 For the first step, we use webpack to build an optimized Node.js bundle. The entry point for this is called `static-entry.js`
 
