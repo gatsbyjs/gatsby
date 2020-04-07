@@ -164,7 +164,7 @@ gatsby-plugin-google-analytics is a very popular plugin that provides insights i
 4. Select a property from the menu in the PROPERTY column.
 5. Under PROPERTY, click Tracking Info > Tracking Code. Your Tracking ID is displayed at the top of the page.
 
-#### Using the id in the plugin
+### Using the ID in the plugin
 
 1. `npm install --save gatsby-plugin-google-analytics`
 2. Add the following to your `gatsby-config.js` file.
