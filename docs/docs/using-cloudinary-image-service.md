@@ -33,7 +33,7 @@ Before using the `gatsby-source-cloudinary` plugin you should do the following:
 
 - Upload your images to a folder on Cloudinary. This folder can have any name of your choosing. 
 - Obtain your API key and API secret from your Cloudinary dashboard.
-- Have [dotenv](https://www.npmjs.com/package/dotenv) module installed for loading environment variables from a `.env` file.
+- Have the [dotenv](https://www.npmjs.com/package/dotenv) module installed for loading environment variables from a `.env` file.
 
 ### Using gatsby-source-cloudinary
 
