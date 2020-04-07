@@ -169,7 +169,7 @@ gatsby-plugin-google-analytics is a very popular plugin that provides insights i
 1. `npm install --save gatsby-plugin-google-analytics`
 2. in gatsby-config.js add
 
-```js
+```javascript:title="gatsby-config.js"
 module.exports = {
   plugins: [
     {
