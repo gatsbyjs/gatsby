@@ -54,12 +54,10 @@ const recipeMachine = Machine(
           id: `applyPlan`,
           src: async (context, event) => {
             if (context.plan.length == 0) {
-              return
+              return undefined
             }
 
-            await Promise.all(
-              context.plan.map(resourcePlan => applyPlan(resourcePlan))
-            )
+            return applyPlan(context.plan)
           },
           onDone: `hasAnotherStep`,
           onError: {
