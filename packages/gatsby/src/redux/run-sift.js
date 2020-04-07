@@ -39,6 +39,9 @@ const createTypedFilterCacheKey = (typeNames, filter) => {
     if (f.type === `elemMatch`) {
       let q /*: IDbQueryElemMatch*/ = f
       f = q.nestedQuery
+      // Make distinction between filtering `a.elemMatch.b.eq` and `a.b.eq`
+      // In practice this is unlikely to be an issue, but it might
+      paths.push(`elemMatch`)
     } else {
       let q /*: IDbQueryQuery*/ = f
       comparator = q.query.comparator
@@ -273,6 +276,7 @@ const collectBucketForElemMatch = (
   filtersCache,
   filterCaches
 ) => {
+  // Get comparator and target value for this elemMatch
   let comparator = ``
   let targetValue = null
   let f /*: DbQuery*/ = filter

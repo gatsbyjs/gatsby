@@ -330,7 +330,7 @@ function addNodeToBucketWithElemMatch(
           nestedQuery.path,
           filterCache,
           resolvedNodesCache,
-          valueAtCurrentStep
+          elem
         )
       }
     })
