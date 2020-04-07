@@ -1,7 +1,7 @@
 ---
 title: Using Cloudinary image service for media optimization  
 ---
-Cloudinary is a cloud-based end-to-end media management platform that provides solutions to help site creators serve optimized media files(images and videos) to their audiences. It also provides a lot of optional transformations that can be carried out on these media assets.  
+Cloudinary is a cloud-based end-to-end media management platform that provides solutions to help site creators serve optimized media files (images and videos) to their audiences. It also provides a lot of optional transformations that can be carried out on these media assets.  
 
 In this guide you will take a look at the  [gatsby-source-cloudinary](/packages/gatsby-source-cloudinary/) and [gatsby-transformer-cloudinary](/packages/gatsby-transformer-cloudinary/) which are used to improve the experience of handling images on Gatsby sites.
 
