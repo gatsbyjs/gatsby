@@ -2,8 +2,30 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const babel = require(`@babel/core`)
 const Joi = require(`@hapi/joi`)
+const glob = require(`glob`)
 
 const declare = require(`@babel/helper-plugin-utils`).declare
+
+const fileExists = filePath => fs.existsSync(filePath)
+
+const listShadowableFilesForTheme = (directory, theme) => {
+  const fullThemePath = path.join(directory, `node_modules`, theme, `src`)
+  const shadowableThemeFiles = glob.sync(fullThemePath + `/**/*.*`, {
+    follow: true,
+  })
+
+  const toShadowPath = filePath => {
+    const themePath = filePath.replace(fullThemePath, ``)
+    return path.join(`src`, theme, themePath)
+  }
+
+  const shadowPaths = shadowableThemeFiles.map(toShadowPath)
+
+  const shadowedFiles = shadowPaths.filter(fileExists)
+  const shadowableFiles = shadowPaths.filter(filePath => !fileExists(filePath))
+
+  return { shadowedFiles, shadowableFiles }
+}
 
 const isDefaultExport = node => {
   if (!node || node.type !== `MemberExpression`) {
@@ -181,6 +203,7 @@ module.exports.create = create
 module.exports.update = create
 module.exports.read = read
 module.exports.destroy = destroy
+module.exports.config = {}
 
 module.exports.all = async ({ root }) => {
   const configPath = path.join(root, `gatsby-config.js`)
@@ -189,9 +212,16 @@ module.exports.all = async ({ root }) => {
 
   // TODO: Consider mapping to read function
   return plugins.map(name => {
+    const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
+      root,
+      name
+    )
+
     return {
       id: name,
       name,
+      shadowedFiles,
+      shadowableFiles,
     }
   })
 }
@@ -199,6 +229,8 @@ module.exports.all = async ({ root }) => {
 module.exports.validate = () => {
   return {
     name: Joi.string(),
+    shadowableFiles: Joi.array().items(Joi.string()),
+    shadowedFiles: Joi.array().items(Joi.string()),
   }
 }
 

@@ -1,4 +1,4 @@
-const Joi2GQL = require(`joi2gql`)
+const Joi2GQL = require(`./joi-to-graphql`)
 const Joi = require(`@hapi/joi`)
 const { GraphQLString, GraphQLObjectType, GraphQLList } = require(`graphql`)
 const _ = require(`lodash`)
@@ -26,6 +26,7 @@ module.exports = () => {
       const joiSchema = Joi.object().keys({
         ...resource.validate(),
         ...resourceSchema,
+        _typeName: Joi.string(),
       })
 
       const type = Joi2GQL.transmuteType(joiSchema, {
@@ -37,9 +38,12 @@ module.exports = () => {
         args: {
           id: { type: GraphQLString },
         },
-        resolve: async (_root, args, context) =>
-          await resource.read(context, args.id),
+        resolve: async (_root, args, context) => {
+          const value = await resource.read(context, args.id)
+          return { ...value, _typeName: resourceName }
+        },
       }
+
       types.push(resourceType)
 
       if (resource.all) {
