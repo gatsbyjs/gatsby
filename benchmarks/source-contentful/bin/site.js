@@ -61,7 +61,6 @@ yargs
     command: "fix-broken-images <ids...>",
     desc: `Fix images found by find-broken-images`,
     handler: ({ ids }) => {
-      console.log(ids)
       runFixBrokenImages(ids).catch(console.error)
     },
   })
