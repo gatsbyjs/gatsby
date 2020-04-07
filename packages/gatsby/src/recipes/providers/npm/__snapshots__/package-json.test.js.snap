@@ -47,3 +47,13 @@ Object {
 }",
 }
 `;
+
+exports[`packageJson resource handles object values 1`] = `
+Object {
+  "id": "husky",
+  "name": "husky",
+  "value": "{
+  \\"hooks\\": {}
+}",
+}
+`;
