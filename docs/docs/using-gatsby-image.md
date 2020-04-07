@@ -83,30 +83,31 @@ module.exports = {
 
 ```jsx:title=src/pages/my-dogs.js
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby" // highlight-line
+import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
-export default () => {
-  // highlight-start
-  const data = useStaticQuery(graphql`
-    query MyQuery {
-      file(relativePath: { eq: "images/corgi.jpg" }) {
-        childImageSharp {
-          # Specify the image processing specifications right in the query.
-          fluid {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
-  `)
-  // highlight-end
+export default ({ data }) => {
   return (
     <Layout>
       <h1>I love my corgi!</h1>
     </Layout>
   )
 }
+
+// highlight-start
+export const query = graphql`
+  query MyQuery {
+    file(relativePath: { eq: "images/corgi.jpg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`
+// highlight-end
 ```
 
 <EggheadEmbed
@@ -118,23 +119,11 @@ export default () => {
 
 ```jsx:title=src/pages/my-dogs.js
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Img from "gatsby-image" // highlight-line
 
-export default () => {
-  const data = useStaticQuery(graphql`
-    query MyQuery {
-      file(relativePath: { eq: "images/corgi.jpg" }) {
-        childImageSharp {
-          # Specify the image processing specifications right in the query.
-          fluid {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
-  `)
+export default ({ data }) => {
   return (
     <Layout>
       <h1>I love my corgi!</h1>
@@ -147,6 +136,19 @@ export default () => {
     </Layout>
   )
 }
+
+export const query = graphql`
+  query MyQuery {
+    file(relativePath: { eq: "images/corgi.jpg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`
 ```
 
 <EggheadEmbed
