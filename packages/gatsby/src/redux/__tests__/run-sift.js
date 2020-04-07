@@ -446,7 +446,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       expect(results[0].deep.flat.search.chain).toEqual(300)
     })
 
-    it(`ignores elemMatch`, () => {
+    it(`supports elemMatch`, () => {
       const filter = {
         elemList: {
           $elemMatch: { foo: { $eq: `baz` } },
@@ -459,7 +459,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
         new Map()
       )
 
-      expect(result).toBe(undefined)
+      expect(result).not.toBe(undefined)
+      expect(result.length).toBe(2)
     })
   })
 } else {
