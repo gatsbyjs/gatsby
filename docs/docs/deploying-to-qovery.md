@@ -46,7 +46,7 @@ You can set up a Gatsby site on Qovery in five quick steps:
 
 ```shell
 # generate the .qovery.yml at the root of your project directory
-$ qovery init
+qovery init
 ```
 
 `qovery init` is an interactive script that will help you configure your application deployment. You can read more about this process [here](https://docs.qovery.com/quickstart/getting-started#qovery-initialization).
