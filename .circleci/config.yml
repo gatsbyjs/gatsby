@@ -155,7 +155,14 @@ commands:
           environment:
             NUM_PAGES: << parameters.NUM_PAGES >>
       - run:
-          command: npm run build
+          name: Build COLD_START
+          command: |
+            echo -e "BENCHMARK_DRUPAL_BASE_URL=$BENCHMARK_DRUPAL_<< parameters.NUM_PAGES >>_BASE_URL\n
+            BENCHMARK_WPGRAPHQL_URL=$BENCHMARK_WPGRAPHQL_<< parameters.NUM_PAGES >>_URL\n
+            BENCHMARK_CONTENTFUL_SPACE_ID=$BENCHMARK_CONTENTFUL_<< parameters.NUM_PAGES >>_SPACE_ID\n
+            BENCHMARK_CONTENTFUL_ACCESS_TOKEN=$BENCHMARK_CONTENTFUL_<< parameters.NUM_PAGES >>_ACCESS_TOKEN\n
+            BENCHMARK_DATOCMS_API_TOKEN=$BENCHMARK_DATOCMS_<< parameters.NUM_PAGES >>_API_TOKEN" >> ~/project/<< parameters.working_directory >>/.env.production
+            npm run build
           working_directory: << parameters.working_directory >>
           environment:
             BENCHMARK_BUILD_TYPE: COLD_START
@@ -165,12 +172,9 @@ commands:
             BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
             BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
             CI_NAME: circleci
+            GATSBY_CPU_COUNT: 2
       - run:
-          command: npm install
-          working_directory: << parameters.working_directory >>
-          environment:
-            NUM_PAGES: << parameters.NUM_PAGES >>
-      - run:
+          name: Build WARM_START
           command: npm run build
           working_directory: << parameters.working_directory >>
           environment:
@@ -181,6 +185,7 @@ commands:
             BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
             BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
             CI_NAME: circleci
+            GATSBY_CPU_COUNT: 2
 
   e2e-test:
     parameters:
