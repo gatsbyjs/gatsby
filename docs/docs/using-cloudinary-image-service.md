@@ -84,7 +84,7 @@ Other optional options are `type`, `tags`, and `maxResult`.
 
 ## Gatsby-transformer-cloudinary
 
-After sourcing media files from Cloudinary, you will be able to leverage on Cloudinary’s media transformation capabilities you will make use of the `gatsby-transformer-cloudinary` which is a type of [transformer plugin](/docs/creating-a-transformer-plugin/) that is used to change image formats , style and dimension. While also optimizes images for minimal file size alongside high visual quality for an improved user experience and minimal bandwidth.
+After sourcing media files from Cloudinary, you will be able to leverage Cloudinary’s media transformation capabilities. To do so,  use `gatsby-transformer-cloudinary` which is a type of [transformer plugin](/docs/creating-a-transformer-plugin/) that is used to change image formats, styles and dimensions. It also optimizes images for minimal file size alongside high visual quality for an improved user experience and minimal bandwidth.
 
 Here's a [demo site that uses the gatsby-transformer-plugin](https://gatsby-transformer-cloudinary.netlify.com/fluid/)
 
