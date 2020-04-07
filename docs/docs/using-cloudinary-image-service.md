@@ -31,7 +31,7 @@ This plugin fetches media assets from Cloudinary that are specified in a folder.
 
 Before using the `gatsby-source-cloudinary` plugin you should do the following: 
 
-- Upload the images to a folder on Cloudinary. This folder can have any name of your choosing. 
+- Upload your images to a folder on Cloudinary. This folder can have any name of your choosing. 
 - Obtain your API key and API secret from your Cloudinary dashboard.
 - Have [dotenv](https://www.npmjs.com/package/dotenv) module installed for loading environment variables from a `.env` file.
 
