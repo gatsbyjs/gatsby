@@ -29,7 +29,7 @@ This plugin fetches media assets from Cloudinary that are specified in a folder.
 
 ### Prerequisites  
 
-Before using the `gatsby-source-cloudinary` you should do the following : 
+Before using the `gatsby-source-cloudinary` plugin you should do the following: 
 
 - Upload the images to a folder on Cloudinary. This folder can have any name of your choosing. 
 - Obtain your API key and API secret from your Cloudinary dashboard.
