@@ -79,7 +79,7 @@ Note that `gatsby-source-cloudinary` takes the following options:
 - **`prefix`** **:** This is the folder (in your Cloudinary account) in which the files reside. In the example above, the folder is called `gatsby-source-cloudinary`. Assign a name of your choice.
 Other optional options are `type`, `tags`, and `maxResult`.
 
-> The `info` log, which displays the Cloudinary Media nodes. Those images are ready to be queried in Gatsby components.
+Here's a [link to the README](https://github.com/Chuloo/gatsby-source-cloudinary#query-parameters) for more information. 
 
 ## Gatsby-transformer-cloudinary
 
