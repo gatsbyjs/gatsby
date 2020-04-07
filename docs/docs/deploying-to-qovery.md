@@ -44,7 +44,7 @@ $ qovery auth
 
 **3/** **Initialize Qovery in your Gatsby project**
 
-```bash
+```shell
 # generate the .qovery.yml at the root of your project directory
 $ qovery init
 ```
