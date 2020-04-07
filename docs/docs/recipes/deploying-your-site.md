@@ -141,11 +141,11 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 
 - A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file and an `index.js` page
 - The [Gatsby CLI](/docs/gatsby-cli) installed
-- A Domain from your provider of choice,  e.g. [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
+- A Domain from your provider of choice, e.g. [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
 
 ### Verify the domain in search.google.com
 
-1. Navigate to the [Google search console]((https://search.google.com/search-console/not-verified)) to verify the domain by clicking on **Search Property** > **Add Property**. Type in your domain and press Continue.
+1. Navigate to the [Google search console](<(https://search.google.com/search-console/not-verified)>) to verify the domain by clicking on **Search Property** > **Add Property**. Type in your domain and press Continue.
 2. Add a **TXT** record to your DNS configuration. Follow the directions for your provider, or refer to [Google docs](https://support.google.com/a/answer/183895?hl=en).
 
 ### Linking the domain to Google Analytics admin
