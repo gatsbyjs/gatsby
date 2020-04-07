@@ -152,7 +152,7 @@ gatsby-plugin-google-analytics is a very popular plugin that provides insights i
 
 1. Log into [Google Analytics](https://analytics.google.com/analytics/).
 2. Click Admin.
-3. Select **Create Property** in Property column
+3. Select **Create Property** in the Property column.
 4. Choose **Web**.
 5. Fill in the details and click Create.
 
