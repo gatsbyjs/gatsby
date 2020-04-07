@@ -467,7 +467,8 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   if (
     filters.some(
       filter =>
-        filter.type !== `elemMatch` &&
+        filter.type === `query` && // enabled
+        // filter.type === `elemMatch` || // disabled
         ![`$eq`].includes(filter.query.comparator)
     )
   ) {
