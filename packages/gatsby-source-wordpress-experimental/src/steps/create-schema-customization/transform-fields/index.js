@@ -143,6 +143,7 @@ export const transformFields = ({
           resolve: source => {
             if (
               source[fieldName] ||
+              // this accounts for "false" as a value
               (!source[fieldName] && source[fieldName] === false)
             ) {
               return source[fieldName]
