@@ -40,12 +40,12 @@ async function getRepository(owner, name) {
       query($owner: String!, $name: String!, $syncLabel: String!) {
         repository(owner: $owner, name: $name) {
           id
-          pullRequests(labels: [$syncLabel], first: 1) {
+          syncPullRequests: pullRequests(labels: [$syncLabel], first: 1) {
             nodes {
               id
             }
           }
-          label(name: $syncLabel) {
+          syncLabel: label(name: $syncLabel) {
             id
           }
         }
@@ -183,7 +183,7 @@ async function syncTranslationRepo(code) {
 
   const repository = await getRepository(owner, transRepoName)
 
-  if (repository.pullRequests.nodes.length > 0) {
+  if (repository.syncPullRequests.nodes.length > 0) {
     logger.info(
       `There are currently open sync pull requests. Please ask the language maintainers to merge the existing PR(s) in before opening another one. Exiting...`
     )
@@ -193,7 +193,7 @@ async function syncTranslationRepo(code) {
   logger.info(`No currently open sync pull requests.`)
 
   let syncLabel
-  if (!repository.label) {
+  if (!repository.syncLabel) {
     logger.info(
       `Repository does not have a "${syncLabelName}" label. Creating one...`
     )
@@ -205,8 +205,9 @@ async function syncTranslationRepo(code) {
     })
   } else {
     logger.info(`Repository has an existing ${syncLabelName} label.`)
-    syncLabel = repository.label
+    syncLabel = repository.syncLabel
   }
+  process.exit(0)
 
   // TODO exit early if this fails
   // Compare these changes
