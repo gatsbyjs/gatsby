@@ -1,5 +1,5 @@
 ---
-title: Challenge 15 - Publish Wbesite Kits with with Gatsby Themes
+title: Challenge 15 - Publish Website Kits with Gatsby Themes
 date: 2020-04-07
 author: "Hashim Warren"
 excerpt: "Learn how to create a Gatsby Theme"
@@ -14,11 +14,15 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 ## Challenge 15: Encapsulate and Share Your Work with a Gatsby Theme
 
-tktk
+This week you'll learn how to create a Gatsby Theme! Themes are a neat way to wrap your site development work into a package that can be used by others on your team, or the open source community.
+
+The resources below will help you to creat your first theme, and learn from themes that the Gatsby community has published.
 
 ### Gatsby Theme Creation Resources
 
-tktk
+Start with this free [video course on authoring Gatsby Themes](https://egghead.io/courses/gatsby-theme-authoring). While you watch the videos, use this [written Gatsby Theme guide](/tutorial/building-a-theme/), which is meant as a companion to the course.
+
+For inspiration, investigate the repos of the projects [that were showcased during Theme Jam](https://themejam.gatsbyjs.org/showcase), our hackathon for Gatsby Themes.
 
 ### What to Do If You Need Help
 
