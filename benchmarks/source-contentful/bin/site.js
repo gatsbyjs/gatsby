@@ -320,7 +320,7 @@ async function createClient() {
 }
 
 async function runSetup({ skip }) {
-  const { env } = createClient()
+  const { env } = await createClient()
 
   await createContentModel(env)
   console.log(`Content model ${chalk.green(`created`)}`)
