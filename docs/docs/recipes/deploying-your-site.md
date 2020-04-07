@@ -141,7 +141,7 @@ gatsby-plugin-google-analytics is a very popular plugin that provides insights i
 
 - A [Gatsby site](/docs/quick-start) with `gatsby-config.js` and an `index.js` page
 - The [Gatsby CLI](/docs/gatsby-cli) installed
-- A Domain ex: [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
+- A Domain from your provider of choice,  e.g. [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
 
 ### Verify the domain in search.google.com
 
