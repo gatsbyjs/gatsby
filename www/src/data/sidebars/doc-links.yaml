@@ -478,6 +478,8 @@
               items:
                 - title: Building an E-commerce Site with Shopify
                   link: /docs/building-an-ecommerce-site-with-shopify/
+                - title: Adding a Shopping Cart with Snipcart
+                  link: /docs/adding-a-shopping-cart-with-snipcart
                 - title: Processing Payments with Stripe
                   link: /docs/processing-payments-with-stripe/
                 - title: Processing Payments with Square
