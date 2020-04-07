@@ -131,7 +131,7 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 
 - [Hosting on Cloudflare](/docs/deploying-to-cloudflare-workers)
 
-## Setting up google analytics
+## Setting up Google Analytics
 
 ### Using gatsby-plugin-google-analytics to track the activity of your Gatsby Site
 
