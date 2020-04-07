@@ -12,7 +12,7 @@ tags:
   - gatsby-cloud
 ---
 
-_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool, joining us at our next Gatsby Days—currently scheduled for October 19th in Amsterdam—would also be pretty awesome)._
+_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-3rd—would be pretty awesome, too 💜. Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
 
 Dustin Shau, Gatsby's Head of Product, is a dedicated open source developer. He was first drawn to the framework by Gatsby’s exceptional performance and outstanding developer experience. Now a Gatsby team member, Dustin is focused on making Gatsby the fastest, most inclusive platform for building websites and web applications.
 
