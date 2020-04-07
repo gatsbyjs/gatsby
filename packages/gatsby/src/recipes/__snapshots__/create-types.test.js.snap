@@ -2,6 +2,10 @@
 
 exports[`create-types 1`] = `
 Object {
+  "allGatsbyPlugin": Object {
+    "resolve": [Function],
+    "type": "GatsbyPluginConnection",
+  },
   "file": Object {
     "args": Object {
       "id": Object {

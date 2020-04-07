@@ -3,9 +3,7 @@
 exports[`should create plan for File resources 1`] = `
 Array [
   Object {
-    "currentState": Object {
-      "content": "",
-    },
+    "currentState": undefined,
     "describe": "Write ./hi.md",
     "newState": "#yo",
     "resource": Array [

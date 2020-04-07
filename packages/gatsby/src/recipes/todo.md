@@ -29,7 +29,7 @@
 - [ ] use yarn/npm based on the user config
 - [x] convert to xstate
 - [ ] reasonably test resources
-- [ ] add Joi for validating resource objects
+- [x] add Joi for validating resource objects
 - [ ] handle error states
 - [x] handle template strings in JSX parser
 - [ ] integration test for each resource (read, create, update, delete)
