@@ -59,7 +59,9 @@ const checkIfSchemaHasChanged = async (_, pluginOptions) => {
   } else if (!lastCompletedSourceTime && pluginOptions.verbose) {
     helpers.reporter.log(``)
     helpers.reporter.info(
-      formatLogMessage(`No previous builds detected, fetching all data`)
+      formatLogMessage(
+        `\n\n\tThis is either your first build or the cache was cleared.\n\n\tPlease wait a minute while WordPress is synced to the Gatsby cache.`
+      )
     )
     helpers.reporter.log(``)
   }
