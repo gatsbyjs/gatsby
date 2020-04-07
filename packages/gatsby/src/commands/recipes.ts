@@ -9,10 +9,16 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   // Start GraphQL serve
   let subprocess
-  const scriptPath = path.join(program.directory, `node_modules/gatsby/dist/recipes/graphql.js`)
+  const scriptPath = path.join(
+    program.directory,
+    `node_modules/gatsby/dist/recipes/graphql.js`
+  )
   subprocess = execa(`node`, [scriptPath], {
     cwd: program.directory,
     all: true,
+  })
+  subprocess.stderr.on("data", data => {
+    console.log(data.toString())
   })
   process.on("exit", () =>
     subprocess.kill("SIGTERM", {
@@ -21,9 +27,9 @@ module.exports = async (program: IProgram): Promise<void> => {
   )
   // Log server output to a file.
   if (process.env.DEBUG) {
-    const logFile = path.join(program.directory, './recipe-server.log')
+    const logFile = path.join(program.directory, "./recipe-server.log")
     fs.writeFileSync(logFile, `\n-----\n${new Date().toJSON()}\n`)
-    const writeStream = fs.createWriteStream(logFile, {flags:'a'});
+    const writeStream = fs.createWriteStream(logFile, { flags: "a" })
     subprocess.stdout.pipe(writeStream)
   }
 
@@ -35,6 +41,5 @@ module.exports = async (program: IProgram): Promise<void> => {
       started = true
     }
   })
-
   // Run command
 }
