@@ -141,12 +141,16 @@ export const transformFields = ({
         transformedField = {
           type: transformedField,
           resolve: source => {
+            const resolvedField = source[fieldName]
+
             if (
-              source[fieldName] ||
-              // this accounts for "false" as a value
-              (!source[fieldName] && source[fieldName] === false)
+              resolvedField ||
+              // account for falsy values
+              resolvedField === false ||
+              resolvedField === `` ||
+              resolvedField === 0
             ) {
-              return source[fieldName]
+              return resolvedField
             }
 
             const autoAliasedFieldPropertyName = `${fieldName}__typename_${field?.type?.name}`
