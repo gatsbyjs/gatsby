@@ -7,7 +7,6 @@ In this guide you will take a look at the [gatsby-source-cloudinary](/packages/g
 
 Plugins are generally used to abstract functionality in Gatsby. In this case, the `gatsby-source-cloudinary` plugin is a [source plugin](/docs/creating-a-source-plugin/) which helps to connect Cloudinary media storage capabilities to your site.  
 
-If you already have some images hosted on Cloudinary and would like to leverage on the plugin system of Gatsby this plugin is for you. 
 
 > Here's a [demo site that uses the gatsby-source-cloudinary](https://gsc-sample.netlify.com) showcasing optimized images in a masonry grid, served from Cloudinary.
 
