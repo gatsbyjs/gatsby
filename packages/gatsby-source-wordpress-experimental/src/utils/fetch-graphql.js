@@ -28,12 +28,18 @@ const handleErrors = async ({
     )
   }
 
+  try {
+    query = gqlPrettier(query)
+  } catch (e) {
+    // do nothing
+  }
+
   if (pluginOptions.debug.graphql.showQueryOnError) {
-    reporter.error(formatLogMessage(`GraphQL query: ${gqlPrettier(query)}`))
+    reporter.error(formatLogMessage(`GraphQL query: ${query}`))
   }
 
   if (pluginOptions.debug.graphql.copyQueryOnError) {
-    await clipboardy.write(gqlPrettier(query))
+    await clipboardy.write(query)
   }
 
   if (!responseJSON) {

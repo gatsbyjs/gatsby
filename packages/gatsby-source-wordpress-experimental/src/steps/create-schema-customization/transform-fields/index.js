@@ -101,7 +101,7 @@ export const transformFields = ({
     ? parentInterfacesImplementingTypes.map(type => getTypeSettingsByType(type))
     : null
 
-  return fields.reduce((fieldsObject, field) => {
+  const transformedFields = fields.reduce((fieldsObject, field) => {
     const thisTypeSettings = getTypeSettingsByType(field.type)
 
     const fieldName = getAliasedFieldName({ fieldAliases, field })
@@ -125,13 +125,48 @@ export const transformFields = ({
       fieldTransformers.find(({ test }) => test(field)) || {}
 
     if (transform && typeof transform === `function`) {
-      fieldsObject[fieldName] = transform({
+      let transformedField = transform({
         field,
         fieldsObject,
         fieldName,
       })
+
+      // add default resolver
+      if (typeof transformedField === `string`) {
+        // we need to add a custom resolver to override the default resolver
+        // and check for aliased fields
+        // fields are aliased automatically if they have conflicting types
+        // with other fields of the same name when placed in side-by-side
+        // fragments on the same union or interface type.
+        transformedField = {
+          type: transformedField,
+          resolve: source => {
+            const resolvedField = source[fieldName]
+
+            if (
+              resolvedField ||
+              // account for falsy values
+              resolvedField === false ||
+              resolvedField === `` ||
+              resolvedField === 0
+            ) {
+              return resolvedField
+            }
+
+            const autoAliasedFieldPropertyName = `${fieldName}__typename_${field?.type?.name}`
+
+            const aliasedField = source[autoAliasedFieldPropertyName]
+
+            return aliasedField
+          },
+        }
+      }
+
+      fieldsObject[fieldName] = transformedField
     }
 
     return fieldsObject
   }, {})
+
+  return transformedFields
 }

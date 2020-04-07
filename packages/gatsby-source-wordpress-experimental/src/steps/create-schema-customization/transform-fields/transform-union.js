@@ -3,16 +3,21 @@ import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 export const transformUnion = ({ field, fieldName }) => ({
   type: buildTypeName(field.type.name),
   resolve: (source, _, context) => {
-    const field = source[fieldName]
+    const resolvedField =
+      source[fieldName] || source[`${field.name}__typename_${field.type.name}`]
 
-    if (!field || !field.id) {
-      return null
+    if (resolvedField && resolvedField.id) {
+      const gatsbyNode = context.nodeModel.getNodeById({
+        id: resolvedField.id,
+        type: resolvedField.type,
+      })
+
+      if (gatsbyNode) {
+        return gatsbyNode
+      }
     }
 
-    return context.nodeModel.getNodeById({
-      id: field.id,
-      type: field.type,
-    })
+    return resolvedField
   },
 })
 
@@ -22,9 +27,11 @@ export const transformListOfUnions = ({ field, fieldName }) => {
   return {
     type: `[${typeName}]`,
     resolve: (source, _, context) => {
-      const field = source[fieldName]
+      const field =
+        source[fieldName] ||
+        source[`${field.name}__typename_${field.type.name}`]
 
-      if (!field || !field.length) {
+      if ((!field && field !== false) || !field.length) {
         return null
       }
 

@@ -4,13 +4,29 @@ import { transformGatsbyNodeObject } from "~/steps/create-schema-customization/t
 import { transformListOfGatsbyNodes } from "./transform-object"
 import { getGatsbyNodeTypeNames } from "~/steps/source-nodes/fetch-nodes/fetch-nodes"
 
+const builtInScalarTypeNames = [
+  `Int`,
+  `String`,
+  `Boolean`,
+  `Float`,
+  `Date`,
+  `ID`,
+  `JSON`,
+]
+
 export const fieldTransformers = [
   {
     // non null scalars
     test: field =>
       field.type.kind === `NON_NULL` && field.type.ofType.kind === `SCALAR`,
 
-    transform: ({ field }) => `${field.type.ofType.name}!`,
+    transform: ({ field }) => {
+      if (builtInScalarTypeNames.includes(field.type.ofType.name)) {
+        return `${field.type.ofType.name}!`
+      } else {
+        return `JSON!`
+      }
+    },
   },
 
   {
@@ -26,7 +42,13 @@ export const fieldTransformers = [
   {
     // scalars
     test: field => field.type.kind === `SCALAR`,
-    transform: ({ field }) => field.type.name,
+    transform: ({ field }) => {
+      if (builtInScalarTypeNames.includes(field.type.name)) {
+        return field.type.name
+      } else {
+        return `JSON`
+      }
+    },
   },
 
   {
@@ -85,7 +107,13 @@ export const fieldTransformers = [
     test: field =>
       field.type.kind === `LIST` && field.type.ofType.kind === `SCALAR`,
 
-    transform: ({ field }) => `[${field.type.ofType.name}]`,
+    transform: ({ field }) => {
+      if (builtInScalarTypeNames.includes(field.type.ofType.name)) {
+        return `[${field.type.ofType.name}]`
+      } else {
+        return `[JSON]`
+      }
+    },
   },
 
   {

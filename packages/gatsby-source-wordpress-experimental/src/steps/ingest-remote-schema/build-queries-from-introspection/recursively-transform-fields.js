@@ -19,6 +19,8 @@ const transformFragments = ({
             return false
           }
 
+          possibleType.type = type
+
           // save this type so we can use it in schema customization
           store.dispatch.remoteSchema.addFetchedType(type)
 
@@ -111,7 +113,10 @@ function transformField({
     (fieldType.kind === `NON_NULL` && ofType.kind === `SCALAR`) ||
     (fieldType.kind === `LIST` && fieldType.ofType.kind === `SCALAR`)
   ) {
-    return fieldName
+    return {
+      fieldName,
+      fieldType,
+    }
   }
 
   const isListOfGatsbyNodes =
@@ -121,6 +126,7 @@ function transformField({
     return {
       fieldName: fieldName,
       fields: [`id`],
+      fieldType,
     }
   } else if (fieldType.kind === `LIST`) {
     const listOfType = typeMap.get(ofType.name)
@@ -160,6 +166,7 @@ function transformField({
       fieldName: fieldName,
       fields: transformedFields,
       fragments: transformedFragments,
+      fieldType,
     }
   }
 
@@ -171,12 +178,14 @@ function transformField({
     return {
       fieldName: fieldName,
       fields: [`id`, `sourceUrl`],
+      fieldType,
     }
   } else if (isAGatsbyNode) {
     // just pull the id for connections to other gatsby nodes
     return {
       fieldName: fieldName,
       fields: [`id`],
+      fieldType,
     }
   }
 
@@ -198,6 +207,7 @@ function transformField({
     return {
       fieldName: fieldName,
       fields: transformedFields,
+      fieldType,
     }
   }
 
@@ -222,6 +232,7 @@ function transformField({
       fieldName: fieldName,
       fields: transformedFields,
       fragments,
+      fieldType,
     }
   }
 

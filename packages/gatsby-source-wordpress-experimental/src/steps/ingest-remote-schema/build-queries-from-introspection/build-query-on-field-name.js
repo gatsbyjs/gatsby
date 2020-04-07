@@ -70,14 +70,14 @@ export const buildSelectionSet = fields => {
             ${buildFragments(fragments)}
           }
         `
-      }
-
-      if (fieldName && fields) {
+      } else if (fieldName && fields) {
         return `
             ${fieldName} ${buildVariables(variables)} {
               ${buildSelectionSet(fields)}
             }
           `
+      } else if (fieldName) {
+        return fieldName
       }
 
       return null
