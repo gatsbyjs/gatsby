@@ -60,10 +60,9 @@ const checkIfSchemaHasChanged = async (_, pluginOptions) => {
     helpers.reporter.log(``)
     helpers.reporter.info(
       formatLogMessage(
-        `\n\n\tThis is either your first build or the cache was cleared.\n\n\tPlease wait a minute while WordPress is synced to the Gatsby cache.`
+        `\n\n\tThis is either your first build or the cache was cleared.\n\tPlease wait while your WordPress data is synced to your Gatsby cache.\n\n\tMaybe now's a good time to get up and stretch? :D\n`
       )
     )
-    helpers.reporter.log(``)
   }
 
   // record wether the schema changed so other logic can beware
