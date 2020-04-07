@@ -125,23 +125,28 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const wss = new WebSocket.Server({ port: 8080 })
 
-  wss.on(`connection`, function(ws, req) {
+  wss.on(`connection`, ws => {
     console.log(`WS`)
 
     ws.on(`open`, () => {
       console.log(`open`)
     })
 
-    ws.on(`message`, msg => {
-      console.log(`msg`, msg)
-      ws.send(
-        JSON.stringify({
-          event: `SET_MACHINE`,
-          config: developMachine.config,
-          options: developMachine.options,
-          state: developService.state.value,
-        })
-      )
+    ws.on(`message`, (msg: WebSocket.Data) => {
+      if (typeof msg !== `string`) {
+        return
+      }
+      const message = JSON.parse(msg)
+      if (message?.type === `GET_MACHINE`) {
+        ws.send(
+          JSON.stringify({
+            event: `SET_MACHINE`,
+            config: developMachine.config,
+            options: developMachine.options,
+            state: developService.state.value,
+          })
+        )
+      }
     })
     let last = developService.state
     developService.onTransition(async context => {
