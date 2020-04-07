@@ -84,8 +84,6 @@ class Reporter {
     return reporterError
   }
 
-  // TODO: I wish this could also be typed better,
-  // but our usages are sooo across the board right now
   error(
     errorMeta: ErrorMeta,
     error?: Error | Error[]
@@ -94,7 +92,6 @@ class Reporter {
       error?: Error
       context: {}
     } = {
-      error: undefined,
       context: {},
     }
 
