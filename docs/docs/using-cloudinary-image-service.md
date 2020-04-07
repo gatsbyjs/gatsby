@@ -134,7 +134,7 @@ module.exports = {
 ```
 > In `gatsby-config.js`, responsive breakpoints can be created for each image, use the fluidMaxWidth and fluidMinWidth options to set them.
 
-### Additional resources
+## Additional resources
 - [Faster Sites with Optimized Media Assets by William Imoh](/blog/2020-01-12-faster-sites-with-optimized-media-assets/)
 - [Gatsby Transformer Cloudinary](https://www.npmjs.com/package/gatsby-transformer-cloudinary)
 - [Gatsby Source Cloudinary](/packages/gatsby-source-cloudinary/)
