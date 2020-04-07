@@ -133,20 +133,18 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 
 ## Setting up Google Analytics
 
-### Using gatsby-plugin-google-analytics
-
-`gatsby-plugin-google-analytics` is a popular plugin that provides insights into how users access your website. You can use it to track site activity.
+Use `gatsby-plugin-google-analytics` to track site activity and provide insights into how users access your website.
 
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file and an `index.js` page
 - The [Gatsby CLI](/docs/gatsby-cli) installed
-- A Domain from your provider of choice, e.g. [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
+- A domain from your provider of choice, e.g. [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
 
 ### Verify the domain in search.google.com
 
 1. Navigate to the [Google search console](<(https://search.google.com/search-console/not-verified)>) to verify the domain by clicking on **Search Property** > **Add Property**. Type in your domain and press Continue.
-2. Add a **TXT** record to your DNS configuration. Follow the directions for your provider, or refer to [Google docs](https://support.google.com/a/answer/183895?hl=en).
+2. Add a **TXT** record to your DNS configuration. Follow the directions for your provider, or refer to the [Google documentation](https://support.google.com/a/answer/183895?hl=en).
 
 ### Linking the domain to Google Analytics admin
 
@@ -154,7 +152,7 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 2. Click **Admin**.
 3. Select **Create Property** in the Property column.
 4. Choose **Web**.
-5. Fill in the details and click Create.
+5. Fill in the details and click **Create**.
 
 ### Getting your Google Analytics `Tracking ID`
 
@@ -182,6 +180,8 @@ module.exports = {
   ],
 }`
 ```
+
+3. Build and deploy your site to start seeing traffic in your [Google Analytics dashboard](https://analytics.google.com/analytics/web/).
 
 ### Additional resources
 
