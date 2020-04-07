@@ -2,6 +2,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const contentful = require(`contentful-management`)
 const chalk = require("chalk")
+const yargs = require("yargs")
 
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -29,11 +30,42 @@ const contentfulConfig = {
 const { spaceId, managementToken } = contentfulConfig
 
 if (!spaceId || !managementToken) {
-  console.error(
-    `Contentful space id and management API token are required.`
-  )
+  console.error(`Contentful space id and management API token are required.`)
   process.exit(1)
 }
+
+yargs
+  .scriptName("site")
+  .usage("$0 <command> [arguments]")
+  .command({
+    command: `setup [--skip=number]`,
+    desc: `Setup new Contentful Benchmark Site from the dataset`,
+    builder: yargs =>
+      yargs.option(`skip`, {
+        type: `number`,
+        default: 0,
+        description: `Skip this number of entries`,
+      }),
+    handler: ({ skip = 0 }) => {
+      runSetup({ skip }).catch(console.error)
+    },
+  })
+  .command({
+    command: "find-broken-images",
+    desc: `Find broken images in current contentful site`,
+    handler: () => {
+      runFindBrokenImages().catch(console.error)
+    },
+  })
+  .command({
+    command: "fix-broken-images <ids...>",
+    desc: `Fix images found by find-broken-images`,
+    handler: ({ ids }) => {
+      runFixBrokenImages(ids).catch(console.error)
+    },
+  })
+  .demandCommand(1)
+  .help().argv
 
 /**
  * Transforms an article from source dataset to contentful data model
@@ -201,16 +233,7 @@ async function createArticle(env, articleData) {
   }
 }
 
-const resolveSkip = () => {
-  const index = process.argv.findIndex(param => param === `--skip`)
-  if (index >= 0) {
-    const skipValue = process.argv[index + 1]
-    return Number(skipValue) || 0
-  }
-  return 0
-}
-
-async function createEntries(env) {
+async function createEntries({ env, skip = 0 }) {
   const processBatch = sourceArticles =>
     Promise.all(
       sourceArticles.map(async sourceArticle => {
@@ -219,13 +242,11 @@ async function createEntries(env) {
         const articleCreated = await createArticle(env, article)
         console.log(
           `Processed ${chalk.green(article.sys.id)} (` +
-          `asset ${assetCreated ? `created` : chalk.yellow(`exists`)}, ` +
-          `article ${articleCreated ? `created` : chalk.yellow(`exists`)})`
+            `asset ${assetCreated ? `created` : chalk.yellow(`exists`)}, ` +
+            `article ${articleCreated ? `created` : chalk.yellow(`exists`)})`
         )
       })
     )
-
-  const skip = resolveSkip()
 
   if (skip) {
     console.log(`Skipping first ${chalk.yellow(skip)} articles`)
@@ -248,7 +269,45 @@ async function createEntries(env) {
   }
 }
 
-async function run() {
+async function updateAssets({ env, assetIds }) {
+  for await (const sourceArticle of readSourceArticles(inputDir)) {
+    const { asset: assetData } = extractEntities(sourceArticle)
+    if (assetIds.has(assetData.sys.id)) {
+      try {
+        let asset = await env.getAsset(assetData.sys.id)
+        try {
+          asset = await asset.unpublish()
+        } catch (e) {}
+        asset = await asset.delete()
+        asset = await createAsset(env, assetData)
+        console.log(`Updated asset ${chalk.yellow(assetData.sys.id)}`)
+      } catch (e) {
+        console.warn(`Could not update asset ${chalk.yellow(assetData.sys.id)}`)
+        console.log(e)
+      }
+    }
+  }
+}
+
+async function findBrokenImages(env) {
+  let assets
+  let skip = 0
+  let ids = []
+
+  do {
+    assets = await env.getAssets({ skip })
+    for (let asset of assets.items) {
+      const details = asset.fields.file[`en-US`].details
+      if (!details || !details.image || !details.image.width) {
+        ids.push(asset.sys.id)
+      }
+    }
+    skip = assets.skip + assets.limit
+  } while (assets && assets.items.length > 0)
+  return ids
+}
+
+async function createClient() {
   const client = contentful.createClient({
     accessToken: contentfulConfig.managementToken,
   })
@@ -256,20 +315,41 @@ async function run() {
   const space = await client.getSpace(contentfulConfig.spaceId)
   const env = await space.getEnvironment(`master`)
 
-  // Create content model only:
-  createContentModel(env)
-    .then(() => {
-      console.log(`Content model ${chalk.green(`created`)}`)
-    })
-    .then(() => createEntries(env))
-    .then(() => {
-      console.log(
-        `All set! You can now run ${chalk.yellow(
-          "gatsby develop"
-        )} to see the site in action.`
-      )
-    })
-    .catch(error => console.error(error))
+  return { client, space, env }
 }
 
-run().catch(console.error)
+async function runSetup({ skip }) {
+  const { env } = await createClient()
+
+  await createContentModel(env)
+  console.log(`Content model ${chalk.green(`created`)}`)
+  await createEntries({ env, skip })
+
+  console.log(
+    `All set! You can now run ${chalk.yellow(
+      "gatsby develop"
+    )} to see the site in action.`
+  )
+}
+
+async function runFindBrokenImages() {
+  const { env } = await createClient()
+  const ids = await findBrokenImages(env)
+  if (ids.length) {
+    console.log(chalk.yellow(`Broken images:`))
+    console.log(ids.join(` `))
+    console.log(``)
+  } else {
+    console.log(chalk.green(`No broken images!`))
+  }
+}
+
+async function runFixBrokenImages(ids) {
+  if (!ids.length) {
+    console.log(`Nothing to do: no broken images!`)
+    return
+  }
+  const { env } = await createClient()
+  console.log(`Fixing ${chalk.yellow(ids.length)} broken images`)
+  await updateAssets({ env, assetIds: new Set(ids) })
+}
