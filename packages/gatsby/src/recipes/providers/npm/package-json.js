@@ -69,6 +69,17 @@ module.exports.plan = async ({ root }, { id, name, value }) => {
   }
 }
 
+module.exports.all = async ({ root }) => {
+  const pkg = await readPackageJson(root)
+
+  return Object.keys(pkg).map(key => {
+    return {
+      name: key,
+      value: JSON.stringify(pkg[key]),
+    }
+  })
+}
+
 module.exports.create = create
 module.exports.update = create
 module.exports.read = read
