@@ -16,7 +16,7 @@ const pkgDir = require(`pkg-dir`)
 const recipeMachine = require(`./recipe-machine`)
 const createTypes = require(`./create-types`)
 
-const SITE_ROOT = pkgDir(process.cwd())
+const SITE_ROOT = pkgDir.sync(process.cwd())
 
 const pubsub = new PubSub()
 const PORT = 4000
