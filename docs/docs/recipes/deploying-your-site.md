@@ -151,7 +151,7 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 ### Linking the domain to Google Analytics admin
 
 1. Log into [Google Analytics](https://analytics.google.com/analytics/).
-2. Click Admin.
+2. Click **Admin**.
 3. Select **Create Property** in the Property column.
 4. Choose **Web**.
 5. Fill in the details and click Create.
@@ -159,10 +159,10 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 ### Getting your Google Analytics `Tracking ID`
 
 1. Sign in to your Google Analytics account.
-2. Click Admin.
+2. Click **Admin**.
 3. Select an account from the menu in the ACCOUNT column.
 4. Select a property from the menu in the PROPERTY column.
-5. Under PROPERTY, click Tracking Info > Tracking Code. Your Tracking ID is displayed at the top of the page.
+5. Under Property, click **Tracking Info** > **Tracking Code**. Your Tracking ID is displayed at the top of the page.
 
 ### Using the ID in the plugin
 
