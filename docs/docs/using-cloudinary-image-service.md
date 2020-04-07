@@ -73,7 +73,7 @@ module.exports = {
   ]
 } 
 ```
-> `gatsby-source-cloudinary` takes these options:
+Note that `gatsby-source-cloudinary` takes the following options:
 
 - **`cloudName`** , **`apiKey`** , and **`apiSecret`** **:** These are credentials from your Cloudinary console, stored as three separate environment variables for security.
 - **`resourceType`** **:** This is the resource type of the media assets: either an image or a video.
