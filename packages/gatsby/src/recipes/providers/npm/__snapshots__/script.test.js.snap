@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`npm script resource e2e script resource test: NPMScript create 1`] = `
+Object {
+  "command": "foot",
+  "id": "apple",
+  "name": "apple",
+}
+`;
+
+exports[`npm script resource e2e script resource test: NPMScript create plan 1`] = `
+Object {
+  "currentState": "\\"apple\\": \\"ooo",
+  "describe": "Add new command to your package.json — \\"apple\\": \\"foot",
+  "newState": "\\"apple\\": \\"foot",
+}
+`;
+
+exports[`npm script resource e2e script resource test: NPMScript destroy 1`] = `undefined`;
+
+exports[`npm script resource e2e script resource test: NPMScript update 1`] = `
+Object {
+  "command": "foot2",
+  "id": "apple",
+  "name": "apple",
+}
+`;
+
+exports[`npm script resource e2e script resource test: NPMScript update plan 1`] = `
+Object {
+  "currentState": "\\"apple\\": \\"foot",
+  "describe": "Add new command to your package.json — \\"apple\\": \\"foot2",
+  "newState": "\\"apple\\": \\"foot2",
+}
+`;

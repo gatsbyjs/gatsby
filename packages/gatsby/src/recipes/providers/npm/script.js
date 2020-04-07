@@ -1,7 +1,7 @@
 const fs = require(`fs`)
 const path = require(`path`)
+const Joi = require(`@hapi/joi`)
 const { promisify } = require(`util`)
-
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 
@@ -23,15 +23,22 @@ const create = async ({ root }, { name, command }) => {
   pkg.scripts = pkg.scripts || {}
   pkg.scripts[name] = command
   await writePackageJson(root, pkg)
+
+  return await read({ root }, name)
 }
 
-const read = async ({ root }, { name }) => {
+const read = async ({ root }, id) => {
   const pkg = await readPackageJson(root)
 
-  return {
-    name,
-    command: pkg.scripts && pkg.scripts[name],
+  if (pkg.scripts && pkg.scripts[id]) {
+    return {
+      id,
+      name: id,
+      command: pkg.scripts[id],
+    }
   }
+
+  return undefined
 }
 
 const destroy = async ({ root }, { name }) => {
@@ -41,11 +48,38 @@ const destroy = async ({ root }, { name }) => {
   await writePackageJson(root, pkg)
 }
 
-module.exports.plan = async context => {
+module.exports.validate = () => {
   return {
-    currentState: ``,
-    newState: ``,
-    describe: `do stuff`,
+    name: Joi.string(),
+    command: Joi.string(),
+  }
+}
+
+module.exports.all = async ({ root }) => {
+  const pkg = await readPackageJson(root)
+  const scripts = pkg.scripts || {}
+
+  return Object.entries(scripts).map(arr => {
+    return { name: arr[0], command: arr[1] }
+  })
+}
+
+module.exports.plan = async ({ root }, { name, command }) => {
+  const resource = await read({ root }, name)
+
+  const scriptDescription = (name, command) => `"${name}": "${command}`
+
+  let currentState = ``
+  if (resource) {
+    currentState = scriptDescription(resource.name, resource.command)
+  }
+  return {
+    currentState,
+    newState: scriptDescription(name, command),
+    describe: `Add new command to your package.json — ${scriptDescription(
+      name,
+      command
+    )}`,
   }
 }
 

@@ -6,6 +6,10 @@ Object {
     "resolve": [Function],
     "type": "GatsbyPluginConnection",
   },
+  "allNPMScript": Object {
+    "resolve": [Function],
+    "type": "NPMScriptConnection",
+  },
   "file": Object {
     "args": Object {
       "id": Object {
@@ -32,6 +36,15 @@ Object {
     },
     "resolve": [Function],
     "type": "NPMPackageJson",
+  },
+  "npmScript": Object {
+    "args": Object {
+      "id": Object {
+        "type": "String",
+      },
+    },
+    "resolve": [Function],
+    "type": "NPMScript",
   },
 }
 `;
