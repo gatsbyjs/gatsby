@@ -93,7 +93,7 @@ Here's a [demo site that uses the gatsby-transformer-plugin](https://gatsby-tran
 1. Install `gatsby-transformer-cloudinary` and  `gatsby-source-filesystem` which creates the File nodes that the Cloudinary transformer plugin works on. 
 
 ```shell
- npm install --save gatsby-transformer-cloudinary gatsby-source-filesystem 
+ npm install gatsby-transformer-cloudinary gatsby-source-filesystem 
 ```
 2. In the root of your project, create an environment file called `.env` to which to add your Cloudinary credentials and their values.
 
