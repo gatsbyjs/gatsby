@@ -158,7 +158,7 @@ gatsby-plugin-google-analytics is a very popular plugin that provides insights i
 
 #### Getting the analytics tracking id
 
-1. Sign in to your Analytics account.
+1. Sign in to your Google Analytics account.
 2. Click Admin.
 3. Select an account from the menu in the ACCOUNT column.
 4. Select a property from the menu in the PROPERTY column.
