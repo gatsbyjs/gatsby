@@ -5,7 +5,7 @@ Cloudinary is a cloud-based end-to-end media management platform that provides s
 
 In this guide you will take a look at the [gatsby-source-cloudinary](/packages/gatsby-source-cloudinary/) and [gatsby-transformer-cloudinary](/packages/gatsby-transformer-cloudinary/) plugins which you can use to improve the experience of handling images on Gatsby sites.
 
-Plugins are generally used to abstract functionality in Gatsby. In this case `gatsby-source-cloudinary` plugin is a [source plugin](/docs/creating-a-source-plugin/) which helps to connect Cloudinary media storage capabilities to your site.  
+Plugins are generally used to abstract functionality in Gatsby. In this case, the `gatsby-source-cloudinary` plugin is a [source plugin](/docs/creating-a-source-plugin/) which helps to connect Cloudinary media storage capabilities to your site.  
 
 If you already have some images hosted on Cloudinary and would like to leverage on the plugin system of Gatsby this plugin is for you. 
 
