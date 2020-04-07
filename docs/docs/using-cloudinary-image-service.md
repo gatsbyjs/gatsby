@@ -95,7 +95,7 @@ Here's a [demo site that uses the gatsby-transformer-plugin](https://gatsby-tran
 ```shell
  npm install --save gatsby-transformer-cloudinary gatsby-source-filesystem 
 ```
-2. In the root of your project, create an environment file called `.env` to which to add your Cloudinary credentials and their values
+2. In the root of your project, create an environment file called `.env` to which to add your Cloudinary credentials and their values.
 
 ```
 CLOUDINARY_API_KEY=xxxxxxxxxxxxxx
