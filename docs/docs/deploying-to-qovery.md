@@ -39,7 +39,7 @@ You can set up a Gatsby site on Qovery in five quick steps:
 
 ```shell
 # Sign up with Github, Gitlab or Bitbucket
-$ qovery auth
+ qovery auth
 ```
 
 **3/** **Initialize Qovery in your Gatsby project**
