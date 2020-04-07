@@ -133,7 +133,7 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 
 ## Setting up Google Analytics
 
-### Using gatsby-plugin-google-analytics to track the activity of your Gatsby Site
+### Using gatsby-plugin-google-analytics
 
 gatsby-plugin-google-analytics is a very popular plugin that provides insights in the access patters of your website
 
