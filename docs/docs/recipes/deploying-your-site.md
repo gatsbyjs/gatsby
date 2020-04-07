@@ -146,7 +146,7 @@ gatsby-plugin-google-analytics is a very popular plugin that provides insights i
 ### Verify the domain in search.google.com
 
 1. Navigate to the [Google search console]((https://search.google.com/search-console/not-verified)) to verify the domain by clicking on **Search Property** > **Add Property**. Type in your domain and press Continue.
-2. Create a **TXT** record in the DNS configuration for example [on AWS](https://www.entrustdatacard.com/knowledgebase/how-to-create-a-txt-record-on-amazon-aws-route-53-for-entrust-email-validation-method)
+2. Add a **TXT** record to your DNS configuration. Follow the directions for your provider, or refer to [Google docs](https://support.google.com/a/answer/183895?hl=en).
 
 #### Linking the domain to Google analytics admin
 
