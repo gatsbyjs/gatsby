@@ -565,7 +565,7 @@ jobs:
       - image: "circleci/node:12"
     steps:
       - run-benchmark:
-          working_directory: benchmarks/markdown_table/benchmarks/markdown_table
+          working_directory: benchmarks/markdown_table
           NUM_PAGES: "32768"
           BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
