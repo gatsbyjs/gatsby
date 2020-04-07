@@ -135,7 +135,7 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 
 ### Using gatsby-plugin-google-analytics
 
-gatsby-plugin-google-analytics is a very popular plugin that provides insights in the access patters of your website
+`gatsby-plugin-google-analytics` is a popular plugin that provides insights into how users access your website. You can use it to track site activity.
 
 ### Prerequisites
 
