@@ -31,6 +31,20 @@ this program running.
 Typically you'll also want to run `npm run watch` in the Gatsby repo to set up
 watchers to build Gatsby source code.
 
+## revert cloned files
+
+To revert the cloned code by `gatsby-dev` you can remove the `node_modules` directory or run:
+
+```shell
+git checkout package.json; yarn --force
+```
+
+or
+
+```shell
+git checkout package.json; npm install --force
+```
+
 **[Demo Video](https://www.youtube.com/watch?v=D0SwX1MSuas)**
 
 More detailed instruction for setting up your Gatsby development environment can
