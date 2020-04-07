@@ -207,7 +207,6 @@ async function syncTranslationRepo(code) {
     logger.info(`Repository has an existing ${syncLabelName} label.`)
     syncLabel = repository.syncLabel
   }
-  process.exit(0)
 
   // TODO exit early if this fails
   // Compare these changes
