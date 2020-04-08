@@ -17,11 +17,9 @@ class Post extends React.Component {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }
-  constructor() {
-    super()
-    this.state = {
-      hovering: false,
-    }
+
+  state = {
+    hovering: false,
   }
 
   render() {

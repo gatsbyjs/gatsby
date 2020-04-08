@@ -10,11 +10,7 @@ import ChevronSvg from "./chevron-svg"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 class StickyResponsiveSidebar extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = { open: false }
-  }
+  state = { open: false }
 
   _openSidebar = () => {
     this.setState({ open: !this.state.open })

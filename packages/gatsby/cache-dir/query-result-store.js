@@ -26,12 +26,9 @@ const getPathFromProps = props =>
     : undefined
 
 export class PageQueryStore extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      pageQueryData: getPageQueryData(),
-      path: null,
-    }
+  state = {
+    pageQueryData: getPageQueryData(),
+    path: null,
   }
 
   handleMittEvent = () => {
@@ -88,11 +85,8 @@ export class PageQueryStore extends React.Component {
 }
 
 export class StaticQueryStore extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      staticQueryData: getStaticQueryData(),
-    }
+  state = {
+    staticQueryData: getStaticQueryData(),
   }
 
   handleMittEvent = () => {

@@ -7,10 +7,7 @@ import { renderCell } from "./evaluation-cell"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 class SimpleEvaluationTable extends Component {
-  constructor() {
-    super()
-    this.state = {}
-  }
+  state = {}
   render() {
     const showTooltip = (row) => this.state[`feature-cell-${row}`]
     const { title, headers, data } = this.props

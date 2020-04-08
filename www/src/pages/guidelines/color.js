@@ -37,12 +37,9 @@ const LegacyColorIcon = ({ textColor }) => (
   />
 )
 class Color extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isModalOpen: false,
-      color: false,
-    }
+  state = {
+    isModalOpen: false,
+    color: false,
   }
 
   handleModalOpen = (event, node) => {

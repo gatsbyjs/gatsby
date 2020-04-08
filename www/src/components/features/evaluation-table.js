@@ -8,10 +8,8 @@ import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
 
 class EvaluationTable extends Component {
-  constructor() {
-    super()
-    this.state = {}
-  }
+  state = {}
+  
   render() {
     const showTooltip = (section, row) => this.state[`${section},${row}`]
 

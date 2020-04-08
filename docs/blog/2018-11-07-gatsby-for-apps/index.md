@@ -87,12 +87,8 @@ import React from "react"
 import Layout from "../components/layout"
 
 class Messages extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      messages: [],
-    }
+  state = {
+    messages: [],
   }
 
   // note: this is a simplified example without error handling, authentication, etc.

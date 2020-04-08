@@ -6,10 +6,8 @@ import { graphql } from "gatsby"
 import { MdCreate as EditIcon } from "react-icons/md"
 
 export default class MarkdownPageFooter extends React.Component {
-  constructor() {
-    super()
-    this.state = { feedbackSubmitted: false }
-  }
+  state = { feedbackSubmitted: false }
+  
   render() {
     return (
       <>

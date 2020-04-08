@@ -70,11 +70,8 @@ class TagsPage extends React.Component {
     }),
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      filterQuery: ``,
-    }
+  state = {
+    filterQuery: ``,
   }
 
   handleChange = ({ target: { name, value } }) => {

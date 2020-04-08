@@ -217,12 +217,8 @@ export default class Lightbox extends Component {
     carImages: PropTypes.array.isRequired, // eslint-disable-line
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      showLightbox: false,
-    }
+  state = {
+    showLightbox: false
   }
 
   render() {
@@ -295,13 +291,9 @@ export default class Lightbox extends Component {
     carImages: PropTypes.array.isRequired, // eslint-disable-line
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      showLightbox: false,
-      selectedImage: null,
-    }
+  state = {
+    showLightbox: false,
+    selectedImage: null,
   }
 
   render() {
