@@ -18,6 +18,10 @@ module.exports = async context => {
   const cmds = context.steps[context.currentStep]
   const commandPlans = Object.entries(cmds).map(async ([key, val]) => {
     const resource = resources[key]
+    // Filter out the Config resource
+    if (key === `Config`) {
+      return
+    }
 
     // Does this resource support creating a plan?
     if (!resource || !resource.plan) {
