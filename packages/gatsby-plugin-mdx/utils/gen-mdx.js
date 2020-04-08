@@ -150,7 +150,7 @@ ${code}`
           {
             useBuiltIns: `entry`,
             corejs: 2,
-            modules: `false`,
+            modules: false,
           },
         ],
       ],

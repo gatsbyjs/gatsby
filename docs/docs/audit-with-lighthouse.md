@@ -42,9 +42,17 @@ Now run your first Lighthouse test.
 
 ![Lighthouse audit results](./images/lighthouse-audit-results.png)
 
-As you can see, Gatsby's performance is excellent out of the box but we're missing some things for PWA, Accessibility, Best Practices, and SEO that will improve your scores (and in the process make your site much more friendly to visitors and search engines). To improve your scores further, see the links under "Next steps" below.
+## Using Gatsby Cloud
 
-Next steps:
+If you use [Gatsby Cloud](https://www.gatsbyjs.com/cloud), a Lighthouse audit runs automatically every time your site builds. In Cloud, every code commit to GitHub triggers a build, allowing you to see any shifts in your scores and what code changes caused them.
+
+![Lighthouse audit in Cloud](./images/cloud-lighthouse.png)
+
+## Next steps
+
+As you can see, Gatsby's performance is excellent out of the box but we're missing some things for PWA, Accessibility, Best Practices, and SEO that will improve your scores (and in the process make your site much more friendly to visitors and search engines).
+
+To improve your scores further, see the links below:
 
 - [Add a manifest file](/docs/add-a-manifest-file/)
 - [Add offline support](/docs/add-offline-support-with-a-service-worker/)

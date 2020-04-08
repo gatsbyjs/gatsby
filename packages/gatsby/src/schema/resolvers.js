@@ -74,7 +74,11 @@ const group = (source, args, context, info) => {
         acc[key] = (acc[key] || []).concat(node)
       })
     return acc
-  }, {})
+    // Note: using Object.create on purpose:
+    //   object key may be arbitrary string including reserved words (i.e. `constructor`)
+    //   see: https://github.com/gatsbyjs/gatsby/issues/22508
+  }, Object.create(null))
+
   return Object.keys(groupedResults)
     .sort()
     .reduce((acc, fieldValue) => {

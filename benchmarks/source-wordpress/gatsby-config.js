@@ -20,7 +20,7 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress-experimental`,
       options: {
-        url: process.env.WPGRAPHQL_URL,
+        url: process.env.BENCHMARK_WPGRAPHQL_URL,
         type: {
           Post: {
             limit: process.env.NODE_ENV === `development` ? 50 : false,
