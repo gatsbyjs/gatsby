@@ -15,7 +15,7 @@ The first part of the article will be CMS agnostic. For the basics, it doesn't m
 
 ## ISO Codes or Codenames
 
-When you work with multiple languages, each content piece needs to be flagged with a language. Languages like English and German make this straightforward, you can use their ISO codes as flags. But sometimes you need to distinguish between countries that speak the same language, such as Portugal and Brazil. We also have ISO codes for countries, and together with their language they form a language code (en-US, cs-CZ, and so on). Many CMSs use that to identify content for that specific part of the world. It's important to be able to extend this list, though.
+When you work with multiple languages, each content piece needs to be flagged with a language. Languages like English and German make this straightforward, you can use their ISO codes as flags. But sometimes you need to distinguish between countries that speak the same language, such as Portugal and Brazil. We also have ISO codes for countries, and together with their language they form a language code (`en-US`, `cs-CZ`, and so on). Many CMSs use that to identify content for that specific part of the world. It's important to be able to extend this list, though.
 
 Why?
 
@@ -65,23 +65,23 @@ Before we jump into code, it's essential to mention plugins. They greatly help w
 
 ```js:title=gatsby-config.js
 {
-     resolve: `gatsby-plugin-i18n`,
-     options: {
-         langKeyDefault: 'en',
-         langKeyForNull: 'en',
-         prefixDefault: false,
-         useLangKeyLayout: false,
-     },
- },
+  resolve: `gatsby-plugin-i18n`,
+  options: {
+    langKeyDefault: 'en',
+    langKeyForNull: 'en',
+    prefixDefault: false,
+    useLangKeyLayout: false,
+  },
+},
 ```
 
-This configuration (in `gatsby-config.js`) tells the plugin to use 'en' as the default language code (`langKeyDefault`, `langKeyForNull`) and no prefix (`prefixDefault`). The last option (`useLangKeyLayout`) specifies that the used layout is language invariant.
+This configuration (in `gatsby-config.js`) tells the plugin to use `'en'` as the default language code (`langKeyDefault`, `langKeyForNull`) and no prefix (`prefixDefault`). The last option (`useLangKeyLayout`) specifies that the used layout is language invariant.
 
 ### Localize URLs
 
 Right at the beginning, we need to think about URLs. Do you want the language code in the URL all the time? Should the default language be accessible without language code?
 
-```js
+```text
 ╔════════════════════════════════════════════════════╗
 ║       All languages use language code in URL       ║
 ╠════════════════════════════════════════════════════╣
@@ -115,28 +115,32 @@ If your website is not Google Maps, people most likely won't share their locatio
 
 As I mentioned already, the intranet app contains profile pages for all employees. They are generated dynamically because, well, the list of employees is also dynamic. This code piece that sits in `gatsby-node.js`'s `createPages` generates pages in the original implementation:
 
-```js
-query peoplePortalList {
+```jsx
+graphql(`
+  query peoplePortalList {
     allKontentItemPerson() {
-         nodes {
-             elements {
-                 urlslug {
-                     value
-                 }
-             }
-         }
-     }
- }
- ...
- for (const person of nodes) {
-     createPage({
-         path: `employees/${person.elements.urlslug.value}`,
-         component: path.resolve(`./src/templates/person.js`),
-         context: {
-             slug: person.elements.urlslug.value,
-         },
-     });
- }
+      nodes {
+        elements {
+          urlslug {
+            value
+          }
+        }
+      }
+    }
+  }
+`)
+
+// ...
+
+for (const person of nodes) {
+  createPage({
+    path: `employees/${person.elements.urlslug.value}`,
+    component: path.resolve(`./src/templates/person.js`),
+    context: {
+      slug: person.elements.urlslug.value,
+    },
+  })
+}
 ```
 
 We will need to adjust both the GraphQL query and the code that generates pages.
@@ -147,22 +151,22 @@ During the build time, the [Kontent source plugin](/docs/sourcing-from-kentico-k
   This field is mainly used for filtering and describes the language the item is intended for. For example, if you want Czech content, you want to filter for `preferred_language='cs'` provided you use the codename `'cs'` for Czech.
 
 - **system.language**
-  This is the actual content item language. If you filter items based on `preferred_language='cs'`, you will get `system.language='cs'` if the item is translated. Otherwise, the item content will be in English, and `system.language` will be 'default' (here, it's English).
+  This is the actual content item language. If you filter items based on `preferred_language='cs'`, you will get `system.language='cs'` if the item is translated. Otherwise, the item content will be in English, and `system.language` will be `'default'` (here, it's English).
 
 In my case, I am happy with language fallbacks for items that are not translated. That means I can use `preferred_language` and treat all items as if they were translated.
 
-```js
+```graphql
 query PeoplePortalList {
-    allKontentItemPerson() {
-        nodes {
-            elements {
-                urlslug {
-                    value
-                }
-            },
-            preferred_language
+  allKontentItemPerson() {
+    nodes {
+      elements {
+        urlslug {
+          value
         }
+      },
+      preferred_language
     }
+  }
 }
 ```
 
@@ -171,30 +175,38 @@ If you don't want to display items that fallback to parent language, just compar
 Let's define here a new variable `lang` that will hold the language code for the current item's `preferred_language`. I will use it in the `createPage` method call to place the newly generated page on the right URL.
 
 ```js
-let lang = `${person.preferred_language}/`
-if (person.preferred_language === "default") {
-  lang = "/"
+for (const person of nodes) {
+  let lang = `${person.preferred_language}/`
+  if (person.preferred_language === "default") {
+    lang = "/"
+  }
+  createPage({
+    path: `${lang}employees/${person.elements.urlslug.value}`,
+    component: path.resolve(`./src/templates/person.js`),
+    context: {
+      slug: person.elements.urlslug.value,
+      lang: person.preferred_language,
+    },
+  })
 }
-createPage({
-  path: `${lang}employees/${person.elements.urlslug.value}`,
-  component: path.resolve(`./src/templates/person.js`),
-  context: {
-    slug: person.elements.urlslug.value,
-    lang: person.preferred_language,
-  },
-})
 ```
 
 ### Generate Language-specific Static Pages
 
 Apart from dynamic pages, there are always some static pages. They include `index.js` and `employees.js` that handle the homepage and employees page respectively. The `gatsby-plugin-i18n` will place them on the right language-specific URLs if you follow the defined language convention-the filename suffix needs to contain the language code.
 
-- index.js -> index.en.js, index.cs.js
-- employees.js -> employees.en.js, employees.cs.js
+- `index.js` ->
+
+  - `index.en.js`
+  - `index.cs.js`
+
+- `employees.js` ->
+  - `employees.en.js`
+  - `employees.cs.js`
 
 It's also necessary to adjust the content of each of the new files to reflect its new language. That includes component properties. Take a look at this part of my index.js:
 
-```js:title=index.js
+```jsx:title=index.js
 <Layout location={location} title={title}>
   <IndexContent />
 </Layout>
@@ -202,7 +214,7 @@ It's also necessary to adjust the content of each of the new files to reflect it
 
 Once this file becomes `index.cs.js`, I need to adjust it to:
 
-```js:title=index.cs.js
+```jsx:title=index.cs.js
 <Layout location={location} title={title} lang="cs">
   <IndexContent lang="cs" />
 </Layout>
@@ -216,11 +228,11 @@ There are multiple ways to handle the language propagation. They are ranging fro
 
 I always aim to keep things simple. In my case, the language travels through components from top to bottom. The language-specific `index` page defines the language code for the `IndexContent` component. If a child component requires the current language, it will receive it from its parent the same way.
 
-```js
+```jsx
 function Content({ classes, lang }) {
-    ...
-    <EmployeeList lang={lang} />
-    ...
+  ...
+  <EmployeeList lang={lang} />
+  ...
 }
 ```
 
@@ -228,7 +240,7 @@ The last part of this multilingual adjustment tutorial is the language selector.
 
 A very simple implementation featuring just two languages (Czech and English) can look like this:
 
-```js
+```jsx
 import PropTypes from "prop-types"
 import React, { Component } from "react"
 import { Location } from "@reach/router"
