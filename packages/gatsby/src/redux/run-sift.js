@@ -143,23 +143,33 @@ function handleMany(siftArgs, nodes) {
  * @returns {Array<IGatsbyNode> | undefined}
  */
 const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
-  const caches = getBucketsForFilters(filters, nodeTypeNames, filtersCache)
+  const nodesPerValueSets /*: Array<Set<IGatsbyNode>> */ = getBucketsForFilters(
+    filters,
+    nodeTypeNames,
+    filtersCache
+  )
 
-  if (!caches) {
+  if (!nodesPerValueSets) {
     // Let Sift take over as fallback
     return undefined
   }
 
   // Put smallest last (we'll pop it)
-  caches.sort((a, b) => b.length - a.length)
+  nodesPerValueSets.sort(
+    (a /*: Set<IGatsbyNode> */, b /*: Set<IGatsbyNode> */) => b.size - a.size
+  )
   // Iterate on the set with the fewest elements and create the intersection
-  const needles = caches.pop()
+  const needles /*: Set<IGatsbyNode>*/ = nodesPerValueSets.pop()
   // Take the intersection of the retrieved caches-by-value
-  const result = []
+  const result /*: Array<IGatsbyNode> */ = []
 
   // This _can_ still be expensive but the set of nodes should be limited ...
-  needles.forEach(node => {
-    if (caches.every(cache => cache.has(node))) {
+  needles.forEach((node /*: IGatsbyNode */) => {
+    if (
+      nodesPerValueSets.every((cache /*: Set<IGatsbyNode> */) =>
+        cache.has(node)
+      )
+    ) {
       // Every cache set contained this node so keep it
       result.push(node)
     }
