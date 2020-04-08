@@ -1,5 +1,5 @@
 ---
-title: 'Gatsby Days LA 2020 Video 7: Improving React Component Library Documentation with Gatsby and MDX'
+title: "Gatsby Days LA 2020 Video 7: Improving React Component Library Documentation with Gatsby and MDX"
 date: 2020-04-09
 author: Greg Thomas
 excerpt: "Kathleen McMahon, a software engineer at O’Reilly Media, tells the Gatsby Days LA 2020 audience how her team facilitated contributions and improved accessibility for her company’s component library documentation using Gatsby and MDX."
@@ -10,7 +10,8 @@ tags:
   - plug-ins
   - mdx
 ---
-_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-3rd—would be pretty awesome, too 💜.  Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
+
+_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-3rd—would be pretty awesome, too 💜. Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
 
 Kathleen McMahon is a senior front-end software engineer and the tech lead for O’Reilly Media’s Design System team. Recently, her team decided it was time to rework the design system’s component library documentation. The primary goals: encourage more contributions by making the documentation process more user friendly and improve accessibility so more users could take advantage of the resulting documentation.
 
