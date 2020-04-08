@@ -130,21 +130,62 @@ There are two types of node relationships in Gatsby: (1) foreign-key based and (
 
 #### Option 1: foreign-key relationships
 
-An example of a foreign-key relationship would be a Post that has an Author.
+An example of a foreign-key relationship would be a `Post` type (like a blog post) that has an `Author`.
 
-In this relationship, each object is a distinct entity that exists whether or not the other does, with independent schemas, and field(s) on each entity that reference the other entity -- in this case the Post would have an Author, and the Author might have Posts. The API of a service that allows complex object modelling, for example a CMS, will often allow users to add relationships between entities and expose them through the API.
+In this relationship, each object is a distinct entity that exists whether or not the other does. They could each be queried individually.
+
+```graphql
+post {
+  id
+  title
+}
+author {
+  id
+  name
+}
+```
+
+Each type has independent schemas and field(s) on that reference the other entity -- in this case the `Post` would have an `Author`, and the `Author` might have `Post`s. The API of a service that allows complex object modelling, for example a CMS, will often allow users to add relationships between entities and expose them through the API. This same relationship can be represented by your schema.
+
+```graphql
+post {
+ id
+ title
+ // highlight-start
+ author {
+   id
+   name
+ }
+ // highlight-end
+}
+author {
+ id
+ name
+ // highlight-start
+ posts {
+   id
+   title
+ }
+ // highlight-end
+}
+```
 
 When an object node is deleted, Gatsby _does not_ delete any referenced entities. When using foreign-key references, it's a source plugin's responsibility to clean up any dangling entity references.
 
 ##### Creating the relationship
 
-Suppose you want to create a relationship between Posts and Authors in order to query the `author` field on a post:
+Suppose you want to create a relationship between `Post`s and `Author`s in order to query the `author` field on a post:
 
 ```graphql
 query {
   post {
     id
-    author // highlight-line
+    // highlight-start
+    author {
+      id
+      name
+    }
+    // highlight-end
   }
 }
 ```
@@ -206,13 +247,13 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 ##### Creating the reverse relationship
 
-It's often convenient for querying to add to the schema backwards references. For example, you might want to query the Author of a Post but you might also want to query all the posts an author has written.
+It's often convenient for querying to add to the schema backwards references. For example, you might want to query the author of a post, but you might also want to query all the posts an author has written.
 
-If you want to call this field on `Author` `posts` using the inference method, you would create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs.
+If you want to call a field to access the author on the `Post` nodes using the inference method, you would create a field called `posts___NODE` to hold the relationship to posts. The value of this field should be an array of `Post` IDs.
 
 Here's an example from the [WordPress source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-wordpress/src/normalize.js#L178-L189).
 
-With schema customization, you would add the `@link` directive to your Author type and store the Post IDs on the Author nodes when they were created on a field used when types are created:
+With schema customization, you would add the `@link` directive to your Author type. The `@link` directive will look for an ID on the `post` field of the Author nodes, which can be added when the Author nodes are created.
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.createSchemaCustomization = ({ actions }) => {
@@ -254,7 +295,9 @@ Each node created by the filesystem source plugin includes the raw content of th
 
 Each source plugin is responsible for setting the media type for the nodes it creates. This way, source and transformer plugins can work together easily.
 
-This is not a required field -- if it's not provided, Gatsby will [infer](/docs/glossary#inference) the type from data that is sent -- but it's the way for source plugins to indicate to transformers that there is "raw" data that can still be further processed. It also allows plugins to remain small and focused. Source plugins don't have to have opinions on how to transform their data: they can set the `mediaType` and push that responsibility to transformer plugins, instead.
+This is not a required field -- if it's not provided, Gatsby will [infer](/docs/glossary#inference) the type from data that is sent -- but it's how source plugins indicate to transformers that there is "raw" data the transformer can further process.
+
+It also allows plugins to remain small and focused. Source plugins don't have to have opinions on how to transform their data: they can set the `mediaType` and push that responsibility to transformer plugins instead.
 
 For example, it's common for services to allow you to add content in Markdown format. If you pull that Markdown into Gatsby and create a new node, what then? How would a user of your source plugin convert that Markdown into HTML they can use in their site? You would create a node for the Markdown content and set its `mediaType` as `text/markdown` and the various Gatsby Markdown transformer plugins would see your node and transform it into HTML.
 
@@ -440,4 +483,4 @@ Then the new data needs to be pulled in via a live update like a websocket (in t
 
 - Working example repository on [creating source plugins](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) with the features in this guide implemented
 - Tutorial on [Creating a Pixabay Image Source Plugin](/tutorial/pixabay-source-plugin-tutorial/)
-- [`gatsby-node-helpers`](https://github.com/angeloashmore/gatsby-node-helpers), a community-made NPM package with helper functions to generate Node objects with required fields like IDs and the `contentDigest` MD5 hash.
+- [`gatsby-node-helpers`](https://github.com/angeloashmore/gatsby-node-helpers), a community-made npm package with helper functions to generate Node objects with required fields like IDs and the `contentDigest` MD5 hash.
