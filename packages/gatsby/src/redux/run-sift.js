@@ -16,7 +16,7 @@ const {
 const {
   ensureIndexByTypedChain,
   ensureIndexByElemMatch,
-  getFilterCacheByTypedChain,
+  getNodesFromCacheByValue,
   addResolvedNodes,
   getNode: siftGetNode,
 } = require(`./nodes`)
@@ -242,7 +242,7 @@ const getBucketsForQueryFilter = (
     ensureIndexByTypedChain(cacheKey, chain, nodeTypeNames, filtersCache)
   }
 
-  const filterCache = getFilterCacheByTypedChain(
+  const filterCache = getNodesFromCacheByValue(
     cacheKey,
     targetValue,
     filtersCache
@@ -306,7 +306,7 @@ const collectBucketForElemMatch = (
     ensureIndexByElemMatch(typedKey, filter, nodeTypeNames, filtersCache)
   }
 
-  const nodesByKeyValue /*: Set<IGatsbyNode> | undefined*/ = getFilterCacheByTypedChain(
+  const nodesByKeyValue /*: Set<IGatsbyNode> | undefined*/ = getNodesFromCacheByValue(
     typedKey,
     targetValue,
     filtersCache

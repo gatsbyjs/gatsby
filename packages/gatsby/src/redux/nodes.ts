@@ -350,7 +350,7 @@ function addNodeToBucketWithElemMatch(
  * The only exception is `id`, since internally there can be at most one node
  * per `id` so there's a minor optimization for that (no need for Sets).
  */
-export const getFilterCacheByTypedChain = (
+export const getNodesFromCacheByValue = (
   cacheKey: FilterCacheKey,
   value: boolean | number | string,
   filtersCache: FiltersCache
