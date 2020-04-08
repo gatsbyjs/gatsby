@@ -1,5 +1,5 @@
 ---
-title: npm or Node Package Manager
+title: npm or Node package manager
 disableTableOfContents: true
 ---
 
