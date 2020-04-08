@@ -18,7 +18,7 @@ At a high-level, a source plugin:
 - Links nodes & creates relationships between them.
 - Lets Gatsby know when nodes are finished sourcing so it can move on to processing them.
 
-A source plugin is a regular NPM package. It has a `package.json` file with optional dependencies as well as a [`gatsby-node.js`](/docs/api-files-gatsby-node) file where you implement Gatsby's [Node APIs](/docs/node-apis/). Read more about [Files Gatsby Looks for in a Plugin](/docs/files-gatsby-looks-for-in-a-plugin/) or [Creating a Generic Plugin](/docs/creating-a-generic-plugin).
+A source plugin is a regular npm package. It has a `package.json` file, with optional dependencies, as well as a [`gatsby-node.js`](/docs/api-files-gatsby-node) file where you implement Gatsby's [Node APIs](/docs/node-apis/). Read more about [files Gatsby looks for in a plugin](/docs/files-gatsby-looks-for-in-a-plugin/) or [creating a generic plugin](/docs/creating-a-generic-plugin).
 
 ## Implementing features for source plugins
 
@@ -28,7 +28,7 @@ Key features that are often built into source plugins are covered in this guide 
 
 ### Sourcing data and creating nodes
 
-The most common use case that all source plugins will implement is fetching data and creating nodes from it. By fetching data and creating nodes at [build time](/docs/glossary#build), Gatsby can make the data available as static assets instead of having to fetch it at [runtime](/docs/glossary#runtime). This happens in the [`sourceNodes` lifecycle](/docs/node-apis/#sourceNodes) with the [`createNode` action](/docs/actions/#createNode).
+All source plugins must fetch data and create nodes from that data. By fetching data and creating nodes at [build time](/docs/glossary#build), Gatsby can make the data available as static assets instead of having to fetch it at [runtime](/docs/glossary#runtime). This happens in the [`sourceNodes` lifecycle](/docs/node-apis/#sourceNodes) with the [`createNode` action](/docs/actions/#createNode).
 
 This example—taken from [the `sourceNodes` API docs](/docs/node-apis/#sourceNodes)—shows how to create a single node from hardcoded data:
 
@@ -62,7 +62,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
 }
 ```
 
-This is the same pattern followed by source plugins, but data comes from other sources. Plugins can leverage Node.js built-in functions like `http.get`, libraries like `node-fetch` or `axios`, or even fully featured GraphQL clients to fetch data. With data being returned from a remote location, it can then be looped through with nodes created programmatically:
+Source plugins follow the same pattern, the only difference is that data comes from other sources. Plugins can leverage Node.js built-in functions like `http.get`, libraries like `node-fetch` or `axios`, or even fully-featured GraphQL clients to fetch data. With data being returned from a remote location, the plugin code can loop through and create nodes programmatically:
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async ({ actions }) => {
@@ -80,13 +80,13 @@ exports.sourceNodes = async ({ actions }) => {
 
 The [`createNode`](/docs/actions/#createNode) function is a Gatsby specific action. `createNode` is used to create the nodes that Gatsby tracks and makes available for querying with GraphQL.
 
-_Note: **Be aware of asynchronous operations!** Because fetching data is an asynchronous task, you need to make sure you `await` data coming from remote sources, return a Promise, or return the callback (the 3rd parameter available in lifecycle APIs) from `sourceNodes`. If you don't Gatsby will continue on in the build process, before nodes are finished being created. This can result in your nodes not ending up in the generated schema at compilation time, or the process could hang while waiting for an indication that it's finished. You can read more in the [Debugging Asynchronous Lifecycle APIs guide](/docs/debugging-async-lifecycles/)._
+_Note: **Be aware of asynchronous operations!** Because fetching data is an asynchronous task, you need to make sure you `await` data coming from remote sources, return a Promise, or return the callback (the 3rd parameter available in lifecycle APIs) from `sourceNodes`. If you don't, Gatsby will continue on in the build process, before nodes are finished being created. This can result in your nodes not ending up in the generated schema at compilation time, or the process could hang while waiting for an indication that it's finished. You can read more in the [Debugging Asynchronous Lifecycle APIs guide](/docs/debugging-async-lifecycles/)._
 
 ### Caching data between runs
 
-Some operations like fetching data from an endpoint can be performance heavy or time intensive, in order to improve the experience of developing with your source plugin, you can leverage the Gatsby cache to store data between runs of `gatsby develop` or `gatsby build`.
+Some operations like fetching data from an endpoint can be performance heavy or time-intensive. In order to improve the experience of developing with your source plugin, you can leverage the Gatsby cache to store data between runs of `gatsby develop` or `gatsby build`.
 
-You access the `cache` in Gatsby Node APIs and use the `set` and `get` functions to store and retrive data as JSON objects:
+You access the `cache` in Gatsby Node APIs and use the `set` and `get` functions to store and retrieve data as JSON objects.
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.onPostBuild = async ({ cache }) => {
@@ -96,7 +96,7 @@ exports.onPostBuild = async ({ cache }) => {
 }
 ```
 
-The above example shows a contrived example for the `cache`, but it can used in more sophisticated cases to reduce the time it takes to run your plugin. For example, by caching a timestamp, you can use it to fetch solely the data that has been updated from the data source:
+The above snippet shows a contrived example for the `cache`, but it can be used in more sophisticated cases to reduce the time it takes to run your plugin. For example, by caching a timestamp, you can use it to fetch solely the data that has been updated since the last time data was fetched from the source:
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async ({ cache }) => {
@@ -116,17 +116,17 @@ exports.onPostBuild = async ({ cache }) => {
 }
 ```
 
-> In addition to the cache, plugin's can save metadata to the [internal Redux store](/docs/data-storage-redux/) with `setPluginStatus`
+> In addition to the cache, plugins can save metadata to the [internal Redux store](/docs/data-storage-redux/) with `setPluginStatus`.
 
 This can reduce the time it takes repeated data fetching operations to run if you are pulling in large amounts of data for your plugin. Existing plugins like [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/gatsby-node.js) generate a token that is sent with each request to only return new data.
 
-You can read more about the cache API, other types of plugins that leverage the cache, and example open source plugins that use the cache in the [Build Caching](/docs/build-caching) guide.
+You can read more about the cache API, other types of plugins that leverage the cache, and example open source plugins that use the cache in the [build caching guide](/docs/build-caching).
 
 ### Adding relationships between nodes
 
 Gatsby source plugins not only create nodes, they also create relationships between nodes that are exposed to GraphQL queries.
 
-There are two types of node relationships in Gatsby: (1) foreign-key based and (1) transformations (parent-child).
+There are two types of node relationships in Gatsby: (1) foreign-key based and (2) transformations (parent-child).
 
 #### Option 1: foreign-key relationships
 
@@ -169,7 +169,7 @@ exports.sourceNodes = ({ actions, createContentDigest }) => {
 }
 ```
 
-For a stricter GraphQL schema, you can specify the exact field and value to link nodes with using schema customization APIs.
+For a stricter GraphQL schema, you can specify the exact field and value to link nodes using schema customization APIs.
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = ({ actions, createContentDigest }) => {
@@ -232,13 +232,13 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-You can read more about connecting foreign key fields with schema customization in the guide on [Customizing the GraphQL Schema](/docs/schema-customization/#foreign-key-fields).
+You can read more about connecting foreign key fields with schema customization in the guide on [customizing the GraphQL schema](/docs/schema-customization/#foreign-key-fields).
 
 #### Option 2: transformation relationships
 
-Transformation relationships are used when a node is _completely_ derived from another node. An example that is common in source plugins is for transforming File nodes from remote sources, like for images from remote sources. You can read about this use case in the section below on [sourcing images from remote locations](/docs/creating-a-source-plugin/#sourcing-images-from-remote-locations).
+When a node is _completely_ derived from another node you'll want to use a transformation relationship. An example that is common in source plugins is for transforming File nodes from remote sources, e.g. images. You can read about this use case in the section below on [sourcing images from remote locations](/docs/creating-a-source-plugin/#sourcing-images-from-remote-locations).
 
-You can find more information about transformation relationships in the [Creating a Transformer Plugin guide](/docs/creating-a-transformer-plugin/#creating-the-transformer-relationship).
+You can find more information about transformation relationships in the [creating a transformer plugin guide](/docs/creating-a-transformer-plugin/#creating-the-transformer-relationship).
 
 #### Union types
 
@@ -250,9 +250,9 @@ When creating fields linking to an array of nodes, if the array of IDs are all o
 
 Each node created by the filesystem source plugin includes the raw content of the file and its _media type_.
 
-[A **media type**](https://en.wikipedia.org/wiki/Media_type) (also **MIME type** and **content type**) is an official way to identify the format of files/content that is transmitted on the internet, e.g. over HTTP or through email. You might be familiar with other media types such as `application/javascript`, `application/pdf`, `audio/mpeg`, `text/html`, `text/plain`, `image/jpeg`, etc.
+[A **media type**](https://en.wikipedia.org/wiki/Media_type) (also **MIME type** and **content type**) is an official way to identify the format of files/content that are transmitted via the internet, e.g. over HTTP or through email. You might be familiar with other media types such as `application/javascript`, `audio/mpeg`, `text/html`, etc.
 
-Each source plugin is responsible for setting the media type for the nodes they create. This way, source and transformer plugins can work together easily.
+Each source plugin is responsible for setting the media type for the nodes it creates. This way, source and transformer plugins can work together easily.
 
 This is not a required field -- if it's not provided, Gatsby will [infer](/docs/glossary#inference) the type from data that is sent -- but it's the way for source plugins to indicate to transformers that there is "raw" data that can still be further processed. It also allows plugins to remain small and focused. Source plugins don't have to have opinions on how to transform their data: they can set the `mediaType` and push that responsibility to transformer plugins, instead.
 
@@ -262,9 +262,9 @@ This loose coupling between the data source and the transformer plugins allow Ga
 
 #### Sourcing and optimizing images from remote locations
 
-A common use case from transforming data from a remote source in source plugins is pulling images from a remote location and optimizing them for use with [Gatsby Image](/packages/gatsby-image/). An API may return a url for an image on a CDN, which could be further optimized by Gatsby at build time.
+A common use case for source plugins is pulling images from a remote location and optimizing them for use with [Gatsby Image](/packages/gatsby-image/). An API may return a URL for an image on a CDN, which could be further optimized by Gatsby at build time.
 
-This can be achieved through a number of steps with the use of several plugins:
+This can be achieved by the following steps:
 
 1. Install `gatsby-source-filesystem` as a dependency in your source plugin:
 
@@ -334,7 +334,7 @@ exports.onCreateNode = async ({
 }
 ```
 
-Attaching `fileNode.id` to `remoteImage___NODE` will rely on Gatsby's [inference](/docs/glossary/#inference) of the GraphQL schema to create a new field `remoteImage` as a relationship between the nodes. This will be done automatically. For a sturdier schema, you can relate them using [`schemaCustomization` APIs](/docs/node-apis/#createSchemaCustomization) by adding the `fileNode.id` to a field that you reference when you `createTypes`:
+Attaching `fileNode.id` to `remoteImage___NODE` will rely on Gatsby's [inference](/docs/glossary/#inference) of the GraphQL schema to create a new field `remoteImage` as a relationship between the nodes. This is done automatically. For a sturdier schema, you can relate them using [`schemaCustomization` APIs](/docs/node-apis/#createSchemaCustomization) by adding the `fileNode.id` to a field that you reference when you `createTypes`:
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.createSchemaCustomization = ({ actions }) => {
@@ -379,7 +379,7 @@ query {
 
 ### Improve plugin developer experience by enabling faster sync
 
-One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. In order to improve the development experience of using a plugin, you can reduce the time it takes to sync between Gatsby and the data source by enabling faster synchronization of data changes from the source with the plugin. There are two approaches for doing this:
+One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. In order to improve the development experience of using a plugin, you can reduce the time it takes to sync between Gatsby and the data source by enabling faster synchronization of data changes. There are two approaches for doing this:
 
 - **Proactively fetch updates**. You can avoid having to restart the `gatsby develop` server by proactively fetching updates from the remote server. For example, [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity) listens to changes to Sanity content when `watchMode` is enabled and pulls them into the Gatsby develop server. The [example source plugin repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) uses GraphQL subscriptions to listen for changes and update data.
 - **Add event-based sync**. Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store the last time you fetched data using the [cache](/docs/creating-a-source-plugin/#caching-data-between-runs) or [`setPluginStatus`](/docs/actions/#setPluginStatus) and then only sync down nodes that have been modified since that time. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
@@ -432,9 +432,9 @@ exports.sourceNodes = async ({ actions }, pluginOptions) => {
 
 _Note: This is pseudo code to illustrate the logic and concept of how these plugins function, you can see an example in the [creating source plugins](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) repository._
 
-Because the code in sourceNodes will be reinvoked when changes in the data source occur, a few steps need to be taken to make sure that Gatsby is tracking the existing nodes that have already been sourced along with the new data. A first step is ensuring that the existing nodes created are not garbage collected which is done by "touching" the nodes with the [`touchNode` action](/docs/actions/#touchNode).
+Because the code in `sourceNodes` is reinvoked when changes in the data source occur, a few steps need to be taken to ensure that Gatsby is tracking the existing nodes as well as the new data. A first step is ensuring that the existing nodes created are not garbage collected which is done by "touching" the nodes with the [`touchNode` action](/docs/actions/#touchNode).
 
-Then the new data needs to be pulled in via a live update like a websocket (in the example above with a subscription). The new data needs to have some information attached that dictates whether the data was created, updated, or deleted so that when it is processed a new node can be created/updated (with `createNode`) or deleted (with `deleteNode`). In the example above that information is coming from `newDatum.status`.
+Then the new data needs to be pulled in via a live update like a websocket (in the example above with a subscription). The new data needs to have some information attached that dictates whether the data was created, updated, or deleted; that way, when it is processed, a new node can be created/updated (with `createNode`) or deleted (with `deleteNode`). In the example above that information is coming from `newDatum.status`.
 
 ## Additional resources
 
