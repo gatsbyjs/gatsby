@@ -28,7 +28,7 @@ process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
-const { createGraphqlRunner } = require(`./create-graphql-runner`)
+import { createGraphqlRunner } from "./create-graphql-runner"
 const { extractQueries } = require(`../query/query-watcher`)
 const requiresWriter = require(`./requires-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
