@@ -3,8 +3,20 @@ import { IGatsbyNode } from "./types"
 import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
+type FilterValue = string | number | boolean
 export type FilterCacheKey = string
-export type FilterCache = Map<string | number | boolean, Set<IGatsbyNode>>
+export type FilterCache = {
+  byValue: Map<FilterValue, Set<IGatsbyNode>>
+  meta: {
+    // The min/max is the lowest/highest value for this filter. For lt/gt bounds
+    minValue?: FilterValue,
+    maxValue?: FilterValue,
+    // This filter leads to a value, these nodes are ordered by that value
+    nodesByValueAsc?: Array<IGatsbyNode>,
+    // The range maps to nodesByValueAsc ^
+    valueToRange?: Map<FilterValue, [number, number]>
+  }
+}
 export type FiltersCache = Map<FilterCacheKey, FilterCache>
 
 /**
@@ -168,7 +180,7 @@ export const ensureIndexByTypedChain = (
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
 
-  const filterCache: FilterCache = new Map()
+  const filterCache: FilterCache = {byValue: new Map(), meta: {}}
   filtersCache.set(filterCacheKey, filterCache)
 
   // We cache the subsets of nodes by type, but only one type. So if searching
@@ -228,10 +240,10 @@ function addNodeToFilterCache(
     return
   }
 
-  let set = filterCache.get(v)
+  let set = filterCache.byValue.get(v)
   if (!set) {
     set = new Set()
-    filterCache.set(v, set)
+    filterCache.byValue.set(v, set)
   }
   set.add(node)
 }
@@ -248,7 +260,7 @@ export const ensureIndexByElemMatch = (
   const state = store.getState()
   const { resolvedNodesCache } = state
 
-  const filterCache: FilterCache = new Map()
+  const filterCache: FilterCache = {byValue: new Map(), meta: {}}
   filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {
@@ -355,6 +367,6 @@ export const getNodesFromCacheByValue = (
   value: boolean | number | string,
   filtersCache: FiltersCache
 ): Set<IGatsbyNode> | undefined => {
-  const byTypedKey = filtersCache?.get(filterCacheKey)
-  return byTypedKey?.get(value)
+  const filterCache = filtersCache?.get(filterCacheKey)
+  return filterCache?.byValue.get(value)
 }

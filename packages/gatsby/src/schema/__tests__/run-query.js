@@ -248,12 +248,17 @@ it(`should use the cache argument`, async () => {
 
   // Confirm cache is not ignored
   expect(filtersCache.size === 1).toBe(true)
-  filtersCache.forEach((filterCache, cacheKey) => {
+  filtersCache.forEach((
+    filterCache /*: FilterCache */,
+    cacheKey /*: FilterCacheKey */
+  ) => {
     // This test will change when the composition of the FilterCache changes
     // For now it should be a Map of values to Set of nodes
-    expect(filterCache instanceof Map).toBe(true)
+    expect(filterCache instanceof Object).toBe(true)
+    expect(filterCache.byValue instanceof Map).toBe(true)
+    expect(filterCache.meta instanceof Object).toBe(true)
     // There ought to be at least one value mapped (probably more, shrug)
-    expect(filterCache.size >= 1).toBe(true)
+    expect(filterCache.byValue.size >= 1).toBe(true)
   })
 })
 
