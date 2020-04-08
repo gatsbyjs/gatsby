@@ -19,7 +19,7 @@ Dealing with images on the web has always been a problem as unoptimized images c
 Cloudinary provides a couple of amazing solutions to this problem, namely:
 
 - Remote storage and delivery of images via CDN
-- Wider range of transformations over [gatsby-image](/docs/using-gatsby-image/).
+- Offers a wider range of transformations than [gatsby-image](/docs/using-gatsby-image/).
 - [Digital Asset Management](https://cloudinary.com/documentation/digital_asset_management_overview) for enterprise assets
 
 ## Gatsby-source-cloudinary
@@ -89,6 +89,15 @@ Here's a [link to the README](https://github.com/Chuloo/gatsby-source-cloudinary
 After sourcing media files from Cloudinary, you will be able to leverage Cloudinary’s media transformation capabilities. To do so, use `gatsby-transformer-cloudinary` which is a type of [transformer plugin](/docs/creating-a-transformer-plugin/) that is used to change image formats, styles and dimensions. It also optimizes images for minimal file size alongside high visual quality for an improved user experience and minimal bandwidth.
 
 Here's a [demo site that uses the gatsby-transformer-plugin](https://gatsby-transformer-cloudinary.netlify.com/fluid/)
+
+### Prerequisites
+
+Before using the `gatsby-transformer-cloudinary` plugin you should do the following:
+
+- Upload your images to a folder on Cloudinary. This folder can have any name of your choosing.
+- Have the gatsby-source-cloudinary plugin to get images.
+- Obtain your API key and API secret from your Cloudinary dashboard.
+- Have the [dotenv](https://www.npmjs.com/package/dotenv) module installed for loading environment variables from a `.env` file.
 
 ### Using gatsby-transformer-cloudinary
 
