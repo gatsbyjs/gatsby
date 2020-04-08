@@ -17,25 +17,25 @@ npm is installed alongside Node during the default [installation process](/tutor
 
 ### Using npm to install Gatsby
 
-To install Gatsby, use the `npm install` command. Since Gatsby needs to be installed globally as a CLI app, you'll need to use the `--global` or `-g` flags.
+It's recommended to install Gatsby globally, so that you can use Gatsby as a CLI application. To do so, use `npm install` with the `--global` or `-g` flags.
 
 ```shell
 npm install -g gatsby-cli
 ```
 
-This command will install the Gatsby command line interface, or <abbr>CLI</abbr>. Once the installation completes, you can run `gatsby new my-project` to create a new Gatsby project.
+Once the installation completes, you can run `gatsby new my-project` to create a new Gatsby project.
 
 ### Using npx to install Gatsby
 
 > **Note:** `npx` requires npm version 5.2 or later. If you've installed the latest versions of Node and NPM, you should also have npx. Otherwise, you should upgrade Node and/or npm.
 
-You can also use the [npx](https://www.npmjs.com/package/npx) command to install Gatsby. npx ships with npm. It allows you to install an npm package and run a command in one step. For example, instead of running `npm install -g gatsby-cli` then `gatsby new my-project`, you could use the following command.
+You can also use [npx](https://www.npmjs.com/package/npx) to install Gatsby. npx ships with npm. It allows you to install a package and run a command in one step. For example, instead of running `npm install -g gatsby-cli` then `gatsby new my-project`, you could use the following command.
 
 ```shell
 npx gatsby new my-project
 ```
 
-This will download and install the latest version of Gatsby, and create a new Gatsby project in the `my-project` folder. Choosing this method will not make the Gatsby CLI globally available. If you choose this method, you'll need to use `npx gatsby` or `npm run` to execute Gatsby commands, e.g.: `npx gatsby develop` or `npm run develop`.
+This will download and install the latest version of Gatsby, then create a new Gatsby project in the `my-project` folder. Choosing this method will not make the Gatsby CLI globally available, however. If you install Gatsby using npx, you'll need to use `npx gatsby` or `npm run` to execute Gatsby commands, e.g.: `npx gatsby develop` or `npm run develop`.
 
 ### Using npm to install Gatsby plugins
 
@@ -44,6 +44,8 @@ Gatsby has a robust collection of [plugins](/plugins/) that add functionality or
 ```shell
 npm install gatsby-source-filesystem
 ```
+
+> **Note:** Use `npm install` to add plugins, even if you installed Gatsby using npx.
 
 > **Note:** You'll still need to update `gatsby-config.js` to add the plugin's functionality to your site.
 
