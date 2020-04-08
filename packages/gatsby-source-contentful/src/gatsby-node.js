@@ -1,13 +1,12 @@
 const path = require(`path`)
 const isOnline = require(`is-online`)
+const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { createPluginConfig, validateOptions } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
-const stringify = require(`json-stringify-safe`)
-const { createContentDigest } = require(`gatsby-core-utils`)
 
 const conflictFieldPrefix = `contentful`
 
@@ -89,9 +88,9 @@ exports.sourceNodes = async (
   let syncToken
   if (
     !pluginConfig.get(`forceFullSync`) &&
-    store.getState()?.status?.plugins &&
-    store.getState()?.status?.plugins[`gatsby-source-contentful`] &&
-    store.getState()?.status?.plugins[`gatsby-source-contentful`][
+    store.getState().status.plugins &&
+    store.getState().status.plugins[`gatsby-source-contentful`] &&
+    store.getState().status.plugins[`gatsby-source-contentful`][
       createSyncToken()
     ]
   ) {
@@ -121,96 +120,42 @@ exports.sourceNodes = async (
   // TODO figure out if entries referencing now deleted entries/assets
   // are "updated" so will get the now deleted reference removed.
 
-  function deleteContentfulNode(referencesToRemove, node) {
-    locales.forEach(locale => {
-      const nodeId = createNodeId(
-        normalize.makeId({
-          spaceId: space.sys.id,
-          id: node.sys.id,
-          currentLocale: locale.code,
-          defaultLocale,
-        })
-      )
-      const gatsbyNode = getNode(nodeId)
-
-      if (!gatsbyNode) {
-        return
-      }
-
-      Object.keys(gatsbyNode).forEach(field => {
-        // we only care about ___NODE as they are links to other ones
-        if (!field.endsWith(`___NODE`)) {
-          return
-        }
-
-        //   // remove foreignReferences to this node
-        ;[].concat(gatsbyNode[field]).forEach(value => {
-          const fieldKey = `${gatsbyNode.parent.toLowerCase()}___NODE`
-          const referencedNode = getNode(value)
-
-          // child -> parent relations are always arrays so we add some extra checks
-          if (
-            !referencedNode ||
-            !Array.isArray(referencedNode[fieldKey]) ||
-            !referencedNode[fieldKey].includes(gatsbyNode.id)
-          ) {
-            return
-          }
-
-          const nodeToUpdate = referencesToRemove.get(value) || {}
-          nodeToUpdate[fieldKey] = nodeToUpdate[fieldKey] || []
-          nodeToUpdate[fieldKey].push(gatsbyNode.id)
-          referencesToRemove.set(value, nodeToUpdate)
-        })
+  function deleteContentfulNode(node) {
+    const localizedNodes = locales
+      .map(locale => {
+        const nodeId = createNodeId(
+          normalize.makeId({
+            spaceId: space.sys.id,
+            id: node.sys.id,
+            currentLocale: locale.code,
+            defaultLocale,
+          })
+        )
+        return getNode(nodeId)
       })
+      .filter(node => node)
 
+    localizedNodes.forEach(node => {
       // touchNode first, to populate typeOwners & avoid erroring
-      touchNode({
-        nodeId: gatsbyNode.id,
-      })
-      deleteNode({
-        node: gatsbyNode,
-      })
+      touchNode({ nodeId: node.id })
+      deleteNode({ node })
     })
   }
 
-  const referencesToRemove = new Map()
-  currentSyncData.deletedEntries.forEach(
-    deleteContentfulNode.bind(deleteContentfulNode, referencesToRemove)
-  )
-  currentSyncData.deletedAssets.forEach(
-    deleteContentfulNode.bind(deleteContentfulNode, referencesToRemove)
-  )
-
-  // remove all references
-  let promises = []
-  for await (const [key, value] of referencesToRemove) {
-    const node = { ...getNode(key) }
-    for (const field in value) {
-      node[field] = node[field].filter(nodeId => !value[field].includes(nodeId))
-    }
-
-    // gatsby creates the owner
-    delete node.internal.owner
-    node.internal.contentDigest = createContentDigest(stringify(node))
-
-    promises.push(createNode(node))
-  }
-  // wait for all create nodes to finish
-  await Promise.all(promises)
+  currentSyncData.deletedEntries.forEach(deleteContentfulNode)
+  currentSyncData.deletedAssets.forEach(deleteContentfulNode)
 
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
   )
-
   existingNodes.forEach(n => touchNode({ nodeId: n.id }))
 
   const assets = currentSyncData.assets
 
-  reporter.info(`Updated entries `, currentSyncData.entries.length)
-  reporter.info(`Deleted entries `, currentSyncData.deletedEntries.length)
-  reporter.info(`Updated assets `, currentSyncData.assets.length)
-  reporter.info(`Deleted assets `, currentSyncData.deletedAssets.length)
+  reporter.info(`Updated entries ${currentSyncData.entries.length}`)
+  reporter.info(`Deleted entries ${currentSyncData.deletedEntries.length}`)
+  reporter.info(`Updated assets ${currentSyncData.assets.length}`)
+  reporter.info(`Deleted assets ${currentSyncData.deletedAssets.length}`)
   console.timeEnd(`Fetch Contentful data`)
 
   // Update syncToken
@@ -221,9 +166,59 @@ exports.sourceNodes = async (
   newState[createSyncToken()] = nextSyncToken
   setPluginStatus(newState)
 
-  const foreignReferenceMap = new Map()
+  // Create map of resolvable ids so we can check links against them while creating
+  // links.
+  const resolvable = normalize.buildResolvableSet({
+    existingNodes,
+    entryList,
+    assets,
+    defaultLocale,
+    locales,
+    space,
+  })
+
+  // Build foreign reference map before starting to insert any nodes
+  const foreignReferenceMap = normalize.buildForeignReferenceMap({
+    contentTypeItems,
+    entryList,
+    resolvable,
+    defaultLocale,
+    locales,
+    space,
+    useNameForId: pluginConfig.get(`useNameForId`),
+  })
+
+  const newOrUpdatedEntries = []
+  entryList.forEach(entries => {
+    entries.forEach(entry => {
+      newOrUpdatedEntries.push(entry.sys.id)
+    })
+  })
+
+  // Update existing entry nodes that weren't updated but that need reverse
+  // links added.
+  existingNodes
+    .filter(n => _.includes(newOrUpdatedEntries, n.id))
+    .forEach(n => {
+      if (foreignReferenceMap[n.id]) {
+        foreignReferenceMap[n.id].forEach(foreignReference => {
+          // Add reverse links
+          if (n[foreignReference.name]) {
+            n[foreignReference.name].push(foreignReference.id)
+            // It might already be there so we'll uniquify after pushing.
+            n[foreignReference.name] = _.uniq(n[foreignReference.name])
+          } else {
+            // If is one foreign reference, there can always be many.
+            // Best to be safe and put it in an array to start with.
+            n[foreignReference.name] = [foreignReference.id]
+          }
+        })
+      }
+    })
+
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
+
     // A contentType can hold lots of entries which create nodes
     // We wait until all nodes are created and processed until we handle the next one
     // TODO add batching in gatsby-core
@@ -236,6 +231,7 @@ exports.sourceNodes = async (
         entries: entryList[i],
         createNode,
         createNodeId,
+        resolvable,
         foreignReferenceMap,
         defaultLocale,
         locales,
@@ -245,37 +241,6 @@ exports.sourceNodes = async (
       })
     )
   }
-
-  // Add referenced values
-  promises = []
-  for (let [key, references] of foreignReferenceMap) {
-    const node = getNode(key)
-    const nodeValues = {}
-    if (node) {
-      for (const field in references) {
-        nodeValues[field] = []
-        if (node[field]) {
-          nodeValues[field] = node[field]
-        }
-        references[field].forEach(reference => {
-          if (getNode(reference)) {
-            nodeValues[field].push(reference)
-          }
-        })
-      }
-
-      const newNode = {
-        ...node,
-        ...nodeValues,
-      }
-
-      // gatsby creates the owner
-      delete node.internal.owner
-      newNode.internal.contentDigest = createContentDigest(stringify(newNode))
-      promises.push(createNode(newNode))
-    }
-  }
-  await Promise.all(promises)
 
   for (let i = 0; i < assets.length; i++) {
     // We wait for each asset to be process until handling the next one.
