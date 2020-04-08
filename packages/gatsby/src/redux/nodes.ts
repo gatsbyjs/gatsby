@@ -9,10 +9,10 @@ export type FilterCache = {
   byValue: Map<FilterValue, Set<IGatsbyNode>>
   meta: {
     // The min/max is the lowest/highest value for this filter. For lt/gt bounds
-    minValue?: FilterValue,
-    maxValue?: FilterValue,
+    minValue?: FilterValue
+    maxValue?: FilterValue
     // This filter leads to a value, these nodes are ordered by that value
-    nodesByValueAsc?: Array<IGatsbyNode>,
+    nodesByValueAsc?: Array<IGatsbyNode>
     // The range maps to nodesByValueAsc ^
     valueToRange?: Map<FilterValue, [number, number]>
   }
@@ -165,22 +165,22 @@ export const addResolvedNodes = (
 }
 
 /**
- * Given a ("flat") filter path leading up to "eq", a set of node types, and a
+ * Given a single non-elemMatch filter path, a set of node types, and a
  * cache, create a cache that for each resulting value of the filter contains
- * all the Nodes in a Set (or, if the property is `id`, just the Nodes).
+ * all the Nodes in a Set.
  * This cache is used for applying the filter and is a massive improvement over
- * looping over all the nodes, when the number of pages (/nodes) scale up.
+ * looping over all the nodes, when the number of pages (/nodes) scales up.
  */
-export const ensureIndexByTypedChain = (
+export const ensureIndexByQuery = (
   filterCacheKey: FilterCacheKey,
-  chain: string[],
+  filterPath: string[],
   nodeTypeNames: string[],
   filtersCache: FiltersCache
 ): void => {
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
 
-  const filterCache: FilterCache = {byValue: new Map(), meta: {}}
+  const filterCache: FilterCache = { byValue: new Map(), meta: {} }
   filtersCache.set(filterCacheKey, filterCache)
 
   // We cache the subsets of nodes by type, but only one type. So if searching
@@ -189,7 +189,7 @@ export const ensureIndexByTypedChain = (
 
   if (nodeTypeNames.length === 1) {
     getNodesByType(nodeTypeNames[0]).forEach(node => {
-      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
+      addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
     })
   } else {
     // Here we must first filter for the node type
@@ -199,7 +199,7 @@ export const ensureIndexByTypedChain = (
         return
       }
 
-      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
+      addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
     })
   }
 }
@@ -260,7 +260,7 @@ export const ensureIndexByElemMatch = (
   const state = store.getState()
   const { resolvedNodesCache } = state
 
-  const filterCache: FilterCache = {byValue: new Map(), meta: {}}
+  const filterCache: FilterCache = { byValue: new Map(), meta: {} }
   filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {

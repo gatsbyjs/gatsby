@@ -14,7 +14,7 @@ const {
   dbQueryToSiftQuery,
 } = require(`../db/common/query`)
 const {
-  ensureIndexByTypedChain,
+  ensureIndexByQuery,
   ensureIndexByElemMatch,
   getNodesFromCacheByValue,
   addResolvedNodes,
@@ -129,13 +129,10 @@ function handleMany(siftArgs, nodes) {
 }
 
 /**
- * Given the chain of a simple filter, return the set of nodes that pass the
- * filter. The chain should be a property chain leading to the property to
- * check, followed by the value to check against. Common example:
- *   `allThings(filter: { fields: { slug: { eq: $slug } } })`
+ * Given the path of a set of filters, return the sets of nodes that pass the
+ * filter.
  * Only nodes of given node types will be considered
  * A fast index is created if one doesn't exist yet so cold call is slower.
- * The empty result value is null if firstOnly is false, or else an empty array.
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
@@ -244,17 +241,17 @@ const getBucketsForQueryFilter = (
   nodesPerValueSets
 ) => {
   let {
-    path: chain,
-    query: { value: targetValue },
+    path: filterPath,
+    query: { value: filterValue },
   } = filter
 
   if (!filtersCache.has(filterCacheKey)) {
-    ensureIndexByTypedChain(filterCacheKey, chain, nodeTypeNames, filtersCache)
+    ensureIndexByQuery(filterCacheKey, filterPath, nodeTypeNames, filtersCache)
   }
 
   const nodesPerValue /*: Set<IGatsbyNode> | undefined */ = getNodesFromCacheByValue(
     filterCacheKey,
-    targetValue,
+    filterValue,
     filtersCache
   )
 
@@ -453,9 +450,11 @@ const filterToStats = (
 }
 
 /**
- * Check if the filter is "flat" (single leaf) and an "$eq". If so, uses custom
- * indexes based on filter and types and returns any result it finds.
- * If conditions are not met or no nodes are found, returns undefined.
+ * Check if filter op is supported (not all are). If so, uses custom
+ * fast indexes based on filter and types and returns any result it finds.
+ * If conditions are not met or no nodes are found, returns undefined and
+ * a slow run through Sift is executed instead.
+ * This function is a noop if no filter cache is given to it.
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
