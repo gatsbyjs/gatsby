@@ -38,14 +38,14 @@ class Reporter {
   /**
    * Toggle verbosity.
    */
-  setVerbose(_isVerbose: boolean = true): void {
+  setVerbose = (_isVerbose: boolean = true): void => {
     isVerbose = _isVerbose
   }
 
   /**
    * Turn off colors in error output.
    */
-  setNoColor(isNoColor: boolean = false): void {
+  setNoColor = (isNoColor: boolean = false): void => {
     if (isNoColor) {
       errorFormatter.withoutColors()
     }
@@ -64,17 +64,17 @@ class Reporter {
   /**
    * Log arguments and exit process with status 1.
    */
-  panic(errorMeta: ErrorMeta, error?: Error | Error[]): void {
+  panic = (errorMeta: ErrorMeta, error?: Error | Error[]): void => {
     const reporterError = this.error(errorMeta, error)
     trackError(`GENERAL_PANIC`, { error: reporterError })
     prematureEnd()
     process.exit(1)
   }
 
-  panicOnBuild(
+  panicOnBuild = (
     errorMeta: ErrorMeta,
     error?: Error | Error[]
-  ): IStructuredError | IStructuredError[] {
+  ): IStructuredError | IStructuredError[] => {
     const reporterError = this.error(errorMeta, error)
     trackError(`BUILD_PANIC`, { error: reporterError })
     if (process.env.gatsby_executing_command === `build`) {
@@ -84,10 +84,10 @@ class Reporter {
     return reporterError
   }
 
-  error(
+  error = (
     errorMeta: ErrorMeta,
     error?: Error | Error[]
-  ): IStructuredError | IStructuredError[] {
+  ): IStructuredError | IStructuredError[] => {
     let details: {
       error?: Error
       context: {}
@@ -151,11 +151,11 @@ class Reporter {
   /**
    * Set prefix on uptime.
    */
-  uptime(prefix: string): void {
+  uptime = (prefix: string): void => {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   }
 
-  verbose(text: string): void {
+  verbose = (text: string): void => {
     if (isVerbose) {
       reporterActions.createLog({
         level: LogLevels.Debug,
@@ -175,20 +175,20 @@ class Reporter {
 
   pendingActivity = reporterActions.createPendingActivity
 
-  completeActivity(
+  completeActivity = (
     id: string,
     status: ActivityStatuses = ActivityStatuses.Success
-  ): void {
+  ): void => {
     reporterActions.endActivity({ id, status })
   }
 
   /**
    * Time an activity.
    */
-  activityTimer(
+  activityTimer = (
     text: string,
     activityArgs: IActivityArgs = {}
-  ): ITimerReporter {
+  ): ITimerReporter => {
     let { parentSpan, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     if (!id) {
@@ -210,10 +210,10 @@ class Reporter {
    * are visible to the user. So this function can be used to create a _hidden_ activity
    * that while not displayed in the CLI, still triggers a change in process status.
    */
-  phantomActivity(
+  phantomActivity = (
     text: string,
     activityArgs: IActivityArgs = {}
-  ): IPhantomReporter {
+  ): IPhantomReporter => {
     let { parentSpan, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     if (!id) {
@@ -228,12 +228,12 @@ class Reporter {
   /**
    * Create a progress bar for an activity
    */
-  createProgress(
+  createProgress = (
     text: string,
     total = 0,
     start = 0,
     activityArgs: IActivityArgs = {}
-  ): IProgressReporter {
+  ): IProgressReporter => {
     let { parentSpan, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     if (!id) {
@@ -253,7 +253,7 @@ class Reporter {
 
   // This method was called in older versions of gatsby, so we need to keep it to avoid
   // "reporter._setStage is not a function" error when gatsby@<2.16 is used with gatsby-cli@>=2.8
-  _setStage(): void {}
+  _setStage = (): void => {}
 }
 
 export const reporter = new Reporter()
