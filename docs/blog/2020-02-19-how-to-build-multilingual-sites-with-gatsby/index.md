@@ -15,7 +15,7 @@ The first part of the article will be CMS agnostic. For the basics, it doesn't m
 
 ## ISO Codes or Codenames
 
-When you work with multiple languages, each content piece needs to be flagged with a language. Languages like English and German make this straightforward, you can use their ISO codes as flags. But sometimes you need to distinguish between countries that speak the same language, such as Portugal and Brazil. We also have ISO codes for countries, and together with their language they form a language code (en-US, cs-CZ, and so on). Many CMSs use that to identify content for that specific part of the world. It's important to be able to extend this list, though.
+When you work with multiple languages, each content piece needs to be flagged with a language. Languages like English and German make this straightforward, you can use their ISO codes as flags. But sometimes you need to distinguish between countries that speak the same language, such as Portugal and Brazil. We also have ISO codes for countries, and together with their language they form a language code (`en-US`, `cs-CZ`, and so on). Many CMSs use that to identify content for that specific part of the world. It's important to be able to extend this list, though.
 
 Why?
 
@@ -75,7 +75,7 @@ Before we jump into code, it's essential to mention plugins. They greatly help w
  },
 ```
 
-This configuration (in `gatsby-config.js`) tells the plugin to use 'en' as the default language code (`langKeyDefault`, `langKeyForNull`) and no prefix (`prefixDefault`). The last option (`useLangKeyLayout`) specifies that the used layout is language invariant.
+This configuration (in `gatsby-config.js`) tells the plugin to use `'en'` as the default language code (`langKeyDefault`, `langKeyForNull`) and no prefix (`prefixDefault`). The last option (`useLangKeyLayout`) specifies that the used layout is language invariant.
 
 ### Localize URLs
 
@@ -147,7 +147,7 @@ During the build time, the [Kontent source plugin](https://www.gatsbyjs.org/docs
   This field is mainly used for filtering and describes the language the item is intended for. For example, if you want Czech content, you want to filter for `preferred_language='cs'` provided you use the codename `'cs'` for Czech.
 
 - **system.language**
-  This is the actual content item language. If you filter items based on `preferred_language='cs'`, you will get `system.language='cs'` if the item is translated. Otherwise, the item content will be in English, and `system.language` will be 'default' (here, it's English).
+  This is the actual content item language. If you filter items based on `preferred_language='cs'`, you will get `system.language='cs'` if the item is translated. Otherwise, the item content will be in English, and `system.language` will be `'default'` (here, it's English).
 
 In my case, I am happy with language fallbacks for items that are not translated. That means I can use `preferred_language` and treat all items as if they were translated.
 
