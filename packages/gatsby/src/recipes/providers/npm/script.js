@@ -67,7 +67,7 @@ module.exports.all = async ({ root }) => {
 module.exports.plan = async ({ root }, { name, command }) => {
   const resource = await read({ root }, name)
 
-  const scriptDescription = (name, command) => `"${name}": "${command}`
+  const scriptDescription = (name, command) => `"${name}": "${command}"`
 
   let currentState = ``
   if (resource) {
@@ -76,7 +76,7 @@ module.exports.plan = async ({ root }, { name, command }) => {
   return {
     currentState,
     newState: scriptDescription(name, command),
-    describe: `Add new command to your package.json — ${scriptDescription(
+    describe: `Add new command to your package.json:\n${scriptDescription(
       name,
       command
     )}`,

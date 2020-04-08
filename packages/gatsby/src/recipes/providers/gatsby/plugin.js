@@ -213,6 +213,6 @@ module.exports.plan = async ({ root }, { id, name }) => {
     name,
     currentState: src,
     newState: newContents,
-    describe: `Configure ${fullName}`,
+    describe: `Install ${fullName} in gatsby-config.js`,
   }
 }

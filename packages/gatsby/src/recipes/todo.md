@@ -6,13 +6,12 @@
 - [x] Run as a command
 - [x] Boot up server as a process
 - [x] Then run the CLI
-- [ ] Clean up server after
+- [x] Clean up server after
 
 ## Near future
 
 - [x] Make it support relative paths for custom recipes (./src/recipes/foo.mdx)
 - [ ] Document the supported components and trivial guide on recipe authoring (help)
-- [ ] Theme UI preset selection (runs dependent install and file write)
 - [ ] Move to more random port
 
 ## alpha
@@ -21,7 +20,6 @@
 - [ ] Make `dependencyType` in NPMPackage an enum
 - [ ] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
 - [x] Step by step design
-- [ ] Select input supported recipes
 - [ ] Make port selection dynamic
 - [x] Use `fs-extra`
 - [x] Handle object style plugins
@@ -30,9 +28,10 @@
 - [x] convert to xstate
 - [ ] reasonably test resources
 - [x] add Joi for validating resource objects
-- [ ] handle error states
 - [x] handle template strings in JSX parser
 - [ ] integration test for each resource (read, create, update, delete)
+- [ ] show plan to create/update or that nothing is necessary & then show in `<static>` what was done
+- [ ] handle error states
 
 ## Near-ish future
 
@@ -40,3 +39,5 @@
 - [ ] Move parsing to the server
 - [ ] init.js for providers to setup clients
 - [ ] validate resource config
+- [ ] Theme UI preset selection (runs dependent install and file write)
+- [ ] Select input supported recipes

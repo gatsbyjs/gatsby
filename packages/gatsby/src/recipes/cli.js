@@ -3,8 +3,8 @@ const path = require(`path`)
 const { inspect } = require(`util`)
 
 const React = require(`react`)
-const { useState, useContext } = require(`react`)
-const { render, Box, Text, useInput, useApp } = require(`ink`)
+const { useState, useContext, useEffect } = require(`react`)
+const { render, Box, Text, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`@mdx-js/runtime`)
@@ -26,6 +26,7 @@ const PlanDescribe = ({ resourceName }) => {
   const { planForNextStep = [] } = usePlan()
   const plans = planForNextStep.filter(p => p.resourceName === resourceName)
 
+  return null
   return (
     <Box>
       {plans.map((stepPlan, i) => (
@@ -35,9 +36,17 @@ const PlanDescribe = ({ resourceName }) => {
   )
 }
 
+const Div = props => (
+  <Box width={80} textWrap="wrap" flexDirection="column" {...props} />
+)
+
 const components = {
   inlineCode: props => <Text {...props} />,
-  h1: props => <Text bold underline {...props} />,
+  h1: props => (
+    <Div marginBottom={1}>
+      <Text bold underline {...props} />
+    </Div>
+  ),
   h2: props => <Text bold {...props} />,
   h3: props => <Text bold italic {...props} />,
   h4: props => <Text bold {...props} />,
@@ -55,19 +64,15 @@ const components = {
       {...props}
     />
   ),
+  ul: props => <Div marginBottom={1}>{props.children}</Div>,
   li: props => <Text>* {props.children}</Text>,
   Config: () => null,
   GatsbyPlugin: () => <PlanDescribe resourceName="GatsbyPlugin" />,
   NPMPackageJson: () => <PlanDescribe resourceName="NPMPackageJson" />,
-  NPMPackage: ({ name }) => (
-    // const { planForNextStep = [] } = usePlan()
-
-    <Box>
-      <Text>* {name}</Text>
-    </Box>
-  ),
+  NPMPackage: () => null,
   File: () => <PlanDescribe resourceName="File" />,
   ShadowFile: () => <PlanDescribe resourceName="ShadowFile" />,
+  NPMScript: () => null,
 }
 
 const isRelative = path => {
@@ -149,10 +154,6 @@ module.exports = ({ recipe, projectRoot }) => {
 
   const { commands: allCommands, stepsAsMdx: stepsAsMDX } = parsed
 
-  const Div = props => (
-    <Box width={80} textWrap="wrap" flexDirection="column" {...props} />
-  )
-
   class ErrorBoundary extends React.Component {
     constructor(props) {
       super(props)
@@ -179,6 +180,7 @@ module.exports = ({ recipe, projectRoot }) => {
     }
   }
 
+  let renderCount = 1
   const RecipeInterpreter = ({ commands }) => {
     const [lastKeyPress, setLastKeyPress] = useState(``)
     const { exit } = useApp()
@@ -226,12 +228,20 @@ module.exports = ({ recipe, projectRoot }) => {
       }
     })
 
-    log(`render`, new Date().toJSON())
+    /*
+     * TODOs
+     * on last step w/ no plan just exit
+     * show what's happened in Static — probably the state machine should put these in new context key.
+     */
+
+    log(`render`, `${renderCount} ${new Date().toJSON()}`)
+    renderCount += 1
 
     if (!subscriptionResponse.data) {
       return null
     }
 
+    // If we're done, exit.
     if (state.value === `done`) {
       process.exit()
     }
@@ -241,14 +251,90 @@ module.exports = ({ recipe, projectRoot }) => {
       log(`plan`, state.context.plan)
     }
 
+    const PresentStep = ({ state }) => {
+      const isPlan = state.context.plan && state.context.plan.length > 0
+      const isPresetPlanState = state.value === `present plan`
+      const isRunningStep = state.value === `applyingPlan`
+
+      if (isRunningStep) {
+        return null
+      }
+
+      if (!isPlan || !isPresetPlanState) {
+        return (
+          <Div>
+            <Text>Press enter to continue</Text>
+          </Div>
+        )
+      }
+
+      return (
+        <Div>
+          {state.context.plan.map(p => {
+            return (
+              <Div key={p.resourceName}>
+                <Text italic>{p.resourceName}:</Text>
+                <Text> * {p.describe}</Text>
+              </Div>
+            )
+          })}
+          <Div marginTop={1}>
+            <Text>Do you want to run this step? Y/n</Text>
+          </Div>
+        </Div>
+      )
+    }
+
+    const RunningStep = ({ state }) => {
+      const isPlan = state.context.plan && state.context.plan.length > 0
+      const isRunningStep = state.value === `applyingPlan`
+
+      if (!isPlan || !isRunningStep) {
+        return null
+      }
+
+      return (
+        <Div>
+          {state.context.plan.map(p => {
+            return (
+              <Div key={p.resourceName}>
+                <Text italic>{p.resourceName}:</Text>
+                <Text>
+                  {` `}
+                  <Spinner /> {p.describe}
+                </Text>
+              </Div>
+            )
+          })}
+        </Div>
+      )
+    }
+
+    // <Static>
+    // <Text bold>Finished</Text>
+    // <Text italic>Step 1</Text>
+    // <Text>✅ Wrote out file to src/pages/what-about-bob.js</Text>
+    // <Text italic>Step 2</Text>
+    // <Text>
+    // ✅ Shadowed file src/gatsby-theme-blog/foo.js from gatsby-theme-blog
+    // </Text>
+    // </Static>
     return (
       <ErrorBoundary>
+        {state.context.currentStep > 0 && (
+          <Div>
+            <Text>
+              Step {state.context.currentStep} /{` `}
+              {state.context.steps.length - 1}
+            </Text>
+          </Div>
+        )}
         <PlanContext.Provider value={{ planForNextStep: state.plan }}>
           <MDX components={components}>
             {stepsAsMDX[state.context.currentStep]}
           </MDX>
-          <Text>{` `}</Text>
-          <Text>Press enter to apply!</Text>
+          <PresentStep state={state} />
+          <RunningStep state={state} />
         </PlanContext.Provider>
       </ErrorBoundary>
     )

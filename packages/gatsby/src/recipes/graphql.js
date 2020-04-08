@@ -52,11 +52,14 @@ const applyPlan = plan => {
         state: state.value,
         currentStep: state.context.currentStep,
       })
-      emitOperation({
-        context: state.context,
-        lastEvent: state.event,
-        value: state.value,
-      })
+      // Wait until plans are created before updating the UI
+      if (state.value !== `creatingPlan`) {
+        emitOperation({
+          context: state.context,
+          lastEvent: state.event,
+          value: state.value,
+        })
+      }
     }
   })
 
