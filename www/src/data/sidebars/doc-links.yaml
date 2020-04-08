@@ -448,6 +448,9 @@
             - title: Adding an RSS Feed
               link: /docs/adding-an-rss-feed/
               breadcrumbTitle: RSS Feed
+            - title: Adding a Redux Store
+              link: /docs/adding-redux-store/
+              breadcrumbTitle: Redux Store
             - title: Adding Page Transitions
               link: /docs/adding-page-transitions/
               breadcrumbTitle: Page Transitions
