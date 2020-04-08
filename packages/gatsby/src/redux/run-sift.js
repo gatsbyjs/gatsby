@@ -28,7 +28,7 @@ const {
  * @param {DbQuery} filter
  * @returns {FilterCacheKey} (a string: `types.join()/path.join()/operator` )
  */
-const createTypedFilterCacheKey = (typeNames, filter) => {
+const createFilterCacheKey = (typeNames, filter) => {
   // Note: while `elemMatch` is a special case, in the key it's just `elemMatch`
   // (This function is future proof for elemMatch support, won't receive it yet)
   let f = filter
@@ -184,12 +184,12 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
 
   // Fail fast while trying to create and get the value-cache for each path
   let every = filters.every((filter /*: DbQuery*/) => {
-    let cacheKey = createTypedFilterCacheKey(nodeTypeNames, filter)
+    let filterCacheKey = createFilterCacheKey(nodeTypeNames, filter)
     if (filter.type === `query`) {
       // (Let TS warn us if a new query type gets added)
       const q /*: IDbQueryQuery */ = filter
       return getBucketsForQueryFilter(
-        cacheKey,
+        filterCacheKey,
         q,
         nodeTypeNames,
         filtersCache,
@@ -199,7 +199,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
       // (Let TS warn us if a new query type gets added)
       const q /*: IDbQueryElemMatch*/ = filter
       return collectBucketForElemMatch(
-        cacheKey,
+        filterCacheKey,
         q,
         nodeTypeNames,
         filtersCache,
@@ -219,7 +219,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
 /**
  * Fetch all buckets for given query filter. That means it's not elemMatch.
  *
- * @param {FilterCacheKey} cacheKey
+ * @param {FilterCacheKey} filterCacheKey
  * @param {IDbQueryQuery} filter
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
@@ -227,7 +227,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
  * @returns {boolean} false means soft fail, filter must go through Sift
  */
 const getBucketsForQueryFilter = (
-  cacheKey,
+  filterCacheKey,
   filter,
   nodeTypeNames,
   filtersCache,
@@ -238,12 +238,12 @@ const getBucketsForQueryFilter = (
     query: { value: targetValue },
   } = filter
 
-  if (!filtersCache.has(cacheKey)) {
-    ensureIndexByTypedChain(cacheKey, chain, nodeTypeNames, filtersCache)
+  if (!filtersCache.has(filterCacheKey)) {
+    ensureIndexByTypedChain(filterCacheKey, chain, nodeTypeNames, filtersCache)
   }
 
   const filterCache = getNodesFromCacheByValue(
-    cacheKey,
+    filterCacheKey,
     targetValue,
     filtersCache
   )
@@ -263,14 +263,14 @@ const getBucketsForQueryFilter = (
 }
 
 /**
- * @param {string} typedKey
+ * @param {FilterCacheKey} filterCacheKey
  * @param {IDbQueryElemMatch} filter
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
  * @param {Array<FilterCache>} filterCaches Matching node sets are put in this array
  */
 const collectBucketForElemMatch = (
-  typedKey,
+  filterCacheKey,
   filter,
   nodeTypeNames,
   filtersCache,
@@ -302,12 +302,12 @@ const collectBucketForElemMatch = (
     return false
   }
 
-  if (!filtersCache.has(typedKey)) {
-    ensureIndexByElemMatch(typedKey, filter, nodeTypeNames, filtersCache)
+  if (!filtersCache.has(filterCacheKey)) {
+    ensureIndexByElemMatch(filterCacheKey, filter, nodeTypeNames, filtersCache)
   }
 
   const nodesByKeyValue /*: Set<IGatsbyNode> | undefined*/ = getNodesFromCacheByValue(
-    typedKey,
+    filterCacheKey,
     targetValue,
     filtersCache
   )

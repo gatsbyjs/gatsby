@@ -160,7 +160,7 @@ export const addResolvedNodes = (
  * looping over all the nodes, when the number of pages (/nodes) scale up.
  */
 export const ensureIndexByTypedChain = (
-  cacheKey: FilterCacheKey,
+  filterCacheKey: FilterCacheKey,
   chain: string[],
   nodeTypeNames: string[],
   filtersCache: FiltersCache
@@ -169,7 +169,7 @@ export const ensureIndexByTypedChain = (
   const resolvedNodesCache = state.resolvedNodesCache
 
   const filterCache: FilterCache = new Map()
-  filtersCache.set(cacheKey, filterCache)
+  filtersCache.set(filterCacheKey, filterCache)
 
   // We cache the subsets of nodes by type, but only one type. So if searching
   // through one node type we can prevent a search through all nodes, otherwise
@@ -237,7 +237,7 @@ function addNodeToFilterCache(
 }
 
 export const ensureIndexByElemMatch = (
-  cacheKey: FilterCacheKey,
+  filterCacheKey: FilterCacheKey,
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
@@ -249,7 +249,7 @@ export const ensureIndexByElemMatch = (
   const { resolvedNodesCache } = state
 
   const filterCache: FilterCache = new Map()
-  filtersCache.set(cacheKey, filterCache)
+  filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {
     getNodesByType(nodeTypeNames[0]).forEach(node => {
@@ -351,10 +351,10 @@ function addNodeToBucketWithElemMatch(
  * per `id` so there's a minor optimization for that (no need for Sets).
  */
 export const getNodesFromCacheByValue = (
-  cacheKey: FilterCacheKey,
+  filterCacheKey: FilterCacheKey,
   value: boolean | number | string,
   filtersCache: FiltersCache
 ): Set<IGatsbyNode> | undefined => {
-  const byTypedKey = filtersCache?.get(cacheKey)
+  const byTypedKey = filtersCache?.get(filterCacheKey)
   return byTypedKey?.get(value)
 }
