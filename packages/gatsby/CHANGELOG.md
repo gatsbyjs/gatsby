@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.20.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.13...gatsby@2.20.14) (2020-04-08)
+
+### Performance Improvements
+
+- **gatsby:** support `elemMatch` as fast filter ([#22742](https://github.com/gatsbyjs/gatsby/issues/22742)) ([66b3d35](https://github.com/gatsbyjs/gatsby/commit/66b3d35))
+
 ## [2.20.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.12...gatsby@2.20.13) (2020-04-07)
 
 **Note:** Version bump only for package gatsby

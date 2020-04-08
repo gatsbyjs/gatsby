@@ -132,9 +132,9 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       )
     })
     ;[
-      { desc: `with cache`, cb: () => new Map() }, // Avoids sift for flat filters
+      { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
       { desc: `no cache`, cb: () => null }, // Always goes through sift
-    ].forEach(({ desc, cb: createIndexCache }) => {
+    ].forEach(({ desc, cb: createFiltersCache }) => {
       describe(desc, () => {
         describe(`filters by just id correctly`, () => {
           it(`eq operator`, async () => {
@@ -149,7 +149,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             const resultMany = await runSift({
@@ -157,7 +157,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[1].id])
@@ -176,7 +176,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             const resultMany = await runSift({
@@ -184,7 +184,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             // `id-1` node is not of queried type, so results should be empty
@@ -204,7 +204,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             const resultMany = await runSift({
@@ -212,7 +212,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[2].id])
@@ -228,7 +228,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [`NonExistentNodeType`],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
             expect(resultSingular).toEqual([])
           })
@@ -246,7 +246,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultSingular)).toBe(true)
@@ -268,7 +268,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultMany)).toBe(true)
@@ -290,7 +290,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultSingular)).toBe(true)
@@ -312,7 +312,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultMany)).toBe(true)
@@ -334,7 +334,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultSingular)).toBe(true)
@@ -352,7 +352,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             expect(resultMany).toBe(null)
@@ -372,7 +372,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              typedKeyValueIndexes: createIndexCache(),
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultMany)).toBe(true)
@@ -446,7 +446,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       expect(results[0].deep.flat.search.chain).toEqual(300)
     })
 
-    it(`ignores elemMatch`, () => {
+    it(`supports elemMatch`, () => {
       const filter = {
         elemList: {
           $elemMatch: { foo: { $eq: `baz` } },
@@ -459,7 +459,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
         new Map()
       )
 
-      expect(result).toBe(undefined)
+      expect(result).not.toBe(undefined)
+      expect(result.length).toBe(2)
     })
   })
 } else {
