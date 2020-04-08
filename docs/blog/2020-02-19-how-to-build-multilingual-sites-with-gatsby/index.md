@@ -65,14 +65,14 @@ Before we jump into code, it's essential to mention plugins. They greatly help w
 
 ```js:title=gatsby-config.js
 {
-     resolve: `gatsby-plugin-i18n`,
-     options: {
-         langKeyDefault: 'en',
-         langKeyForNull: 'en',
-         prefixDefault: false,
-         useLangKeyLayout: false,
-     },
- },
+  resolve: `gatsby-plugin-i18n`,
+  options: {
+    langKeyDefault: 'en',
+    langKeyForNull: 'en',
+    prefixDefault: false,
+    useLangKeyLayout: false,
+  },
+},
 ```
 
 This configuration (in `gatsby-config.js`) tells the plugin to use 'en' as the default language code (`langKeyDefault`, `langKeyForNull`) and no prefix (`prefixDefault`). The last option (`useLangKeyLayout`) specifies that the used layout is language invariant.
@@ -117,26 +117,28 @@ As I mentioned already, the intranet app contains profile pages for all employee
 
 ```js
 query peoplePortalList {
-    allKontentItemPerson() {
-         nodes {
-             elements {
-                 urlslug {
-                     value
-                 }
-             }
-         }
-     }
- }
- ...
- for (const person of nodes) {
-     createPage({
-         path: `employees/${person.elements.urlslug.value}`,
-         component: path.resolve(`./src/templates/person.js`),
-         context: {
-             slug: person.elements.urlslug.value,
-         },
-     });
- }
+  allKontentItemPerson() {
+    nodes {
+      elements {
+        urlslug {
+          value
+        }
+      }
+    }
+  }
+}
+```
+
+```js
+for (const person of nodes) {
+  createPage({
+    path: `employees/${person.elements.urlslug.value}`,
+    component: path.resolve(`./src/templates/person.js`),
+    context: {
+      slug: person.elements.urlslug.value,
+    },
+  })
+}
 ```
 
 We will need to adjust both the GraphQL query and the code that generates pages.
@@ -153,16 +155,16 @@ In my case, I am happy with language fallbacks for items that are not translated
 
 ```js
 query PeoplePortalList {
-    allKontentItemPerson() {
-        nodes {
-            elements {
-                urlslug {
-                    value
-                }
-            },
-            preferred_language
+  allKontentItemPerson() {
+    nodes {
+      elements {
+        urlslug {
+          value
         }
+      },
+      preferred_language
     }
+  }
 }
 ```
 
@@ -171,18 +173,20 @@ If you don't want to display items that fallback to parent language, just compar
 Let's define here a new variable `lang` that will hold the language code for the current item's `preferred_language`. I will use it in the `createPage` method call to place the newly generated page on the right URL.
 
 ```js
-let lang = `${person.preferred_language}/`
-if (person.preferred_language === "default") {
-  lang = "/"
+for (const person of nodes) {
+  let lang = `${person.preferred_language}/`
+  if (person.preferred_language === "default") {
+    lang = "/"
+  }
+  createPage({
+    path: `${lang}employees/${person.elements.urlslug.value}`,
+    component: path.resolve(`./src/templates/person.js`),
+    context: {
+      slug: person.elements.urlslug.value,
+      lang: person.preferred_language,
+    },
+  })
 }
-createPage({
-  path: `${lang}employees/${person.elements.urlslug.value}`,
-  component: path.resolve(`./src/templates/person.js`),
-  context: {
-    slug: person.elements.urlslug.value,
-    lang: person.preferred_language,
-  },
-})
 ```
 
 ### Generate Language-specific Static Pages
@@ -218,9 +222,9 @@ I always aim to keep things simple. In my case, the language travels through com
 
 ```js
 function Content({ classes, lang }) {
-    ...
-    <EmployeeList lang={lang} />
-    ...
+  ...
+  <EmployeeList lang={lang} />
+  ...
 }
 ```
 
