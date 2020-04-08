@@ -1,14 +1,13 @@
-import { parse } from "graphql"
-import { execute } from "apollo-link"
-import { createDataloaderLink } from "../dataloader-link"
+const { parse } = require(`graphql`)
+const { execute } = require(`apollo-link`)
+const { createDataloaderLink } = require(`../dataloader-link`)
 
 const sampleQuery = parse(`{ foo }`)
 const expectedSampleQueryResult = { data: { foo: `bar` } }
 
-// eslint-disable-next-line @typescript-eslint/camelcase
 const fetchResult = { data: { gatsby0_foo: `bar` } }
 
-const makeFetch = (expectedResult: any = fetchResult): jest.Mock<any> =>
+const makeFetch = (expectedResult = fetchResult) =>
   jest.fn(() =>
     Promise.resolve({
       json: () => Promise.resolve(expectedResult),
@@ -23,7 +22,7 @@ describe(`createDataloaderLink`, () => {
     })
     const observable = execute(link, { query: sampleQuery })
     observable.subscribe({
-      next: (result: any) => {
+      next: result => {
         expect(result).toEqual(expectedSampleQueryResult)
         done()
       },
