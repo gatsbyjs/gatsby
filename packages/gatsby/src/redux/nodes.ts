@@ -7,7 +7,7 @@ import { IDbQueryElemMatch } from "../db/common/query"
 type FilterOp = "$eq" | "$lte"
 type FilterValue = string | number | boolean
 export type FilterCacheKey = string
-export type FilterCache = {
+export interface IFilterCache {
   op: FilterOp
   byValue: Map<FilterValue, Set<IGatsbyNode>>
   meta: {
@@ -19,7 +19,7 @@ export type FilterCache = {
     valueRanges?: Map<FilterValue, [number, number]>
   }
 }
-export type FiltersCache = Map<FilterCacheKey, FilterCache>
+export type FiltersCache = Map<FilterCacheKey, IFilterCache>
 
 /**
  * Get all nodes from redux store.
@@ -166,7 +166,7 @@ export const addResolvedNodes = (
   return resolvedNodes
 }
 
-export const postIndexingMetaSetup = (filterCache: FilterCache) => {
+export const postIndexingMetaSetup = (filterCache: IFilterCache): void => {
   // Create an ordered array of individual nodes, ordered (grouped) by the
   // value to which the filter resolves. Nodes are not ordered per value.
   // This way non-eq ops can simply slice the array to get a range.
@@ -215,7 +215,7 @@ export const ensureIndexByQuery = (
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
 
-  const filterCache: FilterCache = { op, byValue: new Map(), meta: {} }
+  const filterCache: IFilterCache = { op, byValue: new Map(), meta: {} }
   filtersCache.set(filterCacheKey, filterCache)
 
   // We cache the subsets of nodes by type, but only one type. So if searching
@@ -238,7 +238,7 @@ export const ensureIndexByQuery = (
     })
   }
 
-  if (op === "$lte") {
+  if (op === `$lte`) {
     postIndexingMetaSetup(filterCache)
   }
 }
@@ -246,7 +246,7 @@ export const ensureIndexByQuery = (
 function addNodeToFilterCache(
   node: IGatsbyNode,
   chain: Array<string>,
-  filterCache: FilterCache,
+  filterCache: IFilterCache,
   resolvedNodesCache,
   valueOffset: any = node
 ): void {
@@ -300,7 +300,7 @@ export const ensureIndexByElemMatch = (
   const state = store.getState()
   const { resolvedNodesCache } = state
 
-  const filterCache: FilterCache = { op, byValue: new Map(), meta: {} }
+  const filterCache: IFilterCache = { op, byValue: new Map(), meta: {} }
   filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {
@@ -330,7 +330,7 @@ export const ensureIndexByElemMatch = (
     })
   }
 
-  if (op === "$lte") {
+  if (op === `$lte`) {
     postIndexingMetaSetup(filterCache)
   }
 }
@@ -339,7 +339,7 @@ function addNodeToBucketWithElemMatch(
   node: IGatsbyNode,
   valueAtCurrentStep: any, // Arbitrary step on the path inside the node
   filter: IDbQueryElemMatch,
-  filterCache: FilterCache,
+  filterCache: IFilterCache,
   resolvedNodesCache
 ): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
@@ -393,6 +393,41 @@ function addNodeToBucketWithElemMatch(
   }
 }
 
+const binarySearch = (
+  values: Array<FilterValue>,
+  needle: FilterValue
+): number => {
+  let min = 0
+  let max = values.length - 1
+  let pivot = Math.floor(values.length / 2)
+  while (min <= max) {
+    const value = values[pivot]
+    if (needle < value) {
+      // Move pivot to middle of nodes left of current pivot
+      // assert pivot < max
+      max = pivot
+    } else if (needle > value) {
+      // Move pivot to middle of nodes right of current pivot
+      // assert pivot > min
+      min = pivot
+    } else {
+      // This means needle === value
+      // TODO: except for NaN ... and potentially certain type casting cases
+      return pivot
+    }
+
+    if (min === max) {
+      // End of search. Needle not found (as expected). Use pivot as index.
+      return pivot
+    }
+
+    pivot = Math.floor((max - min) / 2)
+  }
+
+  // Shouldn't be reachable
+  return 0
+}
+
 /**
  * Given a ("flat") filter path leading up to "eq", a target value to filter
  * for, a set of node types, and a pre-generated lookup cache, return the set
@@ -418,11 +453,11 @@ export const getNodesFromCacheByValue = (
 
   const op = filterCache.op
 
-  if (op === "$eq") {
+  if (op === `$eq`) {
     return filterCache.byValue.get(filterValue)
   }
 
-  if (op === "$lte") {
+  if (op === `$lte`) {
     // First try a direct approach. If a value is queried that also exists then
     // we can prevent a binary search through the whole set, O(1) vs O(log n)
     const range = filterCache.meta.valueRanges!.get(filterValue)
@@ -459,39 +494,4 @@ export const getNodesFromCacheByValue = (
 
   // Unreachable because we checked all values of FilterOp (which op is)
   return undefined
-}
-
-const binarySearch = (
-  values: Array<FilterValue>,
-  needle: FilterValue
-): number => {
-  let min = 0
-  let max = values.length - 1
-  let pivot = Math.floor(values.length / 2)
-  while (true) {
-    const value = values[pivot]
-    if (needle < value) {
-      // Move pivot to middle of nodes left of current pivot
-      // assert pivot < max
-      max = pivot
-    } else if (needle > value) {
-      // Move pivot to middle of nodes right of current pivot
-      // assert pivot > min
-      min = pivot
-    } else {
-      // This means needle === value
-      // TODO: except for NaN ... and potentially certain type casting cases
-      return pivot
-    }
-
-    if (min === max) {
-      // End of search. Needle not found (as expected). Use pivot as index.
-      return pivot
-    }
-
-    pivot = Math.floor((max - min) / 2)
-  }
-
-  // Unreachable
-  return 0
 }
