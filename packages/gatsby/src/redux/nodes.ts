@@ -364,7 +364,7 @@ function addNodeToBucketWithElemMatch(
  */
 export const getNodesFromCacheByValue = (
   filterCacheKey: FilterCacheKey,
-  value: boolean | number | string,
+  value: FilterValue,
   filtersCache: FiltersCache
 ): Set<IGatsbyNode> | undefined => {
   const filterCache = filtersCache?.get(filterCacheKey)
