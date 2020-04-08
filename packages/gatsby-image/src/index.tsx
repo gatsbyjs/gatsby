@@ -501,15 +501,15 @@ export class Image extends React.Component<
   IGatsbyImageProps,
   IGatsbyImageState
 > {
-  seenBefore: boolean
-  isCritical: boolean
-  addNoScript: boolean
-  useIOSupport: boolean
-  placeholderRef: React.RefObject<HTMLImageElement>
-  imageRef: React.RefObject<HTMLImageElement>
-  cleanUpListeners?: void | (() => void)
+  private seenBefore: boolean
+  private isCritical: boolean
+  private addNoScript: boolean
+  private useIOSupport: boolean
+  private placeholderRef: React.RefObject<HTMLImageElement>
+  private imageRef: React.RefObject<HTMLImageElement>
+  private cleanUpListeners?: void | (() => void)
 
-  public static defaultProps = {
+  static defaultProps = {
     fadeIn: true,
     durationFadeIn: 500,
     alt: ``,
@@ -571,7 +571,7 @@ export class Image extends React.Component<
   }
 
   // Specific to IntersectionObserver based lazy-load support
-  public handleRef(ref: HTMLImageElement): void {
+  private handleRef(ref: HTMLImageElement): void {
     if (this.useIOSupport && ref) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
@@ -602,7 +602,7 @@ export class Image extends React.Component<
     }
   }
 
-  public handleImageLoaded(): void {
+  private handleImageLoaded(): void {
     activateCacheForImage(this.props)
 
     this.setState({ imgLoaded: true })
