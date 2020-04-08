@@ -180,7 +180,7 @@ const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
  *   cache was not found. Must fallback to sift.
  */
 const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
-  const filterCaches /*: Array<FilterCache>*/ = []
+  const nodesPerValueSets /*: Array<Set<IGatsbyNode>>*/ = []
 
   // Fail fast while trying to create and get the value-cache for each path
   let every = filters.every((filter /*: DbQuery*/) => {
@@ -193,7 +193,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
         q,
         nodeTypeNames,
         filtersCache,
-        filterCaches
+        nodesPerValueSets
       )
     } else {
       // (Let TS warn us if a new query type gets added)
@@ -203,13 +203,13 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
         q,
         nodeTypeNames,
         filtersCache,
-        filterCaches
+        nodesPerValueSets
       )
     }
   })
 
   if (every) {
-    return filterCaches
+    return nodesPerValueSets
   }
 
   // "failed at least one"
@@ -223,7 +223,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
  * @param {IDbQueryQuery} filter
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
- * @param {Array<FilterCache>} filterCaches
+ * @param {Array<Set<IgatsbyNode>>} nodesPerValueSets
  * @returns {boolean} false means soft fail, filter must go through Sift
  */
 const getBucketsForQueryFilter = (
@@ -231,7 +231,7 @@ const getBucketsForQueryFilter = (
   filter,
   nodeTypeNames,
   filtersCache,
-  filterCaches
+  nodesPerValueSets
 ) => {
   let {
     path: chain,
@@ -257,7 +257,7 @@ const getBucketsForQueryFilter = (
 
   // In all other cases this must be a non-empty Set because the indexing
   // mechanism does not create a Set unless there's a IGatsbyNode for it
-  filterCaches.push(nodesPerValue)
+  nodesPerValueSets.push(nodesPerValue)
 
   return true
 }
@@ -267,14 +267,14 @@ const getBucketsForQueryFilter = (
  * @param {IDbQueryElemMatch} filter
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
- * @param {Array<FilterCache>} filterCaches Matching node sets are put in this array
+ * @param {Array<Set<IGatsbyNode>>} nodesPerValueSets Matching node sets are put in this array
  */
 const collectBucketForElemMatch = (
   filterCacheKey,
   filter,
   nodeTypeNames,
   filtersCache,
-  filterCaches
+  nodesPerValueSets
 ) => {
   // Get comparator and target value for this elemMatch
   let comparator = ``
@@ -321,7 +321,7 @@ const collectBucketForElemMatch = (
 
   // In all other cases this must be a non-empty Set because the indexing
   // mechanism does not create a Set unless there's a IGatsbyNode for it
-  filterCaches.push(nodesByValue)
+  nodesPerValueSets.push(nodesByValue)
 
   return true
 }
