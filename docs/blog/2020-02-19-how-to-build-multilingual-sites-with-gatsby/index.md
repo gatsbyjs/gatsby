@@ -115,21 +115,23 @@ If your website is not Google Maps, people most likely won't share their locatio
 
 As I mentioned already, the intranet app contains profile pages for all employees. They are generated dynamically because, well, the list of employees is also dynamic. This code piece that sits in `gatsby-node.js`'s `createPages` generates pages in the original implementation:
 
-```js
-query peoplePortalList {
-  allKontentItemPerson() {
-    nodes {
-      elements {
-        urlslug {
-          value
+```jsx
+graphql(`
+  query peoplePortalList {
+    allKontentItemPerson() {
+      nodes {
+        elements {
+          urlslug {
+            value
+          }
         }
       }
     }
   }
-}
-```
+`)
 
-```js
+// ...
+
 for (const person of nodes) {
   createPage({
     path: `employees/${person.elements.urlslug.value}`,
