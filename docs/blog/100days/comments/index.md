@@ -22,9 +22,9 @@ There are multiple ways to accept user-generated content on your site. So, inste
 
 #### Option 1. Embed comments using JavaScript.
 
-_Pros and cons_: This approach is the simplest option for adding comments to your site. You can choose many low cost or free comment services, like Discus and Facebook Comments. However, this method will have a negative impact on your site performance, and has privacy implications for your users.
+_Pros and cons_: This approach is the simplest option for adding comments to your site. You can choose many low cost or free comment services, like Disqus and Facebook Comments. However, this method will have a negative impact on your site performance, and has privacy implications for your users.
 
-_Tutorial_: [Using Javascript-based comment service, Discus with Gatsby](/docs/adding-comments/#using-disqus-for-comments)
+_Tutorial_: [Using Javascript-based comment service, Disqus with Gatsby](/docs/adding-comments/#using-disqus-for-comments)
 
 #### Option 2. Add comments to your content
 

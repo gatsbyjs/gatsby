@@ -1,22 +1,14 @@
-import DataLoader from "dataloader"
-import { ApolloLink, Observable, Operation, FetchResult } from "apollo-link"
-import { print } from "graphql"
-import { IQuery, IQueryResult, merge, resolveResult } from "./merge-queries"
+const DataLoader = require(`dataloader`)
+const { ApolloLink, Observable } = require(`apollo-link`)
+const { print } = require(`graphql`)
+const { merge, resolveResult } = require(`./merge-queries`)
 
-interface IOptions {
-  uri: string
-  fetch: Function
-  fetchOptions?: object
-  dataLoaderOptions?: object
-  headers?: object
-}
-
-export function createDataloaderLink(options: IOptions): ApolloLink {
-  const load = async (keys: ReadonlyArray<IQuery>): Promise<IQueryResult[]> => {
+export function createDataloaderLink(options) {
+  const load = async keys => {
     const query = merge(keys)
-    const result: object = await request(query, options)
+    const result = await request(query, options)
     if (!isValidGraphQLResult(result)) {
-      const error: any = new Error(
+      const error = new Error(
         `Failed to load query batch:\n${formatErrors(result)}`
       )
       error.name = `GraphQLError`
@@ -34,12 +26,12 @@ export function createDataloaderLink(options: IOptions): ApolloLink {
   const dataloader = new DataLoader(load, {
     cache: false,
     maxBatchSize,
-    batchScheduleFn: (callback): any => setTimeout(callback, 50),
+    batchScheduleFn: callback => setTimeout(callback, 50),
     ...options.dataLoaderOptions,
   })
 
   return new ApolloLink(
-    (operation: Operation): Observable<FetchResult> =>
+    operation =>
       new Observable(observer => {
         const { query, variables } = operation
 
@@ -61,7 +53,7 @@ export function createDataloaderLink(options: IOptions): ApolloLink {
   )
 }
 
-function formatErrors(result: any): string {
+function formatErrors(result) {
   if (result?.errors?.length > 0) {
     return result.errors
       .map(error => {
@@ -75,7 +67,7 @@ function formatErrors(result: any): string {
   return `Unexpected GraphQL result`
 }
 
-function isValidGraphQLResult(response): response is IQueryResult {
+function isValidGraphQLResult(response) {
   return (
     response &&
     response.data &&
@@ -83,7 +75,7 @@ function isValidGraphQLResult(response): response is IQueryResult {
   )
 }
 
-async function request(query: IQuery, options: IOptions): Promise<object> {
+async function request(query, options) {
   const { uri, headers = {}, fetch, fetchOptions } = options
 
   const body = JSON.stringify({
