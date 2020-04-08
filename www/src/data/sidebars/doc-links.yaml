@@ -102,6 +102,9 @@
             - title: Deploying to KintoHub
               link: /docs/deploying-to-kintohub/
               breadcrumbTitle: KintoHub Hosting
+            - title: Deploying to Gatsby Cloud
+              link: /docs/deploying-to-gatsby-cloud/
+              breadcrumbTitle: Gatsby Cloud
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -475,6 +478,8 @@
               items:
                 - title: Building an E-commerce Site with Shopify
                   link: /docs/building-an-ecommerce-site-with-shopify/
+                - title: Adding a Shopping Cart with Snipcart
+                  link: /docs/adding-a-shopping-cart-with-snipcart
                 - title: Processing Payments with Stripe
                   link: /docs/processing-payments-with-stripe/
                 - title: Processing Payments with Square
@@ -767,6 +772,8 @@
           link: /docs/glossary/headless-cms/
         - title: Headless WordPress
           link: /docs/glossary/headless-wordpress/
+        - title: Hydration
+          link: /docs/glossary/hydration/
         - title: JAMStack
           link: /docs/glossary/jamstack/
         - title: Markdown

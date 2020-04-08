@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactEventHandler } from "react"
+import React from "react"
 
 type Loading = "lazy" | "eager"
 type CrossOrigin = "anonymous" | "use-credentials" | ""
@@ -70,13 +70,14 @@ export interface IGatsbyImageProps {
   className?: string | object
   critical?: boolean
   crossOrigin?: CrossOrigin
-  style?: CSSProperties
-  imgStyle?: CSSProperties
+  style?: React.CSSProperties
+  imgStyle?: React.CSSProperties
   placeholderStyle?: object
   placeholderClassName?: string
+  placeholderRef?: React.RefObject<HTMLImageElement>
   backgroundColor?: string | boolean
   onLoad?: () => void
-  onError?: ReactEventHandler<HTMLImageElement>
+  onError?: React.ReactEventHandler<HTMLImageElement>
   onStartLoad?: (param: { wasCached: boolean }) => void
   Tag?: string | React.ReactType
   itemProp?: string
@@ -118,7 +119,7 @@ interface IImgPropTypes {
   srcSet?: IImageObject["srcSet"]
   src: IImageObject["src"]
   crossOrigin?: IGatsbyImageProps["crossOrigin"]
-  style?: CSSProperties
+  style?: React.CSSProperties
   onLoad?: IGatsbyImageProps["onLoad"]
   onError?: IGatsbyImageProps["onError"]
   itemProp?: IGatsbyImageProps["itemProp"]
@@ -426,24 +427,30 @@ const noscriptImg = (props: INoscriptImgProps): string => {
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
 // the `Img` component in a `picture` element. This maintains compatibility
 // until a breaking change can be introduced in the next major release
-const Placeholder: React.FC<IPlaceholderProps> = ({
-  src,
-  imageVariants,
-  generateSources,
-  spreadProps,
-  ariaHidden,
-}) => {
-  const baseImage = <Img src={src} {...spreadProps} ariaHidden={ariaHidden} />
+const Placeholder = React.forwardRef(
+  (props: IPlaceholderProps, ref: React.Ref<HTMLImageElement>) => {
+    const {
+      src,
+      imageVariants,
+      generateSources,
+      spreadProps,
+      ariaHidden,
+    } = props
 
-  return imageVariants.length > 1 ? (
-    <picture>
-      {generateSources(imageVariants)}
-      {baseImage}
-    </picture>
-  ) : (
-    baseImage
-  )
-}
+    const baseImage = (
+      <Img ref={ref} src={src} {...spreadProps} ariaHidden={ariaHidden} />
+    )
+
+    return imageVariants.length > 1 ? (
+      <picture>
+        {generateSources(imageVariants)}
+        {baseImage}
+      </picture>
+    ) : (
+      baseImage
+    )
+  }
+)
 
 const Img = React.forwardRef(
   (props: IImgPropTypes, ref: React.Ref<HTMLImageElement>) => {
@@ -498,6 +505,7 @@ export class Image extends React.Component<
   isCritical: boolean
   addNoScript: boolean
   useIOSupport: boolean
+  placeholderRef: React.RefObject<HTMLImageElement>
   imageRef: React.RefObject<HTMLImageElement>
   cleanUpListeners?: void | (() => void)
 
@@ -539,6 +547,7 @@ export class Image extends React.Component<
     }
 
     this.imageRef = React.createRef()
+    this.placeholderRef = props.placeholderRef || React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
   }
@@ -627,7 +636,7 @@ export class Image extends React.Component<
     const shouldFadeIn: boolean =
       this.state.fadeIn === true && !this.state.imgCached
 
-    const imageStyle: CSSProperties = {
+    const imageStyle: React.CSSProperties = {
       opacity: shouldReveal ? 1 : 0,
       transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
       ...imgStyle,
@@ -636,11 +645,11 @@ export class Image extends React.Component<
     const bgColor: string | undefined =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
-    const delayHideStyle: CSSProperties = {
+    const delayHideStyle: React.CSSProperties = {
       transitionDelay: `${durationFadeIn}ms`,
     }
 
-    const imagePlaceholderStyle: CSSProperties = {
+    const imagePlaceholderStyle: React.CSSProperties = {
       opacity: this.state.imgLoaded ? 0 : 1,
       ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
@@ -701,6 +710,7 @@ export class Image extends React.Component<
           {image.base64 && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -712,6 +722,7 @@ export class Image extends React.Component<
           {image.tracedSVG && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -763,7 +774,7 @@ export class Image extends React.Component<
       const imageVariants = fixed as IFixedObject[]
       const image = getCurrentSrcData(fixed) as IFixedObject
 
-      const divStyle: CSSProperties = {
+      const divStyle: React.CSSProperties = {
         position: `relative`,
         overflow: `hidden`,
         display: `inline-block`,
@@ -802,6 +813,7 @@ export class Image extends React.Component<
           {image.base64 && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -813,6 +825,7 @@ export class Image extends React.Component<
           {image.tracedSVG && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}

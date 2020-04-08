@@ -61,7 +61,7 @@ To illustrate these steps, I used a sample intranet app that was built on Gatsby
 
 The app contains a list of employees and a profile page for every one of them.
 
-Before we jump into code, it's essential to mention plugins. They greatly help with handling multilingual websites in Gatsby, so it would be a waste of time to try and reinvent the wheel here. For the full list, see [Gatsby docs](https://www.gatsbyjs.org/docs/localization-i18n/). I chose the [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n) as it is capable of automatic locale identification, handles language-specific static pages, and lets me configure the basics.
+Before we jump into code, it's essential to mention plugins. They greatly help with handling multilingual websites in Gatsby, so it would be a waste of time to try and reinvent the wheel here. For the full list, see [Gatsby docs](/docs/localization-i18n/). I chose the [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n) as it is capable of automatic locale identification, handles language-specific static pages, and lets me configure the basics.
 
 ```js:title=gatsby-config.js
 {
@@ -141,7 +141,7 @@ query peoplePortalList {
 
 We will need to adjust both the GraphQL query and the code that generates pages.
 
-During the build time, the [Kontent source plugin](https://www.gatsbyjs.org/docs/sourcing-from-kentico-kontent/) generates one Gatsby node per each content item - language combination. To distinguish these nodes, they always contain two fields:
+During the build time, the [Kontent source plugin](/docs/sourcing-from-kentico-kontent/) generates one Gatsby node per each content item - language combination. To distinguish these nodes, they always contain two fields:
 
 - **preferred_language**
   This field is mainly used for filtering and describes the language the item is intended for. For example, if you want Czech content, you want to filter for `preferred_language='cs'` provided you use the codename `'cs'` for Czech.
@@ -265,4 +265,4 @@ You see that adding multiple languages to sites is not as simple as it seems at 
 
 Have you published a multilingual website on Gatsby? Let me know how you implemented it and what your experience was like on [Twitter](https://twitter.com/ondrabus).
 
-You can also check out [this implementation on GitHub in a separate branch of the forked source repository](https://github.com/ondrabus/kontent-sample-app-gatsby-intranet/tree/multilingual) or the [Kontent source plugin page](https://www.gatsbyjs.org/docs/sourcing-from-kentico-kontent/) in the docs.
+You can also check out [this implementation on GitHub in a separate branch of the forked source repository](https://github.com/ondrabus/kontent-sample-app-gatsby-intranet/tree/multilingual) or the [Kontent source plugin page](/docs/sourcing-from-kentico-kontent/) in the docs.
