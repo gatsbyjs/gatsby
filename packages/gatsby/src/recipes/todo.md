@@ -41,3 +41,4 @@
 - [ ] validate resource config
 - [ ] Theme UI preset selection (runs dependent install and file write)
 - [ ] Select input supported recipes
+- [ ] Refactor resource state to use Redux & record runs in local db
