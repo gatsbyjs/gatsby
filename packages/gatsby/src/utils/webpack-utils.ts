@@ -375,8 +375,13 @@ export const createWebpackUtils = (
             ) {
               return true
             }
-            // If dep is babel-runtime or core-js, exclude
-            if (/@babel(?:\/|\\{1,2})runtime|core-js/.test(modulePath)) {
+            // If dep is known library that doesn't need polyfilling, we don't.
+            // TODO this needs rework, this is buggy as hell
+            if (
+              /node_modules[\\/](@babel[\\/]runtime|core-js|react|react-dom|scheduler|prop-types)[\\/]/.test(
+                modulePath
+              )
+            ) {
               return true
             }
 
@@ -516,10 +521,6 @@ export const createWebpackUtils = (
    */
   const plugins = { ...builtinPlugins } as PluginUtils
 
-  /**
-   * Minify JavaScript code without regard for IE8. Attempts
-   * to parallelize the work to save time. Generally only add in Production
-   */
   plugins.minifyJs = ({
     terserOptions,
     ...options
@@ -622,10 +623,6 @@ export const createWebpackUtils = (
       disableRefreshCheck: true,
     })
 
-  /**
-   * Extracts css requires into a single file;
-   * includes some reasonable defaults
-   */
   plugins.extractText = (options: any): Plugin =>
     new MiniCssExtractPlugin({
       filename: `[name].[contenthash].css`,

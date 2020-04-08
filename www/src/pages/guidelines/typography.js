@@ -468,8 +468,8 @@ const Typography = ({ location }) => (
 
         <Box display={{ md: `flex ` }} mt={12} pb={12} textAlign="left">
           <MarketingColumn title="Modern web tech without the headache">
-            Enjoy the power of the latest web technologies – React.js, Webpack
-            , modern JavaScript and CSS and more — all set up and waiting for
+            Enjoy the power of the latest web technologies – React.js, Webpack,
+            modern JavaScript and CSS and more — all set up and waiting for
             you to start building.
           </MarketingColumn>
           <MarketingColumn title="Bring your own data">

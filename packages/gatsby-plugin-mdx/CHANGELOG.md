@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.5...gatsby-plugin-mdx@1.1.6) (2020-04-07)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** pass on proper `modules` option value to babel ([#22903](https://github.com/gatsbyjs/gatsby/issues/22903)) ([cd120ae](https://github.com/gatsbyjs/gatsby/commit/cd120ae))
+
+## [1.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.4...gatsby-plugin-mdx@1.1.5) (2020-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.3...gatsby-plugin-mdx@1.1.4) (2020-03-30)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.2...gatsby-plugin-mdx@1.1.3) (2020-03-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Use getNodesByType for plugin transformation ([#22555](https://github.com/gatsbyjs/gatsby/issues/22555)) ([63d091a](https://github.com/gatsbyjs/gatsby/commit/63d091a)), closes [#22521](https://github.com/gatsbyjs/gatsby/issues/22521)
+
+## [1.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.1...gatsby-plugin-mdx@1.1.2) (2020-03-24)
+
+### Bug Fixes
+
+- **docs:** remove double words ([#22494](https://github.com/gatsbyjs/gatsby/issues/22494)) ([75f6ee2](https://github.com/gatsbyjs/gatsby/commit/75f6ee2))
+
+## [1.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.0...gatsby-plugin-mdx@1.1.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 # [1.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.84...gatsby-plugin-mdx@1.1.0) (2020-03-20)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

@@ -92,6 +92,12 @@ module.exports = {
   plugins: [
     `gatsby-plugin-theme-ui`,
     {
+      resolve: `gatsby-transformer-gitinfo`,
+      options: {
+        include: /mdx?$/i,
+      },
+    },
+    {
       resolve: `gatsby-source-npm-package-search`,
       options: {
         keywords: [`gatsby-plugin`, `gatsby-component`],
