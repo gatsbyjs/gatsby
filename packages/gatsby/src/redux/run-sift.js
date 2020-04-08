@@ -242,7 +242,7 @@ const getBucketsForQueryFilter = (
     ensureIndexByTypedChain(filterCacheKey, chain, nodeTypeNames, filtersCache)
   }
 
-  const filterCache = getNodesFromCacheByValue(
+  const nodesPerValue /*: Set<IGatsbyNode> | undefined */ = getNodesFromCacheByValue(
     filterCacheKey,
     targetValue,
     filtersCache
@@ -251,13 +251,13 @@ const getBucketsForQueryFilter = (
   // If we couldn't find the needle then maybe sift can, for example if the
   // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
   // There are also cases (and tests) where id exists with a different type
-  if (!filterCache) {
+  if (!nodesPerValue) {
     return false
   }
 
   // In all other cases this must be a non-empty Set because the indexing
   // mechanism does not create a Set unless there's a IGatsbyNode for it
-  filterCaches.push(filterCache)
+  filterCaches.push(nodesPerValue)
 
   return true
 }
@@ -306,7 +306,7 @@ const collectBucketForElemMatch = (
     ensureIndexByElemMatch(filterCacheKey, filter, nodeTypeNames, filtersCache)
   }
 
-  const nodesByKeyValue /*: Set<IGatsbyNode> | undefined*/ = getNodesFromCacheByValue(
+  const nodesByValue /*: Set<IGatsbyNode> | undefined*/ = getNodesFromCacheByValue(
     filterCacheKey,
     targetValue,
     filtersCache
@@ -315,13 +315,13 @@ const collectBucketForElemMatch = (
   // If we couldn't find the needle then maybe sift can, for example if the
   // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
   // There are also cases (and tests) where id exists with a different type
-  if (!nodesByKeyValue) {
+  if (!nodesByValue) {
     return false
   }
 
   // In all other cases this must be a non-empty Set because the indexing
   // mechanism does not create a Set unless there's a IGatsbyNode for it
-  filterCaches.push(nodesByKeyValue)
+  filterCaches.push(nodesByValue)
 
   return true
 }
