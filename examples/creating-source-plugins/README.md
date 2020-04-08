@@ -20,12 +20,17 @@ yarn install
 
 _Note: if you aren't using yarn, you can navigate into each of the 3 folders and run `npm install` instead_
 
-Then you can run the api or example projects with:
+Then you can run the api or example projects in separate terminal windows with the commands below.
+
+For the API which runs at `localhost:4000`, use this command:
 
 ```
-// runs the api with yarn start at port 4000
 yarn workspace api start
-// runs the example site with gatsby develop at port 8000
+```
+
+And to run the example site with `gatsby develop` at `localhost:8000`, use this command:
+
+```
 yarn workspace example-site develop
 ```
 
