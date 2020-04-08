@@ -14,10 +14,8 @@ export default CreatorsPage
 export const pageQuery = graphql`
   query {
     allCreatorsYaml {
-      edges {
-        node {
-          ...CreatorData
-        }
+      nodes {
+        ...CreatorData
       }
     }
   }

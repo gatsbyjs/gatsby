@@ -2,12 +2,12 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
-import Layout from "../components/layout"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import Link from "../components/localized-link"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
@@ -26,7 +26,7 @@ class BlogPostTemplate extends React.Component {
       <p
         sx={{
           color: `textMuted`,
-          fontFamily: `header`,
+          fontFamily: `heading`,
           lineHeight: `dense`,
           m: 0,
         }}
@@ -42,7 +42,7 @@ class BlogPostTemplate extends React.Component {
       )
     }
     return (
-      <Layout location={this.props.location}>
+      <>
         <Container>
           {
             // TODO
@@ -62,17 +62,11 @@ class BlogPostTemplate extends React.Component {
                 rel="author"
                 href={`https://gatsbyjs.org${post.frontmatter.author.fields.slug}`}
               />
-              <meta
-                name="description"
-                content={
-                  post.frontmatter.excerpt
-                    ? post.frontmatter.excerpt
-                    : post.excerpt
-                }
-              />
+              <meta name="description" content={post.fields.excerpt} />
 
-              <meta property="og:description" content={post.excerpt} />
-              <meta name="twitter:description" content={post.excerpt} />
+              <meta name="twitter:description" content={post.fields.excerpt} />
+              <meta name="twitter:card" content={post.frontmatter.twittercard || 'summary'} />
+              <meta property="og:description" content={post.fields.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
               <meta property="og:url" content={href} />
               {post.frontmatter.image && (
@@ -226,24 +220,11 @@ class BlogPostTemplate extends React.Component {
           }}
         >
           <Container>
-            <PrevAndNext
-              prev={
-                prev && {
-                  title: prev.frontmatter.title,
-                  link: prev.fields.slug,
-                }
-              }
-              next={
-                next && {
-                  title: next.frontmatter.title,
-                  link: next.fields.slug,
-                }
-              }
-            />
+            <PrevAndNext prev={prev} next={next} />
           </Container>
           <FooterLinks />
         </div>
-      </Layout>
+      </>
     )
   }
 }
@@ -254,22 +235,21 @@ export const pageQuery = graphql`
   query($slug: String!) {
     mdx(fields: { slug: { eq: $slug } }) {
       body
-      excerpt
       timeToRead
       fields {
         slug
+        excerpt
         publishedAt
       }
       frontmatter {
         title
-        excerpt
         date(formatString: "MMMM Do YYYY")
         rawDate: date
         canonicalLink
         tags
         image {
           childImageSharp {
-            resize(width: 1500, height: 1500) {
+            resize(width: 1500) {
               src
             }
             fluid(maxWidth: 786) {
@@ -281,6 +261,7 @@ export const pageQuery = graphql`
         imageAuthorLink
         imageTitle
         showImageInArticle
+        twittercard
         author {
           id
           bio

@@ -5,7 +5,7 @@ import styled from "@emotion/styled"
 
 import Button from "../button"
 import { rhythm } from "../../utils/typography"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const ICON_SIZE = 7
 

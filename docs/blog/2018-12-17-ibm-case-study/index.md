@@ -30,13 +30,17 @@ Alison Joseph, Frontend Developer at IBM, took over this project from a coworker
 Alison was the only developer able to focus full-time on the Gatsby project and it took about six months before the new site launched in October 2018. She’s quick to point out if they had gone the custom, in-house route, the project would have easily taken twice as long and required more than one developer.
 
 <Pullquote>
-Gatsby just works. With the old system, I had to fight with something for a few days to troubleshoot issues. With Gatsby, you install and it just works. It’s stress-free.
+  Gatsby just works. With the old system, I had to fight with something for a
+  few days to troubleshoot issues. With Gatsby, you install and it just works.
+  It’s stress-free.
 </Pullquote>
 
 With non-technical content writers and designers needing the ability to add content quickly to the site, the “second to none onboarding” made it easy for everyone, regardless of skill level, to be successful. The Gatsby documentation made it easy to onboard new developers and the process was simple enough for any of the content creators to understand. This achieved one of the most important goals for the website: the documentation and process was there for the next person so they wouldn’t struggle.
 
 <Pullquote>
-A home-grown system goes down when the people who created it leave. Gatsby doesn’t allow for that - it grows with whoever is at the controls then seamlessly passes on to the next person.
+  A home-grown system goes down when the people who created it leave. Gatsby
+  doesn’t allow for that - it grows with whoever is at the controls then
+  seamlessly passes on to the next person.
 </Pullquote>
 
 ## A New Era
@@ -45,13 +49,12 @@ The new Carbon Design System website launched October 3, 2018, and is referenced
 
 <figure>
   <img alt="Gatsby swag posts on Twitter." src="./images/lighthouse.png" />
-  <figcaption>
-    Lighthouse Performance Scores with Gatsby
-  </figcaption>
+  <figcaption>Lighthouse Performance Scores with Gatsby</figcaption>
 </figure>
-
 <Pullquote>
-We’re copying Gatsby as a best practice. Whenever we’re working out how to engage our community, we look to Gatsby as the shining example and ask ourselves, What does Gatsby do?
+  We’re copying Gatsby as a best practice. Whenever we’re working out how to
+  engage our community, we look to Gatsby as the shining example and ask
+  ourselves, What does Gatsby do?
 </Pullquote>
 
 ## Final Thoughts

@@ -9,7 +9,7 @@ import {
   a11y,
 } from "../../../utils/guidelines/color"
 import { focusStyle } from "../../../utils/styles"
-import { colors as themeColors } from "../../../gatsby-plugin-theme-ui"
+import { colors as themeColors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const Column = styled(Flex)()
 

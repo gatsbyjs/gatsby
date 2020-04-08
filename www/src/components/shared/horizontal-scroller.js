@@ -15,7 +15,7 @@ export const HorizontalScrollerContent = styled(`ul`)`
 
 export const HorizontalScrollerItem = styled(`li`)`
   background: ${p => p.theme.colors.card.background};
-  border-radius: ${p => p.theme.radii[2]}px;
+  border-radius: ${p => p.theme.radii[2]};
   box-shadow: ${p => p.theme.shadows.raised};
   margin: 0;
   margin-right: ${p => p.theme.space[6]};

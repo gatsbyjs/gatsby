@@ -82,8 +82,8 @@ To access localhost from your Android device you'll need to do (more than) a few
 3. Connect your device to your development machine via USB.
 4. From Chrome, access the remote devices panel in DevTools (under `More Tools > Remote Devices`).
 5. You should see that there is a pending device at the top of the list of devices. Your phone should have a pop-up prompt asking you to accept remote debugging. Accept remote debugging from your phone.
-6. Now you need to enable Port Forwarding from Settings in the Remote devices tab in DevTools. (Settings are at the very bottom of the list of devices so you may have to scroll down to find them) Check the box to enable it and then click the _Add Rule_ button to create a port for your phone to access what's in your browser. Type in the port you want to use on your phone on one side (e.g. `3000`) and the local address you want to access from your computer (e.g. `localhost:9000` for a served Gatsby site)
-7. Boom! If you go to `localhost:3000` on your phone you'll see your site!
+6. Now you need to enable Port Forwarding from Settings in the Remote devices tab in DevTools. (Settings are at the very bottom of the list of devices so you may have to scroll down to find them) Check the box to enable it and then click the _Add Rule_ button to create a port for your phone to access what's in your browser. Type in the port you want to use on your phone on one side (e.g. `3000`) and the local address you want to access from your computer (e.g. `http://localhost:9000/` for a served Gatsby site)
+7. Boom! If you go to `http://localhost:3000/` on your phone you'll see your site!
 
 #### iOS
 

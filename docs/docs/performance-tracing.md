@@ -76,7 +76,7 @@ There are many OpenTracing compatible backends available. Below are examples of 
     gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/jaeger-local.js
     ```
 
-4.  Once the build is complete, view your tracing information at [http://localhost:16686](http://localhost:16686). On the left menu, select the `build` operation to see your build's root trace.
+4.  Once the build is complete, view your tracing information at `http://localhost:16686`. On the left menu, select the `build` operation to see your build's root trace.
 
 ### Local Zipkin with Docker
 
@@ -96,7 +96,7 @@ There are many OpenTracing compatible backends available. Below are examples of 
     gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/zipkin-local.js
     ```
 
-4.  Once the build is complete, view your tracing information at [http://localhost:9411](http://localhost:9411)
+4.  Once the build is complete, view your tracing information at `http://localhost:9411`
 
 ## Adding your own tracing
 

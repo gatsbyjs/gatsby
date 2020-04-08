@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.1](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.8.0...babel-plugin-remove-graphql-queries@2.8.1) (2020-03-23)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+# [2.8.0](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.7.26...babel-plugin-remove-graphql-queries@2.8.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.7.26](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.7.25...babel-plugin-remove-graphql-queries@2.7.26) (2020-03-16)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+## [2.7.25](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.7.24...babel-plugin-remove-graphql-queries@2.7.25) (2020-03-13)
+
+### Bug Fixes
+
+- dont remove query declaration hash, terser will remove it anyway and it can be useful for 3rd party tools ([#20672](https://github.com/gatsbyjs/gatsby/issues/20672)) ([150da45](https://github.com/gatsbyjs/gatsby/commit/150da45))
+
+## [2.7.24](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.7.23...babel-plugin-remove-graphql-queries@2.7.24) (2020-03-06)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+## [2.7.23](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.7.22...babel-plugin-remove-graphql-queries@2.7.23) (2020-02-01)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
 ## [2.7.22](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.7.21...babel-plugin-remove-graphql-queries@2.7.22) (2020-01-09)
 
 **Note:** Version bump only for package babel-plugin-remove-graphql-queries

@@ -28,7 +28,7 @@ BadgeBase.defaultProps = {
   borderColor: `yellow.10`,
   borderRadius: 5,
   color: `yellow.90`,
-  fontFamily: `system`,
+  fontFamily: `body`,
   fontSize: 0,
   fontWeight: `body`,
   letterSpacing: `tracked`,

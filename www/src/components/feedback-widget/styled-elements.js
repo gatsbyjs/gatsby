@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
 
 import { visuallyHidden } from "../../utils/styles"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 export const WidgetContainer = styled(`div`)`
   margin: ${p => p.theme.space[7]} auto;

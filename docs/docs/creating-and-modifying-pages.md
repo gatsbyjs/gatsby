@@ -20,7 +20,7 @@ To see what pages are being created by your code or plugins, you can query for
 page information while developing in Graph*i*QL. Paste the following query in
 the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running
 your sites development server at `HOST:PORT/___graphql` e.g.
-`localhost:8000/___graphql`.
+`http://localhost:8000/___graphql`.
 
 ```graphql
 {
@@ -89,10 +89,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path,
       component: blogPostTemplate,
-      // In your blog post template's graphql query, you can use path
+      // In your blog post template's graphql query, you can use pagePath
       // as a GraphQL variable to query for data from the markdown file.
       context: {
-        path,
+        pagePath: path,
       },
     })
   })
