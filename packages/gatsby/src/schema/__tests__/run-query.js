@@ -394,6 +394,8 @@ it(`should use the cache argument`, async () => {
       })
 
       it(`should lte when value is lower than all found values`, async () => {
+        if (IS_LOKI) return
+
         let result = await runFilter({ float: { lte: 1 } })
 
         expect(result).toEqual(null) // Zero results yields undefined
