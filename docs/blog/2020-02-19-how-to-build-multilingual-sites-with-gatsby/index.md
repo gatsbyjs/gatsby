@@ -189,8 +189,14 @@ createPage({
 
 Apart from dynamic pages, there are always some static pages. They include `index.js` and `employees.js` that handle the homepage and employees page respectively. The `gatsby-plugin-i18n` will place them on the right language-specific URLs if you follow the defined language convention-the filename suffix needs to contain the language code.
 
-- index.js -> index.en.js, index.cs.js
-- employees.js -> employees.en.js, employees.cs.js
+- `index.js` ->
+
+  - `index.en.js`
+  - `index.cs.js`
+
+- `employees.js` ->
+  - `employees.en.js`
+  - `employees.cs.js`
 
 It's also necessary to adjust the content of each of the new files to reflect its new language. That includes component properties. Take a look at this part of my index.js:
 
