@@ -1,18 +1,14 @@
 import stackTrace from "stack-trace"
-import { Store } from "redux"
+import { ExecutionResultDataDefault } from "graphql/execution/execute"
 
 import GraphQLRunner from "../query/graphql-runner"
 import errorParser from "../query/error-parser"
-
-import { emitter } from "../redux"
-import { IGatsbyState } from "../redux/types"
+import { emitter, store as GatsbyStore } from "../redux"
 import { Reporter } from "../.."
-
 import { ExecutionResult, Source } from "../../graphql"
-import { ExecutionResultDataDefault } from "graphql/execution/execute"
 
-const graphQLRunner = (
-  store: Store<IGatsbyState>,
+export const createGraphQLRunner = (
+  store: typeof GatsbyStore,
   reporter: Reporter
 ): ((
   query: string | Source,
@@ -79,5 +75,3 @@ const graphQLRunner = (
       return result
     })
 }
-
-export default graphQLRunner
