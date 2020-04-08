@@ -186,20 +186,14 @@ exports.sourceNodes = async function sourceNodes(
           case "created":
           case "updated":
           default:
-            /*
-             * Created and updated can be handled by the same code path
-             * The post's id is presumed to stay constant (or can be inferred)
-             */
+            // created and updated can be handled by the same code path
+            // the post's id is presumed to stay constant (or can be inferred)
             createNodeFromData(post, POST_NODE_TYPE, helpers)
             break
         }
       })
     })
   }
-
-  // TODO update query to fetch all or only stuff after lastupdatedat
-  // set lastUpdated in cache and use that to fetch only new data
-  // is that important for inc builds: long running vs shutoff?
 
   // store the response from the API in the cache
   const cacheKey = "your-source-data-key"
