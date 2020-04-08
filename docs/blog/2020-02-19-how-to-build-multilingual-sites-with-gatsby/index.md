@@ -81,7 +81,7 @@ This configuration (in `gatsby-config.js`) tells the plugin to use 'en' as the d
 
 Right at the beginning, we need to think about URLs. Do you want the language code in the URL all the time? Should the default language be accessible without language code?
 
-```js
+```text
 ╔════════════════════════════════════════════════════╗
 ║       All languages use language code in URL       ║
 ╠════════════════════════════════════════════════════╣
@@ -115,7 +115,7 @@ If your website is not Google Maps, people most likely won't share their locatio
 
 As I mentioned already, the intranet app contains profile pages for all employees. They are generated dynamically because, well, the list of employees is also dynamic. This code piece that sits in `gatsby-node.js`'s `createPages` generates pages in the original implementation:
 
-```js
+```graphql
 query peoplePortalList {
     allKontentItemPerson() {
          nodes {
@@ -151,7 +151,7 @@ During the build time, the [Kontent source plugin](https://www.gatsbyjs.org/docs
 
 In my case, I am happy with language fallbacks for items that are not translated. That means I can use `preferred_language` and treat all items as if they were translated.
 
-```js
+```graphql
 query PeoplePortalList {
     allKontentItemPerson() {
         nodes {
@@ -194,7 +194,7 @@ Apart from dynamic pages, there are always some static pages. They include `inde
 
 It's also necessary to adjust the content of each of the new files to reflect its new language. That includes component properties. Take a look at this part of my index.js:
 
-```js:title=index.js
+```jsx:title=index.js
 <Layout location={location} title={title}>
   <IndexContent />
 </Layout>
@@ -202,7 +202,7 @@ It's also necessary to adjust the content of each of the new files to reflect it
 
 Once this file becomes `index.cs.js`, I need to adjust it to:
 
-```js:title=index.cs.js
+```jsx:title=index.cs.js
 <Layout location={location} title={title} lang="cs">
   <IndexContent lang="cs" />
 </Layout>
@@ -216,7 +216,7 @@ There are multiple ways to handle the language propagation. They are ranging fro
 
 I always aim to keep things simple. In my case, the language travels through components from top to bottom. The language-specific `index` page defines the language code for the `IndexContent` component. If a child component requires the current language, it will receive it from its parent the same way.
 
-```js
+```jsx
 function Content({ classes, lang }) {
     ...
     <EmployeeList lang={lang} />
@@ -228,7 +228,7 @@ The last part of this multilingual adjustment tutorial is the language selector.
 
 A very simple implementation featuring just two languages (Czech and English) can look like this:
 
-```js
+```jsx
 import PropTypes from "prop-types"
 import React, { Component } from "react"
 import { Location } from "@reach/router"
