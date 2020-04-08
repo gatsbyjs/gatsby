@@ -462,8 +462,6 @@ const filterToStats = (
  * @returns {Array<IGatsbyNode> | undefined} Collection of results
  */
 const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
-  // This can also be `$ne`, `$in` or any other grapqhl comparison op
-
   if (!filtersCache) {
     // If no filter cache is passed on, explicitly don't use one
     return undefined
@@ -479,9 +477,12 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   if (
     filters.some(
       filter =>
-        filter.type === `query` && // enabled
-        // filter.type === `elemMatch` || // disabled
-        ![`$eq`].includes(filter.query.comparator)
+        filter.type === `query` &&
+        ![
+          `$eq`,
+          // "$lte",
+          // "$gte"
+        ].includes(filter.query.comparator)
     )
   ) {
     // If there's a filter with non-supported op, stop now.

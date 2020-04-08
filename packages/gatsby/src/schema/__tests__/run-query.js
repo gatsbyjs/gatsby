@@ -595,6 +595,9 @@ it(`should use the cache argument`, async () => {
         })
 
         expect(result.length).toEqual(1)
+        expect(
+          result[0]?.singleElem?.things.some(e => e?.one?.two?.three === 123)
+        ).toEqual(true)
       })
 
       it(`handles the elemMatch operator on the second element`, async () => {
@@ -808,12 +811,14 @@ it(`should use the cache argument`, async () => {
         // nodes that do not have the field at all (NULL).
 
         expect(result.length).toEqual(2)
-        result.forEach(edge => {
-          // Either does not exist or does not contain
-          expect(edge.anArray === undefined || !edge.anArray.includes(5)).toBe(
-            true
-          )
-        })
+        // Either does not exist or does not contain
+        result
+          .filter(edge => edge.anArray !== undefined)
+          .forEach(edge => {
+            // In this test, if the property exists it should be an array
+            expect(Array.isArray(edge.anArray)).toBe(true)
+            expect(edge.anArray.includes(5)).toBe(false)
+          })
       })
 
       it(`handles the nin operator for array [null]`, async () => {
