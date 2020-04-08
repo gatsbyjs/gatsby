@@ -56,7 +56,7 @@ Qovery needs access to your repository to clone and build your application. Duri
 
 **4/** **Create a Dockerfile at the root of your project using the following script:**
 
-```Dockerfile
+```shell
 echo "FROM node:12-buster as build
 
 RUN yarn global add gatsby-cli
