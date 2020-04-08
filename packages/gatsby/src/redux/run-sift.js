@@ -242,11 +242,21 @@ const getBucketsForQueryFilter = (
 ) => {
   let {
     path: filterPath,
-    query: { value: filterValue },
+    query: {
+      // Note: comparator is verified to be a FilterOp in filterWithoutSift
+      comparator /*: as FilterOp*/,
+      value: filterValue,
+    },
   } = filter
 
   if (!filtersCache.has(filterCacheKey)) {
-    ensureIndexByQuery(filterCacheKey, filterPath, nodeTypeNames, filtersCache)
+    ensureIndexByQuery(
+      comparator,
+      filterCacheKey,
+      filterPath,
+      nodeTypeNames,
+      filtersCache
+    )
   }
 
   const nodesPerValue /*: Set<IGatsbyNode> | undefined */ = getNodesFromCacheByValue(
@@ -302,7 +312,7 @@ const collectBucketForElemMatch = (
   if (
     ![
       `$eq`,
-      // "$lte",
+      `$lte`,
       // "$gte",
     ].includes(comparator)
   ) {
@@ -310,7 +320,13 @@ const collectBucketForElemMatch = (
   }
 
   if (!filtersCache.has(filterCacheKey)) {
-    ensureIndexByElemMatch(filterCacheKey, filter, nodeTypeNames, filtersCache)
+    ensureIndexByElemMatch(
+      comparator,
+      filterCacheKey,
+      filter,
+      nodeTypeNames,
+      filtersCache
+    )
   }
 
   const nodesByValue /*: Set<IGatsbyNode> | undefined*/ = getNodesFromCacheByValue(

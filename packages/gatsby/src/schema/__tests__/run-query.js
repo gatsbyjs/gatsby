@@ -393,6 +393,35 @@ it(`should use the cache argument`, async () => {
         expect(result[1].hair).toEqual(0)
       })
 
+      it(`should lte when value is lower than all found values`, async () => {
+        let result = await runFilter({ float: { lte: 1 } })
+
+        expect(result.length).toEqual(0)
+      })
+
+      it(`should lte when value is in the middle of all found values`, async () => {
+        let result = await runFilter({ float: { lte: 2 } })
+
+        expect(result.length > 0).toEqual(true)
+        result.forEach(r => expect(r.float <= 2).toBe(true))
+      })
+
+      it(`should lte when value is higher than all found values`, async () => {
+        let result = await runFilter({ float: { lte: 5 } })
+
+        expect(result.length).toEqual(3)
+      })
+
+      it(`should lte when type coercion fails direct value lookup`, async () => {
+        // Here 1.5 exists but only as number. However, `1.5 <= '1.5' === true`
+        // This test checks whether we don't incorrectly assume that if the
+        // value wasn't mapped, that it can't be found.
+        let result = await runFilter({ float: { lte: `1.5` } })
+
+        expect(result.length > 0).toEqual(true)
+        result.forEach(r => expect(r.float <= 2).toBe(true))
+      })
+
       it(`handles lte operator with null`, async () => {
         if (IS_LOKI) return
 

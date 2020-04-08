@@ -3,18 +3,20 @@ import { IGatsbyNode } from "./types"
 import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
+// Only list supported ops here. "CacheableFilterOp"
+type FilterOp = "$eq" | "$lte"
 type FilterValue = string | number | boolean
 export type FilterCacheKey = string
 export type FilterCache = {
+  op: FilterOp
   byValue: Map<FilterValue, Set<IGatsbyNode>>
   meta: {
-    // The min/max is the lowest/highest value for this filter. For lt/gt bounds
-    minValue?: FilterValue
-    maxValue?: FilterValue
-    // This filter leads to a value, these nodes are ordered by that value
+    // Ordered set of all values found by this filter
+    valuesAsc?: Array<FilterValue>
+    // Flat set of nodes, ordered by valueAsc, but not ordered per value group
     nodesByValueAsc?: Array<IGatsbyNode>
-    // The range maps to nodesByValueAsc ^
-    valueToRange?: Map<FilterValue, [number, number]>
+    // Ranges of nodes per value, maps to the nodesByValueAsc array
+    valueRanges?: Map<FilterValue, [number, number]>
   }
 }
 export type FiltersCache = Map<FilterCacheKey, FilterCache>
@@ -164,6 +166,38 @@ export const addResolvedNodes = (
   return resolvedNodes
 }
 
+export const postIndexingMetaSetup = (filterCache: FilterCache) => {
+  // Create an ordered array of individual nodes, ordered (grouped) by the
+  // value to which the filter resolves. Nodes are not ordered per value.
+  // This way non-eq ops can simply slice the array to get a range.
+
+  const entries: Array<[FilterValue, Set<IGatsbyNode>]> = [
+    ...filterCache.byValue.entries(),
+  ]
+
+  // Sort all sets by its value, asc. Ignore/allow potential type casting.
+  entries.sort(([a], [b]) => (a <= b ? -1 : a > b ? 1 : 0))
+
+  const orderedNodes: Array<IGatsbyNode> = []
+  const orderedValues: Array<FilterValue> = []
+  const offsets: Map<FilterValue, [number, number]> = new Map()
+  entries.forEach(([v, bucket]) => {
+    // Record the first index containing node with as filter value v
+    offsets.set(v, [orderedNodes.length, bucket.size])
+    // We could do `arr.push(...bucket)` here but that's not safe with very
+    // large sets, so we use a regular loop
+    bucket.forEach(node => orderedNodes.push(node))
+    orderedValues.push(v)
+  })
+
+  filterCache.meta.valuesAsc = orderedValues
+  filterCache.meta.nodesByValueAsc = orderedNodes
+  // The nodesByValueAsc is ordered by value, but multiple nodes per value are
+  // not ordered. To make lt as fast as lte, we must know the start and stop
+  // index for each value. Similarly useful for for `ne`.
+  filterCache.meta.valueRanges = offsets
+}
+
 /**
  * Given a single non-elemMatch filter path, a set of node types, and a
  * cache, create a cache that for each resulting value of the filter contains
@@ -172,6 +206,7 @@ export const addResolvedNodes = (
  * looping over all the nodes, when the number of pages (/nodes) scales up.
  */
 export const ensureIndexByQuery = (
+  op: FilterOp,
   filterCacheKey: FilterCacheKey,
   filterPath: string[],
   nodeTypeNames: string[],
@@ -180,7 +215,7 @@ export const ensureIndexByQuery = (
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
 
-  const filterCache: FilterCache = { byValue: new Map(), meta: {} }
+  const filterCache: FilterCache = { op, byValue: new Map(), meta: {} }
   filtersCache.set(filterCacheKey, filterCache)
 
   // We cache the subsets of nodes by type, but only one type. So if searching
@@ -201,6 +236,10 @@ export const ensureIndexByQuery = (
 
       addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
     })
+  }
+
+  if (op === "$lte") {
+    postIndexingMetaSetup(filterCache)
   }
 }
 
@@ -249,6 +288,7 @@ function addNodeToFilterCache(
 }
 
 export const ensureIndexByElemMatch = (
+  op: FilterOp,
   filterCacheKey: FilterCacheKey,
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
@@ -260,7 +300,7 @@ export const ensureIndexByElemMatch = (
   const state = store.getState()
   const { resolvedNodesCache } = state
 
-  const filterCache: FilterCache = { byValue: new Map(), meta: {} }
+  const filterCache: FilterCache = { op, byValue: new Map(), meta: {} }
   filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {
@@ -288,6 +328,10 @@ export const ensureIndexByElemMatch = (
         resolvedNodesCache
       )
     })
+  }
+
+  if (op === "$lte") {
+    postIndexingMetaSetup(filterCache)
   }
 }
 
@@ -364,9 +408,90 @@ function addNodeToBucketWithElemMatch(
  */
 export const getNodesFromCacheByValue = (
   filterCacheKey: FilterCacheKey,
-  value: FilterValue,
+  filterValue: FilterValue,
   filtersCache: FiltersCache
 ): Set<IGatsbyNode> | undefined => {
   const filterCache = filtersCache?.get(filterCacheKey)
-  return filterCache?.byValue.get(value)
+  if (!filterCache) {
+    return undefined
+  }
+
+  const op = filterCache.op
+
+  if (op === "$eq") {
+    return filterCache.byValue.get(filterValue)
+  }
+
+  if (op === "$lte") {
+    // First try a direct approach. If a value is queried that also exists then
+    // we can prevent a binary search through the whole set, O(1) vs O(log n)
+    const range = filterCache.meta.valueRanges!.get(filterValue)
+    if (range) {
+      return new Set(
+        filterCache.meta.nodesByValueAsc!.slice(0, range[0] + range[1])
+      )
+    }
+
+    // Query may ask for a value that doesn't appear in the set, like if the
+    // set is [1, 2, 5, 6] and the query is <= 3. In that case we have to
+    // apply a search (we'll do binary) to determine the offset to slice from.
+
+    // Note: for lte, the valueAsc array must be set at this point
+    const values = filterCache.meta.valuesAsc as Array<FilterValue>
+    const pivot = binarySearch(values, filterValue)
+
+    // Note: the pivot value _shouldnt_ match the filter value because that
+    // means the value was actually found, but those should have been indexed
+    // so should have yielded a result in the .get() above.
+
+    // Each pivot index must have a value and a range
+    const pivotValue = values[pivot]
+    const [start, stop] = filterCache.meta.valueRanges!.get(pivotValue) as [
+      number,
+      number
+    ]
+
+    // Note: technically, `5 <= "5" === true` but `5` would not be cached.
+    // So we have to consider weak comparison and may have to include the pivot
+    const until = start + (pivotValue <= filterValue ? stop : 0)
+    return new Set(filterCache.meta.nodesByValueAsc!.slice(0, until))
+  }
+
+  // Unreachable because we checked all values of FilterOp (which op is)
+  return undefined
+}
+
+const binarySearch = (
+  values: Array<FilterValue>,
+  needle: FilterValue
+): number => {
+  let min = 0
+  let max = values.length - 1
+  let pivot = Math.floor(values.length / 2)
+  while (true) {
+    const value = values[pivot]
+    if (needle < value) {
+      // Move pivot to middle of nodes left of current pivot
+      // assert pivot < max
+      max = pivot
+    } else if (needle > value) {
+      // Move pivot to middle of nodes right of current pivot
+      // assert pivot > min
+      min = pivot
+    } else {
+      // This means needle === value
+      // TODO: except for NaN ... and potentially certain type casting cases
+      return pivot
+    }
+
+    if (min === max) {
+      // End of search. Needle not found (as expected). Use pivot as index.
+      return pivot
+    }
+
+    pivot = Math.floor((max - min) / 2)
+  }
+
+  // Unreachable
+  return 0
 }
