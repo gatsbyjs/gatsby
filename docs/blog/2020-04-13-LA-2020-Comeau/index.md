@@ -1,16 +1,17 @@
 ---
-title: 'Gatsby Days LA 2020 Video 9: Empowering Content Creators with a Headless CMS and Gatsby'
+title: "Gatsby Days LA 2020 Video 9: Empowering Content Creators with a Headless CMS and Gatsby"
 date: 2020-04-13
 author: Greg Thomas
 excerpt: "Is it possible to satisfy web users, developers, and content creators all at once? Gatsby’s own Josh Comeau explained how Gatsby can achieve exactly that at Gatsby Days LA 2020."
 tags:
-- gatsby-days
-- content-mesh
-- gatsby-cloud
-- gatsby-preview
-- headless-cms
+  - gatsby-days
+  - content-mesh
+  - gatsby-cloud
+  - gatsby-preview
+  - headless-cms
 ---
-_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-3rd—would be pretty awesome, too 💜.  Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
+
+_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-3rd—would be pretty awesome, too 💜. Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
 
 Developers are adept at coding engaging, high-performance websites and web applications. Unfortunately, dev-driven sites are often difficult for content creators to update and manage.
 
