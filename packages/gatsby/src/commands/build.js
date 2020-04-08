@@ -90,41 +90,45 @@ module.exports = async function build(program: BuildArgs) {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  let activity = report.activityTimer(
-    `Building production JavaScript and CSS bundles`,
-    { parentSpan: buildSpan }
-  )
-  activity.start()
-  const stats = await buildProductionBundle(program, activity.span).catch(
-    err => {
-      activity.panic(structureWebpackErrors(`build-javascript`, err))
-    }
-  )
-  activity.end()
-
-  const workerPool = WorkerPool.create()
-
-  const webpackCompilationHash = stats.hash
-  if (
-    webpackCompilationHash !== store.getState().webpackCompilationHash ||
-    !appDataUtil.exists(publicDir)
-  ) {
-    store.dispatch({
-      type: `SET_WEBPACK_COMPILATION_HASH`,
-      payload: webpackCompilationHash,
-    })
-
-    activity = report.activityTimer(`Rewriting compilation hashes`, {
-      parentSpan: buildSpan,
-    })
-    activity.start()
-
-    await appDataUtil.write(publicDir, webpackCompilationHash)
-
-    activity.end()
-  }
+  // Skip webpack
+  console.log('Disabled webpack because I dont care for it in this test')
+  // let activity = report.activityTimer(
+  //   `Building production JavaScript and CSS bundles`,
+  //   { parentSpan: buildSpan }
+  // )
+  // activity.start()
+  // const stats = await buildProductionBundle(program, activity.span).catch(
+  //   err => {
+  //     activity.panic(structureWebpackErrors(`build-javascript`, err))
+  //   }
+  // )
+  // activity.end()
+  //
+  // const workerPool = WorkerPool.create()
+  //
+  // const webpackCompilationHash = stats.hash
+  // if (
+  //   webpackCompilationHash !== store.getState().webpackCompilationHash ||
+  //   !appDataUtil.exists(publicDir)
+  // ) {
+  //   store.dispatch({
+  //     type: `SET_WEBPACK_COMPILATION_HASH`,
+  //     payload: webpackCompilationHash,
+  //   })
+  //
+  //   activity = report.activityTimer(`Rewriting compilation hashes`, {
+  //     parentSpan: buildSpan,
+  //   })
+  //   activity.start()
+  //
+  //   await appDataUtil.write(publicDir, webpackCompilationHash)
+  //
+  //   activity.end()
+  // }
 
   await processPageQueries()
+
+  console.log('hitmiss:', global.hitmiss)
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const { pages } = store.getState()
@@ -139,20 +143,21 @@ module.exports = async function build(program: BuildArgs) {
     }
   }
 
-  if (telemetry.isTrackingEnabled()) {
-    // transform asset size to kB (from bytes) to fit 64 bit to numbers
-    const bundleSizes = stats
-      .toJson({ assets: true })
-      .assets.filter(asset => asset.name.endsWith(`.js`))
-      .map(asset => asset.size / 1000)
-    const pageDataSizes = [...store.getState().pageDataStats.values()]
-
-    telemetry.addSiteMeasurement(`BUILD_END`, {
-      bundleStats: telemetry.aggregateStats(bundleSizes),
-      pageDataStats: telemetry.aggregateStats(pageDataSizes),
-      queryStats: graphqlRunner.getStats(),
-    })
-  }
+  // Hack: disabled because dont care
+  // if (telemetry.isTrackingEnabled()) {
+  //   // transform asset size to kB (from bytes) to fit 64 bit to numbers
+  //   const bundleSizes = stats
+  //     .toJson({ assets: true })
+  //     .assets.filter(asset => asset.name.endsWith(`.js`))
+  //     .map(asset => asset.size / 1000)
+  //   const pageDataSizes = [...store.getState().pageDataStats.values()]
+  //
+  //   telemetry.addSiteMeasurement(`BUILD_END`, {
+  //     bundleStats: telemetry.aggregateStats(bundleSizes),
+  //     pageDataStats: telemetry.aggregateStats(pageDataSizes),
+  //     queryStats: graphqlRunner.getStats(),
+  //   })
+  // }
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`

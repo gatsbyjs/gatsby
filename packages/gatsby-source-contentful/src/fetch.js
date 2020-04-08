@@ -8,6 +8,17 @@ const chalk = require(`chalk`)
 const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 
+
+
+// moet een benchmark site maken van ifsc die dit duidelijk bewijst
+// https://github.com/gatsbyjs/gatsby/pull/22574
+//
+// gatsby clean; CI=1 GATSBY_REMOTE_CACHE=~/gatsby/sites/vrdx/remotecache node --max_old_space_size=12288 ./node_modules/.bin/gatsby build --prefix-paths
+
+
+
+
+
 // Path to read/write files fetched from remote so we can skip it
 const REMOTE_CACHE_FOLDER = process.env.GATSBY_REMOTE_CACHE ?? ``
 const CACHE_DATA_FILE = path.join(REMOTE_CACHE_FOLDER, `sync_data`)
@@ -212,7 +223,8 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
     currentSyncData,
     contentTypeItems,
     defaultLocale,
-    locales: locales && locales.slice && locales.slice(0, 1), // HACK: only use english
+    // locales: locales && locales.slice && locales.slice(0, 1), // HACK: only use english
+    locales,
     space,
   }
 

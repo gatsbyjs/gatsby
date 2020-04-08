@@ -1,9 +1,12 @@
 // @flow
+import { IDbQueryElemMatch } from "../db/common/query"
+
 const { default: sift } = require(`sift`)
 const { prepareRegex } = require(`../utils/prepare-regex`)
 const { makeRe } = require(`micromatch`)
 import { getValueAt } from "../utils/get-value-at"
 import _ from "lodash"
+import { IGatsbyNode } from "./types"
 const {
   toDottedFields,
   objectToDottedField,
@@ -14,10 +17,19 @@ const {
 } = require(`../db/common/query`)
 const {
   ensureIndexByTypedChain,
+  ensureIndexByElemMatch,
   getNodesByTypedChain,
   addResolvedNodes,
   getNode: siftGetNode,
+  getNodesByType: siftGetNodesByType
 } = require(`./nodes`)
+
+const hitmiss = {}
+global.hitmiss = hitmiss
+let thisrun = {}
+const hit = key => (hitmiss[key] = (hitmiss[key] | 0) + 1)
+const hot = (key, v) => (hitmiss[key] = (hitmiss[key] | 0) + v)
+global.shit = hit
 
 /**
  * This is the main cache structure for precomputing fast filters
@@ -40,17 +52,50 @@ const {
  *
  *
  * Keep sync with gatsby/src/schema/node-model.js
+ * See `createTypedFilterCacheKey` for the top key
  * @typedef {Map<
     string,
     {
       buckets: Map<string | number | boolean, Set<IGatsbyNode>>,
       opCache: {
+        minValue?: string | number | boolean
+        maxValue?: string | number | boolean
         nodesOrderedByValue?: Array<IGatsbyNode>
         valueToIndexOffset?: Map<string | number | boolean, number>
       }
     }
   >} filterCache
  */
+
+/**
+ * Creates a key for the filterCache
+ * It seems TS doesn't support "opaque" types, or we would just return that here
+ *
+ * @param {Array<string>} typeNames
+ * @param {DbQuery} filter
+ * @returns {string}
+ */
+const createTypedFilterCacheKey = (typeNames, filter) => {
+  // Note: while `elemMatch` is a special case, for the key it's just `elemMatch`
+  let f = filter
+  let comparator = ""
+  let paths = []
+  while (f) {
+    paths.push(...f.path)
+    if (f.type === "elemMatch") {
+      let q: IDbQueryElemMatch = f
+      f = q.nestedQuery
+    } else {
+      // Can we assume a plain query now?
+      let q: IDbQueryQuery = f
+      comparator = q.query.comparator
+      break
+    }
+  }
+
+  // Note: the separators (`,` and `+`) are chosen arbitrary
+  return typeNames.join(",") + "/" + comparator + "/" + paths.join("+")
+}
 
 /////////////////////////////////////////////////////////////////////
 // Parse filter
@@ -142,9 +187,17 @@ function handleMany(siftArgs, nodes) {
  * @returns {Array<IGatsbyNode> | undefined}
  */
 const runFlatFiltersWithoutSift = (filters, nodeTypeNames, filterCache) => {
+  hit("- got to runFlatFiltersWithoutSift (after early)")
   const caches = getBucketsForFilters(filters, nodeTypeNames, filterCache)
 
   if (!caches) {
+    hit(
+      "- failed late reason: got no buckets [" +
+        filters.map(filter =>
+          createTypedFilterCacheKey(nodeTypeNames, filter)
+        ) +
+        "]"
+    )
     // Let Sift take over as fallback
     return undefined
   }
@@ -183,42 +236,189 @@ const getBucketsForFilters = (filters, nodeTypeNames, filterCache) => {
 
   // Fail fast while trying to create and get the value-cache for each path
   let every = filters.every((filter /*: DbQuery*/) => {
-    let {
-      path: chain,
-      query: { comparator, value: targetValue },
-    } = filter
-
-    ensureIndexByTypedChain(chain, comparator, nodeTypeNames, filterCache)
-
-    const nodesByKeyValue = getNodesByTypedChain(
-      chain,
-      comparator,
-      targetValue,
-      nodeTypeNames,
-      filterCache
-    )
-
-    // If we couldn't find the needle then maybe sift can, for example if the
-    // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
-    // There are also cases (and tests) where id exists with a different type
-    if (!nodesByKeyValue) {
-      return false
-    }
-
-    // In all other cases this must be a non-empty Set because the indexing
-    // mechanism does not create a Set unless there's a IGatsbyNode for it
-    caches.push(nodesByKeyValue)
-
-    return true
+    return getBucketsForFilter(filter, nodeTypeNames, filterCache, caches)
   })
 
   if (every) {
+    hit("    -- found buckets for " + filters.length + " filters")
     return caches
   }
 
   // "failed at least one"
   return undefined
 }
+
+/**
+ * @param {DbQuery} filter
+ * @param {Array<string>} nodeTypeNames
+ * @param {filterCache} filterCache
+ * @param {Set<IGatsbyNode>} caches
+ * @returns {boolean} false means no cache was found for this value on filter
+ */
+const getBucketsForFilter = (filter, nodeTypeNames, filterCache, caches) => {
+  const typedKey = createTypedFilterCacheKey(nodeTypeNames, filter)
+
+  if (filter.type === "elemMatch") {
+    return collectBucketForElemMatch(
+      typedKey,
+      filter,
+      nodeTypeNames,
+      filterCache,
+      caches
+    )
+  }
+
+  return collectBucketForPlainFilter(
+    typedKey,
+    filter,
+    nodeTypeNames,
+    filterCache,
+    caches
+  )
+}
+
+/**
+ * @param {string} typedKey
+ * @param {IDbQueryElemMatch} filter
+ * @param {Array<string>} nodeTypeNames
+ * @param {filterCache} filterCache
+ * @param {Array<Set<IGatsbyNode>>} caches Matching node sets are put in this array
+ */
+const collectBucketForElemMatch = (
+  typedKey,
+  filter,
+  nodeTypeNames,
+  filterCache,
+  caches
+) => {
+  let comparator = ""
+  let targetValue = null
+  let f /*: DbQuery*/ = filter
+  while (f) {
+    if (f.type === "elemMatch") {
+      f = f.nestedQuery
+    } else {
+      comparator = f.query.comparator
+      targetValue = f.query.value
+      break
+    }
+  }
+
+  if (
+    ![
+      `$eq`,
+      // y
+      "$lte",
+      // x
+      "$gte",
+    ].includes(comparator)
+  ) {
+    hit("- fail early reason: unsupported op (elemMatch):" + comparator)
+    return false
+  }
+
+  ensureIndexByElemMatch(typedKey, filter, nodeTypeNames, filterCache)
+
+  const nodesByKeyValue /*: Set<IGatsbyNode> | undefined*/ = getNodesByTypedChain(
+    typedKey,
+    comparator,
+    targetValue,
+    filterCache
+  )
+
+  // If we couldn't find the needle then maybe sift can, for example if the
+  // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
+  // There are also cases (and tests) where id exists with a different type
+  if (!nodesByKeyValue) {
+    hit(
+      "    -- " +
+        "; missing cache for " +
+        typedKey +
+        " => " +
+        String(targetValue)
+    )
+    return false
+  }
+
+  // In all other cases this must be a non-empty Set because the indexing
+  // mechanism does not create a Set unless there's a IGatsbyNode for it
+  caches.push(nodesByKeyValue)
+
+  return true
+}
+
+/**
+ * @param {string} typedKey
+ * @param {IDbQueryQuery} filter
+ * @param {Array<string>} nodeTypeNames
+ * @param {filterCache} filterCache
+ * @param {Array<Set<IGatsbyNode>>} collectedCaches
+ * @returns {boolean} false if there is no cache for target value on this key
+ */
+const collectBucketForPlainFilter = (
+  typedKey,
+  filter,
+  nodeTypeNames,
+  filterCache,
+  collectedCaches
+) => {
+  let {
+    path: chain,
+    query: { comparator, value: targetValue },
+  } = filter
+
+  if (
+    ! [
+      `$eq`,
+      // y
+      "$lte",
+      // x
+      "$gte",
+    ].includes(comparator)
+  ) {
+    hit("- fail early reason: unsupported op (plain):" + filter.query.comparator)
+    return false
+  }
+
+  ensureIndexByTypedChain(
+    typedKey,
+    chain,
+    comparator,
+    nodeTypeNames,
+    filterCache
+  )
+
+  const nodesByKeyValue /*: Set<IGatsbyNode> | undefined*/ = getNodesByTypedChain(
+    typedKey,
+    comparator,
+    targetValue,
+    filterCache
+  )
+
+  // If we couldn't find the needle then maybe sift can, for example if the
+  // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
+  // There are also cases (and tests) where id exists with a different type
+  if (!nodesByKeyValue) {
+    hit(
+      "    -- " +
+        "; missing cache for " +
+        chain +
+        "/" +
+        comparator +
+        "=>" +
+        String(targetValue)
+    )
+    return false
+  }
+
+  // In all other cases this must be a non-empty Set because the indexing
+  // mechanism does not create a Set unless there's a IGatsbyNode for it
+  collectedCaches.push(nodesByKeyValue)
+
+  return true
+}
+
+let lastpass = false
 
 /**
  * Filters and sorts a list of nodes using mongodb-like syntax.
@@ -230,7 +430,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filterCache) => {
  * @property {{filter?: Object, sort?: Object} | undefined} args.queryArgs
  * @property {undefined | filterCache} args.filterCache
  *   May be undefined. A cache of indexes where you can look up Nodes grouped
- *   by a key: `types.join(',')+'/'+filterPath.join('+')`, which yields a Map
+ *   by a key (createTypedFilterCacheKey), which yields a Map
  *   which holds a Set of Nodes for the value that the filter is trying to eq
  *   against. If the property is `id` then there is no Set, it's just the IGatsbyNode.
  *   This object lives in query/query-runner.js and is passed down runQuery
@@ -238,6 +438,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filterCache) => {
  *   if `firstOnly` is true
  */
 const runFilterAndSort = args => {
+  lastpass = 0
   const {
     queryArgs: { filter, sort } = { filter: {}, sort: {} },
     resolvedFields = {},
@@ -288,6 +489,7 @@ const applyFilters = (
         resolvedFields
       )
     : []
+  hit("total")
 
   if (stats) {
     filters.forEach((filter /*: DbQuery*/) => {
@@ -304,18 +506,47 @@ const applyFilters = (
     }
   }
 
+  if (!filters.length && nodeTypeNames.length === 1) {
+    lastpass = "pass"
+    hit(' - PASS, fast path for empty filter')
+    return siftGetNodesByType(nodeTypeNames[0])
+  }
+
   const result = filterWithoutSift(filters, nodeTypeNames, filterCache)
   if (result) {
     if (stats) {
       stats.totalIndexHits++
     }
+    lastpass = "pass"
+
     if (firstOnly) {
+      hit("PASS, first only")
       return result.slice(0, 1)
     }
+    hit("PASS, not first only")
     return result
   }
 
-  return filterWithSift(filters, firstOnly, nodeTypeNames, resolvedFields)
+  hit("FAIL, go through sift")
+  lastpass = "fail"
+
+  const finalresult = filterWithSift(filters, firstOnly, nodeTypeNames, resolvedFields)
+
+  let hadResult = !!finalresult && finalresult.length !== 0
+  // if (lastpass === "fail" && !hadResult) {
+  //   // dont record stats of fails that actually did not yield a result anyways
+  //   thisrun = {}
+  // } else if (lastpass === "pass") {
+  //   // i'm interested in the results for when the heuristic fails to find results that do exist
+  //   thisrun = {}
+  // } else {
+  //   hit("pass=" + lastpass + " | result = " + hadResult + ': key = ' + filters.map(f => createTypedFilterCacheKey(nodeTypeNames, f )).join(' | '))
+  // }
+
+  hit("pass=" + lastpass + " | result = " + hadResult)
+  // for (let key in thisrun) hot(key, thisrun[key])
+
+  return finalresult
 }
 
 const filterToStats = (
@@ -349,17 +580,24 @@ const filterToStats = (
  */
 const filterWithoutSift = (filters, nodeTypeNames, filterCache) => {
   // This can also be `$ne`, `$in` or any other grapqhl comparison op
-  if (
-    !filterCache ||
-    filters.length === 0 || // TODO: we should special case this
-    filters.some((filter /*: DbQuery*/) => {
-      if (filter.type === `elemMatch`) {
-        return true
+  filters &&
+    filters.forEach(f => {
+      if (f.type === `elemMatch`) {
+        hit("- op: elemMatch")
+      } else {
+        hit("- op: " + f.query.comparator)
       }
-
-      return ![`$eq`].includes(filter.query.comparator)
     })
-  ) {
+
+  if (!filterCache) {
+    hit("- fail early reason: have no filter cache")
+    return undefined
+  }
+
+  if (filters.length === 0) {
+    // TODO: we should special case this
+    hit("- failed early")
+    hit("- fail early reason: have no filters")
     return undefined
   }
 

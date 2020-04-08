@@ -67,6 +67,8 @@ export interface NodeModel {
     {
       buckets: Map<string | number | boolean, Set<IGatsbyNode>>,
       opCache: {
+        minValue?: string | number | boolean
+        maxValue?: string | number | boolean
         nodesOrderedByValue?: Array<IGatsbyNode>
         valueToIndexOffset?: Map<string | number | boolean, number>
       }
