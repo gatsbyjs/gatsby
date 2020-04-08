@@ -2,7 +2,7 @@
 
 Create Gatsby plugins that leverage Gatsby's most impactful native features like remote image optimization, caching, customized GraphQL schemas and node relationships, and more.
 
-This monorepo serves as an example of a site using a first class source plugin to pull in data from a Node.js API. It is meant to show the 3 pieces that work together when building a source plugin, the API, the site, and the source plugin.
+This monorepo serves as an example of a site using a first class source plugin to pull in data from a Node.js API. It is meant to show the 3 pieces that work together when building a source plugin: the API, the site, and the source plugin.
 
 ## Setup
 
@@ -29,7 +29,7 @@ yarn workspace api start
 yarn workspace example-site develop
 ```
 
-Running the example site also runs the plugin because it is included in the site's config. You'll see output in the console for different functionality, and then can open up the browser to localhost:8000 to see the site.
+Running the example site also runs the plugin because it is included in the site's config. You'll see output in the console for different functionality and then can open up the browser to `localhost:8000` to see the site.
 
 ## Developing and Experimenting
 
@@ -43,7 +43,7 @@ You can open up `localhost:4000` when the api is running and test a query like t
 }
 ```
 
-You can also run 3 different mutations: `createPost`, `updatePost`, and `deletePost`. These methods would mimic CRUD operations happening on the API of the data source like a headless CMS.
+You can also run 3 different mutations from the GraphQL Playground (at `localhost:4000`): `createPost`, `updatePost`, and `deletePost`. These methods would mimic CRUD operations happening on the API of the data source like a headless CMS. An example `updatePost` mutation is outlined below.
 
 When you run a mutation on a post, a subscription event is published, which lets the plugin know it should respond and update nodes:
 
@@ -57,7 +57,7 @@ mutation {
 }
 ```
 
-The websites homepage will update to any changes while the source plugin is subscribed to changes, which is when the `preview: true` is provided in the example site's `gatsby-config`.
+The website's homepage will update with any changes while the source plugin is subscribed to changes, which is when the `preview: true` is provided in the example site's `gatsby-config`.
 
 You can also optionally listen for subscription events with this query in the playground which will display data when a mutatioin is run:
 
