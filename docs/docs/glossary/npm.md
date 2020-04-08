@@ -35,23 +35,23 @@ You can also use the [npx](https://www.npmjs.com/package/npx) command to install
 npx gatsby new my-project
 ```
 
-This will download and install the latest version of Gatsby, and create a new Gatsby project in the `my-project` folder. Choosing this method will not make the Gatsby CLI globally available. If you choose this method, you'll need to use `npx gatsby` or `npm run` to execute Gatsby commands, e.g.: `npx gatsby develop`.
+This will download and install the latest version of Gatsby, and create a new Gatsby project in the `my-project` folder. Choosing this method will not make the Gatsby CLI globally available. If you choose this method, you'll need to use `npx gatsby` or `npm run` to execute Gatsby commands, e.g.: `npx gatsby develop` or `npm run develop`.
 
 ### Using npm to install Gatsby plugins
 
-Gatsby has a robust collection of [plugins](/plugins/) that add functionality or data sourcing to your Gatsby sites. Adding a plugin as a project dependency is similar to installing Gatsby itself. Use `npm install <package-name>` this time with the `--save` flag. To add the [gatsby-source-filesystem](/packages/gatsby-source-filesystem), plugin, for example, you'd use the following command.
+Gatsby has a robust collection of [plugins](/plugins/) that add functionality or data sourcing to your Gatsby sites. Adding a plugin as a project dependency uses the same process as installing Gatsby itself. Use `npm install <package-name>`. To add the [gatsby-source-filesystem](/packages/gatsby-source-filesystem), plugin, for example, you'd use the following command.
 
 ```shell
-npm install --save gatsby-source-filesystem
+npm install gatsby-source-filesystem
 ```
 
 > **Note:** You'll still need to update `gatsby-config.js` to add the plugin's functionality to your site.
 
-Using the `--save` flag updates the dependencies list of `package.json` and `package-lock.json`. Commit both files to your project's repository. Doing so makes it easy to keep your Gatsby project consistent across team members and computers. When another team member clones your repository, they can use `npm install` to install the dependencies included in `package-lock.json`.
+This will update the dependencies list of `package.json` and `package-lock.json`. Commit both files to your project's repository. Doing so makes it easy to keep your Gatsby project consistent across team members and computers. When another team member clones your repository, they can use `npm install` to install the dependencies included in `package-lock.json`.
 
 ### Learn more about npm
 
 - [npm](https://www.npmjs.com/) official website
 - [Node.js](https://nodejs.org/en/) official website
 - [An introduction to the npm package manager](https://nodejs.dev/an-introduction-to-the-npm-package-manager) from Nodejs.dev
-- [Set Up Your Development Environment](https://www.gatsbyjs.org/tutorial/part-zero/) from the Gatsby docs
+- [Set Up Your Development Environment](/tutorial/part-zero/) from the Gatsby docs
