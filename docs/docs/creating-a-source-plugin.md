@@ -283,7 +283,7 @@ You can find more information about transformation relationships in the [creatin
 
 #### Union types
 
-When creating fields linking to an array of nodes, if the array of IDs are all of the same type, the relationship field that is created will be of this type. If the linked nodes are of different types; the field will turn into a union type of all types that are linked. See the [GraphQL documentation on how to query union types](https://graphql.org/learn/schema/#union-types).
+For either type of relationship you can link a field to an array of nodes. If the array of IDs all correspond to nodes of the same type, the relationship field that is created will be of this type. If the linked nodes are of different types the field will turn into a union type of all types that are linked. See the [GraphQL documentation on how to query union types](https://graphql.org/learn/schema/#union-types).
 
 ### Working with data received from remote sources
 

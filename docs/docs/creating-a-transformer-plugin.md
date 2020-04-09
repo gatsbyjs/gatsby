@@ -139,22 +139,22 @@ File content:
 
 Parsed YAML content:
 
-```javascript
-;[
+```json
+[
   {
-    id: "Jane Doe",
-    bio: "Developer based in Somewhere, USA",
+    "id": "Jane Doe",
+    "bio": "Developer based in Somewhere, USA"
   },
   {
-    id: "John Smith",
-    bio: "Developer based in Maintown, USA",
-  },
+    "id": "John Smith",
+    "bio": "Developer based in Maintown, USA"
+  }
 ]
 ```
 
 Now you'll write a helper function to transform the parsed YAML content into new Gatsby nodes:
 
-```javascript
+```javascript:title=gatsby-node.js
 function transformObject(obj, id, type) {
   const yamlNode = {
     ...obj,
@@ -176,7 +176,7 @@ Above, you create a `yamlNode` object with the shape expected by the [`createNod
 
 You then need to create a link between the parent node (file) and the child node (yaml content) using the `createParentChildLink` function after adding the parent node's id to the `yamlNode`:
 
-```javascript
+```javascript:title=gatsby-node.js
 function transformObject(obj, id, type) {
   const yamlNode = {
     ...obj,

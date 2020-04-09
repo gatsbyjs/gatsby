@@ -38,19 +38,24 @@ Running the example site also runs the plugin because it is included in the site
 
 ## Developing and Experimenting
 
-You can open up `localhost:4000` when the api is running and test a query like this to see data returned:
+You can open up `localhost:4000` with the API running, which will load a GraphQL Playground, which is a GraphQL IDE (like GraphiQL, that Gatsby runs at `localhost:8000/___graphql`) for running queries and mutations on the data from the API.
+
+You can test a query like this to see data returned:
 
 ```graphql
-{
+query {
   posts {
     id
+    slug
   }
 }
 ```
 
-You can also run 3 different mutations from the GraphQL Playground (at `localhost:4000`): `createPost`, `updatePost`, and `deletePost`. These methods would mimic CRUD operations happening on the API of the data source like a headless CMS. An example `updatePost` mutation is outlined below.
+This query will return the IDs for all posts in the API. You can copy one of these IDs and provide it as an argument to a mutation to update information about that post.
 
-When you run a mutation on a post, a subscription event is published, which lets the plugin know it should respond and update nodes:
+You can run 3 different mutations from the GraphQL Playground (at `localhost:4000`): `createPost`, `updatePost`, and `deletePost`. These methods would mimic CRUD operations happening on the API of the data source like a headless CMS. An example `updatePost` mutation is outlined below.
+
+When you run a mutation on a post, a subscription event is published, which lets the plugin know it should respond and update nodes. The following mutation can be copied into the left side of the GraphQL playground so long as you replace "post-id" with a value returned for an ID from a query (like the one above).
 
 ```graphql
 mutation {
@@ -64,7 +69,7 @@ mutation {
 
 The website's homepage will update with any changes while the source plugin is subscribed to changes, which is when the `preview: true` is provided in the example site's `gatsby-config`.
 
-You can also optionally listen for subscription events with this query in the playground which will display data when a mutatioin is run:
+You can also optionally listen for subscription events with this query in the playground which will display data when a mutation is run:
 
 ```graphql
 subscription {
