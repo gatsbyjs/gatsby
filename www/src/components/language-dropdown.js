@@ -42,6 +42,12 @@ const menuLinkStyles = {
   },
 }
 
+const listItemStyles = {
+  listStyleType: `none`,
+  display: `flex`,
+  margin: 0,
+}
+
 function LangLink({ code, name, localName, current, pathname }) {
   const { basePath } = getLocaleAndBasePath(pathname)
   return (
@@ -146,7 +152,7 @@ export default function LanguageDropdown({ pathname }) {
         }}
       >
         {allLangs.map(lang => (
-          <li sx={{ listStyleType: `none`, display: `flex`, margin: 0 }}>
+          <li sx={listItemStyles}>
             <LangLink
               {...lang}
               key={lang.code}
@@ -155,7 +161,7 @@ export default function LanguageDropdown({ pathname }) {
             />
           </li>
         ))}
-        <li sx={{ listStyleType: `none`, display: `flex`, margin: 0 }}>
+        <li sx={listItemStyles}>
           <LocalizedLink
             to="/languages"
             key="allLangs"
