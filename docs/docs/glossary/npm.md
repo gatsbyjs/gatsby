@@ -27,7 +27,7 @@ Once the installation completes, you can run `gatsby new my-project` to create a
 
 ### Using npx to install Gatsby
 
-> **Note:** `npx` requires npm version 5.2 or later. If you've installed the latest versions of Node and NPM, you should also have npx. Otherwise, you should upgrade Node and/or npm.
+> **Note:** `npx` requires npm version 5.2 or later. If you've installed the latest versions of Node and npm, you should also have npx. Otherwise, you should upgrade Node and/or npm.
 
 You can also use [npx](https://www.npmjs.com/package/npx) to install Gatsby. npx ships with npm. It allows you to install a package and run a command in one step. For example, instead of running `npm install -g gatsby-cli` then `gatsby new my-project`, you could use the following command.
 
