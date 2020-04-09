@@ -220,7 +220,7 @@ A way of writing HTML content with plain text, using special characters to denot
 
 ## N
 
-### [NPM](/docs/glossary/npm)
+### [npm](/docs/glossary/npm)
 
 [Node](#node) [package](#package) manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
 
