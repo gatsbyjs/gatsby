@@ -1,10 +1,50 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`it should error if part of the recipe fails validation 1`] = `
+Array [
+  Object {
+    "resource": "File",
+    "resourceDeclaration": Object {
+      "contentz": "#yo",
+      "path": "./hi.md",
+    },
+    "step": 0,
+    "validationError": Object {
+      "_object": Object {
+        "contentz": "#yo",
+        "path": "./hi.md",
+      },
+      "details": Array [
+        Object {
+          "context": Object {
+            "child": "contentz",
+            "key": "contentz",
+            "label": "contentz",
+            "value": "#yo",
+          },
+          "message": "\\"contentz\\" is not allowed",
+          "path": Array [
+            "contentz",
+          ],
+          "type": "object.allowUnknown",
+        },
+      ],
+      "isJoi": true,
+      "name": "ValidationError",
+    },
+  },
+]
+`;
+
 exports[`should create plan for File resources 1`] = `
 Array [
   Object {
-    "currentState": "#yo",
+    "currentState": "",
     "describe": "Write ./hi.md",
+    "diff": "[36m@@ -1 +1 @@[m
+[31m-[m
+[32m+[m[32m#yo[m
+",
     "newState": "#yo",
     "resourceDefinitions": Array [
       Object {
