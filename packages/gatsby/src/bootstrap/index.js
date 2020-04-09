@@ -1,5 +1,5 @@
 /* @flow */
-// We do not use this in state-machine branch
+
 const _ = require(`lodash`)
 const { slash } = require(`gatsby-core-utils`)
 const fs = require(`fs-extra`)
