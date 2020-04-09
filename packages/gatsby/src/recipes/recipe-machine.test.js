@@ -65,3 +65,31 @@ it(`it should switch to done after the final apply step`, done => {
 
   service.start()
 })
+
+it(`should store created/changed/deleted resources on the context after applying plan`, done => {
+  const filePath = `./hi.md`
+  const filePath2 = `./hi2.md`
+  const initialContext = {
+    steps: [
+      { File: [{ path: filePath, content: `#yo` }] },
+      { File: [{ path: filePath2, content: `#yo` }] },
+      {},
+    ],
+    currentStep: 0,
+  }
+  const service = interpret(
+    recipeMachine.withContext(initialContext)
+  ).onTransition(state => {
+    // Keep simulating moving onto the next step
+    if (state.value === `present plan`) {
+      service.send(`CONTINUE`)
+    }
+    if (state.value === `done`) {
+      expect(state.context.stepResources).toMatchSnapshot()
+      expect(state.context.stepResources[1][0]._message).toBeTruthy()
+      done()
+    }
+  })
+
+  service.start()
+})

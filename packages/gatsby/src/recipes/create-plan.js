@@ -28,28 +28,18 @@ module.exports = async context => {
       return
     }
 
-    // Does the resource support batching?
-    if (resource && resource.config && resource.config.batch) {
-      const cmdPlan = await resource.plan(ctx, val)
-      planForNextStep.push({
-        resourceName: key,
-        resourceDefinitions: val,
-        ...cmdPlan,
-      })
-    } else {
-      await asyncForEach(cmds[key], async cmd => {
-        try {
-          const commandPlan = await resource.plan(ctx, cmd)
-          planForNextStep.push({
-            resourceName: key,
-            resourceDefinitions: val,
-            ...commandPlan,
-          })
-        } catch (e) {
-          console.log(e)
-        }
-      })
-    }
+    await asyncForEach(cmds[key], async cmd => {
+      try {
+        const commandPlan = await resource.plan(ctx, cmd)
+        planForNextStep.push({
+          resourceName: key,
+          resourceDefinitions: val,
+          ...commandPlan,
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    })
   })
 
   await Promise.all(commandPlans)

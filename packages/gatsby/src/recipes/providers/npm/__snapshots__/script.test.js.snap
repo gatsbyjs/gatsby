@@ -11,8 +11,9 @@ Object {
 exports[`npm script resource e2e script resource test: NPMScript create plan 1`] = `
 Object {
   "currentState": "",
-  "describe": "Add new command to your package.json — \\"apple\\": \\"foot",
-  "newState": "\\"apple\\": \\"foot",
+  "describe": "Add new command to your package.json:
+\\"apple\\": \\"foot\\"",
+  "newState": "\\"apple\\": \\"foot\\"",
 }
 `;
 
@@ -28,8 +29,9 @@ Object {
 
 exports[`npm script resource e2e script resource test: NPMScript update plan 1`] = `
 Object {
-  "currentState": "\\"apple\\": \\"foot",
-  "describe": "Add new command to your package.json — \\"apple\\": \\"foot2",
-  "newState": "\\"apple\\": \\"foot2",
+  "currentState": "\\"apple\\": \\"foot\\"",
+  "describe": "Add new command to your package.json:
+\\"apple\\": \\"foot2\\"",
+  "newState": "\\"apple\\": \\"foot2\\"",
 }
 `;

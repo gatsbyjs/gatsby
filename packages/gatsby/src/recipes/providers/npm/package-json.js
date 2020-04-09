@@ -1,14 +1,13 @@
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const path = require(`path`)
 const { promisify } = require(`util`)
 const Joi = require(`@hapi/joi`)
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
+const resourceSchema = require(`../resource-schema`)
 
 const readPackageJson = async root => {
   const fullPath = path.join(root, `package.json`)
-  const contents = await readFile(fullPath, `utf8`)
+  const contents = await fs.readFile(fullPath, `utf8`)
   const obj = JSON.parse(contents)
   return obj
 }
@@ -16,7 +15,7 @@ const readPackageJson = async root => {
 const writePackageJson = async (root, obj) => {
   const fullPath = path.join(root, `package.json`)
   const contents = JSON.stringify(obj, null, 2)
-  await writeFile(fullPath, contents)
+  await fs.writeFile(fullPath, contents)
 }
 
 const create = async ({ root }, { name, value }) => {
@@ -48,12 +47,13 @@ const destroy = async ({ root }, { id }) => {
   await writePackageJson(root, pkg)
 }
 
-module.exports.validate = () => {
-  return {
-    name: Joi.string(),
-    value: Joi.string(),
-  }
+const schema = {
+  name: Joi.string(),
+  value: Joi.string(),
+  ...resourceSchema,
 }
+exports.schema = schema
+exports.validate = resource => Joi.validate(resource, schema)
 
 module.exports.plan = async ({ root }, { id, name, value }) => {
   const key = id || name

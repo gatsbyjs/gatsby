@@ -3,10 +3,10 @@
 exports[`should create plan for File resources 1`] = `
 Array [
   Object {
-    "currentState": undefined,
+    "currentState": "#yo",
     "describe": "Write ./hi.md",
     "newState": "#yo",
-    "resource": Array [
+    "resourceDefinitions": Array [
       Object {
         "content": "#yo",
         "path": "./hi.md",
@@ -14,5 +14,26 @@ Array [
     ],
     "resourceName": "File",
   },
+]
+`;
+
+exports[`should store created/changed/deleted resources on the context after applying plan 1`] = `
+Array [
+  Array [
+    Object {
+      "_message": "Wrote file ./hi.md",
+      "content": "#yo",
+      "id": "./hi.md",
+      "path": "./hi.md",
+    },
+  ],
+  Array [
+    Object {
+      "_message": "Wrote file ./hi2.md",
+      "content": "#yo",
+      "id": "./hi2.md",
+      "path": "./hi2.md",
+    },
+  ],
 ]
 `;

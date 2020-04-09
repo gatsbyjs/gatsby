@@ -2,6 +2,7 @@
 
 exports[`file resource e2e file resource test: File create 1`] = `
 Object {
+  "_message": "Wrote file file.txt",
   "content": "Hello, world!",
   "id": "file.txt",
   "path": "file.txt",
@@ -12,12 +13,16 @@ exports[`file resource e2e file resource test: File create plan 1`] = `
 Object {
   "currentState": undefined,
   "describe": "Write file.txt",
+  "diff": "[36m@@ -0,0 +1 @@[m
+[32m{+Hello, world!+}[m
+",
   "newState": "Hello, world!",
 }
 `;
 
 exports[`file resource e2e file resource test: File destroy 1`] = `
 Object {
+  "_message": "Wrote file file.txt",
   "content": "Hello, world!1",
   "id": "file.txt",
   "path": "file.txt",
@@ -26,6 +31,7 @@ Object {
 
 exports[`file resource e2e file resource test: File update 1`] = `
 Object {
+  "_message": "Wrote file file.txt",
   "content": "Hello, world!1",
   "id": "file.txt",
   "path": "file.txt",
@@ -34,8 +40,11 @@ Object {
 
 exports[`file resource e2e file resource test: File update plan 1`] = `
 Object {
-  "currentState": undefined,
+  "currentState": "Hello, world!",
   "describe": "Write file.txt",
+  "diff": "[36m@@ -1 +1 @@[m
+Hello, [31m[-world!-][m[32m{+world!1+}[m
+",
   "newState": "Hello, world!1",
 }
 `;
