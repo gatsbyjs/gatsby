@@ -14,6 +14,7 @@ const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${host}/${owner}/${sourceRepo}`
 const sourceRepoGitUrl = `${sourceRepoUrl}.git`
+const syncLabelName = `sync`
 
 // get the git short hash
 function getShortHash(hash) {
@@ -36,9 +37,17 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
 async function getRepository(owner, name) {
   const { repository } = await graphql(
     `
-      query($owner: String!, $name: String!) {
+      query($owner: String!, $name: String!, $syncLabel: String!) {
         repository(owner: $owner, name: $name) {
           id
+          syncPullRequests: pullRequests(labels: [$syncLabel], first: 1) {
+            nodes {
+              id
+            }
+          }
+          syncLabel: label(name: $syncLabel) {
+            id
+          }
         }
       }
     `,
@@ -48,10 +57,34 @@ async function getRepository(owner, name) {
       },
       owner,
       name,
+      syncLabel: syncLabelName,
     }
   )
   return repository
 }
+
+async function createLabel(input) {
+  const { createLabel } = await graphql(
+    `
+      mutation($input: CreateLabelInput!) {
+        createLabel(input: $input) {
+          label {
+            id
+          }
+        }
+      }
+    `,
+    {
+      headers: {
+        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
+        accept: `application/vnd.github.bane-preview+json`,
+      },
+      input,
+    }
+  )
+  return createLabel.label
+}
+
 async function createPullRequest(input) {
   const { createPullRequest } = await graphql(
     `
@@ -73,6 +106,28 @@ async function createPullRequest(input) {
     }
   )
   return createPullRequest.pullRequest
+}
+
+async function addLabelToPullRequest(pullRequest, label) {
+  await graphql(
+    `
+      mutation($input: AddLabelsToLabelableInput!) {
+        addLabelsToLabelable(input: $input) {
+          clientMutationId
+        }
+      }
+    `,
+    {
+      headers: {
+        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
+        accept: `application/vnd.github.bane-preview+json`,
+      },
+      input: {
+        labelableId: pullRequest.id,
+        labelIds: [label.id],
+      },
+    }
+  )
 }
 
 function conflictPRBody(conflictFiles, comparisonUrl, prNumber) {
@@ -126,7 +181,32 @@ async function syncTranslationRepo(code) {
   shell.exec(`git remote add source ${sourceRepoGitUrl}`)
   shell.exec(`git fetch source master`)
 
-  // TODO don't run the sync script if there is a current PR from the bot
+  const repository = await getRepository(owner, transRepoName)
+
+  if (repository.syncPullRequests.nodes.length > 0) {
+    logger.info(
+      `There are currently open sync pull requests. Please ask the language maintainers to merge the existing PR(s) in before opening another one. Exiting...`
+    )
+    process.exit(0)
+  }
+
+  logger.info(`No currently open sync pull requests.`)
+
+  let syncLabel
+  if (!repository.syncLabel) {
+    logger.info(
+      `Repository does not have a "${syncLabelName}" label. Creating one...`
+    )
+    syncLabel = await createLabel({
+      repositoryId: repository.id,
+      name: syncLabelName,
+      description: `Sync with translation source. Used by @gatsbybot to track open sync pull requests.`,
+      color: `fbca04`,
+    })
+  } else {
+    logger.info(`Repository has an existing ${syncLabelName} label.`)
+    syncLabel = repository.syncLabel
+  }
 
   // TODO exit early if this fails
   // Compare these changes
@@ -156,11 +236,9 @@ async function syncTranslationRepo(code) {
 
   shell.exec(`git push -u origin ${syncBranch}`)
 
-  const repository = await getRepository(owner, transRepoName)
-
   logger.info(`Creating sync pull request`)
   // TODO if there is already an existing PR, don't create a new one and exit early
-  const { number: syncPRNumber } = await createPullRequest({
+  const syncPR = await createPullRequest({
     repositoryId: repository.id,
     baseRefName: `master`,
     headRefName: syncBranch,
@@ -235,15 +313,19 @@ async function syncTranslationRepo(code) {
 
   logger.info(`Creating conflicts pull request`)
   // TODO assign codeowners as reviewers
-  await createPullRequest({
+  const conflictsPR = await createPullRequest({
     repositoryId: repository.id,
     baseRefName: `master`,
     headRefName: conflictBranch,
     title: `(sync) Resolve conflicts with ${sourceRepo} @ ${shortHash}`,
-    body: conflictPRBody(conflictFiles, comparisonUrl, syncPRNumber),
+    body: conflictPRBody(conflictFiles, comparisonUrl, syncPR.number),
     maintainerCanModify: true,
     draft: true,
   })
+
+  logger.info(`Adding ${syncLabelName} labels to created pull requests...`)
+  await addLabelToPullRequest(syncPR, syncLabel)
+  await addLabelToPullRequest(conflictsPR, syncLabel)
 }
 
 const [langCode] = process.argv.slice(2)
