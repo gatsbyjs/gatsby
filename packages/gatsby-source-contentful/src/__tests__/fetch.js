@@ -168,6 +168,24 @@ it(`calls contentful.getContentTypes with custom plugin option page limit`, asyn
   })
 })
 
+it(`panics when localeFilter reduces locale list to 0`, async () => {
+  await fetchData({
+    pluginConfig: createPluginConfig({
+      accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
+      spaceId: `rocybtov1ozk`,
+      pageLimit: 50,
+      localeFilter: () => false,
+    }),
+    reporter,
+  })
+
+  expect(reporter.panic).toBeCalledWith(
+    expect.stringContaining(
+      `Please check if your localeFilter is configured properly. Locales 'en-us' were found but were filtered down to none.`
+    )
+  )
+})
+
 describe(`Displays troubleshooting tips and detailed plugin options on contentful client error`, () => {
   it(`Generic fallback error`, async () => {
     mockClient.getLocales.mockImplementation(() => {

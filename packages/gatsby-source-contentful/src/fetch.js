@@ -31,9 +31,19 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   try {
     console.log(`Fetching default locale`)
     space = await client.getSpace()
-    locales = await client.getLocales().then(response => response.items)
-    defaultLocale = _.find(locales, { default: true }).code
-    locales = locales.filter(pluginConfig.get(`localeFilter`))
+    let contentfulLocales = await client
+      .getLocales()
+      .then(response => response.items)
+    defaultLocale = _.find(contentfulLocales, { default: true }).code
+    locales = contentfulLocales.filter(pluginConfig.get(`localeFilter`))
+    if (locales.length === 0) {
+      reporter.panic(
+        `Please check if your localeFilter is configured properly. Locales '${_.join(
+          contentfulLocales.map(item => item.code),
+          `,`
+        )}' were found but were filtered down to none.`
+      )
+    }
     console.log(`default locale is : ${defaultLocale}`)
   } catch (e) {
     let details

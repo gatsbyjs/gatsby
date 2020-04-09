@@ -97,7 +97,7 @@ module.exports = {
 The end result from a theme's composition view is that we apply the parent, then
 the child, then the user's site. This opens up a whole host of additional
 possibilities as child themes can have multiple parents or compose with each
-other. Data models for blogging and ecommerce can be combined into a usable
+other. Data models for blogging and e-commerce can be combined into a usable
 child theme and distributed as a single npm package. Users don't need to know
 your theme is made up of multiple parents.
 

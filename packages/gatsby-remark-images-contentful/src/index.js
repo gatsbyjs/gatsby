@@ -70,11 +70,20 @@ module.exports = async (
     }
     const metaReader = sharp()
 
-    const response = await axios({
-      method: `GET`,
-      url: originalImg, // for some reason there is a './' prefix
-      responseType: `stream`,
-    })
+    let response
+    try {
+      response = await axios({
+        method: `GET`,
+        url: originalImg, // for some reason there is a './' prefix
+        responseType: `stream`,
+      })
+    } catch (err) {
+      reporter.panic(
+        `Image downloading failed for ${originalImg}, please check if the image still exists on contentful`,
+        err
+      )
+      return []
+    }
 
     response.data.pipe(metaReader)
 

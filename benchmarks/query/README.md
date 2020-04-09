@@ -4,7 +4,7 @@ Stress tests creating lots of queries.
 
 # Usage
 
-```sh
+```shell
 NUM_TYPES=5 NUM_PAGES=1000 yarn bench
 ```
 

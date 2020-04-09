@@ -2,12 +2,13 @@
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
 import { keyframes } from "@emotion/core"
-import { Link, StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
+import Link from "./localized-link"
 
 import logo from "../assets/monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
-import FuturaParagraph from "../components/futura-paragraph"
-import TechWithIcon from "../components/tech-with-icon"
+import FuturaParagraph from "./futura-paragraph"
+import TechWithIcon from "./tech-with-icon"
 
 const lineAnimation = keyframes({
   to: { strokeDashoffset: 10 },
@@ -204,16 +205,14 @@ const Diagram = () => (
     query={graphql`
       query StaticHostsQuery {
         allStaticHostsYaml {
-          edges {
-            node {
-              title
-              url
-            }
+          nodes {
+            title
+            url
           }
         }
       }
     `}
-    render={({ allStaticHostsYaml: { edges: staticHosts } }) => (
+    render={({ allStaticHostsYaml: { nodes: staticHosts } }) => (
       <section
         className="Diagram"
         sx={{
@@ -308,7 +307,7 @@ const Diagram = () => (
           >
             <ItemTitle>Web Hosting</ItemTitle>
             <ItemDescription>
-              {staticHosts.map(({ node: staticHost }, index) => (
+              {staticHosts.map((staticHost, index) => (
                 <Fragment key={staticHost.url}>
                   {index > 0 && `, `}
                   <ItemDescriptionLink to={staticHost.url}>

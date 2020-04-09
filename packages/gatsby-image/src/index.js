@@ -91,6 +91,14 @@ const getCurrentSrcData = currentData => {
     if (foundMedia !== -1) {
       return currentData[foundMedia]
     }
+
+    // No media matches, select first element without a media condition
+    const noMedia = currentData.findIndex(
+      image => typeof image.media === `undefined`
+    )
+    if (noMedia !== -1) {
+      return currentData[noMedia]
+    }
   }
   // Else return the first image.
   return currentData[0]
@@ -254,14 +262,12 @@ const noscriptImg = props => {
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
 // the `Img` component in a `picture` element. This maintains compatibility
 // until a breaking change can be introduced in the next major release
-const Placeholder = ({
-  src,
-  imageVariants,
-  generateSources,
-  spreadProps,
-  ariaHidden,
-}) => {
-  const baseImage = <Img src={src} {...spreadProps} ariaHidden={ariaHidden} />
+const Placeholder = React.forwardRef((props, ref) => {
+  const { src, imageVariants, generateSources, spreadProps, ariaHidden } = props
+
+  const baseImage = (
+    <Img ref={ref} src={src} {...spreadProps} ariaHidden={ariaHidden} />
+  )
 
   return imageVariants.length > 1 ? (
     <picture>
@@ -271,7 +277,7 @@ const Placeholder = ({
   ) : (
     baseImage
   )
-}
+})
 
 const Img = React.forwardRef((props, ref) => {
   const {
@@ -349,6 +355,7 @@ class Image extends React.Component {
     }
 
     this.imageRef = React.createRef()
+    this.placeholderRef = props.placeholderRef || React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
   }
@@ -387,14 +394,18 @@ class Image extends React.Component {
         // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
         // imgLoaded and imgCached are in a 2nd setState call to be changed together,
         // avoiding initiating unnecessary animation frames from style changes.
-        this.setState({ isVisible: true }, () =>
+        this.setState({ isVisible: true }, () => {
           this.setState({
             imgLoaded: imageInCache,
             // `currentSrc` should be a string, but can be `undefined` in IE,
             // !! operator validates the value is not undefined/null/""
-            imgCached: !!this.imageRef.current.currentSrc,
+            // for lazyloaded components this might be null
+            // TODO fix imgCached behaviour as it's now false when it's lazyloaded
+            imgCached: !!(
+              this.imageRef.current && this.imageRef.current.currentSrc
+            ),
           })
-        )
+        })
       })
     }
   }
@@ -505,6 +516,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -516,6 +528,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -606,6 +619,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -617,6 +631,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}

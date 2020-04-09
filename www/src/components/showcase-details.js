@@ -1,23 +1,22 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
+import Link from "./localized-link"
 import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import Layout from "../components/layout"
-import Modal from "../components/modal"
-import ShareMenu from "../components/share-menu"
-import Button from "../components/button"
+import Modal from "./modal"
+import ShareMenu from "./share-menu"
+import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
 
-import MdArrowUpward from "react-icons/lib/md/arrow-upward"
-import MdLink from "react-icons/lib/md/link"
 import FeaturedIcon from "../assets/icons/featured-sites-icons"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { MdArrowUpward, MdLink } from "react-icons/md"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 
 const gutter = 6
 const gutterDesktop = 8
@@ -140,7 +139,8 @@ function getExitLocation(filters = {}) {
   }
 }
 
-function ShowcaseModal({ children, location }) {
+function ShowcaseModal({ children, location, isModal }) {
+  if (!isModal) return children
   const { previousSite, nextSite } = usePrevAndNextSite(location.pathname)
   const { filters } = location.state || {}
   return (
@@ -245,9 +245,8 @@ function ShowcaseModal({ children, location }) {
 const ShowcaseDetails = ({ location, site, isModal, categories }) => {
   const screenshotFile = site.childScreenshot.screenshotFile.childImageSharp
 
-  const PageLayout = isModal ? ShowcaseModal : Layout
   return (
-    <PageLayout location={location}>
+    <ShowcaseModal isModal={isModal} location={location}>
       <div
         sx={{
           display: `flex`,
@@ -395,7 +394,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </ShowcaseModal>
   )
 }
 
