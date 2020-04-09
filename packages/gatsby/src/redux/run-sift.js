@@ -21,6 +21,14 @@ const {
   getNode: siftGetNode,
 } = require(`./nodes`)
 
+const FAST_OPS = [
+  `$eq`,
+  // "$lt",
+  `$lte`,
+  // "$gt",
+  // "$gte"
+]
+
 /**
  * Creates a key for one filterCache inside FiltersCache
  *
@@ -309,13 +317,7 @@ const collectBucketForElemMatch = (
     }
   }
 
-  if (
-    ![
-      `$eq`,
-      `$lte`,
-      // "$gte",
-    ].includes(comparator)
-  ) {
+  if (!FAST_OPS.includes(comparator)) {
     return false
   }
 
@@ -493,12 +495,7 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   if (
     filters.some(
       filter =>
-        filter.type === `query` &&
-        ![
-          `$eq`,
-          // "$lte",
-          // "$gte"
-        ].includes(filter.query.comparator)
+        filter.type === `query` && !FAST_OPS.includes(filter.query.comparator)
     )
   ) {
     // If there's a filter with non-supported op, stop now.
