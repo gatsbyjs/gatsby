@@ -10,6 +10,10 @@ title: Sourcing from Builder.io
 
 ## Quick Start
 
+### Prerequisites
+
+Make a free account over at [Builder.io](https://www.builder.io/fork-sample-org) and grab your public API key from your [organization page](https://builder.io/account/organization)
+
 ### Fresh project:
 
 To start on a fresh project quickly, use the [BuilderIO Gatsby starter](/starters/BuilderIO/gatsby-starter-builder/)
@@ -20,60 +24,37 @@ gatsby new my-builder-site https://github.com/BuilderIO/gatsby-starter-builder
 
 ### Existing project:
 
-Make a free account over at [Builder.io](https://www.builder.io/) and grab your public API key from your [organization page](https://builder.io/account/organization) and:
+Use [@builder.io/gatsby plugin](/packages/@builder.io/gatsby/) which will expose Builder.io data and optionally generate pages dynamically from a provided templates.
 
-```javascript:title=gatsby-config.js
-const path = require("path")
-module.exports = {
-  plugins: [
-    {
-      resolve: "@builder.io/gatsby",
-      options: {
-        // public API Key
-        publicAPIKey: "MY_PUBLIC_API_KEY",
-        templates: {
-          // `page` can be any model of choice, camelCased
-          page: path.resolve("templates/my-page.tsx"),
-        },
-      },
-    },
-  ],
-}
-```
+## Query Builder.io data
 
-Then start building pages in Builder.io, hit publish, and they will be included in your Gatsby site on each new build!
+The `@Builder.io/gatsby` plugin will add `allBuilderModels` to graphQL, under which you can specify which model you'd like to get entries from.
 
-### Using your components in the editor
-
-See this [design systems example](https://github.com/BuilderIO/builder/tree/master/examples/react-design-system) for lots of examples using your design system + custom components
-
-👉**Tip: want to limit page building to only your components? Try [components only mode](https://builder.io/c/docs/guides/components-only-mode)**
-
-Register a component
-
-```tsx
-import { Builder } from "@builder.io/react"
-
-class SimpleText extends React.Component {
-  render() {
-    return <h1>{this.props.text}</h1>
-  }
-}
-
-Builder.registerComponent(SimpleText, {
-  name: "Simple Text",
-  inputs: [{ name: "text", type: "string" }],
-})
-```
-
-### How to Query
-
-For an up-to-date complete examples take a look at our [Gatsby starter](https://github.com/BuilderIO/gatsby-starter-builder)
+For e.g to get the entries from your models `myHeader`, `myFooter`:
 
 ```graphql
 {
   allBuilderModels {
-    myPageModel(options: { cachebust: true }) {
+    myHeader(limit: 1, options: { cachebust: true }) {
+      content
+    }
+    myFooter(limit: 1, options: { cachebust: true }) {
+      content
+    }
+  }
+}
+```
+
+Or you can query by urlPath for your page models:
+
+```graphql
+query($path: String!) {
+  allBuilderModels {
+    myPageModel(
+      target: { urlPath: $path }
+      limit: 1
+      options: { cachebust: true }
+    ) {
       content
     }
   }
@@ -82,6 +63,7 @@ For an up-to-date complete examples take a look at our [Gatsby starter](https://
 
 ## Learn more
 
-- [@builder.io/gatsby plugin](https://github.com/BuilderIO/builder/tree/master/packages/gatsby)
+- [Builder.io GraphQL docs](https://www.builder.io/c/docs/graphql-api)
+- [@builder.io/gatsby plugin](/packages/@builder.io/gatsby/)
 - [Design system example](https://github.com/BuilderIO/builder/tree/master/examples/react-design-system)
 - [Official docs](https://www.builder.io/c/docs/getting-started)
