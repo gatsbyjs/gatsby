@@ -170,10 +170,7 @@ export const addResolvedNodes = (
   return resolvedNodes
 }
 
-export const postIndexingMetaSetup = (
-  filterCache: IFilterCache,
-  filterOp: FilterOp
-): void => {
+export const postIndexingMetaSetup = (filterCache: IFilterCache): void => {
   // Create an ordered array of individual nodes, ordered (grouped) by the
   // value to which the filter resolves. Nodes are not ordered per value.
   // This way non-eq ops can simply slice the array to get a range.
@@ -257,7 +254,7 @@ export const ensureIndexByQuery = (
   }
 
   if (op === `$lte`) {
-    postIndexingMetaSetup(filterCache, op)
+    postIndexingMetaSetup(filterCache)
   }
 }
 
@@ -357,7 +354,7 @@ export const ensureIndexByElemMatch = (
   }
 
   if (op === `$lte`) {
-    postIndexingMetaSetup(filterCache, op)
+    postIndexingMetaSetup(filterCache)
   }
 }
 
