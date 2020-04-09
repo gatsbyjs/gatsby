@@ -17,7 +17,7 @@ npm is installed alongside Node during the default [installation process](/tutor
 
 ### Using npm to install Gatsby
 
-It's recommended to install Gatsby globally, so that you can use Gatsby as a CLI application. To do so, use `npm install` with the `--global` or `-g` flags.
+You'll need to install Gatsby globally to use Gatsby CLI commands such as `gatsby new`. To do so, use `npm install` with the `--global` or `-g` flag.
 
 ```shell
 npm install -g gatsby-cli
