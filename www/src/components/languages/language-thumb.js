@@ -63,7 +63,6 @@ const LanguageThumb = ({ lang, isCurrent }) => (
       href={`https://github.com/gatsbyjs/gatsby-${lang.code}`}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={event => event.stopPropagation()}
     >
       Contribute <LaunchIcon />
     </ContributionLink>

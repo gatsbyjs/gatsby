@@ -82,7 +82,7 @@ const LanguagesPage = ({ location, pageContext }) => (
           {allLanguages.map(lang => (
             <LanguageThumb
               key={lang.code}
-              lang={{ ...lang, progress: 0.5 }}
+              lang={lang}
               isCurrent={lang.code === (pageContext.locale || defaultLang)}
             />
           ))}
