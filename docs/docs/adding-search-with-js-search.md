@@ -52,7 +52,7 @@ And finally, as you go through the code, be mindful it does not adhere to the be
 
 Start by creating a file named `SearchContainer.js` in the `src/components/` folder, then add the following code to get started:
 
-```javascript
+```jsx:title=src/components/SearchContainer.js
 import React, { Component } from "react"
 import Axios from "axios"
 import * as JsSearch from "js-search"
@@ -253,7 +253,7 @@ Breaking down the code into smaller parts:
 In order to get it working in your site, you would only need to import the newly created component to a page.
 As you can see [in the example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/pages/index.js).
 
-Run `gatsby develop` and if all went well, open your browser of choice and enter the url <http://localhost:8000> - you'll have a fully functional search at your disposal.
+Run `gatsby develop` and if all went well, open your browser of choice and enter the url `http://localhost:8000` - you'll have a fully functional search at your disposal.
 
 ## JS-Search with a big dataset
 
@@ -263,7 +263,7 @@ To do this, some changes are required.
 
 Start by modifying the `gatsby-node.js` file by adding the following code:
 
-```javascript
+```javascript:title=gatsby-node.js
 const path = require("path")
 const axios = require("axios")
 
@@ -309,7 +309,7 @@ exports.createPages = ({ actions }) => {
 
 Create a file named `ClientSearchTemplate.js` in the `src/templates/` folder, then add the following code to get started:
 
-```javascript
+```jsx:title=src/templates/ClientSearchTemplate.js
 import React from "react"
 import ClientSearch from "../components/ClientSearch"
 
@@ -334,7 +334,7 @@ export default SearchTemplate
 
 Create a file named `ClientSearch.js` in the `src/components/` folder, then add the following code as a baseline:
 
-```javascript
+```jsx:title=src/components/ClientSearch.js
 import React, { Component } from "react"
 import * as JsSearch from "js-search"
 
@@ -571,7 +571,7 @@ Once again to get it to work on your site you would only need to copy over [the 
 
 And both the [template](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/templates/ClientSearchTemplate.js) and the [search component](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/components/ClientSearch.js).
 
-Issuing `gatsby develop` again, and if all went without any issues one more time, open your browser of choice and enter the url <http://localhost:8000/search>, you'll have a fully functional search at your disposal coupled with Gatsby API.
+Issuing `gatsby develop` again, and if all went without any issues one more time, open your browser of choice and enter the url `http://localhost:8000/search`, you'll have a fully functional search at your disposal coupled with Gatsby API.
 
 Hopefully this rather extensive guide has shed some insights on how to implement client search using js-search.
 

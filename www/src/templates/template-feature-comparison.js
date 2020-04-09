@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import { Component } from "react"
 import { Helmet } from "react-helmet"
 import { css } from "@emotion/core"
-import Layout from "../components/layout"
+import PageWithSidebar from "../components/page-with-sidebar"
 import FooterLinks from "../components/shared/footer-links"
 import Container from "../components/container"
 import EvaluationTable from "../components/features/evaluation-table"
@@ -12,7 +12,6 @@ import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import Breadcrumb from "../components/docs-breadcrumb"
 
-import { itemListFeatures } from "../utils/sidebar/item-list"
 import { getFeaturesData } from "../utils/get-csv-features-data"
 
 import { graphql } from "gatsby"
@@ -29,17 +28,17 @@ class FeatureComparison extends Component {
 
     const { sections, sectionHeaders } =
       featureType === `cms`
-        ? getFeaturesData(data.allGatsbyCmsSpecsCsv.edges)
-        : getFeaturesData(data.allGatsbyJamstackSpecsCsv.edges)
+        ? getFeaturesData(data.allGatsbyCmsSpecsCsv.nodes)
+        : getFeaturesData(data.allGatsbyJamstackSpecsCsv.nodes)
 
     return (
-      <Layout location={location} itemList={itemListFeatures}>
+      <PageWithSidebar location={location}>
         <Helmet>
           <title>{titleString}</title>
         </Helmet>
         <Container>
           <main>
-            <Breadcrumb location={location} itemList={itemListFeatures} />
+            <Breadcrumb location={location} />
             <h1>{titleString}</h1>
             {options.map(o => (
               <section key={o.key} sx={{ mb: 6 }}>
@@ -72,7 +71,7 @@ class FeatureComparison extends Component {
           <FeaturesFooter />
           <FooterLinks />
         </Container>
-      </Layout>
+      </PageWithSidebar>
     )
   }
 }
@@ -82,31 +81,27 @@ export default FeatureComparison
 export const pageQuery = graphql`
   query {
     allGatsbyCmsSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          WordPress
-          Drupal
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        WordPress
+        Drupal
+        Description
       }
     }
     allGatsbyJamstackSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          Nextjs
-          Jekyll
-          Hugo
-          Nuxtjs
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        Nextjs
+        Jekyll
+        Hugo
+        Nuxtjs
+        Description
       }
     }
   }

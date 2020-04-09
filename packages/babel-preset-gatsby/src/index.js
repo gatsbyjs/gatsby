@@ -76,6 +76,8 @@ module.exports = function preset(_, options = {}) {
           loose: true,
         },
       ],
+      [resolve(`@babel/plugin-proposal-nullish-coalescing-operator`)],
+      [resolve(`@babel/plugin-proposal-optional-chaining`)],
       resolve(`babel-plugin-macros`),
       resolve(`@babel/plugin-syntax-dynamic-import`),
       [

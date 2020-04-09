@@ -1,10 +1,10 @@
 const visit = require(`unist-util-visit`)
-
 const parseOptions = require(`./parse-options`)
 const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
 const commandLine = require(`./command-line`)
+const loadPrismShowInvisibles = require(`./plugins/prism-show-invisibles`)
 
 module.exports = (
   { markdownAST },
@@ -14,12 +14,14 @@ module.exports = (
     aliases = {},
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
+    showInvisibles = false,
     languageExtensions = [],
     prompt = {
       user: `root`,
       host: `localhost`,
       global: false,
     },
+    escapeEntities = {},
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -61,6 +63,7 @@ module.exports = (
     // line highlights if Prism is required by any other code.
     // This supports custom user styling without causing Prism to
     // re-process our already-highlighted markup.
+    //
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
     const className = `${classPrefix}${languageName}`
 
@@ -71,6 +74,10 @@ module.exports = (
         1}"`
       numLinesClass = ` line-numbers`
       numLinesNumber = addLineNumbers(node.value)
+    }
+
+    if (showInvisibles) {
+      loadPrismShowInvisibles(languageName)
     }
 
     // Replace the node with the markup we need to make
@@ -94,7 +101,7 @@ module.exports = (
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
     +       `${useCommandLine ? commandLine(node.value, outputLines, promptUser, promptHost) : ``}`
-    +       `${highlightCode(languageName, node.value, highlightLines, noInlineHighlight)}`
+    +       `${highlightCode(languageName, node.value, escapeEntities, highlightLines, noInlineHighlight)}`
     +     `</code>`
     +     `${numLinesNumber}`
     +   `</pre>`
@@ -118,7 +125,8 @@ module.exports = (
       node.type = `html`
       node.value = `<code class="${className}">${highlightCode(
         languageName,
-        node.value
+        node.value,
+        escapeEntities
       )}</code>`
     })
   }

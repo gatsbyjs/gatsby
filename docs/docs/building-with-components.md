@@ -2,8 +2,6 @@
 title: Building with Components
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-
 To use Gatsby, you will need a basic understanding of React components.
 
 The [official tutorial](https://reactjs.org/tutorial/tutorial.html)
@@ -21,7 +19,7 @@ The following model shows how data from a source can be queried by GraphQL for u
 
 <LayerModel initialLayer="View" />
 
-[Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
+[Thinking in React](https://reactjs.org/docs/thinking-in-react.html)
 is a good resource for learning how to structure applications with React.
 
 ## How does Gatsby use React Components?
@@ -30,7 +28,7 @@ Everything in Gatsby is built using components.
 
 A basic directory structure of a project might look like this:
 
-```
+```text
 .
 ├── gatsby-config.js
 ├── package.json

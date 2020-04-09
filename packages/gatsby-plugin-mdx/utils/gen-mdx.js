@@ -40,7 +40,17 @@ const BabelPluginPluckImports = require(`./babel-plugin-pluck-imports`)
  *  */
 
 module.exports = async function genMDX(
-  { isLoader, node, options, getNode, getNodes, reporter, cache, pathPrefix },
+  {
+    isLoader,
+    node,
+    options,
+    getNode,
+    getNodes,
+    reporter,
+    cache,
+    pathPrefix,
+    ...helpers
+  },
   { forceDisableCache = false } = {}
 ) {
   const pathPrefixCacheStr = pathPrefix || ``
@@ -106,6 +116,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
       reporter,
       cache,
       pathPrefix,
+      ...helpers,
     }
   )
 
@@ -139,7 +150,7 @@ ${code}`
           {
             useBuiltIns: `entry`,
             corejs: 2,
-            modules: `false`,
+            modules: false,
           },
         ],
       ],
@@ -149,7 +160,7 @@ ${code}`
     const imports = Array.from(instance.state.imports)
     if (!identifiers.includes(`React`)) {
       identifiers.push(`React`)
-      imports.push(`import React from 'react'`)
+      imports.push(`import * as React from 'react'`)
     }
 
     results.scopeImports = imports

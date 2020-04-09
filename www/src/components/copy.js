@@ -26,11 +26,10 @@ function Copy({ className, content, duration, fileName, trim = false }) {
         color: `code.copyButton`,
         cursor: `pointer`,
         fontSize: 2,
-        fontFamily: `header`,
+        fontFamily: `heading`,
         lineHeight: `solid`,
         p: 2,
-        transition: t =>
-          `${t.transition.speed.default} ${t.transition.curve.default}`,
+        transition: `default`,
         "&[disabled]": {
           cursor: `not-allowed`,
         },

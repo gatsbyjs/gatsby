@@ -35,7 +35,7 @@ Importing and JSX syntax works just like it does in your components. This
 results in a seamless experience for developers and content authors alike.
 Markdown and JSX are included alongside each other like this:
 
-```md
+```markdown
 import { Chart } from '../components/chart'
 
 # Here’s a chart

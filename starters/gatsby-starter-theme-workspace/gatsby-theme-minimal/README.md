@@ -34,7 +34,7 @@ Note that this site doesn't _do_ anything, so you're see a missing
 resources error. Create a simple page in `src/pages/index.js` to see a
 page on the root url.
 
-```javascript
+```jsx
 import React from "react"
 
 export default () => <div>My Site!</div>

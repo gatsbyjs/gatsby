@@ -8,8 +8,11 @@ Here are some things to keep in mind when deciding where to contribute to Gatsby
 
 - [Blog posts](/contributing/docs-contributions#contributing-to-the-blog) are primarily made for case studies and time-sensitive storytelling.
 - [Reference guides](#reference-guides), in contrast, are evergreen -- or continually relevant -- and discoverable documentation articles that go beyond any one case study or situation.
+  - [Other guides](#other-types-of-guide-articles) add documentation for specific purposes like the API reference, Conceptual Guide, Gatsby Internals, and more.
 - [Recipes](#recipes) add concise, discoverable, and easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
 - [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
+
+When writing (or reviewing) learning materials that show Gatsby users how to complete tasks, you are expected to **test out any code examples or steps to ensure they work**. This can also help with writing in your own words, rather than copying from other sources. If you have a demo project or code example that strengthens docs and you don't know where to put it, mention it to the Gatsby Learning team in a PR.
 
 ### Why use templates?
 
@@ -21,7 +24,19 @@ Here are templates (models) to follow when contributing to Gatsby docs to ensure
 
 Reference guide articles cover discrete topics as documentation with links to other resources. A reference guide explains a Gatsby concept or technique without the step-by-step context provided by a tutorial or recipe.
 
-Reference guide sections provide canonical information on how and why to build things with Gatsby for a variety of scenarios.
+Reference guide sections provide canonical information on how and why to build things with Gatsby for a variety of scenarios. Reference material should list text headings for each section of a guide, rather than "steps 1-5" like a tutorial.
+
+#### Other types of guide articles
+
+The Gatsby docs include multiple types of guides. They mostly follow the same format, but some docs will have a slightly different purpose and/or audience.
+
+- [Reference Guides](/docs/guides/): explanations of Gatsby site development techniques and common workflows. These should be written for all skill-levels.
+- [API Reference](/docs/api-reference/): technical docs on API methods and options, common files, and links to additional resources and explanations.
+- [Releases & Migration](/docs/releases-and-migration/): release notes and guides on how to upgrade Gatsby and third-party packages.
+- [Conceptual Guides](/docs/conceptual-guide/): high-level docs to explain important Gatsby concepts and philosophies.
+  - As an example, "Plugins, Themes, and Starters" would be an overarching concept article, with individual reference guide sections for Plugin, Theme, and Starter docs.
+- [Gatsby Internals](/docs/gatsby-internals/): previously titled Behind the Scenes, these docs go in depth into how Gatsby works under the hood.
+- [Using Gatsby Professionally](/docs/using-gatsby-professionally/): articles on winning over stakeholders, working in larger organizations, and building a career as a Gatsby developer.
 
 ### What should a reference guide be about?
 
@@ -179,12 +194,13 @@ Assume the reader has basic programming knowledge such as the command line, code
 
 ## Recipes
 
-[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. They live on the [Recipes page](/docs/recipes/) in the docs, the source of which can be found in [`docs/docs/recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md) in the GitHub repo.
+[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. They live in the [Recipes section](/docs/recipes/) in the docs, the source of which can be found in the [`docs/docs/recipes.md` landing page](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md) and [`docs/docs/recipes/*` folder](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes/) in the GitHub repo.
 
 A recipe should list requirements and include a few short instructions to complete a task. It should omit boilerplate and list only directly related, actionable instructions inline. Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however the content should be consolidated in the Recipes section for discoverability. If a recipe is recorded as a video, it should be less than five or ten minutes long.
 
 The components of a recipe are:
 
+- Overview link on [`recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md)
 - The name of the recipe, which should describe a single task
 - A 1-2 sentence description motivating what the recipe is for
 - Prerequisites and requirements
@@ -219,6 +235,10 @@ Here's a template for a new recipe category:
 ```
 
 ### Recipe parts
+
+#### Overview link
+
+To make sure your recipe is linked from the overview page, you must add it to the appropriate category in [`recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md). Otherwise, it will be difficult for Gatsby users to find it, which isn't good for anyone!
 
 #### Title and description
 
@@ -399,6 +419,8 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 
 Include a summary of what this plugin accomplishes. Is there a demo site that shows how this plugin operates? If so, include a link to the deployed demo site and/or its source code here.
 
+Themes are considered plugins in the Gatsby ecosystem and should follow this README as well. Note that themes include multiple READMEs. One inside the theme directory with configuration instructions, one inside the example project directory, and one in the root of the repository which will follow this guide.
+
 ### Dependencies (optional)
 
 Are there any plugins that must be installed in order to make this plugin work? If so, please include a list of those plugins and links to their pages here.
@@ -410,6 +432,10 @@ If there are other tutorials, docs, and learning resources that are necessary or
 ## How to install
 
 Please include installation instructions here.
+
+Gatsby documentation uses `npm` for installation. This is the recommended approach for plugins as well.
+
+If the plugin is a theme that needs to use `yarn`, please point to [the documentation for switching package managers](/docs/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) in addition to the `yarn`-based instructions.
 
 ## Available options (if any)
 
@@ -430,6 +456,8 @@ This section could also include before-and-after examples of data when the plugi
 ## How to query for data (source plugins only)
 
 If this is a source plugin README, source plugins ought to allow people to query for data within their Gatsby site. Please include code examples to show how to query for data using your source plugin.
+
+If this is a theme that requires data in a specific format in order to match an existing query, include those examples here.
 
 ## How to run tests
 

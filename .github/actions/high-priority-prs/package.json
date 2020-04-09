@@ -7,13 +7,13 @@
     "test": "jest"
   },
   "dependencies": {
-    "@slack/web-api": "^5.0.1",
-    "actions-toolkit": "^2.0.0",
+    "@slack/web-api": "^5.7.0",
+    "actions-toolkit": "^2.2.0",
     "array-to-sentence": "^2.0.0",
-    "date-fns": "^1.30.1",
-    "lodash": "^4.17.14"
+    "date-fns": "^2.9.0",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "jest": "^24.8.0"
+    "jest": "^25.1.0"
   }
 }

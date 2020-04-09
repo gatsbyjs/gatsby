@@ -11,17 +11,21 @@ import {
   ToggleRefinement,
 } from "react-instantsearch-dom"
 import { navigate as reachNavigate } from "@reach/router"
-import { Link } from "gatsby"
-import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
+import Link from "../components/localized-link"
+import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
 import AlgoliaLogo from "../assets/vendor-logos/algolia.svg"
-import GatsbyIcon from "../components/gatsby-monogram"
+import GatsbyIcon from "./gatsby-monogram"
 import { debounce, unescape } from "lodash-es"
 
-import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
+import {
+  space,
+  mediaQueries,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import removeMD from "remove-markdown"
-import SkipNavLink from "../components/skip-nav-link"
+import SkipNavLink from "./skip-nav-link"
+import { FaUsers as CommunityIcon } from "react-icons/fa"
 
 // This is for the urlSync
 const updateAfter = 700
@@ -58,7 +62,7 @@ const searchBoxStyles = t => css`
     appearance: none;
     -webkit-appearance: none;
     background: ${t.colors.themedInput.background};
-    border-radius: ${t.radii[2]}px;
+    border-radius: ${t.radii[2]};
     border: 0;
     color: ${t.colors.text};
     display: inline-block;
@@ -113,7 +117,7 @@ const searchBoxStyles = t => css`
     top: ${searchInputWrapperMargin};
     right: inherit;
     left: ${searchInputWrapperMargin};
-    border-radius: ${t.radii[2]}px 0 0 ${t.radii[2]}px;
+    border-radius: ${t.radii[2]} 0 0 ${t.radii[2]};
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -169,14 +173,14 @@ const searchBoxStyles = t => css`
   .ais-InfiniteHits-loadMore {
     background-color: ${t.colors.gatsby};
     border: 0;
-    border-radius: ${t.radii[1]}px;
+    border-radius: ${t.radii[1]};
     color: ${t.colors.white};
     cursor: pointer;
     width: calc(100% - (${space[6]} * 2));
     margin: ${t.space[6]};
     height: ${t.space[9]};
     outline: none;
-    transition: all ${t.transition.speed.default} ${t.transition.curve.default};
+    transition: ${t.transition.default};
     font-family: ${t.fonts.heading};
     font-weight: bold;
   }
@@ -380,7 +384,7 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? `navigation.linkColor` : `text`,
             display: `flex`,
-            fontFamily: `system`,
+            fontFamily: `body`,
             fontSize: 1,
             fontWeight: `bold`,
             my: 0,
@@ -404,13 +408,17 @@ const Result = ({ hit, pathname, query }) => {
           }}
         >
           {hit.repository &&
-            hit.name[0] !== `@` &&
-            hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
-              0 && (
-              <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`}>
-                <GatsbyIcon />
-              </span>
-            )}
+          hit.name[0] !== `@` &&
+          hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
+            0 ? (
+            <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`}>
+              <GatsbyIcon />
+            </span>
+          ) : (
+            <span sx={{ mr: 1 }} alt={`Community Gatsby Plugin`}>
+              <CommunityIcon />
+            </span>
+          )}
           <span
             css={{
               width: `5em`,

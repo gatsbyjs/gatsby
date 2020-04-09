@@ -78,7 +78,7 @@ Since your .env file contains your real private API keys, it is considered a sec
 ```text:title=.env.example
 # rename this file to .env and supply the values listed below
 # also make sure they are available to the build tool (e.g. Netlify)
-# warning: variables prexifed with GATSBY_ will be made available to client-side code
+# warning: variables prefixed with GATSBY_ will be made available to client-side code
 # be careful not to expose sensitive data (in this case your Algolia admin key)
 
 GATSBY_ALGOLIA_APP_ID=insertValue
@@ -157,7 +157,7 @@ It might look a little intimidating at first, but basically you're just letting 
 
 Transformers allow you to modify the data returned by the queries to bring it into a format ready for searching. All you're doing here is 'flattening' posts and pages to 'unnest' the frontmatter fields (such as `author`, `date`, `tags`) but transformers could do much more for you if required. This makes the whole process of indexing your data really flexible and powerful. You could for instance use them to filter the results of your queries, format fields, add or merge them, etc.
 
-If you've come this far, then the "backend" is done. You should now be able to run `gatsby build` and see your indices in Algolia's webinterface be flooded with your data.
+If you've come this far, then the "backend" is done. You should now be able to run `gatsby build` and see your indices in Algolia's web interface be flooded with your data.
 
 ## Adding a search interface to your site
 
@@ -176,7 +176,7 @@ There's quite a lot happening in these files so break them down one by one and p
 
 ### `index.js`
 
-```js:title=src/components/search/index.js
+```jsx:title=src/components/search/index.js
 import React, { useState, useEffect, createRef } from "react"
 import {
   InstantSearch,
@@ -254,7 +254,7 @@ At the top, you import `InstantSearch` from [`react-instantsearch-dom`](https://
 
 You then import the styled components that make up the UI and the `Input` component into which the user enters the query.
 
-```js:title=src/components/search/index.js
+```jsx:title=src/components/search/index.js
 import { Root, SearchBox, HitsWrapper, PoweredBy } from "./styles"
 import Input from "./Input"
 ```
@@ -263,13 +263,13 @@ import Input from "./Input"
 
 The last thing you need for the `Search` component to work are hit components for every type of result you want to display to the user. The hit component determines how attributes of matching results (such as author, date, tags and title in the case of a blog post) are displayed to the user.
 
-```js:title=src/components/search/index.js
+```jsx:title=src/components/search/index.js
 import * as hitComps from "./hitComps"
 ```
 
 Next you define two connected components. `Results` informs the user that no matches could be found for a query unless the number of hits is positive, i.e. `searchResults.nbHits > 0`. `Stats` just displays `searchResults.nbHits`.
 
-```js:title=src/components/search/index.js
+```jsx:title=src/components/search/index.js
 const Results = connectStateResults(
   ({ searchState: state, searchResults: res, children }) =>
     res && res.nbHits > 0 ? children : `No results for ${state.query}`
@@ -283,7 +283,7 @@ const Stats = connectStateResults(
 
 Now comes the actual `Search` component. It starts off with some state initialization, defining handler functions and event listeners to trigger them. All they do is make the search input slide out when the user clicks a search icon and disappear again when the user clicks or touches (on mobile) anywhere.
 
-```js:title=src/components/search/index.js
+```jsx:title=src/components/search/index.js
 export default function Search({ indices, collapse, hitsAsGrid }) {
   const ref = createRef()
   const [query, setQuery] = useState(``)
@@ -309,7 +309,7 @@ export default function Search({ indices, collapse, hitsAsGrid }) {
 
 `Search` returns JSX that renders a dynamic array of `indices` passed as a prop. Each array item should be an object with keys `name`, `title`, `hitComp` that specifies the name of the index in your Algolia account to be queried, the title to display above the results shown to the user and the component `hitComp` that renders the data returned for each match.
 
-```js:title=src/components/search/index.js
+```jsx:title=src/components/search/index.js
   return (
     <InstantSearch
       searchClient={searchClient}
@@ -343,7 +343,7 @@ Note that you fed `algoliasearch` with the same app ID you specified in our `.en
 
 ### `input.js`
 
-```js:title=src/components/search/input.js
+```jsx:title=src/components/search/input.js
 import React from "react"
 import { connectSearchBox } from "react-instantsearch-dom"
 
@@ -509,7 +509,7 @@ Now you're almost done, two small steps remain. First you need to put together a
 
 ### `hitComps.js`
 
-```js:title=src/components/search/hitComps.js
+```jsx:title=src/components/search/hitComps.js
 import React, { Fragment } from "react"
 import { Highlight, Snippet } from "react-instantsearch-dom"
 import { Link } from "gatsby"
@@ -559,7 +559,7 @@ export const PostHit = clickHandler => ({ hit }) => (
 
 Now all you need to do is import `Search` somewhere. The obvious place is the `Header` component so add it there.
 
-```js:title=src/components/Header/index.js
+```jsx:title=src/components/Header/index.js
 import React from "react"
 
 import { Container, Logo } from "./styles"
@@ -586,12 +586,12 @@ Note that this is where you define your array of search indices and pass it as a
 
 If everything works as expected, running `gatsby develop` should now give you some instant search magic looking something like in the video below! You can also play around with it [here](https://janosh.io/blog).
 
-`youtube: Amsub4xJ3Jc`
+https://youtu.be/Amsub4xJ3Jc
 
 ## Additional Resources
 
 If you have any issues or if you want to learn more about using Algolia for search, check out this tutorial from Jason Lengstorf:
 
-`youtube: VSkXyuXzwlc`
+https://youtu.be/VSkXyuXzwlc
 
 You can also find stories of companies using Gatsby + Algolia together [in the Algolia section of the blog](/blog/tags/algolia).

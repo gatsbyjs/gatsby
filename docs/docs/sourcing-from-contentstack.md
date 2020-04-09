@@ -26,7 +26,7 @@ This downloads the required files and initializes the site.
 
 Create copies of the `env.sample` file for `.env.development`, `.env.production` and any other environment, then add the following stack details to each respective file:
 
-```
+```text
 CONTENTSTACK_API_KEY='apikey'
 CONTENTSTACK_ACCESS_TOKEN='deliverytoken'
 CONTENTSTACK_ENVIRONMENT='development' # or production, staging, etc.
@@ -51,11 +51,11 @@ Navigate to your root directory and run the following command:
 
 `gatsby develop`
 
-After running this, you will be able to view your site at <http://localhost:8000/>. You can run the GraphiQL IDE at <http://localhost:8000/___graphql>. The GraphiQL IDE will help you explore the app's data, including the Contentstack APIs.
+After running this, you will be able to view your site at `http://localhost:8000/`. You can run the GraphiQL IDE at `http://localhost:8000/___graphql`. The GraphiQL IDE will help you explore the app's data, including the Contentstack APIs.
 
 Now, you will able to query Contentstack data. Try the query below to get the 'Home' content type data:
 
-```
+```graphql
 {
   contentstackHome {
     title
@@ -68,9 +68,9 @@ Now, you will able to query Contentstack data. Try the query below to get the 'H
 
 Go to the pages folder inside the src folder, and create a home.js file. Add the code below to it.
 
-```
-import React from 'react';
-import { graphql } from 'gatsby';
+```jsx
+import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   return (
@@ -89,7 +89,7 @@ export const pageQuery = graphql`
 `
 ```
 
-This will display the title of your home page on <http://localhost:8000/home>. Likewise, you can query additional fields in your entry.
+This will display the title of your home page on `http://localhost:8000/home`. Likewise, you can query additional fields in your entry.
 
 ## Closing note
 

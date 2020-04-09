@@ -82,15 +82,7 @@ As we wrote these out, we discussed them with the whole team to make sure we wer
 
 At the end of the exercise, we’d extracted 8 shared core values, all of which the team is fully aligned on and deeply committed to.
 
-<blockquote class="twitter-tweet" data-lang="en">
-  <p lang="en" dir="ltr">
-    What we&#39;re doing at{" "}
-    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>{" "}
-    this week: writing down what kind of company we want to be.{" "}
-    <a href="https://t.co/N0SRaJXILS">pic.twitter.com/N0SRaJXILS</a>
-  </p>
-  &mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1032319257298628608?ref_src=twsrc%5Etfw">August 22, 2018</a>
-</blockquote>
+https://twitter.com/jlengstorf/status/1032319257298628608
 
 ## What we learned — Gatsby’s core values
 
@@ -154,16 +146,7 @@ Open source doesn’t have the best reputation for being friendly and welcoming,
 
 We will never judge, condescend, or exclude anyone. Instead, we will go above and beyond to support the community, through [pair programming](https://gatsby.dev/pairing), offering [free swag for contributors](https://gatsby.dev/swag), giving control to the community by [auto-inviting all contributors to the Gatsby GitHub org](https://github.com/gatsbyjs/gatsby/pull/7699#issuecomment-416665803), an open and inclusive [code of conduct](/contributing/code-of-conduct/), and other means that empower and embrace the incredible community that makes Gatsby possible.
 
-<blockquote class="twitter-tweet" data-lang="en">
-  <p lang="en" dir="ltr">
-    Huge shoutout to{" "}
-    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>.
-    Not only have hey been the perfect open source project for Lambda School
-    students to contribute to, but the whole community goes above and beyond in
-    helping students understand the OSS ecosystem generally
-  </p>
-  &mdash; Austen Allred (@AustenAllred) <a href="https://twitter.com/AustenAllred/status/1038084753008652289?ref_src=twsrc%5Etfw">September 7, 2018</a>
-</blockquote>
+https://twitter.com/AustenAllred/status/1038084753008652289
 
 We’re so happy you’re here. 💪💜
 

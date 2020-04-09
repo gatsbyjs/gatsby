@@ -10,13 +10,12 @@ const sanitizeNode = (data, isNode = true, path = new Set()) => {
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
+    if (path.has(data)) return data
     path.add(data)
 
     const returnData = isPlainObject ? {} : []
     let anyFieldChanged = false
     _.each(data, (o, key) => {
-      if (path.has(o)) return
-
       if (isNode && key === `internal`) {
         returnData[key] = o
         return
@@ -32,8 +31,6 @@ const sanitizeNode = (data, isNode = true, path = new Set()) => {
       data = omitUndefined(returnData)
     }
 
-    path.add(data)
-
     // arrays and plain objects are supported - no need to to sanitize
     return data
   }
@@ -41,7 +38,6 @@ const sanitizeNode = (data, isNode = true, path = new Set()) => {
   if (!isTypeSupported(data)) {
     return undefined
   } else {
-    path.add(data)
     return data
   }
 }

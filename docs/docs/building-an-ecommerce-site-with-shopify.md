@@ -1,5 +1,5 @@
 ---
-title: Building an e-commerce site with Shopify
+title: Building an E-commerce site with Shopify
 ---
 
 In this tutorial, you will setup a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). The site displays a list of all products on a product listing page, and a page for every product in the store.
@@ -44,7 +44,7 @@ plugins: [
 
 ## Querying Shopify data and listing products
 
-Open the Gatsby GraphiQL interface by visiting <http://localhost:8000/___graphql>. With at least one example product added into Shopify you should see several new types of nodes in the Explorer tab, like `allShopifyProduct`. To query all products in your store sorted by title, try running the query:
+Open the Gatsby GraphiQL interface by visiting `http://localhost:8000/___graphql`. With at least one example product added into Shopify you should see several new types of nodes in the Explorer tab, like `allShopifyProduct`. To query all products in your store sorted by title, try running the query:
 
 ```graphql
 {

@@ -19,7 +19,7 @@ export const Intro = styled(Text)()
 Intro.defaultProps = {
   as: `p`,
   color: `text`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   fontSize: { xxs: 4, sm: 5 },
   fontWeight: `body`,
   lineHeight: `dense`,

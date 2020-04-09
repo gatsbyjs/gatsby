@@ -8,7 +8,7 @@ Once you have added Markdown pages to your site, you are just one step away from
 
 As described [here](/docs/adding-markdown-pages), you will have to create your posts in Markdown files which will look like this:
 
-```md
+```markdown
 ---
 path: "/blog/my-first-post"
 date: "2017-11-07"

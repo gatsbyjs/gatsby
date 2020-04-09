@@ -133,7 +133,7 @@ Finally, a result is returned.
 
 As queries are consumed from the queue and executed, their results are saved to redux and disk for consumption later on. This involves converting the result to pure JSON, and then saving it to its [dataPath](/docs/behind-the-scenes-terminology/#datapath). Which is relative to `public/static/d`. The data path includes the jsonName and hash. E.g: for the page `/blog/2018-07-17-announcing-gatsby-preview/`, the queries results would be saved to disk as something like:
 
-```
+```text
 /public/static/d/621/path---blog-2018-07-17-announcing-gatsby-preview-995-a74-dwfQIanOJGe2gi27a9CLKHjamc.json
 ```
 

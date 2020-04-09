@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const json2csv = require(`json2csv`)
 const os = require(`os`)
+const { cloneDeep } = require(`lodash`)
 
 const { onCreateNode } = require(`../gatsby-node`)
 const { typeNameFromDir, typeNameFromFile } = require(`../index`)
@@ -70,6 +71,66 @@ describe(`Process nodes correctly`, () => {
         createContentDigest,
       },
       { noheader: true }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  it(`allows other extensions to be used for input files`, async () => {
+    const tsvNode = cloneDeep(node)
+    tsvNode.extension = `ksv`
+    tsvNode.internal.mediaType = `text/ksv`
+    tsvNode.content = `blue\tfunny\ntrue\tyup\nfalse\tnope`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node: tsvNode,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      { noheader: true, extensions: [`ksv`], delimiter: `\t` }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  it(`passes through the delimiter option`, async () => {
+    const tsvNode = cloneDeep(node)
+    tsvNode.extension = `tsv`
+    tsvNode.internal.mediaType = `text/tsv`
+    tsvNode.content = `blue\tfunny\ntrue\tyup\nfalse\tnope`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node: tsvNode,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      { noheader: true, extensions: [`tsv`], delimiter: `\t` }
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()

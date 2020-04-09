@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 // Implement the Gatsby API “createPages”. This is

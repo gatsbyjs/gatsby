@@ -93,7 +93,7 @@ function findLocation(extractedMessage, def) {
   return location
 }
 
-function getCodeFrame(query: string, line?: number, column?: number) {
+export function getCodeFrame(query: string, line?: number, column?: number) {
   return codeFrameColumns(
     query,
     {
@@ -130,9 +130,16 @@ export function multipleRootQueriesError(
 ) {
   const name = def.name.value
   const otherName = otherDef.name.value
+  const field = def.selectionSet.selections[0].name.value
+  const otherField = otherDef.selectionSet.selections[0].name.value
   const unifiedName = `${_.camelCase(name)}And${_.upperFirst(
     _.camelCase(otherName)
   )}`
+
+  // colors are problematic for tests as we can different
+  // results depending on platform, so we don't
+  // highlight code for tests
+  const highlightCode = process.env.NODE_ENV !== `test`
 
   return {
     id: `85910`,
@@ -143,13 +150,13 @@ export function multipleRootQueriesError(
       beforeCodeFrame: codeFrameColumns(
         report.stripIndent`
         query ${otherName} {
-          bar {
+          ${field} {
             #...
           }
         }
 
         query ${name} {
-          foo {
+          ${otherField} {
             #...
           }
         }
@@ -162,15 +169,16 @@ export function multipleRootQueriesError(
         },
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
+          highlightCode,
         }
       ),
       afterCodeFrame: codeFrameColumns(
         report.stripIndent`
         query ${unifiedName} {
-          bar {
+          ${field} {
             #...
           }
-          foo {
+          ${otherField} {
             #...
           }
         }
@@ -183,6 +191,7 @@ export function multipleRootQueriesError(
         },
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
+          highlightCode,
         }
       ),
     },

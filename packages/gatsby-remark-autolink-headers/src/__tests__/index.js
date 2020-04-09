@@ -239,4 +239,18 @@ describe(`gatsby-remark-autolink-headers`, () => {
       },
     ])
   })
+  it(`adds places anchor after header when isIconAfterHeader prop is passed`, () => {
+    const markdownAST = remark.parse(`# Heading Uno`)
+
+    const isIconAfterHeader = true
+    const transformed = plugin({ markdownAST }, { isIconAfterHeader })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.hProperties.style).toContain(`position:relative`)
+      expect(node.children).toHaveLength(2)
+      expect(node.children[1].data.hProperties.class).toContain(`after`)
+
+      expect(node).toMatchSnapshot()
+    })
+  })
 })

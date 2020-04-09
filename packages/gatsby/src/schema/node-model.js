@@ -71,6 +71,21 @@ class LocalNodeModel {
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
+    this.replaceTypeKeyValueCache()
+  }
+
+  /**
+   * Replace the cache either with the value passed on (mainly for tests) or
+   * an empty new Map.
+   *
+   * @param {undefined | null | FiltersCache} map
+   *   (This cached is used in redux/nodes.js and caches a set of buckets (Sets)
+   *   of Nodes based on filter and tracks this for each set of types which are
+   *   actually queried. If the filter targets `id` directly, only one Node is
+   *   cached instead of a Set of Nodes. If null, don't create or use a cache.
+   */
+  replaceTypeKeyValueCache(map = new Map()) {
+    this._filtersCache = map // See redux/nodes.js for usage
   }
 
   withContext(context) {
@@ -186,7 +201,7 @@ class LocalNodeModel {
    * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies) {
-    const { query, firstOnly, type } = args || {}
+    const { query, firstOnly, type, stats } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -222,11 +237,13 @@ class LocalNodeModel {
       gqlType,
       resolvedFields: fieldsToResolve,
       nodeTypeNames,
+      filtersCache: this._filtersCache,
+      stats,
     })
 
     let result = queryResult
-    if (args.firstOnly) {
-      if (result && result.length > 0) {
+    if (firstOnly) {
+      if (result?.length > 0) {
         result = result[0]
         this.trackInlineObjectsInRootNode(result)
       } else {
@@ -334,7 +351,13 @@ class LocalNodeModel {
    */
   trackInlineObjectsInRootNode(node) {
     if (!this._trackedRootNodes.has(node.id)) {
-      addRootNodeToInlineObject(this._rootNodeMap, node, node.id, true)
+      addRootNodeToInlineObject(
+        this._rootNodeMap,
+        node,
+        node.id,
+        true,
+        new Set()
+      )
       this._trackedRootNodes.add(node.id)
     }
   }
@@ -703,18 +726,18 @@ const addRootNodeToInlineObject = (
   rootNodeMap,
   data,
   nodeId,
-  isNode = false,
-  path = new Set()
-) => {
-  path.add(data)
-
+  isNode /*: boolean */,
+  path /*: Set<mixed> */
+) /*: void */ => {
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
+    if (path.has(data)) return
+    path.add(data)
+
     _.each(data, (o, key) => {
-      if (path.has(o)) return
       if (!isNode || key !== `internal`) {
-        addRootNodeToInlineObject(rootNodeMap, o, nodeId)
+        addRootNodeToInlineObject(rootNodeMap, o, nodeId, false, path)
       }
     })
 

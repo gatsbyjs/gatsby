@@ -19,7 +19,7 @@ You can create a folder named `static` at the root of your project. Every file y
 
 You can reference assets from the `static` folder in your code without anything special required:
 
-```js
+```jsx
 render() {
   // Note: this is an escape hatch and should be used sparingly!
   // Normally we recommend using `import` for getting asset URLs

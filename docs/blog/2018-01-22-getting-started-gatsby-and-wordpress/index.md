@@ -85,7 +85,7 @@ module.exports = {
 
 ## Use the data to dynamically construct pages
 
-Once your source plugin is pulling data, you can construct your site pages by implementing the `createPages` API in `gatsby-node.js`. When this is called, your data has already been fetched and is available to query with GraphQL. Gatsby uses [GraphQL at build time](/docs/querying-with-graphql/#how-does-graphql-and-gatsby-work-together); Your source plugin (in this case, `gatsby-source-wordpress`) fetches your data, and Gatsby uses that data to "[automatically _infer_ a GraphQL schema](/docs/querying-with-graphql/#how-does-graphql-and-gatsby-work-together)" that you can query against.
+Once your source plugin is pulling data, you can construct your site pages by implementing the `createPages` API in `gatsby-node.js`. When this is called, your data has already been fetched and is available to query with GraphQL. Gatsby uses [GraphQL at build time](/docs/graphql-concepts/#how-do-graphql-and-gatsby-work-together); Your source plugin (in this case, `gatsby-source-wordpress`) fetches your data, and Gatsby uses that data to "[automatically _infer_ a GraphQL schema](/docs/graphql-concepts/#how-does-graphql-and-gatsby-work-together)" that you can query against.
 
 The `createPages` API exposes the `graphql` function:
 
@@ -129,7 +129,7 @@ So a template is a page component that we can use to programmatically create pag
 
 React components living in `src/pages` automatically become pages. The file name of a page maps to its site path. My site in its current state only has one good example of this — `src/pages/index.js` maps to [amberley.blog](https://amberley.blog/). If I had an 'about' page, it would live at `src/pages/about.js`, and map to [amberley.blog/about](https://amberley.blog/about). (Since that doesn't exist, it will actually end up hitting the only other page currently defined in my site, which is `src/pages/404.js` — ([read about 404 pages](/docs/add-404-page/)).
 
-If you include the "optional GraphQL query" noted above, the result of that query is automatically passed to the component on a `data` prop (`this.props.data`). ([Read more on GraphQL queries](/docs/querying-with-graphql/#what-does-a-graphql-query-look-like)).
+If you include the "optional GraphQL query" noted above, the result of that query is automatically passed to the component on a `data` prop (`this.props.data`). ([Read more on GraphQL queries](/docs/graphql-concepts/#what-does-a-graphql-query-look-like)).
 
 ## Onward
 

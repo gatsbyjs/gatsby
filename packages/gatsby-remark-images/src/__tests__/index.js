@@ -125,6 +125,25 @@ test(`it transforms images in markdown`, async () => {
   expect(node.value).not.toMatch(`<html>`)
 })
 
+test(`it transforms images in markdown with the "withWebp" option`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath), {
+    withWebp: true,
+  })
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
 test(`it transforms multiple images in markdown`, async () => {
   const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
 

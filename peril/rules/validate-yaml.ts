@@ -11,7 +11,7 @@ const githubRepoRegex: RegExp = new RegExp(
 
 const getExistingFiles = async (path: string, base: string) => {
   const [owner, repo] = danger.github.pr.head.repo.full_name.split("/")
-  const imagesDirReponse: {
+  const imagesDirResponse: {
     data: { name: string }[]
   } = await danger.github.api.repos.getContent({
     repo,
@@ -19,7 +19,7 @@ const getExistingFiles = async (path: string, base: string) => {
     path,
     ref: danger.github.pr.head.ref,
   })
-  const files = imagesDirReponse.data.map(({ name }) => `${base}/${name}`)
+  const files = imagesDirResponse.data.map(({ name }) => `${base}/${name}`)
   return files
 }
 
@@ -108,6 +108,34 @@ const getSitesSchema = categories => {
     .unique("main_url")
 }
 
+const getCreatorsSchema = async () => {
+  return Joi.array()
+    .items(
+      Joi.object().keys({
+        name: Joi.string().required(),
+        type: Joi.string()
+          .valid(["individual", "agency", "company"])
+          .required(),
+        description: Joi.string(),
+        location: Joi.string(),
+        // need to explicitly allow `null` to not fail on github: null fields
+        github: Joi.string()
+          .uri(uriOptions)
+          .allow(null),
+        website: Joi.string().uri(uriOptions),
+        for_hire: Joi.boolean(),
+        portfolio: Joi.boolean(),
+        hiring: Joi.boolean(),
+        image: customJoi
+          .string()
+          .supportedExtension(supportedImageExts)
+          .fileExists(await getExistingFiles("docs/community/images", "images"))
+          .required(),
+      })
+    )
+    .unique("name")
+}
+
 const getAuthorsSchema = async () => {
   return Joi.array()
     .items(
@@ -151,6 +179,7 @@ const getStartersSchema = categories => {
 
 const fileSchemas = {
   "docs/sites.yml": getSitesSchema,
+  "docs/community/creators.yml": getCreatorsSchema,
   "docs/blog/author.yaml": getAuthorsSchema,
   "docs/starters.yml": getStartersSchema,
 }

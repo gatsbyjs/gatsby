@@ -21,6 +21,7 @@ module.exports = (
     maintainCase = false,
     removeAccents = false,
     enableCustomId = false,
+    isIconAfterHeader = false,
   }
 ) => {
   slugs.reset()
@@ -53,10 +54,12 @@ module.exports = (
     patch(data, `hProperties`, {})
     patch(data.htmlAttributes, `id`, id)
     patch(data.hProperties, `id`, id)
+    patch(data.hProperties, `style`, `position:relative;`)
 
     if (icon !== false) {
       const label = id.split(`-`).join(` `)
-      node.children.unshift({
+      const method = isIconAfterHeader ? `push` : `unshift`
+      node.children[method]({
         type: `link`,
         url: `#${id}`,
         title: null,
@@ -64,7 +67,7 @@ module.exports = (
         data: {
           hProperties: {
             "aria-label": `${label} permalink`,
-            class: className,
+            class: `${className} ${isIconAfterHeader ? `after` : `before`}`,
           },
           hChildren: [
             {

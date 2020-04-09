@@ -24,7 +24,10 @@ type Directory implements Node {
   children: [Node!]!
   internal: Internal!
   absolutePath: String
+  contents: [FileOrDirectory!]!
 }
+
+union FileOrDirectory = File | Directory
 
 type DirectoryConnection {
   totalCount: Int!

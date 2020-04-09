@@ -62,7 +62,7 @@ plugins: [
 
 ## dynamic wrapperStyle example
 
-```
+```javascript
 {
   resolve: `gatsby-remark-images`,
   options: {

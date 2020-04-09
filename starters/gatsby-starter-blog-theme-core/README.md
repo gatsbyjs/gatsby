@@ -33,20 +33,20 @@ Quickly get started using the Gatsby blog core theme! This starter creates a new
 
     Your site is now running at `http://localhost:8000`!
 
-    To get started, check out the guide to [using the Gatsby blog theme starter](http://gatsbyjs.org/docs/themes/using-a-gatsby-theme), or the longer, [more detailed tutorial](http://gatsbyjs.org/tutorial/using-a-theme).
+    To get started, check out the guide to [using the Gatsby blog theme starter](https://gatsbyjs.org/docs/themes/using-a-gatsby-theme), or the longer, [more detailed tutorial](https://gatsbyjs.org/tutorial/using-a-theme).
 
 ## 🧐 What's inside?
 
 Here are the top-level files and directories you'll see in a site created using the blog theme starter:
 
-```
+```text
 gatsby-starter-blog-theme-core
 ├── content
-│ ├── assets
-│ │ └── avatar.png
-│ └── posts
-│ ├── hello-world.mdx
-│ └── my-second-post.mdx
+│   ├── assets
+│   │   └── avatar.png
+│   └── posts
+│       ├── hello-world.mdx
+│       └── my-second-post.mdx
 ├── .gitignore
 ├── .prettierrc
 ├── gatsby-config.js

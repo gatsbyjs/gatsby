@@ -195,7 +195,7 @@ async function sqipContentful({ type, cache, store }) {
           file: { contentType },
         } = asset
 
-        if (contentType.includes(`image/`)) {
+        if (!contentType.includes(`image/`)) {
           return null
         }
 

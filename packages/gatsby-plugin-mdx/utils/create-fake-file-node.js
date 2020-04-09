@@ -1,9 +1,8 @@
-const { slash } = require(`gatsby-core-utils`)
+const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const path = require(`path`)
 const fs = require(`fs`)
 const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
-const crypto = require(`crypto`)
 const md5File = require(`md5-file`)
 
 exports.createFileNode = async (
@@ -26,14 +25,11 @@ exports.createFileNode = async (
   const stats = fs.statSync(slashedFile.absolutePath)
   let internal
   if (stats.isDirectory()) {
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(
-        JSON.stringify({ stats: stats, absolutePath: slashedFile.absolutePath })
-      )
-      .digest(`hex`)
     internal = {
-      contentDigest,
+      contentDigest: createContentDigest({
+        stats: stats,
+        absolutePath: slashedFile.absolutePath,
+      }),
       type: `Directory`,
       description: `Directory "${path.relative(process.cwd(), slashed)}"`,
     }

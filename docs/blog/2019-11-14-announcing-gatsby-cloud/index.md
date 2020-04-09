@@ -28,13 +28,21 @@ We want Gatsby Cloud to be used by everyone. [Our pricing structure includes a f
 Jay Hostan, a senior product developer at global coffeehouse chain [Costa Coffee](https://www.costacoffee.com/), told us:
 
 <Pullquote>
-Deciding to use Gatsby Preview as a paid feature of Gatsby Cloud was a no brainer and has added a lot of value to our workflow. Before, we were building staging pipelines by hand. Preview allows our team to see content changes immediately, creating a tighter feedback loop so we can launch faster. It's enabled us to shift a lot of our focus to strategic projects and feature development.
+  Deciding to use Gatsby Preview as a paid feature of Gatsby Cloud was a no
+  brainer and has added a lot of value to our workflow. Before, we were building
+  staging pipelines by hand. Preview allows our team to see content changes
+  immediately, creating a tighter feedback loop so we can launch faster. It's
+  enabled us to shift a lot of our focus to strategic projects and feature
+  development.
 </Pullquote>
 
 Brian Webster, co-founder of the graphic and web design firm [Delicious Simplicity](https://www.delicious-simplicity.com/) with several clients on Gatsby Cloud said:
 
 <Pullquote>
-I love how Gatsby makes it possible to harness the power of React components, headless CMS architecture, and that it's a much more delightful workflow for developers. Now that we can use Gatsby Cloud features like Preview, our content-creator clients get an equally powerful yet simple workflow.
+  I love how Gatsby makes it possible to harness the power of React components,
+  headless CMS architecture, and that it's a much more delightful workflow for
+  developers. Now that we can use Gatsby Cloud features like Preview, our
+  content-creator clients get an equally powerful yet simple workflow.
 </Pullquote>
 
 ## Why Gatsby Cloud?
@@ -82,7 +90,7 @@ Preview offers a private playground for developers, designers, marketers, and co
 
 Preview has been in beta since May, and we've welcomed over 1000 beta testers and are near our 100th customer. Thank you to everyone who's helped test and support Preview! We've learned a lot from our beta users and customers.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/AmkI2iH6c40" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/AmkI2iH6c40
 
 ## Gatsby Cloud Builds (in Private Beta)
 

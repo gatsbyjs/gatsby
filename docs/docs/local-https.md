@@ -27,9 +27,9 @@ After typing in your password, `devcert` will attempt to install some software n
     See https://github.com/davewasmer/devcert#how-it-works for more details
     -- Press <Enter> once you finish the Firefox prompts --
 
-If you wish to support Firefox (or Chrome on Linux), visit [localhost:52175](http://localhost:52175) in Firefox and follow the point-and-click wizard. Otherwise, you may press enter without following the prompts. **Reminder: you'll only need to do this once per machine.**
+If you wish to support Firefox (or Chrome on Linux), visit `http://localhost:52175` in Firefox and follow the point-and-click wizard. Otherwise, you may press enter without following the prompts. **Reminder: you'll only need to do this once per machine.**
 
-Now open the development server at [https://localhost:8000](https://localhost:8000) and enjoy the HTTPS goodness ✨. Of course, you may change the port according to your setup.
+Now open the development server at `https://localhost:8000` and enjoy the HTTPS goodness ✨. Of course, you may change the port according to your setup.
 
 Find out more about [how devcert works](https://github.com/davewasmer/devcert#how-it-works).
 
@@ -47,7 +47,7 @@ If you need to use a custom https setup, you can pass the `--https`, `--key-file
 See the example command:
 
 ```shell
-$ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt
+gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt
 ```
 
 in most cases, the `--https` passed by itself is easier and more convenient to get local https.

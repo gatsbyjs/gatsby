@@ -6,6 +6,7 @@ const {
   GraphQLUnionType,
   GraphQLBoolean,
   printType,
+  printSchema,
 } = require(`graphql`)
 const { SchemaComposer } = require(`graphql-compose`)
 jest.mock(`../../utils/api-runner-node`)
@@ -46,6 +47,17 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 
 const report = require(`gatsby-cli/lib/reporter`)
 afterEach(() => report.warn.mockClear())
+
+describe(`Built-in types`, () => {
+  beforeEach(async () => {
+    store.dispatch({ type: `DELETE_CACHE` })
+  })
+
+  it(`includes built-in types`, async () => {
+    const schema = await buildSchema()
+    expect(printSchema(schema)).toMatchSnapshot()
+  })
+})
 
 describe(`Build schema`, () => {
   beforeAll(() => {

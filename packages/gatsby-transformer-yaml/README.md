@@ -80,7 +80,7 @@ parent directory.
 
 For example, let's say your project has a data layout like:
 
-```
+```text
 data/
     letters/
         a.yml
@@ -120,7 +120,7 @@ Then the following three nodes would be created.
 
 ## How to query
 
-You can query the nodes using GraphQL, like from the GraphiQL browser: `localhost:8000/___graphql`.
+You can query the nodes using GraphQL, like from the GraphiQL browser: `http://localhost:8000/___graphql`.
 
 Regardless of whether you choose to structure your data in arrays of objects or
 single objects, you'd be able to query your letters like:

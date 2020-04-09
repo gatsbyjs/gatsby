@@ -14,7 +14,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "heading uno permalink",
-          "class": "anchor",
+          "class": "anchor before",
         },
       },
       "title": null,
@@ -42,6 +42,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "heading-uno",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "heading-uno",
@@ -80,7 +81,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "heading uno permalink",
-          "class": "custom-class",
+          "class": "custom-class before",
         },
       },
       "title": null,
@@ -108,6 +109,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "heading-uno",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "heading-uno",
@@ -146,7 +148,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "heading uno permalink",
-          "class": "anchor",
+          "class": "anchor before",
         },
       },
       "title": null,
@@ -174,6 +176,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "heading-uno",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "heading-uno",
@@ -222,6 +225,74 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "heading-uno",
+      "style": "position:relative;",
+    },
+    "htmlAttributes": Object {
+      "id": "heading-uno",
+    },
+    "id": "heading-uno",
+  },
+  "depth": 1,
+  "position": Position {
+    "end": Object {
+      "column": 14,
+      "line": 1,
+      "offset": 13,
+    },
+    "indent": Array [],
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "heading",
+}
+`;
+
+exports[`gatsby-remark-autolink-headers adds places anchor after header when isIconAfterHeader prop is passed 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "position": Position {
+        "end": Object {
+          "column": 14,
+          "line": 1,
+          "offset": 13,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 3,
+          "line": 1,
+          "offset": 2,
+        },
+      },
+      "type": "text",
+      "value": "Heading Uno",
+    },
+    Object {
+      "children": Array [],
+      "data": Object {
+        "hChildren": Array [
+          Object {
+            "type": "raw",
+            "value": "<svg aria-hidden=\\"true\\" focusable=\\"false\\" height=\\"16\\" version=\\"1.1\\" viewBox=\\"0 0 16 16\\" width=\\"16\\"><path fill-rule=\\"evenodd\\" d=\\"M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z\\"></path></svg>",
+          },
+        ],
+        "hProperties": Object {
+          "aria-label": "heading uno permalink",
+          "class": "anchor after",
+        },
+      },
+      "title": null,
+      "type": "link",
+      "url": "#heading-uno",
+    },
+  ],
+  "data": Object {
+    "hProperties": Object {
+      "id": "heading-uno",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "heading-uno",
@@ -260,7 +331,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "Heading One permalink",
-          "class": "anchor",
+          "class": "anchor before",
         },
       },
       "title": null,
@@ -288,6 +359,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "Heading-One",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "Heading-One",
@@ -326,7 +398,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "Heading Two permalink",
-          "class": "anchor",
+          "class": "anchor before",
         },
       },
       "title": null,
@@ -354,6 +426,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "Heading-Two",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "Heading-Two",
@@ -392,7 +465,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "Heading Three permalink",
-          "class": "anchor",
+          "class": "anchor before",
         },
       },
       "title": null,
@@ -420,6 +493,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "Heading-Three",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "Heading-Three",

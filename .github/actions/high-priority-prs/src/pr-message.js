@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const arrayToSentence = require(`array-to-sentence`)
-const distanceInWords = require(`date-fns/distance_in_words`)
-const parse = require(`date-fns/parse`)
+const formatDistance = require(`date-fns/formatDistance`)
+const parseISO = require(`date-fns/parseISO`)
 
 // Format a message for Slack's block kit: https://api.slack.com/tools/block-kit-builder
 module.exports = (queues, maintainers, now = new Date()) => {
@@ -18,15 +18,9 @@ module.exports = (queues, maintainers, now = new Date()) => {
 
   Object.keys(queues).forEach(key => {
     const messages = {
-      noMaintainers: `[${
-        queues[key].length
-      }] *_PRs with no responses from maintainers_*`,
-      commitsSinceLastComment: `[${
-        queues[key].length
-      }] *_PRs with new commits awaiting review_*`,
-      lonelyPrs: `[${
-        queues[key].length
-      }] *_PRs that were updated more than 30 days ago_*`,
+      noMaintainers: `[${queues[key].length}] *_PRs with no responses from maintainers_*`,
+      commitsSinceLastComment: `[${queues[key].length}] *_PRs with new commits awaiting review_*`,
+      lonelyPrs: `[${queues[key].length}] *_PRs that were updated more than 30 days ago_*`,
     }
 
     report.push({
@@ -57,8 +51,8 @@ module.exports = (queues, maintainers, now = new Date()) => {
           : ""
 
       // console.log({ participated })
-      const createdAgo = distanceInWords(parse(pr.createdAt), now)
-      const updatedAgo = distanceInWords(parse(pr.updatedAt), now)
+      const createdAgo = formatDistance(now, parseISO(pr.createdAt))
+      const updatedAgo = formatDistance(now, parseISO(pr.updatedAt))
       text += `${i + 1 + `. `}*<${pr.url}|${
         pr.title
       }>* — _created_ ${createdAgo} ago — _updated_ ${updatedAgo} ago ${participatedStr}\n`

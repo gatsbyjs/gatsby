@@ -56,7 +56,7 @@ module.exports = {
         // Indicates whether the site is hosted on wordpress.com.
         // If false, then the assumption is made that the site is self hosted.
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
-        // If your site is hosted on wordpress.org, then set this to false.
+        // If your site is hosted on wordpress.com, then set this to true.
         hostingWPCOM: false,
         // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
         // This feature is untested for sites hosted on WordPress.com
@@ -129,7 +129,7 @@ Run:
 npm run develop
 ```
 
-Open localhost:8000 and localhost:8000/\_\_\_graphql.
+Open `http://localhost:8000` and `http://localhost:8000/___graphql`.
 
 Here’s an example of creating specific widths and heights for images:
 

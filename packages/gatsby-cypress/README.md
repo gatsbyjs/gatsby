@@ -41,7 +41,7 @@ Once imported, the following additional commands are available:
   cy.getTestElement("btn-to-test").click()
   ```
 
-  > **NOTE:** It’s recommended not to use test IDs. Instead, consider using [`cypress-testing-library`](https://github.com/kentcdodds/cypress-testing-library) and relying on `getByText` instead.
+  > **NOTE:** It’s recommended not to use test IDs. Instead, consider using [`cypress-testing-library`](https://github.com/testing-library/cypress-testing-library) and relying on `findByText` instead.
 
 ## Running Cypress tests in Gatsby
 
@@ -72,7 +72,7 @@ context("Homepage", () => {
   })
 
   it("has focusable buttons", () => {
-    cy.getByText("click me").focus()
+    cy.findByText("click me").focus()
     cy.focused().should("have.text", "click me")
   })
 })

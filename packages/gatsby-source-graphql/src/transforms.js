@@ -1,16 +1,10 @@
+const { GraphQLObjectType, GraphQLNonNull } = require(`gatsby/graphql`)
 const {
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLSchema,
-} = require(`gatsby/graphql`)
-const {
-  visitSchema,
   VisitSchemaKind,
-} = require(`graphql-tools/dist/transforms/visitSchema`)
-const {
-  createResolveType,
-  fieldMapToFieldConfigMap,
-} = require(`graphql-tools/dist/stitching/schemaRecreation`)
+  cloneType,
+  healSchema,
+  visitSchema,
+} = require(`graphql-tools-fork`)
 
 class NamespaceUnderFieldTransform {
   constructor({ typeName, fieldName, resolver }) {
@@ -21,23 +15,14 @@ class NamespaceUnderFieldTransform {
 
   transformSchema(schema) {
     const query = schema.getQueryType()
-    let newQuery
-    const nestedType = new GraphQLObjectType({
-      name: this.typeName,
-      fields: () =>
-        fieldMapToFieldConfigMap(
-          query.getFields(),
-          createResolveType(typeName => {
-            if (typeName === query.name) {
-              return newQuery
-            } else {
-              return schema.getType(typeName)
-            }
-          }),
-          true
-        ),
-    })
-    newQuery = new GraphQLObjectType({
+
+    const nestedType = new cloneType(query)
+    nestedType.name = this.typeName
+
+    const typeMap = schema.getTypeMap()
+    typeMap[this.typeName] = nestedType
+
+    const newQuery = new GraphQLObjectType({
       name: query.name,
       fields: {
         [this.fieldName]: {
@@ -52,15 +37,9 @@ class NamespaceUnderFieldTransform {
         },
       },
     })
-    const typeMap = schema.getTypeMap()
-    const allTypes = Object.keys(typeMap)
-      .filter(name => name !== query.name)
-      .map(key => typeMap[key])
+    typeMap[query.name] = newQuery
 
-    return new GraphQLSchema({
-      query: newQuery,
-      types: allTypes,
-    })
+    return healSchema(schema)
   }
 }
 

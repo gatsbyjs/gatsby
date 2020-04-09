@@ -20,7 +20,7 @@ Gentics Mesh is a self-hosted CMS. You can run it for example via [Docker](https
 docker run -p 8080:8080 -d gentics/mesh-demo
 ```
 
-The demo Gentics server that gets setup has a UI that can be accessed on <http://localhost:8080/mesh-ui/> with default login (username: admin, password: admin). It allows you to view the content stored on the CMS and add new content.
+The demo Gentics server that gets setup has a UI that can be accessed on `http://localhost:8080/mesh-ui/` with default login (username: admin, password: admin). It allows you to view the content stored on the CMS and add new content.
 
 ### Install the boilerplate
 
@@ -67,7 +67,7 @@ If everything works correctly, you should now have your Gentics Mesh API added t
 
 From the root of your project, run the development environment with `gatsby develop`. Once the server has started, you should be able to open the following URL in your browser:
 
-<http://localhost:8000/___graphql>
+`http://localhost:8000/___graphql`
 
 This will show you an interface where you can test your new content GraphQL API.
 
@@ -135,7 +135,7 @@ You can read more about how to use the GraphQL API in the [Gentics Mesh docs](ht
 
 For the purpose of this guide I've removed all the layout, SEO, link or other components in the Gatsby starter `index.js` file. Open the index file located at `src/pages/index.js` and replace the content with this code:
 
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { StaticQuery } from "gatsby"
 
@@ -180,7 +180,7 @@ const IndexPage = () => (
 export default IndexPage
 ```
 
-Once saved you can access the page via <http://localhost:8000>
+Once saved you can access the page via `http://localhost:8000`
 
 You now have:
 

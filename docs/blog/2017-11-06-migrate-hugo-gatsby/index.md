@@ -172,7 +172,7 @@ Steps were:
 Add `gatsby-plugin-typography` and `typography-theme-moraga` (for example) and
 "enable" the plugin in the `gatsby-config.js` file:
 
-```javascript=
+```javascript
 {
   resolve: `gatsby-plugin-typography`,
   options: {
@@ -183,7 +183,7 @@ Add `gatsby-plugin-typography` and `typography-theme-moraga` (for example) and
 
 In `src/utils/typograhy` add:
 
-```javascript=
+```javascript
 import Typography from "typography"
 import theme from "typography-theme-moraga"
 

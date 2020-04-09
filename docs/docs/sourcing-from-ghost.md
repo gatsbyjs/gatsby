@@ -65,7 +65,6 @@ There are several ways to structure queries depending on how you prefer to work,
 const path = require(`path`)
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions
   const postTemplate = path.resolve(`./src/templates/post.js`)
 
   // Query Ghost data
@@ -96,9 +95,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   items.forEach(({ node }) => {
     node.url = `/${node.slug}/`
 
-    createPage({
+    actions.createPage({
       path: node.url,
-      component: path.resolve(postTemplate),
+      component: postTemplate,
       context: {
         slug: node.slug,
       },
@@ -117,7 +116,7 @@ The code above will create pages in the root of the site at `/`, with the path b
 
 Then, within the `post.js` template, you can determine exactly how and where you want to output data on each page. Again, you'll use GraphQL to query individual fields, so a simple example looks something like this:
 
-```javascript:title=templates/post.js
+```jsx:title=templates/post.js
 import React from "react"
 import { graphql } from "gatsby"
 

@@ -39,6 +39,19 @@ const generateQueryName = ({ def, hash, file }) => {
   return def
 }
 
+function isUseStaticQuery(path) {
+  return (
+    (path.node.callee.type === `MemberExpression` &&
+      path.node.callee.property.name === `useStaticQuery` &&
+      path
+        .get(`callee`)
+        .get(`object`)
+        .referencesImport(`gatsby`)) ||
+    (path.node.callee.name === `useStaticQuery` &&
+      path.get(`callee`).referencesImport(`gatsby`))
+  )
+}
+
 const warnForUnknownQueryVariable = (varName, file, usageFunction) =>
   report.warn(
     `\nWe were unable to find the declaration of variable "${varName}", which you passed as the "query" prop into the ${usageFunction} declaration in "${file}".
@@ -257,12 +270,7 @@ async function findGraphQLTags(
         // Look for queries in useStaticQuery hooks.
         traverse(ast, {
           CallExpression(hookPath) {
-            if (
-              hookPath.node.callee.name !== `useStaticQuery` ||
-              !hookPath.get(`callee`).referencesImport(`gatsby`)
-            ) {
-              return
-            }
+            if (!isUseStaticQuery(hookPath)) return
 
             const firstArg = hookPath.get(`arguments`)[0]
 
@@ -301,49 +309,76 @@ async function findGraphQLTags(
           },
         })
 
-        // Look for exported page queries
+        function TaggedTemplateExpression(innerPath) {
+          const { ast: gqlAst, isGlobal, hash, text } = getGraphQLTag(innerPath)
+          if (!gqlAst) return
+
+          if (isGlobal) warnForGlobalTag(file)
+
+          gqlAst.definitions.forEach(def => {
+            generateQueryName({
+              def,
+              hash,
+              file,
+            })
+          })
+
+          let templateLoc
+          innerPath.traverse({
+            TemplateElement(templateElementPath) {
+              templateLoc = templateElementPath.node.loc
+            },
+          })
+
+          const docInFile = {
+            filePath: file,
+            doc: gqlAst,
+            text: text,
+            hash: hash,
+            isStaticQuery: false,
+            isHook: false,
+            templateLoc,
+          }
+
+          documentLocations.set(
+            docInFile,
+            `${innerPath.node.start}-${gqlAst.loc.start}`
+          )
+
+          documents.push(docInFile)
+        }
+
+        function followVariableDeclarations(binding) {
+          const node = binding.path?.node
+          if (
+            node &&
+            node.type === `VariableDeclarator` &&
+            node.id.type === `Identifier` &&
+            node.init.type === `Identifier`
+          ) {
+            return followVariableDeclarations(
+              binding.path.scope.getBinding(node.init.name)
+            )
+          }
+          return binding
+        }
+
+        // When a component has a StaticQuery we scan all of its exports and follow those exported variables
+        // to determine if they lead to this static query (via tagged template literal)
         traverse(ast, {
           ExportNamedDeclaration(path, state) {
+            // Skipping the edge case of re-exporting (i.e. "export { bar } from 'Bar'")
+            // (it is handled elsewhere for queries, see usages of warnForUnknownQueryVariable)
+            if (path.node.source) {
+              return
+            }
             path.traverse({
-              TaggedTemplateExpression(innerPath) {
-                const { ast: gqlAst, isGlobal, hash, text } = getGraphQLTag(
-                  innerPath
+              TaggedTemplateExpression,
+              ExportSpecifier(path) {
+                const binding = followVariableDeclarations(
+                  path.scope.getBinding(path.node.local.name)
                 )
-                if (!gqlAst) return
-
-                if (isGlobal) warnForGlobalTag(file)
-
-                gqlAst.definitions.forEach(def => {
-                  generateQueryName({
-                    def,
-                    hash,
-                    file,
-                  })
-                })
-
-                let templateLoc
-                innerPath.traverse({
-                  TemplateElement(templateElementPath) {
-                    templateLoc = templateElementPath.node.loc
-                  },
-                })
-
-                const docInFile = {
-                  filePath: file,
-                  doc: gqlAst,
-                  text: text,
-                  hash: hash,
-                  isStaticQuery: false,
-                  isHook: false,
-                  templateLoc,
-                }
-
-                documentLocations.set(
-                  docInFile,
-                  `${innerPath.node.start}-${gqlAst.loc.start}`
-                )
-
-                documents.push(docInFile)
+                binding.path.traverse({ TaggedTemplateExpression })
               },
             })
           },

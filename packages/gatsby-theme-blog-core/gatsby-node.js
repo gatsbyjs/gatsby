@@ -1,10 +1,9 @@
 const fs = require(`fs`)
 const path = require(`path`)
 const mkdirp = require(`mkdirp`)
-const crypto = require(`crypto`)
 const Debug = require(`debug`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
-const { urlResolve } = require(`gatsby-core-utils`)
+const { urlResolve, createContentDigest } = require(`gatsby-core-utils`)
 
 const debug = Debug(`gatsby-theme-blog-core`)
 const withDefaults = require(`./utils/default-options`)
@@ -148,10 +147,7 @@ exports.onCreateNode = async (
       children: [],
       internal: {
         type: `MdxBlogPost`,
-        contentDigest: crypto
-          .createHash(`md5`)
-          .update(JSON.stringify(fieldData))
-          .digest(`hex`),
+        contentDigest: createContentDigest(fieldData),
         content: JSON.stringify(fieldData),
         description: `Mdx implementation of the BlogPost interface`,
       },

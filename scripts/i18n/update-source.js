@@ -14,8 +14,7 @@ const owner = `gatsbyjs`
 // Repo to be used as basis for translations
 const sourceRepo = `gatsby-i18n-source`
 
-// const branch = `master`
-const branch = `test-update` // test branch
+const branch = `master`
 
 const sourceRepoUrl = `${protocol}${process.env.GITHUB_API_TOKEN}@${host}/${owner}/${sourceRepo}.git`
 

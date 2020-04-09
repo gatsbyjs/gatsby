@@ -21,6 +21,13 @@ describe(`StaticQuery behavior`, () => {
       .should(`not.contain`, `Loading`)
   })
 
+  it(`works when used in wrapRootElement API`, () => {
+    cy.getTestElement(`wrap-root-element-result`)
+      .invoke(`text`)
+      .should(`not.contain`, `Loading`)
+      .should(`contain`, `Gatsby Default Starter`)
+  })
+
   describe(`useStaticQuery`, () => {
     it(`works with inline query`, () => {
       cy.getTestElement(`use-static-query-inline`)

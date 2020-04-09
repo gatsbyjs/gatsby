@@ -10,7 +10,7 @@ module.exports = {
       },
     },
     // used to generate rewrites for client only paths
-    // on demo hosted on netlify
+    // on demo hosted on Netlify
     `gatsby-plugin-netlify`,
   ],
 }

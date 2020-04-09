@@ -47,7 +47,7 @@ We know it’s particularly frustrating if something fails to build but there’
 
 See how you can troubleshoot and add or remove contributors:
 
-<iframe width="560" height="315" title="Video: Gatsby Preview Settings Options" src="https://www.youtube.com/embed/kN5vrRVD_6Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/kN5vrRVD_6Q
 
 ## How to sign up
 
@@ -63,4 +63,4 @@ The initial invites for the closed beta have just gone out! We’ll be talking d
 
 Curious to see Gatsby Preview in action? Watch our short demo to see how it works:
 
-<iframe width="560" height="315" title="Video: Gatsby Preview and Contentful demo" src="https://www.youtube.com/embed/RrQi6W_8SVQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/RrQi6W_8SVQ

@@ -1,7 +1,7 @@
 import { capitalize } from "lodash-es"
 
 import { colorable } from "../../utils/guidelines/color"
-import { colors } from "../../gatsby-plugin-theme-ui"
+import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // Palette meta information
 const meta = {

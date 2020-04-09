@@ -63,7 +63,7 @@ Here are suggested changes to your code if you are using schema customization al
 1. Add resolver directives to fields
 2. Add `@infer` or `@dontInfer` to your type if you don't have it already
 
-```graphql:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
   const { createTypes } = actions
 
@@ -77,7 +77,7 @@ exports.sourceNodes = function sourceNodes({ actions }) {
 }
 ```
 
-```graphql:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
   const { createTypes } = actions
 
@@ -107,7 +107,7 @@ Add resolver and resolver options (such as arguments) to the given field. There 
   characters that are invalid in GraphQL, `proxy` allows to explicitly
   proxy those properties to fields with valid field names. Takes a `from` arg.
 
-```graphql:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
   const { createTypes } = actions
 

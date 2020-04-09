@@ -27,7 +27,7 @@ module.exports = {
 
 # Options
 
-You can pass options to the plugin, see the [Styled Components docs](https://www.styled-components.com/docs/tooling#babel-plugin) for a full list of options.
+You can pass options to the plugin, see the [Styled Components docs](https://styled-components.com/docs/tooling#babel-plugin) for a full list of options.
 
 For example, to disable the `displayName` option:
 

@@ -26,7 +26,7 @@ npm outdated
 
 This will output a table indicating which packages have new versions available and what is the latest version for each one.
 
-```
+```shell
 Package                            Current   Wanted   Latest  Location
 gatsby                             2.15.13  2.15.13  2.15.20
 ```
