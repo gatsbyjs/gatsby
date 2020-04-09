@@ -146,7 +146,7 @@ module.exports = {
 };
 ```
 
-> In `gatsby-config.js`, responsive breakpoints can be created for each image, use the fluidMaxWidth and fluidMinWidth options to set them. Here is a [link to the offical documentation](https://www.npmjs.com/package/gatsby-transformer-cloudinary#api) for more information on how these parameters can be set. 
+> In `gatsby-config.js`, responsive breakpoints can be created for each image, use the `fluidMaxWidth` and `fluidMinWidth` options to set them. Take a look at the [plugin documentation](https://www.npmjs.com/package/gatsby-transformer-cloudinary#api) for more information on how these parameters can be set. 
 
 ## Additional resources
 
