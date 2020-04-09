@@ -30,7 +30,7 @@ function getLanguages(localeStr) {
   return langs
 }
 
-const langs = getLanguages(process.env.LOCALES)
+const langs = getLanguages(`ja id es pl pt-BR zh-Hans`)
 const langCodes = langs.map(lang => lang.code)
 
 function isDefaultLang(locale) {
