@@ -46,7 +46,7 @@ async function graphql(query, params) {
     return await graphqlWithAuth(query, params)
   } catch (error) {
     logger.error(error.message)
-    process.exit(1)
+    return process.exit(1)
   }
 }
 
