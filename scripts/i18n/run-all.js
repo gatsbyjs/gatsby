@@ -8,7 +8,7 @@ require(`dotenv`).config()
 
 function runAll(script) {
   if (!script) {
-    logger.error(`Please provide a script name`)
+    logger.error(`Usage: yarn run-all <script-name>`)
     process.exit(1)
   }
   const langs = JSON.parse(fs.readFileSync(`../../www/i18n.json`))
