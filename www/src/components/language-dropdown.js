@@ -1,16 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import {
-  Menu,
-  MenuButton,
-  MenuPopover,
-  MenuItems,
-  MenuLink,
-} from "@reach/menu-button"
 import { MdTranslate } from "react-icons/md"
 import { Link } from "gatsby"
 import LocalizedLink from "./localized-link"
-import "@reach/menu-button/styles.css"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { useLocale } from "./I18nContext"
 
@@ -38,9 +30,11 @@ const allLangs = [
 ]
 
 const menuLinkStyles = {
+  color: "black",
+  width: `100%`,
   px: 6,
   py: 3,
-  "&[data-selected]": {
+  ":hover": {
     bg: `sidebar.itemHoverBackground`,
     color: `navigation.linkHover`,
   },
@@ -49,36 +43,25 @@ const menuLinkStyles = {
 function LangLink({ code, name, localName, current, pathname }) {
   const { basePath } = getLocaleAndBasePath(pathname)
   return (
-    <MenuLink as={Link} to={localizedPath(code, basePath)} sx={menuLinkStyles}>
+    <Link to={localizedPath(code, basePath)} sx={menuLinkStyles}>
       <span
         sx={{
           fontWeight: current && `semiBold`,
           color: current && `navigation.linkHover`,
         }}
       >
-        {name}
+        {localName}
       </span>
-      <span sx={{ ml: 2, color: `textMuted`, fontSize: 1 }}>{localName}</span>
-    </MenuLink>
+      <span sx={{ ml: 2, color: `textMuted`, fontSize: 2 }}>{name}</span>
+    </Link>
   )
-}
-
-// We want the menu to go on the bottom right.
-// This is taken from the Reach source code here:
-// https://github.com/reach/reach-ui/blob/master/packages/popover/src/index.tsx#L101
-const menuPosition = (targetRect, popoverRect) => {
-  return {
-    position: `fixed`,
-    left: `${targetRect.right - popoverRect.width + window.pageXOffset}px`,
-    top: `${targetRect.top + targetRect.height}px`,
-  }
 }
 
 export default function LanguageDropdown({ pathname }) {
   const locale = useLocale()
   return (
-    <Menu>
-      <MenuButton
+    <div sx={{ position: `relative` }}>
+      <button
         sx={{
           border: 0,
           background: `none`,
@@ -88,29 +71,32 @@ export default function LanguageDropdown({ pathname }) {
         }}
       >
         <MdTranslate /> Languages
-      </MenuButton>
-      <MenuPopover position={menuPosition}>
-        <MenuItems
-          sx={{
-            py: 0,
-            fontSize: 2,
-            width: `16rem`,
-            bg: `background`,
-            borderWidth: `1px`,
-            borderColor: `ui.border`,
-            boxShadow: `dialog`,
-          }}
-        >
-          {allLangs.map(lang => (
+      </button>
+      <ul
+        sx={{
+          position: `absolute`,
+          right: 0,
+          margin: 0,
+          fontSize: 3,
+          width: `16rem`,
+          bg: `background`,
+          borderWidth: `1px`,
+          borderColor: `ui.border`,
+          boxShadow: `dialog`,
+        }}
+      >
+        {allLangs.map(lang => (
+          <li sx={{ listStyleType: `none`, display: `flex`, margin: 0 }}>
             <LangLink
               {...lang}
               key={lang.code}
               current={locale === lang.code}
               pathname={pathname}
             />
-          ))}
-          <MenuLink
-            as={LocalizedLink}
+          </li>
+        ))}
+        <li sx={{ listStyleType: `none`, display: `flex`, margin: 0 }}>
+          <LocalizedLink
             to="/languages"
             key="allLangs"
             sx={{
@@ -120,9 +106,9 @@ export default function LanguageDropdown({ pathname }) {
             }}
           >
             More languages
-          </MenuLink>
-        </MenuItems>
-      </MenuPopover>
-    </Menu>
+          </LocalizedLink>
+        </li>
+      </ul>
+    </div>
   )
 }
