@@ -10,7 +10,7 @@ import Link from "../components/localized-link"
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
 import Breadcrumb from "../components/docs-breadcrumb"
-import LanguageTableRow from "../components/languages/language-table-row"
+import LanguageThumb from "../components/languages/language-thumb"
 
 import { MdTranslate as TranslateIcon } from "react-icons/md"
 
@@ -21,7 +21,14 @@ const TranslateBackground = styled(TranslateIcon)`
   font-size: 10rem;
   opacity: 0.25;
 
-  color: ${p => p.theme.colors.link.color};
+  color: ${p => p.theme.colors.grey[10]};
+`
+
+const LanguagesContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -${p => p.theme.space[4]};
+  margin-bottom: ${p => p.theme.space[8]};
 `
 
 const allLanguages = [
@@ -71,14 +78,15 @@ const LanguagesPage = ({ location, pageContext }) => (
       <main id={`reach-skip-nav`}>
         <Breadcrumb location={location} />
         <LanguagesHeader />
-        {allLanguages.map(lang => (
-          <LanguageTableRow
-            key={lang.code}
-            lang={{ ...lang, progress: 0.5 }}
-            isDefault={lang.code === defaultLang}
-            isCurrent={lang.code === (pageContext.locale || defaultLang)}
-          />
-        ))}
+        <LanguagesContainer>
+          {allLanguages.map(lang => (
+            <LanguageThumb
+              key={lang.code}
+              lang={{ ...lang, progress: 0.5 }}
+              isCurrent={lang.code === (pageContext.locale || defaultLang)}
+            />
+          ))}
+        </LanguagesContainer>
         <LanguagesFooter />
       </main>
     </Container>
