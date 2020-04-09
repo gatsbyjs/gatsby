@@ -261,6 +261,17 @@ describe(`gatsby-node`, () => {
       .mockReturnValueOnce(startersBlogFixture.initialSync)
       .mockReturnValueOnce(startersBlogFixture.createBlogPost)
 
+    const createdBlogEntry =
+      startersBlogFixture.createBlogPost.currentSyncData.entries[0]
+    const createdBlogEntryIds = locales.map(locale =>
+      normalize.makeId({
+        spaceId: createdBlogEntry.sys.space.sys.id,
+        currentLocale: locale,
+        defaultLocale: locales[0],
+        id: createdBlogEntry.sys.id,
+      })
+    )
+
     // initial sync
     await gatsbyNode.sourceNodes({
       actions,
@@ -271,6 +282,11 @@ describe(`gatsby-node`, () => {
       createNodeId,
       cache,
       getCache,
+    })
+
+    // check if blog posts do not exists
+    createdBlogEntryIds.forEach(entryId => {
+      expect(getNode(entryId)).toBeUndefined()
     })
 
     // add new blog post
@@ -284,7 +300,6 @@ describe(`gatsby-node`, () => {
       cache,
       getCache,
     })
-
     testIfContentTypesExists(
       startersBlogFixture.createBlogPost.contentTypeItems
     )
@@ -297,6 +312,12 @@ describe(`gatsby-node`, () => {
       startersBlogFixture.createBlogPost.currentSyncData.assets,
       locales
     )
+
+    createdBlogEntryIds.forEach(blogEntryId => {
+      const blogEntry = getNode(blogEntryId)
+      expect(blogEntry).toMatchSnapshot()
+      expect(getNode(blogEntry[`author___NODE`])).toMatchSnapshot()
+    })
   })
 
   it(`should update a blogpost`, async () => {
@@ -305,6 +326,17 @@ describe(`gatsby-node`, () => {
       .mockReturnValueOnce(startersBlogFixture.initialSync)
       .mockReturnValueOnce(startersBlogFixture.createBlogPost)
       .mockReturnValueOnce(startersBlogFixture.updateBlogPost)
+
+    const updatedBlogEntry =
+      startersBlogFixture.updateBlogPost.currentSyncData.entries[0]
+    const updatedBlogEntryIds = locales.map(locale =>
+      normalize.makeId({
+        spaceId: updatedBlogEntry.sys.space.sys.id,
+        currentLocale: locale,
+        defaultLocale: locales[0],
+        id: updatedBlogEntry.sys.id,
+      })
+    )
 
     // initial sync
     await gatsbyNode.sourceNodes({
@@ -328,6 +360,10 @@ describe(`gatsby-node`, () => {
       createNodeId,
       cache,
       getCache,
+    })
+
+    updatedBlogEntryIds.forEach(blogEntryId => {
+      expect(getNode(blogEntryId).title).toBe(`Hello world`)
     })
 
     // updated blog post
@@ -354,6 +390,13 @@ describe(`gatsby-node`, () => {
       startersBlogFixture.updateBlogPost.currentSyncData.assets,
       locales
     )
+
+    updatedBlogEntryIds.forEach(blogEntryId => {
+      const blogEntry = getNode(blogEntryId)
+      expect(blogEntry.title).toBe(`Hello world 1234`)
+      expect(blogEntry).toMatchSnapshot()
+      expect(getNode(blogEntry[`author___NODE`])).toMatchSnapshot()
+    })
   })
 
   it(`should remove a blogpost and update linkedNodes`, async () => {
@@ -362,6 +405,17 @@ describe(`gatsby-node`, () => {
       .mockReturnValueOnce(startersBlogFixture.initialSync)
       .mockReturnValueOnce(startersBlogFixture.createBlogPost)
       .mockReturnValueOnce(startersBlogFixture.removeBlogPost)
+
+    const removedBlogEntry =
+      startersBlogFixture.removeBlogPost.currentSyncData.deletedEntries[0]
+    const removedBlogEntryIds = locales.map(locale =>
+      normalize.makeId({
+        spaceId: removedBlogEntry.sys.space.sys.id,
+        currentLocale: locale,
+        defaultLocale: locales[0],
+        id: removedBlogEntry.sys.id,
+      })
+    )
 
     // initial sync
     await gatsbyNode.sourceNodes({
@@ -385,6 +439,14 @@ describe(`gatsby-node`, () => {
       createNodeId,
       cache,
       getCache,
+    })
+
+    let authorIds = []
+    // check if blog post exists
+    removedBlogEntryIds.forEach(entryId => {
+      const blogEntry = getNode(entryId)
+      authorIds.push(blogEntry[`author___NODE`])
+      expect(blogEntry).not.toBeUndefined()
     })
 
     // remove blog post
@@ -402,19 +464,15 @@ describe(`gatsby-node`, () => {
     testIfContentTypesExists(
       startersBlogFixture.removeBlogPost.contentTypeItems
     )
-    testIfEntriesExists(
-      startersBlogFixture.removeBlogPost.currentSyncData.entries,
-      startersBlogFixture.removeBlogPost.contentTypeItems,
-      locales
-    )
     testIfEntriesDeleted(
       startersBlogFixture.removeBlogPost.currentSyncData.assets,
       locales
     )
-    testIfAssetsDeleted(
-      startersBlogFixture.removeBlogPost.currentSyncData.assets,
-      locales
-    )
+
+    // check if references are gone
+    authorIds.forEach(authorId => {
+      expect(getNode(authorId)).toMatchSnapshot()
+    })
   })
 
   // this isn't implemented
@@ -425,6 +483,17 @@ describe(`gatsby-node`, () => {
       .mockReturnValueOnce(startersBlogFixture.initialSync)
       .mockReturnValueOnce(startersBlogFixture.createBlogPost)
       .mockReturnValueOnce(startersBlogFixture.removeAsset)
+
+    const removedAssetEntry =
+      startersBlogFixture.removeAsset.currentSyncData.deletedEntries[0]
+    const removedAssetEntryIds = locales.map(locale =>
+      normalize.makeId({
+        spaceId: removedAssetEntry.sys.space.sys.id,
+        currentLocale: locale,
+        defaultLocale: locales[0],
+        id: removedAssetEntry.sys.id,
+      })
+    )
 
     // initial sync
     await gatsbyNode.sourceNodes({
@@ -449,6 +518,12 @@ describe(`gatsby-node`, () => {
       cache,
       getCache,
     })
+
+    // check if blog post exists
+    removedAssetEntryIds.forEach(assetId => {
+      expect(getNode(assetId)).not.toBeUndefined()
+    })
+
     // remove asset
     await gatsbyNode.sourceNodes({
       actions,

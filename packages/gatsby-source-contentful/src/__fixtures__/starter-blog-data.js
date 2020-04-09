@@ -1730,7 +1730,7 @@ exports.updateBlogPost = {
               contentful_id: `a1b2c2345def`,
             },
           },
-          id: `c5Q1RtFHGRDbvbY5rZbaaZP`,
+          id: `c3K9b0esdy0q0yGqgW2g6Ke`,
           type: `Entry`,
           createdAt: `2020-04-01T00:00:00.000Z`,
           updatedAt: `2020-04-03T10:46:20.911Z`,
