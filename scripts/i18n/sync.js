@@ -5,7 +5,8 @@ let logger = log4js.getLogger(`sync`)
 
 require(`dotenv`).config()
 
-const host = `https://github.com`
+const token = process.env.GITHUB_API_TOKEN
+const host = `https://${token}@github.com`
 const cacheDir = `.cache`
 const owner = `gatsbyjs`
 const repoBase = `gatsby`
@@ -53,7 +54,7 @@ async function getRepository(owner, name) {
     `,
     {
       headers: {
-        authorization: `token ${process.env.GITHUB_ADMIN_AUTH_TOKEN}`,
+        authorization: `token ${token}`,
       },
       owner,
       name,
@@ -76,7 +77,7 @@ async function createLabel(input) {
     `,
     {
       headers: {
-        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
+        authorization: `token ${token}`,
         accept: `application/vnd.github.bane-preview+json`,
       },
       input,
@@ -99,7 +100,7 @@ async function createPullRequest(input) {
     `,
     {
       headers: {
-        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
+        authorization: `token ${token}`,
         accept: `application/vnd.github.shadow-cat-preview+json`,
       },
       input,
@@ -119,7 +120,7 @@ async function addLabelToPullRequest(pullRequest, label) {
     `,
     {
       headers: {
-        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
+        authorization: `token ${token}`,
         accept: `application/vnd.github.bane-preview+json`,
       },
       input: {
@@ -232,7 +233,7 @@ async function syncTranslationRepo(code) {
   // Remove files that are deleted by upstream
   // https://stackoverflow.com/a/54232519
   shell.exec(`git diff --name-only --diff-filter=U | xargs git rm`)
-  shell.exec(`git ci --no-edit`)
+  shell.exec(`git commit --no-edit`)
 
   shell.exec(`git push -u origin ${syncBranch}`)
 
