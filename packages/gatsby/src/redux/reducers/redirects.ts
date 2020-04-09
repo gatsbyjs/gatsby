@@ -1,5 +1,4 @@
 import _ from "lodash"
-
 import { IGatsbyState, IRedirect, ICreateRedirectAction } from "../types"
 
 const redirects = new Map<string, IRedirect[]>()
@@ -23,7 +22,7 @@ function add(redirect: IRedirect): void {
   samePathRedirects.push(redirect)
 }
 
-const redirectsReducer = (
+export const redirectsReducer = (
   state: IGatsbyState["redirects"] = [],
   action: ICreateRedirectAction
 ): IGatsbyState["redirects"] => {
@@ -45,5 +44,3 @@ const redirectsReducer = (
       return state
   }
 }
-
-export default redirectsReducer

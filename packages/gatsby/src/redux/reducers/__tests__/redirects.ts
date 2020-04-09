@@ -1,9 +1,11 @@
+import { ICreateRedirectAction, IRedirect } from "../../types"
+
 let reducer
 
 describe(`redirects`, () => {
   beforeEach(() => {
     jest.isolateModules(() => {
-      reducer = require(`../redirects`).default
+      reducer = require(`../redirects`).redirectsReducer
     })
   })
   it(`lets you redirect to an internal url`, () => {
@@ -73,7 +75,10 @@ describe(`redirects`, () => {
   })
 
   it(`prevents duplicate redirects`, () => {
-    function createRedirect(fromPath, toPath) {
+    function createRedirect(
+      fromPath: string,
+      toPath: string
+    ): ICreateRedirectAction {
       return {
         type: `CREATE_REDIRECT`,
         payload: { fromPath, toPath },
@@ -92,7 +97,7 @@ describe(`redirects`, () => {
   })
 
   it(`allows multiple redirects with same "fromPath" but different options`, () => {
-    function createRedirect(redirect) {
+    function createRedirect(redirect: IRedirect): ICreateRedirectAction {
       return {
         type: `CREATE_REDIRECT`,
         payload: redirect,
