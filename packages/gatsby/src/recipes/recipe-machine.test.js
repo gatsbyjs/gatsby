@@ -6,7 +6,9 @@ const recipeMachine = require(`./recipe-machine`)
 
 it(`should create empty plan when the step has no resources`, done => {
   const initialContext = {
-    steps: [{}, {}, {}],
+    src: `
+# Hello, world!
+    `,
     currentStep: 0,
   }
   const service = interpret(
@@ -24,7 +26,11 @@ it(`should create empty plan when the step has no resources`, done => {
 
 it(`should create plan for File resources`, done => {
   const initialContext = {
-    steps: [{ File: [{ path: `./hi.md`, content: `#yo` }] }],
+    src: `
+# File!
+
+<File path="./hi.md" content="#yo" />
+    `,
     currentStep: 0,
   }
   const service = interpret(
@@ -63,7 +69,11 @@ it(`it should error if part of the recipe fails validation`, done => {
 it(`it should switch to done after the final apply step`, done => {
   const filePath = `./hi.md`
   const initialContext = {
-    steps: [{ File: [{ path: filePath, content: `#yo` }] }, {}, {}],
+    src: `
+# File!
+
+<File path="${filePath}" content="#yo" />
+    `,
     currentStep: 0,
   }
   const service = interpret(
@@ -91,16 +101,16 @@ it(`should store created/changed/deleted resources on the context after applying
   const filePath2 = `./hi2.md`
   const filePath3 = `./hi3.md`
   const initialContext = {
-    steps: [
-      {
-        File: [
-          { path: filePath, content: `#yo` },
-          { path: filePath3, content: `#yo` },
-        ],
-      },
-      { File: [{ path: filePath2, content: `#yo` }] },
-      {},
-    ],
+    src: `
+# File!
+
+<File path="${filePath}" content="#yo" />
+<File path="${filePath2}" content="#yo" />
+
+---
+
+<File path="${filePath3}" content="#yo" />
+    `,
     currentStep: 0,
   }
   const service = interpret(
@@ -119,6 +129,27 @@ it(`should store created/changed/deleted resources on the context after applying
       expect(state.context.stepResources[0]).toHaveLength(2)
       expect(state.context.stepResources).toMatchSnapshot()
       expect(state.context.stepResources[1][0]._message).toBeTruthy()
+      done()
+    }
+  })
+
+  service.start()
+})
+
+it.skip(`should create a plan from a url`, () => {
+  const url = 'https://gist.githubusercontent.com/johno/20503d2a2c80529096e60cd70260c9d8/raw/0145da93c17dcbf5d819a1ef3c97fa8713fad490/test-recipe.mdx'
+  const initialContext = {
+    recipePath: url,
+    currentStep: 0,
+  }
+
+  const service = interpret(
+    recipeMachine.withContext(initialContext)
+  ).onTransition(state => {
+    if (state.value === `present plan`) {
+      console.log(state.context)
+      expect(state.context.plan).toMatchSnapshot()
+      service.stop()
       done()
     }
   })

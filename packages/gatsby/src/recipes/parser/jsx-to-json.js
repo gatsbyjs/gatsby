@@ -55,6 +55,10 @@ const getAttributeValue = expression => {
     return entries
   }
 
+  if (expression.type === 'Identifier') {
+    return expression.name
+  }
+
   // Unsupported type
   throw new SyntaxError(`${expression.type} is not supported`)
 }
@@ -119,10 +123,15 @@ const jsxToJson = input => {
     `<root>${input}</root>`
   )
 
-  if (parsed.body[0]) {
-    return parsed.body[0].expression.children
-      .map(getNode)
-      .filter(child => child)
+  try {
+    if (parsed.body[0]) {
+      return parsed.body[0].expression.children
+        .map(getNode)
+        .filter(child => child)
+    }
+  } catch (e) {
+    console.log(input)
+    console.log(e)
   }
 
   return []
