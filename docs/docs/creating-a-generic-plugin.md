@@ -4,7 +4,7 @@ title: Creating a Generic Plugin
 
 This section aims to explain the structure of a Gatsby plugin and the files you need to create one.
 
-The idea of a generic plugin is to lay more emphasis on the makeup of a plugin rather than the specific labels ([source](/docs/creating-a-source-plugin/), [transformer](/docs/creating-a-transformer-plugin/), [local](https://www.gatsbyjs.org/docs/creating-a-local-plugin/)) that are [selected based on functionality](/docs/naming-a-plugin/). As seen in the [what is a plugin doc](/docs/what-is-a-plugin/), a plugin is a piece of software that acts as an add-on and gives a Gatsby site additional functionality.
+The idea of a generic plugin is to lay more emphasis on the makeup of a plugin rather than the specific labels ([source](/docs/creating-a-source-plugin/), [transformer](/docs/creating-a-transformer-plugin/), [local](/docs/creating-a-local-plugin/)) that are [selected based on functionality](/docs/naming-a-plugin/). As seen in the [what is a plugin doc](/docs/what-is-a-plugin/), a plugin is a piece of software that acts as an add-on and gives a Gatsby site additional functionality.
 
 Plugins contain a file, usually in the project root, called `package.json` - this file holds various metadata relevant to the project. The `package.json` file is also used to provide information to npm that identifies the project and allows npm to handle the project's dependencies.
 
@@ -13,7 +13,7 @@ Plugins contain a file, usually in the project root, called `package.json` - thi
 To initialize a `package.json` for your project, run the following command:
 
 ```shell
-  npm init
+npm init
 ```
 
 Once you've run the command you'll see a series of options listed in the command-line interface (CLI). Those you select are stored in your `package.json` which contains some of the [files Gatsby looks for in a Plugin](/docs/files-gatsby-looks-for-in-a-plugin)
@@ -27,7 +27,7 @@ In `gatsby-node.js` you can carry out functions with these APIs, such as:
 - Loading API keys
 - Sending calls to APIs
 - Creating Gatsby-nodes using the API response
-- Creating Individual pages from nodes
+- Creating individual pages from nodes
 
 > A good use case of the above would be a plugin that gets data from an API.
 
