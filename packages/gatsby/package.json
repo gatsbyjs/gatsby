@@ -1,7 +1,11 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
+<<<<<<< HEAD
   "version": "2.20.13",
+=======
+  "version": "2.20.14",
+>>>>>>> origin/master
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -86,7 +90,10 @@
     "gatsby-plugin-page-creator": "^2.2.1",
     "gatsby-react-router-scroll": "^2.2.1",
     "gatsby-telemetry": "^1.2.3",
+<<<<<<< HEAD
     "git-diff": "^2.0.6",
+=======
+>>>>>>> origin/master
     "glob": "^7.1.6",
     "got": "8.3.2",
     "graphql": "^14.6.0",
