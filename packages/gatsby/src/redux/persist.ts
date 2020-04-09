@@ -1,4 +1,5 @@
 import path from "path"
+import os from "os"
 import v8 from "v8"
 import {
   existsSync,
@@ -139,7 +140,7 @@ export function writeToCache(contents: ICachedReduxState): void {
   // Note: this should be a transactional operation. So work in a tmp dir and
   // make sure the cache cannot be left in a corruptable state due to errors.
 
-  const tmpDir = mkdtempSync(`reduxcache`) // linux / windows
+  const tmpDir = mkdtempSync(path.join(os.tmpdir(), `reduxcache`)) // linux / windows
 
   prepareCacheFolder(tmpDir, contents)
 
