@@ -490,9 +490,14 @@ it(`should use the cache argument`, async () => {
       it(`handles gte operator with number`, async () => {
         let result = await runFilter({ hair: { gte: 1 } })
 
-        expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-        expect(result[1].hair).toEqual(2)
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.hair >= 1 ? acc + 1 : acc),
+          0
+        )
+
+        expect(actual).not.toBe(0) // Test invariant should hold
+        expect(result.length).toEqual(actual)
+        result.forEach(r => expect(r.hair >= 1).toBe(true))
       })
 
       it(`handles gte operator with null`, async () => {
@@ -500,10 +505,18 @@ it(`should use the cache argument`, async () => {
 
         let result = await runFilter({ nil: { gte: null } })
 
-        // lte null matches null but no nodes without the property (NULL)
-        expect(result.length).toEqual(1)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-        expect(result[0].nil).toEqual(null)
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.nil >= null ? acc + 1 : acc),
+          0
+        )
+
+        // gte null matches null but no nodes without the property (NULL)
+        expect(actual).not.toBe(0) // Test invariant should hold
+        expect(result.length).toEqual(actual)
+        result.forEach(
+          // Note: confirm no `null` is returned for >= null
+          r => expect(r.nil === null).toBe(true)
+        )
       })
 
       it(`handles the regex operator without flags`, async () => {

@@ -5,13 +5,17 @@ import { IDbQueryElemMatch } from "../db/common/query"
 
 // Only list supported ops here. "CacheableFilterOp"
 type FilterOp = "$eq" | "$lte"
+// Note: `undefined` is an encoding for a property that does not exist
+type FilterValueNullable = string | number | boolean | null | undefined
+// This is filter value in most cases
 type FilterValue = string | number | boolean
 export type FilterCacheKey = string
 export interface IFilterCache {
   op: FilterOp
-  byValue: Map<FilterValue, Set<IGatsbyNode>>
+  // In this set, `undefined` values represent nodes that did not have the path
+  byValue: Map<FilterValueNullable, Set<IGatsbyNode>>
   meta: {
-    // Ordered set of all values found by this filter
+    // Ordered set of all values found by this filter. No null / undefs.
     valuesAsc?: Array<FilterValue>
     // Flat set of nodes, ordered by valueAsc, but not ordered per value group
     nodesByValueAsc?: Array<IGatsbyNode>
@@ -166,14 +170,26 @@ export const addResolvedNodes = (
   return resolvedNodes
 }
 
-export const postIndexingMetaSetup = (filterCache: IFilterCache): void => {
+export const postIndexingMetaSetup = (
+  filterCache: IFilterCache,
+  filterOp: FilterOp
+): void => {
   // Create an ordered array of individual nodes, ordered (grouped) by the
   // value to which the filter resolves. Nodes are not ordered per value.
   // This way non-eq ops can simply slice the array to get a range.
 
-  const entries: Array<[FilterValue, Set<IGatsbyNode>]> = [
+  const entriesNullable: Array<[FilterValueNullable, Set<IGatsbyNode>]> = [
     ...filterCache.byValue.entries(),
   ]
+
+  // These range checks never return `null` or `undefined` so filter those out
+  // By filtering them out early, the sort should be faster. Could be ...
+  const entries: Array<[
+    FilterValue,
+    Set<IGatsbyNode>
+  ]> = entriesNullable.filter(([v]) => v != null) as Array<
+    [FilterValue, Set<IGatsbyNode>]
+  >
 
   // Sort all sets by its value, asc. Ignore/allow potential type casting.
   entries.sort(([a], [b]) => (a <= b ? -1 : a > b ? 1 : 0))
@@ -181,9 +197,11 @@ export const postIndexingMetaSetup = (filterCache: IFilterCache): void => {
   const orderedNodes: Array<IGatsbyNode> = []
   const orderedValues: Array<FilterValue> = []
   const offsets: Map<FilterValue, [number, number]> = new Map()
-  entries.forEach(([v, bucket]) => {
-    // Record the first index containing node with as filter value v
-    offsets.set(v, [orderedNodes.length, bucket.size])
+  entries.forEach(([v, bucket]: [FilterValue, Set<IGatsbyNode>]) => {
+    // Record the range containing all nodes with as filter value v
+    // The last value of the range should be the offset of the next value
+    // (So you should be able to do `nodes.slice(start, stop)` to get them)
+    offsets.set(v, [orderedNodes.length, orderedNodes.length + bucket.size])
     // We could do `arr.push(...bucket)` here but that's not safe with very
     // large sets, so we use a regular loop
     bucket.forEach(node => orderedNodes.push(node))
@@ -239,7 +257,7 @@ export const ensureIndexByQuery = (
   }
 
   if (op === `$lte`) {
-    postIndexingMetaSetup(filterCache)
+    postIndexingMetaSetup(filterCache, op)
   }
 }
 
@@ -260,23 +278,31 @@ function addNodeToFilterCache(
   // - for plain query, valueOffset === node
   // - for elemMatch, valueOffset is sub-tree of the node to continue matching
   let v = valueOffset as any
+  let prev = v
   let i = 0
   while (i < chain.length && v) {
     const nextProp = chain[i++]
+    prev = v
     v = v[nextProp]
   }
 
   if (
     (typeof v !== `string` &&
       typeof v !== `number` &&
-      typeof v !== `boolean`) ||
+      typeof v !== `boolean` &&
+      v !== null) ||
     i !== chain.length
   ) {
-    // Not sure whether this is supposed to happen, but this means that either
-    // - The node chain ended with `undefined`, or
-    // - The node chain ended in something other than a primitive, or
-    // - A part in the chain in the object was not an object
-    return
+    if (chain[i - 1] in prev) {
+      // This means that either
+      // - The filter resolved to `undefined`, or
+      // - The filter resolved to something other than a primitive
+      return
+    }
+    // The filter path did not fully exist in node. Encode this as `undefined`.
+    // The edge case is that `eq` will return these for `null` checks while
+    // range checks like `lte` do not return these, so we make a distinction.
+    v = undefined
   }
 
   let set = filterCache.byValue.get(v)
@@ -331,7 +357,7 @@ export const ensureIndexByElemMatch = (
   }
 
   if (op === `$lte`) {
-    postIndexingMetaSetup(filterCache)
+    postIndexingMetaSetup(filterCache, op)
   }
 }
 
@@ -396,7 +422,7 @@ function addNodeToBucketWithElemMatch(
 const binarySearch = (
   values: Array<FilterValue>,
   needle: FilterValue
-): [number, number] => {
+): [number, number] | undefined => {
   let min = 0
   let max = values.length - 1
   let pivot = Math.floor(values.length / 2)
@@ -425,8 +451,8 @@ const binarySearch = (
     pivot = Math.floor((max - min) / 2)
   }
 
-  // Shouldn't be reachable
-  return [0, 0]
+  // Shouldn't be reachable, but just in case, fall back to Sift if so.
+  return undefined
 }
 
 /**
@@ -440,7 +466,7 @@ const binarySearch = (
  */
 export const getNodesFromCacheByValue = (
   filterCacheKey: FilterCacheKey,
-  filterValue: FilterValue,
+  filterValue: FilterValueNullable,
   filtersCache: FiltersCache
 ): Set<IGatsbyNode> | undefined => {
   const filterCache = filtersCache?.get(filterCacheKey)
@@ -451,17 +477,35 @@ export const getNodesFromCacheByValue = (
   const op = filterCache.op
 
   if (op === `$eq`) {
+    if (filterValue == null) {
+      // Edge case; fetch all nodes for `null` and `undefined` because `$eq`
+      // also returns nodes without the path when searching for `null`. Not
+      // ops do so, so we map non-existing paths to `undefined`.
+      return new Set([
+        ...(filterCache.byValue.get(null) ?? []),
+        ...(filterCache.byValue.get(undefined) ?? []),
+      ])
+    }
     return filterCache.byValue.get(filterValue)
   }
 
   if (op === `$lte`) {
     // First try a direct approach. If a value is queried that also exists then
     // we can prevent a binary search through the whole set, O(1) vs O(log n)
-    const range = filterCache.meta.valueRanges!.get(filterValue)
+
+    if (filterValue == null) {
+      // This is an edge case and this value should be directly indexed
+      // For `lte` this should only return nodes for `null`, not a "range"
+      return filterCache.byValue.get(filterValue)
+    }
+
+    const ranges = filterCache.meta.valueRanges
+    const nodes = filterCache.meta.nodesByValueAsc
+
+    const range = ranges!.get(filterValue)
     if (range) {
-      return new Set(
-        filterCache.meta.nodesByValueAsc!.slice(0, range[0] + range[1])
-      )
+      console.log(ranges)
+      return new Set(nodes!.slice(0, range[1]))
     }
 
     // Query may ask for a value that doesn't appear in the set, like if the
@@ -472,7 +516,11 @@ export const getNodesFromCacheByValue = (
     const values = filterCache.meta.valuesAsc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
     // the two value between which targetValue sits, or first/last element.
-    const [pivotMin, pivotMax] = binarySearch(values, filterValue)
+    const point = binarySearch(values, filterValue)
+    if (!point) {
+      return undefined
+    }
+    const [pivotMin, pivotMax] = point
     // Each pivot index must have a value and a range
     // The returned min/max index may include the lower/upper bound, so we still
     // have to do lte checks for both values.
@@ -485,15 +533,13 @@ export const getNodesFromCacheByValue = (
     // means the value was actually found, but those should have been indexed
     // so should have yielded a result in the .get() above.
 
-    const [start, stop] = filterCache.meta.valueRanges!.get(pivotValue) as [
-      number,
-      number
-    ]
+    const [exclPivot, inclPivot] = ranges!.get(pivotValue) as [number, number]
 
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
-    const until = start + (pivotValue <= filterValue ? stop : 0)
-    return new Set(filterCache.meta.nodesByValueAsc!.slice(0, until))
+    // @ts-ignore
+    const until = pivotValue <= filterValue ? inclPivot : exclPivot
+    return new Set(nodes!.slice(0, until))
   }
 
   // Unreachable because we checked all values of FilterOp (which op is)
