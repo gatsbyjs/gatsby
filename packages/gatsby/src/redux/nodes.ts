@@ -396,7 +396,7 @@ function addNodeToBucketWithElemMatch(
 const binarySearch = (
   values: Array<FilterValue>,
   needle: FilterValue
-): number => {
+): [number, number] => {
   let min = 0
   let max = values.length - 1
   let pivot = Math.floor(values.length / 2)
@@ -413,33 +413,30 @@ const binarySearch = (
     } else {
       // This means needle === value
       // TODO: except for NaN ... and potentially certain type casting cases
-      return pivot
+      return [pivot, pivot]
     }
 
-    if (min === max) {
+    if (max - min <= 1) {
       // End of search. Needle not found (as expected). Use pivot as index.
-      return pivot
+      // If the needle was not found, max-min==1 and max is returned.
+      return [min, max]
     }
 
     pivot = Math.floor((max - min) / 2)
   }
 
   // Shouldn't be reachable
-  return 0
+  return [0, 0]
 }
 
 /**
- * Given a ("flat") filter path leading up to "eq", a target value to filter
- * for, a set of node types, and a pre-generated lookup cache, return the set
- * of Nodes (or, if the property is `id` just the Node) which pass the filter.
- * This returns `undefined` if there is Node that passes the filter.
+ * Given the cache key for a filter and a target value return the set of nodes
+ * that resolve to this value.
+ * This returns `undefined` if there is no such node
  *
  * Basically if the filter was {a: {b: {slug: {eq: "foo/bar"}}}} then it will
  * return all the nodes that have `node.slug === "foo/bar"`. That usually (but
  * not always) at most one node for slug, but this filter can apply to anything.
- *
- * The only exception is `id`, since internally there can be at most one node
- * per `id` so there's a minor optimization for that (no need for Sets).
  */
 export const getNodesFromCacheByValue = (
   filterCacheKey: FilterCacheKey,
@@ -473,14 +470,21 @@ export const getNodesFromCacheByValue = (
 
     // Note: for lte, the valueAsc array must be set at this point
     const values = filterCache.meta.valuesAsc as Array<FilterValue>
-    const pivot = binarySearch(values, filterValue)
+    // It shouldn't find the targetValue (but it might) and return the index of
+    // the two value between which targetValue sits, or first/last element.
+    const [pivotMin, pivotMax] = binarySearch(values, filterValue)
+    // Each pivot index must have a value and a range
+    // The returned min/max index may include the lower/upper bound, so we still
+    // have to do lte checks for both values.
+    let pivotValue = values[pivotMax]
+    if (pivotValue > filterValue) {
+      pivotValue = values[pivotMin]
+    }
 
     // Note: the pivot value _shouldnt_ match the filter value because that
     // means the value was actually found, but those should have been indexed
     // so should have yielded a result in the .get() above.
 
-    // Each pivot index must have a value and a range
-    const pivotValue = values[pivot]
     const [start, stop] = filterCache.meta.valueRanges!.get(pivotValue) as [
       number,
       number

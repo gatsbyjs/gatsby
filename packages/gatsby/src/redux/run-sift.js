@@ -141,6 +141,9 @@ function handleMany(siftArgs, nodes) {
  * filter.
  * Only nodes of given node types will be considered
  * A fast index is created if one doesn't exist yet so cold call is slower.
+ * Returns undefined if an op was not supported for fast indexes or when no
+ * nodes were found for given (query) value. In the zero nodes case, we have to
+ * go through Sift to make sure we're not missing an edge case, for now.
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
@@ -184,6 +187,9 @@ const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   // Consider the case of {a: {eq: 5}, b: {eq: 10}}, do we cache the [5,10]
   // case for all value pairs? How likely is that to ever be reused?
 
+  if (result.length === 0) {
+    return undefined
+  }
   return result
 }
 
@@ -487,8 +493,7 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
 
   if (filters.length === 0) {
     // If no filters are given, go through Sift. This does not appear to be
-    // slower than s
-    // hortcutting it here.
+    // slower than shortcutting it here.
     return undefined
   }
 

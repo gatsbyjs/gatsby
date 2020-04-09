@@ -216,9 +216,11 @@ function resetDb(nodes) {
   )
 }
 
+let nodesAfterLastRunQuery
 async function runQuery(queryArgs, filtersCache) {
   const nodes = makeNodes()
   resetDb(nodes)
+  nodesAfterLastRunQuery = nodes
   const { sc, type: gqlType } = makeGqlType(nodes)
   const args = {
     gqlType,
@@ -372,8 +374,7 @@ it(`should use the cache argument`, async () => {
         let result = await runFilter({ hair: { lt: 2 } })
 
         expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-        expect(result[1].hair).toEqual(0)
+        result.forEach(r => expect(r.hair <= 2).toBe(true))
       })
 
       it(`handles lt operator with null`, async () => {
@@ -388,9 +389,14 @@ it(`should use the cache argument`, async () => {
       it(`handles lte operator with number`, async () => {
         let result = await runFilter({ hair: { lte: 1 } })
 
-        expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-        expect(result[1].hair).toEqual(0)
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.hair <= 1 ? acc + 1 : acc),
+          0
+        )
+
+        expect(actual).not.toBe(0) // Test should keep this invariant!
+        expect(result.length).toEqual(actual)
+        result.forEach(r => expect(r.hair <= 1).toBe(true))
       })
 
       it(`should lte when value is lower than all found values`, async () => {
@@ -398,20 +404,36 @@ it(`should use the cache argument`, async () => {
 
         let result = await runFilter({ float: { lte: 1 } })
 
-        expect(result).toEqual(null) // Zero results yields undefined
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.float <= 1 ? acc + 1 : acc),
+          0
+        )
+
+        expect(actual).toEqual(0) // Make sure test nodes keep this invariant!
+        expect(result).toEqual(null) // Zero results yields null
       })
 
       it(`should lte when value is in the middle of all found values`, async () => {
         let result = await runFilter({ float: { lte: 2 } })
 
-        expect(result.length > 0).toEqual(true)
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.float <= 2 ? acc + 1 : acc),
+          0
+        )
+
+        expect(result.length).toEqual(actual)
         result.forEach(r => expect(r.float <= 2).toBe(true))
       })
 
       it(`should lte when value is higher than all found values`, async () => {
         let result = await runFilter({ float: { lte: 5 } })
 
-        expect(result.length).toEqual(3)
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.float <= 5 ? acc + 1 : acc),
+          0
+        )
+
+        expect(result.length).toEqual(actual)
       })
 
       it.skip(`should lte when type coercion fails direct value lookup`, async () => {
@@ -420,9 +442,14 @@ it(`should use the cache argument`, async () => {
         // value wasn't mapped, that it can't be found.
         let result = await runFilter({ float: { lte: `1.5` } })
 
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.float <= 1.5 ? acc + 1 : acc),
+          0
+        )
+
         expect(result).not.toBe(undefined)
         expect(result).not.toBe(null)
-        expect(result.length > 0).toEqual(true)
+        expect(result.length).toEqual(actual)
         result.forEach(r => expect(r.float <= 2).toBe(true))
       })
 
@@ -431,8 +458,14 @@ it(`should use the cache argument`, async () => {
 
         let result = await runFilter({ nil: { lte: null } })
 
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.nil <= null ? acc + 1 : acc),
+          0
+        )
+
         // lte null matches null but no nodes without the property (NULL)
-        expect(result.length).toEqual(1)
+        expect(actual).not.toBe(0) // Test should keep this invariant!
+        expect(result.length).toEqual(actual)
         expect(result[0].name).toEqual(`The Mad Wax`)
         expect(result[0].nil).toEqual(null)
       })
