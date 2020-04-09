@@ -784,6 +784,8 @@
           link: /docs/glossary/mdx/
         - title: Node.js
           link: /docs/glossary/node/
+        - title: npm
+          link: /docs/glossary/npm/
         - title: React
           link: /docs/glossary/react/
         - title: Server Side Rendering
