@@ -67,9 +67,8 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
 
   if (plan.currentState !== plan.newState) {
     const diff = await gitDiff(plan.currentState || ``, plan.newState || ``, {
-      wordDiff: true,
-      // noHeaders: true,
       color: true,
+      flags: `--diff-algorithm=minimal`,
     })
     plan.diff = diff
   }
