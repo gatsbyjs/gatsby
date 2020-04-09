@@ -30,7 +30,7 @@ Use [@builder.io/gatsby plugin](/packages/@builder.io/gatsby/) which will expose
 
 The `@Builder.io/gatsby` plugin will add `allBuilderModels` to graphQL, under which you can specify which model you'd like to get entries from.
 
-For e.g to get the entries from your models `myHeader`, `myFooter`:
+For example to get the entries from your models `myHeader`, `myFooter`:
 
 ```graphql
 {
