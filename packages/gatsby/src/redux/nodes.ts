@@ -537,7 +537,6 @@ export const getNodesFromCacheByValue = (
 
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
-    // @ts-ignore
     const until = pivotValue <= filterValue ? inclPivot : exclPivot
     return new Set(nodes!.slice(0, until))
   }
