@@ -100,11 +100,12 @@ export default function LanguageDropdown({ pathname }) {
       onKeyUp={wrapKeyHandler}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
-      sx={{ position: `relative` }}
+      sx={{ position: `relative`, alignSelf: `flex-end` }}
     >
       <button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
+        aria-label="Languages"
         aria-haspopup="true"
         aria-controls="language-dropdown"
         sx={{
@@ -114,7 +115,18 @@ export default function LanguageDropdown({ pathname }) {
           ...navItemStyles,
         }}
       >
-        <MdTranslate /> Languages
+        <MdTranslate />
+        <span
+          sx={{
+            display: `none`,
+            [mediaQueries.md]: {
+              display: `initial`,
+            },
+          }}
+        >
+          {" "}
+          Languages
+        </span>
       </button>
       <ul
         id="language-dropdown"
