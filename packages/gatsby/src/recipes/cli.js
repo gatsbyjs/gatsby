@@ -1,6 +1,7 @@
 const fs = require(`fs`)
 const path = require(`path`)
 const { inspect } = require(`util`)
+const lodash = require(`lodash`)
 
 const React = require(`react`)
 const { useState, useContext, useEffect } = require(`react`)
@@ -22,19 +23,7 @@ const ws = require(`ws`)
 
 const parser = require(`./parser`)
 
-const PlanDescribe = ({ resourceName }) => {
-  const { planForNextStep = [] } = usePlan()
-  const plans = planForNextStep.filter(p => p.resourceName === resourceName)
-
-  return null
-  return (
-    <Box>
-      {plans.map((stepPlan, i) => (
-        <Text key={i}>{stepPlan.describe || `* ${resourceName}`}</Text>
-      ))}
-    </Box>
-  )
-}
+let renderCount = 1
 
 const Div = props => (
   <Box width={80} textWrap="wrap" flexDirection="column" {...props} />
@@ -67,11 +56,11 @@ const components = {
   ul: props => <Div marginBottom={1}>{props.children}</Div>,
   li: props => <Text>* {props.children}</Text>,
   Config: () => null,
-  GatsbyPlugin: () => <PlanDescribe resourceName="GatsbyPlugin" />,
-  NPMPackageJson: () => <PlanDescribe resourceName="NPMPackageJson" />,
+  GatsbyPlugin: () => null,
+  NPMPackageJson: () => null,
   NPMPackage: () => null,
-  File: () => <PlanDescribe resourceName="File" />,
-  ShadowFile: () => <PlanDescribe resourceName="ShadowFile" />,
+  File: () => null,
+  ShadowFile: () => null,
   NPMScript: () => null,
 }
 
@@ -83,19 +72,11 @@ const isRelative = path => {
   return false
 }
 
+var logStream = fs.createWriteStream(`recipe-client.log`, { flags: `a` })
 const log = (label, textOrObj) => {
-  const text =
-    typeof textOrObj === `string` ? textOrObj : inspect(textOrObj, null, 2)
-
-  let contents = ``
-  try {
-    contents = fs.readFileSync(`recipe-client.log`, `utf8`)
-  } catch (e) {
-    // File doesn't exist yet
-  }
-
-  contents += label + `: ` + text + `\n`
-  fs.writeFileSync(`recipe-client.log`, contents)
+  logStream.write(`[${label}]:\n`)
+  logStream.write(require(`util`).inspect(textOrObj))
+  logStream.write(`\n`)
 }
 
 log(
@@ -180,7 +161,6 @@ module.exports = ({ recipe, projectRoot }) => {
     }
   }
 
-  let renderCount = 1
   const RecipeInterpreter = ({ commands }) => {
     const [lastKeyPress, setLastKeyPress] = useState(``)
     const { exit } = useApp()
@@ -208,6 +188,7 @@ module.exports = ({ recipe, projectRoot }) => {
     `)
 
     subscriptionClient.connectionCallback = async () => {
+      log(`subscriptionClient connected`)
       await createOperation({ commands: JSON.stringify(commands) })
     }
 
@@ -243,20 +224,35 @@ module.exports = ({ recipe, projectRoot }) => {
 
     // If we're done, exit.
     if (state.value === `done`) {
-      process.exit()
+      process.nextTick(() => process.exit())
     }
 
     if (process.env.DEBUG) {
       log(`state`, state)
       log(`plan`, state.context.plan)
+      log(`stepResources`, state.context.stepResources)
     }
 
     const PresentStep = ({ state }) => {
       const isPlan = state.context.plan && state.context.plan.length > 0
       const isPresetPlanState = state.value === `present plan`
       const isRunningStep = state.value === `applyingPlan`
+      const isDone = state.value === `done`
+      const isLastStep =
+        state.context.steps &&
+        state.context.steps.length - 1 === state.context.currentStep
 
       if (isRunningStep) {
+        return null
+      }
+
+      if (isDone) {
+        return null
+      }
+
+      // If there's no plan on the last step, just return.
+      if (!isPlan && isLastStep) {
+        process.nextTick(() => process.exit())
         return null
       }
 
@@ -270,14 +266,13 @@ module.exports = ({ recipe, projectRoot }) => {
 
       return (
         <Div>
-          {state.context.plan.map(p => {
-            return (
-              <Div key={p.resourceName}>
-                <Text italic>{p.resourceName}:</Text>
-                <Text> * {p.describe}</Text>
-              </Div>
-            )
-          })}
+          {state.context.plan.map(p => (
+            <Div key={p.resourceName}>
+              <Text italic>{p.resourceName}:</Text>
+              <Text> * {p.describe}</Text>
+              <Text>{p.diff}</Text>
+            </Div>
+          ))}
           <Div marginTop={1}>
             <Text>Do you want to run this step? Y/n</Text>
           </Div>
@@ -295,70 +290,45 @@ module.exports = ({ recipe, projectRoot }) => {
 
       return (
         <Div>
-          {state.context.plan.map(p => {
-            return (
-              <Div key={p.resourceName}>
-                <Text italic>{p.resourceName}:</Text>
-                <Text>
-                  {` `}
-                  <Spinner /> {p.describe}
-                </Text>
-              </Div>
-            )
-          })}
+          {state.context.plan.map(p => (
+            <Div key={p.resourceName}>
+              <Text italic>{p.resourceName}:</Text>
+              <Text>
+                {` `}
+                <Spinner /> {p.describe}
+              </Text>
+            </Div>
+          ))}
         </Div>
       )
     }
 
-    // <Static>
-    // <Text bold>Finished</Text>
-    // <Text italic>Step 1</Text>
-    // <Text>✅ Wrote out file to src/pages/what-about-bob.js</Text>
-    // <Text italic>Step 2</Text>
-    // <Text>
-    // ✅ Shadowed file src/gatsby-theme-blog/foo.js from gatsby-theme-blog
-    // </Text>
-    // </Static>
     return (
-      <ErrorBoundary>
-        {state.context.currentStep > 0 && (
-          <Div>
-            <Text>
-              Step {state.context.currentStep} /{` `}
-              {state.context.steps.length - 1}
-            </Text>
-          </Div>
-        )}
-        <PlanContext.Provider value={{ planForNextStep: state.plan }}>
-          <MDX components={components}>
-            {stepsAsMDX[state.context.currentStep]}
-          </MDX>
-          <PresentStep state={state} />
-          <RunningStep state={state} />
-        </PlanContext.Provider>
-      </ErrorBoundary>
+      <>
+        <Static>
+          {lodash.flattenDeep(state.context.stepResources).map((r, i) => (
+            <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>
+          ))}
+        </Static>
+        <ErrorBoundary>
+          {state.context.currentStep > 0 && state.value !== `done` && (
+            <Div>
+              <Text>
+                Step {state.context.currentStep} /{` `}
+                {state.context.steps.length - 1}
+              </Text>
+            </Div>
+          )}
+          <PlanContext.Provider value={{ planForNextStep: state.plan }}>
+            <MDX components={components}>
+              {stepsAsMDX[state.context.currentStep]}
+            </MDX>
+            <PresentStep state={state} />
+            <RunningStep state={state} />
+          </PlanContext.Provider>
+        </ErrorBoundary>
+      </>
     )
-  }
-
-  // {operation.map((command, i) => (
-  // <Div key={i}>
-  // <Div />
-  // </Div>
-  // ))}
-  // {state === `SUCCESS` ? (
-  // <Div>
-  // <Text> </Text>
-  // <Text>Your recipe is served! Press enter to exit.</Text>
-  // </Div>
-  // ) : null}
-  const StateIndicator = ({ state }) => {
-    if (state === `complete`) {
-      return <Text> ✅ </Text>
-    } else if (state === `error`) {
-      return <Text> ❌ </Text>
-    } else {
-      return <Spinner />
-    }
   }
 
   const Wrapper = () => (

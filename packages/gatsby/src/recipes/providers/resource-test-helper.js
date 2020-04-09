@@ -15,7 +15,7 @@ module.exports = async ({
   // Test creating the resource
   const createResponse = await resource.create(context, initialObject)
   const validateResult = Joi.validate(createResponse, {
-    ...resource.validate(),
+    ...resource.schema,
     ...resourceSchema,
   })
   expect(validateResult.error).toBeNull()

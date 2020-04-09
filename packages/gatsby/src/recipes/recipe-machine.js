@@ -11,6 +11,7 @@ const recipeMachine = Machine(
       currentStep: 0,
       steps: [],
       plan: [],
+      stepResources: [],
     },
     states: {
       creatingPlan: {
@@ -40,14 +41,6 @@ const recipeMachine = Machine(
         on: {
           CONTINUE: `applyingPlan`,
         },
-        meta: {
-          test: (_, state) => {
-            expect(state.context.plan).toBeTruthy()
-          },
-        },
-      },
-      applyPlan: {
-        // invoke apply plan machine which sends back state updates for resources
       },
       applyingPlan: {
         invoke: {
@@ -57,9 +50,12 @@ const recipeMachine = Machine(
               return undefined
             }
 
-            return applyPlan(context.plan)
+            return await applyPlan(context.plan)
           },
-          onDone: `hasAnotherStep`,
+          onDone: {
+            target: `hasAnotherStep`,
+            actions: [`addResourcesToContext`],
+          },
           onError: {
             target: `failure`,
             actions: assign({ error: (context, event) => event.data }),
@@ -100,6 +96,14 @@ const recipeMachine = Machine(
       deleteOldPlan: assign((context, event) => {
         return {
           plan: [],
+        }
+      }),
+      addResourcesToContext: assign((context, event) => {
+        if (event.data) {
+          const stepResources = context.stepResources || []
+          return {
+            stepResources: stepResources.concat([event.data]),
+          }
         }
       }),
     },

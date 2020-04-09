@@ -17,15 +17,14 @@ const typeNameToHumanName = name => {
 module.exports = () => {
   const resourceTypes = Object.entries(resources).map(
     ([resourceName, resource]) => {
-      if (!resource.validate) {
+      if (!resource.schema) {
         return undefined
       }
 
       const types = []
 
       const joiSchema = Joi.object().keys({
-        ...resource.validate(),
-        ...resourceSchema,
+        ...resource.schema,
         _typeName: Joi.string(),
       })
 

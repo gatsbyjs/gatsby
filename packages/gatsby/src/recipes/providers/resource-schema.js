@@ -10,5 +10,6 @@ const Joi = require(`@hapi/joi`)
 module.exports = {
   // ID of a file should be relative to the root of the git repo
   // or the absolute path if we can't find one
-  id: Joi.string(),
+  id: Joi.string().required(),
+  _message: Joi.string(),
 }

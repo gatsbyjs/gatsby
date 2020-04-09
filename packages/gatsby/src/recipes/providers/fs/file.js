@@ -2,6 +2,9 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const Joi = require(`@hapi/joi`)
+const gitDiff = require(`git-diff/async`)
+
+const resourceSchema = require(`../resource-schema`)
 
 const makePath = (root, relativePath) => path.join(root, relativePath)
 
@@ -41,7 +44,9 @@ const read = async (context, id) => {
     return undefined
   }
 
-  return { id, path: id, content }
+  const resource = { id, path: id, content }
+  resource._message = message(resource)
+  return resource
 }
 
 const destroy = async (context, fileResource) => {
@@ -52,28 +57,35 @@ const destroy = async (context, fileResource) => {
 
 // TODO pass action to plan
 module.exports.plan = async (context, { id, path: filePath, content }) => {
-  let fullPath
-  if (!id) {
-    fullPath = path.join(context.root, filePath)
-    fullPath = makePath(context.root, filePath)
-  } else {
-    fullPath = makePath(context.root, id)
-  }
-  const currentResource = await read(context, fullPath)
+  const currentResource = await read(context, filePath)
 
-  return {
+  const plan = {
     currentState: currentResource && currentResource.content,
     newState: content,
     describe: `Write ${filePath}`,
   }
+
+  if (plan.currentState !== plan.newState) {
+    const diff = await gitDiff(plan.currentState || ``, plan.newState || ``, {
+      wordDiff: true,
+      // noHeaders: true,
+      color: true,
+    })
+    plan.diff = diff
+  }
+
+  return plan
 }
 
-exports.validate = () => {
-  return {
-    path: Joi.string(),
-    content: Joi.string(),
-  }
+const message = resource => `Wrote file ${resource.path}`
+
+const schema = {
+  path: Joi.string(),
+  content: Joi.string(),
+  ...resourceSchema,
 }
+exports.schema = schema
+exports.validate = resource => Joi.validate(resource, schema)
 
 module.exports.exists = fileExists
 

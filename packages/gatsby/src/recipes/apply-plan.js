@@ -8,7 +8,8 @@ const asyncForEach = async (array, callback) => {
   }
 }
 
-const applyPlan = async stepPlan =>
+const applyPlan = async stepPlan => {
+  let appliedResources = []
   await asyncForEach(stepPlan, async resourcePlan => {
     const resource = resources[resourcePlan.resourceName]
 
@@ -18,13 +19,16 @@ const applyPlan = async stepPlan =>
       )
     }
 
-    if (resource.config && resource.config.batch) {
-      return await resource.create(ctx, resourcePlan.resourceDefinitions)
-    }
-
-    return await Promise.all(
+    const changedResources = await Promise.all(
       resourcePlan.resourceDefinitions.map(r => resource.create(ctx, r))
     )
+
+    appliedResources = appliedResources.concat(changedResources)
+
+    return
   })
+
+  return appliedResources
+}
 
 module.exports = applyPlan

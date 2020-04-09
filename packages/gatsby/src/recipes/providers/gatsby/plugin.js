@@ -6,6 +6,7 @@ const glob = require(`glob`)
 
 const declare = require(`@babel/helper-plugin-utils`).declare
 
+const resourceSchema = require(`../resource-schema`)
 const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
@@ -226,13 +227,15 @@ module.exports.all = async ({ root }) => {
   })
 }
 
-module.exports.validate = () => {
-  return {
-    name: Joi.string(),
-    shadowableFiles: Joi.array().items(Joi.string()),
-    shadowedFiles: Joi.array().items(Joi.string()),
-  }
+const schema = {
+  name: Joi.string(),
+  shadowableFiles: Joi.array().items(Joi.string()),
+  shadowedFiles: Joi.array().items(Joi.string()),
+  ...resourceSchema,
 }
+module.exports.schema = schema
+
+exports.validate = resource => Joi.validate(resource, schema)
 
 module.exports.plan = async ({ root }, { id, name }) => {
   const fullName = id || name
