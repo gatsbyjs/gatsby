@@ -150,6 +150,8 @@
               breadcrumbTitle: Static Folder
             - title: Using gatsby-image
               link: /docs/using-gatsby-image/
+            - title: Using Cloudinary Image service
+              link: /docs/using-cloudinary-image-service/
             - title: Working with Images in Gatsby
               link: /docs/working-with-images/
               breadcrumbTitle: Images in Gatsby
