@@ -12,7 +12,7 @@ title: Sourcing from Builder.io
 
 ### Fresh project:
 
-To start on a fresh project quickly, take a look at the [BuilderIO Gatsby starter](/starters/BuilderIO/gatsby-starter-builder/)
+To start on a fresh project quickly, use the [BuilderIO Gatsby starter](/starters/BuilderIO/gatsby-starter-builder/)
 
 ```shell
 gatsby new my-builder-site https://github.com/BuilderIO/gatsby-starter-builder
@@ -45,7 +45,7 @@ Then start building pages in Builder.io, hit publish, and they will be included 
 
 ### Using your components in the editor
 
-See this [design systems example](/examples/react-design-system) for lots of examples using your design system + custom components
+See this [design systems example](https://github.com/BuilderIO/builder/tree/master/examples/react-design-system) for lots of examples using your design system + custom components
 
 👉**Tip: want to limit page building to only your components? Try [components only mode](https://builder.io/c/docs/guides/components-only-mode)**
 
