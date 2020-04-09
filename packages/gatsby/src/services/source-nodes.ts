@@ -10,6 +10,6 @@ export async function sourceNodes({
     parentSpan,
   })
   activity.start()
-  await sourceNodesAndGc({ parentSpan: activity.span })
+  await sourceNodesAndGc({ parentSpan: activity.span, deferNodeMutation: true })
   activity.end()
 }
