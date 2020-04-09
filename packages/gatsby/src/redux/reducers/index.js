@@ -1,5 +1,6 @@
 const reduxNodes = require(`./nodes`)
 const lokiNodes = require(`../../db/loki/nodes`).reducer
+import { redirectsReducer } from "./redirects"
 
 const backend = process.env.GATSBY_DB_NODES || `redux`
 
@@ -59,7 +60,7 @@ module.exports = {
   jobsV2: require(`./jobsv2`),
   webpack: require(`./webpack`),
   webpackCompilationHash: require(`./webpack-compilation-hash`),
-  redirects: require(`./redirects`),
+  redirects: redirectsReducer,
   babelrc: require(`./babelrc`),
   schemaCustomization: require(`./schema-customization`),
   themes: require(`./themes`),
