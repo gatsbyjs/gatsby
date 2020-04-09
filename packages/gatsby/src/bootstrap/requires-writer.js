@@ -52,6 +52,7 @@ const getComponents = pages =>
   _(pages)
     .map(pickComponentFields)
     .uniqBy(c => c.componentChunkName)
+    .orderBy(c => c.componentChunkName)
     .value()
 
 /**
