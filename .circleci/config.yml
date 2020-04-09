@@ -399,6 +399,19 @@ jobs:
           command: yarn run update-source
           working_directory: ~/project/scripts/i18n
 
+  sync_translation_repo:
+    executor: node
+    steps:
+      - checkout
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
+      - run:
+          command: yarn
+          working_directory: ~/project/scripts/i18n
+      - run:
+          command: yarn run sync ja
+          working_directory: ~/project/scripts/i18n
+
   windows_unit_tests:
     executor:
       name: win/vs2019
@@ -643,6 +656,17 @@ workflows:
             branches:
               only:
                 - master
+
+  weekly-i18n-sync:
+    triggers:
+      - schedule:
+          cron: "0 19 * * 4"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - sync_translation_repo
 
   nightly-react-next:
     triggers:
