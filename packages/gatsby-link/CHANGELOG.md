@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.1...gatsby-link@2.3.2) (2020-04-03)
+
+### Bug Fixes
+
+- **gatsby-link:** drop custom innerRef typing and reuse one from @reach/router ([#22770](https://github.com/gatsbyjs/gatsby/issues/22770)) ([14b9605](https://github.com/gatsbyjs/gatsby/commit/14b9605))
+
 ## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.0...gatsby-link@2.3.1) (2020-03-23)
 
 **Note:** Version bump only for package gatsby-link

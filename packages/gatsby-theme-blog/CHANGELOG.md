@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.4.16...gatsby-theme-blog@1.4.17) (2020-04-09)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.4.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.4.15...gatsby-theme-blog@1.4.16) (2020-04-08)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.4.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.4.14...gatsby-theme-blog@1.4.15) (2020-04-07)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.4.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.4.13...gatsby-theme-blog@1.4.14) (2020-04-07)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.4.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.4.12...gatsby-theme-blog@1.4.13) (2020-04-04)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.4.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.4.11...gatsby-theme-blog@1.4.12) (2020-04-03)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.4.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.4.10...gatsby-theme-blog@1.4.11) (2020-04-03)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
 ## [1.4.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.4.9...gatsby-theme-blog@1.4.10) (2020-04-01)
 
 **Note:** Version bump only for package gatsby-theme-blog
