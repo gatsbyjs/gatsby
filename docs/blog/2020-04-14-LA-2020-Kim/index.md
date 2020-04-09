@@ -13,7 +13,8 @@ tags:
 - markdown
 - learning-to-code
 ---
-_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-3rd—would be pretty awesome, too 💜.  Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
+
+_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-3rd—would be pretty awesome, too 💜. Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
 
 Daniel Kim is a master’s degree student at the University of California, Davis, and the founder of [Bit Project](https://www.bitproject.org/)—a student organization that strives to make technical education accessible to more people. With over 70 developer members, Bit Project has reached more than 3,100 students. The group is working to expand its community through technical workshops, coding bootcamps, and outreach programs.
 
