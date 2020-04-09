@@ -1,6 +1,6 @@
 const log4js = require(`log4js`)
 const shell = require(`shelljs`)
-const { graphql } = require(`@octokit/graphql`)
+const { graphql: baseGraphql } = require(`@octokit/graphql`)
 let logger = log4js.getLogger(`sync`)
 
 require(`dotenv`).config()
@@ -35,6 +35,21 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
   }
 }
 
+// Run the query and exit if there are errors
+async function graphql(query, params) {
+  const graphqlWithAuth = baseGraphql.defaults({
+    headers: {
+      authorization: `token ${token}`,
+    },
+  })
+  try {
+    return await graphqlWithAuth(query, params)
+  } catch (error) {
+    logger.error(error.message)
+    return process.exit(1)
+  }
+}
+
 async function getRepository(owner, name) {
   const { repository } = await graphql(
     `
@@ -53,9 +68,6 @@ async function getRepository(owner, name) {
       }
     `,
     {
-      headers: {
-        authorization: `token ${token}`,
-      },
       owner,
       name,
       syncLabel: syncLabelName,
@@ -77,7 +89,6 @@ async function createLabel(input) {
     `,
     {
       headers: {
-        authorization: `token ${token}`,
         accept: `application/vnd.github.bane-preview+json`,
       },
       input,
@@ -100,7 +111,6 @@ async function createPullRequest(input) {
     `,
     {
       headers: {
-        authorization: `token ${token}`,
         accept: `application/vnd.github.shadow-cat-preview+json`,
       },
       input,
@@ -120,7 +130,6 @@ async function addLabelToPullRequest(pullRequest, label) {
     `,
     {
       headers: {
-        authorization: `token ${token}`,
         accept: `application/vnd.github.bane-preview+json`,
       },
       input: {
