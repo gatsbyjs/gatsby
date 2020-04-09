@@ -8,9 +8,11 @@ type StructuredLog = any // TODO this should come from structured log interface
 
 export interface IRedirect {
   fromPath: string
-  isPermanent: boolean
-  redirectInBrowser: boolean
   toPath: string
+  isPermanent?: boolean
+  redirectInBrowser?: boolean
+  // Users can add anything to this createRedirect API
+  [key: string]: any
 }
 
 export enum ProgramStatus {
