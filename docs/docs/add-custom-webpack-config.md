@@ -75,10 +75,11 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 
 You can always find more information on _resolve_ and other options in the official [Webpack docs](https://webpack.js.org/concepts/).
 
-But note that above solution only applies to webpack. If you are trying to eject from
-gatsby's eslint rules or use other tools they will not know how to resolve these and
-will complain. But if you are using yarn 1 or 2, then the best practice is to set them
-in package.json as shown below:
+### Importing non-webpack tools using `yarn`
+
+Note that above solution absolute imports only applies to webpack. If you are trying to
+eject from gatsby's eslint rules or use other tools they will not know how to resolve
+these and will complain. But if you are using yarn 1 or 2, then the best practice is to set them in package.json as shown below:
 
 ```js
 {
