@@ -65,6 +65,8 @@ function LangLink({ code, name, localName, current, pathname }) {
   )
 }
 
+// Based on:
+// https://github.com/marcysutton/js-a11y-workshop/blob/master/examples/dropdown/dropdown.js
 export default function LanguageDropdown({ pathname }) {
   const locale = useLocale()
   const [isOpen, setIsOpen] = React.useState(false)
