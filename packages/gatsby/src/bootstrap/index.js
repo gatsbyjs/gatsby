@@ -20,7 +20,7 @@ const loadThemes = require(`./load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
 import { getConfigFile } from "./get-config-file"
 const tracer = require(`opentracing`).globalTracer()
-const preferDefault = require(`./prefer-default`)
+import { preferDefault } from "./prefer-default"
 const removeStaleJobs = require(`./remove-stale-jobs`)
 
 // Show stack trace on unhandled promises.
