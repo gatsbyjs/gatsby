@@ -70,7 +70,7 @@ First create a new Hello World Gatsby site:
 
 Upgrade the version of Gatsby installed to use one with Recipes.
 
-`yarn add gatsby@recipe`
+`yarn add gatsby@recipes`
 
 Now run the Emotion recipe and follow the commands.
 
