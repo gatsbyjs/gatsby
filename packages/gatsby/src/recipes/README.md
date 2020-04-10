@@ -14,6 +14,12 @@ tutorials.
 
 [Read more about Recipes on the RFC](https://github.com/gatsbyjs/gatsby/pull/22610)
 
+There's an umbrella issue for testing / using Recipes during its incubation stage.
+
+Follow the issue for updates!
+
+https://github.com/gatsbyjs/gatsby/issues/22991
+
 ## How to write a recipe
 
 Let's write our first Recipe to setup Emotion on a Gatsby site.
