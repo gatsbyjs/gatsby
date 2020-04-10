@@ -30,5 +30,3 @@ class Auth {
     return $jwt;
   }
 }
-
-?>

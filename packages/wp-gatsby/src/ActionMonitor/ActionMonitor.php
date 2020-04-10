@@ -838,5 +838,3 @@ class ActionMonitor
         register_post_type("action_monitor", $args);
     }
 }
-
-?>

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Gatsby
  * Description: Optimize your WordPress site to be a source for Gatsby site(s).
- * Version: 0.1.11
+ * Version: 0.1.12
  * Author: GatsbyJS, Jason Bahl, Tyler Barnes
  * Author URI: https://gatsbyjs.org
  * Text Domain: wp-gatsby
@@ -37,6 +37,7 @@ final class WPGatsby
      * Returns instance of the main WPGatsby class
      *
      * @return WPGatsby
+     * @throws Exception
      */
     public static function instance()
     {
@@ -46,7 +47,7 @@ final class WPGatsby
 
             $minimum_php_version_met = self::$instance->min_php_version_check();
 
-            if ( WP_GATSBY_AUTOLOAD && $minimum_php_version_met ) {
+            if ( WPGATSBY_AUTOLOAD && $minimum_php_version_met ) {
               self::$instance->includes();
               self::$instance->init();
             }
@@ -67,7 +68,7 @@ final class WPGatsby
     {
 
         // Cloning instances of the class is forbidden.
-        _doing_it_wrong(__FUNCTION__, esc_html__('The WP_GATSBY_ class should not be cloned.', 'wp-gatsby'), '0.0.1');
+        _doing_it_wrong(__FUNCTION__, esc_html__('The WPGATSBY_ class should not be cloned.', 'wp-gatsby'), '0.0.1');
 
     }
 
@@ -82,7 +83,7 @@ final class WPGatsby
     {
 
         // De-serializing instances of the class is forbidden.
-        _doing_it_wrong(__FUNCTION__, esc_html__('De-serializing instances of the WP_GATSBY class is not allowed', 'wp-gatsby'), '0.0.1');
+        _doing_it_wrong(__FUNCTION__, esc_html__('De-serializing instances of the WPGATSBY class is not allowed', 'wp-gatsby'), '0.0.1');
 
     }
 
@@ -96,37 +97,37 @@ final class WPGatsby
     private function setup_constants()
     {
         // Plugin version.
-        if (! defined('WP_GATSBY_VERSION') ) {
-            define('WP_GATSBY_VERSION', '0.0.1');
+        if (! defined('WPGATSBY_VERSION') ) {
+            define('WPGATSBY_VERSION', '0.1.12');
         }
 
         // Plugin Folder Path.
-        if (! defined('WP_GATSBY_PLUGIN_DIR') ) {
-            define('WP_GATSBY_PLUGIN_DIR', plugin_dir_path(__FILE__));
+        if (! defined('WPGATSBY_PLUGIN_DIR') ) {
+            define('WPGATSBY_PLUGIN_DIR', plugin_dir_path(__FILE__));
         }
 
         // Plugin Folder URL.
-        if (! defined('WP_GATSBY_PLUGIN_URL') ) {
-            define('WP_GATSBY_PLUGIN_URL', plugin_dir_url(__FILE__));
+        if (! defined('WPGATSBY_PLUGIN_URL') ) {
+            define('WPGATSBY_PLUGIN_URL', plugin_dir_url(__FILE__));
         }
 
         // Plugin Root File.
-        if (! defined('WP_GATSBY_PLUGIN_FILE') ) {
-            define('WP_GATSBY_PLUGIN_FILE', __FILE__);
+        if (! defined('WPGATSBY_PLUGIN_FILE') ) {
+            define('WPGATSBY_PLUGIN_FILE', __FILE__);
         }
 
         // Whether to autoload the files or not.
-        if (! defined('WP_GATSBY_AUTOLOAD') ) {
+        if (! defined('WPGATSBY_AUTOLOAD') ) {
           define(
-            'WP_GATSBY_AUTOLOAD',
+            'WPGATSBY_AUTOLOAD',
             // only autoload if WPGQL is active
             defined('WPGRAPHQL_AUTOLOAD') ? true : false
           );
         }
 
         // Whether to run the plugin in debug mode. Default is false.
-        if (! defined('WP_GATSBY_DEBUG') ) {
-            define('WP_GATSBY_DEBUG', false);
+        if (! defined('WPGATSBY_DEBUG') ) {
+            define('WPGATSBY_DEBUG', false);
         }
 
     }
@@ -162,7 +163,7 @@ final class WPGatsby
     {
 
         /**
-         * WP_GATSBY_AUTOLOAD can be set to "false" to prevent the autoloader from running.
+         * WPGATSBY_AUTOLOAD can be set to "false" to prevent the autoloader from running.
          * In most cases, this is not something that should be disabled, but some environments
          * may bootstrap their dependencies in a global autoloader that will autoload files
          * before we get to this point, and requiring the autoloader again can trigger fatal errors.
@@ -170,13 +171,13 @@ final class WPGatsby
          * The codeception tests are an example of an environment where adding the autoloader again causes issues
          * so this is set to false for tests.
          */
-        if (defined('WP_GATSBY_AUTOLOAD') && true === WP_GATSBY_AUTOLOAD ) {
+        if (defined('WPGATSBY_AUTOLOAD') && true === WPGATSBY_AUTOLOAD ) {
             // Autoload Required Classes.
-            include_once WP_GATSBY_PLUGIN_DIR . 'vendor/autoload.php';
+            include_once WPGATSBY_PLUGIN_DIR . 'vendor/autoload.php';
         }
 
         // Required non-autoloaded classes.
-        include_once WP_GATSBY_PLUGIN_DIR . 'access-functions.php';
+        include_once WPGATSBY_PLUGIN_DIR . 'access-functions.php';
 
     }
 

@@ -29,8 +29,7 @@ class PostTypes
     {
         add_action(
             'graphql_register_types', function () {
-                $this->registerObjectTypes();
-                $this->registerFields();
+                $this->register();
             }
         );
     }
@@ -38,8 +37,9 @@ class PostTypes
     /**
      * Registers fields for the postTypes root field
      */
-    function registerFields() {
-        \register_graphql_field(
+    function register() {
+
+        register_graphql_field(
             'RootQuery', 'postTypes', [
             'type' => ['list_of' => 'PostTypeInfo'],
             'description' => __('Returns a list of available post types', 'wp-gatsby'),
@@ -103,13 +103,8 @@ class PostTypes
             },
             ]
         );
-    }
 
-    /**
-     * Registers GraphQL object types for postTypes root field
-     */
-    function registerObjectTypes() {
-        \register_graphql_object_type(
+        register_graphql_object_type(
             'PostTypeInfoGraphQLFieldNames',
             [
                 'description' => 'The GraphQL field names for a registered post type',
@@ -146,4 +141,3 @@ class PostTypes
         );
     }
 }
-?>

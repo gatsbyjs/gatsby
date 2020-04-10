@@ -16,4 +16,3 @@ class Schema
         new SiteMeta();
     }
 }
-?>
