@@ -58,3 +58,5 @@
 - [ ] Select input supported recipes
 - [ ] Refactor resource state to use Redux & record runs in local db
 - [ ] move creating the validate function to core and out of resources — they just declare their schema
+- [ ] gatsby-config.js hardening — make it work if there's no plugins set like in hello-world starter
+- [ ] get latest version of npm packages so know if can skip running.
