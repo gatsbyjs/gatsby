@@ -1,3 +1,5 @@
+import { createPageDependency } from "../redux/actions/add-page-dependency"
+
 const { LocalNodeModel } = require(`./node-model`)
 const { defaultFieldResolver } = require(`./resolvers`)
 
@@ -7,9 +9,9 @@ const withResolverContext = ({
   context,
   customContext,
   nodeModel,
+  stats,
 }) => {
   const nodeStore = require(`../db/nodes`)
-  const createPageDependency = require(`../redux/actions/add-page-dependency`)
 
   if (!nodeModel) {
     nodeModel = new LocalNodeModel({
@@ -27,6 +29,7 @@ const withResolverContext = ({
     nodeModel: nodeModel.withContext({
       path: context ? context.path : undefined,
     }),
+    stats,
   }
 }
 

@@ -122,7 +122,7 @@ type TypeInfoRelatedNode = TypeInfo & {
 */
 
 const { isEqual } = require(`lodash`)
-const is32BitInteger = require(`./is-32-bit-integer`)
+import { is32BitInteger } from "../../utils/is-32-bit-integer"
 const { looksLikeADate } = require(`../types/date`)
 
 const getType = (value, key) => {

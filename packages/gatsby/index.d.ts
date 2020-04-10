@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
 import { createContentDigest } from "gatsby-core-utils"
@@ -176,6 +177,8 @@ export interface GatsbyConfig {
   >
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
+  /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
+  assetPrefix?: string
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
@@ -526,12 +529,16 @@ export interface GatsbyBrowser {
     args: ServiceWorkerArgs,
     options: PluginOptions
   ): any
+  onServiceWorkerUpdateReady?(
+    args: ServiceWorkerArgs,
+    options: PluginOptions
+  ): any
   registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
   replaceComponentRenderer?(
     args: ReplaceComponentRendererArgs,
     options: PluginOptions
   ): any
-  replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): any
+  replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): Renderer
   shouldUpdateScroll?(args: ShouldUpdateScrollArgs, options: PluginOptions): any
   wrapPageElement?(
     args: WrapPageElementBrowserArgs,
@@ -889,9 +896,9 @@ export interface ReplaceRendererArgs extends NodePluginArgs {
   setBodyProps: Function
 }
 
-export interface WrapPageElementNodeArgs extends NodePluginArgs {
+export interface WrapPageElementNodeArgs<DataType = object, PageContextType = object> extends NodePluginArgs {
   element: object
-  props: object
+  props: PageProps<DataType, PageContextType>
   pathname: string
 }
 
@@ -953,7 +960,13 @@ interface ActionOptions {
 }
 
 export interface BuildArgs extends ParentSpanPluginArgs {
-  graphql: Function
+  graphql<TData, TVariables = any>(
+    query: string,
+    variables?: TVariables
+  ): Promise<{
+    errors?: any
+    data?: TData
+  }>
 }
 
 export interface Actions {
@@ -1096,7 +1109,7 @@ export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
   createFieldExtension(
     extension: object,
-    plugin: ActionPlugin,
+    plugin?: ActionPlugin,
     traceId?: string
   ): void
 }
@@ -1189,11 +1202,11 @@ export interface PackageJson {
         email: string
       }
   license?: string
-  dependencies?: Array<Record<string, string>>
-  devDependencies?: Array<Record<string, string>>
-  peerDependencies?: Array<Record<string, string>>
-  optionalDependecies?: Array<Record<string, string>>
-  bundledDependecies?: Array<Record<string, string>>
+  dependencies?: Record<string, string>
+  devDependencies?: Record<string, string>
+  peerDependencies?: Record<string, string>
+  optionalDependencies?: Record<string, string>
+  bundledDependencies?: Array<string>
   keywords?: string[]
 }
 
@@ -1305,9 +1318,9 @@ export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
   getSavedScrollPosition: Function
 }
 
-export interface WrapPageElementBrowserArgs extends BrowserPluginArgs {
+export interface WrapPageElementBrowserArgs<DataType = object, PageContextType = object> extends BrowserPluginArgs {
   element: object
-  props: object
+  props: PageProps<DataType, PageContextType>
 }
 
 export interface WrapRootElementBrowserArgs extends BrowserPluginArgs {

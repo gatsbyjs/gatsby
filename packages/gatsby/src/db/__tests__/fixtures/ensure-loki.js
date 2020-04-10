@@ -4,5 +4,8 @@ module.exports = () => {
   if (backend === `loki`) {
     const lokiDb = require(`../../loki`)
     beforeAll(lokiDb.start)
+    return true
   }
+
+  return false
 }
