@@ -3,13 +3,13 @@ const remarkMdx = require(`remark-mdx`)
 const remarkParse = require(`remark-parse`)
 const remarkStringify = require(`remark-stringify`)
 const visit = require(`unist-util-visit`)
-const fetch = require('node-fetch')
-const fs = require('fs-extra')
-const isUrl = require('is-url')
-const path = require('path')
+const fetch = require(`node-fetch`)
+const fs = require(`fs-extra`)
+const isUrl = require(`is-url`)
+const path = require(`path`)
 
-const extractImports = require('./extract-imports')
-const removeElementByName = require('./remove-element-by-name')
+const extractImports = require(`./extract-imports`)
+const removeElementByName = require(`./remove-element-by-name`)
 const jsxToJson = require(`./jsx-to-json`)
 
 const asRoot = nodes => {
@@ -63,18 +63,18 @@ const u = unified()
 
 const handleImports = tree => {
   let imports = {}
-  visit(tree, 'import',  async (node, index, parent) => {
+  visit(tree, `import`, async (node, index, parent) => {
     imports = { ...imports, ...extractImports(node.value) }
     parent.children.splice(index, 1)
   })
   return imports
 }
 
-const unwrapImports = async (tree, imports) => {
-  return new Promise((resolve, reject) => {
+const unwrapImports = async (tree, imports) =>
+  new Promise((resolve, reject) => {
     let count = 0
 
-    visit(tree, 'jsx', () => {
+    visit(tree, `jsx`, () => {
       count++
     })
 
@@ -82,17 +82,19 @@ const unwrapImports = async (tree, imports) => {
       return resolve()
     }
 
-    visit(tree, 'jsx', async (node, index, parent) => {
+    visit(tree, `jsx`, async (node, index, parent) => {
       const names = toJson(node.value)
-      const _newValue = removeElementByName(node.value, { names: Object.keys(imports) })
-  
+      const _newValue = removeElementByName(node.value, {
+        names: Object.keys(imports),
+      })
+
       if (names) {
         Object.keys(names).map(async name => {
           const url = imports[name]
           if (!url) {
             return resolve()
           }
-  
+
           const result = await fetch(url)
           const mdx = await result.text()
           const nodes = u.parse(mdx).children
@@ -103,7 +105,6 @@ const unwrapImports = async (tree, imports) => {
       }
     })
   })
-}
 
 const partitionSteps = ast => {
   const steps = []
@@ -167,13 +168,13 @@ const getSource = async (pathOrUrl, projectRoot) => {
   if (isRelative(pathOrUrl)) {
     recipePath = path.join(projectRoot, pathOrUrl)
   } else {
-    recipePath = path.join(__dirname, pathOrUrl)
+    recipePath = path.join(__dirname, `../`, pathOrUrl)
   }
   if (recipePath.slice(-4) !== `.mdx`) {
     recipePath += `.mdx`
   }
 
-  const src = await fs.readFile(recipePath, 'utf8')
+  const src = await fs.readFile(recipePath, `utf8`)
   return src
 }
 

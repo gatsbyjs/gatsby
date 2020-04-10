@@ -36,12 +36,14 @@
 - [ ] run recipe from url
 - [ ] Implement config object for GatsbyPlugin
 - [ ] Handle JS in config objects? { **\_javascript: "`\${**dirname}/foo/bar`" }
+- [ ] write tests for remote files src in File
 - [ ] Gatsby recipes list (design and implementation)
 - [ ] Move gatsby/src/recipes to its own package `gatsby-recipes`
 - [ ] Document the supported components and trivial guide on recipe authoring (help)
 - [ ] handle error states
 - [ ] have File only pull from remote files for now until multiline strings work in MDX
 - [ ] diff all resource changes
+- [ ] validate that the first step doesn't have any packages in it.
 - [ ] move code to its own package `gatsby-recipes`
 - [ ] handle not finding a recipe
 - [ ] write up testing doc ASAP so internal folks can try it

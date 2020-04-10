@@ -12,7 +12,7 @@ const { SubscriptionServer } = require(`subscriptions-transport-ws`)
 const { createServer } = require(`http`)
 const { interpret } = require(`xstate`)
 const pkgDir = require(`pkg-dir`)
-const cors = require('cors')
+const cors = require(`cors`)
 
 const recipeMachine = require(`./recipe-machine`)
 const createTypes = require(`./create-types`)
@@ -32,7 +32,6 @@ const emitOperation = state => {
 // only one service can run at a time.
 let service
 const applyPlan = ({ recipePath, projectRoot }) => {
-  
   const initialState = {
     context: { recipePath, projectRoot, steps: [], currentStep: 0 },
     value: `init`,
@@ -95,7 +94,7 @@ const rootMutationType = new GraphQLObjectType({
         type: GraphQLString,
         args: {
           recipePath: { type: GraphQLString },
-          projectRoot: { type: GraphQLString }
+          projectRoot: { type: GraphQLString },
         },
         resolve: (_data, args) => {
           console.log(`received operation`, args.recipePath)

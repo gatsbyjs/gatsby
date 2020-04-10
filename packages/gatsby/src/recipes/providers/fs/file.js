@@ -2,6 +2,8 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const Joi = require(`@hapi/joi`)
+const isUrl = require(`is-url`)
+const fetch = require(`node-fetch`)
 
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
@@ -17,13 +19,30 @@ const fileExists = fullPath => {
   }
 }
 
+const downloadFile = async (url, filePath) =>
+  fetch(url).then(
+    res =>
+      new Promise((resolve, reject) => {
+        const dest = fs.createWriteStream(filePath)
+        res.body.pipe(dest)
+        dest.on(`finish`, () => {
+          resolve(true)
+        }) // not sure why you want to pass a boolean
+        dest.on(`error`, reject) // don't forget this!
+      })
+  )
+
 const create = async ({ root }, { id, path: filePath, content }) => {
   const fullPath = makePath(root, filePath)
   const { dir } = path.parse(fullPath)
 
   await mkdirp(dir)
 
-  await fs.writeFile(fullPath, content)
+  if (isUrl(content)) {
+    await downloadFile(content, fullPath)
+  } else {
+    await fs.writeFile(fullPath, content)
+  }
 
   return await read({ root }, filePath)
 }
@@ -59,9 +78,15 @@ const destroy = async (context, fileResource) => {
 module.exports.plan = async (context, { id, path: filePath, content }) => {
   const currentResource = await read(context, filePath)
 
+  let newState = content
+  if (isUrl(content)) {
+    const res = await fetch(content)
+    newState = await res.text()
+  }
+
   const plan = {
     currentState: (currentResource && currentResource.content) || ``,
-    newState: content,
+    newState,
     describe: `Write ${filePath}`,
     diff: ``,
   }

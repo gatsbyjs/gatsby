@@ -163,12 +163,13 @@ module.exports = ({ recipe, projectRoot }) => {
       try {
         await createOperation({ recipePath: recipe, projectRoot })
       } catch (e) {
-        log('error creating operation', e)
+        log(`error creating operation`, e)
       }
     }
 
-    const state = (subscriptionResponse.data &&
-      JSON.parse(subscriptionResponse.data.operation.state))
+    const state =
+      subscriptionResponse.data &&
+      JSON.parse(subscriptionResponse.data.operation.state)
 
     useInput((_, key) => {
       setLastKeyPress(key)
@@ -181,10 +182,14 @@ module.exports = ({ recipe, projectRoot }) => {
       }
     })
 
-    log('subscriptionResponse.data', subscriptionResponse.data)
+    log(`subscriptionResponse.data`, subscriptionResponse.data)
 
     if (!state) {
-      return <Text><Spinner /> Loading recipe</Text>
+      return (
+        <Text>
+          <Spinner /> Loading recipe
+        </Text>
+      )
     }
     /*
      * TODOs
@@ -233,7 +238,7 @@ module.exports = ({ recipe, projectRoot }) => {
 
       if (!isPlan || !isPresetPlanState) {
         return (
-          <Div>
+          <Div marginTop={1}>
             <Text>Press enter to continue</Text>
           </Div>
         )
@@ -250,7 +255,7 @@ module.exports = ({ recipe, projectRoot }) => {
             <Div marginTop={1} key={`${p.resourceName} plan ${i}`}>
               <Text italic>{p.resourceName}:</Text>
               <Text> * {p.describe}</Text>
-              {p.diff !== `` && (
+              {p.diff && p.diff !== `` && (
                 <>
                   <Text>---</Text>
                   <Text>{p.diff}</Text>
@@ -292,31 +297,38 @@ module.exports = ({ recipe, projectRoot }) => {
     const Error = ({ state }) => {
       log(`errors`, state)
       if (state && state.context && state.context.error) {
-        return (
-          <Div>
-            <Color marginBottom={1} red>
-              The following resources failed validation
-            </Color>
-            {state.context.error.map((err, i) => {
-              log(`recipe er`, { err })
-              return (
-                <Div key={`error-box-${i}`}>
-                  <Text>Type: {err.resource}</Text>
-                  <Text>
-                    Resource: {JSON.stringify(err.resourceDeclaration, null, 4)}
-                  </Text>
-                  <Text>Recipe step: {err.step}</Text>
-                  <Text>
-                    Error{err.validationError.details.length > 1 && `s`}:
-                  </Text>
-                  {err.validationError.details.map((d, v) => (
-                    <Text key={`validation-error-${v}`}> ‣ {d.message}</Text>
-                  ))}
-                </Div>
-              )
-            })}
-          </Div>
-        )
+        if (false) {
+          return (
+            <Div>
+              <Color marginBottom={1} red>
+                The following resources failed validation
+              </Color>
+              {state.context.error.map((err, i) => {
+                log(`recipe er`, { err })
+                return (
+                  <Div key={`error-box-${i}`}>
+                    <Text>Type: {err.resource}</Text>
+                    <Text>
+                      Resource:{` `}
+                      {JSON.stringify(err.resourceDeclaration, null, 4)}
+                    </Text>
+                    <Text>Recipe step: {err.step}</Text>
+                    <Text>
+                      Error{err.validationError.details.length > 1 && `s`}:
+                    </Text>
+                    {err.validationError.details.map((d, v) => (
+                      <Text key={`validation-error-${v}`}> ‣ {d.message}</Text>
+                    ))}
+                  </Div>
+                )
+              })}
+            </Div>
+          )
+        } else {
+          return (
+            <Color red>{JSON.stringify(state.context.error, null, 2)}</Color>
+          )
+        }
       }
 
       return null

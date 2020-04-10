@@ -109,7 +109,7 @@ const read = async ({ root }, id) => {
   const name = getPluginsFromConfig(configSrc).find(name => name === id)
 
   if (name) {
-    return { id, name }
+    return { id, name, _message: `Installed ${id} in gatsby-config.js` }
   } else {
     return undefined
   }
