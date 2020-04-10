@@ -68,6 +68,12 @@ First create a new Hello World Gatsby site:
 
 `gatsby new try-emotion https://github.com/gatsbyjs/gatsby-starter-hello-world`
 
+Meanwhile also upgrade the global gatsby-cli package to use the one with new recipes command.
+
+`npm install -g gatsby-cli@recipes`
+
+Once the global finishes installing, running `gatsby -v` should show this as your version: `Gatsby CLI version: 2.11.4-recipes.53`
+
 Upgrade the version of Gatsby installed to use one with Recipes.
 
 `yarn add gatsby@recipes`
