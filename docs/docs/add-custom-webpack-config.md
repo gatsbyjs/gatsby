@@ -78,7 +78,6 @@ You can always find more information on _resolve_ and other options in the offic
 ### Importing non-webpack tools using `yarn`
 
 Note that using absolute imports only applies to webpack resolutions and will not work for other tools, e.g. eslint or typescript. 
-eject from gatsby's eslint rules or use other tools they will not know how to resolve
 these and will complain. But if you are using yarn 1 or 2, then the best practice is to set them in package.json as shown below:
 
 ```js
