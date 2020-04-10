@@ -7,13 +7,13 @@ import { reporter as gatsbyReporter } from "./reporter"
 
 export const patchConsole = (reporter: typeof gatsbyReporter): void => {
   console.log = (format: any, ...args: any[]): void => {
-    reporter.log(util.format(format, ...args))
+    format ? reporter.log(util.format(format, ...args)) : reporter.log()
   }
   console.warn = (format: any, ...args: any[]): void => {
-    reporter.warn(util.format(format, ...args))
+    format ? reporter.warn(util.format(format, ...args)) : reporter.warn()
   }
   console.info = (format: any, ...args: any[]): void => {
-    reporter.info(util.format(format, ...args))
+    format ? reporter.info(util.format(format, ...args)) : reporter.info()
   }
   console.error = (format: any, ...args: any[]): void => {
     reporter.error(util.format(format, ...args))
