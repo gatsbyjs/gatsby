@@ -25,6 +25,8 @@ class ActionMonitor
 
         $this->registerGraphQLFields();
         $this->monitorActions();
+
+
     }
 
     function garbageCollectActions() {
@@ -838,5 +840,3 @@ class ActionMonitor
         register_post_type("action_monitor", $args);
     }
 }
-
-?>

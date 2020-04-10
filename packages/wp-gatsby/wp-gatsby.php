@@ -209,6 +209,11 @@ final class WPGatsby
          * Initialize Auth token parser
          */
         new \WPGatsby\GraphQL\ParseAuthToken();
+
+	    /**
+	     * Dispatch builds
+	     */
+        new \WPGatsby\ActionMonitor\Dispatcher();
     }
 
 }
