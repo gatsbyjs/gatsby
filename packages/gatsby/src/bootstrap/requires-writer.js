@@ -255,4 +255,5 @@ module.exports = {
   writeAll,
   resetLastHash,
   startListener,
+  getComponents,
 }
