@@ -3,6 +3,7 @@ const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const Joi = require(`@hapi/joi`)
 const gitDiff = require(`git-diff/async`)
+const isNewline = require(`is-newline`)
 
 const resourceSchema = require(`../resource-schema`)
 
@@ -60,13 +61,23 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
   const currentResource = await read(context, filePath)
 
   const plan = {
-    currentState: currentResource && currentResource.content,
+    currentState: (currentResource && currentResource.content) || ``,
     newState: content,
     describe: `Write ${filePath}`,
+    diff: ``,
   }
 
   if (plan.currentState !== plan.newState) {
-    const diff = await gitDiff(plan.currentState || ``, plan.newState || ``, {
+    let oldString = plan.currentState || `\n`
+    let newString = plan.newState || `\n`
+    if (!isNewline(oldString.slice(-1))) {
+      oldString += `\n`
+    }
+    if (!isNewline(newString.slice(-1))) {
+      newString += `\n`
+    }
+
+    const diff = await gitDiff(oldString, newString, {
       color: true,
       flags: `--diff-algorithm=minimal`,
     })
@@ -84,7 +95,8 @@ const schema = {
   ...resourceSchema,
 }
 exports.schema = schema
-exports.validate = resource => Joi.validate(resource, schema)
+exports.validate = resource =>
+  Joi.validate(resource, schema, { abortEarly: false })
 
 module.exports.exists = fileExists
 

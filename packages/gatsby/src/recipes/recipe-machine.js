@@ -2,11 +2,12 @@ const { Machine, assign } = require(`xstate`)
 
 const createPlan = require(`./create-plan`)
 const applyPlan = require(`./apply-plan`)
+const validateRecipe = require(`./validate-recipe`)
 
 const recipeMachine = Machine(
   {
     id: `recipe`,
-    initial: `creatingPlan`,
+    initial: `validatePlan`,
     context: {
       currentStep: 0,
       steps: [],
@@ -14,6 +15,27 @@ const recipeMachine = Machine(
       stepResources: [],
     },
     states: {
+      validatePlan: {
+        invoke: {
+          id: `validatePlan`,
+          src: async (context, event) => {
+            const result = await validateRecipe(context.steps)
+            if (result.length > 0) {
+              // is stringifying the only way to pass data around in errors 🤔
+              throw new Error(JSON.stringify(result))
+            }
+
+            return result
+          },
+          onDone: `creatingPlan`,
+          onError: {
+            target: `doneError`,
+            actions: assign({
+              error: (context, event) => JSON.parse(event.data.message),
+            }),
+          },
+        },
+      },
       creatingPlan: {
         entry: [`deleteOldPlan`],
         invoke: {
@@ -29,13 +51,10 @@ const recipeMachine = Machine(
             }),
           },
           onError: {
-            target: `failure`,
+            target: `doneError`,
             actions: assign({ error: (context, event) => event.data }),
           },
         },
-      },
-      failure: {
-        "": `done`,
       },
       "present plan": {
         on: {
@@ -57,7 +76,7 @@ const recipeMachine = Machine(
             actions: [`addResourcesToContext`],
           },
           onError: {
-            target: `failure`,
+            target: `doneError`,
             actions: assign({ error: (context, event) => event.data }),
           },
         },
@@ -82,6 +101,9 @@ const recipeMachine = Machine(
         },
       },
       done: {
+        type: `final`,
+      },
+      doneError: {
         type: `final`,
       },
     },

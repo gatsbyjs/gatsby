@@ -40,6 +40,26 @@ it(`should create plan for File resources`, done => {
   service.start()
 })
 
+it(`it should error if part of the recipe fails validation`, done => {
+  const filePath = `./hi.md`
+  const initialContext = {
+    steps: [{ File: [{ path: filePath, contentz: `#yo` }] }, {}, {}],
+    currentStep: 0,
+  }
+  const service = interpret(
+    recipeMachine.withContext(initialContext)
+  ).onTransition(state => {
+    if (state.value === `doneError`) {
+      expect(state.context.error).toBeTruthy()
+      expect(state.context.error).toMatchSnapshot()
+      service.stop()
+      done()
+    }
+  })
+
+  service.start()
+})
+
 it(`it should switch to done after the final apply step`, done => {
   const filePath = `./hi.md`
   const initialContext = {
@@ -87,6 +107,9 @@ it(`should store created/changed/deleted resources on the context after applying
     if (state.value === `done`) {
       expect(state.context.stepResources).toMatchSnapshot()
       expect(state.context.stepResources[1][0]._message).toBeTruthy()
+      // Clean up files
+      fs.unlinkSync(path.join(process.cwd(), filePath))
+      fs.unlinkSync(path.join(process.cwd(), filePath2))
       done()
     }
   })

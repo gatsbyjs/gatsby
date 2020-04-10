@@ -123,7 +123,10 @@ const schema = {
   ...resourceSchema,
 }
 
-const validate = resource => Joi.validate(resource, schema)
+const validate = resource =>
+  Joi.validate(resource, schema, { abortEarly: false })
+
+exports.validate = validate
 
 const destroy = async ({ root }, resource) => {
   const { stderr, stdout } = await execa(`yarn`, [`remove`, resource.name], {

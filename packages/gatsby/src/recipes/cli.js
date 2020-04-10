@@ -5,7 +5,7 @@ const lodash = require(`lodash`)
 
 const React = require(`react`)
 const { useState, useContext, useEffect } = require(`react`)
-const { render, Box, Text, useInput, useApp, Static } = require(`ink`)
+const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`@mdx-js/runtime`)
@@ -26,7 +26,13 @@ const parser = require(`./parser`)
 let renderCount = 1
 
 const Div = props => (
-  <Box width={80} textWrap="wrap" flexDirection="column" {...props} />
+  <Box
+    width="100%"
+    textWrap="wrap"
+    flexShrink={0}
+    flexDirection="column"
+    {...props}
+  />
 )
 
 const components = {
@@ -216,6 +222,7 @@ module.exports = ({ recipe, projectRoot }) => {
      */
 
     log(`render`, `${renderCount} ${new Date().toJSON()}`)
+    log(`state`, state)
     renderCount += 1
 
     if (!subscriptionResponse.data) {
@@ -224,6 +231,9 @@ module.exports = ({ recipe, projectRoot }) => {
 
     // If we're done, exit.
     if (state.value === `done`) {
+      process.nextTick(() => process.exit())
+    }
+    if (state.value === `doneError`) {
       process.nextTick(() => process.exit())
     }
 
@@ -303,6 +313,43 @@ module.exports = ({ recipe, projectRoot }) => {
       )
     }
 
+    const Error = ({ state }) => {
+      log(`errors`, state)
+      if (state && state.context && state.context.error) {
+        return (
+          <Div>
+            <Color marginBottom={1} red>
+              The following resources failed validation
+            </Color>
+            {state.context.error.map((err, i) => {
+              log(`recipe er`, { err })
+              return (
+                <Div key={`error-box-${i}`}>
+                  <Text>Type: {err.resource}</Text>
+                  <Text>
+                    Resource: {JSON.stringify(err.resourceDeclaration, null, 4)}
+                  </Text>
+                  <Text>Recipe step: {err.step}</Text>
+                  <Text>
+                    Error{err.validationError.details.length > 1 && `s`}:
+                  </Text>
+                  {err.validationError.details.map((d, v) => (
+                    <Text key={`validation-error-${v}`}> ‣ {d.message}</Text>
+                  ))}
+                </Div>
+              )
+            })}
+          </Div>
+        )
+      }
+
+      return null
+    }
+
+    if (state.value === `doneError`) {
+      return <Error width="100%" state={state} />
+    }
+
     return (
       <>
         <Static>
@@ -332,10 +379,12 @@ module.exports = ({ recipe, projectRoot }) => {
   }
 
   const Wrapper = () => (
-    <Provider value={client}>
-      <Text>{` `}</Text>
-      <RecipeInterpreter commands={allCommands} />
-    </Provider>
+    <Div>
+      <Provider value={client}>
+        <Text>{` `}</Text>
+        <RecipeInterpreter commands={allCommands} />
+      </Provider>
+    </Div>
   )
 
   const Recipe = () => <Wrapper steps={stepsAsMDX} />
