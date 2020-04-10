@@ -417,7 +417,7 @@ jobs:
           command: yarn
           working_directory: ~/project/scripts/i18n
       - run:
-          command: yarn run sync mr
+          command: yarn run-all sync
           working_directory: ~/project/scripts/i18n
 
   windows_unit_tests:
@@ -860,7 +860,7 @@ workflows:
   weekly-i18n-sync:
     triggers:
       - schedule:
-          cron: "30 20 * * 5"
+          cron: "0 18 * * 5"
           filters:
             branches:
               only:
