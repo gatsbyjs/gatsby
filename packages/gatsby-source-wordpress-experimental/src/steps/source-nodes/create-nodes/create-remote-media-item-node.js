@@ -1,5 +1,6 @@
 import fs from "fs-extra"
 import path from "path"
+import url from "url"
 
 import retry from "async-retry"
 
@@ -10,11 +11,34 @@ import createRemoteFileNode from "./create-remote-file-node/index"
 import store from "~/store"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import urlToPath from "~/utils/url-to-path"
+import { formatLogMessage } from "~/utils/format-log-message"
 
 export const getFileNodeMetaBySourceUrl = sourceUrl => {
   const fileNodesMetaByUrls = store.getState().imageNodes.nodeMetaByUrl
 
   return fileNodesMetaByUrls[sourceUrl]
+}
+
+export const errorPanicker = ({ error, reporter, node }) => {
+  if (
+    error.includes(`Response code 4`) ||
+    error.includes(`Response code 500`) ||
+    error.includes(`Response code 511`) ||
+    error.includes(`Response code 508`) ||
+    error.includes(`Response code 505`) ||
+    error.includes(`Response code 501`)
+  ) {
+    const { protocol, hostname } = url.parse(node.link)
+    const editUrl = `${protocol}//${hostname}/wp-admin/upload.php?item=${node.databaseId}`
+
+    reporter.log(``)
+    reporter.info(
+      formatLogMessage(
+        `Unrecoverable error occured while fetching media item #${node.databaseId}\n\nMedia item link: ${node.link}\nEdit link: ${editUrl}\nFile url: ${node.mediaItemUrl}`
+      )
+    )
+    reporter.panic(error)
+  }
 }
 
 export const getFileNodeByMediaItemNode = async ({
@@ -108,6 +132,7 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
         }
       }
 
+      // if this errors, it's caught one level above in fetch-referenced-media-items.js so it can be placed on the end of the request queue
       const node = await createRemoteFileNode({
         url: mediaItemUrl,
         ...createFileNodeRequirements,
@@ -119,6 +144,7 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
       retries: 3,
       factor: 1.1,
       minTimeout: 5000,
+      onRetry: error => errorPanicker({ error, reporter, node: mediaItemNode }),
     }
   )
 

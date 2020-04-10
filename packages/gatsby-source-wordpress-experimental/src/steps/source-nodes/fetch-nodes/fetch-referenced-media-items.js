@@ -94,11 +94,6 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
           const timesRetried = retriedFiles[node.id] || 0
 
           try {
-            // if (timesRetried > 0) {
-            //   await new Promise(resolve =>
-            //     setTimeout(() => resolve(), timesRetried * 2000)
-            //   )
-            // }
             remoteFile = await createRemoteMediaItemNode({
               mediaItemNode: node,
               helpers,
@@ -109,19 +104,22 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
               )
             }
           } catch (error) {
+            // Errors that should exit are handled one level down
+            // in createRemoteMediaItemNode
+            //
             // if we haven't reqeued this before,
             // add it to the end of the queue to
             // try once more later
             if (timesRetried < 5) {
-              // if (timesRetried > 2) {
-              helpers.reporter.info(
-                `pushing ${node.mediaItemUrl} to the end of the request queue.`
-              )
+              if (timesRetried > 2) {
+                helpers.reporter.info(
+                  `pushing ${node.mediaItemUrl} to the end of the request queue.`
+                )
 
-              helpers.reporter.info(
-                `Previously retried ${timesRetried} times already.`
-              )
-              // }
+                helpers.reporter.info(
+                  `Previously retried ${timesRetried} times already.`
+                )
+              }
 
               retriedFiles[node.id] = timesRetried + 1
 
