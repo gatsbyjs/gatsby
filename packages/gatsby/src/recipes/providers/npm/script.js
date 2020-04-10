@@ -51,7 +51,7 @@ const destroy = async ({ root }, { name }) => {
 const schema = {
   name: Joi.string(),
   command: Joi.string(),
-  ...resourceSchema
+  ...resourceSchema,
 }
 const validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
@@ -80,12 +80,11 @@ module.exports.plan = async ({ root }, { name, command }) => {
     currentState = scriptDescription(resource.name, resource.command)
   }
 
-  const oldState = JSON.stringify(pkg, null, 2)
+  const oldState = JSON.parse(JSON.stringify(pkg))
   pkg.scripts = pkg.scripts || {}
   pkg.scripts[name] = command
-  const newState = JSON.stringify(pkg, null, 2)
 
-  const diff = await getDiff(oldState, newState)
+  const diff = await getDiff(oldState, pkg)
   return {
     currentState,
     newState: scriptDescription(name, command),

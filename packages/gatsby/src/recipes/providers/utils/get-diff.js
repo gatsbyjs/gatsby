@@ -1,18 +1,7 @@
-const isNewline = require(`is-newline`)
-const { diffLinesUnified } = require(`jest-diff`)
+const diff = require(`jest-diff`).default
 const chalk = require(`chalk`)
 
-module.exports = async (oldString = `\n`, newString = `\n`) => {
-  if (!isNewline(oldString.slice(-1))) {
-    oldString += `\n`
-  }
-  if (!isNewline(newString.slice(-1))) {
-    newString += `\n`
-  }
-
-  const oldStringSplits = oldString.split(/\r?\n/)
-  const newStringSplits = newString.split(/\r?\n/)
-
+module.exports = async (oldVal, newVal) => {
   const options = {
     aAnnotation: `Original`,
     bAnnotation: `Modified`,
@@ -23,7 +12,7 @@ module.exports = async (oldString = `\n`, newString = `\n`) => {
     expand: false,
   }
 
-  const diffText = diffLinesUnified(oldStringSplits, newStringSplits, options)
+  const diffText = diff(oldVal, newVal, options)
 
   return diffText
 }

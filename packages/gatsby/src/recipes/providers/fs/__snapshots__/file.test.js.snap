@@ -13,10 +13,10 @@ exports[`file resource e2e file resource test: File create plan 1`] = `
 Object {
   "currentState": "",
   "describe": "Write file.txt",
-  "diff": "[36m@@ -1 +1 @@[m
-[31m-[m
-[32m+[m[32mHello, world![m
-",
+  "diff": "[31m- Original  - 0[39m
+[32m+ Modified  + 1[39m
+
+[32m+ Hello, world![39m",
   "newState": "Hello, world!",
 }
 `;
@@ -43,10 +43,11 @@ exports[`file resource e2e file resource test: File update plan 1`] = `
 Object {
   "currentState": "Hello, world!",
   "describe": "Write file.txt",
-  "diff": "[36m@@ -1 +1 @@[m
-[31m-Hello, world![m
-[32m+[m[32mHello, world!1[m
-",
+  "diff": "[31m- Original  - 1[39m
+[32m+ Modified  + 1[39m
+
+[31m- Hello, world![39m
+[32m+ Hello, world!1[39m",
   "newState": "Hello, world!1",
 }
 `;

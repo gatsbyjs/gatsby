@@ -6,6 +6,10 @@ Object {
     "resolve": [Function],
     "type": "GatsbyPluginConnection",
   },
+  "allGitIgnore": Object {
+    "resolve": [Function],
+    "type": "GitIgnoreConnection",
+  },
   "allNPMPackageJson": Object {
     "resolve": [Function],
     "type": "NPMPackageJsonConnection",
@@ -31,6 +35,15 @@ Object {
     },
     "resolve": [Function],
     "type": "GatsbyPlugin",
+  },
+  "gitIgnore": Object {
+    "args": Object {
+      "id": Object {
+        "type": "String",
+      },
+    },
+    "resolve": [Function],
+    "type": "GitIgnore",
   },
   "npmPackage": Object {
     "args": Object {

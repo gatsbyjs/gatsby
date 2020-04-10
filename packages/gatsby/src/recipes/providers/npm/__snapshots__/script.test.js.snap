@@ -2,6 +2,7 @@
 
 exports[`npm script resource e2e script resource test: NPMScript create 1`] = `
 Object {
+  "_message": "Wrote script apple to your package.json",
   "command": "foot",
   "id": "apple",
   "name": "apple",
@@ -11,8 +12,19 @@ Object {
 exports[`npm script resource e2e script resource test: NPMScript create plan 1`] = `
 Object {
   "currentState": "",
-  "describe": "Add new command to your package.json:
-\\"apple\\": \\"foot\\"",
+  "describe": "Add new command to your package.json",
+  "diff": "[31m- Original  - 1[39m
+[32m+ Modified  + 3[39m
+
+[33m@@ -3,5 +3,7 @@[39m
+[2m      \\"hooks\\": Object {},[22m
+[2m    },[22m
+[2m    \\"name\\": \\"test\\",[22m
+[31m-   \\"scripts\\": Object {},[39m
+[32m+   \\"scripts\\": Object {[39m
+[32m+     \\"apple\\": \\"foot\\",[39m
+[32m+   },[39m
+[2m  }[22m",
   "newState": "\\"apple\\": \\"foot\\"",
 }
 `;
@@ -21,6 +33,7 @@ exports[`npm script resource e2e script resource test: NPMScript destroy 1`] = `
 
 exports[`npm script resource e2e script resource test: NPMScript update 1`] = `
 Object {
+  "_message": "Wrote script apple to your package.json",
   "command": "foot2",
   "id": "apple",
   "name": "apple",
@@ -30,8 +43,17 @@ Object {
 exports[`npm script resource e2e script resource test: NPMScript update plan 1`] = `
 Object {
   "currentState": "\\"apple\\": \\"foot\\"",
-  "describe": "Add new command to your package.json:
-\\"apple\\": \\"foot2\\"",
+  "describe": "Add new command to your package.json",
+  "diff": "[31m- Original  - 1[39m
+[32m+ Modified  + 1[39m
+
+[2m  Object {[22m
+[2m    \\"name\\": \\"test\\",[22m
+[2m    \\"scripts\\": Object {[22m
+[31m-     \\"apple\\": \\"foot\\",[39m
+[32m+     \\"apple\\": \\"foot2\\",[39m
+[2m    },[22m
+[2m  }[22m",
   "newState": "\\"apple\\": \\"foot2\\"",
 }
 `;

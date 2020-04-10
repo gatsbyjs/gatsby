@@ -7,9 +7,10 @@ Array [
   Object {
     "currentState": "",
     "describe": "Write ./hi.md",
-    "diff": "[31m-[m
-[32m+[m[32m#yo[m
-",
+    "diff": "[31m- Original  - 0[39m
+[32m+ Modified  + 1[39m
+
+[32m+ #yo[39m",
     "newState": "#yo",
     "resourceDefinitions": Object {
       "content": "#yo",
