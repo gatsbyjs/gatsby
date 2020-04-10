@@ -54,7 +54,7 @@ site:
 describe("a new PR", () => {
   it(`Valid entry passes validation`, async () => {
     setStartersYmlContent(`
-    - url: http://gatsbyjs.github.io/gatsby-starter-default/
+    - url: https://gatsbyjs.github.io/gatsby-starter-default/
       repo: https://github.com/gatsbyjs/gatsby-starter-default
       description: official default
       features:
@@ -197,7 +197,7 @@ describe("a new PR", () => {
 
   it(`Doesn't allow non GitHub repos`, async () => {
     setStartersYmlContent(`
-    - url: http://gatsbyjs.github.io/gatsby-starter-default/
+    - url: https://gatsbyjs.github.io/gatsby-starter-default/
       repo: https://gitlab.com/gatsbyjs/gatsby-starter-default
       description: official default
       features:
@@ -220,21 +220,21 @@ describe("a new PR", () => {
 
   it(`Check for duplicates`, async () => {
     setStartersYmlContent(`
-    - url: http://gatsbyjs.github.io/gatsby-starter-default/
+    - url: https://gatsbyjs.github.io/gatsby-starter-default/
       repo: https://github.com/gatsbyjs/gatsby-starter-default
       description: official default
       features:
         - It works
       tags:
         - Official
-    - url: http://gatsbyjs.github.io/gatsby-starter-default2/
+    - url: https://gatsbyjs.github.io/gatsby-starter-default2/
       repo: https://github.com/gatsbyjs/gatsby-starter-default
       description: official default
       features:
         - It works
       tags:
         - Official
-    - url: http://gatsbyjs.github.io/gatsby-starter-default/
+    - url: https://gatsbyjs.github.io/gatsby-starter-default/
       repo: https://github.com/gatsbyjs/gatsby-starter-default2
       description: official default
       features:

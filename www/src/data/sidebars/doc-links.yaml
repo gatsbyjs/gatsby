@@ -86,6 +86,9 @@
             - title: Deploying to Firebase Hosting
               link: /docs/deploying-to-firebase/
               breadcrumbTitle: Firebase Hosting
+            - title: Deploying to KintoHub
+              link: /docs/deploying-to-kintohub/
+              breadcrumbTitle: KintoHub Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages

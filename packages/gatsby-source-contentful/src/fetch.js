@@ -85,7 +85,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   // doesn't support this.
   let contentTypes
   try {
-    contentTypes = await pagedGet(client, `getContentTypes`)
+    const pageLimit = pluginConfig.get(`pageLimit`)
+
+    contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
     console.log(`error fetching content types`, e)
   }
@@ -119,9 +121,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 function pagedGet(
   client,
   method,
+  pageLimit,
   query = {},
   skip = 0,
-  pageLimit = 1000,
   aggregatedResponse = null
 ) {
   return client[method]({
@@ -139,9 +141,9 @@ function pagedGet(
       return pagedGet(
         client,
         method,
+        pageLimit,
         query,
         skip + pageLimit,
-        pageLimit,
         aggregatedResponse
       )
     }

@@ -2,7 +2,7 @@
 
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
-const buildHTML = require(`./build-html`)
+import { buildHTML } from "./build-html"
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
@@ -155,7 +155,7 @@ module.exports = async function build(program: BuildArgs) {
   )
   activity.start()
   try {
-    await buildHTML.buildPages({
+    await buildHTML({
       program,
       stage: `build-html`,
       pagePaths,

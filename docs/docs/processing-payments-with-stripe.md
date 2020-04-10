@@ -53,7 +53,7 @@ Check out the [Gatsby E-Commerce Tutorial](https://www.gatsbyjs.org/tutorial/eco
 
 Stripe Elements are prebuilt UI components that help you create checkout flows on the web. Unlike Checkout, Elements give you complete control over the payment experience. Elements require you to write both client-side and server-side code.
 
-React Stripe Elements is a wrapper around Stripe Elements that help you add Elements to React applications and manage the state and lifecycle of Elements. Documentation can be found at the [React Stripe Elements Github](https://github.com/stripe/react-stripe-elements).
+React Stripe Elements is a wrapper around Stripe Elements that help you add Elements to React applications and manage the state and lifecycle of Elements. Documentation can be found at the [React Stripe Elements GitHub](https://github.com/stripe/react-stripe-elements).
 
 The Stripe documentation explains how to [accept a payment](https://stripe.com/docs/payments/accept-a-payment-charges#node) using Elements.
 
@@ -98,5 +98,5 @@ Stripe Billing is an excellent tool for creating recurring payments, even provid
 - [Stripe website](https://stripe.com/)
 - [Stripe API documentation](https://stripe.com/docs/api)
 - [Stripe testing documentation](https://stripe.com/docs/testing).
-- [React Stripe Elements Github](https://github.com/stripe/react-stripe-elements)
+- [React Stripe Elements GitHub](https://github.com/stripe/react-stripe-elements)
 - [Making an e-commerce Gatsby Site with Stripe](https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/)

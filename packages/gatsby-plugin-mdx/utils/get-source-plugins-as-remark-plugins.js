@@ -16,6 +16,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
   reporter,
   cache,
   pathPrefix,
+  ...helpers
 }) {
   debug(`getSourcePluginsAsRemarkPlugins`)
   let pathPlugin = undefined
@@ -63,6 +64,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
               pathPrefix,
               reporter,
               cache,
+              ...helpers,
             },
             plugin.options || {}
           )

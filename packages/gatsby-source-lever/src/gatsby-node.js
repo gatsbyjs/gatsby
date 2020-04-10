@@ -5,7 +5,7 @@ const typePrefix = `lever__`
 
 exports.createSchemaCustomization = async ({ actions }) => {
   const typeDefs = `
-    type lever implements Node @dontInfer {
+    type lever implements Node {
       additional: String
       additionalPlain: String
       applyUrl: String

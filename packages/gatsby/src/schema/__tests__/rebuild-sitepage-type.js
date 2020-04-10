@@ -72,20 +72,25 @@ describe(`build and update schema for SitePage`, () => {
     let inputFields
 
     const initialFields = [
+      `path`,
+      `component`,
+      `internalComponentName`,
+      `componentChunkName`,
+      `matchPath`,
+      `keep`,
+      `fields`,
       `id`,
       `parent`,
       `children`,
       `internal`,
-      `keep`,
-      `fields`,
     ]
 
     fields = Object.keys(schema.getType(`SitePage`).getFields())
-    expect(fields.length).toBe(6)
+    expect(fields.length).toBe(11)
     expect(fields).toEqual(initialFields)
 
     inputFields = Object.keys(schema.getType(`SitePageFilterInput`).getFields())
-    expect(fields.length).toBe(6)
+    expect(fields.length).toBe(11)
     expect(inputFields).toEqual(initialFields)
 
     // Rebuild Schema
@@ -94,11 +99,11 @@ describe(`build and update schema for SitePage`, () => {
     schema = store.getState().schema
 
     fields = Object.keys(schema.getType(`SitePage`).getFields())
-    expect(fields.length).toBe(7)
+    expect(fields.length).toBe(12)
     expect(fields).toEqual(initialFields.concat(`context`))
 
     inputFields = Object.keys(schema.getType(`SitePageFilterInput`).getFields())
-    expect(fields.length).toBe(7)
+    expect(fields.length).toBe(12)
     expect(inputFields).toEqual(initialFields.concat(`context`))
 
     const fieldsEnum = schema

@@ -168,6 +168,10 @@ Using the ID is a much more stable property to work with as it will change less 
 
 If you are confident your Content Types will have natural-language IDs (e.g. `blogPost`), then you should set this option to `false`. If you are unable to ensure this, then you should leave this option set to `true` (the default).
 
+**`pageLimit`** [number][optional] [default: `1000`]
+
+Number of entries to retrieve from Contentful at a time. This can be adjusted to fix issues related to "Response size too big" error.
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.

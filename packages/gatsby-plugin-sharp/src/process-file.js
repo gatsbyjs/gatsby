@@ -233,7 +233,10 @@ const compressWebP = (pipeline, outputPath, options) =>
     imagemin
       .buffer(sharpBuffer, {
         plugins: [
-          imageminWebp({ quality: options.webpQuality || options.quality }),
+          imageminWebp({
+            quality: options.webpQuality || options.quality,
+            metadata: options.stripMetadata ? `none` : `all`,
+          }),
         ],
       })
       .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))

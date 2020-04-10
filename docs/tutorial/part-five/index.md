@@ -15,7 +15,7 @@ In this tutorial, you'll be learning about how to pull data into your Gatsby sit
 GraphiQL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool you'll use often while building Gatsby websites.
 
 You can access it when your site's development server is running—normally at
-<http://localhost:8000/___graphql>.
+`http://localhost:8000/___graphql`.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/graphiql-explore.mp4"></source>

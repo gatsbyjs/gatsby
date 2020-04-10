@@ -40,7 +40,7 @@ To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](http
 
 1. Open your Terminal
 2. Run `brew install node`
-   - If you don't want to install it through homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
+   - If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
 
 ### Windows Instructions
 

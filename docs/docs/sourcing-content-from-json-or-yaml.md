@@ -65,7 +65,7 @@ const YAMLbuildtime = () => (
 export default YAMLbuildtime
 ```
 
-The above code imports YAML source data as an array, iterates over it with the `Array.map` method, and renders the data-filled markup through a functional stateless React component.
+The above code imports YAML source data as an array, iterates over it with the `Array.map` method, and renders the data-filled markup through a functional React component.
 
 ## Directly import data with JSON
 
@@ -293,7 +293,7 @@ After parsing a YAML file into data and configuring Gatsby to produce pages with
     - gatsby-node.js
 ```
 
-Running `gatsby develop` in the terminal and opening a browser window to <http://localhost:8000/page1> you'll see a page with content that was sourced from a YAML file used to generate your site.
+Running `gatsby develop` in the terminal and opening a browser window to `http://localhost:8000/page1` you'll see a page with content that was sourced from a YAML file used to generate your site.
 
 To make this work on your existing Gatsby site, you would need to:
 

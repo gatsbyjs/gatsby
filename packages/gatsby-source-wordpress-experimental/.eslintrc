@@ -1,0 +1,10 @@
+{
+  "globals": {
+    "dd": "readonly",
+    "dump": "readonly",
+    "clipboardy": "readonly"
+  },
+  "rules": {
+    "arrow-body-style": ["error", "as-needed"]
+  }
+}

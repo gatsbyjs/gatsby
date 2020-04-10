@@ -52,7 +52,17 @@ async function getCounts({ mdast }) {
 }
 
 module.exports = (
-  { store, pathPrefix, getNode, getNodes, cache, reporter, actions, schema },
+  {
+    store,
+    pathPrefix,
+    getNode,
+    getNodes,
+    cache,
+    reporter,
+    actions,
+    schema,
+    ...helpers
+  },
   pluginOptions
 ) => {
   let mdxHTMLLoader
@@ -105,7 +115,19 @@ module.exports = (
   }
 
   const processMDX = ({ node }) =>
-    genMDX({ node, getNode, getNodes, reporter, cache, pathPrefix, options })
+    genMDX({
+      node,
+      options,
+      store,
+      pathPrefix,
+      getNode,
+      getNodes,
+      cache,
+      reporter,
+      actions,
+      schema,
+      ...helpers,
+    })
 
   // New Code // Schema
   const MdxType = schema.buildObjectType({

@@ -154,12 +154,7 @@ export const query = graphql`
 
 I mentioned at the end of [part two](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2) that configuring the gatsby-node.js file is probably the most difficult part of this whole thing. Since you worked your way through that already and understand how it works, setting up another content type was cake, right?
 
-<figure>
-<video autoplay muted loop width="400">
-  <source src="https://media.giphy.com/media/zcCGBRQshGdt6/giphy.mp4"/>
-</video>
-<figcaption>...That was easy</figcaption>
-</figure>
+https://giphy.com/gifs/reaction-office-space-that-was-easy-zcCGBRQshGdt6
 
 Now if you visit the about page at [http://localhost:8000/about](http://localhost:8000/about), you can see the data coming in from WordPress. If you inspect the page and look at the head, you can also see that the title and meta tags are being updated in the head because of the SEO component!
 
@@ -277,12 +272,7 @@ And here's what it looks like when you visit the homepage of your blog:
 
 It's looking pretty good so far. You're getting pretty close to being done, you just have a few more things to change and you're ready to start blogging!
 
-<figure>
-  <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/qLWdMYX1NYF2g/giphy.mp4"/>
-  </video>
-  <figcaption>So close...</figcaption>
-</figure>
+https://giphy.com/gifs/twitter-file-maximum-qLWdMYX1NYF2g
 
 ## Changing the header component
 

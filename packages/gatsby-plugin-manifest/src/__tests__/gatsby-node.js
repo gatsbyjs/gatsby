@@ -39,7 +39,9 @@ jest.mock(`sharp`, () => {
 })
 
 jest.mock(`gatsby-core-utils`, () => {
+  const originalCoreUtils = jest.requireActual(`gatsby-core-utils`)
   return {
+    slash: originalCoreUtils.slash,
     cpuCoreCount: jest.fn(() => `1`),
     createContentDigest: jest.fn(() => `contentDigest`),
   }
@@ -278,9 +280,31 @@ describe(`Test plugin manifest options`, () => {
     expect(content.icons[1].purpose).toEqual(`maskable`)
   })
 
+  it(`correctly works with pathPrefix`, async () => {
+    await onPostBootstrap(
+      { ...apiArgs, basePath: `/blog` },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+      }
+    )
+    const contents = fs.writeFileSync.mock.calls[0][1]
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      path.join(`public`, `manifest.webmanifest`),
+      expect.anything()
+    )
+    expect(sharp).toHaveBeenCalledTimes(0)
+    expect(contents).toMatchSnapshot()
+  })
+
   it(`generates all language versions`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => true })
     const pluginSpecificOptions = {
+      ...manifestOptions,
       localize: [
         {
           ...manifestOptions,
@@ -292,10 +316,6 @@ describe(`Test plugin manifest options`, () => {
           start_url: `/es/`,
           lang: `es`,
         },
-        {
-          ...manifestOptions,
-          start_url: `/`,
-        },
       ],
     }
     const { localize, ...manifest } = pluginSpecificOptions
@@ -304,6 +324,57 @@ describe(`Test plugin manifest options`, () => {
     })
 
     await onPostBootstrap(apiArgs, pluginSpecificOptions)
+
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[0])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[1])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[2])
+    )
+  })
+  it(`generates all language versions with pathPrefix`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+    const pluginSpecificOptions = {
+      ...manifestOptions,
+      localize: [
+        {
+          ...manifestOptions,
+          start_url: `/de/`,
+          lang: `de`,
+        },
+        {
+          ...manifestOptions,
+          start_url: `/es/`,
+          lang: `es`,
+        },
+      ],
+    }
+
+    const { localize, ...manifest } = pluginSpecificOptions
+    const expectedResults = [manifest].concat(localize).map(x => {
+      return {
+        ...manifest,
+        ...x,
+        start_url: path.posix.join(`/blog`, x.start_url),
+        icons: manifest.icons.map(icon => {
+          return {
+            ...icon,
+            src: path.posix.join(`/blog`, icon.src),
+          }
+        }),
+      }
+    })
+
+    await onPostBootstrap(
+      { ...apiArgs, basePath: `/blog` },
+      pluginSpecificOptions
+    )
 
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),

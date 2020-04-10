@@ -9,7 +9,6 @@ import APIReference from "../../components/api-reference"
 import normalizeGatsbyApiCall from "../../utils/normalize-gatsby-api-call"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import { itemListDocs } from "../../utils/sidebar/item-list"
 
 class BrowserAPIDocs extends React.Component {
   render() {
@@ -30,7 +29,7 @@ class BrowserAPIDocs extends React.Component {
     })
 
     return (
-      <Layout location={this.props.location} itemList={itemListDocs}>
+      <Layout location={this.props.location}>
         <Container>
           <Helmet>
             <title>Browser APIs</title>

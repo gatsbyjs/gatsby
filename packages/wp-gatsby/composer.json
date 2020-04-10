@@ -1,0 +1,43 @@
+{
+  "name": "gatsbyjs/wp-gatsby",
+  "description": "Optimize your WordPress site as a source for Gatsby site(s)",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "GatsbyJS"
+    },
+    {
+      "name": "Jason Bahl"
+    },
+    {
+      "name": "Tyler Barnes"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "WPGatsby\\": "src/"
+    },
+    "classmap": [
+      "src/"
+    ]
+  },
+  "config": {
+    "optimize-autoloader": true
+  },
+  "require": {
+    "firebase/php-jwt": "^5.2",
+    "ircmaxell/random-lib": "^1.2"
+  },
+  "scripts": {
+    "phpcs-i": [
+      "php ./vendor/bin/phpcs -i"
+    ],
+    "check-cs": [
+      "php ./vendor/bin/phpcs src"
+    ],
+    "fix-cs": [
+      "php ./vendor/bin/phpcbf src"
+    ]
+  }
+}

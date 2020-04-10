@@ -57,7 +57,7 @@ class StubListRoute extends React.Component {
     }
 
     return (
-      <Layout location={this.props.location} itemList={itemListContributing}>
+      <Layout location={this.props.location}>
         <DocsearchContent>
           <Container>
             <Helmet>

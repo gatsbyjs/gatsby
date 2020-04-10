@@ -80,6 +80,14 @@ type Directory implements Node @dontInfer {
   birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
 }
 
+type SitePage implements Node @dontInfer {
+  path: String!
+  component: String!
+  internalComponentName: String!
+  componentChunkName: String!
+  matchPath: String
+}
+
 type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
   first: Inline
   second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
@@ -202,6 +210,14 @@ type Directory implements Node @dontInfer {
   ctime: Date! @dateformat
   birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
   birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+}
+
+type SitePage implements Node @dontInfer {
+  path: String!
+  component: String!
+  internalComponentName: String!
+  componentChunkName: String!
+  matchPath: String
 }
 
 type AnotherTest implements Node & ITest @dontInfer {
@@ -328,6 +344,14 @@ type Directory implements Node @dontInfer {
   ctime: Date! @dateformat
   birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
   birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+}
+
+type SitePage implements Node @dontInfer {
+  path: String!
+  component: String!
+  internalComponentName: String!
+  componentChunkName: String!
+  matchPath: String
 }
 
 type AnotherTest implements Node & ITest @dontInfer {

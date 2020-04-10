@@ -18,12 +18,7 @@ In the last post, I covered setting up [WordPress for use with Gatsby](/blog/201
 
 I have set up a WordPress site for you to use with the plugins mentioned in the last post as well as some dummy content to use. If you're curious, my favorite lorem generator is [Fillerama](http://fillerama.io/) which offers random content from Futurama, Monty Python, Star Wars, and more. This is where the content came from.
 
-<figure>
-  <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/sDcfxFDozb3bO/giphy.mp4"/>
-  </video>
-  <figcaption>Shut up and take my money!</figcaption>
-</figure>
+https://giphy.com/gifs/french-week-sDcfxFDozb3bO
 
 ## Gatsby.js starter
 
@@ -113,12 +108,7 @@ You can see there are several dependencies installed right off the bat. I'll jus
 
 Whew! That was a mouthful.
 
-<figure>
-  <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/eb3WAhXzlUAFi/giphy.mp4"/>
-  </video>
-  <figcaption>Get on with it!</figcaption>
-</figure>
+https://giphy.com/gifs/monty-python-and-the-holy-grail-eb3WAhXzlUAFi
 
 ### Running the site
 
@@ -267,12 +257,7 @@ Now let's talk about `gatsby-node.js` a bit more. Let's start off by discussing 
 
 The gatsby-node.js file allows you to pull in a template file, then query your data using GraphQL. Then you can loop through the appropriate data and programmatically create a page for each piece of data, in this case blog posts and pages. This template will be universal so all content of that type will look the same. You can also use different templates for different content types so your pages and blog posts don't have to look the same.
 
-<figure>
-  <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4"/>
-  </video>
-  <figcaption>Yes!!!</figcaption>
-</figure>
+https://giphy.com/gifs/excited-the-office-yes-t3Mzdx0SA3Eis
 
 The code below pulls in the data for blog posts from WordPress and creates a page for each one using the createPage API provided by Gatsby. It is also much easier to pull in templates in this file using the path package, so I installed it using `npm install path`.
 
@@ -402,12 +387,7 @@ Here's what your completed Blog Post looks like after you update the template:
 
 You're about half-way done with the actual Gatsby.js build. In this post I covered how to import blog posts from WordPress into your Gatsby application and create pages automatically for each post. Honestly, this is the hardest part about making sites in Gatsby. If you're still keeping up, great job! If you're struggling, don't be too hard on yourself. This stuff is hard. If you need to, you can reach out to me on Twitter [@iam_timsmith](https://www.twitter.com/iam_timsmith) and I'll be happy to help you.
 
-<figure>
-  <video autoplay muted loop width="300">
-    <source src="https://media.giphy.com/media/rY93u9tQbybks/giphy.mp4"/>
-  </video>
-  <figcaption>Obligatory Great Gatsby meme</figcaption>
-</figure>
+https://giphy.com/gifs/great-dicaprio-leonardo-rY93u9tQbybks
 
 The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Gitub.
 

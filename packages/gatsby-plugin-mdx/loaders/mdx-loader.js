@@ -3,6 +3,7 @@ const { getOptions } = require(`loader-utils`)
 const grayMatter = require(`gray-matter`)
 const unified = require(`unified`)
 const babel = require(`@babel/core`)
+const { createRequireFromPath, slash } = require(`gatsby-core-utils`)
 
 const {
   isImport,
@@ -12,8 +13,12 @@ const {
   EMPTY_NEWLINE,
 } = require(`@mdx-js/mdx/util`)
 
-const toMDAST = require(`remark-parse`)
-const squeeze = require(`remark-squeeze-paragraphs`)
+// Some packages are required implicitly from @mdx-js/mdx (not listed in package.json).
+// To support yarn PnP, we need them to be required from their direct parent.
+const requireFromMDX = createRequireFromPath(require.resolve(`@mdx-js/mdx`))
+
+const toMDAST = requireFromMDX(`remark-parse`)
+const squeeze = requireFromMDX(`remark-squeeze-paragraphs`)
 const debug = require(`debug`)(`gatsby-plugin-mdx:mdx-loader`)
 const debugMore = require(`debug`)(`gatsby-plugin-mdx-info:mdx-loader`)
 
@@ -21,7 +26,6 @@ const genMdx = require(`../utils/gen-mdx`)
 const withDefaultOptions = require(`../utils/default-options`)
 const createMDXNode = require(`../utils/create-mdx-node`)
 const { createFileNode } = require(`../utils/create-fake-file-node`)
-const { slash } = require(`gatsby-core-utils`)
 
 const DEFAULT_OPTIONS = {
   footnotes: true,
@@ -171,8 +175,8 @@ ${contentWithoutFrontmatter}`
     const result = babel.transform(rawMDXOutput, {
       configFile: false,
       plugins: [
-        require(`@babel/plugin-syntax-jsx`),
-        require(`@babel/plugin-syntax-object-rest-spread`),
+        requireFromMDX(`@babel/plugin-syntax-jsx`),
+        requireFromMDX(`@babel/plugin-syntax-object-rest-spread`),
         require(`../utils/babel-plugin-html-attr-to-jsx-attr`),
       ],
     })

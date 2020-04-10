@@ -2,6 +2,9 @@ import * as React from "react"
 
 interface OutboundLinkProps {
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
+  eventAction?: string
+  eventCategory?: string
+  eventLabel?: string
 }
 
 export class OutboundLink extends React.Component<

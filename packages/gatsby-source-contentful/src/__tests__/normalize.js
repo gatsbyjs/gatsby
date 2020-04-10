@@ -183,6 +183,69 @@ describe(`Fix contentful IDs`, () => {
   it(`left pads ids that start with a number of a "c"`, () => {
     expect(normalize.fixId(`123`)).toEqual(`c123`)
   })
+  it(`does not change entries that are null/undefined`, () => {
+    const a = null
+    normalize.fixIds(a)
+    expect(a).toBeNull()
+  })
+  it(`does not change entries that are not object/array`, () => {
+    const a = 123
+    const expected = 123
+    normalize.fixIds(a)
+    expect(a).toEqual(expected)
+  })
+
+  it(`does not check/change falsy values in arrays`, () => {
+    const a = {
+      b: [
+        {
+          sys: {
+            id: 500,
+          },
+        },
+        null,
+        {},
+      ],
+    }
+
+    const expected = {
+      b: [
+        {
+          sys: {
+            contentful_id: 500,
+            id: `c500`,
+          },
+        },
+        null,
+        {},
+      ],
+    }
+    normalize.fixIds(a)
+    expect(a).toEqual(expected)
+  })
+
+  it(`does not check/change falsy values in objects`, () => {
+    const a = {
+      b: {
+        sys: {
+          id: 500,
+        },
+        value: null,
+      },
+    }
+
+    const expected = {
+      b: {
+        sys: {
+          contentful_id: 500,
+          id: `c500`,
+        },
+        value: null,
+      },
+    }
+    normalize.fixIds(a)
+    expect(a).toEqual(expected)
+  })
 
   describe(`cycles`, () => {
     it(`should return undefined`, () => {

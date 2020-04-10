@@ -266,7 +266,7 @@ and would skip pulling Comments.
 
 You can query nodes created from WordPress using GraphQL like the following:
 Note : Learn to use the GraphQL tool and Ctrl+Spacebar at
-<http://localhost:3000/___graphiql> to discover the types and properties of your
+`http://localhost:3000/___graphiql` to discover the types and properties of your
 GraphQL model.
 
 ### Query posts

@@ -38,7 +38,7 @@ module.exports = {
 
 At this point you can choose to (and probably should) [set up a GraphQL API](https://www.sanity.io/help/graphql-beta) for your Sanity dataset, if you have not done so already. This will help the plugin in knowing which types and fields exists, so you can query for them even without them being present in any current documents.
 
-Go through <http://localhost:8000/___graphql> after running `gatsby develop` to understand the created data. Create a new query and check available collections and fields by using the autocomplete (`CTRL + SPACE`).
+Go through `http://localhost:8000/___graphql` after running `gatsby develop` to understand the created data. Create a new query and check available collections and fields by using the autocomplete (`CTRL + SPACE`).
 
 ## Options
 
@@ -212,7 +212,7 @@ The above query will fetch all projects that have a `slug.current` field set, an
 
 Most [Gatsby starters](/starters/?v=2) have some example of building pages, which you should be able to modify to your needs.
 
-Remember to use the GraphiQL interface to help write the queries you need - it's usually running at <http://localhost:8000/___graphql> while running `gatsby develop`.
+Remember to use the GraphiQL interface to help write the queries you need - it's usually running at `http://localhost:8000/___graphql` while running `gatsby develop`.
 
 ## "Raw" fields
 

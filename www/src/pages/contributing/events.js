@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 import Layout from "../../components/layout"
-import { itemListContributing } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
@@ -11,7 +10,7 @@ import FooterLinks from "../../components/shared/footer-links"
 import Events from "../../components/events/events"
 
 const EventsRoute = props => (
-  <Layout location={props.location} itemList={itemListContributing}>
+  <Layout location={props.location}>
     <DocSearchContent>
       <Container>
         <Helmet>

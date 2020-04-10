@@ -12,7 +12,6 @@ import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import Breadcrumb from "../components/docs-breadcrumb"
 
-import { itemListFeatures } from "../utils/sidebar/item-list"
 import { getFeaturesData } from "../utils/get-csv-features-data"
 
 import { graphql } from "gatsby"
@@ -33,13 +32,13 @@ class FeatureComparison extends Component {
         : getFeaturesData(data.allGatsbyJamstackSpecsCsv.edges)
 
     return (
-      <Layout location={location} itemList={itemListFeatures}>
+      <Layout location={location}>
         <Helmet>
           <title>{titleString}</title>
         </Helmet>
         <Container>
           <main>
-            <Breadcrumb location={location} itemList={itemListFeatures} />
+            <Breadcrumb location={location} />
             <h1>{titleString}</h1>
             {options.map(o => (
               <section key={o.key} sx={{ mb: 6 }}>

@@ -80,12 +80,12 @@ WordPress is _the_ Windows of Content Management Systems.
 Alright, let's say that you have done enough to secure your site and start
 writing your posts.
 
-<div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/VBwXWPvUdxzPi" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/funny-computer-virus-VBwXWPvUdxzPi">via GIPHY</a></p>
+https://giphy.com/gifs/funny-computer-virus-VBwXWPvUdxzPi
 
 Unfortunately, you start realizing that your new awesome WordPress blog is
 actually kind of slow...
 
-<div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/kkpcRessCvNyo" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/angry-computer-frustrated-kkpcRessCvNyo">via GIPHY</a></p>
+https://giphy.com/gifs/angry-computer-frustrated-kkpcRessCvNyo
 
 There are many reasons this could be happening: Maybe your shared hosting
 provider sucks, or maybe that shiny new \$50 theme you bought on ThemeForest
@@ -236,7 +236,7 @@ opportunity of setting up the [RSS feed](https://reactjs.org/feed.xml)!
 In the process, I learned what the 1.0 release of Gatsby was all about, and I
 was completely mindblown.
 
-<div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/EldfH1VJdbrwY" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/tim-and-eric-mind-blown-EldfH1VJdbrwY">via GIPHY</a></p>
+https://giphy.com/gifs/tim-and-eric-mind-blown-EldfH1VJdbrwY
 
 Not only did it have all the standard goodness of a typical React/Webpack static
 site generator (CSS Modules, PostCSS, Hot Reloading, etc), but more importantly,
@@ -295,7 +295,7 @@ All of that content is stored in their databases, which means that you don't
 have to worry about maintaining or securing any server or database yourself.
 Hooray!
 
-<div style="width:100%;height:0;padding-bottom:75%;position:relative;"><iframe src="https://giphy.com/embed/aWRWTF27ilPzy" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/hooray-skeletor-aWRWTF27ilPzy">via GIPHY</a></p>
+https://giphy.com/gifs/hooray-skeletor-aWRWTF27ilPzy
 
 Of course, there's a little catch. As most "(blank)-as-a-service" providers out
 there, Contentful is not always free. Although they have a very generous free
@@ -338,4 +338,4 @@ But whatever that limit is, I am quite sure that this is a step in the right
 direction towards making the web a safer, faster and more enjoyable experience
 for both developers and end users.
 
-<div style="width:100%;height:0;padding-bottom:52%;position:relative;"><iframe src="https://giphy.com/embed/12xSrwKxHxB3BS" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/black-and-white-end-ending-12xSrwKxHxB3BS">via GIPHY</a></p>
+https://giphy.com/gifs/black-and-white-end-ending-12xSrwKxHxB3BS

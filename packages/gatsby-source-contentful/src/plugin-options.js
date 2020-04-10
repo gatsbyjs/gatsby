@@ -3,12 +3,15 @@ const chalk = require(`chalk`)
 
 const _ = require(`lodash`)
 
+const DEFAULT_PAGE_LIMIT = 1000
+
 const defaultOptions = {
   host: `cdn.contentful.com`,
   environment: `master`,
   downloadLocal: false,
   localeFilter: () => true,
   forceFullSync: false,
+  pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
 }
 
@@ -33,6 +36,7 @@ const optionsSchema = Joi.object().keys({
   downloadLocal: Joi.boolean(),
   localeFilter: Joi.func(),
   forceFullSync: Joi.boolean(),
+  pageLimit: Joi.number().integer(),
   proxy: Joi.object().keys({
     host: Joi.string().required(),
     port: Joi.number().required(),
