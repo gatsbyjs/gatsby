@@ -47,12 +47,15 @@ const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
 
 const { getErrorFormatter } = require(`./errors`)
-const { getStore } = require(`./redux`)
+
+import ReporterStore from "./redux"
 import constructError from "../structured-errors/construct-error"
 
 const errorFormatter = getErrorFormatter()
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
+
+const { getStore } = ReporterStore
 
 const addMessage = level => text => reporterActions.createLog({ level, text })
 
