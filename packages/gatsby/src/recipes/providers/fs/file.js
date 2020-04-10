@@ -27,8 +27,8 @@ const downloadFile = async (url, filePath) =>
         res.body.pipe(dest)
         dest.on(`finish`, () => {
           resolve(true)
-        }) // not sure why you want to pass a boolean
-        dest.on(`error`, reject) // don't forget this!
+        })
+        dest.on(`error`, reject)
       })
   )
 
