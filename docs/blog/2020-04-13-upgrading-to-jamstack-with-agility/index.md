@@ -52,7 +52,7 @@ Now, find your API keys on the Getting Started page of the [Agility CMS Content 
 
 Put your keys into the **.env.development** and **.env.production** files. They look something like this and have instructions about which values go where.
 
-```
+```text
 # Your Instance Id
 AGILITY_GUID=
 
@@ -78,7 +78,7 @@ There are folders for Page Templates and Modules, and you can just put in placeh
 
 Here's an example Page Template component with a single content zone called "Main":
 
-```javascript
+```jsx
 import React from "react"
 import ContentZone from "../agility/components/ContentZone"
 
@@ -94,7 +94,7 @@ export default MainTemplate
 
 Here's an example Module component that doesn't do anything except output its name.
 
-```javascript
+```jsx
 import React from "react"
 
 const LatestResources = ({ item }) => {
@@ -152,7 +152,7 @@ query GlobalHeaderQuery {
 
 Your query will look different, of course, but I hope you get the idea of how to query your Agility CMS content.
 
-Now, you can create a component that uses a <StaticQuery> to pull in the data and make it available. Check out the example `GlobalHeader.js` component in your project for an example of that.
+Now, you can create a component that uses a `<StaticQuery>` to pull in the data and make it available. Check out the example `GlobalHeader.js` component in your project for an example of that.
 
 ## Step 3: Create a new Home Page
 
