@@ -151,6 +151,7 @@
     "sift": "^5.1.0",
     "signal-exit": "^3.0.2",
     "simplified-jsx-to-json": "^0.1.0",
+    "single-trailing-newline": "^1.0.0",
     "slugify": "^1.4.0",
     "socket.io": "^2.3.0",
     "stack-trace": "^0.0.10",

@@ -33,7 +33,9 @@
 - [ ] show plan to create/update or that nothing is necessary & then show in `<static>` what was done
 - [ ] integration test for each resource (read, create, update, delete)
 - [ ] finish shadow file
-- [ ] run recipe from url
+- [x] run recipe from url
+- [x] Move parsing to the server
+- [x] imports from a url
 - [ ] Implement config object for GatsbyPlugin
 - [ ] Handle JS in config objects? { **\_javascript: "`\${**dirname}/foo/bar`" }
 - [ ] write tests for remote files src in File
