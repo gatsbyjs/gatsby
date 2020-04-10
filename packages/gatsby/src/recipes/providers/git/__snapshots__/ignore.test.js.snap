@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`git ignore resource e2e test: GitIgnore create 1`] = `undefined`;
+
+exports[`git ignore resource e2e test: GitIgnore create plan 1`] = `
+Object {
+  "currentState": "node_modules
+",
+  "describe": "Add .cache to gitignore",
+  "diff": " node_modules[m
+[32m+[m
+[32m+[m[32m.cache[m
+",
+  "newState": "node_modules
+
+.cache",
+}
+`;

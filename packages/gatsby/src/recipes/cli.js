@@ -1,10 +1,8 @@
 const fs = require(`fs`)
-const path = require(`path`)
-const { inspect } = require(`util`)
 const lodash = require(`lodash`)
 
 const React = require(`react`)
-const { useState, useContext, useEffect } = require(`react`)
+const { useState } = require(`react`)
 const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
