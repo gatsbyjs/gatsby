@@ -52,7 +52,7 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 Install with npm:
 
 ```shell
-npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
@@ -335,6 +335,7 @@ images can be optimized by Gatsby and you should continue using it.
 // gatsby-config.js
 module.exports = {
   plugins: [
+    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -357,6 +358,8 @@ Using a string reference is also supported for `gatsbyRemarkPlugins`.
 ```js
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
 ```
+
+> Note that in the case of `gatsby-remark-images` the plugin needs to be included as both a sub-plugin of gatsby-plugin-mdx and a string entry in the plugins array.
 
 #### Remark plugins
 
@@ -513,7 +516,7 @@ The following components can be customized with the MDXProvider:
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
 
-It's important to define the `components` you pass in in a stable way
+It's important to define the `components` you pass in a stable way
 so that the references don't change if you want to be able to navigate
 to a hash. That's why we defined `components` outside of any render
 functions in these examples.

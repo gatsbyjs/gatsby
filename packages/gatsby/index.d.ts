@@ -176,6 +176,8 @@ export interface GatsbyConfig {
   >
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
+  /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
+  assetPrefix?: string
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
@@ -957,7 +959,13 @@ interface ActionOptions {
 }
 
 export interface BuildArgs extends ParentSpanPluginArgs {
-  graphql: Function
+  graphql<TData, TVariables = any>(
+    query: string,
+    variables?: TVariables
+  ): Promise<{
+    errors?: any
+    data?: TData
+  }>
 }
 
 export interface Actions {
@@ -1100,7 +1108,7 @@ export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
   createFieldExtension(
     extension: object,
-    plugin: ActionPlugin,
+    plugin?: ActionPlugin,
     traceId?: string
   ): void
 }
@@ -1193,11 +1201,11 @@ export interface PackageJson {
         email: string
       }
   license?: string
-  dependencies?: Array<Record<string, string>>
-  devDependencies?: Array<Record<string, string>>
-  peerDependencies?: Array<Record<string, string>>
-  optionalDependecies?: Array<Record<string, string>>
-  bundledDependecies?: Array<Record<string, string>>
+  dependencies?: Record<string, string>
+  devDependencies?: Record<string, string>
+  peerDependencies?: Record<string, string>
+  optionalDependencies?: Record<string, string>
+  bundledDependencies?: Array<string>
   keywords?: string[]
 }
 

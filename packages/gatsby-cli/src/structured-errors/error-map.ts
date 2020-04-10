@@ -1,25 +1,5 @@
 import { stripIndent, stripIndents } from "common-tags"
-
-interface IOptionalGraphQLInfoContext {
-  codeFrame?: string
-  filePath?: string
-  urlPath?: string
-  plugin?: string
-}
-
-enum Level {
-  ERROR = `ERROR`,
-  WARNING = `WARNING`,
-  INFO = `INFO`,
-  DEBUG = `DEBUG`,
-}
-
-enum Type {
-  GRAPHQL = `GRAPHQL`,
-  CONFIG = `CONFIG`,
-  WEBPACK = `WEBPACK`,
-  PLUGIN = `PLUGIN`,
-}
+import { IOptionalGraphQLInfoContext, Level, Type } from "./types"
 
 const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
   `${context.codeFrame ? `\n\n${context.codeFrame}` : ``}${

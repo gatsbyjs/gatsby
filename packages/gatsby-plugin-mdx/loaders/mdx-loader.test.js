@@ -74,7 +74,10 @@ describe(`mdx-loader`, () => {
           }
         },
         query: {
-          getNodes() {
+          getNodes(_type) {
+            return fixtures.map(([, node]) => node)
+          },
+          getNodesByType(_type) {
             return fixtures.map(([, node]) => node)
           },
           pluginOptions: {},

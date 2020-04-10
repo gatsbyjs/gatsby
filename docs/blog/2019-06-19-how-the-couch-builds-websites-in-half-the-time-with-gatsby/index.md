@@ -4,7 +4,7 @@ date: 2019-06-19
 author: Linda Watkins
 tags:
   - case-studies
-  - ecommerce
+  - e-commerce
   - content-mesh
   - building-sites-faster
   - hosting
