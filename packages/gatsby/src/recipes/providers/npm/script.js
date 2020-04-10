@@ -51,12 +51,13 @@ const destroy = async ({ root }, { name }) => {
 const schema = {
   name: Joi.string(),
   command: Joi.string(),
+  ...resourceSchema
 }
 const validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
 
 exports.schema = schema
-exports.validate = resource => Joi.validate(resource, schema)
+exports.validate = validate
 
 module.exports.all = async ({ root }) => {
   const pkg = await readPackageJson(root)

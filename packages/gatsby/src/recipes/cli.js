@@ -241,7 +241,6 @@ module.exports = ({ recipe, projectRoot }) => {
 
       return (
         <Div>
-<<<<<<< HEAD
           <Div>
             <Text bold underline marginBottom={2}>
               Proposed changes
@@ -258,13 +257,6 @@ module.exports = ({ recipe, projectRoot }) => {
                   <Text>---</Text>
                 </>
               )}
-=======
-          {state.context.plan.map((p, i) => (
-            <Div key={p.resourceName + i}>
-              <Text italic>{p.resourceName}:</Text>
-              <Text> * {p.describe}</Text>
-              <Text>{p.diff || ''}</Text>
->>>>>>> feat(recipes): Move recipe parsing to the server
             </Div>
           ))}
           <Div marginTop={1}>
@@ -285,11 +277,7 @@ module.exports = ({ recipe, projectRoot }) => {
       return (
         <Div>
           {state.context.plan.map((p, i) => (
-<<<<<<< HEAD
             <Div key={`${p.resourceName}-${i}`}>
-=======
-            <Div key={p.resourceName + i}>
->>>>>>> feat(recipes): Move recipe parsing to the server
               <Text italic>{p.resourceName}:</Text>
               <Text>
                 {` `}
@@ -367,19 +355,12 @@ module.exports = ({ recipe, projectRoot }) => {
   }
 
   const Wrapper = () => (
-<<<<<<< HEAD
     <Div>
       <Provider value={client}>
         <Text>{` `}</Text>
-        <RecipeInterpreter commands={allCommands} />
+        <RecipeInterpreter />
       </Provider>
     </Div>
-=======
-    <Provider value={client}>
-      <Text>{` `}</Text>
-      <RecipeInterpreter />
-    </Provider>
->>>>>>> feat(recipes): Move recipe parsing to the server
   )
 
   const Recipe = () => <Wrapper />
