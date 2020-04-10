@@ -37,6 +37,7 @@ import { developStatic } from "./develop-static"
 import withResolverContext from "../schema/context"
 import sourceNodes from "../utils/source-nodes"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
+import { rebuild } from "../schema"
 import { websocketManager } from "../utils/websocket-manager"
 import getSslCert from "../utils/get-ssl-cert"
 import { slash } from "gatsby-core-utils"
@@ -214,6 +215,10 @@ async function startServer(program: IProgram): Promise<IServer> {
     await sourceNodes({
       webhookBody: req.body,
     })
+    activity.end()
+    activity = report.activityTimer(`rebuild schema`)
+    activity.start()
+    await rebuild({ parentSpan: activity })
     activity.end()
   }
   app.use(REFRESH_ENDPOINT, express.json())
