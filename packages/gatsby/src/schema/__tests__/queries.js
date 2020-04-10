@@ -654,14 +654,14 @@ describe(`Query schema`, () => {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "edges": Array [],
-    "nodes": Array [],
-    "totalCount": 0,
-  },
-}
-`)
+          Object {
+            "allMarkdown": Object {
+              "edges": Array [],
+              "nodes": Array [],
+              "totalCount": 0,
+            },
+          }
+        `)
       })
 
       it(`adds nodes field as a convenience shortcut`, async () => {
@@ -874,47 +874,47 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "group": Array [
-      Object {
-        "edges": Array [
           Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
+            "allMarkdown": Object {
+              "group": Array [
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": null,
+                          "title": "Markdown File 2",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 1",
+                },
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 2",
+                },
+              ],
             },
-          },
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": null,
-                "title": "Markdown File 2",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 1",
-      },
-      Object {
-        "edges": Array [
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 2",
-      },
-    ],
-  },
-}
-`)
+          }
+        `)
       })
 
       it(`handles groups added in inline fragment`, async () => {
@@ -940,47 +940,47 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "group": Array [
-      Object {
-        "edges": Array [
           Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
+            "allMarkdown": Object {
+              "group": Array [
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": null,
+                          "title": "Markdown File 2",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 1",
+                },
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 2",
+                },
+              ],
             },
-          },
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": null,
-                "title": "Markdown File 2",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 1",
-      },
-      Object {
-        "edges": Array [
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 2",
-      },
-    ],
-  },
-}
-`)
+          }
+        `)
       })
 
       it(`handles groups added in nested fragment`, async () => {
@@ -1012,47 +1012,47 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "group": Array [
-      Object {
-        "edges": Array [
           Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
+            "allMarkdown": Object {
+              "group": Array [
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": null,
+                          "title": "Markdown File 2",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 1",
+                },
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 2",
+                },
+              ],
             },
-          },
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": null,
-                "title": "Markdown File 2",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 1",
-      },
-      Object {
-        "edges": Array [
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 2",
-      },
-    ],
-  },
-}
-`)
+          }
+        `)
       })
 
       it(`groups null result`, async () => {
@@ -1075,12 +1075,39 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "group": Array [],
-  },
-}
-`)
+          Object {
+            "allMarkdown": Object {
+              "group": Array [],
+            },
+          }
+        `)
+      })
+
+      it(`groups using reserved keywords`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              group(field: frontmatter___tags) {
+                field
+                fieldValue
+              }
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toMatchInlineSnapshot(`
+          Object {
+            "allMarkdown": Object {
+              "group": Array [
+                Object {
+                  "field": "frontmatter.tags",
+                  "fieldValue": "constructor",
+                },
+              ],
+            },
+          }
+        `)
       })
     })
 
@@ -1132,14 +1159,14 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "distinct": Array [
-      "2019-01-01T00:00:00.000Z",
-    ],
-  },
-}
-`)
+          Object {
+            "allMarkdown": Object {
+              "distinct": Array [
+                "2019-01-01T00:00:00.000Z",
+              ],
+            },
+          }
+        `)
       })
 
       it(`handles null result`, async () => {
@@ -1157,12 +1184,12 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "distinct": Array [],
-  },
-}
-`)
+          Object {
+            "allMarkdown": Object {
+              "distinct": Array [],
+            },
+          }
+        `)
       })
     })
   })
@@ -1249,25 +1276,25 @@ Object {
       const results = await runQuery(query)
       expect(results.errors).toBeUndefined()
       expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "nodes": Array [
-      Object {
-        "frontmatter": Object {
-          "reviewer": Object {
-            "name": "Author 2",
+        Object {
+          "allMarkdown": Object {
+            "nodes": Array [
+              Object {
+                "frontmatter": Object {
+                  "reviewer": Object {
+                    "name": "Author 2",
+                  },
+                },
+              },
+              Object {
+                "frontmatter": Object {
+                  "reviewer": null,
+                },
+              },
+            ],
           },
-        },
-      },
-      Object {
-        "frontmatter": Object {
-          "reviewer": null,
-        },
-      },
-    ],
-  },
-}
-`)
+        }
+      `)
     })
 
     it(`with defined field mappings`, async () => {
@@ -1287,25 +1314,25 @@ Object {
       const results = await runQuery(query)
       expect(results.errors).toBeUndefined()
       expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "nodes": Array [
-      Object {
-        "frontmatter": Object {
-          "reviewerByEmail": Object {
-            "name": "Author 2",
+        Object {
+          "allMarkdown": Object {
+            "nodes": Array [
+              Object {
+                "frontmatter": Object {
+                  "reviewerByEmail": Object {
+                    "name": "Author 2",
+                  },
+                },
+              },
+              Object {
+                "frontmatter": Object {
+                  "reviewerByEmail": null,
+                },
+              },
+            ],
           },
-        },
-      },
-      Object {
-        "frontmatter": Object {
-          "reviewerByEmail": null,
-        },
-      },
-    ],
-  },
-}
-`)
+        }
+      `)
     })
   })
 

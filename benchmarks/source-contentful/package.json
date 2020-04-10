@@ -10,7 +10,8 @@
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "serve": "gatsby serve",
-    "setup": "cross-env NODE_ENV=development node bin/setup.js",
+    "site": "cross-env NODE_ENV=development node bin/site.js",
+    "setup": "cross-env NODE_ENV=development node bin/site.js setup",
     "start": "npm run develop",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
@@ -31,7 +32,8 @@
     "chalk": "^2.4.2",
     "cross-env": "^7.0.0",
     "gatsby-plugin-benchmark-reporting": "*",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "yargs": "^15.3.1"
   },
   "repository": {
     "type": "git",

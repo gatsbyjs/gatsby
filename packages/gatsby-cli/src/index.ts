@@ -56,7 +56,7 @@ process.on(`unhandledRejection`, reason => {
     reason = new Error(util.format(reason))
   }
 
-  report.panic(`UNHANDLED REJECTION`, reason)
+  report.panic(`UNHANDLED REJECTION`, reason as Error)
 })
 
 process.on(`uncaughtException`, error => {

@@ -155,6 +155,16 @@ commands:
           environment:
             NUM_PAGES: << parameters.NUM_PAGES >>
       - run:
+          name: Set environment variables
+          working_directory: << parameters.working_directory >>
+          command: |
+            echo -e "BENCHMARK_DRUPAL_BASE_URL=$BENCHMARK_DRUPAL_<< parameters.NUM_PAGES >>_BASE_URL\n
+            BENCHMARK_WPGRAPHQL_URL=$BENCHMARK_WPGRAPHQL_<< parameters.NUM_PAGES >>_URL\n
+            BENCHMARK_CONTENTFUL_SPACE_ID=$BENCHMARK_CONTENTFUL_<< parameters.NUM_PAGES >>_SPACE_ID\n
+            BENCHMARK_CONTENTFUL_ACCESS_TOKEN=$BENCHMARK_CONTENTFUL_<< parameters.NUM_PAGES >>_ACCESS_TOKEN\n
+            BENCHMARK_DATOCMS_API_TOKEN=$BENCHMARK_DATOCMS_<< parameters.NUM_PAGES >>_API_TOKEN" >> .env.production
+      - run:
+          name: Build COLD_START
           command: npm run build
           working_directory: << parameters.working_directory >>
           environment:
@@ -165,12 +175,9 @@ commands:
             BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
             BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
             CI_NAME: circleci
+            GATSBY_CPU_COUNT: 2
       - run:
-          command: npm install
-          working_directory: << parameters.working_directory >>
-          environment:
-            NUM_PAGES: << parameters.NUM_PAGES >>
-      - run:
+          name: Build WARM_START
           command: npm run build
           working_directory: << parameters.working_directory >>
           environment:
@@ -181,6 +188,7 @@ commands:
             BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
             BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
             CI_NAME: circleci
+            GATSBY_CPU_COUNT: 2
 
   e2e-test:
     parameters:
@@ -399,6 +407,19 @@ jobs:
           command: yarn run update-source
           working_directory: ~/project/scripts/i18n
 
+  sync_translation_repo:
+    executor: node
+    steps:
+      - checkout
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
+      - run:
+          command: yarn
+          working_directory: ~/project/scripts/i18n
+      - run:
+          command: yarn run sync ja
+          working_directory: ~/project/scripts/i18n
+
   windows_unit_tests:
     executor:
       name: win/vs2019
@@ -446,7 +467,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "512"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -457,7 +478,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "4096"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -468,7 +489,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "8192"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -479,7 +500,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_id
           NUM_PAGES: "32768"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -490,7 +511,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "512"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -501,7 +522,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "4096"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -512,7 +533,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "8192"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -523,7 +544,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_slug
           NUM_PAGES: "32768"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -534,7 +555,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
           NUM_PAGES: "512"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -545,7 +566,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
           NUM_PAGES: "4096"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -556,7 +577,7 @@ jobs:
       - run-benchmark:
           working_directory: benchmarks/markdown_table
           NUM_PAGES: "8192"
-          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
           BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
           BENCHMARK_SITE_TYPE: BLOG
 
@@ -565,10 +586,230 @@ jobs:
       - image: "circleci/node:12"
     steps:
       - run-benchmark:
-          working_directory: benchmarks/markdown_table/benchmarks/markdown_table
+          working_directory: benchmarks/markdown_table
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: MARKDOWN
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_mdx_512:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/mdx
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_mdx_4096:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/mdx
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_mdx_8192:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/mdx
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: MDX
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_mdx_32768:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/mdx
           NUM_PAGES: "32768"
           BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_contentful_512:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-contentful
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: CONTENTFUL
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-contentful
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_contentful_4096:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-contentful
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: CONTENTFUL
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-contentful
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_contentful_8192:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-contentful
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: CONTENTFUL
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-contentful
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_contentful_32768:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-contentful
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: CONTENTFUL
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-contentful
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_datocms_512:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-datocms
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: DATOCMS
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-datocms
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_datocms_4096:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-datocms
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: DATOCMS
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-datocms
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_datocms_8192:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-datocms
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: DATOCMS
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-datocms
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_datocms_32768:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-datocms
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: DATOCMS
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-datocms
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_drupal_512:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-drupal
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: DRUPAL
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-drupal
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_drupal_4096:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-drupal
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: DRUPAL
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-drupal
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_drupal_8192:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-drupal
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: DRUPAL
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-drupal
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_drupal_32768:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-drupal
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: DRUPAL
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-drupal
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_wordpress_512:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-wordpress
+          NUM_PAGES: "512"
+          BENCHMARK_CONTENT_SOURCE: WORDPRESS
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-wordpress
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_wordpress_4096:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-wordpress
+          NUM_PAGES: "4096"
+          BENCHMARK_CONTENT_SOURCE: WORDPRESS
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-wordpress
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_wordpress_8192:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-wordpress
+          NUM_PAGES: "8192"
+          BENCHMARK_CONTENT_SOURCE: WORDPRESS
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-wordpress
+          BENCHMARK_SITE_TYPE: BLOG
+
+  benchmark_wordpress_32768:
+    docker:
+      - image: "circleci/node:12"
+    steps:
+      - run-benchmark:
+          working_directory: benchmarks/source-wordpress
+          NUM_PAGES: "32768"
+          BENCHMARK_CONTENT_SOURCE: WORDPRESS
+          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/source-wordpress
           BENCHMARK_SITE_TYPE: BLOG
 
 workflows:
@@ -588,6 +829,26 @@ workflows:
       - benchmark_markdown_table_4096
       - benchmark_markdown_table_8192
       - benchmark_markdown_table_32768
+      - benchmark_mdx_512
+      - benchmark_mdx_4096
+      - benchmark_mdx_8192
+      - benchmark_mdx_32768
+      - benchmark_contentful_512
+      - benchmark_contentful_4096
+      - benchmark_contentful_8192
+      - benchmark_contentful_32768
+      - benchmark_datocms_512
+      - benchmark_datocms_4096
+      - benchmark_datocms_8192
+      - benchmark_datocms_32768
+      - benchmark_drupal_512
+      - benchmark_drupal_4096
+      - benchmark_drupal_8192
+      - benchmark_drupal_32768
+      - benchmark_wordpress_512
+      - benchmark_wordpress_4096
+      - benchmark_wordpress_8192
+      - benchmark_wordpress_32768
     triggers:
       - schedule:
           cron: 22 16 * * *
@@ -595,6 +856,17 @@ workflows:
             branches:
               only:
                 - master
+
+  weekly-i18n-sync:
+    triggers:
+      - schedule:
+          cron: "0 19 * * 4"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - sync_translation_repo
 
   nightly-react-next:
     triggers:
