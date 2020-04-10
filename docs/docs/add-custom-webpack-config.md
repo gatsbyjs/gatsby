@@ -77,7 +77,7 @@ You can always find more information on _resolve_ and other options in the offic
 
 ### Importing non-webpack tools using `yarn`
 
-Note that using absolute imports only applies to webpack resolutions and will not work for other tools, e.g. eslint or typescript. 
+Note that using absolute imports only applies to webpack resolutions and will not work for other tools, e.g. eslint or typescript.
 But if you are using yarn, then the best practice is to set up your imports in package.json as shown below:
 
 ```js
@@ -99,7 +99,7 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
   config.module.rules = [
     // Omit the default rule where test === '\.jsx?$'
     ...config.module.rules.filter(
-      rule => String(rule.test) !== String(/\.jsx?$/)
+      (rule) => String(rule.test) !== String(/\.jsx?$/)
     ),
 
     // Recreate it with custom exclude filter
@@ -119,7 +119,7 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
       test: /\.jsx?$/,
 
       // Exclude all node_modules from transpilation, except for 'swiper' and 'dom7'
-      exclude: modulePath =>
+      exclude: (modulePath) =>
         /node_modules/.test(modulePath) &&
         !/node_modules\/(swiper|dom7)/.test(modulePath),
     },
