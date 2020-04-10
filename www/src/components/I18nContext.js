@@ -1,5 +1,5 @@
 import React from "react"
-import { defaultLang } from "../utils/i18n"
+import { i18nEnabled, defaultLang } from "../utils/i18n"
 import { I18nProvider as LinguiProvider } from "@lingui/react"
 
 // Lingui doesn't give access to the locale, so we need our own provider
@@ -7,7 +7,7 @@ import { I18nProvider as LinguiProvider } from "@lingui/react"
 const LocaleContext = React.createContext(defaultLang)
 
 export function I18nProvider({ locale = defaultLang, children }) {
-  const catalog = !!process.env.LOCALES
+  const catalog = i18nEnabled
     ? require(`../data/locales/${locale}/messages.js`)
     : {}
   return (
