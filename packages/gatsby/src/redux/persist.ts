@@ -6,7 +6,7 @@ import {
   mkdtempSync,
   readFileSync,
   removeSync,
-  renameSync,
+  moveSync,
   writeFileSync,
 } from "fs-extra"
 import { IGatsbyNode, ICachedReduxState } from "./types"
@@ -131,7 +131,7 @@ function safelyRenameToBak(reduxCacheFolder: string): string {
     ++suffixCounter
     bakName = reduxCacheFolder + tmpSuffix + suffixCounter
   }
-  renameSync(reduxCacheFolder, bakName)
+  moveSync(reduxCacheFolder, bakName)
 
   return bakName
 }
@@ -157,7 +157,7 @@ export function writeToCache(contents: ICachedReduxState): void {
   }
 
   // The redux cache folder should now not exist so we can rename our tmp to it
-  renameSync(tmpDir, reduxCacheFolder)
+  moveSync(tmpDir, reduxCacheFolder)
 
   // Now try to yolorimraf the old cache folder
   try {
