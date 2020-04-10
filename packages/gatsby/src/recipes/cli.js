@@ -21,8 +21,6 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 
-const parser = require(`./parser`)
-
 let renderCount = 1
 
 const Div = props => (
@@ -70,14 +68,6 @@ const components = {
   NPMScript: () => null,
 }
 
-const isRelative = path => {
-  if (path.slice(0, 1) == `.`) {
-    return true
-  }
-
-  return false
-}
-
 var logStream = fs.createWriteStream(`recipe-client.log`, { flags: `a` })
 const log = (label, textOrObj) => {
   logStream.write(`[${label}]:\n`)
@@ -91,20 +81,8 @@ log(
 )
 
 const PlanContext = React.createContext({})
-const usePlan = () => useContext(PlanContext)
 
 module.exports = ({ recipe, projectRoot }) => {
-  let recipePath
-  if (isRelative(recipe)) {
-    recipePath = path.join(projectRoot, recipe)
-  } else {
-    recipePath = path.join(__dirname, recipe)
-  }
-  if (recipePath.slice(-4) !== `.mdx`) {
-    recipePath += `.mdx`
-  }
-
-  const recipeSrc = fs.readFileSync(recipePath, `utf8`)
   const GRAPHQL_ENDPOINT = `http://localhost:4000/graphql`
 
   const subscriptionClient = new SubscriptionClient(
@@ -127,19 +105,6 @@ module.exports = ({ recipe, projectRoot }) => {
       }),
     ],
   })
-
-  let parsed = {}
-  try {
-    parsed = parser(recipeSrc)
-  } catch (e) {
-    if (process.env.DEBUG) {
-      console.log(e)
-    }
-    console.log(`Unable to parse `, recipe)
-    process.exit()
-  }
-
-  const { commands: allCommands, stepsAsMdx: stepsAsMDX } = parsed
 
   class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -167,9 +132,10 @@ module.exports = ({ recipe, projectRoot }) => {
     }
   }
 
-  const RecipeInterpreter = ({ commands }) => {
+  const RecipeInterpreter = () => {
     const [lastKeyPress, setLastKeyPress] = useState(``)
     const { exit } = useApp()
+
     const [subscriptionResponse] = useSubscription(
       {
         query: `
@@ -183,8 +149,8 @@ module.exports = ({ recipe, projectRoot }) => {
       (_prev, now) => now
     )
     const [_, createOperation] = useMutation(`
-      mutation ($commands: String!) {
-        createOperation(commands: $commands)
+      mutation ($recipePath: String!, $projectRoot: String!) {
+        createOperation(recipePath: $recipePath, projectRoot: $projectRoot)
       }
     `)
     const [__, sendEvent] = useMutation(`
@@ -194,14 +160,15 @@ module.exports = ({ recipe, projectRoot }) => {
     `)
 
     subscriptionClient.connectionCallback = async () => {
-      log(`subscriptionClient connected`)
-      await createOperation({ commands: JSON.stringify(commands) })
+      try {
+        await createOperation({ recipePath: recipe, projectRoot })
+      } catch (e) {
+        log('error creating operation', e)
+      }
     }
 
     const state = (subscriptionResponse.data &&
-      JSON.parse(subscriptionResponse.data.operation.state)) || {
-      state: `waitingForData`,
-    }
+      JSON.parse(subscriptionResponse.data.operation.state))
 
     useInput((_, key) => {
       setLastKeyPress(key)
@@ -214,6 +181,11 @@ module.exports = ({ recipe, projectRoot }) => {
       }
     })
 
+    log('subscriptionResponse.data', subscriptionResponse.data)
+
+    if (!state) {
+      return <Text><Spinner /> Loading recipe</Text>
+    }
     /*
      * TODOs
      * Listen to "y" to continue (in addition to enter)
@@ -221,10 +193,6 @@ module.exports = ({ recipe, projectRoot }) => {
 
     log(`render`, `${renderCount} ${new Date().toJSON()}`)
     renderCount += 1
-
-    if (!subscriptionResponse.data) {
-      return null
-    }
 
     // If we're done, exit.
     if (state.value === `done`) {
@@ -376,7 +344,7 @@ module.exports = ({ recipe, projectRoot }) => {
           )}
           <PlanContext.Provider value={{ planForNextStep: state.plan }}>
             <MDX components={components}>
-              {stepsAsMDX[state.context.currentStep]}
+              {state.context.stepsAsMdx[state.context.currentStep]}
             </MDX>
             <PresentStep state={state} />
             <RunningStep state={state} />
@@ -390,12 +358,12 @@ module.exports = ({ recipe, projectRoot }) => {
     <Div>
       <Provider value={client}>
         <Text>{` `}</Text>
-        <RecipeInterpreter commands={allCommands} />
+        <RecipeInterpreter />
       </Provider>
     </Div>
   )
 
-  const Recipe = () => <Wrapper steps={stepsAsMDX} />
+  const Recipe = () => <Wrapper />
 
   // Enable experimental mode for more efficient reconciler and renderer
   render(<Recipe />, { experimental: true })

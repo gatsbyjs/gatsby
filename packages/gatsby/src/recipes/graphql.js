@@ -12,6 +12,7 @@ const { SubscriptionServer } = require(`subscriptions-transport-ws`)
 const { createServer } = require(`http`)
 const { interpret } = require(`xstate`)
 const pkgDir = require(`pkg-dir`)
+const cors = require('cors')
 
 const recipeMachine = require(`./recipe-machine`)
 const createTypes = require(`./create-types`)
@@ -22,6 +23,7 @@ const pubsub = new PubSub()
 const PORT = 4000
 
 const emitOperation = state => {
+  console.log(state)
   pubsub.publish(`operation`, {
     state: JSON.stringify(state),
   })
@@ -29,12 +31,12 @@ const emitOperation = state => {
 
 // only one service can run at a time.
 let service
-const applyPlan = plan => {
+const applyPlan = ({ recipePath, projectRoot }) => {
+  
   const initialState = {
-    context: { steps: plan, currentStep: 0 },
+    context: { recipePath, projectRoot, steps: [], currentStep: 0 },
     value: `init`,
   }
-  emitOperation(initialState)
 
   // Interpret the machine, and add a listener for whenever a transition occurs.
   service = interpret(
@@ -92,12 +94,12 @@ const rootMutationType = new GraphQLObjectType({
       createOperation: {
         type: GraphQLString,
         args: {
-          commands: { type: GraphQLString },
+          recipePath: { type: GraphQLString },
+          projectRoot: { type: GraphQLString }
         },
         resolve: (_data, args) => {
-          const commands = JSON.parse(args.commands)
-          console.log(`received operation`, commands)
-          applyPlan(commands)
+          console.log(`received operation`, args.recipePath)
+          applyPlan(args)
         },
       },
       sendEvent: {
@@ -137,6 +139,8 @@ const app = express()
 const server = createServer(app)
 
 console.log(`listening on localhost:4000`)
+
+app.use(cors())
 
 app.use(
   `/graphql`,

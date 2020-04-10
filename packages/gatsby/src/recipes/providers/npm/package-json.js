@@ -69,6 +69,7 @@ module.exports.plan = async ({ root }, { id, name, value }) => {
     currentState: JSON.stringify(currentState, null, 2),
     newState: JSON.stringify(newState, null, 2),
     describe: `Add ${key} to package.json`,
+    diff: '' // TODO: Make diff
   }
 }
 
