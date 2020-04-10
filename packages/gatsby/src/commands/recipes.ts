@@ -7,6 +7,9 @@ module.exports = async (program: IProgram): Promise<void> => {
   const recipe = program._[1]
   telemetry.trackCli(`RECIPE_RUN`, { recipe })
 
+      // const runRecipe = require(`../recipes/index`)
+      // runRecipe({ recipe, projectRoot: program.directory })
+
   // Start GraphQL serve
   let subprocess
   const scriptPath = path.join(

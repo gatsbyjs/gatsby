@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`diffs strings by line with color codes 1`] = `
+"[31m- Original  - 1[39m
+[32m+ Modified  + 1[39m
+
+
+[2m  pizza[22m
+[31m- super[39m
+[32m+[39m
+[2m  duper[22m
+"
+`;

@@ -1,5 +1,6 @@
-const gitDiff = require(`git-diff/async`)
 const isNewline = require(`is-newline`)
+const { diffLinesUnified } = require(`jest-diff`)
+const chalk = require(`chalk`)
 
 module.exports = async (oldString = `\n`, newString = `\n`) => {
   if (!isNewline(oldString.slice(-1))) {
@@ -9,15 +10,20 @@ module.exports = async (oldString = `\n`, newString = `\n`) => {
     newString += `\n`
   }
 
-  let diff = await gitDiff(oldString, newString, {
-    color: true,
-    noHeaders: true,
-    flags: `--diff-algorithm=minimal`,
-  })
+  const oldStringSplits = oldString.split(/\r?\n/)
+  const newStringSplits = newString.split(/\r?\n/)
 
-  if (!diff) {
-    diff = ``
+  const options = {
+    aAnnotation: `Original`,
+    bAnnotation: `Modified`,
+    aColor: chalk.red,
+    bColor: chalk.green,
+    includeChangeCounts: true,
+    contextLines: 3,
+    expand: false,
   }
 
-  return diff
+  const diffText = diffLinesUnified(oldStringSplits, newStringSplits, options)
+
+  return diffText
 }
