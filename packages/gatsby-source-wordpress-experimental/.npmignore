@@ -1,5 +1,5 @@
 src
-test-runtime
+.test-runtime
 
 # Logs
 logs
@@ -35,3 +35,5 @@ flow-typed
 coverage
 decls
 examples
+
+*.env*

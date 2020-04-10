@@ -64,8 +64,8 @@
     "serve-test-runtime": "cd .test-runtime && yarn serve",
     "ci": "yarn prepare && yarn setup-test-runtime && yarn test",
     "ci-develop": "yarn prepare && yarn test-develop",
-    "test-schema": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./test-runtime/__tests__/schema.js && WPGQL_INCREMENT=true jest ./.test-runtime/__tests__/schema.js",
-    "test-build": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./test-runtime/__tests__/build.js && WPGQL_INCREMENT=true jest ./.test-runtime/__tests__/build.js",
+    "test-schema": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./.test-runtime/__tests__/schema.js && WPGQL_INCREMENT=true jest ./.test-runtime/__tests__/schema.js",
+    "test-build": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./.test-runtime/__tests__/build.js && WPGQL_INCREMENT=true jest ./.test-runtime/__tests__/build.js",
     "test": "yarn setup-test-runtime && yarn test-schema && yarn test-build",
     "test-develop": "jest --watch"
   },
