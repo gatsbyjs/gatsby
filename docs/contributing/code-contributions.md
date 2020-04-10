@@ -122,12 +122,9 @@ Check [Debugging the build process](/docs/debugging-the-build-process/) page to 
 
 ## Official theme development
 
-This section is for official theme development in Gatsby's monorepo. If you are looking
-to build your own theme, see [building themes](/docs/themes/building-themes/).
+This section is for official theme development in Gatsby's monorepo. If you are looking to build your own theme, see [building themes](/docs/themes/building-themes/).
 
-Before getting started, make sure that you have
-[set up your local dev environment](/contributing/setting-up-your-local-dev-environment/)
-and that you're on the latest version of `gatsby-dev-cli`.
+Before getting started, make sure that you have [set up your local dev environment](/contributing/setting-up-your-local-dev-environment/) and that you're on the latest version of `gatsby-dev-cli`.
 
 - In the Gatsby monorepo find the starter in the `/starters` directory that uses the theme you want to work on
 - Navigate to that directory, e.g. `cd starters/gatsby-starter-blog-theme`

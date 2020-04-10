@@ -5,8 +5,7 @@ author: Shannon Soper
 tags: ["ux", "cloud"]
 ---
 
-In my last blogpost, I introduced how we’re [making it easier to start with Gatsby Cloud for
-free](https://www.gatsbyjs.org/blog/2019-11-25-getting-started-with-gatsby-cloud/) with starters. This blogpost introduces the next set of changes that we shipped to help users get started faster. How did we know what changes would help users get started faster? Well, we infer from history to reduce unnecessary user interaction. That's quite a mouthful, so it needs some explanation.
+In my last blogpost, I introduced how we’re [making it easier to start with Gatsby Cloud for free](https://www.gatsbyjs.org/blog/2019-11-25-getting-started-with-gatsby-cloud/) with starters. This blogpost introduces the next set of changes that we shipped to help users get started faster. How did we know what changes would help users get started faster? Well, we infer from history to reduce unnecessary user interaction. That's quite a mouthful, so it needs some explanation.
 
 ## The problem
 
@@ -50,13 +49,11 @@ The first step is simply to look at history; I’ll take you on a tour of the us
 
 ### User selects starter
 
-In this first screenshot, the user selects a starter.
-![Screenshot of the starter page](final-state.png)
+In this first screenshot, the user selects a starter. ![Screenshot of the starter page](final-state.png)
 
 ### User logs into GitHub and into Gatsby Cloud
 
-Next, the user logs into GitHub and give Gatsby Cloud permission to connect with their personal GitHub account.
-![Screenshot of the Gatsby Cloud login page with a thought bubble the author drew on top of the screenshot. The thought bubble contains the text “Alright, I can sign in with Git Hub. I have an account!”](cloud-login-400.png)
+Next, the user logs into GitHub and give Gatsby Cloud permission to connect with their personal GitHub account. ![Screenshot of the Gatsby Cloud login page with a thought bubble the author drew on top of the screenshot. The thought bubble contains the text “Alright, I can sign in with Git Hub. I have an account!”](cloud-login-400.png)
 
 ### Unnecessary interaction: user adds new GitHub organization
 

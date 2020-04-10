@@ -83,7 +83,6 @@ Here's what's next in [Issue #5927](https://github.com/gatsbyjs/gatsby/issues/59
 Our next UX project is finishing up the starter showcase, which will look similar to the site showcase and also have a major functional difference: filter by dependency. Please contribute to these issues to help out!
 
 - [Starter Showcase Issue](https://github.com/gatsbyjs/gatsby/issues/5334)
-- [Starter Showcase WIP PR](https://github.com/gatsbyjs/gatsby/pull/5831)
-  Again, many thanks to all the community members who have contributed to this research and to making Gatsby awesome. Stay tuned for updates on the site showcase and future Gatsby UX research projects!
+- [Starter Showcase WIP PR](https://github.com/gatsbyjs/gatsby/pull/5831) Again, many thanks to all the community members who have contributed to this research and to making Gatsby awesome. Stay tuned for updates on the site showcase and future Gatsby UX research projects!
 - [Contact me](https://twitter.com/shannonb_ux/status/938551014956732418) here if you have feedback that differs from or provides deeper insight into one of the pain points this article mentions.
 - Follow us on [Twitter](https://twitter.com/gatsbyjs).

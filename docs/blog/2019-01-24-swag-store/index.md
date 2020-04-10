@@ -168,8 +168,7 @@ But what did that process actually look like? We had our starting point — some
 
 Basically, our process looked like this:
 
-![South Park Underpants Gnomes](./images/1_93222BZZGSWF__LBsgVvPg.jpg)
-_The Gatsby Swag Project off to a strong start!_
+![South Park Underpants Gnomes](./images/1_93222BZZGSWF__LBsgVvPg.jpg) _The Gatsby Swag Project off to a strong start!_
 
 So we worked with what we had — starting at the end and worked our way backwards.
 
@@ -209,8 +208,7 @@ Since we were going with an “automation first” framework, we had a lot to co
 
 Eventually, by working backwards from the end, we created a full process and recorded it using [Whimsical](https://whimsical.co/). You can see our flow chart [here](https://whimsical.co/HrgMvcBZxyyWxcPPAUzPXf)!
 
-![Flow chart with the step by step swag process](./images/1_tzPNjNB2Lf0w_7mu21JDTQ.png)
-_Flow chart with the step by step swag process_
+![Flow chart with the step by step swag process](./images/1_tzPNjNB2Lf0w_7mu21JDTQ.png) _Flow chart with the step by step swag process_
 
 The top section lists each tool that we’re using to manage and automated the swag process.
 

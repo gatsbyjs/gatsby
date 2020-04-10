@@ -24,8 +24,7 @@ Cloudinary provides a couple of amazing solutions to this problem, namely:
 
 ## Gatsby-source-cloudinary
 
-This plugin fetches media assets from Cloudinary that are specified in a folder. It then transforms these images into Cloudinary file nodes, which can be queried with GraphQL in a Gatsby project.
-`gatsby-source-cloudinary` applies [f_auto and q_auto](https://cloudinary.com/documentation/image_transformations) transformation parameters which aid in automatic optimisation of format and quality for media assets by over 70 percent.
+This plugin fetches media assets from Cloudinary that are specified in a folder. It then transforms these images into Cloudinary file nodes, which can be queried with GraphQL in a Gatsby project. `gatsby-source-cloudinary` applies [f_auto and q_auto](https://cloudinary.com/documentation/image_transformations) transformation parameters which aid in automatic optimisation of format and quality for media assets by over 70 percent.
 
 ### Prerequisites
 
@@ -79,8 +78,7 @@ Note that `gatsby-source-cloudinary` takes the following options:
 
 - **`cloudName`** , **`apiKey`** , and **`apiSecret`** **:** These are credentials from your Cloudinary console, stored as three separate environment variables for security.
 - **`resourceType`** **:** This is the resource type of the media assets - either an image or a video.
-- **`prefix`** **:** This is the folder (in your Cloudinary account) in which the files reside. In the example above, the folder is called `gatsby-source-cloudinary`. Assign a name of your choice.
-  Other optional options are `type`, `tags`, and `maxResult`.
+- **`prefix`** **:** This is the folder (in your Cloudinary account) in which the files reside. In the example above, the folder is called `gatsby-source-cloudinary`. Assign a name of your choice. Other optional options are `type`, `tags`, and `maxResult`.
 
 Here's a [link to the README](https://github.com/Chuloo/gatsby-source-cloudinary#query-parameters) for more information.
 

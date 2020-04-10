@@ -2,8 +2,7 @@
 title: Adding Pagination
 ---
 
-A page displaying a list of content gets longer as the amount of content grows.
-Pagination is the technique of spreading that content across multiple pages.
+A page displaying a list of content gets longer as the amount of content grows. Pagination is the technique of spreading that content across multiple pages.
 
 The goal of pagination is to create multiple pages (from a single [template](/docs/building-with-components/#page-template-components)) that show a limited number of items.
 
@@ -123,8 +122,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 }
 ```
 
-The code above will create an amount of pages that is based on the total number of posts. Each page will list `postsPerPage`(6) posts, until there are less than `postsPerPage`(6) posts left.
-The path for the first page is `/blog`, following pages will have a path of the form: `/blog/2`, `/blog/3`, etc.
+The code above will create an amount of pages that is based on the total number of posts. Each page will list `postsPerPage`(6) posts, until there are less than `postsPerPage`(6) posts left. The path for the first page is `/blog`, following pages will have a path of the form: `/blog/2`, `/blog/3`, etc.
 
 ## Other resources
 

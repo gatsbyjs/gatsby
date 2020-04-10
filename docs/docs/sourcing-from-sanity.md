@@ -42,20 +42,19 @@ Go through `http://localhost:8000/___graphql` after running `gatsby develop` to 
 
 ## Options
 
-| Options       | Type    | Default | Description                                                                                                                                    |
-| ------------- | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| projectId     | string  |         | **[required]** Your Sanity project's ID                                                                                                        |
-| dataset       | string  |         | **[required]** The dataset to fetch from                                                                                                       |
-| token         | string  |         | Authentication token for fetching data from private datasets, or when using `overlayDrafts` [Learn more](https://www.sanity.io/docs/http-auth) |
-| overlayDrafts | boolean | `false` | Set to `true` in order for drafts to replace their published version. By default, drafts will be skipped.                                      |
-| watchMode     | boolean | `false` | Set to `true` to keep a listener open and update with the latest changes in realtime.                                                          |
+| Options | Type | Default | Description |
+| --- | --- | --- | --- |
+| projectId | string |  | **[required]** Your Sanity project's ID |
+| dataset | string |  | **[required]** The dataset to fetch from |
+| token | string |  | Authentication token for fetching data from private datasets, or when using `overlayDrafts` [Learn more](https://www.sanity.io/docs/http-auth) |
+| overlayDrafts | boolean | `false` | Set to `true` in order for drafts to replace their published version. By default, drafts will be skipped. |
+| watchMode | boolean | `false` | Set to `true` to keep a listener open and update with the latest changes in realtime. |
 
 ## Missing fields
 
 Getting errors such as these?
 
-> Cannot query field "allSanityBlogPost"
-> Unknown field `preamble` on type `BlogPost`
+> Cannot query field "allSanityBlogPost" Unknown field `preamble` on type `BlogPost`
 
 By [deploying a GraphQL API](https://www.sanity.io/help/graphql-beta) for your dataset, we are able to introspect and figure out which schema types and fields are available and make them available to prevent this problem. Once the API is deployed it will be transparently be applied. If you have deployed your API and are still seeing similar issues, remember that you have to redeploy the API if your schema changes.
 

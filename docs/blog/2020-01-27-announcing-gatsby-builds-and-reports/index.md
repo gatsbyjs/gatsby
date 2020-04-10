@@ -64,18 +64,15 @@ We’ve solved this problem with **Reports**: a persistent auditing service that
 
 ![Screenshot of Gatsby Cloud builds with Chrome Lighthouse reports](./gatsby-lighthouse.png)
 
-We'll be adding more auditing tools in the future to ensure that you’re always shipping the best possible applications.
-In addition, we’re building a **Site Budgets** feature which will let you set speed and accessibility thresholds for key pages on your site. If a PR leads to changes that exceed your budget limits it will be blocked. This helps you and your team iterate and ship with confidence.
+We'll be adding more auditing tools in the future to ensure that you’re always shipping the best possible applications. In addition, we’re building a **Site Budgets** feature which will let you set speed and accessibility thresholds for key pages on your site. If a PR leads to changes that exceed your budget limits it will be blocked. This helps you and your team iterate and ship with confidence.
 
 ## How do we make builds so fast?
 
-Gatsby was open sourced nearly five years ago, and since then hundreds of thousands of people have used it to build for the web. In that time we've learned a lot about making builds fast, and are now applying that knowledge on Gatsby Cloud.
-There are three ways to make builds faster:
+Gatsby was open sourced nearly five years ago, and since then hundreds of thousands of people have used it to build for the web. In that time we've learned a lot about making builds fast, and are now applying that knowledge on Gatsby Cloud. There are three ways to make builds faster:
 
 ### 1. Optimize individual operations
 
-Build systems do many things. **Reducing individual operation times will lead to faster builds**.
-We've spent years improving Gatsby's complex build system to optimize it from beginning to end. This includes many contributions to upstream open source projects that benefit the broader web community.
+Build systems do many things. **Reducing individual operation times will lead to faster builds**. We've spent years improving Gatsby's complex build system to optimize it from beginning to end. This includes many contributions to upstream open source projects that benefit the broader web community.
 
 ### 2. Distribute more work
 
@@ -106,8 +103,7 @@ In order to build this site, Gatsby needs to:
 - Optimize JavaScript and CSS for production
 - Render the HTML for every page
 
-Let's assume all this adds up to 600 unique operations, and that each operation takes one second of CPU & IO time.
-Because Node.js is a single-process system each operation is blocking. This makes the total processing time 600 seconds, or 10 minutes.
+Let's assume all this adds up to 600 unique operations, and that each operation takes one second of CPU & IO time. Because Node.js is a single-process system each operation is blocking. This makes the total processing time 600 seconds, or 10 minutes.
 
 Now let's say a clever engineer finds a way to optimize one of the operations by 10% reducing the total time to 570 seconds.
 
@@ -146,8 +142,7 @@ There are many implications and possibilities when it comes to embracing the con
 
 ### How do I start using Builds & Reports?
 
-You need to be a Gatsby Cloud user in order to access the features of Builds & Reports.
-If you’re already a user you’ll find Builds and Reports enabled in your account. If you’re not a user and want to access these features alongside [real-time Preview](/blog/2019-11-14-announcing-gatsby-cloud/) just [sign up for a Gatsby Cloud account](https://www.gatsbyjs.com/get-started) today.
+You need to be a Gatsby Cloud user in order to access the features of Builds & Reports. If you’re already a user you’ll find Builds and Reports enabled in your account. If you’re not a user and want to access these features alongside [real-time Preview](/blog/2019-11-14-announcing-gatsby-cloud/) just [sign up for a Gatsby Cloud account](https://www.gatsbyjs.com/get-started) today.
 
 ### How much faster is Gatsby Builds compared to other CD platforms?
 
@@ -211,8 +206,7 @@ A real-time edit is:
 
 “Incremental builds” is normally defined as only rebuilding the portion of HTML files that require changes. In other words: cache the previously built HTML files to avoid rework.
 
-We don’t offer this _yet_. However, we have prototyped it and the reductions in deploy time is dramatic for larger sites.
-Incremental builds are key to us reaching our goal of sub 10 second build times, so stay tuned ;-)
+We don’t offer this _yet_. However, we have prototyped it and the reductions in deploy time is dramatic for larger sites. Incremental builds are key to us reaching our goal of sub 10 second build times, so stay tuned ;-)
 
 ### When can I expect Incremental Builds?
 

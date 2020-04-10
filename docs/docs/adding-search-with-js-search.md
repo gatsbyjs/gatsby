@@ -250,8 +250,7 @@ Breaking down the code into smaller parts:
 
 ### Joining all the pieces
 
-In order to get it working in your site, you would only need to import the newly created component to a page.
-As you can see [in the example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/pages/index.js).
+In order to get it working in your site, you would only need to import the newly created component to a page. As you can see [in the example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/pages/index.js).
 
 Run `gatsby develop` and if all went well, open your browser of choice and enter the url `http://localhost:8000` - you'll have a fully functional search at your disposal.
 

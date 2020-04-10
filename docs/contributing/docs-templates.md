@@ -91,8 +91,7 @@ title: Querying Data with GraphQL
 
 ## Introductory paragraph
 
-The introductory paragraph should be a 1-2 sentence explanation of the main
-topic and answer the following question:
+The introductory paragraph should be a 1-2 sentence explanation of the main topic and answer the following question:
 
 What is the purpose of this guide?
 
@@ -104,13 +103,11 @@ If applicable, list any prerequisites to reading and understanding your article.
 
 What are the facts you know about the topic of this guide?
 
-Keep paragraphs short (around 1-4 sentences). People are more likely to read
-several short paragraphs instead of a huge block of text.
+Keep paragraphs short (around 1-4 sentences). People are more likely to read several short paragraphs instead of a huge block of text.
 
 ## Example
 
-Readers will likely use doc articles as a quick reference to look up syntax.
-Articles should have a basic, real-world example that shows common use cases of its syntax.
+Readers will likely use doc articles as a quick reference to look up syntax. Articles should have a basic, real-world example that shows common use cases of its syntax.
 
 Provide at least one example of how the task gets accomplished. A code snippet is ideal, in this format:
 
@@ -284,9 +281,7 @@ When writing a recipe, try to include each of the below items wherever relevant.
 
 #### Directions
 
-1. Open the index page component (src/pages/index.js), import the <Link />
-   component from Gatsby, add a <Link /> component above the header, and give
-   it a `to` property with the value of "/contact/" for the pathname:
+1. Open the index page component (src/pages/index.js), import the <Link /> component from Gatsby, add a <Link /> component above the header, and give it a `to` property with the value of "/contact/" for the pathname:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -300,8 +295,7 @@ export default () => (
 )
 ```
 
-2. Run `gatsby develop` and navigate to the index page. You should have a link
-   that takes you to the contact page when clicked!
+2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
 
 #### Additional resources
 
@@ -359,11 +353,9 @@ If applicable, list any prerequisites to reading and understanding your tutorial
 
 ## Step 1
 
-Keep paragraphs short (around 1-4 sentences). People are more likely to read
-several short paragraphs instead of a huge block of text.
+Keep paragraphs short (around 1-4 sentences). People are more likely to read several short paragraphs instead of a huge block of text.
 
-Readers will likely use doc articles as a quick reference to look up syntax.
-Articles should have a basic, real-world example that shows common use cases of its syntax.
+Readers will likely use doc articles as a quick reference to look up syntax. Articles should have a basic, real-world example that shows common use cases of its syntax.
 
     code example
 
@@ -395,8 +387,7 @@ If there are more parts to the tutorial, link to the next step here.
 
 ## Other resources
 
-If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add
-them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
+If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
 
 - Link to a blog post
 - Link to a YouTube tutorial

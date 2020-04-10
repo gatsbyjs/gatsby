@@ -31,8 +31,7 @@ Hooking up Gatsby to a new or existing Drupal site takes just a few steps:
 
 ## Why use Gatsby and Drupal together?
 
-[“Decoupled Drupal”](https://www.acquia.com/drupal/decoupled-drupal) has become an increasingly popular approach to building enterprise-grade websites, and has the [full-throated support](https://dri.es/how-to-decouple-drupal-in-2018) of Drupal community leaders.
-Using Gatsby in a decoupled Drupal setup allows your team to access the powerful content modeling and access workflow capabilities of Drupal 8, as well as the powerful UI creation & performance toolset of Gatsby.
+[“Decoupled Drupal”](https://www.acquia.com/drupal/decoupled-drupal) has become an increasingly popular approach to building enterprise-grade websites, and has the [full-throated support](https://dri.es/how-to-decouple-drupal-in-2018) of Drupal community leaders. Using Gatsby in a decoupled Drupal setup allows your team to access the powerful content modeling and access workflow capabilities of Drupal 8, as well as the powerful UI creation & performance toolset of Gatsby.
 
 ## When is Drupal a great choice?
 

@@ -87,8 +87,7 @@ We did 3 rounds of the following pattern and saw that in round two, our sketches
 
 ## What did we conclude from the prototype workshop?
 
-We coalesced around:
-The homepage should be ordered by explaining the following:
+We coalesced around: The homepage should be ordered by explaining the following:
 
 - What is Gatsby?
 - Why is it worth paying attention to?

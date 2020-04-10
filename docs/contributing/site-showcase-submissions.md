@@ -30,6 +30,7 @@ There are three major steps:
   description: >
     This blog is a shiny new website built with Gatsby v2 that makes important contributions towards a faster web for everyone.
 
+
   # You can list as many categories as you want here. Check list of Categories below in this doc!
   # If you'd like to create a new category, simply list it here.
   categories:
@@ -53,6 +54,8 @@ Use the following template to ensure required fields are filled:
   source_url: (optional - https://github.com/{username}/{titleofthesite})
   description: >
     (optional)
+
+
   categories:
     - (required)
   built_by: (optional)

@@ -74,13 +74,13 @@ Some public goods in open source include:
 
 If we were to make an analogy of open-source to something more physical, for example transportation infrastructure, it’s easy to see the parallel for each one to common government-provided public goods.
 
-| Open Source Public Good                       | Analogy in Transportation Infrastructure                |
-| :-------------------------------------------- | :------------------------------------------------------ |
-| Comprehensive, understandable documentation   | Accurate official maps                                  |
-| A well-maintained PR, issue backlog & roadmap | Official communication around planned roadwork          |
-| Ongoing maintenance work                      | Ongoing maintenance work                                |
-| Features that benefit underrepresented users  | Graded sidewalks, curb cuts, crosswalks with audio cues |
-| Plugin compatibility and interoperability     | Uniform traffic standards & rules of road               |
+| Open Source Public Good | Analogy in Transportation Infrastructure |
+| :-- | :-- |
+| Comprehensive, understandable documentation | Accurate official maps |
+| A well-maintained PR, issue backlog & roadmap | Official communication around planned roadwork |
+| Ongoing maintenance work | Ongoing maintenance work |
+| Features that benefit underrepresented users | Graded sidewalks, curb cuts, crosswalks with audio cues |
+| Plugin compatibility and interoperability | Uniform traffic standards & rules of road |
 
 Governments aren’t the _only_ organizations providing public goods; in most developed countries there’s a well-developed nonprofit sector that helps promote the arts, education, and other social services.
 

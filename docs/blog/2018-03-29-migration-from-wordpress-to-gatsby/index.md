@@ -13,14 +13,9 @@ How and Why I migrated from WordPress to static JAM Stack site built with Gatsby
 
 ## Before
 
-When I started my blog back in 2016, I wanted to focus as much as possible on creating content rather than
-creating the blog infrastructure. Of course there the siren's call to build everything from scratch or spend weeks
-researching all the possible platforms — which would, no doubt, be a lot of fun — but I resisted as I wanted to start writing as soon as possible.
-I had wanted to start my blog for a few years already so I wanted to reduce the barrier of entry as much as possible.
-I knew the most critical part is to build a habit of writing regularly and then I can polish my blog tech stack later.
+When I started my blog back in 2016, I wanted to focus as much as possible on creating content rather than creating the blog infrastructure. Of course there the siren's call to build everything from scratch or spend weeks researching all the possible platforms — which would, no doubt, be a lot of fun — but I resisted as I wanted to start writing as soon as possible. I had wanted to start my blog for a few years already so I wanted to reduce the barrier of entry as much as possible. I knew the most critical part is to build a habit of writing regularly and then I can polish my blog tech stack later.
 
-So WordPress was the obvious choice for me because it is widespread, with a lot of resources and plugins available. And it worked well. More or less. There were issues though. Most notable one was performance. WordPress is sluggish. Especially once you add some plugins.
-The results of a [Lighthouse audit](https://www.vojtechruzicka.com/chrome-audit-lighthouse/) were disappointing:
+So WordPress was the obvious choice for me because it is widespread, with a lot of resources and plugins available. And it worked well. More or less. There were issues though. Most notable one was performance. WordPress is sluggish. Especially once you add some plugins. The results of a [Lighthouse audit](https://www.vojtechruzicka.com/chrome-audit-lighthouse/) were disappointing:
 
 ![lighthouse audit before](./chrome-audit-score-before.jpg)
 
@@ -84,8 +79,7 @@ My blog is now deployed on Netlify CDN, which means the user will be served fast
 
 ### Before
 
-![before](./chrome-audit-score-before.jpg)
-![before-details](./chrome-audit-performance-metrics.jpg)
+![before](./chrome-audit-score-before.jpg) ![before-details](./chrome-audit-performance-metrics.jpg)
 
 ### After
 

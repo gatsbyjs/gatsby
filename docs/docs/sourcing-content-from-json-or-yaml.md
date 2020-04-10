@@ -23,21 +23,8 @@ In your Gatsby project folder, create a directory called `content` and inside, a
 ```yaml:title=content/My-YAML-Content.yaml
 title: YAML content used at build time with Gatsby
 content:
-  - item:
-      Cupcake ipsum dolor. Sit amet marshmallow topping cheesecake muffin. Halvah
-      croissant candy canes bonbon candy. Apple pie jelly beans topping carrot cake
-      danish tart cake cheesecake. Muffin danish chocolate soufflé pastry icing bonbon
-      oat cake. Powder cake jujubes oat cake. Lemon drops tootsie roll marshmallow halvah
-      carrot cake.
-  - item:
-      Doggo ipsum borkdrive much ruin diet you are doing me the shock the neighborhood pupper doggorino length boy many pats, boofers heckin shooberino wrinkler.
-      Very good spot very jealous pupper very hand that feed shibe smol, shoob.
-      Long bois pupper doggo you are doin me a concern big ol yapper, smol boof most angery pupper I have ever seen puggorino.
-      Mlem blep wow very biscit dat tungg tho wow very biscit, thicc ur givin me a spook.
-      Many pats heckin you are doing me the shock corgo ur givin me a spook very hand that feed shibe shooberino, big ol pupper doge pats borkdrive.
-      Such treat what a nice floof super chub such treat, smol thicc.
-      Puggorino very good spot most angery pupper I have ever seen you are doing me the shock big ol pupper porgo corgo shoober, heckin good boys lotsa pats noodle horse very taste wow thicc.
-      What a nice floof long doggo blep length boy borking doggo, much ruin diet floofs borkf.
+  - item: Cupcake ipsum dolor. Sit amet marshmallow topping cheesecake muffin. Halvah croissant candy canes bonbon candy. Apple pie jelly beans topping carrot cake danish tart cake cheesecake. Muffin danish chocolate soufflé pastry icing bonbon oat cake. Powder cake jujubes oat cake. Lemon drops tootsie roll marshmallow halvah carrot cake.
+  - item: Doggo ipsum borkdrive much ruin diet you are doing me the shock the neighborhood pupper doggorino length boy many pats, boofers heckin shooberino wrinkler. Very good spot very jealous pupper very hand that feed shibe smol, shoob. Long bois pupper doggo you are doin me a concern big ol yapper, smol boof most angery pupper I have ever seen puggorino. Mlem blep wow very biscit dat tungg tho wow very biscit, thicc ur givin me a spook. Many pats heckin you are doing me the shock corgo ur givin me a spook very hand that feed shibe shooberino, big ol pupper doge pats borkdrive. Such treat what a nice floof super chub such treat, smol thicc. Puggorino very good spot most angery pupper I have ever seen you are doing me the shock big ol pupper porgo corgo shoober, heckin good boys lotsa pats noodle horse very taste wow thicc. What a nice floof long doggo blep length boy borking doggo, much ruin diet floofs borkf.
   - item: 192.33
   - item: 111111
 ```
@@ -153,55 +140,23 @@ Create a folder named `content` if it doesn't exist, and then add a new file ins
     - to: "/page5"
 - path: "/page2"
   content:
-    - item:
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-        in culpa qui officia deserunt mollit anim id est laborum.
+    - item: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   links:
     - to: "/page1"
 - path: "/page3"
   content:
-    - item: Cupcake ipsum dolor sit amet tootsie roll sesame snaps chupa chups.
-        Sugar plum chupa chups topping I love carrot cake I love marshmallow dessert.
-        Toffee gingerbread pie apple pie jelly beans pastry cookie.
-        Lemon drops wafer I love pastry halvah dragée pudding cake.
-        Cake halvah cookie jelly beans topping pudding cheesecake donut.
-        Cake croissant marshmallow.
-        Sesame snaps apple pie I love I love cake danish powder.
-        Lollipop sweet caramels.
-        Tiramisu danish marshmallow candy canes.
-        Powder cupcake cotton candy bonbon chocolate bar marshmallow gummies cheesecake marzipan.
-        Gummies soufflé candy. Candy canes muffin chocolate brownie pudding.
+    - item: Cupcake ipsum dolor sit amet tootsie roll sesame snaps chupa chups. Sugar plum chupa chups topping I love carrot cake I love marshmallow dessert. Toffee gingerbread pie apple pie jelly beans pastry cookie. Lemon drops wafer I love pastry halvah dragée pudding cake. Cake halvah cookie jelly beans topping pudding cheesecake donut. Cake croissant marshmallow. Sesame snaps apple pie I love I love cake danish powder. Lollipop sweet caramels. Tiramisu danish marshmallow candy canes. Powder cupcake cotton candy bonbon chocolate bar marshmallow gummies cheesecake marzipan. Gummies soufflé candy. Candy canes muffin chocolate brownie pudding.
   links: []
 - path: "/page4"
   content:
-    - item:
-        Lorem ipsum dolor amet mustache knausgaard +1, blue bottle waistcoat tbh
-        semiotics artisan synth stumptown gastropub cornhole celiac swag. Brunch raclette
-        vexillologist post-ironic glossier ennui XOXO mlkshk godard pour-over blog tumblr
-        humblebrag. Blue bottle put a bird on it twee prism biodiesel brooklyn. Blue
-        bottle ennui tbh succulents.
+    - item: Lorem ipsum dolor amet mustache knausgaard +1, blue bottle waistcoat tbh semiotics artisan synth stumptown gastropub cornhole celiac swag. Brunch raclette vexillologist post-ironic glossier ennui XOXO mlkshk godard pour-over blog tumblr humblebrag. Blue bottle put a bird on it twee prism biodiesel brooklyn. Blue bottle ennui tbh succulents.
   links:
     - to: "/page5"
     - to: "/page1"
 - path: "/page5"
   content:
-    - item: St. agur blue cheese queso cheesecake.
-        Cheesecake the big cheese monterey jack cheesecake monterey jack paneer halloumi rubber cheese.
-        Cheese triangles cheese strings cheese slices cheesy feet taleggio cottage cheese when the cheese comes out everybody's happy gouda.
-        Feta cauliflower cheese babybel cheese on toast monterey jack.
-    - item:
-        Doggo ipsum borkdrive much ruin diet you are doing me the shock the neighborhood pupper doggorino length boy many pats, boofers heckin shooberino wrinkler.
-        Very good spot very jealous pupper very hand that feed shibe smol, shoob.
-        Long bois pupper doggo you are doin me a concern big ol yapper, smol boof most angery pupper I have ever seen puggorino.
-        Mlem blep wow very biscit dat tungg tho wow very biscit, thicc ur givin me a spook.
-        Many pats heckin you are doing me the shock corgo ur givin me a spook very hand that feed shibe shooberino, big ol pupper doge pats borkdrive.
-        Such treat what a nice floof super chub such treat, smol thicc.
-        Puggorino very good spot most angery pupper I have ever seen you are doing me the shock big ol pupper porgo corgo shoober, heckin good boys lotsa pats noodle horse very taste wow thicc.
-        What a nice floof long doggo blep length boy borking doggo, much ruin diet floofs borkf.
+    - item: St. agur blue cheese queso cheesecake. Cheesecake the big cheese monterey jack cheesecake monterey jack paneer halloumi rubber cheese. Cheese triangles cheese strings cheese slices cheesy feet taleggio cottage cheese when the cheese comes out everybody's happy gouda. Feta cauliflower cheese babybel cheese on toast monterey jack.
+    - item: Doggo ipsum borkdrive much ruin diet you are doing me the shock the neighborhood pupper doggorino length boy many pats, boofers heckin shooberino wrinkler. Very good spot very jealous pupper very hand that feed shibe smol, shoob. Long bois pupper doggo you are doin me a concern big ol yapper, smol boof most angery pupper I have ever seen puggorino. Mlem blep wow very biscit dat tungg tho wow very biscit, thicc ur givin me a spook. Many pats heckin you are doing me the shock corgo ur givin me a spook very hand that feed shibe shooberino, big ol pupper doge pats borkdrive. Such treat what a nice floof super chub such treat, smol thicc. Puggorino very good spot most angery pupper I have ever seen you are doing me the shock big ol pupper porgo corgo shoober, heckin good boys lotsa pats noodle horse very taste wow thicc. What a nice floof long doggo blep length boy borking doggo, much ruin diet floofs borkf.
   links:
     - to: "/page1"
 ```

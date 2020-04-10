@@ -100,9 +100,7 @@ What you may not have is the right questions. That’s what I would like to help
 
 Developers love having a great developer experience. You may be wondering: what does that mean? In short, they need tools to do their job to provide amazing outputs, the outputs you want too. The tools they use to have the right functionality, stable, easy to use and have clarity.
 
-Many developers do not have a great [developer experience](https://hackernoon.com/developer-experience-dx-devs-are-people-too-6590d6577afe) though. They are using old school monolithic CMS’s to create websites. They are using old frameworks for development that are slow and clunky. They are frustrated with the time it takes to get something deployed to production because they are waiting on other dependencies. The list goes on and on. **To drive home this point, let’s say you gave your sales team an Excel spreadsheet to use instead of a CRM. Do you think they would like the “sales experience”?** I think you get the point now.
-.
-Many would like to change but they may not have a strong enough voice to make that change. This is where you come in.
+Many developers do not have a great [developer experience](https://hackernoon.com/developer-experience-dx-devs-are-people-too-6590d6577afe) though. They are using old school monolithic CMS’s to create websites. They are using old frameworks for development that are slow and clunky. They are frustrated with the time it takes to get something deployed to production because they are waiting on other dependencies. The list goes on and on. **To drive home this point, let’s say you gave your sales team an Excel spreadsheet to use instead of a CRM. Do you think they would like the “sales experience”?** I think you get the point now. . Many would like to change but they may not have a strong enough voice to make that change. This is where you come in.
 
 ## Generating Momentum to Create Change
 

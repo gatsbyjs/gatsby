@@ -91,11 +91,9 @@ Possible solutions:
 - Add a [Recipes doc](https://github.com/gatsbyjs/gatsby/issues/6572) to both the Getting Started and README file with a list of how to do basic tasks very quickly.
 - [Revise README](https://github.com/gatsbyjs/gatsby/issues/6569).
 
-Common obstacle no.3
-We have about 60 stub articles now that are topics people care about and we need people to write them!
+Common obstacle no.3 We have about 60 stub articles now that are topics people care about and we need people to write them!
 
-Solution:
-Want to volunteer to write one? Check out all the stub articles (titles in _italics_ on the left hand sidebar).
+Solution: Want to volunteer to write one? Check out all the stub articles (titles in _italics_ on the left hand sidebar).
 
 ![Stub articles](stub-articles.png)
 

@@ -35,11 +35,9 @@ Find out more about [how devcert works](https://github.com/davewasmer/devcert#ho
 
 ## Custom Key and Certificate Files
 
-You may find that you need a custom key and certificate file for https if you use multiple
-machines for development (or if your dev environment is containerized in Docker).
+You may find that you need a custom key and certificate file for https if you use multiple machines for development (or if your dev environment is containerized in Docker).
 
-If you need to use a custom https setup, you can pass the `--https`, `--key-file` and
-`--cert-file` flags to `npm run develop`.
+If you need to use a custom https setup, you can pass the `--https`, `--key-file` and `--cert-file` flags to `npm run develop`.
 
 - `--cert-file` [relative path to ssl certificate file]
 - `--key-file` [relative path to ssl key file]

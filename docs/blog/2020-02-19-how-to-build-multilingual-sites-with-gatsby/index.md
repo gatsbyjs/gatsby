@@ -147,11 +147,9 @@ We will need to adjust both the GraphQL query and the code that generates pages.
 
 During the build time, the [Kontent source plugin](/docs/sourcing-from-kentico-kontent/) generates one Gatsby node per each content item - language combination. To distinguish these nodes, they always contain two fields:
 
-- **preferred_language**
-  This field is mainly used for filtering and describes the language the item is intended for. For example, if you want Czech content, you want to filter for `preferred_language='cs'` provided you use the codename `'cs'` for Czech.
+- **preferred_language** This field is mainly used for filtering and describes the language the item is intended for. For example, if you want Czech content, you want to filter for `preferred_language='cs'` provided you use the codename `'cs'` for Czech.
 
-- **system.language**
-  This is the actual content item language. If you filter items based on `preferred_language='cs'`, you will get `system.language='cs'` if the item is translated. Otherwise, the item content will be in English, and `system.language` will be `'default'` (here, it's English).
+- **system.language** This is the actual content item language. If you filter items based on `preferred_language='cs'`, you will get `system.language='cs'` if the item is translated. Otherwise, the item content will be in English, and `system.language` will be `'default'` (here, it's English).
 
 In my case, I am happy with language fallbacks for items that are not translated. That means I can use `preferred_language` and treat all items as if they were translated.
 

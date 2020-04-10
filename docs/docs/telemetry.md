@@ -2,8 +2,7 @@
 title: Telemetry
 ---
 
-Gatsby contains a telemetry feature that collects anonymous usage information that is used to help improve Gatsby for all users.
-The Gatsby user base is growing very rapidly. It's important that our small team and the greater community will better understand the usage patterns, so we can best decide how to design future features and prioritize current work.
+Gatsby contains a telemetry feature that collects anonymous usage information that is used to help improve Gatsby for all users. The Gatsby user base is growing very rapidly. It's important that our small team and the greater community will better understand the usage patterns, so we can best decide how to design future features and prioritize current work.
 
 You will be notified when installing Gatsby and when running it for the first time.
 
@@ -13,9 +12,7 @@ Users may always opt-out from the telemetry with `gatsby telemetry --disable` or
 
 ## Why?
 
-**Anonymous** aggregate user analytics allow us to prioritize fixes and features based on how and when people use Gatsby.
-Since much of Gatsby’s function revolves around community plugins and starters, we want to collect information on usage
-and reliability so that we can ensure a high-quality ecosystem.
+**Anonymous** aggregate user analytics allow us to prioritize fixes and features based on how and when people use Gatsby. Since much of Gatsby’s function revolves around community plugins and starters, we want to collect information on usage and reliability so that we can ensure a high-quality ecosystem.
 
 This raises a question: how will we use this telemetry data to improve the ecosystem? Some examples are helpful:
 
@@ -27,8 +24,7 @@ This raises a question: how will we use this telemetry data to improve the ecosy
 
 ## What do we track?
 
-We track general usage details, including command invocation, build process status updates, performance measurements, and errors.
-We use these metrics to better understand the usage patterns. These metrics will directly allow us to better decide how to design future features and prioritize current work.
+We track general usage details, including command invocation, build process status updates, performance measurements, and errors. We use these metrics to better understand the usage patterns. These metrics will directly allow us to better decide how to design future features and prioritize current work.
 
 Specifically, we collect the following information for _all_ telemetry events:
 

@@ -82,9 +82,7 @@ export default LoadableBuyButton
 
 ## Workaround 4: Use React.lazy and Suspense on client-side only
 
-React.lazy and Suspense are still not ready for server-side rendering, but they can still be used by checking that the code is executed only on the client.
-While this solution is inferior to `loadable-components`, that works both on server side and client, it still provides an alternative for dealing with client-side only packages, without an added dependency.
-Remember that the following code could break if executed without the `isSSR` guard.
+React.lazy and Suspense are still not ready for server-side rendering, but they can still be used by checking that the code is executed only on the client. While this solution is inferior to `loadable-components`, that works both on server side and client, it still provides an alternative for dealing with client-side only packages, without an added dependency. Remember that the following code could break if executed without the `isSSR` guard.
 
 ```jsx
 import React from "react"
