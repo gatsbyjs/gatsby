@@ -55,7 +55,7 @@ const getBase64Image = imageProps => {
 
   // Note: sha1 is unsafe for crypto but okay for this particular case
   const shasum = crypto.createHash(`sha1`)
-  shasum.update(`requestUrl`)
+  shasum.update(requestUrl)
   const urlSha = shasum.digest(`hex`)
 
   // TODO: Find the best place for this step. This is definitely not it.

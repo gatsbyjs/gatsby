@@ -13,11 +13,12 @@ const telemetry = require(`gatsby-telemetry`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 import { getBrowsersList } from "../utils/browserslist"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
+import { startPluginRunner } from "../redux/plugin-runner"
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
-const getConfigFile = require(`./get-config-file`)
+import { getConfigFile } from "./get-config-file"
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const removeStaleJobs = require(`./remove-stale-jobs`)
@@ -27,7 +28,7 @@ process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
-const createGraphqlRunner = require(`./graphql-runner`)
+import { createGraphQLRunner } from "./create-graphql-runner"
 const { extractQueries } = require(`../query/query-watcher`)
 const requiresWriter = require(`./requires-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
@@ -66,7 +67,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Start plugin runner which listens to the store
   // and invokes Gatsby API based on actions.
-  require(`../redux/plugin-runner`)
+  startPluginRunner()
 
   const directory = slash(args.directory)
 
@@ -468,7 +469,7 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = createGraphqlRunner(store, report)
+  const graphqlRunner = createGraphQLRunner(store, report)
 
   // Collect pages.
   activity = report.activityTimer(`createPages`, {
