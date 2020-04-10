@@ -1,7 +1,7 @@
 import { patchConsole } from "../patch-console"
 import { reporter as gatsbyReporter } from "../reporter"
 
-describe("patchConsole", () => {
+describe(`patchConsole`, () => {
   const reporter = {
     log: jest.fn(),
   }
@@ -9,22 +9,22 @@ describe("patchConsole", () => {
 
   beforeEach(reporter.log.mockReset)
 
-  it("handles an empty call", () => {
+  it(`handles an empty call`, () => {
     console.log()
 
     // intentionally empty arguments
     expect(reporter.log).toBeCalledWith()
   })
 
-  it("handles multiple arguments", () => {
-    console.log("foo", "bar", "baz")
+  it(`handles multiple arguments`, () => {
+    console.log(`foo`, `bar`, `baz`)
 
-    expect(reporter.log).toBeCalledWith("foo bar baz")
+    expect(reporter.log).toBeCalledWith(`foo bar baz`)
   })
 
-  it("handles formatting", () => {
-    console.log("%s %d", "bar", true)
+  it(`handles formatting`, () => {
+    console.log(`%s %d`, `bar`, true)
 
-    expect(reporter.log).toBeCalledWith("bar 1")
+    expect(reporter.log).toBeCalledWith(`bar 1`)
   })
 })
