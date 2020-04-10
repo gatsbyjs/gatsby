@@ -7,16 +7,23 @@ const singleTrailingNewline = require('single-trailing-newline')
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
-const makePath = (root, relativePath) => path.join(root, '.gitignore')
+const makePath = root => path.join(root, '.gitignore')
 
 const gitignoresAsArray = async root => {
   const fullPath = makePath(root)
 
-  if (fileExists(fullPath)) {
-    const ignores = await fs.readFile(fullPath, `utf8`)
-    return ignores.split('\n')
-  } else {
+  if (!fileExists(fullPath)) {
     return []
+  }
+
+  const ignoresStr = await fs.readFile(fullPath, `utf8`)
+  const ignores = ignoresStr.split('\n')
+  const last = ignores.pop()
+
+  if (isBlank(last)) {
+    return ignores
+  } else {
+    return [...ignores, last]
   }
 }
 
@@ -45,9 +52,8 @@ const create = async ({ root }, { name }) => {
 
   await fs.writeFile(fullPath, ignoresToString(ignores))
 
-  console.log(ignores)
-
-  return await read({ root }, name)
+  const result = await read({ root }, name)
+  return result
 }
 
 const update = async ({ root }, { id, name }) => {
@@ -77,7 +83,7 @@ const update = async ({ root }, { id, name }) => {
 const read = async (context, id) => {
   const ignores = await gitignoresAsArray(context.root)
 
-  const name = ignores.find(n => n.name === id)
+  const name = ignores.find(n => n === id)
 
   if (!name) {
     return undefined
@@ -119,7 +125,7 @@ module.exports.plan = async (context, args) => {
 
   const plan = {
     currentState: contents,
-    newState: alreadyIgnored ? contents : contents + '\n' + name,
+    newState: alreadyIgnored ? contents : contents + name,
     describe: `Add ${name} to gitignore`,
     diff: ``,
   }

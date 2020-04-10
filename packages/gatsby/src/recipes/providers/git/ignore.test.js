@@ -11,7 +11,7 @@ describe("git ignore resource", () => {
       resourceName: `GitIgnore`,
       context: { root },
       initialObject: { name: ".cache" },
-      partialUpdate: { id: ".cache", name: ".cache/*" },
+      partialUpdate: { id: ".cache", name: ".cache" },
     })
   })
 
@@ -27,18 +27,6 @@ describe("git ignore resource", () => {
         Object {
           "id": "node_modules",
           "name": "node_modules",
-        },
-        Object {
-          "id": "1",
-          "name": "",
-        },
-        Object {
-          "id": ".cache",
-          "name": ".cache",
-        },
-        Object {
-          "id": "3",
-          "name": "",
         },
       ]
     `)
