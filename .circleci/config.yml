@@ -860,7 +860,7 @@ workflows:
   weekly-i18n-sync:
     triggers:
       - schedule:
-          cron: "20 21 * * 5"
+          cron: "0 1 * * 6"
           filters:
             branches:
               only:
