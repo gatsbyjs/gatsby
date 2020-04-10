@@ -25,12 +25,12 @@
 - [x] Improve gatsby-config test
 - [x] convert to xstate
 - [x] integration test for each resource (read, create, update, delete)
+- [x] validate Resource component props.
 - [ ] Make `dependencyType` in NPMPackage an enum (joi2gql doesn't handle this right now from Joi enums)
 - [ ] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
 - [ ] use yarn/npm based on the user config
 - [ ] show plan to create/update or that nothing is necessary & then show in `<static>` what was done
 - [ ] handle error states
-- [x] validate Resource component props.
 - [ ] have File only pull from remote files for now until multiline strings work in MDX
 - [ ] diff all resource changes
 - [ ] move code to its own package `gatsby-recipes`

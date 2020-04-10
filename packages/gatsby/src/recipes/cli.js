@@ -208,7 +208,6 @@ module.exports = ({ recipe, projectRoot }) => {
       if (key.return && state.value === `SUCCESS`) {
         subscriptionClient.close()
         exit()
-        // TODO figure out why exiting ink isn't enough.
         process.exit()
       } else if (key.return) {
         sendEvent({ event: `CONTINUE` })
@@ -217,12 +216,10 @@ module.exports = ({ recipe, projectRoot }) => {
 
     /*
      * TODOs
-     * on last step w/ no plan just exit
-     * show what's happened in Static — probably the state machine should put these in new context key.
+     * Listen to "y" to continue (in addition to enter)
      */
 
     log(`render`, `${renderCount} ${new Date().toJSON()}`)
-    log(`state`, state)
     renderCount += 1
 
     if (!subscriptionResponse.data) {
@@ -276,11 +273,22 @@ module.exports = ({ recipe, projectRoot }) => {
 
       return (
         <Div>
-          {state.context.plan.map(p => (
-            <Div key={p.resourceName}>
+          <Div>
+            <Text bold underline marginBottom={2}>
+              Proposed changes
+            </Text>
+          </Div>
+          {state.context.plan.map((p, i) => (
+            <Div marginTop={1} key={`${p.resourceName} plan ${i}`}>
               <Text italic>{p.resourceName}:</Text>
               <Text> * {p.describe}</Text>
-              <Text>{p.diff}</Text>
+              {p.diff !== `` && (
+                <>
+                  <Text>---</Text>
+                  <Text>{p.diff}</Text>
+                  <Text>---</Text>
+                </>
+              )}
             </Div>
           ))}
           <Div marginTop={1}>
@@ -300,8 +308,8 @@ module.exports = ({ recipe, projectRoot }) => {
 
       return (
         <Div>
-          {state.context.plan.map(p => (
-            <Div key={p.resourceName}>
+          {state.context.plan.map((p, i) => (
+            <Div key={`${p.resourceName}-${i}`}>
               <Text italic>{p.resourceName}:</Text>
               <Text>
                 {` `}

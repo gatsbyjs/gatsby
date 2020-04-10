@@ -52,8 +52,11 @@ const schema = {
   value: Joi.string(),
   ...resourceSchema,
 }
+const validate = resource =>
+  Joi.validate(resource, schema, { abortEarly: false })
+
 exports.schema = schema
-exports.validate = resource => Joi.validate(resource, schema)
+exports.validate = validate
 
 module.exports.plan = async ({ root }, { id, name, value }) => {
   const key = id || name

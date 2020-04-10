@@ -2,9 +2,8 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const Joi = require(`@hapi/joi`)
-const gitDiff = require(`git-diff/async`)
-const isNewline = require(`is-newline`)
 
+const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
 const makePath = (root, relativePath) => path.join(root, relativePath)
@@ -68,20 +67,7 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
   }
 
   if (plan.currentState !== plan.newState) {
-    let oldString = plan.currentState || `\n`
-    let newString = plan.newState || `\n`
-    if (!isNewline(oldString.slice(-1))) {
-      oldString += `\n`
-    }
-    if (!isNewline(newString.slice(-1))) {
-      newString += `\n`
-    }
-
-    const diff = await gitDiff(oldString, newString, {
-      color: true,
-      flags: `--diff-algorithm=minimal`,
-    })
-    plan.diff = diff
+    plan.diff = await getDiff(plan.currentState, plan.newState)
   }
 
   return plan

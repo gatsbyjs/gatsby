@@ -33,7 +33,7 @@ module.exports = async context => {
         const commandPlan = await resource.plan(ctx, cmd)
         planForNextStep.push({
           resourceName: key,
-          resourceDefinitions: val,
+          resourceDefinitions: cmd,
           ...commandPlan,
         })
       } catch (e) {

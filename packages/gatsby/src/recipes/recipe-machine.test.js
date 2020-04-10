@@ -89,9 +89,15 @@ it(`it should switch to done after the final apply step`, done => {
 it(`should store created/changed/deleted resources on the context after applying plan`, done => {
   const filePath = `./hi.md`
   const filePath2 = `./hi2.md`
+  const filePath3 = `./hi3.md`
   const initialContext = {
     steps: [
-      { File: [{ path: filePath, content: `#yo` }] },
+      {
+        File: [
+          { path: filePath, content: `#yo` },
+          { path: filePath3, content: `#yo` },
+        ],
+      },
       { File: [{ path: filePath2, content: `#yo` }] },
       {},
     ],
@@ -105,11 +111,14 @@ it(`should store created/changed/deleted resources on the context after applying
       service.send(`CONTINUE`)
     }
     if (state.value === `done`) {
-      expect(state.context.stepResources).toMatchSnapshot()
-      expect(state.context.stepResources[1][0]._message).toBeTruthy()
       // Clean up files
       fs.unlinkSync(path.join(process.cwd(), filePath))
       fs.unlinkSync(path.join(process.cwd(), filePath2))
+      fs.unlinkSync(path.join(process.cwd(), filePath3))
+
+      expect(state.context.stepResources[0]).toHaveLength(2)
+      expect(state.context.stepResources).toMatchSnapshot()
+      expect(state.context.stepResources[1][0]._message).toBeTruthy()
       done()
     }
   })

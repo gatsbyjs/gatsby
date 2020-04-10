@@ -46,12 +46,10 @@ Array [
 [32m+[m[32m#yo[m
 ",
     "newState": "#yo",
-    "resourceDefinitions": Array [
-      Object {
-        "content": "#yo",
-        "path": "./hi.md",
-      },
-    ],
+    "resourceDefinitions": Object {
+      "content": "#yo",
+      "path": "./hi.md",
+    },
     "resourceName": "File",
   },
 ]
@@ -65,6 +63,12 @@ Array [
       "content": "#yo",
       "id": "./hi.md",
       "path": "./hi.md",
+    },
+    Object {
+      "_message": "Wrote file ./hi3.md",
+      "content": "#yo",
+      "id": "./hi3.md",
+      "path": "./hi3.md",
     },
   ],
   Array [

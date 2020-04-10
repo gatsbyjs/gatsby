@@ -6,6 +6,7 @@ const glob = require(`glob`)
 
 const declare = require(`@babel/helper-plugin-utils`).declare
 
+const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 const fileExists = filePath => fs.existsSync(filePath)
 
@@ -233,19 +234,24 @@ const schema = {
   shadowedFiles: Joi.array().items(Joi.string()),
   ...resourceSchema,
 }
-module.exports.schema = schema
 
-exports.validate = resource => Joi.validate(resource, schema)
+const validate = resource =>
+  Joi.validate(resource, schema, { abortEarly: false })
+
+exports.schema = schema
+exports.validate = validate
 
 module.exports.plan = async ({ root }, { id, name }) => {
   const fullName = id || name
   const configPath = path.join(root, `gatsby-config.js`)
   const src = await fs.readFile(configPath, `utf8`)
   const newContents = addPluginToConfig(src, fullName)
+  const diff = await getDiff(src, newContents)
 
   return {
     id: fullName,
     name,
+    diff,
     currentState: src,
     newState: newContents,
     describe: `Install ${fullName} in gatsby-config.js`,

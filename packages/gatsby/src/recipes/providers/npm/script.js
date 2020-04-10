@@ -2,6 +2,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const Joi = require(`@hapi/joi`)
 
+const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 const readPackageJson = async root => {
   const fullPath = path.join(root, `package.json`)
@@ -33,6 +34,7 @@ const read = async ({ root }, id) => {
       id,
       name: id,
       command: pkg.scripts[id],
+      _message: `Wrote script ${id} to your package.json`,
     }
   }
 
@@ -50,6 +52,9 @@ const schema = {
   name: Joi.string(),
   command: Joi.string(),
 }
+const validate = resource =>
+  Joi.validate(resource, schema, { abortEarly: false })
+
 exports.schema = schema
 exports.validate = resource => Joi.validate(resource, schema)
 
@@ -65,19 +70,26 @@ module.exports.all = async ({ root }) => {
 module.exports.plan = async ({ root }, { name, command }) => {
   const resource = await read({ root }, name)
 
+  const pkg = await readPackageJson(root)
+
   const scriptDescription = (name, command) => `"${name}": "${command}"`
 
   let currentState = ``
   if (resource) {
     currentState = scriptDescription(resource.name, resource.command)
   }
+
+  const oldState = JSON.stringify(pkg, null, 2)
+  pkg.scripts = pkg.scripts || {}
+  pkg.scripts[name] = command
+  const newState = JSON.stringify(pkg, null, 2)
+
+  const diff = await getDiff(oldState, newState)
   return {
     currentState,
     newState: scriptDescription(name, command),
-    describe: `Add new command to your package.json:\n${scriptDescription(
-      name,
-      command
-    )}`,
+    diff,
+    describe: `Add new command to your package.json`,
   }
 }
 
