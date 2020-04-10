@@ -118,16 +118,16 @@ class Settings
             'sanitize_callback' => 'sanitize_text_field',
             'default'           => self::get_default_secret(),
           ],
-          // [
-          //   'name'              => 'builds_api_webhook',
-          //   'label'             => __('Builds Webhook', 'wpgatsby_settings'),
-          //   'desc'              => __('Enter your Gatsby Builds Webhook URL. Must begin with http:// or https://.', 'wpgatsby_settings'),
-          //   'placeholder'       => __('https://', 'wpgatsby_settings'),
-          //   'type'              => 'text',
-          //   'sanitize_callback' => function( $input ) {
-          //       return $this->sanitize_url_field( $input );
-          //     }
-          // ],
+           [
+             'name'              => 'builds_api_webhook',
+             'label'             => __('Builds Webhook', 'wpgatsby_settings'),
+             'desc'              => __('Enter your Gatsby Builds Webhook URL. Must begin with http:// or https://.', 'wpgatsby_settings'),
+             'placeholder'       => __('https://', 'wpgatsby_settings'),
+             'type'              => 'text',
+             'sanitize_callback' => function( $input ) {
+                 return $this->sanitize_url_field( $input );
+               }
+           ],
         ]
       ];
       return $settings_fields;
