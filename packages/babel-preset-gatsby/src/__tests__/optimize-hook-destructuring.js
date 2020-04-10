@@ -1,6 +1,6 @@
 import { transform } from "@babel/core"
 import preset from "babel-preset-gatsby"
-import plugin from "../"
+import plugin from "../optimize-hook-destructuring"
 
 const trim = s =>
   s
