@@ -30,7 +30,7 @@ export interface IGatsbyPage {
   isCreatedByStatefulCreatePages: boolean
   context: {}
   updatedAt: number
-  pluginCreator__NODE: Identifier
+  pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
 }
