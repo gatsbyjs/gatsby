@@ -27,4 +27,22 @@ describe(`patchConsole`, () => {
 
     expect(reporter.log).toBeCalledWith(`bar 1`)
   })
+
+  it("handles normal values", () => {
+    console.log(1)
+    console.log(0)
+    console.log(true)
+    console.log(false)
+    console.log([1, true, false, {}])
+    console.log({ 1: 1, true: true, false: "false", obj: {} })
+
+    expect(reporter.log.mock.calls[0][0]).toBe(`1`)
+    expect(reporter.log.mock.calls[1][0]).toBe(`0`)
+    expect(reporter.log.mock.calls[2][0]).toBe(`true`)
+    expect(reporter.log.mock.calls[3][0]).toBe(`false`)
+    expect(reporter.log.mock.calls[4][0]).toBe("[ 1, true, false, {} ]")
+    expect(reporter.log.mock.calls[5][0]).toBe(
+      "{ '1': 1, true: true, false: 'false', obj: {} }"
+    )
+  })
 })
