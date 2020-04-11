@@ -185,6 +185,7 @@ const fetchGraphql = async ({
   errorMap,
   ignoreGraphQLErrors = false,
   panicOnError = false,
+  throwGqlErrors = false,
   url = false,
   variables = {},
   headers = {},
@@ -231,6 +232,14 @@ const fetchGraphql = async ({
       pluginOptions,
       query,
     })
+  }
+
+  if (throwGqlErrors && response.data.errors) {
+    const stringifiedErrors = response.data.errors
+      .map(error => error.message)
+      .join(`\n\n`)
+
+    throw new Error(stringifiedErrors)
   }
 
   if (!ignoreGraphQLErrors) {
