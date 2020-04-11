@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.20.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.17...gatsby@2.20.18) (2020-04-11)
+
+### Bug Fixes
+
+- **gatsby:** Use `moveSync` over `renameSync` to fix cross mount cases ([#23029](https://github.com/gatsbyjs/gatsby/issues/23029)) ([96f8d4b](https://github.com/gatsbyjs/gatsby/commit/96f8d4b))
+
 ## [2.20.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.16...gatsby@2.20.17) (2020-04-10)
 
 **Note:** Version bump only for package gatsby
