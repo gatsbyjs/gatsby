@@ -1,22 +1,44 @@
 import fs from "fs-extra"
 import path from "path"
+import url from "url"
 
 import retry from "async-retry"
 
-import {
-  createRemoteFileNode,
-  createFileNodeFromBuffer,
-} from "gatsby-source-filesystem"
+import { createFileNodeFromBuffer } from "gatsby-source-filesystem"
+
+import createRemoteFileNode from "./create-remote-file-node/index"
 
 import store from "~/store"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
-import { formatLogMessage } from "~/utils/format-log-message"
 import urlToPath from "~/utils/url-to-path"
+import { formatLogMessage } from "~/utils/format-log-message"
 
 export const getFileNodeMetaBySourceUrl = sourceUrl => {
   const fileNodesMetaByUrls = store.getState().imageNodes.nodeMetaByUrl
 
   return fileNodesMetaByUrls[sourceUrl]
+}
+
+export const errorPanicker = ({ error, reporter, node }) => {
+  if (
+    error.includes(`Response code 4`) ||
+    error.includes(`Response code 500`) ||
+    error.includes(`Response code 511`) ||
+    error.includes(`Response code 508`) ||
+    error.includes(`Response code 505`) ||
+    error.includes(`Response code 501`)
+  ) {
+    const { protocol, hostname } = url.parse(node.link)
+    const editUrl = `${protocol}//${hostname}/wp-admin/upload.php?item=${node.databaseId}`
+
+    reporter.log(``)
+    reporter.info(
+      formatLogMessage(
+        `Unrecoverable error occured while fetching media item #${node.databaseId}\n\nMedia item link: ${node.link}\nEdit link: ${editUrl}\nFile url: ${node.mediaItemUrl}`
+      )
+    )
+    reporter.panic(error)
+  }
 }
 
 export const getFileNodeByMediaItemNode = async ({
@@ -79,66 +101,52 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
     (process.env.NODE_ENV === `production` &&
       pluginOptions.production.hardCacheMediaFiles)
 
-  let remoteFileNode
-
-  try {
-    // Otherwise we need to download it
-    remoteFileNode = await retry(
-      async () => {
-        const createFileNodeRequirements = {
-          parentNodeId: mediaItemNode.id,
-          store: gatsbyStore,
-          cache,
-          createNode,
-          createNodeId,
-          reporter,
-        }
-
-        if (hardCacheMediaFiles) {
-          // check for file in .wordpress-cache/wp-content
-          // if it exists, use that to create a node from instead of
-          // fetching from wp
-          try {
-            const buffer = await fs.readFile(hardCachedFilePath)
-            const node = await createFileNodeFromBuffer({
-              buffer,
-              ...createFileNodeRequirements,
-            })
-
-            if (node) {
-              return node
-            }
-          } catch (e) {
-            // ignore errors, we'll download the image below if it doesn't exist
-          }
-        }
-
-        const node = await createRemoteFileNode({
-          url: mediaItemUrl,
-          ...createFileNodeRequirements,
-        })
-
-        return node
-      },
-      {
-        retries: 10,
-        factor: 2,
-        minTimeout: 3000,
-        maxTimeout: 60000,
-        onRetry: error => {
-          helpers.reporter.error(error)
-          helpers.reporter.info(
-            formatLogMessage(`retrying remote file download`)
-          )
-        },
+  // Otherwise we need to download it
+  const remoteFileNode = await retry(
+    async () => {
+      const createFileNodeRequirements = {
+        parentNodeId: mediaItemNode.id,
+        store: gatsbyStore,
+        cache,
+        createNode,
+        createNodeId,
+        reporter,
       }
-    )
-  } catch (error) {
-    helpers.reporter.info(`Couldn't fetch remote file ${mediaItemUrl}`)
-    helpers.reporter.panic(error)
 
-    return null
-  }
+      if (hardCacheMediaFiles) {
+        // check for file in .wordpress-cache/wp-content
+        // if it exists, use that to create a node from instead of
+        // fetching from wp
+        try {
+          const buffer = await fs.readFile(hardCachedFilePath)
+          const node = await createFileNodeFromBuffer({
+            buffer,
+            ...createFileNodeRequirements,
+          })
+
+          if (node) {
+            return node
+          }
+        } catch (e) {
+          // ignore errors, we'll download the image below if it doesn't exist
+        }
+      }
+
+      // if this errors, it's caught one level above in fetch-referenced-media-items.js so it can be placed on the end of the request queue
+      const node = await createRemoteFileNode({
+        url: mediaItemUrl,
+        ...createFileNodeRequirements,
+      })
+
+      return node
+    },
+    {
+      retries: 3,
+      factor: 1.1,
+      minTimeout: 5000,
+      onRetry: error => errorPanicker({ error, reporter, node: mediaItemNode }),
+    }
+  )
 
   // push it's id and url to our store for caching,
   // so we can touch this node next time

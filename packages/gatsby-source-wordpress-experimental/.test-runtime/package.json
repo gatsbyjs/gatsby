@@ -12,7 +12,7 @@
     "build": "yarn remove-self && gatsby build",
     "clean-develop": "gatsby clean && yarn develop",
     "clean-build": "gatsby clean && yarn build",
-    "remove-self": "rm -rf ./node_modules/gatsby-source-wordpress-experimental/test-runtime",
+    "remove-self": "rm -rf ./node_modules/gatsby-source-wordpress-experimental/.test-runtime",
     "serve": "gatsby serve"
   },
   "dependencies": {

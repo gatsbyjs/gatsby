@@ -25,6 +25,8 @@ class ActionMonitor
 
         $this->registerGraphQLFields();
         $this->monitorActions();
+
+
     }
 
     function garbageCollectActions() {
