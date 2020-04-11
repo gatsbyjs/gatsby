@@ -26,6 +26,9 @@
 - [x] handle template strings in JSX parser
 - [x] Make it support relative paths for custom recipes (./src/recipes/foo.mdx)
 - [x] Move parsing to the server
+- [x] run recipe from url
+- [x] Move parsing to the server
+- [x] imports from a url
 - [ ] Make port selection dynamic
 - [ ] Make `dependencyType` in NPMPackage an enum (joi2gql doesn't handle this right now from Joi enums)
 - [ ] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
@@ -33,18 +36,16 @@
 - [ ] show plan to create/update or that nothing is necessary & then show in `<static>` what was done
 - [ ] integration test for each resource (read, create, update, delete)
 - [ ] finish shadow file
-- [x] run recipe from url
-- [x] Move parsing to the server
-- [x] imports from a url
 - [ ] Implement config object for GatsbyPlugin
 - [ ] Handle JS in config objects? { **\_javascript: "`\${**dirname}/foo/bar`" }
 - [ ] write tests for remote files src in File
 - [ ] Gatsby recipes list (design and implementation)
 - [ ] Move gatsby/src/recipes to its own package `gatsby-recipes`
+- [ ] handle people pressing Y & quit if they press "n" (for now)
 - [ ] Document the supported components and trivial guide on recipe authoring (help)
 - [ ] handle error states
 - [ ] have File only pull from remote files for now until multiline strings work in MDX
-- [ ] diff all resource changes
+- [ ] diff all resource changes — add test for all resources that they return something for this & remove current/new state
 - [ ] validate that the first step doesn't have any packages in it.
 - [ ] move code to its own package `gatsby-recipes`
 - [ ] handle not finding a recipe
