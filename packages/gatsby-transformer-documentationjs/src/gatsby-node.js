@@ -274,7 +274,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       const docSkeletonNode = {
         commentNumber,
         level,
-        id: createNodeId(docId(node.id, docsJson)),
+        id: createNodeId(docId(parent, docsJson)),
         parent,
         children: [],
         internal: {
