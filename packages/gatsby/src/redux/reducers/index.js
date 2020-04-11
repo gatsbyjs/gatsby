@@ -1,6 +1,7 @@
 const reduxNodes = require(`./nodes`)
 const lokiNodes = require(`../../db/loki/nodes`).reducer
 import { redirectsReducer } from "./redirects"
+import { pagesReducer } from "./pages"
 
 const backend = process.env.GATSBY_DB_NODES || `redux`
 
@@ -50,7 +51,7 @@ module.exports = {
   lastAction: require(`./last-action`),
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),
-  pages: require(`./pages`),
+  pages: pagesReducer,
   schema: require(`./schema`),
   status: require(`./status`),
   componentDataDependencies: require(`./component-data-dependencies`),

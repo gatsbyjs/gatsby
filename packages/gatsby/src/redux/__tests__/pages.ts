@@ -3,14 +3,14 @@ jest.mock(`fs-extra`, () => {
     readFile: jest.fn(() => `contents`),
   }
 })
-const glob = require(`glob`)
+import glob from "glob"
 
-const reducer = require(`../reducers/pages`)
-const { actions } = require(`../actions`)
-const { readFile } = require(`fs-extra`)
+import { pagesReducer as reducer } from "../reducers/pages"
+import { actions } from "../actions"
+import { readFile } from "fs-extra"
 
 afterEach(() => {
-  readFile.mockClear()
+  ;(readFile as jest.MockedFunction<typeof readFile>).mockClear()
 })
 
 Date.now = jest.fn(

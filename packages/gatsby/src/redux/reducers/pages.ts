@@ -1,6 +1,15 @@
-const normalize = require(`normalize-path`)
+import normalize from "normalize-path"
+import {
+  IGatsbyState,
+  IDeleteCacheAction,
+  ICreatePageAction,
+  IDeletePageAction,
+} from "../types"
 
-module.exports = (state = new Map(), action) => {
+export const pagesReducer = (
+  state: IGatsbyState["pages"] = new Map(),
+  action: IDeleteCacheAction | ICreatePageAction | IDeletePageAction
+): IGatsbyState["pages"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()
@@ -16,7 +25,8 @@ module.exports = (state = new Map(), action) => {
         )
       }
       // Link page to its plugin.
-      action.payload.pluginCreator___NODE = action.plugin.id
+      // btw pluginCreator__NODE changed!
+      action.payload.pluginCreator__NODE = action.plugin.id
       action.payload.pluginCreatorId = action.plugin.id
 
       state.set(action.payload.path, action.payload)

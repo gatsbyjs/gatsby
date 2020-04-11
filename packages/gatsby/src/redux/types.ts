@@ -376,3 +376,23 @@ export interface ICreateRedirectAction {
   type: `CREATE_REDIRECT`
   payload: IRedirect
 }
+
+export interface IDeleteCacheAction {
+  type: `DELETE_CACHE`
+}
+
+export interface ICreatePageAction {
+  type: `CREATE_PAGE`
+  plugin: {
+    id: Identifier
+    name: string
+  }
+  payload: IGatsbyPage
+}
+
+export interface IDeletePageAction {
+  type: `DELETE_PAGE`
+  payload: {
+    path: string
+  }
+}
