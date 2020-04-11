@@ -19,6 +19,12 @@ module.exports = async (program: IProgram): Promise<void> => {
   subprocess = execa(`node`, [scriptPath], {
     cwd: program.directory,
     all: true,
+    env: {
+      // Chalk doesn't want to output color in a child process
+      // as it (correctly) thinks it's not in a normal terminal environemnt.
+      // Since we're just returning data, we'll override that.
+      FORCE_COLOR: `true`,
+    }
   })
   subprocess.stderr.on("data", data => {
     console.log(data.toString())
