@@ -59,9 +59,38 @@ if (filterPackage) {
   }
 }
 
+let totalTsFiles = 0
+let totalJsFiles = 0
+
 packagesWithTs.forEach(project => {
+  const tsFiles = glob.sync(
+    `./packages/${project.split(/.*packages[/\\]/)[1]}/src/**/*.ts`,
+    {
+      root: project,
+      ignore: `**/node_modules/**`,
+    }
+  ).length
+
+  const jsFiles = glob.sync(
+    `./packages/${project.split(/.*packages[/\\]/)[1]}/src/**/*.js`,
+    {
+      root: project,
+      ignore: `**/node_modules/**`,
+    }
+  ).length
+
+  totalTsFiles += tsFiles
+  totalJsFiles += jsFiles
+
+  const percentConverted = Number(
+    ((tsFiles / (jsFiles + tsFiles)) * 100).toFixed(1)
+  )
+
   console.log(
-    `TS Check: Checking ./packages/${project.split(/.*packages[/\\]/)[1]}`
+    `TS Check: Checking ./packages/${project.split(/.*packages[/\\]/)[1]}`,
+    `\n  - TS Files: ${tsFiles}`,
+    `\n  - JS Files: ${jsFiles}`,
+    `\n  - Percent Converted: ${percentConverted}%`
   )
 
   const args = [
@@ -84,3 +113,15 @@ packagesWithTs.forEach(project => {
 })
 
 console.log(`TS Check: Success`)
+
+if (!filterPackage) {
+  const percentConverted = Number(
+    ((totalTsFiles / (totalJsFiles + totalTsFiles)) * 100).toFixed(1)
+  )
+
+  console.log(
+    `  - Total TS Files: ${totalJsFiles}`,
+    `\n  - Total JS Files: ${totalJsFiles}`,
+    `\n  - Percent Converted: ${percentConverted}%`
+  )
+}
