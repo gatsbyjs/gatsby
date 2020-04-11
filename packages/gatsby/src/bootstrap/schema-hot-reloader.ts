@@ -36,19 +36,28 @@ const maybeRebuildSchema = debounce(async (): Promise<void> => {
   activity.end()
 }, 1000)
 
-const snapshotInferenceMetadata = (): void => {
+function snapshotInferenceMetadata(): void {
   const { inferenceMetadata } = store.getState()
   lastMetadata = cloneDeep(inferenceMetadata)
 }
 
-export const bootstrapSchemaHotReloader = (): void => {
+export function bootstrapSchemaHotReloader(): void {
   // Snapshot inference metadata at the time of the last schema rebuild
   // (even if schema was rebuilt elsewhere)
   // Using the snapshot later to check if inferred types actually changed since the last rebuild
   snapshotInferenceMetadata()
   emitter.on(`SET_SCHEMA`, snapshotInferenceMetadata)
 
+  startSchemaHotReloader()
+}
+
+export function startSchemaHotReloader(): void {
   // Listen for node changes outside of a regular sourceNodes API call,
   // e.g. markdown file update via watcher
   emitter.on(`API_RUNNING_QUEUE_EMPTY`, maybeRebuildSchema)
+}
+
+export function stopSchemaHotReloader(): void {
+  emitter.off(`API_RUNNING_QUEUE_EMPTY`, maybeRebuildSchema)
+  maybeRebuildSchema.cancel()
 }
