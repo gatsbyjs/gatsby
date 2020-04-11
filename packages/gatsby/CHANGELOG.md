@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.20.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.16...gatsby@2.20.17) (2020-04-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.20.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.15...gatsby@2.20.16) (2020-04-10)
+
+### Bug Fixes
+
+- **gatsby:** Use tmp dir for tmp redux cache folder ([#22959](https://github.com/gatsbyjs/gatsby/issues/22959)) ([86cf920](https://github.com/gatsbyjs/gatsby/commit/86cf920))
+
+## [2.20.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.14...gatsby@2.20.15) (2020-04-09)
+
+### Bug Fixes
+
+- **gatsby:** improve async commons chunking ([#22879](https://github.com/gatsbyjs/gatsby/issues/22879)) ([7cf056f](https://github.com/gatsbyjs/gatsby/commit/7cf056f))
+
+## [2.20.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.13...gatsby@2.20.14) (2020-04-08)
+
+### Performance Improvements
+
+- **gatsby:** support `elemMatch` as fast filter ([#22742](https://github.com/gatsbyjs/gatsby/issues/22742)) ([66b3d35](https://github.com/gatsbyjs/gatsby/commit/66b3d35))
+
+## [2.20.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.12...gatsby@2.20.13) (2020-04-07)
+
+**Note:** Version bump only for package gatsby
+
+## [2.20.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.11...gatsby@2.20.12) (2020-04-03)
+
+### Bug Fixes
+
+- **gatsby:** Fix OOM from telemetry storing too much ([#22752](https://github.com/gatsbyjs/gatsby/issues/22752)) ([a7281c2](https://github.com/gatsbyjs/gatsby/commit/a7281c2))
+
+## [2.20.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.10...gatsby@2.20.11) (2020-04-03)
+
+### Bug Fixes
+
+- **gatsby:** Support grouping by reserved keywords ([#22603](https://github.com/gatsbyjs/gatsby/issues/22603)) ([ad6bc16](https://github.com/gatsbyjs/gatsby/commit/ad6bc16))
+
+## [2.20.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.9...gatsby@2.20.10) (2020-04-01)
+
+### Bug Fixes
+
+- **core:** Add gatsby/graphql type definitions ([#22652](https://github.com/gatsbyjs/gatsby/issues/22652)) ([ac205cf](https://github.com/gatsbyjs/gatsby/commit/ac205cf))
+
 ## [2.20.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.8...gatsby@2.20.9) (2020-03-30)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.2.1...gatsby-transformer-documentationjs@4.2.2) (2020-04-10)
+
+### Bug Fixes
+
+- create unique Nodes ([#22774](https://github.com/gatsbyjs/gatsby/issues/22774)) ([1381a0b](https://github.com/gatsbyjs/gatsby/commit/1381a0b))
+
 ## [4.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.2.0...gatsby-transformer-documentationjs@4.2.1) (2020-03-23)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs

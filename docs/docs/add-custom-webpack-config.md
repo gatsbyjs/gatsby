@@ -75,6 +75,19 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 
 You can always find more information on _resolve_ and other options in the official [Webpack docs](https://webpack.js.org/concepts/).
 
+### Importing non-webpack tools using `yarn`
+
+Note that using absolute imports only applies to webpack resolutions and will not work for other tools, e.g. eslint or typescript.
+But if you are using yarn, then the best practice is to set up your imports in package.json as shown below:
+
+```js
+{
+  "dependencies": {
+      "hooks": "link:./src/hooks",
+  }
+}
+```
+
 ### Modifying the Babel loader
 
 You need this if you want to do things like transpile parts of `node_modules`.
