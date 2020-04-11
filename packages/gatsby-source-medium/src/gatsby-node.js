@@ -113,7 +113,7 @@ exports.sourceNodes = async (
 
 exports.createSchemaCustomization = async ({ actions }) => {
   const typeDefs = `
-    type MediumCollection implements Node @derivedTypes @dontInfer {
+    type MediumCollection implements Node {
       name: String
       slug: String
       tags: [String]
@@ -125,18 +125,21 @@ exports.createSchemaCustomization = async ({ actions }) => {
       virtuals: MediumCollectionVirtuals
       logo: MediumCollectionLogo
       twitterUsername: String
+      facebookPageName: String
       publicEmail: String
-      collectionMastheadId: String
+      domain: String
       sections: [MediumCollectionSections]
       tintColor: String
       lightText: Boolean
       favicon: MediumCollectionFavicon
       colorPalette: MediumCollectionColorPalette
+      navItems: [MediumCollectionNavItems]
       colorBehavior: Int
       instantArticlesState: Int
       acceleratedMobilePagesState: Int
       ampLogo: MediumCollectionAmpLogo
       header: MediumCollectionHeader
+      paidForDomainAt: Date @dateformat
       subscriberCount: Int
       tagline: String
       type: String
@@ -159,13 +162,14 @@ exports.createSchemaCustomization = async ({ actions }) => {
       activeAt: Date @dateformat
     }
 
-    type MediumCollectionVirtuals @derivedTypes {
+    type MediumCollectionVirtuals {
       permissions: MediumCollectionVirtualsPermissions
       isSubscribed: Boolean
       isEnrolledInHightower: Boolean
       isEligibleForHightower: Boolean
       isSubscribedToCollectionEmails: Boolean
       isMuted: Boolean
+      canToggleEmail: Boolean
     }
 
     type MediumCollectionVirtualsPermissions {
@@ -201,18 +205,27 @@ exports.createSchemaCustomization = async ({ actions }) => {
       width: Int
     }
 
-    type MediumCollectionSections @derivedTypes {
+    type MediumCollectionSections {
       type: Int
       collectionHeaderMetadata: MediumCollectionSectionsCollectionHeaderMetadata
       postListMetadata: MediumCollectionSectionsPostListMetadata
     }
 
-    type MediumCollectionSectionsCollectionHeaderMetadata @derivedTypes {
+    type MediumCollectionSectionsCollectionHeaderMetadata {
       title: String
       description: String
+      backgroundImage: MediumCollectionSectionsCollectionHeaderMetadataBackgroundImage
       logoImage: MediumCollectionSectionsCollectionHeaderMetadataLogoImage
       alignment: Int
       layout: Int
+    }
+
+    type MediumCollectionSectionsCollectionHeaderMetadataBackgroundImage {
+      id: String
+      originalWidth: Int
+      originalHeight: Int
+      focusPercentX: Float
+      focusPercentY: Float
     }
 
     type MediumCollectionSectionsCollectionHeaderMetadataLogoImage {
@@ -226,7 +239,6 @@ exports.createSchemaCustomization = async ({ actions }) => {
       source: Int
       layout: Int
       number: Int
-      sectionHeader: String
     }
 
     type MediumCollectionFavicon {
@@ -240,13 +252,13 @@ exports.createSchemaCustomization = async ({ actions }) => {
       width: Int
     }
 
-    type MediumCollectionColorPalette @derivedTypes {
+    type MediumCollectionColorPalette {
       defaultBackgroundSpectrum: MediumCollectionColorPaletteDefaultBackgroundSpectrum
       tintBackgroundSpectrum: MediumCollectionColorPaletteTintBackgroundSpectrum
       highlightSpectrum: MediumCollectionColorPaletteHighlightSpectrum
     }
 
-    type MediumCollectionColorPaletteDefaultBackgroundSpectrum @derivedTypes {
+    type MediumCollectionColorPaletteDefaultBackgroundSpectrum {
       colorPoints: [MediumCollectionColorPaletteDefaultBackgroundSpectrumColorPoints]
       backgroundColor: String
     }
@@ -256,7 +268,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       point: Float
     }
 
-    type MediumCollectionColorPaletteTintBackgroundSpectrum @derivedTypes {
+    type MediumCollectionColorPaletteTintBackgroundSpectrum {
       colorPoints: [MediumCollectionColorPaletteTintBackgroundSpectrumColorPoints]
       backgroundColor: String
     }
@@ -266,7 +278,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       point: Float
     }
 
-    type MediumCollectionColorPaletteHighlightSpectrum @derivedTypes {
+    type MediumCollectionColorPaletteHighlightSpectrum {
       colorPoints: [MediumCollectionColorPaletteHighlightSpectrumColorPoints]
       backgroundColor: String
     }
@@ -274,6 +286,14 @@ exports.createSchemaCustomization = async ({ actions }) => {
     type MediumCollectionColorPaletteHighlightSpectrumColorPoints {
       color: String
       point: Float
+    }
+
+    type MediumCollectionNavItems {
+      type: Int
+      title: String
+      url: String
+      topicId: String
+      source: String
     }
 
     type MediumCollectionAmpLogo {
@@ -287,12 +307,21 @@ exports.createSchemaCustomization = async ({ actions }) => {
       width: Int
     }
 
-    type MediumCollectionHeader @derivedTypes {
+    type MediumCollectionHeader {
       title: String
       description: String
+      backgroundImage: MediumCollectionHeaderBackgroundImage
       logoImage: MediumCollectionHeaderLogoImage
       alignment: Int
       layout: Int
+    }
+
+    type MediumCollectionHeaderBackgroundImage {
+      id: String
+      originalWidth: Int
+      originalHeight: Int
+      focusPercentX: Float
+      focusPercentY: Float
     }
 
     type MediumCollectionHeaderLogoImage {
@@ -302,11 +331,11 @@ exports.createSchemaCustomization = async ({ actions }) => {
       alt: String
     }
 
-    type MediumUser implements Node @dontInfer {
+    type MediumUser implements Node {
       userId: String
       name: String
       username: String
-      mediumMemberAt: Date @dateformat
+      mediumMemberAt: Int
       createdAt: Date @dateformat
       imageId: String
       backgroundImageId: String
@@ -314,15 +343,13 @@ exports.createSchemaCustomization = async ({ actions }) => {
       twitterScreenName: String
       allowNotes: Int
       isWriterProgramEnrolled: Boolean
-      isQuarantined: Boolean
       isSuspended: Boolean
       isMembershipTrialEligible: Boolean
       type: String
       posts: [MediumPost] @link(by: "id", from: "posts___NODE")
-      firstOpenedIosApp: Date @dateformat
     }
 
-    type MediumPost implements Node @derivedTypes @dontInfer {
+    type MediumPost implements Node {
       versionId: String
       creatorId: String
       homeCollectionId: String
@@ -334,8 +361,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       latestRev: Int
       createdAt: Date @dateformat
       updatedAt: Date @dateformat
-      curationEligibleAt: Date @dateformat
-      acceptedAt: Date @dateformat
+      acceptedAt: Int
       firstPublishedAt: Date @dateformat
       latestPublishedAt: Date @dateformat
       vote: Boolean
@@ -349,11 +375,11 @@ exports.createSchemaCustomization = async ({ actions }) => {
       translationSourceCreatorId: String
       isApprovedTranslation: Boolean
       inResponseToPostId: String
-      inResponseToRemovedAt: Date @dateformat
+      inResponseToRemovedAt: Int
       isTitleSynthesized: Boolean
       allowResponses: Boolean
       importedUrl: String
-      importedPublishedAt: Date @dateformat
+      importedPublishedAt: Int
       visibility: Int
       uniqueSlug: String
       previewContent: MediumPostPreviewContent
@@ -368,7 +394,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       notifyFollowers: Boolean
       notifyTwitter: Boolean
       notifyFacebook: Boolean
-      responseHiddenOnParentPostAt: Date @dateformat
+      responseHiddenOnParentPostAt: Int
       isSeries: Boolean
       isSubscriptionLocked: Boolean
       seriesLastAppendedAt: Date @dateformat
@@ -376,11 +402,11 @@ exports.createSchemaCustomization = async ({ actions }) => {
       sequenceId: String
       isEligibleForRevenue: Boolean
       isBlockedFromHightower: Boolean
-      deletedAt: Date @dateformat
+      deletedAt: Int
       lockedPostSource: Int
-      hightowerMinimumGuaranteeStartsAt: Date @dateformat
-      hightowerMinimumGuaranteeEndsAt: Date @dateformat
-      featureLockRequestAcceptedAt: Date @dateformat
+      hightowerMinimumGuaranteeStartsAt: Int
+      hightowerMinimumGuaranteeEndsAt: Int
+      featureLockRequestAcceptedAt: Int
       mongerRequestType: Int
       layerCake: Int
       socialTitle: String
@@ -405,7 +431,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       primaryTopicId: String
     }
 
-    type MediumPostContent @derivedTypes {
+    type MediumPostContent {
       subtitle: String
       postDisplay: MediumPostContentPostDisplay
       metaDescription: String
@@ -415,7 +441,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       coverless: Boolean
     }
 
-    type MediumPostVirtuals @derivedTypes {
+    type MediumPostVirtuals {
       statusForCollection: String
       allowNotes: Boolean
       previewImage: MediumPostVirtualsPreviewImage
@@ -450,7 +476,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       width: Int
     }
 
-    type MediumPostVirtualsTags @derivedTypes {
+    type MediumPostVirtualsTags {
       slug: String
       name: String
       postCount: Int
@@ -458,7 +484,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
       type: String
     }
 
-    type MediumPostVirtualsTagsMetadata @derivedTypes {
+    type MediumPostVirtualsTagsMetadata {
       postCount: Int
       coverImage: MediumPostVirtualsTagsMetadataCoverImage
     }
@@ -469,22 +495,16 @@ exports.createSchemaCustomization = async ({ actions }) => {
       originalHeight: Int
       isFeatured: Boolean
       unsplashPhotoId: String
-      focusPercentX: Int
-      focusPercentY: Int
       alt: String
-      backgroundSize: String
-      filter: String
-      externalSrc: String
-      repairedAt: Date @dateformat
     }
 
-    type MediumPostVirtualsLinks @derivedTypes {
+    type MediumPostVirtualsLinks {
       entries: [MediumPostVirtualsLinksEntries]
       version: String
       generatedAt: Date @dateformat
     }
 
-    type MediumPostVirtualsLinksEntries @derivedTypes {
+    type MediumPostVirtualsLinksEntries {
       url: String
       alts: [MediumPostVirtualsLinksEntriesAlts]
       httpStatus: Int
@@ -495,11 +515,11 @@ exports.createSchemaCustomization = async ({ actions }) => {
       url: String
     }
 
-    type MediumPostVirtualsTopics @derivedTypes {
+    type MediumPostVirtualsTopics {
       topicId: String
       slug: String
       createdAt: Date @dateformat
-      deletedAt: Date @dateformat
+      deletedAt: Int
       image: MediumPostVirtualsTopicsImage
       name: String
       description: String
@@ -513,18 +533,18 @@ exports.createSchemaCustomization = async ({ actions }) => {
       originalHeight: Int
     }
 
-    type MediumPostPreviewContent @derivedTypes {
+    type MediumPostPreviewContent {
       bodyModel: MediumPostPreviewContentBodyModel
       isFullContent: Boolean
       subtitle: String
     }
 
-    type MediumPostPreviewContentBodyModel @derivedTypes {
+    type MediumPostPreviewContentBodyModel {
       paragraphs: [MediumPostPreviewContentBodyModelParagraphs]
       sections: [MediumPostPreviewContentBodyModelSections]
     }
 
-    type MediumPostPreviewContentBodyModelParagraphs @derivedTypes {
+    type MediumPostPreviewContentBodyModelParagraphs {
       name: String
       type: Int
       text: String
@@ -548,40 +568,34 @@ exports.createSchemaCustomization = async ({ actions }) => {
       type: Int
       start: Int
       end: Int
-      href: String
-      title: String
-      rel: String
-      anchorType: Int
-      userId: String
     }
 
     type MediumPostPreviewContentBodyModelSections {
       startIndex: Int
     }
 
-    type MediumPostPreviewContent2 @derivedTypes {
+    type MediumPostPreviewContent2 {
       bodyModel: MediumPostPreviewContent2BodyModel
       isFullContent: Boolean
       subtitle: String
     }
 
-    type MediumPostPreviewContent2BodyModel @derivedTypes {
-      paragraphs: [mediumPostPreviewContent2BodyModelParagraphs]
-      sections: [mediumPostPreviewContent2BodyModelSections]
+    type MediumPostPreviewContent2BodyModel {
+      paragraphs: [MediumPostPreviewContent2BodyModelParagraphs]
+      sections: [MediumPostPreviewContent2BodyModelSections]
     }
 
-    type mediumPostPreviewContent2BodyModelParagraphs @derivedTypes {
+    type MediumPostPreviewContent2BodyModelParagraphs {
       name: String
       type: Int
       text: String
-      markups: [mediumPostPreviewContent2BodyModelParagraphsMarkups]
+      markups: [MediumPostPreviewContent2BodyModelParagraphsMarkups]
       layout: Int
-      metadata: mediumPostPreviewContent2BodyModelParagraphsMetadata
-      iframe: mediumPostPreviewContent2BodyModelParagraphsIframe
+      metadata: MediumPostPreviewContent2BodyModelParagraphsMetadata
       hasDropCap: Boolean
     }
 
-    type mediumPostPreviewContent2BodyModelParagraphsMarkups {
+    type MediumPostPreviewContent2BodyModelParagraphsMarkups {
       type: Int
       start: Int
       end: Int
@@ -590,24 +604,17 @@ exports.createSchemaCustomization = async ({ actions }) => {
       rel: String
       anchorType: Int
       userId: String
-      name: String
     }
 
-    type mediumPostPreviewContent2BodyModelParagraphsMetadata {
+    type MediumPostPreviewContent2BodyModelParagraphsMetadata {
       id: String
       originalWidth: Int
       originalHeight: Int
       isFeatured: Boolean
       unsplashPhotoId: String
-      alt: String
     }
 
-    type mediumPostPreviewContent2BodyModelParagraphsIframe {
-      mediaResourceId: String
-      thumbnailUrl: String
-    }
-
-    type mediumPostPreviewContent2BodyModelSections {
+    type MediumPostPreviewContent2BodyModelSections {
       startIndex: Int
     }
   `
