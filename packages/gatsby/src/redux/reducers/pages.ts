@@ -15,7 +15,7 @@ export const pagesReducer = (
       return new Map()
     case `CREATE_PAGE`: {
       action.payload.component = normalize(action.payload.component)
-      if (!action.plugin && !action.plugin.name) {
+      if (!action.plugin || !action.plugin.name) {
         console.log(``)
         console.error(JSON.stringify(action, null, 4))
         console.log(``)
@@ -25,7 +25,6 @@ export const pagesReducer = (
         )
       }
       // Link page to its plugin.
-      // btw pluginCreator__NODE changed!
       action.payload.pluginCreator__NODE = action.plugin.id
       action.payload.pluginCreatorId = action.plugin.id
 
