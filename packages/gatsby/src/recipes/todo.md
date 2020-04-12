@@ -29,6 +29,8 @@
 - [x] run recipe from url
 - [x] Move parsing to the server
 - [x] imports from a url
+- [x] Document the supported components and trivial guide on recipe authoring
+- [x] have File only pull from remote files for now until multiline strings work in MDX
 - [ ] Make port selection dynamic
 - [ ] Make `dependencyType` in NPMPackage an enum (joi2gql doesn't handle this right now from Joi enums)
 - [ ] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
@@ -42,9 +44,8 @@
 - [ ] Gatsby recipes list (design and implementation)
 - [ ] Move gatsby/src/recipes to its own package `gatsby-recipes`
 - [ ] handle people pressing Y & quit if they press "n" (for now)
-- [ ] Document the supported components and trivial guide on recipe authoring (help)
 - [ ] handle error states
-- [ ] have File only pull from remote files for now until multiline strings work in MDX
+- [ ] validate that the first step of recipes don't have any resources. They should just be for the title/description
 - [ ] diff all resource changes — add test for all resources that they return something for this & remove current/new state
 - [ ] validate that the first step doesn't have any packages in it.
 - [ ] move code to its own package `gatsby-recipes`
