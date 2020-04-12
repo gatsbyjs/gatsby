@@ -69,6 +69,14 @@ const remoteSchema = {
         return state
       }
 
+      type = state.typeMap.get(key)
+
+      // union types with no member types will cause schema customization errors
+      // @todo move this to a better place. This should be excluded before it gets to this point.
+      if (type && type.kind === `UNION` && type.possibleTypes.length === 0) {
+        return state
+      }
+
       state.fetchedTypes.set(key, type)
 
       return state

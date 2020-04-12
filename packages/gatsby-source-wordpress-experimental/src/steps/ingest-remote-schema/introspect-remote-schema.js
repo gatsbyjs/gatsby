@@ -21,7 +21,11 @@ const introspectAndStoreRemoteSchema = async () => {
     await helpers.cache.set(INTROSPECTION_CACHE_KEY, introspectionData)
   }
 
-  store.dispatch.remoteSchema.setState({ introspectionData })
+  const typeMap = new Map(
+    introspectionData.__schema.types.map(type => [type.name, type])
+  )
+
+  store.dispatch.remoteSchema.setState({ introspectionData, typeMap })
 }
 
 export { introspectAndStoreRemoteSchema }

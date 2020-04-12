@@ -5,7 +5,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const nodeListFilter = field => field.name === `nodes`
 
   const state = store.getState()
-  const { introspectionData, fieldBlacklist } = state.remoteSchema
+  const { introspectionData, fieldBlacklist, typeMap } = state.remoteSchema
   const { helpers, pluginOptions } = state.gatsbyApi
 
   const cachedFetchedTypes = await helpers.cache.get(`previously-fetched-types`)
@@ -17,10 +17,6 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
       fetchedTypes: restoredFetchedTypesMap,
     })
   }
-
-  const typeMap = new Map(
-    introspectionData.__schema.types.map(type => [type.name, type])
-  )
 
   if (pluginOptions.type) {
     Object.entries(pluginOptions.type).forEach(([typeName, typeSettings]) => {
@@ -132,7 +128,6 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
   }
 
   store.dispatch.remoteSchema.setState({
-    typeMap,
     gatsbyNodesInfo,
     ingestibles: {
       nodeListRootFields,

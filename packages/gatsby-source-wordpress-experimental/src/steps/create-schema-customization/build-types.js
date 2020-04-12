@@ -9,15 +9,21 @@ import {
 } from "./helpers"
 
 const unionType = ({ typeDefs, schema, type, pluginOptions }) => {
+  const types = type.possibleTypes
+    .filter(
+      possibleType =>
+        !typeIsExcluded({ pluginOptions, typeName: possibleType.name })
+    )
+    .map(possibleType => buildTypeName(possibleType.name))
+
+  if (!types || !types.length) {
+    return
+  }
+
   typeDefs.push(
     schema.buildUnionType({
       name: buildTypeName(type.name),
-      types: type.possibleTypes
-        .filter(
-          possibleType =>
-            !typeIsExcluded({ pluginOptions, typeName: possibleType.name })
-        )
-        .map(possibleType => buildTypeName(possibleType.name)),
+      types,
       resolveType: node => {
         if (node.type) {
           return buildTypeName(node.type)
@@ -52,9 +58,16 @@ const interfaceType = ({
     .filter(
       ({ interfaces }) =>
         interfaces &&
+        // find types that implement this interface type
         interfaces.find(singleInterface => singleInterface.name === type.name)
     )
     .map(type => typeMap.get(type.name))
+    .filter(
+      type =>
+        type.kind !== `UNION` ||
+        // if this is a union type, make sure the union type has one or more member types, otherwise schema customization will throw an error
+        (!!type.possibleTypes && !!type.possibleTypes.length)
+    )
 
   const transformedFields = transformFields({
     parentInterfacesImplementingTypes: implementingTypes,
