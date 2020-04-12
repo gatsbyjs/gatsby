@@ -5924,11 +5924,11 @@
     - Stripe
     - Styling:CSS-in-JS
   features:
-    - 100% Free: No subscriptions, just pay a fee to Stripe when you sell a product.
-    - Home Page: list all your products.
-    - Category Page: list products by category.
-    - Product Detail Page: View products details. Define several colors and sizes for the same product
-    - Cart Page: Summary of your cart before checkout.
-    - Checkout Page: Powered by Stripe.
+    - 100% Free. No subscriptions, just pay a fee to Stripe when you sell a product.
+    - Home Page to list all your products.
+    - Category Page to list products by category.
+    - Product Detail Page. Define several colors and sizes for the same product
+    - Cart Page with the summary of your cart before checkout.
+    - Checkout Page powered by Stripe.
     - Scripts to create/update/delete your products in Stripe.
     - Analytics with Firebase
