@@ -7,6 +7,7 @@
 - [x] Boot up server as a process
 - [x] Then run the CLI
 - [x] Clean up server after
+- [ ] show plan to create or that nothing is necessary & then show in `<static>` what was done
 
 ## alpha
 
@@ -32,25 +33,19 @@
 - [x] Document the supported components and trivial guide on recipe authoring
 - [x] have File only pull from remote files for now until multiline strings work in MDX
 - [ ] Make port selection dynamic
-- [ ] Make `dependencyType` in NPMPackage an enum (joi2gql doesn't handle this right now from Joi enums)
 - [ ] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
 - [ ] use yarn/npm based on the user config
-- [ ] show plan to create/update or that nothing is necessary & then show in `<static>` what was done
 - [ ] integration test for each resource (read, create, update, delete)
-- [ ] finish shadow file
-- [ ] Implement config object for GatsbyPlugin
-- [ ] Handle JS in config objects? { **\_javascript: "`\${**dirname}/foo/bar`" }
+- [ ] update shadow file resource
 - [ ] write tests for remote files src in File
 - [ ] Gatsby recipes list (design and implementation)
-- [ ] Move gatsby/src/recipes to its own package `gatsby-recipes`
+- [ ] Move gatsby/src/recipes to its own package `gatsby-recipes` & pull them from unpkg w/ make-fetch-happen/file-system-cache
 - [ ] handle people pressing Y & quit if they press "n" (for now)
 - [ ] handle error states
 - [ ] validate that the first step of recipes don't have any resources. They should just be for the title/description
 - [ ] diff all resource changes — add test for all resources that they return something for this & remove current/new state
-- [ ] validate that the first step doesn't have any packages in it.
 - [ ] move code to its own package `gatsby-recipes`
 - [ ] handle not finding a recipe
-- [ ] write up testing doc ASAP so internal folks can try it
 - [ ] write blog post
 
 ## Near-ish future
@@ -64,3 +59,7 @@
 - [ ] move creating the validate function to core and out of resources — they just declare their schema
 - [ ] gatsby-config.js hardening — make it work if there's no plugins set like in hello-world starter
 - [ ] get latest version of npm packages so know if can skip running.
+- [ ] Make `dependencyType` in NPMPackage an enum (joi2gql doesn't handle this right now from Joi enums)
+- [ ] Show in plan if an update will be applied vs. create.
+- [ ] Implement config object for GatsbyPlugin
+- [ ] Handle JS in config objects? { **\_javascript: "`\${**dirname}/foo/bar`" }
