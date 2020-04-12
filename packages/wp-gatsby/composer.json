@@ -27,7 +27,8 @@
   },
   "require": {
     "firebase/php-jwt": "^5.2",
-    "ircmaxell/random-lib": "^1.2"
+    "ircmaxell/random-lib": "^1.2",
+    "composer/semver": "^1.5"
   },
   "scripts": {
     "phpcs-i": [
