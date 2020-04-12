@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-wordpress-experimental",
   "description": "Source data from WPGraphQL in an efficient and scalable way.",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -20,7 +20,8 @@
     "execall": "^2.0.0",
     "graphql-prettier": "^1.0.6",
     "graphql-query-compress": "^1.2.2",
-    "node-fetch": "^1.7.3"
+    "node-fetch": "^1.7.3",
+    "p-queue": "^6.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
@@ -49,21 +50,22 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-source-wordpress"
+    "directory": "packages/gatsby-source-wordpress-experimental"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
-    "prepare": "cross-env NODE_ENV=production npm run build && npm run test",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "prepublishOnly": "npm run test",
     "watch": "babel -w src --out-dir . --ignore **/__tests__ --verbose",
-    "setup-test-runtime": "yarn build && cd test-runtime && rm -rf ./node_modules/gatsby-source-wordpress-experimental && yarn install --check-files && rm -rf ./node_modules/gatbsy-source-wordpress-experimental/test-runtime",
-    "clean-test-runtime": "cd test-runtime && gatsby clean",
-    "develop-test-runtime": "cd test-runtime && yarn develop",
-    "build-test-runtime": "cd test-runtime && yarn build",
-    "serve-test-runtime": "cd test-runtime && yarn serve",
+    "setup-test-runtime": "yarn build && cd .test-runtime && rm -rf ./node_modules/gatsby-source-wordpress-experimental && yarn install --check-files && rm -rf ./node_modules/gatbsy-source-wordpress-experimental/.test-runtime",
+    "clean-test-runtime": "cd .test-runtime && gatsby clean",
+    "develop-test-runtime": "cd .test-runtime && yarn develop",
+    "build-test-runtime": "cd .test-runtime && yarn build",
+    "serve-test-runtime": "cd .test-runtime && yarn serve",
     "ci": "yarn prepare && yarn setup-test-runtime && yarn test",
     "ci-develop": "yarn prepare && yarn test-develop",
-    "test-schema": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./test-runtime/__tests__/schema.js && WPGQL_INCREMENT=true jest ./test-runtime/__tests__/schema.js",
-    "test-build": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./test-runtime/__tests__/build.js && WPGQL_INCREMENT=true jest ./test-runtime/__tests__/build.js",
+    "test-schema": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./.test-runtime/__tests__/schema.js && WPGQL_INCREMENT=true jest ./.test-runtime/__tests__/schema.js",
+    "test-build": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./.test-runtime/__tests__/build.js && WPGQL_INCREMENT=true jest ./.test-runtime/__tests__/build.js",
     "test": "yarn setup-test-runtime && yarn test-schema && yarn test-build",
     "test-develop": "jest --watch"
   },
