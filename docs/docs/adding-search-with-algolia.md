@@ -177,7 +177,7 @@ There's quite a lot happening in these files so break them down one by one and p
 ### `index.js`
 
 ```jsx:title=src/components/search/index.js
-import React, { useState, useEffect, createRef } from "react"
+import React, { useState, useEffect, useCallback, useRef } from "react"
 import {
   InstantSearch,
   Index,
@@ -202,20 +202,33 @@ const Stats = connectStateResults(
 
 const useClickOutside = (ref, handler, events) => {
   if (!events) events = [`mousedown`, `touchstart`]
-  const detectClickOutside = event =>
-    !ref.current.contains(event.target) && handler()
+  const detectClickOutside = (event) => ref.current && !ref.current.contains(event.target) && handler()
+  useListenerOn(events, detectClickOutside)
+}
+
+const useEscKey = (handler) => {
+  const detectEscKey = useCallback(
+    (event) => {
+      if (event.keyCode === 27) {
+        handler()
+      }
+    },
+    [handler]
+  )
+  useListenerOn([`keydown`], detectEscKey)
+}
+
+const useListenerOn = (events, detection) => {
   useEffect(() => {
-    for (const event of events)
-      document.addEventListener(event, detectClickOutside)
+    for (const event of events) document.addEventListener(event, detection, false)
     return () => {
-      for (const event of events)
-        document.removeEventListener(event, detectClickOutside)
+      for (const event of events) document.removeEventListener(event, detection, false)
     }
   })
 }
 
 export default function Search({ indices, collapse, hitsAsGrid }) {
-  const ref = createRef()
+  const ref = useRef()
   const [query, setQuery] = useState(``)
   const [focus, setFocus] = useState(false)
   const searchClient = algoliasearch(
@@ -223,29 +236,32 @@ export default function Search({ indices, collapse, hitsAsGrid }) {
     process.env.GATSBY_ALGOLIA_SEARCH_KEY
   )
   useClickOutside(ref, () => setFocus(false))
+  useEscKey(() => setFocus(false))
   return (
-    <InstantSearch
-      searchClient={searchClient}
-      indexName={indices[0].name}
-      onSearchStateChange={({ query }) => setQuery(query)}
-      root={{ Root, props: { ref } }}
-    >
-      <Input onFocus={() => setFocus(true)} {...{ collapse, focus }} />
-      <HitsWrapper show={query.length > 0 && focus} asGrid={hitsAsGrid}>
-        {indices.map(({ name, title, hitComp }) => (
-          <Index key={name} indexName={name}>
-            <header>
-              <h3>{title}</h3>
-              <Stats />
-            </header>
-            <Results>
-              <Hits hitComponent={hitComps[hitComp](() => setFocus(false))} />
-            </Results>
-          </Index>
-        ))}
-        <PoweredBy />
-      </HitsWrapper>
-    </InstantSearch>
+    <div ref={ref}>
+      <InstantSearch
+        searchClient={searchClient}
+        indexName={indices[0].name}
+        onSearchStateChange={({ query }) => setQuery(query)}
+        root={{ Root }}
+      >
+        <Input onFocus={() => setFocus(true)} {...{ collapse, focus }} />
+        <HitsWrapper show={query.length > 0 && focus} asGrid={hitsAsGrid}>
+          {indices.map(({ name, title, hitComp }) => (
+            <Index key={name} indexName={name}>
+              <header>
+                <h3>{title}</h3>
+                <Stats />
+              </header>
+              <Results>
+                <Hits hitComponent={hitComps[hitComp](() => setFocus(false))} />
+              </Results>
+            </Index>
+          ))}
+          <PoweredBy />
+        </HitsWrapper>
+      </InstantSearch>
+    </div>
   )
 }
 ```
