@@ -80,7 +80,9 @@ const areRemotePluginVersionsSatisfied = async ({ helpers }) => {
     message = `WPGatsby and WPGraphQL are both outside the accepted version ranges.`
   }
 
-  helpers.reporter.panic(formatLogMessage(message))
+  if (message) {
+    helpers.reporter.panic(formatLogMessage(message))
+  }
 }
 
 const isWpGatsby = async () =>
