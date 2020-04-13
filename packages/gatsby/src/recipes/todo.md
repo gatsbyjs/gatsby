@@ -42,18 +42,18 @@ Kyle
 - [x] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
 - [x] use yarn/npm based on the user config
 - [x] write tests for remote files src in File
-- [ ] move back to "press enter to run"
+- [ ] Gatsby recipes list (design and implementation)
+- [x] move back to "press enter to run"
 - [ ] write blog post
 
 John
 
 - [ ] spike on bundling recipes into one file
-- [ ] Gatsby recipes list (design and implementation)
-- [ ] print pretty error when there's parsing errors of mdx files
+- [x] print pretty error when there's parsing errors of mdx files
 - [ ] Move mdx recipes to its own package `gatsby-recipes` & pull them from unpkg
 - [ ] add CODEOWNERS file for recipes
-- [ ] validate that the first step of recipes don't have any resources. They should just be for the title/description
-- [ ] handle not finding a recipe
+- [x] validate that the first step of recipes don't have any resources. They should just be for the title/description
+- [x] handle not finding a recipe
 - [ ] test modifying gatsby-config.js from default starter
 
 ## Near-ish future

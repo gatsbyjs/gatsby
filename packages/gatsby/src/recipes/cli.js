@@ -260,7 +260,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
             </Div>
           ))}
           <Div marginTop={1}>
-            <Text>Do you want to run this step? Y/n</Text>
+            <Text>Press enter to run this step</Text>
           </Div>
         </Div>
       )
