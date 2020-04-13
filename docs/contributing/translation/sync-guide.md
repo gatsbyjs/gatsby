@@ -7,7 +7,7 @@ Every Friday at 6:00 PM PST, gatsbybot will run a sync script on every translati
 ## Gatsbybot sync behavior
 
 
-If there are existing sync pull requests marked by the `sync` label, gatsbybot will skip the repository until the next time it runs. Because of this, it is important to make sure that you merge sync and conflict pull requests promptly, so that changes stale translations don't build up.
+If there are existing sync pull requests marked by the `sync` label, gatsbybot will skip the repository until the next time it runs. Because of this, it is important to make sure that you merge sync and conflict pull requests promptly, so that stale translations don't build up.
 
 ## Resolving sync pull requests
 
