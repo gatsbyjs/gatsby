@@ -10374,3 +10374,14 @@
   built_by: Andrew Louis
   built_by_url: https://hyfen.net
   featured: false
+- title: Eddylazar.com
+  main_url: https://eddylazar.com/
+  url: https://eddylazar.com/
+  source_url: https://github.com/eddyLazar/gatsby-cv
+  description: >
+    Two friends developer and designer united to create a simple good website.
+  categories:
+    - Portfolio
+  built_by: Eduard Lazarenko
+  built_by_url: https://www.instagram.com/real.edos/
+  featured: false
