@@ -63,7 +63,7 @@ const executeInstalls = async root => {
     packageManager: PACKAGE_MANGER,
   })
 
-  const { stderr, stdout } = await execa(`yarn`, commands, {
+  const { stderr, stdout } = await execa(PACKAGE_MANGER, commands, {
     cwd: root,
   })
 
