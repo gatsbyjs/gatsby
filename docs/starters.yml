@@ -5948,6 +5948,19 @@
     - Stylesheet built using Sass and BEM-Style naming.
     - Syntax highlighting in code blocks.
     - Google Analytics support.
+- url: https://gatsby-starter-ts.now.sh/
+  repo: https://github.com/jpedroschmitz/gatsby-starter-ts
+  description: A TypeScript starter for Gatsby. No plugins and styling. Exactly the necessary to start!
+  tags:
+    - Language:TypeScript
+    - Styling:None
+    - Linting
+  features:
+    - TypeScript
+    - ESLint and Prettier
+    - Husky and lint-staged
+    - Commitizen and Commitlint
+    - TypeScript absolute paths
 - url: https://rolwinreevan.com
   repo: https://github.com/rolwin100/rolwinreevan_gatsby_blog
   description: This starter consists of ant design system you can use it for your personal blog. I have give a lot of time in developing this starter because I found that there were not much starters with a very good design. Please give a star to this project if you have like it to encourage me 😄. Thank you.
