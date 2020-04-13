@@ -185,9 +185,8 @@ The resulting HTML generated from the markdown file above would look something l
 
 ### Highlighting Lines
 
-You can also specify specific lines for Prism to highlight using
-`highlight-line` and `highlight-next-line` comments. You can also specify a
-range of lines to highlight, relative to a `highlight-range` comment.
+You can specify specific lines for Prism to highlight using
+`highlight-line` and `highlight-next-line` comments. You can also specify a range of lines to highlight, relative to a `highlight-range` comment.
 
 **JavaScript example**:
 
@@ -250,7 +249,48 @@ quz: "highlighted"
 
 It's also possible to specify a range of lines to be hidden.
 
+You can either specify line ranges in the embed using the syntax:
+
+- #Lx - Embed one line from a file
+- #Lx-y - Embed a range of lines from a file
+- #Lx-y,a-b - Embed non-consecutive ranges of lines from a file
+
+**Markdown example**:
+
+```markdown
+This is the JSX of my app:
+
+`embed:App.js#L6-8`
+```
+
+With this example snippet:
+
+```js
+import React from "react"
+import ReactDOM from "react-dom"
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Hello world</h1>
+    </div>
+  )
+}
+```
+
+Will produce something like this:
+
+```markdown
+This is the JSX of my app:
+
+    <div className="App">
+      <h1>Hello world</h1>
+    </div>
+```
+
 **JavaScript example**:
+
+You can also add `// hide-range` comments to your files.
 
 ```jsx
 // hide-range{1-2}
