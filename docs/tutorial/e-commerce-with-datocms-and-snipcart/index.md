@@ -27,7 +27,7 @@ You can sign up for the following accounts now or as you need to use each of the
 
 To edit code locally (affecting files stored on your computer), you'll need the following software. If you don't already know what these are or want additional background information, check out [Step 0 of the Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-zero/). It includes detailed instructions on how to set up a local development environment.
 
-- [node](https://nodejs.org): run JavaScript on your computer
+- [Node.js](https://nodejs.org): run JavaScript on your computer
 - [Git](https://git-scm.com/downloads): track changes to your code
 - [Gatsby command line interface (CLI)](https://www.gatsbyjs.org/tutorial/part-zero/#using-the-gatsby-cli): run Gatsby commands on your computer
 
@@ -84,7 +84,7 @@ Even if you've never used Git/GitHub, there's no need to fear. You can edit indi
 
 You can make small changes to the code from your browser by editing files directly in GitHub. Say, for example, that you always want to display prices in some other currency besides euros. To switch the symbols, head to your repository's page on GitHub and navigate to `src/pages/index.js`.
 
-![github menu shows the current branch and file location as well as the first few lines of code in this file. Also includes view options raw, blame, and history](/images/github-menu.png)
+![GitHub menu shows the current branch and file location as well as the first few lines of code in this file. Also includes view options raw, blame, and history](/images/github-menu.png)
 
 Select "Edit this file" (the pencil icon) from the menu. Where `product.price` is being displayed, you'll need to update the currency symbol.
 
