@@ -7,8 +7,7 @@ const getDiff = require(`../utils/get-diff`)
 const fileExists = filePath => fs.existsSync(filePath)
 
 const relativePathForShadowedFile = ({ theme, filePath }) => {
-  // TODO: Support windows
-  const [_src, ...filePathParts] = filePath.split('/')
+  const [_src, ...filePathParts] = filePath.split(path.sep)
   const relativePath = path.join('src', theme, path.join(...filePathParts))
   return relativePath
 }
@@ -16,7 +15,7 @@ const relativePathForShadowedFile = ({ theme, filePath }) => {
 const create = async ({ root }, { theme, path: filePath }) => {
   const id = relativePathForShadowedFile({ filePath, theme })
 
-  const relativePathInTheme = filePath.replace(theme + `/`, ``)
+  const relativePathInTheme = filePath.replace(theme + path.sep, ``)
   const fullFilePathToShadow = path.join(
     root,
     `node_modules`,
@@ -36,8 +35,7 @@ const create = async ({ root }, { theme, path: filePath }) => {
 }
 
 const read = async ({ root }, id) => {
-  // TODO: Support windows
-  const [_src, theme, ..._filePathParts] = id.split('/')
+  const [_src, theme, ..._filePathParts] = id.split(path.sep)
 
   const fullPath = path.join(root, id)
 
@@ -84,13 +82,13 @@ const message = resource => `Shadowed ${resource.id || resource.path} from ${res
 
 module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
   if (!id) {
-    const [_src, ...filePathParts] = filePath.split('/')
+    const [_src, ...filePathParts] = filePath.split(path.sep)
     id = path.join('src', theme, path.join(...filePathParts))
   }
 
   const currentResource = await read({ root }, id) || {}
 
-  const [_src, _theme, ...shadowPathParts] = id.split('/')
+  const [_src, _theme, ...shadowPathParts] = id.split(path.sep)
   const fullFilePathToShadow = path.join(
     root,
     `node_modules`,
