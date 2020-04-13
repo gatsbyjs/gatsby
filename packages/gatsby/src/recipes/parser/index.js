@@ -12,6 +12,8 @@ const extractImports = require(`./extract-imports`)
 const removeElementByName = require(`./remove-element-by-name`)
 const jsxToJson = require(`./jsx-to-json`)
 
+const ALLOWED_STEP_O_COMMANDS = [`Config`]
+
 const asRoot = nodes => {
   return {
     type: `root`,
@@ -23,7 +25,7 @@ const toJson = value => {
   const obj = {}
   jsxToJson(value).forEach(([type, props = {}]) => {
     if (type === `\n`) {
-      return
+      return undefined
     }
     obj[type] = obj[type] || []
     obj[type].push(props)
@@ -84,7 +86,7 @@ const unwrapImports = async (tree, imports) =>
 
     visit(tree, `jsx`, async (node, index, parent) => {
       const names = toJson(node.value)
-      const _newValue = removeElementByName(node.value, {
+      removeElementByName(node.value, {
         names: Object.keys(imports),
       })
 
@@ -112,7 +114,7 @@ const partitionSteps = ast => {
   ast.children.forEach(node => {
     if (node.type === `thematicBreak`) {
       index++
-      return
+      return undefined
     }
 
     steps[index] = steps[index] || []
@@ -140,11 +142,14 @@ const parse = async src => {
   const imports = handleImports(ast)
   await unwrapImports(ast, imports)
   const steps = partitionSteps(ast)
+  const commands = extractCommands(steps)
+
+  validateCommands(commands)
 
   return {
     ast,
     steps,
-    commands: extractCommands(steps),
+    commands,
     stepsAsMdx: steps.map(toMdx),
     stepsAsMdxWithoutJsx: steps.map(toMdxWithoutJsx),
   }
@@ -176,6 +181,19 @@ const getSource = async (pathOrUrl, projectRoot) => {
 
   const src = await fs.readFile(recipePath, `utf8`)
   return src
+}
+
+const validateCommands = commands => {
+  const step0 = commands[0]
+  const commandKeys = Object.keys(step0).filter(
+    cmd => !ALLOWED_STEP_O_COMMANDS.includes(cmd)
+  )
+
+  if (commandKeys.length) {
+    throw new Error(
+      `{"commands": "Recipes must have an introduction step before executing commands"}`
+    )
+  }
 }
 
 module.exports = async (recipePath, projectRoot) => {

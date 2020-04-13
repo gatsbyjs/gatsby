@@ -3,7 +3,7 @@ const { Machine, assign } = require(`xstate`)
 const createPlan = require(`./create-plan`)
 const applyPlan = require(`./apply-plan`)
 const validateRecipe = require(`./validate-recipe`)
-const parser = require('./parser')
+const parser = require(`./parser`)
 
 const recipeMachine = Machine(
   {
@@ -16,7 +16,7 @@ const recipeMachine = Machine(
       steps: [],
       plan: [],
       stepResources: [],
-      stepsAsMdx: []
+      stepsAsMdx: [],
     },
     states: {
       parsingRecipe: {
@@ -24,6 +24,7 @@ const recipeMachine = Machine(
           id: `parseRecipe`,
           src: async (context, event) => {
             let parsed
+            console.log(`parsing!!!`)
             if (context.src) {
               parsed = await parser.parse(context.src)
             } else {
@@ -34,16 +35,18 @@ const recipeMachine = Machine(
           },
           onError: {
             target: `doneError`,
-            actions: assign({ error: (context, event) => event.data })
+            actions: assign({
+              error: (context, event) => JSON.parse(event.data.message),
+            }),
           },
           onDone: {
             target: `validatePlan`,
             actions: assign({
               steps: (context, event) => event.data.commands,
-              stepsAsMdx: (context, event) => event.data.stepsAsMdx
-            })
-          }
-        }
+              stepsAsMdx: (context, event) => event.data.stepsAsMdx,
+            }),
+          },
+        },
       },
       validatePlan: {
         invoke: {

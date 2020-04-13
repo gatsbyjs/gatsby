@@ -2,13 +2,12 @@
 
 exports[`fetches MDX from a url 1`] = `
 Array [
+  Object {},
   Object {
-    "NPMPackageJson": Array [
+    "NPMScript": Array [
       Object {
-        "name": "test-recipe",
-        "value": Object {
-          "hello": "world!",
-        },
+        "command": "echo 'world'",
+        "name": "hello",
       },
     ],
   },
@@ -18,8 +17,8 @@ Array [
 exports[`handles imports from urls 1`] = `
 Array [
   "# Here is an imported recipe from a url!
-
-# Test recipe
+",
+  "# Test recipe
 
 Add a package.json config object.
 
