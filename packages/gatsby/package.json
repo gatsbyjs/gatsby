@@ -98,6 +98,7 @@
     "html-tag-names": "^1.1.5",
     "humanize-list": "^1.0.1",
     "import-jsx": "^4.0.0",
+    "ink-box": "^1.0.0",
     "ink-link": "^1.0.0",
     "invariant": "^2.2.4",
     "is-blank": "^2.1.0",
