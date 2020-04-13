@@ -2,7 +2,11 @@
 title: Keeping Translations Up-to-date
 ---
 
-Periodically, gatsbybot will update your translation repo to be up-to-date with the current English repo. If there is an update to a page that is already translated, gatsbybot will create a pull request listing the conflicts between translation and the new English content. Resolving these conflicts and merging these pull requests is essential to keeping your translation repo up-to-date.
+Every Friday at 6:00 PM PST, gatsbybot will run a sync script on every translation repo to bring them up-to-date with the current English repo. If there is an update to a page that is already translated, gatsbybot will create a pull request listing the conflicts between the translation and the new English content. Resolving these conflicts and merging these pull requests is essential to keeping your translation repo up-to-date.
+
+## Gatsbybot sync behavior
+
+If there are existing sync pull requests marked by the `sync` label, gatsbybot will skip the repository until the next time it runs. Because of this, it is important to make sure that you merge sync and conflict pull requests promptly, so that stale translations don't build up.
 
 ## Resolving sync pull requests
 
