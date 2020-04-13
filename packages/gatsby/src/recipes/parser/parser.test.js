@@ -34,23 +34,24 @@ import TestRecipe from 'https://gist.githubusercontent.com/johno/20503d2a2c80529
 
 test(`fetches MDX from a url`, async () => {
   const result = await parser(
-    `https://gist.githubusercontent.com/johno/20503d2a2c80529096e60cd70260c9d8/raw/b082a2febcdb0b26d8a799b0c953c165d49b51b9/test-recipe.mdx`
+    "https://gist.githubusercontent.com/johno/20503d2a2c80529096e60cd70260c9d8/raw/b082a2febcdb0b26d8a799b0c953c165d49b51b9/test-recipe.mdx"
   )
 
   expect(result.commands).toMatchSnapshot()
 })
 
-test(`raises a validation error if commands are in step 0`, async () => {
+test(`raises an error if JSX doesn't parse`, async () => {
   try {
-    await parser.parse(`<NPMScript name="foo" command="bar" />`)
+    await parser.parse(`# Hello, world!
+
+---
+
+<NPMScript name="foo" command="bar" /
+
+`)
   } catch (e) {
     expect(e).toMatchInlineSnapshot(
-      `[Error: {"commands": "Recipes must have an introduction step before executing commands"}]`
+      `[Error: {"location":{"line":1,"column":43},"validationError":"Could not parse \\"<NPMScript name=\\"foo\\" command=\\"bar\\" /\\""}]`
     )
   }
-})
-
-test(`does not raise a validation error if Config is in step 0`, async () => {
-  const result = await parser.parse(`<Config name="foo" />`)
-  expect(result).toBeTruthy()
 })

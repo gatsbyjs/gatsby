@@ -29,6 +29,8 @@ it(`should create plan for File resources`, done => {
     src: `
 # File!
 
+---
+
 <File path="./hi.md" content="#yo" />
     `,
     currentStep: 0,
@@ -37,7 +39,40 @@ it(`should create plan for File resources`, done => {
     recipeMachine.withContext(initialContext)
   ).onTransition(state => {
     if (state.value === `present plan`) {
-      expect(state.context.plan).toMatchSnapshot()
+      if (state.context.currentStep === 0) {
+        service.send(`CONTINUE`)
+      } else {
+        expect(state.context.plan).toMatchSnapshot()
+        service.stop()
+        done()
+      }
+    }
+  })
+
+  service.start()
+})
+
+it(`it should error if part of the recipe fails schema validation`, done => {
+  const initialContext = {
+    src: `
+# Hello, world
+
+---
+
+<File path="./hi.md" contentz="#yo" />
+
+---
+
+---
+    `,
+    currentStep: 0,
+  }
+  const service = interpret(
+    recipeMachine.withContext(initialContext)
+  ).onTransition(state => {
+    if (state.value === `doneError`) {
+      expect(state.context.error).toBeTruthy()
+      expect(state.context.error).toMatchSnapshot()
       service.stop()
       done()
     }
@@ -46,10 +81,54 @@ it(`should create plan for File resources`, done => {
   service.start()
 })
 
-it(`it should error if part of the recipe fails validation`, done => {
-  const filePath = `./hi.md`
+it(`it should error if the introduction step has a command`, done => {
   const initialContext = {
-    steps: [{ File: [{ path: filePath, contentz: `#yo` }] }, {}, {}],
+    src: `
+# Hello, world
+
+<File path="./hi.md" contentz="#yo" />
+    `,
+    currentStep: 0,
+  }
+  const service = interpret(
+    recipeMachine.withContext(initialContext)
+  ).onTransition(state => {
+    if (state.value === `doneError`) {
+      expect(state.context.error).toBeTruthy()
+      expect(state.context.error).toMatchSnapshot()
+      service.stop()
+      done()
+    }
+  })
+
+  service.start()
+})
+
+it(`it should error if no src or recipePath has been given`, done => {
+  const initialContext = {
+    currentStep: 0,
+  }
+  const service = interpret(
+    recipeMachine.withContext(initialContext)
+  ).onTransition(state => {
+    if (state.value === `doneError`) {
+      expect(state.context.error).toBeTruthy()
+      expect(state.context.error).toMatchSnapshot()
+      service.stop()
+      done()
+    }
+  })
+
+  service.start()
+})
+
+it(`it should error if invalid jsx is passed`, done => {
+  const initialContext = {
+    src: `
+# Hello, world
+
+<File path="./hi.md" contentz="#yo" /
+    `,
     currentStep: 0,
   }
   const service = interpret(
@@ -71,6 +150,8 @@ it(`it should switch to done after the final apply step`, done => {
   const initialContext = {
     src: `
 # File!
+
+---
 
 <File path="${filePath}" content="#yo" />
     `,
@@ -103,6 +184,8 @@ it(`should store created/changed/deleted resources on the context after applying
   const initialContext = {
     src: `
 # File!
+
+---
 
 <File path="${filePath}" content="#yo" />
 <File path="${filePath2}" content="#yo" />
