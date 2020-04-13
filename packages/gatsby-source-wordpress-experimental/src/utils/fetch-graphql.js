@@ -186,6 +186,7 @@ const fetchGraphql = async ({
   ignoreGraphQLErrors = false,
   panicOnError = false,
   throwGqlErrors = false,
+  throwFetchErrors = false,
   url = false,
   variables = {},
   headers = {},
@@ -223,6 +224,10 @@ const fetchGraphql = async ({
       )
     }
   } catch (e) {
+    if (throwFetchErrors) {
+      throw e
+    }
+
     await handleFetchErrors({
       e,
       reporter,

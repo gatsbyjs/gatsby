@@ -125,7 +125,14 @@ async function pushToQueue(task, cb) {
  * @param  {number}   attempt
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
-const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
+const requestRemoteNode = (
+  url,
+  headers,
+  tmpFilename,
+  httpOpts,
+  attempt = 1,
+  fixedBarTotal
+) =>
   new Promise((resolve, reject) => {
     let timeout
 
@@ -141,7 +148,9 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       } else {
         processingCache[url] = null
         totalJobs -= 1
-        bar.total = totalJobs
+        if (!fixedBarTotal) {
+          bar.total = totalJobs
+        }
         reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
       }
     }
@@ -168,7 +177,9 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       }
       processingCache[url] = null
       totalJobs -= 1
-      bar.total = totalJobs
+      if (!fixedBarTotal) {
+        bar.total = totalJobs
+      }
       fs.removeSync(tmpFilename)
       reject(error)
     })
@@ -179,7 +190,9 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       }
       processingCache[url] = null
       totalJobs -= 1
-      bar.total = totalJobs
+      if (!fixedBarTotal) {
+        bar.total = totalJobs
+      }
       reject(error)
     })
 
@@ -213,6 +226,7 @@ async function processRemoteNode({
   createNodeId,
   ext,
   name,
+  fixedBarTotal,
 }) {
   const pluginCacheDir = cache.directory
   // See if there's response headers for this url
@@ -243,7 +257,13 @@ async function processRemoteNode({
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
+  const response = await requestRemoteNode(
+    url,
+    headers,
+    tmpFilename,
+    httpOpts,
+    fixedBarTotal
+  )
 
   if (response.statusCode == 200) {
     // Save the response headers for future requests.
@@ -267,7 +287,9 @@ async function processRemoteNode({
   } else {
     processingCache[url] = null
     totalJobs -= 1
-    bar.total = totalJobs
+    if (!fixedBarTotal) {
+      bar.total = totalJobs
+    }
     await fs.remove(tmpFilename)
   }
 
@@ -330,6 +352,7 @@ module.exports = ({
   cache,
   createNode,
   getCache,
+  fixedBarTotal,
   parentNodeId = null,
   auth = {},
   httpHeaders = {},
@@ -375,7 +398,12 @@ module.exports = ({
   }
 
   totalJobs += 1
-  bar.total = totalJobs
+
+  if (fixedBarTotal) {
+    bar.total = fixedBarTotal
+  } else {
+    bar.total = totalJobs
+  }
 
   const fileDownloadPromise = pushTask({
     url,
@@ -387,6 +415,7 @@ module.exports = ({
     httpHeaders,
     ext,
     name,
+    fixedBarTotal,
   })
 
   processingCache[url] = fileDownloadPromise.then(node => {

@@ -64,7 +64,10 @@ export const getFileNodeByMediaItemNode = async ({
   return null
 }
 
-export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
+export const createRemoteMediaItemNode = async ({
+  mediaItemNode,
+  fixedBarTotal,
+}) => {
   const { helpers, pluginOptions } = getGatsbyApi()
   const existingNode = await getFileNodeByMediaItemNode({
     mediaItemNode,
@@ -135,6 +138,7 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
       // if this errors, it's caught one level above in fetch-referenced-media-items.js so it can be placed on the end of the request queue
       const node = await createRemoteFileNode({
         url: mediaItemUrl,
+        fixedBarTotal,
         ...createFileNodeRequirements,
       })
 
