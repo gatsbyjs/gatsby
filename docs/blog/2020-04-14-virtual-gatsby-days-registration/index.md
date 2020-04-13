@@ -13,7 +13,7 @@ Back before the world changed so suddenly, our quarterly Gatsby Days was an in-p
 
 Join us for Virtual Gatsby Days, June 2nd and 3rd: Registration is now open at https://www.gatsbyjs.com/virtual-gatsby-days.
 
-![Gatsby logo transposed on binary background receding into distance](./virtualGatsbyDays.jpg "Gatsby logo on futuristic binary background")
+![Gatsby logo transposed on binary background receding into distance](./virutalGatsbyDays.jpg "Gatsby logo on futuristic binary background")
 
 Virtual Gatsby Days will continue to focus on the future of modern website development, use cases, and deep dive into topics such as what’s new in the web technology stack. You’ll have the opportunity to participate in a Q&A with Gatsby creators, Kyle Mathews and Sam Bhagwat, hear other Gatsby core team members speak, and connect with the Gatsby community.
 
