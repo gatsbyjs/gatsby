@@ -10354,6 +10354,18 @@
   built_by: Masatoshi Nishiguchi
   built_by_url: https://mnishiguchi.com
   featured: false
+- title: WhileNext
+  url: https://whilenext.com
+  main_url: https://whilenext.com
+  description: >
+    A Blog on Software Development
+  categories:
+    - Blog
+    - Learning
+    - Programming
+    - Web Development
+  built_by: Masoud Karimi
+  built_by_url: https://github.com/masoudkarimif
 - title: Jamify.me
   description: >
     We build websites & PWAs with JAMstack. Delivering faster, more secure web.
