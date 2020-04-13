@@ -5853,6 +5853,22 @@
     - CSS-in-Reason support
     - StaticQuery GraphQL support in ReasonML
     - Similar to gatsby-starter-blog
+
+- url: https://gct.mozart409.space/
+  repo: https://github.com/Mozart409/gatsby-custom-tailwind
+  description: A minimal tailwind css starter, with custom fonts, purgecss, automatic linting when committing to master, awesome lighthouse audit, custom zeit/serve server for production build, visible to all in your network, so you can test it with your phone.
+  tags:
+    - Linting
+    - PWA
+    - SEO
+    - Styling:Tailwind
+    - Styling:PostCSS
+  features:
+    - Minimal Tailwind Starter
+    - Custom Fonts predefined
+    - Automatic Linting on Commit using husky and pretty-quick
+    - Custom server to test Production Builds on your local network via zeit/serve
+    - Extensive Readme in the repo
 - url: https://gatsby-redux-toolkit-typescript.netlify.com/
   repo: https://github.com/saimirkapaj/gatsby-redux-toolkit-typescript-starter
   description: Gatsby Starter using Redux-Toolkit, Typescript, Styled Components and Tailwind CSS.
