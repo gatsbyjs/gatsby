@@ -9,7 +9,7 @@ tags:
   - netlify
 ---
 
-MagMutual, a leading professional healthcare liability insurer, needed to redesign and re-platform the company’s [MagMutual.com](http://www.magmutual.com) website to further its core mission: to serve and protect policyholders.
+MagMutual, a leading professional healthcare liability insurer, needed to redesign and re-platform the company’s [MagMutual.com](https://www.magmutual.com) website to further its core mission: to serve and protect policyholders.
 
 ![Overview of the new MagMutal website UI](./MagMutual_design_sm.png)
 
