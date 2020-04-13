@@ -53,7 +53,7 @@ Your plugin will have the following behavior:
 - Accept plugin options to customize how your plugin works
 - Optimize images from Unsplash URLs so they can be used with `gatsby-image`
 
-### Setup
+### Setup projects for plugin development
 
 You'll need to setup an example site and create a plugin inside it to begin building.
 
@@ -458,3 +458,170 @@ exports.sourceNodes = async ({
   return
 }
 ```
+
+At this point you should be able to run `gatsby develop` in your `example-site`, open up GraphiQL at `http://localhost:8000/___graphql` and query both posts and authors.
+
+```graphql
+query {
+  allPost {
+    nodes {
+      id
+      description
+      imgUrl
+    }
+  }
+  allAuthor {
+    nodes {
+      id
+      name
+    }
+  }
+}
+```
+
+### Optimize remote images
+
+Each node of post data has an `imgUrl` field with the URL of an image on Unsplash. You could use that URL to load images on your site, but they will be large and take a long time to load. You can optimize the images with your source plugin so that a site using your plugin already has data for `gatsby-image` ready to go!
+
+You can read about [how to use Gatsby Image to prevent image bloat](/docs/using-gatsby-image/) if you are unfamiliar with it.
+
+#### Create `remoteFilenNode`'s from a URL
+
+To create optimized images from URLs, `File` nodes for image files need to be added to your site's data. Then, `gatsby-plugin-sharp` and `gatsby-transformer-sharp` need to be installed, and they will automatically find image files and add the data needed for `gatsby-image`.
+
+Start by installing `gatsby-source-system in the`source-plugin`:
+
+```shell:title=source-plugin
+npm install gatsby-source-filesystem
+```
+
+Now in your plugin's `gatsby-node`, you can implement a new API that gets called everytime a node is created called `onCreateNode`. You can check if the node created was one of your `Post` nodes, and if it was, create a file from the URL on the `imgUrl` field.
+
+Import the `createRemoteFileNode` helper from `gatsby-source-filesystem`, which will download a file from a remote location and create a `File` node for you.
+
+```javascript:title=source-plugin/gatsby-node.js
+const { ApolloClient } = require("apollo-client")
+const { InMemoryCache } = require("apollo-cache-inmemory")
+const { split } = require("apollo-link")
+const { HttpLink } = require("apollo-link-http")
+const { WebSocketLink } = require("apollo-link-ws")
+const { getMainDefinition } = require("apollo-utilities")
+const fetch = require("node-fetch")
+const gql = require("graphql-tag")
+const WebSocket = require("ws")
+// highlight-start
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+// highlight-end
+```
+
+Then export a new function `onCreateNode`, and call `createRemoteFileNode` in it whenever a node of of type `Post` is created:
+
+```javascript:title=source-plugin/gatsby-node.js
+// called each time a node is created
+exports.onCreateNode = async ({
+  node, // the node that was just created
+  actions: { createNode },
+  createNodeId,
+  getCache,
+}) => {
+  if (node.internal.type === POST_NODE_TYPE) {
+    const fileNode = await createRemoteFileNode({
+      // the url of the remote image to generate a node for
+      url: node.imgUrl,
+      parentNodeId: node.id,
+      createNode,
+      createNodeId,
+      getCache,
+    })
+
+    if (fileNode) {
+      node.remoteImage___NODE = fileNode.id
+    }
+  }
+}
+```
+
+This code is called every time a node is created, i.e. when `createNode` is invoked. Each time it is called in the `sourceNodes` step, the condition will check if the node was a `Post` node since those are the only nodes with an image associated with them in your case. Then a remote node is created, if it's successful, the `fileNode` is returned. The next few lines are important:
+
+```javascript:title=source-plugin/gatsby-node.js
+if (fileNode) {
+  // save the ID of the fileNode on the Post node
+  node.remoteImage___NODE = fileNode.id
+}
+```
+
+By assigning a field called `remoteImage___NODE` the ID of the `File` node that was created, Gatsby will be able to [infer](/docs/glossary#inference) a connection between this field and the file node. This will allow fields on the file to be queried from the post node.
+
+```graphql
+# instead of
+query {
+  allPost {
+    nodes {
+      id
+      remoteImage # returns an ID like "ecd83d94-7111-5386-bd3f-0066248b6fa9"
+    }
+  }
+}
+# get an entire node you can query more fields on
+query {
+  allPost {
+    nodes {
+      id
+      remoteImage {
+        id
+        relativePath
+      }
+    }
+  }
+}
+```
+
+_**Note**: you can use [schema customization APIs](/docs/schema-customization) to create these kind of connections between nodes that are sturdier and more strictly typed as well._
+
+At this point you have created files and associated them with your posts, but you still need to transform the files into optimized versions.
+
+#### Transform `File` nodes with sharp plugins
+
+Sharp plugins make optimization of images possible at build time.
+
+Install `gatsby-plugin-sharp` and `gatsby-transformer-sharp` in the `example-site` (_not_ the plugin):
+
+```shell:title=example-site
+npm install gatsby-plugin-sharp gatsby-transformer-sharp
+```
+
+Then include the plugins in your `gatsby-config`:
+
+```javascript:title=example-site/gatsby-config.js
+module.exports = {
+  plugins: [
+    require.resolve(`../source-plugin`),
+    // highlight-start
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    // highlight-end
+  ],
+}
+```
+
+By installing the sharp plugins in the site, they'll run after the source plugin and transform the file nodes and add fields for the optimized versions at `childImageSharp`. The transformer plugin looks for `File` nodes with extensions like `.jpg` and `.png` to create optimized images from, and creates the GraphQL fields for you.
+
+Now when you run your site, you will also be able to query a `childImageSharp` field on the `post.remoteImage`:
+
+```graphql
+query {
+  allPost {
+    nodes {
+      remoteImage {
+        // highlight-start
+        childImageSharp {
+          id
+        }
+        // highlight-end
+      }
+    }
+  }
+}
+```
+
+With data available, you can now query optimized images to use with the `gatsby-image` component in a site!
