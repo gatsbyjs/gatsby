@@ -30,7 +30,7 @@ function getLanguages(localeStr) {
   return langs
 }
 
-const langs = getLanguages(`ja id es pl pt-BR zh-Hans`)
+const langs = getLanguages(process.env.LOCALES)
 const langCodes = langs.map(lang => lang.code)
 
 const i18nEnabled = langs.length > 0
