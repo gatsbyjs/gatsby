@@ -5300,12 +5300,13 @@
     - Language:TypeScript
     - Linting
     - Netlify
+    - Testing
   features:
-    - ✔️ Gatsby
-    - ✔️ TypeScript
-    - ✔️ Prettier
-    - ✔️ ESLint
-    - ✔️ Deploy to Netlify through GitHub Actions
+    - TypeScript
+    - ESLint for JS linting
+    - Prettier code formatting
+    - Jest for testing
+    - Deploy to Netlify through GitHub Actions
 - url: https://answer.netlify.com/
   repo: https://github.com/passwd10/gatsby-starter-answer
   description: A simple Gatsby blog to show your Future Action on top of the page
