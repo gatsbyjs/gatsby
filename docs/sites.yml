@@ -10370,10 +10370,6 @@
     The Cares Family helps people find connection and community in a disconnected age. They relaunched their website in Gatsby during the COVID-19 outbreak of 2020 to help connect neighbours.
   categories:
     - Nonprofit
-    - CMS:Craft
-    - Netlify
-    - Styling:Tailwind
-    - Pagination
     - Blog
     - Community
   built_by: Mutual
