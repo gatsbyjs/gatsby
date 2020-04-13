@@ -25,11 +25,11 @@ You can sign up for the following accounts now or as you need to use each of the
 - [Snipcart](https://snipcart.com/): add a shopping cart to your site
 - [Netlify](https://www.netlify.com/): host your site and register a domain
 
-To edit code locally (affecting files stored on your computer), you'll need the following software. If you don't already know what these are or want additional background information, check out [Step 0 of the Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-zero/). It includes detailed instructions on how to set up a local development environment.
+To edit code locally (affecting files stored on your computer), you'll need the following software. If you don't already know what these are or want additional background information, check out [Step 0 of the Gatsby tutorial](/tutorial/part-zero/). It includes detailed instructions on how to set up a local development environment.
 
 - [Node.js](https://nodejs.org): run JavaScript on your computer
 - [Git](https://git-scm.com/downloads): track changes to your code
-- [Gatsby command line interface (CLI)](https://www.gatsbyjs.org/tutorial/part-zero/#using-the-gatsby-cli): run Gatsby commands on your computer
+- [Gatsby command line interface (CLI)](/tutorial/part-zero/#using-the-gatsby-cli): run Gatsby commands on your computer
 
 ## Provisioning Your Site on Gatsby Cloud
 
@@ -135,7 +135,7 @@ Add your DatoCMS API Token environment variable to this file. You can find your 
 DATO_API_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-Now you should be able to run `gatsby develop` to run your site. If you're using Visual Studio Code, you can open a terminal within the text editor (control + `) and keep everything in one window. Navigate to [localhost:8000](http://localhost:8000/) in your browser to see the example site. It should include whatever products you created in DatoCMS.
+Now you should be able to run `gatsby develop` to run your site. If you're using Visual Studio Code, you can open a terminal within the text editor (control + \`) and keep everything in one window. Navigate to `http://locahost:8000/` in your browser to see the example site. It should include whatever products you created in DatoCMS.
 
 ![sample shop has a bright blue, pink, and green gradient as a background. Stacking rings, rhodochrosite ring, and statement earrings have been added as products](/images/sample-with-products.png)
 
