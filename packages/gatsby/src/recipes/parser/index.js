@@ -168,7 +168,7 @@ const getSource = async (pathOrUrl, projectRoot) => {
   if (isRelative(pathOrUrl)) {
     recipePath = path.join(projectRoot, pathOrUrl)
   } else {
-    recipePath = path.join(__dirname, `../`, pathOrUrl)
+    recipePath = path.join(__dirname, `../mdx-src`, pathOrUrl)
   }
   if (recipePath.slice(-4) !== `.mdx`) {
     recipePath += `.mdx`
