@@ -21,7 +21,7 @@ Follow the issue for updates!
 https://github.com/gatsbyjs/gatsby/issues/22991
 
 
-## What is a recipe?
+## Running an example recipe
 First, try running a recipe called `gatsby recipes emotion` by following these steps:
 
 Create a new Hello World Gatsby site:
@@ -42,7 +42,7 @@ Now run the Emotion recipe and follow the commands.
 
 `gatsby recipes emotion`
 
-## How do I write a recipe?
+## Writing a recipe
 
 Here's how you would write the `gatsby recipes emotion` recipe you just ran: 
 
