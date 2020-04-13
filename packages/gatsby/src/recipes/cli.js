@@ -1,7 +1,8 @@
+const React = require(`react`)
 const fs = require(`fs`)
 const lodash = require(`lodash`)
+import Boxen from "ink-box"
 
-const React = require(`react`)
 const { useState } = require(`react`)
 const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
@@ -334,6 +335,19 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
 
     return (
       <>
+        <Boxen
+          borderStyle="double"
+          borderColor="white"
+          float="center"
+          padding={1}
+          margin={{ bottom: 1 }}
+        >
+          Thank you for trying the experimental version of Gatsby Recipes!
+        </Boxen>
+        <Div marginBottom={2} alignItems="center">
+          Please ask questions, report bugs, and subscribe for updates in our
+          umbrella issue at https://github.com/gatsbyjs/gatsby/issues/22991
+        </Div>
         <Static>
           {lodash.flattenDeep(state.context.stepResources).map((r, i) => (
             <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>
@@ -341,7 +355,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         </Static>
         {state.context.currentStep > 0 && state.value !== `done` && (
           <Div>
-            <Text>
+            <Text underline bold>
               Step {state.context.currentStep} /{` `}
               {state.context.steps.length - 1}
             </Text>
