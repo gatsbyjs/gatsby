@@ -130,3 +130,59 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 ### Additional resources
 
 - [Hosting on Cloudflare](/docs/deploying-to-cloudflare-workers)
+
+## Setting up Google Analytics
+
+Use `gatsby-plugin-google-analytics` to track site activity and provide insights into how users access your website.
+
+### Prerequisites
+
+- A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file and an `index.js` page
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+- A domain from your provider of choice, e.g. [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
+
+### Verify the domain in search.google.com
+
+1. Navigate to the [Google search console](<(https://search.google.com/search-console/not-verified)>) to verify the domain by clicking on **Search Property** > **Add Property**. Type in your domain and press Continue.
+2. Add a **TXT** record to your DNS configuration. Follow the directions for your provider, or refer to the [Google documentation](https://support.google.com/a/answer/183895?hl=en).
+
+### Linking the domain to Google Analytics admin
+
+1. Log into [Google Analytics](https://analytics.google.com/analytics/).
+2. Click **Admin**.
+3. Select **Create Property** in the Property column.
+4. Choose **Web**.
+5. Fill in the details and click **Create**.
+
+### Getting your Google Analytics `Tracking ID`
+
+1. Sign in to your Google Analytics account.
+2. Click **Admin**.
+3. Select an account from the menu in the ACCOUNT column.
+4. Select a property from the menu in the PROPERTY column.
+5. Under Property, click **Tracking Info** > **Tracking Code**. Your Tracking ID is displayed at the top of the page.
+
+### Using the ID in the plugin
+
+1. Run `npm install gatsby-plugin-google-analytics` in your terminal.
+2. Add the following to your `gatsby-config.js` file.
+
+```javascript:title="gatsby-config.js"
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        // replace "UA-XXXXXXXXX-X" with your own Tracking ID
+        trackingId: "UA-XXXXXXXXX-X",
+      },
+    },
+  ],
+}`
+```
+
+3. Build and deploy your site to start seeing traffic in your [Google Analytics dashboard](https://analytics.google.com/analytics/web/).
+
+### Additional resources
+
+- [adding-analytics](https://www.gatsbyjs.org/docs/adding-analytics/)
