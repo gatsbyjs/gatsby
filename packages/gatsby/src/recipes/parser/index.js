@@ -21,13 +21,18 @@ const asRoot = nodes => {
 
 const toJson = value => {
   const obj = {}
-  jsxToJson(value).forEach(([type, props = {}]) => {
-    if (type === `\n`) {
-      return
-    }
-    obj[type] = obj[type] || []
-    obj[type].push(props)
-  })
+  try {
+    const values = jsxToJson(value)
+    values.forEach(([type, props = {}]) => {
+      if (type === `\n`) {
+        return undefined
+      }
+      obj[type] = obj[type] || []
+      obj[type].push(props)
+    })
+  } catch (e) {
+    throw e
+  }
   return obj
 }
 
@@ -72,6 +77,10 @@ const handleImports = tree => {
 
 const unwrapImports = async (tree, imports) =>
   new Promise((resolve, reject) => {
+    if (!Object.keys(imports).length) {
+      return resolve()
+    }
+
     let count = 0
 
     visit(tree, `jsx`, () => {
@@ -83,10 +92,15 @@ const unwrapImports = async (tree, imports) =>
     }
 
     visit(tree, `jsx`, async (node, index, parent) => {
-      const names = toJson(node.value)
-      const _newValue = removeElementByName(node.value, {
-        names: Object.keys(imports),
-      })
+      let names
+      try {
+        names = toJson(node.value)
+        removeElementByName(node.value, {
+          names: Object.keys(imports),
+        })
+      } catch (e) {
+        throw e
+      }
 
       if (names) {
         Object.keys(names).map(async name => {
@@ -112,7 +126,7 @@ const partitionSteps = ast => {
   ast.children.forEach(node => {
     if (node.type === `thematicBreak`) {
       index++
-      return
+      return undefined
     }
 
     steps[index] = steps[index] || []
@@ -136,17 +150,22 @@ const toMdxWithoutJsx = nodes => {
 }
 
 const parse = async src => {
-  const ast = u.parse(src)
-  const imports = handleImports(ast)
-  await unwrapImports(ast, imports)
-  const steps = partitionSteps(ast)
+  try {
+    const ast = u.parse(src)
+    const imports = handleImports(ast)
+    await unwrapImports(ast, imports)
+    const steps = partitionSteps(ast)
+    const commands = extractCommands(steps)
 
-  return {
-    ast,
-    steps,
-    commands: extractCommands(steps),
-    stepsAsMdx: steps.map(toMdx),
-    stepsAsMdxWithoutJsx: steps.map(toMdxWithoutJsx),
+    return {
+      ast,
+      steps,
+      commands,
+      stepsAsMdx: steps.map(toMdx),
+      stepsAsMdxWithoutJsx: steps.map(toMdxWithoutJsx),
+    }
+  } catch (e) {
+    throw e
   }
 }
 
@@ -180,8 +199,13 @@ const getSource = async (pathOrUrl, projectRoot) => {
 
 module.exports = async (recipePath, projectRoot) => {
   const src = await getSource(recipePath, projectRoot)
-  const result = await parse(src)
-  return result
+  try {
+    const result = await parse(src)
+    return result
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
 }
 
 module.exports.parse = parse
