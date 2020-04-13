@@ -102,11 +102,11 @@ log(
 
 const PlanContext = React.createContext({})
 
-module.exports = ({ recipe, projectRoot }) => {
-  const GRAPHQL_ENDPOINT = `http://localhost:4000/graphql`
+module.exports = ({ recipe, graphqlPort, projectRoot }) => {
+  const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
 
   const subscriptionClient = new SubscriptionClient(
-    `ws://localhost:4000/graphql`,
+    `ws://localhost:${graphqlPort}/graphql`,
     {
       reconnect: true,
     },
