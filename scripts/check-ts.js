@@ -15,7 +15,8 @@ const execa = require(`execa`)
 
 console.log(`TS Check: Running...`)
 
-const PACKAGES_DIR = path.resolve(__dirname, `../packages`)
+const toAbsolutePath = relativePath => path.join(__dirname, `..`, relativePath)
+const PACKAGES_DIR = toAbsolutePath(`/packages`)
 
 const filterPackage = yargs.argv._[0]
 
@@ -64,19 +65,15 @@ let totalJsFiles = 0
 
 packagesWithTs.forEach(project => {
   const tsFiles = glob.sync(
-    `./packages/${project.split(/.*packages[/\\]/)[1]}/src/**/*.ts`,
-    {
-      root: project,
-      ignore: `**/node_modules/**`,
-    }
+    toAbsolutePath(
+      `./packages/${project.split(/.*packages[/\\]/)[1]}/src/**/*.ts`
+    )
   ).length
 
   const jsFiles = glob.sync(
-    `./packages/${project.split(/.*packages[/\\]/)[1]}/src/**/*.js`,
-    {
-      root: project,
-      ignore: `**/node_modules/**`,
-    }
+    toAbsolutePath(
+      `./packages/${project.split(/.*packages[/\\]/)[1]}/src/**/*.js`
+    )
   ).length
 
   totalTsFiles += tsFiles
