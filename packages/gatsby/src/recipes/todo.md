@@ -40,6 +40,7 @@
 - [ ] update shadow file resource
 - [ ] write tests for remote files src in File
 - [ ] Gatsby recipes list (design and implementation)
+- [ ] print pretty error when there's parsing errors of mdx files
 - [ ] Move gatsby/src/recipes to its own package `gatsby-recipes` & pull them from unpkg w/ make-fetch-happen/file-system-cache
 - [ ] handle people pressing Y & quit if they press "n" (for now)
 - [ ] handle error states
