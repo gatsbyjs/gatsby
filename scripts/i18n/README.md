@@ -70,3 +70,13 @@ When run, the script will:
 - Pulls the latest version of `gatsby-i18n-source`.
 - Creates a "sync" pull request that updates all files that do not contain conflicts from the merge.
 - Creates a "conflicts" pull request that contains all merge conflicts, with instructions on how to resolve them.
+
+### `run-all`
+
+Usage:
+
+```shell
+yarn run-all [script name]
+```
+
+The `run-all` script runs the script provided in the argument across all languages for which there are translations of gatbyjs.org, listed in /www/src/i18n.json.

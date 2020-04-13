@@ -1,8 +1,11 @@
 import { store } from "./"
 import { IGatsbyNode } from "./types"
 import { createPageDependency } from "./actions/add-page-dependency"
+import { IDbQueryElemMatch } from "../db/common/query"
 
 export type FilterCacheKey = string
+export type FilterCache = Map<string | number | boolean, Set<IGatsbyNode>>
+export type FiltersCache = Map<FilterCacheKey, FilterCache>
 
 /**
  * Get all nodes from redux store.
@@ -160,59 +163,178 @@ export const ensureIndexByTypedChain = (
   cacheKey: FilterCacheKey,
   chain: string[],
   nodeTypeNames: string[],
-  typedKeyValueIndexes: Map<
-    FilterCacheKey,
-    Map<string | number | boolean, Set<IGatsbyNode>>
-  >
+  filtersCache: FiltersCache
 ): void => {
-  if (typedKeyValueIndexes.has(cacheKey)) {
+  const state = store.getState()
+  const resolvedNodesCache = state.resolvedNodesCache
+
+  const filterCache: FilterCache = new Map()
+  filtersCache.set(cacheKey, filterCache)
+
+  // We cache the subsets of nodes by type, but only one type. So if searching
+  // through one node type we can prevent a search through all nodes, otherwise
+  // it's probably faster to loop through all nodes. Perhaps. Maybe.
+
+  if (nodeTypeNames.length === 1) {
+    getNodesByType(nodeTypeNames[0]).forEach(node => {
+      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
+    })
+  } else {
+    // Here we must first filter for the node type
+    // This loop is expensive at scale (!)
+    state.nodes.forEach(node => {
+      if (!nodeTypeNames.includes(node.internal.type)) {
+        return
+      }
+
+      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
+    })
+  }
+}
+
+function addNodeToFilterCache(
+  node: IGatsbyNode,
+  chain: Array<string>,
+  filterCache: FilterCache,
+  resolvedNodesCache,
+  valueOffset: any = node
+): void {
+  // There can be a filter that targets `__gatsby_resolved` so fix that first
+  if (!node.__gatsby_resolved) {
+    const typeName = node.internal.type
+    const resolvedNodes = resolvedNodesCache.get(typeName)
+    node.__gatsby_resolved = resolvedNodes?.get(node.id)
+  }
+
+  // - for plain query, valueOffset === node
+  // - for elemMatch, valueOffset is sub-tree of the node to continue matching
+  let v = valueOffset as any
+  let i = 0
+  while (i < chain.length && v) {
+    const nextProp = chain[i++]
+    v = v[nextProp]
+  }
+
+  if (
+    (typeof v !== `string` &&
+      typeof v !== `number` &&
+      typeof v !== `boolean`) ||
+    i !== chain.length
+  ) {
+    // Not sure whether this is supposed to happen, but this means that either
+    // - The node chain ended with `undefined`, or
+    // - The node chain ended in something other than a primitive, or
+    // - A part in the chain in the object was not an object
     return
   }
 
-  const { nodes, resolvedNodesCache } = store.getState()
+  let set = filterCache.get(v)
+  if (!set) {
+    set = new Set()
+    filterCache.set(v, set)
+  }
+  set.add(node)
+}
 
-  const byKeyValue = new Map<string | number | boolean, Set<IGatsbyNode>>()
-  typedKeyValueIndexes.set(cacheKey, byKeyValue)
+export const ensureIndexByElemMatch = (
+  cacheKey: FilterCacheKey,
+  filter: IDbQueryElemMatch,
+  nodeTypeNames: Array<string>,
+  filtersCache: FiltersCache
+): void => {
+  // Given an elemMatch filter, generate the cache that contains all nodes that
+  // matches a given value for that sub-query
 
-  nodes.forEach(node => {
-    if (!nodeTypeNames.includes(node.internal.type)) {
-      return
-    }
+  const state = store.getState()
+  const { resolvedNodesCache } = state
 
-    // There can be a filter that targets `__gatsby_resolved` so fix that first
-    if (!node.__gatsby_resolved) {
-      const typeName = node.internal.type
-      const resolvedNodes = resolvedNodesCache.get(typeName)
-      node.__gatsby_resolved = resolvedNodes?.get(node.id)
-    }
+  const filterCache: FilterCache = new Map()
+  filtersCache.set(cacheKey, filterCache)
 
-    let v = node as any
-    let i = 0
-    while (i < chain.length && v) {
-      const nextProp = chain[i++]
-      v = v[nextProp]
-    }
+  if (nodeTypeNames.length === 1) {
+    getNodesByType(nodeTypeNames[0]).forEach(node => {
+      addNodeToBucketWithElemMatch(
+        node,
+        node,
+        filter,
+        filterCache,
+        resolvedNodesCache
+      )
+    })
+  } else {
+    // Expensive at scale
+    state.nodes.forEach(node => {
+      if (!nodeTypeNames.includes(node.internal.type)) {
+        return
+      }
 
-    if (
-      (typeof v !== `string` &&
-        typeof v !== `number` &&
-        typeof v !== `boolean`) ||
-      i !== chain.length
-    ) {
-      // Not sure whether this is supposed to happen, but this means that either
-      // - The node chain ended with `undefined`, or
-      // - The node chain ended in something other than a primitive, or
-      // - A part in the chain in the object was not an object
-      return
-    }
+      addNodeToBucketWithElemMatch(
+        node,
+        node,
+        filter,
+        filterCache,
+        resolvedNodesCache
+      )
+    })
+  }
+}
 
-    let set = byKeyValue.get(v)
-    if (!set) {
-      set = new Set()
-      byKeyValue.set(v, set)
-    }
-    set.add(node)
-  })
+function addNodeToBucketWithElemMatch(
+  node: IGatsbyNode,
+  valueAtCurrentStep: any, // Arbitrary step on the path inside the node
+  filter: IDbQueryElemMatch,
+  filterCache: FilterCache,
+  resolvedNodesCache
+): void {
+  // There can be a filter that targets `__gatsby_resolved` so fix that first
+  if (!node.__gatsby_resolved) {
+    const typeName = node.internal.type
+    const resolvedNodes = resolvedNodesCache.get(typeName)
+    node.__gatsby_resolved = resolvedNodes?.get(node.id)
+  }
+
+  const { path, nestedQuery } = filter
+
+  // Find the value to apply elemMatch to
+  let i = 0
+  while (i < path.length && valueAtCurrentStep) {
+    const nextProp = path[i++]
+    valueAtCurrentStep = valueAtCurrentStep[nextProp]
+  }
+
+  if (path.length !== i) {
+    // Found undefined before the end of the path, so let Sift take over
+    return
+  }
+
+  // `v` should now be an elemMatch target, probably an array (but maybe not)
+
+  if (Array.isArray(valueAtCurrentStep)) {
+    // Note: We need to check all elements because the node may need to be added
+    // to multiple buckets (`{a:[{b:3},{b:4}]}`, for `a.elemMatch.b/eq` that
+    // node ends up in buckets for value 3 and 4. This may lead to duplicate
+    // work when elements resolve to the same value, but that can't be helped.
+    valueAtCurrentStep.forEach(elem => {
+      if (nestedQuery.type === `elemMatch`) {
+        addNodeToBucketWithElemMatch(
+          node,
+          elem,
+          nestedQuery,
+          filterCache,
+          resolvedNodesCache
+        )
+      } else {
+        // Now take same route as non-elemMatch filters would take
+        addNodeToFilterCache(
+          node,
+          nestedQuery.path,
+          filterCache,
+          resolvedNodesCache,
+          elem
+        )
+      }
+    })
+  }
 }
 
 /**
@@ -228,14 +350,11 @@ export const ensureIndexByTypedChain = (
  * The only exception is `id`, since internally there can be at most one node
  * per `id` so there's a minor optimization for that (no need for Sets).
  */
-export const getNodesByTypedChain = (
+export const getFilterCacheByTypedChain = (
   cacheKey: FilterCacheKey,
   value: boolean | number | string,
-  typedKeyValueIndexes: Map<
-    FilterCacheKey,
-    Map<string | number | boolean, Set<IGatsbyNode>>
-  >
+  filtersCache: FiltersCache
 ): Set<IGatsbyNode> | undefined => {
-  const byTypedKey = typedKeyValueIndexes?.get(cacheKey)
+  const byTypedKey = filtersCache?.get(cacheKey)
   return byTypedKey?.get(value)
 }
