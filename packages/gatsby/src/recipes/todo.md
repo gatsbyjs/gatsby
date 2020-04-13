@@ -37,6 +37,7 @@
 - [ ] use yarn/npm based on the user config
 - [ ] test modifying gatsby-config.js from default starter
 - [ ] integration test for each resource (read, create, update, delete)
+- [ ] spike on bundling recipes into one file
 - [ ] update shadow file resource
 - [ ] write tests for remote files src in File
 - [ ] Gatsby recipes list (design and implementation)
