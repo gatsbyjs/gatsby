@@ -1,12 +1,12 @@
 ---
 title: "Rebuilding the Agility CMS Website with Gatsby (one page at a time)"
 date: 2020-04-13
-author: Debra Combs
+author: Joel Varty
 excerpt: "When the Agility CMS team asked Joel Varty, the company's president, for a home page upgrade that could handle not only content but new integrations with mar-tech apps, he jumped at the chance to build it on Gatsby using JAMstack architecture."
 tags:
   - netlify
   - headless-cms
-  - gatsby-cloud
+  - jamstack
 ---
 
 I've been preaching about JAMStack for a while now, and lately I've been talking a lot about how you can [move your website to JAMStack without rebuilding everything](https://agilitycms.com/resources/posts/migrate-to-jamstack-now-no-excuses).
