@@ -32,24 +32,29 @@
 - [x] imports from a url
 - [x] Document the supported components and trivial guide on recipe authoring
 - [x] have File only pull from remote files for now until multiline strings work in MDX
+- [x] integration test for each resource (read, create, update, delete)
+- [x] update shadow file resource
+- [x] handle error states
+
+Kyle
+
 - [ ] Make port selection dynamic
 - [ ] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
 - [ ] use yarn/npm based on the user config
-- [ ] test modifying gatsby-config.js from default starter
-- [ ] integration test for each resource (read, create, update, delete)
-- [ ] spike on bundling recipes into one file
-- [ ] update shadow file resource
 - [ ] write tests for remote files src in File
+- [ ] move back to "press enter to run"
+- [ ] write blog post
+
+John
+
+- [ ] spike on bundling recipes into one file
 - [ ] Gatsby recipes list (design and implementation)
 - [ ] print pretty error when there's parsing errors of mdx files
-- [ ] Move gatsby/src/recipes to its own package `gatsby-recipes` & pull them from unpkg w/ make-fetch-happen/file-system-cache
-- [ ] handle people pressing Y & quit if they press "n" (for now)
-- [ ] handle error states
+- [ ] Move mdx recipes to its own package `gatsby-recipes` & pull them from unpkg
+- [ ] add CODEOWNERS file for recipes
 - [ ] validate that the first step of recipes don't have any resources. They should just be for the title/description
-- [ ] diff all resource changes — add test for all resources that they return something for this & remove current/new state
-- [ ] move code to its own package `gatsby-recipes`
 - [ ] handle not finding a recipe
-- [ ] write blog post
+- [ ] test modifying gatsby-config.js from default starter
 
 ## Near-ish future
 
@@ -66,3 +71,4 @@
 - [ ] Show in plan if an update will be applied vs. create.
 - [ ] Implement config object for GatsbyPlugin
 - [ ] Handle JS in config objects? { **\_javascript: "`\${**dirname}/foo/bar`" }
+- [ ] handle people pressing Y & quit if they press "n" (for now)

@@ -65,7 +65,7 @@ const components = {
   strong: props => <Text bold {...props} />,
   em: props => <Text italic {...props} />,
   p: props => {
-    let children = elimiateNewLines(props.children)
+    const children = elimiateNewLines(props.children)
     return (
       <Box
         width="100%"
