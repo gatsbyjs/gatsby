@@ -1,7 +1,7 @@
 # Gatsby Recipes
 
 Gatsby Recipes is framework for automating common Gatsby tasks. Recipes are MDX
-files which when run by our interpretor, perform common actions like installing
+files which, when run by our interpretor, perform common actions like installing
 NPM packages, installing plugins, creating pages, etc.
 
 It's designed to be extensible so new capabilities can be added which allow
@@ -29,11 +29,11 @@ Let's write our first Recipe to setup Emotion on a Gatsby site.
 
 [Emotion](https://emotion.sh/) is a powerful CSS-in-JS library that supports both inline CSS styles and styled components. You can use each styling feature individually or together in the same file.
 
----
+--- // use three dashes to separate steps of the recipe
 
 Install necessary NPM packages
 
-<NPMPackage name="gatsby-plugin-emotion" />
+<NPMPackage name="gatsby-plugin-emotion" /> // refer to the API in this doc to see what APIs are available, like `NPMPackage`
 <NPMPackage name="@emotion/core" />
 <NPMPackage name="@emotion/styled" />
 
