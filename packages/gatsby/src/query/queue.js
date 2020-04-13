@@ -10,6 +10,7 @@ const createBaseOptions = () => {
     concurrent: Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 4,
     // eslint-disable-next-line new-cap
     store: FastMemoryStore(),
+    maxTimeout: 15000,
   }
 }
 
