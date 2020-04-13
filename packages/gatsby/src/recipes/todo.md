@@ -35,6 +35,7 @@
 - [ ] Make port selection dynamic
 - [ ] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
 - [ ] use yarn/npm based on the user config
+- [ ] test modifying gatsby-config.js from default starter
 - [ ] integration test for each resource (read, create, update, delete)
 - [ ] update shadow file resource
 - [ ] write tests for remote files src in File
