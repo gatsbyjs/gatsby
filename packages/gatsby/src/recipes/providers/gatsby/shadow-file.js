@@ -105,7 +105,7 @@ module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
     contents: newContents
   }
 
-  const diff = await getDiff(currentResource.contents, newContents)
+  const diff = await getDiff(currentResource.contents || '', newContents)
 
   return {
     id,
