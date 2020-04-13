@@ -10354,3 +10354,12 @@
   built_by: Masatoshi Nishiguchi
   built_by_url: https://mnishiguchi.com
   featured: false
+- title: Jamify.me
+  description: >
+    We build websites & PWAs with JAMstack. Delivering faster, more secure web.
+  main_url: https://jamify.me
+  url: https://jamify.me
+  categories:
+    - Agency
+    - Web Development
+  featured: false

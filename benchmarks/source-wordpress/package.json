@@ -12,18 +12,14 @@
     "serve": "gatsby serve",
     "start": "npm run develop"
   },
-  "resolutions": {
-    "sharp": "0.25.1"
-  },
   "dependencies": {
     "dotenv": "^8.2.0",
     "gatsby": "^2.19.35",
     "gatsby-image": "^2.2.40",
     "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-source-filesystem": "^2.1.48",
-    "gatsby-source-wordpress-experimental": "^0.0.15",
+    "gatsby-source-wordpress-experimental": "^0.0.29",
     "gatsby-transformer-sharp": "^2.3.14",
-    "lodash.kebabcase": "^4.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },

@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
 import { createContentDigest } from "gatsby-core-utils"
@@ -537,7 +538,7 @@ export interface GatsbyBrowser {
     args: ReplaceComponentRendererArgs,
     options: PluginOptions
   ): any
-  replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): any
+  replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): Renderer
   shouldUpdateScroll?(args: ShouldUpdateScrollArgs, options: PluginOptions): any
   wrapPageElement?(
     args: WrapPageElementBrowserArgs,

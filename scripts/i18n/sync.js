@@ -256,6 +256,7 @@ async function syncTranslationRepo(code) {
     body: syncPRBody(),
     maintainerCanModify: true,
   })
+  await addLabelToPullRequest(syncPR, syncLabel)
 
   // if we successfully publish the PR, pull again and create a new PR --
   shell.exec(`git checkout master`)
@@ -332,9 +333,6 @@ async function syncTranslationRepo(code) {
     maintainerCanModify: true,
     draft: true,
   })
-
-  logger.info(`Adding ${syncLabelName} labels to created pull requests...`)
-  await addLabelToPullRequest(syncPR, syncLabel)
   await addLabelToPullRequest(conflictsPR, syncLabel)
 }
 
