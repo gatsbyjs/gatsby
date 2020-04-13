@@ -5912,3 +5912,18 @@
     - Stylesheet built using Sass and BEM-Style naming.
     - Syntax highlighting in code blocks.
     - Google Analytics support.
+- url: https://thecodemint.github.io/gatsby-starter-simple/
+  repo: https://github.com/thecodemint/gatsby-starter-simple
+  description: A minimal and lightweight blogging gatsby starter.
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - PWA
+    - Styling:CSS
+  features:
+    - Styled Components
+    - Markdown Blogs
+    - Responsive Design
+    - Minimal Design
+    - PWA
