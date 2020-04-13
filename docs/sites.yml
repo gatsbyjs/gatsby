@@ -10363,3 +10363,14 @@
     - Agency
     - Web Development
   featured: false
+- title: "Due to COVID-19: Documenting the Signs of the Pandemic"
+  url: https://duetocovid19.com
+  main_url: https://duetocovid19.com
+  description: >
+    A project to document all the signs that have gone up on the storefronts of our cities in response to the coronavirus pandemic.
+  categories:
+    - Photography
+    - Community
+  built_by: Andrew Louis
+  built_by_url: https://hyfen.net
+  featured: false
