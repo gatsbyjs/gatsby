@@ -5,7 +5,8 @@ const plugin = require(`./plugin`)
 const { addPluginToConfig, getPluginsFromConfig } = require(`./plugin`)
 const resourceTestHelper = require(`../resource-test-helper`)
 
-const root = path.join(__dirname, `./fixtures`)
+const root = path.join(__dirname, `./fixtures/gatsby-starter-blog`)
+const helloWorldRoot = path.join(__dirname, `./fixtures/gatsby-starter-hello-world`)
 const name = `gatsby-plugin-foo`
 const configPath = path.join(root, `gatsby-config.js`)
 
@@ -15,6 +16,16 @@ describe(`gatsby-plugin resource`, () => {
       resourceModule: plugin,
       resourceName: `GatsbyPlugin`,
       context: { root },
+      initialObject: { id: name, name },
+      partialUpdate: { id: name },
+    })
+  })
+
+  test(`e2e plugin resource test with hello world starter`, async () => {
+    await resourceTestHelper({
+      resourceModule: plugin,
+      resourceName: `GatsbyPlugin`,
+      context: { root: helloWorldRoot },
       initialObject: { id: name, name },
       partialUpdate: { id: name },
     })

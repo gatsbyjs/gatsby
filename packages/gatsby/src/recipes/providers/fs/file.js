@@ -41,6 +41,7 @@ const create = async ({ root }, { id, path: filePath, content }) => {
   if (isUrl(content)) {
     await downloadFile(content, fullPath)
   } else {
+    await fs.ensureFile(fullPath)
     await fs.writeFile(fullPath, content)
   }
 
