@@ -120,7 +120,7 @@ You'll need to make one change before you try to run the site. The version that 
 
 In `gatsby-config.js`, you'll find an array of plugins already installed on your site, including `gatsby-source-datocms`. That section references a variable `process.env.DATO_API_TOKEN`. `process.env` refers to the _environment_ in which you're running your code and `DATO_API_TOKEN` is the name of the particular variable in question.
 
-```jsx:title=gatsby-config.js
+```js:title=gatsby-config.js
 {
   resolve: `gatsby-source-datocms`,
   options: { apiToken: process.env.DATO_API_TOKEN },
@@ -131,7 +131,7 @@ In order to set this variable's value, create a new file in your project's root 
 
 Add your DatoCMS API Token environment variable to this file. You can find your API token in Gatsby under Site Settings > Environment variables. Opening the "Edit" menu will allow you to copy the full token. Set that as the value in `.env.development`.
 
-```
+```text
 DATO_API_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
