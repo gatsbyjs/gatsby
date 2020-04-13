@@ -73,9 +73,9 @@ From a security perspective, he continued, Drupal gave MagMutual a highly secure
 
 ### _Why Apollo GraphQL Server?_
 
-Central data source: Creates a single data source for your website, aggregating data from multiple data sources.
-Data integrity: Apollo removes the need to sync data from different sources so it can be displayed on the website. Data is queried and retrieved in real-time using a simple API.
-Developer velocity: Self-documented API for developers increases efficiency.
+- **Central data source:** Creates a single data source for your website, aggregating data from multiple data sources.
+- **Data integrity:** Apollo removes the need to sync data from different sources so it can be displayed on the website. Data is queried and retrieved in real-time using a simple API.
+- **Developer velocity:** Self-documented API for developers increases efficiency.
 
 ### _Why Netlify?_
 
