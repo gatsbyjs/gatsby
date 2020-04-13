@@ -3,6 +3,10 @@ const _ = require(`lodash`)
 const Joi = require(`@hapi/joi`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
+const { getConfigStore } = require(`gatsby-core-utils`)
+
+const packageMangerConfigKey = `cli.packageManager`
+const PACKAGE_MANGER = getConfigStore().get(packageMangerConfigKey) || `yarn`
 
 const resourceSchema = require(`../resource-schema`)
 
@@ -13,6 +17,29 @@ const asyncForEach = async (array, callback) => {
     await callback(array[index], index, array)
   }
 }
+
+// Generate install commands
+const generateClientComands = ({ packageManager, depType, packageNames }) => {
+  let commands = []
+  if (packageManager === `yarn`) {
+    commands.push(`add`)
+    // Needed for Yarn Workspaces and is a no-opt elsewhere.
+    commands.push(`-W`)
+    if (depType === `devDependency`) {
+      commands.push(`--dev`)
+    }
+
+    return commands.concat(packageNames)
+  } else if (packageManager === `npm`) {
+    commands.push(`install`)
+    if (depType === `devDependency`) {
+      commands.push(`--save-dev`)
+    }
+    return commands.concat(packageNames)
+  }
+}
+
+exports.generateClientComands = generateClientComands
 
 let installs = []
 const executeInstalls = async root => {
@@ -28,27 +55,15 @@ const executeInstalls = async root => {
   )
 
   const pkgs = packagesToInstall.map(p => p.resource)
+  const packageNames = getPackageNames(pkgs)
 
-  let typeFlag = ``
-  if (depType === `devDependency`) {
-    typeFlag = `--dev`
-  }
-  const command = [
-    `yarn`,
-    [`add`, `-W`, typeFlag, ...getPackageNames(pkgs)],
-    {
-      cwd: root,
-    },
-  ]
+  const commands = generateClientComands({
+    packageNames,
+    depType,
+    packageManager: PACKAGE_MANGER,
+  })
 
-  let commands
-  if (typeFlag !== ``) {
-    commands = [`add`, `-W`, typeFlag, ...getPackageNames(pkgs)]
-  } else {
-    commands = [`add`, `-W`, ...getPackageNames(pkgs)]
-  }
-
-  const { stderr, stdout } = await execa(`yarn`, commands, {
+  const { stderr, stdout } = await execa(PACKAGE_MANGER, commands, {
     cwd: root,
   })
 

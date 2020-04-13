@@ -28,3 +28,38 @@ describe(`npm package resource`, () => {
     })
   })
 })
+
+describe(`package manager client commands`, () => {
+  it(`generates the correct commands for yarn`, () => {
+    const yarnInstall = pkg.generateClientComands({
+      packageManager: `yarn`,
+      depType: ``,
+      packageNames: [`gatsby`],
+    })
+
+    const yarnDevInstall = pkg.generateClientComands({
+      packageManager: `yarn`,
+      depType: `devDependency`,
+      packageNames: [`eslint`],
+    })
+
+    expect(yarnInstall).toMatchSnapshot()
+    expect(yarnDevInstall).toMatchSnapshot()
+  })
+  it(`generates the correct commands for npm`, () => {
+    const yarnInstall = pkg.generateClientComands({
+      packageManager: `npm`,
+      depType: ``,
+      packageNames: [`gatsby`],
+    })
+
+    const yarnDevInstall = pkg.generateClientComands({
+      packageManager: `npm`,
+      depType: `devDependency`,
+      packageNames: [`eslint`],
+    })
+
+    expect(yarnInstall).toMatchSnapshot()
+    expect(yarnDevInstall).toMatchSnapshot()
+  })
+})
