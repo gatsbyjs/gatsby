@@ -53,7 +53,7 @@ Authorize Gatsby to connect with your DatoCMS account and hit the "Start my site
 
 > This automatic provisioning of your website is one of Gatsby Cloud's strengths. Integrations with content management systems like this make it possible for you to spin up and begin publishing content to new sites without ever touching any code.
 
-![celebratory screen titled successfully set up Gatsby provisioned Snipcart!](/images/successfully-set-up.png)
+![Celebratory screen titled successfully set up Gatsby provisioned Snipcart!](/images/successfully-set-up.png)
 
 ## Exploring the DatoCMS Project
 
@@ -62,7 +62,7 @@ follow the link in Gatsby Cloud to go straight to your project in DatoCMS.
 
 Click on "Enter project" and select "Products" from the secondary navigation menu. You'll see a number of products already defined for you. You can delete or edit these as you'd like.
 
-![edit product screen featuring a single sock product called street faces](/images/edit-product.png)
+![Edit product screen featuring a single sock product called street faces](/images/edit-product.png)
 
 ### Editing models in DatoCMS
 
@@ -70,7 +70,7 @@ Clicking on "Settings" in the primary navigation menu reveals the "Models" menu 
 
 Maybe you also want each product to have a description or a release date. You can edit this model to be whatever you want it to be by adding and customizing fields. DatoCMS provides a wide variety of options that you can tweak to fit your needs.
 
-![choose a field type menu featuring options for text, modular content, media, data and timeline, number, boolean, location, color, SEO, links, and JSON](/images/choose-field-type.png)
+![Choose a field type menu featuring options for text, modular content, media, data and timeline, number, boolean, location, color, SEO, links, and JSON](/images/choose-field-type.png)
 
 If you already have items you know you want to sell, replace the sample products with a few of your own to get a feel for the interface. If not, you can continue on without making any changes in the CMS for now.
 
@@ -94,7 +94,7 @@ Select "Edit this file" (the pencil icon) from the menu. Where `product.price` i
 
 Once you've made your change, you'll need to commit that change. A commit is like a snapshot in time or a save point in a video game. Add a message that concisely describes the changes you've made and then commit those changes.
 
-![commit changes menu with message 'Euro to dollar'. Email address is blurred and there's a big, green 'Commit changes' button](/images/commit-change.png)
+![Commit changes menu with message 'Euro to dollar'. Email address is blurred and there's a big, green 'Commit changes' button](/images/commit-change.png)
 
 You've made a change to your master branch, which means Gatsby will build a new version of your site!
 
@@ -104,7 +104,7 @@ The rest of this process is described in the context of using a text editor to m
 
 You can edit your site's code locally by following these steps:
 
-- Clone the project by Selecting the "Clone or download" button on your repository's main page, which will display a link for you to copy.
+- Clone the project by selecting the "Clone or download" button on your repository's main page, which will display a link for you to copy.
 
 - Copy the project to your computer and install its dependencies, other JavaScript projects that your site relies on to work.
 
@@ -137,7 +137,7 @@ DATO_API_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Now you should be able to run `gatsby develop` to run your site. If you're using Visual Studio Code, you can open a terminal within the text editor (control + \`) and keep everything in one window. Navigate to `http://locahost:8000/` in your browser to see the example site. It should include whatever products you created in DatoCMS.
 
-![sample shop has a bright blue, pink, and green gradient as a background. Stacking rings, rhodochrosite ring, and statement earrings have been added as products](/images/sample-with-products.png)
+![Sample shop has a bright blue, pink, and green gradient as a background. Stacking rings, rhodochrosite ring, and statement earrings have been added as products](/images/sample-with-products.png)
 
 ## Modifying styles
 
@@ -145,7 +145,7 @@ Chances are you'll want to apply your own branding to this site, so try making s
 
 If you're not sure where to look for the code you'll need to change, search for the term "background" and see what comes up! In this case, you'll find one entry in the results that _also_ says something about a gradient...
 
-![searching the word background in VS Code reveals 7 instances in 5 files, including one in reset.scss](/images/background.png)
+![Searching the word background in VS Code reveals 7 instances in 5 files, including one in reset.scss](/images/background.png)
 
 Remove the following CSS from `src/style/reset.scss`. The result should be a plain white background for your store.
 
