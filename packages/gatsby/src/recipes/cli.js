@@ -31,6 +31,23 @@ const Div = props => (
   />
 )
 
+// Markdown ignores new lines and so do we.
+function elimiateNewLines(children) {
+  return React.Children.map(children, child => {
+    if (!React.isValidElement(child)) {
+      return child.replace(/(\r\n|\n|\r)/gm, ` `)
+    }
+
+    if (child.props.children) {
+      child = React.cloneElement(child, {
+        children: elimiateNewLines(child.props.children),
+      })
+    }
+
+    return child
+  })
+}
+
 const components = {
   inlineCode: props => <Text {...props} />,
   h1: props => (
@@ -44,17 +61,22 @@ const components = {
   h5: props => <Text bold {...props} />,
   h6: props => <Text bold {...props} />,
   a: ({ href, children }) => <Link url={href}>{children}</Link>,
+  br: () => null,
   strong: props => <Text bold {...props} />,
   em: props => <Text italic {...props} />,
-  p: props => (
-    <Box
-      width="100%"
-      marginBottom={1}
-      flexDirection="row"
-      textWrap="wrap"
-      {...props}
-    />
-  ),
+  p: props => {
+    let children = elimiateNewLines(props.children)
+    return (
+      <Box
+        width="100%"
+        marginBottom={1}
+        flexDirection="row"
+        textWrap="wrap"
+        {...props}
+        children={children}
+      />
+    )
+  },
   ul: props => <Div marginBottom={1}>{props.children}</Div>,
   li: props => <Text>* {props.children}</Text>,
   Config: () => null,
@@ -103,32 +125,6 @@ module.exports = ({ recipe, projectRoot }) => {
       }),
     ],
   })
-
-  class ErrorBoundary extends React.Component {
-    constructor(props) {
-      super(props)
-      this.state = { hasError: false }
-    }
-
-    static getDerivedStateFromError(error) {
-      // Update state so the next render will show the fallback UI.
-      return { hasError: true }
-    }
-
-    componentDidCatch(error, errorInfo) {
-      // You can also log the error to an error reporting service
-      log(`error`, { error, errorInfo })
-    }
-
-    render() {
-      if (this.state.hasError) {
-        // You can render any custom fallback UI
-        return <h1>Something went wrong.</h1>
-      }
-
-      return this.props.children
-    }
-  }
 
   const RecipeInterpreter = () => {
     const [lastKeyPress, setLastKeyPress] = useState(``)
@@ -343,23 +339,21 @@ module.exports = ({ recipe, projectRoot }) => {
             <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>
           ))}
         </Static>
-        <ErrorBoundary>
-          {state.context.currentStep > 0 && state.value !== `done` && (
-            <Div>
-              <Text>
-                Step {state.context.currentStep} /{` `}
-                {state.context.steps.length - 1}
-              </Text>
-            </Div>
-          )}
-          <PlanContext.Provider value={{ planForNextStep: state.plan }}>
-            <MDX components={components}>
-              {state.context.stepsAsMdx[state.context.currentStep]}
-            </MDX>
-            <PresentStep state={state} />
-            <RunningStep state={state} />
-          </PlanContext.Provider>
-        </ErrorBoundary>
+        {state.context.currentStep > 0 && state.value !== `done` && (
+          <Div>
+            <Text>
+              Step {state.context.currentStep} /{` `}
+              {state.context.steps.length - 1}
+            </Text>
+          </Div>
+        )}
+        <PlanContext.Provider value={{ planForNextStep: state.plan }}>
+          <MDX components={components}>
+            {state.context.stepsAsMdx[state.context.currentStep]}
+          </MDX>
+          <PresentStep state={state} />
+          <RunningStep state={state} />
+        </PlanContext.Provider>
       </>
     )
   }
