@@ -40,8 +40,8 @@ Kyle
 
 - [x] Make port selection dynamic
 - [x] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
-- [ ] use yarn/npm based on the user config
-- [ ] write tests for remote files src in File
+- [x] use yarn/npm based on the user config
+- [x] write tests for remote files src in File
 - [ ] move back to "press enter to run"
 - [ ] write blog post
 
