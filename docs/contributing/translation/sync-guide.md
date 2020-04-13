@@ -6,7 +6,6 @@ Periodically, gatsbybot will update your translation repo to be up-to-date with 
 
 ## Gatsbybot sync behavior
 
-The gatsbybot will run the sync script on every translation repo on Friday at 6:00 PM PST. It will create up to two pull requests: one for changes that do not have conflicts, which can me immediately merged, and one for changes that do have conflicts, which will require updates and code review.
 
 If there are existing sync pull requests marked by the `sync` label, gatsbybot will skip the repository until the next time it runs. Because of this, it is important to make sure that you merge sync and conflict pull requests promptly, so that changes stale translations don't build up.
 
