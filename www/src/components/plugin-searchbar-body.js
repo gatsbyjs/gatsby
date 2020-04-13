@@ -411,11 +411,11 @@ const Result = ({ hit, pathname, query }) => {
           hit.name[0] !== `@` &&
           hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
             0 ? (
-            <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`}>
+            <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`} title={`Official Plugin`}>
               <GatsbyIcon />
             </span>
           ) : (
-            <span sx={{ mr: 1 }} alt={`Community Gatsby Plugin`}>
+            <span sx={{ mr: 1 }} alt={`Community Gatsby Plugin`} title={`Community Plugin`}>
               <CommunityIcon />
             </span>
           )}
@@ -424,6 +424,11 @@ const Result = ({ hit, pathname, query }) => {
               width: `5em`,
               textAlign: `right`,
             }}
+            title={`${hit.downloadsLast30Days
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} download${
+              hit.downloadsLast30Days > 1 ? `s` : ``
+            } in last 30 days`}
           >
             {hit.humanDownloadsLast30Days}
             {` `}
