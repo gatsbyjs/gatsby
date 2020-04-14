@@ -27,7 +27,8 @@ describe(`<Events />`, () => {
     expect(getByText(`No events are scheduled right now.`)).toBeVisible()
   })
 
-  it(`splits upcoming and past events`, () => {
+
+  it.skip(`splits upcoming and past events`, () => {
     const { getByText } = render(
       <Events
         events={mockEvents(
@@ -57,7 +58,7 @@ describe(`<Events />`, () => {
       dateNowSpy.mockRestore()
     })
 
-    it(`display's today's events as upcoming`, () => {
+    it.skip(`display's today's events as upcoming`, () => {
       const { getByText } = render(
         <Events events={mockEvents([`2100-10-08`].map(toEvent))} />
       )
