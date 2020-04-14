@@ -47,20 +47,16 @@ cd try-emotion
 ```
 
 1. Upgrade the version of Gatsby the project is using to be one that works with Recipes.
+   Note that you should use the package manager you've selected to work with Gatsby projects.
 
-Note that you should use the package manager you've selected to work with Gatsby projects.
-
-If it's yarn, type this command:
-
-```shell
-yarn add gatsby@recipes
-```
-
-For npm, type this command:
-
-```shell
-npm install gatsby@recipes
-```
+- If it's yarn, type this command:
+  ```shell
+  yarn add gatsby@recipes
+  ```
+- For npm, type this command:
+  ```shell
+  npm install gatsby@recipes
+  ```
 
 1. Now you can run the `emotion` recipe with this command:
 
