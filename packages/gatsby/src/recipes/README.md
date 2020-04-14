@@ -40,6 +40,12 @@ Now you can test out recipes! Start with this one for installing `emotion` by fo
 gatsby new try-emotion https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
+1. Navigate into that project directory
+
+```shell
+cd try-emotion
+```
+
 1. Upgrade the version of Gatsby the project is using to be one that works with Recipes.
 
 Note that you should use the package manager you've selected to work with Gatsby projects.
