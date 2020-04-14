@@ -180,14 +180,26 @@ const isRelative = path => {
 const getSource = async (pathOrUrl, projectRoot) => {
   let recipePath
   if (isUrl(pathOrUrl)) {
-    const result = await fetch(pathOrUrl)
-    const src = await result.text()
+    const res = await fetch(pathOrUrl)
+    const src = await res.text()
     return src
   }
   if (isRelative(pathOrUrl)) {
     recipePath = path.join(projectRoot, pathOrUrl)
   } else {
-    recipePath = path.join(__dirname, `../mdx-src`, pathOrUrl)
+    const url = `https://unpkg.com/gatsby-recipes/recipes/${pathOrUrl}`
+    const res = await fetch(url.endsWith('.mdx') ? url : url + '.mdx')
+
+    if (res.status !== 200) {
+      throw new Error(
+        JSON.stringify({
+          fetchError: `Could not fetch ${pathOrUrl} from official recipes`,
+        })
+      )
+    }
+
+    const src = await res.text()
+    return src
   }
   if (recipePath.slice(-4) !== `.mdx`) {
     recipePath += `.mdx`
