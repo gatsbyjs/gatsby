@@ -2,7 +2,7 @@ const path = require(`path`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
-const { langCodes } = require(`./src/utils/i18n`)
+const { i18nEnabled, langCodes } = require(`./src/utils/i18n`)
 
 const GA = {
   identifier: `UA-93349937-5`,
@@ -53,12 +53,8 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
-// true if `env.LOCALES` has a defined list of languages
-if (langCodes.length > 0) {
-  const naughtyFiles = [
-    `docs/docs/graphql-api.md`,
-    `docs/docs/data-fetching.md`,
-  ]
+if (i18nEnabled) {
+  const naughtyFiles = [`docs/docs/data-fetching.md`]
   dynamicPlugins.push(
     ...langCodes.map(code => ({
       resolve: `gatsby-source-git`,
