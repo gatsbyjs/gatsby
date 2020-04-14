@@ -93,6 +93,14 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add Typescript`,
       value: `typescript.mdx`,
     },
+    {
+      label: `Add Cypress testing`,
+      value: `cypress.mdx`,
+    },
+    {
+      label: `Add animated page transition support`,
+      value: `animated-page-transitions.mdx`,
+    },
     // TODO remaining recipes
   ]
 
