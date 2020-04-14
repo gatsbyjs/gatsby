@@ -27,7 +27,6 @@ describe(`<Events />`, () => {
     expect(getByText(`No events are scheduled right now.`)).toBeVisible()
   })
 
-
   it.skip(`splits upcoming and past events`, () => {
     const { getByText } = render(
       <Events
