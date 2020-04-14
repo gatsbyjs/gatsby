@@ -82,7 +82,7 @@ function trackCustomEvent({
   action,
   label,
   value,
-  nonInteraction = true,
+  nonInteraction = false,
   transport,
   hitCallback,
   callbackTimeout = 1000,
