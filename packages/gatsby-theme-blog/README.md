@@ -99,6 +99,8 @@ module.exports = {
     // Used for SEO
     description: `My site description...`,
     // Used for social links in the root footer
+    siteURL: `https://example.com`,
+    // Used for resolving images in social cards
     social: [
       {
         name: `Twitter`,
@@ -127,3 +129,4 @@ The following are the defined blog post fields based on the node interface in th
 | tags     | String[] |
 | keywords | String[] |
 | excerpt  | String   |
+| image    | String   |
