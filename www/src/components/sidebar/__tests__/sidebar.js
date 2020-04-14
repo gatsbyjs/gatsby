@@ -30,16 +30,6 @@ Object.defineProperty(window, "localStorage", {
 // https://github.com/jsdom/jsdom/issues/1695
 window.HTMLElement.prototype.scrollIntoView = jest.fn()
 
-const key = `gatsbyjs:sidebar:great-gatsby`
-
-function setLocalStorageHash(openSectionHash) {
-  localStorage.setItem(key, JSON.stringify({ openSectionHash }))
-}
-
-function getLocalStorageHash() {
-  return JSON.parse(localStorage.getItem(key)).openSectionHash
-}
-
 function extendItemList(itemList, parentTitle) {
   for (const item of itemList) {
     if (parentTitle) {
@@ -108,10 +98,13 @@ describe("sidebar", () => {
     })
 
     it("opens sections based on local storage", () => {
-      setLocalStorageHash({ Characters: true })
+      // Render a page
+      renderSidebar("/characters/jay-gatsby/").unmount()
+      // Render a new page and check that the previous opened section
+      // is still open
       const { queryByText } = renderSidebar("/plot-summary/")
       expect(queryByText("Jay Gatsby")).toBeInTheDocument()
-      expect(queryByText("The Green Light")).not.toBeInTheDocument()
+      expect(queryByText("Daisy Buchanan")).not.toBeInTheDocument()
     })
   })
 
@@ -126,14 +119,6 @@ describe("sidebar", () => {
       const { queryByText, getByLabelText } = renderSidebar("/motifs/")
       fireEvent.click(getByLabelText(`Motifs collapse`))
       expect(queryByText("The Green Light")).not.toBeInTheDocument()
-    })
-
-    it("writes to local storage", () => {
-      const { getByLabelText } = renderSidebar("/motifs/")
-      fireEvent.click(getByLabelText(`Characters expand`))
-      fireEvent.click(getByLabelText(`Motifs collapse`))
-      expect(getLocalStorageHash()["Characters"]).toBeTruthy()
-      expect(getLocalStorageHash()["Motifs"]).toBeFalsy()
     })
   })
 
@@ -156,18 +141,6 @@ describe("sidebar", () => {
       expect(queryByText("The Buchanans")).toBeInTheDocument()
       expect(queryByText("Daisy Buchanan")).not.toBeInTheDocument()
       expect(queryByText("The Green Light")).not.toBeInTheDocument()
-    })
-
-    it("writes to local storage", () => {
-      const { getByText } = renderSidebar("/characters/jay-gatsby/")
-      fireEvent.click(getByText(`Expand All`))
-      expect(getLocalStorageHash()["Motifs"]).toBeTruthy()
-      expect(getLocalStorageHash()["The Buchanans"]).toBeTruthy()
-
-      fireEvent.click(getByText(`Collapse All`))
-      expect(getLocalStorageHash()["Motifs"]).toBeFalsy()
-      expect(getLocalStorageHash()["The Buchanans"]).toBeFalsy()
-      expect(getLocalStorageHash()["Characters"]).toBeTruthy()
     })
   })
 })
