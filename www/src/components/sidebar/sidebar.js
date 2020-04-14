@@ -129,16 +129,15 @@ function Sidebar({
   }, [])
 
   function toggleExpandAll() {
-    setOpenSectionHash(openSectionHash => {
-      if (expandAll) {
-        return derivedHash
-      }
+    if (expandAll) {
+      setOpenSectionHash(derivedHash)
+    } else {
       const newOpenSectionHash = {}
-      for (const key of Object.keys(openSectionHash)) {
+      for (const key of Object.keys(derivedHash)) {
         newOpenSectionHash[key] = true
       }
-      return newOpenSectionHash
-    })
+      setOpenSectionHash(newOpenSectionHash)
+    }
   }
 
   return (
