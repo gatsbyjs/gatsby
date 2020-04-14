@@ -74,19 +74,25 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-plugin-layout`,
     },
     {
+      label: `Add Theme UI`,
+      value: `theme-ui.mdx`,
+    },
+    {
       label: `Add Emotion`,
       value: `emotion.mdx`,
+    },
+    {
+      label: `Add Styled Components`,
+      value: `styled-components.mdx`,
     },
     {
       label: `Add Sass`,
       value: `sass.mdx`,
     },
     {
-      label: `Add Theme UI`,
-      value: `theme-ui.mdx`,
+      label: `Add Typescript`,
+      value: `typescript.mdx`,
     },
-    // TODO layouts from Jeremey
-    // TODO mdx pages like tweet
     // TODO add styled components
     // TODO remaining recipes
     // TODO constrain width of UI
