@@ -74,7 +74,6 @@ function Sidebar({
   disableExpandAll,
   disableAccordions,
 }) {
-  // TODO initialize state
   const isSingle = itemList.filter(item => item.level === 0).length === 1
   const scrollRef = React.useRef(null)
 
