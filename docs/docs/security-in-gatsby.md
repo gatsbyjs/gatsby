@@ -155,8 +155,8 @@ currently there is a [compatibility issue](https://github.com/gatsbyjs/gatsby/is
 
 ## Other Resources
 
-- [Security for Modern Web Frameworks](https://www.gatsbyjs.org/blog/2019-04-06-security-for-modern-web-frameworks/)
-- [Docs ReactJS: DOM Elements](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
+- [Security for Modern Web Frameworks](/blog/2019-04-06-security-for-modern-web-frameworks/)
+- [Docs React: DOM Elements](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
 - [OWASP XSS filter evasion cheatsheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet)
 - [OWASP CSRF prevention cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute)
 - [Warn for JavaScript: URLs in DOM sinks #15047](https://github.com/facebook/react/pull/15047)
