@@ -23,7 +23,7 @@ As a result, installing or updating a monorepo often takes less time with Yarn t
 
 You'll need to install Yarn separately from Node. Choose the [binary package](https://classic.yarnpkg.com/en/docs/install) for your operating system. For Gatsby core development, you'll need Yarn version 1.0.2 or later.
 
-Although the Yarn documentation discourages it, you can also install Yarn using npm or npx. Use `npm install yarn` with the `-g` or `--global` flags to install Yarn globally. Or install Yarn per project using npx: `npx yarn`. If you install Yarn using npx, you'll need to prefix Yarn commands with`npx`, e.g. `npx yarn add`. Read more about [npm](/docs/glossary/npm/) and npx in the Gatsby docs.
+Although the Yarn documentation discourages it, you can also install Yarn using npm or npx. Use `npm install yarn` with the `-g` or `--global` flags to install Yarn globally. Or install Yarn per project using npx: `npx yarn`. If you install Yarn using npx, you'll need to prefix Yarn commands with `npx`, e.g. `npx yarn add`. Read more about [npm](/docs/glossary/npm/) and npx in the Gatsby docs.
 
 ### Using Yarn to install Gatsby
 
