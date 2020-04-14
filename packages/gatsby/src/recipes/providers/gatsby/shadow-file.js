@@ -1,14 +1,14 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
-const Joi = require('@hapi/joi')
+const Joi = require(`@hapi/joi`)
 
-const resourceSchema = require('../resource-schema')
+const resourceSchema = require(`../resource-schema`)
 const getDiff = require(`../utils/get-diff`)
 const fileExists = filePath => fs.existsSync(filePath)
 
 const relativePathForShadowedFile = ({ theme, filePath }) => {
   const [_src, ...filePathParts] = filePath.split(path.sep)
-  const relativePath = path.join('src', theme, path.join(...filePathParts))
+  const relativePath = path.join(`src`, theme, path.join(...filePathParts))
   return relativePath
 }
 
@@ -49,7 +49,7 @@ const read = async ({ root }, id) => {
     id,
     theme,
     path: id,
-    contents
+    contents,
   }
 
   resource._message = message(resource)
@@ -67,7 +67,7 @@ const schema = {
   theme: Joi.string(),
   path: Joi.string(),
   contents: Joi.string(),
-  ...resourceSchema
+  ...resourceSchema,
 }
 module.exports.schema = schema
 module.exports.validate = resource =>
@@ -78,34 +78,36 @@ module.exports.update = create
 module.exports.read = read
 module.exports.destroy = destroy
 
-const message = resource => `Shadowed ${resource.id || resource.path} from ${resource.theme}`
+const message = resource =>
+  `Shadowed ${resource.id || resource.path} from ${resource.theme}`
 
 module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
+  let currentResource = ``
   if (!id) {
     const [_src, ...filePathParts] = filePath.split(path.sep)
-    id = path.join('src', theme, path.join(...filePathParts))
+    id = path.join(`src`, theme, path.join(...filePathParts))
   }
 
-  const currentResource = await read({ root }, id) || {}
+  currentResource = (await read({ root }, id)) || {}
 
   const [_src, _theme, ...shadowPathParts] = id.split(path.sep)
   const fullFilePathToShadow = path.join(
     root,
     `node_modules`,
     theme,
-    'src',
+    `src`,
     path.join(...shadowPathParts)
   )
 
-  const newContents = await fs.readFile(fullFilePathToShadow, 'utf8')
+  const newContents = await fs.readFile(fullFilePathToShadow, `utf8`)
   const newResource = {
     id,
     theme,
     path: filePath,
-    contents: newContents
+    contents: newContents,
   }
 
-  const diff = await getDiff(currentResource.contents || '', newContents)
+  const diff = await getDiff(currentResource.contents || ``, newContents)
 
   return {
     id,

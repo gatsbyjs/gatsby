@@ -45,6 +45,8 @@ Kyle
 - [x] Gatsby recipes list (design and implementation)
 - [x] move back to "press enter to run"
 - [x] Run gatsby-config.js changes through prettier to avoid weird diffs
+- [ ] document ShadowFile
+- [ ] Remove mention of canary release before merging
 - [ ] write blog post
 
 John
@@ -76,3 +78,6 @@ John
 - [ ] Handle JS in config objects? { **\_javascript: "`\${**dirname}/foo/bar`" }
 - [ ] handle people pressing Y & quit if they press "n" (for now)
 - [ ] Automatically create list of recipes from the recipes directory (recipes resource 🤔)
+- [ ] ShadowFile needs more validation — validate the file to shadow exists.
+- [ ] Add eslint support & add Typescript eslint plugins to the typescript recipe.
+- [ ] add recipe mdx-pages once we can write out options https://gist.github.com/KyleAMathews/3d763491e5c4c6396e1a6a626b2793ce

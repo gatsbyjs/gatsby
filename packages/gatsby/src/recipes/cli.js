@@ -74,22 +74,34 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-plugin-layout`,
     },
     {
+      label: `Add Theme UI`,
+      value: `theme-ui.mdx`,
+    },
+    {
       label: `Add Emotion`,
       value: `emotion.mdx`,
+    },
+    {
+      label: `Add Styled Components`,
+      value: `styled-components.mdx`,
     },
     {
       label: `Add Sass`,
       value: `sass.mdx`,
     },
     {
-      label: `Add Theme UI`,
-      value: `theme-ui.mdx`,
+      label: `Add Typescript`,
+      value: `typescript.mdx`,
     },
-    // TODO layouts from Jeremey
-    // TODO mdx pages like tweet
-    // TODO add styled components
+    {
+      label: `Add Cypress testing`,
+      value: `cypress.mdx`,
+    },
+    {
+      label: `Add animated page transition support`,
+      value: `animated-page-transitions.mdx`,
+    },
     // TODO remaining recipes
-    // TODO constrain width of UI
   ]
 
   return (
@@ -162,7 +174,7 @@ const components = {
     return (
       <Box
         width="100%"
-        marginBottom={1}
+        marginBottom={2}
         flexDirection="row"
         textWrap="wrap"
         {...props}
