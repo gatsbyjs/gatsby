@@ -33,7 +33,7 @@ const isItemActive = (activeItemParents, item) => {
   return false
 }
 
-function _getOpenItemHash(itemList, activeItemLink, activeItemParents) {
+function getOpenItemHash(itemList, activeItemLink, activeItemParents) {
   let result = {}
   for (let item of itemList) {
     if (item.items) {
@@ -42,7 +42,7 @@ function _getOpenItemHash(itemList, activeItemLink, activeItemParents) {
         activeItemLink.title === item.title
       result = {
         ...result,
-        ..._getOpenItemHash(item.items, activeItemLink, activeItemParents),
+        ...getOpenItemHash(item.items, activeItemLink, activeItemParents),
       }
     }
   }
@@ -97,7 +97,7 @@ function Sidebar({
   // Get the hash where the only open items are
   // the hierarchy defined in props
   const derivedHash = React.useMemo(() => {
-    return _getOpenItemHash(itemList, activeItemLink, activeItemParents)
+    return getOpenItemHash(itemList, activeItemLink, activeItemParents)
   }, [itemList, activeItemLink, activeItemParents])
 
   // Merge hash in local storage and the derived hash from props
