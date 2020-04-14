@@ -10375,6 +10375,17 @@
     - Agency
     - Web Development
   featured: false
+- title: The Cares Family
+  main_url: https://thecaresfamily.org.uk/home
+  url: https://thecaresfamily.org.uk/home
+  description: >
+    The Cares Family helps people find connection and community in a disconnected age. They relaunched their website in Gatsby during the COVID-19 outbreak of 2020 to help connect neighbours.
+  categories:
+    - Nonprofit
+    - Blog
+    - Community
+  built_by: Mutual
+  built_by_url: https://www.madebymutual.com
 - title: "Due to COVID-19: Documenting the Signs of the Pandemic"
   url: https://duetocovid19.com
   main_url: https://duetocovid19.com
