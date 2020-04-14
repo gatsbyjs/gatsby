@@ -1,39 +1,14 @@
-import { ActivityStatuses, ActivityTypes } from "../constants"
-
+import { ActionsUnion, IGatsbyCLIState, ISetLogs } from "./types"
 import { Actions } from "../constants"
 
-export interface IActivity {
-  startTime?: [number, number]
-  id: string
-  uuid: string
-  text: string
-  type: ActivityTypes
-  status: ActivityStatuses
-  statusText: string
-  current: string
-  total: number
-  duration: number
-  errored: boolean
-}
-
-interface IActivities {
-  [id: string]: IActivity
-}
-
-export interface IState {
-  messages: string[]
-  activities: IActivities
-  status: string
-}
-
 export const reducer = (
-  state: IState = {
+  state: IGatsbyCLIState = {
     messages: [],
     activities: {},
     status: ``,
   },
-  action
-): IState => {
+  action: ActionsUnion | ISetLogs
+): IGatsbyCLIState => {
   switch (action.type) {
     case Actions.SetStatus: {
       return {
@@ -122,5 +97,6 @@ export const reducer = (
       return action.payload
     }
   }
+
   return state
 }

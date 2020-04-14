@@ -3,12 +3,10 @@
  * When this happens, there is some clean up logic we need to fire offf
  */
 import signalExit from "signal-exit"
-import ReporterStore from "./redux"
-import reporterActions from "./redux/actions"
+import { getStore } from "./redux"
+import { createPendingActivity } from "./redux/actions"
 import { ActivityStatuses } from "./constants"
 import { reporter } from "./reporter"
-
-const { getStore } = ReporterStore
 
 const interruptActivities = (): void => {
   const { activities } = getStore().getState().logs
@@ -27,7 +25,7 @@ export const prematureEnd = (): void => {
   // hack so at least one activity is surely failed, so
   // we are guaranteed to generate FAILED status
   // if none of activity did explicitly fail
-  reporterActions.createPendingActivity({
+  createPendingActivity({
     id: `panic`,
     status: ActivityStatuses.Failed,
   })

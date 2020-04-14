@@ -1,14 +1,8 @@
-import {
-  createStore,
-  combineReducers,
-  AnyAction,
-  Dispatch,
-  CombinedState,
-  Store,
-} from "redux"
-import { reducer, IState } from "./reducer"
-
-import { ActivityTypes, Actions } from "../constants"
+import { createStore, combineReducers } from "redux"
+import { reducer } from "./reducer"
+import { ActionsUnion } from "./types"
+import { isInternalAction } from "./utils"
+import { setLogs } from "./actions"
 
 let store = createStore(
   combineReducers({
@@ -17,87 +11,62 @@ let store = createStore(
   {}
 )
 
-type store = Store<CombinedState<{ logs: IState }>, AnyAction>
+type GatsbyCLIStore = typeof store
+type StoreListener = (store: GatsbyCLIStore) => void
+type ActionLogListener = (action: ActionsUnion) => any
 
-type storeListener = (store: store) => void
+const storeSwapListeners: StoreListener[] = []
+const onLogActionListeners = new Set<ActionLogListener>()
 
-const storeSwapListeners: storeListener[] = []
-const onLogActionListeners = new Set<Dispatch<AnyAction>>()
+export const getStore = () => store
 
-const isInternalAction = (action): boolean => {
-  if (
-    [
-      Actions.PendingActivity,
-      Actions.CancelActivity,
-      Actions.ActivityErrored,
-    ].includes(action.type)
-  ) {
-    return true
+export const dispatch = (action: ActionsUnion): void => {
+  if (!action) {
+    return
   }
 
-  if ([Actions.StartActivity, Actions.EndActivity].includes(action.type)) {
-    return action.payload.type === ActivityTypes.Hidden
-  }
-
-  return false
-}
-
-interface IReporterStore {
-  dispatch(dispatch: any)
-  getStore: () => store
-  onStoreSwap: (fn: storeListener) => void
-  onLogAction: (fn: Dispatch<AnyAction>) => () => void
-  setStore: (s: store) => void
-}
-
-const ReporterStore: IReporterStore = {
-  getStore: () => store,
-  dispatch: action => {
-    if (!action) {
-      return
-    }
-
-    if (Array.isArray(action)) {
-      action.forEach(item => ReporterStore.dispatch(item))
-      return
-    } else if (typeof action === `function`) {
-      action(ReporterStore.dispatch)
-      return
-    }
-
-    action = {
-      ...action,
-      timestamp: new Date().toJSON(),
-    }
-
+  if (Array.isArray(action)) {
+    action.forEach(item => dispatch(item))
+    return
+  } else if (typeof action === `function`) {
     store.dispatch(action)
+    return
+  }
 
-    if (isInternalAction(action)) {
-      // consumers (ipc, yurnalist, json logger) shouldn't have to
-      // deal with actions needed just for internal tracking of status
-      return
-    }
-    for (const fn of onLogActionListeners) {
-      fn(action)
-    }
-  },
-  onStoreSwap: fn => {
-    storeSwapListeners.push(fn)
-  },
-  onLogAction: fn => {
-    onLogActionListeners.add(fn)
-    return (): void => {
-      onLogActionListeners.delete(fn)
-    }
-  },
-  setStore: s => {
-    s.dispatch({
-      type: Actions.SetLogs,
-      payload: store.getState().logs,
-    })
-    store = s
-    storeSwapListeners.forEach(fn => fn(store))
-  },
+  action = {
+    ...action,
+    // @ts-ignore This is a classic javascript thing that is a no-no with Typescript
+    //            I'm not sure the best way to fix this, but we should probably just put this in
+    //            every action definition.
+    timestamp: new Date().toJSON(),
+  }
+
+  store.dispatch(action)
+
+  if (isInternalAction(action)) {
+    // consumers (ipc, yurnalist, json logger) shouldn't have to
+    // deal with actions needed just for internal tracking of status
+    return
+  }
+  for (const fn of onLogActionListeners) {
+    fn(action)
+  }
 }
 
-export default ReporterStore
+export const onStoreSwap = (fn: StoreListener) => {
+  storeSwapListeners.push(fn)
+}
+
+export const onLogAction = (fn: ActionLogListener) => {
+  onLogActionListeners.add(fn)
+
+  return (): void => {
+    onLogActionListeners.delete(fn)
+  }
+}
+
+export const setStore = (s: GatsbyCLIStore) => {
+  setLogs(store.getState().logs)
+  store = s
+  storeSwapListeners.forEach(fn => fn(store))
+}
