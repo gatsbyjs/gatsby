@@ -1,8 +1,7 @@
 const React = require(`react`)
 const fs = require(`fs`)
 const lodash = require(`lodash`)
-import Boxen from "ink-box"
-
+const Boxen = require(`ink-box`)
 const { useState } = require(`react`)
 const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
@@ -19,6 +18,81 @@ const {
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const fetch = require(`node-fetch`)
 const ws = require(`ws`)
+const SelectInput = require(`ink-select-input`).default
+
+const WelcomeMessage = () => (
+  <>
+    <Boxen
+      borderStyle="double"
+      borderColor="white"
+      float="center"
+      padding={1}
+      margin={{ bottom: 1 }}
+    >
+      Thank you for trying the experimental version of Gatsby Recipes!
+    </Boxen>
+    <Div marginBottom={2} alignItems="center">
+      Please ask questions, report bugs, and subscribe for updates in our
+      umbrella issue at https://github.com/gatsbyjs/gatsby/issues/22991
+    </Div>
+  </>
+)
+
+const RecipesList = ({ setRecipe }) => {
+  log(`inside demo`)
+  const handleSelect = item => {
+    // `item` = { label: 'First', value: 'first' }
+    log(`selected item`, item)
+  }
+  const handleHighlight = item => {
+    log(`highlighted item`, item)
+  }
+
+  const items = [
+    {
+      label: `Add a custom ESLint config`,
+      value: `eslint.mdx`,
+    },
+    {
+      label: `Add Jest`,
+      value: `jest.mdx`,
+    },
+    // Waiting on joi2graphql support for Joi.object().unknown()
+    // with a JSON type.
+    // {
+    // label: "Automatically run Prettier on commits",
+    // value: "prettier-git-hook.mdx",
+    // },
+    {
+      label: `Add Gatsby Theme Blog`,
+      value: `gatsby-theme-blog`,
+    },
+    {
+      label: `Add Emotion`,
+      value: `emotion.mdx`,
+    },
+    {
+      label: `Add Sass`,
+      value: `sass.mdx`,
+    },
+    {
+      label: `Add Theme UI`,
+      value: `theme-ui.mdx`,
+    },
+    // TODO layouts from Jeremey
+    // TODO mdx pages like tweet
+    // TODO add styled components
+    // TODO remaining recipes
+  ]
+
+  return (
+    <SelectInput
+      items={items}
+      onHighlight={handleHighlight}
+      onSelect={setRecipe}
+    />
+  )
+}
 
 let renderCount = 1
 
@@ -114,6 +188,12 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
     ws
   )
 
+  let showRecipesList = false
+
+  if (!recipe) {
+    showRecipesList = true
+  }
+
   const client = createClient({
     fetch,
     url: GRAPHQL_ENDPOINT,
@@ -129,6 +209,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
 
   const RecipeInterpreter = () => {
     const [lastKeyPress, setLastKeyPress] = useState(``)
+    const [localRecipe, setRecipe] = useState(recipe)
     const { exit } = useApp()
 
     const [subscriptionResponse] = useSubscription(
@@ -155,10 +236,13 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
     `)
 
     subscriptionClient.connectionCallback = async () => {
-      try {
-        await createOperation({ recipePath: recipe, projectRoot })
-      } catch (e) {
-        log(`error creating operation`, e)
+      if (!showRecipesList) {
+        log(`createOperation`)
+        try {
+          await createOperation({ recipePath: localRecipe, projectRoot })
+        } catch (e) {
+          log(`error creating operation`, e)
+        }
       }
     }
 
@@ -167,8 +251,11 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
       JSON.parse(subscriptionResponse.data.operation.state)
 
     useInput((_, key) => {
+      if (showRecipesList) {
+        return
+      }
       setLastKeyPress(key)
-      if (key.return && state.value === `SUCCESS`) {
+      if (key.return && state && state.value === `SUCCESS`) {
         subscriptionClient.close()
         exit()
         process.exit()
@@ -178,6 +265,33 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
     })
 
     log(`subscriptionResponse.data`, subscriptionResponse.data)
+
+    if (showRecipesList) {
+      return (
+        <>
+          <WelcomeMessage />
+          <Text bold underline>
+            Select a recipe to run
+          </Text>
+          <RecipesList
+            setRecipe={async recipeItem => {
+              log(`yo`, { recipeItem, projectRoot })
+              showRecipesList = false
+              try {
+                await createOperation({
+                  recipePath: recipeItem.value,
+                  projectRoot,
+                })
+              } catch (e) {
+                log(`error creating operation`, e)
+              }
+              log(`sent recipe`)
+              // setRecipe(recipeItem.value)
+            }}
+          />
+        </>
+      )
+    }
 
     if (!state) {
       return (
@@ -335,19 +449,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
 
     return (
       <>
-        <Boxen
-          borderStyle="double"
-          borderColor="white"
-          float="center"
-          padding={1}
-          margin={{ bottom: 1 }}
-        >
-          Thank you for trying the experimental version of Gatsby Recipes!
-        </Boxen>
-        <Div marginBottom={2} alignItems="center">
-          Please ask questions, report bugs, and subscribe for updates in our
-          umbrella issue at https://github.com/gatsbyjs/gatsby/issues/22991
-        </Div>
+        <WelcomeMessage />
         <Static>
           {lodash.flattenDeep(state.context.stepResources).map((r, i) => (
             <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>

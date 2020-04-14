@@ -2,7 +2,7 @@ const { Machine, assign } = require(`xstate`)
 
 const createPlan = require(`./create-plan`)
 const applyPlan = require(`./apply-plan`)
-const validateSteps = require('./validate-steps')
+const validateSteps = require(`./validate-steps`)
 const validateRecipe = require(`./validate-recipe`)
 const parser = require(`./parser`)
 
@@ -32,9 +32,11 @@ const recipeMachine = Machine(
             } else if (context.recipePath && context.projectRoot) {
               parsed = await parser(context.recipePath, context.projectRoot)
             } else {
-              throw new Error(JSON.stringify({
-                validationError: 'A recipe must be specified'
-              }))
+              throw new Error(
+                JSON.stringify({
+                  validationError: `A recipe must be specified`,
+                })
+              )
             }
 
             return parsed
@@ -43,13 +45,14 @@ const recipeMachine = Machine(
             target: `doneError`,
             actions: assign({
               error: (context, event) => {
+                console.log(msg)
                 try {
                   const msg = JSON.parse(event.data.message)
                   return msg
                 } catch (e) {
                   return {
-                    error: 'Could not parse recipe',
-                    e
+                    error: `Could not parse recipe ${context.recipePath}`,
+                    e,
                   }
                 }
               },
