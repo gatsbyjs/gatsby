@@ -189,7 +189,7 @@ const components = {
   NPMPackageJson: () => null,
   NPMPackage: () => null,
   File: () => null,
-  ShadowFile: () => null,
+  GatsbyShadowFile: () => null,
   NPMScript: () => null,
 }
 

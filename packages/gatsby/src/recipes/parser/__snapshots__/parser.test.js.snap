@@ -33,7 +33,7 @@ This recipe helps you start developing with the [Theme UI](https://theme-ui.com)
 ",
   "Write out Theme UI configuration files.
 
-<ShadowFile
+<GatsbyShadowFile
   theme=\\"gatsby-plugin-theme-ui\\"
   path=\\"src/gatsby-plugin-theme-ui/index.js\\"
 />

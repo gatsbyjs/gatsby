@@ -45,7 +45,7 @@ Kyle
 - [x] Gatsby recipes list (design and implementation)
 - [x] move back to "press enter to run"
 - [x] Run gatsby-config.js changes through prettier to avoid weird diffs
-- [ ] document ShadowFile
+- [x] document ShadowFile
 - [ ] Remove mention of canary release before merging
 - [ ] write blog post
 
@@ -81,3 +81,4 @@ John
 - [ ] ShadowFile needs more validation — validate the file to shadow exists.
 - [ ] Add eslint support & add Typescript eslint plugins to the typescript recipe.
 - [ ] add recipe mdx-pages once we can write out options https://gist.github.com/KyleAMathews/3d763491e5c4c6396e1a6a626b2793ce
+- [ ] Add PWA recipe once we can write options https://gist.githubusercontent.com/gillkyle/9e4fa3d019c525aef2f4bd431c806879/raw/f4d42a81190d2cada59688e6acddc6b5e97fe586/make-your-site-a-pwa.mdx

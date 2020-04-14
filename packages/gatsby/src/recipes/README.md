@@ -136,6 +136,15 @@ Soon will support options.
 
 - **name** name of the plugin
 
+#### `<GatsbyShadowFile>`
+
+<GatsbyShadowFile theme="gatsby-theme-blog" path="src/components/seo.js" />
+
+##### props
+
+- **theme** the name of the theme (or plugin) which provides the file you'd like to shadow
+- **path** the path to the file within the theme. E.g. the example file above lives at `node_modules/gatsby-theme-blog/src/components/seo.js`
+
 #### `<NPMPackage`
 
 `<NPMPackage name="lodash" version="latest" />`
