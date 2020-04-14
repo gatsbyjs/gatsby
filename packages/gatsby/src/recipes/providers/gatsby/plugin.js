@@ -3,6 +3,7 @@ const path = require(`path`)
 const babel = require(`@babel/core`)
 const Joi = require(`@hapi/joi`)
 const glob = require(`glob`)
+const prettier = require(`prettier`)
 
 const declare = require(`@babel/helper-plugin-utils`).declare
 
@@ -95,7 +96,10 @@ const create = async ({ root }, { name }) => {
   const configPath = path.join(root, `gatsby-config.js`)
   const configSrc = await fs.readFile(configPath, `utf8`)
 
-  const code = addPluginToConfig(configSrc, name)
+  const prettierConfig = await prettier.resolveConfig(root)
+
+  let code = addPluginToConfig(configSrc, name)
+  code = prettier.format(code, { ...prettierConfig, parser: `babel` })
 
   await fs.writeFile(configPath, code)
 
@@ -244,8 +248,17 @@ exports.validate = validate
 module.exports.plan = async ({ root }, { id, name }) => {
   const fullName = id || name
   const configPath = path.join(root, `gatsby-config.js`)
-  const src = await fs.readFile(configPath, `utf8`)
-  const newContents = addPluginToConfig(src, fullName)
+  const prettierConfig = await prettier.resolveConfig(root)
+  let src = await fs.readFile(configPath, `utf8`)
+  src = prettier.format(src, {
+    ...prettierConfig,
+    parser: `babel`,
+  })
+  let newContents = addPluginToConfig(src, fullName)
+  newContents = prettier.format(newContents, {
+    ...prettierConfig,
+    parser: `babel`,
+  })
   const diff = await getDiff(src, newContents)
 
   return {

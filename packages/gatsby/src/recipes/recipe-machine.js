@@ -2,8 +2,9 @@ const { Machine, assign } = require(`xstate`)
 
 const createPlan = require(`./create-plan`)
 const applyPlan = require(`./apply-plan`)
+const validateSteps = require(`./validate-steps`)
 const validateRecipe = require(`./validate-recipe`)
-const parser = require('./parser')
+const parser = require(`./parser`)
 
 const recipeMachine = Machine(
   {
@@ -15,8 +16,9 @@ const recipeMachine = Machine(
       currentStep: 0,
       steps: [],
       plan: [],
+      commands: [],
       stepResources: [],
-      stepsAsMdx: []
+      stepsAsMdx: [],
     },
     states: {
       parsingRecipe: {
@@ -24,26 +26,66 @@ const recipeMachine = Machine(
           id: `parseRecipe`,
           src: async (context, event) => {
             let parsed
+
             if (context.src) {
               parsed = await parser.parse(context.src)
-            } else {
+            } else if (context.recipePath && context.projectRoot) {
               parsed = await parser(context.recipePath, context.projectRoot)
+            } else {
+              throw new Error(
+                JSON.stringify({
+                  validationError: `A recipe must be specified`,
+                })
+              )
             }
 
             return parsed
           },
           onError: {
             target: `doneError`,
-            actions: assign({ error: (context, event) => event.data })
+            actions: assign({
+              error: (context, event) => {
+                console.log(msg)
+                try {
+                  const msg = JSON.parse(event.data.message)
+                  return msg
+                } catch (e) {
+                  return {
+                    error: `Could not parse recipe ${context.recipePath}`,
+                    e,
+                  }
+                }
+              },
+            }),
           },
           onDone: {
-            target: `validatePlan`,
+            target: `validateSteps`,
             actions: assign({
               steps: (context, event) => event.data.commands,
-              stepsAsMdx: (context, event) => event.data.stepsAsMdx
-            })
-          }
-        }
+              stepsAsMdx: (context, event) => event.data.stepsAsMdx,
+            }),
+          },
+        },
+      },
+      validateSteps: {
+        invoke: {
+          id: `validateSteps`,
+          src: async (context, event) => {
+            const result = await validateSteps(context.steps)
+            if (result.length > 0) {
+              throw new Error(JSON.stringify(result))
+            }
+
+            return undefined
+          },
+          onDone: `validatePlan`,
+          onError: {
+            target: `doneError`,
+            actions: assign({
+              error: (context, event) => JSON.parse(event.data.message),
+            }),
+          },
+        },
       },
       validatePlan: {
         invoke: {

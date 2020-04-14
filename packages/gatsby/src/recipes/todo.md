@@ -7,7 +7,7 @@
 - [x] Boot up server as a process
 - [x] Then run the CLI
 - [x] Clean up server after
-- [ ] show plan to create or that nothing is necessary & then show in `<static>` what was done
+- [x] show plan to create or that nothing is necessary & then show in `<static>` what was done
 
 ## alpha
 
@@ -38,26 +38,29 @@
 
 Kyle
 
-- [ ] Make port selection dynamic
-- [ ] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
-- [ ] use yarn/npm based on the user config
-- [ ] write tests for remote files src in File
-- [ ] move back to "press enter to run"
+- [x] Make port selection dynamic
+- [x] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
+- [x] use yarn/npm based on the user config
+- [x] write tests for remote files src in File
+- [x] Gatsby recipes list (design and implementation)
+- [x] move back to "press enter to run"
+- [x] Run gatsby-config.js changes through prettier to avoid weird diffs
 - [ ] write blog post
 
 John
 
 - [ ] spike on bundling recipes into one file
-- [ ] Gatsby recipes list (design and implementation)
-- [ ] print pretty error when there's parsing errors of mdx files
-- [ ] Move mdx recipes to its own package `gatsby-recipes` & pull them from unpkg
+- [x] print pretty error when there's parsing errors of mdx files
+- [x] Move mdx recipes to its own package `gatsby-recipes` & pull them from unpkg
 - [ ] add CODEOWNERS file for recipes
-- [ ] validate that the first step of recipes don't have any resources. They should just be for the title/description
-- [ ] handle not finding a recipe
-- [ ] test modifying gatsby-config.js from default starter
+- [ ] give proper npm permissions to `gatsby-recipes`
+- [x] validate that the first step of recipes don't have any resources. They should just be for the title/description
+- [x] handle not finding a recipe
+- [x] test modifying gatsby-config.js from default starter
 
 ## Near-ish future
 
+- [ ] support Joi.any & Joi.alternatives in joi2graphql for prettier-git-hook.mdx
 - [ ] Make a proper "Config" provider to add recipes dir, store data, etc.
 - [ ] init.js for providers to setup clients
 - [ ] validate resource config
@@ -72,3 +75,4 @@ John
 - [ ] Implement config object for GatsbyPlugin
 - [ ] Handle JS in config objects? { **\_javascript: "`\${**dirname}/foo/bar`" }
 - [ ] handle people pressing Y & quit if they press "n" (for now)
+- [ ] Automatically create list of recipes from the recipes directory (recipes resource 🤔)

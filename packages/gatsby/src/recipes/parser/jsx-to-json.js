@@ -119,19 +119,22 @@ const jsxToJson = input => {
     throw new TypeError(`Expected a string`)
   }
 
-  const parsed = acorn.Parser.extend(jsx({ allowNamespaces: false })).parse(
-    `<root>${input}</root>`
-  )
-
+  let parsed = null
   try {
-    if (parsed.body[0]) {
-      return parsed.body[0].expression.children
-        .map(getNode)
-        .filter(child => child)
-    }
+    parsed = acorn.Parser.extend(jsx({ allowNamespaces: false })).parse(
+      `<root>${input}</root>`
+    )
   } catch (e) {
-    console.log(input)
-    console.log(e)
+    throw new Error(JSON.stringify({
+      location: e.loc,
+      validationError: `Could not parse "${input}"`,
+    }))
+  }
+
+  if (parsed.body[0]) {
+    return parsed.body[0].expression.children
+      .map(getNode)
+      .filter(child => child)
   }
 
   return []

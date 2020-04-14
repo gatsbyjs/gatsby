@@ -1,0 +1,10 @@
+{
+  "name": "gatsby-recipes",
+  "version": "0.0.3",
+  "description": "Official Gatsby recipes",
+  "main": "index.js",
+  "keywords": [
+    "gatsby-recipes"
+  ],
+  "license": "MIT"
+}

@@ -166,7 +166,39 @@ Soon will support options.
 
 > Note that this content is stored in a [GitHub gist](https://gist.github.com/). When linking to a gist you'll want to click on the "Raw" button and copy the URL from that page.
 
-## What kind of recipe should I write?
+## FAQ / common issues
+
+### Q) My recipe is combining steps instead of running them seperately!
+
+We use the `---` break syntax from Markdown to separate steps.
+
+One quirk with it is for it to work, it must have an empty line above it.
+
+So this will work:
+
+```mdx
+# Recipes
+
+---
+
+a step
+
+<File src="something.txt" content="something" />
+```
+
+But this won't
+
+```mdx
+# Recipes
+
+---
+
+a step
+
+<File src="something.txt" content="something" />
+```
+
+### Q) What kind of recipe should I write?
 
 If you’d like to write a recipe, there are two great places to get an idea:
 

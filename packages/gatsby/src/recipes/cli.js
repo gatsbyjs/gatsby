@@ -1,7 +1,7 @@
+const React = require(`react`)
 const fs = require(`fs`)
 const lodash = require(`lodash`)
-
-const React = require(`react`)
+const Boxen = require(`ink-box`)
 const { useState } = require(`react`)
 const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
@@ -18,18 +18,111 @@ const {
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const fetch = require(`node-fetch`)
 const ws = require(`ws`)
+const SelectInput = require(`ink-select-input`).default
+
+const MAX_UI_WIDTH = 100
+
+// TODO try this and write out success stuff & last message?
+// const enterAltScreenCommand = "\x1b[?1049h"
+// const leaveAltScreenCommand = "\x1b[?1049l"
+// process.stdout.write(enterAltScreenCommand)
+// process.on("exit", () => {
+// process.stdout.write(leaveAltScreenCommand)
+// })
+
+const WelcomeMessage = () => (
+  <>
+    <Boxen
+      borderStyle="double"
+      borderColor="magentaBright"
+      float="left"
+      padding={1}
+      margin={{ bottom: 1, left: 2 }}
+    >
+      Thank you for trying the experimental version of Gatsby Recipes!
+    </Boxen>
+    <Div marginBottom={2} alignItems="center">
+      Please ask questions, share your recipes, report bugs, and subscribe for
+      updates in our umbrella issue at
+      https://github.com/gatsbyjs/gatsby/issues/22991
+    </Div>
+  </>
+)
+
+const RecipesList = ({ setRecipe }) => {
+  const items = [
+    {
+      label: `Add a custom ESLint config`,
+      value: `eslint.mdx`,
+    },
+    {
+      label: `Add Jest`,
+      value: `jest.mdx`,
+    },
+    // Waiting on joi2graphql support for Joi.object().unknown()
+    // with a JSON type.
+    // {
+    // label: "Automatically run Prettier on commits",
+    // value: "prettier-git-hook.mdx",
+    // },
+    {
+      label: `Add Gatsby Theme Blog`,
+      value: `gatsby-theme-blog`,
+    },
+    {
+      label: `Add persistent layout component with gatsby-plugin-layout`,
+      value: `gatsby-plugin-layout`,
+    },
+    {
+      label: `Add Emotion`,
+      value: `emotion.mdx`,
+    },
+    {
+      label: `Add Sass`,
+      value: `sass.mdx`,
+    },
+    {
+      label: `Add Theme UI`,
+      value: `theme-ui.mdx`,
+    },
+    // TODO layouts from Jeremey
+    // TODO mdx pages like tweet
+    // TODO add styled components
+    // TODO remaining recipes
+    // TODO constrain width of UI
+  ]
+
+  return (
+    <SelectInput
+      items={items}
+      onSelect={setRecipe}
+      indicatorComponent={item => (
+        <Color magentaBright>
+          {item.isSelected ? `>>` : `  `}
+          {item.label}
+        </Color>
+      )}
+      itemComponent={props => (
+        <Color magentaBright={props.isSelected}>{props.label}</Color>
+      )}
+    />
+  )
+}
 
 let renderCount = 1
 
-const Div = props => (
-  <Box
-    width="100%"
-    textWrap="wrap"
-    flexShrink={0}
-    flexDirection="column"
-    {...props}
-  />
-)
+const Div = props => {
+  const width = Math.min(process.stdout.columns, MAX_UI_WIDTH)
+  return (
+    <Box
+      width={width}
+      textWrap="wrap"
+      flexShrink={0}
+      flexDirection="column"
+      {...props}
+    />
+  )
+}
 
 // Markdown ignores new lines and so do we.
 function elimiateNewLines(children) {
@@ -102,16 +195,22 @@ log(
 
 const PlanContext = React.createContext({})
 
-module.exports = ({ recipe, projectRoot }) => {
-  const GRAPHQL_ENDPOINT = `http://localhost:4000/graphql`
+module.exports = ({ recipe, graphqlPort, projectRoot }) => {
+  const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
 
   const subscriptionClient = new SubscriptionClient(
-    `ws://localhost:4000/graphql`,
+    `ws://localhost:${graphqlPort}/graphql`,
     {
       reconnect: true,
     },
     ws
   )
+
+  let showRecipesList = false
+
+  if (!recipe) {
+    showRecipesList = true
+  }
 
   const client = createClient({
     fetch,
@@ -128,6 +227,7 @@ module.exports = ({ recipe, projectRoot }) => {
 
   const RecipeInterpreter = () => {
     const [lastKeyPress, setLastKeyPress] = useState(``)
+    const [localRecipe, setRecipe] = useState(recipe)
     const { exit } = useApp()
 
     const [subscriptionResponse] = useSubscription(
@@ -154,10 +254,13 @@ module.exports = ({ recipe, projectRoot }) => {
     `)
 
     subscriptionClient.connectionCallback = async () => {
-      try {
-        await createOperation({ recipePath: recipe, projectRoot })
-      } catch (e) {
-        log(`error creating operation`, e)
+      if (!showRecipesList) {
+        log(`createOperation`)
+        try {
+          await createOperation({ recipePath: localRecipe, projectRoot })
+        } catch (e) {
+          log(`error creating operation`, e)
+        }
       }
     }
 
@@ -166,8 +269,11 @@ module.exports = ({ recipe, projectRoot }) => {
       JSON.parse(subscriptionResponse.data.operation.state)
 
     useInput((_, key) => {
+      if (showRecipesList) {
+        return
+      }
       setLastKeyPress(key)
-      if (key.return && state.value === `SUCCESS`) {
+      if (key.return && state && state.value === `SUCCESS`) {
         subscriptionClient.close()
         exit()
         process.exit()
@@ -177,6 +283,33 @@ module.exports = ({ recipe, projectRoot }) => {
     })
 
     log(`subscriptionResponse.data`, subscriptionResponse.data)
+
+    if (showRecipesList) {
+      return (
+        <>
+          <WelcomeMessage />
+          <Text bold underline>
+            Select a recipe to run
+          </Text>
+          <RecipesList
+            setRecipe={async recipeItem => {
+              log(`yo`, { recipeItem, projectRoot })
+              showRecipesList = false
+              try {
+                await createOperation({
+                  recipePath: recipeItem.value,
+                  projectRoot,
+                })
+              } catch (e) {
+                log(`error creating operation`, e)
+              }
+              log(`sent recipe`)
+              // setRecipe(recipeItem.value)
+            }}
+          />
+        </>
+      )
+    }
 
     if (!state) {
       return (
@@ -233,7 +366,7 @@ module.exports = ({ recipe, projectRoot }) => {
       if (!isPlan || !isPresetPlanState) {
         return (
           <Div marginTop={1}>
-            <Text>Press enter to continue</Text>
+            <Color magentaBright>>> Press enter to continue</Color>
           </Div>
         )
       }
@@ -259,7 +392,7 @@ module.exports = ({ recipe, projectRoot }) => {
             </Div>
           ))}
           <Div marginTop={1}>
-            <Text>Do you want to run this step? Y/n</Text>
+            <Color magentaBright>>> Press enter to run this step</Color>
           </Div>
         </Div>
       )
@@ -334,23 +467,28 @@ module.exports = ({ recipe, projectRoot }) => {
 
     return (
       <>
-        <Static>
-          {lodash.flattenDeep(state.context.stepResources).map((r, i) => (
-            <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>
-          ))}
-        </Static>
+        <Div>
+          <Static>
+            {lodash.flattenDeep(state.context.stepResources).map((r, i) => (
+              <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>
+            ))}
+          </Static>
+        </Div>
+        {state.context.currentStep === 0 && <WelcomeMessage />}
         {state.context.currentStep > 0 && state.value !== `done` && (
           <Div>
-            <Text>
+            <Text underline bold>
               Step {state.context.currentStep} /{` `}
               {state.context.steps.length - 1}
             </Text>
           </Div>
         )}
         <PlanContext.Provider value={{ planForNextStep: state.plan }}>
-          <MDX components={components}>
-            {state.context.stepsAsMdx[state.context.currentStep]}
-          </MDX>
+          <Div>
+            <MDX components={components}>
+              {state.context.stepsAsMdx[state.context.currentStep]}
+            </MDX>
+          </Div>
           <PresentStep state={state} />
           <RunningStep state={state} />
         </PlanContext.Provider>
@@ -359,12 +497,12 @@ module.exports = ({ recipe, projectRoot }) => {
   }
 
   const Wrapper = () => (
-    <Div>
+    <>
       <Provider value={client}>
         <Text>{` `}</Text>
         <RecipeInterpreter />
       </Provider>
-    </Div>
+    </>
   )
 
   const Recipe = () => <Wrapper />
