@@ -51,7 +51,7 @@ function _getOpenItemHash(itemList, activeItemLink, activeItemParents) {
 
 function readLocalStorage(key) {
   if (hasLocalStorage) {
-    return JSON.parse(localStorage.getItem(`gatsbyjs:sidebar:${key}`))
+    return JSON.parse(localStorage.getItem(`gatsbyjs:sidebar:${key}`)) ?? {}
   }
   return {}
 }
