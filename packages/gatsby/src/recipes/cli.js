@@ -93,9 +93,7 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add Typescript`,
       value: `typescript.mdx`,
     },
-    // TODO add styled components
     // TODO remaining recipes
-    // TODO constrain width of UI
   ]
 
   return (
@@ -168,7 +166,7 @@ const components = {
     return (
       <Box
         width="100%"
-        marginBottom={1}
+        marginBottom={2}
         flexDirection="row"
         textWrap="wrap"
         {...props}
