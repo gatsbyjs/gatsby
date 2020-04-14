@@ -10,6 +10,7 @@ tags:
 ---
 
 Some of you have recently seen a link in the CLI, inviting you to take a four question survey about Gatsby:
+
 ![Invitation to take Gatsby user survey from the command line](./survey-screenshot.png)
 
 Thank you to all who responded to the survey; myself and other engineers have personally read all the responses and are summarizing them in this blogpost, in an anonymized manner!
@@ -35,34 +36,38 @@ Here are the questions we ask in each survey. (The questions will stay the same 
 ## And what did Gatsby users have to say???
 Let's break the results down question by question.
 
-### How disappointed would you be if you could no longer use Gatsby?
+### 1. How disappointed would you be if you could no longer use Gatsby?
 
 ![Bar graph of results from question one, how disappointed would you be if you couldn't use Gatsby anymore](./question_one.png "Bar graph question one results")
 
 A significant majority of respondents—68.33%!—said they would be “very disappointed” if they could no longer use Gatsby. I’ll call this group of users “high expectation users” since they expect Gatsby to perform something critical and valuable for them. Our followup query seeks to identify exactly what these critical and valuable things might be.
 
-### What is the main benefit you receive from Gatsby?
+### 2. What type of people do you think would benefit the most from Gatsby?
+
+Those who would only be somewhat disappointed without Gatsby responded that Gatsby is best for developers, mostly those learning React. Those who would be very disappointed without Gatsby, by contrast, responded that Gatsby is for a wider audience, including developers of all skill levels, building all kinds of websites. A few even mentioned Gatsby is for designers, marketers, and end users.
+> Someone hard-pressed to make a blazingly fast and performant site without having too much time spent playing with configurations for things like tree-shaking and prefetching data. I've been using Gatsby for creating a full-fledged website in the time it takes to make a rough and dirty prototype.
+
+> Everyone. Freelance developers, agency developers, enterprise developers. Marketers, small to large businesses, bloggers, SaaS platforms, e-commerce sites, microsites, dynamic web apps
+
+### 3. What is the main benefit you receive from Gatsby?
 
 There was one central takeaway: Those who responded they would be “very disappointed” without Gatsby agreed strongly that __the main benefit they receive from Gatsby is a fast & easy workflow to get an optimized site.__
 
 “What is the main benefit you receive from Gatsby?” also prompted other, in-depth, responses explaining the value Gatsby provides to high-expectation users:
 
 > Feeling that somebody's got my back on various little things like image loading, typeface loading, other asset and content prefetching. You get the idea.
+
 > Simplification of complex HTML5 features (lazy-loading images at multiple resolutions, i18n, head metadata fields, pwa...), obtaining always optimized code.
+
 > Superior workflow compared to traditional CMS (Wordpress/GRAV etc.). Freedom of choice for system design regarding tools in the React ecosystem.
+
 > It does the job for me. The page load is amazingly fast. I have to write less code.
+
 > Hard things, made easy.
 
 Respondents who said they would be “somewhat disappointed” and “not disappointed” without Gatsby actually gave similar answers. The only difference being that their answers were shorter and less enthusiastic. The similarity between the answers is unexpected. It might mean that they are experiencing enough difficulties to *almost* outweigh the benefits they’re getting from Gatsby, which is why the next question is important.
 
-### What type of people do you think would benefit the most from Gatsby?
-
-Those who would only be somewhat disappointed without Gatsby responded that Gatsby is best for developers, mostly those learning React. Those who would be very disappointed without Gatsby, by contrast, responded that Gatsby is for a wider audience, including developers of all skill levels, building all kinds of websites. A few even mentioned Gatsby is for designers, marketers, and end users.
-> Someone hard-pressed to make a blazingly fast and performant site without having too much time spent playing with configurations for things like tree-shaking and prefetching data. I've been using Gatsby for creating a full-fledged website in the time it takes to make a rough and dirty prototype.
-> Everyone. Freelance developers, agency developers, enterprise developers. Marketers, small to large businesses, bloggers, SaaS platforms, e-commerce sites, microsites, dynamic web apps
-
-
-### How can we improve Gatsby for you?
+### 4. How can we improve Gatsby for you?
 Those who would be “not disappointed” or “somewhat disappointed” without Gatsby still have high expectations about how Gatsby can improve, which is relatively unexpected; usually if a person isn’t receiving much benefit from a product, they don’t care if it improves or not.
 
 So the fact that the “not disappointed” and “somewhat disappointed” groups responded likely indicates that Gatsby provides enough benefit for them to take the time to list specific improvements that would help them get even out of it. Overall, this group indicated that they’d appreciate more tutorials and documentation, TypeScript support (which is currently in progress), and incremental builds.
