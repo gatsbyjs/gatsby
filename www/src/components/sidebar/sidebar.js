@@ -84,24 +84,24 @@ function Sidebar({
     }
   }, [position])
 
-  const activeItemLink = React.useMemo(() => {
-    return getActiveItem(itemList, location, activeItemHash)
-  }, [itemList, location, activeItemHash])
+  const activeItemLink = getActiveItem(itemList, location, activeItemHash)
 
-  const activeItemParents = React.useMemo(() => {
-    return getActiveItemParents(itemList, activeItemLink, []).map(
-      link => link.title
-    )
-  }, [itemList, activeItemLink])
+  const activeItemParents = getActiveItemParents(
+    itemList,
+    activeItemLink,
+    []
+  ).map(link => link.title)
 
   // Get the hash where the only open items are
   // the hierarchy defined in props
-  const derivedHash = React.useMemo(() => {
-    return getOpenItemHash(itemList, activeItemLink, activeItemParents)
-  }, [itemList, activeItemLink, activeItemParents])
+  const derivedHash = getOpenItemHash(
+    itemList,
+    activeItemLink,
+    activeItemParents
+  )
 
   // Merge hash in local storage and the derived hash from props
-  const initialHash = React.useMemo(() => {
+  const initialHash = (() => {
     const { openSectionHash = {} } = readLocalStorage(sidebarKey)
     for (const [key, isOpen] of Object.entries(derivedHash)) {
       if (isOpen) {
@@ -109,24 +109,19 @@ function Sidebar({
       }
     }
     return openSectionHash
-  }, [derivedHash])
+  })()
 
   const [openSectionHash, setOpenSectionHash] = React.useState(initialHash)
   const expandAll = Object.values(openSectionHash).every(isOpen => isOpen)
 
-  // Write to local storage whenever the open section hash changes
-  React.useEffect(() => {
-    writeLocalStorage(sidebarKey, { openSectionHash })
-  }, [openSectionHash])
-
-  const toggleSection = React.useCallback(item => {
+  function toggleSection(item) {
     setOpenSectionHash(openSectionHash => {
       return {
         ...openSectionHash,
         [item.title]: !openSectionHash[item.title],
       }
     })
-  }, [])
+  }
 
   function toggleExpandAll() {
     if (expandAll) {
@@ -139,6 +134,11 @@ function Sidebar({
       setOpenSectionHash(newOpenSectionHash)
     }
   }
+
+  // Write to local storage whenever the open section hash changes
+  React.useEffect(() => {
+    writeLocalStorage(sidebarKey, { openSectionHash })
+  }, [openSectionHash])
 
   return (
     <section
