@@ -27,6 +27,9 @@ Object.defineProperty(window, "localStorage", {
   writable: true,
 })
 
+// https://github.com/jsdom/jsdom/issues/1695
+window.HTMLElement.prototype.scrollIntoView = jest.fn()
+
 const key = `gatsbyjs:sidebar:great-gatsby`
 
 function setLocalStorageHash(openSectionHash) {

@@ -35,8 +35,7 @@ const Item = ({
         // instead of navigating between pages with the prev/next buttons
         // or clicking on linking guides or urls
         await function() {}
-        // FIXME
-        // node.scrollIntoView({ block: `center` })
+        node.scrollIntoView({ block: `center` })
       }
     },
     [location.pathname]
