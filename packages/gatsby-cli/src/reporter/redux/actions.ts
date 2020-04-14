@@ -12,7 +12,6 @@ import {
   setActivityStatusText as internalSetActivityStatusText,
   setActivityTotal as internalSetActivityTotal,
   activityTick as internalActivityTick,
-  setLogs as internalSetLogs,
 } from "./internal-actions"
 
 const actions = {
@@ -26,7 +25,6 @@ const actions = {
   setActivityStatusText: internalSetActivityStatusText,
   setActivityTotal: internalSetActivityTotal,
   activityTick: internalActivityTick,
-  setLogs: internalSetLogs,
 }
 
 const boundActions = bindActionCreators<typeof actions, any>(
@@ -44,4 +42,3 @@ export const setActivityErrored = boundActions.setActivityErrored as typeof inte
 export const setActivityStatusText = boundActions.setActivityStatusText as typeof internalSetActivityStatusText
 export const setActivityTotal = boundActions.setActivityTotal as typeof internalSetActivityTotal
 export const activityTick = boundActions.activityTick as typeof internalActivityTick
-export const setLogs = boundActions.setLogs as typeof internalSetLogs

@@ -1,8 +1,8 @@
 import { createStore, combineReducers } from "redux"
 import { reducer } from "./reducer"
-import { ActionsUnion } from "./types"
+import { ActionsUnion, ISetLogs } from "./types"
 import { isInternalAction } from "./utils"
-import { setLogs } from "./actions"
+import { Actions } from "../constants"
 
 let store = createStore(
   combineReducers({
@@ -14,13 +14,14 @@ let store = createStore(
 type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void
 type ActionLogListener = (action: ActionsUnion) => any
+type Thunk = (...args: any[]) => ActionsUnion
 
 const storeSwapListeners: StoreListener[] = []
 const onLogActionListeners = new Set<ActionLogListener>()
 
 export const getStore = (): typeof store => store
 
-export const dispatch = (action: ActionsUnion): void => {
+export const dispatch = (action: ActionsUnion | Thunk): void => {
   if (!action) {
     return
   }
@@ -29,7 +30,7 @@ export const dispatch = (action: ActionsUnion): void => {
     action.forEach(item => dispatch(item))
     return
   } else if (typeof action === `function`) {
-    store.dispatch(action)
+    action(dispatch)
     return
   }
 
@@ -58,7 +59,10 @@ export const onLogAction = (fn: ActionLogListener): (() => void) => {
 }
 
 export const setStore = (s: GatsbyCLIStore): void => {
-  setLogs(store.getState().logs)
+  s.dispatch({
+    type: Actions.SetLogs,
+    payload: store.getState().logs,
+  } as ISetLogs)
   store = s
   storeSwapListeners.forEach(fn => fn(store))
 }
