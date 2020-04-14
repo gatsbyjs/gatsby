@@ -6,6 +6,37 @@ import Sidebar from "../sidebar"
 import { I18nProvider } from "../../I18nContext"
 import theme from "../../../gatsby-plugin-theme-ui"
 
+class LocalStorageMock {
+  store = {}
+
+  getItem(key) {
+    return this.store[key] ?? null
+  }
+
+  setItem(key, value) {
+    this.store[key] = value
+  }
+
+  clear() {
+    this.store = {}
+  }
+}
+
+Object.defineProperty(window, "localStorage", {
+  value: new LocalStorageMock(),
+  writable: true,
+})
+
+const key = `gatsbyjs:sidebar:great-gatsby`
+
+function setLocalStorageHash(openSectionHash) {
+  localStorage.setItem(key, JSON.stringify({ openSectionHash }))
+}
+
+function getLocalStorageHash() {
+  return JSON.parse(localStorage.getItem(key)).openSectionHash
+}
+
 function extendItemList(itemList, parentTitle) {
   for (const item of itemList) {
     if (parentTitle) {
@@ -51,21 +82,33 @@ function renderSidebar(pathname) {
   return render(
     <ThemeProvider theme={theme}>
       <I18nProvider locale="en">
-        <Sidebar itemList={extendItemList(itemList)} location={{ pathname }} />
+        <Sidebar
+          title="The Great Gatsby"
+          sidebarKey="great-gatsby"
+          itemList={extendItemList(itemList)}
+          location={{ pathname }}
+        />
       </I18nProvider>
     </ThemeProvider>
   )
 }
 
 describe("sidebar", () => {
+  beforeEach(() => {
+    localStorage.clear()
+  })
+
   describe("initialization", () => {
     it("opens sections with active items", () => {
       const { queryByText } = renderSidebar("/characters/jay-gatsby/")
       expect(queryByText("Jay Gatsby")).toBeInTheDocument()
     })
 
-    it("opens sections that are open in local storage", () => {
-      //
+    it("opens sections based on local storage", () => {
+      setLocalStorageHash({ Characters: true })
+      const { queryByText } = renderSidebar("/plot-summary/")
+      expect(queryByText("Jay Gatsby")).toBeInTheDocument()
+      expect(queryByText("The Green Light")).not.toBeInTheDocument()
     })
   })
 
@@ -83,7 +126,11 @@ describe("sidebar", () => {
     })
 
     it("writes to local storage", () => {
-      //
+      const { getByLabelText } = renderSidebar("/motifs/")
+      fireEvent.click(getByLabelText(`Characters expand`))
+      fireEvent.click(getByLabelText(`Motifs collapse`))
+      expect(getLocalStorageHash()["Characters"]).toBeTruthy()
+      expect(getLocalStorageHash()["Motifs"]).toBeFalsy()
     })
   })
 
@@ -100,6 +147,7 @@ describe("sidebar", () => {
       const { queryByText, getByText } = renderSidebar(
         "/characters/jay-gatsby/"
       )
+      fireEvent.click(getByText(`Expand All`))
       fireEvent.click(getByText(`Collapse All`))
       expect(queryByText("Jay Gatsby")).toBeInTheDocument()
       expect(queryByText("The Buchanans")).toBeInTheDocument()
@@ -108,7 +156,15 @@ describe("sidebar", () => {
     })
 
     it("writes to local storage", () => {
-      //
+      const { getByText } = renderSidebar("/characters/jay-gatsby/")
+      fireEvent.click(getByText(`Expand All`))
+      expect(getLocalStorageHash()["Motifs"]).toBeTruthy()
+      expect(getLocalStorageHash()["The Buchanans"]).toBeTruthy()
+
+      fireEvent.click(getByText(`Collapse All`))
+      expect(getLocalStorageHash()["Motifs"]).toBeFalsy()
+      expect(getLocalStorageHash()["The Buchanans"]).toBeFalsy()
+      expect(getLocalStorageHash()["Characters"]).toBeTruthy()
     })
   })
 })
