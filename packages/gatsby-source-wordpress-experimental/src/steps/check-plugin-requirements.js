@@ -11,7 +11,7 @@ export const supportedWpPluginVersions = {
 }
 
 // @todo replace this link with another once we're out of alpha
-const genericDownloadMessage = `\n\n\tVisit https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/tree/fdbe608643f135cc40817d7d6f381d9cc36ecba3/WordPress/plugins\n\tto download the latest supported versions of WPGatsby and WPGraphL.`
+const genericDownloadMessage = `\n\n\tVisit https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/tree/master/WordPress/plugins/\n\tto download the latest supported versions of WPGatsby and WPGraphL.`
 
 const areRemotePluginVersionsSatisfied = async ({ helpers }) => {
   let wpgqlIsSatisfied
