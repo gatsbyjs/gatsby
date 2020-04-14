@@ -1,7 +1,7 @@
 {
   "name": "gatsby-theme-notes",
   "description": "Gatsby Theme for adding a notes section to your website",
-  "version": "1.2.20",
+  "version": "1.2.21",
   "author": "John Otander",
   "license": "MIT",
   "main": "index.js",
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-notes#readme",
   "devDependencies": {
-    "gatsby": "^2.20.19",
+    "gatsby": "^2.20.20",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
