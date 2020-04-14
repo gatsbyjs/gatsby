@@ -22,7 +22,7 @@ https://github.com/gatsbyjs/gatsby/issues/22991
 
 ## Recipe setup
 
-Upgrade the global gatsby-cli package to use the one with new recipes command.
+Upgrade the global gatsby-cli package to use the new recipes command.
 
 ```shell
 npm install -g gatsby-cli@recipes
@@ -32,7 +32,7 @@ To confirm that this worked, run `gatsby -v` in your terminal. The output should
 
 ### Running an example recipe
 
-Now you can test out recipes! Start with this one for installing `emotion` by following these steps:
+Now you can test out recipes! Start with a recipe for installing `emotion` by following these steps:
 
 1. Create a new Hello World Gatsby site:
 
@@ -40,13 +40,13 @@ Now you can test out recipes! Start with this one for installing `emotion` by fo
 gatsby new try-emotion https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-1. Navigate into that project directory
+1. Navigate into that project directory:
 
 ```shell
 cd try-emotion
 ```
 
-1. Upgrade the version of Gatsby the project is using to be one that works with Recipes.
+1. Upgrade the version of Gatsby the project is using to a version that works with Recipes.
    Note that you should use the package manager you've selected to work with Gatsby projects.
 
 - If it's yarn, type this command:
@@ -114,7 +114,7 @@ https://emotion.sh/docs/introduction
 
 ### How to run recipes
 
-You can run built-in Recipes, ones you write locally, and ones people have posted online.
+You can run built-in recipes, ones you write locally, and ones people have posted online.
 
 To run a local recipe, make sure to start the path to the recipe with a period like `gatsby recipes ./my-cool-recipe.mdx`
 
