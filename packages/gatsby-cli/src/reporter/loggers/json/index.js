@@ -1,8 +1,6 @@
-import ReporterStore from "../../redux/index"
+import { onLogAction } from "../../redux/index"
 import stripAnsi from "strip-ansi"
 import _ from "lodash"
-
-const { onLogAction } = ReporterStore
 
 onLogAction(action => {
   const sanitizedAction = {
