@@ -135,3 +135,35 @@ Soon will support options.
 
 - **path** path to the file that should be created. The path is local to the root of the Node.js project (where the package.json is)
 - **content** URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixees to MDX.
+
+## FAQ / common issues
+
+### Q) My recipe is combining steps instead of running them seperately!
+
+We use the `---` break syntax from Markdown to separate steps.
+
+One quirk with it is for it to work, it must have an empty line above it.
+
+So this will work:
+
+```mdx
+# Recipes
+
+---
+
+a step
+
+<File src="something.txt" content="something" />
+```
+
+But this won't
+
+```mdx
+# Recipes
+
+---
+
+a step
+
+<File src="something.txt" content="something" />
+```

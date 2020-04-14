@@ -6,11 +6,13 @@ module.exports = steps => {
   )
 
   if (commandKeys.length) {
-    return commandKeys.map(key => ({
-      step: 0,
-      resource: key,
-      validationError: `${key} should not be used in the introduction step`
-    }))
+    return commandKeys.map(key => {
+      return {
+        step: 0,
+        resource: key,
+        validationError: `Resources e.g. ${key} should not be placed in the introduction step`,
+      }
+    })
   } else {
     return []
   }

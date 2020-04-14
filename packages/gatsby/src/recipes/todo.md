@@ -7,7 +7,7 @@
 - [x] Boot up server as a process
 - [x] Then run the CLI
 - [x] Clean up server after
-- [ ] show plan to create or that nothing is necessary & then show in `<static>` what was done
+- [x] show plan to create or that nothing is necessary & then show in `<static>` what was done
 
 ## alpha
 
@@ -58,6 +58,7 @@ John
 
 ## Near-ish future
 
+- [ ] support Joi.any & Joi.alternatives in joi2graphql for prettier-git-hook.mdx
 - [ ] Make a proper "Config" provider to add recipes dir, store data, etc.
 - [ ] init.js for providers to setup clients
 - [ ] validate resource config
@@ -72,3 +73,4 @@ John
 - [ ] Implement config object for GatsbyPlugin
 - [ ] Handle JS in config objects? { **\_javascript: "`\${**dirname}/foo/bar`" }
 - [ ] handle people pressing Y & quit if they press "n" (for now)
+- [ ] Automatically create list of recipes from the recipes directory (recipes resource 🤔)
