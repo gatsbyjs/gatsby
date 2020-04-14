@@ -457,6 +457,33 @@ describe(`NodeModel`, () => {
           expect(result).toBeDefined()
           expect(result.id).toEqual(`post2`)
         })
+
+        // FIXME: Filters on date instances are not supported yet
+        //  SIFT requires such filters to be expressed as Date instances but we
+        //  don't know if date is stored as `Date` instance or `string`
+        //  so can't really do that
+        //  See https://github.com/crcn/sift.js#date-comparison
+        it.skip(`queries date instances in nodes`, async () => {
+          const type = `Post`
+          const query = {
+            filter: {
+              frontmatter: {
+                date: { lte: `2018-01-01T00:00:00Z` },
+              },
+            },
+          }
+          const firstOnly = false
+          nodeModel.replaceTypeKeyValueCache(createFiltersCache())
+          const result = await nodeModel.runQuery({
+            query,
+            firstOnly,
+            type,
+          })
+          expect(result).toBeDefined()
+          expect(result.length).toEqual(2)
+          expect(result[0].id).toEqual(`post2`)
+          expect(result[1].id).toEqual(`post3`)
+        })
       })
     })
 
