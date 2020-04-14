@@ -8,7 +8,6 @@
  * - Whenever a query changes, re-run all pages that rely on this query.
  ***/
 
-const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 
 const path = require(`path`)
@@ -250,7 +249,7 @@ exports.startWatchDeletePage = () => {
     const componentPath = slash(action.payload.component)
     const { pages } = store.getState()
     let otherPageWithTemplateExists = false
-    for (let page of pages.values()) {
+    for (const page of pages.values()) {
       if (slash(page.component) === componentPath) {
         otherPageWithTemplateExists = true
         break

@@ -1,4 +1,5 @@
 import {
+  IGatsbyPlugin,
   ProgramStatus,
   ICreatePageDependencyAction,
   IDeleteComponentDependenciesAction,
@@ -81,7 +82,7 @@ export const replaceComponentQuery = ({
  */
 export const replaceStaticQuery = (
   args: any,
-  plugin: Plugin | null | undefined = null
+  plugin: IGatsbyPlugin | null | undefined = null
 ): IReplaceStaticQueryAction => {
   return {
     type: `REPLACE_STATIC_QUERY`,
@@ -98,7 +99,7 @@ export const replaceStaticQuery = (
  */
 export const queryExtracted = (
   { componentPath, query }: { componentPath: string; query: string },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractedAction => {
   return {
@@ -116,7 +117,7 @@ export const queryExtracted = (
  */
 export const queryExtractionGraphQLError = (
   { componentPath, error }: { componentPath: string; error: string },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractionGraphQLErrorAction => {
   return {
@@ -135,7 +136,7 @@ export const queryExtractionGraphQLError = (
  */
 export const queryExtractedBabelSuccess = (
   { componentPath },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractedBabelSuccessAction => {
   return {
@@ -153,7 +154,7 @@ export const queryExtractedBabelSuccess = (
  */
 export const queryExtractionBabelError = (
   { componentPath, error }: { componentPath: string; error: Error },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractionBabelErrorAction => {
   return {
@@ -170,7 +171,7 @@ export const queryExtractionBabelError = (
  */
 export const setProgramStatus = (
   status: ProgramStatus,
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): ISetProgramStatusAction => {
   return {
@@ -187,7 +188,7 @@ export const setProgramStatus = (
  */
 export const pageQueryRun = (
   { path, componentPath, isPage },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IPageQueryRunAction => {
   return {
@@ -204,7 +205,7 @@ export const pageQueryRun = (
  */
 export const removeStaleJob = (
   contentDigest: string,
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IRemoveStaleJobAction => {
   return {

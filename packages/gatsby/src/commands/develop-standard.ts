@@ -31,12 +31,17 @@ import * as WorkerPool from "../utils/worker/pool"
 import http from "http"
 import https from "https"
 
-import { bootstrapSchemaHotReloader } from "../bootstrap/schema-hot-reloader"
+import {
+  bootstrapSchemaHotReloader,
+  startSchemaHotReloader,
+  stopSchemaHotReloader,
+} from "../bootstrap/schema-hot-reloader"
 import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
 import { developStatic } from "./develop-static"
 import withResolverContext from "../schema/context"
 import sourceNodes from "../utils/source-nodes"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
+import { rebuild as rebuildSchema } from "../schema"
 import { websocketManager } from "../utils/websocket-manager"
 import getSslCert from "../utils/get-ssl-cert"
 import { slash } from "gatsby-core-utils"
@@ -203,6 +208,7 @@ async function startServer(program: IProgram): Promise<IServer> {
    **/
   const REFRESH_ENDPOINT = `/__refresh`
   const refresh = async (req: express.Request): Promise<void> => {
+    stopSchemaHotReloader()
     let activity = report.activityTimer(`createSchemaCustomization`, {})
     activity.start()
     await createSchemaCustomization({
@@ -215,6 +221,11 @@ async function startServer(program: IProgram): Promise<IServer> {
       webhookBody: req.body,
     })
     activity.end()
+    activity = report.activityTimer(`rebuild schema`)
+    activity.start()
+    await rebuildSchema({ parentSpan: activity })
+    activity.end()
+    startSchemaHotReloader()
   }
   app.use(REFRESH_ENDPOINT, express.json())
   app.post(REFRESH_ENDPOINT, (req, res) => {
