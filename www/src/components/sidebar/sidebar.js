@@ -99,12 +99,15 @@ function Sidebar({
     }
   }, [position])
 
-  const activeItemLink = getActiveItem(itemList, location, activeItemHash)
-  const activeItemParents = getActiveItemParents(
-    itemList,
-    activeItemLink,
-    []
-  ).map(link => link.title)
+  const activeItemLink = React.useMemo(() => {
+    return getActiveItem(itemList, location, activeItemHash)
+  }, [itemList, location, activeItemHash])
+
+  const activeItemParents = React.useMemo(() => {
+    return getActiveItemParents(itemList, activeItemLink, []).map(
+      link => link.title
+    )
+  }, [itemList, activeItemLink])
 
   // Get the hash where the only open items are
   // the hierarchy defined in props
@@ -136,14 +139,14 @@ function Sidebar({
     setExpandAll(Object.values(openSectionHash).every(isOpen => isOpen))
   }, [openSectionHash])
 
-  function toggleSection(item) {
-    const newOpenSectionHash = {
-      ...openSectionHash,
-      [item.title]: !openSectionHash[item.title],
-    }
-
-    setOpenSectionHash(newOpenSectionHash)
-  }
+  const toggleSection = React.useCallback(item => {
+    setOpenSectionHash(openSectionHash => {
+      return {
+        ...openSectionHash,
+        [item.title]: !openSectionHash[item.title],
+      }
+    })
+  }, [])
 
   function toggleExpandAll() {
     if (expandAll) {
@@ -155,7 +158,7 @@ function Sidebar({
         newOpenSectionHash[key] = true
       }
       setOpenSectionHash(newOpenSectionHash)
-      setExpandAll(false)
+      setExpandAll(true)
     }
   }
 
