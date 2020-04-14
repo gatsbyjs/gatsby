@@ -9,6 +9,7 @@ module.exports = themeOptions => {
       title: `Blog Title Placeholder`,
       author: `Name Placeholder`,
       description: `Description placeholder`,
+      siteURL: 'https://example.com',
       social: [
         {
           name: `Twitter`,

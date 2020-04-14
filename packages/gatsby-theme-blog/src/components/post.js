@@ -18,7 +18,11 @@ const Post = ({
   next,
 }) => (
   <Layout location={location} title={title}>
-    <SEO title={post.title} description={post.excerpt} />
+    <SEO
+      title={post.title}
+      description={post.excerpt}
+      imageSource={post.image?.childImageSharp?.fluid.src}
+    />
     <main>
       <Styled.h1>{post.title}</Styled.h1>
       <Styled.p
