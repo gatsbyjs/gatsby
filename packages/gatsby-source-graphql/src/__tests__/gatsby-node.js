@@ -1,4 +1,4 @@
-jest.mock(`graphql-tool`, () => {
+jest.mock(`graphql-tools`, () => {
   return {
     transformSchema: jest.fn(),
     introspectSchema: jest.fn(),
