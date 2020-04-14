@@ -103,7 +103,7 @@ function Sidebar({
 
   // Merge hash in local storage and the derived hash from props
   const initialHash = React.useMemo(() => {
-    const { openSectionHash } = readLocalStorage(sidebarKey)
+    const { openSectionHash = {} } = readLocalStorage(sidebarKey)
     for (const [key, isOpen] of Object.entries(derivedHash)) {
       if (isOpen) {
         openSectionHash[key] = true
