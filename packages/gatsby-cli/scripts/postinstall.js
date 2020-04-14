@@ -1,9 +1,12 @@
 const chalk = require(`chalk`);
+const terminalLink = require(`terminal-link`);
+
+const cliInfoUrl = `https://www.gatsbyjs.org/docs/gatsby-cli/`
 
 const showSuccessMessage = () => {
   console.log(chalk.green(`Success!\n`));
   console.log(chalk.cyan(`Welcome to the Gatsby CLI! Please visit `) +
-    chalk.underline(`https://www.gatsbyjs.org/docs/gatsby-cli/`) +
+    terminalLink(cliInfoUrl, cliInfoUrl, { fallback: chalk.underline(cliInfoUrl) }) +
     chalk.cyan(` for more information.\n`));
 }
 
