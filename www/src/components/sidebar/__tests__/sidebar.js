@@ -11,6 +11,7 @@ describe("sidebar", () => {
 
   describe("toggle section", () => {
     it("opens the section if it is not open", () => {
+      render(<Sidebar />)
       //
     })
 

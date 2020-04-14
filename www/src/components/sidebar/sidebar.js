@@ -54,7 +54,10 @@ function _getOpenItemHash(itemList, activeItemLink, activeItemParents) {
       result[item.title] =
         isItemActive(activeItemParents, item) ||
         activeItemLink.title === item.title
-      result = { ...result, ..._getOpenItemHash(item.items, state) }
+      result = {
+        ...result,
+        ..._getOpenItemHash(item.items, activeItemLink, activeItemParents),
+      }
     }
   }
   return result
@@ -76,6 +79,7 @@ function writeLocalStorage(key, state) {
 function Sidebar({
   i18n,
   title,
+  sidebarKey,
   closeSidebar,
   itemList,
   location,
@@ -507,4 +511,4 @@ class SidebarBody extends Component {
   }
 }
 
-export default withI18n()(SidebarBody)
+export default withI18n()(Sidebar)
