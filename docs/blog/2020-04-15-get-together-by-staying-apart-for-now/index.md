@@ -16,11 +16,11 @@ We love that you love getting together as much as we do. But in light of the cur
 
 The good news is it’s easier than ever to interact with people online and host remote events. Here are some ideas for engaging with the community and sharing your Gatsby expertise while still safely physically, if not socially, distancing:
 
-1. _Host your own Gatsby webinar._ Invite the folks who usually attend your in-person events to a live stream or online call, and give a Gatsby presentation.
-2. _Do some live pair programming._ Get together with one of your Gatsby buddies on your preferred remote interaction tools and stream on Twitch or YouTube. You can also [sign up to pair with someone from the Gatsby team](https://www.gatsbyjs.org/contributing/pair-programming/). You might even make it onto our [Twitch channel](https://www.twitch.tv/gatsbyjs)!
-3. _Chat with other community members on the [Gatsby Discord server](https://gatsby.dev/discord)._
-4. _Hang out on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs)._ Check out our channel for info on our upcoming streams.
-5. _Plan to attend [Virtual Gatsby Days](https://www.gatsbyjs.org/blog/2020-04-14-virtual-gatsby-days-registration/)_, June 2nd & 3rd!
+1. __Host your own Gatsby webinar.__ Invite the folks who usually attend your in-person events to a live stream or online call, and give a Gatsby presentation.
+2. __Do some live pair programming.__ Get together with one of your Gatsby buddies on your preferred remote interaction tools and stream on Twitch or YouTube. You can also [sign up to pair with someone from the Gatsby team](https://www.gatsbyjs.org/contributing/pair-programming/). You might even make it onto our [Twitch channel](https://www.twitch.tv/gatsbyjs)!
+3. __Chat with other community members on the [Gatsby Discord server](https://gatsby.dev/discord).__
+4. __Hang out on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).__ Check out our channel for info on our upcoming streams.
+5. __Plan to attend [Virtual Gatsby Days](https://www.gatsbyjs.org/blog/2020-04-14-virtual-gatsby-days-registration/)__, June 2nd & 3rd!
 
 ## Some great tools for remote events
 We have the technology! There are lots of free tools and applications you can use to host an awesome remote event. Here are a few that we’ve used at Gatsby:
@@ -29,4 +29,4 @@ We have the technology! There are lots of free tools and applications you can us
   * [Glitch](https://glitch.com/) for building apps, sharing projects, and learning to code
   * [FindCollabs](https://findcollabs.com/) for hosting online hackathons
 
-We’ve got big plans for the Gatsby community and events coming down the road! You can [follow Gatsby on Twitter](https://twitter.com/gatsbyjs) for up-to-the-minute announcements and updates.  So stay tuned, stay healthy, and stay home—it’s how we make sure we are all here to gather together once more when pandemic restrictions are a thing of the past 💜.
+We’ve got big plans for the Gatsby community and events coming down the road! You can [follow Gatsby on Twitter](https://twitter.com/gatsbyjs) for up-to-the-minute announcements and updates.  So stay tuned, stay healthy, and stay home—so we can _all_ be here to gather together when pandemic restrictions are a thing of the past 💜.
