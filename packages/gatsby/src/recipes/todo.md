@@ -7,7 +7,7 @@
 - [x] Boot up server as a process
 - [x] Then run the CLI
 - [x] Clean up server after
-- [ ] show plan to create or that nothing is necessary & then show in `<static>` what was done
+- [x] show plan to create or that nothing is necessary & then show in `<static>` what was done
 
 ## alpha
 

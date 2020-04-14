@@ -20,34 +20,36 @@ const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 const SelectInput = require(`ink-select-input`).default
 
+const MAX_UI_WIDTH = 100
+
+// TODO try this and write out success stuff & last message?
+// const enterAltScreenCommand = "\x1b[?1049h"
+// const leaveAltScreenCommand = "\x1b[?1049l"
+// process.stdout.write(enterAltScreenCommand)
+// process.on("exit", () => {
+// process.stdout.write(leaveAltScreenCommand)
+// })
+
 const WelcomeMessage = () => (
   <>
     <Boxen
       borderStyle="double"
       borderColor="white"
-      float="center"
+      float="left"
       padding={1}
-      margin={{ bottom: 1 }}
+      margin={{ bottom: 1, left: 2 }}
     >
       Thank you for trying the experimental version of Gatsby Recipes!
     </Boxen>
     <Div marginBottom={2} alignItems="center">
-      Please ask questions, report bugs, and subscribe for updates in our
-      umbrella issue at https://github.com/gatsbyjs/gatsby/issues/22991
+      Please ask questions, share your recipes, report bugs, and subscribe for
+      updates in our umbrella issue at
+      https://github.com/gatsbyjs/gatsby/issues/22991
     </Div>
   </>
 )
 
 const RecipesList = ({ setRecipe }) => {
-  log(`inside demo`)
-  const handleSelect = item => {
-    // `item` = { label: 'First', value: 'first' }
-    log(`selected item`, item)
-  }
-  const handleHighlight = item => {
-    log(`highlighted item`, item)
-  }
-
   const items = [
     {
       label: `Add a custom ESLint config`,
@@ -83,28 +85,40 @@ const RecipesList = ({ setRecipe }) => {
     // TODO mdx pages like tweet
     // TODO add styled components
     // TODO remaining recipes
+    // TODO constrain width of UI
   ]
 
   return (
     <SelectInput
       items={items}
-      onHighlight={handleHighlight}
       onSelect={setRecipe}
+      indicatorComponent={item => (
+        <Color magentaBright>
+          {item.isSelected ? `>>` : `  `}
+          {item.label}
+        </Color>
+      )}
+      itemComponent={props => (
+        <Color magentaBright={props.isSelected}>{props.label}</Color>
+      )}
     />
   )
 }
 
 let renderCount = 1
 
-const Div = props => (
-  <Box
-    width="100%"
-    textWrap="wrap"
-    flexShrink={0}
-    flexDirection="column"
-    {...props}
-  />
-)
+const Div = props => {
+  const width = Math.min(process.stdout.columns, MAX_UI_WIDTH)
+  return (
+    <Box
+      width={width}
+      textWrap="wrap"
+      flexShrink={0}
+      flexDirection="column"
+      {...props}
+    />
+  )
+}
 
 // Markdown ignores new lines and so do we.
 function elimiateNewLines(children) {
@@ -348,7 +362,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
       if (!isPlan || !isPresetPlanState) {
         return (
           <Div marginTop={1}>
-            <Text>Press enter to continue</Text>
+            <Color magentaBright>>> Press enter to continue</Color>
           </Div>
         )
       }
@@ -374,7 +388,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
             </Div>
           ))}
           <Div marginTop={1}>
-            <Text>Press enter to run this step</Text>
+            <Color magentaBright>>> Press enter to run this step</Color>
           </Div>
         </Div>
       )
@@ -449,12 +463,14 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
 
     return (
       <>
-        <WelcomeMessage />
-        <Static>
-          {lodash.flattenDeep(state.context.stepResources).map((r, i) => (
-            <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>
-          ))}
-        </Static>
+        <Div>
+          <Static>
+            {lodash.flattenDeep(state.context.stepResources).map((r, i) => (
+              <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>
+            ))}
+          </Static>
+        </Div>
+        {state.context.currentStep === 0 && <WelcomeMessage />}
         {state.context.currentStep > 0 && state.value !== `done` && (
           <Div>
             <Text underline bold>
@@ -464,9 +480,11 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
           </Div>
         )}
         <PlanContext.Provider value={{ planForNextStep: state.plan }}>
-          <MDX components={components}>
-            {state.context.stepsAsMdx[state.context.currentStep]}
-          </MDX>
+          <Div>
+            <MDX components={components}>
+              {state.context.stepsAsMdx[state.context.currentStep]}
+            </MDX>
+          </Div>
           <PresentStep state={state} />
           <RunningStep state={state} />
         </PlanContext.Provider>
@@ -475,12 +493,12 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
   }
 
   const Wrapper = () => (
-    <Div>
+    <>
       <Provider value={client}>
         <Text>{` `}</Text>
         <RecipeInterpreter />
       </Provider>
-    </Div>
+    </>
   )
 
   const Recipe = () => <Wrapper />
