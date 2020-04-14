@@ -44,6 +44,7 @@ Kyle
 - [x] write tests for remote files src in File
 - [x] Gatsby recipes list (design and implementation)
 - [x] move back to "press enter to run"
+- [x] Run gatsby-config.js changes through prettier to avoid weird diffs
 - [ ] write blog post
 
 John
