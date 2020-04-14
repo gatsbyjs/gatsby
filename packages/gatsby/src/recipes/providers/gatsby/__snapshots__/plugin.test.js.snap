@@ -85,16 +85,18 @@ module.exports = {
   plugins: []
 };",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "[31m- Original  - 1[39m
-[32m+ Modified  + 1[39m
+  "diff": "[31m- Original  - 2[39m
+[32m+ Modified  + 3[39m
 
-[33m@@ -5,5 +5,5 @@[39m
+[33m@@ -5,5 +5,6 @@[39m
 [2m   */[22m
 [2m  module.exports = {[22m
 [2m    /* Your site config here */[22m
 [31m-   plugins: [][39m
-[32m+   plugins: [\\"gatsby-plugin-foo\\"][39m
-[2m  };[22m",
+[31m- };[39m
+[32m+   plugins: [\\"gatsby-plugin-foo\\"],[39m
+[32m+ }[39m
+[32m+[39m",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
   "newState": "/**
@@ -104,8 +106,9 @@ module.exports = {
  */
 module.exports = {
   /* Your site config here */
-  plugins: [\\"gatsby-plugin-foo\\"]
-};",
+  plugins: [\\"gatsby-plugin-foo\\"],
+}
+",
 }
 `;
 
@@ -128,8 +131,9 @@ Object {
  */
 module.exports = {
   /* Your site config here */
-  plugins: [\\"gatsby-plugin-foo\\"]
-};",
+  plugins: [\\"gatsby-plugin-foo\\"],
+}
+",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
   "diff": "[2mCompared values have no visual difference.[22m",
   "id": "gatsby-plugin-foo",
@@ -141,8 +145,9 @@ module.exports = {
  */
 module.exports = {
   /* Your site config here */
-  plugins: [\\"gatsby-plugin-foo\\"]
-};",
+  plugins: [\\"gatsby-plugin-foo\\"],
+}
+",
 }
 `;
 
@@ -209,70 +214,198 @@ module.exports = {
   \`gatsby-plugin-react-helmet\`]
 };",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "[31m- Original  - 1[39m
-[32m+ Modified  + 1[39m
+  "diff": "[31m- Original  - 47[39m
+[32m+ Modified  + 65[39m
 
-[33m@@ -48,5 +48,5 @@[39m
-[2m        display: \`minimal-ui\`[22m
-[2m      }[22m
-[2m    }, \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,[22m
+[31m- const redish = \`#c5484d\`;[39m
+[32m+ const redish = \`#c5484d\`[39m
+[2m  module.exports = {[22m
+[2m    siteMetadata: {[22m
+[2m      title: \`Bricolage\`,[22m
+[2m      author: \`Kyle Mathews\`,[22m
+[31m-     homeCity: \`San Francisco\`[39m
+[32m+     homeCity: \`San Francisco\`,[39m
+[2m    },[22m
+[31m-   plugins: [{[39m
+[31m-     resolve: \`gatsby-source-filesystem\`,[39m
+[31m-     options: {[39m
+[31m-       path: \`\${__dirname}/src/pages\`,[39m
+[31m-       name: \`pages\`[39m
+[31m-     }[39m
+[31m-   }, \`gatsby-transformer-sharp\`, \`gatsby-plugin-emotion\`, {[39m
+[31m-     resolve: \`gatsby-plugin-typography\`,[39m
+[31m-     options: {[39m
+[31m-       pathToConfigModule: \`src/utils/typography\`[39m
+[31m-     }[39m
+[31m-   }, {[39m
+[31m-     resolve: \`gatsby-transformer-remark\`,[39m
+[31m-     options: {[39m
+[31m-       plugins: [{[39m
+[31m-         resolve: \`gatsby-remark-images\`,[39m
+[31m-         options: {[39m
+[31m-           maxWidth: 590[39m
+[31m-         }[39m
+[31m-       }, {[39m
+[31m-         resolve: \`gatsby-remark-responsive-iframe\`,[39m
+[31m-         options: {[39m
+[31m-           wrapperStyle: \`margin-bottom: 1.0725rem\`[39m
+[31m-         }[39m
+[31m-       }, \`gatsby-remark-prismjs\`, \`gatsby-remark-copy-linked-files\`, \`gatsby-remark-smartypants\`][39m
+[31m-     }[39m
+[31m-   }, \`gatsby-plugin-sharp\`, {[39m
+[31m-     resolve: \`gatsby-plugin-google-analytics\`,[39m
+[31m-     options: {[39m
+[31m-       trackingId: \`UA-774017-3\`[39m
+[31m-     }[39m
+[31m-   }, {[39m
+[31m-     resolve: \`gatsby-plugin-manifest\`,[39m
+[31m-     options: {[39m
+[31m-       name: \`Bricolage\`,[39m
+[31m-       short_name: \`Bricolage\`,[39m
+[31m-       icon: \`static/logo.png\`,[39m
+[31m-       start_url: \`/\`,[39m
+[31m-       background_color: redish,[39m
+[31m-       theme_color: redish,[39m
+[31m-       display: \`minimal-ui\`[39m
+[31m-     }[39m
+[31m-   }, \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,[39m
 [31m-   \`gatsby-plugin-react-helmet\`][39m
-[32m+   \`gatsby-plugin-react-helmet\`, \\"gatsby-plugin-foo\\"][39m
-[2m  };[22m",
+[31m- };[39m
+[32m+   plugins: [[39m
+[32m+     {[39m
+[32m+       resolve: \`gatsby-source-filesystem\`,[39m
+[32m+       options: {[39m
+[32m+         path: \`\${__dirname}/src/pages\`,[39m
+[32m+         name: \`pages\`,[39m
+[32m+       },[39m
+[32m+     },[39m
+[32m+     \`gatsby-transformer-sharp\`,[39m
+[32m+     \`gatsby-plugin-emotion\`,[39m
+[32m+     {[39m
+[32m+       resolve: \`gatsby-plugin-typography\`,[39m
+[32m+       options: {[39m
+[32m+         pathToConfigModule: \`src/utils/typography\`,[39m
+[32m+       },[39m
+[32m+     },[39m
+[32m+     {[39m
+[32m+       resolve: \`gatsby-transformer-remark\`,[39m
+[32m+       options: {[39m
+[32m+         plugins: [[39m
+[32m+           {[39m
+[32m+             resolve: \`gatsby-remark-images\`,[39m
+[32m+             options: {[39m
+[32m+               maxWidth: 590,[39m
+[32m+             },[39m
+[32m+           },[39m
+[32m+           {[39m
+[32m+             resolve: \`gatsby-remark-responsive-iframe\`,[39m
+[32m+             options: {[39m
+[32m+               wrapperStyle: \`margin-bottom: 1.0725rem\`,[39m
+[32m+             },[39m
+[32m+           },[39m
+[32m+           \`gatsby-remark-prismjs\`,[39m
+[32m+           \`gatsby-remark-copy-linked-files\`,[39m
+[32m+           \`gatsby-remark-smartypants\`,[39m
+[32m+         ],[39m
+[32m+       },[39m
+[32m+     },[39m
+[32m+     \`gatsby-plugin-sharp\`,[39m
+[32m+     {[39m
+[32m+       resolve: \`gatsby-plugin-google-analytics\`,[39m
+[32m+       options: {[39m
+[32m+         trackingId: \`UA-774017-3\`,[39m
+[32m+       },[39m
+[32m+     },[39m
+[32m+     {[39m
+[32m+       resolve: \`gatsby-plugin-manifest\`,[39m
+[32m+       options: {[39m
+[32m+         name: \`Bricolage\`,[39m
+[32m+         short_name: \`Bricolage\`,[39m
+[32m+         icon: \`static/logo.png\`,[39m
+[32m+         start_url: \`/\`,[39m
+[32m+         background_color: redish,[39m
+[32m+         theme_color: redish,[39m
+[32m+         display: \`minimal-ui\`,[39m
+[32m+       },[39m
+[32m+     },[39m
+[32m+     \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,[39m
+[32m+     \`gatsby-plugin-react-helmet\`,[39m
+[32m+     \\"gatsby-plugin-foo\\",[39m
+[32m+   ],[39m
+[32m+ }[39m
+[32m+[39m",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
-  "newState": "const redish = \`#c5484d\`;
+  "newState": "const redish = \`#c5484d\`
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
     author: \`Kyle Mathews\`,
-    homeCity: \`San Francisco\`
+    homeCity: \`San Francisco\`,
   },
-  plugins: [{
-    resolve: \`gatsby-source-filesystem\`,
-    options: {
-      path: \`\${__dirname}/src/pages\`,
-      name: \`pages\`
-    }
-  }, \`gatsby-transformer-sharp\`, \`gatsby-plugin-emotion\`, {
-    resolve: \`gatsby-plugin-typography\`,
-    options: {
-      pathToConfigModule: \`src/utils/typography\`
-    }
-  }, {
-    resolve: \`gatsby-transformer-remark\`,
-    options: {
-      plugins: [{
-        resolve: \`gatsby-remark-images\`,
-        options: {
-          maxWidth: 590
-        }
-      }, {
-        resolve: \`gatsby-remark-responsive-iframe\`,
-        options: {
-          wrapperStyle: \`margin-bottom: 1.0725rem\`
-        }
-      }, \`gatsby-remark-prismjs\`, \`gatsby-remark-copy-linked-files\`, \`gatsby-remark-smartypants\`]
-    }
-  }, \`gatsby-plugin-sharp\`, {
-    resolve: \`gatsby-plugin-google-analytics\`,
-    options: {
-      trackingId: \`UA-774017-3\`
-    }
-  }, {
-    resolve: \`gatsby-plugin-manifest\`,
-    options: {
-      name: \`Bricolage\`,
-      short_name: \`Bricolage\`,
-      icon: \`static/logo.png\`,
-      start_url: \`/\`,
-      background_color: redish,
-      theme_color: redish,
-      display: \`minimal-ui\`
-    }
-  }, \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
-  \`gatsby-plugin-react-helmet\`, \\"gatsby-plugin-foo\\"]
-};",
+  plugins: [
+    {
+      resolve: \`gatsby-source-filesystem\`,
+      options: {
+        path: \`\${__dirname}/src/pages\`,
+        name: \`pages\`,
+      },
+    },
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
+    \`gatsby-plugin-react-helmet\`,
+    \\"gatsby-plugin-foo\\",
+  ],
+}
+",
 }
 `;
 
@@ -288,113 +421,149 @@ Object {
 
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update plan 1`] = `
 Object {
-  "currentState": "const redish = \`#c5484d\`;
+  "currentState": "const redish = \`#c5484d\`
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
     author: \`Kyle Mathews\`,
-    homeCity: \`San Francisco\`
+    homeCity: \`San Francisco\`,
   },
-  plugins: [{
-    resolve: \`gatsby-source-filesystem\`,
-    options: {
-      path: \`\${__dirname}/src/pages\`,
-      name: \`pages\`
-    }
-  }, \`gatsby-transformer-sharp\`, \`gatsby-plugin-emotion\`, {
-    resolve: \`gatsby-plugin-typography\`,
-    options: {
-      pathToConfigModule: \`src/utils/typography\`
-    }
-  }, {
-    resolve: \`gatsby-transformer-remark\`,
-    options: {
-      plugins: [{
-        resolve: \`gatsby-remark-images\`,
-        options: {
-          maxWidth: 590
-        }
-      }, {
-        resolve: \`gatsby-remark-responsive-iframe\`,
-        options: {
-          wrapperStyle: \`margin-bottom: 1.0725rem\`
-        }
-      }, \`gatsby-remark-prismjs\`, \`gatsby-remark-copy-linked-files\`, \`gatsby-remark-smartypants\`]
-    }
-  }, \`gatsby-plugin-sharp\`, {
-    resolve: \`gatsby-plugin-google-analytics\`,
-    options: {
-      trackingId: \`UA-774017-3\`
-    }
-  }, {
-    resolve: \`gatsby-plugin-manifest\`,
-    options: {
-      name: \`Bricolage\`,
-      short_name: \`Bricolage\`,
-      icon: \`static/logo.png\`,
-      start_url: \`/\`,
-      background_color: redish,
-      theme_color: redish,
-      display: \`minimal-ui\`
-    }
-  }, \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
-  \`gatsby-plugin-react-helmet\`, \\"gatsby-plugin-foo\\"]
-};",
+  plugins: [
+    {
+      resolve: \`gatsby-source-filesystem\`,
+      options: {
+        path: \`\${__dirname}/src/pages\`,
+        name: \`pages\`,
+      },
+    },
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
+    \`gatsby-plugin-react-helmet\`,
+    \\"gatsby-plugin-foo\\",
+  ],
+}
+",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
   "diff": "[2mCompared values have no visual difference.[22m",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
-  "newState": "const redish = \`#c5484d\`;
+  "newState": "const redish = \`#c5484d\`
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
     author: \`Kyle Mathews\`,
-    homeCity: \`San Francisco\`
+    homeCity: \`San Francisco\`,
   },
-  plugins: [{
-    resolve: \`gatsby-source-filesystem\`,
-    options: {
-      path: \`\${__dirname}/src/pages\`,
-      name: \`pages\`
-    }
-  }, \`gatsby-transformer-sharp\`, \`gatsby-plugin-emotion\`, {
-    resolve: \`gatsby-plugin-typography\`,
-    options: {
-      pathToConfigModule: \`src/utils/typography\`
-    }
-  }, {
-    resolve: \`gatsby-transformer-remark\`,
-    options: {
-      plugins: [{
-        resolve: \`gatsby-remark-images\`,
-        options: {
-          maxWidth: 590
-        }
-      }, {
-        resolve: \`gatsby-remark-responsive-iframe\`,
-        options: {
-          wrapperStyle: \`margin-bottom: 1.0725rem\`
-        }
-      }, \`gatsby-remark-prismjs\`, \`gatsby-remark-copy-linked-files\`, \`gatsby-remark-smartypants\`]
-    }
-  }, \`gatsby-plugin-sharp\`, {
-    resolve: \`gatsby-plugin-google-analytics\`,
-    options: {
-      trackingId: \`UA-774017-3\`
-    }
-  }, {
-    resolve: \`gatsby-plugin-manifest\`,
-    options: {
-      name: \`Bricolage\`,
-      short_name: \`Bricolage\`,
-      icon: \`static/logo.png\`,
-      start_url: \`/\`,
-      background_color: redish,
-      theme_color: redish,
-      display: \`minimal-ui\`
-    }
-  }, \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
-  \`gatsby-plugin-react-helmet\`, \\"gatsby-plugin-foo\\"]
-};",
+  plugins: [
+    {
+      resolve: \`gatsby-source-filesystem\`,
+      options: {
+        path: \`\${__dirname}/src/pages\`,
+        name: \`pages\`,
+      },
+    },
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
+    \`gatsby-plugin-react-helmet\`,
+    \\"gatsby-plugin-foo\\",
+  ],
+}
+",
 }
 `;

@@ -34,7 +34,7 @@ const WelcomeMessage = () => (
   <>
     <Boxen
       borderStyle="double"
-      borderColor="white"
+      borderColor="magentaBright"
       float="left"
       padding={1}
       margin={{ bottom: 1, left: 2 }}
