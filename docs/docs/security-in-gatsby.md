@@ -10,7 +10,7 @@ Cross-Site Scripting is a type of attack that injects a script or an unexpected 
 
 JSX elements automatically escape HTML tags by design. See the following example:
 
-```js
+```jsx
 // highlight-next-line
 const username = `<script src='https://path/to/badness.js'></script>`
 
@@ -23,7 +23,7 @@ On the other hand, fields in your application may need to render inner HTML tags
 
 In order to render those HTML tags you need to use an HTML parser (e.g. [html-react-parser](https://github.com/remarkablemark/html-react-parser)) or the `dangerouslySetInnerHTML` prop, like so:
 
-```js
+```jsx
 const CommentRenderer = comment => (
   // highlight-next-line
   <p dangerouslySetInnerHTML={{ __html: comment }} />
@@ -51,15 +51,20 @@ For example, assume that the comments in your blog are sent in a form similar to
 
 A malicious website could inspect your site and copy this snippet to theirs. If the user is logged in, the associated cookies are sent with the form and the server cannot distinguish the origin of it. Even worse, the form could be sent when the page loads with information you don't control:
 
-```js
+```html
 // highlight-next-line
 <body onload="document.csrf.submit()">
-<!-- ... -->
-<form action="http://mywebsite.com/blog/addcomment" method="POST" name="csrf">
-  // highlight-next-line
-  <input type="hidden" name="comment" value="Hey visit http://maliciouswebsite.com, it's pretty nice" />
-  <input type="submit" />
-</form>
+  <!-- ... -->
+  <form action="http://mywebsite.com/blog/addcomment" method="POST" name="csrf">
+    // highlight-next-line
+    <input
+      type="hidden"
+      name="comment"
+      value="Hey visit http://maliciouswebsite.com, it's pretty nice"
+    />
+    <input type="submit" />
+  </form>
+</body>
 ```
 
 ### How can you prevent cross-site request forgery?
@@ -76,7 +81,7 @@ Actions that do not simply read data should be handled in a POST request. In the
 
 If you want to protect a page your server will provide an encrypted, hard to guess **token**. That token is tied to a user's session and must be included in every POST request. See the following example:
 
-```js
+```html
 <form action="http://mywebsite.com/blog/addcoment" method="POST">
   <input type="text" name="comment" />
   // highlight-next-line
@@ -121,18 +126,18 @@ Similar to npm, you can use the `yarn audit` command. It is available starting w
 Gatsby allows you to [fetch data from various APIs](/docs/content-and-data/) and those APIs often require a key to access them. These keys should be stored in your build environment using [Environment Variables](/docs/environment-variables/). See the following example for fetching data from GitHub with an Authorization Header:
 
 ```js
-    {
-      resolve: "gatsby-source-graphql",
-      options: {
-        typeName: "GitHub",
-        fieldName: "github",
-        url: "https://api.github.com/graphql",
-        headers: {
-          // highlight-next-line
-          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-        },
-      }
-    }
+{
+  resolve: "gatsby-source-graphql",
+  options: {
+    typeName: "GitHub",
+    fieldName: "github",
+    url: "https://api.github.com/graphql",
+    headers: {
+      // highlight-next-line
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    },
+  }
+}
 ```
 
 ### Storing keys in client-side
