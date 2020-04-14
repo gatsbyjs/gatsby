@@ -70,6 +70,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-theme-blog`,
     },
     {
+      label: `Add persistent layout component with gatsby-plugin-layout`,
+      value: `gatsby-plugin-layout`,
+    },
+    {
       label: `Add Emotion`,
       value: `emotion.mdx`,
     },

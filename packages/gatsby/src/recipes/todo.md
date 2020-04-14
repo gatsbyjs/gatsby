@@ -42,7 +42,7 @@ Kyle
 - [x] Add large warning to recipes output that this is an experimental feature & might change at any moment + link to docs / umbrella issue for bug reports & discussions
 - [x] use yarn/npm based on the user config
 - [x] write tests for remote files src in File
-- [ ] Gatsby recipes list (design and implementation)
+- [x] Gatsby recipes list (design and implementation)
 - [x] move back to "press enter to run"
 - [ ] write blog post
 
