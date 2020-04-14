@@ -113,16 +113,11 @@ function Sidebar({
   }, [derivedHash])
 
   const [openSectionHash, setOpenSectionHash] = React.useState(initialHash)
-  const [expandAll, setExpandAll] = React.useState(false)
+  const expandAll = Object.values(openSectionHash).every(isOpen => isOpen)
 
   // Write to local storage whenever the open section hash changes
   React.useEffect(() => {
     writeLocalStorage(sidebarKey, { openSectionHash })
-  }, [openSectionHash])
-
-  // Update the expandAll variable when the hash changes
-  React.useEffect(() => {
-    setExpandAll(Object.values(openSectionHash).every(isOpen => isOpen))
   }, [openSectionHash])
 
   const toggleSection = React.useCallback(item => {
@@ -135,17 +130,16 @@ function Sidebar({
   }, [])
 
   function toggleExpandAll() {
-    if (expandAll) {
-      setOpenSectionHash(derivedHash)
-      setExpandAll(false)
-    } else {
+    setOpenSectionHash(openSectionHash => {
+      if (expandAll) {
+        return derivedHash
+      }
       const newOpenSectionHash = {}
       for (const key of Object.keys(openSectionHash)) {
         newOpenSectionHash[key] = true
       }
-      setOpenSectionHash(newOpenSectionHash)
-      setExpandAll(true)
-    }
+      return newOpenSectionHash
+    })
   }
 
   return (
