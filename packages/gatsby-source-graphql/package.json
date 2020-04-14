@@ -12,7 +12,7 @@
     "apollo-link-http": "^1.5.16",
     "dataloader": "^2.0.0",
     "graphql": "^14.6.0",
-    "graphql-tools-fork": "^8.9.6",
+    "graphql-tools": "^5.0.0",
     "invariant": "^2.2.4",
     "node-fetch": "^1.7.3",
     "uuid": "^3.4.0"
