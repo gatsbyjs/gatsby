@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.20.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.18...gatsby@2.20.19) (2020-04-14)
+
+### Bug Fixes
+
+- **gatsby:** call schema rebuild manually on \_\_refresh ([#23009](https://github.com/gatsbyjs/gatsby/issues/23009)) ([8493de8](https://github.com/gatsbyjs/gatsby/commit/8493de8))
+- **gatsby:** Set a timeout of 15 seconds on queries ([#23036](https://github.com/gatsbyjs/gatsby/issues/23036)) ([1e81c76](https://github.com/gatsbyjs/gatsby/commit/1e81c76))
+- Ensure component order is deterministic ([#22965](https://github.com/gatsbyjs/gatsby/issues/22965)) ([94267be](https://github.com/gatsbyjs/gatsby/commit/94267be))
+
 ## [2.20.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.17...gatsby@2.20.18) (2020-04-11)
 
 ### Bug Fixes

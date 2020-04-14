@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.7...gatsby-cli@2.11.8) (2020-04-14)
+
+### Bug Fixes
+
+- **gatsby-cli:** Fix console methods incorrectly handling falsy values ([#23021](https://github.com/gatsbyjs/gatsby/issues/23021)) ([66a1b7f](https://github.com/gatsbyjs/gatsby/commit/66a1b7f))
+
 ## [2.11.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.6...gatsby-cli@2.11.7) (2020-04-10)
 
 ### Bug Fixes
