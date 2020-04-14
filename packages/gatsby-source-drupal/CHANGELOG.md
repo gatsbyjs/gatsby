@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.4.2...gatsby-source-drupal@3.4.3) (2020-04-10)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** Verify nodes exist before looping through them ([#22898](https://github.com/gatsbyjs/gatsby/issues/22898)) ([cdbe734](https://github.com/gatsbyjs/gatsby/commit/cdbe734))
+
 ## [3.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.4.1...gatsby-source-drupal@3.4.2) (2020-03-23)
 
 **Note:** Version bump only for package gatsby-source-drupal
