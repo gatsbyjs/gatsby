@@ -20,42 +20,68 @@ Follow the issue for updates!
 
 https://github.com/gatsbyjs/gatsby/issues/22991
 
+## Recipe setup
 
-## Running an example recipe
-First, try running a recipe called `gatsby recipes emotion` by following these steps:
+Upgrade the global gatsby-cli package to use the one with new recipes command.
 
-Create a new Hello World Gatsby site:
+```shell
+npm install -g gatsby-cli@recipes
+```
 
-`gatsby new try-emotion https://github.com/gatsbyjs/gatsby-starter-hello-world`
+To confirm that this worked, run `gatsby -v` in your terminal. The output should show the following: `Gatsby CLI version: 2.11.4-recipes.53`.
 
-Meanwhile also upgrade the global gatsby-cli package to use the one with new recipes command.
+### Running an example recipe
 
-`npm install -g gatsby-cli@recipes`
+Now you can test out recipes! Start with this one for installing `emotion` by following these steps:
 
-Once the global finishes installing, running `gatsby -v` should show this as your version: `Gatsby CLI version: 2.11.4-recipes.53`
+1. Create a new Hello World Gatsby site:
 
-Upgrade the version of Gatsby installed to use one with Recipes.
+```shell
+gatsby new try-emotion https://github.com/gatsbyjs/gatsby-starter-hello-world
+```
 
-`yarn add gatsby@recipes`
+1. Upgrade the version of Gatsby the project is using to be one that works with Recipes.
 
-Now run the Emotion recipe and follow the commands.
+Note that you should use the package manager you've selected to work with Gatsby projects.
 
-`gatsby recipes emotion`
+If it's yarn, type this command:
 
-## Writing a recipe
+```shell
+yarn add gatsby@recipes
+```
 
-Here's how you would write the `gatsby recipes emotion` recipe you just ran: 
+For npm, type this command:
+
+```shell
+npm install gatsby@recipes
+```
+
+1. Now you can run the `emotion` recipe with this command:
+
+```shell
+gatsby recipes emotion
+```
+
+## Developing Recipes
+
+### An example MDX recipe
+
+Here's how you would write the `gatsby recipes emotion` recipe you just ran:
 
 ```mdx
 # Setup Gatsby with Emotion
 
 [Emotion](https://emotion.sh/) is a powerful CSS-in-JS library that supports both inline CSS styles and styled components. You can use each styling feature individually or together in the same file.
 
---- // use three dashes to separate steps of the recipe
+<!-- use three dashes to separate steps of the recipe -->
+
+---
 
 Install necessary NPM packages
 
-<NPMPackage name="gatsby-plugin-emotion" /> // refer to the API in this doc to see what APIs are available, like `NPMPackage`
+<!-- // refer to the API in this doc to see what APIs are available, like `NPMPackage` -->
+
+<NPMPackage name="gatsby-plugin-emotion" />
 <NPMPackage name="@emotion/core" />
 <NPMPackage name="@emotion/styled" />
 
@@ -84,12 +110,7 @@ Read more about Emotion on the official Emotion docs site:
 https://emotion.sh/docs/introduction
 ```
 
-## What kind of recipe should I write?
-If you’d like to write a recipe, there are two great places to get an idea:
-- Think of a task that took you more time than other tasks in the last Gatsby site you built. Is there a way to automate any part of that task?
-- Look at this list of recipes in the Gatsby docs. Many of these can be partially or fully automated through creating a recipe `mdx` file. https://www.gatsbyjs.org/docs/recipes/
-
-## Ways to run Recipes
+### How to run recipes
 
 You can run built-in Recipes, ones you write locally, and ones people have posted online.
 
@@ -97,10 +118,7 @@ To run a local recipe, make sure to start the path to the recipe with a period l
 
 To run a remote recipe, just paste in the path to the recipe e.g. `gatsby recipes https://example.com/sweet-recipe.mdx`
 
-
-## How to write your own
-
-### API
+### Recipe API
 
 #### `<GatsbyPlugin>`
 
@@ -143,3 +161,12 @@ Soon will support options.
 
 - **path** path to the file that should be created. The path is local to the root of the Node.js project (where the package.json is)
 - **content** URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixees to MDX.
+
+> Note that this content is stored in a [GitHub gist](https://gist.github.com/). When linking to a gist you'll want to click on the "Raw" button and copy the URL from that page.
+
+## What kind of recipe should I write?
+
+If you’d like to write a recipe, there are two great places to get an idea:
+
+- Think of a task that took you more time than other tasks in the last Gatsby site you built. Is there a way to automate any part of that task?
+- Look at this list of recipes in the Gatsby docs. Many of these can be partially or fully automated through creating a recipe `mdx` file. https://www.gatsbyjs.org/docs/recipes/
