@@ -140,7 +140,7 @@ Soon will support options.
 
 ### Q) My recipe is combining steps instead of running them seperately!
 
-We use the `---` break syntax from Markdown to seperate steps.
+We use the `---` break syntax from Markdown to separate steps.
 
 One quirk with it is for it to work, it must have an empty line above it.
 
