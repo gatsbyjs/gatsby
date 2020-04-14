@@ -189,7 +189,7 @@ export const postIndexingMetaSetup = (filterCache: IFilterCache): void => {
   >
 
   // Sort all sets by its value, asc. Ignore/allow potential type casting.
-  entries.sort(([a], [b]) => (a <= b ? -1 : a > b ? 1 : 0))
+  entries.sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
 
   const orderedNodes: Array<IGatsbyNode> = []
   const orderedValues: Array<FilterValue> = []
@@ -501,7 +501,6 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      console.log(ranges)
       return new Set(nodes!.slice(0, range[1]))
     }
 
