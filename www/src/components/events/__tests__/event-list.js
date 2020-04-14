@@ -58,7 +58,7 @@ describe(`<Events />`, () => {
       dateNowSpy.mockRestore()
     })
 
-    it(`display's today's events as upcoming`, () => {
+    it.skip(`display's today's events as upcoming`, () => {
       const { getByText } = render(
         <Events events={mockEvents([`2100-10-08`].map(toEvent))} />
       )
