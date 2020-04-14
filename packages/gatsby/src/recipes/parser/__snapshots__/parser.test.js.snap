@@ -14,6 +14,45 @@ Array [
 ]
 `;
 
+exports[`fetches a recipe from unpkg when official short form 1`] = `
+Array [
+  "# Add Theme UI
+
+This recipe helps you start developing with the [Theme UI](https://theme-ui.com) styling library.
+
+<Config name=\\"gatsbyjs/add-theme-ui\\" />
+",
+  "Install packages.
+
+<NPMPackage name=\\"theme-ui\\" />
+<NPMPackage name=\\"gatsby-plugin-theme-ui\\" />
+",
+  "Add the plugin \`gatsby-plugin-theme-ui\` to your \`gatsby-config.js\`.
+
+<GatsbyPlugin name=\\"gatsby-plugin-theme-ui\\" />
+",
+  "Write out Theme UI configuration files.
+
+<ShadowFile
+  theme=\\"gatsby-plugin-theme-ui\\"
+  path=\\"src/gatsby-plugin-theme-ui/index.js\\"
+/>
+
+<File
+  content=\\"export default {}\\"
+  path=\\"src/gatsby-plugin-theme-ui/components.js\\"
+/>
+",
+  "**Success**!
+
+You're ready to get started!
+
+-   Read the docs: <https://theme-ui.com>
+-   Learn about the theme specification: <https://system-ui.com>
+",
+]
+`;
+
 exports[`handles imports from urls 1`] = `
 Array [
   "# Here is an imported recipe from a url!
@@ -34,9 +73,9 @@ Add a package.json config object.
 
 exports[`partitions the MDX into steps 1`] = `
 Array [
-  "# Automaically run Prettier on commits
+  "# Prettier Git Hook
 
-Make sure all of your code is run through Prettier when you commit it to git.
+Make sure all of your code is run through prettier when you commit it to git.
 We achieve this by configuring prettier to run on git hooks using husky and
 lint-staged.
 ",
@@ -88,6 +127,8 @@ if you'd like to change your prettier configuration.
 ",
 ]
 `;
+
+exports[`raises an error when the recipe isn't known 1`] = `[Error: {"fetchError":"Could not fetch theme-uiz from official recipes"}]`;
 
 exports[`returns a set of commands 1`] = `
 Array [
