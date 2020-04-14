@@ -28,12 +28,12 @@ Gatsby Cloud offers integrations with a wide variety of CMSs. The below CMSs hav
 - Cosmic JS
 - Dato CMS
 - Sanity.io
+- Strapi
 
 If you want to work with a CMS without automatic integration support you still can. There are specific documents available for the below integration points:
 
 - Contentstack
 - Drupal
-- Strapi
 
 In addition, Gatsby Cloud offers a POST endpoint for manually integrating with CMSs that support webhooks.
 
