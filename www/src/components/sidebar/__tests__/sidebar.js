@@ -6,6 +6,18 @@ import Sidebar from "../sidebar"
 import { I18nProvider } from "../../I18nContext"
 import theme from "../../../gatsby-plugin-theme-ui"
 
+function extendItemList(itemList, parentTitle) {
+  for (const item of itemList) {
+    if (parentTitle) {
+      item.parentTitle = parentTitle
+    }
+    if (item.items) {
+      extendItemList(item.items, item.title)
+    }
+  }
+  return itemList
+}
+
 const itemList = [
   { title: "Plot Summary", link: "/plot-summary/" },
   { title: "Themes", link: "/themes/" },
@@ -39,7 +51,7 @@ function renderSidebar(pathname) {
   return render(
     <ThemeProvider theme={theme}>
       <I18nProvider locale="en">
-        <Sidebar itemList={itemList} location={{ pathname }} />
+        <Sidebar itemList={extendItemList(itemList)} location={{ pathname }} />
       </I18nProvider>
     </ThemeProvider>
   )
@@ -47,7 +59,7 @@ function renderSidebar(pathname) {
 
 describe("sidebar", () => {
   describe("initialization", () => {
-    xit("opens sections with active items", () => {
+    it("opens sections with active items", () => {
       const { queryByText } = renderSidebar("/characters/jay-gatsby/")
       expect(queryByText("Jay Gatsby")).toBeInTheDocument()
     })
@@ -84,8 +96,10 @@ describe("sidebar", () => {
       expect(queryByText("The Green Light")).toBeInTheDocument()
     })
 
-    xit("closes all sections except active items when already expanded", () => {
-      const { queryByText, getByText } = renderSidebar("/jay-gatsby/")
+    it("closes all sections except active items when already expanded", () => {
+      const { queryByText, getByText } = renderSidebar(
+        "/characters/jay-gatsby/"
+      )
       fireEvent.click(getByText(`Collapse All`))
       expect(queryByText("Jay Gatsby")).toBeInTheDocument()
       expect(queryByText("The Buchanans")).toBeInTheDocument()
