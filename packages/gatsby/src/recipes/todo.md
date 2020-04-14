@@ -54,7 +54,7 @@ John
 - [ ] add CODEOWNERS file for recipes
 - [x] validate that the first step of recipes don't have any resources. They should just be for the title/description
 - [x] handle not finding a recipe
-- [ ] test modifying gatsby-config.js from default starter
+- [x] test modifying gatsby-config.js from default starter
 
 ## Near-ish future
 
