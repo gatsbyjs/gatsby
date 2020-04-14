@@ -7,4 +7,6 @@ const supportedExtensions = {
   tiff: true,
 }
 
-export default supportedExtensions
+module.exports = {
+  supportedExtensions,
+}

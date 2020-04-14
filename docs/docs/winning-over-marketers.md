@@ -41,7 +41,7 @@ One question marketers often ask themselves when hearing new ideas, whether they
 
 In order to proactively diffuse these concerns, you might consider sharing stories of organizations that have adopted Gatsby:
 
-- [Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical ecommerce launch, 5X faster page loads](/blog/2019-01-30-flamingo-case-study/)
+- [Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical e-commerce launch, 5X faster page loads](/blog/2019-01-30-flamingo-case-study/)
 - [Youfit uses Gatsby to increase lead generation by 60%](/blog/2018-11-16-youfit-case-study/)
 - [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
 

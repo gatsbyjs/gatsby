@@ -7,7 +7,7 @@ tags: ["themes"]
 ---
 
 Gatsby is a powerful platform for building marketing sites, blogs,
-ecommerce frontends, and more. You can source data from static files
+e-commerce frontends, and more. You can source data from static files
 and any number of content management systems. You can process images,
 add support for our favorite styling technique, transform markdown,
 and just about anything else you can imagine.

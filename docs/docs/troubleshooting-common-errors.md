@@ -224,3 +224,15 @@ The build is failing to find the file at `../..SomeFile.svg`. This can be frustr
 The most common culprit to prompt this issue is with filepaths having mixed capitalization. In the example above, check to make sure that the file is actually named `SomeFile.svg` and not something different like `Somefile.svg` or `somefile.svg`. Some operating systems will pick up on this discrepancy for you and find the image without any problems. Your deployment environment may not.
 
 Checking the capitalization of files output in your build logs and redeploying is the best next step.
+
+### Error: ENOSPC: System limit for number of file watchers reached
+
+You may have encountered a system limit on the number of files you can monitor.
+
+To fix it, increase your system's file watchers limit (which is the number of processes that check for changes to files in your site while it's running) with the following command:
+
+```shell
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+```
+
+You may be able to find more information for your circumstances in [the GitHub issue corresponding to this error](https://github.com/gatsbyjs/gatsby/issues/11406).

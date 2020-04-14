@@ -1,5 +1,5 @@
 import React from "react"
-import MdArrowForward from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward } from "react-icons/md"
 
 import { Box, Flex, Heading, Link, Text } from "../system"
 import ImagePlaceholder from "../image-placeholder"
@@ -39,7 +39,7 @@ const BlogCard = ({ ...props }) => (
 
       <Flex mt={4} alignItems="center">
         <Link href="#" css={{ textDecoration: `none` }}>
-          Read more <MdArrowForward style={{ verticalAlign: `middle` }} />
+          Read more <MdArrowForward />
         </Link>
       </Flex>
     </Box>

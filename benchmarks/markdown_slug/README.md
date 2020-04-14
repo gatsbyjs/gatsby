@@ -10,7 +10,7 @@ The pre-generate script stores pages in root/markdown-pages.
 
 ## Usage
 
-```
+```shell
 yarn
 yarn bench
 ```
@@ -21,7 +21,7 @@ If you want to run the same pages without regenerating them you can use `yarn be
 
 Use `yarn` to install if you want to use `gatsby-dev`. Otherwise I don't think it matters between `yarn` or `npm install`.
 
-```sh
+```shell
 # Requires node 8+
 # nvm use 8
 yarn

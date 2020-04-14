@@ -11,7 +11,7 @@ In Gatsby components and pages, you'll want to import animated GIFs instead of u
 Here's an example:
 
 ```jsx:title=pages/about.js
-import React from 'react'
+import * as React from 'react'
 
 import Layout from '../components/layout'
 import otterGIF from '../gifs/otter.gif'

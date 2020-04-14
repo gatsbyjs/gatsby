@@ -2,7 +2,7 @@ const path = require(`path`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
-const { langCodes } = require(`./src/utils/i18n`)
+const { i18nEnabled, langCodes } = require(`./src/utils/i18n`)
 
 const GA = {
   identifier: `UA-93349937-5`,
@@ -53,7 +53,8 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
-if (langCodes.length > 0) {
+if (i18nEnabled) {
+  const naughtyFiles = [`docs/docs/data-fetching.md`]
   dynamicPlugins.push(
     ...langCodes.map(code => ({
       resolve: `gatsby-source-git`,
@@ -61,9 +62,15 @@ if (langCodes.length > 0) {
         name: `docs-${code}`,
         remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
         branch: `master`,
-        patterns: `docs/tutorial/**`,
+        patterns: [`docs/**`, ...naughtyFiles.map(file => `!${file}`)],
       },
-    }))
+    })),
+    {
+      resolve: `gatsby-plugin-i18n`, // local plugin
+      options: {
+        languages: langCodes,
+      },
+    }
   )
 }
 
@@ -80,6 +87,12 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-theme-ui`,
+    {
+      resolve: `gatsby-transformer-gitinfo`,
+      options: {
+        include: /mdx?$/i,
+      },
+    },
     {
       resolve: `gatsby-source-npm-package-search`,
       options: {
@@ -276,20 +289,18 @@ module.exports = {
                     fileAbsolutePath: { regex: "/docs.blog/" }
                   }
                 ) {
-                  edges {
-                    node {
-                      html
-                      frontmatter {
-                        title
-                        date
-                        author {
-                          id
-                        }
+                  nodes {
+                    html
+                    frontmatter {
+                      title
+                      date
+                      author {
+                        id
                       }
-                      fields {
-                        excerpt
-                        slug
-                      }
+                    }
+                    fields {
+                      excerpt
+                      slug
                     }
                   }
                 }
@@ -310,7 +321,7 @@ module.exports = {
               }
             },
             serialize: ({ query: { site, allMdx } }) =>
-              allMdx.edges.map(({ node }) => {
+              allMdx.nodes.map(node => {
                 return {
                   title: node.frontmatter.title,
                   description: node.fields.excerpt,
@@ -318,6 +329,7 @@ module.exports = {
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
                   custom_elements: [{ "content:encoded": node.html }],
                   author: node.frontmatter.author.id,
+                  date: node.frontmatter.date,
                 }
               }),
           },

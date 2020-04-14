@@ -1,4 +1,5 @@
 import {
+  IGatsbyPlugin,
   ProgramStatus,
   ICreatePageDependencyAction,
   IDeleteComponentDependenciesAction,
@@ -13,15 +14,9 @@ import {
   IRemoveStaleJobAction,
 } from "../types"
 
-// import type { Plugin } from "./types"
-
 /**
  * Create a dependency between a page and data. Probably for
  * internal use only.
- * @param {Object} $0
- * @param {string} $0.path the path to the page
- * @param {string} $0.nodeId A node ID
- * @param {string} $0.connection A connection type
  * @private
  */
 export const createPageDependency = (
@@ -29,7 +24,7 @@ export const createPageDependency = (
     path,
     nodeId,
     connection,
-  }: { path: string; nodeId: string; connection: string },
+  }: { path: string; nodeId?: string; connection?: string },
   plugin = ``
 ): ICreatePageDependencyAction => {
   return {
@@ -46,7 +41,6 @@ export const createPageDependency = (
 /**
  * Delete dependencies between an array of pages and data. Probably for
  * internal use only. Used when deleting pages.
- * @param {Array} paths the paths to delete.
  * @private
  */
 export const deleteComponentsDependencies = (
@@ -88,7 +82,7 @@ export const replaceComponentQuery = ({
  */
 export const replaceStaticQuery = (
   args: any,
-  plugin: Plugin | null | undefined = null
+  plugin: IGatsbyPlugin | null | undefined = null
 ): IReplaceStaticQueryAction => {
   return {
     type: `REPLACE_STATIC_QUERY`,
@@ -101,16 +95,11 @@ export const replaceStaticQuery = (
  *
  * Report that a query has been extracted from a component. Used by
  * query-compiler.js.
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
- * @param {query} $0.query The GraphQL query that was extracted from the component.
  * @private
  */
 export const queryExtracted = (
   { componentPath, query }: { componentPath: string; query: string },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractedAction => {
   return {
@@ -124,16 +113,11 @@ export const queryExtracted = (
 /**
  *
  * Report that the Relay Compiler found a graphql error when attempting to extract a query
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
- * @param {error} $0.error The GraphQL query that was extracted from the component.
  * @private
  */
 export const queryExtractionGraphQLError = (
   { componentPath, error }: { componentPath: string; error: string },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractionGraphQLErrorAction => {
   return {
@@ -148,15 +132,11 @@ export const queryExtractionGraphQLError = (
  *
  * Report that babel was able to extract the graphql query.
  * Indicates that the file is free of JS errors.
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
  * @private
  */
 export const queryExtractedBabelSuccess = (
   { componentPath },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractedBabelSuccessAction => {
   return {
@@ -170,16 +150,11 @@ export const queryExtractedBabelSuccess = (
 /**
  *
  * Report that the Relay Compiler found a babel error when attempting to extract a query
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
- * @param {error} $0.error The Babel error object
  * @private
  */
 export const queryExtractionBabelError = (
   { componentPath, error }: { componentPath: string; error: Error },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractionBabelErrorAction => {
   return {
@@ -192,13 +167,11 @@ export const queryExtractionBabelError = (
 
 /**
  * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
- *
- * @param {string} Program status
  * @private
  */
 export const setProgramStatus = (
   status: ProgramStatus,
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): ISetProgramStatusAction => {
   return {
@@ -211,13 +184,11 @@ export const setProgramStatus = (
 
 /**
  * Broadcast that a page's query was run.
- *
- * @param {string} Path to the page component that changed.
  * @private
  */
 export const pageQueryRun = (
   { path, componentPath, isPage },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IPageQueryRunAction => {
   return {
@@ -230,13 +201,11 @@ export const pageQueryRun = (
 
 /**
  * Remove jobs which are marked as stale (inputPath doesn't exists)
- *
- * @param {string} contentDigest
  * @private
  */
 export const removeStaleJob = (
   contentDigest: string,
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IRemoveStaleJobAction => {
   return {

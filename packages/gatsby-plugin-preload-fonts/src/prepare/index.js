@@ -37,6 +37,12 @@ export async function main() {
     endpoint: endpoint(GRAPHQL_PATH),
   })
 
+  // When we haven't found any routes we don't do anything
+  // Routes can be empty when we're running in CI or the user didn't want to update
+  if (!routes.length) {
+    return
+  }
+
   const sections = [
     dim(` crawling routes`),
     `:bar`,

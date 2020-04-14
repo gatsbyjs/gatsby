@@ -74,7 +74,7 @@ export function createProgress(message, reporter) {
  *
  * @param  {String} directory
  * @param  {String} filename
- * @param  {String} url
+ * @param  {String} ext
  * @return {String}
  */
 export function createFilePath(directory, filename, ext) {

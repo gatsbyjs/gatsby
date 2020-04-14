@@ -60,6 +60,11 @@ Alternatively, you may be looking to configure an existing blog site to use MDX.
 > `tableOfContents` and you haven't previously added a `gatsby-source-filesystem`
 > pointing at `src/pages` in your project, you'll want to add one now.
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-set-up-a-gatsby-site-to-use-mdx-with-gatsby-plugin-mdx-with-a-default-layout"
+  lessonTitle="Set up a Gatsby site to use MDX with gatsby-plugin-mdx with a default layout"
+/>
+
 ## What's next?
 
 Go check out the [writing MDX guide](/docs/mdx/writing-pages) to find out what else you can do
