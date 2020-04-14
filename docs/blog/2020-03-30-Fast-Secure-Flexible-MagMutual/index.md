@@ -9,11 +9,11 @@ tags:
   - netlify
 ---
 
-MagMutual, a leading professional healthcare liability insurer, needed to redesign and re-platform the company’s [MagMutual.com](http://www.magmutual.com) website to further its core mission: to serve and protect policyholders.
+MagMutual, a leading professional healthcare liability insurer, needed to redesign and re-platform the company’s [MagMutual.com](https://www.magmutual.com) website to further its core mission: to serve and protect policyholders.
 
 ![Overview of the new MagMutal website UI](./MagMutual_design_sm.png)
 
-To achieve the company's vision for their new site, MagMutual collaborated with [Mediacurrent](https://www.mediacurrent.com/), the Atlanta-based open source development and digital marketing agency. The new magmutual.com united Drupal and Gatsby to form a fully open source, enterprise-grade system that empowers MagMutual’s web team to closely yet easily manage content and customer experience.
+To achieve the company's vision for their new site, MagMutual collaborated with [Mediacurrent](https://www.mediacurrent.com/), the Atlanta-based open source development and digital marketing agency. The new MagMutual.com united Drupal and Gatsby to form a fully open source, enterprise-grade system that empowers MagMutual’s web team to closely yet easily manage content and customer experience.
 
 ## The Challenge
 
@@ -23,7 +23,7 @@ For MagMutual, the best path forward was an enterprise-grade CMS built on an ope
 
 ## The Solution
 
-A fully decoupled Drupal 8 system powered by the Gatsbyjs platform lifted the burden from MagMutual’s technology team and put content authors in the driver’s seat. The Drupal 8 backend provides a powerful capacity for content modeling. Gatsby, the presentation layer, adds a robust dimension of UI flexibility and performance.
+A fully decoupled Drupal 8 system powered by the Gatsby platform lifted the burden from MagMutual’s technology team and put content authors in the driver’s seat. The Drupal 8 backend provides a powerful capacity for content modeling. Gatsby, the presentation layer, adds a robust dimension of UI flexibility and performance.
 
 ![Mission statement page on MagMutual.com](./MagMutual_mission.png)
 
@@ -98,5 +98,5 @@ MagMutual serves the intersection of two rapidly evolving industries: insurance 
 ## Resources
 
 - See the [complete case study for MagMutual.com](https://www.mediacurrent.com/work/case-study/magmutual-drupal-8-gatsby).
-- Learn more about some of the development tools used for this project in our webinar, [Rain + GatsbyJS: Fast-Tracking to Drupal 8](https://www.mediacurrent.com/videos/webinar-recording-rain-gatsbyjs-fast-tracking-drupal-8).
+- Learn more about some of the development tools used for this project in our webinar, [Rain + Gatsby: Fast-Tracking to Drupal 8](https://www.mediacurrent.com/videos/webinar-recording-rain-gatsbyjs-fast-tracking-drupal-8).
 - Planning for a decoupled Drupal/Gatsby project and not sure where to start? [Mediacurrent can help](https://www.mediacurrent.com/contact-us).
