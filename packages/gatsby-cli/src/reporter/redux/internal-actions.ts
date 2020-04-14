@@ -30,6 +30,7 @@ import {
   getElapsedTimeMS,
   getGlobalStatus,
 } from "./utils"
+import { IStructuredError } from "../../structured-errors/types"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
@@ -41,6 +42,30 @@ let weShouldExit = false
 signalExit(() => {
   weShouldExit = true
 })
+
+let cancelDelayedSetStatus: (() => void) | null
+export const setStatus = (status: string, force: boolean = false) => (
+  dispatch: Dispatch<ISetStatus>
+): ISetStatus | void => {
+  const currentStatus = getStore().getState().logs.status
+  if (cancelDelayedSetStatus) {
+    cancelDelayedSetStatus()
+    cancelDelayedSetStatus = null
+  }
+  if (status !== currentStatus) {
+    if (status === `IN_PROGRESS` || force || weShouldExit) {
+      return {
+        type: Actions.SetStatus,
+        payload: status,
+      }
+    } else {
+      cancelDelayedSetStatus = delayedCall(() => {
+        setStatus(status, true)(dispatch)
+      }, 1000)
+    }
+  }
+  return void 0
+}
 
 export const createLog = ({
   level,
@@ -68,15 +93,14 @@ export const createLog = ({
   code?: string
   type?: string
   filePath?: string
-  location?: string
+  location?: IStructuredError["location"]
   docsUrl?: string
   context?: string
   activity_current?: number
   activity_total?: number
   activity_type?: string
   activity_uuid?: string
-  timestamp?: string
-  stack?: string
+  stack?: IStructuredError["stack"]
 }): ICreateLog => {
   return {
     type: Actions.Log,
@@ -132,29 +156,6 @@ export const createPendingActivity = ({
   return actionsToEmit
 }
 
-let cancelDelayedSetStatus: (() => void) | null
-export const setStatus = (status: string, force: boolean = false) => {
-  return (dispatch: Dispatch<ISetStatus>): ISetStatus | void => {
-    const currentStatus = getStore().getState().logs.status
-    if (cancelDelayedSetStatus) {
-      cancelDelayedSetStatus()
-      cancelDelayedSetStatus = null
-    }
-    if (status !== currentStatus) {
-      if (status === `IN_PROGRESS` || force || weShouldExit) {
-        return {
-          type: Actions.SetStatus,
-          payload: status,
-        }
-      } else {
-        cancelDelayedSetStatus = delayedCall(() => {
-          setStatus(status, true)(dispatch)
-        }, 1000)
-      }
-    }
-  }
-}
-
 type QueuedStartActivityActions = Array<
   IStartActivity | ReturnType<typeof setStatus>
 >
@@ -192,9 +193,7 @@ export const startActivity = ({
       type,
       status,
       startTime: process.hrtime(),
-
       statusText: ``,
-
       current,
       total,
     },
@@ -264,14 +263,13 @@ export const endActivity = ({
             (status === ActivityStatuses.Success &&
             activity.type === ActivityTypes.Progress
               ? `${activity.current}/${activity.total} ${(
-                  activity.total / durationS
+                  (activity.total || 0) / durationS
                 ).toFixed(2)}/s`
               : undefined),
           activity_uuid: activity.uuid,
           activity_current: activity.current,
           activity_total: activity.total,
           activity_type: activity.type,
-          timestamp: new Date().toJSON(),
         })
       )
     }
@@ -368,7 +366,7 @@ export const activityTick = ({
 
   return updateActivity({
     id,
-    current: activity.current + increment,
+    current: (activity.current || 0) + increment,
   })
 }
 

@@ -18,7 +18,7 @@ type ActionLogListener = (action: ActionsUnion) => any
 const storeSwapListeners: StoreListener[] = []
 const onLogActionListeners = new Set<ActionLogListener>()
 
-export const getStore = () => store
+export const getStore = (): typeof store => store
 
 export const dispatch = (action: ActionsUnion): void => {
   if (!action) {
@@ -33,14 +33,6 @@ export const dispatch = (action: ActionsUnion): void => {
     return
   }
 
-  action = {
-    ...action,
-    // @ts-ignore This is a classic javascript thing that is a no-no with Typescript
-    //            I'm not sure the best way to fix this, but we should probably just put this in
-    //            every action definition.
-    timestamp: new Date().toJSON(),
-  }
-
   store.dispatch(action)
 
   if (isInternalAction(action)) {
@@ -53,11 +45,11 @@ export const dispatch = (action: ActionsUnion): void => {
   }
 }
 
-export const onStoreSwap = (fn: StoreListener) => {
+export const onStoreSwap = (fn: StoreListener): void => {
   storeSwapListeners.push(fn)
 }
 
-export const onLogAction = (fn: ActionLogListener) => {
+export const onLogAction = (fn: ActionLogListener): (() => void) => {
   onLogActionListeners.add(fn)
 
   return (): void => {
@@ -65,7 +57,7 @@ export const onLogAction = (fn: ActionLogListener) => {
   }
 }
 
-export const setStore = (s: GatsbyCLIStore) => {
+export const setStore = (s: GatsbyCLIStore): void => {
   setLogs(store.getState().logs)
   store = s
   storeSwapListeners.forEach(fn => fn(store))

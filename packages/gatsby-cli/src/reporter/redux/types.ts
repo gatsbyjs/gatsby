@@ -1,4 +1,5 @@
 import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
+import { IStructuredError } from "../../structured-errors/types"
 
 export interface IGatsbyCLIState {
   messages: ILog[]
@@ -27,8 +28,8 @@ export interface IActivity {
   type: ActivityTypes
   status: ActivityStatuses
   statusText: string
-  current: number
-  total: number
+  current?: number
+  total?: number
   duration?: number
   errored?: boolean
 }
@@ -37,20 +38,20 @@ interface ILog {
   level: string
   text: string | undefined
   statusText: string | undefined
-  duration: number
+  duration: number | undefined
   group: string | undefined
   code: string | undefined
   type: string | undefined
   filePath: string | undefined
-  location: string | undefined
+  location: IStructuredError["location"] | undefined
   docsUrl: string | undefined
   context: string | undefined
-  activity_current: number
-  activity_total: number
-  activity_type: string
-  activity_uuid: string
+  activity_current: number | undefined
+  activity_total: number | undefined
+  activity_type: string | undefined
+  activity_uuid: string | undefined
   timestamp: string
-  stack: string | undefined
+  stack: IStructuredError["stack"] | undefined
 }
 
 export interface ICreateLog {
