@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  The Gatsby Blog theme
+  The Gatsby Theme UI Preset Theme
 </h1>
 
 A Gatsby theme that contains the Theme-UI configuration used in other official Gatsby themes, e.g. `gatsby-theme-blog`.
