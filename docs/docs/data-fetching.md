@@ -74,7 +74,7 @@ exports.sourceNodes = async ({
   const resultData = await result.json()
   // create node for build time data example in the docs
   createNode({
-    //nameWithOwner and url are arbitrary fields from the data
+    // nameWithOwner and url are arbitrary fields from the data
     nameWithOwner: resultData.full_name,
     url: resultData.html_url,
     // required fields
