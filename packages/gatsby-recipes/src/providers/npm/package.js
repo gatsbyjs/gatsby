@@ -19,14 +19,14 @@ const generateClientComands = ({ packageManager, depType, packageNames }) => {
     commands.push(`add`)
     // Needed for Yarn Workspaces and is a no-opt elsewhere.
     commands.push(`-W`)
-    if (depType === `devDependency`) {
+    if (depType === `development`) {
       commands.push(`--dev`)
     }
 
     return commands.concat(packageNames)
   } else if (packageManager === `npm`) {
     commands.push(`install`)
-    if (depType === `devDependency`) {
+    if (depType === `development`) {
       commands.push(`--save-dev`)
     }
     return commands.concat(packageNames)

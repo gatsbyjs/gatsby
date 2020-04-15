@@ -38,7 +38,7 @@ describe(`package manager client commands`, () => {
 
     const yarnDevInstall = pkg.generateClientComands({
       packageManager: `yarn`,
-      depType: `devDependency`,
+      depType: `development`,
       packageNames: [`eslint`],
     })
 
@@ -54,7 +54,7 @@ describe(`package manager client commands`, () => {
 
     const yarnDevInstall = pkg.generateClientComands({
       packageManager: `npm`,
-      depType: `devDependency`,
+      depType: `development`,
       packageNames: [`eslint`],
     })
 

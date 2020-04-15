@@ -153,7 +153,7 @@ Soon will support options.
 
 - **name**: name of the package(s) to install. Takes a string or an array of strings.
 - **version**: defaults to latest
-- **dependencyType**: defaults to `dependency`. Other options include `devDependency`
+- **dependencyType**: defaults to `production`. Other options include `development`
 
 #### `<NPMScript>`
 
