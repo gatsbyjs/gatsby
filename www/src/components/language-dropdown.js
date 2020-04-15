@@ -128,7 +128,7 @@ export default function LanguageDropdown({ pathname }) {
         <span
           sx={{
             display: `none`,
-            [mediaQueries.md]: {
+            [mediaQueries.xl]: {
               display: `initial`
             }
           }}
