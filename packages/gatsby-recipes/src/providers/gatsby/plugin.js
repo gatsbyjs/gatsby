@@ -77,6 +77,7 @@ const addPluginToConfig = (src, pluginName) => {
 
   const { code } = babel.transform(src, {
     plugins: [addPlugins.plugin],
+    configFile: false,
   })
 
   return code
@@ -87,6 +88,7 @@ const getPluginsFromConfig = src => {
 
   babel.transform(src, {
     plugins: [getPlugins.plugin],
+    configFile: false,
   })
 
   return getPlugins.state
@@ -130,6 +132,7 @@ const destroy = async ({ root }, { name }) => {
 
   const { code } = babel.transform(configSrc, {
     plugins: [addPlugins.plugin],
+    configFile: false,
   })
 
   await fs.writeFile(configPath, code)

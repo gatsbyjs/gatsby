@@ -54,11 +54,14 @@ John
 - [x] spike on bundling recipes into one file
 - [x] print pretty error when there's parsing errors of mdx files
 - [x] Move mdx recipes to its own package `gatsby-recipes` & pull them from unpkg
-- [ ] add CODEOWNERS file for recipes
-- [ ] give proper npm permissions to `gatsby-recipes`
+- [x] add CODEOWNERS file for recipes
+- [x] give proper npm permissions to `gatsby-recipes`
 - [x] validate that the first step of recipes don't have any resources. They should just be for the title/description
 - [x] handle not finding a recipe
 - [x] test modifying gatsby-config.js from default starter
+- [x] get tests passing
+- [ ] add emotion screenshot and add to readme
+- [x] make note about using gists for paths and using the "raw" link
 
 ## Near-ish future
 

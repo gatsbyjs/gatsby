@@ -81,7 +81,7 @@ Here's how you would write the `gatsby recipes emotion` recipe you just ran:
 
 Install necessary NPM packages
 
-<!-- // refer to the API in this doc to see what APIs are available, like `NPMPackage` -->
+<!-- refer to the API in this doc to see what APIs are available, like `NPMPackage` -->
 
 <NPMPackage name="gatsby-plugin-emotion" />
 <NPMPackage name="@emotion/core" />
@@ -145,7 +145,7 @@ Soon will support options.
 - **theme** the name of the theme (or plugin) which provides the file you'd like to shadow
 - **path** the path to the file within the theme. E.g. the example file above lives at `node_modules/gatsby-theme-blog/src/components/seo.js`
 
-#### `<NPMPackage`
+#### `<NPMPackage>`
 
 `<NPMPackage name="lodash" version="latest" />`
 
@@ -166,7 +166,7 @@ Soon will support options.
 
 #### `<File>`
 
-<File path="test.md" content="https://raw.githubusercontent.com/KyleAMathews/test-recipes/master/gatsby-receipe-sass.mdx" />
+<File path="test.md" content="https://raw.githubusercontent.com/KyleAMathews/test-recipes/master/gatsby-recipe-jest.mdx" />
 
 ##### props
 
