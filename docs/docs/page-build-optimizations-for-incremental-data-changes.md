@@ -56,7 +56,7 @@ If there are no changed or deleted paths, then the relevant files will not be cr
 
 - This feature is not available with `gatsby develop`.
 
-* At the end of each build, gatsby creates a `redux.state` file in `/.cache` that contains previous build data. You will need to persist the `.cache/redux.state` between builds, allowing for comparison. If there is no `redux.state` file located in the `/.cache` folder then a full build will be triggered.
+* You will need to persist the `.cache` and `public` directories between builds. This allows for comparisons and reuse of previously built files. If `.cache` directory was not persisted then a full build will be triggered. If `public` directory was not persisted then you might experience failing builds or builds that are missing certain assets.
 
 * Any code or static query changes (templates, components, source handling, new plugins etc) will prompt the creation of a new webpack compilation hash and trigger a full build.
 

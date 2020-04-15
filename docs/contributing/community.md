@@ -13,7 +13,7 @@ One of our community's values is that ["you belong here"](/blog/2018-09-07-gatsb
 ## Gatsby Contributor Covenant Code of Conduct
 
 In the interest of fostering an open and welcoming environment, we as
-contributors and maintainers pledge to making participation in our project and
+contributors and maintainers pledge to make participation in our project and
 our community a harassment-free experience for everyone, regardless of age, body
 size, disability, ethnicity, gender identity and expression, level of
 experience, nationality, personal appearance, race, religion, or sexual identity
@@ -38,7 +38,7 @@ The Gatsby community welcomes contributions. Please refer to the guides below on
 
 Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby community! Hear about new features, tips & tricks, and what people are building.
 
-[Sign up here](/newsletter/)
+<EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
 
 ### Twitter
 

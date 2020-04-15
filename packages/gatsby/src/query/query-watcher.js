@@ -20,7 +20,7 @@ const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const queryUtil = require(`./index`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
-const getGatsbyDependents = require(`../utils/gatsby-dependents`)
+import { getGatsbyDependents } from "../utils/gatsby-dependents"
 
 const getQueriesSnapshot = () => {
   const state = store.getState()

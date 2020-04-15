@@ -18,7 +18,7 @@ How do you know which headless CMS is right for your site? In this post, we’ll
 
 2. This headless CMS has to be robust enough to grow with the site over time.
 
-3. This headless CMS has to work with with frontend frameworks like Gatsby.
+3. This headless CMS has to work with frontend frameworks like Gatsby.
 
 The difficulty with these must-haves is that there are no _truly free_ options. There are open source projects that provide code for free, but you have to host it somewhere. Then, there are hosted headless CMS’s with generous free tiers. But most of them have prohibitive pricing once your project grows.
 

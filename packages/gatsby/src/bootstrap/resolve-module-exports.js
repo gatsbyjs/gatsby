@@ -1,12 +1,12 @@
 // @flow
-const fs = require(`fs`)
-const traverse = require(`@babel/traverse`).default
-const get = require(`lodash/get`)
-const { codeFrameColumns } = require(`@babel/code-frame`)
-const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
-const report = require(`gatsby-cli/lib/reporter`)
+import fs from "fs"
+import traverse from "@babel/traverse"
+import get from "lodash/get"
+import { codeFrameColumns } from "@babel/code-frame"
+import { babelParseToAst } from "../utils/babel-parse-to-ast"
+import report from "gatsby-cli/lib/reporter"
 
-const testRequireError = require(`../utils/test-require-error`).default
+import { testRequireError } from "../utils/test-require-error"
 
 const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
   let absPath

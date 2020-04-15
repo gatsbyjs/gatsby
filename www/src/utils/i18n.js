@@ -33,6 +33,8 @@ function getLanguages(localeStr) {
 const langs = getLanguages(process.env.LOCALES)
 const langCodes = langs.map(lang => lang.code)
 
+const i18nEnabled = langs.length > 0
+
 function isDefaultLang(locale) {
   return locale === defaultLang
 }
@@ -48,7 +50,7 @@ function localizedPath(locale, path) {
     return path
   }
 
-  const [, base] = path.split("/")
+  const [, base] = path.split(`/`)
 
   // If for whatever reason we receive an already localized path
   // (e.g. if the path was made with location.pathname)
@@ -78,6 +80,7 @@ function getLocaleAndBasePath(path, codes = langCodes) {
 }
 
 module.exports = {
+  i18nEnabled,
   langCodes,
   langs,
   defaultLang,

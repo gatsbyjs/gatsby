@@ -11,7 +11,7 @@ Tools).
 
 The recommended way to setup your build environment on Windows is to install the
 [`windows-build-tools`](https://github.com/felixrieseberg/windows-build-tools)
-package by running `npm install windows-build-tools -g` on an admin PowerShell
+package by running `npm install --global windows-build-tools --vs2015` on an admin PowerShell
 console. Upon installing this package, it downloads and installs Visual C++
 Build Tools 2015, provided free of charge by Microsoft. These tools are required
 to compile popular native modules. It will also install Python 2.7, configuring
