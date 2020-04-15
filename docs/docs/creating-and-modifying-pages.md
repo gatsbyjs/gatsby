@@ -101,7 +101,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
 ## Trade-offs of querying for all fields in the context object of `gatsby-node.js`
 
-Imagine a scenario where you could query for all the parameters your template would need in the `gatsby-node.js`. What are the performance advantages this method might propose? In this section, you will look into this.
+Imagine a scenario where you could query for all the parameters your template would need in the `gatsby-node.js`. What would the implications be? In this section, you will look into this.
 
 In the initial approach you have seen how the `gatsby-node.js` file would have a query block like so :
 
