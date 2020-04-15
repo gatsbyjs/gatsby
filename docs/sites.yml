@@ -1467,14 +1467,6 @@
   built_by: Niklas von Hertzen
   built_by_url: http://hertzen.com/
   featured: false
-- title: Dato CMS
-  description: |
-    The API-based CMS your editors will love
-  main_url: https://www.datocms.com/
-  url: https://www.datocms.com/
-  categories:
-    - API
-  featured: false
 - title: Half Electronics
   description: |
     Personal website
@@ -7933,7 +7925,6 @@
 - title: Brent Runs Marathons
   main_url: https://www.brentrunsmarathons.com/
   url: https://www.brentrunsmarathons.com/
-  source_url: https://github.com/bingr001/brentrunsmarathonsv2
   description: >
     Brent Runs Marathons is about the training and race experience for the Comrades Ultra Marathon
   categories:
@@ -9651,16 +9642,6 @@
     - Business
   built_by: Alex Moon
   built_by_url: https://moonmeister.net
-  featured: false
-- title: Health Pro Fitness
-  url: https://healthprofitness.com/
-  main_url: https://healthprofitness.com/
-  description: >
-    Health Pro Fitness is a lifestyle blog built with Gatsby and static Markdown content.
-  categories:
-    - Blog
-  built_by: Botox For Hair And co.
-  built_by_url: https://www.botoxforhair.net/
   featured: false
 - title: ramonak.io
   url: https://ramonak.io/
