@@ -5,7 +5,11 @@ module.exports = {
   entry: './src/recipes/index.js',
   target: 'node',
   mode: 'production',
-  externals: [nodeExternals()],
+  externals: [
+    nodeExternals({
+      whitelist: ['react', 'graphql', 'urql', '@urql/core', '@mdx-js/react']
+    })
+  ],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'recipes.js',
