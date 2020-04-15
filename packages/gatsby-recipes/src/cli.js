@@ -20,7 +20,7 @@ const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 const SelectInput = require(`ink-select-input`).default
 
-const MAX_UI_WIDTH = 100
+const MAX_UI_WIDTH = 67
 
 // TODO try this and write out success stuff & last message?
 // const enterAltScreenCommand = "\x1b[?1049h"
@@ -160,27 +160,40 @@ const components = {
       <Text bold underline {...props} />
     </Div>
   ),
-  h2: props => <Text bold {...props} />,
-  h3: props => <Text bold italic {...props} />,
-  h4: props => <Text bold {...props} />,
-  h5: props => <Text bold {...props} />,
-  h6: props => <Text bold {...props} />,
+  h2: props => (
+    <Div>
+      <Text bold {...props} />
+    </Div>
+  ),
+  h3: props => (
+    <Div>
+      <Text bold italic {...props} />
+    </Div>
+  ),
+  h4: props => (
+    <Div>
+      <Text bold {...props} />
+    </Div>
+  ),
+  h5: props => (
+    <Div>
+      <Text bold {...props} />
+    </Div>
+  ),
+  h6: props => (
+    <Div>
+      <Text bold {...props} />
+    </Div>
+  ),
   a: ({ href, children }) => <Link url={href}>{children}</Link>,
-  br: () => null,
   strong: props => <Text bold {...props} />,
   em: props => <Text italic {...props} />,
   p: props => {
     const children = elimiateNewLines(props.children)
     return (
-      <Box
-        width="100%"
-        marginBottom={2}
-        flexDirection="row"
-        textWrap="wrap"
-        {...props}
-      >
-        {children}
-      </Box>
+      <Div marginBottom={1}>
+        <Text>{children}</Text>
+      </Div>
     )
   },
   ul: props => <Div marginBottom={1}>{props.children}</Div>,
@@ -310,7 +323,6 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
             </Text>
             <RecipesList
               setRecipe={async recipeItem => {
-                log(`yo`, { recipeItem, projectRoot })
                 showRecipesList = false
                 try {
                   await createOperation({
@@ -501,11 +513,9 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
             </Div>
           )}
           <PlanContext.Provider value={{ planForNextStep: state.plan }}>
-            <Div>
-              <MDX components={components}>
-                {state.context.stepsAsMdx[state.context.currentStep]}
-              </MDX>
-            </Div>
+            <MDX components={components}>
+              {state.context.stepsAsMdx[state.context.currentStep]}
+            </MDX>
             <PresentStep state={state} />
             <RunningStep state={state} />
           </PlanContext.Provider>
@@ -513,17 +523,14 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
       )
     }
 
-    const Wrapper = () => {
-      console.log(`rendering wrapper`)
-      return (
-        <>
-          <Provider value={client}>
-            <Text>{` `}</Text>
-            <RecipeInterpreter />
-          </Provider>
-        </>
-      )
-    }
+    const Wrapper = () => (
+      <>
+        <Provider value={client}>
+          <Text>{` `}</Text>
+          <RecipeInterpreter />
+        </Provider>
+      </>
+    )
 
     const Recipe = () => <Wrapper />
 

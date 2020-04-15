@@ -6,7 +6,7 @@ const {
   GraphQLList,
 } = require(`graphql`)
 const TypeDictionary = require(`./type-dictionary`)
-const Hoek = require(`hoek`)
+const Hoek = require(`@hapi/hoek`)
 const internals = {}
 let cache = {}
 const lazyLoadQueue = []
