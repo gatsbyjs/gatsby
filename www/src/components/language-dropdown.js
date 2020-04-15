@@ -13,22 +13,23 @@ const navItemTopOffset = `0.4rem`
 // FIXME this is copied from navigation.js
 const navItemStyles = {
   borderBottom: `2px solid transparent`,
-  color: `navigation.linkDefault`,
+  // color: `navigation.linkDefault`,
+  color: `navigation.socialLink`, // Same as the social icons
   display: `block`,
   fontSize: 3,
   lineHeight: t => t.sizes.headerHeight,
   [mediaQueries.md]: {
-    lineHeight: t => `calc(${t.sizes.headerHeight} - ${navItemTopOffset})`,
+    lineHeight: t => `calc(${t.sizes.headerHeight} - ${navItemTopOffset})`
   },
   position: `relative`,
   textDecoration: `none`,
   zIndex: 1,
-  "&:hover, &:focus": { color: `navigation.linkHover` },
+  "&:hover, &:focus": { color: `navigation.linkHover` }
 }
 
 const allLangs = [
   { code: "en", name: "English", localName: "English" },
-  ...langs,
+  ...langs
 ]
 
 const menuLinkStyles = {
@@ -38,14 +39,14 @@ const menuLinkStyles = {
   py: 3,
   ":hover": {
     bg: `sidebar.itemHoverBackground`,
-    color: `navigation.linkHover`,
-  },
+    color: `navigation.linkHover`
+  }
 }
 
 const listItemStyles = {
   listStyleType: `none`,
   display: `flex`,
-  margin: 0,
+  margin: 0
 }
 
 function LangLink({ code, name, localName, current, pathname }) {
@@ -55,7 +56,7 @@ function LangLink({ code, name, localName, current, pathname }) {
       <span
         sx={{
           fontWeight: current && `semiBold`,
-          color: current && `navigation.linkHover`,
+          color: current && `navigation.linkHover`
         }}
       >
         {localName}
@@ -120,7 +121,7 @@ export default function LanguageDropdown({ pathname }) {
           border: 0,
           background: `none`,
           cursor: `pointer`,
-          ...navItemStyles,
+          ...navItemStyles
         }}
       >
         <MdTranslate />
@@ -128,8 +129,8 @@ export default function LanguageDropdown({ pathname }) {
           sx={{
             display: `none`,
             [mediaQueries.md]: {
-              display: `initial`,
-            },
+              display: `initial`
+            }
           }}
         >
           {" "}
@@ -150,7 +151,8 @@ export default function LanguageDropdown({ pathname }) {
           bg: `background`,
           borderWidth: `1px`,
           borderColor: `ui.border`,
-          boxShadow: `dialog`,
+          borderRadius: 2,
+          boxShadow: `dialog`
         }}
       >
         {allLangs.map(lang => (
@@ -170,7 +172,7 @@ export default function LanguageDropdown({ pathname }) {
             sx={{
               ...menuLinkStyles,
               borderTop: `1px solid`,
-              borderColor: `ui.border`,
+              borderColor: `ui.border`
             }}
           >
             More languages
