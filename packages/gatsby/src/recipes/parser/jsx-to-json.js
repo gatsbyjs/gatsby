@@ -55,7 +55,7 @@ const getAttributeValue = expression => {
     return entries
   }
 
-  if (expression.type === 'Identifier') {
+  if (expression.type === `Identifier`) {
     return expression.name
   }
 
@@ -125,10 +125,12 @@ const jsxToJson = input => {
       `<root>${input}</root>`
     )
   } catch (e) {
-    throw new Error(JSON.stringify({
-      location: e.loc,
-      validationError: `Could not parse "${input}"`,
-    }))
+    throw new Error(
+      JSON.stringify({
+        location: e.loc,
+        validationError: `Could not parse "${input}"`,
+      })
+    )
   }
 
   if (parsed.body[0]) {

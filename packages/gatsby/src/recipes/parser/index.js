@@ -188,7 +188,7 @@ const getSource = async (pathOrUrl, projectRoot) => {
     recipePath = path.join(projectRoot, pathOrUrl)
   } else {
     const url = `https://unpkg.com/gatsby-recipes/recipes/${pathOrUrl}`
-    const res = await fetch(url.endsWith('.mdx') ? url : url + '.mdx')
+    const res = await fetch(url.endsWith(`.mdx`) ? url : url + `.mdx`)
 
     if (res.status !== 200) {
       throw new Error(

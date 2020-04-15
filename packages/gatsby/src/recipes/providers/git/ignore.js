@@ -1,13 +1,13 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Joi = require(`@hapi/joi`)
-const isBlank = require('is-blank')
-const singleTrailingNewline = require('single-trailing-newline')
+const isBlank = require(`is-blank`)
+const singleTrailingNewline = require(`single-trailing-newline`)
 
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
-const makePath = root => path.join(root, '.gitignore')
+const makePath = root => path.join(root, `.gitignore`)
 
 const gitignoresAsArray = async root => {
   const fullPath = makePath(root)
@@ -17,7 +17,7 @@ const gitignoresAsArray = async root => {
   }
 
   const ignoresStr = await fs.readFile(fullPath, `utf8`)
-  const ignores = ignoresStr.split('\n')
+  const ignores = ignoresStr.split(`\n`)
   const last = ignores.pop()
 
   if (isBlank(last)) {
@@ -27,9 +27,8 @@ const gitignoresAsArray = async root => {
   }
 }
 
-const ignoresToString = ignores => {
-  return singleTrailingNewline(ignores.map(n => n.name).join('\n'))
-}
+const ignoresToString = ignores =>
+  singleTrailingNewline(ignores.map(n => n.name).join(`\n`))
 
 const fileExists = fullPath => {
   try {
@@ -105,12 +104,12 @@ const all = async context => {
 
 const destroy = async (context, { id, name }) => {
   const fullPath = makePath(context.root)
-  
+
   const ignores = await all(context)
   const newIgnores = ignores.filter(n => n.id !== id)
 
   await fs.writeFile(fullPath, ignoresToString(newIgnores))
-  
+
   return { id, name }
 }
 
@@ -118,7 +117,7 @@ const destroy = async (context, { id, name }) => {
 module.exports.plan = async (context, args) => {
   const name = args.id || args.name
 
-  const currentResource = await all(context, args) || []
+  const currentResource = (await all(context, args)) || []
   const alreadyIgnored = currentResource.find(n => n.id === name)
 
   const contents = ignoresToString(currentResource)

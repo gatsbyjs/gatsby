@@ -1,9 +1,9 @@
-const {declare} = require('@babel/helper-plugin-utils')
-const babel = require('@babel/standalone')
-const jsxSyntax = require('@babel/plugin-syntax-jsx')
+const { declare } = require(`@babel/helper-plugin-utils`)
+const babel = require(`@babel/standalone`)
+const jsxSyntax = require(`@babel/plugin-syntax-jsx`)
 
 const BabelPluginRemoveElementByName = (api, { names }) => {
-  const {types: t} = api
+  const { types: t } = api
 
   return {
     visitor: {
@@ -11,8 +11,8 @@ const BabelPluginRemoveElementByName = (api, { names }) => {
         if (names.includes(path.node.openingElement.name.name)) {
           path.remove()
         }
-      }
-    }
+      },
+    },
   }
 }
 
@@ -20,13 +20,10 @@ module.exports = (src, options) => {
   try {
     const { code } = babel.transform(`<>${src}</>`, {
       configFile: false,
-      plugins: [
-        [BabelPluginRemoveElementByName, options],
-        jsxSyntax
-      ]
+      plugins: [[BabelPluginRemoveElementByName, options], jsxSyntax],
     })
 
-    return code.replace(/^<>/, '').replace(/<\/>;$/, '')
+    return code.replace(/^<>/, ``).replace(/<\/>;$/, ``)
   } catch (e) {
     console.log(e)
   }

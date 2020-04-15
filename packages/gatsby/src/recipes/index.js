@@ -1,3 +1,3 @@
-import cli from './cli'
+import cli from "./cli"
 
 export default recipe => cli(recipe)

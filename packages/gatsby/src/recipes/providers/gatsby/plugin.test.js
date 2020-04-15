@@ -6,7 +6,10 @@ const { addPluginToConfig, getPluginsFromConfig } = require(`./plugin`)
 const resourceTestHelper = require(`../resource-test-helper`)
 
 const root = path.join(__dirname, `./fixtures/gatsby-starter-blog`)
-const helloWorldRoot = path.join(__dirname, `./fixtures/gatsby-starter-hello-world`)
+const helloWorldRoot = path.join(
+  __dirname,
+  `./fixtures/gatsby-starter-hello-world`
+)
 const name = `gatsby-plugin-foo`
 const configPath = path.join(root, `gatsby-config.js`)
 

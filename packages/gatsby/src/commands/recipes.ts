@@ -11,8 +11,8 @@ module.exports = async (program: IProgram): Promise<void> => {
   const graphqlPort = await detectPort(4000)
   telemetry.trackCli(`RECIPE_RUN`, { recipe })
 
-      // const runRecipe = require(`../recipes/index`)
-      // runRecipe({ recipe, projectRoot: program.directory })
+  // const runRecipe = require(`../recipes/index`)
+  // runRecipe({ recipe, projectRoot: program.directory })
 
   // Start GraphQL serve
   let subprocess
@@ -29,26 +29,26 @@ module.exports = async (program: IProgram): Promise<void> => {
       // as it (correctly) thinks it's not in a normal terminal environemnt.
       // Since we're just returning data, we'll override that.
       FORCE_COLOR: `true`,
-    }
+    },
   })
-  subprocess.stderr.on("data", data => {
+  subprocess.stderr.on(`data`, data => {
     console.log(data.toString())
   })
-  process.on("exit", () =>
-    subprocess.kill("SIGTERM", {
+  process.on(`exit`, () =>
+    subprocess.kill(`SIGTERM`, {
       forceKillAfterTimeout: 2000,
     })
   )
   // Log server output to a file.
   if (process.env.DEBUG) {
-    const logFile = path.join(program.directory, "./recipe-server.log")
+    const logFile = path.join(program.directory, `./recipe-server.log`)
     fs.writeFileSync(logFile, `\n-----\n${new Date().toJSON()}\n`)
-    const writeStream = fs.createWriteStream(logFile, { flags: "a" })
+    const writeStream = fs.createWriteStream(logFile, { flags: `a` })
     subprocess.stdout.pipe(writeStream)
   }
 
   let started = false
-  subprocess.stdout.on("data", data => {
+  subprocess.stdout.on(`data`, data => {
     if (!started) {
       const runRecipe = require(`../recipes`).default
       runRecipe({ recipe, graphqlPort, projectRoot: program.directory })
