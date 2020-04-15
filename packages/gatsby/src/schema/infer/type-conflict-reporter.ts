@@ -1,25 +1,24 @@
-// @flow
-const _ = require(`lodash`)
-const report = require(`gatsby-cli/lib/reporter`)
-const typeOf = require(`type-of`)
-const util = require(`util`)
+import _ from "lodash"
+import report from "gatsby-cli/lib/reporter"
+import typeOf from "type-of"
+import util from "util"
 
-export type TypeConflictExample = {
-  value: mixed,
-  parent: {},
-  type: string,
-  arrayTypes: string[],
+export interface ITypeConflictExample {
+  value: unknown
+  parent: {}
+  type: string
+  arrayTypes: string[]
 }
 
-type TypeConflict = {
-  value: mixed,
-  description: string,
+interface ITypeConflict {
+  value: unknown
+  description: string
 }
 
-const isNodeWithDescription = node =>
+const isNodeWithDescription = (node): boolean =>
   node && node.internal && node.internal.description
 
-const findNodeDescription = obj => {
+const findNodeDescription = (obj): string => {
   if (obj) {
     // TODO: Maybe get this back
     // const node = findRootNodeAncestor(obj, isNodeWithDescription)
@@ -30,7 +29,7 @@ const findNodeDescription = obj => {
   return ``
 }
 
-const formatValue = value => {
+const formatValue = (value): string => {
   if (!_.isArray(value)) {
     return util.inspect(value, {
       colors: true,
@@ -39,7 +38,7 @@ const formatValue = value => {
     })
   }
 
-  const output = []
+  const output: string[] = []
 
   if (value.length === 1) {
     // For arrays usually a single conflicting item is exposed vs. the whole array
@@ -48,7 +47,7 @@ const formatValue = value => {
     output.push(`...`)
   } else {
     let wasElipsisLast = false
-    const usedTypes = []
+    const usedTypes: string[] = []
     value.forEach(item => {
       const type = typeOf(item)
       if (usedTypes.includes(type)) {
@@ -69,21 +68,21 @@ const formatValue = value => {
 
 class TypeConflictEntry {
   selector: string
-  types: Map<string, TypeConflict>
+  types: Map<string, ITypeConflict>
 
   constructor(selector: string) {
     this.selector = selector
     this.types = new Map()
   }
 
-  addExample({ value, type, parent }: TypeConflictExample) {
+  addExample({ value, type, parent }: ITypeConflictExample): void {
     this.types.set(type, {
       value,
       description: findNodeDescription(parent),
     })
   }
 
-  printEntry() {
+  printEntry(): void {
     const sortedByTypeName = _.sortBy(
       Array.from(this.types.entries()),
       ([typeName, value]) => typeName
@@ -109,7 +108,7 @@ class TypeConflictReporter {
     this.entries = new Map()
   }
 
-  clearConflicts() {
+  clearConflicts(): void {
     this.entries.clear()
   }
 
@@ -124,7 +123,7 @@ class TypeConflictReporter {
     return dataEntry
   }
 
-  addConflict(selector: string, examples: TypeConflictExample[]) {
+  addConflict(selector: string, examples: ITypeConflictExample[]): void {
     if (selector.substring(0, 11) === `SitePlugin.`) {
       // Don't store and print out type conflicts in plugins.
       // This is out of user control so he/she can't do anything
@@ -138,7 +137,7 @@ class TypeConflictReporter {
       .forEach(example => entry.addExample(example))
   }
 
-  printConflicts() {
+  printConflicts(): void {
     if (this.entries.size > 0) {
       report.warn(
         `There are conflicting field types in your data.\n\n` +
@@ -154,9 +153,9 @@ class TypeConflictReporter {
     }
   }
 
-  getConflicts() {
+  getConflicts(): TypeConflictEntry[] {
     return Array.from(this.entries.values())
   }
 }
 
-module.exports = { TypeConflictReporter, TypeConflictEntry }
+export { TypeConflictReporter, TypeConflictEntry }

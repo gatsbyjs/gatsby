@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /*
 ## Incrementally track the structure of nodes with metadata
 
@@ -121,11 +122,81 @@ type TypeInfoRelatedNode = TypeInfo & {
   (still rare edge cases possible when reporting may be confusing, i.e. when node is deleted)
 */
 
-const { isEqual } = require(`lodash`)
+import { isEqual } from "lodash"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
-const { looksLikeADate } = require(`../types/date`)
+import { looksLikeADate } from "../types/date"
+import { Node } from "../../../index"
+import { TypeConflictReporter } from "./type-conflict-reporter"
 
-const getType = (value, key) => {
+interface ITypeInfo {
+  first?: string
+  total: number
+}
+
+interface ITypeInfoString extends ITypeInfo {
+  empty: number
+  example: string
+}
+
+interface ITypeInfoDate extends ITypeInfo {
+  example: string
+}
+
+interface ITypeInfoNumber extends ITypeInfo {
+  example: number
+}
+
+interface ITypeInfoBoolean extends ITypeInfo {
+  example: boolean
+}
+
+interface ITypeInfoArray extends ITypeInfo {
+  item: IValueDescriptor
+}
+
+interface ITypeInfoRelatedNodes extends ITypeInfo {
+  nodes: { [key: string]: number }
+}
+
+interface ITypeInfoObject extends ITypeInfo {
+  dprops: {
+    [name in
+      | `number`
+      | `string`
+      | `boolean`
+      | `null`
+      | `date`
+      | `array`
+      | `object`]?: IValueDescriptor
+  }
+}
+
+interface IValueDescriptor {
+  int?: ITypeInfoNumber
+  float?: ITypeInfoNumber
+  date?: ITypeInfoDate
+  string?: ITypeInfoString
+  boolean?: ITypeInfoBoolean
+  array?: ITypeInfoArray
+  nodes?: ITypeInfoRelatedNodes
+  object?: ITypeInfoObject
+}
+
+export interface IMetadata {
+  typeName?: string
+  disabled: boolean
+  ignored?: boolean
+  dirty?: boolean
+  total?: number
+  ignoredFields?: Set<string>
+  fieldMap: Record<string, IValueDescriptor>
+  typeConflictReporter?: TypeConflictReporter
+  [key: string]: unknown
+}
+
+type Operation = "add" | "del"
+
+const getType = (value: unknown, key: string): string => {
   // Staying as close as possible to GraphQL types
   switch (typeof value) {
     case `number`:
@@ -156,13 +227,13 @@ const getType = (value, key) => {
 }
 
 const updateValueDescriptorObject = (
-  value,
-  typeInfo,
-  nodeId,
-  operation,
-  metadata,
-  path
-) => {
+  value: object,
+  typeInfo: ITypeInfoObject,
+  nodeId: string,
+  operation: Operation,
+  metadata: IMetadata,
+  path: unknown[]
+): void => {
   path.push(value)
 
   const { dprops = {} } = typeInfo
@@ -184,14 +255,14 @@ const updateValueDescriptorObject = (
 }
 
 const updateValueDescriptorArray = (
-  value,
-  key,
-  typeInfo,
-  nodeId,
-  operation,
-  metadata,
-  path
-) => {
+  value: unknown[],
+  key: string,
+  typeInfo: ITypeInfoArray,
+  nodeId: string,
+  operation: Operation,
+  metadata: IMetadata,
+  path: unknown[]
+): void => {
   value.forEach(item => {
     let descriptor = typeInfo.item
     if (descriptor === undefined) {
@@ -212,12 +283,12 @@ const updateValueDescriptorArray = (
 }
 
 const updateValueDescriptorRelNodes = (
-  listOfNodeIds,
-  delta,
-  operation,
-  typeInfo,
-  metadata
-) => {
+  listOfNodeIds: string[],
+  delta: number,
+  operation: Operation,
+  typeInfo: ITypeInfoRelatedNodes,
+  metadata: IMetadata
+): void => {
   const { nodes = {} } = typeInfo
   typeInfo.nodes = nodes
 
@@ -233,7 +304,11 @@ const updateValueDescriptorRelNodes = (
   })
 }
 
-const updateValueDescriptorString = (value, delta, typeInfo) => {
+const updateValueDescriptorString = (
+  value: string,
+  delta: number,
+  typeInfo: ITypeInfoString
+): void => {
   if (value === ``) {
     const { empty = 0 } = typeInfo
     typeInfo.empty = empty + delta
@@ -243,14 +318,14 @@ const updateValueDescriptorString = (value, delta, typeInfo) => {
 }
 
 const updateValueDescriptor = (
-  nodeId,
-  key,
-  value,
-  operation = `add` /* add | del */,
-  descriptor,
-  metadata,
-  path
-) => {
+  nodeId: string,
+  key: string,
+  value: unknown,
+  operation: Operation = `add`,
+  descriptor: IValueDescriptor,
+  metadata: IMetadata,
+  path: unknown[]
+): void => {
   // The object may be traversed multiple times from root.
   // Each time it does it should not revisit the same node twice
   if (path.includes(value)) {
@@ -291,7 +366,7 @@ const updateValueDescriptor = (
   switch (typeName) {
     case `object`:
       updateValueDescriptorObject(
-        value,
+        value as object,
         typeInfo,
         nodeId,
         operation,
@@ -301,7 +376,7 @@ const updateValueDescriptor = (
       return
     case `array`:
       updateValueDescriptorArray(
-        value,
+        value as [],
         key,
         typeInfo,
         nodeId,
@@ -312,7 +387,7 @@ const updateValueDescriptor = (
       return
     case `relatedNode`:
       updateValueDescriptorRelNodes(
-        [value],
+        [value as string],
         delta,
         operation,
         typeInfo,
@@ -320,10 +395,16 @@ const updateValueDescriptor = (
       )
       return
     case `relatedNodeList`:
-      updateValueDescriptorRelNodes(value, delta, operation, typeInfo, metadata)
+      updateValueDescriptorRelNodes(
+        value as string[],
+        delta,
+        operation,
+        typeInfo,
+        metadata
+      )
       return
     case `string`:
-      updateValueDescriptorString(value, delta, typeInfo)
+      updateValueDescriptorString(value as string, delta, typeInfo)
       return
   }
 
@@ -333,38 +414,44 @@ const updateValueDescriptor = (
     typeof typeInfo.example !== `undefined` ? typeInfo.example : value
 }
 
-const mergeObjectKeys = (dpropsKeysA, dpropsKeysB) => {
+const mergeObjectKeys = (
+  dpropsKeysA: ITypeInfoObject["dprops"] = {},
+  dpropsKeysB: ITypeInfoObject["dprops"] = {}
+): string[] => {
   const dprops = Object.keys(dpropsKeysA)
   const otherProps = Object.keys(dpropsKeysB)
   return [...new Set(dprops.concat(otherProps))]
 }
 
-const descriptorsAreEqual = (descriptor, otherDescriptor) => {
+const descriptorsAreEqual = (
+  descriptor?: IValueDescriptor,
+  otherDescriptor?: IValueDescriptor
+): boolean => {
   const types = possibleTypes(descriptor)
   const otherTypes = possibleTypes(otherDescriptor)
 
-  const childDescriptorsAreEqual = type => {
+  const childDescriptorsAreEqual = (type: string): boolean => {
     switch (type) {
       case `array`:
         return descriptorsAreEqual(
-          descriptor.array.item,
-          otherDescriptor.array.item
+          descriptor?.array?.item,
+          otherDescriptor?.array?.item
         )
       case `object`: {
         const dpropsKeys = mergeObjectKeys(
-          descriptor.object.dprops,
-          otherDescriptor.object.dprops
+          descriptor?.object?.dprops,
+          otherDescriptor?.object?.dprops
         )
         return dpropsKeys.every(prop =>
           descriptorsAreEqual(
-            descriptor.object.dprops[prop],
-            otherDescriptor.object.dprops[prop]
+            descriptor?.object?.dprops[prop],
+            otherDescriptor?.object?.dprops[prop]
           )
         )
       }
       case `relatedNode`:
       case `relatedNodeList`: {
-        return isEqual(descriptor.nodes, otherDescriptor.nodes)
+        return isEqual(descriptor?.nodes, otherDescriptor?.nodes)
       }
       default:
         return true
@@ -375,10 +462,14 @@ const descriptorsAreEqual = (descriptor, otherDescriptor) => {
   return isEqual(types, otherTypes) && types.every(childDescriptorsAreEqual)
 }
 
-const nodeFields = (node, ignoredFields = new Set()) =>
+const nodeFields = (node: Node, ignoredFields = new Set()): string[] =>
   Object.keys(node).filter(key => !ignoredFields.has(key))
 
-const updateTypeMetadata = (metadata = initialMetadata(), operation, node) => {
+const updateTypeMetadata = (
+  metadata = initialMetadata(),
+  operation: Operation,
+  node: Node
+): IMetadata => {
   if (metadata.disabled) {
     return metadata
   }
@@ -409,44 +500,48 @@ const updateTypeMetadata = (metadata = initialMetadata(), operation, node) => {
   return metadata
 }
 
-const ignore = (metadata = initialMetadata(), set = true) => {
+const ignore = (metadata = initialMetadata(), set = true): IMetadata => {
   metadata.ignored = set
   metadata.fieldMap = {}
   return metadata
 }
 
-const disable = (metadata = initialMetadata(), set = true) => {
+const disable = (metadata = initialMetadata(), set = true): IMetadata => {
   metadata.disabled = set
   return metadata
 }
 
-const addNode = (metadata, node) => updateTypeMetadata(metadata, `add`, node)
-const deleteNode = (metadata, node) => updateTypeMetadata(metadata, `del`, node)
-const addNodes = (metadata = initialMetadata(), nodes) =>
+const addNode = (metadata: IMetadata, node: Node): IMetadata =>
+  updateTypeMetadata(metadata, `add`, node)
+
+const deleteNode = (metadata: IMetadata, node: Node): IMetadata =>
+  updateTypeMetadata(metadata, `del`, node)
+const addNodes = (metadata = initialMetadata(), nodes: Node[]): IMetadata =>
   nodes.reduce(addNode, metadata)
 
-const possibleTypes = (descriptor = {}) =>
+const possibleTypes = (descriptor: object = {}): string[] =>
   Object.keys(descriptor).filter(type => descriptor[type].total > 0)
 
-const isEmpty = ({ fieldMap }) =>
+const isEmpty = ({ fieldMap }): boolean =>
   Object.keys(fieldMap).every(
     field => possibleTypes(fieldMap[field]).length === 0
   )
 
 // Even empty type may still have nodes
-const hasNodes = typeMetadata => typeMetadata.total > 0
+const hasNodes = (typeMetadata: IMetadata): boolean =>
+  (typeMetadata.total ?? 0) > 0
 
 const haveEqualFields = (
   { fieldMap = {} } = {},
   { fieldMap: otherFieldMap = {} } = {}
-) => {
+): boolean => {
   const fields = mergeObjectKeys(fieldMap, otherFieldMap)
   return fields.every(field =>
     descriptorsAreEqual(fieldMap[field], otherFieldMap[field])
   )
 }
 
-const initialMetadata = state => {
+const initialMetadata = (state?: object): IMetadata => {
   return {
     typeName: undefined,
     disabled: false,
@@ -459,7 +554,7 @@ const initialMetadata = state => {
   }
 }
 
-module.exports = {
+export {
   addNode,
   addNodes,
   deleteNode,
