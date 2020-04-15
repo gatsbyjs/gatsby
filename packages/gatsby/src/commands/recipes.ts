@@ -9,7 +9,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   // We don't really care what port is used for GraphQL as it's
   // generally only for code 2 code communication or debugging.
   const graphqlPort = await detectPort(4000)
-  telemetry.trackCli(`RECIPE_RUN`, { recipe })
+  telemetry.trackCli(`RECIPE_RUN`, { name: recipe })
 
   // const runRecipe = require(`../recipes/index`)
   // runRecipe({ recipe, projectRoot: program.directory })
