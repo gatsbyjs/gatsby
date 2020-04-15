@@ -95,6 +95,10 @@ https://emotion.sh/docs/introduction
 
 You can run local recipes or recipes at a URL. [The docs walk you through writing your first Recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/recipes/README.md)!
 
+### Will there be more official recipes? Do you want contributions?
+
+Yes! We want to have official recipes for all common use cases. Even if a recipe isn't yet possible to create (i.e. its missing a required resource), please suggest it in the Recipes Umbrella issue to start the conversation.
+
 ### What are future plans for recipes?
 
 A few areas we're exploring.
