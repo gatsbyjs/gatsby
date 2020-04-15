@@ -10,6 +10,8 @@ Learn what the _Yarn_ package manager is, how to use it, and how it fits in to t
 
 Yarn is a package manager for the [Node.js](/docs/glossary/node) JavaScript runtime. It's an alternative to Node's standard package manager, [npm](/docs/glossary/npm). [Contributing](/contributing/setting-up-your-local-dev-environment/) to Gatsby core requires Yarn. Gatsby core uses Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature to manage dependencies. Gatsby [theme development](/tutorial/building-a-theme/) also uses Yarn workspaces. For Gatsby site development, you can use Yarn or npm.
 
+> **Note:** Most tutorials and site development examples from the Gatsby docs use npm. To avoid confusion and possible conflicts with your dependencies, Gatsby recommends using npm for site development.
+
 Engineers from Facebook, Google, Exponent, and Tilde [launched Yarn](https://engineering.fb.com/web/yarn-a-new-package-manager-for-javascript/) in 2016 to improve package management for large-scale, monolithic repositories. A monolithic repository, or [_monorepo_](https://en.wikipedia.org/wiki/Monorepo), contains the code for many different projects in a single repository. Gatsby core uses a monorepo pattern for its code.
 
 As a monorepo adds projects and contributors, the number and size of its dependencies also increases. Yarn mitigates this in two ways.
