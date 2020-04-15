@@ -117,7 +117,7 @@ Gatsby will pull down all the content for our website and put it into GraphQL. T
 
 We need to make our new website look just like the old one, so we need to match the colors, fonts, and other visual styles as much as we can. You may want to pull in the CSS from your old site—or start from scratch if you want to make a clean break.
 
-Either way, this is a great time to familiarize yourself with the GraphQL data in your website. Point your browser to [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql) to start exploring your data, and you can build the query access and Shared Content or Sitemap data. You can see that all content is available, grouped by content definition name.
+Either way, this is a great time to familiarize yourself with the GraphQL data in your website. Point your browser to `http://localhost:8000/___graphql` to start exploring your data, and you can build the query access and Shared Content or Sitemap data. You can see that all content is available, grouped by content definition name.
 
 Here's the query that I used to grab a Global Header shared content item, as well as the nested sitemap as JSON.
 
@@ -162,7 +162,7 @@ In Agility CMS, the first page in your sitemap is considered your Home Page. So,
 
 I created a couple of new Module Definitions that I needed for the new page design, so I created new react components in the **modules** folder for those. The amazing thing about the Agility CMS Gatsby implementation is that nearly all the data that you need to render a module on a page is given to you in a property called **item**.
 
-What I normally do is just `console.log("ModuleName", item)` so I can see exactly what that data looks like. Then run the site locally in your browser http://localhost:8000 and open up your Developer Tools to see what it looks like in the console.
+What I normally do is just `console.log("ModuleName", item)` so I can see exactly what that data looks like. Then run the site locally in your browser `http://localhost:8000` and open up your Developer Tools to see what it looks like in the console.
 
 ### Hot Reloading - Code and Content
 
