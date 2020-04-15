@@ -1,20 +1,19 @@
 {
-  "name": "gatsby-theme-blog",
-  "version": "1.4.23",
-  "description": "A Gatsby theme for miscellaneous blogging with a dark/light mode",
+  "name": "gatsby-theme-ui-preset",
+  "version": "1.0.0",
+  "description": "A Gatsby theme for theme-ui styles",
   "main": "index.js",
   "keywords": [
     "gatsby",
     "gatsby-theme",
     "gatsby-plugin",
     "react",
-    "blog"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-theme-blog"
+    "directory": "packages/gatsby-theme-ui-preset"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog#readme",
   "dependencies": {
