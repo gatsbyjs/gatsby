@@ -119,7 +119,7 @@ In the initial approach you have seen how the `gatsby-node.js` file would have a
 
 Using the `id` as an access point to query for other properties in the template is the default approach. However, Suppose you had a list of products with properties you would like to query for. Handling the query all from `gatsby-node.js` the query would look like this:
 
-```javascript:tittle=gatsby-node.js
+```javascript:title=gatsby-node.js
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
