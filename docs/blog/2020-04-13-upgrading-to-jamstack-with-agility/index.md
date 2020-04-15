@@ -66,7 +66,7 @@ AGILITY_API_ISPREVIEW=true
 ENABLE_GATSBY_REFRESH_ENDPOINT=true
 ```
 
-Now, check out the **gatsby.config** file - it has a section for plugins, and the Agility CMS source plugin is called **@agility/gatsby-source-agilitycms**. Check that the language code and channel name matches what you have in your Agility CMS instance.
+Now, check out the **gatsby-config.js** file - it has a section for plugins, and the Agility CMS source plugin is called **@agility/gatsby-source-agilitycms**. Check that the language code and channel name matches what you have in your Agility CMS instance.
 
 ### Modules and Page Templates
 
