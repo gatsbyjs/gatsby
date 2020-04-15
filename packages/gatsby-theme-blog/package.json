@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "gatsby": "^2.20.22",
-    "prettier": "^1.19.1",
+    "prettier": "2.0.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },

@@ -66,7 +66,7 @@ exports.doesIconExist = function doesIconExist(srcIcon) {
  * @param {string} path The generic path to an icon
  * @param {string} digest The digest of the icon provided in the plugin's options.
  */
-exports.addDigestToPath = function(path, digest, method) {
+exports.addDigestToPath = function (path, digest, method) {
   if (method === `name`) {
     const parsedPath = sysPath.parse(path)
 
