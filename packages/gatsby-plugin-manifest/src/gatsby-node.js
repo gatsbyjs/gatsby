@@ -131,10 +131,7 @@ const makeManifest = async ({
   const suffix =
     shouldLocalize && pluginOptions.lang ? `_${pluginOptions.lang}` : ``
 
-  const faviconIsEnabled =
-    typeof pluginOptions.include_favicon !== `undefined`
-      ? pluginOptions.include_favicon
-      : true
+  const faviconIsEnabled = pluginOptions.include_favicon ?? true
 
   // Delete options we won't pass to the manifest.webmanifest.
   delete manifest.plugins
