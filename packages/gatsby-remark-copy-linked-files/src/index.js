@@ -38,7 +38,7 @@ const getDestination = (linkNode, dir) => {
     return isValidFunction
       ? `${dir({
           name: linkNode.name,
-          hash: linkNode.internal.contentDigest,
+          hash: linkNode.internal.contentDigest
         })}.${linkNode.extension}`
       : `${dir()}/${defaultDestination(linkNode)}`
   } else if (_.isString(dir)) {
@@ -79,7 +79,7 @@ module.exports = (
   pluginOptions = {}
 ) => {
   const defaults = {
-    ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
+    ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`]
   }
   const { destinationDir } = pluginOptions
   if (!validateDestinationDir(destinationDir))

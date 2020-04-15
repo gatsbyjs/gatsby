@@ -20,15 +20,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -43,7 +43,7 @@ describe(`Query schema`, () => {
       undefined,
       withResolverContext({
         schema,
-        schemaComposer,
+        schemaComposer
       })
     )
 
@@ -59,18 +59,18 @@ describe(`Query schema`, () => {
                   const authors = await context.nodeModel.runQuery({
                     type: `Author`,
                     query: { filter: { email: { in: source.authors } } },
-                    firstOnly: false,
+                    firstOnly: false
                   })
                   return authors.map(author => author.name)
-                },
+                }
               },
               [`frontmatter.anotherField`]: {
                 type: `Boolean`,
                 resolve() {
                   return true
-                },
-              },
-            },
+                }
+              }
+            }
           ]
         }
         return []
@@ -97,8 +97,8 @@ describe(`Query schema`, () => {
                   return context.nodeModel
                     .getAllNodes({ type: `Author` })
                     .filter(author => source.authors.includes(author.email))
-                },
-              },
+                }
+              }
             },
             Author: {
               posts: {
@@ -117,18 +117,18 @@ describe(`Query schema`, () => {
                     query: {
                       filter: {
                         frontmatter: {
-                          authors: { email: { eq: source.email } },
+                          authors: { email: { eq: source.email } }
                           // authors: {
                           //   elemMatch: { email: { eq: source.email } },
                           // },
-                        },
-                      },
+                        }
+                      }
                     },
-                    firstOnly: false,
+                    firstOnly: false
                   })
-                },
-              },
-            },
+                }
+              }
+            }
           }),
           args[0].createResolvers({
             Query: {
@@ -138,10 +138,10 @@ describe(`Query schema`, () => {
                   return context.nodeModel
                     .getAllNodes({ type: `Author` })
                     .map(author => author.name)
-                },
-              },
-            },
-          }),
+                }
+              }
+            }
+          })
         ]
       } else {
         return []
@@ -156,7 +156,7 @@ describe(`Query schema`, () => {
     const typeDefs = [
       `type Markdown implements Node { frontmatter: Frontmatter! }`,
       `type Frontmatter { authors: [Author] }`,
-      `type Author implements Node { posts: [Markdown] }`,
+      `type Author implements Node { posts: [Markdown] }`
     ]
     typeDefs.forEach(def =>
       store.dispatch({ type: `CREATE_TYPES`, payload: def })
@@ -166,9 +166,9 @@ describe(`Query schema`, () => {
       type: `SET_SITE_CONFIG`,
       payload: {
         mapping: {
-          "Markdown.frontmatter.reviewerByEmail": `Author.email`,
-        },
-      },
+          "Markdown.frontmatter.reviewerByEmail": `Author.email`
+        }
+      }
     })
 
     await build({})
@@ -198,21 +198,21 @@ describe(`Query schema`, () => {
           edges: [
             {
               node: {
-                children: [{ frontmatter: { title: `Markdown File 1` } }],
-              },
+                children: [{ frontmatter: { title: `Markdown File 1` } }]
+              }
             },
             {
               node: {
-                children: [{ frontmatter: { title: `Markdown File 2` } }],
-              },
+                children: [{ frontmatter: { title: `Markdown File 2` } }]
+              }
             },
             {
               node: {
-                children: [{ name: `Author 2` }, { name: `Author 1` }],
-              },
-            },
-          ],
-        },
+                children: [{ name: `Author 2` }, { name: `Author 1` }]
+              }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -236,21 +236,21 @@ describe(`Query schema`, () => {
           edges: [
             {
               node: {
-                childMarkdown: { frontmatter: { title: `Markdown File 1` } },
-              },
+                childMarkdown: { frontmatter: { title: `Markdown File 1` } }
+              }
             },
             {
               node: {
-                childMarkdown: { frontmatter: { title: `Markdown File 2` } },
-              },
+                childMarkdown: { frontmatter: { title: `Markdown File 2` } }
+              }
             },
             {
               node: {
-                childMarkdown: null,
-              },
-            },
-          ],
-        },
+                childMarkdown: null
+              }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -274,21 +274,21 @@ describe(`Query schema`, () => {
           edges: [
             {
               node: {
-                childrenAuthor: [],
-              },
+                childrenAuthor: []
+              }
             },
             {
               node: {
-                childrenAuthor: [],
-              },
+                childrenAuthor: []
+              }
             },
             {
               node: {
-                childrenAuthor: [{ name: `Author 2` }, { name: `Author 1` }],
-              },
-            },
-          ],
-        },
+                childrenAuthor: [{ name: `Author 2` }, { name: `Author 1` }]
+              }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -323,13 +323,13 @@ describe(`Query schema`, () => {
         allFile: {
           edges: [
             {
-              node: { name: `2.md`, children: [{ id: `md2` }] },
+              node: { name: `2.md`, children: [{ id: `md2` }] }
             },
             {
-              node: { name: `1.md`, children: [{ id: `md1` }] },
-            },
-          ],
-        },
+              node: { name: `1.md`, children: [{ id: `md1` }] }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -382,12 +382,12 @@ describe(`Query schema`, () => {
               {
                 posts: [
                   { frontmatter: { title: `Markdown File 1` } },
-                  { frontmatter: { title: `Markdown File 2` } },
-                ],
+                  { frontmatter: { title: `Markdown File 2` } }
+                ]
               },
-              { posts: [{ frontmatter: { title: `Markdown File 1` } }] },
-            ],
-          },
+              { posts: [{ frontmatter: { title: `Markdown File 1` } }] }
+            ]
+          }
         },
         allMarkdown: {
           edges: [
@@ -401,20 +401,20 @@ describe(`Query schema`, () => {
                       name: `Author 1`,
                       posts: [
                         { frontmatter: { title: `Markdown File 1` } },
-                        { frontmatter: { title: `Markdown File 2` } },
-                      ],
+                        { frontmatter: { title: `Markdown File 2` } }
+                      ]
                     },
                     {
                       email: `author2@example.com`,
                       name: `Author 2`,
-                      posts: [{ frontmatter: { title: `Markdown File 1` } }],
-                    },
+                      posts: [{ frontmatter: { title: `Markdown File 1` } }]
+                    }
                   ],
                   date: `01-01-2019`,
                   published: null,
-                  title: `Markdown File 1`,
-                },
-              },
+                  title: `Markdown File 1`
+                }
+              }
             },
             {
               node: {
@@ -426,18 +426,18 @@ describe(`Query schema`, () => {
                       name: `Author 1`,
                       posts: [
                         { frontmatter: { title: `Markdown File 1` } },
-                        { frontmatter: { title: `Markdown File 2` } },
-                      ],
-                    },
+                        { frontmatter: { title: `Markdown File 2` } }
+                      ]
+                    }
                   ],
                   date: null,
                   published: false,
-                  title: `Markdown File 2`,
-                },
-              },
-            },
-          ],
-        },
+                  title: `Markdown File 2`
+                }
+              }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -502,16 +502,16 @@ describe(`Query schema`, () => {
           name: `Author 1`,
           posts: [
             { frontmatter: { title: `Markdown File 1` } },
-            { frontmatter: { title: `Markdown File 2` } },
-          ],
+            { frontmatter: { title: `Markdown File 2` } }
+          ]
         },
         allMarkdown: {
           edges: [
             {
               node: {
                 id: `md2`,
-                frontmatter: { authors: [{ name: `Author 1` }] },
-              },
+                frontmatter: { authors: [{ name: `Author 1` }] }
+              }
             },
             {
               node: {
@@ -519,13 +519,13 @@ describe(`Query schema`, () => {
                 frontmatter: {
                   authors: expect.arrayContaining([
                     { name: `Author 1` },
-                    { name: `Author 2` },
-                  ]),
-                },
-              },
-            },
-          ],
-        },
+                    { name: `Author 2` }
+                  ])
+                }
+              }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -588,22 +588,22 @@ describe(`Query schema`, () => {
                 node: {
                   frontmatter: {
                     authors: [{ name: `Author 1` }],
-                    title: `Markdown File 2`,
-                  },
-                },
+                    title: `Markdown File 2`
+                  }
+                }
               },
               {
                 node: {
                   frontmatter: {
                     authors: expect.arrayContaining([
                       { name: `Author 1` },
-                      { name: `Author 2` },
+                      { name: `Author 2` }
                     ]),
-                    title: `Markdown File 1`,
-                  },
-                },
-              },
-            ],
+                    title: `Markdown File 1`
+                  }
+                }
+              }
+            ]
           },
           pages: {
             totalCount: 2,
@@ -613,23 +613,23 @@ describe(`Query schema`, () => {
                   frontmatter: {
                     authors: expect.arrayContaining([
                       { name: `Author 1` },
-                      { name: `Author 2` },
+                      { name: `Author 2` }
                     ]),
-                    title: `Markdown File 1`,
-                  },
-                },
+                    title: `Markdown File 1`
+                  }
+                }
               },
               {
                 node: {
                   frontmatter: {
                     authors: [{ name: `Author 1` }],
-                    title: `Markdown File 2`,
-                  },
-                },
-              },
-            ],
+                    title: `Markdown File 2`
+                  }
+                }
+              }
+            ]
           },
-          skiplimit: { totalCount: 2, edges: [{ node: { id: `md2` } }] },
+          skiplimit: { totalCount: 2, edges: [{ node: { id: `md2` } }] }
         }
         expect(results.errors).toBeUndefined()
         expect(results.data).toEqual(expected)
@@ -654,14 +654,14 @@ describe(`Query schema`, () => {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "edges": Array [],
-    "nodes": Array [],
-    "totalCount": 0,
-  },
-}
-`)
+          Object {
+            "allMarkdown": Object {
+              "edges": Array [],
+              "nodes": Array [],
+              "totalCount": 0,
+            },
+          }
+        `)
       })
 
       it(`adds nodes field as a convenience shortcut`, async () => {
@@ -680,8 +680,8 @@ Object {
         const expected = {
           allMarkdown: {
             totalCount: 2,
-            nodes: [{ id: `md2` }],
-          },
+            nodes: [{ id: `md2` }]
+          }
         }
         expect(results.errors).toBeUndefined()
         expect(results.data).toEqual(expected)
@@ -718,11 +718,11 @@ Object {
                     node: {
                       frontmatter: {
                         title: `Markdown File 1`,
-                        date: `2019-01-01`,
-                      },
-                    },
-                  },
-                ],
+                        date: `2019-01-01`
+                      }
+                    }
+                  }
+                ]
               },
               {
                 fieldValue: `Markdown File 2`,
@@ -731,14 +731,14 @@ Object {
                     node: {
                       frontmatter: {
                         title: `Markdown File 2`,
-                        date: null,
-                      },
-                    },
-                  },
-                ],
-              },
-            ],
-          },
+                        date: null
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
         }
         expect(results.errors).toBeUndefined()
         expect(results.data).toEqual(expected)
@@ -773,14 +773,14 @@ Object {
                     node: {
                       frontmatter: {
                         title: `Markdown File 1`,
-                        date: `2019/01/01`,
-                      },
-                    },
-                  },
-                ],
-              },
-            ],
-          },
+                        date: `2019/01/01`
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
         }
         expect(results.errors).toBeUndefined()
         expect(results.data).toEqual(expected)
@@ -815,19 +815,19 @@ Object {
                     node: {
                       frontmatter: {
                         title: `Markdown File 1`,
-                        date: `2019-01-01`,
-                      },
-                    },
+                        date: `2019-01-01`
+                      }
+                    }
                   },
                   {
                     node: {
                       frontmatter: {
                         title: `Markdown File 2`,
-                        date: null,
-                      },
-                    },
-                  },
-                ],
+                        date: null
+                      }
+                    }
+                  }
+                ]
               },
               {
                 fieldValue: `Author 2`,
@@ -836,14 +836,14 @@ Object {
                     node: {
                       frontmatter: {
                         title: `Markdown File 1`,
-                        date: `2019-01-01`,
-                      },
-                    },
-                  },
-                ],
-              },
-            ],
-          },
+                        date: `2019-01-01`
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
         }
         expect(results.errors).toBeUndefined()
         expect(results.data).toEqual(expected)
@@ -874,47 +874,47 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "group": Array [
-      Object {
-        "edges": Array [
           Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
+            "allMarkdown": Object {
+              "group": Array [
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": null,
+                          "title": "Markdown File 2",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 1",
+                },
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 2",
+                },
+              ],
             },
-          },
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": null,
-                "title": "Markdown File 2",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 1",
-      },
-      Object {
-        "edges": Array [
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 2",
-      },
-    ],
-  },
-}
-`)
+          }
+        `)
       })
 
       it(`handles groups added in inline fragment`, async () => {
@@ -940,47 +940,47 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "group": Array [
-      Object {
-        "edges": Array [
           Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
+            "allMarkdown": Object {
+              "group": Array [
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": null,
+                          "title": "Markdown File 2",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 1",
+                },
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 2",
+                },
+              ],
             },
-          },
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": null,
-                "title": "Markdown File 2",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 1",
-      },
-      Object {
-        "edges": Array [
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 2",
-      },
-    ],
-  },
-}
-`)
+          }
+        `)
       })
 
       it(`handles groups added in nested fragment`, async () => {
@@ -1012,47 +1012,47 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "group": Array [
-      Object {
-        "edges": Array [
           Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
+            "allMarkdown": Object {
+              "group": Array [
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": null,
+                          "title": "Markdown File 2",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 1",
+                },
+                Object {
+                  "edges": Array [
+                    Object {
+                      "node": Object {
+                        "frontmatter": Object {
+                          "date": "2019-01-01",
+                          "title": "Markdown File 1",
+                        },
+                      },
+                    },
+                  ],
+                  "fieldValue": "Author 2",
+                },
+              ],
             },
-          },
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": null,
-                "title": "Markdown File 2",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 1",
-      },
-      Object {
-        "edges": Array [
-          Object {
-            "node": Object {
-              "frontmatter": Object {
-                "date": "2019-01-01",
-                "title": "Markdown File 1",
-              },
-            },
-          },
-        ],
-        "fieldValue": "Author 2",
-      },
-    ],
-  },
-}
-`)
+          }
+        `)
       })
 
       it(`groups null result`, async () => {
@@ -1075,12 +1075,39 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "group": Array [],
-  },
-}
-`)
+          Object {
+            "allMarkdown": Object {
+              "group": Array [],
+            },
+          }
+        `)
+      })
+
+      it(`groups using reserved keywords`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              group(field: frontmatter___tags) {
+                field
+                fieldValue
+              }
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toMatchInlineSnapshot(`
+          Object {
+            "allMarkdown": Object {
+              "group": Array [
+                Object {
+                  "field": "frontmatter.tags",
+                  "fieldValue": "constructor",
+                },
+              ],
+            },
+          }
+        `)
       })
     })
 
@@ -1096,8 +1123,8 @@ Object {
         const results = await runQuery(query)
         const expected = {
           allMarkdown: {
-            distinct: [`Markdown File 1`, `Markdown File 2`],
-          },
+            distinct: [`Markdown File 1`, `Markdown File 2`]
+          }
         }
         expect(results.errors).toBeUndefined()
         expect(results.data).toEqual(expected)
@@ -1114,8 +1141,8 @@ Object {
         const results = await runQuery(query)
         const expected = {
           allMarkdown: {
-            distinct: [`Author 1`, `Author 2`],
-          },
+            distinct: [`Author 1`, `Author 2`]
+          }
         }
         expect(results.errors).toBeUndefined()
         expect(results.data).toEqual(expected)
@@ -1132,14 +1159,14 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "distinct": Array [
-      "2019-01-01T00:00:00.000Z",
-    ],
-  },
-}
-`)
+          Object {
+            "allMarkdown": Object {
+              "distinct": Array [
+                "2019-01-01T00:00:00.000Z",
+              ],
+            },
+          }
+        `)
       })
 
       it(`handles null result`, async () => {
@@ -1157,12 +1184,12 @@ Object {
         const results = await runQuery(query)
         expect(results.errors).toBeUndefined()
         expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "distinct": Array [],
-  },
-}
-`)
+          Object {
+            "allMarkdown": Object {
+              "distinct": Array [],
+            },
+          }
+        `)
       })
     })
   })
@@ -1191,20 +1218,20 @@ Object {
               node: {
                 frontmatter: {
                   anotherField: true,
-                  authorNames: [`Author 1`, `Author 2`],
-                },
-              },
+                  authorNames: [`Author 1`, `Author 2`]
+                }
+              }
             },
             {
               node: {
                 frontmatter: {
                   anotherField: true,
-                  authorNames: [`Author 1`],
-                },
-              },
-            },
-          ],
-        },
+                  authorNames: [`Author 1`]
+                }
+              }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -1220,7 +1247,7 @@ Object {
     `
       const results = await runQuery(query)
       const expected = {
-        allAuthorNames: [`Author 1`, `Author 2`],
+        allAuthorNames: [`Author 1`, `Author 2`]
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -1249,25 +1276,25 @@ Object {
       const results = await runQuery(query)
       expect(results.errors).toBeUndefined()
       expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "nodes": Array [
-      Object {
-        "frontmatter": Object {
-          "reviewer": Object {
-            "name": "Author 2",
+        Object {
+          "allMarkdown": Object {
+            "nodes": Array [
+              Object {
+                "frontmatter": Object {
+                  "reviewer": Object {
+                    "name": "Author 2",
+                  },
+                },
+              },
+              Object {
+                "frontmatter": Object {
+                  "reviewer": null,
+                },
+              },
+            ],
           },
-        },
-      },
-      Object {
-        "frontmatter": Object {
-          "reviewer": null,
-        },
-      },
-    ],
-  },
-}
-`)
+        }
+      `)
     })
 
     it(`with defined field mappings`, async () => {
@@ -1287,25 +1314,25 @@ Object {
       const results = await runQuery(query)
       expect(results.errors).toBeUndefined()
       expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "nodes": Array [
-      Object {
-        "frontmatter": Object {
-          "reviewerByEmail": Object {
-            "name": "Author 2",
+        Object {
+          "allMarkdown": Object {
+            "nodes": Array [
+              Object {
+                "frontmatter": Object {
+                  "reviewerByEmail": Object {
+                    "name": "Author 2",
+                  },
+                },
+              },
+              Object {
+                "frontmatter": Object {
+                  "reviewerByEmail": null,
+                },
+              },
+            ],
           },
-        },
-      },
-      Object {
-        "frontmatter": Object {
-          "reviewerByEmail": null,
-        },
-      },
-    ],
-  },
-}
-`)
+        }
+      `)
     })
   })
 
@@ -1328,16 +1355,16 @@ Object {
           nodes: [
             {
               frontmatter: {
-                title: `Markdown File 1`,
-              },
+                title: `Markdown File 1`
+              }
             },
             {
               frontmatter: {
-                title: `Markdown File 2`,
-              },
-            },
-          ],
-        },
+                title: `Markdown File 2`
+              }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -1361,16 +1388,16 @@ Object {
           nodes: [
             {
               frontmatter: {
-                title: `Markdown File 2`,
-              },
+                title: `Markdown File 2`
+              }
             },
             {
               frontmatter: {
-                title: `Markdown File 1`,
-              },
-            },
-          ],
-        },
+                title: `Markdown File 1`
+              }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -1398,21 +1425,21 @@ Object {
             {
               parent: {
                 internal: {
-                  type: `SecondParent`,
-                },
+                  type: `SecondParent`
+                }
               },
-              name: `Child 2`,
+              name: `Child 2`
             },
             {
               parent: {
                 internal: {
-                  type: `FirstParent`,
-                },
+                  type: `FirstParent`
+                }
               },
-              name: `Child 1`,
-            },
-          ],
-        },
+              name: `Child 1`
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -1441,24 +1468,24 @@ Object {
               children: [
                 {
                   internal: {
-                    type: `Child`,
-                  },
-                },
+                    type: `Child`
+                  }
+                }
               ],
-              name: `Parent 3`,
+              name: `Parent 3`
             },
             {
               children: [
                 {
                   internal: {
-                    type: `FirstChild`,
-                  },
-                },
+                    type: `FirstChild`
+                  }
+                }
               ],
-              name: `Parent 1`,
-            },
-          ],
-        },
+              name: `Parent 1`
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -1488,26 +1515,26 @@ Object {
                 title: `Markdown File 1`,
                 authors: [
                   {
-                    name: `Author 1`,
+                    name: `Author 1`
                   },
                   {
-                    name: `Author 2`,
-                  },
-                ],
-              },
+                    name: `Author 2`
+                  }
+                ]
+              }
             },
             {
               frontmatter: {
                 title: `Markdown File 2`,
                 authors: [
                   {
-                    name: `Author 1`,
-                  },
-                ],
-              },
-            },
-          ],
-        },
+                    name: `Author 1`
+                  }
+                ]
+              }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
@@ -1535,19 +1562,19 @@ Object {
             {
               frontmatter: {
                 title: `Markdown File 2`,
-                reviewer: null,
-              },
+                reviewer: null
+              }
             },
             {
               frontmatter: {
                 title: `Markdown File 1`,
                 reviewer: {
-                  name: `Author 2`,
-                },
-              },
-            },
-          ],
-        },
+                  name: `Author 2`
+                }
+              }
+            }
+          ]
+        }
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)

@@ -208,7 +208,7 @@ export default function({ types: t }) {
               )
               path.unshiftContainer(`body`, importDeclaration)
             }
-          },
+          }
         }
 
         const nestedHookVisitor = {
@@ -260,7 +260,7 @@ export default function({ types: t }) {
               )
               path.unshiftContainer(`body`, importDeclaration)
             }
-          },
+          }
         }
 
         const tagsToRemoveImportsFrom = new Set()
@@ -296,14 +296,14 @@ export default function({ types: t }) {
           // modify StaticQuery elements and import data only if query is inside StaticQuery
           parent.traverse(nestedJSXVistor, {
             queryHash,
-            query,
+            query
           })
 
           // modify useStaticQuery elements and import data only if query is inside useStaticQuery
           parent.traverse(nestedHookVisitor, {
             queryHash,
             query,
-            templatePath,
+            templatePath
           })
 
           return null
@@ -340,17 +340,17 @@ export default function({ types: t }) {
                             varPath.traverse({
                               TaggedTemplateExpression(templatePath) {
                                 setImportForStaticQuery(templatePath)
-                              },
+                              }
                             })
                           }
-                        },
+                        }
                       })
                     }
-                  },
+                  }
                 })
-              },
+              }
             })
-          },
+          }
         })
 
         function followVariableDeclarations(binding) {
@@ -389,16 +389,16 @@ export default function({ types: t }) {
 
               if (binding) {
                 followVariableDeclarations(binding).path.traverse({
-                  TaggedTemplateExpression,
+                  TaggedTemplateExpression
                 })
               }
             }
 
             hookPath.traverse({
               // Assume the query is inline in the component and extract that.
-              TaggedTemplateExpression,
+              TaggedTemplateExpression
             })
-          },
+          }
         })
 
         // Run it again to remove non-staticquery versions
@@ -420,12 +420,12 @@ export default function({ types: t }) {
             // Replace the query with the hash of the query.
             path2.replaceWith(t.StringLiteral(queryHash))
             return null
-          },
+          }
         })
 
         tagsToRemoveImportsFrom.forEach(removeImport)
-      },
-    },
+      }
+    }
   }
 }
 
@@ -433,5 +433,5 @@ export {
   getGraphQLTag,
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
-  GraphQLSyntaxError,
+  GraphQLSyntaxError
 }

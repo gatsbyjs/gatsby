@@ -52,7 +52,7 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 Install with npm:
 
 ```shell
-npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
@@ -73,11 +73,11 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
-        path: `${__dirname}/src/pages/`,
-      },
+        path: `${__dirname}/src/pages/`
+      }
     },
-    `gatsby-plugin-mdx`,
-  ],
+    `gatsby-plugin-mdx`
+  ]
 }
 ```
 
@@ -99,17 +99,17 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
-        path: `${__dirname}/src/posts/`,
-      },
+        path: `${__dirname}/src/posts/`
+      }
     },
     {
       resolve: "gatsby-plugin-page-creator",
       options: {
-        path: `${__dirname}/src/posts`,
-      },
+        path: `${__dirname}/src/posts`
+      }
     },
-    `gatsby-plugin-mdx`,
-  ],
+    `gatsby-plugin-mdx`
+  ]
 }
 ```
 
@@ -143,10 +143,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        extensions: [`.mdx`, `.md`],
-      },
-    },
-  ],
+        extensions: [`.mdx`, `.md`]
+      }
+    }
+  ]
 }
 ```
 
@@ -165,32 +165,32 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
-        path: `${__dirname}/src/pages/`,
-      },
+        path: `${__dirname}/src/pages/`
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
-        path: `${__dirname}/src/posts/`,
-      },
+        path: `${__dirname}/src/posts/`
+      }
     },
     {
       resolve: "gatsby-plugin-page-creator",
       options: {
-        path: `${__dirname}/src/posts`,
-      },
+        path: `${__dirname}/src/posts`
+      }
     },
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
         defaultLayouts: {
           posts: require.resolve("./src/components/posts-layout.js"),
-          default: require.resolve("./src/components/default-page-layout.js"),
-        },
-      },
-    },
-  ],
+          default: require.resolve("./src/components/default-page-layout.js")
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -236,7 +236,7 @@ use one layout for all MDX pages that don't already have a layout defined.
 ```js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby MDX Kitchen Sink`,
+    title: `Gatsby MDX Kitchen Sink`
   },
   plugins: [
     {
@@ -244,24 +244,24 @@ module.exports = {
       options: {
         defaultLayouts: {
           posts: require.resolve("./src/components/posts-layout.js"),
-          default: require.resolve("./src/components/default-page-layout.js"),
-        },
-      },
+          default: require.resolve("./src/components/default-page-layout.js")
+        }
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
-        path: `${__dirname}/src/posts/`,
-      },
+        path: `${__dirname}/src/posts/`
+      }
     },
     {
       resolve: "gatsby-plugin-page-creator",
       options: {
-        path: `${__dirname}/src/posts`,
-      },
-    },
-  ],
+        path: `${__dirname}/src/posts`
+      }
+    }
+  ]
 }
 ```
 
@@ -335,6 +335,7 @@ images can be optimized by Gatsby and you should continue using it.
 // gatsby-config.js
 module.exports = {
   plugins: [
+    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -342,13 +343,13 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 590,
-            },
-          },
-        ],
-      },
-    },
-  ],
+              maxWidth: 590
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
 ```
 
@@ -357,6 +358,8 @@ Using a string reference is also supported for `gatsbyRemarkPlugins`.
 ```js
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
 ```
+
+> Note that in the case of `gatsby-remark-images` the plugin needs to be included as both a sub-plugin of gatsby-plugin-mdx and a string entry in the plugins array.
 
 #### Remark plugins
 
@@ -373,10 +376,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        remarkPlugins: [require("remark-abbr")],
-      },
-    },
-  ],
+        remarkPlugins: [require("remark-abbr")]
+      }
+    }
+  ]
 }
 ```
 
@@ -395,10 +398,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        rehypePlugins: [require("rehype-slug")],
-      },
-    },
-  ],
+        rehypePlugins: [require("rehype-slug")]
+      }
+    }
+  ]
 }
 ```
 
@@ -415,10 +418,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        mediaTypes: [`text/markdown`, `text/x-markdown`],
-      },
-    },
-  ],
+        mediaTypes: [`text/markdown`, `text/x-markdown`]
+      }
+    }
+  ]
 }
 ```
 
@@ -446,10 +449,10 @@ module.exports = {
             (node.internal.type === `File` &&
               path.parse(node.dir).dir.endsWith(`packages`))
           )
-        },
-      },
-    },
-  ],
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -476,7 +479,7 @@ const MyParagraph = props => <p style={{ fontSize: "18px", lineHeight: 1.6 }} />
 
 const components = {
   h1: MyH1,
-  p: MyParagraph,
+  p: MyParagraph
 }
 
 export const wrapRootElement = ({ element }) => (
@@ -557,6 +560,22 @@ export const pageQuery = graphql`
     }
   }
 `
+```
+
+## Troubleshooting
+
+### Excerpts for non-latin languages
+
+By default, `excerpt` uses `underscore.string/prune` which doesn't handle non-latin characters ([https://github.com/epeli/underscore.string/issues/418](https://github.com/epeli/underscore.string/issues/418)).
+
+If that is the case, you can set `truncate` option on `excerpt` field, like:
+
+```graphql
+{
+  markdownRemark {
+    excerpt(truncate: true)
+  }
+}
 ```
 
 ## License

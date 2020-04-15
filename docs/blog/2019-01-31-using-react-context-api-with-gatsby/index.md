@@ -37,7 +37,7 @@ import React from "react"
 
 const defaultState = {
   dark: false,
-  toggleDark: () => {},
+  toggleDark: () => {}
 }
 
 const ThemeContext = React.createContext(defaultState)
@@ -49,7 +49,7 @@ const supportsDarkMode = () =>
 
 class ThemeProvider extends React.Component {
   state = {
-    dark: false,
+    dark: false
   }
 
   toggleDark = () => {
@@ -75,7 +75,7 @@ class ThemeProvider extends React.Component {
       <ThemeContext.Provider
         value={{
           dark,
-          toggleDark: this.toggleDark,
+          toggleDark: this.toggleDark
         }}
       >
         {children}
@@ -118,7 +118,7 @@ The `ThemeProvider` component exported from the `ThemeContext.js` file wraps the
 The default `layout.js` uses a `<staticQuery>` and renderProp to render the layout, which is wrapped by a Fragment `<>`. Modify it to look like this:
 
 ```jsx:title=src/components/layout.js
-import React from 'react'
+import * as React from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 
@@ -192,14 +192,14 @@ const Header = ({ siteTitle }) => (
       <div
         style={{
           background: `rebeccapurple`,
-          marginBottom: `1.45rem`,
+          marginBottom: `1.45rem`
         }}
       >
         <div
           style={{
             margin: `0 auto`,
             maxWidth: 960,
-            padding: `1.45rem 1.0875rem`,
+            padding: `1.45rem 1.0875rem`
           }}
         >
           <h1 style={{ margin: 0 }}>
@@ -207,7 +207,7 @@ const Header = ({ siteTitle }) => (
               to="/"
               style={{
                 color: `white`,
-                textDecoration: `none`,
+                textDecoration: `none`
               }}
             >
               {siteTitle}
@@ -223,11 +223,11 @@ const Header = ({ siteTitle }) => (
 )
 
 Header.propTypes = {
-  siteTitle: PropTypes.string,
+  siteTitle: PropTypes.string
 }
 
 Header.defaultProps = {
-  siteTitle: ``,
+  siteTitle: ``
 }
 
 export default Header

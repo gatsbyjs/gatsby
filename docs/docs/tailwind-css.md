@@ -54,7 +54,7 @@ Create a `postcss.config.js` in your project's root folder with the following co
 
 ```javascript:title=postcss.config.js
 module.exports = () => ({
-  plugins: [require("tailwindcss")],
+  plugins: [require("tailwindcss")]
 })
 ```
 
@@ -66,7 +66,7 @@ To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documen
 
 ### Option #2: CSS-in-JS
 
-These steps assume you have a CSS-in-JS library already installed, and the examples are based on Styled Components.
+These steps assume you have a CSS-in-JS library already installed, and the examples are based on Emotion.
 
 1. Install Tailwind Babel Macro
 
@@ -90,7 +90,7 @@ import "tailwindcss/dist/base.css"
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-emotion`],
+  plugins: [`gatsby-plugin-emotion`]
 }
 ```
 
@@ -108,7 +108,7 @@ npm install tailwind.macro
 2. Use the Babel Macro (`tailwind.macro`) in your styled component
 
 ```javascript
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import tw from "tailwind.macro"
 
 // All versions

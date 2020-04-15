@@ -81,7 +81,7 @@ defined here.
 
 # Drawbacks
 
-Why should we *not* do this? Please consider:
+Why should we _not_ do this? Please consider:
 
 - implementation cost, both in term of code size and complexity
 - whether the proposed feature can be implemented in user space
@@ -161,7 +161,7 @@ This will spell out the process for an RFC, specifically:
 1. **Why** to submit an RFC
 1. **How** to submit an RFC
 1. The lifecycle of an RFC, e.g. when an RFC can be closed, merged, etc.
-1. The expectations around an RFC, e.g. the open-source team will have final approval (as with existing pull requests) but will solicit the community's feedback 
+1. The expectations around an RFC, e.g. the open-source team will have final approval (as with existing pull requests) but will solicit the community's feedback
 
 # How we teach this
 
@@ -170,7 +170,7 @@ We will refer Gatsby developers to the aforementioned guide which will be source
 # Unresolved questions
 
 1. When can an RFC be closed/merged?
-    - My proposal: _ideally_ an RFC is merged alongside the implementation
-    - If a separate author implements the RFC, the RFC can be closed when the pull request is opened closing the RFC
+   - My proposal: _ideally_ an RFC is merged alongside the implementation
+   - If a separate author implements the RFC, the RFC can be closed when the pull request is opened closing the RFC
 1. Does an RFC start as an issue? Or a PR?
-    - An RFC _may_ implement an existing issue, but it does not *need* to
+   - An RFC _may_ implement an existing issue, but it does not _need_ to

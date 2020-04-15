@@ -81,13 +81,13 @@ You can specify a `trigger` function that will handle the animation. This is use
     length: length,
     // highlight-next-line
     trigger: ({ exit, node }) =>
-      this.someCustomDefinedAnimation({ exit, node, direction: "out" }),
+      this.someCustomDefinedAnimation({ exit, node, direction: "out" })
   }}
   entry={{
     length: 0,
     // highlight-next-line
     trigger: ({ exit, node }) =>
-      this.someCustomDefinedAnimation({ exit, node, direction: "in" }),
+      this.someCustomDefinedAnimation({ exit, node, direction: "in" })
   }}
   {...props}
 >
@@ -159,7 +159,7 @@ module.exports = {
 ];
 ```
 
-As always, check out [the installation docs](https://transitionlink.tylerbarnes.ca/docs/transitionportal/) for more information.
+As always, check out [the installation docs](https://transitionlink.tylerbarnes.ca/docs/installation/) for more information.
 
 ## Further reading
 

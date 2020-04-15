@@ -20,8 +20,8 @@ The first step in displaying the description will be ensuring you have one to be
 module.exports = {
   siteMetadata: {
     title: "My Homepage",
-    description: "This is where I write my thoughts.",
-  },
+    description: "This is where I write my thoughts."
+  }
 }
 ```
 
@@ -44,7 +44,7 @@ export default HomePage
 The first thing to do is import `graphql` from Gatsby. At the top of `index.js` add:
 
 ```diff:title=src/pages/index.js
-import React from 'react'
+import * as React from 'react'
 + import { graphql } from 'gatsby'
 
 const HomePage = () => {
@@ -100,7 +100,7 @@ To start, update the `HomePage` component to destructure `data` from props.
 The `data` prop contains the results of the GraphQL query, and matches the shape you would expect. With this in mind, the updated `HomePage` markup looks like:
 
 ```diff:title=src/pages/index.js
-import React from 'react'
+import * as React from 'react'
 import { graphql } from 'gatsby'
 
 - const HomePage = () => {
@@ -186,8 +186,8 @@ posts.forEach(({ node }, index) => {
     component: path.resolve(`./src/templates/blog-post.js`),
     // values in the context object are passed in as variables to page queries
     context: {
-      title: node.title, // "Using a Theme"
-    },
+      title: node.title // "Using a Theme"
+    }
   })
 })
 ```

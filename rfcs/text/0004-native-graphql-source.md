@@ -6,8 +6,8 @@
 
 This RFCs proposes the way to add third-party GraphQL schemas into Gatsby core schema. In addition to a low-level API to add schemas to be stitched, it describes a higher-level API/plugin to integrate third-party APIs into your Gatsby API.
 
-* [Implementation](https://github.com/gatsbyjs/gatsby/tree/graphql/schema-stitching)
-* [Simple example project](https://github.com/freiksenet/gatsby-github-displayer)
+- [Implementation](https://github.com/gatsbyjs/gatsby/tree/graphql/schema-stitching)
+- [Simple example project](https://github.com/freiksenet/gatsby-github-displayer)
 
 # Basic example
 
@@ -113,21 +113,21 @@ Adds a schema to third-party schema list. At schema creation time all the schema
 
 This is a higher level plugin. Instead of just merging a schema, it allows a more simple way of merging an third-party GraphQL API into the Gatsby schema. It also handles namespacing, both on type and field level. Features:
 
-* Merge in a GraphQL Schema from an API. Schema can be automatically introspected or provided through a callback.
-* In case of introspection, schema is cached.
-* Connection parameters can provided both in simplified form (`url` and `params`) or by providing a callback that creates `apollo-link`
-* Namespace all types in the schema
-* Put schema's Query type under a specified `fieldName` as an object type with a `typeName`. This means the third-party schema won't be pollute the main Gatsby namespace or conflict with it.
+- Merge in a GraphQL Schema from an API. Schema can be automatically introspected or provided through a callback.
+- In case of introspection, schema is cached.
+- Connection parameters can provided both in simplified form (`url` and `params`) or by providing a callback that creates `apollo-link`
+- Namespace all types in the schema
+- Put schema's Query type under a specified `fieldName` as an object type with a `typeName`. This means the third-party schema won't be pollute the main Gatsby namespace or conflict with it.
 
 ### Options
 
-* `typeName: string` (required) - type to put third-party schema's Query type into
-* `fieldName: string` (required) - field into which Gatsby's third-party API will be added
-* `url: string?` - url of a third-party service
-* `headers: object?` - headers to add to the request
-* `fetchOptions: object?` - additional `node-fetch` options
-* `createLink: (options: object) => ApolloLink` - a callback that will create an ApolloLink instance that should query the third-party API. An escape hatch that overrides `url`, `headers` and `fetchOptions` parameters above and allows complex logic for eg authorization
-* `createSchema: (options: object) => GraphQLSchema` - callback that will create a GraphQLSchema of a third-party API. Resolvers are going to be ignored. This allows not using introspection (eg if it's disabled) or to customize third-party schema before passing it to stitching
+- `typeName: string` (required) - type to put third-party schema's Query type into
+- `fieldName: string` (required) - field into which Gatsby's third-party API will be added
+- `url: string?` - url of a third-party service
+- `headers: object?` - headers to add to the request
+- `fetchOptions: object?` - additional `node-fetch` options
+- `createLink: (options: object) => ApolloLink` - a callback that will create an ApolloLink instance that should query the third-party API. An escape hatch that overrides `url`, `headers` and `fetchOptions` parameters above and allows complex logic for eg authorization
+- `createSchema: (options: object) => GraphQLSchema` - callback that will create a GraphQLSchema of a third-party API. Resolvers are going to be ignored. This allows not using introspection (eg if it's disabled) or to customize third-party schema before passing it to stitching
 
 Either `url` or `createLink` must be specified. If no `createSchema` is passed, third-party schema must support introspection.
 

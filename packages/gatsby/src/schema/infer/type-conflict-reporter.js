@@ -8,12 +8,12 @@ export type TypeConflictExample = {
   value: mixed,
   parent: {},
   type: string,
-  arrayTypes: string[],
+  arrayTypes: string[]
 }
 
 type TypeConflict = {
   value: mixed,
-  description: string,
+  description: string
 }
 
 const isNodeWithDescription = node =>
@@ -35,7 +35,7 @@ const formatValue = value => {
     return util.inspect(value, {
       colors: true,
       depth: 0,
-      breakLength: Infinity,
+      breakLength: Infinity
     })
   }
 
@@ -79,7 +79,7 @@ class TypeConflictEntry {
   addExample({ value, type, parent }: TypeConflictExample) {
     this.types.set(type, {
       value,
-      description: findNodeDescription(parent),
+      description: findNodeDescription(parent)
     })
   }
 

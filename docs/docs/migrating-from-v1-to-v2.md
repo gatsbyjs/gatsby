@@ -353,8 +353,8 @@ module.exports = () => ({
     postcssImport(),
     postcssCssNext(),
     postcssBrowserReporter(),
-    postcssReporter(),
-  ],
+    postcssReporter()
+  ]
 })
 ```
 
@@ -495,7 +495,7 @@ Here's a more complex example of migrating a `<PrivateRoute>` component (used
 in store.gatsbyjs.org) from React Router to @reach/router.
 
 ```diff
- import React from 'react';
+ import * as React from 'react';
 -import { Redirect, Route } from 'react-router-dom';
 +import { Router, navigate } from '@reach/router';
  import { isAuthenticated } from '../../utils/auth';
@@ -549,7 +549,7 @@ If you were using `replaceRouterComponent` for this, you'll need to migrate to
 `wrapRootElement`:
 
 ```diff
-import React from 'react'
+import * as React from 'react'
 import { Provider } from 'react-redux'
 -import { Router } from 'react-router-dom'
 
@@ -685,7 +685,7 @@ const processRule = rule => {
   if (rule.oneOf) {
     return {
       ...rule,
-      oneOf: rule.oneOf.map(processRule),
+      oneOf: rule.oneOf.map(processRule)
     }
   }
 
@@ -706,10 +706,10 @@ const processRule = rule => {
           ...use,
           options: {
             ...use.options,
-            camelCase: false,
-          },
+            camelCase: false
+          }
         }
-      }),
+      })
     }
   }
 
@@ -723,8 +723,8 @@ exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
     ...config,
     module: {
       ...config.module,
-      rules: config.module.rules.map(processRule),
-    },
+      rules: config.module.rules.map(processRule)
+    }
   }
   actions.replaceWebpackConfig(newConfig)
 }
@@ -739,10 +739,10 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       cssLoaderOptions: {
-        camelCase: false,
-      },
-    },
-  },
+        camelCase: false
+      }
+    }
+  }
 ]
 ```
 

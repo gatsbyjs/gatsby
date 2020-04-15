@@ -12,16 +12,16 @@ As an example consider the following code snippet in a `gatsby-node.js` file:
 const { createFilePath } = require("gatsby-source-filesystem")
 
 exports.onCreateNode = args => {
-  const { actions, Node } = args
+  const { actions, node } = args
 
-  if (Node.internal.type === "MarkdownRemark") {
+  if (node.internal.type === "MarkdownRemark") {
     const { createNodeField } = actions
 
     const value = createFilePath({ node, getNode })
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value
     })
   }
 }
@@ -47,15 +47,15 @@ const { createFilePath } = require("gatsby-source-filesystem")
 
 exports.onCreateNode = args => {
   console.log(args) // highlight-line
-  const { actions, Node } = args
-  if (Node.internal.type === "MarkdownRemark") {
+  const { actions, node } = args
+  if (node.internal.type === "MarkdownRemark") {
     const { createNodeField } = actions
 
     const value = createFilePath({ node, getNode })
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value
     })
   }
 }

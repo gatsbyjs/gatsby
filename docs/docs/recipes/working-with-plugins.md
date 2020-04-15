@@ -38,11 +38,11 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
+        path: `${__dirname}/src/images`
+      }
+    }
     // highlight-end
-  ],
+  ]
 }
 ```
 
@@ -58,6 +58,11 @@ _The instructions found in the README of the plugin you're using can you help yo
 ## Creating a new plugin using a plugin starter
 
 If you want to create your own plugin you can get started with the Gatsby plugin starter.
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-get-started-writing-a-gatsby-plugin-using-the-plugin-starter"
+  lessonTitle="Get started writing a Gatsby plugin using the plugin starter"
+/>
 
 ### Prerequisites
 
@@ -92,8 +97,8 @@ my-plugin
 ```javascript:title=gatsby-site/gatsby-config.js
 module.exports = {
   plugins: [
-    require.resolve(`../my-plugin), // highlight-line
-  ],
+    require.resolve(`../my-plugin`) // highlight-line
+  ]
 }
 ```
 
