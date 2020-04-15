@@ -1,13 +1,14 @@
-const { Actions } = require(`../constants`)
+import { ActionsUnion, IGatsbyCLIState, ISetLogs } from "./types"
+import { Actions } from "../constants"
 
-module.exports = (
-  state = {
+export const reducer = (
+  state: IGatsbyCLIState = {
     messages: [],
     activities: {},
     status: ``,
   },
-  action
-) => {
+  action: ActionsUnion | ISetLogs
+): IGatsbyCLIState => {
   switch (action.type) {
     case Actions.SetStatus: {
       return {
@@ -96,5 +97,6 @@ module.exports = (
       return action.payload
     }
   }
+
   return state
 }
