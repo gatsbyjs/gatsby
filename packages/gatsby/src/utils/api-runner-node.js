@@ -242,8 +242,30 @@ const apisRunningById = new Map()
 const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
-module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
-  new Promise(resolve => {
+let stopRunnerForDeletedPageMap
+function setupDeletedPageStopper() {
+  if (stopRunnerForDeletedPageMap) {
+    return
+  }
+
+  // Create a hash which is a lookup table for payloads for createPage runs
+  // If a page gets deleted while still in flight, this map will hold its
+  // path and a toggle, which can then be flipped.
+  // Before this was added, it would call `emitter.on()` and `emitter.off()`
+  // for every individual page, which led to significant overhead at scale.
+
+  stopRunnerForDeletedPageMap = new Map()
+  emitter.on(`DELETE_PAGE`, action => {
+    const obj = stopRunnerForDeletedPageMap.get(action?.payload?.path)
+    if (obj) {
+      obj.stop = true
+    }
+  })
+}
+
+module.exports = async (api, args = {}, { pluginSource, activity } = {}) => {
+  setupDeletedPageStopper()
+  return new Promise(resolve => {
     const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
@@ -312,23 +334,14 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       apisRunningByTraceId.set(apiRunInstance.traceId, 1)
     }
 
-    let stopQueuedApiRuns = false
-    let onAPIRunComplete = null
+    let stopQueuedApiRuns
     if (api === `onCreatePage`) {
-      const path = args.page.path
-      const actionHandler = action => {
-        if (action.payload.path === path) {
-          stopQueuedApiRuns = true
-        }
-      }
-      emitter.on(`DELETE_PAGE`, actionHandler)
-      onAPIRunComplete = () => {
-        emitter.off(`DELETE_PAGE`, actionHandler)
-      }
+      stopQueuedApiRuns = { stop: false }
+      stopRunnerForDeletedPageMap.set(args.page.path, stopQueuedApiRuns)
     }
 
     Promise.mapSeries(implementingPlugins, plugin => {
-      if (stopQueuedApiRuns) {
+      if (stopQueuedApiRuns?.stop) {
         return null
       }
 
@@ -386,8 +399,9 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
         return null
       })
     }).then(results => {
-      if (onAPIRunComplete) {
-        onAPIRunComplete()
+      if (stopQueuedApiRuns) {
+        stopRunnerForDeletedPageMap.delete(args.page.path)
+        stopQueuedApiRuns = undefined
       }
       // Remove runner instance
       apisRunningById.delete(apiRunInstance.id)
@@ -425,3 +439,4 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       return
     })
   })
+}
