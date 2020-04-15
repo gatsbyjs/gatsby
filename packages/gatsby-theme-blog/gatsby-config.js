@@ -1,4 +1,5 @@
 module.exports = options => {
+  let {disableThemeUiStyling = false} = options
   return {
     plugins: [
       {
