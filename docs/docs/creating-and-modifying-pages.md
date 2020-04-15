@@ -125,7 +125,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
   const queryResults = await graphql(`
     query AllProducts {
-      AllProducts {
+      allProducts {
         nodes {
           id
           name
