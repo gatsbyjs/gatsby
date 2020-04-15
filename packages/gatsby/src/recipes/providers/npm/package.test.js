@@ -1,4 +1,3 @@
-const pkgDir = require(`pkg-dir`)
 const os = require(`os`)
 const path = require(`path`)
 const uuid = require(`uuid`)

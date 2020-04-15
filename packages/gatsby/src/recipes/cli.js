@@ -177,8 +177,9 @@ const components = {
         flexDirection="row"
         textWrap="wrap"
         {...props}
-        children={children}
-      />
+      >
+        {children}
+      </Box>
     )
   },
   ul: props => <Div marginBottom={1}>{props.children}</Div>,
@@ -242,7 +243,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
     })
 
     const RecipeInterpreter = () => {
-      const [lastKeyPress, setLastKeyPress] = useState(``)
+      // eslint-disable-next-line
       const [localRecipe, setRecipe] = useState(recipe)
       const { exit } = useApp()
 
@@ -258,11 +259,13 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         },
         (_prev, now) => now
       )
+      // eslint-disable-next-line
       const [_, createOperation] = useMutation(`
         mutation ($recipePath: String!, $projectRoot: String!) {
           createOperation(recipePath: $recipePath, projectRoot: $projectRoot)
         }
       `)
+      // eslint-disable-next-line
       const [__, sendEvent] = useMutation(`
         mutation($event: String!) {
           sendEvent(event: $event)
@@ -290,7 +293,6 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         if (showRecipesList) {
           return
         }
-        setLastKeyPress(key)
         if (key.return && state && state.value === `SUCCESS`) {
           subscriptionClient.close()
           exit()
@@ -321,8 +323,6 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
                 } catch (e) {
                   log(`error creating operation`, e)
                 }
-                log(`sent recipe`)
-                // setRecipe(recipeItem.value)
               }}
             />
           </>
@@ -442,40 +442,40 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
       const Error = ({ state }) => {
         log(`errors`, state)
         if (state && state.context && state.context.error) {
-          if (false) {
-            return (
-              <Div>
-                <Color marginBottom={1} red>
-                  The following resources failed validation
-                </Color>
-                {state.context.error.map((err, i) => {
-                  log(`recipe er`, { err })
-                  return (
-                    <Div key={`error-box-${i}`}>
-                      <Text>Type: {err.resource}</Text>
-                      <Text>
-                        Resource:{` `}
-                        {JSON.stringify(err.resourceDeclaration, null, 4)}
-                      </Text>
-                      <Text>Recipe step: {err.step}</Text>
-                      <Text>
-                        Error{err.validationError.details.length > 1 && `s`}:
-                      </Text>
-                      {err.validationError.details.map((d, v) => (
-                        <Text key={`validation-error-${v}`}>
-                          {` `}‣ {d.message}
-                        </Text>
-                      ))}
-                    </Div>
-                  )
-                })}
-              </Div>
-            )
-          } else {
-            return (
-              <Color red>{JSON.stringify(state.context.error, null, 2)}</Color>
-            )
-          }
+          // if (false) {
+          // return (
+          // <Div>
+          // <Color marginBottom={1} red>
+          // The following resources failed validation
+          // </Color>
+          // {state.context.error.map((err, i) => {
+          // log(`recipe er`, { err })
+          // return (
+          // <Div key={`error-box-${i}`}>
+          // <Text>Type: {err.resource}</Text>
+          // <Text>
+          // Resource:{` `}
+          // {JSON.stringify(err.resourceDeclaration, null, 4)}
+          // </Text>
+          // <Text>Recipe step: {err.step}</Text>
+          // <Text>
+          // Error{err.validationError.details.length > 1 && `s`}:
+          // </Text>
+          // {err.validationError.details.map((d, v) => (
+          // <Text key={`validation-error-${v}`}>
+          // {` `}‣ {d.message}
+          // </Text>
+          // ))}
+          // </Div>
+          // )
+          // })}
+          // </Div>
+          // )
+          // } else {
+          return (
+            <Color red>{JSON.stringify(state.context.error, null, 2)}</Color>
+          )
+          // }
         }
 
         return null

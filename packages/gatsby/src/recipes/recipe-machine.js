@@ -45,9 +45,9 @@ const recipeMachine = Machine(
             target: `doneError`,
             actions: assign({
               error: (context, event) => {
-                console.log(msg)
+                let msg
                 try {
-                  const msg = JSON.parse(event.data.message)
+                  msg = JSON.parse(event.data.message)
                   return msg
                 } catch (e) {
                   return {
@@ -199,6 +199,7 @@ const recipeMachine = Machine(
             stepResources: stepResources.concat([event.data]),
           }
         }
+        return undefined
       }),
     },
     guards: {

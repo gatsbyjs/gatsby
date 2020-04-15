@@ -7,6 +7,7 @@ const getDiff = require(`../utils/get-diff`)
 const fileExists = filePath => fs.existsSync(filePath)
 
 const relativePathForShadowedFile = ({ theme, filePath }) => {
+  // eslint-disable-next-line
   const [_src, ...filePathParts] = filePath.split(path.sep)
   const relativePath = path.join(`src`, theme, path.join(...filePathParts))
   return relativePath
@@ -35,6 +36,7 @@ const create = async ({ root }, { theme, path: filePath }) => {
 }
 
 const read = async ({ root }, id) => {
+  // eslint-disable-next-line
   const [_src, theme, ..._filePathParts] = id.split(path.sep)
 
   const fullPath = path.join(root, id)
@@ -84,12 +86,14 @@ const message = resource =>
 module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
   let currentResource = ``
   if (!id) {
+    // eslint-disable-next-line
     const [_src, ...filePathParts] = filePath.split(path.sep)
     id = path.join(`src`, theme, path.join(...filePathParts))
   }
 
   currentResource = (await read({ root }, id)) || {}
 
+  // eslint-disable-next-line
   const [_src, _theme, ...shadowPathParts] = id.split(path.sep)
   const fullFilePathToShadow = path.join(
     root,

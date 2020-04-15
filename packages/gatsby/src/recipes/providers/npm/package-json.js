@@ -1,6 +1,5 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const { promisify } = require(`util`)
 const Joi = require(`@hapi/joi`)
 
 const resourceSchema = require(`../resource-schema`)

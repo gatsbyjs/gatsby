@@ -4,7 +4,6 @@ const { GraphQLString, GraphQLObjectType, GraphQLList } = require(`graphql`)
 const _ = require(`lodash`)
 
 const resources = require(`./resources`)
-const resourceSchema = require(`./providers/resource-schema`)
 
 const typeNameToHumanName = name => {
   if (name.endsWith(`Connection`)) {

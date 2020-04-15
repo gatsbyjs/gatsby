@@ -12,12 +12,6 @@ const resourceSchema = require(`../resource-schema`)
 
 const getPackageNames = packages => packages.map(n => `${n.name}@${n.version}`)
 
-const asyncForEach = async (array, callback) => {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array)
-  }
-}
-
 // Generate install commands
 const generateClientComands = ({ packageManager, depType, packageNames }) => {
   let commands = []
@@ -37,6 +31,8 @@ const generateClientComands = ({ packageManager, depType, packageNames }) => {
     }
     return commands.concat(packageNames)
   }
+
+  return undefined
 }
 
 exports.generateClientComands = generateClientComands
@@ -63,7 +59,7 @@ const executeInstalls = async root => {
     packageManager: PACKAGE_MANGER,
   })
 
-  const { stderr, stdout } = await execa(PACKAGE_MANGER, commands, {
+  await execa(PACKAGE_MANGER, commands, {
     cwd: root,
   })
 
@@ -100,13 +96,6 @@ const create = async ({ root }, resource) => {
 
   await createInstall({ root }, value)
   return read({ root }, value.name)
-
-  return new Promise(resolve => {
-    setTimeout(async () => {
-      const resources = await read({ root }, { packages })
-      resolve(resources)
-    }, 1)
-  })
 }
 
 const read = async ({ root }, id) => {
@@ -144,7 +133,7 @@ const validate = resource =>
 exports.validate = validate
 
 const destroy = async ({ root }, resource) => {
-  const { stderr, stdout } = await execa(`yarn`, [`remove`, resource.name], {
+  await execa(`yarn`, [`remove`, resource.name], {
     cwd: root,
   })
   return resource
@@ -159,7 +148,6 @@ module.exports.config = {}
 
 module.exports.plan = async (context, resource) => {
   const {
-    err,
     value: { name, version },
   } = validate(resource)
 
