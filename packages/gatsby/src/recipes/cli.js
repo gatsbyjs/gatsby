@@ -1,23 +1,23 @@
-  import fs from "fs"
+import fs from "fs"
 import lodash from "lodash"
 import React, { useState } from "react"
 import { render, Box, Text, Color, useInput, useApp, Static } from "ink"
 import Spinner from "ink-spinner"
 import Link from "ink-link"
 import MDX from "@mdx-js/runtime"
-const {
+import {
   createClient,
   useMutation,
   useSubscription,
   Provider,
   defaultExchanges,
   subscriptionExchange,
-} = require("urql")
-const { SubscriptionClient } = require("subscriptions-transport-ws")
+} from "urql"
+import { SubscriptionClient } from "subscriptions-transport-ws"
 import fetch from "node-fetch"
 import ws from "ws"
-import SelectInput from 'ink-select-input'
-import Boxen from 'ink-box'
+import SelectInput from "ink-select-input"
+import Boxen from "ink-box"
 
 const MAX_UI_WIDTH = 100
 
@@ -192,11 +192,11 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
-log('butts', '!!!!!!!')
+log(`butts`, `!!!!!!!`)
 
 const PlanContext = React.createContext({})
 
-log('created context', 'ewww')
+log(`created context`, `ewww`)
 
 module.exports = ({ recipe, graphqlPort, projectRoot }) => {
   try {
@@ -268,8 +268,8 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         }
       }
 
-      log('state', subscriptionResponse)
-      log('!!!!!')
+      log(`state`, subscriptionResponse)
+      log(`!!!!!`)
       const state =
         subscriptionResponse.data &&
         JSON.parse(subscriptionResponse.data.operation.state)
@@ -325,9 +325,9 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         )
       }
       /*
-      * TODOs
-      * Listen to "y" to continue (in addition to enter)
-      */
+       * TODOs
+       * Listen to "y" to continue (in addition to enter)
+       */
 
       log(`render`, `${renderCount} ${new Date().toJSON()}`)
       renderCount += 1
@@ -450,7 +450,9 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
                         Error{err.validationError.details.length > 1 && `s`}:
                       </Text>
                       {err.validationError.details.map((d, v) => (
-                        <Text key={`validation-error-${v}`}> ‣ {d.message}</Text>
+                        <Text key={`validation-error-${v}`}>
+                          {` `}‣ {d.message}
+                        </Text>
                       ))}
                     </Div>
                   )
