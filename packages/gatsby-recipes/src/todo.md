@@ -59,7 +59,7 @@ John
 - [x] validate that the first step of recipes don't have any resources. They should just be for the title/description
 - [x] handle not finding a recipe
 - [x] test modifying gatsby-config.js from default starter
-- [ ] get tests passing
+- [x] get tests passing
 - [ ] add emotion screenshot and add to readme
 - [x] make note about using gists for paths and using the "raw" link
 
