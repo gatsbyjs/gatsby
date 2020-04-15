@@ -108,7 +108,7 @@ In the initial approach you have seen how the `gatsby-node.js` file would have a
 ```graphql
   const queryResults = await graphql(`
     query AllProducts {
-      AllProducts {
+      allProducts {
         nodes {
           id
         }
