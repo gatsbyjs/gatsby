@@ -33,7 +33,7 @@ This recipe helps you start developing with the [Theme UI](https://theme-ui.com)
 ",
   "Write out Theme UI configuration files.
 
-<GatsbyShadowFile
+<ShadowFile
   theme=\\"gatsby-plugin-theme-ui\\"
   path=\\"src/gatsby-plugin-theme-ui/index.js\\"
 />
@@ -73,9 +73,9 @@ Add a package.json config object.
 
 exports[`partitions the MDX into steps 1`] = `
 Array [
-  "# Prettier Git Hook
+  "# Automatically run Prettier on Git commits
 
-Make sure all of your code is run through prettier when you commit it to git.
+Make sure all of your code is run through Prettier when you commit it to git.
 We achieve this by configuring prettier to run on git hooks using husky and
 lint-staged.
 ",

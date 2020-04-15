@@ -36,6 +36,15 @@ Object {
     "resolve": [Function],
     "type": "GatsbyPlugin",
   },
+  "gatsbyShadowFile": Object {
+    "args": Object {
+      "id": Object {
+        "type": "String",
+      },
+    },
+    "resolve": [Function],
+    "type": "GatsbyShadowFile",
+  },
   "gitIgnore": Object {
     "args": Object {
       "id": Object {

@@ -58,7 +58,7 @@ Array [
   Object {
     "resource": "File",
     "step": 0,
-    "validationError": "File should not be used in the introduction step",
+    "validationError": "Resources e.g. File should not be placed in the introduction step",
   },
 ]
 `;

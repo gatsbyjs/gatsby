@@ -16,9 +16,7 @@ Object {
   "diff": "[31m- Original  - 1[39m
 [32m+ Modified  + 3[39m
 
-[33m@@ -3,5 +3,7 @@[39m
-[2m      \\"hooks\\": Object {},[22m
-[2m    },[22m
+[2m  Object {[22m
 [2m    \\"name\\": \\"test\\",[22m
 [31m-   \\"scripts\\": Object {},[39m
 [32m+   \\"scripts\\": Object {[39m

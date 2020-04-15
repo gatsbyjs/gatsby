@@ -71,7 +71,7 @@ test(`raises an error if JSX doesn't parse`, async () => {
 `)
   } catch (e) {
     expect(e).toMatchInlineSnapshot(
-      `[Error: {"location":{"line":1,"column":43},"validationError":"Could not parse /"<NPMScript name=/"foo/" command=/"bar/" //""}]`
+      `[Error: {"location":{"line":1,"column":43},"validationError":"Could not parse \\"<NPMScript name=\\"foo\\" command=\\"bar\\" /\\""}]`
     )
   }
 })
