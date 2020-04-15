@@ -7,17 +7,13 @@ import detectPort from "detect-port"
 module.exports = async (program: IProgram): Promise<void> => {
   const recipe = program._[1]
   // We don't really care what port is used for GraphQL as it's
-  // generally only for code 2 code communication or debugging.
+  // generally only for code to code communication or debugging.
   const graphqlPort = await detectPort(4000)
   telemetry.trackCli(`RECIPE_RUN`, { name: recipe })
 
-  // const runRecipe = require(`../recipes/index`)
-  // runRecipe({ recipe, projectRoot: program.directory })
-
   // Start GraphQL serve
-  const scriptPath = path.join(
-    program.directory,
-    `node_modules/gatsby/dist/recipes/graphql.js`
+  const scriptPath = require.resolve(
+    `gatsby-recipes/src/graphql.js`
   )
 
   const subprocess = execa(`node`, [scriptPath, graphqlPort], {
@@ -49,10 +45,9 @@ module.exports = async (program: IProgram): Promise<void> => {
   let started = false
   subprocess.stdout.on(`data`, data => {
     if (!started) {
-      const runRecipe = require(`../recipes`).default
+      const runRecipe = require(`gatsby-recipes/src/index.js`)
       runRecipe({ recipe, graphqlPort, projectRoot: program.directory })
       started = true
     }
   })
-  // Run command
 }

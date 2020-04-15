@@ -1,23 +1,24 @@
-import fs from "fs"
-import lodash from "lodash"
-import React, { useState } from "react"
-import { render, Box, Text, Color, useInput, useApp, Static } from "ink"
-import Spinner from "ink-spinner"
-import Link from "ink-link"
-import MDX from "@mdx-js/runtime"
-import {
+const fs = require(`fs`)
+const lodash = require(`lodash`)
+const Boxen = require(`ink-box`)
+const React = require(`react`)
+const { useState } = require(`react`)
+const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
+const Spinner = require(`ink-spinner`).default
+const Link = require(`ink-link`)
+const MDX = require(`@mdx-js/runtime`)
+const {
   createClient,
   useMutation,
   useSubscription,
   Provider,
   defaultExchanges,
   subscriptionExchange,
-} from "urql"
-import { SubscriptionClient } from "subscriptions-transport-ws"
-import fetch from "node-fetch"
-import ws from "ws"
-import SelectInput from "ink-select-input"
-import Boxen from "ink-box"
+} = require(`urql`)
+const { SubscriptionClient } = require(`subscriptions-transport-ws`)
+const fetch = require(`node-fetch`)
+const ws = require(`ws`)
+const SelectInput = require(`ink-select-input`).default
 
 const MAX_UI_WIDTH = 100
 
@@ -255,6 +256,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         },
         (_prev, now) => now
       )
+
       // eslint-disable-next-line
       const [_, createOperation] = useMutation(`
         mutation ($recipePath: String!, $projectRoot: String!) {
@@ -280,7 +282,6 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
       }
 
       log(`state`, subscriptionResponse)
-      log(`!!!!!`)
       const state =
         subscriptionResponse.data &&
         JSON.parse(subscriptionResponse.data.operation.state)
@@ -512,14 +513,17 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
       )
     }
 
-    const Wrapper = () => (
-      <>
-        <Provider value={client}>
-          <Text>{` `}</Text>
-          <RecipeInterpreter />
-        </Provider>
-      </>
-    )
+    const Wrapper = () => {
+      console.log(`rendering wrapper`)
+      return (
+        <>
+          <Provider value={client}>
+            <Text>{` `}</Text>
+            <RecipeInterpreter />
+          </Provider>
+        </>
+      )
+    }
 
     const Recipe = () => <Wrapper />
 
