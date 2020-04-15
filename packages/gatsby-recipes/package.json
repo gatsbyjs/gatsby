@@ -82,6 +82,13 @@
   "resolutions": {
     "graphql": "^14.6.0"
   },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/.cache/",
+      "dist"
+    ],
+    "testEnvironment": "node"
+  },
   "scripts": {
     "build": "babel src --out-dir dist --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
     "build:watch": "npm run build -- --watch",
