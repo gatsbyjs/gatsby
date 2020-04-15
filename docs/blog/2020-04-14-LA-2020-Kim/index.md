@@ -1,9 +1,8 @@
 ---
-title: 'Gatsby Days LA 2020 Video 10: Teaching Web Development to Beginners with Gatsby'
+title: "Gatsby Days LA 2020 Video 10: Teaching Web Development to Beginners with Gatsby"
 date: 2020-04-14
 author: Greg Thomas
-excerpt: "UC Davis grad student Daniel Kim explains why Gatsby offers a better framework than React for teaching beginning web development
-at Gatsby Days LA 2020."
+excerpt: "UC Davis grad student Daniel Kim explains why Gatsby offers a better framework than React for teaching beginning web development at Gatsby Days LA 2020."
 tags:
   - gatsby-days
   - community
