@@ -157,7 +157,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 Your template file would look like this:
 
-```javascript:tittle=src/templates/product.js
+```javascript:title=src/templates/product.js
 function Product({ pageContext }) {
   return (
     <div>
