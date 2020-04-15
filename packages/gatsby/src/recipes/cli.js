@@ -1,24 +1,23 @@
-const React = require(`react`)
-const fs = require(`fs`)
-const lodash = require(`lodash`)
-const Boxen = require(`ink-box`)
-const { useState } = require(`react`)
-const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
-const Spinner = require(`ink-spinner`).default
-const Link = require(`ink-link`)
-const MDX = require(`@mdx-js/runtime`)
-const {
+import fs from "fs"
+import lodash from "lodash"
+import React, { useState } from "react"
+import { render, Box, Text, Color, useInput, useApp, Static } from "ink"
+import Spinner from "ink-spinner"
+import Link from "ink-link"
+import MDX from "@mdx-js/runtime"
+import {
   createClient,
   useMutation,
   useSubscription,
   Provider,
   defaultExchanges,
   subscriptionExchange,
-} = require(`urql`)
-const { SubscriptionClient } = require(`subscriptions-transport-ws`)
-const fetch = require(`node-fetch`)
-const ws = require(`ws`)
-const SelectInput = require(`ink-select-input`).default
+} from "urql"
+import { SubscriptionClient } from "subscriptions-transport-ws"
+import fetch from "node-fetch"
+import ws from "ws"
+import SelectInput from "ink-select-input"
+import Boxen from "ink-box"
 
 const MAX_UI_WIDTH = 100
 
@@ -205,320 +204,332 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
+log(`butts`, `!!!!!!!`)
+
 const PlanContext = React.createContext({})
 
+log(`created context`, `ewww`)
+
 module.exports = ({ recipe, graphqlPort, projectRoot }) => {
-  const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
+  try {
+    const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
 
-  const subscriptionClient = new SubscriptionClient(
-    `ws://localhost:${graphqlPort}/graphql`,
-    {
-      reconnect: true,
-    },
-    ws
-  )
-
-  let showRecipesList = false
-
-  if (!recipe) {
-    showRecipesList = true
-  }
-
-  const client = createClient({
-    fetch,
-    url: GRAPHQL_ENDPOINT,
-    exchanges: [
-      ...defaultExchanges,
-      subscriptionExchange({
-        forwardSubscription(operation) {
-          return subscriptionClient.request(operation)
-        },
-      }),
-    ],
-  })
-
-  const RecipeInterpreter = () => {
-    const [lastKeyPress, setLastKeyPress] = useState(``)
-    const [localRecipe, setRecipe] = useState(recipe)
-    const { exit } = useApp()
-
-    const [subscriptionResponse] = useSubscription(
+    const subscriptionClient = new SubscriptionClient(
+      `ws://localhost:${graphqlPort}/graphql`,
       {
-        query: `
-        subscription {
-          operation {
-            state
-          }
-        }
-      `,
+        reconnect: true,
       },
-      (_prev, now) => now
+      ws
     )
-    const [_, createOperation] = useMutation(`
-      mutation ($recipePath: String!, $projectRoot: String!) {
-        createOperation(recipePath: $recipePath, projectRoot: $projectRoot)
-      }
-    `)
-    const [__, sendEvent] = useMutation(`
-      mutation($event: String!) {
-        sendEvent(event: $event)
-      }
-    `)
 
-    subscriptionClient.connectionCallback = async () => {
-      if (!showRecipesList) {
-        log(`createOperation`)
-        try {
-          await createOperation({ recipePath: localRecipe, projectRoot })
-        } catch (e) {
-          log(`error creating operation`, e)
-        }
-      }
+    let showRecipesList = false
+
+    if (!recipe) {
+      showRecipesList = true
     }
 
-    const state =
-      subscriptionResponse.data &&
-      JSON.parse(subscriptionResponse.data.operation.state)
-
-    useInput((_, key) => {
-      if (showRecipesList) {
-        return
-      }
-      setLastKeyPress(key)
-      if (key.return && state && state.value === `SUCCESS`) {
-        subscriptionClient.close()
-        exit()
-        process.exit()
-      } else if (key.return) {
-        sendEvent({ event: `CONTINUE` })
-      }
+    const client = createClient({
+      fetch,
+      url: GRAPHQL_ENDPOINT,
+      exchanges: [
+        ...defaultExchanges,
+        subscriptionExchange({
+          forwardSubscription(operation) {
+            return subscriptionClient.request(operation)
+          },
+        }),
+      ],
     })
 
-    log(`subscriptionResponse.data`, subscriptionResponse.data)
+    const RecipeInterpreter = () => {
+      const [lastKeyPress, setLastKeyPress] = useState(``)
+      const [localRecipe, setRecipe] = useState(recipe)
+      const { exit } = useApp()
 
-    if (showRecipesList) {
-      return (
-        <>
-          <WelcomeMessage />
-          <Text bold underline>
-            Select a recipe to run
-          </Text>
-          <RecipesList
-            setRecipe={async recipeItem => {
-              log(`yo`, { recipeItem, projectRoot })
-              showRecipesList = false
-              try {
-                await createOperation({
-                  recipePath: recipeItem.value,
-                  projectRoot,
-                })
-              } catch (e) {
-                log(`error creating operation`, e)
-              }
-              log(`sent recipe`)
-              // setRecipe(recipeItem.value)
-            }}
-          />
-        </>
+      const [subscriptionResponse] = useSubscription(
+        {
+          query: `
+          subscription {
+            operation {
+              state
+            }
+          }
+        `,
+        },
+        (_prev, now) => now
       )
-    }
+      const [_, createOperation] = useMutation(`
+        mutation ($recipePath: String!, $projectRoot: String!) {
+          createOperation(recipePath: $recipePath, projectRoot: $projectRoot)
+        }
+      `)
+      const [__, sendEvent] = useMutation(`
+        mutation($event: String!) {
+          sendEvent(event: $event)
+        }
+      `)
 
-    if (!state) {
-      return (
-        <Text>
-          <Spinner /> Loading recipe
-        </Text>
-      )
-    }
-    /*
-     * TODOs
-     * Listen to "y" to continue (in addition to enter)
-     */
-
-    log(`render`, `${renderCount} ${new Date().toJSON()}`)
-    renderCount += 1
-
-    // If we're done, exit.
-    if (state.value === `done`) {
-      process.nextTick(() => process.exit())
-    }
-    if (state.value === `doneError`) {
-      process.nextTick(() => process.exit())
-    }
-
-    if (process.env.DEBUG) {
-      log(`state`, state)
-      log(`plan`, state.context.plan)
-      log(`stepResources`, state.context.stepResources)
-    }
-
-    const PresentStep = ({ state }) => {
-      const isPlan = state.context.plan && state.context.plan.length > 0
-      const isPresetPlanState = state.value === `present plan`
-      const isRunningStep = state.value === `applyingPlan`
-      const isDone = state.value === `done`
-      const isLastStep =
-        state.context.steps &&
-        state.context.steps.length - 1 === state.context.currentStep
-
-      if (isRunningStep) {
-        return null
+      subscriptionClient.connectionCallback = async () => {
+        if (!showRecipesList) {
+          log(`createOperation`)
+          try {
+            await createOperation({ recipePath: localRecipe, projectRoot })
+          } catch (e) {
+            log(`error creating operation`, e)
+          }
+        }
       }
 
-      if (isDone) {
-        return null
-      }
+      log(`state`, subscriptionResponse)
+      log(`!!!!!`)
+      const state =
+        subscriptionResponse.data &&
+        JSON.parse(subscriptionResponse.data.operation.state)
 
-      // If there's no plan on the last step, just return.
-      if (!isPlan && isLastStep) {
-        process.nextTick(() => process.exit())
-        return null
-      }
+      useInput((_, key) => {
+        if (showRecipesList) {
+          return
+        }
+        setLastKeyPress(key)
+        if (key.return && state && state.value === `SUCCESS`) {
+          subscriptionClient.close()
+          exit()
+          process.exit()
+        } else if (key.return) {
+          sendEvent({ event: `CONTINUE` })
+        }
+      })
 
-      if (!isPlan || !isPresetPlanState) {
+      log(`subscriptionResponse.data`, subscriptionResponse.data)
+
+      if (showRecipesList) {
         return (
-          <Div marginTop={1}>
-            <Color magentaBright>>> Press enter to continue</Color>
+          <>
+            <WelcomeMessage />
+            <Text bold underline>
+              Select a recipe to run
+            </Text>
+            <RecipesList
+              setRecipe={async recipeItem => {
+                log(`yo`, { recipeItem, projectRoot })
+                showRecipesList = false
+                try {
+                  await createOperation({
+                    recipePath: recipeItem.value,
+                    projectRoot,
+                  })
+                } catch (e) {
+                  log(`error creating operation`, e)
+                }
+                log(`sent recipe`)
+                // setRecipe(recipeItem.value)
+              }}
+            />
+          </>
+        )
+      }
+
+      if (!state) {
+        return (
+          <Text>
+            <Spinner /> Loading recipe
+          </Text>
+        )
+      }
+      /*
+       * TODOs
+       * Listen to "y" to continue (in addition to enter)
+       */
+
+      log(`render`, `${renderCount} ${new Date().toJSON()}`)
+      renderCount += 1
+
+      // If we're done, exit.
+      if (state.value === `done`) {
+        process.nextTick(() => process.exit())
+      }
+      if (state.value === `doneError`) {
+        process.nextTick(() => process.exit())
+      }
+
+      if (process.env.DEBUG) {
+        log(`state`, state)
+        log(`plan`, state.context.plan)
+        log(`stepResources`, state.context.stepResources)
+      }
+
+      const PresentStep = ({ state }) => {
+        const isPlan = state.context.plan && state.context.plan.length > 0
+        const isPresetPlanState = state.value === `present plan`
+        const isRunningStep = state.value === `applyingPlan`
+        const isDone = state.value === `done`
+        const isLastStep =
+          state.context.steps &&
+          state.context.steps.length - 1 === state.context.currentStep
+
+        if (isRunningStep) {
+          return null
+        }
+
+        if (isDone) {
+          return null
+        }
+
+        // If there's no plan on the last step, just return.
+        if (!isPlan && isLastStep) {
+          process.nextTick(() => process.exit())
+          return null
+        }
+
+        if (!isPlan || !isPresetPlanState) {
+          return (
+            <Div marginTop={1}>
+              <Color magentaBright>>> Press enter to continue</Color>
+            </Div>
+          )
+        }
+
+        return (
+          <Div>
+            <Div>
+              <Text bold underline marginBottom={2}>
+                Proposed changes
+              </Text>
+            </Div>
+            {state.context.plan.map((p, i) => (
+              <Div marginTop={1} key={`${p.resourceName} plan ${i}`}>
+                <Text italic>{p.resourceName}:</Text>
+                <Text> * {p.describe}</Text>
+                {p.diff && p.diff !== `` && (
+                  <>
+                    <Text>---</Text>
+                    <Text>{p.diff}</Text>
+                    <Text>---</Text>
+                  </>
+                )}
+              </Div>
+            ))}
+            <Div marginTop={1}>
+              <Color magentaBright>>> Press enter to run this step</Color>
+            </Div>
           </Div>
         )
       }
 
-      return (
-        <Div>
+      const RunningStep = ({ state }) => {
+        const isPlan = state.context.plan && state.context.plan.length > 0
+        const isRunningStep = state.value === `applyingPlan`
+
+        if (!isPlan || !isRunningStep) {
+          return null
+        }
+
+        return (
           <Div>
-            <Text bold underline marginBottom={2}>
-              Proposed changes
-            </Text>
+            {state.context.plan.map((p, i) => (
+              <Div key={`${p.resourceName}-${i}`}>
+                <Text italic>{p.resourceName}:</Text>
+                <Text>
+                  {` `}
+                  <Spinner /> {p.describe}
+                </Text>
+              </Div>
+            ))}
           </Div>
-          {state.context.plan.map((p, i) => (
-            <Div marginTop={1} key={`${p.resourceName} plan ${i}`}>
-              <Text italic>{p.resourceName}:</Text>
-              <Text> * {p.describe}</Text>
-              {p.diff && p.diff !== `` && (
-                <>
-                  <Text>---</Text>
-                  <Text>{p.diff}</Text>
-                  <Text>---</Text>
-                </>
-              )}
-            </Div>
-          ))}
-          <Div marginTop={1}>
-            <Color magentaBright>>> Press enter to run this step</Color>
-          </Div>
-        </Div>
-      )
-    }
+        )
+      }
 
-    const RunningStep = ({ state }) => {
-      const isPlan = state.context.plan && state.context.plan.length > 0
-      const isRunningStep = state.value === `applyingPlan`
+      const Error = ({ state }) => {
+        log(`errors`, state)
+        if (state && state.context && state.context.error) {
+          if (false) {
+            return (
+              <Div>
+                <Color marginBottom={1} red>
+                  The following resources failed validation
+                </Color>
+                {state.context.error.map((err, i) => {
+                  log(`recipe er`, { err })
+                  return (
+                    <Div key={`error-box-${i}`}>
+                      <Text>Type: {err.resource}</Text>
+                      <Text>
+                        Resource:{` `}
+                        {JSON.stringify(err.resourceDeclaration, null, 4)}
+                      </Text>
+                      <Text>Recipe step: {err.step}</Text>
+                      <Text>
+                        Error{err.validationError.details.length > 1 && `s`}:
+                      </Text>
+                      {err.validationError.details.map((d, v) => (
+                        <Text key={`validation-error-${v}`}>
+                          {` `}‣ {d.message}
+                        </Text>
+                      ))}
+                    </Div>
+                  )
+                })}
+              </Div>
+            )
+          } else {
+            return (
+              <Color red>{JSON.stringify(state.context.error, null, 2)}</Color>
+            )
+          }
+        }
 
-      if (!isPlan || !isRunningStep) {
         return null
       }
 
+      if (state.value === `doneError`) {
+        return <Error width="100%" state={state} />
+      }
+
       return (
-        <Div>
-          {state.context.plan.map((p, i) => (
-            <Div key={`${p.resourceName}-${i}`}>
-              <Text italic>{p.resourceName}:</Text>
-              <Text>
-                {` `}
-                <Spinner /> {p.describe}
+        <>
+          <Div>
+            <Static>
+              {lodash.flattenDeep(state.context.stepResources).map((r, i) => (
+                <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>
+              ))}
+            </Static>
+          </Div>
+          {state.context.currentStep === 0 && <WelcomeMessage />}
+          {state.context.currentStep > 0 && state.value !== `done` && (
+            <Div>
+              <Text underline bold>
+                Step {state.context.currentStep} /{` `}
+                {state.context.steps.length - 1}
               </Text>
             </Div>
-          ))}
-        </Div>
+          )}
+          <PlanContext.Provider value={{ planForNextStep: state.plan }}>
+            <Div>
+              <MDX components={components}>
+                {state.context.stepsAsMdx[state.context.currentStep]}
+              </MDX>
+            </Div>
+            <PresentStep state={state} />
+            <RunningStep state={state} />
+          </PlanContext.Provider>
+        </>
       )
     }
 
-    const Error = ({ state }) => {
-      log(`errors`, state)
-      if (state && state.context && state.context.error) {
-        if (false) {
-          return (
-            <Div>
-              <Color marginBottom={1} red>
-                The following resources failed validation
-              </Color>
-              {state.context.error.map((err, i) => {
-                log(`recipe er`, { err })
-                return (
-                  <Div key={`error-box-${i}`}>
-                    <Text>Type: {err.resource}</Text>
-                    <Text>
-                      Resource:{` `}
-                      {JSON.stringify(err.resourceDeclaration, null, 4)}
-                    </Text>
-                    <Text>Recipe step: {err.step}</Text>
-                    <Text>
-                      Error{err.validationError.details.length > 1 && `s`}:
-                    </Text>
-                    {err.validationError.details.map((d, v) => (
-                      <Text key={`validation-error-${v}`}> ‣ {d.message}</Text>
-                    ))}
-                  </Div>
-                )
-              })}
-            </Div>
-          )
-        } else {
-          return (
-            <Color red>{JSON.stringify(state.context.error, null, 2)}</Color>
-          )
-        }
-      }
-
-      return null
-    }
-
-    if (state.value === `doneError`) {
-      return <Error width="100%" state={state} />
-    }
-
-    return (
+    const Wrapper = () => (
       <>
-        <Div>
-          <Static>
-            {lodash.flattenDeep(state.context.stepResources).map((r, i) => (
-              <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>
-            ))}
-          </Static>
-        </Div>
-        {state.context.currentStep === 0 && <WelcomeMessage />}
-        {state.context.currentStep > 0 && state.value !== `done` && (
-          <Div>
-            <Text underline bold>
-              Step {state.context.currentStep} /{` `}
-              {state.context.steps.length - 1}
-            </Text>
-          </Div>
-        )}
-        <PlanContext.Provider value={{ planForNextStep: state.plan }}>
-          <Div>
-            <MDX components={components}>
-              {state.context.stepsAsMdx[state.context.currentStep]}
-            </MDX>
-          </Div>
-          <PresentStep state={state} />
-          <RunningStep state={state} />
-        </PlanContext.Provider>
+        <Provider value={client}>
+          <Text>{` `}</Text>
+          <RecipeInterpreter />
+        </Provider>
       </>
     )
+
+    const Recipe = () => <Wrapper />
+
+    // Enable experimental mode for more efficient reconciler and renderer
+    render(<Recipe />, { experimental: true })
+  } catch (e) {
+    log(e)
   }
-
-  const Wrapper = () => (
-    <>
-      <Provider value={client}>
-        <Text>{` `}</Text>
-        <RecipeInterpreter />
-      </Provider>
-    </>
-  )
-
-  const Recipe = () => <Wrapper />
-
-  // Enable experimental mode for more efficient reconciler and renderer
-  render(<Recipe />, { experimental: true })
 }

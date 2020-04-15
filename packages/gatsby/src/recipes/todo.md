@@ -51,7 +51,7 @@ Kyle
 
 John
 
-- [ ] spike on bundling recipes into one file
+- [x] spike on bundling recipes into one file
 - [x] print pretty error when there's parsing errors of mdx files
 - [x] Move mdx recipes to its own package `gatsby-recipes` & pull them from unpkg
 - [ ] add CODEOWNERS file for recipes
