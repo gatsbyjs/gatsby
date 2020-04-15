@@ -20,7 +20,9 @@ export function filterQuery(
     throw new Error(errors.join(`, `))
   }
 
-  let { allPages, originalType } = getNodes(data.allSitePage)
+  const { allSitePage, ...otherData } = data
+
+  let { allPages, originalType } = getNodes(allSitePage)
 
   // Removing excluded paths
   allPages = allPages.filter(
@@ -53,6 +55,7 @@ export function filterQuery(
   siteUrl = withoutTrailingSlash(siteUrl)
 
   return {
+    ...otherData,
     allSitePage: {
       [originalType]:
         originalType === `nodes`

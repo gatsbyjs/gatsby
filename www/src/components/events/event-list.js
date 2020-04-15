@@ -5,9 +5,9 @@ import Event from "./event"
 export default function EventList({ events }) {
   const endOfDay = date => new Date(date).setHours(23, 59, 59, 999)
 
-  const upcoming = events.nodes.filter(
-    event => endOfDay(event.data.date) >= Date.now()
-  )
+  // const upcoming = events.nodes.filter(
+  //   event => endOfDay(event.data.date) >= Date.now()
+  // )
 
   const past = events.nodes
     .filter(event => endOfDay(event.data.date) < Date.now())
@@ -15,14 +15,15 @@ export default function EventList({ events }) {
 
   return events.nodes.length > 0 ? (
     <>
-      <h2>Upcoming Events</h2>
+    // Temporarily removing during COVID
+      {/* <h2>Upcoming Events</h2>
       <ul>
         {upcoming.map(event => (
           <li key={event.id}>
             <Event event={event.data} />
           </li>
         ))}
-      </ul>
+      </ul> */}
       <h2>Past Events</h2>
       <ul>
         {past.map(event => (
