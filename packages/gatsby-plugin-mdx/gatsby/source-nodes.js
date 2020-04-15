@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const { GraphQLBoolean } = require(`gatsby/graphql`)
 const remark = require(`remark`)
 const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
@@ -151,8 +152,12 @@ module.exports = (
             type: `Int`,
             defaultValue: 140,
           },
+          truncate: {
+            type: GraphQLBoolean,
+            defaultValue: false,
+          },
         },
-        async resolve(mdxNode, { pruneLength }) {
+        async resolve(mdxNode, { pruneLength, truncate }) {
           if (mdxNode.excerpt) {
             return Promise.resolve(mdxNode.excerpt)
           }
@@ -166,7 +171,14 @@ module.exports = (
             return
           })
 
-          return prune(excerptNodes.join(` `), pruneLength, `…`)
+          if (!truncate) {
+            return prune(excerptNodes.join(` `), pruneLength, `…`)
+          }
+
+          return _.truncate(excerptNodes.join(` `), {
+            length: pruneLength,
+            omission: `…`,
+          })
         },
       },
       headings: {

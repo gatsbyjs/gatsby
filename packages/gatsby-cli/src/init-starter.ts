@@ -179,9 +179,14 @@ const clone = async (hostInfo: any, rootPath: string): Promise<void> => {
 
   report.info(`Creating new site from git: ${url}`)
 
-  const args = [`clone`, ...branch, url, rootPath, `--depth=1`].filter(arg =>
-    Boolean(arg)
-  )
+  const args = [
+    `clone`,
+    ...branch,
+    url,
+    rootPath,
+    `--recursive`,
+    `--depth=1`,
+  ].filter(arg => Boolean(arg))
 
   await spawnWithArgs(`git`, args)
 

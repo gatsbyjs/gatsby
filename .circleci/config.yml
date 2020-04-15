@@ -130,58 +130,6 @@ commands:
             - slack/status:
               channel: eng-react-integration-status
 
-  run-benchmark:
-    parameters:
-      working_directory:
-        type: string
-      NUM_PAGES:
-        type: string
-      BENCHMARK_CONTENT_SOURCE:
-        type: string
-      BENCHMARK_REPO_NAME:
-        type: string
-        default: gatsbyjs/gatsby
-      BENCHMARK_SITE_TYPE:
-        type: string
-        default: BLOG
-      BENCHMARK_BRANCH:
-        type: string
-        default: master
-    steps:
-      - checkout
-      - run:
-          command: npm install
-          working_directory: << parameters.working_directory >>
-          environment:
-            NUM_PAGES: << parameters.NUM_PAGES >>
-      - run:
-          command: npm run build
-          working_directory: << parameters.working_directory >>
-          environment:
-            BENCHMARK_BUILD_TYPE: COLD_START
-            NUM_PAGES: << parameters.NUM_PAGES >>
-            BENCHMARK_CONTENT_SOURCE: << parameters.BENCHMARK_CONTENT_SOURCE >>
-            BENCHMARK_REPO_NAME: << parameters.BENCHMARK_REPO_NAME >>
-            BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
-            BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
-            CI_NAME: circleci
-      - run:
-          command: npm install
-          working_directory: << parameters.working_directory >>
-          environment:
-            NUM_PAGES: << parameters.NUM_PAGES >>
-      - run:
-          command: npm run build
-          working_directory: << parameters.working_directory >>
-          environment:
-            BENCHMARK_BUILD_TYPE: WARM_START
-            NUM_PAGES: << parameters.NUM_PAGES >>
-            BENCHMARK_CONTENT_SOURCE: << parameters.BENCHMARK_CONTENT_SOURCE >>
-            BENCHMARK_REPO_NAME: << parameters.BENCHMARK_REPO_NAME >>
-            BENCHMARK_SITE_TYPE: << parameters.BENCHMARK_SITE_TYPE >>
-            BENCHMARK_BRANCH: << parameters.BENCHMARK_BRANCH >>
-            CI_NAME: circleci
-
   e2e-test:
     parameters:
       skip_file_change_test:
@@ -399,6 +347,19 @@ jobs:
           command: yarn run update-source
           working_directory: ~/project/scripts/i18n
 
+  sync_translation_repo:
+    executor: node
+    steps:
+      - checkout
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
+      - run:
+          command: yarn
+          working_directory: ~/project/scripts/i18n
+      - run:
+          command: yarn run-all sync
+          working_directory: ~/project/scripts/i18n
+
   windows_unit_tests:
     executor:
       name: win/vs2019
@@ -439,210 +400,19 @@ jobs:
           paths:
             - "*"
 
-  benchmark_markdown_id_512:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_id
-          NUM_PAGES: "512"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_id_4096:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_id
-          NUM_PAGES: "4096"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_id_8192:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_id
-          NUM_PAGES: "8192"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_id_32768:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_id
-          NUM_PAGES: "32768"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_id
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_slug_512:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_slug
-          NUM_PAGES: "512"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_slug_4096:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_slug
-          NUM_PAGES: "4096"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_slug_8192:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_slug
-          NUM_PAGES: "8192"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_slug_32768:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_slug
-          NUM_PAGES: "32768"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_slug
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_table_512:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_table
-          NUM_PAGES: "512"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_table_4096:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_table
-          NUM_PAGES: "4096"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_table_8192:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_table
-          NUM_PAGES: "8192"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_markdown_table_32768:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/markdown_table
-          NUM_PAGES: "32768"
-          BENCHMARK_CONTENT_SOURCE: MARKDOWN
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/markdown_table
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_mdx_512:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/mdx
-          NUM_PAGES: "512"
-          BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_mdx_4096:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/mdx
-          NUM_PAGES: "4096"
-          BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_mdx_8192:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/mdx
-          NUM_PAGES: "8192"
-          BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
-          BENCHMARK_SITE_TYPE: BLOG
-
-  benchmark_mdx_32768:
-    docker:
-      - image: "circleci/node:12"
-    steps:
-      - run-benchmark:
-          working_directory: benchmarks/mdx
-          NUM_PAGES: "32768"
-          BENCHMARK_CONTENT_SOURCE: MDX
-          BENCHMARK_REPO_NAME: gatsbyjs/gatsby/benchmarks/mdx
-          BENCHMARK_SITE_TYPE: BLOG
-
 workflows:
   version: 2
 
-  benchmark:
-    jobs:
-      - benchmark_markdown_id_512
-      - benchmark_markdown_id_4096
-      - benchmark_markdown_id_8192
-      - benchmark_markdown_id_32768
-      - benchmark_markdown_slug_512
-      - benchmark_markdown_slug_4096
-      - benchmark_markdown_slug_8192
-      - benchmark_markdown_slug_32768
-      - benchmark_markdown_table_512
-      - benchmark_markdown_table_4096
-      - benchmark_markdown_table_8192
-      - benchmark_markdown_table_32768
-      - benchmark_mdx_512
-      - benchmark_mdx_4096
-      - benchmark_mdx_8192
-      - benchmark_mdx_32768
+  weekly-i18n-sync:
     triggers:
       - schedule:
-          cron: 22 16 * * *
+          cron: "0 1 * * 6"
           filters:
             branches:
               only:
                 - master
+    jobs:
+      - sync_translation_repo
 
   nightly-react-next:
     triggers:
