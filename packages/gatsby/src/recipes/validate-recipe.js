@@ -7,7 +7,7 @@ module.exports = plan => {
       plan.map((step, i) =>
         Object.keys(step).map(key =>
           step[key].map(resourceDeclaration => {
-            if (!resources[key].validate) {
+            if (resources[key] && !resources[key].validate) {
               console.log(`${key} is missing an exported validate function`)
               return undefined
             }
