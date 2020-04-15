@@ -21,18 +21,15 @@ const asRoot = nodes => {
 
 const toJson = value => {
   const obj = {}
-  try {
-    const values = jsxToJson(value)
-    values.forEach(([type, props = {}]) => {
-      if (type === `\n`) {
-        return undefined
-      }
-      obj[type] = obj[type] || []
-      obj[type].push(props)
-    })
-  } catch (e) {
-    throw e
-  }
+  const values = jsxToJson(value)
+  values.forEach(([type, props = {}]) => {
+    if (type === `\n`) {
+      return undefined
+    }
+    obj[type] = obj[type] || []
+    obj[type].push(props)
+    return undefined
+  })
   return obj
 }
 
@@ -91,7 +88,7 @@ const unwrapImports = async (tree, imports) =>
       return resolve()
     }
 
-    visit(tree, `jsx`, async (node, index, parent) => {
+    return visit(tree, `jsx`, async (node, index, parent) => {
       let names
       try {
         names = toJson(node.value)
@@ -114,7 +111,7 @@ const unwrapImports = async (tree, imports) =>
           const nodes = u.parse(mdx).children
           parent.children.splice(index, 1, nodes)
           parent.children = parent.children.flat()
-          resolve()
+          return resolve()
         })
       }
     })
@@ -131,6 +128,7 @@ const partitionSteps = ast => {
 
     steps[index] = steps[index] || []
     steps[index].push(node)
+    return undefined
   })
 
   return steps

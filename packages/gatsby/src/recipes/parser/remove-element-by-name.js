@@ -1,10 +1,7 @@
-const { declare } = require(`@babel/helper-plugin-utils`)
 const babel = require(`@babel/standalone`)
 const jsxSyntax = require(`@babel/plugin-syntax-jsx`)
 
 const BabelPluginRemoveElementByName = (api, { names }) => {
-  const { types: t } = api
-
   return {
     visitor: {
       JSXElement(path) {
@@ -27,6 +24,8 @@ module.exports = (src, options) => {
   } catch (e) {
     console.log(e)
   }
+
+  return null
 }
 
 module.exports.BabelPluginRemoveElementByName = BabelPluginRemoveElementByName

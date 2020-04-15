@@ -219,7 +219,7 @@ it(`should store created/changed/deleted resources on the context after applying
   service.start()
 })
 
-it.skip(`should create a plan from a url`, () => {
+it.skip(`should create a plan from a url`, done => {
   const url = `https://gist.githubusercontent.com/johno/20503d2a2c80529096e60cd70260c9d8/raw/0145da93c17dcbf5d819a1ef3c97fa8713fad490/test-recipe.mdx`
   const initialContext = {
     recipePath: url,
