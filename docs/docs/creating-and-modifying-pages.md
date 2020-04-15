@@ -181,7 +181,7 @@ Gatsby stores page metadata (including context) in a redux store (which also mea
 
 > If there is memory pressure, Node.js will try to garbage collect more often, which is a known performance issue.
 
-Page query results, are not stored in memory permanently and are being saved to disk immediately after running the query.
+Page query results are not stored in memory permanently and are being saved to disk immediately after running the query.
 
 We recommend passing "ids" or "slugs" and making full queries in the page template query to avoid this.
 
