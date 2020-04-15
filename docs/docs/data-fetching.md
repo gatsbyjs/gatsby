@@ -89,7 +89,7 @@ exports.sourceNodes = async ({
 }
 ```
 
-It is important to note that node fields can indeed be arbitrary. The nameWithOwner and url fields from above are examples of this.
+It is important to note that node fields can indeed be arbitrary. The `nameWithOwner` and `url` fields from above are examples of this.
 
 This node created manually could be retrieved with a query like this:
 
