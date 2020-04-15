@@ -5975,7 +5975,7 @@
     - Beautifully designed landing page.
     - First project in the starters list to use ant design.
     - Supports SSR and is also a PWA.
- - url: https://www.dyuzz.club/
+- url: https://www.dyuzz.club/
   repo: https://github.com/Dyuzz/Gatsby-Blog-Starter-Dyuzz
   description: A Gatsby starter for creating blogs.
   tags:
@@ -5990,7 +5990,7 @@
     - Beautifully designed landing page.
     - GatsbyJS v2
     - Google Analytics
-    -  Web App Manifest
+    - Web App Manifest
     - Netlify Support
     - Gitalk Comment
     - SiteMap
