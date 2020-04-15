@@ -205,11 +205,7 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
-log(`butts`, `!!!!!!!`)
-
 const PlanContext = React.createContext({})
-
-log(`created context`, `ewww`)
 
 module.exports = ({ recipe, graphqlPort, projectRoot }) => {
   try {

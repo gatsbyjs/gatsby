@@ -15,13 +15,12 @@ module.exports = async (program: IProgram): Promise<void> => {
   // runRecipe({ recipe, projectRoot: program.directory })
 
   // Start GraphQL serve
-  let subprocess
   const scriptPath = path.join(
     program.directory,
     `node_modules/gatsby/dist/recipes/graphql.js`
   )
 
-  subprocess = execa(`node`, [scriptPath, graphqlPort], {
+  const subprocess = execa(`node`, [scriptPath, graphqlPort], {
     cwd: program.directory,
     all: true,
     env: {

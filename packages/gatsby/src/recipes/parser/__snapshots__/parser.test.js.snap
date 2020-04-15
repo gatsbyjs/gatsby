@@ -16,7 +16,7 @@ Array [
 
 exports[`fetches a recipe from unpkg when official short form 1`] = `
 Array [
-  "# Add Theme UI
+  "# Setup Theme UI
 
 This recipe helps you start developing with the [Theme UI](https://theme-ui.com) styling library.
 
@@ -33,9 +33,9 @@ This recipe helps you start developing with the [Theme UI](https://theme-ui.com)
 ",
   "Write out Theme UI configuration files.
 
-<ShadowFile
+<GatsbyShadowFile
   theme=\\"gatsby-plugin-theme-ui\\"
-  path=\\"src/gatsby-plugin-theme-ui/index.js\\"
+  path=\\"src/index.js\\"
 />
 
 <File

@@ -1,18 +1,9 @@
 const getDiff = require(`./get-diff`)
 
-const oldString = `
-pizza
-super
-duper
-`
+const oldValue = { a: `hi` }
+const newValue = { b: `hi` }
 
-const newString = `
-pizza
-
-duper
-`
-
-it(`diffs strings by line with color codes`, async () => {
-  const result = await getDiff(oldString, newString)
+it(`diffs values by line with color codes`, async () => {
+  const result = await getDiff(oldValue, newValue)
   expect(result).toMatchSnapshot()
 })
