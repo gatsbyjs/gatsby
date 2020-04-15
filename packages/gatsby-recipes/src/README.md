@@ -22,13 +22,13 @@ https://github.com/gatsbyjs/gatsby/issues/22991
 
 ## Recipe setup
 
-Upgrade the global gatsby-cli package to use the new recipes command.
+Upgrade the global gatsby-cli package to the latest with recipes.
 
 ```shell
-npm install -g gatsby-cli@recipes
+npm install -g gatsby-cli@latest
 ```
 
-To confirm that this worked, run `gatsby -v` in your terminal. The output should show the following: `Gatsby CLI version: 2.11.4-recipes.53`.
+To confirm that this worked, run `gatsby --help` in your terminal. The output should show the recipes command.
 
 ### Running an example recipe
 
@@ -46,23 +46,13 @@ gatsby new try-emotion https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd try-emotion
 ```
 
-1. Upgrade the version of Gatsby the project is using to a version that works with Recipes.
-   Note that you should use the package manager you've selected to work with Gatsby projects.
-
-- If it's yarn, type this command:
-  ```shell
-  yarn add gatsby@recipes
-  ```
-- For npm, type this command:
-  ```shell
-  npm install gatsby@recipes
-  ```
-
 1. Now you can run the `emotion` recipe with this command:
 
 ```shell
 gatsby recipes emotion
 ```
+
+You can see a list of other recipes to run by running `gatsby recipes`
 
 ## Developing Recipes
 
