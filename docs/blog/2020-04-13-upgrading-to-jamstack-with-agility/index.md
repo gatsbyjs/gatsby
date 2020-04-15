@@ -11,14 +11,14 @@ tags:
 
 I've been preaching about JAMStack for a while now, and lately I've been talking a lot about how you can [move your website to JAMStack without rebuilding everything](https://agilitycms.com/resources/posts/migrate-to-jamstack-now-no-excuses).
 
-I decided it was time to take my own advice and upgrade my company's website, [agilitycms.com](https://agilitycms.com), starting with the home page, and adding pages and sections over time. Agility CMS is a headless content management system running in the cloud (Microsoft Azure). The current website is built on ASP.Net Core. Our marketing team came to me with a request to build a brand new home page which included not only updating content, but a brand new design, new modules, and new integrations with mar-tech.
+I decided it was time to take my own advice and upgrade my company's website, [agilitycms.com](https://agilitycms.com), starting with the home page, and adding pages and sections over time. Agility CMS is a headless content management system running in the cloud (Microsoft Azure). The current website is built on ASP.NET Core. Our marketing team came to me with a request to build a brand new home page which included not only updating content, but a brand new design, new modules, and new integrations with mar-tech.
 
-This was just the opportunity I’d been looking for: A chance to practice what I've been preaching! What's also great is the current .net website is already built using a headless CMS, so I don't have to rewrite or migrate any content.
+This was just the opportunity I’d been looking for: A chance to practice what I've been preaching! What's also great is the current .NET website is already built using a headless CMS, so I don't have to rewrite or migrate any content.
 
 ## Goals
 
 - Build the new home page using [Gatsby](https://www.gatsbyjs.org/)
-- Re-use much of the existing site content from [our headless cms](https://agilitycms.com/)
+- Re-use much of the existing site content from [our headless CMS](https://agilitycms.com/)
 - Zero downtime
 
 ## tl;dr
@@ -40,17 +40,17 @@ What's really cool is that this workflow isn't just for upgrading Agility websit
 
 ## Step 1: Get it running locally with Gatsby
 
-It's really easy to get started creating a Gatsby website with Agility CMS. Just clone the [starter repo from github](https://github.com/agility/agility-gatsby-starter), open up the folder in [VS Code](https://code.visualstudio.com/) and pop in your API Keys.
+It's really easy to get started creating a Gatsby website with Agility CMS. Just clone the [starter repo from GitHub](https://github.com/agility/agility-gatsby-starter), open up the folder in [VS Code](https://code.visualstudio.com/) and pop in your API Keys.
 
 ```shell
 git clone https://github.com/agility/agility-gatsby-starter.git
 ```
 
-Now, find your API keys on the Getting Started page of the [Agility CMS Content Manager](https://manager.agilitycms.com/)
+Now, find your API Keys on the Getting Started page of the [Agility CMS Content Manager](https://manager.agilitycms.com/)
 
 ![Agility CMS Getting Started landing page](post-image-1.png "Agility CMS Screenshot")
 
-Put your keys into the **.env.development** and **.env.production** files. They look something like this and have instructions about which values go where.
+Put your API Keys into the **.env.development** and **.env.production** files. They look something like this and have instructions about which values go where.
 
 ```text
 # Your Instance Id
