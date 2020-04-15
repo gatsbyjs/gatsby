@@ -187,7 +187,7 @@ We recommend passing "ids" or "slugs" and making full queries in the page templa
 
 ### Incremental builds trade-off of this method
 
-Another disadvantage of this method is that because your site has to be rebuilt every time you make a change you will not be able to take advantage of incremental builds.
+Another disadvantage of querying all of your data in `gatsby-node.js` is that your site has to be rebuilt every time you make a change, so you will not be able to take advantage of incremental builds.
 
 ## Modifying pages created by core or plugins
 
