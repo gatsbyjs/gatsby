@@ -43,7 +43,7 @@ function OutboundLink(props) {
             eventLabel: eventLabel || props.href,
             eventValue,
             transport: redirect ? `beacon` : ``,
-            hitCallback: function() {
+            hitCallback: function () {
               if (redirect) {
                 document.location = props.href
               }

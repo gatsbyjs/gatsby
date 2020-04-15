@@ -366,10 +366,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
               // When documenting destructured parameters, the name
               // is parent.child where we just want the child.
               if (docObj.name && docObj.name.split(`.`).length > 1) {
-                docObj.name = docObj.name
-                  .split(`.`)
-                  .slice(-1)
-                  .join(`.`)
+                docObj.name = docObj.name.split(`.`).slice(-1).join(`.`)
               }
 
               const adjustedObj = {

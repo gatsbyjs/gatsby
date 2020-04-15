@@ -2,7 +2,7 @@
  * This module is used when calling reporter.
  * these logs
  */
-import reporterActions from "./redux/actions"
+import * as reporterActions from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
@@ -38,7 +38,7 @@ export const createTimerReporter = ({
     start(): void {
       reporterActions.startActivity({
         id,
-        text,
+        text: text || `__timer__`,
         type: ActivityTypes.Spinner,
       })
     },
