@@ -92,18 +92,18 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       // In your blog post template's graphql query, you can use pagePath
       // as a GraphQL variable to query for data from the markdown file.
       context: {
-        pagePath: path,
-      },
+        pagePath: path
+      }
     })
   })
 }
 ```
 
-## Trade-offs of querying for all fields in the context object of `gatsby-node.js` 
+## Trade-offs of querying for all fields in the context object of `gatsby-node.js`
 
-Imagine a scenario where you could query for all the parameters your template would need in the `gatsby-node.js`. What are the performance advantages this method might propose? In this section, you will look into this. 
+Imagine a scenario where you could query for all the parameters your template would need in the `gatsby-node.js`. What are the performance advantages this method might propose? In this section, you will look into this.
 
-In the initial approach you have seen how the `gatsby-node.js` file would have a query block like so : 
+In the initial approach you have seen how the `gatsby-node.js` file would have a query block like so :
 
 ```graphql
   const queryResults = await graphql(`
@@ -116,8 +116,8 @@ In the initial approach you have seen how the `gatsby-node.js` file would have a
     }
   `);
 ```
-Using the `id` as an access point to query for other properties in the template is the default approach. However, Suppose you had a list of products with properties you would like to query for. Handling the query all from `gatsby-node.js` the query would look like this: 
 
+Using the `id` as an access point to query for other properties in the template is the default approach. However, Suppose you had a list of products with properties you would like to query for. Handling the query all from `gatsby-node.js` the query would look like this:
 
 ```javascript:tittle=gatsby-node.js
 
@@ -151,12 +151,11 @@ exports.createPages = async ({ graphql, actions }) => {
 };
 ```
 
-> You are now requesting all the data you need in a single query (this requires server-side support to fetch many products in a single database query). 
-
+> You are now requesting all the data you need in a single query (this requires server-side support to fetch many products in a single database query).
 
 > As long as you can pass this data down to the template component via `pageContext`, there is no need for the template to make a GraphQL query at all.
 
-Your template file would look like this: 
+Your template file would look like this:
 
 ```javascript:tittle=src/templates/product.js
 function Product({ pageContext }) {
@@ -166,30 +165,29 @@ function Product({ pageContext }) {
       Price: {pageContext.price}
       Description: {pageContext.description}
     </div>
-  );
+  )
 }
 ```
 
-### Pefromance implecations 
+### Pefromance implecations
 
-Using the PageContext props in the template component can come with its performance advantages, of getting in all the data you need at build time; from the createPages API. This prevents having a graphql query in the template component. 
+Using the PageContext props in the template component can come with its performance advantages, of getting in all the data you need at build time; from the createPages API. This prevents having a graphql query in the template component.
 
-It does come with the advantage of querying your data from one place after declaring the `context` parameter. 
+It does come with the advantage of querying your data from one place after declaring the `context` parameter.
 
-However, it doesn’t give you the opportunity to know what exactly you are querying for in the template and if any changes occur in the component query structure in gatsby-node.js. Hot reload is taken off the table and the site needs to be rebuilt for changes to reflect. 
+However, it doesn’t give you the opportunity to know what exactly you are querying for in the template and if any changes occur in the component query structure in gatsby-node.js. Hot reload is taken off the table and the site needs to be rebuilt for changes to reflect.
 
-Gatsby stores page metadata (including context) in a redux store (which also means that it stores its memory). For large enough sites (either number of pages and/or amount of data that is being passed via page context) this will cause problems. This might be out of memory crashes if it's too much data or degraded performance. 
+Gatsby stores page metadata (including context) in a redux store (which also means that it stores its memory). For large enough sites (either number of pages and/or amount of data that is being passed via page context) this will cause problems. This might be out of memory crashes if it's too much data or degraded performance.
 
->If there is memory pressure, Node.js will try to garbage collect more often, which is a known performance issue. 
+> If there is memory pressure, Node.js will try to garbage collect more often, which is a known performance issue.
 
 Page query results, are not stored in memory permanently and are being saved to disk immediately after running the query.
 
 We recommend passing "ids" or "slugs" and making full queries in the page template query to avoid this.
 
-### Incremental builds trade-off of this method 
+### Incremental builds trade-off of this method
 
-Another disadvantage of this method is that because your site has to be rebuilt every time you make a change you will not be able to take advantage of incremental builds. 
-
+Another disadvantage of this method is that because your site has to be rebuilt every time you make a change you will not be able to take advantage of incremental builds.
 
 ## Modifying pages created by core or plugins
 
@@ -242,8 +240,8 @@ exports.onCreatePage = ({ page, actions }) => {
     ...page,
     context: {
       ...page.context,
-      house: `Gryffindor`,
-    },
+      house: `Gryffindor`
+    }
   })
 }
 ```
