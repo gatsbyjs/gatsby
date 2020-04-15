@@ -212,11 +212,11 @@ In the end, you're going to end up with a URL to your new home page in Netlify.
 
 We can use Edge computing to decide whether to route to the new website or the old one, depending on the page.
 
-In this example, I decided to use a [Stackpath](https://www.stackpath.com/) Script to do this for us.
+In this example, I decided to use a [StackPath](https://www.stackpath.com/) Script to do this for us.
 
-You set up a Stackpath site just like normal, but pointing to your OLD website's unique hostname. It can't be your public DNS name - you need to have another unique way to address that site. For example, since our website is hosted in an Azure App Service, we get an azurewebsites.net URL.
+You set up a StackPath site just like normal, but pointing to your OLD website's unique hostname. It can't be your public DNS name - you need to have another unique way to address that site. For example, since our website is hosted in an Azure App Service, we get an azurewebsites.net URL.
 
-Now you create a Script in Stackpath to do the routing. In our case, we ONLY want to route requests to the home page, plus any Gatsby-specific stuff, to our new website.
+Now you create a Script in StackPath to do the routing. In our case, we ONLY want to route requests to the home page, plus any Gatsby-specific stuff, to our new website.
 
 You can also see that I'm only allowing for 60 seconds on caching in the CDN for all requests. This is because we don't have anything built into this workflow to clear the cache in this CDN, and I don't want my content team to have to wait too long to see their changes. I'll take care of that later.
 
@@ -267,9 +267,9 @@ async function handleRequest(request) {
 }
 ```
 
-You can now test this whole thing with the unique Stackpath URL that you get (123xyz.stackpathcdn.com).
+You can now test this whole thing with the unique StackPath URL that you get (123xyz.stackpathcdn.com).
 
-Once you are happy with everything, you simply switch your DNS to point to Stackpath.
+Once you are happy with everything, you simply switch your DNS to point to StackPath.
 
 That's it—you’re finished!
 
@@ -281,6 +281,6 @@ I encourage you to go ahead and use this technique as the starting point for one
 
 ## BONUS CONTENT!
 
-As a companion to this article, I recorded a video that walks you through the steps I took and the different tools involved. I also highlight some of the really neat features of Agility CMS, Gatsby, Netlify, and Stackpath.
+As a companion to this article, I recorded a video that walks you through the steps I took and the different tools involved. I also highlight some of the really neat features of Agility CMS, Gatsby, Netlify, and StackPath.
 
 [![Migrating a website to JAMstack with Gatsby](https://res.cloudinary.com/marcomontalbano/image/upload/v1586464859/video_to_markdown/images/youtube--WSIzYKDgJuE-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/embed/WSIzYKDgJuE "Migrating a website to JAMstack with Gatsby")
