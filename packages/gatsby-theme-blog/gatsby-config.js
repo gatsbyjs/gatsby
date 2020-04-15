@@ -8,9 +8,7 @@ module.exports = options => {
       `gatsby-plugin-react-helmet`,
       `gatsby-plugin-twitter`,
       `gatsby-plugin-emotion`,
-      {
-        resolve: require.resolve(`../gatsby-theme-ui-preset`),
-      },
+      `gatsby-theme-ui-preset`,
     ],
   }
 }
