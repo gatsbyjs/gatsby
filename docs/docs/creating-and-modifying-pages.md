@@ -171,7 +171,7 @@ function Product({ pageContext }) {
 
 ### Pefromance implecations
 
-Using the PageContext props in the template component can come with its performance advantages, of getting in all the data you need at build time; from the createPages API. This prevents having a graphql query in the template component.
+Using the `pageContext` props in the template component can come with its performance advantages, of getting in all the data you need at build time; from the createPages API. This removes the need to have a GraphQL query in the template component.
 
 It does come with the advantage of querying your data from one place after declaring the `context` parameter.
 
