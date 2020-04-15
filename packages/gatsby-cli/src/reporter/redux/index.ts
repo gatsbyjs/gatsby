@@ -34,6 +34,16 @@ export const dispatch = (action: ActionsUnion | Thunk): void => {
     return
   }
 
+  action = {
+    ...action,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore this is a typescript no-no..
+    // And i'm pretty sure this timestamp isn't used anywhere.
+    // but for now, the structured logs integration tests expect it
+    // so it's easier to leave it and then explore as a follow up
+    timestamp: new Date().toJSON(),
+  } as ActionsUnion
+
   store.dispatch(action)
 
   if (isInternalAction(action)) {
