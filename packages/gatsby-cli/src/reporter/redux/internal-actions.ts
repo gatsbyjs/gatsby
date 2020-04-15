@@ -48,7 +48,6 @@ let cancelDelayedSetStatus: (() => void) | null
 export const setStatus = (status: string, force: boolean = false) => (
   dispatch: Dispatch<ISetStatus>
 ): void => {
-  console.debug(status)
   const currentStatus = getStore().getState().logs.status
   if (cancelDelayedSetStatus) {
     cancelDelayedSetStatus()
