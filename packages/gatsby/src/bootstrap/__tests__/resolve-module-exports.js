@@ -123,7 +123,7 @@ describe(`Resolve module exports`, () => {
     "/export/named/as": `const foo = ''; export { foo as bar };`,
     "/export/named/multiple": `const foo = ''; const bar = ''; const baz = ''; export { foo, bar, baz };`,
     "/export/default": `export default () => {}`,
-    "/export/default/name": `export default foo = () => {}`,
+    "/export/default/name": `const foo = () => {}; export default foo`,
   }
 
   beforeEach(() => {
