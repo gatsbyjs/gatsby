@@ -14,10 +14,7 @@ const hasher = objectHash({
 })
 
 const hashPrimitive = (input: BinaryLike | string): string =>
-  crypto
-    .createHash(`md5`)
-    .update(input)
-    .digest(`hex`)
+  crypto.createHash(`md5`).update(input).digest(`hex`)
 
 /**
  * Hashes an input using md5 hash of hexadecimal digest.

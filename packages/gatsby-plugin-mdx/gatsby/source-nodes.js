@@ -28,12 +28,7 @@ async function getCounts({ mdast }) {
   })
 
   await remark()
-    .use(
-      remark2retext,
-      unified()
-        .use(english)
-        .use(count)
-    )
+    .use(remark2retext, unified().use(english).use(count))
     .run(mdast)
 
   function count() {
