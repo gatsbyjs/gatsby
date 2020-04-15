@@ -13,7 +13,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   // Start GraphQL serve
   const scriptPath = require.resolve(
-    `gatsby-recipes/src/graphql.js`
+    `gatsby-recipes/dist/graphql.js`
   )
 
   const subprocess = execa(`node`, [scriptPath, graphqlPort], {
@@ -45,7 +45,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   let started = false
   subprocess.stdout.on(`data`, data => {
     if (!started) {
-      const runRecipe = require(`gatsby-recipes/src/index.js`)
+      const runRecipe = require(`gatsby-recipes/dist/index.js`)
       runRecipe({ recipe, graphqlPort, projectRoot: program.directory })
       started = true
     }
