@@ -296,15 +296,11 @@ function buildLocalCommands(cli, isLocalSite) {
   cli.command({
     command: `recipes`,
     desc: `Run a recipe`,
-    handler: handlerP(
-      getCommandHandler(`recipes`, (args, cmd) => {
-        cmd(args)
-        // Return an empty promise to prevent handlerP from exiting early.
-        // The development server shouldn't ever exit until the user directly
-        // kills it so this is fine.
-        return new Promise(resolve => {})
-      })
-    ),
+    handler: handlerP((args, cmd) => {
+      console.log({ args, cmd })
+      const runRecipe = require(`./recipes`)
+      return runRecipe(args)
+    }),
   })
 }
 
