@@ -72,6 +72,15 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
       if (exportName) exportNames.push(exportName)
     },
 
+    // export default () => {}
+    // export default Foo = () => {}
+    ExportDefaultDeclaration: function ExportDefaultDeclaration(astPath) {
+      const identifier = get(astPath, `node.declaration.left.name`)
+      const exportName = `export default${identifier ? ` ${identifier}` : ``}`
+      isES6 = true
+      exportNames.push(exportName)
+    },
+
     AssignmentExpression: function AssignmentExpression(astPath) {
       const nodeLeft = astPath.node.left
 
