@@ -44,9 +44,11 @@ signalExit(() => {
 })
 
 let cancelDelayedSetStatus: (() => void) | null
+// TODO: THIS IS NOT WORKING ATM
 export const setStatus = (status: string, force: boolean = false) => (
   dispatch: Dispatch<ISetStatus>
-): ISetStatus | void => {
+): void => {
+  console.debug(status)
   const currentStatus = getStore().getState().logs.status
   if (cancelDelayedSetStatus) {
     cancelDelayedSetStatus()
@@ -54,17 +56,16 @@ export const setStatus = (status: string, force: boolean = false) => (
   }
   if (status !== currentStatus) {
     if (status === `IN_PROGRESS` || force || weShouldExit) {
-      return {
+      dispatch({
         type: Actions.SetStatus,
         payload: status,
-      }
+      })
     } else {
       cancelDelayedSetStatus = delayedCall(() => {
         setStatus(status, true)(dispatch)
       }, 1000)
     }
   }
-  return void 0
 }
 
 export const createLog = ({
