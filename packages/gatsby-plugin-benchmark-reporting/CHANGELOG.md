@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.1.1...gatsby-plugin-benchmark-reporting@0.1.2) (2020-04-03)
+
+### Bug Fixes
+
+- **gatsby-plugin-benchmark-reporting:** Update pageCount to use NUM_PAGES ([#22766](https://github.com/gatsbyjs/gatsby/issues/22766)) ([b5b41a0](https://github.com/gatsbyjs/gatsby/commit/b5b41a0))
+
 ## [0.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.1.0...gatsby-plugin-benchmark-reporting@0.1.1) (2020-03-23)
 
 **Note:** Version bump only for package gatsby-plugin-benchmark-reporting

@@ -4,7 +4,7 @@ const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const debug = require(`debug`)(`gatsby:load-themes`)
 const preferDefault = require(`../prefer-default`)
-const getConfigFile = require(`../get-config-file`)
+import { getConfigFile } from "../get-config-file"
 const { resolvePlugin } = require(`../load-plugins/load`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
@@ -47,8 +47,8 @@ const resolveTheme = async (
           themeName,
           configFilePath: configFileThatDeclaredTheme,
           pathToLocalTheme,
-          nodeResolutionPaths,
-        },
+          nodeResolutionPaths
+        }
       })
     }
   }
@@ -129,8 +129,8 @@ module.exports = async (
         plugins: [
           ...(themeConfig.plugins || []),
           // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
-          { resolve: themeName, options: themeSpec.options || {} },
-        ],
+          { resolve: themeName, options: themeSpec.options || {} }
+        ]
       }
     })
       /**
@@ -143,7 +143,7 @@ module.exports = async (
       .then(newConfig => {
         return {
           config: mergeGatsbyConfig(newConfig, config),
-          themes: themesA,
+          themes: themesA
         }
       })
   )

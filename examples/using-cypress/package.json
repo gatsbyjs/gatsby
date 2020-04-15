@@ -35,7 +35,7 @@
     "axe-core": "^3.5.1",
     "cypress": "^4.0.2",
     "cypress-axe": "^0.5.3",
-    "prettier": "^1.19.1",
+    "prettier": "2.0.4",
     "start-server-and-test": "^1.10.8"
   },
   "keywords": [

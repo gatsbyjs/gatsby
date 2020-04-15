@@ -19,9 +19,9 @@ module.exports = (
     prompt = {
       user: `root`,
       host: `localhost`,
-      global: false,
+      global: false
     },
-    escapeEntities = {},
+    escapeEntities = {}
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -41,7 +41,7 @@ module.exports = (
       numberLinesStartAt,
       outputLines,
       promptUserLocal,
-      promptHostLocal,
+      promptHostLocal
     } = parseOptions(language)
     const showLineNumbers = showLineNumbersLocal || showLineNumbersGlobal
     const promptUser = promptUserLocal || prompt.user

@@ -2,7 +2,7 @@ const {
   DEFAULT_OPTIONS,
   imageClass,
   imageBackgroundClass,
-  imageWrapperClass,
+  imageWrapperClass
 } = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const getDefinitions = require(`mdast-util-definitions`)
@@ -31,7 +31,7 @@ module.exports = (
     getNode,
     reporter,
     cache,
-    compiler,
+    compiler
   },
   pluginOptions
 ) => {
@@ -77,7 +77,7 @@ module.exports = (
         .split(`.`)
         .pop(),
       url,
-      query,
+      query
     }
   }
 
@@ -154,7 +154,7 @@ module.exports = (
       file: imageNode,
       args: options,
       reporter,
-      cache,
+      cache
     })
 
     if (!fluidResult) {
@@ -224,7 +224,7 @@ module.exports = (
           pluginOptions,
           DEFAULT_OPTIONS
         ),
-        reporter,
+        reporter
       })
 
       if (!webpFluidResult) {
@@ -275,7 +275,7 @@ module.exports = (
         args,
         fileArgs: args,
         cache,
-        reporter,
+        reporter
       })
 
       // Escape single quotes so the SVG data can be used in inline style attribute with single quotes

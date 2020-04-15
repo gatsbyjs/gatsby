@@ -4,7 +4,7 @@ jest.mock(`fs`, () => {
     writeFileSync: jest.fn(),
     mkdirSync: jest.fn(),
     readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
-    statSync: jest.fn(),
+    statSync: jest.fn()
   }
 })
 /*
@@ -26,7 +26,7 @@ jest.mock(`sharp`, () => {
         metadata() {
           return {
             width: 128,
-            height: 128,
+            height: 128
           }
         }
       })()
@@ -43,7 +43,7 @@ jest.mock(`gatsby-core-utils`, () => {
   return {
     slash: originalCoreUtils.slash,
     cpuCoreCount: jest.fn(() => `1`),
-    createContentDigest: jest.fn(() => `contentDigest`),
+    createContentDigest: jest.fn(() => `contentDigest`)
   }
 })
 
@@ -54,14 +54,14 @@ const reporter = {
   activityTimer: jest.fn().mockImplementation(function() {
     return {
       start: jest.fn(),
-      end: jest.fn(),
+      end: jest.fn()
     }
-  }),
+  })
 }
 const { onPostBootstrap } = require(`../gatsby-node`)
 
 const apiArgs = {
-  reporter,
+  reporter
 }
 
 const manifestOptions = {
@@ -76,14 +76,14 @@ const manifestOptions = {
       src: `icons/icon-48x48.png`,
       sizes: `48x48`,
       type: `image/png`,
-      purpose: `all`,
+      purpose: `all`
     },
     {
       src: `icons/icon-128x128.png`,
       sizes: `128x128`,
-      type: `image/png`,
-    },
-  ],
+      type: `image/png`
+    }
+  ]
 }
 
 describe(`Test plugin manifest options`, () => {
@@ -106,7 +106,7 @@ describe(`Test plugin manifest options`, () => {
       start_url: `/`,
       background_color: `#f7f0eb`,
       theme_color: `#a2466c`,
-      display: `standalone`,
+      display: `standalone`
     })
     const contents = fs.writeFileSync.mock.calls[0][1]
     expect(fs.writeFileSync).toHaveBeenCalledWith(
@@ -127,19 +127,19 @@ describe(`Test plugin manifest options`, () => {
         {
           src: `icons/icon-48x48.png`,
           sizes: `${size}x${size}`,
-          type: `image/png`,
+          type: `image/png`
         },
         {
           src: `other-icons/icon-48x48.png`,
           sizes: `${size}x${size}`,
-          type: `image/png`,
-        },
-      ],
+          type: `image/png`
+        }
+      ]
     }
 
     await onPostBootstrap(apiArgs, {
       ...manifestOptions,
-      ...pluginSpecificOptions,
+      ...pluginSpecificOptions
     })
 
     const firstIconPath = path.join(
@@ -167,14 +167,14 @@ describe(`Test plugin manifest options`, () => {
         {
           src: `icons/icon-48x48.png`,
           sizes: `${size}x${size}`,
-          type: `image/png`,
-        },
-      ],
+          type: `image/png`
+        }
+      ]
     }
 
     await onPostBootstrap(apiArgs, {
       ...manifestOptions,
-      ...pluginSpecificOptions,
+      ...pluginSpecificOptions
     })
 
     expect(sharp).toHaveBeenCalledWith(icon, { density: size })
@@ -185,13 +185,13 @@ describe(`Test plugin manifest options`, () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => false })
 
     const pluginSpecificOptions = {
-      icon: `non/existing/path`,
+      icon: `non/existing/path`
     }
 
     await expect(
       onPostBootstrap(apiArgs, {
         ...manifestOptions,
-        ...pluginSpecificOptions,
+        ...pluginSpecificOptions
       })
     ).rejects.toThrow(
       `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
@@ -209,11 +209,11 @@ describe(`Test plugin manifest options`, () => {
       cache_busting_mode: `name`,
       include_favicon: true,
       crossOrigin: `anonymous`,
-      icon_options: {},
+      icon_options: {}
     }
     await onPostBootstrap(apiArgs, {
       ...manifestOptions,
-      ...pluginSpecificOptions,
+      ...pluginSpecificOptions
     })
 
     expect(sharp).toHaveBeenCalledTimes(0)
@@ -229,11 +229,11 @@ describe(`Test plugin manifest options`, () => {
     const pluginSpecificOptions = {
       icon: `images/gatsby-logo.png`,
       legacy: true,
-      cache_busting_mode: `name`,
+      cache_busting_mode: `name`
     }
     await onPostBootstrap(apiArgs, {
       ...manifestOptions,
-      ...pluginSpecificOptions,
+      ...pluginSpecificOptions
     })
 
     expect(sharp).toHaveBeenCalledTimes(2)
@@ -246,11 +246,11 @@ describe(`Test plugin manifest options`, () => {
     const pluginSpecificOptions = {
       icon: `images/gatsby-logo.png`,
       legacy: true,
-      cache_busting_mode: `none`,
+      cache_busting_mode: `none`
     }
     await onPostBootstrap(apiArgs, {
       ...manifestOptions,
-      ...pluginSpecificOptions,
+      ...pluginSpecificOptions
     })
 
     expect(sharp).toHaveBeenCalledTimes(2)
@@ -266,12 +266,12 @@ describe(`Test plugin manifest options`, () => {
     const pluginSpecificOptions = {
       icon: `images/gatsby-logo.png`,
       icon_options: {
-        purpose: `maskable`,
-      },
+        purpose: `maskable`
+      }
     }
     await onPostBootstrap(apiArgs, {
       ...manifestOptions,
-      ...pluginSpecificOptions,
+      ...pluginSpecificOptions
     })
 
     expect(sharp).toHaveBeenCalledTimes(2)
@@ -289,7 +289,7 @@ describe(`Test plugin manifest options`, () => {
         start_url: `/`,
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
-        display: `standalone`,
+        display: `standalone`
       }
     )
     const contents = fs.writeFileSync.mock.calls[0][1]
@@ -309,14 +309,14 @@ describe(`Test plugin manifest options`, () => {
         {
           ...manifestOptions,
           start_url: `/de/`,
-          lang: `de`,
+          lang: `de`
         },
         {
           ...manifestOptions,
           start_url: `/es/`,
-          lang: `es`,
-        },
-      ],
+          lang: `es`
+        }
+      ]
     }
     const { localize, ...manifest } = pluginSpecificOptions
     const expectedResults = localize.concat(manifest).map(x => {
@@ -346,14 +346,14 @@ describe(`Test plugin manifest options`, () => {
         {
           ...manifestOptions,
           start_url: `/de/`,
-          lang: `de`,
+          lang: `de`
         },
         {
           ...manifestOptions,
           start_url: `/es/`,
-          lang: `es`,
-        },
-      ],
+          lang: `es`
+        }
+      ]
     }
 
     const { localize, ...manifest } = pluginSpecificOptions
@@ -365,9 +365,9 @@ describe(`Test plugin manifest options`, () => {
         icons: manifest.icons.map(icon => {
           return {
             ...icon,
-            src: path.posix.join(`/blog`, icon.src),
+            src: path.posix.join(`/blog`, icon.src)
           }
-        }),
+        })
       }
     })
 
@@ -397,13 +397,13 @@ describe(`Test plugin manifest options`, () => {
       localize: [
         {
           start_url: `/de/`,
-          lang: `de`,
+          lang: `de`
         },
         {
           start_url: `/es/`,
-          lang: `es`,
-        },
-      ],
+          lang: `es`
+        }
+      ]
     }
     const { localize, ...manifest } = pluginSpecificOptions
     const expectedResults = localize
@@ -411,7 +411,7 @@ describe(`Test plugin manifest options`, () => {
       .map(({ language, manifest }) => {
         return {
           ...manifestOptions,
-          ...manifest,
+          ...manifest
         }
       })
 

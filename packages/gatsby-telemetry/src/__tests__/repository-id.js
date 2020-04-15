@@ -25,8 +25,8 @@ describe(`Repository ID Helpers`, () => {
       repositoryData: {
         provider: hash(`github.com`),
         owner: hash(`user`),
-        name: hash(`repo`),
-      },
+        name: hash(`repo`)
+      }
     })
 
     mockCwd.mockRestore()
@@ -73,8 +73,8 @@ describe(`Repository ID Helpers`, () => {
       repositoryData: {
         provider: hash(`github.com`),
         owner: hash(`user`),
-        name: hash(`repo`),
-      },
+        name: hash(`repo`)
+      }
     })
 
     execSync.mockRestore()
@@ -84,14 +84,14 @@ describe(`Repository ID Helpers`, () => {
     ;[
       `https://github.com/user/repo.git`,
       `https://x-access-token:v1.6xxxxxxxxxxxxxxxxx@github.com/user/repo`,
-      `git@github.com:user/repo.git`,
+      `git@github.com:user/repo.git`
     ].map(url => {
       it(`works with github urls ${url}`, () => {
         const metadata = getRepoMetadata(url)
         expect(metadata).toEqual({
           provider: hash(`github.com`),
           owner: hash(`user`),
-          name: hash(`repo`),
+          name: hash(`repo`)
         })
       })
     })

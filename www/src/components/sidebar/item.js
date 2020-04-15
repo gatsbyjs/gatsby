@@ -34,7 +34,7 @@ const Item = ({
         // will only scroll to the correct location on a full page refresh,
         // instead of navigating between pages with the prev/next buttons
         // or clicking on linking guides or urls
-        await function() {}
+        await function () {}
         node.scrollIntoView({ block: `center` })
       }
     },

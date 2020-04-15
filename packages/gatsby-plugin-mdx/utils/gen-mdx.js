@@ -70,7 +70,7 @@ module.exports = async function genMDX(
     html: undefined,
     scopeImports: [],
     scopeIdentifiers: [],
-    body: undefined,
+    body: undefined
   }
 
   // TODO: a remark and a hast plugin that pull out the ast and store it in results
@@ -116,7 +116,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
       reporter,
       cache,
       pathPrefix,
-      ...helpers,
+      ...helpers
     }
   )
 
@@ -125,7 +125,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
     ...options,
     remarkPlugins: options.remarkPlugins.concat(
       gatsbyRemarkPluginsAsremarkPlugins
-    ),
+    )
   })
 
   results.rawMDXOutput = `/* @jsx mdx */
@@ -141,7 +141,7 @@ ${code}`
         instance.plugin,
         objRestSpread,
         htmlAttrToJSXAttr,
-        removeExportKeywords,
+        removeExportKeywords
       ],
       presets: [
         require(`@babel/preset-react`),
@@ -150,10 +150,10 @@ ${code}`
           {
             useBuiltIns: `entry`,
             corejs: 2,
-            modules: `false`,
-          },
-        ],
-      ],
+            modules: false
+          }
+        ]
+      ]
     })
 
     const identifiers = Array.from(instance.state.identifiers)

@@ -488,7 +488,7 @@ var TRANSLATIONS = {
   y: `y`,
   ychannelselector: `yChannelSelector`,
   z: `z`,
-  zoomandpan: `zoomAndPan`,
+  zoomandpan: `zoomAndPan`
 }
 
 const propsKeysVisitor = {
@@ -497,7 +497,7 @@ const propsKeysVisitor = {
       node.node.key.value =
         TRANSLATIONS[node.node.key.value] || node.node.key.value
     }
-  },
+  }
 }
 var jsxAttributeFromHTMLAttributeVisitor = {
   JSXAttribute: function(node) {
@@ -533,7 +533,7 @@ var jsxAttributeFromHTMLAttributeVisitor = {
         )
       )
     }
-  },
+  }
 }
 
 module.exports = function attrs() {
@@ -541,7 +541,7 @@ module.exports = function attrs() {
     visitor: {
       JSXElement: function(path) {
         path.traverse(jsxAttributeFromHTMLAttributeVisitor)
-      },
-    },
+      }
+    }
   }
 }

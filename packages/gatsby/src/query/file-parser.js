@@ -10,7 +10,7 @@ const {
   getGraphQLTag,
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
-  GraphQLSyntaxError,
+  GraphQLSyntaxError
 } = require(`babel-plugin-remove-graphql-queries`)
 
 const report = require(`gatsby-cli/lib/reporter`)
@@ -29,11 +29,11 @@ const generateQueryName = ({ def, hash, file }) => {
   if (!def.name || !def.name.value) {
     const slugified = slugify(file, {
       replacement: ` `,
-      lower: false,
+      lower: false
     })
     def.name = {
       value: `${_.camelCase(slugified)}${hash}`,
-      kind: `Name`,
+      kind: `Name`
     }
   }
   return def
@@ -69,7 +69,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   const transpiled = await apiRunnerNode(`preprocessSource`, {
     filename: filePath,
     contents: fileStr,
-    parentSpan: parentSpan,
+    parentSpan: parentSpan
   })
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
@@ -79,7 +79,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
         break
       } catch (error) {
         boundActionCreators.queryExtractionGraphQLError({
-          componentPath: filePath,
+          componentPath: filePath
         })
         continue
       }
@@ -89,11 +89,11 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
         id: `85912`,
         filePath,
         context: {
-          filePath,
-        },
+          filePath
+        }
       })
       boundActionCreators.queryExtractionGraphQLError({
-        componentPath: filePath,
+        componentPath: filePath
       })
 
       return null
@@ -104,15 +104,15 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
     } catch (error) {
       boundActionCreators.queryExtractionBabelError({
         componentPath: filePath,
-        error,
+        error
       })
 
       addError({
         id: `85911`,
         filePath,
         context: {
-          filePath,
-        },
+          filePath
+        }
       })
 
       return null
@@ -136,7 +136,7 @@ type GraphQLDocumentInFile = {
   text: string,
   hash: string,
   isHook: boolean,
-  isStaticQuery: boolean,
+  isStaticQuery: boolean
 }
 
 async function findGraphQLTags(
@@ -180,7 +180,7 @@ async function findGraphQLTags(
             generateQueryName({
               def,
               hash,
-              file,
+              file
             })
           })
 
@@ -189,7 +189,7 @@ async function findGraphQLTags(
           taggedTemplateExpressPath.traverse({
             TemplateElement(templateElementPath) {
               templateLoc = templateElementPath.node.loc
-            },
+            }
           })
 
           const docInFile = {
@@ -199,7 +199,7 @@ async function findGraphQLTags(
             hash: hash,
             isStaticQuery: true,
             isHook,
-            templateLoc,
+            templateLoc
           }
 
           documentLocations.set(
@@ -246,10 +246,10 @@ async function findGraphQLTags(
                               TaggedTemplateExpression(templatePath) {
                                 found = true
                                 extractStaticQuery(templatePath)
-                              },
+                              }
                             })
                           }
-                        },
+                        }
                       })
                       if (!found) {
                         warnForUnknownQueryVariable(
@@ -259,12 +259,12 @@ async function findGraphQLTags(
                         )
                       }
                     }
-                  },
+                  }
                 })
-              },
+              }
             })
             return
-          },
+          }
         })
 
         // Look for queries in useStaticQuery hooks.
@@ -296,17 +296,17 @@ async function findGraphQLTags(
                         TaggedTemplateExpression(templatePath) {
                           found = true
                           extractStaticQuery(templatePath, true)
-                        },
+                        }
                       })
                     }
-                  },
+                  }
                 })
                 if (!found) {
                   warnForUnknownQueryVariable(varName, file, `useStaticQuery`)
                 }
               }
             }
-          },
+          }
         })
 
         function TaggedTemplateExpression(innerPath) {
@@ -319,7 +319,7 @@ async function findGraphQLTags(
             generateQueryName({
               def,
               hash,
-              file,
+              file
             })
           })
 
@@ -327,7 +327,7 @@ async function findGraphQLTags(
           innerPath.traverse({
             TemplateElement(templateElementPath) {
               templateLoc = templateElementPath.node.loc
-            },
+            }
           })
 
           const docInFile = {
@@ -337,7 +337,7 @@ async function findGraphQLTags(
             hash: hash,
             isStaticQuery: false,
             isHook: false,
-            templateLoc,
+            templateLoc
           }
 
           documentLocations.set(
@@ -379,9 +379,9 @@ async function findGraphQLTags(
                   path.scope.getBinding(path.node.local.name)
                 )
                 binding.path.traverse({ TaggedTemplateExpression })
-              },
+              }
             })
-          },
+          }
         })
 
         // Remove duplicate queries
@@ -409,13 +409,13 @@ export default class FileParser {
         id: `85913`,
         filePath: file,
         context: {
-          filePath: file,
+          filePath: file
         },
-        error: err,
+        error: err
       })
 
       boundActionCreators.queryExtractionGraphQLError({
-        componentPath: file,
+        componentPath: file
       })
       return null
     }
@@ -432,7 +432,7 @@ export default class FileParser {
         cache[hash] ||
         (cache[hash] = await findGraphQLTags(file, text, {
           parentSpan: this.parentSpan,
-          addError,
+          addError
         }))
 
       // If any AST definitions were extracted, report success.
@@ -440,7 +440,7 @@ export default class FileParser {
       // we tried to extract the graphql AST.
       if (astDefinitions.length > 0) {
         boundActionCreators.queryExtractedBabelSuccess({
-          componentPath: file,
+          componentPath: file
         })
       }
 
@@ -450,29 +450,29 @@ export default class FileParser {
       let structuredError = {
         id: `85915`,
         context: {
-          filePath: file,
-        },
+          filePath: file
+        }
       }
 
       if (err instanceof StringInterpolationNotAllowedError) {
         const location = {
           start: err.interpolationStart,
-          end: err.interpolationEnd,
+          end: err.interpolationEnd
         }
         structuredError = {
           id: `85916`,
           location,
           context: {
             codeFrame: codeFrameColumns(text, location, {
-              highlightCode: process.env.FORCE_COLOR !== `0`,
-            }),
-          },
+              highlightCode: process.env.FORCE_COLOR !== `0`
+            })
+          }
         }
       } else if (err instanceof EmptyGraphQLTagError) {
         const location = err.templateLoc
           ? {
               start: err.templateLoc.start,
-              end: err.templateLoc.end,
+              end: err.templateLoc.end
             }
           : null
 
@@ -482,17 +482,17 @@ export default class FileParser {
           context: {
             codeFrame: location
               ? codeFrameColumns(text, location, {
-                  highlightCode: process.env.FORCE_COLOR !== `0`,
+                  highlightCode: process.env.FORCE_COLOR !== `0`
                 })
-              : null,
-          },
+              : null
+          }
         }
       } else if (err instanceof GraphQLSyntaxError) {
         const location = {
           start: locInGraphQlToLocInFile(
             err.templateLoc,
             err.originalError.locations[0]
-          ),
+          )
         }
 
         structuredError = {
@@ -502,21 +502,21 @@ export default class FileParser {
             codeFrame: location
               ? codeFrameColumns(text, location, {
                   highlightCode: process.env.FORCE_COLOR !== `0`,
-                  message: err.originalError.message,
+                  message: err.originalError.message
                 })
               : null,
-            sourceMessage: err.originalError.message,
-          },
+            sourceMessage: err.originalError.message
+          }
         }
       }
 
       addError({
         ...structuredError,
-        filePath: file,
+        filePath: file
       })
 
       boundActionCreators.queryExtractionGraphQLError({
-        componentPath: file,
+        componentPath: file
       })
       return null
     }

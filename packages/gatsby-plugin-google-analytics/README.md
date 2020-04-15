@@ -36,10 +36,10 @@ module.exports = {
         // Any additional optional fields
         sampleRate: 5,
         siteSpeedSampleRate: 10,
-        cookieDomain: "example.com",
-      },
-    },
-  ],
+        cookieDomain: "example.com"
+      }
+    }
+  ]
 }
 ```
 
@@ -100,6 +100,10 @@ you can set a link e.g. in your imprint as follows:
 ### `respectDNT`
 
 If you enable this optional option, Google Analytics will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Analytics does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
+
+If you are testing this, make sure to disable Do Not Track settings in your own browser.
+For Chrome, Settings > Privacy and security > More
+Then disable `Send a "Do Not Track" request with your browsing traffic`
 
 ### `exclude`
 
@@ -225,11 +229,11 @@ module.exports = {
       options: {
         trackingId: "UA-111111111-1",
         // this option places the tracking script into the head of the DOM
-        head: true,
+        head: true
         // other options
-      },
-    },
-  ],
+      }
+    }
+  ]
   // other plugins
 }
 ```
