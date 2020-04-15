@@ -70,8 +70,9 @@ module.exports = (
     let numLinesStyle, numLinesClass, numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
     if (showLineNumbers) {
-      numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt -
-        1}"`
+      numLinesStyle = ` style="counter-reset: linenumber ${
+        numberLinesStartAt - 1
+      }"`
       numLinesClass = ` line-numbers`
       numLinesNumber = addLineNumbers(node.value)
     }
