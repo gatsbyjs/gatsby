@@ -4,6 +4,8 @@ import path from "path"
 import fs from "fs"
 import detectPort from "detect-port"
 
+import { IProgram } from "./types"
+
 module.exports = async (program: IProgram): Promise<void> => {
   const recipe = program._[1]
   // We don't really care what port is used for GraphQL as it's
@@ -41,7 +43,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   let started = false
-  subprocess.stdout.on(`data`, data => {
+  subprocess.stdout.on(`data`, () => {
     if (!started) {
       const runRecipe = require(`gatsby-recipes/dist/index.js`)
       runRecipe({ recipe, graphqlPort, projectRoot: program.directory })
