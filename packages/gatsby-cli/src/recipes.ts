@@ -1,23 +1,19 @@
-import telemetry from "gatsby-telemetry"
+import { trackCli } from "gatsby-telemetry"
 import execa from "execa"
-import path from "path"
-import fs from "fs"
+import * as path from "path"
+import * as fs from "fs"
 import detectPort from "detect-port"
 
-import { IProgram } from "./types"
-
-module.exports = async (program: IProgram): Promise<void> => {
-  const recipe = program._[1]
+export async function recipesHandler(recipe: string): Promise<void> {
   // We don't really care what port is used for GraphQL as it's
   // generally only for code to code communication or debugging.
   const graphqlPort = await detectPort(4000)
-  telemetry.trackCli(`RECIPE_RUN`, { name: recipe })
+  trackCli(`RECIPE_RUN`, { name: recipe })
 
   // Start GraphQL serve
   const scriptPath = require.resolve(`gatsby-recipes/dist/graphql.js`)
 
   const subprocess = execa(`node`, [scriptPath, graphqlPort], {
-    cwd: program.directory,
     all: true,
     env: {
       // Chalk doesn't want to output color in a child process
@@ -36,7 +32,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   )
   // Log server output to a file.
   if (process.env.DEBUG) {
-    const logFile = path.join(program.directory, `./recipe-server.log`)
+    const logFile = path.resolve(`./recipe-server.log`)
     fs.writeFileSync(logFile, `\n-----\n${new Date().toJSON()}\n`)
     const writeStream = fs.createWriteStream(logFile, { flags: `a` })
     subprocess.stdout.pipe(writeStream)
@@ -46,8 +42,10 @@ module.exports = async (program: IProgram): Promise<void> => {
   subprocess.stdout.on(`data`, () => {
     if (!started) {
       const runRecipe = require(`gatsby-recipes/dist/index.js`)
-      runRecipe({ recipe, graphqlPort, projectRoot: program.directory })
+      runRecipe({ recipe, graphqlPort, projectRoot: process.cwd() })
       started = true
     }
   })
+
+  return subprocess
 }
