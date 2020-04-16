@@ -108,7 +108,7 @@ You can see there are several dependencies installed right off the bat. I'll jus
 
 Whew! That was a mouthful.
 
-https://giphy.com/gifs/monty-python-and-the-holy-grail-eb3WAhXzlUAFi
+https://giphy.com/gifs/movie-funny-HfJdu4HABDU3e
 
 ### Running the site
 
