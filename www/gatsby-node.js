@@ -15,6 +15,14 @@ const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
 const sections = [docs, showcase, starters, creators, packages, features]
 
+exports.createSchemaCustomization = async helpers => {
+  await Promise.all(
+    sections
+      .filter(section => typeof section.createSchemaCustomization === `function`)
+      .map(section => section.createSchemaCustomization(helpers))
+  )
+}
+
 exports.createPages = async helpers => {
   const { actions } = helpers
   const { createRedirect } = actions

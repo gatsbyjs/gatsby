@@ -226,7 +226,7 @@ export const pageQuery = graphql`
     allMdx(
       limit: 2000
       filter: {
-        fields: { released: { eq: true } }
+        released: { eq: true }
         fileAbsolutePath: { regex: "/docs.blog/" }
       }
     ) {

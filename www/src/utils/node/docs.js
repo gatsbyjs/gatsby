@@ -7,6 +7,8 @@ const moment = require(`moment`)
 const { langCodes } = require(`../i18n`)
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
 
+const IS_PRODUCTION = process.env.NODE_ENV === `production`
+
 // convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
 const slugToAnchor = slug =>
   slug
@@ -22,6 +24,42 @@ const docSlugFromPath = parsedFilePath => {
   } else {
     return `/${parsedFilePath.dir}/`
   }
+}
+
+/*
+ * Blog posts are occassionally set to the future (e.g. publish on DD/YY/MMMM)
+ * We'll filter as part of the build to only show posts for _today_ or in the past
+ * Note: we only use this behavior in production
+ */
+const isReleased = node => {
+  if (IS_PRODUCTION) {
+    let released = false
+    const date = _.get(node, `frontmatter.date`)
+    if (date) {
+      released = moment.utc().isSameOrAfter(moment.utc(date))
+    }
+    return released && node.draft !== true
+  }
+  return true
+}
+
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  const { createTypes } = actions
+  const typeDefs = [
+    schema.buildObjectType({
+      name: `Mdx`,
+      fields: {
+        released: {
+          type: `Boolean`,
+          resolve: source => {
+            return isReleased(source)
+          },
+        },
+      },
+      interfaces: [`Node`],
+    }),
+  ]
+  createTypes(typeDefs)
 }
 
 exports.createPages = async ({ graphql, actions }) => {
@@ -47,6 +85,7 @@ exports.createPages = async ({ graphql, actions }) => {
         filter: {
           fileAbsolutePath: { ne: null }
           fields: { locale: { eq: "en" } }
+          released: { eq: true }
         }
       ) {
         nodes {
@@ -54,7 +93,6 @@ exports.createPages = async ({ graphql, actions }) => {
             slug
             locale
             package
-            released
           }
           frontmatter {
             title
@@ -64,6 +102,7 @@ exports.createPages = async ({ graphql, actions }) => {
             tags
             jsdoc
             apiCalls
+            date
           }
         }
       }
@@ -90,9 +129,7 @@ exports.createPages = async ({ graphql, actions }) => {
     return undefined
   })
 
-  const releasedBlogPosts = blogPosts.filter(post =>
-    _.get(post, `fields.released`)
-  )
+  const releasedBlogPosts = blogPosts.filter(isReleased)
 
   // Create blog-list pages.
   const postsPerPage = 8
@@ -116,7 +153,9 @@ exports.createPages = async ({ graphql, actions }) => {
   // Create blog-post pages.
   blogPosts.forEach((node, index) => {
     let next = index === 0 ? null : blogPosts[index - 1]
-    if (next && !_.get(next, `fields.released`)) next = null
+    if (next && next.released !== false) {
+      next = null
+    }
 
     const prev = index === blogPosts.length - 1 ? null : blogPosts[index + 1]
 
@@ -244,13 +283,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
       // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
-        let released = false
-        const date = _.get(node, `frontmatter.date`)
-        if (date) {
-          released = moment.utc().isSameOrAfter(moment.utc(date))
-        }
-        createNodeField({ node, name: `released`, value: released })
-
         const canonicalLink = _.get(node, `frontmatter.canonicalLink`)
         const publishedAt = _.get(node, `frontmatter.publishedAt`)
 
