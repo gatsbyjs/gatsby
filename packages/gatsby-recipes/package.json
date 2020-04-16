@@ -1,7 +1,7 @@
 {
   "name": "gatsby-recipes",
   "description": "Core functionality for Gatsby Recipes",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -69,11 +69,7 @@
     "rimraf": "^3.0.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes-core#readme",
-  "keywords": [
-    "gatsby",
-    "gatsby-recipes",
-    "mdx"
-  ],
+  "keywords": ["gatsby", "gatsby-recipes", "mdx"],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -83,10 +79,7 @@
     "graphql": "^14.6.0"
   },
   "jest": {
-    "testPathIgnorePatterns": [
-      "/.cache/",
-      "dist"
-    ],
+    "testPathIgnorePatterns": ["/.cache/", "dist"],
     "testEnvironment": "node"
   },
   "scripts": {
