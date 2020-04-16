@@ -21,7 +21,7 @@ If by chance you have not yet taken the survey, we definitely still want to hear
 
 ## Why run this survey?
 
-Gatsby added this survey as a reliable way for active Gatsby users to communicate their needs, problems, and feature requests with the assurance that each survey’s results will be shared in one place (a blog post each quarter) so the results can influence product priorities.
+Gatsby added this survey as a reliable way to query active Gatsby users about their needs, problems, and feature requests.  Each survey’s results will be shared in one place (a blog post each quarter) so the results can influence product priorities (and show how we did in terms of follow through on addressing issues raised by survey responses).
 
 ## What did the most recent survey reveal about Gatsby users?
 
