@@ -60,13 +60,13 @@ module.exports = {
 
 ### Theme options
 
-| Key                      | Default value    | Description                                                                                                                                        |
-| ------------------------ | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `basePath`               | `/`              | Root url for all blog posts                                                                                                                        |
-| `contentPath`            | `content/posts`  | Location of blog posts                                                                                                                             |
-| `assetPath`              | `content/assets` | Location of assets                                                                                                                                 |
-| `mdxOtherwiseConfigured` | `false`          | Set this flag `true` if `gatsby-plugin-mdx` is already configured for your site.                                                                   |
-| `disableThemeUiStyling`  | `false`          | Set this flag `true` if you want to use the blog theme without theme-ui styles. Note that styles within the components you can shadow still exist. |
+| Key                      | Default value    | Description                                                                                                                                                      |
+| ------------------------ | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `basePath`               | `/`              | Root url for all blog posts                                                                                                                                      |
+| `contentPath`            | `content/posts`  | Location of blog posts                                                                                                                                           |
+| `assetPath`              | `content/assets` | Location of assets                                                                                                                                               |
+| `mdxOtherwiseConfigured` | `false`          | Set this flag `true` if `gatsby-plugin-mdx` is already configured for your site.                                                                                 |
+| `disableThemeUiStyling`  | `false`          | Set this flag `true` if you want to use the blog theme without gatsby-plugin-theme-ui styles. Note that styles within the components you can shadow still exist. |
 
 #### Example configuration
 
