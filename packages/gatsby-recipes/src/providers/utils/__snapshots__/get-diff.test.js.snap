@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`diffs values by line with color codes 1`] = `
+"[31m- Original  - 1[39m
+[32m+ Modified  + 1[39m
+
+[2m  Object {[22m
+[31m-   \\"a\\": \\"hi\\",[39m
+[32m+   \\"b\\": \\"hi\\",[39m
+[2m  }[22m"
+`;

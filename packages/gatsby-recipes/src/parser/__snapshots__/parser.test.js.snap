@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetches MDX from a url 1`] = `
+Array [
+  Object {},
+  Object {
+    "NPMScript": Array [
+      Object {
+        "command": "echo 'world'",
+        "name": "hello",
+      },
+    ],
+  },
+]
+`;
+
+exports[`fetches a recipe from unpkg when official short form 1`] = `
+Array [
+  "# Setup Theme UI
+
+This recipe helps you start developing with the [Theme UI](https://theme-ui.com) styling library.
+
+<Config name=\\"gatsbyjs/add-theme-ui\\" />
+",
+  "Install packages.
+
+<NPMPackage name=\\"theme-ui\\" />
+<NPMPackage name=\\"gatsby-plugin-theme-ui\\" />
+",
+  "Add the plugin \`gatsby-plugin-theme-ui\` to your \`gatsby-config.js\`.
+
+<GatsbyPlugin name=\\"gatsby-plugin-theme-ui\\" />
+",
+  "Write out Theme UI configuration files.
+
+<GatsbyShadowFile
+  theme=\\"gatsby-plugin-theme-ui\\"
+  path=\\"src/index.js\\"
+/>
+
+<File
+  content=\\"export default {}\\"
+  path=\\"src/gatsby-plugin-theme-ui/components.js\\"
+/>
+",
+  "**Success**!
+
+You're ready to get started!
+
+-   Read the docs: <https://theme-ui.com>
+-   Learn about the theme specification: <https://system-ui.com>
+",
+]
+`;
+
+exports[`handles imports from urls 1`] = `
+Array [
+  "# Here is an imported recipe from a url!
+",
+  "# Test recipe
+
+Add a package.json config object.
+
+<NPMPackageJson
+  name=\\"test-recipe\\"
+  value={{
+    hello: 'world!'
+  }}
+/>
+",
+]
+`;
+
+exports[`partitions the MDX into steps 1`] = `
+Array [
+  "# Automatically run Prettier on Git commits
+
+Make sure all of your code is run through Prettier when you commit it to git.
+We achieve this by configuring prettier to run on git hooks using husky and
+lint-staged.
+",
+  "Install packages.
+
+<NPMPackage name=\\"husky\\" />
+<NPMPackage name=\\"prettier\\" />
+<NPMPackage name=\\"lint-staged\\" />
+",
+  "Implement git hooks for prettier.
+
+<NPMPackageJson
+  name=\\"husky\\"
+  value={{
+    \\"hooks\\": {
+      \\"pre-commit\\": \\"lint-staged\\"
+    }
+  }}
+/>
+<NPMPackageJson
+  name=\\"lint-staged\\"
+  value={{
+    \\"*.{js,md,mdx,json}\\": [
+      \\"prettier --write\\"
+    ]
+  }}
+/>
+",
+  "Write prettier config files.
+
+<File
+  path=\\".prettierrc\\"
+  content={\`{
+  \\"semi\\": false,
+  \\"singleQuote\\": true,
+  \\"trailingComma\\": \\"none\\"
+}\`}
+/>
+<File
+  path=\\".prettierignore\\"
+  content={\`.cache
+public
+node_modules
+\`}
+/>
+",
+  "Prettier, husky, and lint-staged are now installed! You can edit your \`.prettierrc\`
+if you'd like to change your prettier configuration.
+",
+]
+`;
+
+exports[`raises an error when the recipe isn't known 1`] = `[Error: {"fetchError":"Could not fetch theme-uiz from official recipes"}]`;
+
+exports[`returns a set of commands 1`] = `
+Array [
+  Object {},
+  Object {
+    "NPMPackage": Array [
+      Object {
+        "name": "husky",
+      },
+      Object {
+        "name": "prettier",
+      },
+      Object {
+        "name": "lint-staged",
+      },
+    ],
+  },
+  Object {
+    "NPMPackageJson": Array [
+      Object {
+        "name": "husky",
+        "value": Object {
+          "hooks": Object {
+            "pre-commit": "lint-staged",
+          },
+        },
+      },
+      Object {
+        "name": "lint-staged",
+        "value": Object {
+          "*.{js,md,mdx,json}": Array [
+            "prettier --write",
+          ],
+        },
+      },
+    ],
+  },
+  Object {
+    "File": Array [
+      Object {
+        "content": "{
+  \\"semi\\": false,
+  \\"singleQuote\\": true,
+  \\"trailingComma\\": \\"none\\"
+}",
+        "path": ".prettierrc",
+      },
+      Object {
+        "content": ".cache
+public
+node_modules
+",
+        "path": ".prettierignore",
+      },
+    ],
+  },
+  Object {},
+]
+`;
