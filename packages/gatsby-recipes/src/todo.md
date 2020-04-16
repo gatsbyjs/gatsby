@@ -48,7 +48,7 @@ Kyle
 - [x] document ShadowFile
 - [x] Remove mention of canary release before merging
 - [x] write blog post
-- [ ] move gatsby package to depend on released version of gatsby-recipes
+- [x] move gatsby package to depend on released version of gatsby-recipes
 
 John
 
