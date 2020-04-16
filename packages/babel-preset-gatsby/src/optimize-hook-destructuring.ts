@@ -8,7 +8,7 @@ const isHook = /^use[A-Z]/
 // matches only built-in hooks provided by React et al
 const isBuiltInHook = /^use(Callback|Context|DebugValue|Effect|ImperativeHandle|LayoutEffect|Memo|Reducer|Ref|State)$/
 
-type State = {
+interface IState {
   opts?: {
     onlyBuiltIns?: boolean
     lib?: boolean
@@ -21,7 +21,7 @@ export default function ({
   types: typeof BabelTypes
 }): PluginObj<Program> {
   const visitor: Visitor = {
-    CallExpression(path, state: State): void {
+    CallExpression(path, state: IState): void {
       const onlyBuiltIns = state.opts?.onlyBuiltIns || false
 
       // if specified, options.lib is a list of libraries that provide hook functions
