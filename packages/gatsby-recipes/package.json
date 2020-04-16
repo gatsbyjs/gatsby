@@ -68,18 +68,26 @@
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.2"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes-core#readme",
-  "keywords": ["gatsby", "gatsby-recipes", "mdx"],
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-recipes",
+    "mdx"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby.git"
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-recipes"
   },
   "resolutions": {
     "graphql": "^14.6.0"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/.cache/", "dist"],
+    "testPathIgnorePatterns": [
+      "/.cache/",
+      "dist"
+    ],
     "testEnvironment": "node"
   },
   "scripts": {
