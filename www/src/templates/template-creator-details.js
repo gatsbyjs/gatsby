@@ -220,8 +220,8 @@ class CreatorTemplate extends Component {
                       <Img
                         alt={`${site.title}`}
                         fixed={
-                          site.childScreenshot.screenshotFile
-                            .childImageSharp.fixed
+                          site.childScreenshot.screenshotFile.childImageSharp
+                            .fixed
                         }
                       />
                     </Link>

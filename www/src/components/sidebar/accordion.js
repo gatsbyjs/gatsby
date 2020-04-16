@@ -143,7 +143,6 @@ class Accordion extends React.Component {
           <ul
             id={uid}
             sx={{
-              // display: isExpanded ? `block` : `none`,
               listStyle: `none`,
               margin: 0,
               position: `relative`,

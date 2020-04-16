@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@3.2.1...gatsby-plugin-preact@3.2.2) (2020-04-16)
+
+### Features
+
+- **gatsby-plugin-preact:** enable preact in development ([#22441](https://github.com/gatsbyjs/gatsby/issues/22441)) ([ca19076](https://github.com/gatsbyjs/gatsby/commit/ca19076))
+
 ## [3.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@3.2.0...gatsby-plugin-preact@3.2.1) (2020-03-23)
 
 **Note:** Version bump only for package gatsby-plugin-preact
