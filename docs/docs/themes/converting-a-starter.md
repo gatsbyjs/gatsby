@@ -66,27 +66,6 @@ const createPosts = (createPage, createRedirect, edges) => {
 
 There may be other locations where you will need to update the path resolution like your `gatsby-config.js` as well.
 
-## Sourcing pages
-
-If your theme provides pages for things like the blog post index and a homepage, you will need to source them.
-Gatsby will only look in the relative `src/pages` directory when `gatsby develop` is run.
-You will need to use the [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/).
-
-```shell
-npm install --save gatsby-plugin-page-creator
-```
-
-Then, tell the plugin to look in your theme's `src/pages` directory.
-
-```js:title=gatsby-config.js
-{
-  resolve: `gatsby-plugin-page-creator`,
-  options: {
-    path: path.join(__dirname, `src`, `pages`),
-  },
-},
-```
-
 ## Publishing to npm
 
 In order to allow others to install your theme you will need to publish it to npm. If this is new for you, learn how [to publish to npm](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
