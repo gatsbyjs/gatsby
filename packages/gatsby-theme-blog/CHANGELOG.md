@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.4.23...gatsby-theme-blog@1.4.24) (2020-04-16)
+
+### Features
+
+- **gatsby-theme-blog:** Refactor some larger components to be smaller ([#22185](https://github.com/gatsbyjs/gatsby/issues/22185)) ([a4427be](https://github.com/gatsbyjs/gatsby/commit/a4427be))
+
 ## [1.4.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.4.22...gatsby-theme-blog@1.4.23) (2020-04-15)
 
 **Note:** Version bump only for package gatsby-theme-blog

@@ -82,7 +82,7 @@ These files will be present in all Gatsby starters you use, so it's worth your t
     "react-helmet": "^5.2.0"
   },
   "devDependencies": {
-    "prettier": "^1.16.4"
+    "prettier": "2.0.4"
   },
   "keywords": ["gatsby"],
   "license": "MIT",
@@ -196,7 +196,7 @@ module.exports = {
           "**/users",
         ],
         excludedRoutes: [],
-        normalizer: function({ entities }) {
+        normalizer: function ({ entities }) {
           return entities
         },
       },

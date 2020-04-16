@@ -27,7 +27,7 @@
   "devDependencies": {
     "cross-env": "^7.0.0",
     "gatsby-plugin-benchmark-reporting": "*",
-    "prettier": "^1.19.1"
+    "prettier": "2.0.4"
   },
   "repository": {
     "type": "git",

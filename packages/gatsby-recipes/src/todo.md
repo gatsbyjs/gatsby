@@ -48,7 +48,7 @@ Kyle
 - [x] document ShadowFile
 - [x] Remove mention of canary release before merging
 - [x] write blog post
-- [ ] move gatsby package to depend on released version of gatsby-recipes
+- [x] move gatsby package to depend on released version of gatsby-recipes
 
 John
 
@@ -61,8 +61,9 @@ John
 - [x] handle not finding a recipe
 - [x] test modifying gatsby-config.js from default starter
 - [x] get tests passing
-- [ ] add emotion screenshot and add to readme
+- [x] add emotion screenshot and add to readme
 - [x] make note about using gists for paths and using the "raw" link
+- [x] gatsby-config.js hardening — make it work if there's no plugins set like in hello-world starter
 
 ## Near-ish future
 
@@ -71,10 +72,10 @@ John
 - [ ] init.js for providers to setup clients
 - [ ] validate resource config
 - [ ] Theme UI preset selection (runs dependent install and file write)
+- [ ] Failing postinstall scripts cause client to hang
 - [ ] Select input supported recipes
 - [ ] Refactor resource state to use Redux & record runs in local db
 - [ ] move creating the validate function to core and out of resources — they just declare their schema
-- [ ] gatsby-config.js hardening — make it work if there's no plugins set like in hello-world starter
 - [ ] get latest version of npm packages so know if can skip running.
 - [ ] Make `dependencyType` in NPMPackage an enum (joi2gql doesn't handle this right now from Joi enums)
 - [ ] Show in plan if an update will be applied vs. create.

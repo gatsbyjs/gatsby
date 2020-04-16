@@ -207,11 +207,15 @@ const components = {
   NPMScript: () => null,
 }
 
-var logStream = fs.createWriteStream(`recipe-client.log`, { flags: `a` })
+let logStream
 const log = (label, textOrObj) => {
-  logStream.write(`[${label}]:\n`)
-  logStream.write(require(`util`).inspect(textOrObj))
-  logStream.write(`\n`)
+  if (process.env.DEBUG) {
+    logStream =
+      logStream ?? fs.createWriteStream(`recipe-client.log`, { flags: `a` })
+    logStream.write(`[${label}]:\n`)
+    logStream.write(require(`util`).inspect(textOrObj))
+    logStream.write(`\n`)
+  }
 }
 
 log(

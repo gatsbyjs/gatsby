@@ -65,7 +65,7 @@ class SidebarBody extends Component {
       const localState = this._readLocalStorage(key)
 
       if (localState) {
-        const bar = Object.keys(initialState.openSectionHash).filter(function(
+        const bar = Object.keys(initialState.openSectionHash).filter(function (
           key
         ) {
           return initialState.openSectionHash[key]

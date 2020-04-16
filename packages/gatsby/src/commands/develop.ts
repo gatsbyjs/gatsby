@@ -614,7 +614,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   //   console.log(`set invalid`, args, this)
   // })
 
-  compiler.hooks.watchRun.tapAsync(`log compiling`, function(_, done) {
+  compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
       webpackActivity.end()
     }
@@ -629,7 +629,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tapAsync(`print gatsby instructions`, function(
+  compiler.hooks.done.tapAsync(`print gatsby instructions`, function (
     stats,
     done
   ) {

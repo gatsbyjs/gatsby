@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-lodash",
   "description": "Easy modular Lodash builds. Adds the Lodash webpack & Babel plugins to your Gatsby build",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
