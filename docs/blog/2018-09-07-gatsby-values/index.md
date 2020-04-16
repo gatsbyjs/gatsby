@@ -29,8 +29,9 @@ Gatsby is a distributed team, which means that on most days we only interact wit
     src="./images/team-discussion.jpg"
   />
   <figcaption>
-    The Inkteam in Portland, Oregon for a Gatsby Gathering. Photo:
-    <a href="https://www.houseofschaab.photography/">Danielle Schaab</a>
+
+The Inkteam in Portland, Oregon for a Gatsby Gathering. Photo: [Danielle Schaab](https://www.houseofschaab.photography/)
+
   </figcaption>
 </figure>
 
@@ -54,8 +55,9 @@ While we were all together, Sam went through the themes with all of us and we wr
     src="./images/kurt-sticky-note.jpg"
   />
   <figcaption>
-    Kurt writing down really good ideas on a sticky note. Photo:
-    <a href="https://www.houseofschaab.photography/">Danielle Schaab</a>
+
+Kurt writing down really good ideas on a sticky note. Photo: [Danielle Schaab](https://www.houseofschaab.photography/)
+
   </figcaption>
 </figure>
 
@@ -73,8 +75,9 @@ With everyone’s ideas on the board, we started grouping. [Marisa](https://twit
     src="./images/values-whiteboard.jpg"
   />
   <figcaption>
-    Kyle, Linda, and Marisa adding and grouping ideas on the whiteboard. Photo:
-    <a href="https://www.houseofschaab.photography/">Danielle Schaab</a>
+
+Kyle, Linda, and Marisa adding and grouping ideas on the whiteboard. Photo: [Danielle Schaab](https://www.houseofschaab.photography/)
+
   </figcaption>
 </figure>
 
@@ -164,8 +167,9 @@ Are we acting like the company we want to be? Like the _people_ we want to be?
     src="./images/team-in-the-park.jpg"
   />
   <figcaption>
-    The Gatsby Inkteam (not pictured: Florian Kissling). Photo:{" "}
-    <a href="https://www.houseofschaab.photography/">Danielle Schaab</a>
+
+The Gatsby Inkteam (not pictured: Florian Kissling). Photo:{" "} [Danielle Schaab](https://www.houseofschaab.photography/)
+
   </figcaption>
 </figure>
 

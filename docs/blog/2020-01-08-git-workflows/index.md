@@ -52,11 +52,9 @@ Here's a visualization of this setup:
   <img src={initialSvg} aria-describedby="git-setup-description" />
 </Breakout>
 <VisuallyHidden id="git-setup-description">
-  4 git branches are represented with parallel lines. Our root branch,
-  feat/headless-cms, is forked from staging, and contains no commits.
-  feat/headless-cms-pt1 is forked from our root branch, and includes two
-  commits, A and B. Finally, a fourth branch, feat/headless-cms-pt2, is forked
-  after commit B, and includes one commit, C.
+
+4 git branches are represented with parallel lines. Our root branch, feat/headless-cms, is forked from staging, and contains no commits. feat/headless-cms-pt1 is forked from our root branch, and includes two commits, A and B. Finally, a fourth branch, feat/headless-cms-pt2, is forked after commit B, and includes one commit, C.
+
 </VisuallyHidden>
 
 Our first incremental branch has two commits, `A` and `B`. Our second branch is forked from that first branch, and adds a new commit `C`.
@@ -73,11 +71,9 @@ Let's say that we get feedback that fundamentally changes how we want to approac
   <img src={additionalWorkSvg} aria-describedby="git-additional-work" />
 </Breakout>
 <VisuallyHidden id="git-additional-work">
-  4 parallel lines are shown, representing different branches: staging,
-  feat/headless-cms, feat/headless-cms-pt1, and feat/headless-cms-pt2. As it was
-  before, commits A and B are on our "pt1" branch, and commit C is on our "pt2"
-  branch. A newly-added commit, D, is on our "pt1" branch, but it occurs after
-  the fork that leads to commit C on the later feature branch.
+
+4 parallel lines are shown, representing different branches: staging, feat/headless-cms, feat/headless-cms-pt1, and feat/headless-cms-pt2. As it was before, commits A and B are on our "pt1" branch, and commit C is on our "pt2" branch. A newly-added commit, D, is on our "pt1" branch, but it occurs after the fork that leads to commit C on the later feature branch.
+
 </VisuallyHidden>
 
 Our `pt1` PR is approved (🎉), but now we have to reconcile our `pt2` branch. Given that it built on a now-outdated structure, there's a good chance we'll have some conflicts.
@@ -117,10 +113,9 @@ After rebasing, our Git branches look like this:
   <img src={rebasedSvg} aria-describedby="git-rebased" />
 </Breakout>
 <VisuallyHidden id="git-rebased">
-  4 parallel lines are shown, representing different branches: staging,
-  feat/headless-cms, feat/headless-cms-pt1, and feat/headless-cms-pt2. Our "pt1"
-  branch now holds commits A, B, D in series, with the split to "pt2" happening
-  later. After the split, commit E is added on the "pt2" branch.
+
+4 parallel lines are shown, representing different branches: staging, feat/headless-cms, feat/headless-cms-pt1, and feat/headless-cms-pt2. Our "pt1" branch now holds commits A, B, D in series, with the split to "pt2" happening later. After the split, commit E is added on the "pt2" branch.
+
 </VisuallyHidden>
 
 You'll notice that our `C` commit—the only commit in our `pt2` branch—has been replaced with `E`. This is because it's no longer the same commit; it includes the changes that we dealt with in our rebase.
@@ -157,10 +152,9 @@ With our new base set, our tree looks like this:
   <img src={mergeCommitSvg} aria-describedby="git-merge-commit" />
 </Breakout>
 <VisuallyHidden id="git-merge-commit">
-  3 parallel lines are shown, representing different branches: staging,
-  feat/headless-cms, and feat/headless-cms-pt2. Our "pt1" branch is not
-  pictured. Our root branch, "feat/headless-cms", holds commits A, B, D, and M.
-  After that last commit, the branch is split into "pt2", which holds commit E.
+
+3 parallel lines are shown, representing different branches: staging, feat/headless-cms, and feat/headless-cms-pt2. Our "pt1" branch is not pictured. Our root branch, "feat/headless-cms", holds commits A, B, D, and M. After that last commit, the branch is split into "pt2", which holds commit E.
+
 </VisuallyHidden>
 
 A new commit `M` was added, representing the merge.
@@ -179,13 +173,9 @@ A more accurate representation of our current state would look like this:
   <img src={actualGitSvg} alt="" aria-describedby="git-actual" />
 </Breakout>
 <VisuallyHidden id="git-actual">
-  Unlike the previous visualizations, which featured multiple parallel lines
-  each holding commits, this new representation shows a single chain of commits:
-  A, B, D, M, E. At the start of the chain, it points to the previous commits
-  from the original branch (staging). Commit M is circled and is annotated with
-  the branch name, feat/headless-cms. Commit E is also circled, with the
-  annotation feat/headless-cms-pt2. In this representation, branches are simply
-  labels applied to individual commits, which form a long, single chain.
+
+Unlike the previous visualizations, which featured multiple parallel lines each holding commits, this new representation shows a single chain of commits: A, B, D, M, E. At the start of the chain, it points to the previous commits from the original branch (staging). Commit M is circled and is annotated with the branch name, feat/headless-cms. Commit E is also circled, with the annotation feat/headless-cms-pt2. In this representation, branches are simply labels applied to individual commits, which form a long, single chain.
+
 </VisuallyHidden>
 
 Every commit points to its parent, and branches are just references to a particular commit.
@@ -200,12 +190,9 @@ Let's say we had squash-merged our `pt1` branch into the root branch. We would w
   />
 </Breakout>
 <VisuallyHidden id="git-parallel-universes">
-  This image is split into two halves. The top half is labeled "Universe 1:
-  feat/headless-cms-pt2", and it shows the string of commits that the
-  feat/headless-cms-pt2 branch points to: A, B, D, M, E. This is the same chain
-  as in the previous image. The second half shows a different chain. It's
-  labeled "Universe 2: feat/headless-cms", and shows the chain of commits held
-  by our root branch: S, E.
+
+This image is split into two halves. The top half is labeled "Universe 1: feat/headless-cms-pt2", and it shows the string of commits that the feat/headless-cms-pt2 branch points to: A, B, D, M, E. This is the same chain as in the previous image. The second half shows a different chain. It's labeled "Universe 2: feat/headless-cms", and shows the chain of commits held by our root branch: S, E.
+
 </VisuallyHidden>
 
 These universes collide when we try to change the base, to point `pt2` at the root branch:
@@ -214,12 +201,9 @@ These universes collide when we try to change the base, to point `pt2` at the ro
   <img src={doubleWorkSvg} alt="" aria-describedby="git-double-work" />
 </Breakout>
 <VisuallyHidden id="git-double-work">
-  This image shows the string of commits that occurs when changing the base. The
-  string of commits is: S, A, B, D, M, E. The first commit is circled with the
-  label "Part 1", since it includes the work contained in the "pt1" branch.
-  Commits A, B, D, and M are circled as well, with the label "Also Part 1". This
-  image demonstrates the problem: that the same work is repeated twice in the
-  history.
+
+This image shows the string of commits that occurs when changing the base. The string of commits is: S, A, B, D, M, E. The first commit is circled with the label "Part 1", since it includes the work contained in the "pt1" branch. Commits A, B, D, and M are circled as well, with the label "Also Part 1". This image demonstrates the problem: that the same work is repeated twice in the history.
+
 </VisuallyHidden>
 
 The Git history pollution isn't a huge deal, since we'll have the chance to squash or clean this up before deploying, but it can lead to weird issues and nonsensical conflicts.
@@ -266,12 +250,9 @@ In this example, we could check out a new branch, `pt3`, based off of `pt2`. And
   <img src={moreIncrementalSvg} alt="" aria-describedby="git-on-and-on" />
 </Breakout>
 <VisuallyHidden id="git-on-and-on">
-  Back in the parallel tracks world-view, we now have 5 parallel lines, each
-  representing different branches: staging, feat/headless-cms,
-  feat/headless-cms-pt2, feat/headless-cms-pt3, and feat/headless-cms-pt4. The
-  root branch holds A, B, D, and M, which is then split to "pt2", which holds E.
-  Another split leads to branch "pt3, which holds the commit F, before finally
-  splitting into "pt4", which holds the last commit in this image, G.
+
+Back in the parallel tracks world-view, we now have 5 parallel lines, each representing different branches: staging, feat/headless-cms, feat/headless-cms-pt2, feat/headless-cms-pt3, and feat/headless-cms-pt4. The root branch holds A, B, D, and M, which is then split to "pt2", which holds E. Another split leads to branch "pt3, which holds the commit F, before finally splitting into "pt4", which holds the last commit in this image, G.
+
 </VisuallyHidden>
 
 No matter how many branches we have, the process is always the same when we're ready to start merging:

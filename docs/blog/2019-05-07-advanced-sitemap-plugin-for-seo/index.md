@@ -25,10 +25,9 @@ The plugin generates an organised sitemap that is accessible to both humans and 
 <figure>
   <img alt="Advanced sitemaps" src="./images/advanced_sitemaps.png" />
   <figcaption>
-    Demo:{" "}
-    <a href="https://docs.ghost.org/sitemap.xml">
-      https://docs.ghost.org/sitemap.xml
-    </a>
+
+Demo: <https://docs.ghost.org/sitemap.xml>
+
   </figcaption>
 </figure>
 
@@ -41,8 +40,9 @@ Rebuilding our docs site using Gatsby was a huge success. We saw major improveme
 <figure>
   <img alt="SEO performance" src="./images/seo_results.png" />
   <figcaption>
-    In 6 months organic search impressions have increased by 235% & organic
-    traffic is up 120%
+
+In 6 months organic search impressions have increased by 235% & organic traffic is up 120%
+
   </figcaption>
 </figure>
 

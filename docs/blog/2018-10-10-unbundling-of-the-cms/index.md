@@ -56,7 +56,11 @@ Enterprises who have purchased these CMS solutions are left asking themselves on
     height="400"
     src="./headless-cms-landscape.png"
   />
-  <figcaption>The [headless CMS](/docs/headless-cms/) landscape</figcaption>
+  <figcaption>
+
+The [headless CMS](/docs/headless-cms/) landscape
+
+  </figcaption>
 </figure>
 
 ## Making integration feasible via a content mesh

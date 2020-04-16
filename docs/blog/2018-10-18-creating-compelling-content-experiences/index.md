@@ -74,8 +74,9 @@ The answer: choose a content mesh. A content mesh:
     height="300"
   />
   <figcaption>
-    The Content Mesh integrates <b>headless</b> content systems, modern
-    development tools, and website performance
+
+The Content Mesh integrates **headless** content systems, modern development tools, and website performance
+
   </figcaption>
 </figure>
 

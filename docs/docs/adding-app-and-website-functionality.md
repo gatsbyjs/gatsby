@@ -8,10 +8,9 @@ Gatsby empowers developers and creators to make many different types of websites
 The distinction between apps and websites is blurry, the way Dustin Schau puts it in a [blog post](/blog/2018-10-15-beyond-static-intro/):
 
 <Pullquote citation="Dustin Schau" narrow={true}>
-  I contend that the line between these two concepts is extremely blurry. There
-  isn’t some magic percentage threshold that, when crossed, indicates that a
-  static site is now an application. Nor is the inverse true, that an “app” is
-  somehow static because some percentage of its content never or rarely changes.
+
+I contend that the line between these two concepts is extremely blurry. There isn’t some magic percentage threshold that, when crossed, indicates that a static site is now an application. Nor is the inverse true, that an “app” is somehow static because some percentage of its content never or rarely changes.
+
 </Pullquote>
 
 Gatsby allows you to orchestrate data fetching, transforming, and usage in pages, but it also allows you to make the call about how, when, and where, that happens. It allows you to make a site as feature-less or feature-rich as you want, you aren't restricted to just static sites.

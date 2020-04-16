@@ -55,6 +55,7 @@ Based on these new technologies, it seems that we can move to a new serverless p
 There are lots of pieces to this puzzle to still work out, but the shapes are starting to come into focus. The end result should be a streamlined process to design, build, test, and deploy new user experiences. And the resulting applications should be much faster, simpler to operate, cheaper to run, and more secure.
 
 <Pullquote citation="Elon Musk">
-  Some people don’t like change, but you need to embrace change if the
-  alternative is disaster.
+
+Some people don’t like change, but you need to embrace change if the alternative is disaster.
+
 </Pullquote>

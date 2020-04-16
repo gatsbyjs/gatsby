@@ -69,7 +69,9 @@ No matter how small the initial cost of a “free” headless CMS, the biggest t
 This is where the power of a headless CMS architecture shines. You can create a Gatsby site that starts with one free headless CMS, then switches to another if the first one didn’t fit your workflow, without making drastic changes to your site.
 
 <Pullquote>
-  The decoupled nature of your site erases concerns of CMS lock-in.
+
+The decoupled nature of your site erases concerns of CMS lock-in.
+
 </Pullquote>
 
 Now, that’s really being free!

@@ -17,10 +17,9 @@ I recently sat down with David Eads, who recently wrote a [fascinating deep dive
 **David:** Everything I've made since 2018 has been in Gatsby. https://projects.propublica.org/graphics/il/stuck-kids/ is one example, https://projects.propublica.org/chicago-tickets/ is another. I've also done embedded graphics with Gatsby, like the one seen here https://features.propublica.org/the-bad-bet/how-illinois-bet-on-video-gambling-and-lost/
 
 <Pullquote citation="ProPublica">
-  Every day, a child is held beyond medical necessity in Illinois. They've been
-  cleared to leave, but there's no where for them to go. Explore the cases of
-  Illinois youths stuck in psychiatric hospitals because of failures within the
-  state'a Department of Children and Family Services.
+
+Every day, a child is held beyond medical necessity in Illinois. They've been cleared to leave, but there's no where for them to go. Explore the cases of Illinois youths stuck in psychiatric hospitals because of failures within the state'a Department of Children and Family Services.
+
 </Pullquote>
 
 ![Illinois medical necessity](./images/medical.png)

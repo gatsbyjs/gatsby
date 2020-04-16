@@ -23,8 +23,9 @@ Most examples in the Gatsby docs and on the web at large focus on leveraging sou
 <figure>
   <img alt="" height="400" src="./integration_layer.png" />
   <figcaption>
-    Gatsby's GraphQL integration layer is the glue between presentation layer
-    and where your data lives
+
+Gatsby's GraphQL integration layer is the glue between presentation layer and where your data lives
+
   </figcaption>
 </figure>
 

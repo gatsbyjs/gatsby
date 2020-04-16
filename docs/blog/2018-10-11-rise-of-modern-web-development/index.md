@@ -69,9 +69,9 @@ And the evidence? Increasingly, award-winning websites such as the leading "corp
 <figure>
   <img alt="" src="./bmw-arch-digest-spotify.png" />
   <figcaption>
-    <a href="https://bmw.com">bmw.com</a> -- Angular //{" "}
-    <a href="https://architecturaldigest.com">AD (Conde Nast)</a> -- React //{" "}
-    <a href="https://spotify.me">Spotify.me</a> -- Vue
+
+[bmw.com](https://bmw.com) -- Angular // [AD (Conde Nast)](https://architecturaldigest.com) -- React // [Spotify.me](https://spotify.me) -- Vue
+
   </figcaption>
 </figure>
 

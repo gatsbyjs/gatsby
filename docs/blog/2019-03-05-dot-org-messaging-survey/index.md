@@ -130,8 +130,9 @@ Here are some ideas to keep in mind throughout for a potential redesign of the .
 Quote:
 
 <Pullquote>
-  [I didn’t think the value Gatsby provides was] that crucial until I
-  experienced it firsthand.
+
+[I didn’t think the value Gatsby provides was] that crucial until I experienced it firsthand.
+
 </Pullquote>
 
 ## How you can participate
