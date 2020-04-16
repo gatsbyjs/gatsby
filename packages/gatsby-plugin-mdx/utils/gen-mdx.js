@@ -154,7 +154,7 @@ ${code}`
           {
             useBuiltIns: `entry`,
             corejs: 2,
-            modules: `false`,
+            modules: false,
           },
         ],
       ],
@@ -164,7 +164,7 @@ ${code}`
     const imports = Array.from(instance.state.imports)
     if (!identifiers.includes(`React`)) {
       identifiers.push(`React`)
-      imports.push(`import React from 'react'`)
+      imports.push(`import * as React from 'react'`)
     }
 
     results.scopeImports = imports

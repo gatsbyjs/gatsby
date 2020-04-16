@@ -1,10 +1,13 @@
-const { request } = require(`graphql-request`)
-const createMockLogger = require(`logger-mock`)
-const fetchRoutes = require(`../prepare/fetch-routes`)
-
 jest.mock(`graphql-request`, () => {
   return { request: jest.fn() }
 })
+
+jest.mock(`gatsby-core-utils`)
+
+const { request } = require(`graphql-request`)
+const { isCI, createContentDigest } = require(`gatsby-core-utils`)
+const createMockLogger = require(`logger-mock`)
+const fetchRoutes = require(`../prepare/fetch-routes`)
 
 describe(`fetch-routes`, () => {
   const endpoint = `http://localhost:3000/___graphql`
@@ -63,16 +66,28 @@ describe(`fetch-routes`, () => {
         },
       }
     })
-    logger.confirm.mockImplementationOnce(() =>
-      Promise.resolve(false /* don't crawl routes */)
-    )
-    const mockExit = jest
-      .spyOn(process, `exit`)
-      .mockImplementationOnce(() => {})
+    // don't crawl routes
+    logger.confirm.mockImplementationOnce(() => Promise.resolve(false))
+    createContentDigest.mockReturnValueOnce(cache.hash)
+
+    await expect(fetchRoutes({ logger, endpoint, cache })).resolves.toEqual([])
+  })
+
+  it(`doesn't prompt the user when the list of routes has not changed since last run if run in CI`, async () => {
+    expect.assertions(1)
+
+    request.mockImplementationOnce(() => {
+      return {
+        allSitePage: {
+          nodes: [{ path: `/foo` }, { path: `/bar` }, { path: `/baz` }],
+        },
+      }
+    })
 
     cache.hash = `09f5b092fb87d859e0ac53dbae299a9e`
-    await fetchRoutes({ logger, endpoint, cache })
+    createContentDigest.mockReturnValueOnce(cache.hash)
+    isCI.mockReturnValueOnce(true)
 
-    expect(mockExit).toHaveBeenCalledWith(0)
+    await expect(fetchRoutes({ logger, endpoint, cache })).resolves.toEqual([])
   })
 })

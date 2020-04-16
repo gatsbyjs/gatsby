@@ -91,18 +91,16 @@ One of the great functions in WordPress is the ability for users to easily creat
 ### WP Trigger Netlify Build
 
 <figure>
-<video autoplay muted loop>
-  <source src="./images/wp_netlify_build.webm"/>
-  <source src="./images/wp_netlify_build.mp4"/>
-</video>
-<figcaption>WP Trigger Netlify Build shows Netlify status</figcaption>
+  <video autoplay muted loop>
+    <source src="./images/wp_netlify_build.webm" />
+    <source src="./images/wp_netlify_build.mp4" />
+  </video>
+  <figcaption>WP Trigger Netlify Build shows Netlify status</figcaption>
 </figure>
 
 When I build a Gatsby website, I like to use Netlify to handle the deployment of the site. Netlify rebuilds whenever a new commit is pushed or merged to the master branch of the repository, but what about when someone updates their WordPress site?
 
 Netlify has the ability to create webhooks that you can grab to say, "Hey, there's new content so you need to rebuild". I built [WP Trigger Netlify Build](https://github.com/iamtimsmith/wp-trigger-netlify-build) to make this super easy to integrate with WordPress. Simply drop in the necessary information and it will tell Netlify to rebuild when changes are made. It even shows a badge with the status of the build on the dashboard.
-
-https://giphy.com/gifs/qyX9oq2ZmsPwk
 
 ## You have themes and plugins, now what?
 

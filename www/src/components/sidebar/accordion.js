@@ -139,42 +139,43 @@ class Accordion extends React.Component {
           uid={uid}
           disableAccordions={disableAccordions}
         />
-        <ul
-          id={uid}
-          sx={{
-            display: isExpanded ? `block` : `none`,
-            listStyle: `none`,
-            margin: 0,
-            position: `relative`,
-            ...(item.ui === `steps` && {
-              "&:after": {
-                backgroundColor: `ui.border`,
-                bottom: 0,
-                content: `''`,
-                left: 27,
-                position: `absolute`,
-                top: 0,
-                width: 1,
-              },
-            }),
-          }}
-        >
-          {item.items.map(subitem => (
-            <Item
-              activeItemLink={activeItemLink}
-              activeItemParents={activeItemParents}
-              createLink={createLink}
-              item={subitem}
-              key={subitem.title}
-              location={location}
-              onLinkClick={onLinkClick}
-              isExpanded={isExpanded}
-              onSectionTitleClick={onSectionTitleClick}
-              openSectionHash={openSectionHash}
-              ui={item.ui}
-            />
-          ))}
-        </ul>
+        {isExpanded && (
+          <ul
+            id={uid}
+            sx={{
+              listStyle: `none`,
+              margin: 0,
+              position: `relative`,
+              ...(item.ui === `steps` && {
+                "&:after": {
+                  backgroundColor: `ui.border`,
+                  bottom: 0,
+                  content: `''`,
+                  left: 27,
+                  position: `absolute`,
+                  top: 0,
+                  width: 1,
+                },
+              }),
+            }}
+          >
+            {item.items.map(subitem => (
+              <Item
+                activeItemLink={activeItemLink}
+                activeItemParents={activeItemParents}
+                createLink={createLink}
+                item={subitem}
+                key={subitem.title}
+                location={location}
+                onLinkClick={onLinkClick}
+                isExpanded={isExpanded}
+                onSectionTitleClick={onSectionTitleClick}
+                openSectionHash={openSectionHash}
+                ui={item.ui}
+              />
+            ))}
+          </ul>
+        )}
       </li>
     )
   }

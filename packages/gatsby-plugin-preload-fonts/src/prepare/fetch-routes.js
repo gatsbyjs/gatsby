@@ -1,4 +1,4 @@
-import { createContentDigest } from "gatsby-core-utils"
+const { createContentDigest, isCI } = require(`gatsby-core-utils`)
 const { request } = require(`graphql-request`)
 const { formatRelative } = require(`date-fns`)
 const { red, blue, bold, dim } = require(`chalk`)
@@ -36,7 +36,14 @@ ${red(`err`)} could not establish a connection with the dev server
   }
 
   const routesHash = createContentDigest(routes)
+  // We can't detect all new routes so to make sure we are up to date
+  // we ask the user if they wants to recrawl or not.
   if (cache.hash === routesHash) {
+    // In CI we can't ask the user anything so we will bail as if the user said no.
+    if (isCI()) {
+      return []
+    }
+
     const lastRun = formatRelative(new Date(cache.timestamp), new Date())
     const ok = await logger.confirm(`
 
@@ -48,7 +55,9 @@ ${red(`err`)} could not establish a connection with the dev server
          - ${dim(`route hash`)} ${bold(cache.hash)}
 
 `)
-    if (!ok) process.exit(0)
+    if (!ok) {
+      return []
+    }
   }
 
   return routes

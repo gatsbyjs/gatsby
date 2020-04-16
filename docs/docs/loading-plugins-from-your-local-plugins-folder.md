@@ -6,7 +6,7 @@ Gatsby can load plugins from your website's local plugins folder, which is a fol
 
 Consider this example project structure which includes a local plugin called `gatsby-local-plugin`:
 
-```
+```text
 /my-gatsby-site
 └── /src
     └── /pages
@@ -49,7 +49,7 @@ _The [`onPreInit` API](/docs/node-apis/#onPreInit) is the first Node API called 
 
 Then, when running your site in develop or build mode, you should see "Testing..." logged in your terminal:
 
-```sh
+```shell
 success open and validate gatsby-configs - 0.051s
 success load plugins - 1.047s
 Testing... // highlight-line

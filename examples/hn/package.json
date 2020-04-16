@@ -7,6 +7,7 @@
   "dependencies": {
     "flat": "^2.0.1",
     "gatsby": "^2.0.0",
+    "gatsby-core-utils": "^1.0.28",
     "gatsby-plugin-manifest": "^2.0.2",
     "gatsby-source-hacker-news": "^2.0.5",
     "lodash": "^4.17.14",

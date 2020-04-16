@@ -55,18 +55,16 @@ the plugin provides a component.
 To use it, simply import it and use it like you would the `<a>` element e.g.
 
 ```jsx
-import React
-import { OutboundLink } from 'gatsby-plugin-google-analytics'
+import React from "react"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-export default () => {
+export default () => (
   <div>
-    <OutboundLink
-      href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/"
-    >
+    <OutboundLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/">
       Visit the Google Analytics plugin page!
     </OutboundLink>
   </div>
-}
+)
 ```
 
 ## Options
@@ -102,6 +100,10 @@ you can set a link e.g. in your imprint as follows:
 ### `respectDNT`
 
 If you enable this optional option, Google Analytics will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Analytics does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
+
+If you are testing this, make sure to disable Do Not Track settings in your own browser.
+For Chrome, Settings > Privacy and security > More
+Then disable `Send a "Do Not Track" request with your browsing traffic`
 
 ### `exclude`
 

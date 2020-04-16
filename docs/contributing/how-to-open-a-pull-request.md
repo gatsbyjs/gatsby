@@ -89,7 +89,7 @@ There are specific pages about contributing to various parts of the Gatsby ecosy
 
 ### Blog posts
 
-For the Gatsby blog, it's necessary to run your content idea by the Gatsby team before submitting it. For more information, refer to the page on [blog and website contributions](/contributing/blog-and-website-contributions/), including how to propose an idea and setting up the blog to run locally.
+For the Gatsby blog, it's necessary to run your content idea by the Gatsby team before submitting it. For more information, refer to the page on [blog contributions](/contributing/blog-contributions/), including how to propose an idea and setting up the blog to run locally.
 
 ## Follow up with reviews and suggestions
 

@@ -88,7 +88,7 @@ const hasDefaultExport = (str, options) => {
   return hasDefaultExportBool
 }
 
-module.exports = async function(content) {
+module.exports = async function (content) {
   const callback = this.async()
   const {
     getNode: rawGetNode,
@@ -97,6 +97,7 @@ module.exports = async function(content) {
     cache,
     pathPrefix,
     pluginOptions,
+    ...helpers
   } = getOptions(this)
 
   const options = withDefaultOptions(pluginOptions)
@@ -161,6 +162,7 @@ ${contentWithoutFrontmatter}`
   }
 
   const { rawMDXOutput } = await genMdx({
+    ...helpers,
     isLoader: true,
     options,
     node: { ...mdxNode, rawBody: code },
@@ -183,7 +185,7 @@ ${contentWithoutFrontmatter}`
     debugMore(`transformed code`, result.code)
     return callback(
       null,
-      `import React from 'react'
+      `import * as React from 'react'
   ${result.code}
       `
     )

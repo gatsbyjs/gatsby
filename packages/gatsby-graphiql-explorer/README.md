@@ -2,7 +2,7 @@
 
 A package to extend the default [GraphiQL][graphiql] IDE with useful features for Gatsby users.
 
-_Note:_ accessible at http://localhost:8000/___graphql after running `gatsby develop`
+_Note:_ accessible at `http://localhost:8000/___graphql` after running `gatsby develop`
 
 ![Gatsby GraphiQL Explorer](./assets/gatsby-graphiql-explorer.png)
 

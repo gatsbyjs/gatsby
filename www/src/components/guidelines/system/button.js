@@ -56,7 +56,7 @@ Button.defaultProps = {
   border: 0,
   borderRadius: 2,
   color: `white`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   fontSize: { xxs: 4, md: 5 },
   fontWeight: `bold`,
   px: 4,

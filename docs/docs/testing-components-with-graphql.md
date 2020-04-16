@@ -72,7 +72,7 @@ describe("Index", () =>
 This should fix the `StaticQuery` error, but in a more real-world example you may also be using a page query with the `graphql` helper from Gatsby. In this case, there is no GraphQL data being passed to the component. You can pass this in too,
 but the structure is a little more complicated. Luckily there's a way to
 get some suitable data. Run `npm run develop` and go to
-http://localhost:8000/___graphql to load the GraphiQL IDE. You can now get the
+`http://localhost:8000/___graphql` to load the GraphiQL IDE. You can now get the
 right data using the same query that you used on the page. If it is a simple
 query with no fragments you can copy it directly. That is the case here, run
 this query copied from the index page:
@@ -109,29 +109,29 @@ you're using `gatsby-transformer-sharp` you'll find the fragments in
 So, for example if your query includes:
 
 ```graphql
-    image {
-        childImageSharp {
-            fluid(maxWidth: 1024) {
-                ...GatsbyImageSharpFluid
-            }
-        }
+image {
+  childImageSharp {
+    fluid(maxWidth: 1024) {
+      ...GatsbyImageSharpFluid
     }
+  }
+}
 ```
 
 ...it becomes:
 
 ```graphql
-    image {
-        childImageSharp {
-            fluid(maxWidth: 1024) {
-                base64
-                aspectRatio
-                src
-                srcSet
-                sizes
-            }
-        }
+image {
+  childImageSharp {
+    fluid(maxWidth: 1024) {
+      base64
+      aspectRatio
+      src
+      srcSet
+      sizes
     }
+  }
+}
 ```
 
 When you have the result, copy the `data` value from the output panel. Good
@@ -141,6 +141,7 @@ you will be defining it directly inside your test file:
 ```js:title=src/pages/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
+import { StaticQuery } from "gatsby"
 import Index from "../index"
 
 beforeEach(() => {

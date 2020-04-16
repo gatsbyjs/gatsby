@@ -13,4 +13,4 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-import 'gatsby-cypress'
+import "gatsby-cypress"

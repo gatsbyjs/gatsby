@@ -4,7 +4,7 @@ title: Docs Contributions
 
 Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of February 2019, over 800 people have contributed. It's people like you that make this community great!
 
-> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-and-website-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
+> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
 
 ## Top priorities
 
@@ -103,6 +103,25 @@ It can be necessary to change a heading within the docs. It's important to note 
 - Determine the URL you're looking for. `Changing headers` is linked with a URL ending in `changing-headers`, `Docs renaming instructions` becomes `docs-renaming-instructions`, etc.
 - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
 
+## Adding a description
+
+The site automatically creates description tags in order to boost SEO:
+
+```html
+<meta name="description" content="Documentation of Gatsby" />
+<meta property="og:description" content="Documentation of Gatsby" />
+<meta name="twitter:description" content="Documentation of Gatsby" />
+```
+
+By default, this description is generated from the `page.excerpt`. If you would like to add a custom description, you can use the `description` frontmatter tag:
+
+```markdown
+---
+title: Gatsby Community Events
+description: Learn about other events happening around the globe to connect with other members of the Gatsby community
+---
+```
+
 ## Configuring site navigation
 
 The docs include custom built components to aid with navigation. In order to customize the navigation experience, these components allow some configurations without changing any of the React code.
@@ -151,6 +170,7 @@ There are embedded examples in a few places in the docs (like the [GraphQL Refer
 
 To write a new GraphQL example, a Codesandbox project with a Gatsby site can be opened at its server container link, for example: [https://711808k40x.sse.codesandbox.io/](https://711808k40x.sse.codesandbox.io/). Because Codesandbox is running a Gatsby site in [`develop` mode instead of `build` mode](/docs/overview-of-the-gatsby-build-process/) you can navigate to GraphiQL by adding `/___graphql` to the link. Write an example query, and when you have a query you are satisfied with, the query fields and names will be saved as URL parameters so you can share the link. Copy the URL and use it as the `src` of an iframe:
 
+<!-- prettier-ignore -->
 ```mdx
 Here's an example of a GraphQL query inline:
 
@@ -171,7 +191,7 @@ Sometimes it makes sense to move or rename a file as part of docs restructuring 
 
 ```yaml:title=www/redirects.yaml
 - fromPath: /docs/source-plugin-tutorial/
-  toPath: /docs/pixabay-source-plugin-tutorial/
+  toPath: /tutorial/pixabay-source-plugin-tutorial/
 ```
 
 ## Claim your swag

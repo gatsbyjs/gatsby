@@ -1,52 +1,18 @@
-import React from "react"
-import { graphql } from "gatsby"
-import Event from "./event"
+import { graphql, useStaticQuery } from "gatsby"
+import EventList from "./event-list"
 
-const Events = ({ events }) => {
-  const endOfDay = date => new Date(date).setHours(23, 59, 59, 999)
-
-  const upcoming = events.nodes.filter(
-    event => endOfDay(event.data.date) >= Date.now()
-  )
-
-  const past = events.nodes
-    .filter(event => endOfDay(event.data.date) < Date.now())
-    .reverse()
-
-  return events.nodes.length > 0 ? (
-    <>
-      <h2>Upcoming Events</h2>
-      <ul>
-        {upcoming.map(event => (
-          <li key={event.id}>
-            <Event event={event.data} />
-          </li>
-        ))}
-      </ul>
-      <h2>Past Events</h2>
-      <ul>
-        {past.map(event => (
-          <li key={event.id}>
-            <Event event={event.data} />
-          </li>
-        ))}
-      </ul>
-    </>
-  ) : (
-    <p>No events are scheduled right now.</p>
-  )
+const Events = () => {
+  const { events } = useStaticQuery(graphql`
+    query {
+      events: allAirtable(
+        sort: { order: ASC, fields: [data___date] }
+        filter: { data: { approved: { eq: true } } }
+      ) {
+        ...CommunityEvents
+      }
+    }
+  `)
+  return <EventList events={events} />
 }
 
 export default Events
-
-export const query = graphql`
-  fragment CommunityEvents on AirtableConnection {
-    nodes {
-      id
-      data {
-        date
-        ...EventFragment
-      }
-    }
-  }
-`

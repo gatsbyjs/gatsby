@@ -43,10 +43,7 @@ function isUseStaticQuery(path) {
   return (
     (path.node.callee.type === `MemberExpression` &&
       path.node.callee.property.name === `useStaticQuery` &&
-      path
-        .get(`callee`)
-        .get(`object`)
-        .referencesImport(`gatsby`)) ||
+      path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
     (path.node.callee.name === `useStaticQuery` &&
       path.get(`callee`).referencesImport(`gatsby`))
   )
@@ -363,9 +360,15 @@ async function findGraphQLTags(
           return binding
         }
 
-        // Look for exported page queries
+        // When a component has a StaticQuery we scan all of its exports and follow those exported variables
+        // to determine if they lead to this static query (via tagged template literal)
         traverse(ast, {
           ExportNamedDeclaration(path, state) {
+            // Skipping the edge case of re-exporting (i.e. "export { bar } from 'Bar'")
+            // (it is handled elsewhere for queries, see usages of warnForUnknownQueryVariable)
+            if (path.node.source) {
+              return
+            }
             path.traverse({
               TaggedTemplateExpression,
               ExportSpecifier(path) {

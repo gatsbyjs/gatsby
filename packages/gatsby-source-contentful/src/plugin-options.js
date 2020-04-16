@@ -3,7 +3,7 @@ const chalk = require(`chalk`)
 
 const _ = require(`lodash`)
 
-const DEFAULT_PAGE_LIMIT = 1000
+const DEFAULT_PAGE_LIMIT = 100
 
 const defaultOptions = {
   host: `cdn.contentful.com`,
@@ -25,12 +25,8 @@ const createPluginConfig = pluginOptions => {
 }
 
 const optionsSchema = Joi.object().keys({
-  accessToken: Joi.string()
-    .required()
-    .empty(),
-  spaceId: Joi.string()
-    .required()
-    .empty(),
+  accessToken: Joi.string().required().empty(),
+  spaceId: Joi.string().required().empty(),
   host: Joi.string().empty(),
   environment: Joi.string().empty(),
   downloadLocal: Joi.boolean(),
@@ -48,6 +44,11 @@ const optionsSchema = Joi.object().keys({
   useNameForId: Joi.boolean(),
   // default plugins passed by gatsby
   plugins: Joi.array(),
+  richText: Joi.object()
+    .keys({
+      resolveFieldLocales: Joi.boolean(),
+    })
+    .default({}),
 })
 
 const maskedFields = [`accessToken`, `spaceId`]

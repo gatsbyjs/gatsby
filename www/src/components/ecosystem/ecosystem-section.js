@@ -5,7 +5,7 @@ import styled from "@emotion/styled"
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const EcosystemSectionRoot = styled(`section`)`
   background: ${p => p.theme.colors.card.background};
@@ -14,7 +14,7 @@ const EcosystemSectionRoot = styled(`section`)`
 
   ${mediaQueries.md} {
     box-shadow: ${p => p.theme.shadows.raised};
-    border-radius: ${p => p.theme.radii[2]}px;
+    border-radius: ${p => p.theme.radii[2]};
     display: flex;
     flex-basis: calc(50% - ${p => p.theme.space[5]});
     flex-direction: column;

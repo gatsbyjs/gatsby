@@ -4,6 +4,7 @@ const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
 const commandLine = require(`./command-line`)
+const loadPrismShowInvisibles = require(`./plugins/prism-show-invisibles`)
 
 module.exports = (
   { markdownAST },
@@ -13,6 +14,7 @@ module.exports = (
     aliases = {},
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
+    showInvisibles = false,
     languageExtensions = [],
     prompt = {
       user: `root`,
@@ -61,16 +63,22 @@ module.exports = (
     // line highlights if Prism is required by any other code.
     // This supports custom user styling without causing Prism to
     // re-process our already-highlighted markup.
+    //
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
     const className = `${classPrefix}${languageName}`
 
     let numLinesStyle, numLinesClass, numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
     if (showLineNumbers) {
-      numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt -
-        1}"`
+      numLinesStyle = ` style="counter-reset: linenumber ${
+        numberLinesStartAt - 1
+      }"`
       numLinesClass = ` line-numbers`
       numLinesNumber = addLineNumbers(node.value)
+    }
+
+    if (showInvisibles) {
+      loadPrismShowInvisibles(languageName)
     }
 
     // Replace the node with the markup we need to make

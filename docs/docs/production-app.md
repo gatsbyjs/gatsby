@@ -21,7 +21,7 @@ The config is quite large, but here are some of the important values in the fina
 ```javascript
 {
   entry: {
-    app: ".cache/production-app"
+    app: `.cache/production-app`
   },
   output: {
     // e.g. app-2e49587d85e03a033f58.js
@@ -32,6 +32,7 @@ The config is quite large, but here are some of the important values in the fina
     publicPath: `/`
   },
   target: `web`,
+  devtool: `source-map`,
   mode: `production`,
   node: {
     ___filename: true
@@ -41,7 +42,37 @@ The config is quite large, but here are some of the important values in the fina
       // e.g. webpack-runtime-e402cdceeae5fad2aa61.js
       name: `webpack-runtime`
     },
-    splitChunks: false
+    splitChunks: {
+      chunks: `all`,
+      cacheGroups: {
+        // disable Webpack's default cacheGroup
+        default: false,
+        // disable Webpack's default vendor cacheGroup
+        vendors: false,
+        // Create a framework bundle that contains React libraries
+        // They hardly change so we bundle them together to improve
+        framework: {},
+        // Big modules that are over 160kb are moved to their own file to
+        // optimize browser parsing & execution
+        lib: {},
+        // All libraries that are used on all pages are moved into a common chunk
+        commons: {},
+        // When a module is used more than once we create a shared bundle to save user's bandwidth
+        shared: {},
+        // All CSS is bundled into one stylesheet
+        styles: {}
+      },
+      // Keep maximum initial requests to 25
+      maxInitialRequests: 25,
+      // A chunk should be at least 20kb before using splitChunks
+      minSize: 20000
+    },
+    minimizers: [
+      // Minify javascript using Terser (https://terser.org/)
+      plugins.minifyJs(),
+      // Minify CSS by using cssnano (https://cssnano.co/)
+      plugins.minifyCss(),
+    ]
   }
   plugins: [
     // A custom webpack plugin that implements logic to write out chunk-map.json and webpack.stats.json
@@ -52,6 +83,8 @@ The config is quite large, but here are some of the important values in the fina
 
 There's a lot going on here. And this is just a sample of the output that doesn't include the loaders, rules, etc. We won't go over everything here, but most of it is geared towards proper code splitting of your application.
 
+The splitChunks section is the most complex part of the Gatsby webpack config as it configures how Gatsby generates the most optimized bundles for your website. This is referred to as Granular Chunks as Gatsby tries to make the generated JavaScript files as granular as possible by deduplicating all modules. You can read more about [SplitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#optimizationsplitchunks) and [chunks](https://webpack.js.org/concepts/under-the-hood/#chunks) on the [official webpack website](https://webpack.js.org/).
+
 Once Webpack has finished compilation, it will have produced a few key types of bundles:
 
 ##### app-[contenthash].js
@@ -61,6 +94,14 @@ This bundle is produced from [production-app.js](https://github.com/gatsbyjs/gat
 ##### webpack-runtime-[contenthash].js
 
 This contains the small [webpack-runtime](https://webpack.js.org/concepts/manifest/#runtime) as a separate bundle (configured in `optimization` section). In practice, the app and webpack-runtime are always needed together.
+
+##### framework-[contenthash].js
+
+The framework bundle contains the React framework. Based on user behavior, React hardly gets upgraded to a newer version. Creating a separate bundle improves users' browser cache hit rate as this bundle is likely not going to be updated often.
+
+##### commons-[contenthash].js
+
+Libraries used on every Gatsby page are bundled into the commons javascript file. By bundling these together, you can make sure your users only need to download this bundle once.
 
 ##### component---[name]-[contenthash].js
 
@@ -89,7 +130,7 @@ To show how `production-app` works, let's imagine that you've just refreshed the
 */
 ```
 
-Then, the app, webpack-runtime, component, and data json bundles are loaded via `<link>` and `<script>` (see [HTML tag generation](/docs/html-generation/#5-add-preload-link-and-script-tags)). Now, your `production-app` code starts running.
+Then, the app, webpack-runtime, component, shared libraries, and data json bundles are loaded via `<link>` and `<script>` (see [HTML tag generation](/docs/html-generation/#5-add-preload-link-and-script-tags)). Now, your `production-app` code starts running.
 
 ### onClientEntry (api-runner-browser)
 

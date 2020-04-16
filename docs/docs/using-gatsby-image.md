@@ -29,7 +29,7 @@ But creating optimized images for websites has long been a thorny problem. Ideal
 - Use the “blur-up” technique or a “traced placeholder” SVG to show a preview of the image while it loads
 - Hold the image position so your page doesn’t jump while the images load
 
-Doing this consistently across a site feels like Sisyphean labor. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
+Doing this consistently across a site feels like a task that can never be completed. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
 
 Most solutions involve a lot of manual labor and bookkeeping to ensure every image is optimized.
 
@@ -83,30 +83,31 @@ module.exports = {
 
 ```jsx:title=src/pages/my-dogs.js
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby" // highlight-line
+import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
-export default () => {
-  // highlight-start
-  const data = useStaticQuery(graphql`
-    query MyQuery {
-      file(relativePath: { eq: "images/corgi.jpg" }) {
-        childImageSharp {
-          # Specify the image processing specifications right in the query.
-          fluid {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
-  `)
-  // highlight-end
+export default ({ data }) => {
   return (
     <Layout>
       <h1>I love my corgi!</h1>
     </Layout>
   )
 }
+
+// highlight-start
+export const query = graphql`
+  query MyQuery {
+    file(relativePath: { eq: "images/corgi.jpg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`
+// highlight-end
 ```
 
 <EggheadEmbed
@@ -118,23 +119,11 @@ export default () => {
 
 ```jsx:title=src/pages/my-dogs.js
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Img from "gatsby-image" // highlight-line
 
-export default () => {
-  const data = useStaticQuery(graphql`
-    query MyQuery {
-      file(relativePath: { eq: "images/corgi.jpg" }) {
-        childImageSharp {
-          # Specify the image processing specifications right in the query.
-          fluid {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
-  `)
+export default ({ data }) => {
   return (
     <Layout>
       <h1>I love my corgi!</h1>
@@ -147,6 +136,19 @@ export default () => {
     </Layout>
   )
 }
+
+export const query = graphql`
+  query MyQuery {
+    file(relativePath: { eq: "images/corgi.jpg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`
 ```
 
 <EggheadEmbed

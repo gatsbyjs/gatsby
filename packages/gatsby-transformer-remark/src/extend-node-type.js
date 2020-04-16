@@ -1,6 +1,5 @@
 const Remark = require(`remark`)
 const select = require(`unist-util-select`)
-const sanitizeHTML = require(`sanitize-html`)
 const _ = require(`lodash`)
 const visit = require(`unist-util-visit`)
 const toHAST = require(`mdast-util-to-hast`)
@@ -22,6 +21,7 @@ const {
   findLastTextNode,
 } = require(`./hast-processing`)
 const codeHandler = require(`./code-handler`)
+const { timeToRead } = require(`./utils/time-to-read`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -281,7 +281,7 @@ module.exports = (
 
         let toc
         if (tocAst.map) {
-          const addSlugToUrl = function(node) {
+          const addSlugToUrl = function (node) {
             if (node.url) {
               if (
                 _.get(markdownNode, appliedTocOptions.pathToSlugField) ===
@@ -443,9 +443,7 @@ module.exports = (
         truncate,
         excerptSeparator,
       })
-      var excerptMarkdown = unified()
-        .use(stringify)
-        .stringify(excerptAST)
+      var excerptMarkdown = unified().use(stringify).stringify(excerptAST)
       return excerptMarkdown
     }
 
@@ -604,20 +602,7 @@ module.exports = (
       timeToRead: {
         type: `Int`,
         resolve(markdownNode) {
-          return getHTML(markdownNode).then(html => {
-            let timeToRead = 0
-            const pureText = sanitizeHTML(html, { allowTags: [] })
-            const avgWPM = 265
-            const wordCount =
-              _.words(pureText).length +
-              _.words(pureText, /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu)
-                .length
-            timeToRead = Math.round(wordCount / avgWPM)
-            if (timeToRead === 0) {
-              timeToRead = 1
-            }
-            return timeToRead
-          })
+          return getHTML(markdownNode).then(timeToRead)
         },
       },
       tableOfContents: {
@@ -648,12 +633,7 @@ module.exports = (
 
           unified()
             .use(parse)
-            .use(
-              remark2retext,
-              unified()
-                .use(english)
-                .use(count)
-            )
+            .use(remark2retext, unified().use(english).use(count))
             .use(stringify)
             .processSync(markdownNode.internal.content)
 

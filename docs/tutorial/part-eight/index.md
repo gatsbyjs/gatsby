@@ -44,7 +44,7 @@ gatsby build
 gatsby serve
 ```
 
-Once this starts, you can view your site at [`localhost:9000`](http://localhost:9000).
+Once this starts, you can view your site at `http://localhost:9000`.
 
 ### Run a Lighthouse audit
 
