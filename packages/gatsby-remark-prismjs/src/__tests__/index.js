@@ -122,6 +122,19 @@ describe(`remark prism plugin`, () => {
       expect(markdownAST).toMatchSnapshot()
     })
 
+    it(`correctly counts line-numbers for markup using highlight classes`, () => {
+      const code =
+        `\`\`\`js\n` +
+        `function highlightTest() {\n` +
+        `// highlight-start\n` +
+        `return "this is a highlight test"\n` +
+        `// highlight-end\n` +
+        `}`
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST }, { showLineNumbers: true })
+      expect(markdownAST).toMatchSnapshot()
+    })
+
     it(`does not add line-number markup when not configured globally`, () => {
       const code = `\`\`\`js\n//.foo { \ncolor: red;\n }\``
       const markdownAST = remark.parse(code)
