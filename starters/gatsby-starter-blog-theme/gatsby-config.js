@@ -2,9 +2,7 @@ module.exports = {
   plugins: [
     {
       resolve: `gatsby-theme-blog`,
-      options: {
-        disableThemeUiStyling: true,
-      },
+      options: {},
     },
   ],
   // Customize your site metadata:
