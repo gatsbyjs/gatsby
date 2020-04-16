@@ -21,7 +21,7 @@
     "@babel/preset-flow": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
     "babel-plugin-dynamic-import-node": "^2.3.0",
-    "core-js": "^2.6.11"
+    "core-js": "^3.6.5"
   },
   "license": "MIT",
   "main": "index.js",
