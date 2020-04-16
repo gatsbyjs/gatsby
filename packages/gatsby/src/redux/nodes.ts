@@ -3,9 +3,27 @@ import { IGatsbyNode } from "./types"
 import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
+// Only list supported ops here. "CacheableFilterOp"
+type FilterOp = "$eq" | "$lte"
+// Note: `undefined` is an encoding for a property that does not exist
+type FilterValueNullable = string | number | boolean | null | undefined
+// This is filter value in most cases
+type FilterValue = string | number | boolean
 export type FilterCacheKey = string
-export type FilterCache = Map<string | number | boolean, Set<IGatsbyNode>>
-export type FiltersCache = Map<FilterCacheKey, FilterCache>
+export interface IFilterCache {
+  op: FilterOp
+  // In this set, `undefined` values represent nodes that did not have the path
+  byValue: Map<FilterValueNullable, Set<IGatsbyNode>>
+  meta: {
+    // Ordered set of all values found by this filter. No null / undefs.
+    valuesAsc?: Array<FilterValue>
+    // Flat set of nodes, ordered by valueAsc, but not ordered per value group
+    nodesByValueAsc?: Array<IGatsbyNode>
+    // Ranges of nodes per value, maps to the nodesByValueAsc array
+    valueRanges?: Map<FilterValue, [number, number]>
+  }
+}
+export type FiltersCache = Map<FilterCacheKey, IFilterCache>
 
 /**
  * Get all nodes from redux store.
@@ -152,24 +170,68 @@ export const addResolvedNodes = (
   return resolvedNodes
 }
 
+export const postIndexingMetaSetup = (filterCache: IFilterCache): void => {
+  // Create an ordered array of individual nodes, ordered (grouped) by the
+  // value to which the filter resolves. Nodes are not ordered per value.
+  // This way non-eq ops can simply slice the array to get a range.
+
+  const entriesNullable: Array<[FilterValueNullable, Set<IGatsbyNode>]> = [
+    ...filterCache.byValue.entries(),
+  ]
+
+  // These range checks never return `null` or `undefined` so filter those out
+  // By filtering them out early, the sort should be faster. Could be ...
+  const entries: Array<[
+    FilterValue,
+    Set<IGatsbyNode>
+  ]> = entriesNullable.filter(([v]) => v != null) as Array<
+    [FilterValue, Set<IGatsbyNode>]
+  >
+
+  // Sort all sets by its value, asc. Ignore/allow potential type casting.
+  entries.sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+
+  const orderedNodes: Array<IGatsbyNode> = []
+  const orderedValues: Array<FilterValue> = []
+  const offsets: Map<FilterValue, [number, number]> = new Map()
+  entries.forEach(([v, bucket]: [FilterValue, Set<IGatsbyNode>]) => {
+    // Record the range containing all nodes with as filter value v
+    // The last value of the range should be the offset of the next value
+    // (So you should be able to do `nodes.slice(start, stop)` to get them)
+    offsets.set(v, [orderedNodes.length, orderedNodes.length + bucket.size])
+    // We could do `arr.push(...bucket)` here but that's not safe with very
+    // large sets, so we use a regular loop
+    bucket.forEach(node => orderedNodes.push(node))
+    orderedValues.push(v)
+  })
+
+  filterCache.meta.valuesAsc = orderedValues
+  filterCache.meta.nodesByValueAsc = orderedNodes
+  // The nodesByValueAsc is ordered by value, but multiple nodes per value are
+  // not ordered. To make lt as fast as lte, we must know the start and stop
+  // index for each value. Similarly useful for for `ne`.
+  filterCache.meta.valueRanges = offsets
+}
+
 /**
- * Given a ("flat") filter path leading up to "eq", a set of node types, and a
+ * Given a single non-elemMatch filter path, a set of node types, and a
  * cache, create a cache that for each resulting value of the filter contains
- * all the Nodes in a Set (or, if the property is `id`, just the Nodes).
+ * all the Nodes in a Set.
  * This cache is used for applying the filter and is a massive improvement over
- * looping over all the nodes, when the number of pages (/nodes) scale up.
+ * looping over all the nodes, when the number of pages (/nodes) scales up.
  */
-export const ensureIndexByTypedChain = (
-  cacheKey: FilterCacheKey,
-  chain: string[],
+export const ensureIndexByQuery = (
+  op: FilterOp,
+  filterCacheKey: FilterCacheKey,
+  filterPath: string[],
   nodeTypeNames: string[],
   filtersCache: FiltersCache
 ): void => {
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
 
-  const filterCache: FilterCache = new Map()
-  filtersCache.set(cacheKey, filterCache)
+  const filterCache: IFilterCache = { op, byValue: new Map(), meta: {} }
+  filtersCache.set(filterCacheKey, filterCache)
 
   // We cache the subsets of nodes by type, but only one type. So if searching
   // through one node type we can prevent a search through all nodes, otherwise
@@ -177,7 +239,7 @@ export const ensureIndexByTypedChain = (
 
   if (nodeTypeNames.length === 1) {
     getNodesByType(nodeTypeNames[0]).forEach(node => {
-      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
+      addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
     })
   } else {
     // Here we must first filter for the node type
@@ -187,15 +249,19 @@ export const ensureIndexByTypedChain = (
         return
       }
 
-      addNodeToFilterCache(node, chain, filterCache, resolvedNodesCache)
+      addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
     })
+  }
+
+  if (op === `$lte`) {
+    postIndexingMetaSetup(filterCache)
   }
 }
 
 function addNodeToFilterCache(
   node: IGatsbyNode,
   chain: Array<string>,
-  filterCache: FilterCache,
+  filterCache: IFilterCache,
   resolvedNodesCache,
   valueOffset: any = node
 ): void {
@@ -209,35 +275,44 @@ function addNodeToFilterCache(
   // - for plain query, valueOffset === node
   // - for elemMatch, valueOffset is sub-tree of the node to continue matching
   let v = valueOffset as any
+  let prev = v
   let i = 0
   while (i < chain.length && v) {
     const nextProp = chain[i++]
+    prev = v
     v = v[nextProp]
   }
 
   if (
     (typeof v !== `string` &&
       typeof v !== `number` &&
-      typeof v !== `boolean`) ||
+      typeof v !== `boolean` &&
+      v !== null) ||
     i !== chain.length
   ) {
-    // Not sure whether this is supposed to happen, but this means that either
-    // - The node chain ended with `undefined`, or
-    // - The node chain ended in something other than a primitive, or
-    // - A part in the chain in the object was not an object
-    return
+    if (chain[i - 1] in prev) {
+      // This means that either
+      // - The filter resolved to `undefined`, or
+      // - The filter resolved to something other than a primitive
+      return
+    }
+    // The filter path did not fully exist in node. Encode this as `undefined`.
+    // The edge case is that `eq` will return these for `null` checks while
+    // range checks like `lte` do not return these, so we make a distinction.
+    v = undefined
   }
 
-  let set = filterCache.get(v)
+  let set = filterCache.byValue.get(v)
   if (!set) {
     set = new Set()
-    filterCache.set(v, set)
+    filterCache.byValue.set(v, set)
   }
   set.add(node)
 }
 
 export const ensureIndexByElemMatch = (
-  cacheKey: FilterCacheKey,
+  op: FilterOp,
+  filterCacheKey: FilterCacheKey,
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
@@ -248,8 +323,8 @@ export const ensureIndexByElemMatch = (
   const state = store.getState()
   const { resolvedNodesCache } = state
 
-  const filterCache: FilterCache = new Map()
-  filtersCache.set(cacheKey, filterCache)
+  const filterCache: IFilterCache = { op, byValue: new Map(), meta: {} }
+  filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {
     getNodesByType(nodeTypeNames[0]).forEach(node => {
@@ -277,13 +352,17 @@ export const ensureIndexByElemMatch = (
       )
     })
   }
+
+  if (op === `$lte`) {
+    postIndexingMetaSetup(filterCache)
+  }
 }
 
 function addNodeToBucketWithElemMatch(
   node: IGatsbyNode,
   valueAtCurrentStep: any, // Arbitrary step on the path inside the node
   filter: IDbQueryElemMatch,
-  filterCache: FilterCache,
+  filterCache: IFilterCache,
   resolvedNodesCache
 ): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
@@ -337,24 +416,127 @@ function addNodeToBucketWithElemMatch(
   }
 }
 
+const binarySearch = (
+  values: Array<FilterValue>,
+  needle: FilterValue
+): [number, number] | undefined => {
+  let min = 0
+  let max = values.length - 1
+  let pivot = Math.floor(values.length / 2)
+  while (min <= max) {
+    const value = values[pivot]
+    if (needle < value) {
+      // Move pivot to middle of nodes left of current pivot
+      // assert pivot < max
+      max = pivot
+    } else if (needle > value) {
+      // Move pivot to middle of nodes right of current pivot
+      // assert pivot > min
+      min = pivot
+    } else {
+      // This means needle === value
+      // TODO: except for NaN ... and potentially certain type casting cases
+      return [pivot, pivot]
+    }
+
+    if (max - min <= 1) {
+      // End of search. Needle not found (as expected). Use pivot as index.
+      // If the needle was not found, max-min==1 and max is returned.
+      return [min, max]
+    }
+
+    pivot = Math.floor((max - min) / 2)
+  }
+
+  // Shouldn't be reachable, but just in case, fall back to Sift if so.
+  return undefined
+}
+
 /**
- * Given a ("flat") filter path leading up to "eq", a target value to filter
- * for, a set of node types, and a pre-generated lookup cache, return the set
- * of Nodes (or, if the property is `id` just the Node) which pass the filter.
- * This returns `undefined` if there is Node that passes the filter.
+ * Given the cache key for a filter and a target value return the set of nodes
+ * that resolve to this value.
+ * This returns `undefined` if there is no such node
  *
  * Basically if the filter was {a: {b: {slug: {eq: "foo/bar"}}}} then it will
  * return all the nodes that have `node.slug === "foo/bar"`. That usually (but
  * not always) at most one node for slug, but this filter can apply to anything.
- *
- * The only exception is `id`, since internally there can be at most one node
- * per `id` so there's a minor optimization for that (no need for Sets).
  */
-export const getFilterCacheByTypedChain = (
-  cacheKey: FilterCacheKey,
-  value: boolean | number | string,
+export const getNodesFromCacheByValue = (
+  filterCacheKey: FilterCacheKey,
+  filterValue: FilterValueNullable,
   filtersCache: FiltersCache
 ): Set<IGatsbyNode> | undefined => {
-  const byTypedKey = filtersCache?.get(cacheKey)
-  return byTypedKey?.get(value)
+  const filterCache = filtersCache?.get(filterCacheKey)
+  if (!filterCache) {
+    return undefined
+  }
+
+  const op = filterCache.op
+
+  if (op === `$eq`) {
+    if (filterValue == null) {
+      // Edge case; fetch all nodes for `null` and `undefined` because `$eq`
+      // also returns nodes without the path when searching for `null`. Not
+      // ops do so, so we map non-existing paths to `undefined`.
+      return new Set([
+        ...(filterCache.byValue.get(null) ?? []),
+        ...(filterCache.byValue.get(undefined) ?? []),
+      ])
+    }
+    return filterCache.byValue.get(filterValue)
+  }
+
+  if (op === `$lte`) {
+    // First try a direct approach. If a value is queried that also exists then
+    // we can prevent a binary search through the whole set, O(1) vs O(log n)
+
+    if (filterValue == null) {
+      // This is an edge case and this value should be directly indexed
+      // For `lte` this should only return nodes for `null`, not a "range"
+      return filterCache.byValue.get(filterValue)
+    }
+
+    const ranges = filterCache.meta.valueRanges
+    const nodes = filterCache.meta.nodesByValueAsc
+
+    const range = ranges!.get(filterValue)
+    if (range) {
+      return new Set(nodes!.slice(0, range[1]))
+    }
+
+    // Query may ask for a value that doesn't appear in the set, like if the
+    // set is [1, 2, 5, 6] and the query is <= 3. In that case we have to
+    // apply a search (we'll do binary) to determine the offset to slice from.
+
+    // Note: for lte, the valueAsc array must be set at this point
+    const values = filterCache.meta.valuesAsc as Array<FilterValue>
+    // It shouldn't find the targetValue (but it might) and return the index of
+    // the two value between which targetValue sits, or first/last element.
+    const point = binarySearch(values, filterValue)
+    if (!point) {
+      return undefined
+    }
+    const [pivotMin, pivotMax] = point
+    // Each pivot index must have a value and a range
+    // The returned min/max index may include the lower/upper bound, so we still
+    // have to do lte checks for both values.
+    let pivotValue = values[pivotMax]
+    if (pivotValue > filterValue) {
+      pivotValue = values[pivotMin]
+    }
+
+    // Note: the pivot value _shouldnt_ match the filter value because that
+    // means the value was actually found, but those should have been indexed
+    // so should have yielded a result in the .get() above.
+
+    const [exclPivot, inclPivot] = ranges!.get(pivotValue) as [number, number]
+
+    // Note: technically, `5 <= "5" === true` but `5` would not be cached.
+    // So we have to consider weak comparison and may have to include the pivot
+    const until = pivotValue <= filterValue ? inclPivot : exclPivot
+    return new Set(nodes!.slice(0, until))
+  }
+
+  // Unreachable because we checked all values of FilterOp (which op is)
+  return undefined
 }

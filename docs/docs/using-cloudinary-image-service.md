@@ -153,4 +153,4 @@ module.exports = {
 - [Faster Sites with Optimized Media Assets by William Imoh](/blog/2020-01-12-faster-sites-with-optimized-media-assets/)
 - [Gatsby Transformer Cloudinary](https://www.npmjs.com/package/gatsby-transformer-cloudinary)
 - [Gatsby Source Cloudinary](/packages/gatsby-source-cloudinary/)
-- [Aspect ratio parameter ](https://cloudinary.com/documentation/image_transformation_reference#aspect_ratio_parameter)
+- [Aspect ratio parameter](https://cloudinary.com/documentation/image_transformation_reference#aspect_ratio_parameter)

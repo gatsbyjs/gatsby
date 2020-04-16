@@ -3,7 +3,7 @@ import chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
 import { globalTracer, Span } from "opentracing"
 
-import reporterActions from "./redux/actions"
+import * as reporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
@@ -164,13 +164,13 @@ class Reporter {
     }
   }
 
-  success = (text: string): CreateLogAction =>
+  success = (text?: string): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Success, text })
-  info = (text: string): CreateLogAction =>
+  info = (text?: string): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Info, text })
-  warn = (text: string): CreateLogAction =>
+  warn = (text?: string): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Warning, text })
-  log = (text: string): CreateLogAction =>
+  log = (text?: string): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Log, text })
 
   pendingActivity = reporterActions.createPendingActivity

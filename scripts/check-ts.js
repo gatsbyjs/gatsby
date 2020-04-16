@@ -15,7 +15,8 @@ const execa = require(`execa`)
 
 console.log(`TS Check: Running...`)
 
-const PACKAGES_DIR = path.resolve(__dirname, `../packages`)
+const toAbsolutePath = relativePath => path.join(__dirname, `..`, relativePath)
+const PACKAGES_DIR = toAbsolutePath(`/packages`)
 
 const filterPackage = yargs.argv._[0]
 
@@ -59,9 +60,34 @@ if (filterPackage) {
   }
 }
 
+let totalTsFiles = 0
+let totalJsFiles = 0
+
 packagesWithTs.forEach(project => {
+  const tsFiles = glob.sync(
+    toAbsolutePath(
+      `./packages/${project.split(/.*packages[/\\]/)[1]}/src/**/*.ts`
+    )
+  ).length
+
+  const jsFiles = glob.sync(
+    toAbsolutePath(
+      `./packages/${project.split(/.*packages[/\\]/)[1]}/src/**/*.js`
+    )
+  ).length
+
+  totalTsFiles += tsFiles
+  totalJsFiles += jsFiles
+
+  const percentConverted = Number(
+    ((tsFiles / (jsFiles + tsFiles)) * 100).toFixed(1)
+  )
+
   console.log(
-    `TS Check: Checking ./packages/${project.split(/.*packages[/\\]/)[1]}`
+    `TS Check: Checking ./packages/${project.split(/.*packages[/\\]/)[1]}`,
+    `\n  - TS Files: ${tsFiles}`,
+    `\n  - JS Files: ${jsFiles}`,
+    `\n  - Percent Converted: ${percentConverted}%`
   )
 
   const args = [
@@ -84,3 +110,15 @@ packagesWithTs.forEach(project => {
 })
 
 console.log(`TS Check: Success`)
+
+if (!filterPackage) {
+  const percentConverted = Number(
+    ((totalTsFiles / (totalJsFiles + totalTsFiles)) * 100).toFixed(1)
+  )
+
+  console.log(
+    `  - Total TS Files: ${totalJsFiles}`,
+    `\n  - Total JS Files: ${totalJsFiles}`,
+    `\n  - Percent Converted: ${percentConverted}%`
+  )
+}

@@ -15,7 +15,7 @@ For bug reports, include in your issue:
 
 - Gatsby version, Node.js version, OS version
 - The contents of your `gatsby-config.js` and `package.json` as well as your
-  `gatsby-node.js`, `gatsby-browser.js` `gatsby-ssr.js` files depending on
+  `gatsby-node.js`, `gatsby-browser.js`, and `gatsby-ssr.js` files depending on
   changes you've made there.
 - A [reproduction](/contributing/how-to-make-a-reproducible-test-case/) for debugging and taking action
 

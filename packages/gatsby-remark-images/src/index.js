@@ -72,10 +72,7 @@ module.exports = (
   const getImageInfo = uri => {
     const { url, query } = queryString.parseUrl(uri)
     return {
-      ext: path
-        .extname(url)
-        .split(`.`)
-        .pop(),
+      ext: path.extname(url).split(`.`).pop(),
       url,
       query,
     }
@@ -123,7 +120,7 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = async function(
+  const generateImagesAndUpdateNode = async function (
     node,
     resolve,
     inLink,
@@ -424,7 +421,7 @@ module.exports = (
             }
 
             let imageRefs = []
-            $(`img`).each(function() {
+            $(`img`).each(function () {
               imageRefs.push($(this))
             })
 

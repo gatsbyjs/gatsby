@@ -291,8 +291,9 @@ async function onPreInit(api) {
   lastApi = api
   // This should be set in the gatsby-config of the site when enabling this plugin
   reportInfo(
-    `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${BENCHMARK_REPORTING_URL ||
-      `the CLI`}`
+    `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${
+      BENCHMARK_REPORTING_URL || `the CLI`
+    }`
   )
 
   benchMeta.markStart()
