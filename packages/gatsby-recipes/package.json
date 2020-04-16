@@ -1,0 +1,101 @@
+{
+  "name": "gatsby-recipes",
+  "description": "Core functionality for Gatsby Recipes",
+  "version": "0.0.5",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/standalone": "^7.9.5",
+    "@hapi/joi": "^15.1.1",
+    "@mdx-js/mdx": "^1.5.8",
+    "@mdx-js/react": "^1.5.8",
+    "@mdx-js/runtime": "^1.5.8",
+    "acorn": "^7.1.1",
+    "acorn-jsx": "^5.2.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-add-module-exports": "^0.3.3",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
+    "babel-plugin-remove-graphql-queries": "^2.8.1",
+    "babel-preset-gatsby": "^0.3.1",
+    "detect-port": "^1.3.0",
+    "event-source-polyfill": "^1.0.12",
+    "execa": "^4.0.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "fs-extra": "^8.1.0",
+    "gatsby-telemetry": "^1.2.3",
+    "gatsby-core-utils": "^1.1.1",
+    "glob": "^7.1.6",
+    "graphql": "^14.6.0",
+    "graphql-subscriptions": "^1.1.0",
+    "graphql-type-json": "^0.3.1",
+    "html-tag-names": "^1.1.5",
+    "humanize-list": "^1.0.1",
+    "ink-box": "^1.0.0",
+    "ink-link": "^1.0.0",
+    "ink-select-input": "^3.1.2",
+    "import-jsx": "^4.0.0",
+    "is-blank": "^2.1.0",
+    "is-newline": "^1.0.0",
+    "is-relative": "^1.0.0",
+    "is-string": "^1.0.5",
+    "is-url": "^1.2.4",
+    "jest-diff": "^25.3.0",
+    "mkdirp": "^0.5.1",
+    "pkg-dir": "^4.2.0",
+    "prettier": "^2.0.4",
+    "remark-stringify": "^8.0.0",
+    "single-trailing-newline": "^1.0.0",
+    "style-to-object": "^0.3.0",
+    "subscriptions-transport-ws": "^0.9.16",
+    "svg-tag-names": "^2.0.1",
+    "unist-util-remove": "^2.0.0",
+    "unist-util-visit": "^2.0.2",
+    "url-loader": "^1.1.2",
+    "urql": "^1.9.5",
+    "ws": "^7.2.3",
+    "xstate": "^4.8.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "babel-preset-gatsby-package": "^0.3.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "rimraf": "^3.0.2"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-recipes",
+    "mdx"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-recipes"
+  },
+  "resolutions": {
+    "graphql": "^14.6.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/.cache/",
+      "dist"
+    ],
+    "testEnvironment": "node"
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
+    "build:watch": "npm run build -- --watch",
+    "prepare": "npm run build",
+    "watch": "npm run build:watch",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  }
+}

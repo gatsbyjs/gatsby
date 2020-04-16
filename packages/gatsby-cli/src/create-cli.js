@@ -293,6 +293,19 @@ function buildLocalCommands(cli, isLocalSite) {
       return cmd(args)
     }),
   })
+  cli.command({
+    command: `recipes`,
+    desc: `Run a recipe`,
+    handler: handlerP(
+      getCommandHandler(`recipes`, (args, cmd) => {
+        cmd(args)
+        // Return an empty promise to prevent handlerP from exiting early.
+        // The recipe command shouldn't ever exit until the user directly
+        // kills it so this is fine.
+        return new Promise(resolve => {})
+      })
+    ),
+  })
 }
 
 function isLocalGatsbySite() {

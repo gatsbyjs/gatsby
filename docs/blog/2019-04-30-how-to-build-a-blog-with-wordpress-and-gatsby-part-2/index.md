@@ -18,7 +18,7 @@ In the last post, I covered setting up [WordPress for use with Gatsby](/blog/201
 
 I have set up a WordPress site for you to use with the plugins mentioned in the last post as well as some dummy content to use. If you're curious, my favorite lorem generator is [Fillerama](http://fillerama.io/) which offers random content from Futurama, Monty Python, Star Wars, and more. This is where the content came from.
 
-https://giphy.com/gifs/french-week-sDcfxFDozb3bO
+https://giphy.com/gifs/movie-funny-HfJdu4HABDU3e
 
 ## Gatsby.js starter
 

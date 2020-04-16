@@ -77,6 +77,7 @@
     "gatsby-link": "^2.3.2",
     "gatsby-plugin-page-creator": "^2.2.1",
     "gatsby-react-router-scroll": "^2.2.1",
+    "gatsby-recipes": "^0.0.5",
     "gatsby-telemetry": "^1.2.3",
     "glob": "^7.1.6",
     "got": "8.3.2",
