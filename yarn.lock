@@ -11335,65 +11335,6 @@ gatsby-plugin-theme-ui@^0.2.53:
   resolved "https://registry.yarnpkg.com/gatsby-plugin-theme-ui/-/gatsby-plugin-theme-ui-0.2.53.tgz#57a52339e50ede7ef4df0b1b5593d360b56b597d"
   integrity sha512-AlQC+uC9lvrP3LlGsLe0f0azp7B5c49qWl4b3FDj8xbravBoqFmJT7XrNTpYYbxnCnx/K1v0QtwP8qindw0S2g==
 
-gatsby-recipes@recipes:
-  version "0.0.6-recipes.14791"
-  resolved "https://registry.yarnpkg.com/gatsby-recipes/-/gatsby-recipes-0.0.6-recipes.14791.tgz#c71682004b5873789a1156be68a0468d17c8d888"
-  integrity sha512-esPSrkVFQIcat7Ct6hyywAnEVvyz7gfE45oOgQPrNZISelIQz4rwAmnO6yLXyeoplGxK3XqMNEKtMlKKHWRz9w==
-  dependencies:
-    "@babel/core" "^7.8.7"
-    "@babel/standalone" "^7.9.5"
-    "@hapi/joi" "^15.1.1"
-    "@mdx-js/mdx" "^1.5.8"
-    "@mdx-js/react" "^1.5.8"
-    "@mdx-js/runtime" "^1.5.8"
-    acorn "^7.1.1"
-    acorn-jsx "^5.2.0"
-    babel-core "7.0.0-bridge.0"
-    babel-eslint "^10.1.0"
-    babel-loader "^8.0.6"
-    babel-plugin-add-module-exports "^0.3.3"
-    babel-plugin-dynamic-import-node "^2.3.0"
-    babel-plugin-remove-graphql-queries "2.8.1"
-    babel-preset-gatsby "0.3.1"
-    detect-port "^1.3.0"
-    event-source-polyfill "^1.0.12"
-    execa "^4.0.0"
-    express "^4.17.1"
-    express-graphql "^0.9.0"
-    fs-extra "^8.1.0"
-    gatsby-core-utils "1.1.1"
-    gatsby-telemetry "1.2.3"
-    glob "^7.1.6"
-    graphql "^14.6.0"
-    graphql-subscriptions "^1.1.0"
-    graphql-type-json "^0.3.1"
-    html-tag-names "^1.1.5"
-    humanize-list "^1.0.1"
-    import-jsx "^4.0.0"
-    ink-box "^1.0.0"
-    ink-link "^1.0.0"
-    ink-select-input "^3.1.2"
-    is-blank "^2.1.0"
-    is-newline "^1.0.0"
-    is-relative "^1.0.0"
-    is-string "^1.0.5"
-    is-url "^1.2.4"
-    jest-diff "^25.3.0"
-    mkdirp "^0.5.1"
-    pkg-dir "^4.2.0"
-    prettier "^2.0.4"
-    remark-stringify "^8.0.0"
-    single-trailing-newline "^1.0.0"
-    style-to-object "^0.3.0"
-    subscriptions-transport-ws "^0.9.16"
-    svg-tag-names "^2.0.1"
-    unist-util-remove "^2.0.0"
-    unist-util-visit "^2.0.2"
-    url-loader "^1.1.2"
-    urql "^1.9.5"
-    ws "^7.2.3"
-    xstate "^4.8.0"
-
 gauge@~2.7.3:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.4.tgz#2c03405c7538c39d7eb37b317022e325fb018bf7"
@@ -19243,17 +19184,7 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.4.tgz#2d1bae173e355996ee355ec9830a7a1ee05457ef"
-  integrity sha512-SVJIQ51spzFDvh4fIbCLvciiDMCrRhlN3mbZvv/+ycjvmF5E73bKdGfU8QDLNmjYJf+lsGnDBC4UUnvTe5OO0w==
-
-prettier@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.4.tgz#2d1bae173e355996ee355ec9830a7a1ee05457ef"
-  integrity sha512-SVJIQ51spzFDvh4fIbCLvciiDMCrRhlN3mbZvv/+ycjvmF5E73bKdGfU8QDLNmjYJf+lsGnDBC4UUnvTe5OO0w==
-
-prettier@^2.0.4:
+prettier@2.0.4, prettier@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.4.tgz#2d1bae173e355996ee355ec9830a7a1ee05457ef"
   integrity sha512-SVJIQ51spzFDvh4fIbCLvciiDMCrRhlN3mbZvv/+ycjvmF5E73bKdGfU8QDLNmjYJf+lsGnDBC4UUnvTe5OO0w==
