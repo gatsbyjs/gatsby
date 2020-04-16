@@ -119,8 +119,6 @@ A few areas we're exploring.
 
 ### I'm curious, how did you build this?
 
-TODO add links before merging
-
 React and GraphQL of course! ;-)
 
 The terminal UI (like all of our Gatsby CLIs) are built with [Ink](https://github.com/vadimdemedes/ink) a very cool project that allows you to build CLIs with React. It makes building data-driven CLI apps _much_ more approachable than other methods we've tried.
@@ -133,9 +131,9 @@ We leverage XState to control the flow of running Recipes.
 
 Some links to interesting bits of code:
 
-- [CLI app]
-- [File resource]
-- [Gatsby Plugin resource]
-- [XState Machine for running a recipe]
-- [Code for generating the GraphQL schema]
-- [Recipe MDX parsing]
+- [CLI app](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/cli.js)
+- [File resource](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/providers/fs/file.js)
+- [Gatsby Plugin resource](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/providers/gatsby/plugin.js)
+- [XState Machine for running a recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/recipe-machine.js)
+- [Code for generating the GraphQL schema](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/create-types.js)
+- [Recipe MDX parsing](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/parser/index.js)
