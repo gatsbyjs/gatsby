@@ -295,7 +295,7 @@ function buildLocalCommands(cli, isLocalSite) {
   })
   cli.command({
     command: `recipes`,
-    desc: `Run a recipe`,
+    desc: `[EXPERIMENTAL] Run a recipe`,
     handler: handlerP(
       getCommandHandler(`recipes`, (args, cmd) => {
         cmd(args)

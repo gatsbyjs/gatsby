@@ -58,10 +58,7 @@ const extractCommands = steps => {
   return commands
 }
 
-const u = unified()
-  .use(remarkParse)
-  .use(remarkStringify)
-  .use(remarkMdx)
+const u = unified().use(remarkParse).use(remarkStringify).use(remarkMdx)
 
 const handleImports = tree => {
   let imports = {}
