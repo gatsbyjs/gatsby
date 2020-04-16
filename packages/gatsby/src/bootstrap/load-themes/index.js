@@ -47,8 +47,8 @@ const resolveTheme = async (
           themeName,
           configFilePath: configFileThatDeclaredTheme,
           pathToLocalTheme,
-          nodeResolutionPaths
-        }
+          nodeResolutionPaths,
+        },
       })
     }
   }
@@ -129,8 +129,8 @@ module.exports = async (
         plugins: [
           ...(themeConfig.plugins || []),
           // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
-          { resolve: themeName, options: themeSpec.options || {} }
-        ]
+          { resolve: themeName, options: themeSpec.options || {} },
+        ],
       }
     })
       /**
@@ -143,7 +143,7 @@ module.exports = async (
       .then(newConfig => {
         return {
           config: mergeGatsbyConfig(newConfig, config),
-          themes: themesA
+          themes: themesA,
         }
       })
   )

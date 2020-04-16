@@ -28,9 +28,9 @@ window['_fs_namespace'] = 'FS';
     if(m[y])m[y]=function(){return g._w[y].apply(this,arguments)};
     g._v="1.2.0";
 })(window,document,window['_fs_namespace'],'script','user');
-      `
+      `,
         }}
-      />
+      />,
     ])
   }
 

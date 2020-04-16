@@ -8,7 +8,7 @@ const isHook = /^use[A-Z]/
 // matches only built-in hooks provided by React et al
 const isBuiltInHook = /^use(Callback|Context|DebugValue|Effect|ImperativeHandle|LayoutEffect|Memo|Reducer|Ref|State)$/
 
-export default function({
+export default function ({
   types: t,
 }: {
   types: typeof BabelTypes

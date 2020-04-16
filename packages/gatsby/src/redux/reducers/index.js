@@ -68,5 +68,5 @@ module.exports = {
   logs: logReducer,
   inferenceMetadata: require(`./inference-metadata`),
   pageDataStats: require(`./page-data-stats`),
-  pageData: require(`./page-data`)
+  pageData: require(`./page-data`),
 }

@@ -1,6 +1,6 @@
 const {
   filterQuery,
-  defaultOptions: { serialize }
+  defaultOptions: { serialize },
 } = require(`../internals`)
 
 beforeEach(() => {
@@ -19,24 +19,24 @@ describe(`results using default settings`, () => {
       data: {
         site: {
           siteMetadata: {
-            siteUrl: siteUrl
-          }
+            siteUrl: siteUrl,
+          },
         },
         allSitePage: {
           edges: [
             {
               node: {
-                path: `/page-1`
-              }
+                path: `/page-1`,
+              },
             },
             {
               node: {
-                path: `/page-2`
-              }
-            }
-          ]
-        }
-      }
+                path: `/page-2`,
+              },
+            },
+          ],
+        },
+      },
     }
   }
 
@@ -53,7 +53,7 @@ describe(`results using default settings`, () => {
 
       verifyUrlsExistInResults(urls, [
         `http://dummy.url${pathPrefix}/page-1`,
-        `http://dummy.url${pathPrefix}/page-2`
+        `http://dummy.url${pathPrefix}/page-2`,
       ])
     })
 
@@ -69,7 +69,7 @@ describe(`results using default settings`, () => {
 
       verifyUrlsExistInResults(urls, [
         `http://dummy.url${pathPrefix}/page-1`,
-        `http://dummy.url${pathPrefix}/page-2`
+        `http://dummy.url${pathPrefix}/page-2`,
       ])
     })
 
@@ -124,30 +124,30 @@ describe(`results using non default alternatives`, () => {
       data: {
         site: {
           siteMetadata: {
-            siteUrl: siteUrl
-          }
+            siteUrl: siteUrl,
+          },
         },
         allSitePage: {
           nodes: [
             {
-              path: `/page-1`
+              path: `/page-1`,
             },
             {
-              path: `/page-2`
-            }
-          ]
+              path: `/page-2`,
+            },
+          ],
         },
         otherData: {
           nodes: [
             {
-              name: `test`
+              name: `test`,
             },
             {
-              name: `test 2`
-            }
-          ]
-        }
-      }
+              name: `test 2`,
+            },
+          ],
+        },
+      },
     }
   }
 
@@ -159,7 +159,7 @@ describe(`results using non default alternatives`, () => {
 
     verifyUrlsExistInResults(urls, [
       `http://dummy.url/page-1`,
-      `http://dummy.url/page-2`
+      `http://dummy.url/page-2`,
     ])
   })
 

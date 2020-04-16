@@ -2,11 +2,7 @@ import { transform } from "@babel/core"
 import preset from "babel-preset-gatsby"
 import plugin from "../optimize-hook-destructuring"
 
-const trim = s =>
-  s
-    .join(`\n`)
-    .trim()
-    .replace(/^\s+/gm, ``)
+const trim = s => s.join(`\n`).trim().replace(/^\s+/gm, ``)
 
 const babel = code =>
   transform(code, {

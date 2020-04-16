@@ -8,7 +8,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
     GraphQLNonNull,
     GraphQLID,
     GraphQLString,
-    GraphQLList
+    GraphQLList,
   } = require(`graphql`)
 
   const mockNodes = () => [
@@ -19,13 +19,13 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       deep: { flat: { search: { chain: 123 } } },
       elemList: [
         {
-          foo: `bar`
-        }
+          foo: `bar`,
+        },
       ],
       internal: {
         type: `notTest`,
-        contentDigest: `0`
-      }
+        contentDigest: `0`,
+      },
     },
     {
       id: `id_2`,
@@ -33,14 +33,14 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       slog: `def`,
       elemList: [
         {
-          foo: `baz`
-        }
+          foo: `baz`,
+        },
       ],
       deep: { flat: { search: { chain: 500 } } },
       internal: {
         type: `test`,
-        contentDigest: `0`
-      }
+        contentDigest: `0`,
+      },
     },
     {
       id: `id_3`,
@@ -48,17 +48,17 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       string: `baz`,
       elemList: [
         {
-          foo: `bar`
+          foo: `bar`,
         },
         {
-          foo: `baz`
-        }
+          foo: `baz`,
+        },
       ],
       deep: { flat: { search: { chain: 300 } } },
       internal: {
         type: `test`,
-        contentDigest: `0`
-      }
+        contentDigest: `0`,
+      },
     },
     {
       id: `id_4`,
@@ -67,7 +67,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
       deep: { flat: { search: { chain: 300 } } },
       internal: {
         type: `test`,
-        contentDigest: `0`
+        contentDigest: `0`,
       },
       first: {
         willBeResolved: `willBeResolved`,
@@ -75,12 +75,12 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           {
             willBeResolved: `willBeResolved`,
             third: {
-              foo: `foo`
-            }
-          }
-        ]
-      }
-    }
+              foo: `foo`,
+            },
+          },
+        ],
+      },
+    },
   ]
 
   const typeName = `test`
@@ -96,7 +96,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
             fields: {
               willBeResolved: {
                 type: GraphQLString,
-                resolve: () => `resolvedValue`
+                resolve: () => `resolvedValue`,
               },
               second: {
                 type: new GraphQLList(
@@ -105,23 +105,23 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
                     fields: {
                       willBeResolved: {
                         type: GraphQLString,
-                        resolve: () => `resolvedValue`
+                        resolve: () => `resolvedValue`,
                       },
                       third: new GraphQLObjectType({
                         name: `Third`,
                         fields: {
-                          foo: GraphQLString
-                        }
-                      })
-                    }
+                          foo: GraphQLString,
+                        },
+                      }),
+                    },
                   })
-                )
-              }
-            }
-          })
-        }
+                ),
+              },
+            },
+          }),
+        },
       }
-    }
+    },
   })
 
   describe(`run-sift tests`, () => {
@@ -133,15 +133,15 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
     })
     ;[
       { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => null } // Always goes through sift
+      { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createFiltersCache }) => {
       describe(desc, () => {
         describe(`filters by just id correctly`, () => {
           it(`eq operator`, async () => {
             const queryArgs = {
               filter: {
-                id: { eq: `id_2` }
-              }
+                id: { eq: `id_2` },
+              },
             }
 
             const resultSingular = await runSift({
@@ -149,7 +149,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             const resultMany = await runSift({
@@ -157,7 +157,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[1].id])
@@ -167,8 +167,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           it(`eq operator honors type`, async () => {
             const queryArgs = {
               filter: {
-                id: { eq: `id_1` }
-              }
+                id: { eq: `id_1` },
+              },
             }
 
             const resultSingular = await runSift({
@@ -176,7 +176,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             const resultMany = await runSift({
@@ -184,7 +184,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             // `id-1` node is not of queried type, so results should be empty
@@ -195,8 +195,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           it(`non-eq operator`, async () => {
             const queryArgs = {
               filter: {
-                id: { ne: `id_2` }
-              }
+                id: { ne: `id_2` },
+              },
             }
 
             const resultSingular = await runSift({
@@ -204,7 +204,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             const resultMany = await runSift({
@@ -212,13 +212,13 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[2].id])
             expect(resultMany.map(o => o.id)).toEqual([
               mockNodes()[2].id,
-              mockNodes()[3].id
+              mockNodes()[3].id,
             ])
           })
           it(`return empty array in case of empty nodes`, async () => {
@@ -228,7 +228,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [`NonExistentNodeType`],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
             expect(resultSingular).toEqual([])
           })
@@ -237,8 +237,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           it(`eq operator flat single`, async () => {
             const queryArgs = {
               filter: {
-                slog: { eq: `def` }
-              }
+                slog: { eq: `def` },
+              },
             }
 
             const resultSingular = await runSift({
@@ -246,7 +246,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultSingular)).toBe(true)
@@ -259,8 +259,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           it(`eq operator flat many`, async () => {
             const queryArgs = {
               filter: {
-                slog: { eq: `def` }
-              }
+                slog: { eq: `def` },
+              },
             }
 
             const resultMany = await runSift({
@@ -268,7 +268,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultMany)).toBe(true)
@@ -281,8 +281,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           it(`eq operator deep single`, async () => {
             const queryArgs = {
               filter: {
-                deep: { flat: { search: { chain: { eq: 300 } } } }
-              }
+                deep: { flat: { search: { chain: { eq: 300 } } } },
+              },
             }
 
             const resultSingular = await runSift({
@@ -290,7 +290,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultSingular)).toBe(true)
@@ -303,8 +303,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           it(`eq operator deep many`, async () => {
             const queryArgs = {
               filter: {
-                deep: { flat: { search: { chain: { eq: 300 } } } }
-              }
+                deep: { flat: { search: { chain: { eq: 300 } } } },
+              },
             }
 
             const resultMany = await runSift({
@@ -312,7 +312,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultMany)).toBe(true)
@@ -325,8 +325,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           it(`eq operator deep miss single`, async () => {
             const queryArgs = {
               filter: {
-                deep: { flat: { search: { chain: { eq: 999 } } } }
-              }
+                deep: { flat: { search: { chain: { eq: 999 } } } },
+              },
             }
 
             const resultSingular = await runSift({
@@ -334,7 +334,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: true,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultSingular)).toBe(true)
@@ -343,8 +343,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           it(`eq operator deep miss many`, async () => {
             const queryArgs = {
               filter: {
-                deep: { flat: { search: { chain: { eq: 999 } } } }
-              }
+                deep: { flat: { search: { chain: { eq: 999 } } } },
+              },
             }
 
             const resultMany = await runSift({
@@ -352,7 +352,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             expect(resultMany).toBe(null)
@@ -362,9 +362,9 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
             const queryArgs = {
               filter: {
                 elemList: {
-                  elemMatch: { foo: { eq: `baz` } }
-                }
-              }
+                  elemMatch: { foo: { eq: `baz` } },
+                },
+              },
             }
 
             const resultMany = await runSift({
@@ -372,7 +372,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
               queryArgs,
               firstOnly: false,
               nodeTypeNames: [gqlType.name],
-              filtersCache: createFiltersCache()
+              filtersCache: createFiltersCache(),
             })
 
             expect(Array.isArray(resultMany)).toBe(true)
@@ -393,7 +393,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
 
     it(`gets stuff from cache for simple query`, () => {
       const filter = {
-        slog: { $eq: `def` }
+        slog: { $eq: `def` },
       }
 
       const result = filterWithoutSift(
@@ -411,7 +411,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
 
     it(`gets stuff from cache for deep query`, () => {
       const filter = {
-        deep: { flat: { search: { chain: { $eq: 300 } } } }
+        deep: { flat: { search: { chain: { $eq: 300 } } } },
       }
 
       const result = filterWithoutSift(
@@ -430,7 +430,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
     it(`supports multi-query`, () => {
       const filter = {
         slog: { $eq: `def` },
-        deep: { flat: { search: { chain: { $eq: 300 } } } }
+        deep: { flat: { search: { chain: { $eq: 300 } } } },
       }
 
       const results = filterWithoutSift(
@@ -449,8 +449,8 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
     it(`supports elemMatch`, () => {
       const filter = {
         elemList: {
-          $elemMatch: { foo: { $eq: `baz` } }
-        }
+          $elemMatch: { foo: { $eq: `baz` } },
+        },
       }
 
       const result = filterWithoutSift(

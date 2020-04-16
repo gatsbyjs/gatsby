@@ -27,7 +27,7 @@ function createNodeTypeCollection(type) {
   const options = {
     unique: [`id`],
     indices: [`id`, `internal.counter`],
-    disableMeta: true
+    disableMeta: true,
   }
   const coll = getDb().addCollection(collName, options)
   return coll
@@ -134,10 +134,7 @@ function getNodesByType(typeName) {
   const collName = getTypeCollName(typeName)
   const coll = getDb().getCollection(collName)
   if (!coll) return []
-  return coll
-    .chain()
-    .simplesort(`internal.counter`)
-    .data()
+  return coll.chain().simplesort(`internal.counter`).data()
 }
 
 /**
@@ -409,5 +406,5 @@ module.exports = {
   reducer,
 
   saveResolvedNodes,
-  ensureFieldIndexes
+  ensureFieldIndexes,
 }

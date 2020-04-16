@@ -27,7 +27,7 @@ export function createDataloaderLink(options) {
     cache: false,
     maxBatchSize,
     batchScheduleFn: callback => setTimeout(callback, 50),
-    ...options.dataLoaderOptions
+    ...options.dataLoaderOptions,
   })
 
   return new ApolloLink(
@@ -80,13 +80,13 @@ async function request(query, options) {
 
   const body = JSON.stringify({
     query: print(query.query),
-    variables: query.variables
+    variables: query.variables,
   })
   const response = await fetch(uri, {
     method: `POST`,
     ...fetchOptions,
     headers: Object.assign({ "Content-Type": `application/json` }, headers),
-    body
+    body,
   })
   return response.json()
 }
