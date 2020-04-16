@@ -63,9 +63,9 @@ plugins: [
        * One convention is to place your Netlify CMS customization code in a
        * `src/cms` directory.
        */
-      modulePath: `${__dirname}/src/cms/cms.js`
-    }
-  }
+      modulePath: `${__dirname}/src/cms/cms.js`,
+    },
+  },
 ]
 ```
 
@@ -117,9 +117,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-netlify-cms`,
     options: {
-      manualInit: true
-    }
-  }
+      manualInit: true,
+    },
+  },
 ]
 ```
 
@@ -135,9 +135,9 @@ import CMS from "netlify-cms-app"
 CMS.init({
   config: {
     backend: {
-      name: "git-gateway"
-    }
-  }
+      name: "git-gateway",
+    },
+  },
 })
 ```
 
@@ -154,9 +154,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-netlify-cms`,
     options: {
-      enableIdentityWidget: true
-    }
-  }
+      enableIdentityWidget: true,
+    },
+  },
 ]
 ```
 
@@ -207,14 +207,14 @@ plugins: [
 
         config.plugins.push(
           plugins.define({
-            "process.env.MY_VAR": JSON.stringify("my var value")
+            "process.env.MY_VAR": JSON.stringify("my var value"),
           })
         )
 
         config.plugins.push(new Plugin())
-      }
-    }
-  }
+      },
+    },
+  },
 ]
 ```
 
@@ -233,9 +233,9 @@ plugins: [
       publicPath: `admin`,
       htmlTitle: `Content Manager`,
       htmlFavicon: `path/to/favicon`,
-      includeRobots: false
-    }
-  }
+      includeRobots: false,
+    },
+  },
 ]
 ```
 
@@ -250,9 +250,9 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     plugins: [
       new webpack.IgnorePlugin({
-        resourceRegExp: /^netlify-identity-widget$/
-      })
-    ]
+        resourceRegExp: /^netlify-identity-widget$/,
+      }),
+    ],
   })
 }
 ```

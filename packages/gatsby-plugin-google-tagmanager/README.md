@@ -28,9 +28,9 @@ plugins: [
       // Specify optional GTM environment details.
       gtmAuth: "YOUR_GOOGLE_TAGMANAGER_ENVIRONMENT_AUTH_STRING",
       gtmPreview: "YOUR_GOOGLE_TAGMANAGER_ENVIRONMENT_PREVIEW_NAME",
-      dataLayerName: "YOUR_DATA_LAYER_NAME"
-    }
-  }
+      dataLayerName: "YOUR_DATA_LAYER_NAME",
+    },
+  },
 ]
 ```
 
@@ -45,13 +45,13 @@ plugins: [
       // datalayer to be set before GTM is loaded
       // should be a stringified object or object
       // Defaults to null
-      defaultDataLayer: function() {
+      defaultDataLayer: function () {
         return {
-          pageType: window.pageType
+          pageType: window.pageType,
         }
-      }
-    }
-  }
+      },
+    },
+  },
 ]
 ```
 

@@ -353,8 +353,8 @@ module.exports = () => ({
     postcssImport(),
     postcssCssNext(),
     postcssBrowserReporter(),
-    postcssReporter()
-  ]
+    postcssReporter(),
+  ],
 })
 ```
 
@@ -685,7 +685,7 @@ const processRule = rule => {
   if (rule.oneOf) {
     return {
       ...rule,
-      oneOf: rule.oneOf.map(processRule)
+      oneOf: rule.oneOf.map(processRule),
     }
   }
 
@@ -706,10 +706,10 @@ const processRule = rule => {
           ...use,
           options: {
             ...use.options,
-            camelCase: false
-          }
+            camelCase: false,
+          },
         }
-      })
+      }),
     }
   }
 
@@ -723,8 +723,8 @@ exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
     ...config,
     module: {
       ...config.module,
-      rules: config.module.rules.map(processRule)
-    }
+      rules: config.module.rules.map(processRule),
+    },
   }
   actions.replaceWebpackConfig(newConfig)
 }
@@ -739,10 +739,10 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       cssLoaderOptions: {
-        camelCase: false
-      }
-    }
-  }
+        camelCase: false,
+      },
+    },
+  },
 ]
 ```
 

@@ -193,7 +193,7 @@ Rendered, it looks like this:
     "egghead-embed",
     "pull-quote",
     "layer-model",
-    "horizontal-navigation-list"
+    "horizontal-navigation-list",
   ]}
   slug={props.slug}
 />

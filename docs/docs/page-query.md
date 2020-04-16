@@ -20,8 +20,8 @@ The first step in displaying the description will be ensuring you have one to be
 module.exports = {
   siteMetadata: {
     title: "My Homepage",
-    description: "This is where I write my thoughts."
-  }
+    description: "This is where I write my thoughts.",
+  },
 }
 ```
 
@@ -186,8 +186,8 @@ posts.forEach(({ node }, index) => {
     component: path.resolve(`./src/templates/blog-post.js`),
     // values in the context object are passed in as variables to page queries
     context: {
-      title: node.title // "Using a Theme"
-    }
+      title: node.title, // "Using a Theme"
+    },
   })
 })
 ```

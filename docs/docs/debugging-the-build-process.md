@@ -21,7 +21,7 @@ exports.onCreateNode = args => {
     createNodeField({
       name: `slug`,
       node,
-      value
+      value,
     })
   }
 }
@@ -55,7 +55,7 @@ exports.onCreateNode = args => {
     createNodeField({
       name: `slug`,
       node,
-      value
+      value,
     })
   }
 }
