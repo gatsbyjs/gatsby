@@ -34,10 +34,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-typescript`,
       options: {
-        // isTSX defaults to false
-        // jsxPragma defaults to `React`
-        // allExtensions defaults to false
-        // allowNamespaces defaults to false
+        isTSX: true, // defaults to false
+        jsxPragma: `jsx`, // defaults to "React"
+        allExtensions: true, // defaults to false
       },
     },
   ],
