@@ -7,7 +7,7 @@ describe(`gatsby-plugin-sass`, () => {
 
   // loaders "mocks"
   const loaders = {
-    miniCssExtract: () => `miniCssExtract`,
+    miniCssExtract: args => `miniCssExtract(${JSON.stringify(args)})`,
     css: args => `css(${JSON.stringify(args)})`,
     postcss: args => `postcss(${JSON.stringify(args)})`,
     null: () => `null`,

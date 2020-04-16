@@ -5,6 +5,7 @@ exports.onCreateWebpackConfig = (
   {
     cssLoaderOptions = {},
     postCssPlugins,
+    miniCssExtractOptions = {},
     useResolveUrlLoader,
     sassRuleTest,
     sassRuleModulesTest,
@@ -28,7 +29,7 @@ exports.onCreateWebpackConfig = (
     use: isSSR
       ? [loaders.null()]
       : [
-          loaders.miniCssExtract(),
+          loaders.miniCssExtract(miniCssExtractOptions),
           loaders.css({ ...cssLoaderOptions, importLoaders: 2 }),
           loaders.postcss({ plugins: postCssPlugins }),
           sassLoader,
@@ -37,7 +38,8 @@ exports.onCreateWebpackConfig = (
   const sassRuleModules = {
     test: sassRuleModulesTest || /\.module\.s(a|c)ss$/,
     use: [
-      !isSSR && loaders.miniCssExtract({ hmr: false }),
+      !isSSR &&
+        loaders.miniCssExtract({ ...miniCssExtractOptions, hmr: false }),
       loaders.css({ ...cssLoaderOptions, modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       sassLoader,
