@@ -1,6 +1,6 @@
-import { PluginObj } from "@babel/core"
-import { NodePath } from "@babel/traverse"
+import { NodePath, PluginObj, Visitor } from "@babel/core"
 import * as BabelTypes from "@babel/types"
+import { Program } from "@babel/types"
 
 // matches any hook-like (the default)
 const isHook = /^use[A-Z]/
@@ -8,24 +8,25 @@ const isHook = /^use[A-Z]/
 // matches only built-in hooks provided by React et al
 const isBuiltInHook = /^use(Callback|Context|DebugValue|Effect|ImperativeHandle|LayoutEffect|Memo|Reducer|Ref|State)$/
 
+type State = {
+  opts?: {
+    onlyBuiltIns?: boolean
+    lib?: boolean
+  }
+}
+
 export default function ({
   types: t,
 }: {
   types: typeof BabelTypes
-}): PluginObj<any> {
-  const visitor = {
-    CallExpression(
-      path: NodePath<BabelTypes.CallExpression>,
-      state: any
-    ): void {
-      const onlyBuiltIns = state.opts.onlyBuiltIns
+}): PluginObj<Program> {
+  const visitor: Visitor = {
+    CallExpression(path, state: State): void {
+      const onlyBuiltIns = state.opts?.onlyBuiltIns || false
 
       // if specified, options.lib is a list of libraries that provide hook functions
       const libs =
-        state.opts.lib &&
-        (state.opts.lib === true
-          ? [`react`, `preact/hooks`]
-          : [].concat(state.opts.lib))
+        state.opts?.lib === true ? [`react`, `preact/hooks`] : [state.opts!.lib]
 
       // skip function calls that are not the init of a variable declaration:
       if (!t.isVariableDeclarator(path.parent)) return
@@ -52,7 +53,7 @@ export default function ({
 
       path.parent.id = t.objectPattern(
         path.parent.id.elements.map((element, i) =>
-          t.objectProperty(t.numericLiteral(i), element)
+          t.objectProperty(t.numericLiteral(i), element!)
         )
       )
     },
@@ -62,7 +63,7 @@ export default function ({
     name: `optimize-hook-destructuring`,
     visitor: {
       // this is a workaround to run before preset-env destroys destructured assignments
-      Program(path: NodePath<BabelTypes.Program>, state: any): void {
+      Program<Program>(path: NodePath<Program>, state: any): void {
         path.traverse(visitor, state)
       },
     },
