@@ -20,7 +20,7 @@ To kickstart the new era of Gatsby Recipes, we’ve created 11 official recipes 
   <p>Sorry! Your browser doesn't support this video.</p>
 </video>
 
-Gatsby has 1000s of plugins and themes and is an incredibly flexible tool for creating for the web. With this comes the problem of discovering how to accomplish a specific task. It's a challenge when users enter the Gatsby ecosystem, they have to translate "I want to do x" to how "x" is done in Gatsby. Last year, Marcy Sutton led our effort to add [ dozens of "recipes" to help people with this on gatsbyjs.org](https://www.gatsbyjs.org/docs/recipes/). But we think these will work even better if you can run them directly on the CLI. Gatsby Recipes teach users how to accomplish desired tasks in Gatsby while also enabling them to automate the process.
+Gatsby has 1000s of plugins and themes and is an incredibly flexible tool for creating for the web. With this comes the problem of discovering how to accomplish a specific task. It's a challenge when users enter the Gatsby ecosystem, they have to translate "I want to do x" to how "x" is done in Gatsby. Last year, Marcy Sutton led our effort to add [dozens of "recipes" to help people with this on gatsbyjs.org](https://www.gatsbyjs.org/docs/recipes/). But we think these will work even better if you can run them directly on the CLI. Gatsby Recipes teach users how to accomplish desired tasks in Gatsby while also enabling them to automate the process.
 
 So now, instead of Googling how to add Styled Components support to Gatsby, you simply run `gatsby recipes styled-components` and an interactive workflow walks you through the steps.
 
