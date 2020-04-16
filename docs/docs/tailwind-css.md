@@ -146,7 +146,8 @@ plugins: [
 ],
 ```
 
-**Note:** Optionally you can add a corresponding configuration file (by default it will be `tailwind.config.js`). If you are adding a custom configuration, you will need to load it after `tailwindcss`.
+**Note:** Optionally you can add a corresponding configuration file (by default it will be `tailwind.config.js`).
+If you are adding a custom configuration, you will need to load it after `tailwindcss`.
 
 ## Other resources
 

@@ -374,7 +374,8 @@ Once this finishes running, you should see in your terminal something like:
 
 ![Screenshot of publishing Gatsby site with Surge](surge-deployment.png)
 
-Open the web address listed on the bottom line (`lowly-pain.surge.sh` in this case) and you'll see your newly published site! Great work!
+Open the web address listed on the bottom line (`lowly-pain.surge.sh` in this
+case) and you'll see your newly published site! Great work!
 
 ## ➡️ What’s Next?
 

@@ -45,7 +45,8 @@ export default {
 }
 ```
 
-This will allow you to add `localeText` as a type in your schemas and renders a nice UI for adding translations. ![Example of the translation UI from Sanity](./images/ui-example.png)
+This will allow you to add `localeText` as a type in your schemas and renders a nice UI for adding translations.
+![Example of the translation UI from Sanity](./images/ui-example.png)
 
 In your schema:
 

@@ -2,7 +2,8 @@
 title: Adding Markdown Pages
 ---
 
-Gatsby can use Markdown files to create pages in your site. You add plugins to read and understand folders with Markdown files and from them create pages automatically.
+Gatsby can use Markdown files to create pages in your site.
+You add plugins to read and understand folders with Markdown files and from them create pages automatically.
 
 Here are the steps Gatsby follows for making this happen.
 
@@ -67,7 +68,8 @@ plugins: [
 
 ## Add a Markdown file
 
-Create a folder in the `/src` directory of your Gatsby application called `markdown-pages`. Now create a Markdown file inside it with the name `post-1.md`.
+Create a folder in the `/src` directory of your Gatsby application called `markdown-pages`.
+Now create a Markdown file inside it with the name `post-1.md`.
 
 ### Frontmatter for metadata in Markdown files
 
@@ -85,7 +87,8 @@ What is important in this step is the key pair `path`. The value that is assigne
 
 ## Create a page template for the Markdown files
 
-Create a folder in the `/src` directory of your Gatsby application called `templates`. Now create a `blogTemplate.js` inside it with the following content:
+Create a folder in the `/src` directory of your Gatsby application called `templates`.
+Now create a `blogTemplate.js` inside it with the following content:
 
 ```jsx:title=src/templates/blogTemplate.js
 import React from "react"

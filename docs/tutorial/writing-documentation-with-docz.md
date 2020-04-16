@@ -123,7 +123,10 @@ name: Button
 menu: Components
 ---
 
-// highlight-start import { Playground, Props } from "docz" import { Button } from "./button" // highlight-end
+// highlight-start
+import { Playground, Props } from "docz"
+import { Button } from "./button"
+// highlight-end
 
 # Button
 
@@ -147,7 +150,8 @@ Buttons make common actions more obvious and help users more easily perform them
   <Button scale="small">Click me</Button>
   <Button scale="normal">Click me</Button>
   <Button scale="big">Click me</Button>
-</Playground> // highlight-end
+</Playground>
+// highlight-end
 ```
 
 Start the development server again and you should see the properties (children and scale), one playground displaying the normal button, and one playground showing the button in its three sizes.

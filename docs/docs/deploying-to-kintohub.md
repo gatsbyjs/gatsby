@@ -30,25 +30,28 @@ _Note: A **KintoBlock** is connected to a GitHub repository. Accessing the kinto
 3. Select your GitHub repo from the list and press **Continue**.
 4. Choose **Static from Build** with the following values:
 
-   |  |  |
-   | --- | --- |
-   | **Name** | `Gatsby Website` (or your own name) |
-   | **Language** | `Node.js` |
-   | **Version** | `latest` (or your own node.js version) |
-   | **Build Command** | `npm install && npm run build` (or your own build command) |
-   | **Build Output Folder** | `public` (or your own output directory) |
+   |                         |                                                            |
+   | ----------------------- | ---------------------------------------------------------- |
+   | **Name**                | `Gatsby Website` (or your own name)                        |
+   | **Language**            | `Node.js`                                                  |
+   | **Version**             | `latest` (or your own node.js version)                     |
+   | **Build Command**       | `npm install && npm run build` (or your own build command) |
+   | **Build Output Folder** | `public` (or your own output directory)                    |
 
 5. Press **Create Website**.
 
-The build will automatically start on the default GitHub branch of your repository. Wait for your build to be successful (green).
+The build will automatically start on the default GitHub branch of your repository.
+Wait for your build to be successful (green).
 
 #### Multiple Branches
 
-When you create a new **KintoBlock**, KintoHub imports all your branches and you can access them from your kintoblock page (new branches will also be automatically picked up). You can switch from one branch to another by pressing the branch name on the side panel on the left.
+When you create a new **KintoBlock**, KintoHub imports all your branches and you can access them from your kintoblock page (new branches will also be automatically picked up).
+You can switch from one branch to another by pressing the branch name on the side panel on the left.
 
 #### Continuous Integration
 
-By default, KintoHub will build all the changes you push on your default branch. If you want to disable it:
+By default, KintoHub will build all the changes you push on your default branch.
+If you want to disable it:
 
 1. Disable the toggle **Build New Commits**.
 2. Press **Save Changes**.
@@ -63,7 +66,8 @@ From your KintoBlock page, you will need to deploy your website first before acc
 2. You can change the default values (optional).
 3. Press **Create New Project**.
 
-The deployment will start. Wait for it to be successful (green).
+The deployment will start.
+Wait for it to be successful (green).
 
 _Note: you can disable Continuous Deployments for future builds._
 
@@ -78,7 +82,8 @@ And that's it!
 
 ## Deployment Configuration
 
-You can configure additional features directly from your Project page. If you're not already there, select **Projects** on the left-hand navigation bar, and then click on the project you want to configure.
+You can configure additional features directly from your Project page.
+If you're not already there, select **Projects** on the left-hand navigation bar, and then click on the project you want to configure.
 
 ### Basic Auth
 
@@ -89,7 +94,8 @@ You can configure additional features directly from your Project page. If you're
 5. Press **Done Configuring** and then **Deploy**.
 6. You'll see a **Compare Versions** screen. Click **Confirm Deployment**.
 
-Wait for the deployment to be successful. Refresh the page, your website is now protected.
+Wait for the deployment to be successful.
+Refresh the page, your website is now protected.
 
 ### Custom domain
 
@@ -100,7 +106,8 @@ Wait for the deployment to be successful. Refresh the page, your website is now 
 5. Press **Done Configuring** and then **Deploy**.
 6. You'll see a **Compare Versions** screen. Click **Confirm Deployment**.
 
-Wait for the deployment to be successful. Access your new custom domain.
+Wait for the deployment to be successful.
+Access your new custom domain.
 
 ## Support
 
