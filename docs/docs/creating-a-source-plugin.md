@@ -265,7 +265,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       author: Author @link(from: "author.name" by: "name") // highlight-line
       # ... other fields
     }
-    
+
     type Author implements Node {
       name: String!
       post: Post @link // highlight-line
