@@ -4,8 +4,8 @@
   "description": "Gatsby library that helps creating pages",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore **/__tests__",
-    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__",
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\"",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [

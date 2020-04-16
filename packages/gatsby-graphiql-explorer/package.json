@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:app": "webpack --config ./src/app/webpack.config.js",
-    "build:babel": "babel src/index.js --out-dir . --ignore **/__tests__",
+    "build:babel": "babel src/index.js --out-dir . --ignore \"**/__tests__\"",
     "build": "npm-run-all --parallel build:app build:babel",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",

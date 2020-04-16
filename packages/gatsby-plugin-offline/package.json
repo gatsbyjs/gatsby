@@ -43,7 +43,7 @@
   },
   "scripts": {
     "build": "npm run build:src && npm run build:sw-append",
-    "build:src": "babel src --out-dir . --ignore **/__tests__,src/sw-append.js",
+    "build:src": "babel src --out-dir . --ignore \"**/__tests__,src/sw-append.js\"",
     "build:sw-append": "cpx -v src/sw-append.js .",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "npm run build:sw-append -- --watch & npm run build:src -- --watch"
