@@ -46,8 +46,9 @@ Kyle
 - [x] move back to "press enter to run"
 - [x] Run gatsby-config.js changes through prettier to avoid weird diffs
 - [x] document ShadowFile
-- [ ] Remove mention of canary release before merging
-- [ ] write blog post
+- [x] Remove mention of canary release before merging
+- [x] write blog post
+- [ ] move gatsby package to depend on released version of gatsby-recipes
 
 John
 
