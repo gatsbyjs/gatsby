@@ -52,14 +52,8 @@ This success can be attributed to having improved content and meta data, a light
 
 Rather than making the sitemap plugin platform specific, it was built to work with any Gatsby project. You could be using Ghost as a Headless CMS, or any other software to build your site, and use the plugin for free.
 
-<pullquote>
-  Visit the{" "}
-  <a href="/packages/gatsby-plugin-advanced-sitemap/?=sitemap">
-    Gatsby plugin library
-  </a>{" "}
-  page to get started, or download directly from{" "}
-  <a href="https://github.com/tryghost/gatsby-plugin-advanced-sitemap">
-    GitHub
-  </a>
-  !
-</pullquote>
+<Pullquote>
+
+Visit the [Gatsby plugin library](/packages/gatsby-plugin-advanced-sitemap/?=sitemap) page to get started, or download directly from [GitHub](https://github.com/tryghost/gatsby-plugin-advanced-sitemap)!
+
+</Pullquote>
