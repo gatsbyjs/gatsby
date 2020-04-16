@@ -16,9 +16,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-page-utils"
+    "directory": "packages\\gatsby-page-utils"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-page-utils#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-page-utils#readme",
   "dependencies": {
     "@babel/runtime": "^7.8.7",
     "bluebird": "^3.7.2",

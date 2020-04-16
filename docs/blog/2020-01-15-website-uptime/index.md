@@ -40,8 +40,7 @@ Brian Webster, co-founder of the LA-based Delicious Simplicity, compares how Gat
 
 In a world where website visitors are a source of revenue or donations, Webster points out, time is money, and traffic spikes from publicity, email newsletter blasts, should be taken advantage of rather than worried about.
 
-Webster again:
-"We never want our best day to be our worst day - the site going down, or becoming slow," he says. "But with [Gatsby], everything's prebuilt. Scale is cheap, easy. If we're expecting 10 people at our party and 10 thousand show up, we're well equipped.
+Webster again: "We never want our best day to be our worst day - the site going down, or becoming slow," he says. "But with [Gatsby], everything's prebuilt. Scale is cheap, easy. If we're expecting 10 people at our party and 10 thousand show up, we're well equipped.
 
 ## No more clearing caches and hoping for the best
 

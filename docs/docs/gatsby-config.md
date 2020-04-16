@@ -141,8 +141,7 @@ query($slug: String!) {
 }
 ```
 
-Mapping can also be used to map an array of ids to any other collection of data. For example, if you have two JSON files
-`experience.json` and `tech.json` as follows:
+Mapping can also be used to map an array of ids to any other collection of data. For example, if you have two JSON files `experience.json` and `tech.json` as follows:
 
 ```json:title=experience.json
 [

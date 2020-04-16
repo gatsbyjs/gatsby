@@ -981,8 +981,7 @@ const Event = ({ name, location, url, startDate, endDate }) => (
 export default Event
 ```
 
-> 💡 This tutorial won't go into detail on the date refactor as written.
-> For more detail, refer to the [Egghead lesson and transcript](https://egghead.io/lessons/react-style-and-format-dates-in-react).
+> 💡 This tutorial won't go into detail on the date refactor as written. For more detail, refer to the [Egghead lesson and transcript](https://egghead.io/lessons/react-style-and-format-dates-in-react).
 
 ## Configure a theme to take options
 

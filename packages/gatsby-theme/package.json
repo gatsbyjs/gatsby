@@ -10,9 +10,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-theme"
+    "directory": "packages\\gatsby-theme"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-theme#readme",
   "dependencies": {
     "@babel/core": "^7.8.7",
     "@babel/helper-plugin-utils": "^7.8.3",

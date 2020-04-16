@@ -20,9 +20,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-plugin-page-creator"
+    "directory": "packages\\gatsby-plugin-page-creator"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-plugin-page-creator#readme",
   "dependencies": {
     "@babel/runtime": "^7.8.7",
     "bluebird": "^3.7.2",

@@ -19,7 +19,7 @@
     "cross-env": "^5.2.1",
     "graphql": "^14.6.0"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\graphql-skip-limit#readme",
   "keywords": [
     "gatsby",
     "graphql"
@@ -29,7 +29,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/graphql-skip-limit"
+    "directory": "packages\\graphql-skip-limit"
   },
   "scripts": {
     "build": "babel src --out-dir dist",

@@ -4,14 +4,14 @@
   "description": "MDX integration for Gatsby",
   "main": "index.js",
   "license": "MIT",
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-plugin-mdx#readme",
   "scripts": {
     "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-plugin-mdx"
+    "directory": "packages\\gatsby-plugin-mdx"
   },
   "peerDependencies": {
     "@mdx-js/mdx": "^1.0.0",

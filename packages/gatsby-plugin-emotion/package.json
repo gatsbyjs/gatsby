@@ -16,7 +16,7 @@
     "babel-preset-gatsby-package": "^0.3.1",
     "cross-env": "^5.2.1"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-plugin-emotion#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -33,7 +33,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-plugin-emotion"
+    "directory": "packages\\gatsby-plugin-emotion"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

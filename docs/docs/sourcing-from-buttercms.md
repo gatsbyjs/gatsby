@@ -44,8 +44,7 @@ Run this in your terminal:
 
 ### Adding configuration
 
-Here you'll specify the config that will be needed to pull down data from ButterCMS.
-Make sure to add your **API_TOKEN** from your dashboard. In this guide you will be creating `faq_items`, `faq_headline`, `homepage`, `customer_case_study` as stated in the config below. Do well to change it if you named it something differently.
+Here you'll specify the config that will be needed to pull down data from ButterCMS. Make sure to add your **API_TOKEN** from your dashboard. In this guide you will be creating `faq_items`, `faq_headline`, `homepage`, `customer_case_study` as stated in the config below. Do well to change it if you named it something differently.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -78,8 +77,7 @@ To see a fully complete Gatsby+ButterCMS project check out this [Gatsby ButterCM
 
 ### Webhooks
 
-Webhooks are a powerful feature that allow you to notify your internal systems whenever content in ButterCMS has changed.
-Your host platform needs to be notified so that Gatsby can create fresh pages from the new data. You can learn more about Webhooks in this [blog post](https://buttercms.com/blog/webhook-vs-api-whats-the-difference). Checkout your host platform from incoming webhooks so you can hit it anytime your content changes. Netlify lets you generate a build hook that will be triggered by ButterCMS on certain events e.g. when you create or update a blog post, more details [here](https://buttercms.com/docs/api/#webhooks).
+Webhooks are a powerful feature that allow you to notify your internal systems whenever content in ButterCMS has changed. Your host platform needs to be notified so that Gatsby can create fresh pages from the new data. You can learn more about Webhooks in this [blog post](https://buttercms.com/blog/webhook-vs-api-whats-the-difference). Checkout your host platform from incoming webhooks so you can hit it anytime your content changes. Netlify lets you generate a build hook that will be triggered by ButterCMS on certain events e.g. when you create or update a blog post, more details [here](https://buttercms.com/docs/api/#webhooks).
 
 ![Webhook](https://buttercms.com/static/images/docs/guides/OverviewWebhooks.png "Webhook")
 
@@ -271,11 +269,9 @@ If you need help after reading this, contact ButterCMS via email or livechat.
 
 #### Create the Page Type structure
 
-Create a Page Type to represent your Customer Case Study pages:
-![page structure](https://buttercms.com/static/images/docs/guides/PagesNewPageType1.png)
+Create a Page Type to represent your Customer Case Study pages: ![page structure](https://buttercms.com/static/images/docs/guides/PagesNewPageType1.png)
 
-After saving, return to the configuration page by clicking the gear icon:
-![image](https://buttercms.com/static/images/docs/guides/PagesNewPageType2.png)
+After saving, return to the configuration page by clicking the gear icon: ![image](https://buttercms.com/static/images/docs/guides/PagesNewPageType2.png)
 
 Then click on Create Page Type and name it "Customer Case Study". This will allow you to reuse this field configuration across multiple customer case study pages:
 
@@ -590,9 +586,7 @@ That's it! Now stop the server and run:
 gatsby develop
 ```
 
-Now the home page should contain links to customer case study pages, click around and
-you'll notice that the template you defined in `src/template/customer_case_study.js`
-was used by Gatsby to create each case study page.
+Now the home page should contain links to customer case study pages, click around and you'll notice that the template you defined in `src/template/customer_case_study.js` was used by Gatsby to create each case study page.
 
 ### FAQ page example
 
@@ -968,8 +962,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 ### Categories, tags, and authors
 
-Use Butter's APIs for categories, tags, and authors to feature and filter content on your blog.
-See their [API reference](https://buttercms.com/docs/api/) for more information about these objects:
+Use Butter's APIs for categories, tags, and authors to feature and filter content on your blog. See their [API reference](https://buttercms.com/docs/api/) for more information about these objects:
 
 ### Easy as Butter
 

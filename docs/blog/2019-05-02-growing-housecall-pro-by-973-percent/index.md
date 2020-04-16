@@ -19,8 +19,7 @@ We needed our site to be blazing fast, scalable, have top notch SEO, and most im
 
 Along the way, it became clear that to get the benefits of a fast, fully crawlable site, we would need extra tools for the job. Indexability and SEO would prove challenging to improve upon when the website is being rendered in the browser via JavaScript. SEO and mobile performance are critical components for customers to be able to find your site. With that in mind, we searched for better React solutions.
 
-We were given a recommendation for Gatsby and it did not disappoint. Since Gatsby
-renders all of our pages as static HTML files, our site became instantly crawlable by search engines. From our time of implementing Gatsby in late November 2018 to April 2019, we have increased our organic blog traffic by **​973%​**. We expect that number to keep increasing from there.
+We were given a recommendation for Gatsby and it did not disappoint. Since Gatsby renders all of our pages as static HTML files, our site became instantly crawlable by search engines. From our time of implementing Gatsby in late November 2018 to April 2019, we have increased our organic blog traffic by **​973%​**. We expect that number to keep increasing from there.
 
 ![Housecall Pro Web Traffic Increase With Gatsby](./images/web-traffic-increase.png)
 
@@ -56,14 +55,12 @@ By providing data in the form of a JSON object, we can parse and iterate over ea
 
 This has dramatically decreased developer time and rocketed the speed of page creation. We went from building several pages a week using frontend developers, to building out dozens of pages a day with professional content creators.
 
-Below is an example of one of our live industry pages (in this case Heating/Air
-Conditioning). Each industry page follows the same template, and content authors can build out new industries, complete with whatever copy, icons, images, and animations they need to allow each to stand out as its own work of art.
+Below is an example of one of our live industry pages (in this case Heating/Air Conditioning). Each industry page follows the same template, and content authors can build out new industries, complete with whatever copy, icons, images, and animations they need to allow each to stand out as its own work of art.
 
 ![Housecall Pro Website Example](./images/website-example.png)
 
 ## Developer Love
 
-Gatsby has provided us with the tools to grow and expand Housecall Pro, all
-while being a pleasure to develop with. The vibrant community, fantastic documentation, and accessibility to knowledgeable people has made it clear that Gatsby is a winning solution.
+Gatsby has provided us with the tools to grow and expand Housecall Pro, all while being a pleasure to develop with. The vibrant community, fantastic documentation, and accessibility to knowledgeable people has made it clear that Gatsby is a winning solution.
 
 Thank you Gatsby team! Housecall Pro is always looking for engineering talent. Check out our [careers](https://www.housecallpro.com/careers/)​ page to see all of our current openings.

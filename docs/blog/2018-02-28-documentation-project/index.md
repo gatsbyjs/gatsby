@@ -45,8 +45,7 @@ Here is a brief overview of issues that have come up again and again as I've int
 
 - Gatsby is beginner-friendly; however, _true_ beginners to programming need an intro to basic tools like the command line, code editors, and browser consoles.
 - Upon first visit to Gatsbyjs.org, most visitors click “Get Started.” This is the perfect solution for them if they prefer to jump into coding without reading much. If they prefer step-by-step instructions, it takes some looking around before they see the tutorial tab across the top.
-- Installing new starters for every part of tutorial feels like a distraction to some beginners.
-  "Part 1" is not a descriptive title for a tutorial if someone wants to preview or remember what was covered.
+- Installing new starters for every part of tutorial feels like a distraction to some beginners. "Part 1" is not a descriptive title for a tutorial if someone wants to preview or remember what was covered.
 - Almost everyone is new to GraphQL and gets overwhelmed when we introduce it in Part 4.
 
 ## Documentation project beginnings

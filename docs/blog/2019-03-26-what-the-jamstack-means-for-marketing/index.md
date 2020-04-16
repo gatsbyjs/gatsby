@@ -30,8 +30,7 @@ Put simply, a JAMstack website has an unlimited ecosystem of all of the tools an
 
 Building your marketing site on the JAMstack is an efficient and reliable way to combine all of your content and channels and serve it up as a lightning-fast website that your visitors will love. If you need to add e-commerce, paywalls, a podcast or some other content to your site in the future, your team won't have to figure out how to get everything to play ball with your CMS or build a new site from scratch. Instead they'll be able to connect new APIs or services to your existing site.
 
-**The past vs the future**
-Using a traditional CMS is more restrictive and opinionated than this. You're constrained to the platform you choose from the get-go and forced to accept additional "features" that you might not even need. While these platforms have provided us with an excellent way to publish websites in the past, it's changing for the future.
+**The past vs the future** Using a traditional CMS is more restrictive and opinionated than this. You're constrained to the platform you choose from the get-go and forced to accept additional "features" that you might not even need. While these platforms have provided us with an excellent way to publish websites in the past, it's changing for the future.
 
 <Pullquote>
   Thanks to progression with modern browsers, static site generators, APIs and
@@ -41,8 +40,7 @@ Using a traditional CMS is more restrictive and opinionated than this. You're co
 
 **Going back to the benefits:** better performance, higher security, cheaper to scale & a better experience. These aren't just developer benefits, they apply directly to the marketing team too. Better performance means better site engagement and improved SEO. Higher security means less chance of not hitting your stretch goal next June because the site got hacked. Cheaper to scale means there will be less roadblocks in your way when you want to add that Shopify store or when a big campaign sends 1M visitors to the site. Better experience — who wouldn't want that?
 
-**The rise of static sites**
-Static site generators like Gatsby play a huge part in making all of this possible, and there are lots of [exciting new tools](https://www.staticgen.com/) appearing that support the future of publishing on the JAMstack. Static site generators work by pulling content from APIs and running a build task in the background to generate your site. So when your visitors arrive, they’re met with blazing-fast load times, and your security and SEO is taken care of.
+**The rise of static sites** Static site generators like Gatsby play a huge part in making all of this possible, and there are lots of [exciting new tools](https://www.staticgen.com/) appearing that support the future of publishing on the JAMstack. Static site generators work by pulling content from APIs and running a build task in the background to generate your site. So when your visitors arrive, they’re met with blazing-fast load times, and your security and SEO is taken care of.
 
 ## Enter the headless CMS
 
@@ -142,8 +140,7 @@ I've already covered some of the benefits of opting to use JAMstack instead of a
 
 To be frank, all of these downsides are things that are worth enduring to get a better end result. Being more involved in the technical side didn't slow me down once I'd got my foundational knowledge nailed, and spending a little more time upfront to have a beautiful, blazing-fast site is time well spent. The results speak for themselves.
 
-**Tips for a successful JAMstack launch**
-Since you're going to be working so closely with developers, it would be a good idea to sit down from the outset and plan out how things are going to work. Your developers are going to need to know exactly what functionality you need so that it can be built into the site. If you're using a headless CMS, you'll need to be clear about what data and content you expect to be pulled out of the CMS and into your static site.
+**Tips for a successful JAMstack launch** Since you're going to be working so closely with developers, it would be a good idea to sit down from the outset and plan out how things are going to work. Your developers are going to need to know exactly what functionality you need so that it can be built into the site. If you're using a headless CMS, you'll need to be clear about what data and content you expect to be pulled out of the CMS and into your static site.
 
 You will likely require integrations with your favourite tools and services and tracking for analytics. Depending on what stack you decide to use, the answer to how this will be connected together might be different. So it's important to iron out these expectations from the start so nothing gets missed.
 

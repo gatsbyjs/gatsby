@@ -30,7 +30,7 @@
     "babel-preset-gatsby-package": "^0.3.1",
     "cross-env": "^5.2.1"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-dev-cli#readme",
   "keywords": [
     "gatsby"
   ],
@@ -39,7 +39,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-dev-cli"
+    "directory": "packages\\gatsby-dev-cli"
   },
   "scripts": {
     "build": "babel src --out-dir dist --ignore \"**/__tests__\"",

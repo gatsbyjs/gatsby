@@ -21,7 +21,7 @@
     "cross-env": "^5.2.1",
     "lodash": "^4.17.15"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-transformer-react-docgen#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -36,7 +36,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-transformer-react-docgen"
+    "directory": "packages\\gatsby-transformer-react-docgen"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

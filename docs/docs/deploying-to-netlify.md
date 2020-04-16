@@ -4,14 +4,9 @@ title: Deploying to Netlify
 
 This guide walks through how to deploy and host your next Gatsby site on [Netlify](https://www.netlify.com/).
 
-Netlify is an excellent option for deploying Gatsby sites. Netlify is a unified
-platform that automates your code to create performant, easily maintainable
-sites and web apps. They provide continuous deployment (Git-triggered builds);
-an intelligent, global CDN; full DNS (including custom domains); automated
-HTTPS; asset acceleration; and a lot more.
+Netlify is an excellent option for deploying Gatsby sites. Netlify is a unified platform that automates your code to create performant, easily maintainable sites and web apps. They provide continuous deployment (Git-triggered builds); an intelligent, global CDN; full DNS (including custom domains); automated HTTPS; asset acceleration; and a lot more.
 
-Their free tier includes unlimited personal and commercial projects, HTTPS,
-continuous deployment from public or private repos, and more.
+Their free tier includes unlimited personal and commercial projects, HTTPS, continuous deployment from public or private repos, and more.
 
 ## Hosting setup
 

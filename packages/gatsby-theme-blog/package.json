@@ -14,9 +14,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-theme-blog"
+    "directory": "packages\\gatsby-theme-blog"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-theme-blog#readme",
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@mdx-js/react": "^1.5.7",

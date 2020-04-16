@@ -2,24 +2,15 @@
 title: Creating Pages from Data Programmatically
 ---
 
-Gatsby and its ecosystem of plugins provide all kinds of data through a
-GraphQL interface. This guide will show how that data can be used to
-programmatically create pages.
+Gatsby and its ecosystem of plugins provide all kinds of data through a GraphQL interface. This guide will show how that data can be used to programmatically create pages.
 
 ## Prerequisites
 
-Though you can use any data source you'd like, this guide will show how to
-create pages from Markdown files (following after the example introduced in
-[earlier guides](/docs/adding-markdown-pages/)).
+Though you can use any data source you'd like, this guide will show how to create pages from Markdown files (following after the example introduced in [earlier guides](/docs/adding-markdown-pages/)).
 
 ## Creating pages
 
-The Gatsby Node API provides the
-[`createPages`](/docs/node-apis/#createPages)
-extension point which you'll use to add pages. This function will give you
-access to the
-[`createPage`](/docs/actions/#createPage) action
-which is at the core of programmatically creating a page.
+The Gatsby Node API provides the [`createPages`](/docs/node-apis/#createPages) extension point which you'll use to add pages. This function will give you access to the [`createPage`](/docs/actions/#createPage) action which is at the core of programmatically creating a page.
 
 ```js:title=gatsby-node.js
 exports.createPages = async function ({ actions, graphql }) {
@@ -49,15 +40,9 @@ exports.createPages = async function ({ actions, graphql }) {
 }
 ```
 
-For each page you want to create you must specify the `path` for visiting that
-page, the `component` template used to render that page, and any `context`
-you need in the component for rendering.
+For each page you want to create you must specify the `path` for visiting that page, the `component` template used to render that page, and any `context` you need in the component for rendering.
 
-The `context` parameter is _optional_, though often times it will include a
-unique identifier that can be used to query for associated data that will be
-rendered to the page. All `context` values are made available to a template's
-GraphQL queries as arguments prefaced with `$`, so from our example above the
-`slug` property will become the `$slug` argument in our page query:
+The `context` parameter is _optional_, though often times it will include a unique identifier that can be used to query for associated data that will be rendered to the page. All `context` values are made available to a template's GraphQL queries as arguments prefaced with `$`, so from our example above the `slug` property will become the `$slug` argument in our page query:
 
 ```js
 export const query = graphql`
@@ -69,9 +54,7 @@ export const query = graphql`
 
 ## Specifying a template
 
-The `createPage` action requires that you specify the `component` template
-that will be used to render the page. Here is an example of what the
-referenced template could look like:
+The `createPage` action requires that you specify the `component` template that will be used to render the page. Here is an example of what the referenced template could look like:
 
 ```jsx:title=blog-post.js
 import React from "react"
@@ -102,19 +85,11 @@ export const query = graphql`
 `
 ```
 
-Notice that you're able to query with the `$slug` value from your `context` as
-an argument, which ensures that you're returning only the data that matches
-that specific page. As a result, you can provide the `title` and `html` from
-the matching `markdownRemark` record to your component. The `context` values
-are also available as the `pageContext` prop in the template component itself.
+Notice that you're able to query with the `$slug` value from your `context` as an argument, which ensures that you're returning only the data that matches that specific page. As a result, you can provide the `title` and `html` from the matching `markdownRemark` record to your component. The `context` values are also available as the `pageContext` prop in the template component itself.
 
 ## Not just Markdown
 
-The
-[`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
-plugin is just one of a multitude of Gatsby plugins that can provide data
-through the GraphQL interface. Any of that data can be used to
-programmatically create pages.
+The [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) plugin is just one of a multitude of Gatsby plugins that can provide data through the GraphQL interface. Any of that data can be used to programmatically create pages.
 
 ## Other resources
 

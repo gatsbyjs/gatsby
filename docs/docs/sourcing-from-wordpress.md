@@ -6,8 +6,7 @@ This guide will walk you through the process of using [Gatsby](/) with [WordPres
 
 WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress](/packages/gatsby-source-wordpress/?=wordpress). Let's begin!
 
-_Note: this guide uses the `gatsby-starter-default` to provide you with the knowledge necessary to start working with WordPress but if you get stuck at some point of the guide feel free to use
-[this example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) to gain extra insights._
+_Note: this guide uses the `gatsby-starter-default` to provide you with the knowledge necessary to start working with WordPress but if you get stuck at some point of the guide feel free to use [this example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) to gain extra insights._
 
 ## Setup
 
@@ -124,10 +123,7 @@ In the GraphiQL IDE at `http://localhost:8000/__graphql` you should now see quer
 
 ## Wrapping up
 
-This was a very basic example meant to help you understand how you can fetch data from WordPress and use it with Gatsby. As
-the guide mentioned already, if you got stuck, you can have a look at
-[example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress), which is a working example
-created to support this guide.
+This was a very basic example meant to help you understand how you can fetch data from WordPress and use it with Gatsby. As the guide mentioned already, if you got stuck, you can have a look at [example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress), which is a working example created to support this guide.
 
 ## Other resources
 

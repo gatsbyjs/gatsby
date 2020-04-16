@@ -50,11 +50,9 @@ If applicable, list any prerequisites to reading and understanding your tutorial
 
 ## Step 1
 
-Keep paragraphs short (around 1-4 sentences). People are more likely to read
-several short paragraphs instead of a huge block of text.
+Keep paragraphs short (around 1-4 sentences). People are more likely to read several short paragraphs instead of a huge block of text.
 
-Readers will likely use doc articles as a quick reference to look up syntax.
-Articles should have a basic, real-world example that shows common use cases of its syntax.
+Readers will likely use doc articles as a quick reference to look up syntax. Articles should have a basic, real-world example that shows common use cases of its syntax.
 
     code example
 
@@ -86,8 +84,7 @@ If there are more parts to the tutorial, link to the next step here.
 
 ## Other resources
 
-If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add
-them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
+If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
 
 - Link to a blog post
 - Link to a YouTube tutorial

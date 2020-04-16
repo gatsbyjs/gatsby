@@ -10,9 +10,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-plugin-benchmark-reporting"
+    "directory": "packages\\gatsby-plugin-benchmark-reporting"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-benchmark-reporting#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-plugin-benchmark-reporting#readme",
   "devDependencies": {
     "babel-preset-gatsby-package": "^0.3.1"
   },

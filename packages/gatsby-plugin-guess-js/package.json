@@ -20,11 +20,11 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-guess-js#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-plugin-guess-js#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-plugin-guess-js"
+    "directory": "packages\\gatsby-plugin-guess-js"
   },
   "license": "MIT",
   "dependencies": {

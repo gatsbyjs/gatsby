@@ -24,7 +24,7 @@
     "remark": "^10.0.1",
     "remark-mdx": "^1.5.7"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-remark-copy-linked-files#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -39,7 +39,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-remark-copy-linked-files"
+    "directory": "packages\\gatsby-remark-copy-linked-files"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

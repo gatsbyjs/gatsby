@@ -23,7 +23,7 @@
     "rimraf": "^3.0.2",
     "unist-util-find": "^1.0.1"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-remark-graphviz#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -42,7 +42,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-remark-graphviz"
+    "directory": "packages\\gatsby-remark-graphviz"
   },
   "scripts": {
     "build": "babel --out-dir . src --ignore **/__tests__",

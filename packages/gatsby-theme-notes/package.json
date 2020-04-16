@@ -16,9 +16,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-theme-notes"
+    "directory": "packages\\gatsby-theme-notes"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-notes#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-theme-notes#readme",
   "devDependencies": {
     "gatsby": "^2.20.22",
     "react": "^16.12.0",

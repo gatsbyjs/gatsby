@@ -82,8 +82,7 @@ This allows us to transpile less code (e.g. `async` and `await` are natively sup
 
 To best support any users who may still be using Node 6 and these newer versions of Gatsby packages, we do log an error from the command line interface (CLI):
 
-> Gatsby requires Node.js v8 or higher (you have "6.0.0").
-> Upgrade Node to the latest stable release: https://gatsby.dev/upgrading-node-js
+> Gatsby requires Node.js v8 or higher (you have "6.0.0"). Upgrade Node to the latest stable release: https://gatsby.dev/upgrading-node-js
 
 We are very much cognizant that this change may introduce some measure of churn and potential confusion for that very small percentage of users who may still be on Node 6 and using recent versions of Gatsby packages. However, in an effort to increase productivity and deliver features and fixes to the great **majority** of users not using Node 6, we feel confident that it's time to make this change.
 

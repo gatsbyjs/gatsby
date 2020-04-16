@@ -18,7 +18,7 @@
     "cross-env": "^5.2.1",
     "json2csv": "^3.11"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-csv#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-transformer-csv#readme",
   "keywords": [
     "csv",
     "gatsby",
@@ -32,7 +32,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-transformer-csv"
+    "directory": "packages\\gatsby-transformer-csv"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

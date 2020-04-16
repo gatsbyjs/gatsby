@@ -5,9 +5,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/babel-preset-gatsby-package"
+    "directory": "packages\\babel-preset-gatsby-package"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby-package#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\babel-preset-gatsby-package#readme",
   "peerDependencies": {
     "@babel/core": "^7.0.0"
   },
