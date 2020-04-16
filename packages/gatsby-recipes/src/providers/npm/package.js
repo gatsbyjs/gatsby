@@ -59,9 +59,21 @@ const executeInstalls = async root => {
     packageManager: PACKAGE_MANGER,
   })
 
-  await execa(PACKAGE_MANGER, commands, {
-    cwd: root,
-  })
+  try {
+    await execa(PACKAGE_MANGER, commands, {
+      cwd: root,
+    })
+  } catch (e) {
+    // A package failed so call the rejects
+    return packagesToInstall.forEach(p => {
+      p.outsideReject(
+        JSON.stringify({
+          message: e.shortMessage,
+          installationError: `Could not install package`,
+        })
+      )
+    })
+  }
 
   packagesToInstall.forEach(p => p.outsideResolve())
 
@@ -69,6 +81,8 @@ const executeInstalls = async root => {
   if (installs.length > 0) {
     executeInstalls()
   }
+
+  return undefined
 }
 
 const debouncedExecute = _.debounce(executeInstalls, 25)
@@ -76,11 +90,14 @@ const debouncedExecute = _.debounce(executeInstalls, 25)
 // Collect installs run at the same time so we can batch them.
 const createInstall = async ({ root }, resource) => {
   let outsideResolve
-  const promise = new Promise(resolve => {
+  let outsideReject
+  const promise = new Promise((resolve, reject) => {
     outsideResolve = resolve
+    outsideReject = reject
   })
   installs.push({
     outsideResolve,
+    outsideReject,
     resource,
   })
 
@@ -95,6 +112,7 @@ const create = async ({ root }, resource) => {
   }
 
   await createInstall({ root }, value)
+
   return read({ root }, value.name)
 }
 
