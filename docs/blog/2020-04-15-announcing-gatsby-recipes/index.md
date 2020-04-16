@@ -1,6 +1,6 @@
 ---
 title: "Announcing Gatsby Recipes"
-date: 2020-04-15
+date: 2020-04-16
 author: "Kyle Mathews"
 tags: ["gatsby-inc", "releases", "gatsby-cloud"]
 ---
