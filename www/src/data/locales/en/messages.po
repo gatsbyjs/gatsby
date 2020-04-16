@@ -29,7 +29,7 @@ msgstr "Table of Contents"
 msgid "In this section:"
 msgstr "In this section:"
 
-#: src/components/markdown-page-footer.js:24
+#: src/components/markdown-page-footer.js:32
 msgid "<0/> Edit this page on GitHub"
 msgstr "<0/> Edit this page on GitHub"
 
@@ -126,11 +126,11 @@ msgstr "Collapse All"
 msgid "Expand All"
 msgstr "Expand All"
 
-#: src/components/sidebar/section-title.js:142
+#: src/components/sidebar/section-title.js:143
 msgid "{0} collapse"
 msgstr "{0} collapse"
 
-#: src/components/sidebar/section-title.js:142
+#: src/components/sidebar/section-title.js:144
 msgid "{0} expand"
 msgstr "{0} expand"
 
