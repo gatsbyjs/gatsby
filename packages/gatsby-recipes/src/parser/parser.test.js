@@ -1,17 +1,17 @@
 // const fs = require(`fs-extra`)
 // const path = require(`path`)
 
-const parser = require(`.`)
+//const parser = require(`.`)
 
 // const fixturePath = path.join(__dirname, `fixtures/prettier-git-hook.mdx`)
 // const fixtureSrc = fs.readFileSync(fixturePath, `utf8`)
 
-test(`fetches a recipe from unpkg when official short form`, async () => {
-  const result = await parser(`theme-ui`)
+// test(`fetches a recipe from unpkg when official short form`, async () => {
+//   const result = await parser(`theme-ui`)
 
-  expect(result.stepsAsMdx).toBeTruthy()
-  //expect(result.stepsAsMdx).toMatchSnapshot()
-})
+//   expect(result.stepsAsMdx).toBeTruthy()
+//   //expect(result.stepsAsMdx).toMatchSnapshot()
+// })
 
 // test(`fetches a recipe from unpkg when official short form and .mdx`, async () => {
 //   const result = await parser(`theme-ui.mdx`)
