@@ -44,9 +44,9 @@
     "directory": "packages/gatsby-plugin-react-helmet"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__,**/__mocks__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\",**/__mocks__",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__,**/__mocks__"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\",**/__mocks__"
   },
   "engines": {
     "node": ">=10.13.0"

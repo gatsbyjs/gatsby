@@ -4,8 +4,8 @@
   "description": "Runs the font delivery optimizing CLI tool subfont on the homepage of your site during the Gatsby build",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
