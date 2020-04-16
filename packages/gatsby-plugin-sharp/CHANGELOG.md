@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.4...gatsby-plugin-sharp@2.5.5) (2020-04-16)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** trim option failed ([#22997](https://github.com/gatsbyjs/gatsby/issues/22997)) ([0558443](https://github.com/gatsbyjs/gatsby/commit/0558443))
+
 ## [2.5.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.3...gatsby-plugin-sharp@2.5.4) (2020-04-04)
 
 ### Bug Fixes

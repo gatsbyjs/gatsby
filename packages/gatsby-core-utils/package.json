@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -16,10 +16,10 @@
     "directory": "packages\\gatsby-core-utils"
   },
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore **/__tests__ --ignore **/__mocks__ --extensions \".ts\"",
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
     "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
-    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__ --extensions \".ts\""
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\""
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

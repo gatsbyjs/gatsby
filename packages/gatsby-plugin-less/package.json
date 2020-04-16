@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-less",
   "description": "Gatsby plugin to add support for using Less",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "author": "monastic.panic@gmail.com",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -34,9 +34,9 @@
     "directory": "packages\\gatsby-plugin-less"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__,theme-test.js",
+    "build": "babel src --out-dir . --ignore \"**/__tests__,theme-test.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__,theme-test.js"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__,theme-test.js\""
   },
   "engines": {
     "node": ">=10.13.0"
