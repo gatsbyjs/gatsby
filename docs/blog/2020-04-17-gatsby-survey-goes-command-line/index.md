@@ -98,6 +98,6 @@ Anyone in the community, including employees, can read this and all future blog 
 
 Thank you again to all who have responded to the survey so far; your responses help guide the focus of the community to answer real-world needs. If you haven’t filled out the survey yet, you can run `gatsby feedback` at any time after upgrading your version of gatsby in a project’s `package.json` file, and then rerunning dependency and install commands.
 
-Otherwise, wait to see the survey appear in a CLI near you! The plan is to do this every 3 months, at the most. (Again, if you’d like to opt out, visit https://www.gatsbyjs.org/docs/CLI-feedback/#how-to-opt-out).
+Otherwise, wait to see the survey appear in a CLI near you! The plan is to do this every 3 months, at the most. (Again, if you’d like to opt-out, visit the [how to opt-out docs](/docs/CLI-feedback/#how-to-opt-out)).
 
 Thank you for being part of Gatsby 💜!
