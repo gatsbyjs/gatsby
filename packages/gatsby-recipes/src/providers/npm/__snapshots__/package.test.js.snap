@@ -1,33 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`npm package resource e2e npm package resource test: NPMPackage create 1`] = `
+{
+  "id": "is-sorted",
+  "name": "is-sorted",
+  "version": "1.0.0",
+  "_message": "Installed NPM package is-sorted@1.0.0"
+}
+`;
+
+exports[`npm package resource e2e npm package resource test: NPMPackage create plan 1`] = `
+{
+  "newState": "is-sorted@1.0.0",
+  "describe": "Install is-sorted@1.0.0"
+}
+`;
+
+exports[`npm package resource e2e npm package resource test: NPMPackage destroy 1`] = `
+{
+  "id": "is-sorted",
+  "name": "is-sorted",
+  "version": "1.0.2",
+  "_message": "Installed NPM package is-sorted@1.0.2"
+}
+`;
+
+exports[`npm package resource e2e npm package resource test: NPMPackage update 1`] = `
+{
+  "id": "is-sorted",
+  "name": "is-sorted",
+  "version": "1.0.2",
+  "_message": "Installed NPM package is-sorted@1.0.2"
+}
+`;
+
+exports[`npm package resource e2e npm package resource test: NPMPackage update plan 1`] = `
+{
+  "currentState": "is-sorted@1.0.0",
+  "newState": "is-sorted@1.0.2",
+  "describe": "Install is-sorted@1.0.2"
+}
+`;
+
 exports[`package manager client commands generates the correct commands for npm 1`] = `
-Array [
+[
   "install",
-  "gatsby",
+  "gatsby"
 ]
 `;
 
 exports[`package manager client commands generates the correct commands for npm 2`] = `
-Array [
+[
   "install",
   "--save-dev",
-  "eslint",
+  "eslint"
 ]
 `;
 
 exports[`package manager client commands generates the correct commands for yarn 1`] = `
-Array [
+[
   "add",
   "-W",
-  "gatsby",
+  "gatsby"
 ]
 `;
 
 exports[`package manager client commands generates the correct commands for yarn 2`] = `
-Array [
+[
   "add",
   "-W",
   "--dev",
-  "eslint",
+  "eslint"
 ]
 `;

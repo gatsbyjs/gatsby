@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`npm script resource e2e script resource test: NPMScript create 1`] = `
+{
+  "id": "apple",
+  "name": "apple",
+  "command": "foot",
+  "_message": "Wrote script apple to your package.json"
+}
+`;
+
+exports[`npm script resource e2e script resource test: NPMScript create plan 1`] = `
+{
+  "currentState": "",
+  "newState": "\\"apple\\": \\"foot\\"",
+  "diff": "\\u001b[31m- Original  - 1\\u001b[39m\\n\\u001b[32m+ Modified  + 3\\u001b[39m\\n\\n\\u001b[2m  Object {\\u001b[22m\\n\\u001b[2m    \\"name\\": \\"test\\",\\u001b[22m\\n\\u001b[31m-   \\"scripts\\": Object {},\\u001b[39m\\n\\u001b[32m+   \\"scripts\\": Object {\\u001b[39m\\n\\u001b[32m+     \\"apple\\": \\"foot\\",\\u001b[39m\\n\\u001b[32m+   },\\u001b[39m\\n\\u001b[2m  }\\u001b[22m",
+  "describe": "Add new command to your package.json"
+}
+`;
+
+exports[`npm script resource e2e script resource test: NPMScript destroy 1`] = `null`;
+
+exports[`npm script resource e2e script resource test: NPMScript update 1`] = `
+{
+  "id": "apple",
+  "name": "apple",
+  "command": "foot2",
+  "_message": "Wrote script apple to your package.json"
+}
+`;
+
+exports[`npm script resource e2e script resource test: NPMScript update plan 1`] = `
+{
+  "currentState": "\\"apple\\": \\"foot\\"",
+  "newState": "\\"apple\\": \\"foot2\\"",
+  "diff": "\\u001b[31m- Original  - 1\\u001b[39m\\n\\u001b[32m+ Modified  + 1\\u001b[39m\\n\\n\\u001b[2m  Object {\\u001b[22m\\n\\u001b[2m    \\"name\\": \\"test\\",\\u001b[22m\\n\\u001b[2m    \\"scripts\\": Object {\\u001b[22m\\n\\u001b[31m-     \\"apple\\": \\"foot\\",\\u001b[39m\\n\\u001b[32m+     \\"apple\\": \\"foot2\\",\\u001b[39m\\n\\u001b[2m    },\\u001b[22m\\n\\u001b[2m  }\\u001b[22m",
+  "describe": "Add new command to your package.json"
+}
+`;

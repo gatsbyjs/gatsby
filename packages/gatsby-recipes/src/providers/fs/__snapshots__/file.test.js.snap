@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`file resource e2e file resource test: File create 1`] = `
+{
+  "id": "file.txt",
+  "path": "file.txt",
+  "content": "Hello, world!",
+  "_message": "Wrote file file.txt"
+}
+`;
+
+exports[`file resource e2e file resource test: File create plan 1`] = `
+{
+  "currentState": "",
+  "newState": "Hello, world!",
+  "describe": "Write file.txt",
+  "diff": "\\u001b[31m- Original  - 0\\u001b[39m\\n\\u001b[32m+ Modified  + 1\\u001b[39m\\n\\n\\u001b[32m+ Hello, world!\\u001b[39m"
+}
+`;
+
+exports[`file resource e2e file resource test: File destroy 1`] = `
+{
+  "id": "file.txt",
+  "path": "file.txt",
+  "content": "Hello, world!1",
+  "_message": "Wrote file file.txt"
+}
+`;
+
+exports[`file resource e2e file resource test: File update 1`] = `
+{
+  "id": "file.txt",
+  "path": "file.txt",
+  "content": "Hello, world!1",
+  "_message": "Wrote file file.txt"
+}
+`;
+
+exports[`file resource e2e file resource test: File update plan 1`] = `
+{
+  "currentState": "Hello, world!",
+  "newState": "Hello, world!1",
+  "describe": "Write file.txt",
+  "diff": "\\u001b[31m- Original  - 1\\u001b[39m\\n\\u001b[32m+ Modified  + 1\\u001b[39m\\n\\n\\u001b[31m- Hello, world!\\u001b[39m\\n\\u001b[32m+ Hello, world!1\\u001b[39m"
+}
+`;
+
+exports[`file resource e2e remote file resource test: File create 1`] = `
+{
+  "id": "file.txt",
+  "path": "file.txt",
+  "content": "query {\\n  allGatsbyPlugin {\\n    nodes {\\n      name\\n      options\\n      resolvedOptions\\n      package {\\n        version\\n      }\\n      ... on GatsbyTheme {\\n        files {\\n          nodes {\\n            path\\n          }\\n        }\\n        shadowedFiles {\\n          nodes {\\n            path\\n          }\\n        }\\n      }\\n    }\\n  }  \\n}",
+  "_message": "Wrote file file.txt"
+}
+`;
+
+exports[`file resource e2e remote file resource test: File create plan 1`] = `
+{
+  "currentState": "",
+  "newState": "query {\\n  allGatsbyPlugin {\\n    nodes {\\n      name\\n      options\\n      resolvedOptions\\n      package {\\n        version\\n      }\\n      ... on GatsbyTheme {\\n        files {\\n          nodes {\\n            path\\n          }\\n        }\\n        shadowedFiles {\\n          nodes {\\n            path\\n          }\\n        }\\n      }\\n    }\\n  }  \\n}",
+  "describe": "Write file.txt",
+  "diff": "\\u001b[31m- Original  -  0\\u001b[39m\\n\\u001b[32m+ Modified  + 24\\u001b[39m\\n\\n\\u001b[32m+ query {\\u001b[39m\\n\\u001b[32m+   allGatsbyPlugin {\\u001b[39m\\n\\u001b[32m+     nodes {\\u001b[39m\\n\\u001b[32m+       name\\u001b[39m\\n\\u001b[32m+       options\\u001b[39m\\n\\u001b[32m+       resolvedOptions\\u001b[39m\\n\\u001b[32m+       package {\\u001b[39m\\n\\u001b[32m+         version\\u001b[39m\\n\\u001b[32m+       }\\u001b[39m\\n\\u001b[32m+       ... on GatsbyTheme {\\u001b[39m\\n\\u001b[32m+         files {\\u001b[39m\\n\\u001b[32m+           nodes {\\u001b[39m\\n\\u001b[32m+             path\\u001b[39m\\n\\u001b[32m+           }\\u001b[39m\\n\\u001b[32m+         }\\u001b[39m\\n\\u001b[32m+         shadowedFiles {\\u001b[39m\\n\\u001b[32m+           nodes {\\u001b[39m\\n\\u001b[32m+             path\\u001b[39m\\n\\u001b[32m+           }\\u001b[39m\\n\\u001b[32m+         }\\u001b[39m\\n\\u001b[32m+       }\\u001b[39m\\n\\u001b[32m+     }\\u001b[39m\\n\\u001b[32m+   }  \\u001b[39m\\n\\u001b[32m+ }\\u001b[39m"
+}
+`;
+
+exports[`file resource e2e remote file resource test: File destroy 1`] = `
+{
+  "id": "file.txt",
+  "path": "file.txt",
+  "content": "https://gist.githubusercontent.com/KyleAMathews/3d763491e5c4c6396e1a6a626b2793ce/raw/545120bfecbe7b0f97f6f021801bc8b6370b5b41/gistfile2.txt",
+  "_message": "Wrote file file.txt"
+}
+`;
+
+exports[`file resource e2e remote file resource test: File update 1`] = `
+{
+  "id": "file.txt",
+  "path": "file.txt",
+  "content": "https://gist.githubusercontent.com/KyleAMathews/3d763491e5c4c6396e1a6a626b2793ce/raw/545120bfecbe7b0f97f6f021801bc8b6370b5b41/gistfile2.txt",
+  "_message": "Wrote file file.txt"
+}
+`;
+
+exports[`file resource e2e remote file resource test: File update plan 1`] = `
+{
+  "currentState": "query {\\n  allGatsbyPlugin {\\n    nodes {\\n      name\\n      options\\n      resolvedOptions\\n      package {\\n        version\\n      }\\n      ... on GatsbyTheme {\\n        files {\\n          nodes {\\n            path\\n          }\\n        }\\n        shadowedFiles {\\n          nodes {\\n            path\\n          }\\n        }\\n      }\\n    }\\n  }  \\n}",
+  "newState": "const options = {\\n  key: process.env.WHATEVER\\n  \\n}",
+  "describe": "Write file.txt",
+  "diff": "\\u001b[31m- Original  - 23\\u001b[39m\\n\\u001b[32m+ Modified  +  3\\u001b[39m\\n\\n\\u001b[31m- query {\\u001b[39m\\n\\u001b[31m-   allGatsbyPlugin {\\u001b[39m\\n\\u001b[31m-     nodes {\\u001b[39m\\n\\u001b[31m-       name\\u001b[39m\\n\\u001b[31m-       options\\u001b[39m\\n\\u001b[31m-       resolvedOptions\\u001b[39m\\n\\u001b[31m-       package {\\u001b[39m\\n\\u001b[31m-         version\\u001b[39m\\n\\u001b[31m-       }\\u001b[39m\\n\\u001b[31m-       ... on GatsbyTheme {\\u001b[39m\\n\\u001b[31m-         files {\\u001b[39m\\n\\u001b[31m-           nodes {\\u001b[39m\\n\\u001b[31m-             path\\u001b[39m\\n\\u001b[31m-           }\\u001b[39m\\n\\u001b[31m-         }\\u001b[39m\\n\\u001b[31m-         shadowedFiles {\\u001b[39m\\n\\u001b[31m-           nodes {\\u001b[39m\\n\\u001b[31m-             path\\u001b[39m\\n\\u001b[31m-           }\\u001b[39m\\n\\u001b[31m-         }\\u001b[39m\\n\\u001b[31m-       }\\u001b[39m\\n\\u001b[31m-     }\\u001b[39m\\n\\u001b[31m-   }  \\u001b[39m\\n\\u001b[32m+ const options = {\\u001b[39m\\n\\u001b[32m+   key: process.env.WHATEVER\\u001b[39m\\n\\u001b[32m+   \\u001b[39m\\n\\u001b[2m  }\\u001b[22m"
+}
+`;

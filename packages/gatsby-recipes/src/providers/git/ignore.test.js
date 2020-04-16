@@ -23,11 +23,11 @@ describe(`git ignore resource`, () => {
     const result = await ignore.all({ root })
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "id": "node_modules",
-          "name": "node_modules",
-        },
+          "name": "node_modules"
+        }
       ]
     `)
   })

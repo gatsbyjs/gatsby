@@ -1,66 +1,146 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`gatsby-plugin resource all returns an array of plugins 1`] = `
-Array [
-  Object {
+[
+  {
     "id": "gatsby-source-filesystem",
     "name": "gatsby-source-filesystem",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+    "shadowedFiles": [],
+    "shadowableFiles": []
   },
-  Object {
+  {
     "id": "gatsby-transformer-sharp",
     "name": "gatsby-transformer-sharp",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+    "shadowedFiles": [],
+    "shadowableFiles": []
   },
-  Object {
+  {
     "id": "gatsby-plugin-emotion",
     "name": "gatsby-plugin-emotion",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+    "shadowedFiles": [],
+    "shadowableFiles": []
   },
-  Object {
+  {
     "id": "gatsby-plugin-typography",
     "name": "gatsby-plugin-typography",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+    "shadowedFiles": [],
+    "shadowableFiles": []
   },
-  Object {
+  {
     "id": "gatsby-transformer-remark",
     "name": "gatsby-transformer-remark",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+    "shadowedFiles": [],
+    "shadowableFiles": []
   },
-  Object {
+  {
     "id": "gatsby-plugin-sharp",
     "name": "gatsby-plugin-sharp",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+    "shadowedFiles": [],
+    "shadowableFiles": []
   },
-  Object {
+  {
     "id": "gatsby-plugin-google-analytics",
     "name": "gatsby-plugin-google-analytics",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+    "shadowedFiles": [],
+    "shadowableFiles": []
   },
-  Object {
+  {
     "id": "gatsby-plugin-manifest",
     "name": "gatsby-plugin-manifest",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+    "shadowedFiles": [],
+    "shadowableFiles": []
   },
-  Object {
+  {
     "id": "gatsby-plugin-offline",
     "name": "gatsby-plugin-offline",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
+    "shadowedFiles": [],
+    "shadowableFiles": []
   },
-  Object {
+  {
     "id": "gatsby-plugin-react-helmet",
     "name": "gatsby-plugin-react-helmet",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
+    "shadowedFiles": [],
+    "shadowableFiles": []
+  }
 ]
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create 1`] = `
+{
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+  "_message": "Installed gatsby-plugin-foo in gatsby-config.js"
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create plan 1`] = `
+{
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+  "diff": "\\u001b[31m- Original  - 1\\u001b[39m\\n\\u001b[32m+ Modified  + 1\\u001b[39m\\n\\n\\u001b[33m@@ -5,6 +5,6 @@\\u001b[39m\\n\\u001b[2m   */\\u001b[22m\\n\\u001b[2m  module.exports = {\\u001b[22m\\n\\u001b[2m    /* Your site config here */\\u001b[22m\\n\\u001b[31m-   plugins: [],\\u001b[39m\\n\\u001b[32m+   plugins: [\\"gatsby-plugin-foo\\"],\\u001b[39m\\n\\u001b[2m  }\\u001b[22m\\n",
+  "currentState": "/**\\n * Configure your Gatsby site with this file.\\n *\\n * See: https://www.gatsbyjs.org/docs/gatsby-config/\\n */\\nmodule.exports = {\\n  /* Your site config here */\\n  plugins: [],\\n}\\n",
+  "newState": "/**\\n * Configure your Gatsby site with this file.\\n *\\n * See: https://www.gatsbyjs.org/docs/gatsby-config/\\n */\\nmodule.exports = {\\n  /* Your site config here */\\n  plugins: [\\"gatsby-plugin-foo\\"],\\n}\\n",
+  "describe": "Install gatsby-plugin-foo in gatsby-config.js"
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin destroy 1`] = `null`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin update 1`] = `
+{
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+  "_message": "Installed gatsby-plugin-foo in gatsby-config.js"
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin update plan 1`] = `
+{
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+  "diff": "\\u001b[2mCompared values have no visual difference.\\u001b[22m",
+  "currentState": "/**\\n * Configure your Gatsby site with this file.\\n *\\n * See: https://www.gatsbyjs.org/docs/gatsby-config/\\n */\\nmodule.exports = {\\n  /* Your site config here */\\n  plugins: [\\"gatsby-plugin-foo\\"],\\n}\\n",
+  "newState": "/**\\n * Configure your Gatsby site with this file.\\n *\\n * See: https://www.gatsbyjs.org/docs/gatsby-config/\\n */\\nmodule.exports = {\\n  /* Your site config here */\\n  plugins: [\\"gatsby-plugin-foo\\"],\\n}\\n",
+  "describe": "Install gatsby-plugin-foo in gatsby-config.js"
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create 1`] = `
+{
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+  "_message": "Installed gatsby-plugin-foo in gatsby-config.js"
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create plan 1`] = `
+{
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+  "diff": "\\u001b[31m- Original  - 0\\u001b[39m\\n\\u001b[32m+ Modified  + 1\\u001b[39m\\n\\n\\u001b[33m@@ -64,6 +64,7 @@\\u001b[39m\\n\\u001b[2m      },\\u001b[22m\\n\\u001b[2m      \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,\\u001b[22m\\n\\u001b[2m      \`gatsby-plugin-react-helmet\`,\\u001b[22m\\n\\u001b[32m+     \\"gatsby-plugin-foo\\",\\u001b[39m\\n\\u001b[2m    ],\\u001b[22m\\n\\u001b[2m  }\\u001b[22m\\n",
+  "currentState": "const redish = \`#c5484d\`\\nmodule.exports = {\\n  siteMetadata: {\\n    title: \`Bricolage\`,\\n    author: \`Kyle Mathews\`,\\n    homeCity: \`San Francisco\`,\\n  },\\n  plugins: [\\n    {\\n      resolve: \`gatsby-source-filesystem\`,\\n      options: {\\n        path: \`\${__dirname}/src/pages\`,\\n        name: \`pages\`,\\n      },\\n    },\\n    \`gatsby-transformer-sharp\`,\\n    \`gatsby-plugin-emotion\`,\\n    {\\n      resolve: \`gatsby-plugin-typography\`,\\n      options: {\\n        pathToConfigModule: \`src/utils/typography\`,\\n      },\\n    },\\n    {\\n      resolve: \`gatsby-transformer-remark\`,\\n      options: {\\n        plugins: [\\n          {\\n            resolve: \`gatsby-remark-images\`,\\n            options: {\\n              maxWidth: 590,\\n            },\\n          },\\n          {\\n            resolve: \`gatsby-remark-responsive-iframe\`,\\n            options: {\\n              wrapperStyle: \`margin-bottom: 1.0725rem\`,\\n            },\\n          },\\n          \`gatsby-remark-prismjs\`,\\n          \`gatsby-remark-copy-linked-files\`,\\n          \`gatsby-remark-smartypants\`,\\n        ],\\n      },\\n    },\\n    \`gatsby-plugin-sharp\`,\\n    {\\n      resolve: \`gatsby-plugin-google-analytics\`,\\n      options: {\\n        trackingId: \`UA-774017-3\`,\\n      },\\n    },\\n    {\\n      resolve: \`gatsby-plugin-manifest\`,\\n      options: {\\n        name: \`Bricolage\`,\\n        short_name: \`Bricolage\`,\\n        icon: \`static/logo.png\`,\\n        start_url: \`/\`,\\n        background_color: redish,\\n        theme_color: redish,\\n        display: \`minimal-ui\`,\\n      },\\n    },\\n    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,\\n    \`gatsby-plugin-react-helmet\`,\\n  ],\\n}\\n",
+  "newState": "const redish = \`#c5484d\`\\nmodule.exports = {\\n  siteMetadata: {\\n    title: \`Bricolage\`,\\n    author: \`Kyle Mathews\`,\\n    homeCity: \`San Francisco\`,\\n  },\\n  plugins: [\\n    {\\n      resolve: \`gatsby-source-filesystem\`,\\n      options: {\\n        path: \`\${__dirname}/src/pages\`,\\n        name: \`pages\`,\\n      },\\n    },\\n    \`gatsby-transformer-sharp\`,\\n    \`gatsby-plugin-emotion\`,\\n    {\\n      resolve: \`gatsby-plugin-typography\`,\\n      options: {\\n        pathToConfigModule: \`src/utils/typography\`,\\n      },\\n    },\\n    {\\n      resolve: \`gatsby-transformer-remark\`,\\n      options: {\\n        plugins: [\\n          {\\n            resolve: \`gatsby-remark-images\`,\\n            options: {\\n              maxWidth: 590,\\n            },\\n          },\\n          {\\n            resolve: \`gatsby-remark-responsive-iframe\`,\\n            options: {\\n              wrapperStyle: \`margin-bottom: 1.0725rem\`,\\n            },\\n          },\\n          \`gatsby-remark-prismjs\`,\\n          \`gatsby-remark-copy-linked-files\`,\\n          \`gatsby-remark-smartypants\`,\\n        ],\\n      },\\n    },\\n    \`gatsby-plugin-sharp\`,\\n    {\\n      resolve: \`gatsby-plugin-google-analytics\`,\\n      options: {\\n        trackingId: \`UA-774017-3\`,\\n      },\\n    },\\n    {\\n      resolve: \`gatsby-plugin-manifest\`,\\n      options: {\\n        name: \`Bricolage\`,\\n        short_name: \`Bricolage\`,\\n        icon: \`static/logo.png\`,\\n        start_url: \`/\`,\\n        background_color: redish,\\n        theme_color: redish,\\n        display: \`minimal-ui\`,\\n      },\\n    },\\n    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,\\n    \`gatsby-plugin-react-helmet\`,\\n    \\"gatsby-plugin-foo\\",\\n  ],\\n}\\n",
+  "describe": "Install gatsby-plugin-foo in gatsby-config.js"
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin destroy 1`] = `null`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update 1`] = `
+{
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+  "_message": "Installed gatsby-plugin-foo in gatsby-config.js"
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update plan 1`] = `
+{
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+  "diff": "\\u001b[2mCompared values have no visual difference.\\u001b[22m",
+  "currentState": "const redish = \`#c5484d\`\\nmodule.exports = {\\n  siteMetadata: {\\n    title: \`Bricolage\`,\\n    author: \`Kyle Mathews\`,\\n    homeCity: \`San Francisco\`,\\n  },\\n  plugins: [\\n    {\\n      resolve: \`gatsby-source-filesystem\`,\\n      options: {\\n        path: \`\${__dirname}/src/pages\`,\\n        name: \`pages\`,\\n      },\\n    },\\n    \`gatsby-transformer-sharp\`,\\n    \`gatsby-plugin-emotion\`,\\n    {\\n      resolve: \`gatsby-plugin-typography\`,\\n      options: {\\n        pathToConfigModule: \`src/utils/typography\`,\\n      },\\n    },\\n    {\\n      resolve: \`gatsby-transformer-remark\`,\\n      options: {\\n        plugins: [\\n          {\\n            resolve: \`gatsby-remark-images\`,\\n            options: {\\n              maxWidth: 590,\\n            },\\n          },\\n          {\\n            resolve: \`gatsby-remark-responsive-iframe\`,\\n            options: {\\n              wrapperStyle: \`margin-bottom: 1.0725rem\`,\\n            },\\n          },\\n          \`gatsby-remark-prismjs\`,\\n          \`gatsby-remark-copy-linked-files\`,\\n          \`gatsby-remark-smartypants\`,\\n        ],\\n      },\\n    },\\n    \`gatsby-plugin-sharp\`,\\n    {\\n      resolve: \`gatsby-plugin-google-analytics\`,\\n      options: {\\n        trackingId: \`UA-774017-3\`,\\n      },\\n    },\\n    {\\n      resolve: \`gatsby-plugin-manifest\`,\\n      options: {\\n        name: \`Bricolage\`,\\n        short_name: \`Bricolage\`,\\n        icon: \`static/logo.png\`,\\n        start_url: \`/\`,\\n        background_color: redish,\\n        theme_color: redish,\\n        display: \`minimal-ui\`,\\n      },\\n    },\\n    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,\\n    \`gatsby-plugin-react-helmet\`,\\n    \\"gatsby-plugin-foo\\",\\n  ],\\n}\\n",
+  "newState": "const redish = \`#c5484d\`\\nmodule.exports = {\\n  siteMetadata: {\\n    title: \`Bricolage\`,\\n    author: \`Kyle Mathews\`,\\n    homeCity: \`San Francisco\`,\\n  },\\n  plugins: [\\n    {\\n      resolve: \`gatsby-source-filesystem\`,\\n      options: {\\n        path: \`\${__dirname}/src/pages\`,\\n        name: \`pages\`,\\n      },\\n    },\\n    \`gatsby-transformer-sharp\`,\\n    \`gatsby-plugin-emotion\`,\\n    {\\n      resolve: \`gatsby-plugin-typography\`,\\n      options: {\\n        pathToConfigModule: \`src/utils/typography\`,\\n      },\\n    },\\n    {\\n      resolve: \`gatsby-transformer-remark\`,\\n      options: {\\n        plugins: [\\n          {\\n            resolve: \`gatsby-remark-images\`,\\n            options: {\\n              maxWidth: 590,\\n            },\\n          },\\n          {\\n            resolve: \`gatsby-remark-responsive-iframe\`,\\n            options: {\\n              wrapperStyle: \`margin-bottom: 1.0725rem\`,\\n            },\\n          },\\n          \`gatsby-remark-prismjs\`,\\n          \`gatsby-remark-copy-linked-files\`,\\n          \`gatsby-remark-smartypants\`,\\n        ],\\n      },\\n    },\\n    \`gatsby-plugin-sharp\`,\\n    {\\n      resolve: \`gatsby-plugin-google-analytics\`,\\n      options: {\\n        trackingId: \`UA-774017-3\`,\\n      },\\n    },\\n    {\\n      resolve: \`gatsby-plugin-manifest\`,\\n      options: {\\n        name: \`Bricolage\`,\\n        short_name: \`Bricolage\`,\\n        icon: \`static/logo.png\`,\\n        start_url: \`/\`,\\n        background_color: redish,\\n        theme_color: redish,\\n        display: \`minimal-ui\`,\\n      },\\n    },\\n    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,\\n    \`gatsby-plugin-react-helmet\`,\\n    \\"gatsby-plugin-foo\\",\\n  ],\\n}\\n",
+  "describe": "Install gatsby-plugin-foo in gatsby-config.js"
+}
 `;

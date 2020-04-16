@@ -1,11 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`packageJson resource handles object values 1`] = `
-Object {
+exports[`packageJson resource e2e package resource test: PackageJson create 1`] = `
+{
   "id": "husky",
   "name": "husky",
-  "value": "{
-  \\"hooks\\": {}
-}",
+  "value": "{\\n  \\"hooks\\": {}\\n}"
+}
+`;
+
+exports[`packageJson resource e2e package resource test: PackageJson create plan 1`] = `
+{
+  "id": "husky",
+  "name": "husky",
+  "currentState": "{}",
+  "newState": "{\\n  \\"husky\\": \\"{\\\\n  \\\\\\"hooks\\\\\\": {}\\\\n}\\"\\n}",
+  "describe": "Add husky to package.json",
+  "diff": ""
+}
+`;
+
+exports[`packageJson resource e2e package resource test: PackageJson destroy 1`] = `null`;
+
+exports[`packageJson resource e2e package resource test: PackageJson update 1`] = `
+{
+  "id": "husky",
+  "name": "husky",
+  "value": "{\\n  \\"hooks\\": {\\n    \\"pre-commit\\": \\"lint-staged\\"\\n  }\\n}"
+}
+`;
+
+exports[`packageJson resource e2e package resource test: PackageJson update plan 1`] = `
+{
+  "id": "husky",
+  "name": "husky",
+  "currentState": "{}",
+  "newState": "{\\n  \\"husky\\": \\"{\\\\n  \\\\\\"hooks\\\\\\": {\\\\n    \\\\\\"pre-commit\\\\\\": \\\\\\"lint-staged\\\\\\"\\\\n  }\\\\n}\\"\\n}",
+  "describe": "Add husky to package.json",
+  "diff": ""
+}
+`;
+
+exports[`packageJson resource handles object values 1`] = `
+{
+  "id": "husky",
+  "name": "husky",
+  "value": "{\\n  \\"hooks\\": {}\\n}"
 }
 `;
