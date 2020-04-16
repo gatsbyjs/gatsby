@@ -14,7 +14,7 @@ it(`should create empty plan when the step has no resources`, done => {
   const service = interpret(
     recipeMachine.withContext(initialContext)
   ).onTransition(state => {
-    if (state.value === `present plan`) {
+    if (state.value === `presentPlan`) {
       expect(state.context.plan).toEqual([])
       service.stop()
       done()
@@ -38,7 +38,7 @@ it(`should create plan for File resources`, done => {
   const service = interpret(
     recipeMachine.withContext(initialContext)
   ).onTransition(state => {
-    if (state.value === `present plan`) {
+    if (state.value === `presentPlan`) {
       if (state.context.currentStep === 0) {
         service.send(`CONTINUE`)
       } else {
@@ -161,7 +161,7 @@ it(`it should switch to done after the final apply step`, done => {
     recipeMachine.withContext(initialContext)
   ).onTransition(state => {
     // Keep simulating moving onto the next step
-    if (state.value === `present plan`) {
+    if (state.value === `presentPlan`) {
       service.send(`CONTINUE`)
     }
     if (state.value === `done`) {
@@ -200,7 +200,7 @@ it(`should store created/changed/deleted resources on the context after applying
     recipeMachine.withContext(initialContext)
   ).onTransition(state => {
     // Keep simulating moving onto the next step
-    if (state.value === `present plan`) {
+    if (state.value === `presentPlan`) {
       service.send(`CONTINUE`)
     }
     if (state.value === `done`) {
@@ -229,7 +229,7 @@ it.skip(`should create a plan from a url`, done => {
   const service = interpret(
     recipeMachine.withContext(initialContext)
   ).onTransition(state => {
-    if (state.value === `present plan`) {
+    if (state.value === `presentPlan`) {
       console.log(state.context)
       expect(state.context.plan).toMatchSnapshot()
       service.stop()

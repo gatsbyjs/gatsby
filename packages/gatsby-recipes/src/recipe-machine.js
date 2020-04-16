@@ -117,7 +117,7 @@ const recipeMachine = Machine(
             return result
           },
           onDone: {
-            target: `present plan`,
+            target: `presentPlan`,
             actions: assign({
               plan: (context, event) => event.data,
             }),
@@ -128,7 +128,7 @@ const recipeMachine = Machine(
           },
         },
       },
-      "present plan": {
+      presentPlan: {
         on: {
           CONTINUE: `applyingPlan`,
         },

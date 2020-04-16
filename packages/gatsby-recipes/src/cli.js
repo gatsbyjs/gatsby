@@ -373,7 +373,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
 
       const PresentStep = ({ state }) => {
         const isPlan = state.context.plan && state.context.plan.length > 0
-        const isPresetPlanState = state.value === `present plan`
+        const isPresetPlanState = state.value === `presentPlan`
         const isRunningStep = state.value === `applyingPlan`
         const isDone = state.value === `done`
         const isLastStep =
