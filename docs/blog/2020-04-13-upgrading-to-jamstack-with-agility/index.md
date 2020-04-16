@@ -29,12 +29,12 @@ For those of you who just want to see the code for the new site (it only has cod
 
 Here's what I did to get everything up and running, right from coding the new site, to deploying, testing and flipping over the DNS.
 
-[Get it running locally with Gatsby](#step-1-get-it-running-locally-with-gatsby)
-[Implement the Header and Footer](#step-2-implement-the-header-and-footer)
-[Create a new Home Page](#step-3-create-a-new-home-page)
-[Run it in Gatsby Cloud](#step-4-run-it-in-gatsby-cloud)
-[Deploy to Netlify](#step-5-deploy-to-netlify)
-[Setup the CDN to do the Edge Routing](#step-6-setup-the-cdn-to-do-the-edge-routing)
+- [Get it running locally with Gatsby](#step-1-get-it-running-locally-with-gatsby)
+- [Implement the Header and Footer](#step-2-implement-the-header-and-footer)
+- [Create a new Home Page](#step-3-create-a-new-home-page)
+- [Run it in Gatsby Cloud](#step-4-run-it-in-gatsby-cloud)
+- [Deploy to Netlify](#step-5-deploy-to-netlify)
+- [Setup the CDN to do the Edge Routing](#step-6-setup-the-cdn-to-do-the-edge-routing)
 
 What's really cool is that this workflow isn't just for upgrading Agility websites to JAMstack - you can use it for any website! Now let’s break each step into specific details.
 
