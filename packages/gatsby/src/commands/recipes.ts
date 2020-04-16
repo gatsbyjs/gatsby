@@ -12,9 +12,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   telemetry.trackCli(`RECIPE_RUN`, { name: recipe })
 
   // Start GraphQL serve
-  const scriptPath = require.resolve(
-    `gatsby-recipes/dist/graphql.js`
-  )
+  const scriptPath = require.resolve(`gatsby-recipes/dist/graphql.js`)
 
   const subprocess = execa(`node`, [scriptPath, graphqlPort], {
     cwd: program.directory,
