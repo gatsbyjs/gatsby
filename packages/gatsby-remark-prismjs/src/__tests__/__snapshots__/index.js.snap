@@ -595,11 +595,12 @@ Object {
       "lang": "js",
       "position": Position {
         "end": Object {
-          "column": 2,
-          "line": 6,
-          "offset": 104,
+          "column": 4,
+          "line": 7,
+          "offset": 108,
         },
         "indent": Array [
+          1,
           1,
           1,
           1,
@@ -619,9 +620,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 2,
-      "line": 6,
-      "offset": 104,
+      "column": 4,
+      "line": 7,
+      "offset": 108,
     },
     "start": Object {
       "column": 1,

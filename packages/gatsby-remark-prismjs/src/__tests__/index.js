@@ -129,7 +129,8 @@ describe(`remark prism plugin`, () => {
         `// highlight-start\n` +
         `return "this is a highlight test"\n` +
         `// highlight-end\n` +
-        `}`
+        `}\n` +
+        `\`\`\``
       const markdownAST = remark.parse(code)
       plugin({ markdownAST }, { showLineNumbers: true })
       expect(markdownAST).toMatchSnapshot()
