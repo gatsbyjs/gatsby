@@ -26,6 +26,8 @@ So now, instead of Googling how to add Styled Components support to Gatsby, you 
 
 Similarly if you want to add a blog, you can now run `gatsby recipes gatsby-theme-blog` and immediately start blogging.
 
+We want there to be 10s of thousands of recipes you can search, run, and remix per your needs.
+
 ## Human-friendly automation
 
 Recipes are written in [MDX](https://mdxjs.com/)—a combination of Markdown and React components—readable by both humans and machines. (Other “infrastructure as code” automations, like AWS CloudFormation, use kinda-sorta legible yaml templates that favor the machines). We picked MDX to make Gatsby Recipes instructions and explanations easily readable for humans while using React components syntax to _declare_ to Gatsby Recipes the desired state of the world. This means Gatsby Recipes read like actual little recipes. Writing and using them could be...dare we say it..._fun_.
@@ -97,17 +99,17 @@ You can run local recipes or recipes at a URL. [The docs walk you through writin
 
 ### Will there be more official recipes? Do you want contributions?
 
-Yes! We want to have official recipes for all common use cases. Even if a recipe isn't yet possible to create (i.e. its missing a required resource), please suggest it in the Recipes Umbrella issue to start the conversation.
+Yes! We want to have official recipes for all common use cases. Even if a recipe isn't yet possible to create (i.e. it's missing a required resource), please suggest it in the Recipes Umbrella issue to start the conversation.
 
 ### What are future plans for recipes?
 
 A few areas we're exploring.
 
-- How to translate tutorials to Recipes. The Gatsby community has created a ton of tutorials. What if tutorials could be run as Recipes and they'd walk you through setting up sites, adding technologies and services, etc. This would be a boon to many people new to Gatsby as it'd automate fiddly details like installing packages and plugins, creating files in the right place, etc. that slow learning the concepts and technology.
+- How to translate tutorials to Recipes. The Gatsby community has created a ton of tutorials. What if tutorials _were_ Recipes but could be still read as tutorials _and_ run as Recipes where they'd walk you through setting up sites, adding technologies and services, etc. This would be a boon to many people new to Gatsby as it'd automate fiddly details like installing packages and plugins, creating files in the right place, etc. that slow learning the concepts and technology.
 - Expanding the capabilities available to Recipes. There's a lot more Recipes could automate like setting up cloud services, controlling content types, deeper integrations with Gatsby and other core web technologies, etc. Anything with an API, a recipe could automate.
 - A GUI version of Recipes. We're working on a Desktop app for Gatsby and Recipes will fit beautifully into it.
 - Referencing other recipes from within a recipe to create recipe "stacks". The ability to compose recipes opens up a lot of interesting possibilities.
-- Executable recipes. Right now recipes are static but what if you could code recipe components that respond to real data from your environment? It’d be like React Native but for infrastructure 🤯
+- Executable recipes. Right now React components in recipes are static declarations but what if you could code recipe components that respond to real data from your environment? It’d be like React Native but for infrastructure 🤯
 
 ### What are some inspirations for Recipes?
 
