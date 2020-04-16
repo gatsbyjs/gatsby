@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
 
 import ContentLayer from "./text-content/ContentLayer.md"
 import BuildLayer from "./text-content/BuildLayer.md"
@@ -13,6 +12,8 @@ import {
   ExampleWrapper,
   CodeWrapper,
 } from "../model-wrapper"
+
+import { Trans } from "@lingui/macro"
 
 // This content is only used when you click "cycle sources" in the Content pane
 const sources = [
@@ -167,7 +168,7 @@ const AppLayerContent = ({ index }) => (
             borderBottom: t => `1px solid ${t.colors.ui.border}`,
           }}
         >
-          Home
+          <Trans>Home</Trans>
         </div>
         <div
           sx={{
@@ -176,7 +177,7 @@ const AppLayerContent = ({ index }) => (
             background: `ui.background`,
           }}
         >
-          Gatsby tips
+          <Trans>Gatsby tips</Trans>
         </div>
       </div>
     </ExampleWrapper>
