@@ -118,7 +118,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
       pathPrefix,
       compiler: {
         parseString: compiler.parse.bind(compiler),
-        generateHTML: ast => mdx.sync(ast, options),
+        generateHTML: ast => mdx(ast, options),
       },
       ...helpers,
     }
