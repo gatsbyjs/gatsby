@@ -18,7 +18,7 @@ Object {
   "id": "husky",
   "name": "husky",
   "newState": "{
-  \\"husky\\": \\"{\\\\n  \\\\\\"hooks\\\\\\": {}\\\\n}\\"
+  \\"husky\\": \\"{/n  /\\"hooks/\\": {}/n}\\"
 }",
 }
 `;
@@ -45,7 +45,7 @@ Object {
   "id": "husky",
   "name": "husky",
   "newState": "{
-  \\"husky\\": \\"{\\\\n  \\\\\\"hooks\\\\\\": {\\\\n    \\\\\\"pre-commit\\\\\\": \\\\\\"lint-staged\\\\\\"\\\\n  }\\\\n}\\"
+  \\"husky\\": \\"{/n  /\\"hooks/\\": {/n    /\\"pre-commit/\\": /\\"lint-staged/\\"/n  }/n}\\"
 }",
 }
 `;
