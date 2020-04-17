@@ -106,7 +106,7 @@ Read more about Emotion on the official Emotion docs site:
 https://emotion.sh/docs/introduction
 ```
 
-You can browse the source of the official recipes @ https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes. The [recipes umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) also has a number of recipes posted by community members.
+You can browse the [source of the official recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes). The [recipes umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) also has a number of recipes posted by community members.
 
 ### How to run recipes
 
