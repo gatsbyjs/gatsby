@@ -22,7 +22,8 @@ export async function recipesHandler(recipe: string): Promise<void> {
       FORCE_COLOR: `true`,
     },
   })
-  subprocess.stderr.on(`data`, data => {
+
+  subprocess.stderr?.on(`data`, data => {
     console.log(data.toString())
   })
   process.on(`exit`, () =>
@@ -35,11 +36,11 @@ export async function recipesHandler(recipe: string): Promise<void> {
     const logFile = path.resolve(`./recipe-server.log`)
     fs.writeFileSync(logFile, `\n-----\n${new Date().toJSON()}\n`)
     const writeStream = fs.createWriteStream(logFile, { flags: `a` })
-    subprocess.stdout.pipe(writeStream)
+    subprocess.stdout?.pipe(writeStream)
   }
 
   let started = false
-  subprocess.stdout.on(`data`, () => {
+  subprocess.stdout?.on(`data`, () => {
     if (!started) {
       const runRecipe = require(`gatsby-recipes/dist/index.js`)
       runRecipe({ recipe, graphqlPort, projectRoot: process.cwd() })
@@ -47,5 +48,5 @@ export async function recipesHandler(recipe: string): Promise<void> {
     }
   })
 
-  return subprocess
+  return subprocess.then(() => {})
 }
