@@ -588,52 +588,6 @@ color<span class=\\"token operator\\">:</span> red<span class=\\"token punctuati
 }
 `;
 
-exports[`remark prism plugin numberLines correctly counts line-numbers for markup using highlight classes 1`] = `
-Object {
-  "children": Array [
-    Object {
-      "lang": "js",
-      "position": Position {
-        "end": Object {
-          "column": 4,
-          "line": 7,
-          "offset": 108,
-        },
-        "indent": Array [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-        ],
-        "start": Object {
-          "column": 1,
-          "line": 1,
-          "offset": 0,
-        },
-      },
-      "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre style=\\"counter-reset: linenumber NaN\\" class=\\"language-js line-numbers\\"><code class=\\"language-js\\"><span class=\\"token keyword\\">function</span> <span class=\\"token function\\">highlightTest</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span> <span class=\\"token punctuation\\">{</span>
-<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token keyword\\">return</span> <span class=\\"token string\\">\\"this is a highlight test\\"</span></span><span class=\\"token punctuation\\">}</span></code><span aria-hidden=\\"true\\" class=\\"line-numbers-rows\\" style=\\"white-space: normal; width: auto; left: 0;\\"><span></span><span></span><span></span></span></pre></div>",
-    },
-  ],
-  "position": Object {
-    "end": Object {
-      "column": 4,
-      "line": 7,
-      "offset": 108,
-    },
-    "start": Object {
-      "column": 1,
-      "line": 1,
-      "offset": 0,
-    },
-  },
-  "type": "root",
-}
-`;
-
 exports[`remark prism plugin numberLines does not add line-number markup when not configured globally 1`] = `
 Object {
   "children": Array [
