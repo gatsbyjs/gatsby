@@ -8,7 +8,7 @@ import {
 import { remove as removePageDataFile, fixedPagePath } from "../utils/page-data"
 import { IGatsbyState } from "../redux/types"
 
-const checkFolderHasContent = (path: string) =>
+const checkFolderHasContent = (path: string): boolean =>
   fs.existsSync(path) && !fs.readdirSync(path).length
 
 export const getChangedPageDataKeys = (
