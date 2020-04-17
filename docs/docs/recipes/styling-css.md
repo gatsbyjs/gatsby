@@ -32,7 +32,7 @@ p {
 import "./src/styles/global.css"
 ```
 
-> **Note:** You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-config.js` file.
+> **Note:** You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-browser.js` file.
 
 3. Run `gatsby-develop` to observe the global styling being applied across your site.
 
@@ -100,7 +100,7 @@ export default () => <Layout>Hello world!</Layout>
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-styled-components`],
+  plugins: [`gatsby-plugin-styled-components`]
 }
 ```
 
@@ -326,7 +326,7 @@ npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-emotion`],
+  plugins: [`gatsby-plugin-emotion`]
 }
 ```
 
@@ -343,7 +343,7 @@ export default () => (
     <p
       css={{
         background: "pink",
-        color: "blue",
+        color: "blue"
       }}
     >
       This page is using Emotion.
