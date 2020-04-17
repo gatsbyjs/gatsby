@@ -5971,7 +5971,6 @@
   description: A Gatsby starter for creating blogs.
   tags:
     - Blog
-    - Table Of Contents
     - PWA
     - SEO
     - CMS:Netlify
