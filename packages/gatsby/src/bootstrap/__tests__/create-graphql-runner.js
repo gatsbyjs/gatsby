@@ -1,6 +1,6 @@
 jest.mock(`graphql`)
 
-import { createGraphQLRunner } from "../graphql-runner"
+import { createGraphQLRunner } from "../create-graphql-runner"
 const { execute, validate, parse } = require(`graphql`)
 
 parse.mockImplementation(() => {
