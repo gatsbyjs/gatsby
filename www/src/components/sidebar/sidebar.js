@@ -196,8 +196,6 @@ class SidebarBody extends Component {
     const { i18n, closeSidebar, itemList, location } = this.props
     const { openSectionHash, activeItemLink, activeItemParents } = this.state
 
-    const isSingle = itemList.filter(item => item.level === 0).length === 1
-
     return (
       <section
         aria-label={i18n._(t`Secondary Navigation`)}
@@ -290,7 +288,6 @@ class SidebarBody extends Component {
                 onLinkClick={closeSidebar}
                 onSectionTitleClick={this._toggleSection}
                 openSectionHash={openSectionHash}
-                isSingle={isSingle}
                 disableAccordions={this.props.disableAccordions}
               />
             ))}
