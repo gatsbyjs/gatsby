@@ -23,7 +23,6 @@ const Item = ({
   onLinkClick,
   onSectionTitleClick,
   ui,
-  isSingle,
   disableAccordions,
 }) => {
   const itemRef = useCallback(
@@ -62,7 +61,6 @@ const Item = ({
           onLinkClick={onLinkClick}
           openSectionHash={openSectionHash}
           onSectionTitleClick={onSectionTitleClick}
-          isSingle={isSingle}
           disableAccordions={disableAccordions}
         />
       ) : (

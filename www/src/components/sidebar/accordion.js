@@ -75,7 +75,6 @@ class Accordion extends React.Component {
       onLinkClick,
       onSectionTitleClick,
       openSectionHash,
-      isSingle,
       disableAccordions,
     } = this.props
     const uid = `item_` + this.state.uid
@@ -93,30 +92,28 @@ class Accordion extends React.Component {
           transition: t =>
             `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
           mt: t =>
-            item.level === 0 && disableAccordions && !isSingle
+            item.level === 0 && disableAccordion
               ? `${t.space[4]} !important`
               : false,
-          ...(item.level === 0 &&
-            !isSingle && {
-              "::before": {
-                content: `" "`,
-                position: `absolute`,
-                borderTopWidth: `1px`,
-                borderTopStyle: `solid`,
-                borderColor: `ui.border`,
-                left: t =>
-                  (isParentOfActiveItem && isExpanded) ||
-                  (isActive && isExpanded)
-                    ? 0
-                    : t.space[6],
-                right: 0,
-                top: 0,
-              },
-              ":after": {
-                top: `auto`,
-                bottom: -1,
-              },
-            }),
+          ...(item.level === 0 && {
+            "::before": {
+              content: `" "`,
+              position: `absolute`,
+              borderTopWidth: `1px`,
+              borderTopStyle: `solid`,
+              borderColor: `ui.border`,
+              left: t =>
+                (isParentOfActiveItem && isExpanded) || (isActive && isExpanded)
+                  ? 0
+                  : t.space[6],
+              right: 0,
+              top: 0,
+            },
+            ":after": {
+              top: `auto`,
+              bottom: -1,
+            },
+          }),
         }}
       >
         <ItemWithSubitems
