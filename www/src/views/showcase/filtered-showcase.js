@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component } from "react"
-import MdArrowDownward from "react-icons/lib/md/arrow-downward"
+import { MdArrowDownward } from "react-icons/md"
 import Fuse from "fuse.js"
 
 import { loadMoreButton } from "../shared/styles"
@@ -57,12 +57,7 @@ class FilteredShowcase extends Component {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: [
-        `title`,
-        `categories`,
-        `built_by`,
-        `description`,
-      ],
+      keys: [`title`, `categories`, `built_by`, `description`],
     }
 
     this.fuse = new Fuse(props.data.allSitesYaml.nodes, options)

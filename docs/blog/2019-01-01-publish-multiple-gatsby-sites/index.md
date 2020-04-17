@@ -49,7 +49,7 @@ Let’s begin! Navigate to an empty folder in the terminal and clone the repo by
 
 `git clone git@github.com:andrico1234/lerna-monorepo-starter.git`
 
-and navigate into the the `lerna-monorepo-starter` directory.
+and navigate into the `lerna-monorepo-starter` directory.
 
 Go to your GitHub account and create a new repo, this’ll be the repo that you push the site to so that Travis can run the pipeline. For those who need a refresher on how to [create a new repo](https://help.github.com/articles/creating-a-new-repository/). You may have to run `git remote remove origin` so you can point the code to your newly created repo.
 

@@ -10,12 +10,8 @@ describe(`anonymous arrow function pages`, () => {
   })
 
   it(`updates page on navigation`, () => {
-    cy.getTestElement(`link`)
-      .click()
-      .waitForRouteChange()
+    cy.getTestElement(`link`).click().waitForRouteChange()
 
-    cy.getTestElement(`title`)
-      .invoke(`text`)
-      .should(`contain`, `Two`)
+    cy.getTestElement(`title`).invoke(`text`).should(`contain`, `Two`)
   })
 })

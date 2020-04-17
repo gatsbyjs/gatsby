@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.2.4...gatsby-telemetry@1.2.5) (2020-04-17)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.2.3...gatsby-telemetry@1.2.4) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.2.2...gatsby-telemetry@1.2.3) (2020-04-01)
+
+### Bug Fixes
+
+- **telemetry:** fix isTrackingEnabled always truthy ([#22613](https://github.com/gatsbyjs/gatsby/issues/22613)) ([5aaf296](https://github.com/gatsbyjs/gatsby/commit/5aaf296)), closes [#22531](https://github.com/gatsbyjs/gatsby/issues/22531)
+
+## [1.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.2.1...gatsby-telemetry@1.2.2) (2020-03-25)
+
+### Features
+
+- **gatsby-telemetry:** Make build collect GraphQL/Sift query data for telemetry ([#22540](https://github.com/gatsbyjs/gatsby/issues/22540)) ([1bec140](https://github.com/gatsbyjs/gatsby/commit/1bec140))
+
+## [1.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.2.0...gatsby-telemetry@1.2.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [1.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.56...gatsby-telemetry@1.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [1.1.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.55...gatsby-telemetry@1.1.56) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.54...gatsby-telemetry@1.1.55) (2020-03-12)
+
+### Performance Improvements
+
+- **gatsby-telemetry:** Memoize the getRepositoryId ([#20472](https://github.com/gatsbyjs/gatsby/issues/20472)) ([d9b8fe8](https://github.com/gatsbyjs/gatsby/commit/d9b8fe8))
+
+## [1.1.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.53...gatsby-telemetry@1.1.54) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.52...gatsby-telemetry@1.1.53) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-telemetry
+
 ## [1.1.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.51...gatsby-telemetry@1.1.52) (2020-03-09)
 
 **Note:** Version bump only for package gatsby-telemetry

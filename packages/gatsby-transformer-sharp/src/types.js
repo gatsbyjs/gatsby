@@ -26,6 +26,8 @@ const ImageFitType = new GraphQLEnumType({
     COVER: { value: sharp.fit.cover },
     CONTAIN: { value: sharp.fit.contain },
     FILL: { value: sharp.fit.fill },
+    INSIDE: { value: sharp.fit.inside },
+    OUTSIDE: { value: sharp.fit.outside },
   },
 })
 

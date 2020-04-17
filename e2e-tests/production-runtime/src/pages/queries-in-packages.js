@@ -1,7 +1,7 @@
-import React from 'react'
-import SEO from 'gatsby-seo'
+import * as React from "react"
+import SEO from "gatsby-seo"
 
-import Layout from '../components/layout'
+import Layout from "../components/layout"
 
 export default () => (
   <Layout>

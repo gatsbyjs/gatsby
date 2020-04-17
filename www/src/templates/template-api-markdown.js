@@ -53,7 +53,7 @@ const mergeFunctions = (data, context) => {
           }
         } else {
           // API pages having apiCalls did not query for this in the page query,
-          // so just remove it instead. Having one that returns nothing supresses
+          // so just remove it instead. Having one that returns nothing suppresses
           // documentation git links completely.
           def.codeLocation = null
         }

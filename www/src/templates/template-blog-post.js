@@ -2,11 +2,12 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import Link from "../components/localized-link"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
@@ -63,8 +64,12 @@ class BlogPostTemplate extends React.Component {
               />
               <meta name="description" content={post.fields.excerpt} />
 
-              <meta property="og:description" content={post.fields.excerpt} />
               <meta name="twitter:description" content={post.fields.excerpt} />
+              <meta
+                name="twitter:card"
+                content={post.frontmatter.twittercard || "summary"}
+              />
+              <meta property="og:description" content={post.fields.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
               <meta property="og:url" content={href} />
               {post.frontmatter.image && (
@@ -247,7 +252,7 @@ export const pageQuery = graphql`
         tags
         image {
           childImageSharp {
-            resize(width: 1500, height: 1500) {
+            resize(width: 1500) {
               src
             }
             fluid(maxWidth: 786) {
@@ -259,6 +264,7 @@ export const pageQuery = graphql`
         imageAuthorLink
         imageTitle
         showImageInArticle
+        twittercard
         author {
           id
           bio
