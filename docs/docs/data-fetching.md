@@ -93,7 +93,6 @@ It is important to note that node fields can indeed be arbitrary. The `nameWithO
 
 This node created manually could be retrieved with a query like this:
 
-
 ```graphql
 query {
   example {
