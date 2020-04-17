@@ -2,6 +2,8 @@
 title: Building with Components
 ---
 
+import LayerModel from "@components/layer-model"
+
 To use Gatsby, you will need a basic understanding of React components.
 
 The [official tutorial](https://reactjs.org/tutorial/tutorial.html)

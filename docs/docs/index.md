@@ -4,6 +4,8 @@ description: The one stop location for tutorials, guides, and information about 
 disableTableOfContents: true
 ---
 
+import EmailCaptureForm from "@components/email-capture-form"
+
 Gatsby is a blazing fast modern site generator for React.
 
 ## Get Started

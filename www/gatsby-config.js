@@ -88,6 +88,14 @@ module.exports = {
   plugins: [
     `gatsby-plugin-theme-ui`,
     {
+      resolve: `gatsby-alias-imports`,
+      options: {
+        aliases: {
+          "@components": "src/components",
+        },
+      },
+    },
+    {
       resolve: `gatsby-transformer-gitinfo`,
       options: {
         include: /mdx?$/i,

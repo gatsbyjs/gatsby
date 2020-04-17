@@ -2,6 +2,8 @@
 title: Overview of the Gatsby Build Process
 ---
 
+import LayerModel from "@components/layer-model"
+
 <!-- written at the time of commit e85278c to bootstrap/index.js and commit f8cae16 to build.js -->
 
 _This is a high-level overview about the steps in the Gatsby build process. For more detailed information about specific steps, check out the [Gatsby Internals](/docs/gatsby-internals) section of the docs._
