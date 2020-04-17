@@ -1,8 +1,6 @@
 import { PackageJson, Reporter } from "gatsby"
 
 export interface ICert {
-  keyPath: string
-  certPath: string
   key: string
   cert: string
 }
@@ -20,7 +18,6 @@ export interface IProgram {
   https?: boolean
   sitePackageJson: PackageJson
   ssl?: ICert
-  _?: any
 }
 
 // @deprecated

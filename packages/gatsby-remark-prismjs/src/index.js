@@ -67,20 +67,6 @@ module.exports = (
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
     const className = `${classPrefix}${languageName}`
 
-    let numLinesStyle, numLinesClass, numLinesNumber
-    numLinesStyle = numLinesClass = numLinesNumber = ``
-    if (showLineNumbers) {
-      numLinesStyle = ` style="counter-reset: linenumber ${
-        numberLinesStartAt - 1
-      }"`
-      numLinesClass = ` line-numbers`
-      numLinesNumber = addLineNumbers(node.value)
-    }
-
-    if (showInvisibles) {
-      loadPrismShowInvisibles(languageName)
-    }
-
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
     node.type = `html`
@@ -88,6 +74,28 @@ module.exports = (
     let highlightClassName = `gatsby-highlight`
     if (highlightLines && highlightLines.length > 0)
       highlightClassName += ` has-highlighted-lines`
+
+    const highlightedCode = highlightCode(
+      languageName,
+      node.value,
+      escapeEntities,
+      highlightLines,
+      noInlineHighlight
+    )
+
+    let numLinesStyle, numLinesClass, numLinesNumber
+    numLinesStyle = numLinesClass = numLinesNumber = ``
+    if (showLineNumbers) {
+      numLinesStyle = ` style="counter-reset: linenumber ${
+        numberLinesStartAt - 1
+      }"`
+      numLinesClass = ` line-numbers`
+      numLinesNumber = addLineNumbers(highlightedCode)
+    }
+
+    if (showInvisibles) {
+      loadPrismShowInvisibles(languageName)
+    }
 
     const useCommandLine =
       [`bash`].includes(languageName) &&
@@ -102,7 +110,7 @@ module.exports = (
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
     +       `${useCommandLine ? commandLine(node.value, outputLines, promptUser, promptHost) : ``}`
-    +       `${highlightCode(languageName, node.value, escapeEntities, highlightLines, noInlineHighlight)}`
+    +       `${highlightedCode}`
     +     `</code>`
     +     `${numLinesNumber}`
     +   `</pre>`
