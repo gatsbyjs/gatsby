@@ -31,7 +31,7 @@ export async function startWebpackServer({
     app
   )
 
-  compiler.hooks.watchRun.tapAsync(`log compiling`, function(_, done) {
+  compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
       webpackActivity.end()
     }
@@ -46,7 +46,7 @@ export async function startWebpackServer({
   let isFirstCompile = true
 
   return new Promise(resolve => {
-    compiler.hooks.done.tapAsync(`print gatsby instructions`, async function(
+    compiler.hooks.done.tapAsync(`print gatsby instructions`, async function (
       stats,
       done
     ) {

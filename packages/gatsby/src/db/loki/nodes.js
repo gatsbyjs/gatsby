@@ -134,10 +134,7 @@ function getNodesByType(typeName) {
   const collName = getTypeCollName(typeName)
   const coll = getDb().getCollection(collName)
   if (!coll) return []
-  return coll
-    .chain()
-    .simplesort(`internal.counter`)
-    .data()
+  return coll.chain().simplesort(`internal.counter`).data()
 }
 
 /**

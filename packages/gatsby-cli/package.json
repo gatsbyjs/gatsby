@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "2.11.8",
+  "version": "2.11.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "lib/index.js"
@@ -25,8 +25,8 @@
     "execa": "^3.4.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.1.1",
-    "gatsby-telemetry": "^1.2.3",
+    "gatsby-core-utils": "^1.1.2",
+    "gatsby-telemetry": "^1.2.4",
     "hosted-git-info": "^3.0.4",
     "is-valid-path": "^0.1.1",
     "lodash": "^4.17.15",

@@ -12,7 +12,6 @@ const createBaseOptions = () => {
     concurrent: Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 4,
     // eslint-disable-next-line new-cap
     store: FastMemoryStore(),
-    maxTimeout: 15000,
   }
 }
 
@@ -117,7 +116,7 @@ const processBatch = async (queue, jobs, activity) => {
       })
 
     jobs.forEach(job =>
-      queue.push(job).on(`finish`, function(result) {
+      queue.push(job).on(`finish`, function (result) {
         results.set(job.id, result)
       })
     )

@@ -22,7 +22,7 @@ access to the
 which is at the core of programmatically creating a page.
 
 ```js:title=gatsby-node.js
-exports.createPages = async function({ actions, graphql }) {
+exports.createPages = async function ({ actions, graphql }) {
   const { data } = await graphql(`
     query {
       allMarkdownRemark {

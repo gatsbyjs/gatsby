@@ -1,5 +1,5 @@
 /** @type {import('gatsby').GatsbyNode["onPreInit"]} */
-exports.onPreInit = function(args, options) {
+exports.onPreInit = function (args, options) {
   if (options.excludeRegex && !options.excludePattern) {
     options.excludePattern = options.excludeRegex
   }
