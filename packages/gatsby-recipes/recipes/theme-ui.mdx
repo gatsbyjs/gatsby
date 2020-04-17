@@ -1,0 +1,44 @@
+# Setup Theme UI
+
+This recipe helps you start developing with the [Theme UI](https://theme-ui.com) styling library.
+
+<Config name="gatsbyjs/add-theme-ui" />
+
+---
+
+Install packages.
+
+<NPMPackage name="theme-ui" />
+<NPMPackage name="gatsby-plugin-theme-ui" />
+
+---
+
+Add the plugin `gatsby-plugin-theme-ui` to your `gatsby-config.js`.
+
+<GatsbyPlugin name="gatsby-plugin-theme-ui" />
+
+---
+
+Write out Theme UI configuration files.
+
+<GatsbyShadowFile
+  theme="gatsby-plugin-theme-ui"
+  path="src/index.js"
+/>
+
+<File
+  content="export default {}"
+  path="src/gatsby-plugin-theme-ui/components.js"
+/>
+
+---
+
+**Success**!
+
+You're ready to get started!
+
+- Read the docs: https://theme-ui.com
+- Learn about the theme specification: https://system-ui.com
+
+*note:* if you're running this recipe on the default starter (or any other starter with
+base css), you'll need to remove the require to `layout.css` in the `components/layout.js` file.

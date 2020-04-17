@@ -101,6 +101,10 @@ you can set a link e.g. in your imprint as follows:
 
 If you enable this optional option, Google Analytics will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Analytics does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
 
+If you are testing this, make sure to disable Do Not Track settings in your own browser.
+For Chrome, Settings > Privacy and security > More
+Then disable `Send a "Do Not Track" request with your browsing traffic`
+
 ### `exclude`
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.

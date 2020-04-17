@@ -4544,15 +4544,6 @@
     - Based on the official Gatsby starter blog
     - Uses TailwindCSS
     - Uses PostCSS
-- url: https://gatsby-starter-hello-world-with-header-and-footer.netlify.com/
-  repo: https://github.com/lgnov/gatsby-starter-hello-world-with-header-and-footer
-  description: Gatsby starter with a responsive barebones header and footer layout
-  tags:
-    - Styling:CSS-in-JS
-  features:
-    - Navbar and footer components with only minimal CSS that make responsiveness works
-    - Works in any device screen
-    - Easily kicking off your project with writing CSS right away
 - url: https://gatsby-minimalist-starter.netlify.com/
   repo: https://github.com/dylanesque/Gatsby-Minimalist-Starter
   description: A minimalist, general-purpose Gatsby starter
