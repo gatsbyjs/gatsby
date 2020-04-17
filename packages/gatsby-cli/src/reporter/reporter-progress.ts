@@ -1,4 +1,4 @@
-import reporterActions from "./redux/actions"
+import * as reporterActions from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"

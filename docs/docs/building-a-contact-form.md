@@ -138,7 +138,7 @@ const mailer = nodemailer.createTransport({
   },
 })
 
-app.post("/contact", function(req, res) {
+app.post("/contact", function (req, res) {
   mailer.sendMail(
     {
       from: req.body.from,
@@ -146,7 +146,7 @@ app.post("/contact", function(req, res) {
       subject: req.body.subject || "[No subject]",
       html: req.body.message || "[No message]",
     },
-    function(err, info) {
+    function (err, info) {
       if (err) return res.status(500).send(err)
       res.json({ success: true })
     }

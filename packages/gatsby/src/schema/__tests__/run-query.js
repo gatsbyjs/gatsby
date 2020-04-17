@@ -216,9 +216,11 @@ function resetDb(nodes) {
   )
 }
 
+let nodesAfterLastRunQuery
 async function runQuery(queryArgs, filtersCache) {
   const nodes = makeNodes()
   resetDb(nodes)
+  nodesAfterLastRunQuery = nodes
   const { sc, type: gqlType } = makeGqlType(nodes)
   const args = {
     gqlType,
@@ -248,12 +250,17 @@ it(`should use the cache argument`, async () => {
 
   // Confirm cache is not ignored
   expect(filtersCache.size === 1).toBe(true)
-  filtersCache.forEach((filterCache, cacheKey) => {
+  filtersCache.forEach((
+    filterCache /*: FilterCache */,
+    cacheKey /*: FilterCacheKey */
+  ) => {
     // This test will change when the composition of the FilterCache changes
     // For now it should be a Map of values to Set of nodes
-    expect(filterCache instanceof Map).toBe(true)
+    expect(filterCache instanceof Object).toBe(true)
+    expect(filterCache.byValue instanceof Map).toBe(true)
+    expect(filterCache.meta instanceof Object).toBe(true)
     // There ought to be at least one value mapped (probably more, shrug)
-    expect(filterCache.size >= 1).toBe(true)
+    expect(filterCache.byValue.size >= 1).toBe(true)
   })
 })
 
@@ -367,8 +374,7 @@ it(`should use the cache argument`, async () => {
         let result = await runFilter({ hair: { lt: 2 } })
 
         expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-        expect(result[1].hair).toEqual(0)
+        result.forEach(r => expect(r.hair <= 2).toBe(true))
       })
 
       it(`handles lt operator with null`, async () => {
@@ -383,9 +389,68 @@ it(`should use the cache argument`, async () => {
       it(`handles lte operator with number`, async () => {
         let result = await runFilter({ hair: { lte: 1 } })
 
-        expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-        expect(result[1].hair).toEqual(0)
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.hair <= 1 ? acc + 1 : acc),
+          0
+        )
+
+        expect(actual).not.toBe(0) // Test should keep this invariant!
+        expect(result.length).toEqual(actual)
+        result.forEach(r => expect(r.hair <= 1).toBe(true))
+      })
+
+      it(`should lte when value is lower than all found values`, async () => {
+        if (IS_LOKI) return
+
+        let result = await runFilter({ float: { lte: 1 } })
+
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.float <= 1 ? acc + 1 : acc),
+          0
+        )
+
+        expect(actual).toEqual(0) // Make sure test nodes keep this invariant!
+        expect(result).toEqual(null) // Zero results yields null
+      })
+
+      it(`should lte when value is in the middle of all found values`, async () => {
+        let result = await runFilter({ float: { lte: 2 } })
+
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.float <= 2 ? acc + 1 : acc),
+          0
+        )
+
+        expect(result.length).toEqual(actual)
+        result.forEach(r => expect(r.float <= 2).toBe(true))
+      })
+
+      it(`should lte when value is higher than all found values`, async () => {
+        let result = await runFilter({ float: { lte: 5 } })
+
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.float <= 5 ? acc + 1 : acc),
+          0
+        )
+
+        expect(result.length).toEqual(actual)
+      })
+
+      it.skip(`should lte when type coercion fails direct value lookup`, async () => {
+        // Here 1.5 exists but only as number. However, `1.5 <= '1.5' === true`
+        // This test checks whether we don't incorrectly assume that if the
+        // value wasn't mapped, that it can't be found.
+        let result = await runFilter({ float: { lte: `1.5` } })
+
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.float <= 1.5 ? acc + 1 : acc),
+          0
+        )
+
+        expect(result).not.toBe(undefined)
+        expect(result).not.toBe(null)
+        expect(result.length).toEqual(actual)
+        result.forEach(r => expect(r.float <= 2).toBe(true))
       })
 
       it(`handles lte operator with null`, async () => {
@@ -393,8 +458,14 @@ it(`should use the cache argument`, async () => {
 
         let result = await runFilter({ nil: { lte: null } })
 
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.nil <= null ? acc + 1 : acc),
+          0
+        )
+
         // lte null matches null but no nodes without the property (NULL)
-        expect(result.length).toEqual(1)
+        expect(actual).not.toBe(0) // Test should keep this invariant!
+        expect(result.length).toEqual(actual)
         expect(result[0].name).toEqual(`The Mad Wax`)
         expect(result[0].nil).toEqual(null)
       })
@@ -419,9 +490,14 @@ it(`should use the cache argument`, async () => {
       it(`handles gte operator with number`, async () => {
         let result = await runFilter({ hair: { gte: 1 } })
 
-        expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-        expect(result[1].hair).toEqual(2)
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.hair >= 1 ? acc + 1 : acc),
+          0
+        )
+
+        expect(actual).not.toBe(0) // Test invariant should hold
+        expect(result.length).toEqual(actual)
+        result.forEach(r => expect(r.hair >= 1).toBe(true))
       })
 
       it(`handles gte operator with null`, async () => {
@@ -429,10 +505,18 @@ it(`should use the cache argument`, async () => {
 
         let result = await runFilter({ nil: { gte: null } })
 
-        // lte null matches null but no nodes without the property (NULL)
-        expect(result.length).toEqual(1)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-        expect(result[0].nil).toEqual(null)
+        let actual = nodesAfterLastRunQuery.reduce(
+          (acc, node) => (node.nil >= null ? acc + 1 : acc),
+          0
+        )
+
+        // gte null matches null but no nodes without the property (NULL)
+        expect(actual).not.toBe(0) // Test invariant should hold
+        expect(result.length).toEqual(actual)
+        result.forEach(
+          // Note: confirm no `null` is returned for >= null
+          r => expect(r.nil === null).toBe(true)
+        )
       })
 
       it(`handles the regex operator without flags`, async () => {
@@ -590,6 +674,9 @@ it(`should use the cache argument`, async () => {
         })
 
         expect(result.length).toEqual(1)
+        expect(
+          result[0]?.singleElem?.things.some(e => e?.one?.two?.three === 123)
+        ).toEqual(true)
       })
 
       it(`handles the elemMatch operator on the second element`, async () => {
@@ -803,12 +890,14 @@ it(`should use the cache argument`, async () => {
         // nodes that do not have the field at all (NULL).
 
         expect(result.length).toEqual(2)
-        result.forEach(edge => {
-          // Either does not exist or does not contain
-          expect(edge.anArray === undefined || !edge.anArray.includes(5)).toBe(
-            true
-          )
-        })
+        // Either does not exist or does not contain
+        result
+          .filter(edge => edge.anArray !== undefined)
+          .forEach(edge => {
+            // In this test, if the property exists it should be an array
+            expect(Array.isArray(edge.anArray)).toBe(true)
+            expect(edge.anArray.includes(5)).toBe(false)
+          })
       })
 
       it(`handles the nin operator for array [null]`, async () => {
