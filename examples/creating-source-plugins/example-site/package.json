@@ -22,7 +22,7 @@
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "prettier": "2.0.4"
   },
   "repository": {
     "type": "git",

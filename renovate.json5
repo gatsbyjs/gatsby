@@ -2,7 +2,6 @@
   extends: ["config:base", ":disablePeerDependencies"],
   includePaths: [
     "package.json",
-    "starters/**",
     "packages/**",
     "www/package.json",
   ],
@@ -84,6 +83,11 @@
     {
       depTypeList: ["engines"],
       enabled: false,
+    },
+    {
+      groupName: "updates in starters",
+      paths: ["starters/**"],
+      updateTypes: ["patch"],
     },
   ],
   timezone: "GMT",

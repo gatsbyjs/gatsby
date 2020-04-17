@@ -15,7 +15,7 @@ export default function EventList({ events }) {
 
   return events.nodes.length > 0 ? (
     <>
-    // Temporarily removing during COVID
+      // Temporarily removing during COVID
       {/* <h2>Upcoming Events</h2>
       <ul>
         {upcoming.map(event => (
