@@ -131,13 +131,6 @@ function transformField({
   } else if (fieldType.kind === `LIST`) {
     const listOfType = typeMap.get(ofType.name)
 
-    // we don't have a type for this list type
-    // the remote schema might be incomplete.
-    // all we can do is omit this field
-    if (!ofType.name || !listOfType) {
-      return false
-    }
-
     const transformedFields = recursivelyTransformFields({
       fields: listOfType.fields,
       parentType: fieldType,
