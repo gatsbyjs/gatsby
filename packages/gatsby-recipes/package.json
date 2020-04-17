@@ -46,6 +46,7 @@
     "is-string": "^1.0.5",
     "is-url": "^1.2.4",
     "jest-diff": "^25.3.0",
+    "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
     "pkg-dir": "^4.2.0",
     "prettier": "^2.0.4",

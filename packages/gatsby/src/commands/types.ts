@@ -20,7 +20,6 @@ export interface IProgram {
   https?: boolean
   sitePackageJson: PackageJson
   ssl?: ICert
-  _?: any
 }
 
 // @deprecated

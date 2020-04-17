@@ -26,6 +26,7 @@
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.1.2",
+    "gatsby-recipes": "^0.0.6",
     "gatsby-telemetry": "^1.2.4",
     "hosted-git-info": "^3.0.4",
     "is-valid-path": "^0.1.1",
