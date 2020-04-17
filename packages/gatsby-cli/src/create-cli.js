@@ -13,6 +13,7 @@ const {
   setDefaultTags,
   setTelemetryEnabled,
 } = require(`gatsby-telemetry`)
+const { recipesHandler } = require(`./recipes`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -293,18 +294,11 @@ function buildLocalCommands(cli, isLocalSite) {
       return cmd(args)
     }),
   })
+
   cli.command({
-    command: `recipes`,
+    command: `recipes [recipe]`,
     desc: `[EXPERIMENTAL] Run a recipe`,
-    handler: handlerP(
-      getCommandHandler(`recipes`, (args, cmd) => {
-        cmd(args)
-        // Return an empty promise to prevent handlerP from exiting early.
-        // The recipe command shouldn't ever exit until the user directly
-        // kills it so this is fine.
-        return new Promise(resolve => {})
-      })
-    ),
+    handler: handlerP(({ recipe }) => recipesHandler(recipe)),
   })
 }
 
