@@ -23,23 +23,28 @@ export async function recipesHandler(recipe: string): Promise<void> {
     },
   })
 
+  // eslint-disable-next-line no-unused-expressions
   subprocess.stderr?.on(`data`, data => {
     console.log(data.toString())
   })
-  process.on(`exit`, () =>
+
+  process.on(`exit`, () => {
     subprocess.kill(`SIGTERM`, {
       forceKillAfterTimeout: 2000,
     })
-  )
+  })
+
   // Log server output to a file.
   if (process.env.DEBUG) {
     const logFile = path.resolve(`./recipe-server.log`)
     fs.writeFileSync(logFile, `\n-----\n${new Date().toJSON()}\n`)
     const writeStream = fs.createWriteStream(logFile, { flags: `a` })
+    // eslint-disable-next-line no-unused-expressions
     subprocess.stdout?.pipe(writeStream)
   }
 
   let started = false
+  // eslint-disable-next-line no-unused-expressions
   subprocess.stdout?.on(`data`, () => {
     if (!started) {
       const runRecipe = require(`gatsby-recipes/dist/index.js`)
