@@ -8,7 +8,8 @@ import {
 import { remove as removePageDataFile, fixedPagePath } from "../utils/page-data"
 import { IGatsbyState } from "../redux/types"
 
-const checkFolderHasContent = (path: string) => (fs.existsSync(path) && !fs.readdirSync(path).length)
+const checkFolderHasContent = (path: string) =>
+  fs.existsSync(path) && !fs.readdirSync(path).length
 
 export const getChangedPageDataKeys = (
   state: IGatsbyState,
@@ -58,10 +59,10 @@ const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
     fixedPagePath(pagePath)
   )
   // if page's folder is empty also remove matching page-data folder
-  if(checkFolderHasContent(pageHtmlDirectory)){
+  if (checkFolderHasContent(pageHtmlDirectory)) {
     fs.removeSync(pageHtmlDirectory)
   }
-  if(checkFolderHasContent(pageDataDirectory)){
+  if (checkFolderHasContent(pageDataDirectory)) {
     fs.removeSync(pageDataDirectory)
   }
 }
