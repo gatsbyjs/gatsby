@@ -1,0 +1,44 @@
+# Setup Gatsby with TailwindCSS + TailwindUI (TUI)
+
+[Tailwind CSS](https://tailwindcss.com/) is a highly customizable, low-level CSS framework that gives you all of the building blocks you need to build bespoke designs without any annoying opinionated styles you have to fight to override.
+[Tailwind UI](https://tailwindui.com/) is a paid set of plain HTML and CSS components from the creator of TailwindCSS.
+---
+
+Install necessary NPM packages
+
+<NPMPackage name="tailwindcss" />
+<NPMPackage name="tailwindcss/ui" />
+<NPMPackage name="gatsby-plugin-postcss" />
+
+---
+
+Install necessary Gatsby Plugins
+
+<GatsbyPlugin name="gatsby-plugin-postcss"/>
+
+---
+
+Setup necessary Files
+
+<File
+  path="postcss.config.js"
+  content="https://gist.github.com/Khaledgarbaya/c2c3b5096c757df27421fc7280d689cf/raw/ffc84d10d8ca18d5983afe6e0d798e4b2aeb7243/postcss.config.js"
+/>
+
+<File
+  path="tailwind.config.js"
+  content="https://gist.github.com/crock/67dccc607bb3306bb257d7bc29eddd07/raw/bf5809918a17a037e63ef39d329db114e0a4ca41/tailwind.config.js"
+/>
+
+<File
+  path="src/styles/tailwind.css"
+  content="https://gist.github.com/crock/67dccc607bb3306bb257d7bc29eddd07/raw/bf5809918a17a037e63ef39d329db114e0a4ca41/tailwind.css"
+/>
+
+<File
+  path="src/pages/usingtailwind.js"
+  content="https://gist.github.com/Khaledgarbaya/c2c3b5096c757df27421fc7280d689cf/raw/aa9f92a1a764d94db8567803643e2edf3f008b42/using-tailwindcss.js"
+/>
+---
+
+You are good to go
