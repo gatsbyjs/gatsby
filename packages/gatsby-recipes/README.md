@@ -193,9 +193,9 @@ a step
 
 But this won't
 
+<!-- prettier-ignore -->
 ```mdx
 # Recipes
-
 ---
 
 a step
