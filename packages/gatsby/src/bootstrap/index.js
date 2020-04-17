@@ -28,7 +28,7 @@ process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
-import { newGraphQLRunner } from "./create-graphql-runner"
+import { createGraphQLRunner } from "./create-graphql-runner"
 const { extractQueries } = require(`../query/query-watcher`)
 const requiresWriter = require(`./requires-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
@@ -469,7 +469,7 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = newGraphQLRunner(store, report)
+  const graphqlRunner = createGraphQLRunner(store, report)
 
   // Collect pages.
   activity = report.activityTimer(`createPages`, {
