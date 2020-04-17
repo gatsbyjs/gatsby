@@ -5,7 +5,8 @@ import hex2rgba from "hex2rgba"
 
 import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import LayerIcon from "../../assets/icons/layer-icon"
-import { Trans } from "@lingui/macro"
+
+import { withI18n } from "@lingui/react"
 
 const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
   const { baseColor, title, icon } = layer
@@ -52,7 +53,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
             fillColor={selected ? colors[baseColor][70] : colors.grey[50]}
           />
         </span>
-        <span><Trans>{title}</Trans></span>
+        <span>{i18n._(title)}</span>
       </span>
     </button>
   )
@@ -62,6 +63,7 @@ const LayerModel = ({
   layers,
   displayCodeFullWidth = false,
   initialLayer = `Content`,
+  i18n,
 }) => {
   const [selected, setSelected] = useState(initialLayer)
   const [sourceIndex, setSourceIndex] = useState(0)
@@ -137,4 +139,4 @@ const LayerModel = ({
   )
 }
 
-export default LayerModel
+export default withI18n()(LayerModel)
