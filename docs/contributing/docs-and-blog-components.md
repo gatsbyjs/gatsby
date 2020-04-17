@@ -124,6 +124,25 @@ Rendered, the component looks like this:
   To improve is to change, so to be perfect is to have changed often.
 </Pullquote>
 
+## Importing other components
+
+If you need to use a component that is not globally available, you can do by importing it using the special `@components` alias, which points to `www/src/components`:
+
+```mdx
+import EmailCaptureForm from "@components/email-capture-form"
+
+<EmailCaptureForm />
+```
+
+**NOTE:** Do _not_ import a component using relative path directories:
+
+```mdx
+// DO NOT DO THIS
+import EmailCaptureForm from "../../www/src/components/email-capture-form"
+```
+
+Doing so will break localized versions of the page, which are stored in other repos.
+
 ---
 
 ## Writing content in Markdown

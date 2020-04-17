@@ -54,7 +54,6 @@ if (process.env.AIRTABLE_API_KEY) {
 }
 
 if (i18nEnabled) {
-  const naughtyFiles = [`docs/docs/data-fetching.md`]
   dynamicPlugins.push(
     ...langCodes.map(code => ({
       resolve: `gatsby-source-git`,
@@ -62,7 +61,7 @@ if (i18nEnabled) {
         name: `docs-${code}`,
         remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
         branch: `master`,
-        patterns: [`docs/**`, ...naughtyFiles.map(file => `!${file}`)],
+        patterns: [`docs/**`],
       },
     })),
     {
