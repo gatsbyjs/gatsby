@@ -21,7 +21,7 @@ the browser when needed by your components.
 
 Data from any number of sources is made queryable in one unified layer, a key part of the Gatsby building process:
 
-<LayerModel initialLayer="Data" />
+<ComponentModel initialLayer="Data" />
 
 ## Why is GraphQL so cool?
 
