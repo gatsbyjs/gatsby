@@ -137,13 +137,18 @@ function buildLocalCommands(cli, isLocalSite) {
           alias: `cert-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS cert file (also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`k`, {
           alias: `key-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS key file (also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`ca-file`, {
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
