@@ -129,11 +129,9 @@ exports.createPages = async ({ graphql, actions }) => {
     return undefined
   })
 
-  const releasedBlogPosts = blogPosts.filter(isReleased)
-
   // Create blog-list pages.
   const postsPerPage = 8
-  const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
+  const numPages = Math.ceil(blogPosts.length / postsPerPage)
 
   Array.from({
     length: numPages,
@@ -183,7 +181,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // `case-study` -> [`case-study`, `case study`]. The hyphenated
   // version will be used for the slug, and the spaced version
   // will be used for human readability (see templates/tags)
-  const tagGroups = _(releasedBlogPosts)
+  const tagGroups = _(blogPosts)
     .map(post => _.get(post, `frontmatter.tags`))
     .filter()
     .flatten()
