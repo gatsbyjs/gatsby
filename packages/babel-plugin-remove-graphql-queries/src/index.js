@@ -168,6 +168,23 @@ function isUseStaticQuery(path) {
   )
 }
 
+function getGraphqlExpression(t, queryHash, source) {
+  return t.objectExpression([
+    t.objectProperty(t.identifier(`id`), t.stringLiteral(queryHash)),
+    t.objectProperty(t.identifier(`source`), t.stringLiteral(source)),
+    t.objectMethod(
+      `method`,
+      t.identifier(`toString`),
+      [],
+      t.blockStatement([
+        t.returnStatement(
+          t.memberExpression(t.identifier(`this`), t.identifier(`id`))
+        ),
+      ])
+    ),
+  ])
+}
+
 export default function({ types: t }) {
   return {
     visitor: {
@@ -238,6 +255,11 @@ export default function({ types: t }) {
                   else importPath.remove()
               }
 
+              // Expose query source
+              path2.replaceWith(
+                getGraphqlExpression(t, this.queryHash, this.query)
+              )
+
               // Add query
               path2.replaceWith(
                 t.memberExpression(identifier, t.identifier(`data`))
@@ -281,7 +303,8 @@ export default function({ types: t }) {
           }
 
           // Replace the query with the hash of the query.
-          templatePath.replaceWith(t.StringLiteral(queryHash))
+          // templatePath.replaceWith(t.StringLiteral(queryHash))
+          templatePath.replaceWith(getGraphqlExpression(t, queryHash, text))
 
           // traverse upwards until we find top-level JSXOpeningElement or Program
           // this handles exported queries and variable queries
@@ -404,7 +427,7 @@ export default function({ types: t }) {
         // Run it again to remove non-staticquery versions
         path.traverse({
           TaggedTemplateExpression(path2, state) {
-            const { ast, hash, isGlobal } = getGraphQLTag(path2)
+            const { ast, hash, isGlobal, text } = getGraphQLTag(path2)
 
             if (!ast) return null
 
@@ -418,7 +441,8 @@ export default function({ types: t }) {
             }
 
             // Replace the query with the hash of the query.
-            path2.replaceWith(t.StringLiteral(queryHash))
+            // path2.replaceWith(t.StringLiteral(queryHash))
+            path2.replaceWith(getGraphqlExpression(t, queryHash, text))
             return null
           },
         })
