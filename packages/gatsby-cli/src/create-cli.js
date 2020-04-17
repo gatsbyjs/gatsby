@@ -13,6 +13,7 @@ const {
   setDefaultTags,
   setTelemetryEnabled,
 } = require(`gatsby-telemetry`)
+const { recipesHandler } = require(`./recipes`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -292,6 +293,12 @@ function buildLocalCommands(cli, isLocalSite) {
       process.env.NODE_ENV = process.env.NODE_ENV || `development`
       return cmd(args)
     }),
+  })
+
+  cli.command({
+    command: `recipes [recipe]`,
+    desc: `[EXPERIMENTAL] Run a recipe`,
+    handler: handlerP(({ recipe }) => recipesHandler(recipe)),
   })
 }
 

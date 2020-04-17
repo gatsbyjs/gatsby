@@ -176,7 +176,7 @@ A hosting provider keeps a copy of your website or app and makes it accessible t
 
 A feature in use when you run `gatsby develop` that live updates your site on save of code in a text editor by automatically replacing modules, or chunks of code, in an open browser window.
 
-### Hydration
+### [Hydration](/docs/glossary/hydration/)
 
 Once a site has been [built](#build) by Gatsby and loaded in a web browser, [client-side](#client-side) JavaScript assets will download and turn the site into a full React application that can manipulate the [DOM](#dom). This process is often called re-hydration as it runs some of the same JavaScript code used to generate Gatsby pages, but this time with browser DOM APIs like `window` available.
 
@@ -220,9 +220,9 @@ A way of writing HTML content with plain text, using special characters to denot
 
 ## N
 
-### NPM
+### [npm](/docs/glossary/npm)
 
-[Node](#node) [Package](#package) Manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
+[Node](#node) [package](#package) manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
 
 ### Node
 
