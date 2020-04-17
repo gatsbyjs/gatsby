@@ -8,29 +8,27 @@ import {
   DisplayLayerContent,
 } from "./image-content-sections"
 
-import { t } from "@lingui/macro"
-
 const layers = [
   {
-    title: t`Install`,
+    title: `Install`,
     icon: `AbstractSymbol`,
     baseColor: `orange`,
     component: InstallLayerContent,
   },
   {
-    title: t`Config`,
+    title: `Config`,
     icon: `AtomicSymbol`,
     baseColor: `green`,
     component: ConfigLayerContent,
   },
   {
-    title: t`Query`,
+    title: `Query`,
     icon: `GraphqlLogo`,
     baseColor: `magenta`,
     component: QueryLayerContent,
   },
   {
-    title: t`Display`,
+    title: `Display`,
     icon: `ReactLogo`,
     baseColor: `blue`,
     component: DisplayLayerContent,
