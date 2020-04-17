@@ -129,7 +129,8 @@ function transformField({
       fieldType,
     }
   } else if (fieldType.kind === `LIST`) {
-    const listOfType = typeMap.get(ofType.name)
+    const listOfType =
+      typeMap.get(ofType.name) || typeMap.get(ofType.ofType.name)
 
     const transformedFields = recursivelyTransformFields({
       fields: listOfType.fields,
