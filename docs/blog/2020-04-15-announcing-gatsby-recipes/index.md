@@ -95,7 +95,7 @@ https://emotion.sh/docs/introduction
 
 ### How can I write my own?
 
-You can run local recipes or recipes at a URL. [The docs walk you through writing your first Recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/recipes/README.md)!
+You can run local recipes or recipes at a URL. [The docs walk you through writing your first Recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/README.md)!
 
 ### Will there be more official recipes? Do you want contributions?
 
