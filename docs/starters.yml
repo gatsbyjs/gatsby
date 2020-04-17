@@ -5966,3 +5966,12 @@
     - Beautifully designed landing page.
     - First project in the starters list to use ant design.
     - Supports SSR and is also a PWA.
+- url: https://gatsby-antd-starter.netlify.app/
+  repo: https://github.com/alienCY/gatsby-antd-starter
+  description: Gatsby starter with ant design (antd)
+  tags:
+    - Styling:Ant Design
+    - SEO
+  features:
+    - Ant Design components
+    - A really nice header.
