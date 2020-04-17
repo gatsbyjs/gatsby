@@ -82,8 +82,10 @@ const uncheckedIcon = (
 export default ({ children, title, ...props }) => {
   const blogThemeConfig = useBlogThemeConfig()
 
+  const { disableThemeUiStyling } = blogThemeConfig
+
   var switchToggle
-  if (!blogThemeConfig.disableThemeUiStyling) {
+  if (!disableThemeUiStyling) {
     const [colorMode, setColorMode] = useColorMode()
     const isDark = colorMode === `dark`
     const toggleColorMode = (e) => {
