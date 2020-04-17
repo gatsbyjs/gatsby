@@ -11,8 +11,8 @@ import prompts from "prompts"
 import url from "url"
 
 import report from "./reporter"
-import { getPackageManager, promptPackageManager } from "./util/configstore"
-import isTTY from "./util/is-tty"
+import { getPackageManager, promptPackageManager } from "./util/package-manager"
+import { isTTY } from "./util/is-tty"
 
 const spawnWithArgs = (
   file: string,
@@ -100,7 +100,7 @@ const createInitialGitCommit = async (
       cwd: rootPath,
     })
   } catch {
-    // Remove git support if intial commit fails
+    // Remove git support if initial commit fails
     report.info(`Initial git commit failed - removing git support\n`)
     fs.removeSync(sysPath.join(rootPath, `.git`))
   }
@@ -179,9 +179,14 @@ const clone = async (hostInfo: any, rootPath: string): Promise<void> => {
 
   report.info(`Creating new site from git: ${url}`)
 
-  const args = [`clone`, ...branch, url, rootPath, `--depth=1`].filter(arg =>
-    Boolean(arg)
-  )
+  const args = [
+    `clone`,
+    ...branch,
+    url,
+    rootPath,
+    `--recursive`,
+    `--depth=1`,
+  ].filter(arg => Boolean(arg))
 
   await spawnWithArgs(`git`, args)
 

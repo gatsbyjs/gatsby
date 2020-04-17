@@ -7,8 +7,9 @@ import { buildHTML } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const GraphQLRunner = require(`../query/graphql-runner`).default
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
-const { initTracer, stopTracer } = require(`../utils/tracer`)
+import { initTracer, stopTracer } from "../utils/tracer"
 const db = require(`../db`)
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
@@ -16,12 +17,12 @@ const { store, readState } = require(`../redux`)
 const queryUtil = require(`../query`)
 import * as appDataUtil from "../utils/app-data"
 import * as WorkerPool from "../utils/worker/pool"
-const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
+import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
-const buildUtils = require(`../commands/build-utils`)
+import * as buildUtils from "./build-utils"
 const { boundActionCreators } = require(`../redux/actions`)
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 
@@ -63,22 +64,25 @@ module.exports = async function build(program: BuildArgs) {
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
-  const { graphqlRunner } = await bootstrap({
+  const { graphqlRunner: bootstrapGraphQLRunner } = await bootstrap({
     ...program,
     parentSpan: buildSpan,
   })
+
+  const graphqlRunner = new GraphQLRunner(store, { collectStats: true })
 
   const {
     processPageQueries,
     processStaticQueries,
   } = queryUtil.getInitialQueryProcessors({
     parentSpan: buildSpan,
+    graphqlRunner,
   })
 
   await processStaticQueries()
 
   await apiRunnerNode(`onPreBuild`, {
-    graphql: graphqlRunner,
+    graphql: bootstrapGraphQLRunner,
     parentSpan: buildSpan,
   })
 
@@ -146,6 +150,7 @@ module.exports = async function build(program: BuildArgs) {
     telemetry.addSiteMeasurement(`BUILD_END`, {
       bundleStats: telemetry.aggregateStats(bundleSizes),
       pageDataStats: telemetry.aggregateStats(pageDataSizes),
+      queryStats: graphqlRunner.getStats(),
     })
   }
 
@@ -221,7 +226,7 @@ module.exports = async function build(program: BuildArgs) {
       store.getState(),
       cachedPageData
     )
-    await buildUtils.removePageFiles({ publicDir }, deletedPageKeys)
+    await buildUtils.removePageFiles(publicDir, deletedPageKeys)
 
     activity.end()
   }
@@ -229,7 +234,7 @@ module.exports = async function build(program: BuildArgs) {
   activity = report.activityTimer(`onPostBuild`, { parentSpan: buildSpan })
   activity.start()
   await apiRunnerNode(`onPostBuild`, {
-    graphql: graphqlRunner,
+    graphql: bootstrapGraphQLRunner,
     parentSpan: buildSpan,
   })
   activity.end()

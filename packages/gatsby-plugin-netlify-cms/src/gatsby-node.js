@@ -101,7 +101,7 @@ exports.onPreInit = ({ reporter }) => {
 exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
   const { program } = store.getState()
   const publicPathClean = trim(publicPath, `/`)
-  app.get(`/${publicPathClean}`, function(req, res) {
+  app.get(`/${publicPathClean}`, function (req, res) {
     res.sendFile(
       path.join(program.directory, `public`, publicPathClean, `index.html`),
       err => {
@@ -175,8 +175,8 @@ exports.onCreateWebpackConfig = (
       name: `netlify-identity-widget`,
       global: `netlifyIdentity`,
       assetDir: `build`,
-      assetName: `netlify-identity-widget.js`,
-      sourceMap: `netlify-identity-widget.js.map`,
+      assetName: `netlify-identity.js`,
+      sourceMap: `netlify-identity.js.map`,
     })
   }
 

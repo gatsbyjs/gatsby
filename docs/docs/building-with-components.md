@@ -19,7 +19,7 @@ The following model shows how data from a source can be queried by GraphQL for u
 
 <LayerModel initialLayer="View" />
 
-[Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
+[Thinking in React](https://reactjs.org/docs/thinking-in-react.html)
 is a good resource for learning how to structure applications with React.
 
 ## How does Gatsby use React Components?

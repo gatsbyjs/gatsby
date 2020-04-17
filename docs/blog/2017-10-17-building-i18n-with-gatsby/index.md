@@ -126,15 +126,15 @@ looks like this.
 
 ```text
 - src
-	- locales
-		- en
-			- PageHeader.json
-			- PricingPlan.json
-		...
-		- cy
-			- PageHeader.json
-			- PricingPlan.json
-		...
+  - locales
+    - en
+      - PageHeader.json
+      - PricingPlan.json
+    ...
+    - cy
+      - PageHeader.json
+      - PricingPlan.json
+    ...
 ```
 
 The `PageHeader` component in the `en` folder might look like this:
@@ -214,7 +214,7 @@ React Helmet:
 
 ```jsx
 <div className="Pricing">
-	<Helmet title={t('heading')}>
+  <Helmet title={t('heading')}>
 </div>
 ```
 
