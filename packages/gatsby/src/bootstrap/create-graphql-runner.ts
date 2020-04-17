@@ -14,7 +14,7 @@ type Runner = (
   context: Record<string, any>
 ) => Promise<ExecutionResult<ExecutionResultDataDefault>>
 
-export const createGraphQLRunner = (
+export const newGraphQLRunner = (
   store: Store<IGatsbyState>,
   reporter: Reporter
 ): Runner => {
