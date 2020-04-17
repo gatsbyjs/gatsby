@@ -92,7 +92,7 @@ class Accordion extends React.Component {
           transition: t =>
             `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
           mt: t =>
-            item.level === 0 && disableAccordion
+            item.level === 0 && disableAccordions
               ? `${t.space[4]} !important`
               : false,
           ...(item.level === 0 && {
