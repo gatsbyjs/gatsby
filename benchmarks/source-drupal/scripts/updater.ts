@@ -38,13 +38,6 @@ const patchArticle = async (
       }
     })
   })
-
-  const body = await response.json()
-  console.log({
-    body,
-    data: body.data,
-    st: response.status
-  })
 }
 
 const getFirstArticle = async (server: string): Promise<IArticle> => {
