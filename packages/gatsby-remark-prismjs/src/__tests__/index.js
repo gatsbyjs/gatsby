@@ -1,4 +1,5 @@
 const remark = require(`remark`)
+const cheerio = require(`cheerio`)
 let plugin
 
 describe(`remark prism plugin`, () => {
@@ -133,7 +134,11 @@ describe(`remark prism plugin`, () => {
         `\`\`\``
       const markdownAST = remark.parse(code)
       plugin({ markdownAST }, { showLineNumbers: true })
-      expect(markdownAST).toMatchSnapshot()
+
+      const htmlResult = markdownAST.children[0].value
+      const $ = cheerio.load(htmlResult)
+      const numberOfLineNumbers = $(`.line-numbers-rows > span`).length
+      expect(numberOfLineNumbers).toEqual(3)
     })
 
     it(`does not add line-number markup when not configured globally`, () => {
