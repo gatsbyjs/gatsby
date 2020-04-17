@@ -13,8 +13,6 @@ import {
   CodeWrapper,
 } from "../model-wrapper"
 
-import { Trans } from "@lingui/macro"
-
 // This content is only used when you click "cycle sources" in the Content pane
 const sources = [
   {
@@ -168,7 +166,7 @@ const AppLayerContent = ({ index }) => (
             borderBottom: t => `1px solid ${t.colors.ui.border}`,
           }}
         >
-          <Trans>Home</Trans>
+          Home
         </div>
         <div
           sx={{
@@ -177,7 +175,7 @@ const AppLayerContent = ({ index }) => (
             background: `ui.background`,
           }}
         >
-          <Trans>Gatsby tips</Trans>
+          Gatsby tips
         </div>
       </div>
     </ExampleWrapper>

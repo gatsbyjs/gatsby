@@ -9,33 +9,36 @@ import {
   AppLayerContent,
 } from "./component-content-sections"
 
+import { t } from "@lingui/macro"
+
+
 const layers = [
   {
-    title: `Content`,
+    title: t`Content`,
     icon: `AbstractSymbol`,
     baseColor: `orange`,
     component: ContentLayerContent,
   },
   {
-    title: `Build`,
+    title: t`Build`,
     icon: `AtomicSymbol`,
     baseColor: `green`,
     component: BuildLayerContent,
   },
   {
-    title: `Data`,
+    title: t`Data`,
     icon: `GraphqlLogo`,
     baseColor: `magenta`,
     component: DataLayerContent,
   },
   {
-    title: `View`,
+    title: t`View`,
     icon: `ReactLogo`,
     baseColor: `blue`,
     component: ViewLayerContent,
   },
   {
-    title: `App`,
+    title: t`App`,
     icon: `AppWindow`,
     baseColor: `yellow`,
     component: AppLayerContent,

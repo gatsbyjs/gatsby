@@ -1,4 +1,6 @@
 import React from "react"
+import { t } from "@lingui/macro"
+
 import LayerModel from "../layer-model"
 import {
   InstallLayerContent,
@@ -9,25 +11,25 @@ import {
 
 const layers = [
   {
-    title: `Install`,
+    title: t`Install`,
     icon: `AbstractSymbol`,
     baseColor: `orange`,
     component: InstallLayerContent,
   },
   {
-    title: `Config`,
+    title: t`Config`,
     icon: `AtomicSymbol`,
     baseColor: `green`,
     component: ConfigLayerContent,
   },
   {
-    title: `Query`,
+    title: t`Query`,
     icon: `GraphqlLogo`,
     baseColor: `magenta`,
     component: QueryLayerContent,
   },
   {
-    title: `Display`,
+    title: t`Display`,
     icon: `ReactLogo`,
     baseColor: `blue`,
     component: DisplayLayerContent,
