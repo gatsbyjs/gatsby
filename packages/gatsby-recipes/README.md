@@ -12,7 +12,7 @@ enables us to port our dozens of recipes from
 https://www.gatsbyjs.org/docs/recipes/ as well as in the future, entire
 tutorials.
 
-[Read more about Recipes on the RFC](https://github.com/gatsbyjs/gatsby/pull/22610)
+[Read more about Recipes on the launch blog post](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/)
 
 There's an umbrella issue for testing / using Recipes during its incubation stage.
 
@@ -105,6 +105,8 @@ Read more about Emotion on the official Emotion docs site:
 
 https://emotion.sh/docs/introduction
 ```
+
+You can browse the [source of the official recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes). The [recipes umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) also has a number of recipes posted by community members.
 
 ### How to run recipes
 
