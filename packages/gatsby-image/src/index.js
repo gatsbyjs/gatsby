@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import ReactDOMServer from "react-dom/server"
 
 const logDeprecationNotice = (prop, replacement) => {
   if (process.env.NODE_ENV === `production`) {
@@ -206,22 +207,25 @@ function generateBase64Sources(imageVariants) {
 }
 
 function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
-  const src = isWebp ? srcSetWebp : srcSet
-  const mediaAttr = media ? `media="${media}" ` : ``
-  const typeAttr = isWebp ? `type='image/webp' ` : ``
-  const sizesAttr = sizes ? `sizes="${sizes}" ` : ``
+  const propsObj = {};
 
-  return `<source ${typeAttr}${mediaAttr}srcset="${src}" ${sizesAttr}/>`
+  propsObj["media"] = media;
+  if(isWebp) propsObj["type"] ='image/webp'
+  propsObj["srcset"] = isWebp ? srcSetWebp : srcSet
+  propsObj["sizes"] = sizes
+
+  return <source {...propsObj}/>
 }
 
 function generateNoscriptSources(imageVariants) {
   return imageVariants
     .map(
-      variant =>
-        (variant.srcSetWebp ? generateNoscriptSource(variant, true) : ``) +
-        generateNoscriptSource(variant)
+      (variant, i) =>
+        (<React.Fragment key={i}>
+          {variant.srcSetWebp && generateNoscriptSource(variant, true)}
+          {generateNoscriptSource(variant)}
+        </React.Fragment>)
     )
-    .join(``)
 }
 
 const listenToIntersections = (el, cb) => {
@@ -238,40 +242,44 @@ const listenToIntersections = (el, cb) => {
   }
 }
 
-const convertToCSSString = styleObject => {
-  if (!styleObject) return ""
-
-  const cssProps = Object.keys(styleObject)
-  const jsToCSSProp = capitalLetter => `-${capitalLetter[0].toLowerCase()}`
-
-  return cssProps.reduce((cssString, propName) => {
-    const propAsCSS = propName.replace(/([A-Z])/g, jsToCSSProp)
-    return cssString + `${propAsCSS}:${styleObject[propName]};`
-  }, "")
-}
-
 const noscriptImg = props => {
+  const propsObj = {}
+
+  // Required Attributes
+  propsObj["src"] = props.src || ""
+  propsObj["alt"] = props.alt || ""
+
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
-  const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
-  const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
-  const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
-  const title = props.title ? `title="${props.title}" ` : ``
-  const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
-  const width = props.width ? `width="${props.width}" ` : ``
-  const height = props.height ? `height="${props.height}" ` : ``
-  const crossOrigin = props.crossOrigin
-    ? `crossorigin="${props.crossOrigin}" `
-    : ``
-  const loading = props.loading ? `loading="${props.loading}" ` : ``
-  const draggable = props.draggable ? `draggable="${props.draggable}" ` : ``
-  const style = `style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center;${convertToCSSString(
-    props.imgStyle
-  )}"`
+  if (props.sizes !== undefined) propsObj["sizes"] = props.sizes
+  if (props.srcSet !== undefined) propsObj["srcSet"] = props.srcSet
+  if (props.title !== undefined) propsObj["title"] = props.title
+  if (props.width !== undefined) propsObj["width"] = props.width
+  if (props.height !== undefined) propsObj["height"] = props.height
+  if (props.crossOrigin !== undefined)
+    propsObj["crossOrigin"] = props.crossOrigin
+  if (props.loading !== undefined) propsObj["loading"] = props.loading
+  if (props.draggable !== undefined) propsObj["draggable"] = props.draggable
+
+  propsObj["style"] = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    opacity: 1,
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "center",
+    ...props.imgStyle,
+  }
 
   const sources = generateNoscriptSources(props.imageVariants)
 
-  return `<picture>${sources}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}${draggable}${style}/></picture>`
+  return ReactDOMServer.renderToString(    <picture>
+      {sources}
+      <img {...propsObj} />
+    </picture>
+  )
 }
 
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
@@ -680,7 +688,7 @@ class Image extends React.Component {
           {this.addNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
-                __html: noscriptImg({
+              __html: noscriptImg({
                   alt,
                   title,
                   loading,
