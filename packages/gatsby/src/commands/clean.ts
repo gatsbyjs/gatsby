@@ -18,7 +18,7 @@ module.exports = async function clean(program: IProgram): Promise<void> {
     directories.map(dir => fs.remove(path.join(directory, dir)))
   )
 
-  report.info(`Successfully deleted directories`)
+  report.panic(`Successfully deleted directories`)
 
   if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
