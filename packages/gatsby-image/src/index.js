@@ -222,7 +222,7 @@ function generateNoscriptSources(imageVariants) {
     .map(
       (variant, i) =>
         (<React.Fragment key={i}>
-          {variant.srcSetWebp && generateNoscriptSource(variant, true)}
+          {!!variant.srcSetWebp && generateNoscriptSource(variant, true)}
           {generateNoscriptSource(variant)}
         </React.Fragment>)
     )
@@ -249,17 +249,14 @@ const noscriptImg = props => {
   propsObj["src"] = props.src || ""
   propsObj["alt"] = props.alt || ""
 
-  // Check if prop exists before adding each attribute to the string output below to prevent
-  // HTML validation issues caused by empty values like width="" and height=""
-  if (props.sizes !== undefined) propsObj["sizes"] = props.sizes
-  if (props.srcSet !== undefined) propsObj["srcSet"] = props.srcSet
-  if (props.title !== undefined) propsObj["title"] = props.title
-  if (props.width !== undefined) propsObj["width"] = props.width
-  if (props.height !== undefined) propsObj["height"] = props.height
-  if (props.crossOrigin !== undefined)
-    propsObj["crossOrigin"] = props.crossOrigin
-  if (props.loading !== undefined) propsObj["loading"] = props.loading
-  if (props.draggable !== undefined) propsObj["draggable"] = props.draggable
+  propsObj["sizes"] = props.sizes
+  propsObj["srcSet"] = props.srcSet
+  propsObj["title"] = props.title
+  propsObj["width"] = props.width
+  propsObj["height"] = props.height
+  propsObj["crossOrigin"] = props.crossOrigin
+  propsObj["loading"] = props.loading
+  propsObj["draggable"] = props.draggable
 
   propsObj["style"] = {
     position: "absolute",
@@ -275,7 +272,8 @@ const noscriptImg = props => {
 
   const sources = generateNoscriptSources(props.imageVariants)
 
-  return ReactDOMServer.renderToString(    <picture>
+  return ReactDOMServer.renderToString(
+    <picture>
       {sources}
       <img {...propsObj} />
     </picture>
@@ -688,7 +686,7 @@ class Image extends React.Component {
           {this.addNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
-              __html: noscriptImg({
+                __html: noscriptImg({
                   alt,
                   title,
                   loading,
