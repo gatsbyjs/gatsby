@@ -23,26 +23,20 @@ try {
   hasLocalStorage = false
 }
 
-const isItemActive = (activeItemParents, item) => {
-  if (activeItemParents) {
-    for (let parent of activeItemParents) {
-      if (parent === item.title) return true
-    }
-  }
-
-  return false
+const isItemParentOfActive = (activeItemParents, item) => {
+  return activeItemParents.some(parent => parent === item.title)
 }
 
-function getOpenItemHash(itemList, activeItemLink, activeItemParents) {
+function getOpenItemHash(itemList, activeItem, activeItemParents) {
   let result = {}
   for (let item of itemList) {
     if (item.items) {
       result[item.title] =
-        isItemActive(activeItemParents, item) ||
-        activeItemLink.title === item.title
+        isItemParentOfActive(activeItemParents, item) ||
+        activeItem.title === item.title
       result = {
         ...result,
-        ...getOpenItemHash(item.items, activeItemLink, activeItemParents),
+        ...getOpenItemHash(item.items, activeItem, activeItemParents),
       }
     }
   }
@@ -89,26 +83,20 @@ export default withI18n()(function Sidebar({
     }
   }, [position])
 
-  const activeItemLink = React.useMemo(
+  const activeItem = React.useMemo(
     () => getActiveItem(itemList, location, activeItemHash),
     [itemList, location, activeItemHash]
   )
 
   const activeItemParents = React.useMemo(
     () =>
-      getActiveItemParents(itemList, activeItemLink, []).map(
-        link => link.title
-      ),
-    [itemList, activeItemLink]
+      getActiveItemParents(itemList, activeItem, []).map(link => link.title),
+    [itemList, activeItem]
   )
 
   // Get the hash where the only open items are
   // the hierarchy defined in props
-  const derivedHash = getOpenItemHash(
-    itemList,
-    activeItemLink,
-    activeItemParents
-  )
+  const derivedHash = getOpenItemHash(itemList, activeItem, activeItemParents)
 
   // Merge hash in local storage and the derived hash from props
   const initialHash = (() => {
@@ -154,13 +142,13 @@ export default withI18n()(function Sidebar({
     item => {
       return {
         isExpanded: openSectionHash[item.title] || disableAccordions,
-        isActive: item.link === activeItemLink.link,
+        isActive: item.link === activeItem.link,
         isParentOfActive: activeItemParents.some(
           parent => parent === item.title
         ),
       }
     },
-    [openSectionHash, disableAccordions, activeItemLink, activeItemParents]
+    [openSectionHash, disableAccordions, activeItem, activeItemParents]
   )
 
   const context = React.useMemo(
