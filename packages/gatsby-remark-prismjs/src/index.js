@@ -98,7 +98,7 @@ module.exports = (
     }
 
     const useCommandLine =
-      [`bash`].includes(languageName) &&
+      [`bash`, `shell`].includes(languageName) &&
       (prompt.global ||
         (outputLines && outputLines.length > 0) ||
         promptUserLocal ||
