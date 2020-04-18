@@ -1,8 +1,6 @@
 import fetchGraphql from "gatsby-source-wordpress-experimental/utils/fetch-graphql"
 import { introspectionQuery } from "gatsby-source-wordpress-experimental/utils/graphql-queries"
 
-import compress from "graphql-query-compress"
-
 import { runGatsby } from "../test-utils/run-gatsby"
 import gql from "gatsby-source-wordpress-experimental/utils/gql"
 import { incrementalIt } from "../test-utils/incremental-it"
