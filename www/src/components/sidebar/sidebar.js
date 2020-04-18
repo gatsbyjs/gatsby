@@ -251,8 +251,8 @@ export default withI18n()(function Sidebar({
               },
             }}
           >
-            {itemList.map((item, index) => (
-              <Item item={item} key={index} />
+            {itemList.map(item => (
+              <Item item={item} key={item.title} />
             ))}
           </ul>
         </nav>

@@ -19,16 +19,14 @@ export default function Accordion({ itemRef, item }) {
     <li
       sx={{
         bg:
-          item.level === 0 && isActiveOrParent
-            ? `sidebar.activeSectionBackground`
-            : false,
+          item.level === 0 &&
+          isActiveOrParent &&
+          `sidebar.activeSectionBackground`,
         position: `relative`,
         transition: t =>
           `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
         mt: t =>
-          item.level === 0 && disableAccordions
-            ? `${t.space[4]} !important`
-            : false,
+          item.level === 0 && disableAccordions && `${t.space[4]} !important`,
         ...(item.level === 0 && {
           "::before": {
             content: `" "`,
@@ -36,7 +34,7 @@ export default function Accordion({ itemRef, item }) {
             borderTopWidth: `1px`,
             borderTopStyle: `solid`,
             borderColor: `ui.border`,
-            left: t => (isExpanded && isActiveOrParent ? 0 : t.space[6]),
+            left: isExpanded && isActiveOrParent ? 0 : 6,
             right: 0,
             top: 0,
           },

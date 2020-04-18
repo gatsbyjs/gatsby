@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import { forwardRef } from "react"
 import { jsx } from "theme-ui"
 import { t } from "@lingui/macro"
 import { withI18n } from "@lingui/react"
@@ -52,7 +51,7 @@ const SectionTitleItem = ({ children, disabled, item }) => {
         textTransform: `uppercase`,
         letterSpacing: `tracked`,
         margin: 0,
-        ...(item.level === 0 && { ...styles.level0 }),
+        ...(item.level === 0 && styles.level0),
         color:
           isExpanded && !disabled
             ? `gatsby`
@@ -60,7 +59,7 @@ const SectionTitleItem = ({ children, disabled, item }) => {
             ? `navigation.linkDefault`
             : false,
         "&:hover": {
-          color: disabled ? false : `gatsby`,
+          color: !disabled && `gatsby`,
         },
       }}
     >
@@ -68,6 +67,21 @@ const SectionTitleItem = ({ children, disabled, item }) => {
     </h3>
   )
 }
+
+const Title = ({ item }) => (
+  <div
+    sx={{
+      alignItems: `center`,
+      display: `flex`,
+      paddingLeft: indention(item.level),
+      minHeight: 40,
+    }}
+  >
+    <SectionTitleItem disabled item={item}>
+      {item.title}
+    </SectionTitleItem>
+  </div>
+)
 
 const TitleButton = ({ item, uid }) => {
   const { onSectionTitleClick, getItemState } = useSidebarContext()
@@ -178,21 +192,6 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
     </span>
   )
 })
-
-const Title = ({ item }) => (
-  <div
-    sx={{
-      alignItems: `center`,
-      display: `flex`,
-      paddingLeft: indention(item.level),
-      minHeight: 40,
-    }}
-  >
-    <SectionTitleItem disabled item={item}>
-      {item.title}
-    </SectionTitleItem>
-  </div>
-)
 
 export default function SectionTitle({ itemRef, item, uid }) {
   const { disableAccordions } = useSidebarContext()
