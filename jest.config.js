@@ -2,6 +2,17 @@ const path = require(`path`)
 const glob = require(`glob`)
 const fs = require(`fs`)
 
+const Module = require(`module`)
+const createRequireFromPath =
+  Module.createRequire || Module.createRequireFromPath
+
+const requireFromBabelPresetGatsbyPackage = createRequireFromPath(
+  `./packages/babel-preset-gatsby-package/index.js`
+)
+const babelPresetGatsbyPackageCoreJsPath = path.dirname(
+  requireFromBabelPresetGatsbyPackage.resolve(`core-js`)
+)
+
 const pkgs = glob.sync(`./packages/*`).map(p => p.replace(/^\./, `<rootDir>`))
 
 const reGatsby = /gatsby$/
@@ -38,6 +49,7 @@ module.exports = {
   },
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
+    "^core-js/(.*)": path.join(babelPresetGatsbyPackageCoreJsPath, `$1`),
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverage: useCoverage,
