@@ -137,7 +137,7 @@ const Div = props => {
 }
 
 // Markdown ignores new lines and so do we.
-function elimiateNewLines(children) {
+function eliminateNewLines(children) {
   return React.Children.map(children, child => {
     if (!React.isValidElement(child)) {
       return child.replace(/(\r\n|\n|\r)/gm, ` `)
@@ -145,7 +145,7 @@ function elimiateNewLines(children) {
 
     if (child.props.children) {
       child = React.cloneElement(child, {
-        children: elimiateNewLines(child.props.children),
+        children: eliminateNewLines(child.props.children),
       })
     }
 
@@ -189,7 +189,7 @@ const components = {
   strong: props => <Text bold {...props} />,
   em: props => <Text italic {...props} />,
   p: props => {
-    const children = elimiateNewLines(props.children)
+    const children = eliminateNewLines(props.children)
     return (
       <Div marginBottom={1}>
         <Text>{children}</Text>

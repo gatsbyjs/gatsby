@@ -46,10 +46,4 @@ describe(`gatsby-plugin resource`, () => {
 
     expect(result).toEqual(plugins)
   })
-
-  test(`all returns an array of plugins`, async () => {
-    const result = await plugin.all({ root })
-
-    expect(result).toMatchSnapshot()
-  })
 })

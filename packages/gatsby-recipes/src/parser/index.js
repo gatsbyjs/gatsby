@@ -7,6 +7,7 @@ const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
 const isUrl = require(`is-url`)
 const path = require(`path`)
+const _ = require(`lodash`)
 
 const extractImports = require(`./extract-imports`)
 const removeElementByName = require(`./remove-element-by-name`)
@@ -107,7 +108,7 @@ const unwrapImports = async (tree, imports) =>
           const mdx = await result.text()
           const nodes = u.parse(mdx).children
           parent.children.splice(index, 1, nodes)
-          parent.children = parent.children.flat()
+          parent.children = _.flatten(parent.children)
           return resolve()
         })
       }
