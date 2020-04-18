@@ -38,7 +38,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
           `Query in the ${page.internalComponentName} component takes too long`
         )
       }
-    }, 30000)
+    }, 15000)
 
     promise.finally(() => {
       isPending = false
