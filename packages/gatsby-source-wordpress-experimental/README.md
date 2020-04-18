@@ -10,6 +10,7 @@ You can find the changelog [here](https://github.com/TylerBarnes/gatsby/blob/fea
 
 - [Gatsby Starter](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental)
 - [WPGatsby](https://github.com/TylerBarnes/gatsby/tree/feat/source-wordpress-v4/packages/wp-gatsby)
+- [WPGraphQL](https://github.com/wp-graphql/wp-graphql)
 
 
 ## Installation
