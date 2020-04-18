@@ -282,11 +282,9 @@ class SidebarBody extends Component {
               <Item
                 activeItemLink={activeItemLink}
                 activeItemParents={activeItemParents}
-                isActive={item.link === location.pathname}
                 isExpanded={openSectionHash[item.title]}
                 item={item}
                 key={index}
-                location={location}
                 onLinkClick={closeSidebar}
                 onSectionTitleClick={this._toggleSection}
                 openSectionHash={openSectionHash}
