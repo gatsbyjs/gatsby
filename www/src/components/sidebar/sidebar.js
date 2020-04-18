@@ -244,16 +244,10 @@ export default withI18n()(function Sidebar({
               bg: `background`,
               "& li": {
                 m: 0,
-                py: 4,
-                fontSize: 1,
-                bg: `background`,
-                "& li": {
-                  m: 0,
-                  listStyle: `none`,
-                },
-                "& > li:last-child > span:before": {
-                  display: `none`,
-                },
+                listStyle: `none`,
+              },
+              "& > li:last-child > span:before": {
+                display: `none`,
               },
             }}
           >
