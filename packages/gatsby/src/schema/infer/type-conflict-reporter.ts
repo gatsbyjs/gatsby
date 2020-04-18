@@ -85,7 +85,7 @@ class TypeConflictEntry {
   printEntry(): void {
     const sortedByTypeName = _.sortBy(
       Array.from(this.types.entries()),
-      ([typeName, value]) => typeName
+      ([typeName]) => typeName
     )
 
     report.log(
