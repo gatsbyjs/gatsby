@@ -37,8 +37,8 @@ const Chevron = ({ isExpanded }) => (
 )
 
 const SectionTitleItem = ({ children, disabled, item }) => {
-  const { isItemExpanded } = useSidebarContext()
-  const isExpanded = isItemExpanded(item)
+  const { getItemState } = useSidebarContext()
+  const { isExpanded } = getItemState(item)
   return (
     <h3
       sx={{
@@ -130,7 +130,7 @@ const TitleButton = ({ item, uid }) => {
 
 const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
   const { getItemState, onSectionTitleClick } = useSidebarContext()
-  const { isExpanded, isActive, isParentOfActive } = getItemState(item)
+  const { isExpanded } = getItemState(item)
   return (
     <span
       ref={itemRef}
@@ -152,16 +152,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
         <ItemLink
           item={item}
           overrideCSS={{
-            ...(item.level === 0 &&
-              item.ui !== `steps` && {
-                "&&": {
-                  ...styles.level0,
-                  color:
-                    (isParentOfActive && isExpanded) || isActive
-                      ? `link.color`
-                      : `navigation.linkDefault`,
-                },
-              }),
+            "&&": item.level === 0 && item.ui !== `steps` && styles.level0,
             pr: t => t.sizes.sidebarItemMinHeight,
           }}
         />

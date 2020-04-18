@@ -57,12 +57,7 @@ export default function ItemLink({ item, overrideCSS }) {
             ...(isDraft && {
               color: `textMuted`,
             }),
-            ...(isActive && {
-              color: `link.color`,
-              fontWeight: `semiBold`,
-            }),
             ...(isParentOfActive && {
-              bg: `sidebar.itemBackgroundActive`,
               color: `link.color`,
               fontWeight: `semiBold`,
             }),

@@ -12,15 +12,14 @@ export default function Accordion({ itemRef, item }) {
   // Use the title as the ID since it's already being used as the hash key
   const uid = `item_${item.title.replace(/[^-a-zA-Z0-9]+/g, `_`)}`
 
-  const { isActive, isParentOfActive, isExpanded } = getItemState(item)
-  const isActiveOrParent = isActive || isParentOfActive
+  const { isParentOfActive, isExpanded } = getItemState(item)
 
   return (
     <li
       sx={{
         bg:
           item.level === 0 &&
-          isActiveOrParent &&
+          isParentOfActive &&
           `sidebar.activeSectionBackground`,
         position: `relative`,
         transition: t =>
@@ -34,7 +33,7 @@ export default function Accordion({ itemRef, item }) {
             borderTopWidth: `1px`,
             borderTopStyle: `solid`,
             borderColor: `ui.border`,
-            left: isExpanded && isActiveOrParent ? 0 : 6,
+            left: isExpanded && isParentOfActive ? 0 : 6,
             right: 0,
             top: 0,
           },

@@ -140,12 +140,13 @@ export default withI18n()(function Sidebar({
 
   const getItemState = React.useCallback(
     item => {
+      const isActive = item.link === activeItem.link
       return {
         isExpanded: openSectionHash[item.title] || disableAccordions,
-        isActive: item.link === activeItem.link,
-        isParentOfActive: activeItemParents.some(
-          parent => parent === item.title
-        ),
+        isActive,
+        // TODO rename this variable to be more apparent about what it is
+        isParentOfActive:
+          isActive || activeItemParents.some(parent => parent === item.title),
       }
     },
     [openSectionHash, disableAccordions, activeItem, activeItemParents]
