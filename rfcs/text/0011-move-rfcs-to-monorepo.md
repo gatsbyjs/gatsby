@@ -43,13 +43,13 @@ This will be how we teach the RFC process. We _may_ publish this to gatsbyjs.org
 
 This Markdown file will be the source from which all RFCs are created. It will look like the following:
 
-```md
+```markdown
 ---
 title: "RFC Template"
 date: YYYY-MM-DD
 status: "IN_REVIEW" | "MERGED" | "PUBLISHED"
 # optional fields, e.g. that can be added when merging
-issue: 
+issue:
 ---
 
 # Summary

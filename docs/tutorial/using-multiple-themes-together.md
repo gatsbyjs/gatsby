@@ -88,7 +88,7 @@ Behind the scenes, the two themes created content folders in the root directory 
 
 Create a new file in `/content/posts`, like this one:
 
-```mdx:title=content/posts/hello-posts.md
+```markdown:title=content/posts/hello-posts.md
 ---
 title: My first blog post
 date: 2020-02-15
@@ -101,7 +101,7 @@ Multiple themes are great!
 
 Create a new file in `/content/notes`, like this one:
 
-```mdx:title=content/note/hello-notes.md
+```markdown:title=content/note/hello-notes.md
 ---
 title: My first note
 date: 2020-02-20
@@ -241,7 +241,7 @@ module.exports = {
 
 3. Test it out by adding a Youtube video to one of your blog posts:
 
-```mdx:title=content/posts/video-post.md
+```markdown:title=content/posts/video-post.md
 ---
 title: Jason and Jackson Talk Themes
 date: 2020-02-21

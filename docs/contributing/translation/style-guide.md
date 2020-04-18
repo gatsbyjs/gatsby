@@ -24,13 +24,13 @@ Use soft line wraps for paragraphs:
 
 ✅ DO:
 
-```md
+```markdown
 No intuito de promover um ambiente aberto e acolhedor, nós, como contribuidores e mantenedores, nos comprometemos em tornar a participação em nossos projetos e em nossa comunidade o mais livre de assédio para todos, independentemente da idade, corpo, tamanho, deficiência, etnia, identidade ou expressão de gênero, nível de experiência, nacionalidade, aparência, raça, religião ou identidade e orientação sexual.
 ```
 
 ❌ DON'T:
 
-```md
+```markdown
 No intuito de promover um ambiente aberto e acolhedor, nós, como contribuidores e mantenedores,
 nos comprometemos em tornar a participação em nossos projetos e em nossa comunidade o mais livre
 de assédio para todos, independentemente da idade, corpo, tamanho, deficiência, etnia, identidade
