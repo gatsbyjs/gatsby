@@ -21,7 +21,7 @@ export default function Accordion({ itemRef, item }) {
   // TODO use the useUniqueId hook when React releases it
   // https://github.com/facebook/react/pull/17322
   // Use the title as the ID since it's already being used as the hash key
-  const uid = `item${item.title.replace(/[^-a-zA-Z0-9]/g, `_`)}`
+  const uid = `item_${item.title.replace(/[^-a-zA-Z0-9]+/g, `_`)}`
 
   const { isActive, isParentOfActive, isExpanded } = getItemState(item)
   const isActiveOrParent = isActive || isParentOfActive
