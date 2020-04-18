@@ -25,7 +25,28 @@ type QueryJob = {
 module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   const { program } = store.getState()
 
-  const graphql = (query, context) => graphqlRunner.query(query, context)
+  const graphql = (query, context) => {
+    // Check if query takes too long, print out warning
+    const promise = graphqlRunner.query(query, context)
+    let isPending = true
+
+    const timeoutId = setTimeout(() => {
+      if (isPending) {
+        const { pages } = store.getState()
+        const page = pages.get(queryJob.id)
+        console.warn(
+          `Query in the ${page.internalComponentName} component takes too long`
+        )
+      }
+    }, 30000)
+
+    promise.finally(() => {
+      isPending = false
+      clearTimeout(timeoutId)
+    })
+
+    return promise
+  }
 
   // Run query
   let result
