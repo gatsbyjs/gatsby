@@ -1,20 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 
 import { useSidebarContext } from "./sidebar"
 import Item from "./item"
-import { Title, TitleButton, SplitButton } from "./section-title"
-
-const ItemWithSubitems = ({ itemRef, item, uid, disableAccordions }) => {
-  const SectionTitleComponent = disableAccordions ? Title : TitleButton
-
-  return item.link ? (
-    <SplitButton itemRef={itemRef} item={item} uid={uid} />
-  ) : (
-    <SectionTitleComponent item={item} uid={uid} />
-  )
-}
+import SectionTitle from "./section-title"
 
 export default function Accordion({ itemRef, item }) {
   const { getItemState, disableAccordions } = useSidebarContext()
@@ -58,12 +47,7 @@ export default function Accordion({ itemRef, item }) {
         }),
       }}
     >
-      <ItemWithSubitems
-        itemRef={itemRef}
-        item={item}
-        uid={uid}
-        disableAccordions={disableAccordions}
-      />
+      <SectionTitle itemRef={itemRef} item={item} uid={uid} />
       {isExpanded && (
         <ul
           id={uid}
@@ -85,7 +69,7 @@ export default function Accordion({ itemRef, item }) {
           }}
         >
           {item.items.map(subitem => (
-            <Item item={subitem} key={subitem.title} ui={item.ui} />
+            <Item item={subitem} key={subitem.title} />
           ))}
         </ul>
       )}

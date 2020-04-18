@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { forwardRef } from "react"
 import { jsx } from "theme-ui"
 import { t } from "@lingui/macro"
 import { withI18n } from "@lingui/react"
@@ -36,6 +37,38 @@ const Chevron = ({ isExpanded }) => (
   </span>
 )
 
+const SectionTitleItem = ({ children, disabled, item }) => {
+  const { isItemExpanded } = useSidebarContext()
+  const isExpanded = isItemExpanded(item)
+  return (
+    <h3
+      sx={{
+        alignItems: `center`,
+        display: `flex`,
+        fontSize: 1,
+        // fontFamily: "body",
+        // fontWeight: isActive ? `bold` : `body`,
+        fontWeight: `body`,
+        textTransform: `uppercase`,
+        letterSpacing: `tracked`,
+        margin: 0,
+        ...(item.level === 0 && { ...styles.level0 }),
+        color:
+          isExpanded && !disabled
+            ? `gatsby`
+            : disabled
+            ? `navigation.linkDefault`
+            : false,
+        "&:hover": {
+          color: disabled ? false : `gatsby`,
+        },
+      }}
+    >
+      {children}
+    </h3>
+  )
+}
+
 const TitleButton = ({ item, uid }) => {
   const { onSectionTitleClick, getItemState } = useSidebarContext()
   const { isExpanded } = getItemState(item)
@@ -62,7 +95,7 @@ const TitleButton = ({ item, uid }) => {
       }}
       onClick={() => onSectionTitleClick(item)}
     >
-      <SectionTitle item={item}>
+      <SectionTitleItem item={item}>
         {item.title}
         <span
           sx={{
@@ -76,7 +109,7 @@ const TitleButton = ({ item, uid }) => {
         >
           <Chevron isExpanded={isExpanded} />
         </span>
-      </SectionTitle>
+      </SectionTitleItem>
     </button>
   )
 }
@@ -155,45 +188,20 @@ const Title = ({ item }) => (
       minHeight: 40,
     }}
   >
-    <SectionTitle disabled item={item}>
+    <SectionTitleItem disabled item={item}>
       {item.title}
-    </SectionTitle>
+    </SectionTitleItem>
   </div>
 )
 
-const SectionTitle = ({ children, disabled, item }) => {
-  const { isItemExpanded } = useSidebarContext()
-  const isExpanded = isItemExpanded(item)
-  return (
-    <h3
-      sx={{
-        alignItems: `center`,
-        display: `flex`,
-        fontSize: 1,
-        // fontFamily: "body",
-        // fontWeight: isActive ? `bold` : `body`,
-        fontWeight: `body`,
-        textTransform: `uppercase`,
-        letterSpacing: `tracked`,
-        margin: 0,
-        ...(item.level === 0 && { ...styles.level0 }),
-        color:
-          isExpanded && !disabled
-            ? `gatsby`
-            : disabled
-            ? `navigation.linkDefault`
-            : false,
-        "&:hover": {
-          color: disabled ? false : `gatsby`,
-        },
-      }}
-    >
-      {children}
-    </h3>
-  )
+export default function SectionTitle({ itemRef, item, uid }) {
+  const { disableAccordions } = useSidebarContext()
+  if (item.link) {
+    return <SplitButton itemRef={itemRef} item={item} uid={uid} />
+  }
+  const SectionTitleComponent = disableAccordions ? Title : TitleButton
+  return <SectionTitleComponent item={item} uid={uid} />
 }
-
-export { Title, TitleButton, SplitButton }
 
 const styles = {
   resetButton: {
