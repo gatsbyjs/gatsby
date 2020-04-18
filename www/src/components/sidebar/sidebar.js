@@ -282,7 +282,6 @@ class SidebarBody extends Component {
               <Item
                 activeItemLink={activeItemLink}
                 activeItemParents={activeItemParents}
-                isExpanded={openSectionHash[item.title]}
                 item={item}
                 key={index}
                 onLinkClick={closeSidebar}
