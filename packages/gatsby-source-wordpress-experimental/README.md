@@ -6,9 +6,11 @@ This plugin is a pre-release experimental version of the upcoming gatsby-source-
 
 You can find the changelog [here](https://github.com/TylerBarnes/gatsby/blob/feat/source-wordpress-v4/packages/gatsby-source-wordpress-experimental/CHANGELOG.md).
 
-## Starters
+## Links
 
-- [using-gatsby-source-wordpress-experimental](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental)
+- [Gatsby Starter](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental)
+- [WPGatsby](https://github.com/TylerBarnes/gatsby/tree/feat/source-wordpress-v4/packages/wp-gatsby)
+
 
 ## Installation
 
@@ -75,13 +77,8 @@ If you're getting errors while the nodes are being sourced, you can see which qu
 - With a 500 page site with 500 images - Gatsby cloud built this in 3:30 and a second rebuild with changed content took 1 minute.
 - locally these both build in 20 seconds on a second run. re-starting your development server always takes around 12 seconds regardless of the size of your site.
 
-## Known issues you might notice
+## Issues you might notice
 
 - If your `schema.queryDepth` option is set too high, your computer will run out of memory. This usually isn't an issue unless you're using a WPGraphQL extension with undetected circular references like `wp-graphql-woocommerce`. A fix for this is coming soon. For now you can set queryDepth low (to 2 or 3).
 - The cache isn't selectively invalidated for every possible user interaction. For now this only works for creating/updating/deleting/reattributing users and adding or removing them based on if their profile is public or not, creating/deleting/drafting/updating posts/pages/CPT's, editing/creating/deleting media items, and adding/editing/deleting categories/terms/tags.
 - Changing the homepage doesn't invalidate the cache
-
-## gatsby-source-wordpress-experimental
-
-Currently the source plugin code lives here -> https://github.com/TylerBarnes/gatsby/tree/feat/source-wordpress-v4/packages/gatsby-source-wordpress-experimental
-And the WPGatsby code lives here -> https://github.com/TylerBarnes/gatsby/tree/feat/source-wordpress-v4/packages/wp-gatsby
