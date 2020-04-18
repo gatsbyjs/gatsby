@@ -20,18 +20,18 @@ Currently, the following languages are being translated:
 
 ## Creating a new translation
 
-If you don't see your language in the above list, please see [Starting a new language](/contributing/translation/new-translations/) for how to start up a new translation repository.
+If you don't see your language in the above list, please see [Starting a new language](/docs/contributing/translation/new-translations.md) for how to start up a new translation repository.
 
 ## Contributing translations
 
-If you do see your language on the list, please see the [translation contributor guide](/contributing/translation/translators/) for information on how to contribute translations in your language.
+If you do see your language on the list, please see the [translation contributor guide](/docs/contributing/translation/translators.md) for information on how to contribute translations in your language.
 
 ## Maintainers
 
-Each translation repo will have at least two maintainers and codeowners that are responsible for the upkeep of the repo. Please see the [Translation Maintainer Guide](/contributing/translation/maintainers/) for information on the responsibilities of translation maintainers.
+Each translation repo will have at least two maintainers and codeowners that are responsible for the upkeep of the repo. Please see the [Translation Maintainer Guide](/docs/contributing/translation/maintainers.md) for information on the responsibilities of translation maintainers.
 
 ## Language-specific channels
 
 Each translation group may want to have a space for maintainers and community members to ask questions and coordinate the project. **[Discord](https://gatsby.dev/discord) is the official channel** and maintainers can have their own private groups if desired. Some groups may elect to use a different platform such as Wechat or Whatsapp, but that will be at your own discretion.
 
-To set up a Discord channel for a translation group (if it doesn't already exist), [ping the Gatsbyjs team](/contributing/how-to-contribute/#not-sure-how-to-start-contributing).
+To set up a Discord channel for a translation group (if it doesn't already exist), [ping the Gatsbyjs team](/docs/contributing/how-to-contribute.md#not-sure-how-to-start-contributing).
