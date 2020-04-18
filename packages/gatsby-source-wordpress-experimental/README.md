@@ -2,6 +2,10 @@
 
 This plugin is a pre-release experimental version of the upcoming gatsby-source-wordpress V4. It is rewritten from the ground up using WPGraphQL for data sourcing as well as a custom plugin WPGatsby to transform the WPGraphQL schema in Gatsby-specific ways (see `packages/wp-gatsby`).
 
+## Change Log
+
+You can find the changelog [here](https://github.com/TylerBarnes/gatsby/blob/feat/source-wordpress-v4/packages/gatsby-source-wordpress-experimental/CHANGELOG.md).
+
 ## Starters
 
 - [using-gatsby-source-wordpress-experimental](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental)
