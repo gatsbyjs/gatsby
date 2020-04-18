@@ -1,19 +1,12 @@
-import React, { Fragment, useCallback } from "react"
+import React, { Fragment } from "react"
 
 import Accordion from "./accordion"
 import ItemLink from "./item-link"
+import { useSidebarContext } from "./sidebar"
 
-const Item = ({
-  activeItemLink,
-  activeItemParents,
-  openSectionHash,
-  item,
-  onLinkClick,
-  onSectionTitleClick,
-  ui,
-  disableAccordions,
-}) => {
-  const isActive = item.link === activeItemLink.link
+const Item = ({ item, ui }) => {
+  const { getItemState } = useSidebarContext()
+  const { isActive } = getItemState(item)
   const itemRef = React.useRef(null)
 
   React.useEffect(() => {
@@ -25,24 +18,10 @@ const Item = ({
   return (
     <Fragment>
       {item.items ? (
-        <Accordion
-          itemRef={itemRef}
-          activeItemLink={activeItemLink}
-          activeItemParents={activeItemParents}
-          item={item}
-          onLinkClick={onLinkClick}
-          openSectionHash={openSectionHash}
-          onSectionTitleClick={onSectionTitleClick}
-          disableAccordions={disableAccordions}
-        />
+        <Accordion itemRef={itemRef} item={item} />
       ) : (
         <li ref={itemRef}>
-          <ItemLink
-            isActive={isActive}
-            item={item}
-            onLinkClick={onLinkClick}
-            ui={ui}
-          />
+          <ItemLink item={item} ui={ui} />
         </li>
       )}
     </Fragment>

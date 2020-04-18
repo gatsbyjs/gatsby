@@ -2,6 +2,7 @@
 import { jsx } from "theme-ui"
 import Link from "../localized-link"
 
+import { useSidebarContext } from "./sidebar"
 import indention from "../../utils/sidebar/indention"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
@@ -11,14 +12,10 @@ const bulletSize = 8
 const bulletSizeActive = 100
 const bulletOffsetTop = `1.3em`
 
-export default function ItemLink({
-  item,
-  onLinkClick,
-  isActive,
-  isParentOfActiveItem,
-  ui,
-  overrideCSS,
-}) {
+export default function ItemLink({ item, ui, overrideCSS }) {
+  const { onLinkClick, getItemState } = useSidebarContext()
+  const { isActive, isParentOfActive } = getItemState(item)
+
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
 
@@ -64,7 +61,7 @@ export default function ItemLink({
               color: `link.color`,
               fontWeight: `semiBold`,
             }),
-            ...(isParentOfActiveItem && {
+            ...(isParentOfActive && {
               bg: `sidebar.itemBackgroundActive`,
               color: `link.color`,
               fontWeight: `semiBold`,

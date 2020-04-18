@@ -6,6 +6,7 @@ import { withI18n } from "@lingui/react"
 import ChevronSvg from "./chevron-svg"
 import indention from "../../utils/sidebar/indention"
 import ItemLink from "./item-link"
+import { useSidebarContext } from "./sidebar"
 
 const Chevron = ({ isExpanded }) => (
   <span
@@ -35,65 +36,55 @@ const Chevron = ({ isExpanded }) => (
   </span>
 )
 
-const TitleButton = ({
-  isActive,
-  isExpanded,
-  item,
-  onSectionTitleClick,
-  uid,
-}) => (
-  <button
-    aria-expanded={isExpanded}
-    aria-controls={uid}
-    sx={{
-      ...styles.resetButton,
-      ...styles.button,
-      pl: item.level === 0 ? 6 : 0,
-      pr: `0 !important`,
-      minHeight: 40,
-      "&:before": {
-        bg: `itemBorderColor`,
-        content: `''`,
-        height: 1,
-        position: `absolute`,
-        right: 0,
-        bottom: 0,
-        left: t => (item.level === 0 ? t.space[6] : 0),
-        top: `auto`,
-      },
-    }}
-    onClick={() => onSectionTitleClick(item)}
-  >
-    <SectionTitle isExpanded={isExpanded} isActive={isActive} item={item}>
-      {item.title}
-      <span
-        sx={{
+const TitleButton = ({ item, uid }) => {
+  const { onSectionTitleClick, getItemState } = useSidebarContext()
+  const { isExpanded } = getItemState(item)
+  return (
+    <button
+      aria-expanded={isExpanded}
+      aria-controls={uid}
+      sx={{
+        ...styles.resetButton,
+        ...styles.button,
+        pl: item.level === 0 ? 6 : 0,
+        pr: `0 !important`,
+        minHeight: 40,
+        "&:before": {
+          bg: `itemBorderColor`,
+          content: `''`,
+          height: 1,
           position: `absolute`,
-          top: 0,
-          bottom: 0,
           right: 0,
-          minHeight: `sidebarItemMinHeight`,
-          width: `sidebarItemMinHeight`,
-        }}
-      >
-        <Chevron isExpanded={isExpanded} />
-      </span>
-    </SectionTitle>
-  </button>
-)
+          bottom: 0,
+          left: t => (item.level === 0 ? t.space[6] : 0),
+          top: `auto`,
+        },
+      }}
+      onClick={() => onSectionTitleClick(item)}
+    >
+      <SectionTitle item={item}>
+        {item.title}
+        <span
+          sx={{
+            position: `absolute`,
+            top: 0,
+            bottom: 0,
+            right: 0,
+            minHeight: `sidebarItemMinHeight`,
+            width: `sidebarItemMinHeight`,
+          }}
+        >
+          <Chevron isExpanded={isExpanded} />
+        </span>
+      </SectionTitle>
+    </button>
+  )
+}
 
-const SplitButton = withI18n()(
-  ({
-    i18n,
-    itemRef,
-    isActive,
-    isExpanded,
-    isParentOfActiveItem,
-    item,
-    onLinkClick,
-    onSectionTitleClick,
-    uid,
-  }) => (
+const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
+  const { getItemState, onSectionTitleClick } = useSidebarContext()
+  const { isExpanded, isActive, isParentOfActive } = getItemState(item)
+  return (
     <span
       ref={itemRef}
       css={{
@@ -112,17 +103,14 @@ const SplitButton = withI18n()(
         }}
       >
         <ItemLink
-          isActive={isActive}
-          isParentOfActiveItem={isParentOfActiveItem}
           item={item}
-          onLinkClick={onLinkClick}
           overrideCSS={{
             ...(item.level === 0 &&
               item.ui !== `steps` && {
                 "&&": {
                   ...styles.level0,
                   color:
-                    (isParentOfActiveItem && isExpanded) || isActive
+                    (isParentOfActive && isExpanded) || isActive
                       ? `link.color`
                       : `navigation.linkDefault`,
                 },
@@ -156,9 +144,9 @@ const SplitButton = withI18n()(
       </button>
     </span>
   )
-)
+})
 
-const Title = ({ item, isActive, isExpanded }) => (
+const Title = ({ item }) => (
   <div
     sx={{
       alignItems: `center`,
@@ -167,44 +155,43 @@ const Title = ({ item, isActive, isExpanded }) => (
       minHeight: 40,
     }}
   >
-    <SectionTitle
-      disabled
-      isActive={isActive}
-      isExpanded={isExpanded}
-      item={item}
-    >
+    <SectionTitle disabled item={item}>
       {item.title}
     </SectionTitle>
   </div>
 )
 
-const SectionTitle = ({ children, isExpanded, disabled, item }) => (
-  <h3
-    sx={{
-      alignItems: `center`,
-      display: `flex`,
-      fontSize: 1,
-      // fontFamily: "body",
-      // fontWeight: isActive ? `bold` : `body`,
-      fontWeight: `body`,
-      textTransform: `uppercase`,
-      letterSpacing: `tracked`,
-      margin: 0,
-      ...(item.level === 0 && { ...styles.level0 }),
-      color:
-        isExpanded && !disabled
-          ? `gatsby`
-          : disabled
-          ? `navigation.linkDefault`
-          : false,
-      "&:hover": {
-        color: disabled ? false : `gatsby`,
-      },
-    }}
-  >
-    {children}
-  </h3>
-)
+const SectionTitle = ({ children, disabled, item }) => {
+  const { isItemExpanded } = useSidebarContext()
+  const isExpanded = isItemExpanded(item)
+  return (
+    <h3
+      sx={{
+        alignItems: `center`,
+        display: `flex`,
+        fontSize: 1,
+        // fontFamily: "body",
+        // fontWeight: isActive ? `bold` : `body`,
+        fontWeight: `body`,
+        textTransform: `uppercase`,
+        letterSpacing: `tracked`,
+        margin: 0,
+        ...(item.level === 0 && { ...styles.level0 }),
+        color:
+          isExpanded && !disabled
+            ? `gatsby`
+            : disabled
+            ? `navigation.linkDefault`
+            : false,
+        "&:hover": {
+          color: disabled ? false : `gatsby`,
+        },
+      }}
+    >
+      {children}
+    </h3>
+  )
+}
 
 export { Title, TitleButton, SplitButton }
 

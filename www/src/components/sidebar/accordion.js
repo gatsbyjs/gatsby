@@ -2,67 +2,29 @@
 import { jsx } from "theme-ui"
 import React from "react"
 
+import { useSidebarContext } from "./sidebar"
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
 
-const ItemWithSubitems = ({
-  itemRef,
-  isExpanded,
-  isActive,
-  isParentOfActiveItem,
-  item,
-  onLinkClick,
-  onSectionTitleClick,
-  uid,
-  disableAccordions,
-}) => {
+const ItemWithSubitems = ({ itemRef, item, uid, disableAccordions }) => {
   const SectionTitleComponent = disableAccordions ? Title : TitleButton
 
   return item.link ? (
-    <SplitButton
-      itemRef={itemRef}
-      isActive={isActive}
-      isExpanded={isExpanded}
-      isParentOfActiveItem={isParentOfActiveItem}
-      item={item}
-      onLinkClick={onLinkClick}
-      onSectionTitleClick={onSectionTitleClick}
-      uid={uid}
-    />
+    <SplitButton itemRef={itemRef} item={item} uid={uid} />
   ) : (
-    <SectionTitleComponent
-      isActive={isActive}
-      isExpanded={isExpanded}
-      isParentOfActiveItem={isParentOfActiveItem}
-      item={item}
-      onSectionTitleClick={onSectionTitleClick}
-      uid={uid}
-    />
+    <SectionTitleComponent item={item} uid={uid} />
   )
 }
 
-export default function Accordion({
-  itemRef,
-  activeItemLink,
-  activeItemParents,
-  item,
-  onLinkClick,
-  onSectionTitleClick,
-  openSectionHash,
-  disableAccordions,
-}) {
+export default function Accordion({ itemRef, item }) {
+  const { getItemState, disableAccordions } = useSidebarContext()
   // TODO use the useUniqueId hook when React releases it
   // https://github.com/facebook/react/pull/17322
   // Use the title as the ID since it's already being used as the hash key
   const uid = `item${item.title.replace(/[^-a-zA-Z0-9]/g, `_`)}`
 
-  const isActive = item.link === activeItemLink.link
-  const isParentOfActiveItem = activeItemParents.some(
-    parent => parent === item.title
-  )
-
-  const isActiveOrParent = isActive || isParentOfActiveItem
-  const isExpanded = openSectionHash[item.title] || disableAccordions
+  const { isActive, isParentOfActive, isExpanded } = getItemState(item)
+  const isActiveOrParent = isActive || isParentOfActive
 
   return (
     <li
@@ -98,12 +60,7 @@ export default function Accordion({
     >
       <ItemWithSubitems
         itemRef={itemRef}
-        isActive={isActive}
-        isExpanded={isExpanded}
-        isParentOfActiveItem={isParentOfActiveItem}
         item={item}
-        onLinkClick={onLinkClick}
-        onSectionTitleClick={onSectionTitleClick}
         uid={uid}
         disableAccordions={disableAccordions}
       />
@@ -128,17 +85,7 @@ export default function Accordion({
           }}
         >
           {item.items.map(subitem => (
-            <Item
-              activeItemLink={activeItemLink}
-              activeItemParents={activeItemParents}
-              item={subitem}
-              key={subitem.title}
-              onLinkClick={onLinkClick}
-              isExpanded={isExpanded}
-              onSectionTitleClick={onSectionTitleClick}
-              openSectionHash={openSectionHash}
-              ui={item.ui}
-            />
+            <Item item={subitem} key={subitem.title} ui={item.ui} />
           ))}
         </ul>
       )}

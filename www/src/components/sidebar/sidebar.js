@@ -62,6 +62,12 @@ function writeLocalStorage(key, state) {
   }
 }
 
+const SidebarContext = React.createContext({})
+
+export function useSidebarContext() {
+  return React.useContext(SidebarContext)
+}
+
 export default withI18n()(function Sidebar({
   i18n,
   title,
@@ -83,13 +89,18 @@ export default withI18n()(function Sidebar({
     }
   }, [position])
 
-  const activeItemLink = getActiveItem(itemList, location, activeItemHash)
+  const activeItemLink = React.useMemo(
+    () => getActiveItem(itemList, location, activeItemHash),
+    [itemList, location, activeItemHash]
+  )
 
-  const activeItemParents = getActiveItemParents(
-    itemList,
-    activeItemLink,
-    []
-  ).map(link => link.title)
+  const activeItemParents = React.useMemo(
+    () =>
+      getActiveItemParents(itemList, activeItemLink, []).map(
+        link => link.title
+      ),
+    [itemList, activeItemLink]
+  )
 
   // Get the hash where the only open items are
   // the hierarchy defined in props
@@ -113,14 +124,14 @@ export default withI18n()(function Sidebar({
   const [openSectionHash, setOpenSectionHash] = React.useState(initialHash)
   const expandAll = Object.values(openSectionHash).every(isOpen => isOpen)
 
-  function toggleSection(item) {
+  const toggleSection = React.useCallback(item => {
     setOpenSectionHash(openSectionHash => {
       return {
         ...openSectionHash,
         [item.title]: !openSectionHash[item.title],
       }
     })
-  }
+  }, [])
 
   function toggleExpandAll() {
     if (expandAll) {
@@ -139,102 +150,119 @@ export default withI18n()(function Sidebar({
     writeLocalStorage(sidebarKey, { openSectionHash })
   }, [openSectionHash])
 
+  const getItemState = React.useCallback(
+    item => {
+      return {
+        isExpanded: openSectionHash[item.title] || disableAccordions,
+        isActive: item.link === activeItemLink.link,
+        isParentOfActive: activeItemParents.some(
+          parent => parent === item.title
+        ),
+      }
+    },
+    [openSectionHash, disableAccordions, activeItemLink, activeItemParents]
+  )
+
+  const context = React.useMemo(
+    () => ({
+      getItemState,
+      disableAccordions,
+      onLinkClick: closeSidebar,
+      onSectionTitleClick: toggleSection,
+    }),
+    [getItemState, disableAccordions, closeSidebar, toggleSection]
+  )
+
   return (
-    <section
-      aria-label={i18n._(t`Secondary Navigation`)}
-      id="SecondaryNavigation"
-      className="docSearch-sidebar"
-      sx={{ height: `100%` }}
-    >
-      {!disableExpandAll && (
-        <header
-          sx={{
-            alignItems: `center`,
-            bg: `background`,
-            borderColor: `ui.border`,
-            borderRightStyle: `solid`,
-            borderRightWidth: `1px`,
-            display: `flex`,
-            height: `sidebarUtilityHeight`,
-            pl: 4,
-            pr: 6,
-          }}
-        >
-          <ExpandAllButton onClick={toggleExpandAll} expandAll={expandAll} />
-        </header>
-      )}
-      <nav
-        ref={scrollRef}
-        sx={{
-          WebkitOverflowScrolling: `touch`,
-          bg: `background`,
-          border: 0,
-          display: `block`,
-          overflowY: `auto`,
-          transition: t =>
-            `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
-          zIndex: 10,
-          borderRightWidth: `1px`,
-          borderRightStyle: `solid`,
-          borderColor: `ui.border`,
-          height: t =>
-            disableExpandAll
-              ? `100%`
-              : `calc(100% - ${t.sizes.sidebarUtilityHeight})`,
-          [mediaQueries.md]: {
-            top: t => `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
-          },
-        }}
+    <SidebarContext.Provider value={context}>
+      <section
+        aria-label={i18n._(t`Secondary Navigation`)}
+        id="SecondaryNavigation"
+        className="docSearch-sidebar"
+        sx={{ height: `100%` }}
       >
-        <h3
+        {!disableExpandAll && (
+          <header
+            sx={{
+              alignItems: `center`,
+              bg: `background`,
+              borderColor: `ui.border`,
+              borderRightStyle: `solid`,
+              borderRightWidth: `1px`,
+              display: `flex`,
+              height: `sidebarUtilityHeight`,
+              pl: 4,
+              pr: 6,
+            }}
+          >
+            <ExpandAllButton onClick={toggleExpandAll} expandAll={expandAll} />
+          </header>
+        )}
+        <nav
+          ref={scrollRef}
           sx={{
-            color: `textMuted`,
-            px: 6,
-            fontSize: 1,
-            pt: 6,
-            margin: 0,
-            fontWeight: `body`,
-            textTransform: `uppercase`,
-            letterSpacing: `tracked`,
+            WebkitOverflowScrolling: `touch`,
+            bg: `background`,
+            border: 0,
+            display: `block`,
+            overflowY: `auto`,
+            transition: t =>
+              `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
+            zIndex: 10,
+            borderRightWidth: `1px`,
+            borderRightStyle: `solid`,
+            borderColor: `ui.border`,
+            height: t =>
+              disableExpandAll
+                ? `100%`
+                : `calc(100% - ${t.sizes.sidebarUtilityHeight})`,
+            [mediaQueries.md]: {
+              top: t =>
+                `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
+            },
           }}
         >
-          {title}
-        </h3>
-        <ul
-          sx={{
-            m: 0,
-            py: 4,
-            fontSize: 1,
-            bg: `background`,
-            "& li": {
+          <h3
+            sx={{
+              color: `textMuted`,
+              px: 6,
+              fontSize: 1,
+              pt: 6,
+              margin: 0,
+              fontWeight: `body`,
+              textTransform: `uppercase`,
+              letterSpacing: `tracked`,
+            }}
+          >
+            {title}
+          </h3>
+          <ul
+            sx={{
               m: 0,
               py: 4,
               fontSize: 1,
               bg: `background`,
               "& li": {
                 m: 0,
-                listStyle: `none`,
+                py: 4,
+                fontSize: 1,
+                bg: `background`,
+                "& li": {
+                  m: 0,
+                  listStyle: `none`,
+                },
+                "& > li:last-child > span:before": {
+                  display: `none`,
+                },
               },
-              "& > li:last-child > span:before": {
-                display: `none`,
-              },
-            },
-          }}
-        >
-          {itemList.map((item, index) => (
-            <Item
-              activeItemLink={activeItemLink}
-              activeItemParents={activeItemParents}
-              item={item}
-              key={index}
-              onLinkClick={closeSidebar}
-              onSectionTitleClick={toggleSection}
-              openSectionHash={openSectionHash}
-              disableAccordions={disableAccordions}
-            />
-          ))}
-        </ul>
-      </nav>
-    </section>
+            }}
+          >
+            {itemList.map((item, index) => (
+              <Item item={item} key={index} />
+            ))}
+          </ul>
+        </nav>
+      </section>
+    </SidebarContext.Provider>
   )
 })
