@@ -287,7 +287,6 @@ describe(`Test plugin manifest options`, () => {
     expect(sharp).toHaveBeenCalledTimes(4)
 
     // Filenames in the manifest should be suffixed with the content digest
-    // hash
     expect(fs.writeFileSync).toMatchSnapshot()
   })
 
