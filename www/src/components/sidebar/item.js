@@ -11,7 +11,6 @@ const Item = ({
   onLinkClick,
   onSectionTitleClick,
   ui,
-  isSingle,
   disableAccordions,
 }) => {
   const isActive = item.link === activeItemLink.link
@@ -34,7 +33,6 @@ const Item = ({
           onLinkClick={onLinkClick}
           openSectionHash={openSectionHash}
           onSectionTitleClick={onSectionTitleClick}
-          isSingle={isSingle}
           disableAccordions={disableAccordions}
         />
       ) : (

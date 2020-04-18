@@ -49,7 +49,6 @@ export default function Accordion({
   onLinkClick,
   onSectionTitleClick,
   openSectionHash,
-  isSingle,
   disableAccordions,
 }) {
   // TODO use the useUniqueId hook when React releases it
@@ -76,26 +75,25 @@ export default function Accordion({
         transition: t =>
           `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
         mt: t =>
-          item.level === 0 && disableAccordions && !isSingle
+          item.level === 0 && disableAccordions
             ? `${t.space[4]} !important`
             : false,
-        ...(item.level === 0 &&
-          !isSingle && {
-            "::before": {
-              content: `" "`,
-              position: `absolute`,
-              borderTopWidth: `1px`,
-              borderTopStyle: `solid`,
-              borderColor: `ui.border`,
-              left: t => (isExpanded && isActiveOrParent ? 0 : t.space[6]),
-              right: 0,
-              top: 0,
-            },
-            ":after": {
-              top: `auto`,
-              bottom: -1,
-            },
-          }),
+        ...(item.level === 0 && {
+          "::before": {
+            content: `" "`,
+            position: `absolute`,
+            borderTopWidth: `1px`,
+            borderTopStyle: `solid`,
+            borderColor: `ui.border`,
+            left: t => (isExpanded && isActiveOrParent ? 0 : t.space[6]),
+            right: 0,
+            top: 0,
+          },
+          ":after": {
+            top: `auto`,
+            bottom: -1,
+          },
+        }),
       }}
     >
       <ItemWithSubitems

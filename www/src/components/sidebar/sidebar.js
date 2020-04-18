@@ -62,7 +62,7 @@ function writeLocalStorage(key, state) {
   }
 }
 
-function Sidebar({
+export default withI18n()(function Sidebar({
   i18n,
   title,
   sidebarKey,
@@ -74,7 +74,6 @@ function Sidebar({
   disableExpandAll,
   disableAccordions,
 }) {
-  const isSingle = itemList.filter(item => item.level === 0).length === 1
   const scrollRef = React.useRef(null)
 
   // Set the scroll position if one is provided
@@ -219,26 +218,23 @@ function Sidebar({
               "& > li:last-child > span:before": {
                 display: `none`,
               },
-            }}
-          >
-            {itemList.map((item, index) => (
-              <Item
-                activeItemLink={activeItemLink}
-                activeItemParents={activeItemParents}
-                item={item}
-                key={index}
-                onLinkClick={closeSidebar}
-                onSectionTitleClick={this._toggleSection}
-                openSectionHash={openSectionHash}
-                isSingle={isSingle}
-                disableAccordions={this.props.disableAccordions}
-              />
-            ))}
-          </ul>
-        </nav>
-      </section>
-    )
-  }
-}
-
-export default withI18n()(Sidebar)
+            },
+          }}
+        >
+          {itemList.map((item, index) => (
+            <Item
+              activeItemLink={activeItemLink}
+              activeItemParents={activeItemParents}
+              item={item}
+              key={index}
+              onLinkClick={closeSidebar}
+              onSectionTitleClick={toggleSection}
+              openSectionHash={openSectionHash}
+              disableAccordions={disableAccordions}
+            />
+          ))}
+        </ul>
+      </nav>
+    </section>
+  )
+})
