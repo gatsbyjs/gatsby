@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import React from "react"
 import { t } from "@lingui/macro"
 import { withI18n } from "@lingui/react"
 
