@@ -1,24 +1,26 @@
-import _ from "lodash"
+import sortBy from "lodash/sortBy"
 import report from "gatsby-cli/lib/reporter"
 import typeOf from "type-of"
 import util from "util"
 
+import { Node } from "../../../index"
+
 export interface ITypeConflictExample {
   value: unknown
-  parent: {}
+  parent: Node
   type: string
   arrayTypes: string[]
 }
 
 interface ITypeConflict {
   value: unknown
-  description: string
+  description?: string
 }
 
-const isNodeWithDescription = (node): boolean =>
-  node && node.internal && node.internal.description
+const isNodeWithDescription = (node: Node): boolean =>
+  !!(node && node.internal && node.internal.description)
 
-const findNodeDescription = (obj): string => {
+const findNodeDescription = (obj: Node): string | undefined => {
   if (obj) {
     // TODO: Maybe get this back
     // const node = findRootNodeAncestor(obj, isNodeWithDescription)
@@ -29,8 +31,8 @@ const findNodeDescription = (obj): string => {
   return ``
 }
 
-const formatValue = (value): string => {
-  if (!_.isArray(value)) {
+const formatValue = (value: unknown): string => {
+  if (!Array.isArray(value)) {
     return util.inspect(value, {
       colors: true,
       depth: 0,
@@ -83,7 +85,7 @@ class TypeConflictEntry {
   }
 
   printEntry(): void {
-    const sortedByTypeName = _.sortBy(
+    const sortedByTypeName = sortBy(
       Array.from(this.types.entries()),
       ([typeName]) => typeName
     )
