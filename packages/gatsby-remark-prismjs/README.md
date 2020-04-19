@@ -373,7 +373,7 @@ plugins: [
 
 ### Shell prompt
 
-To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
+To show fancy prompts next to shell commands (only triggers on `bash` and `shell`), either set `prompt.global` to `true` in `gatsby-config.js`,
 or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
 
 By default, every line gets a prompt appended to the start, this behaviour can be changed by specifying `{outputLines: <range>}`
