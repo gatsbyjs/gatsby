@@ -5989,3 +5989,20 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://dropinblog-gatsby-starter.netlify.app/
+  repo: https://github.com/DynamisDevelopment/dib-gatsby-starter
+  description: A quick and simple Gatsby solution for the simpilest blogging solution.
+  tags:
+    - Blog 
+    - Netlify
+    - Pagination 
+    - SEO 
+    - CMS:Headless
+    - Styling:SASS
+    - Styling:CSS-in-JS
+    - Styling:Tailwind
+    - Styling:Chakra-UI
+  features:
+    - Pagination 
+    - Beautifully designed landing page.
+    - Includes Chakra-UI and Tailwind CSS
