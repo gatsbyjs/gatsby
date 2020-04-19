@@ -32,10 +32,8 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
 
     const timeoutId = setTimeout(() => {
       if (isPending) {
-        const { pages } = store.getState()
-        const page = pages.get(queryJob.id)
         report.warn(
-          `Query in the ${page.internalComponentName} component takes too long`
+          `Query in the "${queryJob.componentPath}" file takes too long`
         )
       }
     }, 15000)
