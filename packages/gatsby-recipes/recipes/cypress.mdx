@@ -15,13 +15,13 @@ Well look at that — we've added dependencies to your package.json and we also 
 ---
 
 <File
-  path="cypress/plugins/index.js"
-  content={`https://gist.github.com/KyleAMathews/a88885cf6a52b8a0c654319ab544d958/raw/b434660dd8b695eca3b38bf1b40303c705c1aec5/plugins-index.js`}
+ path="cypress/plugins/index.js"
+ content={`https://gist.github.com/KyleAMathews/a88885cf6a52b8a0c654319ab544d958/raw/b434660dd8b695eca3b38bf1b40303c705c1aec5/plugins-index.js`}
 />
 
 <File
-  path="cypress/support/index.js"
-  content={`https://gist.github.com/KyleAMathews/a88885cf6a52b8a0c654319ab544d958/raw/b434660dd8b695eca3b38bf1b40303c705c1aec5/support-index.js`}
+ path="cypress/support/index.js"
+ content={`https://gist.github.com/KyleAMathews/a88885cf6a52b8a0c654319ab544d958/raw/b434660dd8b695eca3b38bf1b40303c705c1aec5/support-index.js`}
 />
 
 ---
@@ -31,8 +31,8 @@ Cool cool! So we created a local `cypress` folder with two sub-folders, `support
 ---
 
 <File
-  path="cypress/integration/home-page/home-page.js"
-  content={`https://gist.github.com/KyleAMathews/a88885cf6a52b8a0c654319ab544d958/raw/b434660dd8b695eca3b38bf1b40303c705c1aec5/home-page-home-page.js`}
+ path="cypress/integration/home-page/home-page.js"
+ content={`https://gist.github.com/KyleAMathews/a88885cf6a52b8a0c654319ab544d958/raw/b434660dd8b695eca3b38bf1b40303c705c1aec5/home-page-home-page.js`}
 />
 
 ---
@@ -41,9 +41,15 @@ Our first test! You'll notice it's failing. This is intentional -- we'd like you
 
 ---
 
-<NPMScript name="develop" command="gatsby develop" />
+<NPMScript
+  name="develop"
+  command="gatsby develop"
+/>
 
-<NPMScript name="cy:open" command="cypress open" />
+<NPMScript
+  name="cy:open"
+  command="cypress open"
+/>
 
 <NPMScript
   name="test:e2e"
