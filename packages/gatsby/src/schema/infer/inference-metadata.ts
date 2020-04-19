@@ -131,6 +131,7 @@ import { TypeConflictReporter } from "./type-conflict-reporter"
 interface ITypeInfo {
   first?: string
   total: number
+  example?: unknown
 }
 
 interface ITypeInfoString extends ITypeInfo {
@@ -175,6 +176,8 @@ interface IValueDescriptor {
   object?: ITypeInfoObject
 }
 
+type ValueType = keyof IValueDescriptor | "relatedNode" | "relatedNodeList"
+
 export interface ITypeMetadata {
   typeName?: string
   disabled: boolean
@@ -189,7 +192,7 @@ export interface ITypeMetadata {
 
 type Operation = "add" | "del"
 
-const getType = (value: unknown, key: string): string => {
+const getType = (value: unknown, key: string): ValueType | "null" => {
   // Staying as close as possible to GraphQL types
   switch (typeof value) {
     case `number`:
@@ -332,6 +335,8 @@ const updateValueDescriptor = (
   }
 
   const delta = operation === `del` ? -1 : 1
+
+  // XXX: This comes out as `any` so we need a mapping to generic string keys
   let typeInfo = descriptor[typeName]
   if (typeInfo === undefined) {
     typeInfo = descriptor[typeName] = { total: 0 }
@@ -360,7 +365,7 @@ const updateValueDescriptor = (
     case `object`:
       updateValueDescriptorObject(
         value as object,
-        typeInfo,
+        typeInfo as ITypeInfoObject,
         nodeId,
         operation,
         metadata,
@@ -369,9 +374,9 @@ const updateValueDescriptor = (
       return
     case `array`:
       updateValueDescriptorArray(
-        value as [],
+        value as Array<unknown>,
         key,
-        typeInfo,
+        typeInfo as ITypeInfoArray,
         nodeId,
         operation,
         metadata,
@@ -383,7 +388,7 @@ const updateValueDescriptor = (
         [value as string],
         delta,
         operation,
-        typeInfo,
+        typeInfo as ITypeInfoRelatedNodes,
         metadata
       )
       return
@@ -392,12 +397,16 @@ const updateValueDescriptor = (
         value as string[],
         delta,
         operation,
-        typeInfo,
+        typeInfo as ITypeInfoRelatedNodes,
         metadata
       )
       return
     case `string`:
-      updateValueDescriptorString(value as string, delta, typeInfo)
+      updateValueDescriptorString(
+        value as string,
+        delta,
+        typeInfo as ITypeInfoString
+      )
       return
   }
 
@@ -512,8 +521,10 @@ const deleteNode = (metadata: ITypeMetadata, node: Node): ITypeMetadata =>
 const addNodes = (metadata = initialMetadata(), nodes: Node[]): ITypeMetadata =>
   nodes.reduce(addNode, metadata)
 
-const possibleTypes = (descriptor: object = {}): string[] =>
-  Object.keys(descriptor).filter(type => descriptor[type].total > 0)
+const possibleTypes = (descriptor: IValueDescriptor = {}): ValueType[] =>
+  Object.keys(descriptor).filter(
+    type => descriptor[type].total > 0
+  ) as ValueType[]
 
 const isEmpty = ({ fieldMap }): boolean =>
   Object.keys(fieldMap).every(
