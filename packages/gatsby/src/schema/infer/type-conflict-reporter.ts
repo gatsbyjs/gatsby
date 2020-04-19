@@ -17,20 +17,6 @@ interface ITypeConflict {
   description?: string
 }
 
-const isNodeWithDescription = (node: Node): boolean =>
-  !!(node && node.internal && node.internal.description)
-
-const findNodeDescription = (obj: Node): string | undefined => {
-  if (obj) {
-    // TODO: Maybe get this back
-    // const node = findRootNodeAncestor(obj, isNodeWithDescription)
-    if (isNodeWithDescription(obj)) {
-      return obj.internal.description
-    }
-  }
-  return ``
-}
-
 const formatValue = (value: unknown): string => {
   if (!Array.isArray(value)) {
     return util.inspect(value, {
@@ -80,7 +66,7 @@ class TypeConflictEntry {
   addExample({ value, type, parent }: ITypeConflictExample): void {
     this.types.set(type, {
       value,
-      description: findNodeDescription(parent),
+      description: parent?.internal?.description ?? ``,
     })
   }
 
