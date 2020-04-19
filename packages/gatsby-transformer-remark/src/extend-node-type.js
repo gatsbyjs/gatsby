@@ -150,10 +150,7 @@ module.exports = (
         // We are already generating AST, so let's wait for it
         return await ASTPromiseMap.get(cacheKey)
       } else {
-        const ASTGenerationPromise = getMarkdownAST(
-          markdownNode.internal.content,
-          markdownNode
-        )
+        const ASTGenerationPromise = getMarkdownAST(markdownNode)
         ASTGenerationPromise.then(markdownAST => {
           ASTPromiseMap.delete(cacheKey)
           return cache.set(cacheKey, markdownAST)
@@ -168,44 +165,21 @@ module.exports = (
       }
     }
 
-    async function getMarkdownAST(content, markdownNode) {
-      if (process.env.NODE_ENV !== `production` || !fileNodes) {
-        fileNodes = getNodesByType(`File`)
-      }
-
+    // Parse a markdown string and its AST representation,
+    // applying the remark plugins if necesserary
+    async function parseString(string, markdownNode) {
       // compiler to inject in the remark plugins
       // so that they can use our parser/generator
       // with all the options and plugins from the user
       const compiler = {
-        parseString: string => getMarkdownAST(string, markdownNode),
+        parseString: string => parseString(string, markdownNode),
         generateHTML: ast =>
           hastToHTML(ast, {
             allowDangerousHTML: true,
           }),
       }
 
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
-        const requiredPlugin = require(plugin.resolve)
-        if (_.isFunction(requiredPlugin.mutateSource)) {
-          return requiredPlugin.mutateSource(
-            {
-              markdownNode,
-              files: fileNodes,
-              getNode,
-              reporter,
-              cache: getCache(plugin.name),
-              getCache,
-              compiler,
-              ...rest,
-            },
-            plugin.pluginOptions
-          )
-        } else {
-          return Promise.resolve()
-        }
-      })
-      const markdownAST = remark.parse(content)
+      const markdownAST = remark.parse(string)
 
       if (basePath) {
         // Ensure relative links include `pathPrefix`
@@ -255,6 +229,38 @@ module.exports = (
       })
 
       return markdownAST
+    }
+
+    async function getMarkdownAST(markdownNode) {
+      if (process.env.NODE_ENV !== `production` || !fileNodes) {
+        fileNodes = getNodesByType(`File`)
+      }
+
+      // Execute the remark plugins that can mutate the node
+      // before parsing its content
+      //
+      // Use Bluebird's Promise function "each" to run remark plugins serially.
+      await Promise.each(pluginOptions.plugins, plugin => {
+        const requiredPlugin = require(plugin.resolve)
+        if (_.isFunction(requiredPlugin.mutateSource)) {
+          return requiredPlugin.mutateSource(
+            {
+              markdownNode,
+              files: fileNodes,
+              getNode,
+              reporter,
+              cache: getCache(plugin.name),
+              getCache,
+              ...rest,
+            },
+            plugin.pluginOptions
+          )
+        } else {
+          return Promise.resolve()
+        }
+      })
+
+      return parseString(markdownNode.internal.content, markdownNode)
     }
 
     async function getHeadings(markdownNode) {
@@ -442,10 +448,7 @@ module.exports = (
       if (excerptSeparator && markdownNode.excerpt !== ``) {
         return markdownNode.excerpt
       }
-      const ast = await getMarkdownAST(
-        markdownNode.internal.content,
-        markdownNode
-      )
+      const ast = await getMarkdownAST(markdownNode)
       const excerptAST = await getExcerptAst(ast, markdownNode, {
         pruneLength,
         truncate,
