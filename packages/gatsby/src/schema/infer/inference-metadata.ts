@@ -228,7 +228,7 @@ const updateValueDescriptorObject = (
   nodeId: string,
   operation: Operation,
   metadata: ITypeMetadata,
-  path: unknown[]
+  path: object[]
 ): void => {
   path.push(value)
 
@@ -257,7 +257,7 @@ const updateValueDescriptorArray = (
   nodeId: string,
   operation: Operation,
   metadata: ITypeMetadata,
-  path: unknown[]
+  path: object[]
 ): void => {
   value.forEach(item => {
     let descriptor = typeInfo.item
@@ -320,11 +320,11 @@ const updateValueDescriptor = (
   operation: Operation = `add`,
   descriptor: IValueDescriptor,
   metadata: ITypeMetadata,
-  path: unknown[]
+  path: object[]
 ): void => {
   // The object may be traversed multiple times from root.
   // Each time it does it should not revisit the same node twice
-  if (path.includes(value)) {
+  if (path.includes(value as object)) {
     return
   }
 
