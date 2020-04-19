@@ -52,7 +52,9 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
             fillColor={selected ? colors[baseColor][70] : colors.grey[50]}
           />
         </span>
-        <span><Trans>{title}</Trans></span>
+        <span>
+          <Trans>{title}</Trans>
+        </span>
       </span>
     </button>
   )
@@ -86,7 +88,7 @@ const LayerModel = ({
     }
   }, [selected])
   return (
-        <div
+    <div
       sx={{
         borderRadius: 3,
         border: t => `1px solid ${t.colors.ui.border}`,

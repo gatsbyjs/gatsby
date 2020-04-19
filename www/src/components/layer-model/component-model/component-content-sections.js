@@ -84,7 +84,9 @@ const ContentLayerContent = ({ sourceIndex, setSourceIndex, index }) => (
         setSourceIndex={setSourceIndex}
       />
     </ExampleWrapper>
-    <div><ContentLayer /></div>
+    <div>
+      <ContentLayer />
+    </div>
   </LayerContentWrapper>
 )
 

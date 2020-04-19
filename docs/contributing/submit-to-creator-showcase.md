@@ -32,6 +32,7 @@ There are only two major steps :)
   description: >-
     We help agencies and companies with JAMStack tools. This includes web development using Static Site Generators, Headless CMS, CI / CD and CDN setup.
 
+
   location: Poland
   website: https://yourname.io/
   github: https://github.com/githubusername
@@ -53,6 +54,7 @@ Use the following template to ensure required fields are filled:
   image: (required - images/{filename}.{ext})
   description: >-
     (optional)
+
 
   location: (optional)
   website: (optional)

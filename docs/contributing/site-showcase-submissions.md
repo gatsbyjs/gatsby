@@ -55,6 +55,7 @@ Use the following template to ensure required fields are filled:
   description: >
     (optional)
 
+
   categories:
     - (required)
   built_by: (optional)
