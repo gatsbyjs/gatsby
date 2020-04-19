@@ -17,6 +17,7 @@ www/public
 
 # ignore built packages
 packages/**/*.js
+packages/**/*.json
 !packages/gatsby/cache-dir/**/*.js
 !packages/*/src/**/*.js
 !packages/gatsby-plugin-mdx/**/*.js
