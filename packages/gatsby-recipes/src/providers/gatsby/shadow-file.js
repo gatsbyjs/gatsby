@@ -40,7 +40,7 @@ const splitId = id => {
   }
   return {
     theme,
-    filePath,
+    filePath: slash(filePath),
   }
 }
 exports.splitId = splitId
