@@ -4,7 +4,7 @@ const { GraphQLList } = require(`graphql`)
 const invariant = require(`invariant`)
 const report = require(`gatsby-cli/lib/reporter`)
 
-const { isFile } = require(`./is-file`)
+import { isFile } from "./is-file"
 const { isDate } = require(`../types/date`)
 const { addDerivedType } = require(`../types/derived-types`)
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
