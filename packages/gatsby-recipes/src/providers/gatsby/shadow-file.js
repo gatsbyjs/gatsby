@@ -2,7 +2,7 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const Joi = require(`@hapi/joi`)
 
-const { slash, joinPath } = require(`gatsby-core-utils`)
+const { slash } = require(`gatsby-core-utils`)
 
 const resourceSchema = require(`../resource-schema`)
 const getDiff = require(`../utils/get-diff`)
@@ -11,7 +11,7 @@ const fileExists = filePath => fs.existsSync(filePath)
 const relativePathForShadowedFile = ({ theme, filePath }) => {
   // eslint-disable-next-line
   const [_src, ...filePathParts] = filePath.split(path.sep)
-  const relativePath = joinPath(`src`, theme, joinPath(...filePathParts))
+  const relativePath = path.join(`src`, theme, path.join(...filePathParts))
   return slash(relativePath)
 }
 
@@ -19,7 +19,7 @@ exports.relativePathForShadowedFile = relativePathForShadowedFile
 
 const createPathToThemeFile = ({ root, theme, filePath }) => {
   // eslint-disable-next-line
-  const fullPath = joinPath(root, `node_modules`, theme, filePath)
+  const fullPath = path.join(root, `node_modules`, theme, filePath)
   return slash(fullPath)
 }
 exports.createPathToThemeFile = createPathToThemeFile
@@ -27,16 +27,16 @@ exports.createPathToThemeFile = createPathToThemeFile
 const splitId = id => {
   // Remove src
   // eslint-disable-next-line
-  const [_src, ...filePathParts] = id.split(path.sep)
+  const [_src, ...filePathParts] = id.split(`/`)
   let theme
   let filePath
   // Check if npm package is scoped
   if (filePathParts[0][0] === `@`) {
-    theme = joinPath(filePathParts[0], filePathParts[1])
-    filePath = joinPath(...filePathParts.slice(2))
+    theme = path.join(filePathParts[0], filePathParts[1])
+    filePath = path.join(...filePathParts.slice(2))
   } else {
     theme = filePathParts[0]
-    filePath = joinPath(...filePathParts.slice(1))
+    filePath = path.join(...filePathParts.slice(1))
   }
   return {
     theme,
@@ -52,7 +52,7 @@ const create = async ({ root }, { theme, path: filePath }) => {
 
   const contents = await fs.readFile(fullFilePathToShadow, `utf8`)
 
-  const shadowedFilePath = joinPath(root, id)
+  const shadowedFilePath = path.join(root, id)
 
   await fs.ensureFile(shadowedFilePath)
   await fs.writeFile(shadowedFilePath, contents)
@@ -119,7 +119,7 @@ module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
   currentResource = (await read({ root }, id)) || {}
 
   // eslint-disable-next-line
-  const fullFilePathToShadow = joinPath(root, `node_modules`, theme, filePath)
+  const fullFilePathToShadow = path.join(root, `node_modules`, theme, filePath)
 
   const newContents = await fs.readFile(fullFilePathToShadow, `utf8`)
   const newResource = {
