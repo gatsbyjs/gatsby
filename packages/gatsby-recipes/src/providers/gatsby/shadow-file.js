@@ -10,7 +10,7 @@ const fileExists = filePath => fs.existsSync(filePath)
 
 const relativePathForShadowedFile = ({ theme, filePath }) => {
   // eslint-disable-next-line
-  const [_src, ...filePathParts] = filePath.split(path.sep)
+  const [_src, ...filePathParts] = filePath.split(`/`)
   const relativePath = path.join(`src`, theme, path.join(...filePathParts))
   return slash(relativePath)
 }
@@ -39,7 +39,7 @@ const splitId = id => {
     filePath = path.join(...filePathParts.slice(1))
   }
   return {
-    theme,
+    theme: slash(theme),
     filePath: slash(filePath),
   }
 }
