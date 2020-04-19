@@ -12,7 +12,7 @@ React's component architecture simplifies building large websites by encouraging
 
 The following model shows how data from a source can be queried by GraphQL for use inside components in the process of building a Gatsby site:
 
-<LayerModel initialLayer="View" />
+<ComponentModel initialLayer="View" />
 
 [Thinking in React](https://reactjs.org/docs/thinking-in-react.html) is a good resource for learning how to structure applications with React.
 

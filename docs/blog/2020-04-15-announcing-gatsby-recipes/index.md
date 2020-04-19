@@ -78,8 +78,7 @@ Install the Emotion plugin in gatsby-config.js
 
 Sweet, now it's ready to go.
 
-Let's also write out an example page you can use to play
-with Emotion.
+Let's also write out an example page you can use to play with Emotion.
 
 <File
   path="src/pages/emotion-example.js"
@@ -95,7 +94,7 @@ https://emotion.sh/docs/introduction
 
 ### How can I write my own?
 
-You can run local recipes or recipes at a URL. [The docs walk you through writing your first Recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/recipes/README.md)!
+You can run local recipes or recipes at a URL. [The docs walk you through writing your first Recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/README.md)!
 
 ### Will there be more official recipes? Do you want contributions?
 
