@@ -34,7 +34,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
       if (isPending) {
         const { pages } = store.getState()
         const page = pages.get(queryJob.id)
-        console.warn(
+        report.warn(
           `Query in the ${page.internalComponentName} component takes too long`
         )
       }
