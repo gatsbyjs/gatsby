@@ -160,14 +160,7 @@ interface ITypeInfoRelatedNodes extends ITypeInfo {
 
 interface ITypeInfoObject extends ITypeInfo {
   dprops: {
-    [name in
-      | `number`
-      | `string`
-      | `boolean`
-      | `null`
-      | `date`
-      | `array`
-      | `object`]?: IValueDescriptor
+    [name: string]: IValueDescriptor
   }
 }
 
@@ -182,7 +175,7 @@ interface IValueDescriptor {
   object?: ITypeInfoObject
 }
 
-export interface IMetadata {
+export interface ITypeMetadata {
   typeName?: string
   disabled: boolean
   ignored?: boolean
@@ -231,7 +224,7 @@ const updateValueDescriptorObject = (
   typeInfo: ITypeInfoObject,
   nodeId: string,
   operation: Operation,
-  metadata: IMetadata,
+  metadata: ITypeMetadata,
   path: unknown[]
 ): void => {
   path.push(value)
@@ -260,7 +253,7 @@ const updateValueDescriptorArray = (
   typeInfo: ITypeInfoArray,
   nodeId: string,
   operation: Operation,
-  metadata: IMetadata,
+  metadata: ITypeMetadata,
   path: unknown[]
 ): void => {
   value.forEach(item => {
@@ -287,7 +280,7 @@ const updateValueDescriptorRelNodes = (
   delta: number,
   operation: Operation,
   typeInfo: ITypeInfoRelatedNodes,
-  metadata: IMetadata
+  metadata: ITypeMetadata
 ): void => {
   const { nodes = {} } = typeInfo
   typeInfo.nodes = nodes
@@ -323,7 +316,7 @@ const updateValueDescriptor = (
   value: unknown,
   operation: Operation = `add`,
   descriptor: IValueDescriptor,
-  metadata: IMetadata,
+  metadata: ITypeMetadata,
   path: unknown[]
 ): void => {
   // The object may be traversed multiple times from root.
@@ -469,7 +462,7 @@ const updateTypeMetadata = (
   metadata = initialMetadata(),
   operation: Operation,
   node: Node
-): IMetadata => {
+): ITypeMetadata => {
   if (metadata.disabled) {
     return metadata
   }
@@ -500,23 +493,23 @@ const updateTypeMetadata = (
   return metadata
 }
 
-const ignore = (metadata = initialMetadata(), set = true): IMetadata => {
+const ignore = (metadata = initialMetadata(), set = true): ITypeMetadata => {
   metadata.ignored = set
   metadata.fieldMap = {}
   return metadata
 }
 
-const disable = (metadata = initialMetadata(), set = true): IMetadata => {
+const disable = (metadata = initialMetadata(), set = true): ITypeMetadata => {
   metadata.disabled = set
   return metadata
 }
 
-const addNode = (metadata: IMetadata, node: Node): IMetadata =>
+const addNode = (metadata: ITypeMetadata, node: Node): ITypeMetadata =>
   updateTypeMetadata(metadata, `add`, node)
 
-const deleteNode = (metadata: IMetadata, node: Node): IMetadata =>
+const deleteNode = (metadata: ITypeMetadata, node: Node): ITypeMetadata =>
   updateTypeMetadata(metadata, `del`, node)
-const addNodes = (metadata = initialMetadata(), nodes: Node[]): IMetadata =>
+const addNodes = (metadata = initialMetadata(), nodes: Node[]): ITypeMetadata =>
   nodes.reduce(addNode, metadata)
 
 const possibleTypes = (descriptor: object = {}): string[] =>
@@ -528,7 +521,7 @@ const isEmpty = ({ fieldMap }): boolean =>
   )
 
 // Even empty type may still have nodes
-const hasNodes = (typeMetadata: IMetadata): boolean =>
+const hasNodes = (typeMetadata: ITypeMetadata): boolean =>
   (typeMetadata.total ?? 0) > 0
 
 const haveEqualFields = (
@@ -541,7 +534,7 @@ const haveEqualFields = (
   )
 }
 
-const initialMetadata = (state?: object): IMetadata => {
+const initialMetadata = (state?: object): ITypeMetadata => {
   return {
     typeName: undefined,
     disabled: false,

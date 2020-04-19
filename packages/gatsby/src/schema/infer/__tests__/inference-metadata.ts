@@ -6,7 +6,7 @@ import {
   deleteNode,
   addNodes,
   haveEqualFields,
-  IMetadata,
+  ITypeMetadata,
 } from "../inference-metadata"
 import { getExampleObject } from "../build-example-data"
 
@@ -25,8 +25,8 @@ const getExampleValue = ({
     typeName,
     typeConflictReporter,
     ignoredFields: new Set(ignoreFields),
-  } as IMetadata
-  const inferenceMetadata: IMetadata = addNodes(initialMetadata, nodes)
+  } as ITypeMetadata
+  const inferenceMetadata: ITypeMetadata = addNodes(initialMetadata, nodes)
   return getExampleObject(inferenceMetadata)
 }
 
@@ -776,7 +776,7 @@ describe(`Get example value for type inference`, () => {
         typeName: `IncrementalExampleValue`,
         typeConflictReporter,
         ignoredFields: new Set(),
-      } as IMetadata
+      } as ITypeMetadata
 
       const revisions = nodes.map(node => {
         inferenceMetadata = addNode(inferenceMetadata, node)
@@ -792,7 +792,7 @@ describe(`Get example value for type inference`, () => {
         typeName: `IncrementalExampleValue`,
         typeConflictReporter,
         ignoredFields: new Set(),
-      } as IMetadata
+      } as ITypeMetadata
       inferenceMetadata = addNodes(inferenceMetadata, nodes)
       const fullExampleValue = getExampleObject(inferenceMetadata)
 
@@ -1051,10 +1051,10 @@ describe(`Type change detection`, () => {
 
   const addOne = (
     node: object,
-    metadata: IMetadata = initialMetadata
-  ): IMetadata => addNode(_.cloneDeep(metadata), node as Node)
+    metadata: ITypeMetadata = initialMetadata
+  ): ITypeMetadata => addNode(_.cloneDeep(metadata), node as Node)
 
-  const deleteOne = (node: object, metadata = initialMetadata): IMetadata =>
+  const deleteOne = (node: object, metadata = initialMetadata): ITypeMetadata =>
     deleteNode(_.cloneDeep(metadata), node as Node)
 
   beforeEach(() => {
