@@ -3,22 +3,27 @@ const {
   createPathToThemeFile,
   splitId,
 } = require(`./shadow-file.js`)
+const { slash } = require(`gatsby-core-utils`)
 
 describe(`shadow-file create relative path for theme file`, () => {
   it(`should create the corect path for a non-scoped npm package`, () => {
     expect(
-      relativePathForShadowedFile({
-        theme: `foo-theme`,
-        filePath: `src/foo.js`,
-      })
+      slash(
+        relativePathForShadowedFile({
+          theme: `foo-theme`,
+          filePath: `src/foo.js`,
+        })
+      )
     ).toEqual(`src/foo-theme/foo.js`)
   })
   it(`should create the corect path for a scoped npm package`, () => {
     expect(
-      relativePathForShadowedFile({
-        theme: `@bar/foo-theme`,
-        filePath: `src/foo.js`,
-      })
+      slash(
+        relativePathForShadowedFile({
+          theme: `@bar/foo-theme`,
+          filePath: `src/foo.js`,
+        })
+      )
     ).toEqual(`src/@bar/foo-theme/foo.js`)
   })
 })
@@ -27,20 +32,24 @@ describe(`shadow-file create relative path for theme file`, () => {
 describe(`shadow-file create full path to theme file`, () => {
   it(`should create the corect path for a non-scoped npm package`, () => {
     expect(
-      createPathToThemeFile({
-        root: `/sup/`,
-        theme: `foo-theme`,
-        filePath: `src/foo.js`,
-      })
+      slash(
+        createPathToThemeFile({
+          root: `/sup/`,
+          theme: `foo-theme`,
+          filePath: `src/foo.js`,
+        })
+      )
     ).toEqual(`/sup/node_modules/foo-theme/src/foo.js`)
   })
   it(`should create the corect path for a scoped npm package`, () => {
     expect(
-      createPathToThemeFile({
-        root: `/sup/`,
-        theme: `@bar/foo-theme`,
-        filePath: `src/foo.js`,
-      })
+      slash(
+        createPathToThemeFile({
+          root: `/sup/`,
+          theme: `@bar/foo-theme`,
+          filePath: `src/foo.js`,
+        })
+      )
     ).toEqual(`/sup/node_modules/@bar/foo-theme/src/foo.js`)
   })
 })
