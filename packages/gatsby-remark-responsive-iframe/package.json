@@ -22,7 +22,7 @@
     "remark-mdx": "^1.5.7",
     "unist-util-find": "^1.0.1"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-remark-responsive-iframe#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -36,7 +36,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages\\gatsby-remark-responsive-iframe"
+    "directory": "packages/gatsby-remark-responsive-iframe"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",

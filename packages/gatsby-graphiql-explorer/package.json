@@ -20,11 +20,11 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-graphiql-explorer#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-graphiql-explorer#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages\\gatsby-graphiql-explorer"
+    "directory": "packages/gatsby-graphiql-explorer"
   },
   "license": "MIT",
   "dependencies": {

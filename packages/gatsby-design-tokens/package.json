@@ -11,7 +11,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages\\gatsby-design-tokens"
+    "directory": "packages/gatsby-design-tokens"
   },
   "files": [
     "dist/**/*"
@@ -24,7 +24,7 @@
     "build:theme": "(microbundle build src/theme.js -o dist/theme.js --sourcemap=false -f es,cjs) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\"",
     "build:theme-gatsbyjs-org": "(microbundle build src/theme-gatsbyjs-org.js -o dist/theme-gatsbyjs-org.js --sourcemap=false -f es,cjs) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\""
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-design-tokens#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-design-tokens#readme",
   "dependencies": {
     "hex2rgba": "^0.0.1"
   },

@@ -16,11 +16,11 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-plugin-fullstory#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-fullstory#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages\\gatsby-plugin-fullstory"
+    "directory": "packages/gatsby-plugin-fullstory"
   },
   "license": "MIT",
   "dependencies": {

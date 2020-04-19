@@ -17,7 +17,7 @@
     "babel-preset-gatsby-package": "^0.3.1",
     "cross-env": "^5.2.1"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-transformer-documentationjs#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs#readme",
   "keywords": [
     "documentation.js",
     "gatsby",
@@ -32,7 +32,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages\\gatsby-transformer-documentationjs"
+    "directory": "packages/gatsby-transformer-documentationjs"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",

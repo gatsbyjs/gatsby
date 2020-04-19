@@ -27,7 +27,7 @@
     "hast-util-to-html": "^6.1.0",
     "mdast-util-to-hast": "^6.0.2"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-remark-images#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -45,7 +45,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages\\gatsby-remark-images"
+    "directory": "packages/gatsby-remark-images"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",

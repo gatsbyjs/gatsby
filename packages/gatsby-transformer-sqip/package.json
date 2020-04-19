@@ -28,7 +28,7 @@
     "gatsby-source-contentful": "^2.0.0",
     "gatsby-transformer-sharp": "^2.0.0"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-transformer-sqip#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -40,7 +40,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages\\gatsby-transformer-sqip"
+    "directory": "packages/gatsby-transformer-sqip"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",

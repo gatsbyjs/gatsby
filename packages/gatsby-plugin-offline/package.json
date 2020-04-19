@@ -23,7 +23,7 @@
     "cross-env": "^5.2.1",
     "rewire": "^4.0.1"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-plugin-offline#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -39,7 +39,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages\\gatsby-plugin-offline"
+    "directory": "packages/gatsby-plugin-offline"
   },
   "scripts": {
     "build": "npm run build:src && npm run build:sw-append",
