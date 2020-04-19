@@ -1,5 +1,6 @@
 const { interpret } = require(`xstate`)
-const machine = require(`../page-component`)
+
+import machine from "../page-component"
 
 jest.mock(`../../../query`)
 const { enqueueExtractedQueryId, runQueuedQueries } = require(`../../../query`)
@@ -11,7 +12,7 @@ const getService = (args = {}) =>
       query: ``,
       pages: new Set([`/`]),
       isInBootstrap: true,
-      ...args,
+      ...args
     })
   ).start()
 
