@@ -68,7 +68,7 @@
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.2"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages\\gatsby-recipes#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
   "keywords": [
     "gatsby",
     "gatsby-recipes",
@@ -78,7 +78,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages\\gatsby-recipes"
+    "directory": "packages/gatsby-recipes"
   },
   "resolutions": {
     "graphql": "^14.6.0"
