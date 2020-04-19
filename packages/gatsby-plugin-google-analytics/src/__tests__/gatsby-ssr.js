@@ -173,11 +173,20 @@ describe(`gatsby-plugin-google-analytics`, () => {
           expect(result).not.toContain(`allowAdFeatures`)
         })
 
-        it(`should defer script after the site render`, () => {
-          const { setPostBodyComponents } = setup({})
+        it(`should defer script after the site render when set`, () => {
+          const { setPostBodyComponents } = setup({
+            defer: true,
+          })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
           expect(result).toContain(`defer=1;`)
+        })
+
+        it(`should not defer script after the site render`, () => {
+          const { setPostBodyComponents } = setup({})
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).not.toContain(`defer=1;`)
         })
 
         it(`should run script in an async task`, () => {
