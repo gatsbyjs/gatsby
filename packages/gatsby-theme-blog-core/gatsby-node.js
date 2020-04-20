@@ -52,7 +52,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       slug: String!
       date: Date! @dateformat
       tags: [String]!
-      keywords: [String]!
       excerpt: String!
       image: File
   }`)
@@ -70,7 +69,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
         date: { type: `Date!`, extensions: { dateformat: {} } },
         tags: { type: `[String]!` },
-        keywords: { type: `[String]!` },
         excerpt: {
           type: `String!`,
           args: {
@@ -139,7 +137,6 @@ exports.onCreateNode = async (
       tags: node.frontmatter.tags || [],
       slug,
       date: node.frontmatter.date,
-      keywords: node.frontmatter.keywords || [],
       image: node.frontmatter.image,
     }
 
