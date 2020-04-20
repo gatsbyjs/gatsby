@@ -41,7 +41,21 @@ export default () => {
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf("gatsby-theme") === 0)
           .map(plugin => (
-            <li key={plugin.id}>{plugin.name}</li>
+            <li key={plugin.id}>
+              <details>
+                <summary>{plugin.name}</summary>
+                <ul>
+                  {plugin.shadowedFiles.map(file => (
+                    <li key={file} style={{ opacity: 0.6 }}>
+                      {file} (shadowed)
+                    </li>
+                  ))}
+                  {plugin.shadowableFiles.map(file => (
+                    <li key={file}>{file}</li>
+                  ))}
+                </ul>
+              </details>
+            </li>
           ))}
       </ul>
     </>
