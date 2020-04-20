@@ -10436,3 +10436,16 @@
   built_by: Andrew Louis
   built_by_url: https://hyfen.net
   featured: false
+- title: SofaScore Corporate
+  url: https://corporate.sofascore.com
+  main_url: https://corporate.sofascore.com
+  description: >
+    SofaScore is a leading provider of advanced sports insights and content with global coverage of 20+ sports.
+  categories:
+    - App
+    - Data
+    - Sports
+    - Technology
+  built_by: SofaScore
+  built_by_url: https://www.sofascore.com
+  featured: false
