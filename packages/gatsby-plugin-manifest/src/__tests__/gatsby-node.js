@@ -51,7 +51,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const sharp = require(`sharp`)
 const reporter = {
-  activityTimer: jest.fn().mockImplementation(function() {
+  activityTimer: jest.fn().mockImplementation(function () {
     return {
       start: jest.fn(),
       end: jest.fn(),

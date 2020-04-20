@@ -4,7 +4,7 @@
 const path = require(`path`)
 const resolve = m => require.resolve(m)
 
-module.exports = function(api, options = {}) {
+module.exports = function (api, options = {}) {
   const absoluteRuntimePath = path.dirname(
     resolve(`@babel/runtime/package.json`)
   )
