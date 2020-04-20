@@ -5,7 +5,6 @@ import hex2rgba from "hex2rgba"
 
 import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import LayerIcon from "../../assets/icons/layer-icon"
-import { Trans } from "@lingui/macro"
 
 const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
   const { baseColor, title, icon } = layer
@@ -52,7 +51,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
             fillColor={selected ? colors[baseColor][70] : colors.grey[50]}
           />
         </span>
-        <span><Trans>{title}</Trans></span>
+        <span>{title}</span>
       </span>
     </button>
   )
