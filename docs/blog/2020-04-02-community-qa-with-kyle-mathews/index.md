@@ -55,23 +55,23 @@ We’re razor focused right now on solving these two problems (see the last answ
 
 There are still two remaining valid reasons for run-time SSR that we plan to support. One is personalization where the page needs to be customized for the visitor based on a variety of factors. The other is A/B testing. Both of those require that you can render custom versions of pages on the fly. We will not only support this but also solve it in a way that doesn’t sacrifice the speed and simplicity Gatsby is known for.
 
-## What's a realistic availability timeline for incremental builds using Wordpress with WPGraphQL?
+## What's a realistic availability timeline for incremental builds using WordPress with WPGraphQL?
 
 A bit of back history for everyone: last year we hired [Jason Bahl](https://twitter.com/jasonbahl), the creator of [WPGraphQL](https://www.wpgraphql.com/), to continue his work. We want to fully support WordPress + Gatsby, meaning content authors can see real-time previews and content changes deploy in less than 10 seconds. This is the great experience that CMSs provide for content authors. Replicating it is a hard requirement for most people considering moving to a headless WordPress + Gatsby stack.
 
 We choose WPGraphQL as the way forward as Jason’s done an amazing job making incremental querying incredibly fast—as well as adding GraphQL subscription support, which will drive both preview & incremental builds.
 
-Last fall [Tyler Barnes](https://github.com/TylerBarnes) — a long-time Gatsby/WP developer — joined the team to work on a new version of gatsby-source-wordpress that leverages WPGraphQL to drive preview/10 second deploys.
+Last fall [Tyler Barnes](https://github.com/TylerBarnes) — a long-time Gatsby/WordPress developer — joined the team to work on a new version of gatsby-source-wordpress that leverages WPGraphQL to drive preview/10 second deploys.
 
 They’ve been making incredible progress. Check out [the umbrella issue for the epic](https://github.com/gatsbyjs/gatsby/issues/19292). A number of people are experimenting with the alphas and even shipping sites! If you’re interested in this space, please dive in.
 
-What’s amazing about this work is that **you’ll soon be able to seamlessly swap out the WordPress presentation layer for Gatsby **without** anyone working in the WordPress CMS noticing**. As a developer, you’ll be able to deliver way faster sites, enjoy far simpler hosting, put WordPress behind a firewall (maybe even skip some of those security updates! 😅🤪), and enjoy all the advantages of working in the world of modern React/JS tooling.
+What’s amazing about this work is that **you’ll soon be able to seamlessly swap out the WordPress presentation layer for Gatsby **without** anyone working in the WordPress CMS noticing**. As a developer, you’ll be able to deliver way faster sites, enjoy far simpler hosting, put WordPress behind a firewall (maybe even skip some of those security updates! 😅🤪), and enjoy all the advantages of working in the world of modern React/JavaScript tooling.
 
 ## Working with images is a pain, and the distinction between page and static query seems a wrong API. The [issue #10482](https://github.com/gatsbyjs/gatsby/issues/10482) seems to fix both. What's the plan?
 
 We’ve worked on a number of ideas/prototypes for solving this but haven’t yet arrived at something we feel is a genuine improvement. There are more ideas floating around for better APIs, so stay tuned. We’d love to pair with anyone who has ideas for improving things as well.
 
-## Is there going to be a WP integration with Gatsby Cloud?
+## Is there going to be a WordPress integration with Gatsby Cloud?
 
 Yup! Once the new gatsby-source-wordpress version is ready, Preview & Incremental builds will work out-of-the-box on Gatsby Cloud.
 
@@ -99,7 +99,7 @@ We’re also investigating better patterns for building themes to ensure they’
 
 ## Is there a limit on the size of a website generated with Gatsby? At what point does the build time become unmanageable?
 
-That’s a constantly moving target as we improve the Gatsby build process. Our open source team is now 15 people strong and many of them are working on the build process from different angles from improving source plugins to core parts of the build process. [Peter van der Zee](https://twitter.com/kuvos) joined the team as a build performance specialist last fall from Facebook where he was a JS Infrastructure Engineer and [has a long string of PRs improving the build process over the past months](https://github.com/gatsbyjs/gatsby/commits?author=pvdz).
+That’s a constantly moving target as we improve the Gatsby build process. Our open source team is now 15 people strong and many of them are working on the build process from different angles from improving source plugins to core parts of the build process. [Peter van der Zee](https://twitter.com/kuvos) joined the team as a build performance specialist last fall from Facebook where he was a JavaScript Infrastructure Engineer and [has a long string of PRs improving the build process over the past months](https://github.com/gatsbyjs/gatsby/commits?author=pvdz).
 
 We’re also working on adding benchmark sites that’ll show more clearly when a site is a good fit for Gatsby.
 
@@ -111,14 +111,14 @@ Awww thanks! I don’t know there’s anything magic other than just caring enou
 
 Yes! This is something we’re pretty excited about shipping. If you’re interested in learning more or helping out, check out this issue [Sidhartha Chatterjee](https://github.com/sidharthachatterjee) put together — [https://github.com/gatsbyjs/gatsby/issues/18983](https://github.com/gatsbyjs/gatsby/issues/18983)
 
-[Blaine Kasten](https://twitter.com/blainekasten) has also been leading the effort to convert the entire codebase to Typescript which has been a massive effort by dozens of people — [https://github.com/gatsbyjs/gatsby/issues/21995](https://github.com/gatsbyjs/gatsby/issues/21995)
+[Blaine Kasten](https://twitter.com/blainekasten) has also been leading the effort to convert the entire codebase to TypeScript which has been a massive effort by dozens of people — [https://github.com/gatsbyjs/gatsby/issues/21995](https://github.com/gatsbyjs/gatsby/issues/21995)
 
-## Are you guys trying to catch up to Next.js's smaller JS bundle size?
+## Are you guys trying to catch up to Next.js's smaller JavaScript bundle size?
 
 A team at Chrome has been doing a lot of investigation into how frameworks like Next.js & Gatsby can optimize how we ship JavaScript. Next.js implemented that a few months ago and last week [Ward Peeters](https://twitter.com/wardpeet) shipped [a PR implementing the same new webpack bundling algorithm](https://github.com/gatsbyjs/gatsby/pull/22253) for Gatsby—so bundle sizes are now identical to Next.js. Very exciting improvement!
 
 ## Are you continuing to work on even more good accessibility defaults for Gatsby in the future? How important is accessibility overall within Gatsby?
 
-We care a lot about accessibility. We think that’s part and parcel of building a great framework. We moved to @reach/router as part of Gatsby v2 to take advantage of Ryan Florence’s work on JS router accessibility, and Marcy Sutton has done a lot of testing on how to solve some lingering issues. We hired [Madalyn Rose](https://twitter.com/madalynrose) last fall as a full-time specialist for accessibility engineering in Gatsby.
+We care a lot about accessibility. We think that’s part and parcel of building a great framework. We moved to @reach/router as part of Gatsby v2 to take advantage of Ryan Florence’s work on JavaScript router accessibility, and Marcy Sutton has done a lot of testing on how to solve some lingering issues. We hired [Madalyn Rose](https://twitter.com/madalynrose) last fall as a full-time specialist for accessibility engineering in Gatsby.
 
 Check out our blog posts tagged with accessibility: [https://www.gatsbyjs.org/blog/tags/accessibility](https://www.gatsbyjs.org/blog/tags/accessibility)
