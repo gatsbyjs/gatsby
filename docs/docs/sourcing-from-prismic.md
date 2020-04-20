@@ -9,7 +9,9 @@ It’s suitable for marketers and developers as it offers features like a compon
 
 Interesting reads:
 [Sample Blog with API-based CMS & Gatsby.js](https://user-guides.prismic.io/en/articles/2933292-sample-blog-with-api-based-cms-gatsby-js).
+
 [Read the official Prismic documentation on Gatsby](https://prismic.io/docs/reactjs/getting-started/prismic-gatsby).
+
 [Prismic Official documentation](https://prismic.io/docs).
 
 
