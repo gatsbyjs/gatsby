@@ -291,6 +291,18 @@ Want to run two queries on the same datasource? You can do this by aliasing your
 
 When you use your data, you will be able to reference it using the alias instead of the root query name. In this example, that would be `data.someEntries` or `data.someMoreEntries` instead of `data.allMarkdownRemark`.
 
+The same works for fields inside a query. Take this example:
+
+<iframe
+  title="Using aliases for fields"
+  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(skip%3A%203%2C%20limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20header%3A%20title%0A%20%20%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%20%20%20%20relativeDate%3A%20date(fromNow%3A%20true)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
+  width="600"
+  height="400"
+  loading="lazy"
+></iframe>
+
+Instead of receiving `title` you'll get `header`. This is especially useful when you want to display the same field in different ways as the `date` shows. You both get `date` and `relativeDate` from the same source.
+
 ## Conditionals
 
 GraphQL allows you to skip a piece of a query depending on variables. This is handy when you need to render some part of a page conditionally.

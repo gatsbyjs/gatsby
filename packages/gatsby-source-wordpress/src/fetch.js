@@ -528,7 +528,7 @@ function getValidRoutes({
     })
     // ACF to REST V2 does not allow ACF Option Page ID specification
     if (_acfOptionPageIds.length > 0 && acfRestNamespace.includes(`3`)) {
-      _acfOptionPageIds.forEach(function(acfOptionPageId) {
+      _acfOptionPageIds.forEach(function (acfOptionPageId) {
         validRoutes.push({
           url: `${url}/acf/v3/options/${acfOptionPageId}`,
           type: `${typePrefix}acf_options`,

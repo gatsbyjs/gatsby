@@ -3,7 +3,9 @@ title: "Announcing Gatsby Cloud"
 date: 2019-11-14
 author: "Kyle Mathews"
 excerpt: "I'm excited to announce that we're launching our commercial platform, Gatsby Cloud, which will provide a growing suite of tools for web creators"
-tags: ["gatsby-inc"]
+tags: ["gatsby-inc", "releases", "gatsby-cloud"]
+---
+
 ---
 
 We're excited to announce the launch of [Gatsby Cloud](https://www.gatsbyjs.com/): a commercial platform of stable, trusted tools that enable web creators to build better websites.

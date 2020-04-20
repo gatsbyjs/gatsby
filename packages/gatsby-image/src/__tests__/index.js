@@ -185,7 +185,7 @@ describe(`<Image />`, () => {
     expect(component).toMatchSnapshot()
   })
 
-  it(`should have the the "critical" prop set "loading='eager'"`, () => {
+  it(`should have the "critical" prop set "loading='eager'"`, () => {
     jest.spyOn(global.console, `log`)
 
     const props = { critical: true }
