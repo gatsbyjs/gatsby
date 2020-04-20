@@ -619,3 +619,5 @@ Array [
   },
 ]
 `;
+
+exports[`Load plugins Throws an error when a plugin is defined with an option key 1`] = `"Plugin \\"___TEST___\\" has an \\"option\\" key in the configuration. Did you mean \\"options\\"?"`;

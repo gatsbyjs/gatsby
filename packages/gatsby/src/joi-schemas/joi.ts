@@ -1,4 +1,5 @@
 import Joi from "@hapi/joi"
+import { didYouMean } from "../utils/did-you-mean"
 import { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types"
 
 const stripTrailingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
@@ -75,6 +76,18 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
       }),
     }
   )
+  .error(errors => {
+    return errors.map(error => {
+      if (error.type === `object.allowUnknown`) {
+        const { key } = error.context
+        const suggestion = didYouMean(key)
+
+        return { message: `"${key}" is not allowed. ${suggestion}` }
+      }
+
+      return error
+    })
+  })
 
 export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()
   .keys({
