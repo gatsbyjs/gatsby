@@ -1,9 +1,11 @@
 import path from "path"
+import http from "http"
 import respawn from "respawn"
 import chokidar from "chokidar"
 import resolveCwd from "resolve-cwd"
-import getPort from "get-port"
+import getRandomPort from "get-port"
 import report from "gatsby-cli/lib/reporter"
+import socket from "socket.io"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
 
@@ -32,35 +34,49 @@ module.exports = async (program: IProgram): Promise<void> => {
   )
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
-  const userPort = program.port
-  const randomPort = await getPort()
-  console.log({ userPort, randomPort })
+  const proxyPort = program.port
+  const developPort = await getRandomPort()
+
   const script = createControllableScript(report.stripIndent`
     const cmd = require("${developProcessPath}");
     const args = ${JSON.stringify({
       ...program,
-      port: randomPort,
+      port: developPort,
     })};
     cmd(args);
   `)
 
   startDevelopProxy({
-    proxyPort: userPort,
-    targetPort: randomPort,
+    proxyPort: proxyPort,
+    targetPort: developPort,
   })
 
-  script.start()
+  // TODO(@mxstbr): This port needs to be not-hardcoded.
+  const wsServer = http.createServer().listen(8888)
 
-  chokidar
-    .watch([rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)])
-    .on(`change`, filePath => {
-      const activity = report.activityTimer(
-        `${path.basename(filePath)} changed, restarting gatsby develop`
-      )
+  const io = socket(wsServer)
+
+  io.on(`connection`, socket => {
+    socket.on(`gatsby:develop:do-restart`, () => {
+      const activity = report.activityTimer(`Restarting develop process...`)
       activity.start()
       script.stop(() => {
         activity.end()
         script.start()
+        io.emit(`gatsby:develop:restarted`)
+      })
+    })
+  })
+
+  script.start()
+  io.emit(`gatsby:develop:restarted`)
+
+  chokidar
+    .watch([rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)])
+    .on(`change`, filePath => {
+      console.log(`${path.basename(filePath)} changed`)
+      io.emit(`gatsby:develop:needs-restart`, {
+        reason: `${path.basename(filePath)} changed`,
       })
     })
 }

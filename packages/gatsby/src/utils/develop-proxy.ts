@@ -16,7 +16,16 @@ export const startDevelopProxy = (ports: {
     })
     .listen(ports.proxyPort)
 
-  proxy.on(`error`, (_, __, res) => {
+  proxy.on(`error`, (_, req, res) => {
+    console.log(req.url)
+    if (req.url && req.url.indexOf(`socket.io.js`) > -1) {
+      res.end(
+        require(`fs`).readFileSync(
+          require.resolve(`socket.io-client/dist/socket.io.js`)
+        )
+      )
+      return
+    }
     res.end(renderToString(jsx(RestartingScreen)))
   })
 }
