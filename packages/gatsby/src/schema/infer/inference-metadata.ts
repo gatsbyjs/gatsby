@@ -172,11 +172,12 @@ interface IValueDescriptor {
   string?: ITypeInfoString
   boolean?: ITypeInfoBoolean
   array?: ITypeInfoArray
-  nodes?: ITypeInfoRelatedNodes
+  relatedNode?: ITypeInfoRelatedNodes
+  relatedNodeList?: ITypeInfoRelatedNodes
   object?: ITypeInfoObject
 }
 
-type ValueType = keyof IValueDescriptor | "relatedNode" | "relatedNodeList"
+type ValueType = keyof IValueDescriptor
 
 export interface ITypeMetadata {
   typeName?: string
@@ -336,10 +337,9 @@ const updateValueDescriptor = (
 
   const delta = operation === `del` ? -1 : 1
 
-  // XXX: This comes out as `any` so we need a mapping to generic string keys
-  let typeInfo = descriptor[typeName]
+  let typeInfo: ITypeInfo | undefined = descriptor[typeName]
   if (typeInfo === undefined) {
-    typeInfo = descriptor[typeName] = { total: 0 }
+    typeInfo = (descriptor[typeName] as ITypeInfo) = { total: 0 }
   }
   typeInfo.total += delta
 
@@ -453,6 +453,9 @@ const descriptorsAreEqual = (
       }
       case `relatedNode`:
       case `relatedNodeList`: {
+        // eslint-disable-next-line
+        // @ts-ignore
+        // FIXME See comment: https://github.com/gatsbyjs/gatsby/pull/23264#discussion_r410908538
         return isEqual(descriptor?.nodes, otherDescriptor?.nodes)
       }
       default:
