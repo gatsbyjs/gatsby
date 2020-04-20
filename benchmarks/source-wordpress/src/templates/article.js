@@ -22,18 +22,18 @@ export default Article
 
 export const query = graphql`
   query($id: String!) {
-  article: wpPost(id: { eq: $id } ) {
+    article: wpPost(id: { eq: $id }) {
       title
-			content
-			featuredImage {
+      content
+      featuredImage {
         remoteFile {
-            childImageSharp {
-              fluid(maxWidth: 960, quality: 90) {
-                ...GatsbyImageSharpFluid_withWebp_tracedSVG
-              }
+          childImageSharp {
+            fluid(maxWidth: 960, quality: 90) {
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
             }
+          }
         }
       }
+    }
   }
-}
 `

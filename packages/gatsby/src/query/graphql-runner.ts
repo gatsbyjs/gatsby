@@ -175,10 +175,7 @@ export default class GraphQLRunner {
       )
 
       this.stats.uniqueQueries.add(
-        crypto
-          .createHash(`sha1`)
-          .update(statsQuery)
-          .digest(`hex`)
+        crypto.createHash(`sha1`).update(statsQuery).digest(`hex`)
       )
     }
 

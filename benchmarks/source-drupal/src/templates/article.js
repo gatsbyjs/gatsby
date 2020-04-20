@@ -10,11 +10,18 @@ const Article = ({ data }) => {
       <div>
         <h2>{data.article.title}</h2>
         {data.article.relationships.field_image.localFile.childImageSharp ? (
-          <Img fluid={data.article.relationships.field_image.localFile.childImageSharp.fluid} />
+          <Img
+            fluid={
+              data.article.relationships.field_image.localFile.childImageSharp
+                .fluid
+            }
+          />
         ) : (
           <div>Image can't be displayed</div>
         )}
-        <div dangerouslySetInnerHTML={{ __html: data.article.body.processed }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: data.article.body.processed }}
+        />
       </div>
     </Layout>
   )
@@ -23,8 +30,8 @@ const Article = ({ data }) => {
 export default Article
 
 export const query = graphql`
-  query($slug: String!){
-    article: nodeArticle(fields: {slug: {eq: $slug }}) {
+  query($slug: String!) {
+    article: nodeArticle(fields: { slug: { eq: $slug } }) {
       title
       body {
         processed
