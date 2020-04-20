@@ -1,13 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
+import { trackCustomEvent } from "gatsby-plugin-google-analytics"
 
 import { CirclesOrnament } from "../../assets/ornaments"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const CloudCalloutRoot = styled(`div`)`
-  border: 1px solid ${p => console.log(p) || p.theme.colors.purple["20"]};
+  border: 1px solid ${p => p.theme.colors.purple["20"]};
   border-radius: ${p => p.theme.radii[2]};
   color: ${p => p.theme.colors.purple["60"]};
   font-family: ${p => p.theme.fonts.heading};
@@ -48,8 +48,20 @@ const CloudCallout = ({ narrow = true, children }) => {
   return (
     <CloudCalloutRoot narrow={narrow}>
       <CloudText>{children}</CloudText>
-      Try <OutboundLink href="https://gatsbyjs.com">Gatsby Cloud</OutboundLink>,
-      with CMS and CDN auto-provisioning, performance reports, and 20x faster
+      Try{" "}
+      <a
+        href="https://gatsbyjs.com"
+        onClick={() =>
+          trackCustomEvent({
+            category: `docs-cloud-callout`,
+            action: `click`,
+            label: `Try Gatsby Cloud`,
+          })
+        }
+      >
+        Gatsby Cloud
+      </a>
+      , with CMS and CDN auto-provisioning, performance reports, and 20x faster
       builds!
       <Circles dangerouslySetInnerHTML={{ __html: CirclesOrnament }} />
     </CloudCalloutRoot>
