@@ -364,7 +364,7 @@ A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's
 
 ## Y
 
-### Yarn
+### [Yarn](/docs/glossary/yarn/)
 
 A [package](#package) manager that some prefer to [NPM](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
 
