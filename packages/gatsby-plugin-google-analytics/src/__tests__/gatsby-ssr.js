@@ -180,6 +180,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
           expect(result).toContain(`defer=1;`)
+          expect(result).not.toContain(`async=1;`)
         })
 
         it(`should not defer script after the site render`, () => {
@@ -187,12 +188,6 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
           expect(result).not.toContain(`defer=1;`)
-        })
-
-        it(`should run script in an async task`, () => {
-          const { setPostBodyComponents } = setup({})
-
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
           expect(result).toContain(`async=1;`)
         })
       })
