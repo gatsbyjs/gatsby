@@ -163,7 +163,7 @@ A Node.js server process powers things behind the scenes when you run the `gatsb
 
 The following model demonstrates what is happening in different "layers" of Gatsby as content and data are gathered up and made available for your static assets.
 
-<LayerModel initialLayer="Build" />
+<ComponentModel initialLayer="Build" />
 
 Like the console output demonstrates in the section above, there are 2 main steps that take place when you run a build: the `bootstrap` phase, and the `build` phase (which can be observed finishing in the console output when you run `gatsby develop` or `gatsby build`).
 
