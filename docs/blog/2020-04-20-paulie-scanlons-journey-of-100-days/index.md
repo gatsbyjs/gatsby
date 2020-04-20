@@ -1,12 +1,22 @@
-### Intro
+title: "Challenge Accepted: One Developer, 10 Projects, 100 Days of Gatsby"
+date: 2020-04-20
+author: Paul Scanlon
+excerpt: "Paul Scanlon took the #100DaysOfGatsby challenge quite literally: Each day for 100 days, he worked in and around the Gatsby ecosystem—writing a blog post each day to document his labors. Here is an overview of Paul's prodigious output!"
+tags:
+  - themes
+  - plugins
+  - 100-Days-of-Gatsby
+  - react
+---
+## Intro
 
-Well hey there! 👋 i'm Paul, i'm a React UI Developer / UX Engineer and a long long time ago I was a designer but after a few years of pixel pushing I realized code is just better!
+Well hey there! 👋 I'm Paul, I'm a React UI Developer / UX Engineer and a long long time ago I was a designer but after a few years of pixel pushing I realized code is just better!
 
-### A little context
+## A little context
 
 I first found Gatsby because of my requirement to create a new, public and **S**earch **E**ngine **O**ptimized web presence. I needed a [commercial portfolio](https://www.pauliescanlon.io/) and a [blog](https://paulie.dev/) and I wanted them to look and feel the same. I also wanted a way to easily update both entities separately, but didn't want to suffer poor SEO in favor of "content managed" third party fetched data. Ideally I wanted to build these sites using React but always disliked the poor SEO performance using a framework like React produces.
 
-After a little research I discovered that Gatsby is just React BUT it still maintains effective Search Engine Optimization by creating static HTML pages with real and actual Google indexable metadata and Open Graph images for each and every page or post!
+After a little research I discovered that Gatsby is just React...BUT it still maintains effective Search Engine Optimization by creating static HTML pages with real and actual Google indexable metadata and Open Graph images for each and every page or post!
 
 **When the penny dropped it was an absolute hammer blow!**
 
@@ -16,8 +26,8 @@ When the [#100DaysOfGatsby](https://www.gatsbyjs.org/blog/tags/100-days-of-gatsb
 
 So for **100** days I posted literally **every day** about the work I've been doing in and around the Gatsby eco-system. If you have a spare 103 minutes you can read about the full 100 days [here](https://paulie.dev/posts/2020/01/100DaysOfGatsby/). But because I know you're all busy busy people, here is the tl;dr summary version.
 
-![Screen shot of Skin UI, a Gatsby app by Paulie Scanlon](./skin-ui.jpg)
 
+![Screen shot of Skin UI, a Gatsby app by Paulie Scanlon](./skin-ui.jpg)
 
 ## 1. Skin UI
 
@@ -31,6 +41,7 @@ I believe this project has legs, but I also need to do a bit more work on it bef
 [GitHub](https://github.com/PaulieScanlon/skin-ui) |
 [Blog post](https://paulie.dev/posts/2020/04/skin-ui/)
 
+
 ![Screenshot of Terminal, a zero-component Gatsby theme](./gatsby-theme-terminal.jpg "Screenshot of Terminal, a zero-component Gatsby theme")
 
 ## 2. gatsby-theme-terminal
@@ -43,6 +54,7 @@ Having worked on Gatsby Themes for about a year now I think this approach can be
 [GitHub](https://github.com/PaulieScanlon/gatsby-theme-terminal) |
 [Blog post](https://paulie.dev/posts/2020/02/gatsby-theme-terminal/)
 
+
 ![Screenshot of starter instructions for Gatsby Terminal theme](./gatsby-starter-terminal.jpg "Screenshot of starter instructions for Gatsby Terminal theme.")
 
 ## 3. gatsby-starter-terminal
@@ -52,6 +64,7 @@ It seems fitting that if I want folks to use my theme: [gatsby-theme-terminal](h
 It's a pretty bare bones example of how to use the theme but it does demonstrate how to use component shadowing for the logo and how to provide a custom Theme UI object to style the theme your way. _I believe the 2 stars it has on GitHub speak for themselves_ 🤣
 
 [GitHub](https://github.com/PaulieScanlon/gatsby-starter-terminal)
+
 
 ![PropShop plugin screenshot](./gatsby-plugin-prop-shop.jpg)
 
@@ -67,21 +80,21 @@ I've created a [PR](https://github.com/system-ui/theme-ui/pull/669) for Theme UI
 
 > Thanks! This is a really cool idea!
 
-If anyone in Gatsby Admin happens to read this, again, I'm available to help build it. 🤞
+(If anyone in Gatsby Admin happens to read this, again, I'm available to help build it. 🤞)
 
 [View demo](https://gatsby-plugin-prop-shop.netlify.com/prop-shop/) |
 [GitHub](https://github.com/PaulieScanlon/gatsby-plugin-prop-shop) |
 [Blog post](https://paulie.dev/posts/2020/02/prop-shop/)
 
-![](./theme-ui-components.jpg)
+![Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, convering package to TypeScript](./theme-ui-components.jpg "Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, convering package to TypeScript")
 
 ## 5. @theme-ui/components
 
-In the true spirit of open source I wanted to contribute to the libraries I use and love, and what better time than 100 Days of Gatsby to do this? I noticed a request for collaboration on Theme UI Components by the Gatsby team who were switching _everything_ over to TypeScript. This kind of work is right in my wheel house so i set about converting the package to TypeScript. Unfortunately I ran out of talent and the [PR](https://github.com/system-ui/theme-ui/pull/692) remains open. I believe there are bigger pieces of work that first need to be completed before this will be looked at again. However, if I suddenly become a TypeScript guru I'll be certain to pick this back up.
+In the true spirit of open source I wanted to contribute to the libraries I use and love, and what better time than 100 Days of Gatsby to do this? I noticed a request for collaboration on Theme UI Components by the Gatsby team who were switching _everything_ over to TypeScript. This kind of work is right in my wheel house so I set about converting the package to TypeScript. Unfortunately I ran out of talent and the [PR](https://github.com/system-ui/theme-ui/pull/692) remains open. I believe there are bigger pieces of work that first need to be completed before this will be looked at again. However, if I suddenly become a TypeScript guru I'll be certain to pick this back up.
 
 [PR](https://github.com/system-ui/theme-ui/pull/692)
 
-![Screenshot of MDX-embed plugin](./gatsby-mdx-embed.jpg "Screenshot of starter instructions for Gatsby Terminal theme")
+"![Screenshot of MDX-embed plugin](./gatsby-mdx-embed.jpg "Screenshot of Gatsby MDX Embed plugin")
 
 ## 6. gatsby-mdx-embed
 
@@ -97,7 +110,7 @@ That's all possible with this plugin. There are few shortcomings with the way th
 [GitHub](https://github.com/PaulieScanlon/gatsby-mdx-embed) |
 [Blog post](https://paulie.dev/posts/2020/01/gatsby-mdx-embed/)
 
-![](./gatsby-remark-grid-system.jpg)
+![Screen shot of Gatsby Grid System plugin](./gatsby-remark-grid-system.jpg "Screen shot of Gatsby Grid System plugin")
 
 ## 7. gatsby-remark-grid-system
 
@@ -145,9 +158,9 @@ So if you do want big tables in your blog but don't want neverending page scroll
 
 ... and finally, GatStats.
 
-This was the whole reason I got into Gatsby. I released [GatStats](https://twitter.com/PaulieScanlon/status/1201514996838141952) in December 2019, before the challenge started. Due to the new exposure , though, more and more issues were raised on GitHub so I continued to support and develop this over the course of the challenge.
+This was the whole reason I got into Gatsby. I released [GatStats](https://twitter.com/PaulieScanlon/status/1201514996838141952) in December 2019, before the challenge started. Due to the new exposure, though, more and more issues were raised on GitHub so I continued to support and develop this over the course of the challenge.
 
-Knowing what I know now, post my 100 Days journey, I think it's time to retire this theme. Ultimately I would like to rebuild it using all my learnings from other Gatsby work. Also, I still want to create a dashboard theme but not sure this is it, I think there's another, much better way to approach it...Maybe 100 Days of Gatsby 2021??? 
+Knowing what I know now, post my 100 Days journey, I think it's time to retire this theme. Ultimately I would like to rebuild it using all my learnings from other Gatsby work. Also, I still want to create a dashboard theme but not sure this is it, I think there's another, much better way to approach it...Maybe 100 Days of Gatsby 2021???
 
 (Apologies in advance if you're using this theme. They'll be an update soon about how to migrate).
 
@@ -159,5 +172,3 @@ Knowing what I know now, post my 100 Days journey, I think it's time to retire t
 ... and that's it 💥
 
 Big shout out to the Gatsby team, all the folks who use the technology, plus everyone I've interacted with on [Twitter](https://twitter.com/PaulieScanlon) over the past three months. It's been an absolute pleasure.
-
-
