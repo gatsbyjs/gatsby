@@ -10,6 +10,8 @@ module.exports = async ({
 }) => {
   // Test the plan
   const createPlan = await resource.plan(context, initialObject)
+  expect(createPlan).toBeTruthy()
+
   expect(createPlan).toMatchSnapshot(`${resourceName} create plan`)
 
   // Test creating the resource

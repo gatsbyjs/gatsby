@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-google-gtag",
   "description": "Gatsby plugin to add google gtag onto a site",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Tyler Buchea <tyler@buchea.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

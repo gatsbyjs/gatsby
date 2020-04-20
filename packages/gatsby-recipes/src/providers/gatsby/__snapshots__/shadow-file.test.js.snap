@@ -17,13 +17,13 @@ exports[`Shadow File resource e2e shadow file resource test: GatsbyShadowFile cr
 Object {
   "currentState": Object {},
   "describe": "Shadow src/components/author.js from the theme gatsby-theme-blog",
-  "diff": "[31m- Original  - 0[39m
-[32m+ Modified  + 4[39m
+  "diff": "- Original  - 0
++ Modified  + 4
 
-[32m+ import React from 'react'[39m
-[32m+[39m
-[32m+ export default () => <h1>F. Scott Fitzgerald</h1>[39m
-[32m+[39m",
++ import React from 'react'
++
++ export default () => <h1>F. Scott Fitzgerald</h1>
++",
   "id": "src/gatsby-theme-blog/components/author.js",
   "newState": Object {
     "contents": "import React from 'react'
@@ -78,7 +78,7 @@ export default () => <h1>F. Scott Fitzgerald</h1>
     "theme": "gatsby-theme-blog",
   },
   "describe": "Shadow src/components/author.js from the theme gatsby-theme-blog",
-  "diff": "[2mCompared values have no visual difference.[22m",
+  "diff": "Compared values have no visual difference.",
   "id": "src/gatsby-theme-blog/components/author.js",
   "newState": Object {
     "contents": "import React from 'react'
