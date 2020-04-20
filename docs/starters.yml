@@ -5993,8 +5993,10 @@
   repo: https://github.com/neo/gatsby-starter-typescript-eslint
   description: A clean Gatsby starter with TypeScript and ESLint
   tags:
+    - Language:TypeScript
+    - Linting
+  features:
     - TypeScript
     - ESLint
     - Prettier
-  features:
-    - ESLint that works with TypeScript and Prettier
+    - `typescript-eslint`
