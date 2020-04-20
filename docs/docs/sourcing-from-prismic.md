@@ -1,16 +1,17 @@
 ---
 title: Sourcing from Prismic
 ---
+In this guide, you’ll set up a site with content management using [Prismic](https://prismic.io/).
+We’ll use the Gatsby Hello World starter.
 
-In this guide, you'll set up a site with content management using [Prismic](https://prismic.io/).
+Prismic is a Headless CMS with a web app for creating and publishing content: the “Writing Room” + a fully-fledged GraphQL API
+It’s suitable for marketers and developers as it offers features like a components-based page builder, image optimization, previewing, scheduling, content versioning, and multi-language support.
 
-Prismic is a Headless CMS (SaaS) with a web app for creating and publishing content. It's suitable for marketers, editors, and developers as it has both a "Writing Room" and a fully-fledged API & content backend. Besides the usual advantages of a SaaS CMS (hosting, security, updates), Prismic offers features like custom type builder, scheduling and content versioning, and multi-language support.
-
+Interesting reads:
+[Sample Blog with API-based CMS & Gatsby.js](https://user-guides.prismic.io/en/articles/2933292-sample-blog-with-api-based-cms-gatsby-js).
 [Read the official Prismic documentation on Gatsby](https://prismic.io/docs/reactjs/getting-started/prismic-gatsby).
+[Prismic Official documentation](https://prismic.io/docs).
 
-_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work. If you'd like to start with an example project, check out [Sample Blog with API-based CMS & Gatsby.js](https://user-guides.prismic.io/en/articles/2933292-sample-blog-with-api-based-cms-gatsby-js). 
-
-If you're not familiar with Prismic and its functionalities yet, check out [Prismic's official documentation](https://prismic.io/docs). This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
 
 ## Setup
 
