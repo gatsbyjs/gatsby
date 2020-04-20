@@ -1,11 +1,12 @@
 import path from "path"
+import os from "os"
 import v8 from "v8"
 import {
   existsSync,
   mkdtempSync,
+  moveSync, // Note: moveSync over renameSync because /tmp may be on other mount
   readFileSync,
   removeSync,
-  renameSync,
   writeFileSync,
 } from "fs-extra"
 import { IGatsbyNode, ICachedReduxState } from "./types"
@@ -130,7 +131,7 @@ function safelyRenameToBak(reduxCacheFolder: string): string {
     ++suffixCounter
     bakName = reduxCacheFolder + tmpSuffix + suffixCounter
   }
-  renameSync(reduxCacheFolder, bakName)
+  moveSync(reduxCacheFolder, bakName)
 
   return bakName
 }
@@ -139,7 +140,7 @@ export function writeToCache(contents: ICachedReduxState): void {
   // Note: this should be a transactional operation. So work in a tmp dir and
   // make sure the cache cannot be left in a corruptable state due to errors.
 
-  const tmpDir = mkdtempSync(`reduxcache`) // linux / windows
+  const tmpDir = mkdtempSync(path.join(os.tmpdir(), `reduxcache`)) // linux / windows
 
   prepareCacheFolder(tmpDir, contents)
 
@@ -156,7 +157,7 @@ export function writeToCache(contents: ICachedReduxState): void {
   }
 
   // The redux cache folder should now not exist so we can rename our tmp to it
-  renameSync(tmpDir, reduxCacheFolder)
+  moveSync(tmpDir, reduxCacheFolder)
 
   // Now try to yolorimraf the old cache folder
   try {

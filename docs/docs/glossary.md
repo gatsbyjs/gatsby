@@ -220,9 +220,9 @@ A way of writing HTML content with plain text, using special characters to denot
 
 ## N
 
-### NPM
+### [npm](/docs/glossary/npm)
 
-[Node](#node) [Package](#package) Manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
+[Node](#node) [package](#package) manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
 
 ### Node
 
@@ -364,7 +364,7 @@ A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's
 
 ## Y
 
-### Yarn
+### [Yarn](/docs/glossary/yarn/)
 
 A [package](#package) manager that some prefer to [NPM](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
 
