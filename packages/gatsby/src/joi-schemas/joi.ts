@@ -76,8 +76,8 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
       }),
     }
   )
-  .error(errors => {
-    return errors.map(error => {
+  .error(errors =>
+    errors.map(error => {
       if (error.type === `object.allowUnknown`) {
         const { key } = error.context
         const suggestion = didYouMean(key)
@@ -87,7 +87,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
 
       return error
     })
-  })
+  )
 
 export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()
   .keys({
