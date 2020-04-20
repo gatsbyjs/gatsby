@@ -9,6 +9,7 @@ tags:
   - 100-Days-of-Gatsby
   - react
 ---
+
 ## Intro
 
 Well hey there! 👋 I'm Paul, I'm a React UI Developer / UX Engineer and a long long time ago I was a designer but after a few years of pixel pushing I realized code is just better!
@@ -27,7 +28,6 @@ When the [#100DaysOfGatsby](https://www.gatsbyjs.org/blog/tags/100-days-of-gatsb
 
 So for **100** days I posted literally **every day** about the work I've been doing in and around the Gatsby eco-system. If you have a spare 103 minutes you can read about the full 100 days [here](https://paulie.dev/posts/2020/01/100DaysOfGatsby/). But because I know you're all busy busy people, here is the tl;dr summary version.
 
-
 ![Screen shot of Skin UI, a Gatsby app by Paulie Scanlon](./skin-ui.jpg)
 
 ## 1. Skin UI
@@ -42,7 +42,6 @@ I believe this project has legs, but I also need to do a bit more work on it bef
 [GitHub](https://github.com/PaulieScanlon/skin-ui) |
 [Blog post](https://paulie.dev/posts/2020/04/skin-ui/)
 
-
 ![Screenshot of Terminal, a zero-component Gatsby theme](./gatsby-theme-terminal.jpg "Screenshot of Terminal, a zero-component Gatsby theme")
 
 ## 2. gatsby-theme-terminal
@@ -55,7 +54,6 @@ Having worked on Gatsby Themes for about a year now I think this approach can be
 [GitHub](https://github.com/PaulieScanlon/gatsby-theme-terminal) |
 [Blog post](https://paulie.dev/posts/2020/02/gatsby-theme-terminal/)
 
-
 ![Screenshot of starter instructions for Gatsby Terminal theme](./gatsby-starter-terminal.jpg "Screenshot of starter instructions for Gatsby Terminal theme.")
 
 ## 3. gatsby-starter-terminal
@@ -65,7 +63,6 @@ It seems fitting that if I want folks to use my theme: [gatsby-theme-terminal](h
 It's a pretty bare bones example of how to use the theme but it does demonstrate how to use component shadowing for the logo and how to provide a custom Theme UI object to style the theme your way. _I believe the 2 stars it has on GitHub speak for themselves_ 🌟😂.
 
 [GitHub](https://github.com/PaulieScanlon/gatsby-starter-terminal)
-
 
 ![PropShop plugin screenshot](./gatsby-plugin-prop-shop.jpg)
 
@@ -123,7 +120,6 @@ This plugin was a head first dive into the [Markdown Abstract Syntax Tree](https
 [GitHub](https://github.com/PaulieScanlon/gatsby-remark-grid-system) |
 [Blog post](https://paulie.dev/posts/2019/12/26/gatsby-remark-grid-system/)
 
-
 ![Code sample of a plugin called gatsby-mdx-routes](./gatsby-mdx-routes.jpg "Code sample of a plugin called gatsby-mdx-routes")
 
 ## 8. gatsby-mdx-routes
@@ -137,7 +133,6 @@ There are a few areas where it doesn't quite perform, namely in the recursive pa
 [View Demo](https://gatsby-mdx-routes.netlify.com/) |
 [GitHub](https://github.com/PaulieScanlon/gatsby-mdx-routes) |
 [Blog post](https://paulie.dev/posts/2019/12/12/gatsby-mdx-routes/)
-
 
 ![demo of gatsby-remark-sticky-table, a plugin for making sticky header tables in markdown](./gatsby-remark-sticky-table.jpg "demo image of gatsby-remark-sticky-table, a plugin for making sticky header tables in markdown")
 
@@ -153,7 +148,7 @@ So if you do want big tables in your blog but don't want neverending page scroll
 [GitHub](https://github.com/PaulieScanlon/gatsby-remark-sticky-table) |
 [Blog post](https://paulie.dev/posts/2019/11/24/gatsby-remark-sticky-table/)
 
-![](./gatsby-theme-gatstats.jpg "")
+![](./gatsby-theme-gatstats.jpg)
 
 ## 10. gatsby-theme-gatstats
 
