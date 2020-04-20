@@ -89,8 +89,7 @@ export default withI18n()(function Sidebar({
   )
 
   const activeItemParents = React.useMemo(
-    () =>
-      getActiveItemParents(itemList, activeItem, []).map(link => link.title),
+    () => getActiveItemParents(itemList, activeItem).map(link => link.title),
     [itemList, activeItem]
   )
 

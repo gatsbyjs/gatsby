@@ -84,7 +84,7 @@ export default function ItemLink({ item, overrideCSS }) {
             width: bulletSize,
           },
           "&:before": {
-            bg: isActive ? `link.color` : false,
+            bg: isActive && `link.color`,
             borderRadius: 6,
             transform: isActive ? `scale(1)` : `scale(0.1)`,
           },
