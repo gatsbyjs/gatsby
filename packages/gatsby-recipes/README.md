@@ -134,7 +134,9 @@ Soon will support options.
 
 #### `<GatsbyShadowFile>`
 
+```jsx
 <GatsbyShadowFile theme="gatsby-theme-blog" path="src/components/seo.js" />
+```
 
 ##### props
 
