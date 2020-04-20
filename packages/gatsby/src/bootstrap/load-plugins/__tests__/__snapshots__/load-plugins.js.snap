@@ -186,7 +186,7 @@ Array [
 ]
 `;
 
-exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
+exports[`Load plugins Loads plugins defined with an object but without an options key 1`] = `
 Array [
   Object {
     "browserAPIs": Array [],

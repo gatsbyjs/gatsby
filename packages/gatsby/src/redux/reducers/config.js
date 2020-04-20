@@ -1,5 +1,6 @@
 const chalk = require(`chalk`)
 
+const { didYouMean } = require(`../../utils/did-you-mean`)
 const { gatsbyConfigSchema } = require(`../../joi-schemas/joi`)
 
 module.exports = (state = {}, action) => {
@@ -17,7 +18,20 @@ module.exports = (state = {}, action) => {
         console.log(
           chalk.blue.bgYellow(`The site's gatsby-config.js failed validation`)
         )
-        console.log(chalk.bold.red(result.error))
+
+        const [invalidProperty] = result.error.details.filter(
+          details => details.type === `object.allowUnknown`
+        )
+
+        if (invalidProperty) {
+          const { key } = invalidProperty.context
+          const suggestion = didYouMean(key)
+
+          throw new Error(`${result.error}. ${suggestion}`)
+        } else {
+          console.log(chalk.bold.red(result.error))
+        }
+
         if (normalizedPayload.linkPrefix) {
           console.log(`"linkPrefix" should be changed to "pathPrefix"`)
         }

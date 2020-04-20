@@ -78,4 +78,20 @@ describe(`config reducer`, () => {
     }
     expect(reducer(undefined, action).pathPrefix).toBe(``)
   })
+
+  it(`throws with a suggestion when an invalid key is passed`, async () => {
+    expect.assertions(1)
+    const action = {
+      type: `SET_SITE_CONFIG`,
+      payload: {
+        plugin: [],
+      },
+    }
+
+    try {
+      reducer({}, action)
+    } catch (err) {
+      expect(err.message).toMatchSnapshot()
+    }
+  })
 })

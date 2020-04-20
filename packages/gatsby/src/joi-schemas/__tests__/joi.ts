@@ -100,33 +100,6 @@ describe(`gatsby config`, () => {
       expect(err.message).toMatchSnapshot()
     }
   })
-
-  it(`throws when relative path used for both assetPrefix and pathPrefix`, async () => {
-    expect.assertions(1)
-    const config = {
-      assetPrefix: `/assets`,
-      pathPrefix: `/blog`,
-    }
-
-    try {
-      await gatsbyConfigSchema.validate(config)
-    } catch (err) {
-      expect(err.message).toMatchSnapshot()
-    }
-  })
-
-  it(`throws with a suggestion when an invalid key is passed`, async () => {
-    expect.assertions(1)
-    const config = {
-      plugin: [],
-    }
-
-    try {
-      await gatsbyConfigSchema.validate(config)
-    } catch (err) {
-      expect(err.message).toMatchSnapshot()
-    }
-  })
 })
 
 describe(`node schema`, () => {

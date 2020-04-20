@@ -4,8 +4,6 @@ exports[`gatsby config does not allow pathPrefix to be full URL 1`] = `"child \\
 
 exports[`gatsby config throws when relative path used for both assetPrefix and pathPrefix 1`] = `"assetPrefix must be an absolute URI when used with pathPrefix"`;
 
-exports[`gatsby config throws with a suggestion when an invalid key is passed 1`] = `"\\"plugin\\" is not allowed. Did you mean \\"plugins\\"?"`;
-
 exports[`node schema doesn't allow unknown internal fields 1`] = `"child \\"internal\\" fails because [\\"customField\\" is not allowed]"`;
 
 exports[`node schema force id type 1`] = `"child \\"id\\" fails because [\\"id\\" must be a string]"`;
