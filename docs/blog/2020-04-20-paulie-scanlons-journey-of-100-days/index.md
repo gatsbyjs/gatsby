@@ -24,7 +24,7 @@ After a little research I discovered that Gatsby is just React...BUT it still ma
 
 With Gatsby you get back all that good stuff we kind of lost when "Websites" became "Single Page Applications" built with React.
 
-When the [#100DaysOfGatsby](https://www.gatsbyjs.org/blog/tags/100-days-of-gatsby/) challenge was first announced I thought, _Yes, please_. I'm totally up for getting involved, but it soon transpired that pretty much every challenge was something I'd already learnt myself. _No matter,_ I thought. I can still continue to develop my React, JavaScript and Gatsby skills and by using the [hashtag](https://twitter.com/hashtag/100DaysOfGatsby) I hoped to share what I'd learnt and to find other folks out there doing the same.
+When the [#100DaysOfGatsby](/blog/tags/100-days-of-gatsby/) challenge was first announced I thought, _Yes, please_. I'm totally up for getting involved, but it soon transpired that pretty much every challenge was something I'd already learnt myself. _No matter,_ I thought. I can still continue to develop my React, JavaScript and Gatsby skills and by using the [hashtag](https://twitter.com/hashtag/100DaysOfGatsby) I hoped to share what I'd learnt and to find other folks out there doing the same.
 
 So for **100** days I posted literally **every day** about the work I've been doing in and around the Gatsby eco-system. If you have a spare 103 minutes you can read about the full 100 days [here](https://paulie.dev/posts/2020/01/100DaysOfGatsby/). But because I know you're all busy busy people, here is the tl;dr summary version.
 
