@@ -139,7 +139,7 @@ Sweet. You've installed and configured your very first Gatsby plugin!
 
 ## Creating layout components
 
-Now let's move on to learning about layout components. To get ready for this part, add a couple new pages to your project: an about page and a contact page.
+Now let's move on to learning about layout components. To get ready for this part, add a couple of new pages to your project: an about page and a contact page.
 
 ```jsx:title=src/pages/about.js
 import React from "react"
