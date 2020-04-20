@@ -35,6 +35,7 @@ const isItemActive = (activeItemParents, item) => {
 
 function getOpenItemHash(itemList, activeItemLink, activeItemParents) {
   let result = {}
+  console.log(itemList)
   for (let item of itemList) {
     if (item.items) {
       result[item.title] =
@@ -104,13 +105,12 @@ function Sidebar({
   const initialHash = (() => {
     const { openSectionHash = {} } = readLocalStorage(sidebarKey)
     for (const [key, isOpen] of Object.entries(derivedHash)) {
-      if (isOpen) {
-        openSectionHash[key] = true
-      }
+      openSectionHash[key] = openSectionHash[key] ?? isOpen
     }
     return openSectionHash
   })()
 
+  console.log(initialHash)
   const [openSectionHash, setOpenSectionHash] = React.useState(initialHash)
   const expandAll = Object.values(openSectionHash).every(isOpen => isOpen)
 
