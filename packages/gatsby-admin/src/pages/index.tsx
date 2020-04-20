@@ -1,7 +1,7 @@
 import React from "react"
 import { useQuery } from "urql"
 
-export default () => {
+export default (): React.ReactElement => {
   const [{ data, fetching, error }] = useQuery({
     query: `
       {
@@ -27,11 +27,11 @@ export default () => {
 
   return (
     <>
-      <h1>{data.npmPackageJson.value.replace(/^"|"$/g, "")}</h1>
+      <h1>{data.npmPackageJson.value.replace(/^"|"$/g, ``)}</h1>
       <h2>Plugins</h2>
       <ul>
         {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf("gatsby-plugin") === 0)
+          .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
           .map(plugin => (
             <li key={plugin.id}>{plugin.name}</li>
           ))}
@@ -39,7 +39,7 @@ export default () => {
       <h2>Themes</h2>
       <ul>
         {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf("gatsby-theme") === 0)
+          .filter(plugin => plugin.name.indexOf(`gatsby-theme`) === 0)
           .map(plugin => (
             <li key={plugin.id}>
               <details>
