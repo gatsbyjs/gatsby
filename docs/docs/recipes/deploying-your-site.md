@@ -185,4 +185,4 @@ module.exports = {
 
 ### Additional resources
 
-- [adding-analytics](https://www.gatsbyjs.org/docs/adding-analytics/)
+- [adding-analytics](/docs/adding-analytics/)

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-recipes",
   "description": "Core functionality for Gatsby Recipes",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
