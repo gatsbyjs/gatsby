@@ -90,7 +90,8 @@ module.exports = {
       resolve: `gatsby-alias-imports`,
       options: {
         aliases: {
-          // Relative paths break translations of the docs, so use an alias instead
+          // Relative paths when importing components from MDX break translations of the docs,
+          // so use an alias instead inside MDX:
           // https://www.gatsbyjs.org/contributing/docs-and-blog-components/#importing-other-components
           "@components": "src/components",
         },
