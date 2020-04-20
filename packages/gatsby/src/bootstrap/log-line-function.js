@@ -1,6 +1,6 @@
-;[`log`, `warn`].forEach(function(method) {
+;[`log`, `warn`].forEach(function (method) {
   var old = console[method]
-  console[method] = function() {
+  console[method] = function () {
     var stack = new Error().stack.split(/\n/)
     // Chrome includes a single "Error" line, FF doesn't.
     if (stack[0].indexOf(`Error`) === 0) {

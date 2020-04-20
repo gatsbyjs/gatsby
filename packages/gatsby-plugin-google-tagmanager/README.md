@@ -45,7 +45,7 @@ plugins: [
       // datalayer to be set before GTM is loaded
       // should be a stringified object or object
       // Defaults to null
-      defaultDataLayer: function() {
+      defaultDataLayer: function () {
         return {
           pageType: window.pageType,
         }

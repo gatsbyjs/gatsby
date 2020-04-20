@@ -389,10 +389,10 @@ exports.createNodesForContentType = ({
               // creating an empty node field in case when original key field value
               // is empty due to links to missing entities
               const resolvableEntryItemFieldValue = entryItemFieldValue
-                .filter(function(v) {
+                .filter(function (v) {
                   return resolvable.has(v.sys.id)
                 })
-                .map(function(v) {
+                .map(function (v) {
                   return mId(space.sys.id, v.sys.id)
                 })
               if (resolvableEntryItemFieldValue.length !== 0) {

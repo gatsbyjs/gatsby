@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.8...gatsby-plugin-mdx@1.1.9) (2020-04-17)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.7...gatsby-plugin-mdx@1.1.8) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.6...gatsby-plugin-mdx@1.1.7) (2020-04-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Truncate non-latin language excerpts correctly ([#22638](https://github.com/gatsbyjs/gatsby/issues/22638)) ([ec80671](https://github.com/gatsbyjs/gatsby/commit/ec80671))
+
+## [1.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.5...gatsby-plugin-mdx@1.1.6) (2020-04-07)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** pass on proper `modules` option value to babel ([#22903](https://github.com/gatsbyjs/gatsby/issues/22903)) ([cd120ae](https://github.com/gatsbyjs/gatsby/commit/cd120ae))
+
 ## [1.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.4...gatsby-plugin-mdx@1.1.5) (2020-04-07)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

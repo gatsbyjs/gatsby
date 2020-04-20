@@ -13,6 +13,7 @@ const {
   setDefaultTags,
   setTelemetryEnabled,
 } = require(`gatsby-telemetry`)
+const { recipesHandler } = require(`./recipes`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -136,13 +137,18 @@ function buildLocalCommands(cli, isLocalSite) {
           alias: `cert-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS cert file (also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`k`, {
           alias: `key-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS key file (also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`ca-file`, {
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
@@ -292,6 +298,12 @@ function buildLocalCommands(cli, isLocalSite) {
       process.env.NODE_ENV = process.env.NODE_ENV || `development`
       return cmd(args)
     }),
+  })
+
+  cli.command({
+    command: `recipes [recipe]`,
+    desc: `[EXPERIMENTAL] Run a recipe`,
+    handler: handlerP(({ recipe }) => recipesHandler(recipe)),
   })
 }
 
