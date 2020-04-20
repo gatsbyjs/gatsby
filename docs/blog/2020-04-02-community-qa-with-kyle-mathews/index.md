@@ -11,7 +11,7 @@ The [full video is on YouTube](https://www.youtube.com/watch?v=mGyUJvKjzXQ&featu
 
 ## In 2018 you blogged about "a new version of Gatsby" with incremental and parallelizing builds—what's the status & roadmap for incremental builds with Gatsby?
 
-I’m guessing this question is referring to [my blog post on the launch of our company in 2018](https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/) and that supporting very fast deployments for everyone is our top goal as a company.
+I’m guessing this question is referring to [my blog post on the launch of our company in 2018](/blog/2018-05-24-launching-new-gatsby-company/) and that supporting very fast deployments for everyone is our top goal as a company.
 
 This has always been my goal with Gatsby. The Gatsby v1 architecture was designed specifically to support this. Here’s the original tweet announcing when the basic support for incremental builds was added to the framework in a 1.0 alpha:
 
@@ -21,7 +21,7 @@ Gatsby has always used “incremental building” to drive developing on sites. 
 
 The Gatsby cache, if saved between builds, also substantially increases the speed of builds by avoiding much of the rework.
 
-As most of you know, [we recently launched our own continuous deployment product on Gatsby Cloud](https://www.gatsbyjs.org/blog/2020-01-27-announcing-gatsby-builds-and-reports/). Included in that was initial support for parallelizing parts of the build process — images to start with, and more to come.
+As most of you know, [we recently launched our own continuous deployment product on Gatsby Cloud](/blog/2020-01-27-announcing-gatsby-builds-and-reports/). Included in that was initial support for parallelizing parts of the build process — images to start with, and more to come.
 
 That drove some impressive improvements to build speeds:
 
@@ -77,7 +77,7 @@ Yup! Once the new gatsby-source-wordpress version is ready, Preview & Incrementa
 
 ## Are there going to be any big Gatsby core releases coming up?
 
-We ship releases multiple times a week. Most are incremental improvements and bug releases. We periodically write blog posts summarizing improvements. You can catch up with them at [https://www.gatsbyjs.org/blog/tags/gazette/](https://www.gatsbyjs.org/blog/tags/gazette/)
+We ship releases multiple times a week. Most are incremental improvements and bug releases. We periodically write blog posts summarizing improvements. You can catch up with them at [https://www.gatsbyjs.org/blog/tags/gazette/](/blog/tags/gazette/)
 
 We put up a couple of RFCs recently for “[Recipes](https://github.com/gatsbyjs/gatsby/pull/22610)” and a “[Gatsby Admin](https://github.com/gatsbyjs/gatsby/pull/22713)” experience you can go read. They’re going to push the Gatsby experience forward a lot.
 
@@ -121,4 +121,4 @@ A team at Chrome has been doing a lot of investigation into how frameworks like 
 
 We care a lot about accessibility. We think that’s part and parcel of building a great framework. We moved to @reach/router as part of Gatsby v2 to take advantage of Ryan Florence’s work on JavaScript router accessibility, and Marcy Sutton has done a lot of testing on how to solve some lingering issues. We hired [Madalyn Rose](https://twitter.com/madalynrose) last fall as a full-time specialist for accessibility engineering in Gatsby.
 
-Check out our blog posts tagged with accessibility: [https://www.gatsbyjs.org/blog/tags/accessibility](https://www.gatsbyjs.org/blog/tags/accessibility)
+Check out our blog posts tagged with accessibility: [https://www.gatsbyjs.org/blog/tags/accessibility](/blog/tags/accessibility)
