@@ -60,7 +60,7 @@ export type PageProps<DataType = object, PageContextType = object> = {
   /** An extended version of window.document which comes from @react/router */
   location: WindowLocation
   /** A way to handle programmatically controlling navigation */
-  navigate:  NavigateFn
+  navigate: NavigateFn
   /** You can't get passed children as this is the root user-land component */
   children: undefined
   /** @deprecated use pageContext instead */
@@ -68,16 +68,16 @@ export type PageProps<DataType = object, PageContextType = object> = {
   /** Holds information about the build process for this component */
   pageResources: {
     component: React.Component
-      json: {
-        data: DataType
-        pageContext: PageContextType
-      },
-      page: {
-        componentChunkName: string,
-        path: string,
-        webpackCompilationHash: string,
-        matchPath?: string,
-      },
+    json: {
+      data: DataType
+      pageContext: PageContextType
+    }
+    page: {
+      componentChunkName: string
+      path: string
+      webpackCompilationHash: string
+      matchPath?: string
+    }
   }
   /**
    * Data passed into the page via an exported GraphQL query. To set up this type
@@ -538,7 +538,10 @@ export interface GatsbyBrowser {
     args: ReplaceComponentRendererArgs,
     options: PluginOptions
   ): any
-  replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): Renderer
+  replaceHydrateFunction?(
+    args: BrowserPluginArgs,
+    options: PluginOptions
+  ): Renderer
   shouldUpdateScroll?(args: ShouldUpdateScrollArgs, options: PluginOptions): any
   wrapPageElement?(
     args: WrapPageElementBrowserArgs,
@@ -896,7 +899,10 @@ export interface ReplaceRendererArgs extends NodePluginArgs {
   setBodyProps: Function
 }
 
-export interface WrapPageElementNodeArgs<DataType = object, PageContextType = object> extends NodePluginArgs {
+export interface WrapPageElementNodeArgs<
+  DataType = object,
+  PageContextType = object
+> extends NodePluginArgs {
   element: object
   props: PageProps<DataType, PageContextType>
   pathname: string
@@ -1318,7 +1324,10 @@ export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
   getSavedScrollPosition: Function
 }
 
-export interface WrapPageElementBrowserArgs<DataType = object, PageContextType = object> extends BrowserPluginArgs {
+export interface WrapPageElementBrowserArgs<
+  DataType = object,
+  PageContextType = object
+> extends BrowserPluginArgs {
   element: object
   props: PageProps<DataType, PageContextType>
 }

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-facebook-analytics",
   "description": "Gatsby plugin to add facebook analytics  onto a site",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "author": "Yeison Daza <jahir045@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -33,9 +33,9 @@
     "directory": "packages/gatsby-plugin-facebook-analytics"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
     "node": ">=10.13.0"

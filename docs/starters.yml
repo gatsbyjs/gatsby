@@ -4544,15 +4544,6 @@
     - Based on the official Gatsby starter blog
     - Uses TailwindCSS
     - Uses PostCSS
-- url: https://gatsby-starter-hello-world-with-header-and-footer.netlify.com/
-  repo: https://github.com/lgnov/gatsby-starter-hello-world-with-header-and-footer
-  description: Gatsby starter with a responsive barebones header and footer layout
-  tags:
-    - Styling:CSS-in-JS
-  features:
-    - Navbar and footer components with only minimal CSS that make responsiveness works
-    - Works in any device screen
-    - Easily kicking off your project with writing CSS right away
 - url: https://gatsby-minimalist-starter.netlify.com/
   repo: https://github.com/dylanesque/Gatsby-Minimalist-Starter
   description: A minimalist, general-purpose Gatsby starter
@@ -5300,12 +5291,13 @@
     - Language:TypeScript
     - Linting
     - Netlify
+    - Testing
   features:
-    - ✔️ Gatsby
-    - ✔️ TypeScript
-    - ✔️ Prettier
-    - ✔️ ESLint
-    - ✔️ Deploy to Netlify through GitHub Actions
+    - TypeScript
+    - ESLint for JS linting
+    - Prettier code formatting
+    - Jest for testing
+    - Deploy to Netlify through GitHub Actions
 - url: https://answer.netlify.com/
   repo: https://github.com/passwd10/gatsby-starter-answer
   description: A simple Gatsby blog to show your Future Action on top of the page
@@ -5852,6 +5844,41 @@
     - CSS-in-Reason support
     - StaticQuery GraphQL support in ReasonML
     - Similar to gatsby-starter-blog
+
+- url: https://gct.mozart409.space/
+  repo: https://github.com/Mozart409/gatsby-custom-tailwind
+  description: A minimal tailwind css starter, with custom fonts, purgecss, automatic linting when committing to master, awesome lighthouse audit, custom zeit/serve server for production build, visible to all in your network, so you can test it with your phone.
+  tags:
+    - Linting
+    - PWA
+    - SEO
+    - Styling:Tailwind
+    - Styling:PostCSS
+  features:
+    - Minimal Tailwind Starter
+    - Custom Fonts predefined
+    - Automatic Linting on Commit using husky and pretty-quick
+    - Custom server to test Production Builds on your local network via zeit/serve
+    - Extensive Readme in the repo
+- url: https://gatsby-redux-toolkit-typescript.netlify.com/
+  repo: https://github.com/saimirkapaj/gatsby-redux-toolkit-typescript-starter
+  description: Gatsby Starter using Redux-Toolkit, Typescript, Styled Components and Tailwind CSS.
+  tags:
+    - Redux
+    - Language:TypeScript
+    - Styling:Tailwind
+  features:
+    - Redux-Toolkit
+    - Typescript
+    - Styled Components
+    - Tailwind CSS
+    - Removes unused CSS with Purgecss
+    - Font Awesome Icons
+    - Responsive Design
+    - Change between light and dark themes
+    - SEO
+    - React Helmet
+    - Offline Support
 - url: https://gatsby-ts-tw-styled-eslint.netlify.com
   repo: https://github.com/Miloshinjo/gatsby-ts-tw-styled-eslint-starter
   description: Gatsby starter with Typescript, TailwindCSS, @emotion/styled and eslint.
@@ -5932,3 +5959,53 @@
     - Checkout Page powered by Stripe.
     - Scripts to create/update/delete your products in Stripe.
     - Analytics with Firebase
+- url: https://gatsby-starter-ts.now.sh/
+  repo: https://github.com/jpedroschmitz/gatsby-starter-ts
+  description: A TypeScript starter for Gatsby. No plugins and styling. Exactly the necessary to start!
+  tags:
+    - Language:TypeScript
+    - Styling:None
+    - Linting
+  features:
+    - TypeScript
+    - ESLint and Prettier
+    - Husky and lint-staged
+    - Commitizen and Commitlint
+    - TypeScript absolute paths
+- url: https://rolwinreevan.com
+  repo: https://github.com/rolwin100/rolwinreevan_gatsby_blog
+  description: This starter consists of ant design system you can use it for your personal blog. I have give a lot of time in developing this starter because I found that there were not much starters with a very good design. Please give a star to this project if you have like it to encourage me 😄. Thank you.
+  tags:
+    - Blog
+    - Portfolio
+    - Markdown
+    - SEO
+    - PWA
+  features:
+    - Blog designed using Markdown.
+    - Beautifully designed landing page.
+    - First project in the starters list to use ant design.
+    - Supports SSR and is also a PWA.
+- url: https://www.dyuzz.club/
+  repo: https://github.com/Dyuzz/Gatsby-Blog-Starter-Dyuzz
+  description: A Gatsby starter for creating blogs.
+  tags:
+    - Blog
+    - PWA
+    - SEO
+    - CMS:Netlify
+    - Pagination
+  features:
+    - Blog designed using Markdown.
+    - Beautifully designed landing page.
+    - GatsbyJS v2
+    - Google Analytics
+    - Web App Manifest
+    - Netlify Support
+    - Gitalk Comment
+    - SiteMap
+    - Netlify CMS Support
+    - TOC（TableOfContexts）
+    - Pagination
+    - SEO
+    - Phone browser Support

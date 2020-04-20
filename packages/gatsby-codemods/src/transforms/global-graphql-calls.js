@@ -39,10 +39,7 @@ function addEsmImport(j, root, tag) {
       j.literal(MODULE_NAME)
     )
     importStatement.comments = comments
-    root
-      .find(j.Program)
-      .get(`body`, 0)
-      .insertBefore(importStatement)
+    root.find(j.Program).get(`body`, 0).insertBefore(importStatement)
     return
   }
 
