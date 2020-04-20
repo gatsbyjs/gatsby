@@ -20,9 +20,9 @@ Interesting reads:
 
 ### Prismic
 
-Before initializing your Gatsby project you should sign up for an account on [Prismic.io](https://prismic.io/). The free plan is a perfect fit for personal or smaller projects. Create a new blank repository to get to the content overview of your repository.
+Before initializing your Gatsby project you should sign up on [Prismic.io](https://prismic.io/). The free plan is a perfect fit for personal or smaller projects.
 
-Create your first custom type (Repeatable Type) with the name `Post` and add some fields to it. Choose rational names for the `API ID` input while configuring a field because these names will appear in your queries. You should always add the `uid` field in order to have a unique identifier (e.g. for filtering). Then switch to the content overview and create a new document with your `Post` type. Fill out the fields and publish the item.
+Create a new repository and your first Custom type (Repeatable Type) with the name `Post`, then add some fields. Choose rational names for the `API ID` input while configuring a field, these names will appear in your queries. You should always add the `uid` field in order to have a unique identifier (e.g. for filtering). Then switch to the Content overview and create a new Document with your `Post` type. Fill out the fields and publish it.
 
 https://youtu.be/yrOYLNiYtBQ
 
@@ -66,9 +66,9 @@ API_KEY=paste-your-secret-access-token-here-wou7evoh0eexuf
 
 _Note: If you want to locally build your project you'll also have to create a `.env.production` file with the same content._
 
-Now you need to configure the plugin (See all [available options](https://www.gatsbyjs.org/packages/gatsby-source-prismic-graphql/)). The `repositoryName` is the name you have entered at the creation of the repository (you'll also find it as the subdomain in the URL). 
+Now configure the plugin (See all [available options](https://www.gatsbyjs.org/packages/gatsby-source-prismic-graphql/)). The `repositoryName` is the name you have entered at the creation of the repository (you'll also find it as the subdomain in the URL). 
 
-Add the following to register the plugin, in this example we're dinamically creating pages for all the documents of the tupe `Post` and one `Homepage`:
+Add the following to register the plugin, in this example we're dinamically creating pages for all the documents of the type `Post` and one `Homepage`:
 
 ```javascript:title=gatsby-config.js
 require("dotenv").config({
@@ -85,7 +85,7 @@ module.exports = {
         pages: [
           {
             type: 'Page',
-            match: '/:uid',
+            match: '/page/:uid',
             path: '/',
             component: require.resolve('./src/templates/page.js')
           },
@@ -102,9 +102,7 @@ module.exports = {
 }
 ```
 
-The best way to create and test your queries now is to first develop them in the [GraphQL Playground](https://www.gatsbyjs.org/docs/using-graphql-playground/) at `http://localhost:8000/__graphql` and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
-
-![Prismic Index Query](./images/prismic-index-query.jpg)
+The best way to create and test your queries now is to first develop them in the [GraphQL Playground](https://www.gatsbyjs.org/docs/using-graphql-playground/) at `http://localhost:8000/__graphql` and then paste them into your files. Start the local development server and experiment a bit with the available queries.
 
 Because you defined the custom type as `Post` the query after the `prismic` key is called `allPosts` (and `Post`). You can also see the API IDs (from the field names) you created earlier.
 
@@ -163,14 +161,14 @@ Prismic offers a [Content Relationship](https://user-guides.prismic.io/content-m
 
 https://youtu.be/67yir-jQrFk
 
-The video shows the usage of a group field and relationship field — if you only want to have one category, skip the group field. Similar as to the `Post` custom type the `Category` one can also be queried. Furthermore, the `allPosts` query also has the `categories` node available.
+The video shows the usage of a Group field and Content Relationship field — if you only want to have one category, skip the group field. Similar as to the `Post` custom type the `Category` one can also be queried. Furthermore, the `allPosts` query also has the `categories` node available.
 
 The `linkResolver` function is used to process links in your content. Fields with rich text formatting or links to internal content use this function to generate the correct link URL. The document node, field key (i.e. API ID), and field value are provided to the function. This allows you to use different [link resolver logic](https://prismic.io/docs/reactjs/beyond-the-api/link-resolving) for each field if necessary.
 
 
 ### Single Type
 
-When creating a new custom type, you are able to choose `Single Type`, too. In this example, you'll fill the homepage with content from Prismic and therefore have complete control over the content of your site. The goal is to eliminate the need to change website code, and to change your content in Prismic instead. Visit your Prismic repository and follow the video:
+When creating a new custom type, you are able to choose `Single Type`, too. Visit your Prismic repository and follow the video:
 
 https://youtu.be/bvDAUEaJXrM
 
@@ -183,14 +181,14 @@ import { graphql } from "gatsby"
 import { RichText } from "prismic-reactjs"
 
 export const query = graphql`
-query($lang: String!, $uid:String!){
+ query($lang: String!, $uid:String!){
   prismic{
     homepage(lang:$lang, uid:$uid){
       title
       content
     }
   }
-}
+ }
 `
 const Homepage = props => {
   const document = props.data.prismic.homepage
@@ -212,11 +210,6 @@ export default Homepage
 This was an example meant to help you understand how Prismic works with Gatsby. With your newfound knowledge of Prismic (and perhaps even Gatsby), you're now able to:
 
 - Create a Prismic repository and setting it up together with the Gatsby plugin
-- Query data from Prismic and using it to programmatically create pages
-- Use Prismic together with Netlify
-- Add relationships between posts, e.g. with categories
-- Query data from Prismic for repeatable and single pages
-
-
-
-<!-- Links to more advanced tutorials will go here -->
+- Query data from Prismic for repeatable and single pages and dynamically generate pages
+- Deploy the site in Netlify
+- Add Content Relationship links between documents.
