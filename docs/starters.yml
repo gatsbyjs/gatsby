@@ -6009,3 +6009,15 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://flotiq-starter-recipes.herokuapp.com
+  repo: https://github.com/flotiq/gatsby-starter-recipes
+  description: A Gatsby culinary starter with recipes sourced from Flotiq.
+  tags:
+    - Culinary recipes
+    - CMS:Flotiq
+    - CMS:Headless
+  features:
+    - Recipes starter
+    - Flotiq CMS as a recipe source
+    - Deploy to Heroku
+    
