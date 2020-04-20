@@ -5989,3 +5989,12 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://gatsby-starter-typescript-eslint.now.sh/
+  repo: https://github.com/neo/gatsby-starter-typescript-eslint
+  description: A clean Gatsby starter with TypeScript and ESLint
+  tags:
+    - TypeScript
+    - ESLint
+    - Prettier
+  features:
+    - ESLint that works with TypeScript and Prettier
