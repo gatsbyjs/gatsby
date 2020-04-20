@@ -104,9 +104,7 @@ function Sidebar({
   const initialHash = (() => {
     const { openSectionHash = {} } = readLocalStorage(sidebarKey)
     for (const [key, isOpen] of Object.entries(derivedHash)) {
-      if (isOpen) {
-        openSectionHash[key] = true
-      }
+      openSectionHash[key] = openSectionHash[key] ?? isOpen
     }
     return openSectionHash
   })()
