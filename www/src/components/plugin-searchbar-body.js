@@ -411,11 +411,11 @@ const Result = ({ hit, pathname, query }) => {
           hit.name[0] !== `@` &&
           hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
             0 ? (
-            <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`} title={`Official Plugin`}>
+            <span sx={{ mr: 1 }} title={`Official Plugin`}>
               <GatsbyIcon />
             </span>
           ) : (
-            <span sx={{ mr: 1 }} alt={`Community Gatsby Plugin`} title={`Community Plugin`}>
+            <span sx={{ mr: 1 }} title={`Community Plugin`}>
               <CommunityIcon />
             </span>
           )}
