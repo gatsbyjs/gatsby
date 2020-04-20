@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.3.4...gatsby-plugin-sitemap@2.3.5) (2020-04-20)
+
+### Bug Fixes
+
+- **gatsby-plugin-sitemap:** word spelling ([#23252](https://github.com/gatsbyjs/gatsby/issues/23252)) ([c35d337](https://github.com/gatsbyjs/gatsby/commit/c35d337))
+
 ## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.3.3...gatsby-plugin-sitemap@2.3.4) (2020-04-17)
 
 ### Bug Fixes

@@ -2,7 +2,7 @@
 title: Overview of the Gatsby Build Process
 ---
 
-import LayerModel from "@components/layer-model"
+import ComponentModel from "@components/layer-model/component-model"
 
 <!-- written at the time of commit e85278c to bootstrap/index.js and commit f8cae16 to build.js -->
 
@@ -165,7 +165,7 @@ A Node.js server process powers things behind the scenes when you run the `gatsb
 
 The following model demonstrates what is happening in different "layers" of Gatsby as content and data are gathered up and made available for your static assets.
 
-<LayerModel initialLayer="Build" />
+<ComponentModel initialLayer="Build" />
 
 Like the console output demonstrates in the section above, there are 2 main steps that take place when you run a build: the `bootstrap` phase, and the `build` phase (which can be observed finishing in the console output when you run `gatsby develop` or `gatsby build`).
 
