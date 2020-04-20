@@ -18,5 +18,3 @@ Object {
   },
 }
 `;
-
-exports[`config reducer throws with a suggestion when an invalid key is passed 1`] = `"[1m[31mplugin is not allowed. Did you mean \\"plugins\\"?[39m[22m"`;

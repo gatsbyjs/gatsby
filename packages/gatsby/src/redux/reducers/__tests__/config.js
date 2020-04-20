@@ -93,7 +93,7 @@ describe(`config reducer`, () => {
     try {
       reducer({}, action)
     } catch (err) {
-      expect(consoleSpy.mock.calls[1][0]).toMatchSnapshot()
+      expect(consoleSpy.mock.calls[1][0]).toContain(`Did you mean "plugins"?`)
     }
   })
 })
