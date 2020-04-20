@@ -121,11 +121,20 @@ function transformField({
 
   const isListOfGatsbyNodes =
     ofType && gatsbyNodesInfo.typeNames.includes(ofType.name)
+  const isListOfMediaItems =
+    (ofType && ofType.name === `MediaItem`) ??
+    (ofType?.ofType && ofType.ofType.name === `MediaItem`)
 
-  if (fieldType.kind === `LIST` && isListOfGatsbyNodes) {
+  if (fieldType.kind === `LIST` && isListOfGatsbyNodes && !isListOfMediaItems) {
     return {
       fieldName: fieldName,
       fields: [`id`],
+      fieldType,
+    }
+  } else if (fieldType.kind === `LIST` && isListOfMediaItems) {
+    return {
+      fieldName: fieldName,
+      fields: [`id`, `sourceUrl`],
       fieldType,
     }
   } else if (fieldType.kind === `LIST`) {

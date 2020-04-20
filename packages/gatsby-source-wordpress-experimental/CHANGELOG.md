@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.0.35
+
+### Bug Fixes
+
+- Lists of MediaItems were not being recognized as media files that are referenced. This means those media items weren't being sourced as we only source referenced media items. This version fixes that issue!
+
 ## 0.0.34
 
 ### Bug Fixes
