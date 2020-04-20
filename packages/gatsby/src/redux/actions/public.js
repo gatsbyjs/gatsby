@@ -246,7 +246,16 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       }
     }
   }
-
+  
+  //sends a warning if pageContext exceeds approx 500kb limit
+  const contextSize = JSON.stringify(page.context).length;
+  if(contextSize > 500000){
+    msg = `page contextSize was greater than 500kb`
+    report.warn(
+        chalk.bold.yellow(msg)
+        )
+  }
+  
   // Check if a component is set.
   if (!page.component) {
     if (process.env.NODE_ENV !== `test`) {
