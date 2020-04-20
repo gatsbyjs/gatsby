@@ -61,12 +61,16 @@ const paginatedWpNodeFetch = async ({
     return allContentNodes
   }
 
-  const {
+  let {
     [contentTypePlural]: { nodes, pageInfo: { hasNextPage, endCursor } = {} },
   } = data
 
+  // Sometimes private posts return as null.
+  // That causes problems for us so let's strip them out
+  nodes = nodes.filter(Boolean)
+
   if (nodes && nodes.length) {
-    nodes.forEach(node => {
+    nodes.forEach(async node => {
       node.type = nodeTypeName
       // this is used to filter node interfaces by content types
       node.nodeType = nodeTypeName
