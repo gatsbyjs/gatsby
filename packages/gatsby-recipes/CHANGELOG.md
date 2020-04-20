@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.8...gatsby-recipes@0.0.9) (2020-04-20)
+
+### Bug Fixes
+
+- **recipes:** adjust path to layout component ([#23251](https://github.com/gatsbyjs/gatsby/issues/23251)) ([4043129](https://github.com/gatsbyjs/gatsby/commit/4043129))
+
 ## [0.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.7...gatsby-recipes@0.0.8) (2020-04-18)
 
 ### Bug Fixes
