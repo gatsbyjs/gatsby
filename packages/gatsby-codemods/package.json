@@ -1,6 +1,6 @@
 {
   "name": "gatsby-codemods",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A collection of codemod scripts for use with JSCodeshift that help migrate to newer versions of Gatsby.",
   "main": "index.js",
   "scripts": {

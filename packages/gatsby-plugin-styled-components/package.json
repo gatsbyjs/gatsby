@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-styled-components",
   "description": "Gatsby plugin to add support for styled components",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "author": "Guten Ye <ywzhaifei@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import Link from "../../components/localized-link"
+import Link from "../localized-link"
 
 import indention from "../../utils/sidebar/indention"
 
@@ -11,17 +11,18 @@ const bulletSize = 8
 const bulletSizeActive = 100
 const bulletOffsetTop = `1.3em`
 
-const createLink = ({
+export default function ItemLink({
   item,
   onLinkClick,
   isActive,
   isParentOfActiveItem,
   ui,
   overrideCSS,
-  level,
-}) => {
+}) {
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
+
+  const level = item.level
   const indent = ui === `steps` ? indention(level + 1) : indention(level)
 
   return (
@@ -130,5 +131,3 @@ const createLink = ({
     </span>
   )
 }
-
-export default createLink
