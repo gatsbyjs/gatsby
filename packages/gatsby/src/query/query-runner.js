@@ -4,6 +4,7 @@ const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const path = require(`path`)
+const _ = require(`lodash`)
 const { store } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const pageDataUtil = require(`../utils/page-data`)
@@ -32,9 +33,21 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
 
     const timeoutId = setTimeout(() => {
       if (isPending) {
-        report.warn(
-          `Query in the "${queryJob.componentPath}" file takes too long`
-        )
+        const messageParts = [
+          `Query takes too long:`,
+          `File path: ${queryJob.componentPath}`,
+        ]
+
+        if (queryJob.isPage) {
+          const { path, context } = queryJob.context
+          messageParts.push(`URL path: ${path}`)
+
+          if (!_.isEmpty(context)) {
+            messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
+          }
+        }
+
+        report.warn(messageParts.join(`\n`))
       }
     }, 15000)
 
