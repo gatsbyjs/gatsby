@@ -14,4 +14,5 @@
 /themes/                                        @gatsbyjs/themes-core
 /packages/gatsby-plugin-mdx/                    @gatsbyjs/themes-core
 /packages/gatsby/src/bootstrap/load-themes      @gatsbyjs/themes-core
+/packages/gatsby-recipes/                       @gatsbyjs/themes-core
 /packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/   @gatsbyjs/themes-core
