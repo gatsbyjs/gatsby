@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
+import { trackCustomEvent } from "gatsby-plugin-google-analytics"
 
 import Button from "./button"
 
@@ -68,7 +68,19 @@ const MastheadContent = () => (
       }}
     >
       Already using Gatsby? Preview, build, and deploy faster with{" "}
-      <OutboundLink href="https://www.gatsbyjs.com">Gatsby Cloud</OutboundLink>.
+      <a
+        href="https://www.gatsbyjs.com"
+        onClick={() =>
+          trackCustomEvent({
+            category: `home-masthead`,
+            action: `click`,
+            label: `Gatsby Cloud`,
+          })
+        }
+      >
+        Gatsby Cloud
+      </a>
+      .
     </p>
   </div>
 )
