@@ -11,7 +11,7 @@ const fixedShapeMock = {
   src: `test_image.jpg`,
   srcSet: `some srcSet`,
   srcSetWebp: `some srcSetWebp`,
-  base64: `string_of_base64`,
+  base64: `string_of_base64`
 }
 
 const fluidShapeMock = {
@@ -20,7 +20,7 @@ const fluidShapeMock = {
   srcSet: `some srcSet`,
   srcSetWebp: `some srcSetWebp`,
   sizes: `(max-width: 600px) 100vw, 600px`,
-  base64: `string_of_base64`,
+  base64: `string_of_base64`
 }
 
 const fixedImagesShapeMock = [
@@ -30,7 +30,7 @@ const fixedImagesShapeMock = [
     src: `test_image.jpg`,
     srcSet: `some srcSet`,
     srcSetWebp: `some srcSetWebp`,
-    base64: `string_of_base64`,
+    base64: `string_of_base64`
   },
   {
     width: 300,
@@ -39,8 +39,8 @@ const fixedImagesShapeMock = [
     srcSet: `some other srcSet`,
     srcSetWebp: `some other srcSetWebp`,
     base64: `other_string_of_base64`,
-    media: `only screen and (min-width: 768px)`,
-  },
+    media: `only screen and (min-width: 768px)`
+  }
 ]
 
 const fluidImagesShapeMock = [
@@ -50,7 +50,7 @@ const fluidImagesShapeMock = [
     srcSet: `some srcSet`,
     srcSetWebp: `some srcSetWebp`,
     sizes: `(max-width: 600px) 100vw, 600px`,
-    base64: `string_of_base64`,
+    base64: `string_of_base64`
   },
   {
     aspectRatio: 3,
@@ -59,8 +59,8 @@ const fluidImagesShapeMock = [
     srcSetWebp: `some other srcSetWebp`,
     sizes: `(max-width: 600px) 100vw, 600px`,
     base64: `string_of_base64`,
-    media: `only screen and (min-width: 768px)`,
-  },
+    media: `only screen and (min-width: 768px)`
+  }
 ]
 
 const setup = (
@@ -125,10 +125,10 @@ describe(`<Image />`, () => {
     window.matchMedia = jest.fn(media =>
       media === `only screen and (min-width: 1024px)`
         ? {
-            matches: true,
+            matches: true
           }
         : {
-            matches: false,
+            matches: false
           }
     )
   })
@@ -185,7 +185,7 @@ describe(`<Image />`, () => {
     expect(component).toMatchSnapshot()
   })
 
-  it(`should have the the "critical" prop set "loading='eager'"`, () => {
+  it(`should have the "critical" prop set "loading='eager'"`, () => {
     jest.spyOn(global.console, `log`)
 
     const props = { critical: true }
@@ -211,7 +211,7 @@ describe(`<Image />`, () => {
           srcSet: `some other srcSet`,
           srcSetWebp: `some other srcSetWebp`,
           sizes: `(max-width: 600px) 100vw, 600px`,
-          base64: `string_of_base64`,
+          base64: `string_of_base64`
         })}
         itemProp={`item-prop-for-the-image`}
         placeholderStyle={{ color: `red` }}
@@ -229,7 +229,7 @@ describe(`<Image />`, () => {
       srcSetWebp: `third other srcSetWebp`,
       sizes: `(max-width: 1920px) 100vw, 1920px`,
       base64: `string_of_base64`,
-      media: `only screen and (min-width: 1024px)`,
+      media: `only screen and (min-width: 1024px)`
     })
     const { container } = render(
       <Image
@@ -259,7 +259,7 @@ describe(`<Image />`, () => {
       srcSet: `third other srcSet`,
       srcSetWebp: `third other srcSetWebp`,
       base64: `string_of_base64`,
-      media: `only screen and (min-width: 1024px)`,
+      media: `only screen and (min-width: 1024px)`
     })
     const { container } = render(
       <Image

@@ -32,7 +32,7 @@ const OutboundLink = React.forwardRef(({ children, ...props }, ref) => (
             if (redirect) {
               document.location = props.href
             }
-          },
+          }
         })
       } else {
         if (redirect) {
@@ -50,7 +50,7 @@ const OutboundLink = React.forwardRef(({ children, ...props }, ref) => (
 OutboundLink.propTypes = {
   href: PropTypes.string,
   target: PropTypes.string,
-  onClick: PropTypes.func,
+  onClick: PropTypes.func
 }
 
 export { OutboundLink }

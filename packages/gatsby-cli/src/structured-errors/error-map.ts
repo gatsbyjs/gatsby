@@ -292,8 +292,9 @@ const errors = {
     text: (context): string =>
       `"${context.pluginName}" threw an error while running the ${
         context.api
-      } lifecycle:\n\n${context.sourceMessage ??
-        context.message}${optionalGraphQLInfo(context)}`,
+      } lifecycle:\n\n${
+        context.sourceMessage ?? context.message
+      }${optionalGraphQLInfo(context)}`,
     type: Type.PLUGIN,
     level: Level.ERROR,
   },

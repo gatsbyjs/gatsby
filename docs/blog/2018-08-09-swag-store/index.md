@@ -18,16 +18,12 @@ We’ve spent the last couple weeks working the kinks out, and we couldn’t be 
     src="./images/gatsby-swag-twitter.jpg"
   />
   <figcaption>
-    {/* prettier-ignore */}
-    Tweets from <a href="https://twitter.com/DeaNHtiD99/status/1023204484183416832">
-      Dean
-    </a>, <a href="https://twitter.com/ARebelBelle/status/1020044426712735744">
-      Elle
-    </a>, <a href="https://twitter.com/chaseadamsio/status/1021896138503245824">
-      Chase
-    </a>, and <a href="https://twitter.com/kato_katherine/status/1021967765400211456">
-      Katherine
-    </a> showing off their new Gatsby swag.
+    Tweets from
+    [Dean](https://twitter.com/DeaNHtiD99/status/1023204484183416832),
+    [Elle](https://twitter.com/ARebelBelle/status/1020044426712735744),
+    [Chase](https://twitter.com/chaseadamsio/status/1021896138503245824), and
+    [Katherine](https://twitter.com/kato_katherine/status/1021967765400211456)
+    showing off their new Gatsby swag.
   </figcaption>
 </figure>
 

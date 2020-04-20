@@ -2,22 +2,22 @@ jest.mock(`fs`, () => {
   const fs = jest.requireActual(`fs`)
   return {
     ...fs,
-    readFileSync: jest.fn(file => `${file}::file`),
+    readFileSync: jest.fn(file => `${file}::file`)
   }
 })
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     panic: jest.fn(),
-    info: jest.fn(),
+    info: jest.fn()
   }
 })
 jest.mock(`devcert`, () => {
   return {
-    certificateFor: jest.fn(),
+    certificateFor: jest.fn()
   }
 })
 
-const { certificateFor } = require(`devcert`)
+const getDevCert = require(`devcert`).certificateFor
 const reporter = require(`gatsby-cli/lib/reporter`)
 const getSslCert = require(`../get-ssl-cert`)
 
@@ -25,7 +25,7 @@ describe(`gets ssl certs`, () => {
   beforeEach(() => {
     reporter.panic.mockClear()
     reporter.info.mockClear()
-    certificateFor.mockClear()
+    getDevCert.mockClear()
   })
   describe(`Custom SSL certificate`, () => {
     it.each([[{ certFile: `foo` }], [{ keyFile: `bar` }]])(
@@ -42,17 +42,17 @@ describe(`gets ssl certs`, () => {
           name: `mock-cert`,
           certFile: `foo.crt`,
           keyFile: `foo.key`,
-          directory: `/app/directory`,
+          directory: `/app/directory`
         })
       ).resolves.toMatchSnapshot()
     })
-    it(`loads a cert from a absolute paths`, () => {
+    it(`loads a cert from absolute paths`, () => {
       expect(
         getSslCert({
           name: `mock-cert`,
           certFile: `/foo.crt`,
           keyFile: `/foo.key`,
-          directory: `/app/directory`,
+          directory: `/app/directory`
         })
       ).resolves.toMatchSnapshot()
     })
@@ -60,13 +60,17 @@ describe(`gets ssl certs`, () => {
   describe(`automatic SSL certificate`, () => {
     it(`sets up dev cert`, () => {
       getSslCert({ name: `mock-cert` })
-      expect(certificateFor).toBeCalledWith(`mock-cert`, {
-        installCertutil: true,
+      expect(getDevCert).toBeCalledWith(`mock-cert`, {
+        getCaPath: true,
+        skipCertutilInstall: false,
+        ui: {
+          getWindowsEncryptionPassword: expect.any(Function)
+        }
       })
       expect(reporter.info.mock.calls).toMatchSnapshot()
     })
     it(`panics if certificate can't be created`, () => {
-      certificateFor.mockImplementation(() => {
+      getDevCert.mockImplementation(() => {
         throw new Error(`mock error message`)
       })
       getSslCert({ name: `mock-cert` })

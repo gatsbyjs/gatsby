@@ -184,7 +184,7 @@ export default function Contact() {
             .email()
             .required(),
           name: yup.string().required(),
-          message: yup.string().required(),
+          message: yup.string().required()
         })}
       >
         {props => (

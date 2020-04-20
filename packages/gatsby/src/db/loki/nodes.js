@@ -27,7 +27,7 @@ function createNodeTypeCollection(type) {
   const options = {
     unique: [`id`],
     indices: [`id`, `internal.counter`],
-    disableMeta: true,
+    disableMeta: true
   }
   const coll = getDb().addCollection(collName, options)
   return coll
@@ -409,5 +409,5 @@ module.exports = {
   reducer,
 
   saveResolvedNodes,
-  ensureFieldIndexes,
+  ensureFieldIndexes
 }

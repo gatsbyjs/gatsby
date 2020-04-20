@@ -42,7 +42,7 @@ const graphqlParamNames = {
   query: true,
   variables: true,
   operationName: true,
-  explorerIsOpen: true,
+  explorerIsOpen: true
 }
 const otherParams = {}
 for (var k in parameters) {
@@ -57,10 +57,10 @@ function graphQLFetcher(graphQLParams) {
     method: `post`,
     headers: {
       Accept: `application/json`,
-      "Content-Type": `application/json`,
+      "Content-Type": `application/json`
     },
     body: JSON.stringify(graphQLParams),
-    credentials: `include`,
+    credentials: `include`
   }).then(function(response) {
     return response.json()
   })
@@ -166,12 +166,12 @@ class App extends React.Component {
     query: DEFAULT_QUERY,
     variables: DEFAULT_VARIABLES,
     explorerIsOpen: storedExplorerPaneState,
-    codeExporterIsOpen: storedCodeExporterPaneState,
+    codeExporterIsOpen: storedCodeExporterPaneState
   }
 
   componentDidMount() {
     graphQLFetcher({
-      query: getIntrospectionQuery(),
+      query: getIntrospectionQuery()
     }).then(result => {
       const newState = { schema: buildClientSchema(result.data) }
 
@@ -208,7 +208,7 @@ class App extends React.Component {
     const editor = this._graphiql.getQueryEditor()
     editor.setOption(`extraKeys`, {
       ...(editor.options.extraKeys || {}),
-      "Shift-Alt-LeftClick": this._handleInspectOperation,
+      "Shift-Alt-LeftClick": this._handleInspectOperation
     })
   }
 
@@ -225,7 +225,7 @@ class App extends React.Component {
     const end = { line: mousePos.line, ch: token.end }
     const relevantMousePos = {
       start: cm.indexFromPos(start),
-      end: cm.indexFromPos(end),
+      end: cm.indexFromPos(end)
     }
 
     const position = relevantMousePos

@@ -61,9 +61,7 @@ const hashPaths = (paths?: string[]): undefined | Array<string | undefined> => {
     if (!path) {
       return undefined
     }
-    return createHash(`sha256`)
-      .update(path)
-      .digest(`hex`)
+    return createHash(`sha256`).update(path).digest(`hex`)
   })
 }
 
