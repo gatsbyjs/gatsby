@@ -1219,6 +1219,64 @@
     - Marketing
   built_by: Bejamas
   built_by_url: https://bejamas.io/
+- title: Mambu
+  main_url: https://www.mambu.com/
+  url: https://www.mambu.com/
+  featured: false
+  description: >-
+    Mambu is the cloud platform for banking and lending businesses that
+    puts customer relationships first.
+  categories:
+    - Technology
+    - Finance
+  built_by: Bejamas
+  built_by_url: https://bejamas.io/
+- title: Avenues
+  main_url: https://www.avenues.org
+  url: https://www.avenues.org
+  featured: false
+  description: >-
+    One school with many campuses, providing transformative,
+    world-focused learning experiences to students around the globe
+  categories:
+    - Education
+  built_by: Bejamas
+  built_by_url: https://bejamas.io/
+- title: Multicoin Capital
+  main_url: https://multicoin.capital
+  url: https://multicoin.capital
+  featured: false
+  description: >-
+    Multicoin Capital is a thesis-driven investment firm that
+    invests in cryptocurrencies, tokens, and blockchain
+    companies reshaping trillion-dollar markets.
+  categories:
+    - Technology
+    - Finance
+  built_by: Bejamas
+  built_by_url: https://bejamas.io/
+- title: Argent
+  main_url: https://www.argent.xyz/
+  url: https://www.argent.xyz/
+  featured: false
+  description: Argent is the simplest and safest Ethereum wallet for DeFi.
+  categories:
+    - Technology
+    - Finance
+  built_by: Bejamas
+  built_by_url: https://bejamas.io/
+- title: Meet Flo
+  main_url: https://meetflo.com/
+  url: https://meetflo.com/
+  featured: false
+  description: >-
+    The Flo by Moen Smart Water Shutoff is a comprehensive
+    water monitoringand shut-off system with leak detection
+    and proactive leak prevention technologies.
+  categories:
+    - E-commerce
+  built_by: Bejamas
+  built_by_url: https://bejamas.io/
 - title: Matthias Kretschmann Portfolio
   main_url: https://matthiaskretschmann.com/
   url: https://matthiaskretschmann.com/
