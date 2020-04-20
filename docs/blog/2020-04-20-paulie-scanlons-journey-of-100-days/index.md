@@ -1,3 +1,4 @@
+---
 title: "Challenge Accepted: One Developer, 10 Projects, 100 Days of Gatsby"
 date: 2020-04-20
 author: Paul Scanlon
@@ -22,7 +23,7 @@ After a little research I discovered that Gatsby is just React...BUT it still ma
 
 With Gatsby you get back all that good stuff we kind of lost when "Websites" became "Single Page Applications" built with React.
 
-When the [#100DaysOfGatsby](https://www.gatsbyjs.org/blog/tags/100-days-of-gatsby/) challenge was first announced I thought, _"Yes please"_. I'm totally up for getting involved, but it soon transpired that pretty much every challenge was something I'd already learnt myself. _"No matter,"_ I thought. I can still continue to develop my React, JavaScript and Gatsby skills and by using the [hashtag](https://www.gatsbyjs.org/blog/tags/100-days-of-gatsby/) I hoped to share what I'd learnt and to find other folks out there doing the same.
+When the [#100DaysOfGatsby](https://www.gatsbyjs.org/blog/tags/100-days-of-gatsby/) challenge was first announced I thought, _Yes, please_. I'm totally up for getting involved, but it soon transpired that pretty much every challenge was something I'd already learnt myself. _No matter,_ I thought. I can still continue to develop my React, JavaScript and Gatsby skills and by using the [hashtag](https://twitter.com/hashtag/100DaysOfGatsby) I hoped to share what I'd learnt and to find other folks out there doing the same.
 
 So for **100** days I posted literally **every day** about the work I've been doing in and around the Gatsby eco-system. If you have a spare 103 minutes you can read about the full 100 days [here](https://paulie.dev/posts/2020/01/100DaysOfGatsby/). But because I know you're all busy busy people, here is the tl;dr summary version.
 
@@ -31,11 +32,11 @@ So for **100** days I posted literally **every day** about the work I've been do
 
 ## 1. Skin UI
 
-This is proof that Gatsby can be more than just blogs. Skin UI is a full stack Gatsby App with client-only routes, Netlify Identity, an Apollo/GraphQL serverless function api and Fauna for database storage.
+This is proof that Gatsby can be more than just blogs. Skin UI is a full stack Gatsby App with client-only routes, Netlify Identity, an Apollo/GraphQL serverless function API, and Fauna for database storage.
 
 Using the Skin UI editor and live preview you can tinker with Theme UI's theme object and see the styles update the markdown and Theme UI Components right in your browser. You can also save, share, edit and download your theme.
 
-I believe this project has legs, but I also need to do a bit more work on it before it's all singing and all dancing. I have it on good authority that something similar will make its way in to [Blocks UI](https://blocks-ui.com/)... psst hey Gatsby I'm available to help build it 😊
+I believe this project has legs, but I also need to do a bit more work on it before it's all singing and all dancing. I have it on good authority that something similar will make its way in to [Blocks UI](https://blocks-ui.com/)... psst hey Gatsby I'm available to help build it 😊.
 
 [Visit site](https://www.skin-ui.com/) |
 [GitHub](https://github.com/PaulieScanlon/skin-ui) |
@@ -46,7 +47,7 @@ I believe this project has legs, but I also need to do a bit more work on it bef
 
 ## 2. gatsby-theme-terminal
 
-This was my second attempt at developing a theme and after making a bit of a mess of my first one [gatsby-theme-gatstats](https://gatsby-theme-gatstats.netlify.com/) i went back to the drawing board and decided to see if it was possible to write a theme with **zero components**. This is an odd concept if you're coming form WordPress but with this theme all I'm providing are some neat little data components that help you query the nodes from GraphQL, plus a very light skin that styles all markdown and all components provided by Theme UI Components. If you've read above about Skin UI this theme is essentially Skin UI but with some extra bits thrown in.
+This was my second attempt at developing a theme and after making a bit of a mess of my first one [gatsby-theme-gatstats](https://gatsby-theme-gatstats.netlify.com/) I went back to the drawing board and decided to see if it was possible to write a theme with **zero components**. This is an odd concept if you're coming form WordPress, but with this theme all I'm providing are some neat little data components that help you query the nodes from GraphQL. Plus a very light skin that styles all markdown and all components provided by Theme UI Components. If you've read above about Skin UI this theme is essentially Skin UI but with some extra bits thrown in.
 
 Having worked on Gatsby Themes for about a year now I think this approach can be really powerful. Component shadowing is awesome, don't get me wrong, but if you decouple the "components" from a theme and just provide _data_ and _styles_ the user then has full control over their UI. No more hacking over the top of CSS and no real need to shadow a "component" to change the way it looks or functions. This approach means you can just build anything you want using the components from Theme UI and boom 💥 you've got yourself a totally custom blog, site or application.
 
@@ -59,9 +60,9 @@ Having worked on Gatsby Themes for about a year now I think this approach can be
 
 ## 3. gatsby-starter-terminal
 
-It seems fitting that if I want folks to use my theme: [gatsby-theme-terminal](https://gatsby-theme-terminal.netlify.com/) i should give them a helping hand. So here's a starter to... er... get you started 🤗
+It seems fitting that if I want folks to use my theme: [gatsby-theme-terminal](https://gatsby-theme-terminal.netlify.com/) I should give them a helping hand. So here's a starter to... er... get you started 🤗
 
-It's a pretty bare bones example of how to use the theme but it does demonstrate how to use component shadowing for the logo and how to provide a custom Theme UI object to style the theme your way. _I believe the 2 stars it has on GitHub speak for themselves_ 🤣
+It's a pretty bare bones example of how to use the theme but it does demonstrate how to use component shadowing for the logo and how to provide a custom Theme UI object to style the theme your way. _I believe the 2 stars it has on GitHub speak for themselves_ 🌟😂.
 
 [GitHub](https://github.com/PaulieScanlon/gatsby-starter-terminal)
 
@@ -70,17 +71,17 @@ It's a pretty bare bones example of how to use the theme but it does demonstrate
 
 ## 4. gatsby-plugin-prop-shop
 
-I think perhaps this a unique concept that the masses just aren't ready for yet 🤔. With this plugin you can get an overview of all _PropTypes_ in your components, turns out that most developers building Gatsby sites don't use _PropTypes_. In fact i've been working on a much larger project where _PropTypes_ haven't be used at all... if you're doing this... then just stop it!
+I think perhaps this a unique concept that the masses just aren't ready for yet 🤔. With this plugin you can get an overview of all _PropTypes_ in your components, turns out that most developers building Gatsby sites don't use _PropTypes_. In fact i've been working on a much larger project where _PropTypes_ haven't be used at all...if you're doing this...then just stop it!
 
 I'm a massive TypeScript fan but when not using TypeScript, _PropTypes_ are the next best thing. And when building component libraries (which I've done a lot of) I have found it crucially important to provide a consistent API for props.
 
 PropShop aims to help you with this by providing a holistic view of all defined _PropTypes_ in your project, all in one place.
 
-I've created a [PR](https://github.com/system-ui/theme-ui/pull/669) for Theme UI but as the library is undergoing some vital TypeScript work it has yet to be merged. The feedback from the Gatsby team was promising though and to quote [Brent Jackson](https://twitter.com/jxnblk)
+I've created a [PR](https://github.com/system-ui/theme-ui/pull/669) for Theme UI but as the library is undergoing some vital TypeScript work it has yet to be merged. The feedback from the Gatsby team was promising though and to quote [Brent Jackson](https://twitter.com/jxnblk),
 
 > Thanks! This is a really cool idea!
 
-(If anyone in Gatsby Admin happens to read this, again, I'm available to help build it. 🤞)
+(If anyone in Gatsby Admin happens to read this, again, I'm available to help build it.)
 
 [View demo](https://gatsby-plugin-prop-shop.netlify.com/prop-shop/) |
 [GitHub](https://github.com/PaulieScanlon/gatsby-plugin-prop-shop) |
@@ -94,11 +95,11 @@ In the true spirit of open source I wanted to contribute to the libraries I use 
 
 [PR](https://github.com/system-ui/theme-ui/pull/692)
 
-"![Screenshot of MDX-embed plugin](./gatsby-mdx-embed.jpg "Screenshot of Gatsby MDX Embed plugin")
+![Screenshot of MDX-embed plugin](./gatsby-mdx-embed.jpg "Screenshot of Gatsby MDX Embed plugin")
 
 ## 6. gatsby-mdx-embed
 
-Continuing with my interest in Gatsby plugins, ![]() was inspired by [gatsby-remark-oembed](https://github.com/raae/gatsby-remark-oembed). This is great plugin and allows you to use all sorts of media embed codes in your markdown blog.
+Continuing with my interest in Gatsby plugins, this was inspired by [gatsby-remark-oembed](https://github.com/raae/gatsby-remark-oembed). This is great plugin and allows you to use all sorts of media embed codes in your markdown blog.
 
 Yeah... markdown... what about MDX?
 
@@ -114,7 +115,7 @@ That's all possible with this plugin. There are few shortcomings with the way th
 
 ## 7. gatsby-remark-grid-system
 
-OK, true confession, I started building this plugin before the challenge came about and before I'd truly discovered MDX and Theme UI Components. But I was wondering why people didn't need Bootstrap style containers, rows and columns in markdown (and, for the record, I still don't know the answer to that question 🤷‍♂️).
+OK, true confession, I started building this plugin before the challenge came about and before I'd truly discovered MDX and Theme UI Components. But I was wondering why people didn't need Bootstrap style containers, rows and columns in markdown (and, for the record, I still don't know the answer to that question ).
 
 This plugin was a head first dive into the [Markdown Abstract Syntax Tree](https://github.com/syntax-tree/mdast) and allowed me to understand what markdown and MDX do under the hood. Using visitor patterns I was able to bring responsive mobile first layouts to tired old single column markdown files.
 
@@ -131,7 +132,7 @@ Again, officially speaking, I started this plugin before the challenge started. 
 
 Extracting navigation routes for locally sourced `.mdx` files using GraphQL in your project isn't a huge task in itself. But I try to be helpful, so this plugin aims to separate the business logic of _finding_, _sorting_ and _listing_ routes from _styling_ those routes as links or lists. It was the start of my thinking process about separation of concerns which I then used more effectively in [gatsby-theme-terminal](https://gatsby-theme-terminal.netlify.com/)
 
-There are a few areas where it doesn't quite perform, namely in the recursive pattern, but developing this plugin really enhanced my JavaScript knowledge. And, dare I say it, but I think I finally understand [Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) 🕺
+There are a few areas where it doesn't quite perform, namely in the recursive pattern, but developing this plugin really enhanced my JavaScript knowledge. And, dare I say it, but I think I finally understand [Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)
 
 [View Demo](https://gatsby-mdx-routes.netlify.com/) |
 [GitHub](https://github.com/PaulieScanlon/gatsby-mdx-routes) |
