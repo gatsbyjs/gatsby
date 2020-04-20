@@ -19,15 +19,18 @@ module.exports = (state = {}, action) => {
           chalk.blue.bgYellow(`The site's gatsby-config.js failed validation`)
         )
 
-        const [invalidProperty] = result.error.details.filter(
+        // Display a 'did you mean' suggestion to resolve config error.
+        const invalidConfig = result.error.details.filter(
           details => details.type === `object.allowUnknown`
         )
 
-        if (invalidProperty) {
-          const { key } = invalidProperty.context
-          const suggestion = didYouMean(key)
+        if (Array.isArray(invalidConfig) && invalidConfig.length) {
+          invalidConfig.map(config => {
+            const { key } = config.context
+            const suggestion = didYouMean(key)
 
-          throw new Error(`${result.error}. ${suggestion}`)
+            console.log(chalk.bold.red(`${key} is not allowed. ${suggestion}`))
+          })
         } else {
           console.log(chalk.bold.red(result.error))
         }

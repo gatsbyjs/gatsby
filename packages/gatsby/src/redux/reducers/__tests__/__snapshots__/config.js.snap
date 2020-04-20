@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`config reducer Validates configs with unsupported options 1`] = `"ValidationError: \\"someRandomThing\\" is not allowed. "`;
+exports[`config reducer Validates configs with unsupported options 1`] = `"The site's gatsby-config.js failed validation"`;
 
 exports[`config reducer handles empty configs 1`] = `
 Object {
@@ -19,4 +19,4 @@ Object {
 }
 `;
 
-exports[`config reducer throws with a suggestion when an invalid key is passed 1`] = `"ValidationError: \\"plugin\\" is not allowed. Did you mean \\"plugins\\"?"`;
+exports[`config reducer throws with a suggestion when an invalid key is passed 1`] = `"[1m[31mplugin is not allowed. Did you mean \\"plugins\\"?[39m[22m"`;

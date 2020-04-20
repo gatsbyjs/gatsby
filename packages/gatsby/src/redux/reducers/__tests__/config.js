@@ -80,6 +80,8 @@ describe(`config reducer`, () => {
   })
 
   it(`throws with a suggestion when an invalid key is passed`, async () => {
+    const consoleSpy = jest.spyOn(console, `log`).mockImplementation(() => {})
+
     expect.assertions(1)
     const action = {
       type: `SET_SITE_CONFIG`,
@@ -91,7 +93,7 @@ describe(`config reducer`, () => {
     try {
       reducer({}, action)
     } catch (err) {
-      expect(err.message).toMatchSnapshot()
+      expect(consoleSpy.mock.calls[1][0]).toMatchSnapshot()
     }
   })
 })
