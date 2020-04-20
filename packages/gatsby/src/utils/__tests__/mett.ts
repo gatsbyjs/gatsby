@@ -3,9 +3,9 @@ import { mett } from "../mett"
 describe(`mett`, (): void => {
   describe(`regular events`, (): void => {
     it(`can be called multiple times`, (): void => {
-      expect((): void => mett()).not.toThrow()
-      expect((): void => mett()).not.toThrow()
-      expect((): void => mett()).not.toThrow()
+      expect((): unknown => mett()).not.toThrow()
+      expect((): unknown => mett()).not.toThrow()
+      expect((): unknown => mett()).not.toThrow()
     })
 
     it(`returns unique objects`, (): void => {
