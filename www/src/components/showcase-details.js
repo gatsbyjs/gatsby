@@ -101,19 +101,17 @@ function usePrevAndNextSite(item, filters = []) {
           fields: { hasScreenshot: { eq: true } }
         }
       ) {
-        edges {
-          node {
-            title
-            categories
-            fields {
-              slug
-            }
-            childScreenshot {
-              screenshotFile {
-                childImageSharp {
-                  resize(width: 200, height: 200) {
-                    src
-                  }
+        nodes {
+          title
+          categories
+          fields {
+            slug
+          }
+          childScreenshot {
+            screenshotFile {
+              childImageSharp {
+                resize(width: 200, height: 200) {
+                  src
                 }
               }
             }
@@ -123,11 +121,11 @@ function usePrevAndNextSite(item, filters = []) {
     }
   `)
 
-  const sites = filterByCategories(allSitesYaml.edges, filters)
-  const currentIndex = sites.findIndex(edge => edge.node.fields.slug === item)
-  const nextSite = sites[(currentIndex + 1) % sites.length].node
+  const sites = filterByCategories(allSitesYaml.nodes, filters)
+  const currentIndex = sites.findIndex(node => node.fields.slug === item)
+  const nextSite = sites[(currentIndex + 1) % sites.length]
   const previousSite =
-    sites[currentIndex === 0 ? sites.length - 1 : currentIndex - 1].node
+    sites[currentIndex === 0 ? sites.length - 1 : currentIndex - 1]
   return { nextSite, previousSite }
 }
 
