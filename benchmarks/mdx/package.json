@@ -7,6 +7,7 @@
   "scripts": {
     "build": "gatsby build",
     "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
+    "data-update": "ts-node scripts/data-update.ts",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "postinstall": "del-cli src/articles && gatsby clean && willit --use-pregenerated-data --type=mdx --num-pages=${NUM_PAGES:-512}",
@@ -27,7 +28,9 @@
     "gatsby-source-filesystem": "^2.2.3",
     "gatsby-transformer-sharp": "^2.4.5",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.0",
