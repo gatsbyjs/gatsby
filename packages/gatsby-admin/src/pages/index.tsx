@@ -1,5 +1,72 @@
 import React from "react"
-import { useQuery } from "urql"
+import { useQuery, useMutation } from "urql"
+
+const InstallInput = () => {
+  const [value, setValue] = React.useState("")
+
+  const [_, installGatbyPlugin] = useMutation(`
+    mutation installGatsbyPlugin($name: String!) {
+      createNpmPackage(npmPackage: {
+        name: $name,
+        dependencyType: "development"
+      }) {
+        id
+        name
+      }
+      createGatsbyPlugin(gatsbyPlugin: {
+        name: $name
+      }) {
+        id
+        name
+      }
+    }
+  `)
+
+  return (
+    <form
+      onSubmit={evt => {
+        evt.preventDefault()
+        installGatbyPlugin({
+          name: value,
+        })
+      }}
+    >
+      <label>
+        Install:
+        <input
+          value={value}
+          onChange={evt => setValue(evt.target.value)}
+          type="text"
+          placeholder="gatsby-plugin-cool"
+        />
+      </label>
+    </form>
+  )
+}
+
+const DestroyButton = ({ name }) => {
+  const [_, deleteGatsbyPlugin] = useMutation(`
+    mutation destroyGatsbyPlugin($name: String!) {
+      destroyNpmPackage(npmPackage: {
+        name: $name,
+        id: $name,
+        dependencyType: "development"
+      }) {
+        id
+        name
+      }
+      destroyGatsbyPlugin(gatsbyPlugin: {
+        name: $name,
+        id: $name
+      }) {
+        id
+        name
+      }
+    }
+  `)
+
+  return <button onClick={() => deleteGatsbyPlugin({ name })}>X</button>
+}
 
 export default (): React.ReactElement => {
   const [{ data, fetching, error }] = useQuery({
@@ -33,9 +100,12 @@ export default (): React.ReactElement => {
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
           .map(plugin => (
-            <li key={plugin.id}>{plugin.name}</li>
+            <li key={plugin.id}>
+              {plugin.name} <DestroyButton name={plugin.name} />
+            </li>
           ))}
       </ul>
+      <InstallInput />
       <h2>Themes</h2>
       <ul>
         {data.allGatsbyPlugin.nodes
@@ -43,7 +113,9 @@ export default (): React.ReactElement => {
           .map(plugin => (
             <li key={plugin.id}>
               <details>
-                <summary>{plugin.name}</summary>
+                <summary>
+                  {plugin.name} <DestroyButton name={plugin.name} />
+                </summary>
                 <ul>
                   {plugin.shadowedFiles.map(file => (
                     <li key={file} style={{ opacity: 0.6 }}>
@@ -58,6 +130,8 @@ export default (): React.ReactElement => {
             </li>
           ))}
       </ul>
+
+      <InstallInput />
     </>
   )
 }
