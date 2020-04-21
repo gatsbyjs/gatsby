@@ -217,6 +217,12 @@ jobs:
       FORCE_COLOR: 0
     <<: *test_template
 
+  unit_tests_node14:
+    executor:
+      name: node
+      image: "14"
+    <<: *test_template
+
   unit_tests_www:
     executor: node
     steps:
@@ -479,6 +485,11 @@ workflows:
             - lint
             - bootstrap
       - unit_tests_node12:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - bootstrap
+      - unit_tests_node14:
           <<: *ignore_docs
           requires:
             - lint
