@@ -344,7 +344,7 @@ A [plugin](#plugin) that transforms one type of data to another. For example you
 
 ### Transpile
 
-The process of converting code from one syntax or format to another, such as TypeScript: a superset of JavaScript providing extra type checking during development and outputting standard JavaScript code. [Babel](#babel) is another common example of transpilation that reformats newer JavaScript code to be backwards compatible during the site [compilation](#compilation) process.
+The process of converting code from one syntax or format to another, such as TypeScript, a superset of JavaScript which provides custom type checking during development. [Babel](#babel) is another common example of transpilation that reformats newer JavaScript code following the [ECMAScript](#ecmascript) standard to be more backwards-compatible during the site [compilation](#compilation) process.
 
 ## U
 
