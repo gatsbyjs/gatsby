@@ -10,7 +10,7 @@ However, you can do some manual set up in order to work with it locally. Follow 
 
 1. Navigate to the monorepo and open the `packages/gatsby-admin` directory.
 2. In that directory, run `yarn develop`.
-   > If you see eslint errors you'll need to temporarly replace all references to `___loader` with `window.___loader`.
+   > If you see eslint errors you'll need to temporarly replace all references to `___loader` with `window.___loader` inside of `gatsby-link/index.js`.
 3. In a new tab, navigate to a Gatsby site of your choice (or create one) that runs the latest version of Gatsby (recipes are a requirement).
 4. From the `packages/gatsby-recipes/src` directory in the monorepo copy the `create-types.js` and `graphql.js` files. Use these files to replace those currently in your site's `node_modules/gatsby-recipes/src` directory.
 5. Run `node ./node_modules/gatsby-recipes/src/graphql.js` to start the Recipes GraphQL server for that site.
