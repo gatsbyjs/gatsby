@@ -140,8 +140,6 @@ module.exports = () => {
     return acc
   }, {})
 
-  console.log(mutationTypes)
-
   return {
     queryTypes,
     mutationTypes,
