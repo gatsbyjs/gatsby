@@ -13,6 +13,7 @@ Through use of [source plugins](/plugins/?=source), Gatsby has support for dozen
 
 The guides in this section will walk through the process of setting up content sourcing from some of the most popular headless CMSes in use today.
 
+<CloudCallout>For integrating your site with a headless CMS:</CloudCallout>
 <GuideList slug={props.slug} />
 
 <!--

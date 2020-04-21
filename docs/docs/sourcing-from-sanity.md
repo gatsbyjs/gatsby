@@ -29,10 +29,10 @@ module.exports = {
       resolve: "gatsby-source-sanity",
       options: {
         projectId: "abc123",
-        dataset: "blog",
-      },
-    },
-  ],
+        dataset: "blog"
+      }
+    }
+  ]
 }
 ```
 
@@ -202,7 +202,7 @@ exports.createPages = async ({ graphql, actions }) => {
     createPage({
       path,
       component: require.resolve("./src/templates/project.js"),
-      context: { slug: edge.node.slug.current },
+      context: { slug: edge.node.slug.current }
     })
   })
 }
@@ -256,3 +256,5 @@ module.exports = {
 ```
 
 This example is based off [Gatsby Docs' implementation](/docs/environment-variables/).
+
+<CloudCallout />
