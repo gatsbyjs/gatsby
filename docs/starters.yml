@@ -6013,10 +6013,10 @@
   repo: https://github.com/flotiq/gatsby-starter-products
   description: A Gatsby ecommerce starter with products sourced from Flotiq.
   tags:
+    - CMS:Headless
     - E-commerce
     - Snipcart
     - CMS:Flotiq
-    - CMS:Headless
     - Snipcart
   features:
     - Snipcart e-commerce starter
