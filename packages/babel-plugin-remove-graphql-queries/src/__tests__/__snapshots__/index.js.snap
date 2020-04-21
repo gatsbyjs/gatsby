@@ -5,7 +5,15 @@ exports[`Allow alternative import of useStaticQuery 1`] = `
 import * as React from 'react';
 import * as Gatsby from 'gatsby';
 export default (() => {
-  const query = \\"2626356014\\";
+  const query = {
+    id: \\"2626356014\\",
+    source: \\"{site { siteMetadata { title }}}\\",
+
+    toString() {
+      return this.id;
+    }
+
+  };
   const siteTitle = staticQueryData.data;
   return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
 });"
@@ -17,13 +25,29 @@ import * as React from 'react';
 import { StaticQuery } from \\"gatsby\\";
 
 const Test = () => React.createElement(StaticQuery, {
-  query: \\"4279313589\\",
+  query: {
+    id: \\"4279313589\\",
+    source: \\"/n      {/n        site {/n          siteMetadata {/n            title/n          }/n        }/n      }/n      \\",
+
+    toString() {
+      return this.id;
+    }
+
+  },
   render: data => React.createElement(\\"div\\", null, data.site.siteMetadata.title),
   data: staticQueryData
 });
 
 export default Test;
-export const fragment = \\"2962815581\\";"
+export const fragment = {
+  id: \\"2962815581\\",
+  source: \\"/n    fragment MarkdownNodeFragment on MarkdownRemark {/n      html/n    }/n  \\",
+
+  toString() {
+    return this.id;
+  }
+
+};"
 `;
 
 exports[`Handles closing StaticQuery tag 1`] = `
@@ -31,7 +55,15 @@ exports[`Handles closing StaticQuery tag 1`] = `
 import * as React from 'react';
 import { StaticQuery } from 'gatsby';
 export default (() => React.createElement(StaticQuery, {
-  query: \\"2626356014\\",
+  query: {
+    id: \\"2626356014\\",
+    source: \\"{site { siteMetadata { title }}}\\",
+
+    toString() {
+      return this.id;
+    }
+
+  },
   data: staticQueryData
 }, data => React.createElement(\\"div\\", null, data.site.siteMetadata.title)));"
 `;
@@ -50,7 +82,15 @@ export const query = graphql\`
 exports[`Only runs transforms if useStaticQuery is imported from gatsby 1`] = `
 "import * as React from 'react';
 export default (() => {
-  const query = \\"2626356014\\";
+  const query = {
+    id: \\"2626356014\\",
+    source: \\"{site { siteMetadata { title }}}\\",
+
+    toString() {
+      return this.id;
+    }
+
+  };
   const siteTitle = useStaticQuery(query);
   return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
 });"
@@ -58,8 +98,24 @@ export default (() => {
 
 exports[`Removes all gatsby queries 1`] = `
 "export default (() => React.createElement(\\"div\\", null, data.site.siteMetadata.title));
-export const siteMetaQuery = \\"2673797374\\";
-export const query = \\"2589775908\\";"
+export const siteMetaQuery = {
+  id: \\"2673797374\\",
+  source: \\"/n    fragment siteMetaQuery on RootQueryType {/n      site {/n        siteMetadata {/n          title/n        }/n      }/n    }/n  \\",
+
+  toString() {
+    return this.id;
+  }
+
+};
+export const query = {
+  id: \\"2589775908\\",
+  source: \\"/n     {/n       ...siteMetaQuery/n     }/n  \\",
+
+  toString() {
+    return this.id;
+  }
+
+};"
 `;
 
 exports[`Transformation does not break custom hooks 1`] = `
@@ -84,7 +140,15 @@ export default (() => {
   const data = staticQueryData.data;
   return React.createElement(React.Fragment, null, React.createElement(\\"h1\\", null, data.site.siteMetadata.title), React.createElement(\\"p\\", null, data.site.siteMetadata.description));
 });
-export const query = \\"2626356014\\";"
+export const query = {
+  id: \\"2626356014\\",
+  source: \\"{site { siteMetadata { title }}}\\",
+
+  toString() {
+    return this.id;
+  }
+
+};"
 `;
 
 exports[`Transforms only the call expression in useStaticQuery 1`] = `
@@ -105,7 +169,15 @@ exports[`Transforms queries and preserves destructuring in useStaticQuery 1`] = 
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import * as React from 'react';
 export default (() => {
-  const query = \\"2626356014\\";
+  const query = {
+    id: \\"2626356014\\",
+    source: \\"{site { siteMetadata { title }}}\\",
+
+    toString() {
+      return this.id;
+    }
+
+  };
   const {
     site
   } = staticQueryData.data;
@@ -117,7 +189,15 @@ exports[`Transforms queries and preserves variable type in useStaticQuery 1`] = 
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import * as React from 'react';
 export default (() => {
-  const query = \\"2626356014\\";
+  const query = {
+    id: \\"2626356014\\",
+    source: \\"{site { siteMetadata { title }}}\\",
+
+    toString() {
+      return this.id;
+    }
+
+  };
   let {
     site
   } = staticQueryData.data;
@@ -129,7 +209,15 @@ exports[`Transforms queries defined in own variable in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import * as React from 'react';
 import { StaticQuery } from 'gatsby';
-const query = \\"2626356014\\";
+const query = {
+  id: \\"2626356014\\",
+  source: \\"{site { siteMetadata { title }}}\\",
+
+  toString() {
+    return this.id;
+  }
+
+};
 export default (() => React.createElement(StaticQuery, {
   query: query,
   render: data => React.createElement(\\"div\\", null, data.site.siteMetadata.title),
@@ -141,7 +229,15 @@ exports[`Transforms queries defined in own variable in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import * as React from 'react';
 export default (() => {
-  const query = \\"2626356014\\";
+  const query = {
+    id: \\"2626356014\\",
+    source: \\"{site { siteMetadata { title }}}\\",
+
+    toString() {
+      return this.id;
+    }
+
+  };
   const siteTitle = staticQueryData.data;
   return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
 });"
@@ -152,13 +248,31 @@ exports[`Transforms queries in <StaticQuery> 1`] = `
 import * as React from 'react';
 import { StaticQuery } from 'gatsby';
 export default (() => React.createElement(StaticQuery, {
-  query: \\"2626356014\\",
+  query: {
+    id: \\"2626356014\\",
+    source: \\"{site { siteMetadata { title }}}\\",
+
+    toString() {
+      return this.id;
+    }
+
+  },
   render: data => React.createElement(\\"div\\", null, data.site.siteMetadata.title),
   data: staticQueryData
 }));"
 `;
 
-exports[`Transforms queries in page components 1`] = `"export const query = \\"3687030656\\";"`;
+exports[`Transforms queries in page components 1`] = `
+"export const query = {
+  id: \\"3687030656\\",
+  source: \\"/n     {/n       site { siteMetadata { title }}/n     }/n  \\",
+
+  toString() {
+    return this.id;
+  }
+
+};"
+`;
 
 exports[`Transforms queries in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
@@ -169,7 +283,17 @@ export default (() => {
 });"
 `;
 
-exports[`allows the global tag 1`] = `"export const query = \\"3687030656\\";"`;
+exports[`allows the global tag 1`] = `
+"export const query = {
+  id: \\"3687030656\\",
+  source: \\"/n     {/n       site { siteMetadata { title }}/n     }/n  \\",
+
+  toString() {
+    return this.id;
+  }
+
+};"
+`;
 
 exports[`distinguishes between the right tags 1`] = `
 "const foo = styled('div')\`
@@ -195,22 +319,78 @@ const pulse = keyframes\`
       animation-timing-function: ease-out;
     }
   \`;
-export const query = \\"3687030656\\";"
+export const query = {
+  id: \\"3687030656\\",
+  source: \\"/n     {/n       site { siteMetadata { title }}/n     }/n  \\",
+
+  toString() {
+    return this.id;
+  }
+
+};"
 `;
 
-exports[`handles import aliasing 1`] = `"export const query = \\"3687030656\\";"`;
+exports[`handles import aliasing 1`] = `
+"export const query = {
+  id: \\"3687030656\\",
+  source: \\"/n     {/n       site { siteMetadata { title }}/n     }/n  \\",
 
-exports[`handles require 1`] = `"export const query = \\"3687030656\\";"`;
+  toString() {
+    return this.id;
+  }
 
-exports[`handles require alias 1`] = `"export const query = \\"3687030656\\";"`;
+};"
+`;
 
-exports[`handles require namespace 1`] = `"export const query = \\"3687030656\\";"`;
+exports[`handles require 1`] = `
+"export const query = {
+  id: \\"3687030656\\",
+  source: \\"/n     {/n       site { siteMetadata { title }}/n     }/n  \\",
+
+  toString() {
+    return this.id;
+  }
+
+};"
+`;
+
+exports[`handles require alias 1`] = `
+"export const query = {
+  id: \\"3687030656\\",
+  source: \\"/n     {/n       site { siteMetadata { title }}/n     }/n  \\",
+
+  toString() {
+    return this.id;
+  }
+
+};"
+`;
+
+exports[`handles require namespace 1`] = `
+"export const query = {
+  id: \\"3687030656\\",
+  source: \\"/n     {/n       site { siteMetadata { title }}/n     }/n  \\",
+
+  toString() {
+    return this.id;
+  }
+
+};"
+`;
 
 exports[`transforms exported variable queries in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import * as React from 'react';
 import { StaticQuery } from 'gatsby';
-export const query = \\"2626356014\\";
+export const query = {
+  id: \\"2626356014\\",
+  source: \\"{site { siteMetadata { title }}}\\",
+
+  toString() {
+    return this.id;
+  }
+
+};
 export default (() => React.createElement(StaticQuery, {
   query: query,
   render: data => React.createElement(\\"div\\", null, data.site.siteMetadata.title),
