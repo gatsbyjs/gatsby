@@ -1,7 +1,7 @@
 import React from "react"
 import { useQuery, useMutation } from "urql"
 
-const InstallInput = () => {
+const InstallInput: React.FC<{}> = () => {
   const [value, setValue] = React.useState("")
 
   const [_, installGatbyPlugin] = useMutation(`
@@ -44,7 +44,7 @@ const InstallInput = () => {
   )
 }
 
-const DestroyButton = ({ name }) => {
+const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
   const [_, deleteGatsbyPlugin] = useMutation(`
     mutation destroyGatsbyPlugin($name: String!) {
       destroyNpmPackage(npmPackage: {
@@ -68,7 +68,7 @@ const DestroyButton = ({ name }) => {
   return <button onClick={() => deleteGatsbyPlugin({ name })}>X</button>
 }
 
-export default (): React.ReactElement => {
+const Index: React.FC<{}> = () => {
   const [{ data, fetching, error }] = useQuery({
     query: `
       {
@@ -135,3 +135,5 @@ export default (): React.ReactElement => {
     </>
   )
 }
+
+export default Index
