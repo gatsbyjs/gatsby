@@ -5939,6 +5939,26 @@
     - Stylesheet built using Sass and BEM-Style naming.
     - Syntax highlighting in code blocks.
     - Google Analytics support.
+- url: https://dindim-production.netlify.com/
+  repo: https://github.com/lorenzogm/gatsby-ecommerce-starter
+  description: Gatsby starter to create an ecommerce website with netlify and stripe. Setup and release your shop in a few minutes.
+  tags:
+    - Client-side App
+    - E-commerce
+    - Firebase
+    - Netlify
+    - SEO
+    - Stripe
+    - Styling:CSS-in-JS
+  features:
+    - 100% Free. No subscriptions, just pay a fee to Stripe when you sell a product.
+    - Home Page to list all your products.
+    - Category Page to list products by category.
+    - Product Detail Page. Define several colors and sizes for the same product
+    - Cart Page with the summary of your cart before checkout.
+    - Checkout Page powered by Stripe.
+    - Scripts to create/update/delete your products in Stripe.
+    - Analytics with Firebase
 - url: https://gatsby-starter-ts.now.sh/
   repo: https://github.com/jpedroschmitz/gatsby-starter-ts
   description: A TypeScript starter for Gatsby. No plugins and styling. Exactly the necessary to start!
