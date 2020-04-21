@@ -1,8 +1,6 @@
 import { PackageJson, Reporter } from "gatsby"
 
 export interface ICert {
-  keyPath: string
-  certPath: string
   key: string
   cert: string
 }

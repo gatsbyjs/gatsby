@@ -2,10 +2,7 @@ const { createHash } = require(`crypto`)
 jest.mock(`child_process`)
 const { getRepositoryId, getRepoMetadata } = require(`../repository-id`)
 
-const hash = str =>
-  createHash(`sha256`)
-    .update(str)
-    .digest(`hex`)
+const hash = str => createHash(`sha256`).update(str).digest(`hex`)
 
 describe(`Repository ID Helpers`, () => {
   it(`getRepositoryId from git`, () => {

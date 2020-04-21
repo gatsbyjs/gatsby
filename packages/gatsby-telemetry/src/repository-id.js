@@ -72,10 +72,7 @@ const getRepositoryFromNetlifyEnv = () => {
   return null
 }
 
-const hash = str =>
-  createHash(`sha256`)
-    .update(str)
-    .digest(`hex`)
+const hash = str => createHash(`sha256`).update(str).digest(`hex`)
 
 module.exports = {
   getRepositoryId,

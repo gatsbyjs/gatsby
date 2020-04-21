@@ -74,6 +74,7 @@ exports.sourceNodes = async ({
   const resultData = await result.json()
   // create node for build time data example in the docs
   createNode({
+    // nameWithOwner and url are arbitrary fields from the data
     nameWithOwner: resultData.full_name,
     url: resultData.html_url,
     // required fields
@@ -87,6 +88,8 @@ exports.sourceNodes = async ({
   })
 }
 ```
+
+It is important to note that node fields can indeed be arbitrary. The `nameWithOwner` and `url` fields from above are examples of this.
 
 This node created manually could be retrieved with a query like this:
 
