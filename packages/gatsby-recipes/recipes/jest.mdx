@@ -1,0 +1,46 @@
+# Add Jest
+
+This recipe helps you setup Jest in your Gatsby site to test components and utilities
+
+<Config
+  name="gatsbyjs/add-jest"
+/>
+
+---
+
+Installing the `jest` package
+
+<NPMPackage name="jest" />
+
+---
+
+Adding some jest test files for you to play with
+
+<File
+  path="src/jest-example/sum.js"
+  content="https://gist.github.com/KyleAMathews/3267b3e09b23dd693aa996b23dfd2d6f/raw/f7c8fa25c295421d8826037b40ac924a33aebf15/sum.js"
+/>
+
+<File
+  path="src/jest-example/sum.test.js"
+  content="https://gist.github.com/KyleAMathews/3267b3e09b23dd693aa996b23dfd2d6f/raw/f7c8fa25c295421d8826037b40ac924a33aebf15/sum.test.js"
+/>
+
+---
+
+Adding a `test` & `test:watch` scripts to your package.json.
+
+Now Try running `npm run test` — jest will run your test!
+
+While writing tests you can run `npm run test:watch` and tests will re-run
+as you edit them.
+
+<NPMScript
+  name="test"
+  command="jest"
+/>
+
+<NPMScript
+  name="test:watch"
+  command="jest --watch"
+/>

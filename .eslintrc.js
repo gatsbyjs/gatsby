@@ -85,6 +85,19 @@ module.exports = {
       plugins: ["@typescript-eslint/eslint-plugin"],
       rules: {
         ...TSEslint.configs.recommended.rules,
+        // This rule is great. It helps us not throw on types for areas that are
+        // easily inferrable. However we have a desire to have all function inputs
+        // and outputs declaratively typed. So this let's us ignore the parameters
+        // inferrable lint.
+        "@typescript-eslint/no-inferrable-types": [
+          "error",
+          { ignoreParameters: true },
+        ],
+        // This rule tries to ensure we use camelCase for all variables, properties
+        // functions, etc. However, it is not always possible to ensure properties
+        // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
+        // this rule. This allows properties to be whatever they need to be.
+        "@typescript-eslint/camelcase": ["error", { properties: "never" }],
         // This rule tries to prevent using `require()`. However in node code,
         // there are times where this makes sense. And it specifically is causing
         // problems in our tests where we often want this functionality for module
@@ -140,6 +153,9 @@ module.exports = {
             avoidEscape: true,
           },
         ],
+        // bump to @typescript-eslint/parser started showing Flow related errors in ts(x) files
+        // so disabling them in .ts(x) files
+        "flowtype/no-types-missing-file-annotation": "off",
       },
     },
   ],

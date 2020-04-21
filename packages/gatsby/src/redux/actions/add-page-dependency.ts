@@ -9,7 +9,7 @@ export const createPageDependency = ({
 }: {
   path: string
   nodeId: string
-  connection: string
+  connection?: string
 }): void => {
   const { componentDataDependencies } = store.getState()
 
@@ -23,7 +23,7 @@ export const createPageDependency = ({
   if (
     nodeId &&
     componentDataDependencies.nodes.has(nodeId) &&
-    componentDataDependencies.nodes.get(nodeId).has(path)
+    componentDataDependencies.nodes.get(nodeId)!.has(path)
   ) {
     nodeDependencyExists = true
   }
@@ -33,7 +33,7 @@ export const createPageDependency = ({
   if (
     connection &&
     componentDataDependencies.connections.has(connection) &&
-    componentDataDependencies.connections.get(connection).has(path)
+    componentDataDependencies.connections.get(connection)!.has(path)
   ) {
     connectionDependencyExists = true
   }

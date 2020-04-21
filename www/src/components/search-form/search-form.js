@@ -2,6 +2,8 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { navigate } from "gatsby"
+import { withI18n } from "@lingui/react"
+import { t } from "@lingui/macro"
 
 import SearchIcon from "../search-icon"
 import { themedInput } from "../../utils/styles"
@@ -13,7 +15,7 @@ import { Global } from "@emotion/core"
 
 import algoliaStyles from "./algolia-styles"
 
-export default function SearchForm() {
+function SearchForm({ i18n }) {
   const [focused, setFocus] = React.useState(false)
   const [isInit, setInit] = React.useState(false)
   const searchInput = React.useRef(null)
@@ -144,9 +146,9 @@ export default function SearchForm() {
               `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
           }}
           type="search"
-          placeholder={`Search gatsbyjs.org`}
-          aria-label="Search gatsbyjs.org"
-          title="Hit 's' to search docs"
+          placeholder={i18n._(t`Search gatsbyjs.org`)}
+          aria-label={i18n._(t`Search gatsbyjs.org`)}
+          title={i18n._(t`Hit 's' to search docs`)}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           ref={searchInput}
@@ -156,3 +158,5 @@ export default function SearchForm() {
     </form>
   )
 }
+
+export default withI18n()(SearchForm)

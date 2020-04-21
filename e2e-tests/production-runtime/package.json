@@ -42,7 +42,7 @@
     "cross-env": "^5.2.0",
     "fs-extra": "^7.0.1",
     "is-ci": "^2.0.0",
-    "prettier": "^1.14.3",
+    "prettier": "2.0.4",
     "start-server-and-test": "^1.7.1"
   },
   "repository": {

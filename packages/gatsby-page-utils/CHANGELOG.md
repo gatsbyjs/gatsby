@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.1.2...gatsby-page-utils@0.1.3) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [0.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.1.1...gatsby-page-utils@0.1.2) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.1.0...gatsby-page-utils@0.1.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+# [0.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.45...gatsby-page-utils@0.1.0) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.44...gatsby-page-utils@0.0.45) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-page-utils
+
 ## [0.0.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.43...gatsby-page-utils@0.0.44) (2020-03-11)
 
 **Note:** Version bump only for package gatsby-page-utils

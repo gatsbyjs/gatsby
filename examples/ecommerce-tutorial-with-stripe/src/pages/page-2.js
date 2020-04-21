@@ -1,13 +1,13 @@
-import React from 'react'
-import { Link } from 'gatsby'
+import React from "react"
+import { Link } from "gatsby"
 
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Layout from "../components/layout"
+import SEO from "../components/seo"
 
 const SecondPage = () => (
   <Layout>
     <SEO title="Payment Success" />
-    <h1>Sucess!</h1>
+    <h1>Success!</h1>
     <Link to="/">Shop again</Link>
   </Layout>
 )
