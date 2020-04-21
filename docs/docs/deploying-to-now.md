@@ -2,7 +2,7 @@
 title: Deploying to Now
 ---
 
-[ZEIT Now](https://vercel.com/now) is a [cloud platform for serverless deployment](https://vercel.com/docs/v2/getting-started/introduction-to-now/) that you can use to deploy your Gatsby projects and [alias them](https://vercel.com/docs/v2/domains-and-aliases/aliasing-a-deployment/) to your personal domain or a free `.now.sh` suffixed URL.
+[Vercel Now](https://vercel.com/now) is a [cloud platform for serverless deployment](https://vercel.com/docs/v2/getting-started/introduction-to-now/) that you can use to deploy your Gatsby projects and [alias them](https://vercel.com/docs/v2/domains-and-aliases/aliasing-a-deployment/) to your personal domain or a free `.now.sh` suffixed URL.
 
 This guide will show you how to get started in a few quick steps:
 
@@ -50,7 +50,7 @@ With Now CLI installed, we can go on to deploy our previously setup Gatsby proje
 
 This `now.json` file will allow us to do several things, specifically:
 
-- Use the [latest Now 2.0 version](https://vercel.com/blog/now-2) of [the platform](https://zeit.co/docs/v2/platform/overview/)
+- Use the [latest Now 2.0 version](https://vercel.com/blog/now-2) of [the platform](https://vercel.com/docs/v2/platform/overview/)
 - Set the project name to `my-gatsby-project`
 - Use the [@now/static-build builder](https://vercel.com/docs/v2/deployments/official-builders/static-build-now-static-build/) to take the `package.json` file as an entrypoint and use the `public` directory as our content directory
 
@@ -77,4 +77,4 @@ That's all! Your application will now deploy, and you will receive a link simila
 
 ## References:
 
-- [Deploying Gatsby with Now](https://vercel.com/examples/gatsby/)
+- [Example Project](https://github.com/zeit/now/tree/master/examples/gatsby)
