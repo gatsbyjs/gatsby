@@ -82,7 +82,10 @@ module.exports = () => {
           [camelCasedResourceName]: { type: inputType },
         },
         resolve: async (_root, args, context) => {
-          const value = await resource.destroy(context, args)
+          const value = await resource.destroy(
+            context,
+            args[camelCasedResourceName]
+          )
           return { ...value, _typeName: resourceName }
         },
       }
