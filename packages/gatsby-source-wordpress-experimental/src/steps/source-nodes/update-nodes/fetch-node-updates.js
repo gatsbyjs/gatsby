@@ -44,8 +44,6 @@ const fetchAndApplyNodeUpdates = async ({ since, intervalRefetching }) => {
     pluginOptions,
   })
 
-  const { actions } = helpers
-
   if (
     // if we're refetching, we only want to touch all nodes
     // if something changed
