@@ -15,7 +15,7 @@ export const pagesReducer = (
       return new Map()
     case `CREATE_PAGE`: {
       action.payload.component = normalize(action.payload.component)
-      if (!action.plugin || !action.plugin.name) {
+      if (!action.plugin?.name) {
         console.log(``)
         console.error(JSON.stringify(action, null, 4))
         console.log(``)
