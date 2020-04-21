@@ -6,12 +6,8 @@ const existsSync = require(`fs-exists-cached`).sync
 
 const glob = Promise.promisify(globCB)
 
-const {
-  createPath,
-  validatePath,
-  ignorePath,
-  watchDirectory,
-} = require(`gatsby-page-utils`)
+const { createPage } = require("./create-page-wrapper")
+const { createPath, watchDirectory } = require(`gatsby-page-utils`)
 
 // Path creator.
 // Auto-create pages.
@@ -23,7 +19,7 @@ exports.createPagesStatefully = async (
   { path: pagesPath, pathCheck = true, ignore },
   doneCb
 ) => {
-  const { createPage, deletePage } = actions
+  const { deletePage } = actions
   const program = store.getState().program
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
@@ -55,14 +51,16 @@ exports.createPagesStatefully = async (
 
   // Get initial list of files.
   let files = await glob(pagesGlob, { cwd: pagesPath })
-  files.forEach(file => _createPage(file, pagesDirectory, createPage, ignore))
+  files.forEach(file =>
+    createPage(file, pagesDirectory, actions.createPage, ignore)
+  )
 
   watchDirectory(
     pagesPath,
     pagesGlob,
     addedPath => {
       if (!_.includes(files, addedPath)) {
-        _createPage(addedPath, pagesDirectory, createPage, ignore)
+        createPage(addedPath, pagesDirectory, actions.createPage, ignore)
         files.push(addedPath)
       }
     },
@@ -80,26 +78,4 @@ exports.createPagesStatefully = async (
       files = files.filter(f => f !== removedPath)
     }
   ).then(() => doneCb())
-}
-const _createPage = (filePath, pagesDirectory, createPage, ignore) => {
-  // Filter out special components that shouldn't be made into
-  // pages.
-  if (!validatePath(filePath)) {
-    return
-  }
-
-  // Filter out anything matching the given ignore patterns and options
-  if (ignorePath(filePath, ignore)) {
-    return
-  }
-
-  // Create page object
-  const createdPath = createPath(filePath)
-  const page = {
-    path: createdPath,
-    component: systemPath.join(pagesDirectory, filePath),
-  }
-
-  // Add page
-  createPage(page)
 }

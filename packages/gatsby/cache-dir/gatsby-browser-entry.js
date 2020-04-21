@@ -84,8 +84,17 @@ function graphql() {
   )
 }
 
+function createPagesFromData() {
+  //   throw new Error(`
+  // It appears like Gatsby is misconfigured. Gatsby related \`createPagesFromData\` calls
+  // are supposed to only be evaluated at compile time, and then compiled away.
+  // Unfortunately, something went wrong and the function was left in the compiled code.
+  // Unless your site has a complex or custom babel/Gatsby configuration this is likely a bug in Gatsby.`)
+}
+
 export {
   Link,
+  createPagesFromData,
   withAssetPrefix,
   withPrefix,
   graphql,
