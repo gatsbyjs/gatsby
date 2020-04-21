@@ -2,7 +2,7 @@
 
 A visual interface to configure your Gatsby site.
 
-We have not packaged this nicely yet, so its not installable
+We have not packaged this nicely yet, so it is not installable.
 
 ## How to develop it
 
