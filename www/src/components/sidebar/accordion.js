@@ -8,11 +8,9 @@ import { Title, TitleButton, SplitButton } from "./section-title"
 const ItemWithSubitems = ({
   itemRef,
   activeItemLink,
-  createLink,
   isExpanded,
   isParentOfActiveItem,
   item,
-  location,
   onLinkClick,
   onSectionTitleClick,
   uid,
@@ -24,12 +22,10 @@ const ItemWithSubitems = ({
   return item.link ? (
     <SplitButton
       itemRef={itemRef}
-      createLink={createLink}
       isActive={isActive}
       isExpanded={isExpanded}
       isParentOfActiveItem={isParentOfActiveItem}
       item={item}
-      location={location}
       onLinkClick={onLinkClick}
       onSectionTitleClick={onSectionTitleClick}
       uid={uid}
@@ -72,7 +68,6 @@ class Accordion extends React.Component {
       itemRef,
       activeItemLink,
       activeItemParents,
-      createLink,
       isActive,
       isParentOfActiveItem,
       item,
@@ -128,12 +123,10 @@ class Accordion extends React.Component {
           itemRef={itemRef}
           activeItemLink={activeItemLink}
           activeItemParents={activeItemParents}
-          createLink={createLink}
           isActive={isActive}
           isExpanded={isExpanded}
           isParentOfActiveItem={isParentOfActiveItem}
           item={item}
-          location={location}
           onLinkClick={onLinkClick}
           onSectionTitleClick={onSectionTitleClick}
           uid={uid}
@@ -163,7 +156,6 @@ class Accordion extends React.Component {
               <Item
                 activeItemLink={activeItemLink}
                 activeItemParents={activeItemParents}
-                createLink={createLink}
                 item={subitem}
                 key={subitem.title}
                 location={location}

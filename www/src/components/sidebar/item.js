@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback } from "react"
 
 import Accordion from "./accordion"
-import createLink from "../../utils/sidebar/create-link"
+import ItemLink from "./item-link"
 
 const isItemActive = (activeItemParents, item) => {
   if (activeItemParents) {
@@ -50,7 +50,6 @@ const Item = ({
           itemRef={itemRef}
           activeItemLink={activeItemLink}
           activeItemParents={activeItemParents}
-          createLink={createLink}
           isActive={
             isActive ||
             item.link === location.pathname ||
@@ -68,14 +67,12 @@ const Item = ({
         />
       ) : (
         <li ref={itemRef}>
-          {createLink({
-            isActive: item.link === activeItemLink.link,
-            item,
-            location,
-            onLinkClick,
-            ui,
-            level: item.level,
-          })}
+          <ItemLink
+            isActive={item.link === activeItemLink.link}
+            item={item}
+            onLinkClick={onLinkClick}
+            ui={ui}
+          />
         </li>
       )}
     </Fragment>
