@@ -11,11 +11,11 @@ const Item = ({ item }) => {
 
   // Scroll the active item into view on
   React.useEffect(() => {
-    // FIXME don't do this if this item is a hash
-    if (isActive) {
+    // If the active item isn't a hash, scroll to it on page load
+    if (isActive && !item.link.includes("#")) {
       itemRef.current.scrollIntoView({ block: `center` })
     }
-  }, [isActive])
+  }, [isActive, item])
 
   if (item.items) {
     return <Accordion itemRef={itemRef} item={item} />
