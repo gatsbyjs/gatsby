@@ -9,8 +9,9 @@ const Item = ({ item }) => {
   const { isActive } = getItemState(item)
   const itemRef = React.useRef(null)
 
-  // Scroll the active item into view on rended
+  // Scroll the active item into view on
   React.useEffect(() => {
+    // FIXME don't do this if this item is a hash
     if (isActive) {
       itemRef.current.scrollIntoView({ block: `center` })
     }

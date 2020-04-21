@@ -24,7 +24,7 @@ try {
 }
 
 const isItemParentOfActive = (activeItemParents, item) => {
-  return activeItemParents.some(parent => parent === item.title)
+  return activeItemParents.some(parent => parent.title === item.title)
 }
 
 function getOpenItemHash(itemList, activeItem, activeItemParents) {
@@ -89,7 +89,7 @@ export default withI18n()(function Sidebar({
   )
 
   const activeItemParents = React.useMemo(
-    () => getActiveItemParents(itemList, activeItem).map(link => link.title),
+    () => getActiveItemParents(itemList, activeItem),
     [itemList, activeItem]
   )
 
@@ -143,7 +143,8 @@ export default withI18n()(function Sidebar({
         isActive,
         // TODO rename this variable to be more apparent about what it is
         isParentOfActive:
-          isActive || activeItemParents.some(parent => parent === item.title),
+          isActive ||
+          activeItemParents.some(parent => parent.title === item.title),
       }
     },
     [openSectionHash, disableAccordions, activeItem, activeItemParents]
