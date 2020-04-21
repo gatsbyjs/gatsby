@@ -1,8 +1,8 @@
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import { graphql } from 'gatsby'
+import * as React from "react"
+import PropTypes from "prop-types"
+import { graphql } from "gatsby"
 
-import Layout from '../components/layout.js'
+import Layout from "../components/layout.js"
 
 const IndexPage = ({ data }) => (
   <Layout data={data}>

@@ -137,6 +137,16 @@ describe(`results using non default alternatives`, () => {
             },
           ],
         },
+        otherData: {
+          nodes: [
+            {
+              name: `test`,
+            },
+            {
+              name: `test 2`,
+            },
+          ],
+        },
       },
     }
   }
@@ -161,5 +171,6 @@ describe(`results using non default alternatives`, () => {
     const queryRecords = filterQuery(results, [], ``, customSiteResolver)
 
     expect(queryRecords.site.siteMetadata.siteUrl).toEqual(customUrl)
+    expect(queryRecords).toHaveProperty(`otherData`)
   })
 })

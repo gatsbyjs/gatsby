@@ -124,13 +124,13 @@ Rendered, the component looks like this:
   To improve is to change, so to be perfect is to have changed often.
 </Pullquote>
 
-### Layer Model
+### Component Model
 
-The `<LayerModel />` was made to help explain concepts of how Gatsby works at a high level. It conceptually breaks Gatsby into different layers and shows how data is pulled, aggregated, and eventually rendered as an app. It's used on docs pages to help explain how Gatsby works at different levels.
+The `<ComponentModel />` was made to help explain concepts of how Gatsby works at a high level. It conceptually breaks Gatsby into different layers and shows how data is pulled, aggregated, and eventually rendered as an app. It's used on docs pages to help explain how Gatsby works at different levels.
 
 #### Usage
 
-The Layer Model component takes one prop:
+The Component Model component takes one prop:
 
 - `initialLayer` - defaults to `Content`, can be one of `Content`, `Build`, `Data`, `View`, `App` that correspond to the different layers
 
@@ -139,18 +139,16 @@ The Layer Model component takes one prop:
 title: GraphQL Concepts in Gatsby
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-
 To help understand how GraphQL works in Gatsby...
 
-<LayerModel initialLayer="Data" />
+<ComponentModel initialLayer="Data" />
 ```
 
 #### Sample
 
 When used, it looks like this:
 
-<LayerModel initialLayer="Data" />
+<ComponentModel initialLayer="Data" />
 
 ### Horizontal Navigation List
 

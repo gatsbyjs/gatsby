@@ -28,7 +28,7 @@ const OutboundLink = React.forwardRef(({ children, ...props }, ref) => (
           event_category: `outbound`,
           event_label: props.href,
           transport_type: redirect ? `beacon` : ``,
-          event_callback: function() {
+          event_callback: function () {
             if (redirect) {
               document.location = props.href
             }

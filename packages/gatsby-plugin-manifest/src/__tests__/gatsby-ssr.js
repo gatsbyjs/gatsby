@@ -4,12 +4,6 @@ jest.mock(`fs`, () => {
   }
 })
 
-jest.mock(`gatsby-core-utils`, () => {
-  return {
-    createContentDigest: jest.fn(() => `contentDigest`),
-  }
-})
-
 const { onRenderBody } = require(`../gatsby-ssr`)
 
 let headComponents

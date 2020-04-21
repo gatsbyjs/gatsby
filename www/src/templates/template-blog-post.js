@@ -65,7 +65,10 @@ class BlogPostTemplate extends React.Component {
               <meta name="description" content={post.fields.excerpt} />
 
               <meta name="twitter:description" content={post.fields.excerpt} />
-              <meta name="twitter:card" content={post.frontmatter.twittercard || 'summary'} />
+              <meta
+                name="twitter:card"
+                content={post.frontmatter.twittercard || "summary"}
+              />
               <meta property="og:description" content={post.fields.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
               <meta property="og:url" content={href} />
