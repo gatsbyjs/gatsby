@@ -8,7 +8,7 @@ const InstallInput = () => {
     mutation installGatsbyPlugin($name: String!) {
       createNpmPackage(npmPackage: {
         name: $name,
-        dependencyType: "development"
+        dependencyType: "production"
       }) {
         id
         name
@@ -50,7 +50,7 @@ const DestroyButton = ({ name }) => {
       destroyNpmPackage(npmPackage: {
         name: $name,
         id: $name,
-        dependencyType: "development"
+        dependencyType: "production"
       }) {
         id
         name
