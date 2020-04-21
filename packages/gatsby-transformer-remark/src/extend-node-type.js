@@ -174,7 +174,7 @@ module.exports = (
       const compiler = {
         parseString: string => parseString(string, markdownNode),
         generateHTML: ast =>
-          hastToHTML(ast, {
+          hastToHTML(markdownASTToHTMLAst(ast), {
             allowDangerousHTML: true,
           }),
       }
@@ -338,16 +338,20 @@ module.exports = (
       }
     }
 
+    async function markdownASTToHTMLAst(ast) {
+      return toHAST(ast, {
+        allowDangerousHTML: true,
+        handlers: { code: codeHandler },
+      })
+    }
+
     async function getHTMLAst(markdownNode) {
       const cachedAst = await cache.get(htmlAstCacheKey(markdownNode))
       if (cachedAst) {
         return cachedAst
       } else {
         const ast = await getAST(markdownNode)
-        const htmlAst = toHAST(ast, {
-          allowDangerousHTML: true,
-          handlers: { code: codeHandler },
-        })
+        const htmlAst = markdownASTToHTMLAst(ast)
 
         // Save new HTML AST to cache and return
         cache.set(htmlAstCacheKey(markdownNode), htmlAst)
