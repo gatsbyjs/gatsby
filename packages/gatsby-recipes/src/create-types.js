@@ -89,17 +89,29 @@ module.exports = () => {
         schemaComposer
       ).getInputType()
 
-      const createMutationArgName = _.camelCase(resourceName)
+      const camelCasedResourceName = _.camelCase(resourceName)
       const createMutation = {
         type,
         args: {
-          [createMutationArgName]: { type: inputType },
+          [camelCasedResourceName]: { type: inputType },
         },
         resolve: (_root, args, context) =>
-          resource.create(context, args[createMutationArgName]),
+          resource.create(context, args[camelCasedResourceName]),
       }
 
       mutationTypes[`create${resourceName}`] = createMutation
+
+      // Update mutation
+      const updateMutation = {
+        type,
+        args: {
+          [camelCasedResourceName]: { type: inputType },
+        },
+        resolve: (_root, args, context) =>
+          resource.update(context, args[camelCasedResourceName]),
+      }
+
+      mutationTypes[`update${resourceName}`] = updateMutation
 
       return {
         query: queryTypes,
