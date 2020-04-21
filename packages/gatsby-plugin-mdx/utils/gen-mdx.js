@@ -122,6 +122,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
 
   debug(`running mdx`)
   let code = await mdx(content, {
+    filepath: node.fileAbsolutePath,
     ...options,
     remarkPlugins: options.remarkPlugins.concat(
       gatsbyRemarkPluginsAsremarkPlugins

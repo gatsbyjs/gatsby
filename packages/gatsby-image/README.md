@@ -262,7 +262,7 @@ format, use the `withWebp` fragments. If the browser doesn't support WebP,
 `gatsby-image` will fall back to the default image format.
 
 For more information about these options, please see the
-[Gatsby Image API](/docs/gatsby-image/#image-query-fragments).
+[Gatsby Image API](https://www.gatsbyjs.org/docs/gatsby-image/#image-query-fragments).
 
 _Please see the
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#tracedsvg)
