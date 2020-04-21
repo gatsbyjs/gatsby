@@ -100,7 +100,7 @@ function transformField({
   if (
     field.args &&
     field.args.length &&
-    field.args.find(arg => arg && arg.type && arg.type.kind === `NON_NULL`)
+    field.args.find(arg => arg?.type?.kind === `NON_NULL`)
   ) {
     return false
   }
