@@ -9,7 +9,7 @@ exports[`Test plugin manifest options does file name based cache busting 1`] = `
   "calls": Array [
     Array [
       "public/manifest.webmanifest",
-      "{\\"name\\":\\"GatsbyJS\\",\\"short_name\\":\\"GatsbyJS\\",\\"start_url\\":\\"/\\",\\"background_color\\":\\"#f7f0eb\\",\\"theme_color\\":\\"#a2466c\\",\\"display\\":\\"standalone\\",\\"icons\\":[{\\"src\\":\\"icons/icon-48x48-contentDigest.png\\",\\"sizes\\":\\"48x48\\",\\"type\\":\\"image/png\\",\\"purpose\\":\\"all\\"},{\\"src\\":\\"icons/icon-128x128-contentDigest.png\\",\\"sizes\\":\\"128x128\\",\\"type\\":\\"image/png\\"}]}",
+      "{\\"name\\":\\"GatsbyJS\\",\\"short_name\\":\\"GatsbyJS\\",\\"start_url\\":\\"/\\",\\"background_color\\":\\"#f7f0eb\\",\\"theme_color\\":\\"#a2466c\\",\\"display\\":\\"standalone\\",\\"icons\\":[{\\"src\\":\\"icons/icon-48x48-00913339321ee5a854812aea11f8a5d4.png\\",\\"sizes\\":\\"48x48\\",\\"type\\":\\"image/png\\",\\"purpose\\":\\"all\\"},{\\"src\\":\\"icons/icon-128x128-00913339321ee5a854812aea11f8a5d4.png\\",\\"sizes\\":\\"128x128\\",\\"type\\":\\"image/png\\"}]}",
     ],
   ],
   "results": Array [
