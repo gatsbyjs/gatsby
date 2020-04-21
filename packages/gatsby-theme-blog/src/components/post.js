@@ -26,9 +26,15 @@ const Post = ({
       keywords={post.keywords}
     />
     <main>
-      <PostTitle>{post.title}</PostTitle>
-      <PostDate>{post.date}</PostDate>
-      <MDXRenderer>{post.body}</MDXRenderer>
+      <article>
+        <header>
+          <PostTitle>{post.title}</PostTitle>
+          <PostDate>{post.date}</PostDate>
+        </header>
+        <section>
+          <MDXRenderer>{post.body}</MDXRenderer>
+        </section>
+      </article>
     </main>
     <PostFooter {...{ previous, next }} />
   </Layout>
