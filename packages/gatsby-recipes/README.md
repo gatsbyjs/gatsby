@@ -169,7 +169,7 @@ Soon will support options.
 ##### props
 
 - **path** path to the file that should be created. The path is local to the root of the Node.js project (where the package.json is)
-- **content** URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixees to MDX.
+- **content** URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixes to MDX.
 
 > Note that this content is stored in a [GitHub gist](https://gist.github.com/). When linking to a gist you'll want to click on the "Raw" button and copy the URL from that page.
 
