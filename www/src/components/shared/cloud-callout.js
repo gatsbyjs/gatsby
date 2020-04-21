@@ -9,7 +9,7 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 const CloudCalloutRoot = styled(`div`)`
   border: 1px solid ${p => console.log(p) || p.theme.colors.purple["20"]};
   border-radius: ${p => p.theme.radii[2]};
-  color: ${p => p.theme.colors.purple["60"]};
+  color: ${p => p.theme.colors.purple["50"]};
   font-family: ${p => p.theme.fonts.heading};
   font-size: ${p => p.theme.fontSizes[3]};
   font-weight: bold;
@@ -30,7 +30,6 @@ const CloudCalloutRoot = styled(`div`)`
 
 const CloudText = styled(`p`)`
   color: ${p => p.theme.colors.text};
-  font-size: ${p => p.theme.fontSizes[2]};
   font-weight: normal;
   margin-bottom: 0;
 `

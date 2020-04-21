@@ -2,5 +2,5 @@
   <circle cx="17" cy="15" r="14.5" stroke="currentColor"/>
   <circle cx="17" cy="35" r="14.5" stroke="currentColor"/>
   <circle cx="17" cy="55" r="14.5" stroke="currentColor"/>
-  <circle cx="17" cy="70" r="14.5" fill="#fff" stroke="currentColor"/>
+  <circle cx="17" cy="70" r="14.5" stroke="currentColor"/>
 </svg>

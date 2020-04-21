@@ -130,7 +130,7 @@ The `<CloudCallout />` component is used to call attention and link to Gatsby Cl
 
 #### Usage
 
-The Cloud Callout component takes one optional props, and prepends the children it wraps to the general call to action:
+The Cloud Callout component takes one optional prop, and prepends the children it wraps to the general call to action:
 
 - `narrow` - styles the component by removing the left and right negative margins, keeping it inside the parent container. This prop is by default set to true since it's most commonly used in the docs where it's necessary to keep content from overlapping with other sections of the layout, such as the Table of Contents.
 
