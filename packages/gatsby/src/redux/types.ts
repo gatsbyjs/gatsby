@@ -2,10 +2,10 @@ import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema } from "graphql"
 import { SchemaComposer } from "graphql-compose"
+import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 
 type SystemPath = string
 type Identifier = string
-type StructuredLog = any // TODO this should come from structured log interface
 
 export interface IRedirect {
   fromPath: string
@@ -177,24 +177,7 @@ export interface IGatsbyState {
     types: any[] // TODO
   }
   themes: any // TODO
-  logs: {
-    messages: StructuredLog[]
-    activities: {
-      [key: string]: {
-        id: Identifier
-        uuid: Identifier
-        text: string
-        type: string // TODO make enum
-        status: string // TODO make enum
-        startTime: [number, number]
-        statusText: string
-        current: undefined | any // TODO
-        total: undefined | any // TODO
-        duration: number
-      }
-    }
-    status: string // TODO make enum
-  }
+  logs: IGatsbyCLIState
   inferenceMetadata: {
     step: string // TODO make enum or union
     typeMap: {

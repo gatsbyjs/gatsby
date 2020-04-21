@@ -1,70 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-plugin resource all returns an array of plugins 1`] = `
-Array [
-  Object {
-    "id": "gatsby-source-filesystem",
-    "name": "gatsby-source-filesystem",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-transformer-sharp",
-    "name": "gatsby-transformer-sharp",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-plugin-emotion",
-    "name": "gatsby-plugin-emotion",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-plugin-typography",
-    "name": "gatsby-plugin-typography",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-transformer-remark",
-    "name": "gatsby-transformer-remark",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-plugin-sharp",
-    "name": "gatsby-plugin-sharp",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-plugin-google-analytics",
-    "name": "gatsby-plugin-google-analytics",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-plugin-manifest",
-    "name": "gatsby-plugin-manifest",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-plugin-offline",
-    "name": "gatsby-plugin-offline",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "id": "gatsby-plugin-react-helmet",
-    "name": "gatsby-plugin-react-helmet",
-    "shadowableFiles": Array [],
-    "shadowedFiles": Array [],
-  },
-]
-`;
-
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create 1`] = `
 Object {
   "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
@@ -86,16 +21,16 @@ module.exports = {
 }
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "[31m- Original  - 1[39m
-[32m+ Modified  + 1[39m
+  "diff": "- Original  - 1
++ Modified  + 1
 
-[33m@@ -5,6 +5,6 @@[39m
-[2m   */[22m
-[2m  module.exports = {[22m
-[2m    /* Your site config here */[22m
-[31m-   plugins: [],[39m
-[32m+   plugins: [\\"gatsby-plugin-foo\\"],[39m
-[2m  }[22m
+@@ -5,6 +5,6 @@
+   */
+  module.exports = {
+    /* Your site config here */
+-   plugins: [],
++   plugins: [\\"gatsby-plugin-foo\\"],
+  }
 ",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
@@ -135,7 +70,7 @@ module.exports = {
 }
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "[2mCompared values have no visual difference.[22m",
+  "diff": "Compared values have no visual difference.",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
   "newState": "/**
@@ -231,16 +166,16 @@ module.exports = {
 }
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "[31m- Original  - 0[39m
-[32m+ Modified  + 1[39m
+  "diff": "- Original  - 0
++ Modified  + 1
 
-[33m@@ -64,6 +64,7 @@[39m
-[2m      },[22m
-[2m      \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,[22m
-[2m      \`gatsby-plugin-react-helmet\`,[22m
-[32m+     \\"gatsby-plugin-foo\\",[39m
-[2m    ],[22m
-[2m  }[22m
+@@ -64,6 +64,7 @@
+      },
+      \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
+      \`gatsby-plugin-react-helmet\`,
++     \\"gatsby-plugin-foo\\",
+    ],
+  }
 ",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
@@ -400,7 +335,7 @@ module.exports = {
 }
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "[2mCompared values have no visual difference.[22m",
+  "diff": "Compared values have no visual difference.",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
   "newState": "const redish = \`#c5484d\`

@@ -26,7 +26,7 @@ module.exports = constructor => {
     target = new GraphQLObjectType({
       name,
       description,
-      fields: function() {
+      fields: function () {
         return compiledFields(target)
       },
       args: internals.buildArgs(args),
@@ -188,7 +188,7 @@ internals.buildFields = fields => {
 
   cache = Object.create(null) //Empty cache
 
-  return function(recursiveType) {
+  return function (recursiveType) {
     if (recursiveType) {
       return internals.processLazyLoadQueue(attrs, recursiveType)
     }
