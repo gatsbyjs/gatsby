@@ -6013,9 +6013,10 @@
   repo: https://github.com/flotiq/gatsby-starter-recipes
   description: A Gatsby culinary starter with recipes sourced from Flotiq.
   tags:
+    - CMS:Headless
+    - Gallery
     - Culinary recipes
     - CMS:Flotiq
-    - CMS:Headless
   features:
     - Recipes starter
     - Flotiq CMS as a recipe source
