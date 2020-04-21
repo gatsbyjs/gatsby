@@ -6,10 +6,8 @@ import CLI from "./cli"
 const ConnectedCLI: React.FC = (): React.ReactElement => {
   const state = useContext(StoreStateContext)
   const showStatusBar =
-    state.program &&
-    state.program._ &&
-    state.program._[0] === `develop` &&
-    state.program.status === `BOOTSTRAP_FINISHED`
+    state.program?._?.[0] === `develop` &&
+    state.program?.status === `BOOTSTRAP_FINISHED`
 
   return <CLI showStatusBar={Boolean(showStatusBar)} logs={state.logs} />
 }

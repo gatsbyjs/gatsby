@@ -44,6 +44,7 @@ export interface IMessageProps {
   duration?: number
   statusText?: string
 }
+
 export const Message = React.memo<IMessageProps>(
   ({ level, text, duration, statusText }) => {
     let message = text

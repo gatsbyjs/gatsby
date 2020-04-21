@@ -19,19 +19,10 @@ const useTerminalResize = (): Array<number> => {
   return sizes
 }
 
-enum mapConstantToStatus {
-  IN_PROGRESS = `In Progress`,
-  NOT_STARTED = `Not Started`,
-  INTERRUPTED = `Interrupted`,
-  FAILED = `Failed`,
-  SUCCESS = `Success`,
-  CANCELLED = `Cancelled`,
-}
-
 interface IDevelopProps {
   pagesCount: number
   appName: string
-  status: keyof mapConstantToStatus
+  status: string
 }
 
 const Develop: React.FC<IDevelopProps> = ({ pagesCount, appName, status }) => {
@@ -43,7 +34,7 @@ const Develop: React.FC<IDevelopProps> = ({ pagesCount, appName, status }) => {
       <Box height={1} flexDirection="row">
         <Color>{pagesCount} pages</Color>
         <Box flexGrow={1} />
-        <Color>{mapConstantToStatus[status]}</Color>
+        <Color>{status}</Color>
         <Box flexGrow={1} />
         <Color>{appName}</Color>
       </Box>
@@ -56,9 +47,9 @@ const ConnectedDevelop: React.FC = () => {
 
   return (
     <Develop
-      pagesCount={state.pages ? state.pages.size : 0}
-      appName={state.program ? state.program.sitePackageJson.name || `` : ``}
-      status={state.logs ? state.logs.status : ``}
+      pagesCount={state.pages?.size || 0}
+      appName={state.program?.sitePackageJson.name || ``}
+      status={state.logs?.status || ``}
     />
   )
 }

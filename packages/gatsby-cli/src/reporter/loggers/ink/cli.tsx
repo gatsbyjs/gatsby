@@ -3,33 +3,18 @@ import { Box, Static } from "ink"
 import { isTTY } from "../../../util/is-tty"
 import { trackBuildError } from "gatsby-telemetry"
 import { Spinner } from "./components/spinner"
-import { ProgressBar, IProgressbarProps } from "./components/progress-bar"
+import { ProgressBar } from "./components/progress-bar"
 import { Message, IMessageProps } from "./components/messages"
-import { Error as ErrorComponent, IErrorDetails } from "./components/error"
+import { Error as ErrorComponent } from "./components/error"
 import Develop from "./components/develop"
-import {
-  ActivityLogLevels,
-  ActivityStatuses,
-  ActivityTypes,
-} from "../../constants"
+import { IGatsbyCLIState, IActivity } from "../../redux/types"
+import { ActivityLogLevels } from "../../constants"
+import { IStructuredError } from "../../../structured-errors/types"
 
 const showProgress = isTTY()
 
-interface IActivity {
-  id: string
-  text: string
-  total: IProgressbarProps["total"]
-  current: IProgressbarProps["current"]
-  startTime: IProgressbarProps["startTime"]
-  status: ActivityStatuses
-  type: ActivityTypes
-}
-
 interface ICLIProps {
-  logs: {
-    messages: Array<IErrorDetails | IMessageProps>
-    activities: Record<string, IActivity>
-  }
+  logs: IGatsbyCLIState
   showStatusBar: boolean
 }
 
@@ -94,7 +79,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
         const msg = messages[index]
         this.memoizedReactElementsForMessages.push(
           msg.level === `ERROR` ? (
-            <ErrorComponent details={msg as IErrorDetails} key={index} />
+            <ErrorComponent details={msg as IStructuredError} key={index} />
           ) : (
             <Message key={index} {...(msg as IMessageProps)} />
           )
@@ -132,9 +117,9 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
             <ProgressBar
               key={activity.id}
               message={activity.text}
-              total={activity.total}
-              current={activity.current}
-              startTime={activity.startTime}
+              total={activity.total || 0}
+              current={activity.current || 0}
+              startTime={activity.startTime || [0, 0]}
             />
           ))}
         </Box>
