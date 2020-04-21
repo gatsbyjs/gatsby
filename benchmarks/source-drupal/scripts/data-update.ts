@@ -2,7 +2,9 @@
 
 import { update } from "./updater"
 
-require(`dotenv`).config()
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
 
 const username = process.env.BENCHMARK_DRUPAL_USERNAME
 const password = process.env.BENCHMARK_DRUPAL_PASSWORD
