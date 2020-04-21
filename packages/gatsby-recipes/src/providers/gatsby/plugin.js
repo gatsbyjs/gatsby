@@ -122,6 +122,7 @@ const read = async ({ root }, id) => {
 }
 
 const destroy = async ({ root }, { name }) => {
+  console.log(`DESTROY`, name)
   const configPath = path.join(root, `gatsby-config.js`)
   const configSrc = await fs.readFile(configPath, `utf8`)
 
@@ -134,6 +135,7 @@ const destroy = async ({ root }, { name }) => {
     plugins: [addPlugins.plugin],
     configFile: false,
   })
+  console.log(code)
 
   await fs.writeFile(configPath, code)
 }
