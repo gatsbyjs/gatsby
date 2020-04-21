@@ -980,4 +980,5 @@ Congratulations!
 
 ## Additional resources
 
-- [Example repository](<(https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins)>) with all of this code implemented
+- [Example repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) with all of this code implemented
+- Creating a [first class source plugin for Gatsby Cloud](https://www.gatsbyjs.com/docs/integration-guide/source-plugin/)
