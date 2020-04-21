@@ -6015,9 +6015,10 @@
   tags:
     - CMS:Headless
     - Gallery
-    - Culinary recipes
-    - CMS:Flotiq
+    - Pagination
+    - CMS:Other
   features:
     - Recipes starter
+    - Culinary recipes
     - Flotiq CMS as a recipe source
     - Deploy to Heroku
