@@ -33,6 +33,10 @@ export const fieldOfTypeWasFetched = type => {
     return true
   }
 
+  if (type?.ofType?.ofType && fetchedTypes.get(type.ofType.ofType.name)) {
+    return true
+  }
+
   return false
 }
 

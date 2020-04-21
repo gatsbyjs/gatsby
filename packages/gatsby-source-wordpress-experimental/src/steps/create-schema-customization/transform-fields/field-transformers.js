@@ -40,6 +40,18 @@ export const fieldTransformers = [
   },
 
   {
+    // lists of non null types
+    test: field =>
+      field.type.kind === `LIST` &&
+      field.type.ofType.kind === `NON_NULL` &&
+      (field.type.ofType.name ?? field.type.ofType?.ofType?.name),
+
+    transform: ({ field }) =>
+      `[${buildTypeName(field.type.ofType.name) ??
+        buildTypeName(field.type.ofType?.ofType?.name)}!]`,
+  },
+
+  {
     // scalars
     test: field => field.type.kind === `SCALAR`,
     transform: ({ field }) => {

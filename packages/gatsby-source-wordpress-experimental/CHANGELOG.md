@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.0.36
+
+### Bug Fixes
+
+- Fixed lists of non_null types which have their type on type.ofType.ofType instead of type.ofType
+
 ## 0.0.35
 
 ### Bug Fixes

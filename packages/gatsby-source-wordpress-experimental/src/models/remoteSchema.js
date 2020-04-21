@@ -63,7 +63,7 @@ const remoteSchema = {
     },
 
     addFetchedType(state, type) {
-      const key = type.name || type.ofType.name
+      const key = type.name || type.ofType.name || type.ofType?.ofType?.name
 
       if (!key) {
         return state

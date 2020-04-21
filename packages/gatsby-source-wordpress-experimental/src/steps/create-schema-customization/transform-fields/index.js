@@ -73,7 +73,10 @@ const excludeField = ({
   // this field has required input args
   (field.args && field.args.find(arg => arg.type.kind === `NON_NULL`)) ||
   // this field has no typeName
-  (!field.type.name && !field.type.ofType.name) ||
+  (!field.type.name &&
+    !field.type?.ofType?.name &&
+    !field.type?.ofType?.name &&
+    !field.type?.ofType?.ofType?.name) ||
   // field is a non null object
   (field.type.kind === `NON_NULL` && field.type.ofType.kind === `OBJECT`) ||
   // field is a non null enum
