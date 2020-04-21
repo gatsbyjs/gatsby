@@ -7,6 +7,7 @@
   "scripts": {
     "build": "gatsby build",
     "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
+    "data-update": "ts-node scripts/data-update.ts",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
+    "faker": "^4.1.0",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.40",
     "gatsby-plugin-sharp": "^2.4.5",
@@ -21,8 +23,10 @@
     "gatsby-source-filesystem": "^2.1.48",
     "gatsby-transformer-sharp": "^2.3.14",
     "lodash.kebabcase": "^4.1.1",
+    "node-fetch": "^2.6.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "ts-node": "^8.6.2"
   },
   "devDependencies": {
     "cross-env": "^7.0.0",

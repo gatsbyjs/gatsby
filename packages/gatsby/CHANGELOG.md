@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.20.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.27...gatsby@2.20.28) (2020-04-21)
+
+### Bug Fixes
+
+- **gatsby:** Check for files before delete action when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES ([#23219](https://github.com/gatsbyjs/gatsby/issues/23219)) ([ea7160d](https://github.com/gatsbyjs/gatsby/commit/ea7160d))
+
+## [2.20.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.26...gatsby@2.20.27) (2020-04-20)
+
+**Note:** Version bump only for package gatsby
+
+## [2.20.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.25...gatsby@2.20.26) (2020-04-20)
+
+### Bug Fixes
+
+- **gatsby:** Throw error on default export in gatsby-ssr/brows… ([#23133](https://github.com/gatsbyjs/gatsby/issues/23133)) ([3def3a7](https://github.com/gatsbyjs/gatsby/commit/3def3a7))
+
 ## [2.20.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.20.24...gatsby@2.20.25) (2020-04-18)
 
 ### Bug Fixes
