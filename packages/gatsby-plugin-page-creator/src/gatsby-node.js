@@ -6,7 +6,7 @@ const existsSync = require(`fs-exists-cached`).sync
 
 const glob = Promise.promisify(globCB)
 
-const { createPage } = require("./create-page-wrapper")
+const { createPage } = require(`./create-page-wrapper`)
 const { createPath, watchDirectory } = require(`gatsby-page-utils`)
 
 // Path creator.
