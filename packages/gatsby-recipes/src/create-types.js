@@ -33,6 +33,7 @@ module.exports = () => {
         name: resourceName,
       })
 
+      // Query
       const queryType = {
         type,
         args: {
@@ -46,6 +47,7 @@ module.exports = () => {
 
       queryTypes.push(queryType)
 
+      // Query connection
       if (resource.all) {
         const connectionTypeName = resourceName + `Connection`
 
@@ -67,6 +69,7 @@ module.exports = () => {
         queryTypes.push(connectionType)
       }
 
+      // Destroy mutation
       const destroyMutation = {
         type,
         args: {
@@ -80,20 +83,23 @@ module.exports = () => {
 
       mutationTypes[`destroy${resourceName}`] = destroyMutation
 
-      // const inputType = ObjectTypeComposer.create(
-      //   type,
-      //   schemaComposer
-      // ).getInputType()
+      // Create mutation
+      const inputType = ObjectTypeComposer.create(
+        type,
+        schemaComposer
+      ).getInputType()
 
-      // const mutationType = {
-      //   type,
-      //   args: {
-      //     [resourceName]: inputType,
-      //   },
-      //   resolve: async (_root, _args, context) => {
-      //     return await resource.
-      //   }
-      // }
+      const createMutationArgName = _.camelCase(resourceName)
+      const createMutation = {
+        type,
+        args: {
+          [createMutationArgName]: { type: inputType },
+        },
+        resolve: (_root, args, context) =>
+          resource.create(context, args[createMutationArgName]),
+      }
+
+      mutationTypes[`create${resourceName}`] = createMutation
 
       return {
         query: queryTypes,
@@ -114,7 +120,7 @@ module.exports = () => {
     resourceTypes.filter(Boolean).map(r => r.mutation)
   ).reduce((acc, curr) => {
     Object.keys(curr).forEach(key => {
-      acc[key] = curr[key]
+      acc[typeNameToHumanName(key)] = curr[key]
     })
     return acc
   }, {})
