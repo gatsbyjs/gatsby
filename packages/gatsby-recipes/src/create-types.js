@@ -70,10 +70,16 @@ module.exports = () => {
       }
 
       // Destroy mutation
+      const camelCasedResourceName = _.camelCase(resourceName)
+      const inputType = ObjectTypeComposer.create(
+        type,
+        schemaComposer
+      ).getInputType()
+
       const destroyMutation = {
         type,
         args: {
-          id: { type: GraphQLString },
+          [camelCasedResourceName]: { type: inputType },
         },
         resolve: async (_root, args, context) => {
           const value = await resource.destroy(context, args)
@@ -84,12 +90,6 @@ module.exports = () => {
       mutationTypes[`destroy${resourceName}`] = destroyMutation
 
       // Create mutation
-      const inputType = ObjectTypeComposer.create(
-        type,
-        schemaComposer
-      ).getInputType()
-
-      const camelCasedResourceName = _.camelCase(resourceName)
       const createMutation = {
         type,
         args: {
