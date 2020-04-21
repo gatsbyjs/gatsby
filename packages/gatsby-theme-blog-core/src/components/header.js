@@ -13,7 +13,7 @@ const Title = ({ children, location }) => {
     )
   } else {
     return (
-      <h3 as="p">
+      <h3>
         <Link to={`/`}>{children}</Link>
       </h3>
     )

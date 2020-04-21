@@ -10,10 +10,9 @@ const Posts = ({ location, posts, siteTitle, socialLinks }) => (
     <main>
       {posts.map(({ node }) => {
         const title = node.title || node.slug
-        const keywords = node.keywords || []
         return (
           <Fragment key={node.slug}>
-            <SEO title="Home" keywords={keywords} />
+            <SEO title="Home" />
             <div>
               <h2>
                 <Link to={node.slug}>{title}</Link>
