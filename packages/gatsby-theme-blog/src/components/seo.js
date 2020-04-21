@@ -105,6 +105,7 @@ SEO.propTypes = {
   meta: PropTypes.array,
   keywords: PropTypes.arrayOf(PropTypes.string),
   title: PropTypes.string.isRequired,
+  imageSource: PropTypes.string,
 }
 
 export default SEO
