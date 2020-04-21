@@ -81,7 +81,7 @@
 - fromPath: /docs/remark-plugin-tutorial/
   toPath: /tutorial/remark-plugin-tutorial/
 - fromPath: /docs/source-plugin-tutorial/
-  toPath: /tutorial/pixabay-source-plugin-tutorial/
+  toPath: /tutorial/source-plugin-tutorial/
 - fromPath: /docs/how-plugins-work/
   toPath: /docs/plugins/
 - fromPath: /blog/2018-2-16-how-to-build-a-website-with-react/
