@@ -18,7 +18,7 @@ Object {
 module.exports = {
   /* Your site config here */
   plugins: [],
-}
+};
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
   "diff": "- Original  - 1
@@ -30,7 +30,7 @@ module.exports = {
     /* Your site config here */
 -   plugins: [],
 +   plugins: [\\"gatsby-plugin-foo\\"],
-  }
+  };
 ",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
@@ -42,7 +42,7 @@ module.exports = {
 module.exports = {
   /* Your site config here */
   plugins: [\\"gatsby-plugin-foo\\"],
-}
+};
 ",
 }
 `;
@@ -67,7 +67,7 @@ Object {
 module.exports = {
   /* Your site config here */
   plugins: [\\"gatsby-plugin-foo\\"],
-}
+};
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
   "diff": "Compared values have no visual difference.",
@@ -81,7 +81,7 @@ module.exports = {
 module.exports = {
   /* Your site config here */
   plugins: [\\"gatsby-plugin-foo\\"],
-}
+};
 ",
 }
 `;
@@ -96,7 +96,7 @@ Object {
 
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create plan 1`] = `
 Object {
-  "currentState": "const redish = \`#c5484d\`
+  "currentState": "const redish = \`#c5484d\`;
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
@@ -163,7 +163,7 @@ module.exports = {
     \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
     \`gatsby-plugin-react-helmet\`,
   ],
-}
+};
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
   "diff": "- Original  - 0
@@ -175,11 +175,11 @@ module.exports = {
       \`gatsby-plugin-react-helmet\`,
 +     \\"gatsby-plugin-foo\\",
     ],
-  }
+  };
 ",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
-  "newState": "const redish = \`#c5484d\`
+  "newState": "const redish = \`#c5484d\`;
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
@@ -247,7 +247,7 @@ module.exports = {
     \`gatsby-plugin-react-helmet\`,
     \\"gatsby-plugin-foo\\",
   ],
-}
+};
 ",
 }
 `;
@@ -264,7 +264,7 @@ Object {
 
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update plan 1`] = `
 Object {
-  "currentState": "const redish = \`#c5484d\`
+  "currentState": "const redish = \`#c5484d\`;
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
@@ -332,13 +332,13 @@ module.exports = {
     \`gatsby-plugin-react-helmet\`,
     \\"gatsby-plugin-foo\\",
   ],
-}
+};
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
   "diff": "Compared values have no visual difference.",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
-  "newState": "const redish = \`#c5484d\`
+  "newState": "const redish = \`#c5484d\`;
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
@@ -406,7 +406,7 @@ module.exports = {
     \`gatsby-plugin-react-helmet\`,
     \\"gatsby-plugin-foo\\",
   ],
-}
+};
 ",
 }
 `;
