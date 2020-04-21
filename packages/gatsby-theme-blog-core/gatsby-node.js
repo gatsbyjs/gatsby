@@ -54,6 +54,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       tags: [String]!
       keywords: [String]!
       excerpt: String!
+      image: File
   }`)
 
   createTypes(
@@ -79,6 +80,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             },
           },
           resolve: mdxResolverPassthrough(`excerpt`),
+        },
+        image: {
+          type: 'File',
         },
         body: {
           type: `String!`,
@@ -136,6 +140,7 @@ exports.onCreateNode = async (
       slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
+      image: node.frontmatter.image,
     }
 
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
