@@ -205,12 +205,16 @@ jobs:
 
   unit_tests_node10:
     executor: node
+    environment:
+      FORCE_COLOR: 0
     <<: *test_template
 
   unit_tests_node12:
     executor:
       name: node
       image: "12"
+    environment:
+      FORCE_COLOR: 0
     <<: *test_template
 
   unit_tests_www:
