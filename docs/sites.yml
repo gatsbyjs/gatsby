@@ -10474,3 +10474,14 @@
   built_by: SofaScore
   built_by_url: https://www.sofascore.com
   featured: false
+- title: Hasura 
+  url: https://hasura.io
+  main_url: https://hasura.io
+  description: >
+    Hasura is an open source engine that connects to your databases & microservices and auto-generates a production-ready GraphQL backend.
+  categories:
+    - API
+    - Web Development
+    - Technology
+    - Open Source
+  featured: false
