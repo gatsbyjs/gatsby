@@ -642,7 +642,7 @@ module.exports = async (
     }
 
     config.externals = [
-      function(context, request, callback) {
+      function (context, request, callback) {
         const external = isExternal(request)
         if (external !== null) {
           callback(null, external)

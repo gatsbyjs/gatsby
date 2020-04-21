@@ -47,61 +47,61 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
 
 1. Update the `firebase.json` with the following cache settings
 
-```json
-{
-  "hosting": {
-    "public": "public",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "headers": [
-      {
-        "source": "**/*",
-        "headers": [
-          {
-            "key": "cache-control",
-            "value": "cache-control: public, max-age=0, must-revalidate"
-          }
-        ]
-      },
-      {
-        "source": "static/**",
-        "headers": [
-          {
-            "key": "cache-control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-      },
-      {
-        "source": "**/*.@(css|js)",
-        "headers": [
-          {
-            "key": "cache-control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-      },
-      {
-        "source": "sw.js",
-        "headers": [
-          {
-            "key": "cache-control",
-            "value": "cache-control: public, max-age=0, must-revalidate"
-          }
-        ]
-      },
-      {
-        "source": "page-data/**",
-        "headers": [
-          {
-            "key": "cache-control",
-            "value": "cache-control: public, max-age=0, must-revalidate"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
+   ```json
+   {
+     "hosting": {
+       "public": "public",
+       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+       "headers": [
+         {
+           "source": "**/*",
+           "headers": [
+             {
+               "key": "cache-control",
+               "value": "cache-control: public, max-age=0, must-revalidate"
+             }
+           ]
+         },
+         {
+           "source": "static/**",
+           "headers": [
+             {
+               "key": "cache-control",
+               "value": "public, max-age=31536000, immutable"
+             }
+           ]
+         },
+         {
+           "source": "**/*.@(css|js)",
+           "headers": [
+             {
+               "key": "cache-control",
+               "value": "public, max-age=31536000, immutable"
+             }
+           ]
+         },
+         {
+           "source": "sw.js",
+           "headers": [
+             {
+               "key": "cache-control",
+               "value": "cache-control: public, max-age=0, must-revalidate"
+             }
+           ]
+         },
+         {
+           "source": "page-data/**",
+           "headers": [
+             {
+               "key": "cache-control",
+               "value": "cache-control: public, max-age=0, must-revalidate"
+             }
+           ]
+         }
+       ]
+     }
+   }
+   ```
 
 1. Prepare your site for deployment by running `gatsby build`. This generates a publishable version of your site in the `public` folder.
 

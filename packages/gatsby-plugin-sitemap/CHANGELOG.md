@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.3.4...gatsby-plugin-sitemap@2.3.5) (2020-04-20)
+
+### Bug Fixes
+
+- **gatsby-plugin-sitemap:** word spelling ([#23252](https://github.com/gatsbyjs/gatsby/issues/23252)) ([c35d337](https://github.com/gatsbyjs/gatsby/commit/c35d337))
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.3.3...gatsby-plugin-sitemap@2.3.4) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.3.2...gatsby-plugin-sitemap@2.3.3) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.3.1...gatsby-plugin-sitemap@2.3.2) (2020-04-14)
+
+### Bug Fixes
+
+- **plugin-sitemap:** missing data in query results ([#22843](https://github.com/gatsbyjs/gatsby/issues/22843)) ([cff1d7f](https://github.com/gatsbyjs/gatsby/commit/cff1d7f)), closes [#22703](https://github.com/gatsbyjs/gatsby/issues/22703)
+
 ## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.3.0...gatsby-plugin-sitemap@2.3.1) (2020-03-23)
 
 **Note:** Version bump only for package gatsby-plugin-sitemap

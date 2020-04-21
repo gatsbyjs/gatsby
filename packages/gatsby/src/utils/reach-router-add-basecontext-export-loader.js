@@ -1,4 +1,4 @@
-export default function(source) {
+export default function (source) {
   // all it does is adding BaseContext to list of exports
   return source.replace(/export\s+{([^}]+)}/m, (match, exportList) => {
     // return `export { ${exportList}, BaseContext }`
