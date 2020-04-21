@@ -28,7 +28,7 @@ export default Layout
 ```
 
 ### Focus your link on page navigation
-
+Hooking into Gatsby's onRouteUpdate API method will allow you to focus automatically on a skip link on page change, putting a user in a more appropriate spot to take action. More information about this method can be found the [browser API docs](https://www.gatsbyjs.org/docs/browser-apis/#onRouteUpdate).
 ```javascript:gatsby-browser.js
 export const onRouteUpdate = ({ location, prevLocation }) => {
   if (prevLocation !== null) {
@@ -64,13 +64,13 @@ A quick look at the relevant files and directories you'll see in this example:
 
     1.  **`/header.css`**: This ensures that our navigation links have focus rings, which are important visual cues when navigating by keyboard.
     1.  **`/header.js`**: This has the navigation links for your pages.
-    1.  **`/layout.js`**: This component is used in all of our pages to make sure they all use the same navigation. This is also where we are implementing our skip link.
+    1.  **`/layout.js`**: This component is used in all of your pages to make sure they all use the same navigation. This is also where you will implement your skip link.
     1.  **`/seo.js`**: This information is necessary to give the site a 100% in [Lighthouse](https://developers.google.com/web/tools/lighthouse) for accessibility since screen readers need a title and language.
 
-1.  **`/pages`**: This directory contains pages that will be automatically built and served by Gatsby. We've included three pages to demonstrate navigation between them and how our skip nav link behaves. All of these pages use the `Layout` component.
-1.  **`gatsby-browser.js`**: This file is where we tell the Gatsby to focus the skip navigation when we navigate to a new page.
-1.  **`/cypress**: This directory is where tests and [Cypress](https://www.cypress.io/) configuration live. We're going to focus on the test. If you want to learn more about using Cypress, check out our [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-cypress).
-1.  **`/integrations/skip-nav.test.js`**: runs two tests to ensure that we have a skip link and that the skip link is focused on page navigation.
+1.  **`/pages`**: This directory contains pages that will be automatically built and served by Gatsby. This example includes three pages to demonstrate navigation between them and how your skip nav link behaves. All of these pages use the `Layout` component.
+1.  **`gatsby-browser.js`**: This file is where you tell the Gatsby to focus the skip navigation when users navigate to a new page.
+1.  **`/cypress**: This directory is where tests and [Cypress](https://www.cypress.io/) configuration live. You're going to focus on the test. If you want to learn more about using Cypress, check out the [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-cypress).
+1.  **`/integrations/skip-nav.test.js`**: runs two tests to ensure that you have a skip link and that the skip link is focused on page navigation.
 
 ### Running the example
 
@@ -84,7 +84,7 @@ A quick look at the relevant files and directories you'll see in this example:
 1. Press `tab` and you'll see the skip link!
 1. If you press `enter` and then `tab` again you'll see that you skipped over the rest of the navigation and are in the main content!
 
-### Runnings tests
+### Running tests
 
 1. Use the CLI to run cypress tests
    ```shell

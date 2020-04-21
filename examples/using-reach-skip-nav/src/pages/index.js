@@ -7,7 +7,7 @@ const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
     <h1>
-      If you hit "tab" and click the skip link, the next tab should go to
+      If you hit "tab" and activate the skip link, the next tab should go to
       "Gatsby" in the footer.
     </h1>
     <p>Welcome to your new Gatsby site.</p>

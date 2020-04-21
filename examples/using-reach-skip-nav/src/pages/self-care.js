@@ -7,7 +7,7 @@ import SEO from "../components/seo"
 const SelfCare = () => (
   <Layout>
     <SEO title="Self care" />
-    <h1>If you click the skip link, the next tab will take you to the "Go back to homepage" link.</h1>
+    <h1>If you activate the skip link, the next tab will take you to the "Go back to homepage" link.</h1>
     <p>
       Feeling stressed today? Here are some things you can do to help you feel
       better:
