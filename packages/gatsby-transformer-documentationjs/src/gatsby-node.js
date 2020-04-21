@@ -44,13 +44,14 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
 
 exports.sourceNodes = ({ actions }) => {
   const { createTypes } = actions
-  const typeDefs = `
+  const typeDefs = /* GraphQL */ `
     type DocumentationJs implements Node {
       name: String
       kind: String
       memberof: String
       scope: String
       access: String
+      optional: Boolean
       readonly: Boolean
       abstract: Boolean
       generator: Boolean
@@ -65,6 +66,10 @@ exports.sourceNodes = ({ actions }) => {
       lends: String
       type: DoctrineType
       default: JSON
+      description: DocumentationJSComponentDescription
+        @link(from: "description___NODE")
+      deprecated: DocumentationJSComponentDescription
+        @link(from: "deprecated___NODE")
       augments: [DocumentationJs] @link(from: "augments___NODE")
       examples: [DocumentationJsExample]
       implements: [DocumentationJs] @link(from: "implements___NODE")
@@ -269,7 +274,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       const docSkeletonNode = {
         commentNumber,
         level,
-        id: createNodeId(docId(node.id, docsJson)),
+        id: createNodeId(docId(parent, docsJson)),
         parent,
         children: [],
         internal: {
@@ -361,10 +366,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
               // When documenting destructured parameters, the name
               // is parent.child where we just want the child.
               if (docObj.name && docObj.name.split(`.`).length > 1) {
-                docObj.name = docObj.name
-                  .split(`.`)
-                  .slice(-1)
-                  .join(`.`)
+                docObj.name = docObj.name.split(`.`).slice(-1).join(`.`)
               }
 
               const adjustedObj = {

@@ -71,6 +71,21 @@ class LocalNodeModel {
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
+    this.replaceFiltersCache()
+  }
+
+  /**
+   * Replace the cache either with the value passed on (mainly for tests) or
+   * an empty new Map.
+   *
+   * @param {undefined | null | FiltersCache} map
+   *   (This cached is used in redux/nodes.js and caches a set of buckets (Sets)
+   *   of Nodes based on filter and tracks this for each set of types which are
+   *   actually queried. If the filter targets `id` directly, only one Node is
+   *   cached instead of a Set of Nodes. If null, don't create or use a cache.
+   */
+  replaceFiltersCache(map = new Map()) {
+    this._filtersCache = map // See redux/nodes.js for usage
   }
 
   withContext(context) {
@@ -186,7 +201,7 @@ class LocalNodeModel {
    * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies) {
-    const { query, firstOnly, type } = args || {}
+    const { query, firstOnly, type, stats } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -222,11 +237,13 @@ class LocalNodeModel {
       gqlType,
       resolvedFields: fieldsToResolve,
       nodeTypeNames,
+      filtersCache: this._filtersCache,
+      stats,
     })
 
     let result = queryResult
-    if (args.firstOnly) {
-      if (result && result.length > 0) {
+    if (firstOnly) {
+      if (result?.length > 0) {
         result = result[0]
         this.trackInlineObjectsInRootNode(result)
       } else {
@@ -334,7 +351,13 @@ class LocalNodeModel {
    */
   trackInlineObjectsInRootNode(node) {
     if (!this._trackedRootNodes.has(node.id)) {
-      addRootNodeToInlineObject(this._rootNodeMap, node, node.id, true, true)
+      addRootNodeToInlineObject(
+        this._rootNodeMap,
+        node,
+        node.id,
+        true,
+        new Set()
+      )
       this._trackedRootNodes.add(node.id)
     }
   }
@@ -410,21 +433,41 @@ class ContextualNodeModel {
     })
   }
 
-  getNodeById(...args) {
-    return this.nodeModel.getNodeById(...args)
+  _getFullDependencies(pageDependencies) {
+    return {
+      path: this.context.path,
+      ...(pageDependencies || {}),
+    }
   }
 
-  getNodesByIds(...args) {
-    return this.nodeModel.getNodesByIds(...args)
+  getNodeById(args, pageDependencies) {
+    return this.nodeModel.getNodeById(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 
-  getAllNodes(...args) {
-    return this.nodeModel.getAllNodes(...args)
+  getNodesByIds(args, pageDependencies) {
+    return this.nodeModel.getNodesByIds(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 
-  runQuery(...args) {
-    return this.nodeModel.runQuery(...args)
+  getAllNodes(args, pageDependencies) {
+    const fullDependencies = pageDependencies
+      ? this._getFullDependencies(pageDependencies)
+      : null
+    return this.nodeModel.getAllNodes(args, fullDependencies)
   }
+
+  runQuery(args, pageDependencies) {
+    return this.nodeModel.runQuery(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
+  }
+
   prepareNodes(...args) {
     return this.nodeModel.prepareNodes(...args)
   }
@@ -446,12 +489,10 @@ class ContextualNodeModel {
   }
 
   trackPageDependencies(result, pageDependencies) {
-    const fullDependencies = {
-      path: this.context.path,
-      ...(pageDependencies || {}),
-    }
-
-    return this.nodeModel.trackPageDependencies(result, fullDependencies)
+    return this.nodeModel.trackPageDependencies(
+      result,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 }
 
@@ -539,7 +580,7 @@ async function resolveRecursive(
   fieldsToResolve
 ) {
   const gqlFields = getFields(schema, type, node)
-  let resolvedFields = {}
+  const resolvedFields = {}
   for (const fieldName of Object.keys(fieldsToResolve)) {
     const fieldToResolve = fieldsToResolve[fieldName]
     const queryField = queryFields[fieldName]
@@ -649,7 +690,7 @@ const determineResolvableFields = (
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    let possibleTCs = [
+    const possibleTCs = [
       typeComposer,
       ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
     ]
@@ -685,16 +726,21 @@ const addRootNodeToInlineObject = (
   rootNodeMap,
   data,
   nodeId,
-  isNode = false
-) => {
+  isNode /*: boolean */,
+  path /*: Set<mixed> */
+) /*: void */ => {
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
+    if (path.has(data)) return
+    path.add(data)
+
     _.each(data, (o, key) => {
       if (!isNode || key !== `internal`) {
-        addRootNodeToInlineObject(rootNodeMap, o, nodeId)
+        addRootNodeToInlineObject(rootNodeMap, o, nodeId, false, path)
       }
     })
+
     // don't need to track node itself
     if (!isNode) {
       rootNodeMap.set(data, nodeId)

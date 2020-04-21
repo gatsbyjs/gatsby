@@ -4,7 +4,7 @@ title: Agency Partnership Program
 
 If you're in the business of building websites or web apps for clients, and you're building with Gatsby, we're building an Agency Partnership Program to get the support you need and the visibility you deserve.
 
-### What's provided
+## What's provided
 
 Depending on the amount of websites you build with Gatsby, the partner program will include:
 
@@ -13,7 +13,7 @@ Depending on the amount of websites you build with Gatsby, the partner program w
 - A lead capture form on this page so people can get in touch with you directly
 - Live training for developers (in-person or virtual)
 
-### Application process
+## Application process
 
 **Step 1**: Build a client (or agency) website with Gatsby.
 

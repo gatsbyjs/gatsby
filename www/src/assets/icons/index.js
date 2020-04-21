@@ -4,7 +4,6 @@ import EcosystemIcon from "!raw-loader!./ecosystem.svg"
 import PluginsIcon from "!raw-loader!./plugins.svg"
 import ShowcaseIcon from "!raw-loader!./showcase.svg"
 import TutorialIcon from "!raw-loader!./tutorial.svg"
-import SvgDefs from "./svg-defs"
 
 export {
   BlogIcon,
@@ -13,5 +12,4 @@ export {
   PluginsIcon,
   ShowcaseIcon,
   TutorialIcon,
-  SvgDefs,
 }

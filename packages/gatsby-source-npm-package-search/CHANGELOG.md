@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.2.2...gatsby-source-npm-package-search@2.2.3) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.2.1...gatsby-source-npm-package-search@2.2.2) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.2.0...gatsby-source-npm-package-search@2.2.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+# [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.25...gatsby-source-npm-package-search@2.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.24...gatsby-source-npm-package-search@2.1.25) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.23...gatsby-source-npm-package-search@2.1.24) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.22...gatsby-source-npm-package-search@2.1.23) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.21...gatsby-source-npm-package-search@2.1.22) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.19...gatsby-source-npm-package-search@2.1.21) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.19...gatsby-source-npm-package-search@2.1.20) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.18...gatsby-source-npm-package-search@2.1.19) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.17...gatsby-source-npm-package-search@2.1.18) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.16...gatsby-source-npm-package-search@2.1.17) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.15...gatsby-source-npm-package-search@2.1.16) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.14...gatsby-source-npm-package-search@2.1.15) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.13...gatsby-source-npm-package-search@2.1.14) (2019-10-09)
+
+### Bug Fixes
+
+- update dependency algoliasearch to ^3.35.1 ([#18334](https://github.com/gatsbyjs/gatsby/issues/18334)) ([2155c9a](https://github.com/gatsbyjs/gatsby/commit/2155c9a))
+
 ## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.12...gatsby-source-npm-package-search@2.1.13) (2019-10-04)
 
 ### Bug Fixes
@@ -57,7 +127,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **www:** fallback to github & unpkg to get README.md ([#16322](https://github.com/gatsbyjs/gatsby/issues/16322)) ([f38b40d](https://github.com/gatsbyjs/gatsby/commit/f38b40d))
+- **www:** fallback to GitHub & unpkg to get README.md ([#16322](https://github.com/gatsbyjs/gatsby/issues/16322)) ([f38b40d](https://github.com/gatsbyjs/gatsby/commit/f38b40d))
 
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.1...gatsby-source-npm-package-search@2.1.2) (2019-07-12)
 

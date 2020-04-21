@@ -35,7 +35,7 @@ Here's how it works:
 
 ## Getting started
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/H72PY3wNMcI" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen title="Youtube video: Drupal Gatsby Preview setup walkthrough"></iframe>
+https://youtu.be/H72PY3wNMcI
 
 ### Step 1: Sign Up for Gatsby Preview Beta
 

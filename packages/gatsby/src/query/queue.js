@@ -2,35 +2,34 @@ const Queue = require(`better-queue`)
 const { store } = require(`../redux`)
 const FastMemoryStore = require(`../query/better-queue-custom-store`)
 const queryRunner = require(`../query/query-runner`)
-const websocketManager = require(`../utils/websocket-manager`)
-const GraphQLRunner = require(`./graphql-runner`)
+const { websocketManager } = require(`../utils/websocket-manager`)
+const GraphQLRunner = require(`./graphql-runner`).default
 
 const createBaseOptions = () => {
   return {
-    concurrent: 4,
+    concurrent: Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 4,
+    // eslint-disable-next-line new-cap
     store: FastMemoryStore(),
   }
 }
 
-const createBuildQueue = () => {
-  const graphqlRunner = new GraphQLRunner(store)
+const createBuildQueue = graphqlRunner => {
+  if (!graphqlRunner) {
+    graphqlRunner = new GraphQLRunner(store)
+  }
   const handler = (queryJob, callback) =>
     queryRunner(graphqlRunner, queryJob)
       .then(result => callback(null, result))
       .catch(callback)
-  return new Queue(handler, createBaseOptions())
+  const queue = new Queue(handler, createBaseOptions())
+  return queue
 }
 
 const createDevelopQueue = getRunner => {
-  let queue
-  const processing = new Set()
-  const waiting = new Map()
-
   const queueOptions = {
     ...createBaseOptions(),
     priority: (job, cb) => {
-      const activePaths = Array.from(websocketManager.activePaths.values())
-      if (job.id && activePaths.includes(job.id)) {
+      if (job.id && websocketManager.activePaths.has(job.id)) {
         cb(null, 10)
       } else {
         cb(null, 1)
@@ -38,17 +37,6 @@ const createDevelopQueue = getRunner => {
     },
     merge: (oldTask, newTask, cb) => {
       cb(null, newTask)
-    },
-    // Filter out new query jobs if that query is already running.
-    // When the query finshes, it checks the waiting map and pushes
-    // another job to make sure all the user changes are captured.
-    filter: (job, cb) => {
-      if (processing.has(job.id)) {
-        waiting.set(job.id, job)
-        cb(`already running`)
-      } else {
-        cb(null, job)
-      }
     },
   }
 
@@ -67,41 +55,61 @@ const createDevelopQueue = getRunner => {
           })
         }
 
-        processing.delete(queryJob.id)
-        if (waiting.has(queryJob.id)) {
-          queue.push(waiting.get(queryJob.id))
-          waiting.delete(queryJob.id)
-        }
         callback(null, result)
       },
       error => callback(error)
     )
   }
 
-  queue = new Queue(handler, queueOptions)
-  return queue
+  return new Queue(handler, queueOptions)
 }
-
-const pushJob = (queue, job) =>
-  new Promise((resolve, reject) =>
-    queue
-      .push(job)
-      .on(`finish`, resolve)
-      .on(`failed`, reject)
-  )
 
 /**
  * Returns a promise that pushes jobs onto queue and resolves onces
  * they're all finished processing (or rejects if one or more jobs
  * fail)
+ * Note: queue is reused in develop so make sure to thoroughly cleanup hooks
  */
-const processBatch = async (queue, jobs) => {
-  let numJobs = jobs.length
-  if (numJobs === 0) {
+const processBatch = async (queue, jobs, activity) => {
+  if (jobs.length === 0) {
     return Promise.resolve()
   }
-  const runningJobs = jobs.map(job => pushJob(queue, job))
-  return await Promise.all(runningJobs)
+
+  return new Promise((resolve, reject) => {
+    let taskFinishCallback
+    if (activity.tick) {
+      taskFinishCallback = () => activity.tick()
+      queue.on(`task_finish`, taskFinishCallback)
+    }
+
+    const taskFailedCallback = (...err) => {
+      gc()
+      reject(err)
+    }
+
+    const drainCallback = () => {
+      gc()
+      resolve()
+    }
+
+    const gc = () => {
+      queue.off(`task_failed`, taskFailedCallback)
+      queue.off(`drain`, drainCallback)
+      if (taskFinishCallback) {
+        queue.off(`task_finish`, taskFinishCallback)
+      }
+      queue = null
+    }
+
+    queue
+      // Note: the first arg is the path, the second the error
+      .on(`task_failed`, taskFailedCallback)
+      // Note: `drain` fires when all tasks _finish_
+      //       `empty` fires when queue is empty (but tasks are still running)
+      .on(`drain`, drainCallback)
+
+    jobs.forEach(job => queue.push(job))
+  })
 }
 
 module.exports = {

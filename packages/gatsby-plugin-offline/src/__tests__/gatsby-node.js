@@ -51,6 +51,10 @@ describe(`onPostBuild`, () => {
       swText += text
     },
 
+    writeFileSync(file, text) {
+      swText = text
+    },
+
     createReadStream() {
       return { pipe() {} }
     },
@@ -83,5 +87,23 @@ describe(`onPostBuild`, () => {
     )
 
     expect(swText).toContain(`console.log(\`Hello, world!\`)`)
+  })
+
+  it(`configures the Workbox debug option`, async () => {
+    swText = `workbox.setConfig({modulePathPrefix: "workbox-v4.3.1"});`
+
+    await gatsbyNode.onPostBuild(
+      {
+        pathPrefix: ``,
+        reporter: {
+          info(message) {
+            console.log(message)
+          },
+        },
+      },
+      { debug: true }
+    )
+
+    expect(swText).toContain(`debug: true`)
   })
 })

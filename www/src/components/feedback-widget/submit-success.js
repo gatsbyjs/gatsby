@@ -3,11 +3,10 @@ import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
 import { CloseButton } from "./buttons"
 import { Title as BaseTitle } from "./styled-elements"
-import { fontSizes, space } from "../../utils/presets"
 
 const Title = styled(BaseTitle)`
-  font-size: ${fontSizes[5]};
-  margin-bottom: ${space[6]};
+  font-size: ${p => p.theme.fontSizes[5]};
+  margin-bottom: ${p => p.theme.space[6]};
   text-align: left;
 `
 

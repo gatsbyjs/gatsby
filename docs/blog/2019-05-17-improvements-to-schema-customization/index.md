@@ -20,7 +20,7 @@ However, the original design allowed some uncertainties to still creep in. In ad
 - Resolvers and arguments of fields like Date and File was determined by inferred data
 - There was no easy way to use arguments/resolvers to override the above
 - Inference was run even when `@dontInfer` flag was on
-- There was no way to control inference outside of SDL, eg in Type Builders
+- There was no way to control inference outside of SDL, e.g. in Type Builders
 
 Therefore we are excited to announce some changes in how we perform inference. In addition, we are deprecating some of the features introduced in 2.2.0 and will remove them in Gatsby v3.
 
@@ -63,7 +63,7 @@ Here are suggested changes to your code if you are using schema customization al
 1. Add resolver directives to fields
 2. Add `@infer` or `@dontInfer` to your type if you don't have it already
 
-```graphql:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
   const { createTypes } = actions
 
@@ -77,7 +77,7 @@ exports.sourceNodes = function sourceNodes({ actions }) {
 }
 ```
 
-```graphql:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
   const { createTypes } = actions
 
@@ -107,7 +107,7 @@ Add resolver and resolver options (such as arguments) to the given field. There 
   characters that are invalid in GraphQL, `proxy` allows to explicitly
   proxy those properties to fields with valid field names. Takes a `from` arg.
 
-```graphql:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
   const { createTypes } = actions
 

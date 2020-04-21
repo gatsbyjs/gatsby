@@ -5,7 +5,7 @@ const { build } = require(`..`)
 const withResolverContext = require(`../context`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 const basePath = slash(__dirname)
 const filePath = p => slash(path.join(basePath, p))

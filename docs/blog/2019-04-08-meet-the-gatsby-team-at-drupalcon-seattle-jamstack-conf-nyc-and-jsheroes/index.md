@@ -31,7 +31,7 @@ Four of our team will be behind the table at various times during DrupalCon, inc
 
 On Thursday, during the DrupalCon closing plenary, **[Marcy Sutton](https://twitter.com/marcysutton)**, our Head of Learning, will deliver one of the keynotes to close out DrupalCon with a discussion of how to design and build software that fosters inclusion. [“JavaScript and Civil Rights”](https://events.drupal.org/seattle2019/sessions/javascript-and-civil-rights) will take place in Hall 4E from 4:15-5:30pm on Thursday.
 
-“As designers and developers of software, we act as gatekeepers in people’s lives more than we realize,” states the keynote abstract. “Now more than ever, it is our duty to create digital experiences that honor our users’ rights to inclusion–no matter where they live, or how they access the Web. This applies to both authors and contributors, as well as end-users and consumers; we must do more to protect everyone’s rights to access, safety, security, and privacy.”
+“As designers and developers of software, we act as gatekeepers in people’s lives more than we realize,” states the keynote abstract. “Now more than ever, it is our duty to create digital experiences that honor our users’ rights to inclusion–no matter where they live, or how they access the Web. This applies to both authors and contributors, as well as end users and consumers; we must do more to protect everyone’s rights to access, safety, security, and privacy.”
 
 ### Meet Gatsby CEO Kyle Mathews at Decoupled Summit
 

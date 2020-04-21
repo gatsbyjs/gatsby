@@ -18,6 +18,12 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
   }
 })
 
@@ -309,7 +315,7 @@ describe(`dateResolver`, () => {
   }
 
   it(`can properly resolve datetimes`, async () => {
-    const schema = await buildTestSchema({})
+    const schema = await buildTestSchema()
     const fields = schema.getType(`Test`).getFields()
 
     expect(fields.testDate.resolve).toBeDefined()
@@ -399,7 +405,7 @@ describe(`dateResolver`, () => {
     `2018-01-29T23:25:16.019345123+02:00`,
     `2018-01-29T23:25:16.019345123Z`,
   ])(`should return "Jan 29, 2018": %s`, async dateString => {
-    const schema = await buildTestSchema({})
+    const schema = await buildTestSchema()
     const fields = schema.getType(`Test`).getFields()
     expect(
       await fields[`testDate`].resolve(
@@ -424,7 +430,7 @@ describe(`dateResolver`, () => {
     // Combine with above statement once we figure out why it passes
     // `2018-08-31T23:25:16.01234567899993+02:00`,
   ])(`should return "Invalid Date": %s`, async dateString => {
-    const schema = await buildTestSchema({})
+    const schema = await buildTestSchema()
     const fields = schema.getType(`Test`).getFields()
     expect(
       await fields[`testDate`].resolve(

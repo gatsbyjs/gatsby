@@ -5,7 +5,7 @@ includes this plugin automatically in all sites for creating pages from componen
 
 You may include another instance of this plugin if you'd like to create additional "pages" directories.
 
-With this plugin, _any_ file that lives in the the specified pages folder (e.g. the default `src/pages`) or subfolders will be expected to export a React Component to generate a Page. The following files are automatically excluded:
+With this plugin, _any_ file that lives in the specified pages folder (e.g. the default `src/pages`) or subfolders will be expected to export a React Component to generate a Page. The following files are automatically excluded:
 
 - `template-*`
 - `__tests__/*`

@@ -1,5 +1,5 @@
 ---
-title: The gatsby-config.js API file
+title: The gatsby-config.js API File
 ---
 
 The file `gatsby-config.js` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site.
@@ -100,7 +100,7 @@ module.exports = {
 }
 ```
 
-### Mixed plugins
+#### Mixed plugins
 
 You can add plugins with and without options in the same array. Your site's config file could look like this:
 

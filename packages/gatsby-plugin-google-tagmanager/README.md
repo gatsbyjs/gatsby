@@ -45,7 +45,7 @@ plugins: [
       // datalayer to be set before GTM is loaded
       // should be a stringified object or object
       // Defaults to null
-      defaultDataLayer: function() {
+      defaultDataLayer: function () {
         return {
           pageType: window.pageType,
         }
@@ -54,6 +54,10 @@ plugins: [
   },
 ]
 ```
+
+This plugin only initiates the tag manager _container_. If you want to use Google Analytics, please also add `gatsby-plugin-google-analytics`.
+
+If you want to link analytics use with anything inside the container (for example, a cookie consent manager such as OneTrust), you will need to ensure that the tag manager script comes _before_ the analytics script in your `gatsby-config.js`.
 
 #### Tracking routes
 

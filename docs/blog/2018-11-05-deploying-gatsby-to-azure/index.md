@@ -22,8 +22,8 @@ To complete this tutorial you will need the following tools:
 Install Node from the [Node website](https://nodejs.org/en/) and check it's installed by checking the version from your terminal.
 
 ```bash
-$ node -v
-$ v10.9.0
+node -v
+v10.9.0
 ```
 
 Install VS Code from the [VS Code website](https://code.visualstudio.com/).
@@ -31,7 +31,7 @@ Install VS Code from the [VS Code website](https://code.visualstudio.com/).
 Next, we can install the important part! [Gatsby](https://gatsbyjs.org/) from your terminal, run:
 
 ```bash
-$ npm install --global gatsby-cli
+npm install --global gatsby-cli
 + gatsby-cli@2.4.2
 updated 1 package in 4.868s
 ```
@@ -45,7 +45,7 @@ Next you will create the blog from the handy [Gatsby Starter Blog](https://githu
 From your terminal run
 
 ```bash
-$ gatsby new azure-blog https://github.com/gatsbyjs/gatsby-starter-blog
+gatsby new azure-blog https://github.com/gatsbyjs/gatsby-starter-blog
 
 info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-blog.git
 Cloning into 'azure-blog'...
@@ -62,8 +62,8 @@ info Installing packages...
 You can now view your website by running
 
 ```bash
-$ cd azure-blog
-$ npm run develop
+cd azure-blog
+npm run develop
 ```
 
 You should now see your blog in the flesh!
@@ -114,7 +114,8 @@ Change the option to `enabled`, set a default document name of `index.html` and 
 You are now ready to produce a production build of your blog. Make sure you're in the blog folder and then run.
 
 ```bash
-$ gatsby build
+gatsby build
+
 success open and validate gatsby-config — 0.010 s
 success load plugins — 0.352 s
 success onPreInit — 2.785 s

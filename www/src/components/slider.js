@@ -1,4 +1,5 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { keyframes } from "@emotion/core"
 
 export default ({ items, color }) => (
@@ -11,7 +12,7 @@ export default ({ items, color }) => (
     }}
   >
     {items.map(item => (
-      <span key={item} css={{ color }}>
+      <span key={item} sx={{ color: color }}>
         {item}
       </span>
     ))}

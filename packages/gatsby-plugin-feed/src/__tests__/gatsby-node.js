@@ -8,7 +8,7 @@ global.Date = jest.fn(() => DATE_TO_USE)
 global.Date.UTC = _Date.UTC
 global.Date.now = _Date.now
 
-describe(`Test plugin feed`, async () => {
+describe(`Test plugin feed`, () => {
   beforeEach(() => {
     fs.exists = jest.fn().mockResolvedValue(true)
     fs.writeFile = jest.fn().mockResolvedValue()

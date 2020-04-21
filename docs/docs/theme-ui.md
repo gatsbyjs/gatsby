@@ -15,7 +15,7 @@ Theme UI includes the `gatsby-plugin-theme-ui` package to better integrate with 
 Install the following packages to add Theme UI.
 
 ```shell
-npm install theme-ui gatsby-plugin-theme-ui @emotion/core @mdx-js/react
+npm install theme-ui gatsby-plugin-theme-ui
 ```
 
 After installing the dependencies, add the following to your `gatsby-config.js`.
@@ -133,7 +133,7 @@ The [`sx` prop][] is used to style elements by referencing values from the theme
 
 [`sx` prop]: https://theme-ui.com/sx-prop
 
-```js:title=src/components/header.js
+```jsx:title=src/components/header.js
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 

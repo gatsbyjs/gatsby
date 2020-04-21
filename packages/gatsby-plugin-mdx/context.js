@@ -7,8 +7,9 @@ export const useMDXScope = scope => {
   return scope || contextScope
 }
 
-export const MDXScopeProvider = ({ __mdxScope, children }) => (
-  <GatsbyMDXScopeContext.Provider value={__mdxScope}>
-    {children}
-  </GatsbyMDXScopeContext.Provider>
-)
+export const MDXScopeProvider = ({ __mdxScope, children }) =>
+  React.createElement(
+    GatsbyMDXScopeContext.Provider,
+    { value: __mdxScope },
+    children
+  )

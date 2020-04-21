@@ -195,7 +195,7 @@ async function sqipContentful({ type, cache, store }) {
           file: { contentType },
         } = asset
 
-        if (contentType.indexOf(`image/`) !== 0) {
+        if (!contentType.includes(`image/`)) {
           return null
         }
 
@@ -212,7 +212,6 @@ async function sqipContentful({ type, cache, store }) {
 
         if (width && height) {
           const aspectRatio = height / width
-          width = 256
           height = height * aspectRatio
         }
 

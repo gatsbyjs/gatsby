@@ -7,10 +7,7 @@ import Box from "./box"
 
 const buttonPropTypes = { ...propTypes.border, ...propTypes.typography }
 
-const styleProps = compose(
-  border,
-  typography
-)
+const styleProps = compose(border, typography)
 
 const Button = styled(Box)(
   props => {
@@ -27,13 +24,12 @@ const Button = styled(Box)(
     lineHeight: `inherit`,
     textAlign: `center`,
     textDecoration: `none`,
-    WebkitFontSmoothing: `antialiased`,
   },
   styleProps,
   props =>
     props.outlined && {
       background: themeGet(`colors.white`)(props),
-      fontWeight: themeGet(`fontWeights.0`)(props),
+      fontWeight: themeGet(`fontWeights.body`)(props),
       padding: `${themeGet(`space.2`)(props)} ${themeGet(`space.3`)(props)}`,
       "&&": {
         border: `1px solid ${themeGet(`colors.purple.30`)(props)}`,
@@ -60,9 +56,9 @@ Button.defaultProps = {
   border: 0,
   borderRadius: 2,
   color: `white`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   fontSize: { xxs: 4, md: 5 },
-  fontWeight: 1,
+  fontWeight: `bold`,
   px: 4,
   py: 2,
 }

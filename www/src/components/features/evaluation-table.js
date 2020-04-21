@@ -1,11 +1,7 @@
-import React, { Component } from "react"
-import {
-  colors,
-  space,
-  mediaQueries,
-  fontSizes,
-  lineHeights,
-} from "../../utils/presets"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { renderCell } from "./evaluation-cell"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
@@ -57,8 +53,8 @@ class EvaluationTable extends Component {
                     [].concat([
                       <SectionHeaderBottom
                         options={options}
-                        display={row.node.Subcategory}
-                        category={row.node.Subcategory}
+                        display={row.Subcategory}
+                        category={row.Subcategory}
                         key={`section-header-${s}-bottom-${i}`}
                       />,
                       // table row with the name of the feature and corresponding scores
@@ -66,27 +62,26 @@ class EvaluationTable extends Component {
                         {nodeFieldProperties.map((nodeProperty, j) => (
                           <td
                             key={j}
-                            css={{
+                            sx={{
                               display: `table-cell`,
                               "&:hover": {
                                 cursor: j >= 0 ? `pointer` : `inherit`,
                               },
-                              borderBottom: !showTooltip(s, i)
-                                ? `1px solid ${colors.ui.border.subtle}`
-                                : `none`,
+                              borderBottom: t =>
+                                !showTooltip(s, i)
+                                  ? `1px solid ${t.colors.ui.border}`
+                                  : `none`,
                               minWidth: 40,
                               paddingRight: 0,
                               paddingLeft: 0,
                               textAlign: `left`,
                               verticalAlign: `middle`,
-                              fontSize: fontSizes[1],
-                              lineHeight: lineHeights.solid,
+                              fontSize: 1,
+                              lineHeight: `solid`,
                             }}
                             id={
                               j === 0
-                                ? row.node.Feature.toLowerCase()
-                                    .split(` `)
-                                    .join(`-`)
+                                ? row.Feature.toLowerCase().split(` `).join(`-`)
                                 : undefined
                             }
                             onClick={() => {
@@ -95,7 +90,7 @@ class EvaluationTable extends Component {
                               })
                             }}
                           >
-                            {renderCell(row.node[nodeProperty], j)}
+                            {renderCell(row[nodeProperty], j)}
                           </td>
                         ))}
                       </tr>,
@@ -107,13 +102,11 @@ class EvaluationTable extends Component {
                         key={`section-${s}-second-row-${i}`}
                       >
                         <td
-                          css={{
-                            fontSize: fontSizes[1],
-                            paddingBottom: `calc(${space[5]} - 1px)`,
+                          sx={{
+                            paddingBottom: t => `calc(${t.space[5]} - 1px)`,
                             "&&": {
                               [mediaQueries.xs]: {
-                                paddingRight: `${space[3]}`,
-                                paddingLeft: `${space[3]}`,
+                                px: 3,
                               },
                             },
                           }}
@@ -122,7 +115,7 @@ class EvaluationTable extends Component {
                           {
                             <span
                               dangerouslySetInnerHTML={{
-                                __html: row.node.Description,
+                                __html: row.Description,
                               }}
                             />
                           }

@@ -1,13 +1,12 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
-import Layout from "../components/layout"
-
-import { mediaQueries } from "../utils/presets"
 import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
-import StarterScreenshot from "../views/starter/screenshot"
+import Screenshot from "../views/shared/screenshot"
 import StarterSource from "../views/starter/source"
 import StarterInstallation from "../views/starter/installation"
 import StarterDetails from "../views/starter/details"
@@ -45,89 +44,79 @@ class StarterTemplate extends React.Component {
     const showMore =
       !this.state.showAllDeps && allDeps.length - shownDeps.length > 0
 
-    // plug for now
-    const isModal = false
+    // TODO enable modal view
     const repoName = starterShowcase.name
     return (
-      <Layout
-        location={this.props.location}
-        isModal={isModal}
-        modalBackgroundPath="/showcase"
+      <div
+        css={{
+          alignItems: `center`,
+          display: `flex`,
+          flexDirection: `column`,
+          margin: `0 auto`,
+          maxWidth: 1080,
+        }}
       >
-        <div
-          css={{
-            alignItems: `center`,
-            display: `flex`,
-            flexDirection: `column`,
-            maxWidth: isModal ? false : 1080,
-            margin: isModal ? false : `0 auto`,
-          }}
-        >
+        <div css={{ width: `100%` }}>
+          <Helmet>
+            <title>{`${repoName}: Gatsby Starter`}</title>
+            <meta
+              property="og:image"
+              content={screenshot.childImageSharp.fluid.src}
+            />
+            <meta property="og:image:alt" content="Gatsby Logo" />
+            <meta
+              name="twitter:image"
+              content={screenshot.childImageSharp.fluid.src}
+            />
+            <meta name="description" content={`Gatsby Starter: ${repoName}`} />
+            <meta
+              property="og:description"
+              content={`Gatsby Starter: ${repoName}`}
+            />
+            <meta
+              name="twitter:description"
+              content={`Gatsby Starter: ${repoName}`}
+            />
+            <meta property="og:site_name" content={repoName} />
+            <meta property="og:title" content={repoName} />
+            <meta property="og:type" content="article" />
+            <meta name="twitter.label1" content="Reading time" />
+            <meta name="twitter:data1" content={`1 min read`} />
+          </Helmet>
+          <StarterHeader stub={starterShowcase.stub} />
           <div
-            css={{
-              width: `100%`,
+            sx={{
+              display: `flex`,
+              flexDirection: [`column-reverse`, `column`],
             }}
           >
-            <Helmet>
-              <title>{`${repoName}: Gatsby Starter`}</title>
-              <meta
-                property="og:image"
-                content={screenshot.childImageSharp.fluid.src}
-              />
-              <meta property="og:image:alt" content="Gatsby Logo" />
-              <meta
-                name="twitter:image"
-                content={screenshot.childImageSharp.fluid.src}
-              />
-              <meta
-                name="description"
-                content={`Gatsby Starter: ${repoName}`}
-              />
-              <meta
-                property="og:description"
-                content={`Gatsby Starter: ${repoName}`}
-              />
-              <meta
-                name="twitter:description"
-                content={`Gatsby Starter: ${repoName}`}
-              />
-              <meta property="og:site_name" content={repoName} />
-              <meta property="og:title" content={repoName} />
-              <meta property="og:type" content="article" />
-              <meta name="twitter.label1" content="Reading time" />
-              <meta name="twitter:data1" content={`1 min read`} />
-            </Helmet>
-            <StarterHeader stub={starterShowcase.stub} />
-            <div
-              css={{
-                display: `flex`,
-                flexDirection: `column-reverse`,
-                [mediaQueries.sm]: {
-                  flexDirection: `column`,
-                },
-              }}
-            >
-              <StarterMeta
-                starter={starterShowcase}
-                repoName={repoName}
-                imageSharp={screenshot}
-                demo={demoUrl}
-              />
-              <StarterScreenshot imageSharp={screenshot} repoName={repoName} />
-            </div>
-            <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} />
-            <StarterInstallation repoName={repoName} repoUrl={repoUrl} />
-            <StarterDetails
-              startersYaml={startersYaml}
-              allDeps={allDeps}
-              shownDeps={shownDeps}
-              showMore={showMore}
-              showAllDeps={this.showAllDeps}
+            <StarterMeta
+              starter={starterShowcase}
+              repoName={repoName}
+              imageSharp={screenshot}
+              demo={demoUrl}
             />
-            <FooterLinks />
+            <Screenshot
+              imageSharp={screenshot.childImageSharp.fluid}
+              alt={`Screenshot of ${repoName}`}
+            />
           </div>
+          <StarterSource
+            repoUrl={repoUrl}
+            startersYaml={startersYaml}
+            starter={starterShowcase}
+          />
+          <StarterInstallation repoName={repoName} repoUrl={repoUrl} />
+          <StarterDetails
+            startersYaml={startersYaml}
+            allDeps={allDeps}
+            shownDeps={shownDeps}
+            showMore={showMore}
+            showAllDeps={this.showAllDeps}
+          />
+          <FooterLinks />
         </div>
-      </Layout>
+      </div>
     )
   }
 

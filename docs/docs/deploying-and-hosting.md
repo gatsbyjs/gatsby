@@ -9,4 +9,4 @@ When you build your Gatsby application, the output is static content: HTML, CSS,
 
 <GuideList slug={props.slug} />
 
-The Gatsby blog also has posts on both [deploying](/blog/tags/deploying/) and [hosting](/blog/tags/hosting/).
+The Gatsby blog also has posts on both [deployment](/blog/tags/deployment/) and [hosting](/blog/tags/hosting/).

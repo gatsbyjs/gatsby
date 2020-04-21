@@ -13,7 +13,7 @@ Then we came across [Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/
 
 In January 2019 we shipped our new [Sanity Gatsby Source](https://github.com/sanity-io/gatsby-source-sanity) Plugin that uses the Sanity APIs to rebuild instantly as content changes. When developing this means a group of people can freely work together on both content models, UI design and the content itself. In real-time. Without rebuilds. This feels both a bit futuristic and pretty great. In the process we also to also make the static production builds themselves as fast as possible.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/STtpXBvJmDA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/STtpXBvJmDA
 
 You can experience it yourself with the sample [company website](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we built for the launch. We ship it in a monorepo along with a Sanity project that has content models for _people_, _project case studies_ and _blogging_. We made it pretty minimal to make it easier to extend.
 
@@ -27,7 +27,7 @@ Add the source plugin to your Gatsby project:
 npm install --save gatsby-source-sanity
 ```
 
-The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/introducing-graphiql/) to test queries and familiarize yourself with the schema documentation. It's super useful!
+The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/running-queries-with-graphiql/) to test queries and familiarize yourself with the schema documentation. It's super useful!
 
 Once you have installed the plugin, add this configuration to `gatsby-config.js`:
 

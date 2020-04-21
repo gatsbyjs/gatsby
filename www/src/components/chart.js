@@ -1,6 +1,6 @@
 import React from "react"
 import loadable from "@loadable/component"
-import { radii } from "../utils/presets"
+import { radii } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const dateToUTC = date => {
   const d = String(date)

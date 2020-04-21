@@ -47,25 +47,54 @@ Open up GraphiQL.
 
 If you bring up the autocomplete window, you'll see:
 
-![graphiql-filesystem](images/graphiql-filesystem.png)
+![graphiql-filesystem](./images/graphiql-filesystem.png)
 
 Hit <kbd>Enter</kbd> on `allFile` then type <kbd>Ctrl + Enter</kbd> to run a
 query.
 
-![filesystem-query](images/filesystem-query.png)
+![filesystem-query](./images/filesystem-query.png)
 
 Delete the `id` from the query and bring up the autocomplete again (<kbd>Ctrl +
 Space</kbd>).
 
-![filesystem-autocomplete](images/filesystem-autocomplete.png)
+![filesystem-autocomplete](./images/filesystem-autocomplete.png)
 
 Try adding a number of fields to your query, pressing <kbd>Ctrl + Enter</kbd>
 each time to re-run the query. You'll see something like this:
 
-![allfile-query](images/allfile-query.png)
+![allfile-query](./images/allfile-query.png)
 
 The result is an array of File "nodes" (node is a fancy name for an object in a
 "graph"). Each File object has the fields you queried for.
+
+If you have multiple sets of data, you can query specific ones by specifying the `name` property from the config object in the `gatsby-config.js` file. In this case, `name` is set to `src`.
+
+```javascript:title=gatsby-config.js
+{
+  resolve: `gatsby-source-filesystem`,
+  options: {
+    path: `${__dirname}/src`,
+    name: `src`,
+  },
+},
+```
+
+You can then update your query using `sourceInstanceName` and the value of the `name` property in a filter like so.
+
+```graphql
+{
+  allFile(filter: { sourceInstanceName: { eq: "src" } }) {
+    edges {
+      node {
+        relativePath
+        prettySize
+        extension
+        birthTime
+      }
+    }
+  }
+}
+```
 
 ## Transforming File nodes
 

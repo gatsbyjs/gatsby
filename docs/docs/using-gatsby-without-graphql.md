@@ -6,7 +6,7 @@ Most examples in the Gatsby docs and on the web at large focus on leveraging sou
 
 > Note: For our purposes here, “unstructured data” means data “handled outside of Gatsby’s data layer” (we’re using the data directly, and not transforming the data into Gatsby nodes).
 
-## The approach: Fetch data and use Gatsby's `createPages` API
+## The approach: fetch data and use Gatsby's `createPages` API
 
 > _Note_: This example is drawn from an example repo built specifically to model how to use this "unstructured data" approach. [View the full repo on GitHub](https://github.com/jlengstorf/gatsby-with-unstructured-data).
 
@@ -85,7 +85,7 @@ Using Gatsby's data layer provides the following benefits:
 - Improves performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
 - Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 
-> Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql/).
+> Learn more about [GraphQL in Gatsby](/docs/graphql/).
 
 Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
 

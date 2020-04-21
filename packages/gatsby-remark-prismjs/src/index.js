@@ -1,10 +1,10 @@
 const visit = require(`unist-util-visit`)
-
 const parseOptions = require(`./parse-options`)
 const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
 const commandLine = require(`./command-line`)
+const loadPrismShowInvisibles = require(`./plugins/prism-show-invisibles`)
 
 module.exports = (
   { markdownAST },
@@ -14,12 +14,14 @@ module.exports = (
     aliases = {},
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
+    showInvisibles = false,
     languageExtensions = [],
     prompt = {
       user: `root`,
       host: `localhost`,
       global: false,
     },
+    escapeEntities = {},
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -61,17 +63,9 @@ module.exports = (
     // line highlights if Prism is required by any other code.
     // This supports custom user styling without causing Prism to
     // re-process our already-highlighted markup.
+    //
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
     const className = `${classPrefix}${languageName}`
-
-    let numLinesStyle, numLinesClass, numLinesNumber
-    numLinesStyle = numLinesClass = numLinesNumber = ``
-    if (showLineNumbers) {
-      numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt -
-        1}"`
-      numLinesClass = ` line-numbers`
-      numLinesNumber = addLineNumbers(node.value)
-    }
 
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
@@ -81,8 +75,30 @@ module.exports = (
     if (highlightLines && highlightLines.length > 0)
       highlightClassName += ` has-highlighted-lines`
 
+    const highlightedCode = highlightCode(
+      languageName,
+      node.value,
+      escapeEntities,
+      highlightLines,
+      noInlineHighlight
+    )
+
+    let numLinesStyle, numLinesClass, numLinesNumber
+    numLinesStyle = numLinesClass = numLinesNumber = ``
+    if (showLineNumbers) {
+      numLinesStyle = ` style="counter-reset: linenumber ${
+        numberLinesStartAt - 1
+      }"`
+      numLinesClass = ` line-numbers`
+      numLinesNumber = addLineNumbers(highlightedCode)
+    }
+
+    if (showInvisibles) {
+      loadPrismShowInvisibles(languageName)
+    }
+
     const useCommandLine =
-      [`bash`].includes(languageName) &&
+      [`bash`, `shell`].includes(languageName) &&
       (prompt.global ||
         (outputLines && outputLines.length > 0) ||
         promptUserLocal ||
@@ -94,7 +110,7 @@ module.exports = (
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
     +       `${useCommandLine ? commandLine(node.value, outputLines, promptUser, promptHost) : ``}`
-    +       `${highlightCode(languageName, node.value, highlightLines, noInlineHighlight)}`
+    +       `${highlightedCode}`
     +     `</code>`
     +     `${numLinesNumber}`
     +   `</pre>`
@@ -118,7 +134,8 @@ module.exports = (
       node.type = `html`
       node.value = `<code class="${className}">${highlightCode(
         languageName,
-        node.value
+        node.value,
+        escapeEntities
       )}</code>`
     })
   }

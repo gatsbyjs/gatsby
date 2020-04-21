@@ -21,12 +21,12 @@ loki.Comparators.aeq = customComparators.aeqHelper
 // these collections, and the "meta collections" used to track them.
 //
 // You won't use these directly. They are used by the collection
-// functions in `./nodes.js`. E.g `getTypeCollName()` and
+// functions in `./nodes.js`. E.g. `getTypeCollName()` and
 // `getNodeTypeCollection`
 const colls = {
   // Each object has keys `id` and `typeCollName`. It's a way of
   // quickly looking up the collection that a node is contained in.
-  // E.g { id: `someNodeId`, typeCollName: `gatsby:nodeType:myType` }
+  // E.g. { id: `someNodeId`, typeCollName: `gatsby:nodeType:myType` }
   nodeMeta: {
     name: `gatsby:nodeMeta`,
     options: {
@@ -37,7 +37,7 @@ const colls = {
   // The list of all node type collections. Each object has keys
   // `type` and `collName` so you can quickly look up the collection
   // name for a node type.
-  // e.g { type: `myType`, collName: `gatsby:nodeType:myType` }
+  // e.g. { type: `myType`, collName: `gatsby:nodeType:myType` }
   nodeTypes: {
     name: `gatsby:nodeTypes`,
     options: {

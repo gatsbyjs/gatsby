@@ -1,22 +1,63 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 
-import { Link } from "gatsby"
-import { space } from "../utils/presets"
-import Container from "../components/container"
-import MarkdownPageFooter from "../components/markdown-page-footer"
-import FooterLinks from "../components/shared/footer-links"
-import GithubIcon from "react-icons/lib/go/mark-github"
-import GatsbyIcon from "../assets/monogram.svg"
-import { linkStyles } from "../utils/styles"
+import Link from "./localized-link"
+import Container from "./container"
+import MarkdownPageFooter from "./markdown-page-footer"
+import FooterLinks from "./shared/footer-links"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import GatsbyIcon from "./gatsby-monogram"
+import { FaUsers as CommunityIcon } from "react-icons/fa"
+
+const GatsbyPluginBadge = ({ isOfficial }) => {
+  const Icon = isOfficial ? GatsbyIcon : CommunityIcon
+  const title = isOfficial
+    ? "Official Gatsby Plugin"
+    : "Community Gatsby Plugin"
+  const text = isOfficial ? `Official Plugin` : `Community Plugin`
+
+  return (
+    <div
+      sx={{
+        variant: `links.muted`,
+        mr: 8,
+        "&&": {
+          border: 0,
+          color: `textMuted`,
+          display: `flex`,
+          fontWeight: `body`,
+        },
+        "&&:hover": {
+          color: `textMuted`,
+        },
+      }}
+    >
+      <span
+        sx={{
+          display: `inline-block`,
+          mr: 2,
+        }}
+        title={title}
+      >
+        <Icon />
+      </span>
+      {text}
+    </div>
+  )
+}
 
 const PackageReadMe = props => {
   const { page, packageName, excerpt, html, githubUrl, timeToRead } = props
   const metaExcerpt = excerpt || `Plugin information for ${packageName}`
+  const isOfficial =
+    githubUrl.indexOf(`https://github.com/gatsbyjs/gatsby`) === 0 &&
+    packageName[0] !== `@`
 
   return (
-    <>
+    <React.Fragment>
       <Container>
         <Helmet>
           <title>{packageName}</title>
@@ -29,11 +70,11 @@ const PackageReadMe = props => {
           <meta name="twitter:data1" content={`${timeToRead} min read`} />
         </Helmet>
         <div
-          css={{
+          sx={{
             display: `flex`,
             flexWrap: `wrap`,
             justifyContent: `space-between`,
-            paddingBottom: space[9],
+            pb: 6,
             "&&:hover": {
               color: `inherit`,
             },
@@ -45,40 +86,21 @@ const PackageReadMe = props => {
               justifyContent: `space-between`,
             }}
           >
-            {githubUrl.indexOf(`https://github.com/gatsbyjs/gatsby`) === 0 &&
-              packageName[0] !== `@` && (
-                <div
-                  css={{
-                    ...linkStyles,
-                    color: `#aaa !important`,
-                    marginRight: space[6],
-                  }}
-                >
-                  <img
-                    src={GatsbyIcon}
-                    css={{
-                      height: 16,
-                      marginBottom: 0,
-                      marginRight: 5,
-                      filter: `grayscale(100%)`,
-                      opacity: 0.5,
-                    }}
-                    alt={`Official Gatsby Plugin`}
-                  />
-                  Official Plugin
-                </div>
-              )}
+            <GatsbyPluginBadge isOfficial={isOfficial} />
             <a
-              css={{ ...linkStyles }}
+              sx={{ variant: `links.muted` }}
               href={githubUrl}
               aria-labelledby="github-link-label"
             >
-              <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
+              <GithubIcon focusable="false" sx={{ mr: 2 }} />
               <span id="github-link-label">View plugin on GitHub</span>
             </a>
           </div>
           {githubUrl && (
-            <Link to={`/starters?d=${packageName}`} css={{ ...linkStyles }}>
+            <Link
+              to={`/starters?d=${packageName}`}
+              sx={{ variant: `links.muted` }}
+            >
               See starters using this
             </Link>
           )}
@@ -90,7 +112,7 @@ const PackageReadMe = props => {
         <MarkdownPageFooter page={page} packagePage />
       </Container>
       <FooterLinks />
-    </>
+    </React.Fragment>
   )
 }
 

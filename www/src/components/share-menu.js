@@ -1,12 +1,8 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
-import MdShare from "react-icons/lib/md/share"
-import FaPinterestP from "react-icons/lib/fa/pinterest-p"
-import FaGooglePlus from "react-icons/lib/fa/google-plus"
-import FaLinkedin from "react-icons/lib/fa/linkedin"
-import FaFacebook from "react-icons/lib/fa/facebook"
-import FaTwitter from "react-icons/lib/fa/twitter"
-
-import { colors, space, radii } from "../utils/presets"
+import { MdShare } from "react-icons/md"
+import { FaPinterestP, FaLinkedin, FaFacebook, FaTwitter } from "react-icons/fa"
 
 const objectToParams = object =>
   `?` +
@@ -14,6 +10,31 @@ const objectToParams = object =>
     .filter(key => !!object[key])
     .map(key => `${key}=${encodeURIComponent(object[key])}`)
     .join(`&`)
+
+const ShareMenuItem = ({ href, title, children }) => (
+  <a
+    target="_blank"
+    rel="noopener noreferrer"
+    sx={{
+      width: 36,
+      height: 36,
+      mb: 2,
+      "&&": {
+        bg: `button.primaryBg`,
+        border: 0,
+        borderRadius: 2,
+        color: `button.primaryText`,
+        display: `flex`,
+        alignItems: `center`,
+        justifyContent: `center`,
+      },
+    }}
+    href={href}
+    title={title}
+  >
+    {children}
+  </a>
+)
 
 class ShareMenu extends React.Component {
   constructor(props) {
@@ -62,18 +83,20 @@ class ShareMenu extends React.Component {
   }
 
   render() {
-    const { url, title, image, className, theme = `gatsby` } = this.props
+    const { url, title, image, className } = this.props
     const { open } = this.state
     return (
       <Fragment>
         <button
           onClick={this.shareMenu}
-          css={{
-            background: styles[theme].background,
+          sx={{
+            bg: `button.primaryBg`,
             border: 0,
-            borderRadius: radii[1],
-            color: styles[theme].textColor,
+            borderRadius: 2,
+            color: `button.primaryText`,
             cursor: `pointer`,
+            height: 36,
+            width: 36,
           }}
           className={className}
           ref={this.setShareBtnRef}
@@ -90,9 +113,7 @@ class ShareMenu extends React.Component {
             }}
             ref={this.setShareMenuRef}
           >
-            <a
-              {...linkAttrs}
-              css={{ ...styles.shareMenuListItem[theme] }}
+            <ShareMenuItem
               href={`https://pinterest.com/pin/create/button/${objectToParams({
                 url: url,
                 media: image,
@@ -101,10 +122,8 @@ class ShareMenu extends React.Component {
               title="Share on Pinterest"
             >
               <FaPinterestP />
-            </a>
-            <a
-              {...linkAttrs}
-              css={{ ...styles.shareMenuListItem[theme] }}
+            </ShareMenuItem>
+            <ShareMenuItem
               href={`https://www.linkedin.com/shareArticle${objectToParams({
                 mini: `true`,
                 url: url,
@@ -113,10 +132,8 @@ class ShareMenu extends React.Component {
               title="Share on LinkedIn"
             >
               <FaLinkedin />
-            </a>
-            <a
-              {...linkAttrs}
-              css={{ ...styles.shareMenuListItem[theme] }}
+            </ShareMenuItem>
+            <ShareMenuItem
               href={`https://www.facebook.com/sharer.php${objectToParams({
                 u: url,
                 t: title,
@@ -124,20 +141,8 @@ class ShareMenu extends React.Component {
               title="Share on Facebook"
             >
               <FaFacebook />
-            </a>
-            <a
-              {...linkAttrs}
-              css={{ ...styles.shareMenuListItem[theme] }}
-              href={`https://plus.google.com/share${objectToParams({
-                url: url,
-              })}`}
-              title="Share on Google Plus"
-            >
-              <FaGooglePlus />
-            </a>
-            <a
-              {...linkAttrs}
-              css={{ ...styles.shareMenuListItem[theme] }}
+            </ShareMenuItem>
+            <ShareMenuItem
               href={`https://twitter.com/share${objectToParams({
                 url: url,
                 text: title,
@@ -145,7 +150,7 @@ class ShareMenu extends React.Component {
               title="Share on Twitter"
             >
               <FaTwitter />
-            </a>
+            </ShareMenuItem>
           </div>
         )}
       </Fragment>
@@ -154,52 +159,3 @@ class ShareMenu extends React.Component {
 }
 
 export default ShareMenu
-
-const styles = {
-  gatsby: {
-    background: colors.gatsby,
-    textColor: colors.white,
-  },
-  accent: {
-    background: colors.accent,
-    textColor: colors.gatsby,
-  },
-  shareMenuListItem: {
-    gatsby: {
-      width: 32,
-      height: 32,
-      marginBottom: space[2],
-      "&&": {
-        background: colors.gatsby,
-        border: 0,
-        borderRadius: radii[1],
-        color: colors.white,
-        display: `flex`,
-        alignItems: `center`,
-        justifyContent: `center`,
-        "&:hover": {
-          background: colors.gatsby,
-        },
-      },
-    },
-    accent: {
-      width: 32,
-      height: 32,
-      marginBottom: space[2],
-      "&&": {
-        background: colors.accent,
-        border: 0,
-        borderRadius: radii[1],
-        color: colors.gatsby,
-        display: `flex`,
-        alignItems: `center`,
-        justifyContent: `center`,
-      },
-    },
-  },
-}
-
-const linkAttrs = {
-  target: `_blank`,
-  rel: `noopener noreferrer`,
-}

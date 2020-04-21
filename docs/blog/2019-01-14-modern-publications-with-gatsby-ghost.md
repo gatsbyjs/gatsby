@@ -8,23 +8,23 @@ image: "./images/ghost-headless-feature-image.png"
 showImageInArticle: true
 ---
 
-There has been a lot of progress around static site generators, front end frameworks and API-centric infrastructure in recent years. At [Ghost](https://ghost.org/), we’ve been building open source technology for modern publishing for over 5 years and as a developer-centric team, the momentum around static sites didn’t go unnoticed.
+There has been a lot of progress around static site generators, frontend frameworks and API-centric infrastructure in recent years. At [Ghost](https://ghost.org/), we’ve been building open source technology for modern publishing for over 5 years and as a developer-centric team, the momentum around static sites didn’t go unnoticed.
 
-Wildly fast websites which have no back end and can be deployed just about anywhere felt very much like the future. So I’m thrilled to share that with the recent updates to the Ghost API, it’s now possible to use Ghost as a completely decoupled headless CMS and bring your own front-end written in Gatsby.js!
+Wildly fast websites which have no back end and can be deployed just about anywhere felt very much like the future. So I’m thrilled to share that with the recent updates to the Ghost API, it’s now possible to use Ghost as a completely decoupled headless CMS and bring your own frontend written in Gatsby.js!
 
 ## API driven publishing
 
-Ghost has always been architected into 3 distinct areas: A core Node.js API, an Ember.js Admin client, and a speedy Handlebars.js front-end theme layer. Until now those 3 areas have been fairly tightly coupled, so it hasn't been possible to use them separately.
+Ghost has always been architected into 3 distinct areas: A core Node.js API, an Ember.js Admin client, and a speedy Handlebars.js frontend theme layer. Until now those 3 areas have been fairly tightly coupled, so it hasn't been possible to use them separately.
 
 ![](./images/ghost-core-1.png)
 
-Our latest updates allow you to completely replace the default Handlebars theme layer in favor of a front-end framework, so you can use Gatsby to build your site statically from the Ghost API.
+Our latest updates allow you to completely replace the default Handlebars theme layer in favor of a frontend framework, so you can use Gatsby to build your site statically from the Ghost API.
 
 ## Why use a headless CMS?
 
 Many developers use static site generators alongside locally stored Markdown files, using a code editor to create content and a GIT workflow to publish. While this works great and is suitable for some sites, it quickly becomes unmanageable for publishers that need to scale, or teams that are not solely developers.
 
-This is where a [headless CMS](/docs/headless-cms/) comes in, which provides an admin client for authoring and content management, while still bringing all of the benefits of having a static front-end. Developers can use their preferred stack, and writers have an editor, content scheduling, SEO and much more at their fingertips.
+This is where a [headless CMS](/docs/headless-cms/) comes in, which provides an admin client for authoring and content management, while still bringing all of the benefits of having a static frontend. Developers can use their preferred stack, and writers have an editor, content scheduling, SEO and much more at their fingertips.
 
 When you look at the bigger picture of the [content mesh](/blog/2018-10-04-journey-to-the-content-mesh/), it really starts to feel like an inevitable future for building publishing websites.
 
@@ -46,6 +46,6 @@ We’ve also introduced an official [Netlify integration](https://docs.ghost.org
 
 ## Publishing on the JAMstack
 
-I’m really excited to see what people build with these new technologies. The concept of having just one front-end and many APIs all connected together and served as a single site or application with Gatsby opens up so much opportunity in the publishing space.
+I’m really excited to see what people build with these new technologies. The concept of having just one frontend and many APIs all connected together and served as a single site or application with Gatsby opens up so much opportunity in the publishing space.
 
 If you want to give it a try with Ghost, sign up for a free trial account at [Ghost.org](https://ghost.org/pricing/) and use our official Gatsby plugin + starter to put it through it’s paces!

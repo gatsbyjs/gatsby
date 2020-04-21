@@ -1,5 +1,5 @@
 const loadPlugins = require(`../index`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 describe(`Load plugins`, () => {
   /**

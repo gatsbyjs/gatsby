@@ -1,5 +1,5 @@
 ---
-title: Adding pagination
+title: Adding Pagination
 ---
 
 A page displaying a list of content gets longer as the amount of content grows.
@@ -7,13 +7,13 @@ Pagination is the technique of spreading that content across multiple pages.
 
 The goal of pagination is to create multiple pages (from a single [template](/docs/building-with-components/#page-template-components)) that show a limited number of items.
 
-Each page will [query GraphQL](/docs/querying-with-graphql/) for those specific items.
+Each page will [query GraphQL](/docs/graphql-concepts/) for those specific items.
 
 The information needed to query for those specific items (i.e. values for [`limit`](/docs/graphql-reference/#limit) and [`skip`](/docs/graphql-reference/#skip)) will come from the [`context`](/docs/graphql-reference/#query-variables) that is added when [creating pages](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`.
 
-### Example
+## Example
 
-```js:title=src/templates/blog-list-template.js
+```jsx:title=src/templates/blog-list-template.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -126,7 +126,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 The code above will create an amount of pages that is based on the total number of posts. Each page will list `postsPerPage`(6) posts, until there are less than `postsPerPage`(6) posts left.
 The path for the first page is `/blog`, following pages will have a path of the form: `/blog/2`, `/blog/3`, etc.
 
-### Other resources
+## Other resources
 
 - Follow this [step-by-step tutorial](https://nickymeuleman.netlify.com/blog/gatsby-pagination/) to add links to the previous/next page and the traditional page-navigation at the bottom of the page
 

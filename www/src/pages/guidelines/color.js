@@ -1,9 +1,7 @@
 import React from "react"
-import Modal from "react-modal"
-import MdWarning from "react-icons/lib/md/warning"
+import { MdWarning } from "react-icons/md"
 
 import Layout from "../../components/guidelines/layout"
-
 import { Box, Flex, Text } from "../../components/guidelines/system"
 
 import {
@@ -20,14 +18,12 @@ import {
   SectionSubheading,
 } from "../../components/guidelines/typography"
 
+import LazyModal from "../../components/lazy-modal"
 import Badge from "../../components/guidelines/badge"
 import Overview from "../../components/guidelines/color/overview"
 import ColorModal from "../../components/guidelines/color/modal"
 
 import palette from "../../utils/guidelines/extend-palette-info"
-
-// http://reactcommunity.org/react-modal/accessibility/
-Modal.setAppElement(`#___gatsby`)
 
 const LegacyColorIcon = ({ textColor }) => (
   <Box
@@ -63,7 +59,7 @@ class Color extends React.Component {
 
   render() {
     return (
-      <Layout pathname={this.props.location.pathname} pageTitle="Color">
+      <Layout location={this.props.location} pageTitle="Color">
         <Container>
           <PageHeading>Color</PageHeading>
           <Intro>
@@ -105,7 +101,7 @@ class Color extends React.Component {
                     mb={0}
                     mt={{ xxs: 8, lg: 0 }}
                     fontSize={2}
-                    fontWeight={0}
+                    fontWeight="body"
                   >
                     WCAG Contrast Score
                   </Text>
@@ -235,7 +231,7 @@ class Color extends React.Component {
           </Columns>
         </Section>
 
-        <Modal
+        <LazyModal
           closeTimeoutMS={300}
           contentLabel="Example Modal In Gatsby"
           isOpen={this.state.isModalOpen}
@@ -262,7 +258,7 @@ class Color extends React.Component {
             handleModalClose={this.handleModalClose}
             palette={palette}
           />
-        </Modal>
+        </LazyModal>
       </Layout>
     )
   }

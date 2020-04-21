@@ -31,8 +31,8 @@ describe(`assetPrefix`, () => {
         .and(`not.matches`, assetPrefixExpression)
     })
 
-    it(`prefixes shortcut icon`, () => {
-      assetPrefixMatcher(cy.get(`head link[rel="shortcut icon"]`))
+    it(`prefixes icon`, () => {
+      assetPrefixMatcher(cy.get(`head link[rel="icon"]`))
     })
 
     it(`prefixes manifest icons`, () => {

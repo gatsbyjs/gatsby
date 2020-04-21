@@ -47,6 +47,13 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
   }
 })
 
@@ -423,7 +430,7 @@ describe(`query caching between builds`, () => {
             siteMetadata: {
               title: `My Site`,
               description: `Description of site
-            
+
               --edited
               edited content #${nodeChangeCounter++}
               `,
@@ -502,7 +509,7 @@ describe(`query caching between builds`, () => {
             id: `test-2`,
             slug: `bar`,
             content: `Dolor sit amet.
-            
+
             --edited
             edited content #${nodeChangeCounter++}
             `,
@@ -600,7 +607,7 @@ describe(`query caching between builds`, () => {
           createNotUsedNode({
             id: `not-used`,
             content: `Content
-            
+
             --edited
             edited content #${nodeChangeCounter++}`,
           })
@@ -672,7 +679,7 @@ describe(`query caching between builds`, () => {
             id: `test-1`,
             slug: `foo`,
             content: `Lorem ipsum.
-            
+
             --edited
             edited content #${nodeChangeCounter++}`,
           })
@@ -831,7 +838,7 @@ describe(`query caching between builds`, () => {
             siteMetadata: {
               title: `My Site`,
               description: `Description of site
-            
+
               --edited
               edited content #${nodeChangeCounter++}
               `,

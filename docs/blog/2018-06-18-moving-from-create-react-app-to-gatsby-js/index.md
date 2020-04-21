@@ -40,7 +40,7 @@ Gatsby uses [GraphQL](https://graphql.org/learn/) to share data across pages. Yo
 
 ## Gatsby project folder structure
 
-```shell
+```text
 ├── LICENSE
 ├── README.md
 ├── gatsby-config.js
@@ -66,7 +66,7 @@ There are two types of routes:
 
 Let's assume you have the following static routes in your `create-react-app` project:
 
-```js
+```jsx
 <Route exact path='/' component={Home} />
 <Route path='/blog' component={Blog} />
 <Route path='/contact' component={Contact} />
@@ -74,7 +74,7 @@ Let's assume you have the following static routes in your `create-react-app` pro
 
 Gatsby will create these routes automatically based on files you create in your `pages` folder. The good news is you've already created the React components so it's a matter of copying them to the right place. The exception is the home page which should be named `index.js`.  You will end up with something like this:
 
-```shell
+```text
 ├── LICENSE
 ├── README.md
 ├── gatsby-config.js
@@ -98,13 +98,13 @@ I will take an example of blog posts in this case loaded from Contentful. Every 
 
 In a normal React app the route will look something like this.
 
-```js
+```jsx
 <Route path="/blog/:slug" component={BlogPost} />
 ```
 
 And your `BlogPost` component will look something like this:
 
-```js
+```jsx
 // a function that requests a blog post from Contentful's API
 import { getBlogPost } from "./contentful-service"
 import marked from "marked"
@@ -188,7 +188,7 @@ Since you already have the `BlogPost` component from your React project move it 
 
 Your Gatsby project will look like this:
 
-```shell
+```text
 ├── LICENSE
 ├── README.md
 ├── gatsby-config.js
@@ -211,7 +211,7 @@ You need to make some slight modifications to your `BlogPost` component.
 
 `src/templates/blog-post.js`:
 
-```js
+```jsx
 import React from "react"
 import { graphql } from "gatsby"
 

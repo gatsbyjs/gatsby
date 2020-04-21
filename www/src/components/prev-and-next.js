@@ -1,88 +1,107 @@
-import React from "react"
-import { Link } from "gatsby"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-import ArrowBackIcon from "react-icons/lib/md/arrow-back"
-
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { t, Trans } from "@lingui/macro"
+import { withI18n } from "@lingui/react"
+import Link from "./localized-link"
 import {
-  colors,
-  space,
-  mediaQueries,
-  lineHeights,
-  fontSizes,
-  fonts,
-} from "../utils/presets"
+  MdArrowBack as ArrowBackIcon,
+  MdArrowForward as ArrowForwardIcon,
+} from "react-icons/md"
+
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const prevNextLinkStyles = {
   // bump specificity to override the border applied to Link's by default
   "&&": {
     borderBottom: 0,
   },
-  color: colors.gatsby,
-  fontFamily: fonts.header,
-  fontSize: fontSizes[3],
+  color: `gatsby`,
+  fontFamily: `heading`,
+  fontSize: 3,
   fontWeight: `bold`,
-  lineHeight: lineHeights.dense,
+  lineHeight: `dense`,
 }
 const prevNextLabelStyles = {
-  color: colors.text.secondary,
-  fontSize: fontSizes[2],
-  fontWeight: `normal`,
-  marginBottom: space[2],
-  marginTop: 0,
+  color: `textMuted`,
+  fontSize: 2,
+  fontWeight: `body`,
+  mb: 2,
+  mt: 0,
 }
 
-const PrevAndNext = ({ prev = null, next = null, ...props }) => {
+const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
   if (!prev && !next) {
     return null
   }
 
   return (
     <nav
-      aria-label="pagination"
-      css={{
+      aria-label={i18n._(t`pagination`)}
+      sx={{
         [mediaQueries.sm]: {
           display: `flex`,
+          justifyContent: `space-between`,
           width: `100%`,
         },
       }}
       {...props}
     >
-      <div css={{ [mediaQueries.sm]: { width: `50%` } }}>
+      <div css={{ [mediaQueries.sm]: { width: `48%` } }}>
         {prev && (
-          <Link to={prev.link} css={prevNextLinkStyles}>
-            <h4 css={prevNextLabelStyles}>Previous</h4>
+          <Link to={prev.link} sx={prevNextLinkStyles}>
+            <p sx={prevNextLabelStyles}>
+              <Trans>Previous</Trans>
+            </p>
             <span
-              css={{
+              sx={{
                 [mediaQueries.md]: {
-                  marginLeft: `-${space[4]}`,
+                  ml: `-1.5em`,
                 },
+                display: `inline-flex`,
+                alignItems: `center`,
               }}
             >
-              <ArrowBackIcon style={{ verticalAlign: `sub` }} />
+              <ArrowBackIcon
+                sx={{
+                  flexShrink: 0,
+                  mr: `0.5em`,
+                  verticalAlign: `sub`,
+                }}
+              />
               {prev.title}
             </span>
           </Link>
         )}
       </div>
       <div
-        css={{
+        sx={{
           textAlign: `right`,
-          marginTop: space[5],
-          [mediaQueries.sm]: { marginTop: 0, width: `50%` },
+          mt: 5,
+          [mediaQueries.sm]: { mt: 0, width: `48%` },
         }}
       >
         {next && (
-          <Link to={next.link} css={prevNextLinkStyles}>
-            <h4 css={prevNextLabelStyles}>Next</h4>
+          <Link to={next.link} sx={prevNextLinkStyles}>
+            <p sx={prevNextLabelStyles}>
+              <Trans>Next</Trans>
+            </p>
             <span
-              css={{
+              sx={{
                 [mediaQueries.md]: {
-                  marginRight: `-${space[4]}`,
+                  mr: `-1.5em`,
                 },
+                display: `inline-flex`,
+                alignItems: `center`,
               }}
             >
               {next.title}
-              <ArrowForwardIcon style={{ verticalAlign: `sub` }} />
+              <ArrowForwardIcon
+                sx={{
+                  flexShrink: 0,
+                  ml: `0.5em`,
+                  verticalAlign: `sub`,
+                }}
+              />
             </span>
           </Link>
         )}
@@ -91,4 +110,4 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
   )
 }
 
-export default PrevAndNext
+export default withI18n()(PrevAndNext)

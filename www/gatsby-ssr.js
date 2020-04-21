@@ -1,5 +1,4 @@
 import React from "react"
-import wrapRoot from "./wrap-root-element"
 
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
@@ -31,5 +30,3 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
     />,
   ])
 }
-
-export const wrapRootElement = wrapRoot

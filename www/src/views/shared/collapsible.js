@@ -1,9 +1,7 @@
-import React, { Component } from "react"
-import FaAngleDown from "react-icons/lib/fa/angle-down"
-import FaAngleUp from "react-icons/lib/fa/angle-up"
-
-import { rhythm } from "../../utils/typography"
-import { colors, space, fontSizes, letterSpacings } from "../../utils/presets"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
+import { FaAngleDown, FaAngleUp } from "react-icons/fa"
 
 class Collapsible extends Component {
   state = {
@@ -20,8 +18,9 @@ class Collapsible extends Component {
 
     return (
       <div
-        css={{
-          borderBottom: collapsed ? 0 : `1px solid ${colors.ui.border.subtle}`,
+        sx={{
+          borderBottom: t =>
+            collapsed ? 0 : `1px solid ${t.colors.ui.border}`,
           display: collapsed ? false : `flex`,
           flex: collapsed ? `0 0 auto` : `1 1 auto`,
           minHeight: fixed ? `${fixed}px` : `initial`,
@@ -38,31 +37,35 @@ class Collapsible extends Component {
             width: `100%`,
           }}
         >
-          <h4
-            css={{
+          <button
+            sx={{
               alignItems: `center`,
-              color: colors.lilac,
+              color: `textMuted`,
               cursor: `pointer`,
               display: `flex`,
               flexShrink: 0,
-              fontWeight: `normal`,
-              fontSize: fontSizes[1],
-              marginTop: space[6],
-              marginRight: rhythm(5 / 4),
-              letterSpacing: letterSpacings.tracked,
+              fontWeight: `body`,
+              fontSize: 1,
+              my: 6,
+              mr: 4,
+              p: 0,
+              letterSpacing: `tracked`,
               textTransform: `uppercase`,
+              background: `none`,
+              border: `none`,
               "&:hover": {
-                color: colors.gatsby,
+                color: `gatsby`,
               },
             }}
+            aria-expanded={!collapsed}
             onClick={this.handleClick}
           >
             {heading}
             {` `}
-            <span css={{ marginLeft: `auto` }}>
+            <span sx={{ ml: `auto` }} css={{ display: `flex` }}>
               {collapsed ? <FaAngleDown /> : <FaAngleUp />}
             </span>
-          </h4>
+          </button>
           <div
             css={{
               display: collapsed ? `none` : `block`,

@@ -4,7 +4,7 @@ title: Creating Component Libraries
 
 Component libraries are often used in component-based UI systems like React and Vue. They are typically versioned repositories of components.
 
-IBM's [Carbon Design System](http://carbondesignsystem.com/) and Palantir's [Blueprint](https://blueprintjs.com/) are both good examples.
+IBM's [Carbon Design System](https://www.carbondesignsystem.com/) and Palantir's [Blueprint](https://blueprintjs.com/) are both good examples.
 
 ## Why component libraries
 
@@ -27,7 +27,7 @@ For example, if a feature developer need to change a library component, that dev
 
 There are two different approaches for versioning component libraries.
 
-The first is to version on globally across the component library. At any given commit, the library has one version number (eg `30.3.1`). Any commit updating a component will then bump the version number accordingly. Both Carbon Design System and Blueprint take this approach.
+The first is to version on globally across the component library. At any given commit, the library has one version number (e.g. `30.3.1`). Any commit updating a component will then bump the version number accordingly. Both Carbon Design System and Blueprint take this approach.
 
 The second approach is to version each component in the component library. This was used, for example, [by Walmart.com](https://medium.com/walmartlabs/how-to-achieve-reusability-with-react-components-81edeb7fb0e0) -- they built their component library as React components, and created every component as a separate, versioned npm package.
 

@@ -54,9 +54,9 @@ Current partners have reported development timelines of 2-3 days when the conten
 
 If you have a GraphQL-based API, you **may not need to build an integration at all** -- Gatsby supports integration with GraphQL APIs via so-called ["schema stitching"](/blog/2018-09-25-announcing-graphql-stitching-support/).
 
-If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](/docs/creating-plugins/) and [source plugin tutorial](/docs/pixabay-source-plugin-tutorial/).
+If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](/docs/creating-plugins/) and [source plugin tutorial](/tutorial/pixabay-source-plugin-tutorial/).
 
-If you still have questions, please [raise an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://discord.gg/0ZcbPKXt5bVoxkfV), or reach out to our Head of Developer Relations [Jason Lengstorf](/contributors/jason-lengstorf/) at developer-relations@gatsbyjs.com.
+If you still have questions, please [raise an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://gatsby.dev/discord), or reach out to our team at [developer-relations@gatsbyjs.com](mailto:developer-relations@gatsbyjs.com).
 
 ### Step Two: Launching Your Gatsby Integration
 
@@ -64,7 +64,7 @@ To launch your Gatsby integration, there are two steps:
 
 1. **Publishing your integration to our [plugin library](/plugins/)**. If you built the integration, we have [developer documentation](/docs/plugin-authoring/#publishing-a-plugin-to-the-library) for publishing that integration to the Node.js package registry (npm). Once you publish it, over the next 24 hours, our system will automatically pull it in.
 
-2. **Add your example to our [starter library](/starters/)**. Most Gatsby users find it easier to try a new integration when they can start with a ready-made code example. We created [a starter library](http://gatsbyjs.org/starters/) to showcase these plugins to the community. [Here’s how you add your starter to it](/contributing/submit-to-starter-library/).
+2. **Add your example to our [starter library](/starters/)**. Most Gatsby users find it easier to try a new integration when they can start with a ready-made code example. We created [a starter library](https://gatsbyjs.org/starters/) to showcase these plugins to the community. [Here’s how you add your starter to it](/contributing/submit-to-starter-library/).
 
 ### Step Three: Co-Marketing With Gatsby
 
@@ -78,7 +78,7 @@ Depending on your size and reach, there are a few ways we can work together.
 
 2. **Blogging about your integration.** Our [gatsbyjs.org](/blog/) developer blog is open to quality posts from key partners to share about how to use our solutions together. A typical blog post gets 3,000 reads in the first 7 days, and around 10,000 reads over the course of a year.
 
-If you’re an established vendor adding a Gatsby integration, we’d love for you to tell that story on our blog (eg [Kentico Cloud](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/)). Here is a [guide to posting this in the blog](/docs/how-to-contribute/#contributing-to-the-blog).
+If you’re an established vendor adding a Gatsby integration, we’d love for you to tell that story on our blog (e.g. [Kentico Cloud](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/)). Here is a [guide to posting this in the blog](/docs/how-to-contribute/#contributing-to-the-blog).
 
 3. **Writing a case study**. If you have customers using Gatsby & your solution, you can work with our marketing team at marketing@gatsbyjs.com to put together a joint case study of how our solutions work together, and post this on the gatsbyjs.org blog
 
@@ -98,7 +98,7 @@ In terms of what a "first-class" Gatsby Preview integration and partnership look
 
 - A button in the CMS editor where users can click through to Preview
 
-- Featured on a plugin marketplace, if applicable. Eg, [Contentful Marketplace](https://www.contentful.com/developers/marketplace/gatsby-preview-sidebar/)
+- Featured on a plugin marketplace, if applicable. E.g., [Contentful Marketplace](https://www.contentful.com/developers/marketplace/gatsby-preview-sidebar/)
 
 #### Marketing & Sales:
 

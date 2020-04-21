@@ -1,6 +1,6 @@
 import React from "react"
-import MdWarning from "react-icons/lib/md/warning"
-import Link from "gatsby-link"
+import { MdWarning } from "react-icons/md"
+import Link from "../../components/localized-link"
 
 import {
   Container,
@@ -18,9 +18,9 @@ import {
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 
-import theme from "../../utils/guidelines/theme"
+import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { Box, Flex, Text } from "../../components/guidelines/system"
-import { mediaQueries } from "../../utils/presets"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const ColorExample = ({ hex, token }) => (
   <tr>
@@ -48,7 +48,7 @@ const ColorExample = ({ hex, token }) => (
       }}
     >
       <Flex alignItems="center">
-        <Text color={hex} fontWeight={1} fontSize={6} mr={8}>
+        <Text color={hex} fontWeight="bold" fontSize={6} mr={8}>
           Aa
         </Text>
         <div
@@ -69,7 +69,7 @@ const ColorExample = ({ hex, token }) => (
 )
 
 const DesignTokens = ({ location }) => (
-  <Layout pathname={location.pathname} pageTitle="Design Tokens">
+  <Layout location={location} pageTitle="Design Tokens">
     <Container>
       <div css={{ position: `relative`, zIndex: 1 }}>
         <PageHeading>Design Tokens</PageHeading>
@@ -139,7 +139,7 @@ const DesignTokens = ({ location }) => (
                       key={`${index}-${space}`}
                       height={space}
                       width={space}
-                      bg="orange.30"
+                      bg="grey.30"
                     />
                     <SrOnly>
                       A box with <code>space[{index}]</code> set as value for
@@ -157,7 +157,7 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <Section bg="grey.5">
+    <Section bg="ui.background">
       <SectionHeading>Shadows &amp; Elevation</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -268,7 +268,7 @@ const DesignTokens = ({ location }) => (
                       key={`${index}-radius`}
                       height={40}
                       width={80}
-                      bg="orange.30"
+                      bg="grey.30"
                       borderRadius={index}
                     />
                     <SrOnly>
@@ -444,7 +444,7 @@ const DesignTokens = ({ location }) => (
                     <td>
                       <Text
                         letterSpacing={letterSpacing}
-                        color="grey.90"
+                        color="text"
                         lineHeight="solid"
                         css={{
                           whiteSpace: `nowrap`,

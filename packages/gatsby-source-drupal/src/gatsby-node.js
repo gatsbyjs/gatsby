@@ -8,7 +8,15 @@ const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
 
 exports.sourceNodes = async (
-  { actions, store, cache, createNodeId, createContentDigest, reporter },
+  {
+    actions,
+    store,
+    cache,
+    createNodeId,
+    createContentDigest,
+    getCache,
+    reporter,
+  },
   pluginOptions
 ) => {
   let {
@@ -19,12 +27,16 @@ exports.sourceNodes = async (
     headers,
     params,
     concurrentFileRequests,
+    disallowedLinkTypes,
   } = pluginOptions
   const { createNode } = actions
   const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
+
+  // Default disallowedLinkTypes to self, describedby.
+  disallowedLinkTypes = disallowedLinkTypes || [`self`, `describedby`]
 
   // Default concurrentFileRequests to `20`
   concurrentFileRequests = concurrentFileRequests || 20
@@ -57,7 +69,7 @@ exports.sourceNodes = async (
   })
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
-      if (type === `self`) return
+      if (disallowedLinkTypes.includes(type)) return
       if (!url) return
       if (!type) return
       const getNext = async (url, data = []) => {
@@ -93,7 +105,14 @@ exports.sourceNodes = async (
           }
         }
         data = data.concat(d.data.data)
-        if (d.data.links.next) {
+        // Add support for includes. Includes allow entity data to be expanded
+        // based on relationships. The expanded data is exposed as `included`
+        // in the JSON API response.
+        // See https://www.drupal.org/docs/8/modules/jsonapi/includes
+        if (d.data.included) {
+          data = data.concat(d.data.included)
+        }
+        if (d.data.links && d.data.links.next) {
           data = await getNext(d.data.links.next, data)
         }
 
@@ -120,6 +139,7 @@ exports.sourceNodes = async (
   _.each(allData, contentType => {
     if (!contentType) return
     _.each(contentType.data, datum => {
+      if (!datum) return
       const node = nodeFromData(datum, createNodeId)
       nodes.set(node.id, node)
     })
@@ -144,7 +164,7 @@ exports.sourceNodes = async (
     downloadingFilesActivity.start()
     await asyncPool(concurrentFileRequests, fileNodes, async node => {
       await downloadFile(
-        { node, store, cache, createNode, createNodeId },
+        { node, store, cache, createNode, createNodeId, getCache, reporter },
         pluginOptions
       )
     })
@@ -167,6 +187,7 @@ exports.onCreateDevServer = (
     store,
     cache,
     createContentDigest,
+    getCache,
     reporter,
   },
   pluginOptions
@@ -177,22 +198,37 @@ exports.onCreateDevServer = (
       type: `application/json`,
     }),
     async (req, res) => {
-      // we are missing handling of node deletion
-      const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
-
-      await handleWebhookUpdate(
-        {
-          nodeToUpdate,
-          actions,
-          cache,
-          createNodeId,
-          createContentDigest,
-          getNode,
-          reporter,
-          store,
-        },
-        pluginOptions
-      )
+      if (!_.isEmpty(req.body)) {
+        const requestBody = JSON.parse(JSON.parse(req.body))
+        const { secret, action, id } = requestBody
+        if (pluginOptions.secret && pluginOptions.secret !== secret) {
+          return reporter.warn(
+            `The secret in this request did not match your plugin options secret.`
+          )
+        }
+        if (action === `delete`) {
+          actions.deleteNode({ node: getNode(createNodeId(id)) })
+          return reporter.log(`Deleted node: ${id}`)
+        }
+        const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
+        return await handleWebhookUpdate(
+          {
+            nodeToUpdate,
+            actions,
+            cache,
+            createNodeId,
+            createContentDigest,
+            getCache,
+            getNode,
+            reporter,
+            store,
+          },
+          pluginOptions
+        )
+      } else {
+        res.status(400).send(`Received body was empty!`)
+        return reporter.log(`Received body was empty!`)
+      }
     }
   )
 }

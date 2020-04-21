@@ -1,9 +1,21 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 
 import DocBlock from "./doc-block"
 
-import { space } from "../../utils/presets"
+const APIContents = ({ docs }) => (
+  <ul>
+    {docs.map(node => (
+      <li key={`function list ${node.name}`}>
+        <a href={`#${node.name}`}>{node.name}</a>
+      </li>
+    ))}
+  </ul>
+)
+
+export { APIContents }
 
 export default ({
   docs,
@@ -16,7 +28,7 @@ export default ({
       <div
         id={definition.name}
         key={`reference list ${definition.name}`}
-        css={{ marginBottom: space[6] }}
+        sx={{ mb: 6 }}
       >
         {i !== 0 && <hr />}
         <DocBlock

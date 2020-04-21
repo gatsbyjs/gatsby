@@ -111,7 +111,9 @@ const updatePlugins = (updates, plugins) => {
 
 const filterArchived = plugins => {
   if (!process.env.GITHUB_API_TOKEN) {
-    throw `Please use instructions in README.md to setup GITHUB_API_TOKEN`
+    throw new Error(
+      `Please use instructions in README.md to setup GITHUB_API_TOKEN`
+    )
   }
 
   const promises = plugins.map(plugin => {
@@ -151,7 +153,7 @@ const main = () => {
         .then(packages => filterArchived(packages))
         .then(packages =>
           packages.map(p => {
-            // TODO: notify / comment on github
+            // TODO: notify / comment on GitHub
             console.info(`Notify package "${p.name}"`)
             // return update status
             // will turn notified to true once notifications are created

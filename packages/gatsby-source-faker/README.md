@@ -6,14 +6,14 @@ This is a plugin that allows you to use [faker.js](https://github.com/marak/Fake
 
 Install `gatsby-source-faker`
 
-```
-    npm install --save gatsby-source-faker
+```shell
+npm install --save gatsby-source-faker
 ```
 
 or
 
-```
-    npm install gatsby-source-faker
+```shell
+npm install gatsby-source-faker
 ```
 
 Add `gatsby-source-faker` to the `gatsby-config.js` as follows

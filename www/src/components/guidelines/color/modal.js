@@ -9,7 +9,7 @@ import {
   a11y,
 } from "../../../utils/guidelines/color"
 import { focusStyle } from "../../../utils/styles"
-import theme from "../../../utils/guidelines/theme"
+import { colors as themeColors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const Column = styled(Flex)()
 
@@ -81,7 +81,7 @@ const AAADescription = () => (
 // Renders either white or black text samples
 const TextSamples = ({ contrast, bg, colorName }) => {
   const inverted = contrast.blackOnColor < contrast.whiteOnColor
-  const colors = inverted ? theme.colors.whiteFade : theme.colors.blackFade
+  const colors = inverted ? themeColors.whiteFade : themeColors.blackFade
 
   return (
     <>
@@ -142,7 +142,7 @@ const modalContent = (palette, color) => {
           <Column bg={c.hex} color={textColor}>
             <Text
               as="span"
-              fontWeight={1}
+              fontWeight="bold"
               color={textColor}
               fontFamily="monospace"
               mb={4}
@@ -164,10 +164,17 @@ const modalContent = (palette, color) => {
             </Box>
           </Column>
           <Column bg="white">
-            <Text as="p" fontFamily="monospace" fontWeight={1} mr={3} mb={4}>
+            <Text
+              as="p"
+              color="grey.80"
+              fontFamily="monospace"
+              fontWeight="bold"
+              mr={3}
+              mb={4}
+            >
               colors.{color}[{colorNumber}] {c.name && c.name}
             </Text>
-            <Text as="span" fontWeight={0} ml="auto">
+            <Text as="span" color="grey.80" fontWeight="body" ml="auto">
               {c.contrast.colorOnWhite.toFixed(2)} /{` `}
               {getA11yLabel(c.a11y)}
             </Text>
@@ -190,12 +197,13 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
   return (
     <>
       <Flex alignItems="baseline" p={{ xxs: 6, md: 8 }}>
-        <Heading mr={4} mt={0}>
+        <Heading color="black" mr={4} mt={0}>
           {palette[color].name}
         </Heading>
         <CloseButton
           onClick={handleModalClose}
           aria-label={`Close “${palette[color].name}” modal`}
+          paddingBottom="6"
         >
           &times;
         </CloseButton>

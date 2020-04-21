@@ -1,8 +1,13 @@
 import fs from "fs"
 import path from "path"
 import sharp from "./safe-sharp"
-import { createContentDigest, cpuCoreCount } from "gatsby-core-utils"
-import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
+import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
+import {
+  defaultIcons,
+  doesIconExist,
+  addDigestToPath,
+  favicons,
+} from "./common"
 
 sharp.simd(true)
 
@@ -58,7 +63,7 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
 }
 
 exports.onPostBootstrap = async (
-  { reporter, parentSpan },
+  { reporter, parentSpan, basePath },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
@@ -68,7 +73,7 @@ exports.onPostBootstrap = async (
 
   let cache = new Map()
 
-  await makeManifest(cache, reporter, manifest)
+  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath })
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
@@ -84,26 +89,49 @@ exports.onPostBootstrap = async (
           cacheModeOverride = { cache_busting_mode: `name` }
         }
 
-        return makeManifest(
+        return makeManifest({
           cache,
           reporter,
-          {
+          pluginOptions: {
             ...manifest,
             ...locale,
             ...cacheModeOverride,
           },
-          true
-        )
+          shouldLocalize: true,
+          basePath,
+        })
       })
     )
   }
   activity.end()
 }
 
-const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
+/**
+ * The complete Triforce, or one or more components of the Triforce.
+ * @typedef {Object} makeManifestArgs
+ * @property {Object} cache - from gatsby-node api
+ * @property {Object} reporter - from gatsby-node api
+ * @property {Object} pluginOptions - from gatsby-node api/gatsby config
+ * @property {boolean?} shouldLocalize
+ * @property {string?} basePath - string of base path frpvided by gatsby node
+ */
+
+/**
+ * Build manifest
+ * @param {makeManifestArgs}
+ */
+const makeManifest = async ({
+  cache,
+  reporter,
+  pluginOptions,
+  shouldLocalize = false,
+  basePath = ``,
+}) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
     shouldLocalize && pluginOptions.lang ? `_${pluginOptions.lang}` : ``
+
+  const faviconIsEnabled = pluginOptions.include_favicon ?? true
 
   // Delete options we won't pass to the manifest.webmanifest.
   delete manifest.plugins
@@ -147,7 +175,9 @@ const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
   if (icon !== undefined) {
     // Check if the icon exists
     if (!doesIconExist(icon)) {
-      throw `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+      throw new Error(
+        `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+      )
     }
 
     const sharpIcon = sharp(icon)
@@ -169,31 +199,59 @@ const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
 
     const iconDigest = createContentDigest(fs.readFileSync(icon))
 
-    //if cacheBusting is being done via url query icons must be generated before cache busting runs
-    if (cacheMode === `query`) {
-      await Promise.all(
-        manifest.icons.map(dstIcon =>
-          checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+    /**
+     * Given an array of icon configs, generate the various output sizes from
+     * the source icon image.
+     */
+    async function processIconSet(iconSet) {
+      //if cacheBusting is being done via url query icons must be generated before cache busting runs
+      if (cacheMode === `query`) {
+        await Promise.all(
+          iconSet.map(dstIcon =>
+            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+          )
         )
-      )
+      }
+
+      if (cacheMode !== `none`) {
+        iconSet = iconSet.map(icon => {
+          let newIcon = { ...icon }
+          newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
+          return newIcon
+        })
+      }
+
+      //if file names are being modified by cacheBusting icons must be generated after cache busting runs
+      if (cacheMode !== `query`) {
+        await Promise.all(
+          iconSet.map(dstIcon =>
+            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+          )
+        )
+      }
+
+      return iconSet
     }
 
-    if (cacheMode !== `none`) {
-      manifest.icons = manifest.icons.map(icon => {
-        let newIcon = { ...icon }
-        newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
-        return newIcon
-      })
-    }
+    manifest.icons = await processIconSet(manifest.icons)
 
-    //if file names are being modified by cacheBusting icons must be generated after cache busting runs
-    if (cacheMode !== `query`) {
-      await Promise.all(
-        manifest.icons.map(dstIcon =>
-          checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
-        )
-      )
+    // If favicon is enabled, apply the same caching policy and generate
+    // the resized image(s)
+    if (faviconIsEnabled) {
+      await processIconSet(favicons)
     }
+  }
+
+  //Fix #18497 by prefixing paths
+  manifest.icons = manifest.icons.map(icon => {
+    return {
+      ...icon,
+      src: slash(path.join(basePath, icon.src)),
+    }
+  })
+
+  if (manifest.start_url) {
+    manifest.start_url = path.posix.join(basePath, manifest.start_url)
   }
 
   //Write manifest

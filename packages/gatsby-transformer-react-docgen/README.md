@@ -5,7 +5,7 @@ Parses inline component-documentation using
 
 ## Install
 
-```
+```shell
 npm install --save gatsby-transformer-react-docgen
 ```
 

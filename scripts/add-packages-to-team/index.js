@@ -44,5 +44,11 @@ getUnownedPackages({ user }).then(async ({ packages }) => {
   // packages.forEach(package => {
   //   fetch("https://www.npmjs.com/settings/gatsbyjs/teams/team/ink-team/access", <this need to be custom to your session & use the package here>);
   // })
-  console.log(JSON.stringify(packages.map(pkg => pkg.name), null, 2))
+  console.log(
+    JSON.stringify(
+      packages.map(pkg => pkg.name),
+      null,
+      2
+    )
+  )
 })

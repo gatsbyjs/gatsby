@@ -6,6 +6,7 @@ const {
   GraphQLInputObjectType,
   GraphQLList,
 } = require(`graphql`)
+const { addDerivedType } = require(`./derived-types`)
 
 const SORTABLE_ENUM = {
   SORTABLE: `SORTABLE`,
@@ -23,9 +24,12 @@ const getSortOrderEnum = ({ schemaComposer }) =>
 
 const getFieldsEnum = ({ schemaComposer, typeComposer, inputTypeComposer }) => {
   const typeName = typeComposer.getTypeName()
+  const fieldsEnumTypeName = `${typeName}FieldsEnum`
   const fieldsEnumTypeComposer = schemaComposer.getOrCreateETC(
-    `${typeName}FieldsEnum`
+    fieldsEnumTypeName
   )
+  addDerivedType({ typeComposer, derivedTypeName: fieldsEnumTypeName })
+
   const fields = convert(
     schemaComposer,
     typeComposer,
@@ -46,7 +50,10 @@ const getSortInput = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName()
   // console.log(fieldsEnumTC.getType().getValues())
 
-  return schemaComposer.getOrCreateITC(`${typeName}SortInput`, itc => {
+  const sortInputTypeName = `${typeName}SortInput`
+  addDerivedType({ typeComposer, derivedTypeName: sortInputTypeName })
+
+  return schemaComposer.getOrCreateITC(sortInputTypeName, itc => {
     itc.addFields({
       fields: [fieldsEnumTC],
       order: { type: [sortOrderEnumTC], defaultValue: [`ASC`] },

@@ -1,15 +1,12 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
-import { mediaQueries, space, sizes } from "../utils/presets"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-import Layout from "../components/layout"
-import {
-  itemListDocs,
-  itemListTutorial,
-  itemListContributing,
-} from "../utils/sidebar/item-list"
+import PageWithSidebar from "../components/page-with-sidebar"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 import TableOfContents from "../components/docs-table-of-contents"
@@ -24,149 +21,135 @@ const containerStyles = {
   // of whitespace in between main content and TOC
   //
   // could be much cleaner/clearer, please feel free to improve 🙏
-  maxWidth: `calc(${sizes.mainContentWidth.withSidebar} + ${sizes.tocWidth} + ${
-    space[9]
-  } + ${space[9]} + ${space[9]})`,
-  paddingLeft: space[9],
-  paddingRight: space[9],
-}
-
-const getDocsData = location => {
-  const [urlSegment] = location.pathname.split(`/`).slice(1)
-  const itemListLookup = {
-    docs: itemListDocs,
-    contributing: itemListContributing,
-    tutorial: itemListTutorial,
-  }
-
-  return [urlSegment, itemListLookup[urlSegment]]
+  maxWidth: t =>
+    `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${t.space[9]} + ${t.space[9]} + ${t.space[9]})`,
+  px: 9,
 }
 
 function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const page = data.mdx
-  const [urlSegment, itemList] = getDocsData(location)
+  const [urlSegment] = page.fields.slug.split(`/`).slice(1)
   const toc =
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
+  const description = page.frontmatter.description || page.excerpt
+
   return (
-    <>
+    <PageWithSidebar
+      location={location}
+      enableScrollSync={urlSegment === "tutorial"}
+    >
       <Helmet>
         <title>{page.frontmatter.title}</title>
-        <meta name="description" content={page.excerpt} />
-        <meta property="og:description" content={page.excerpt} />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
         <meta property="og:title" content={page.frontmatter.title} />
         <meta property="og:type" content="article" />
-        <meta name="twitter:description" content={page.excerpt} />
+        <meta name="twitter:description" content={description} />
         <meta name="twitter.label1" content="Reading time" />
         <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
       </Helmet>
-      <Layout
-        location={location}
-        itemList={itemList}
-        enableScrollSync={urlSegment === `docs` ? false : true}
-      >
-        <DocSearchContent>
-          <Container
-            overrideCSS={{
-              paddingBottom: 0,
-              [mediaQueries.lg]: {
-                paddingTop: space[9],
-              },
-              [toc && mediaQueries.xl]: {
-                ...containerStyles,
-              },
-            }}
-          >
-            <Breadcrumb location={location} itemList={itemList} />
-            <h1 id={page.fields.anchor} css={{ marginTop: 0 }}>
-              {page.frontmatter.title}
-            </h1>
-          </Container>
-          <Container
-            overrideCSS={{
-              paddingTop: 0,
-              position: `static`,
-              [mediaQueries.lg]: {
-                paddingBottom: space[9],
-              },
-              [toc && mediaQueries.xl]: {
-                ...containerStyles,
-                display: `flex`,
-                alignItems: `flex-start`,
-              },
-            }}
-          >
-            {toc && (
-              <div
-                css={{
-                  order: 2,
-                  [mediaQueries.xl]: {
-                    marginLeft: space[9],
-                    maxWidth: sizes.tocWidth,
-                    position: `sticky`,
-                    top: `calc(${sizes.headerHeight} + ${
-                      sizes.bannerHeight
-                    } + ${space[9]})`,
-                    maxHeight: `calc(100vh - ${sizes.headerHeight} - ${
-                      sizes.bannerHeight
-                    } - ${space[9]} - ${space[9]})`,
-                    overflow: `auto`,
-                  },
-                }}
-              >
-                <TableOfContents location={location} page={page} />
-              </div>
-            )}
+      <DocSearchContent>
+        <Container
+          overrideCSS={{
+            pb: 0,
+            [mediaQueries.lg]: {
+              pt: 9,
+            },
+            [toc && mediaQueries.xl]: {
+              ...containerStyles,
+            },
+          }}
+        >
+          <Breadcrumb location={location} />
+          <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
+            {page.frontmatter.title}
+          </h1>
+        </Container>
+        <Container
+          overrideCSS={{
+            pt: 0,
+            position: `static`,
+            [mediaQueries.lg]: {
+              pb: 9,
+            },
+            [toc && mediaQueries.xl]: {
+              ...containerStyles,
+              display: `flex`,
+              alignItems: `flex-start`,
+            },
+          }}
+        >
+          {toc && (
             <div
-              css={{
-                [toc && mediaQueries.xl]: {
-                  maxWidth: sizes.mainContentWidth.withSidebar,
-                  minWidth: 0,
+              sx={{
+                order: 2,
+                [mediaQueries.xl]: {
+                  ml: 9,
+                  maxWidth: `tocWidth`,
+                  position: `sticky`,
+                  top: t =>
+                    `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + ${t.space[9]})`,
+                  maxHeight: t =>
+                    `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${t.space[9]} - ${t.space[9]})`,
+                  overflow: `auto`,
                 },
               }}
             >
-              <div>
-                <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
-                {page.frontmatter.issue && (
-                  <a
-                    href={page.frontmatter.issue}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    See the issue relating to this stub on GitHub
-                  </a>
-                )}
-                <PrevAndNext
-                  css={{ marginTop: space[9] }}
-                  prev={prev}
-                  next={next}
-                />
-                <MarkdownPageFooter page={page} />
-              </div>
+              <TableOfContents
+                items={toc}
+                location={location}
+                depth={page.frontmatter.tableOfContentsDepth}
+              />
             </div>
-          </Container>
-        </DocSearchContent>
-        <FooterLinks />
-      </Layout>
-    </>
+          )}
+          <div
+            sx={{
+              [page.tableOfContents.items && mediaQueries.xl]: {
+                maxWidth: `mainContentWidth.withSidebar`,
+                minWidth: 0,
+              },
+            }}
+          >
+            <div>
+              <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
+              {page.frontmatter.issue && (
+                <a
+                  href={page.frontmatter.issue}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See the issue relating to this stub on GitHub
+                </a>
+              )}
+              <MarkdownPageFooter page={page} />
+              <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
+            </div>
+          </div>
+        </Container>
+      </DocSearchContent>
+      <FooterLinks />
+    </PageWithSidebar>
   )
 }
 
 export default DocsTemplate
 
 export const pageQuery = graphql`
-  query($path: String!) {
-    mdx(fields: { slug: { eq: $path } }) {
+  query($slug: String!, $locale: String!) {
+    mdx(fields: { slug: { eq: $slug }, locale: { eq: $locale } }) {
       body
       excerpt
       timeToRead
       tableOfContents
       fields {
         slug
+        locale
         anchor
       }
       frontmatter {
         title
+        description
         overview
         issue
         disableTableOfContents

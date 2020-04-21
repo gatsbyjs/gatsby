@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
@@ -7,8 +7,8 @@ const glob = require(`glob`)
 const { warnOnIncompatiblePeerDependency } = require(`./validate`)
 const { store } = require(`../../redux`)
 const existsSync = require(`fs-exists-cached`).sync
-const createNodeId = require(`../../utils/create-node-id`)
-const createRequireFromPath = require(`../../utils/create-require-from-path`)
+import { createNodeId } from "../../utils/create-node-id"
+const { createRequireFromPath } = require(`gatsby-core-utils`)
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
@@ -22,7 +22,7 @@ function createFileContentHash(root, globPattern) {
 }
 
 /**
- * Make sure key is unique to plugin options. E.g there could
+ * Make sure key is unique to plugin options. E.g. there could
  * be multiple source-filesystem plugins, with different names
  * (docs, blogs).
  * @param {*} name Name of the plugin
@@ -88,7 +88,18 @@ function resolvePlugin(pluginName, rootDir) {
       rootDir !== null
         ? createRequireFromPath(`${rootDir}/:internal:`)
         : require
-    const resolvedPath = slash(path.dirname(requireSource.resolve(pluginName)))
+
+    // If the path is absolute, resolve the directory of the internal plugin,
+    // otherwise resolve the directory containing the package.json
+    const resolvedPath = slash(
+      path.dirname(
+        requireSource.resolve(
+          path.isAbsolute(pluginName)
+            ? pluginName
+            : `${pluginName}/package.json`
+        )
+      )
+    )
 
     const packageJSON = JSON.parse(
       fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
@@ -108,7 +119,7 @@ function resolvePlugin(pluginName, rootDir) {
   }
 }
 
-module.exports = (config = {}, rootDir = null) => {
+const loadPlugins = (config = {}, rootDir = null) => {
   // Instantiate plugins.
   const plugins = []
 
@@ -223,7 +234,8 @@ module.exports = (config = {}, rootDir = null) => {
     const pageCreatorPlugin = config.plugins.find(
       plugin =>
         plugin.resolve === `gatsby-plugin-page-creator` &&
-        plugin.options.path === slash(path.join(program.directory, `src/pages`))
+        slash(plugin.options.path || ``) ===
+          slash(path.join(program.directory, `src/pages`))
     )
     if (pageCreatorPlugin) {
       // override the options if there are any user specified options
@@ -239,4 +251,9 @@ module.exports = (config = {}, rootDir = null) => {
   )
 
   return plugins
+}
+
+module.exports = {
+  loadPlugins,
+  resolvePlugin,
 }

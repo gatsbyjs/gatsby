@@ -1,5 +1,4 @@
-export default {
-  xxs: 0, // needed for styled-system
+const b = {
   xs: `400px`,
   sm: `550px`,
   md: `750px`,
@@ -7,3 +6,12 @@ export default {
   xl: `1200px`,
   xxl: `1600px`,
 }
+
+export const breakpoints = b
+
+const bp = []
+for (const b in breakpoints) {
+  bp.push(breakpoints[b])
+}
+
+export const breakpointsArray = bp

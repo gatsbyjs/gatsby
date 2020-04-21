@@ -1,14 +1,15 @@
-module.exports = (
-  state = {
+const initialState = () => {
+  return {
     composer: null,
     context: {},
     fieldExtensions: {},
     printConfig: null,
     thirdPartySchemas: [],
     types: [],
-  },
-  action
-) => {
+  }
+}
+
+module.exports = (state = initialState(), action) => {
   switch (action.type) {
     case `ADD_THIRD_PARTY_SCHEMA`:
       return {
@@ -69,15 +70,13 @@ module.exports = (
         context: { ...state.context, ...context },
       }
     }
-    case `DELETE_CACHE`:
+    case `CLEAR_SCHEMA_CUSTOMIZATION`:
       return {
-        composer: null,
-        context: {},
-        fieldExtensions: {},
-        printConfig: null,
-        thirdPartySchemas: [],
-        types: [],
+        ...initialState(),
+        composer: state.composer,
       }
+    case `DELETE_CACHE`:
+      return initialState()
     default:
       return state
   }

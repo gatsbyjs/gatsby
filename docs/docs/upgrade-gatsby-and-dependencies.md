@@ -6,7 +6,7 @@ To keep up with the latest bug fixes, security patches, and minor releases from 
 
 ## Semantic versioning
 
-As many other packages, Gatsby uses [semantic versioning](https://semver.org/) to tag new versions and indicate what kind of changes are introduced in every new release.
+Like many other packages, Gatsby uses [semantic versioning](https://semver.org/) to tag new versions and indicate what kind of changes are introduced in every new release.
 
 This guide is meant to teach you how to upgrade Gatsby for minor or patch releases. For major changes you can refer to the [Release and Migrations](/docs/releases-and-migration/) reference guide overview for the corresponding guide to upgrade.
 
@@ -26,7 +26,7 @@ npm outdated
 
 This will output a table indicating which packages have new versions available and what is the latest version for each one.
 
-```
+```shell
 Package                            Current   Wanted   Latest  Location
 gatsby                             2.15.13  2.15.13  2.15.20
 ```
@@ -99,7 +99,7 @@ Then add the corresponding script to your package.json file:
 }
 ```
 
-And finally run the recently added command:
+And finally, run the recently added command:
 
 ```shell
 npm run upgrade-interactive

@@ -21,8 +21,11 @@ export interface GraphQLFieldExtensionDefinition {
   ): $Shape<ComposeFieldConfig>;
 }
 
+const inferExtensionName = `infer`
+const dontInferExtensionName = `dontInfer`
+
 const typeExtensions = {
-  infer: {
+  [inferExtensionName]: {
     description: `Infer field types from field values.`,
     args: {
       noDefaultResolvers: {
@@ -32,7 +35,7 @@ const typeExtensions = {
       },
     },
   },
-  dontInfer: {
+  [dontInferExtensionName]: {
     description: `Do not infer field types from field values.`,
     args: {
       noDefaultResolvers: {
@@ -240,4 +243,6 @@ module.exports = {
   internalExtensionNames,
   processFieldExtensions,
   reservedExtensionNames,
+  inferExtensionName,
+  dontInferExtensionName,
 }

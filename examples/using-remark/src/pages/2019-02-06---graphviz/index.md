@@ -141,7 +141,7 @@ digraph graphname {
 
   ## Source Nodes
 
-  dataSource [ label = "data sources. e.g file, contentful", shape = cylinder, fillcolor = gray ];
+  dataSource [ label = "data sources. e.g. file, contentful", shape = cylinder, fillcolor = gray ];
   sourceNodes [ label = "source nodes" URL = "/docs/node-creation/" ];
   nodes [ label = "nodes", shape = box, fillcolor = skyblue, URL = "/docs/node-creation/" ];
   nodesTouched [ label = "touchedNodes", shape = box, fillcolor = skyblue, URL = "/docs/node-creation/#freshstale-nodes" ];
@@ -288,7 +288,7 @@ digraph graphname {
 
   ## Source Nodes
 
-  dataSource [ label = "data sources. e.g file, contentful", shape = cylinder, fillcolor = gray ];
+  dataSource [ label = "data sources. e.g. file, contentful", shape = cylinder, fillcolor = gray ];
   sourceNodes [ label = "source nodes" URL = "/docs/node-creation/" ];
   nodes [ label = "nodes", shape = box, fillcolor = skyblue, URL = "/docs/node-creation/" ];
   nodesTouched [ label = "touchedNodes", shape = box, fillcolor = skyblue, URL = "/docs/node-creation/#freshstale-nodes" ];

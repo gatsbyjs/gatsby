@@ -249,4 +249,35 @@ describe(`gatsby-source-drupal`, () => {
       })
     })
   })
+
+  it(`Control disallowed link types`, async () => {
+    // Reset nodes and test new disallowed link type.
+    Object.keys(nodes).forEach(key => delete nodes[key])
+    const disallowedLinkTypes = [`self`, `describedby`, `taxonomy_term--tags`]
+    await sourceNodes(args, { baseUrl, disallowedLinkTypes })
+    expect(Object.keys(nodes).length).not.toEqual(0)
+    expect(nodes[createNodeId(`file-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`file-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`tag-1`)]).toBeUndefined()
+    expect(nodes[createNodeId(`tag-2`)]).toBeUndefined()
+    expect(nodes[createNodeId(`article-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`article-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`article-3`)]).toBeDefined()
+  })
+
+  it(`Verify JSON:API includes relationships`, async () => {
+    // Reset nodes and test includes relationships.
+    Object.keys(nodes).forEach(key => delete nodes[key])
+    const disallowedLinkTypes = [`self`, `describedby`, `taxonomy_term--tags`]
+    const filters = {
+      "node--article": `include=field_tags`,
+    }
+    const apiBase = `jsonapi-includes`
+    await sourceNodes(args, { baseUrl, apiBase, disallowedLinkTypes, filters })
+    expect(Object.keys(nodes).length).not.toEqual(0)
+    expect(nodes[createNodeId(`tag-1`)]).toBeUndefined()
+    expect(nodes[createNodeId(`tag-2`)]).toBeUndefined()
+    expect(nodes[createNodeId(`tag-3`)]).toBeDefined()
+    expect(nodes[createNodeId(`article-5`)]).toBeDefined()
+  })
 })

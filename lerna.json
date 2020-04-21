@@ -10,7 +10,7 @@
       "message": "chore(release): Publish"
     }
   },
-  "packages": ["packages/*", "/gatsby-theme-*"],
+  "packages": ["packages/*"],
   "loglevel": "success",
   "version": "independent",
   "npmClient": "yarn",

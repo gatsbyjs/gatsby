@@ -1,24 +1,16 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { Global } from "@emotion/core"
-import { ThemeProvider } from "emotion-theming"
 
-import theme from "../../utils/guidelines/theme"
-
+import { globalStyles } from "../../utils/styles/global"
 import { Box } from "./system"
 import Header from "./header"
-import AnotherHeader from "../navigation"
-import Banner from "../banner"
 import Footer from "../shared/footer-links"
 
-import { sizes } from "../../utils/presets"
-
-// Import Futura PT typeface
-import "../../assets/fonts/futura"
-
-const Layout = ({ children, background, pathname, pageTitle }) => (
-  <ThemeProvider theme={theme}>
+const Layout = ({ children, background, pageTitle }) => (
+  <Box bg="background" position="relative">
     <Global
       styles={{
         ".ReactModal__Overlay": {
@@ -36,34 +28,17 @@ const Layout = ({ children, background, pathname, pageTitle }) => (
         },
       }}
     />
+    <Global styles={globalStyles} />
     <Helmet>
-      <title>
-        {pageTitle ? `${pageTitle} | Guidelines | GatsbyJS` : `GatsbyJS`}
-      </title>
-      <meta name="twitter:site" content="@gatsbyjs" />
-      <meta name="og:type" content="website" />
-      <meta name="og:site_name" content="GatsbyJS" />
-      <link rel="canonical" href={`https://gatsbyjs.org${pathname}`} />
-      <html lang="en" />
+      <title>{pageTitle ? `${pageTitle} | Guidelines` : `Guidelines`}</title>
     </Helmet>
-    <Banner />
-    <AnotherHeader pathname={pathname} />
-    <Box
-      bg="white"
-      position="relative"
-      pt={{
-        xxs: sizes.bannerHeight,
-        sm: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
-      }}
-    >
-      {background && background}
-      <Header />
-      <Box as="main" className="main-body">
-        {children}
-        <Footer />
-      </Box>
+    {background && background}
+    <Header />
+    <Box as="main" className="main-body">
+      {children}
+      <Footer />
     </Box>
-  </ThemeProvider>
+  </Box>
 )
 
 Layout.propTypes = {

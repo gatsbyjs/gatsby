@@ -13,11 +13,11 @@ canonicalLink: https://www.thirdandgrove.com/building-new-site-with-drupal-and-g
 
 This rebrand/replatform is a big leap forward for our brand, marking a milestone in who we want to be as a company. In this article, I’m going to focus on the tech behind the screen that makes it all happen.
 
-## Why use a modern front end?
+## Why use a modern frontend?
 
-We’re a Drupal agency through and through. But since we saw the promise of front end tech like React, we’ve better equipped our team with people who can build modern digital experiences for our clients (including people like me!) Building our own site with a modern front end is foremost a way for us to eat our own dog food (good news is that we’re still really enjoying eating it).
+We’re a Drupal agency through and through. But since we saw the promise of frontend tech like React, we’ve better equipped our team with people who can build modern digital experiences for our clients (including people like me!) Building our own site with a modern frontend is foremost a way for us to eat our own dog food (good news is that we’re still really enjoying eating it).
 
-There are several reasons to modernize from an aging front end but these stick out to us.
+There are several reasons to modernize from an aging frontend but these stick out to us.
 
 1. **User Experience.** It’s possible to create an amazing user experience with dated technology (we’ve done it many a time). BUT it’s easier, cheaper, and faster to do with a modern set of solutions.
 2. **Developer Velocity.** Leveraging Gatsby has improved the code quality and tooling. So development, while faster, can produce code that is more testable, has less duplication and is of higher quality. It also reduces the overhead for developers to know HTML, CSS, JavaScript, and PHP. This last part wasn’t of huge importance to us but for this can make a world of difference to our clients that don’t have as wide a skillset on their team.
@@ -56,6 +56,6 @@ In our new site, we have content coming from multiple sources. Each source might
 
 ## More like TAGV5.1
 
-The beauty of building React projects is that they are highly flexible. This flexibility allows us to construct this front end in a way that it can grow with us. So instead of having to rebuild everything when we want a new look, we can change some of our wrapper components out, or add a new data source if we start a swag store. This gives us a layer of abstraction that is useful in the real world. Our data/content is separate from our views, and our views are abstracted from their structure. This is powerful for many reasons, foremost being that, instead of building a single entity that is our site, we are building modular pieces that when combined become an awesome thing, like a Megazord, or Captain Planet. This mentality of modular code isn't new and isn't unique to React. However, the JavaScript ecosystem and React in particular have taken this approach to heart. Gatsby takes it a step further with their plugin model. For example, adding a sitemap is as easy as adding a plugin. Once the plugin is installed it’s just another task added into the Gatsby build process using information that is already available.
+The beauty of building React projects is that they are highly flexible. This flexibility allows us to construct this frontend in a way that it can grow with us. So instead of having to rebuild everything when we want a new look, we can change some of our wrapper components out, or add a new data source if we start a swag store. This gives us a layer of abstraction that is useful in the real world. Our data/content is separate from our views, and our views are abstracted from their structure. This is powerful for many reasons, foremost being that, instead of building a single entity that is our site, we are building modular pieces that when combined become an awesome thing, like a Megazord, or Captain Planet. This mentality of modular code isn't new and isn't unique to React. However, the JavaScript ecosystem and React in particular have taken this approach to heart. Gatsby takes it a step further with their plugin model. For example, adding a sitemap is as easy as adding a plugin. Once the plugin is installed it’s just another task added into the Gatsby build process using information that is already available.
 
 With this modular approach, we can add, refactor, and redesign at will. The TAG website is now a living breathing internet creature more than ever before. Now on to TAGV5.2.

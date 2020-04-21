@@ -27,7 +27,7 @@ export const onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV !== `production`) {
+  if (process.env.NODE_ENV !== `production` || !pluginOptions.trackingId) {
     return null
   }
 

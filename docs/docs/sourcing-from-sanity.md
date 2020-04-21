@@ -4,7 +4,7 @@ title: Sourcing from Sanity
 
 ## What is Sanity.io?
 
-[Sanity](https:///www.sanity.io) is a hosted backend for structured content that comes with an open source editor built in React. It has powerful real-time APIs for both reading and writing data.
+[Sanity](https://www.sanity.io) is a hosted backend for structured content that comes with an open source editor built in React. It has powerful real-time APIs for both reading and writing data.
 
 You can use Sanity as a headless CMS that lets your authors work in a user friendly environment, or as a pure data backend for your apps. We make it easier for you to reuse content across multiple websites, apps, print, voice assistants, and other channels.
 
@@ -230,13 +230,13 @@ You can install [block-content-to-react](https://www.npmjs.com/package/@sanity/b
 
 If you don't want to attach your Sanity project's ID to the repo, you can easily store it in .env files by doing the following:
 
-```js
-// In your .env file
+```text:title=.env
 SANITY_PROJECT_ID = abc123
 SANITY_DATASET = production
 SANITY_TOKEN = my-super-secret-token
+```
 
-// In your gatsby-config.js file
+```js:title=gatsby-config.js
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`
 })

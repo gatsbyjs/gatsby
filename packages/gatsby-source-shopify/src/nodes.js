@@ -12,6 +12,7 @@ import {
   PRODUCT_OPTION,
   PRODUCT_VARIANT,
   PRODUCT_METAFIELD,
+  PRODUCT_VARIANT_METAFIELD,
   SHOP_POLICY,
   PAGE,
 } from "./constants"
@@ -22,7 +23,7 @@ const { createNodeFactory, generateNodeId } = createNodeHelpers({
 
 const downloadImageAndCreateFileNode = async (
   { url, nodeId },
-  { createNode, createNodeId, touchNode, store, cache, reporter }
+  { createNode, createNodeId, touchNode, store, cache, getCache, reporter }
 ) => {
   let fileNodeID
 
@@ -41,6 +42,7 @@ const downloadImageAndCreateFileNode = async (
     cache,
     createNode,
     createNodeId,
+    getCache,
     parentNodeId: nodeId,
     reporter,
   })
@@ -146,6 +148,15 @@ export const ProductOptionNode = _imageArgs => createNodeFactory(PRODUCT_OPTION)
 
 export const ProductVariantNode = imageArgs =>
   createNodeFactory(PRODUCT_VARIANT, async node => {
+    if (node.metafields) {
+      const metafields = node.metafields.edges.map(edge => edge.node)
+
+      node.metafields___NODE = metafields.map(metafield =>
+        generateNodeId(PRODUCT_VARIANT_METAFIELD, metafield.id)
+      )
+      delete node.metafields
+    }
+
     if (node.image)
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
         {
@@ -157,6 +168,9 @@ export const ProductVariantNode = imageArgs =>
 
     return node
   })
+
+export const ProductVariantMetafieldNode = _imageArgs =>
+  createNodeFactory(PRODUCT_VARIANT_METAFIELD)
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
 

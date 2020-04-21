@@ -46,7 +46,7 @@ async function runTest() {
 
   for (let i = 0; i < rounds; i++) {
     // process.stdout.write(`Round ${i + 1}: `)
-    await executeBootstrap(i)
+    await executeBootstrap()
   }
 
   let averageSum = [0, 0]
@@ -67,9 +67,10 @@ async function runTest() {
   )
 
   console.info(
-    `\nRange execution time (hr): ${(Math.max(...results.nanoseconds) -
-      Math.min(...results.nanoseconds)) /
-      1000000}ms`
+    `\nRange execution time (hr): ${
+      (Math.max(...results.nanoseconds) - Math.min(...results.nanoseconds)) /
+      1000000
+    }ms`
   )
 }
 

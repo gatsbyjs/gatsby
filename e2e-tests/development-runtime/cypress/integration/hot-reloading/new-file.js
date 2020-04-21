@@ -1,6 +1,10 @@
 describe(`hot reloading new page component`, () => {
   before(() => {
     cy.exec(`npm run update -- --file src/pages/sample.js`)
+    // TO-DO remove `wait` below and fix this properly in core,
+    // we shouldn't have to wait here and core
+    // should be smart enough to recover on it's own.
+    cy.wait(1000)
   })
 
   beforeEach(() => {
@@ -10,9 +14,7 @@ describe(`hot reloading new page component`, () => {
   it(`can navigate to new page`, () => {
     cy.visit(`/sample`).waitForRouteChange()
 
-    cy.getTestElement(`message`)
-      .invoke(`text`)
-      .should(`contain`, `Hello`)
+    cy.getTestElement(`message`).invoke(`text`).should(`contain`, `Hello`)
   })
 
   it(`can hot reload a new page file`, () => {
@@ -23,8 +25,6 @@ describe(`hot reloading new page component`, () => {
 
     cy.visit(`/sample`).waitForRouteChange()
 
-    cy.getTestElement(`message`)
-      .invoke(`text`)
-      .should(`eq`, `Hello ${text}`)
+    cy.getTestElement(`message`).invoke(`text`).should(`eq`, `Hello ${text}`)
   })
 })

@@ -2,8 +2,6 @@ import React from "react"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
 
-import { colors, fontSizes, space } from "../../utils/presets"
-
 const animA = keyframes`
   from  {
     transform: translate3d(0,0,0);
@@ -48,12 +46,12 @@ const animC = keyframes`
 
 const IconWrapper = styled(`span`)`
   display: block;
-  height: ${space[9]};
+  height: ${p => p.theme.space[9]};
   transition: 0.5s;
-  width: ${space[9]};
+  width: ${p => p.theme.space[9]};
 
   svg {
-    color: ${colors.lilac};
+    color: ${p => p.theme.colors.grey[40]};
     height: 100%;
     width: 100%;
   }
@@ -61,16 +59,16 @@ const IconWrapper = styled(`span`)`
 
 const RatingText = styled(`span`)`
   display: block;
-  font-size: ${fontSizes[0]};
+  font-size: ${p => p.theme.fontSizes[0]};
   font-weight: bold;
   transition: 0.5s;
   line-height: 1;
-  margin-top: ${space[1]};
+  margin-top: ${p => p.theme.space[1]};
 `
 
 const Label = styled(`label`)`
   align-items: center;
-  background: ${colors.white};
+  background: ${p => p.theme.colors.themedInput.background};
   cursor: pointer;
   display: flex;
   flex-basis: 33.33%;
@@ -81,12 +79,12 @@ const Label = styled(`label`)`
   transition: background 0.25s;
 
   &.focused {
-    background: ${colors.lilac};
-    color: ${colors.white};
+    background: ${p => p.theme.colors.gatsby};
+    color: ${p => p.theme.colors.white};
 
     ${IconWrapper} {
       svg {
-        color: ${colors.orange[40]};
+        color: ${p => p.theme.colors.white};
       }
     }
   }

@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 32" focusable="false">
-  <circle class="svg-fill-brightest" cx="15.4" cy="19.2" r="6.8"/>
-  <path fill="#fff" class="svg-stroke svg-stroke-accent" d="M25.3 21.5h-7.6l3.8-6.7 3.8-6.6 3.9 6.6 3.8 6.7z"/>
-  <path class="svg-fill-lilac" d="M15.5 13.4c3.4 0 6.1 2.7 6.1 6.1s-2.7 6.1-6.1 6.1-6.1-2.7-6.1-6.1 2.7-6.1 6.1-6.1m0-1.4C11.4 12 8 15.4 8 19.5s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5-3.4-7.5-7.5-7.5z"/>
-  <path class="svg-fill-gradient-accent-white-top" d="M3.7 6.7h10.6v10.6H3.7z"/>
-  <path class="svg-fill-gatsby" d="M13.6 7.4v9.2H4.4V7.4h9.2M15 6H3v12h12V6z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" focusable="false">
+  <path class="svg-stroke svg-stroke-dark svg-fill-light" d="M22.8 22h-7.6l3.8-6.7 3.8-6.6 3.9 6.6 3.8 6.7h-7.7z"/>
+  <circle class="svg-stroke svg-stroke-dark svg-fill-accent svg-fill-transparent" cx="13.25" cy="20.25" r="6.75"/>
+  <path class="svg-stroke svg-stroke-dark" fill="transparent" d="M1.75 7.75h10.5v10.5H1.75z"/>
 </svg>

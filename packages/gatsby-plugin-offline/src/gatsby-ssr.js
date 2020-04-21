@@ -30,12 +30,10 @@ export const onRenderBody = ({ pathname, setHeadComponents }) => {
 
   setHeadComponents([
     <noscript key="disable-offline-shell">
-      <link
-        rel="preload"
-        as="fetch"
-        href="/.gatsby-plugin-offline:disableOfflineShell"
+      <meta
+        httpEquiv="refresh"
+        content="0;url=/.gatsby-plugin-offline:api=disableOfflineShell&redirect=true"
       />
-      <meta httpEquiv="refresh" content="0;url=" />
     </noscript>,
   ])
 }

@@ -14,7 +14,7 @@ title: Importing Media Content
 
 ## Video assets
 
-Like images, video assets present many options and requirements for cross-browser support. Learn about video embeds on the Gatsby docs page on [working with video](/docs/working-with-video/).
+Like images, video assets present many options and requirements for cross-browser support. Learn about video embeds on the Gatsby docs page on [working with video](/docs/working-with-video/) section.
 
 ## Canvas and WebGL
 

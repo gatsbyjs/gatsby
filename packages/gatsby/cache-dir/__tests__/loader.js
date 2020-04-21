@@ -6,9 +6,23 @@ import emitter from "../emitter"
 jest.mock(`../emitter`)
 
 describe(`Production loader`, () => {
+  let originalBasePath
+  let originalPathPrefix
+
+  beforeEach(() => {
+    originalBasePath = global.__BASE_PATH__
+    originalPathPrefix = global.__PATH_PREFIX__
+    global.__BASE_PATH__ = ``
+    global.__PATH_PREFIX__ = ``
+  })
+
+  // put the real XHR object back and clear the mocks after each test
+  afterEach(() => {
+    global.__BASE_PATH__ = originalBasePath
+    global.__PATH_PREFIX__ = originalPathPrefix
+  })
+
   describe(`loadPageDataJson`, () => {
-    let originalBasePath
-    let originalPathPrefix
     let xhrCount
 
     /**
@@ -36,23 +50,16 @@ describe(`Production loader`, () => {
 
     const defaultPayload = {
       path: `/mypage/`,
-      webpackCompilationHash: `1234`,
     }
 
     // replace the real XHR object with the mock XHR object before each test
     beforeEach(() => {
-      originalBasePath = global.__BASE_PATH__
-      originalPathPrefix = global.__PATH_PREFIX__
-      global.__BASE_PATH__ = ``
-      global.__PATH_PREFIX__ = ``
       xhrCount = 0
       mock.setup()
     })
 
     // put the real XHR object back and clear the mocks after each test
     afterEach(() => {
-      global.__BASE_PATH__ = originalBasePath
-      global.__PATH_PREFIX__ = originalPathPrefix
       mock.teardown()
     })
 
@@ -169,7 +176,7 @@ describe(`Production loader`, () => {
       mockPageData(`/404.html`, 404)
 
       const expectation = {
-        status: `failure`,
+        status: `error`,
         pagePath: `/404.html`,
         notFound: true,
       }
@@ -217,7 +224,6 @@ describe(`Production loader`, () => {
       const prodLoader = new ProdLoader(null, [])
       const payload = {
         path: `/blocked-page/`,
-        webpackCompilationHash: `1234`,
       }
 
       let xhrCount = 0
@@ -261,7 +267,24 @@ describe(`Production loader`, () => {
       }
     }
 
-    beforeEach(() => emitter.emit.mockReset())
+    beforeEach(() => {
+      mock.setup()
+      mock.get(`/page-data/app-data.json`, (req, res) =>
+        res
+          .status(200)
+          .header(`content-type`, `application/json`)
+          .body(
+            JSON.stringify({
+              webpackCompilationHash: `123`,
+            })
+          )
+      )
+      emitter.emit.mockReset()
+    })
+
+    afterEach(() => {
+      mock.teardown()
+    })
 
     it(`should be successful when component can be loaded`, async () => {
       const asyncRequires = createAsyncRequires({
@@ -271,7 +294,6 @@ describe(`Production loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
-        webpackCompilationHash: `123`,
         result: {
           pageContext: `something something`,
         },
@@ -307,7 +329,6 @@ describe(`Production loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
-        webpackCompilationHash: `123`,
       }
       prodLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -335,7 +356,6 @@ describe(`Production loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
-        webpackCompilationHash: `123`,
       }
       prodLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -358,7 +378,6 @@ describe(`Production loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
-        webpackCompilationHash: `123`,
       }
       prodLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -372,22 +391,18 @@ describe(`Production loader`, () => {
       expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
-    it(`should throw an error when 404 cannot be fetched`, async () => {
+    it(`should return an error when 404 cannot be fetched`, async () => {
       const prodLoader = new ProdLoader(null, [])
 
       prodLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
-          status: `failure`,
+          status: `error`,
         })
       )
 
-      try {
-        await prodLoader.loadPage(`/404.html/`)
-      } catch (err) {
-        expect(err.message).toEqual(
-          expect.stringContaining(`404 page could not be found`)
-        )
-      }
+      expect(await prodLoader.loadPage(`/404.html/`)).toEqual({
+        status: `error`,
+      })
       expect(prodLoader.pageDb.size).toBe(0)
       expect(emitter.emit).toHaveBeenCalledTimes(0)
     })

@@ -1,15 +1,17 @@
 import React from "react"
 import { graphql } from "gatsby"
 
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import PackageReadme from "../components/package-readme"
 
 class DocsRemotePackagesTemplate extends React.Component {
   render() {
     const {
+      location,
       data: { npmPackage, markdownRemark },
     } = this.props
     return (
-      <>
+      <PageWithPluginSearchBar location={location}>
         <PackageReadme
           page={markdownRemark}
           packageName={npmPackage.name}
@@ -25,7 +27,7 @@ class DocsRemotePackagesTemplate extends React.Component {
           keywords={npmPackage.keywords}
           lastPublisher={npmPackage.lastPublisher}
         />
-      </>
+      </PageWithPluginSearchBar>
     )
   }
 }

@@ -18,4 +18,8 @@ netlifyIdentityWidget.on(`init`, user => {
   }
 })
 
-netlifyIdentityWidget.init()
+// Boot on next tick to prevent clashes with css injected into NetlifyCMS
+// preview pane.
+setImmediate(() => {
+  netlifyIdentityWidget.init()
+})

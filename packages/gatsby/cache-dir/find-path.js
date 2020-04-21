@@ -6,9 +6,9 @@ const pathCache = new Map()
 let matchPaths = []
 
 const trimPathname = rawPathname => {
-  let pathname = decodeURIComponent(rawPathname)
+  const pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
-  let trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
+  const trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
     // Remove any hashfragment
     .split(`#`)[0]
     // Remove search query
@@ -50,7 +50,7 @@ export const findMatchPath = rawPathname => {
 // `#` and query params), or if it matches an entry in
 // `match-paths.json`, its matched path is returned
 //
-// E.g `/foo?bar=far` => `/foo`
+// E.g. `/foo?bar=far` => `/foo`
 //
 // Or if `match-paths.json` contains `{ "/foo*": "/page1", ...}`, then
 // `/foo?bar=far` => `/page1`
@@ -74,7 +74,7 @@ export const findPath = rawPathname => {
 
 /**
  * Clean a url and converts /index.html => /
- * E.g `/foo?bar=far` => `/foo`
+ * E.g. `/foo?bar=far` => `/foo`
  *
  * @param {string} rawPathname A raw pathname
  * @return {string}

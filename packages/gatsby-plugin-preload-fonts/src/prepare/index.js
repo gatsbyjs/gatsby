@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
-const crypto = require(`crypto`)
+import { createContentDigest } from "gatsby-core-utils"
+
 const { URL } = require(`url`)
 
 const puppeteer = require(`puppeteer`)
@@ -35,6 +36,12 @@ export async function main() {
     cache,
     endpoint: endpoint(GRAPHQL_PATH),
   })
+
+  // When we haven't found any routes we don't do anything
+  // Routes can be empty when we're running in CI or the user didn't want to update
+  if (!routes.length) {
+    return
+  }
 
   const sections = [
     dim(` crawling routes`),
@@ -79,7 +86,6 @@ export async function main() {
     }
   })
 
-  const hash = crypto.createHash(`md5`)
   for (const route of routes) {
     // wait until there are no more than 2 network connections for 500ms
     // to allow for dynamically inserted <link> and <script> tags to load
@@ -90,7 +96,6 @@ export async function main() {
     // unfortunately, this increases the minimum load time per route to
     // ~500ms, which adds up quickly on large sites; there may be room
     // for optimization here
-    hash.update(route)
     logger.info(`visit`, route)
     await page.goto(endpoint(route), { waitUntil: `networkidle2` })
     bar.tick()
@@ -99,7 +104,7 @@ export async function main() {
   await browser.close()
   logger.resetAdapter()
 
-  cache.hash = hash.digest(`hex`)
+  cache.hash = createContentDigest(routes)
   cache.timestamp = Date.now()
   await save(cache)
 

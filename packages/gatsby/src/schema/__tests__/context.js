@@ -21,6 +21,12 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
   }
 })
 const report = require(`gatsby-cli/lib/reporter`)
@@ -94,7 +100,7 @@ describe(`Resolver context`, () => {
       expect(results).toEqual(expected)
     })
 
-    it(`custom resolver context is avalable in custom field extension`, async () => {
+    it(`custom resolver context is available in custom field extension`, async () => {
       dispatch(
         createResolverContext({
           hello(planet) {

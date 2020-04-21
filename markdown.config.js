@@ -9,6 +9,8 @@ module.exports = {
       const starters = fs
         .readdirSync(base)
         .filter(dir => fs.statSync(path.join(base, dir)).isDirectory())
+        // theme starters have their own README so skip those
+        .filter(dir => !dir.includes(`theme`))
         .reduce((merged, dir) => {
           merged[dir] = JSON.parse(
             fs.readFileSync(path.join(base, dir, `package.json`), `utf8`)

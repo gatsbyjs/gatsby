@@ -28,9 +28,9 @@ Sandy Springs came to [Mediacurrent](https://www.mediacurrent.com/?utm_source=ga
 
 ## Mediacurrent’s Solution
 
-A decoupled approach, where front end templating is separate from the content management system and database was required to achieve a unified system. Proven as a powerful decoupled CMS, Drupal replaced the city’s existing WordPress site.
+A decoupled approach, where frontend templating is separate from the content management system and database was required to achieve a unified system. Proven as a powerful decoupled CMS, Drupal replaced the city’s existing WordPress site.
 
-On the back end, a [Drupal 8](https://www.drupal.org/8) foundation manages content. On the front end, Gatsby presents content. With this approach, the Sandy Springs team can “create once, publish everywhere,” with a more efficient process for sharing information with the local community.
+On the back end, a [Drupal 8](https://www.drupal.org/8) foundation manages content. On the frontend, Gatsby presents content. With this approach, the Sandy Springs team can “create once, publish everywhere,” with a more efficient process for sharing information with the local community.
 
 ![Drupal-powered large scale digital signage in a cafe](./images/CitySprings2.jpg "City Spring's large scale digital signage")
 
@@ -45,7 +45,7 @@ In this [video presentation](https://www.youtube.com/watch?time_continue=3&v=Qio
 
 - **Stable**: With full control over the markup, the site build is fast.
 - **Scalable**: Gatsby makes it easier for the client to add additional sites in the future.
-- **Speedy**: Gatsby bakes in a lot of performance optimization for the front end, ultimately delivering a faster site.
+- **Speedy**: Gatsby bakes in a lot of performance optimization for the frontend, ultimately delivering a faster site.
 - **Hosting**: The Drupal site is never used by a non-editorial user, so fewer hosting resources are needed.
 
 ![Drupal-powered digital display kiosk promotes a theatre event](./images/CitySprings3.jpg "City Spring's digital signage kiosk")

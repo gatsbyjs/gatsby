@@ -1,19 +1,21 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
-import Layout from "../../components/layout"
+import FooterLinks from "../../components/shared/footer-links"
 import CreatorsHeader from "./creators-header"
 import Badge from "./badge"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import { navigate } from "gatsby"
-import { colors, space, mediaQueries, fontSizes } from "../../utils/presets"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import qs from "qs"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
-import sharedStyles from "../shared/styles"
+import { meta, shortcutIcon } from "../shared/styles"
 
 class CreatorsView extends Component {
   state = {
-    creators: this.props.data.allCreatorsYaml.edges,
+    creators: this.props.data.allCreatorsYaml.nodes,
     for_hire: false,
     hiring: false,
   }
@@ -26,13 +28,13 @@ class CreatorsView extends Component {
       const isFiltered = this.props.location.state.filter !== ``
       if (filterStateChanged && isNotFiltered) {
         this.setState({
-          creators: this.props.data.allCreatorsYaml.edges,
+          creators: this.props.data.allCreatorsYaml.nodes,
           [prevProps.location.state.filter]: false,
         })
       }
       if (filterStateChanged && isFiltered) {
         let items = this.state.creators.filter(
-          item => item.node[this.props.location.state.filter] === true
+          item => item[this.props.location.state.filter] === true
         )
         this.setState({
           creators: items,
@@ -47,7 +49,7 @@ class CreatorsView extends Component {
     const query = qs.parse(this.props.location.search.slice(1))
     if (query.filter) {
       let items = this.state.creators.filter(
-        item => item.node[query.filter] === true
+        item => item[query.filter] === true
       )
       this.setState({
         creators: items,
@@ -78,12 +80,12 @@ class CreatorsView extends Component {
     const applyFilter = filter => {
       if (this.state[filter] === true) {
         this.setState({
-          creators: data.allCreatorsYaml.edges,
+          creators: data.allCreatorsYaml.nodes,
           [filter]: false,
         })
         navigate(`${location.pathname}`, { state: { filter: `` } })
       } else {
-        let items = creators.filter(item => item.node[filter] === true)
+        let items = creators.filter(item => item[filter] === true)
         this.setState({
           creators: items,
           [filter]: true,
@@ -95,7 +97,7 @@ class CreatorsView extends Component {
     }
 
     return (
-      <Layout location={location}>
+      <>
         <Helmet>
           <title>{title}</title>
           <meta
@@ -111,11 +113,11 @@ class CreatorsView extends Component {
         />
         <main
           id={`reach-skip-nav`}
-          css={{
-            padding: space[6],
+          sx={{
+            p: 6,
             paddingBottom: `10vh`,
             [mediaQueries.md]: {
-              paddingBottom: space[6],
+              pb: 6,
             },
           }}
         >
@@ -130,47 +132,47 @@ class CreatorsView extends Component {
             }}
           >
             {creators.length < 1 ? (
-              <p css={{ color: colors.gatsby }}>No results</p>
+              <p sx={{ color: `gatsby` }}>No results</p>
             ) : (
-              creators.map(item => (
-                <div key={item.node.name} css={styles.creatorCard}>
+              creators.map(node => (
+                <div key={node.name} sx={styles.creatorCard}>
                   <ThumbnailLink
-                    slug={item.node.fields.slug}
-                    image={item.node.image}
-                    title={item.node.name}
+                    slug={node.fields.slug}
+                    image={node.image}
+                    title={node.name}
                   >
-                    <strong className="title">{item.node.name}</strong>
+                    <strong className="title">{node.name}</strong>
                   </ThumbnailLink>
-                  <div css={{ display: `flex`, ...sharedStyles.meta }}>
+                  <div sx={{ display: `flex`, ...meta }}>
                     <div
-                      css={{
-                        margin: `0 0 ${space[1]}`,
-                        color: colors.text.secondary,
+                      sx={{
+                        mb: 1,
+                        color: `textMuted`,
                       }}
                     >
-                      {item.node.location}
+                      {node.location}
                     </div>
-                    {item.node.github && (
+                    {node.github && (
                       <a
-                        css={{
-                          ...sharedStyles.shortcutIcon,
-                          marginLeft: `auto`,
+                        sx={{
+                          ...shortcutIcon,
+                          ml: `auto`,
                         }}
-                        href={item.node.github}
+                        href={node.github}
                       >
                         <GithubIcon style={{ verticalAlign: `text-top` }} />
                       </a>
                     )}
                   </div>
-                  {item.node.for_hire || item.node.hiring ? (
+                  {node.for_hire || node.hiring ? (
                     <div
-                      css={{
+                      sx={{
                         alignSelf: `flex-start`,
-                        fontSize: fontSizes[0],
+                        fontSize: 0,
                       }}
                     >
-                      <Badge forHire={item.node.for_hire}>
-                        {item.node.for_hire ? `For Hire` : `Hiring`}
+                      <Badge forHire={node.for_hire}>
+                        {node.for_hire ? `For Hire` : `Hiring`}
                       </Badge>
                     </div>
                   ) : null}
@@ -180,7 +182,8 @@ class CreatorsView extends Component {
             {creators.length && <EmptyGridItems styles={styles.creatorCard} />}
           </div>
         </main>
-      </Layout>
+        <FooterLinks />
+      </>
     )
   }
 }
@@ -191,7 +194,7 @@ const styles = {
   creatorCard: {
     display: `flex`,
     flexDirection: `column`,
-    margin: space[6],
+    m: 6,
     minWidth: 200,
     maxWidth: 240,
     flex: `1 0 0`,

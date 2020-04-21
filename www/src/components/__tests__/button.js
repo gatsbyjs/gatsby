@@ -1,12 +1,16 @@
 import React from "react"
 import { fireEvent, render } from "@testing-library/react"
+import { ThemeProvider } from "theme-ui"
 
+import theme from "../../gatsby-plugin-theme-ui"
 import Button from "../button"
 
 describe(`selective tag rendering`, () => {
   it(`defaults to rendering a Gatsby Link`, () => {
     const { container, getByText } = render(
-      <Button to="/somewhere">Hello</Button>
+      <ThemeProvider theme={theme}>
+        <Button to="/somewhere">Hello</Button>
+      </ThemeProvider>
     )
 
     expect(container.nodeName).toBe(`DIV`)
@@ -15,9 +19,11 @@ describe(`selective tag rendering`, () => {
 
   it(`renders a button if tag=button`, () => {
     const { getByText } = render(
-      <Button to="/somewhere" tag="button">
-        Hello
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button to="/somewhere" tag="button">
+          Hello
+        </Button>
+      </ThemeProvider>
     )
 
     expect(getByText(`Hello`).nodeName).toBe(`BUTTON`)
@@ -25,9 +31,11 @@ describe(`selective tag rendering`, () => {
 
   it(`renders an anchor if tag=a`, () => {
     const { getByText } = render(
-      <Button to="/somewhere" tag="link">
-        Hello
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button to="/somewhere" tag="link">
+          Hello
+        </Button>
+      </ThemeProvider>
     )
 
     expect(getByText(`Hello`).nodeName).toBe(`A`)
@@ -41,7 +49,11 @@ describe(`tracking`, () => {
   })
 
   it(`does not send tracking event, by default`, () => {
-    const { getByText } = render(<Button to="/not-tracked">Hello</Button>)
+    const { getByText } = render(
+      <ThemeProvider theme={theme}>
+        <Button to="/not-tracked">Hello</Button>
+      </ThemeProvider>
+    )
     fireEvent.click(getByText(`Hello`))
 
     expect(ga).not.toHaveBeenCalled()
@@ -51,9 +63,11 @@ describe(`tracking`, () => {
     delete window.ga
 
     const { getByText } = render(
-      <Button to="/not-tracked" tracking={true}>
-        Hello
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button to="/not-tracked" tracking={true}>
+          Hello
+        </Button>
+      </ThemeProvider>
     )
     fireEvent.click(getByText(`Hello`))
 
@@ -63,9 +77,11 @@ describe(`tracking`, () => {
   it(`sends tracking event if tracking=true`, () => {
     const to = `/tracking/somewhere`
     const { getByText } = render(
-      <Button to={to} tracking={true}>
-        Hello
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button to={to} tracking={true}>
+          Hello
+        </Button>
+      </ThemeProvider>
     )
 
     fireEvent.click(getByText(`Hello`))
@@ -87,9 +103,11 @@ describe(`props forwarding`, () => {
     const onClick = jest.fn()
 
     const { getByText } = render(
-      <Button to="/custom-click" onClick={onClick}>
-        Hello
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button to="/custom-click" onClick={onClick}>
+          Hello
+        </Button>
+      </ThemeProvider>
     )
     fireEvent.click(getByText(`Hello`))
 
@@ -98,7 +116,11 @@ describe(`props forwarding`, () => {
 
   it(`renders children`, () => {
     const children = <span>Hello World</span>
-    const { getByText } = render(<Button to="/children">{children}</Button>)
+    const { getByText } = render(
+      <ThemeProvider theme={theme}>
+        <Button to="/children">{children}</Button>
+      </ThemeProvider>
+    )
 
     expect(getByText(`Hello World`)).toBeDefined()
   })
@@ -107,9 +129,11 @@ describe(`props forwarding`, () => {
     const icon = <span>Icon</span>
 
     const { getByText } = render(
-      <Button to="/with-icon" icon={icon}>
-        Hello
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button to="/with-icon" icon={icon}>
+          Hello
+        </Button>
+      </ThemeProvider>
     )
 
     expect(getByText(`Icon`)).toBeDefined()

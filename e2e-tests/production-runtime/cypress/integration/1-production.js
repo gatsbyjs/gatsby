@@ -3,7 +3,7 @@
 // NOTE: This needs to be run before any other integration tests as it
 // sets up the service worker in offline mode. Therefore, if you want
 // to test an individual integration test, you must run this
-// first. E.g to run `compilation-hash.js` test, run
+// first. E.g. to run `compilation-hash.js` test, run
 //
 // cypress run -s \
 // "cypress/integration/1-production.js,cypress/integration/compilation-hash.js" \
@@ -23,13 +23,9 @@ describe(`Production build tests`, () => {
   it(`should navigate back after a reload`, () => {
     cy.getTestElement(`page2`).click()
 
-    cy.waitForRouteChange()
-      .location(`pathname`)
-      .should(`equal`, `/page-2/`)
+    cy.waitForRouteChange().location(`pathname`).should(`equal`, `/page-2/`)
 
-    cy.reload()
-      .waitForRouteChange()
-      .go(`back`)
+    cy.reload().waitForRouteChange().go(`back`)
 
     cy.waitForRouteChange()
       .getTestElement(`page2`)
@@ -64,9 +60,7 @@ describe(`Production build tests`, () => {
       failOnStatusCode: false,
     })
 
-    cy.waitForRouteChange()
-      .getTestElement(`404`)
-      .should(`exist`)
+    cy.waitForRouteChange().getTestElement(`404`).should(`exist`)
   })
 
   it(`should navigate back after a 404 from a direct link entry`, () => {
@@ -98,6 +92,13 @@ describe(`Production build tests`, () => {
     cy.getTestElement(`process.env.NOT_EXISTING_VAR`).should(`be.empty`)
   })
 
+  it(`should be able to create a page from component located in .cache directory`, () => {
+    cy.visit(`/page-from-cache/`).waitForRouteChange()
+
+    // `bar` is set in gatsby-node createPages
+    cy.getTestElement(`dom-marker`).contains(`[static-page-from-cache]`)
+  })
+
   describe(`Supports unicode characters in urls`, () => {
     it(`Can navigate directly`, () => {
       cy.visit(`/안녕/`, {
@@ -116,13 +117,28 @@ describe(`Production build tests`, () => {
 
     it(`Can navigate on client`, () => {
       cy.visit(`/`).waitForRouteChange()
-      cy.getTestElement(`page-with-unicode-path`)
-        .click()
-        .waitForRouteChange()
+      cy.getTestElement(`page-with-unicode-path`).click().waitForRouteChange()
 
       cy.getTestElement(`page-2-message`)
         .invoke(`text`)
         .should(`equal`, `Hi from the second page`)
+    })
+
+    it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating directly`, () => {
+      cy.visit(`/안녕404/`, {
+        failOnStatusCode: false,
+      }).waitForRouteChange()
+
+      cy.getTestElement(`404`).should(`exist`)
+    })
+
+    it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating on client`, () => {
+      cy.visit(`/`).waitForRouteChange()
+      cy.window()
+        .then(win => win.___navigate(`/안녕404/`))
+        .waitForRouteChange()
+
+      cy.getTestElement(`404`).should(`exist`)
     })
   })
 })

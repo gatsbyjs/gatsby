@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link, navigate } from 'gatsby'
+import * as React from "react"
+import { Link, navigate } from "gatsby"
 
-import Layout from '../components/layout'
+import Layout from "../components/layout"
 
 const IndexPage = () => (
   <Layout>
@@ -10,6 +10,9 @@ const IndexPage = () => (
     <p>Now go build something great.</p>
     <Link data-testid="page-2-link" to="/page-2/">
       Go to page 2
+    </Link>
+    <Link data-testid="page-blogtest-link" to="/blogtest/">
+      Go to blogtest
     </Link>
     <button
       data-testid="page-2-button-link"

@@ -6,6 +6,7 @@ const {
   GraphQLList,
   isSpecifiedScalarType,
 } = require(`graphql`)
+const { addDerivedType } = require(`./derived-types`)
 const { InputTypeComposer } = require(`graphql-compose`)
 const { GraphQLJSON } = require(`graphql-compose`)
 const { GraphQLDate } = require(`./date`)
@@ -26,6 +27,8 @@ const convert = ({
   const inputTypeName = inputTypeComposer
     .getTypeName()
     .replace(/Input$/, `FilterInput`)
+
+  addDerivedType({ typeComposer, derivedTypeName: inputTypeName })
 
   let convertedITC
   if (filterInputComposer) {

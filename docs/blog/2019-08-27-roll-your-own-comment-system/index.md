@@ -47,7 +47,7 @@ The comments API consists of three parts:
 - [API Server](#api)
 - [Front End](#front-end)
 
-The front end is written for React, but if you know how to make a form and an API call, it can be easily adjusted to whatever static system you're using.
+The frontend is written for React, but if you know how to make a form and an API call, it can be easily adjusted to whatever static system you're using.
 
 ## Database
 
@@ -241,7 +241,7 @@ app.delete("/comments/:id", deleteComment)
 
 ## Front End
 
-Again, for the front end I'm using React as an example, but the concept is the same for any template system. In whatever your post template file is, use JavaScript to make a `fetch` or `axios` call to your comment API, and save the data in state somewhere. Once I retrieve the JSON response from the API server, which will be an array of comment objects, I can pass it to wherever I'm displaying the comments.
+Again, for the frontend I'm using React as an example, but the concept is the same for any template system. In whatever your post template file is, use JavaScript to make a `fetch` or `axios` call to your comment API, and save the data in state somewhere. Once I retrieve the JSON response from the API server, which will be an array of comment objects, I can pass it to wherever I'm displaying the comments.
 
 > Sorry, I'm not using hooks yet. It's okay, deep breath. We'll get through this.
 

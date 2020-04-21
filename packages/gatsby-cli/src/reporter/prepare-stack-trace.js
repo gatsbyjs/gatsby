@@ -117,9 +117,8 @@ function CallSiteToString() {
     }
     line += functionName
     if (
-      methodName &&
       functionName.indexOf(`.` + methodName) !=
-        functionName.length - methodName.length - 1
+      functionName.length - methodName.length - 1
     ) {
       line += ` [as ${methodName}]`
     }

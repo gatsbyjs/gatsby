@@ -1,10 +1,10 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
 
 import Button from "../../components/button"
-import Layout from "../../components/layout"
+import PageWithSidebar from "../../components/page-with-sidebar"
 import EvaluationTable from "../../components/features/evaluation-table"
-import { itemListFeatures } from "../../utils/sidebar/item-list"
 import { getFeaturesData } from "../../utils/get-csv-features-data"
 import Container from "../../components/container"
 import FooterLinks from "../../components/shared/footer-links"
@@ -13,7 +13,6 @@ import LegendTable from "../../components/features/legend-table"
 import CompareButton from "../../components/features/compare-button"
 import Breadcrumb from "../../components/docs-breadcrumb"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
-import { space } from "../../utils/presets"
 import useComparisonState from "../../hooks/use-comparison-state"
 
 const FeaturesHeader = () => (
@@ -32,18 +31,14 @@ const CmsFeaturesPage = ({ data, location }) => {
   })
 
   const { sections, sectionHeaders } = getFeaturesData(
-    data.allGatsbyCmsSpecsCsv.edges
+    data.allGatsbyCmsSpecsCsv.nodes
   )
 
   return (
-    <Layout
-      location={location}
-      itemList={itemListFeatures}
-      enableScrollSync={true}
-    >
+    <PageWithSidebar location={location}>
       <Container>
         <main id={`reach-skip-nav`}>
-          <Breadcrumb location={location} itemList={itemListFeatures} />
+          <Breadcrumb location={location} />
           <FeaturesHeader />
           <h3>Comparison</h3>
           <p>
@@ -51,28 +46,30 @@ const CmsFeaturesPage = ({ data, location }) => {
             technologies, choose the technologies to compare and then press
             Compare:
           </p>
-          <div
-            css={{
-              display: `grid`,
-              gridTemplateColumns: `repeat(auto-fit, minmax(75px, 120px))`,
-              gridGap: space[2],
-              paddingBottom: space[10],
-            }}
-          >
-            {featureComparisonOptions.cms.map(({ key: optionKey, display }) => (
-              <CompareButton
-                key={optionKey}
-                optionKey={optionKey}
-                selected={selected[optionKey]}
-                setSelected={setSelected}
-              >
-                {display}
-              </CompareButton>
-            ))}
-            <Button
-              style={{
-                whiteSpace: `pre-wrap`,
+          <div sx={{ pb: 10 }}>
+            <div
+              sx={{
+                display: `grid`,
+                gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
+                gridAutoRows: `1fr`,
+                gridGap: 2,
+                pb: 4,
               }}
+            >
+              {featureComparisonOptions.cms.map(
+                ({ key: optionKey, display }) => (
+                  <CompareButton
+                    key={optionKey}
+                    optionKey={optionKey}
+                    selected={selected[optionKey]}
+                    setSelected={setSelected}
+                  >
+                    {display}
+                  </CompareButton>
+                )
+              )}
+            </div>
+            <Button
               to={
                 hasSelected
                   ? `/features/cms/gatsby-vs-${comparators.join(`-vs-`)}`
@@ -92,7 +89,7 @@ const CmsFeaturesPage = ({ data, location }) => {
         </main>
         <FooterLinks />
       </Container>
-    </Layout>
+    </PageWithSidebar>
   )
 }
 
@@ -101,16 +98,14 @@ export default CmsFeaturesPage
 export const pageQuery = graphql`
   query {
     allGatsbyCmsSpecsCsv {
-      edges {
-        node {
-          Category
-          Subcategory
-          Feature
-          Gatsby
-          WordPress
-          Drupal
-          Description
-        }
+      nodes {
+        Category
+        Subcategory
+        Feature
+        Gatsby
+        WordPress
+        Drupal
+        Description
       }
     }
   }

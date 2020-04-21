@@ -1,9 +1,9 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
+import { Trans } from "@lingui/macro"
 import { graphql } from "gatsby"
-import EditIcon from "react-icons/lib/md/create"
-
-import { space } from "../utils/presets"
-import { linkStyles } from "../utils/styles"
+import { MdCreate as EditIcon } from "react-icons/md"
 
 export default class MarkdownPageFooter extends React.Component {
   constructor() {
@@ -13,19 +13,35 @@ export default class MarkdownPageFooter extends React.Component {
   render() {
     return (
       <>
-        <hr css={{ marginTop: space[9] }} />
-
+        <hr sx={{ display: `none` }} />
         {this.props.page && (
-          <a
-            css={{ ...linkStyles }}
-            href={`https://github.com/gatsbyjs/gatsby/blob/master/${
-              this.props.packagePage ? `packages` : `docs`
-            }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
+          <div
+            sx={{
+              display: `flex`,
+              alignItems: `center`,
+              justifyContent: `space-between`,
+              mt: 9,
+            }}
           >
-            <EditIcon css={{ marginRight: space[2] }} />
-            {` `}
-            Edit this page on GitHub
-          </a>
+            <a
+              sx={{ variant: `links.muted` }}
+              href={`https://github.com/gatsbyjs/gatsby/blob/master/${
+                this.props.packagePage ? `packages` : `docs`
+              }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
+            >
+              <Trans>
+                <EditIcon sx={{ marginRight: 2 }} /> Edit this page on GitHub
+              </Trans>
+            </a>
+            {this.props.page?.parent?.fields?.gitLogLatestDate && (
+              <span sx={{ color: `textMuted`, fontSize: 1 }}>
+                Last updated:{` `}
+                <time dateTime={this.props.page.parent.fields.gitLogLatestDate}>
+                  {this.props.page.parent.fields.gitLogLatestDate}
+                </time>
+              </span>
+            )}
+          </div>
         )}
       </>
     )
@@ -37,6 +53,9 @@ export const fragment = graphql`
     parent {
       ... on File {
         relativePath
+        fields {
+          gitLogLatestDate(formatString: "MMMM D, YYYY")
+        }
       }
     }
   }
@@ -44,6 +63,9 @@ export const fragment = graphql`
     parent {
       ... on File {
         relativePath
+        fields {
+          gitLogLatestDate(formatString: "MMMM D, YYYY")
+        }
       }
     }
   }

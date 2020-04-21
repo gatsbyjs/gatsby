@@ -1,7 +1,8 @@
-import React, { Component } from "react"
-import HubspotForm from "./react-hubspot-form"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 
-import { colors, space, fontSizes } from "../utils/presets"
+import HubspotForm from "./react-hubspot-form"
 import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
 
 export default class GatsbyHubspotForm extends Component {
@@ -14,7 +15,7 @@ export default class GatsbyHubspotForm extends Component {
     // See https://designers.hubspot.com/docs/cos/hubspot-form-markup#styling-forms for information on how to style the form
     return (
       <div
-        css={{
+        sx={{
           "& form": {
             margin: 0,
           },
@@ -23,13 +24,13 @@ export default class GatsbyHubspotForm extends Component {
             width: `100%`,
           },
           "& .hs-form-field": {
-            paddingBottom: space[5],
+            pb: 5,
           },
           "& ul.hs-error-msgs": {
             listStyleType: `none`,
             margin: 0,
-            color: colors.warning,
-            fontSize: fontSizes[1],
+            color: `warning`,
+            fontSize: 1,
           },
           "& .hs-form input": {
             ...formInput,
@@ -43,14 +44,14 @@ export default class GatsbyHubspotForm extends Component {
           "& label": {
             // a bit unsure about the implications of the next line
             display: `inline-block`,
-            fontSize: fontSizes[1],
-            paddingBottom: space[1],
+            fontSize: 1,
+            pb: 1,
           },
           "& .hs-form-required": {
-            color: colors.text.secondary,
+            color: `textMuted`,
           },
           "& .hs-button.primary": {
-            ...buttonStyles.default,
+            ...buttonStyles().default,
           },
         }}
       >

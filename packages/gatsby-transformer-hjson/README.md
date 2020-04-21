@@ -46,23 +46,25 @@ parent directory.
 
 For example, lets say your project has a data layout like:
 
+```text
     data/
         letters/
             a.hjson
             b.hjson
             c.hjson
+```
 
 Where each of `a.hjson`, `b.hjson` and `c.hjson` look like:
 
-```
+```json
 value: a
 ```
 
-```
+```json
 value: b
 ```
 
-```
+```json
 value: c
 ```
 

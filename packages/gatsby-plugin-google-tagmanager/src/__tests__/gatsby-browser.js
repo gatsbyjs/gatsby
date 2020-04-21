@@ -69,4 +69,23 @@ describe(`onRouteUpdate`, () => {
 
     expect(window.dataLayer).toHaveLength(1)
   })
+
+  it(`registers new data layer variable if dataLayerName is specified`, () => {
+    const { onRouteUpdate } = getAPI(() => {
+      process.env.NODE_ENV = `production`
+    })
+    const dataLayerName = `fooBarDataLater`
+    window[dataLayerName] = []
+
+    onRouteUpdate(
+      {},
+      {
+        dataLayerName,
+      }
+    )
+
+    jest.runAllTimers()
+
+    expect(window[dataLayerName]).toHaveLength(1)
+  })
 })

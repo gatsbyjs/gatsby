@@ -1,5 +1,5 @@
 ---
-title: Add a manifest file
+title: Adding a Manifest File
 ---
 
 If you've run an [audit with Lighthouse](/docs/audit-with-lighthouse/), you may have noticed a lackluster score in the "Progressive Web App" category. Let's address how you can improve that score.
@@ -16,7 +16,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 [Gatsby's manifest plugin](/packages/gatsby-plugin-manifest/) configures Gatsby to create a `manifest.webmanifest` file on every site build.
 
-### Using `gatsby-plugin-manifest`
+## Using `gatsby-plugin-manifest`
 
 1.  Install the plugin:
 
