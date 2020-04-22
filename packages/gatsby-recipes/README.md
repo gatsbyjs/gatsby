@@ -175,7 +175,7 @@ Soon will support options.
 
 ## Resources
 
--  A free 6 min eggheadio [collection](https://egghead.io/playlists/getting-started-with-gatsbyjs-recipes-c79a) by [Khaled Garbaya](https://twitter.com/khaled_garbaya)
+- A free 6 min eggheadio [collection](https://egghead.io/playlists/getting-started-with-gatsbyjs-recipes-c79a) by [Khaled Garbaya](https://twitter.com/khaled_garbaya)
 
 ## FAQ / common issues
 
@@ -199,7 +199,7 @@ a step
 
 But this won't
 
-<!-- prettier-ignore -->
+<!-- prettier-ignore-start -->
 ```mdx
 # Recipes
 ---
@@ -208,6 +208,7 @@ a step
 
 <File src="something.txt" content="something" />
 ```
+<!-- prettier-ignore-end -->
 
 ### Q) What kind of recipe should I write?
 

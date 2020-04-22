@@ -13,6 +13,7 @@ Through use of [source plugins](/plugins/?=source), Gatsby has support for dozen
 
 The guides in this section will walk through the process of setting up content sourcing from some of the most popular headless CMSes in use today.
 
+<CloudCallout>For integrating your site with a headless CMS:</CloudCallout>
 <GuideList slug={props.slug} />
 
 <!--
@@ -46,6 +47,7 @@ Here are more resources for guides, plugins, and starters for CMS systems you ca
 | [Forestry](https://forestry.io/)              | [guide](/docs/sourcing-from-forestry/)                                           |                                                      |                                                                     |
 | [Gentics Mesh](https://getmesh.io)            | [guide](/docs/sourcing-from-gentics-mesh)                                        |                                                      |                                                                     |
 | [Seams-CMS](https://seams-cms.com/)           | [guide](/docs/sourcing-from-seams-cms)                                           |                                                      |                                                                     |
+| [Builder.io](https://www.bulider.io/)         | [guide](/docs/sourcing-from-builder-io/)                                         | [docs](/packages/@builder.io/gatsby/)                | [starter](https://github.com/BuilderIO/gatsby-starter-builder)      |
 
 ## How to add new guides to this section
 
