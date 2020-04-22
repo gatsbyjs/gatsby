@@ -85,7 +85,7 @@
       "eslint --cache --ext .js,.jsx,.ts,.tsx --fix",
       "git add"
     ],
-    "*.{md,css,scss,yaml,yml}": [
+    "*.{css,scss,yaml,yml}": [
       "prettier --write",
       "git add"
     ],
