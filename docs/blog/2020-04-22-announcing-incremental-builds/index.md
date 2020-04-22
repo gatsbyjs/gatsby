@@ -83,4 +83,4 @@ Incremental Builds is now available in public beta on [Gatsby Cloud](http://gats
 
 We’re currently fully supporting incremental Builds for our first-class integrations with Gatsby Cloud, including Contentful, Sanity, DatoCMS and CosmicJS. WordPress and Drupal support are in alpha. If you’re interested in building a first-class integration with Gatsby Cloud for Incremental Builds, please reach out to partners@gatsbyjs.com.
 
-_Head to Gatsby Cloud (https://gatsbyjs.com/cloud/) to try Incremental Builds today!_
+_Head to Gatsby Cloud (https://gatsbyjs.com/cloud/) to try Incremental Builds today! You can also join Dustin Schau, Gatsby's Head of Product, for a webinar on May 7th for a demonstration of how build times just got **seriously** faster. Visit http://gatsbyjs.com/incrbuilds-webinar to register._
