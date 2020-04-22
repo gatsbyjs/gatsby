@@ -10485,6 +10485,17 @@
   built_by: SofaScore
   built_by_url: https://www.sofascore.com
   featured: false
+- title: Hasura
+  url: https://hasura.io
+  main_url: https://hasura.io
+  description: >
+    Hasura is an open source engine that connects to your databases & microservices and auto-generates a production-ready GraphQL backend.
+  categories:
+    - API
+    - Web Development
+    - Technology
+    - Open Source
+  featured: false
 - title: Jimdo.com
   description: >
     Jimdo is an international tech company and one of the world's leading providers of online services for small and medium businesses (SMBs). The company empowers entrepreneurs to create their own website or store without coding and to digitize their business ideas.
