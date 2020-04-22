@@ -6,7 +6,7 @@ title: Deploying to Vercel Now
 
 This guide will show you how to get started in a few quick steps:
 
-## Step 1: Installing Now CLI
+## Step 1: Getting Started with Gatsby
 
 To install the Vercel command-line interface with [npm](https://www.npmjs.com/), run the following command:
 
