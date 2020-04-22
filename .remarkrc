@@ -7,10 +7,9 @@
  },
  "plugins": [
     ["remark-frontmatter", "yaml"],
-    "remark-preset-lint-consistent",
     "remark-preset-lint-recommended",
     "remark-preset-lint-markdown-style-guide",
-    ["remark-lint-emphasis-marker", "_"],
+    ["remark-lint-emphasis-marker", false],
     ["remark-lint-heading-increment", false],
     ["remark-lint-no-heading-punctuation", false],
     ["remark-lint-list-item-indent", "space"],
