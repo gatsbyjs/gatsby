@@ -43,7 +43,7 @@ Until now.
 
 ## Introducing Incremental Builds for Gatsby
 
-Starting today, Incremental Builds is available in public beta on [Gatsby Cloud](http://gatsbyjs.com). It’s the fastest way yet for building true JAMstack pre-rendered websites—making real-time deployments a possibility.
+Starting today, Incremental Builds is available in public beta on [Gatsby Cloud](http://gatsbyjs.com). It’s the fastest way yet for building pre-rendered websites—making real-time deployments a possibility.
 
 **Using Incremental Builds on Gatsby Cloud, we are showing build speeds of under 10 seconds for data edits.** This is oftentimes a 1000x improvement over existing build solutions, where the entire site must be re-built for even the smallest data change.
 
