@@ -1,0 +1,11 @@
+{
+  "name": "gatsby-plugin-admin",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": "Max Stoiber",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "gatsby-admin": "^0.0.0"
+  }
+}

@@ -18,6 +18,7 @@
     "urql": "^1.9.5"
   },
   "scripts": {
-    "develop": "gatsby develop"
+    "develop": "gatsby develop",
+    "build": "gatsby build --prefix-paths"
   }
 }
