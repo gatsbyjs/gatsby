@@ -3,8 +3,39 @@ const normalize = require(`./normalize`)
 
 const typePrefix = `lever__`
 
+exports.createSchemaCustomization = async ({ actions }) => {
+  const typeDefs = `
+    type lever implements Node {
+      additional: String
+      additionalPlain: String
+      applyUrl: String
+      createdAt: Date @dateformat
+      description: String
+      descriptionPlain: String
+      hostedUrl: String
+      lever_id: String
+      text: String
+      categories: leverCategories
+      lists: [leverList]
+    }
+
+    type leverCategories {
+      commitment: String
+      level: String
+      location:String
+      team: String
+    }
+
+    type leverList {
+      content: String
+      text: String
+    }
+  `
+  actions.createTypes(typeDefs)
+}
+
 exports.sourceNodes = async (
-  { actions, getNode, store, cache, createNodeId },
+  { actions, getNode, store, cache, createNodeId, createContentDigest },
   { site, verboseOutput }
 ) => {
   const { createNode } = actions
@@ -30,7 +61,11 @@ exports.sourceNodes = async (
   entities = normalize.createGatsbyIds(createNodeId, entities)
 
   // creates nodes for each entry
-  normalize.createNodesFromEntities({ entities, createNode })
+  normalize.createNodesFromEntities({
+    entities,
+    createNode,
+    createContentDigest,
+  })
 
   return
 }

@@ -3,12 +3,14 @@ title: "Themes Update: Child Theming and Component Shadowing"
 date: 2019-01-29
 author: Chris Biscardi
 excerpt: "Making it easier to abstract themes into reusable modules"
-tags: ["themes", "architecture"]
+tags: ["themes", "content-mesh"]
 ---
+
+> _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._
 
 > If you aren't familiar with Gatsby themes yet, then check out [Introducing
 > Gatsby
-> Themes](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/)
+> Themes](/blog/2018-11-11-introducing-gatsby-themes/)
 > for a written introduction and [my Gatsby Days
 > talk](https://www.youtube.com/watch?v=wX84vXBpMR8) for a more audio/visual
 > approach.
@@ -19,7 +21,7 @@ We've merged [a PR](https://github.com/gatsbyjs/gatsby/pull/10787) into Gatsby
 core to support Child theming. Child theming is an extension of the core theming
 algorithm to support a "parent/child" style relationship where child themes can
 rely on parent themes in the same way sites rely on themes. This means you can
-now use the `__experimentalThemes` gatsby-config key in a theme as well as your
+now add a child theme using the `plugins` gatsby-config key in a theme as well as your
 sites.
 
 This change is being made to make it easier for theme authors to produce themes
@@ -64,7 +66,7 @@ for the core theme.
 
 ```js:title=gatsby-theme-blog-core/gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-mdx`],
+  plugins: [`gatsby-plugin-mdx`],
 }
 ```
 
@@ -78,8 +80,7 @@ applied to the parent and focus on one possible child theme `gatsby-config.js`.
 
 ```js:title=gatsby-theme-blog/gatsby-config.js
 module.exports = {
-  __experimentalThemes: [`gatsby-theme-blog-core`],
-  plugins: [`gatsby-plugin-emotion`],
+  plugins: [`gatsby-theme-blog-core`, `gatsby-plugin-emotion`],
 }
 ```
 
@@ -89,14 +90,14 @@ by specifying only the child in their `gatsby-config.js`.
 
 ```js:title=my-site/gatsby-config.js
 module.exports = {
-  __experimentalThemes: [`gatsby-theme-blog`],
+  plugins: [`gatsby-theme-blog`],
 }
 ```
 
 The end result from a theme's composition view is that we apply the parent, then
 the child, then the user's site. This opens up a whole host of additional
 possibilities as child themes can have multiple parents or compose with each
-other. Data models for blogging and ecommerce can be combined into a usable
+other. Data models for blogging and e-commerce can be combined into a usable
 child theme and distributed as a single npm package. Users don't need to know
 your theme is made up of multiple parents.
 

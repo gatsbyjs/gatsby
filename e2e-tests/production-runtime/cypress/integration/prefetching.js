@@ -1,7 +1,7 @@
 describe(`Prefetching`, () => {
   if (Cypress.env(`CONNECTION_TYPE`) === `slow`) {
     it(`should not prefetch if on slow connection`, () => {
-      cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.window().then(async win => {
         const isPrefetching = await win.___loader.enqueue(`/page-2`)
@@ -13,7 +13,7 @@ describe(`Prefetching`, () => {
     })
   } else {
     it(`should prefetch`, () => {
-      cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.window().then(async win => {
         const isPrefetching = await win.___loader.enqueue(`/page-2`)

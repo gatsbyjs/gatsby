@@ -28,6 +28,7 @@ module.exports = (state = new Map(), action) => {
 
     case `DELETE_NODE`: {
       const node = action.payload
+      if (!node) return state
       const nodesOfType = getNodesOfType(node, state)
       nodesOfType.delete(node.id)
       if (!nodesOfType.size) {

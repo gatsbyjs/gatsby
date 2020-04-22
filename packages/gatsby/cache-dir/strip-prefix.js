@@ -4,6 +4,15 @@
  */
 
 export default (str, prefix = ``) => {
-  if (str.substr(0, prefix.length) === prefix) return str.slice(prefix.length)
+  if (!prefix) {
+    return str
+  }
+
+  prefix += `/`
+
+  if (str.substr(0, prefix.length) === prefix) {
+    return str.slice(prefix.length - 1)
+  }
+
   return str
 }

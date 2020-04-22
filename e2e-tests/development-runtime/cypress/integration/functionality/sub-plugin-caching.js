@@ -5,7 +5,7 @@
  */
 describe(`sub-plugin caching`, () => {
   beforeEach(() => {
-    cy.visit(`/2018-12-14-hello-world/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/2018-12-14-hello-world/`).waitForRouteChange()
   })
 
   it(`has access to custom sub-plugin cache`, () => {

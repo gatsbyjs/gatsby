@@ -12,7 +12,7 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "discord.js": "^11.1.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
     "webhook-discord": "^2.0.6"

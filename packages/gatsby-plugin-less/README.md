@@ -47,6 +47,20 @@ plugins: [
 ]
 ```
 
+If you need to provide [Less plugins](https://github.com/less/less-docs/blob/master/content/usage/plugins.md), normally you would provide a `plugins` in the Less options, but this option attribute is already used by Gatsby. It has been remapped to `lessPlugins`
+
+```javascript
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-less`,
+    options: {
+      lessPlugins: [MyLessPlugin],
+    },
+  },
+]
+```
+
 ### With CSS Modules
 
 Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.less` -> `App.module.less`.
@@ -54,9 +68,9 @@ Any file with the `module` extension will use CSS modules.
 
 ### PostCSS plugins
 
-PostCSS is also included to handle some default optimizations like autoprefixing a
+PostCSS is also included to handle some default optimizations like autoprefixing
 and common cross-browser flexbox bugs. Normally you don't need to think about it, but if
-you'd prefer to add additional postprocessing to your Less output you can sepecify plugins
+you'd prefer to add additional postprocessing to your Less output you can specify plugins
 in the plugin options
 
 ```javascript

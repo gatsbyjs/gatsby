@@ -1,0 +1,2 @@
+Contact: mailto:mathews.kyle@gmail.com
+Policy: https://github.com/gatsbyjs/gatsby/blob/master/SECURITY.md

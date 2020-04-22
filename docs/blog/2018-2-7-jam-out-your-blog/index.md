@@ -2,7 +2,7 @@
 title: JAM Out Your Blog - Gatsby + Prose + Netlify
 date: 2018-02-07
 author: "Vlad Pasculescu"
-tags: ["prose-io", "netlify", "ci", "jamstack"]
+tags: ["netlify", "deployment", "jamstack"]
 ---
 
 If you’re reading this, chances are you’ve heard a thing or two about Gatsby. Let me take you through a _jamstacked_ workflow that is friendly to both developers, as well as content-creators.
@@ -17,11 +17,11 @@ I’m willing to assume that many readers have been here before and are currentl
 
 My goal here is to share a tool set helps bring order to my freelance chaos. I'll be walking through a workflow that's ideal for personal blogs and hand-off projects where some sort of a CMS is in scope.
 
-I'll also be referencing a wonderful article written by Josh Weaver, [Gatsby + Contentful + Netlify (and Algolia)](https://www.gatsbyjs.org/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/). Josh’s article spoke to my goals and frustrations perfectly and inspired me to share this alternative approach.
+I'll also be referencing a wonderful article written by Josh Weaver, [Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/). Josh’s article spoke to my goals and frustrations perfectly and inspired me to share this alternative approach.
 
 _**Let’s get into it.**_
 
-<div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/WDtCGLCXBAgow" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/tom-cruise-top-gun-WDtCGLCXBAgow">via GIPHY</a></p>
+https://giphy.com/gifs/tom-cruise-top-gun-WDtCGLCXBAgow
 
 ## My Requirements
 
@@ -37,7 +37,7 @@ _**Let’s get into it.**_
 - **NO WordPress** - similarly, I don’t want to deal with updates, themes, hacks...etc
 - **Continuous Deployment** - the site needs to always be up and running and current
 
-For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at [http://jamstack.org/. ](http://jamstack.org/)
+For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at [http://jamstack.org/](http://jamstack.org/).
 
 ## CMS-Induced Headaches
 
@@ -58,7 +58,7 @@ With such a robust set of features, it is easy to see why Contentful is a popula
 
 While, a fully-customizable frontend may seem really flexible, _**there is NOTHING set up when you create a new project.**_ You will have to create your own content models for blog posts and use GraphQL to query for each blog post type you set up.
 
-<div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/16e1J9ztaZ3na"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/bored-kanye-west-16e1J9ztaZ3na">via GIPHY</a></p>
+https://giphy.com/gifs/bored-kanye-west-16e1J9ztaZ3na
 
 If you’re like me and have no previous experience with Contentful, expect a few headaches. Your first time working with the service will involve a great deal of trial and error to get content/posts into your Gatsby website. Couple this with being a GraphQL newbie (like me), and you will get frustrated..._**very quickly**_.
 
@@ -90,7 +90,7 @@ So, a service that works on top of GitHub where I, or anyone with a GitHub accou
 5.  Done. You can edit existing posts, preview posts, and commit any changes directly within the interface.
     set up a repository for the website
 
-<div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/l0HlDtKDqfGGQtwic"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed"  allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/emmys-emmy-awards-emmys-2016-l0HlDtKDqfGGQtwic">via GIPHY</a></p>
+https://giphy.com/gifs/emmys-emmy-awards-emmys-2016-l0HlDtKDqfGGQtwic
 
 _**Yes, there’s more.**_
 
@@ -102,7 +102,9 @@ I should also mention that Prose is an open source project that is available for
 
 Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will take care of the rest.
 
-```[ ] Lean - simplify the tools and services use to a bare minimum
+```markdown
+[ ] Lean - simplify the tools and services use to a bare minimum
+
 [ ] Inexpensive Hosting - again, to maximize value and keep personal costs down
 
 [ ] Continuous Deployment - the site needs to always be up and running and current
@@ -134,7 +136,7 @@ With this process in place, content creators do not need to understand Markdown,
 
 _**It just works.**_ 🤙🏼
 
-<div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/3oFzmqDNycyhUcrjTW"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed"  allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/nba-celebrity-3oFzmqDNycyhUcrjTW">via GIPHY</a></p>
+https://giphy.com/gifs/nba-celebrity-3oFzmqDNycyhUcrjTW
 
 ## Concluding Thoughts
 

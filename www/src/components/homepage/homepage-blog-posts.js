@@ -1,9 +1,8 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import { Link } from "gatsby"
-
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import Link from "../localized-link"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import HomepageBlogPost from "./homepage-blog-post"
 import {
@@ -11,13 +10,14 @@ import {
   HorizontalScrollerContent,
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
-
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import {
+  breakpoints,
+  mediaQueries,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
-  margin: -6px -${rhythm(presets.gutters.default / 2)};
+  margin: -6px -${p => p.theme.space[6]};
 `
 
 const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
@@ -33,7 +33,7 @@ const PostsColumn = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-  margin-right: ${rhythm(presets.gutters.default)};
+  margin-right: ${p => p.theme.space[8]};
   position: relative;
 
   :last-child {
@@ -45,7 +45,7 @@ const PostsColumn = styled(`div`)`
 
 const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
   display: flex;
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${p => p.theme.fonts.heading};
   overflow: hidden;
   width: auto;
 
@@ -55,10 +55,10 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size: ${p => p.theme.fontSizes[4]};
     justify-content: center;
-    line-height: 1.2;
-    padding: ${rhythm(1.5)};
+    line-height: ${p => p.theme.lineHeights.dense};
+    padding: ${p => p.theme.space[7]};
     width: 100%;
 
     span {
@@ -68,32 +68,32 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
 
     svg {
       height: 18px;
-      margin-left: 0.2rem;
+      margin-left: ${p => p.theme.space[1]};
       width: 18px;
     }
   }
 
-  ${presets.Lg} {
-    background: ${colors.gatsby};
-    color: white;
+  ${mediaQueries.lg} {
+    background: ${p => p.theme.colors.gatsby};
+    color: ${p => p.theme.colors.white};
     flex-shrink: 0;
     height: 160px;
 
-    margin-left: ${rhythm(presets.gutters.default)};
+    margin-left: ${p => p.theme.space[8]};
     width: 125px;
 
     a {
-      padding: ${rhythm(1)};
+      color: ${p => p.theme.colors.white};
+      padding: ${p => p.theme.space[5]};
       justify-content: flex-start;
 
       &:hover {
-        color: ${colors.gatsby};
-        background: ${colors.ui.whisper};
+        background: ${p => p.theme.colors.purple[80]};
       }
     }
   }
 
-  ${presets.Xl} {
+  ${mediaQueries.xl} {
     width: 160px;
   }
 `
@@ -123,7 +123,7 @@ class HomepageBlogPosts extends Component {
   }
 
   componentDidMount = () => {
-    this.desktopMediaQuery = window.matchMedia(presets.lg)
+    this.desktopMediaQuery = window.matchMedia(`(min-width: ${breakpoints[3]}`)
     this.desktopMediaQuery.addListener(this.updateViewPortState)
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }
@@ -156,7 +156,7 @@ class HomepageBlogPosts extends Component {
     const { desktopViewport } = this.state
 
     return (
-      <React.Fragment>
+      <>
         {desktopViewport ? (
           <HomepageBlogPostsRootDesktop>
             {postsInColumns.map((column, colIdx) => (
@@ -210,7 +210,7 @@ class HomepageBlogPosts extends Component {
             </HorizontalScrollerContentAsDiv>
           </HomepageBlogPostsRootMobile>
         )}
-      </React.Fragment>
+      </>
     )
   }
 }

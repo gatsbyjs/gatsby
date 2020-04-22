@@ -111,6 +111,10 @@ const options = {
         backgroundColor: `#fef9ec`,
         borderRadius: `2px`,
       },
+      // Inline code highlighting.
+      "body :not(pre) > code[class*='language-']": {
+        backgroundColor: `#fef9ec`,
+      },
       // Add space before and after code/tt elements.
       // @see https://github.com/KyleAMathews/typography.js/blob/66f78f0f4b8d2c5abf0262bcc1118610139c3b5f/packages/typography-plugin-code/src/index.js#L38-L46
       "code:before,code:after,tt:before,tt:after": {
@@ -156,15 +160,7 @@ const options = {
       ".post a:not(.gatsby-resp-image-link):not(.anchor), .link-underline": {
         position: `relative`,
         backgroundImage: `linear-gradient(${colors.link},${colors.link})`,
-        textShadow: `0.03em 0 ${colors.white}, -0.03em 0 ${
-          colors.white
-        }, 0 0.03em ${colors.white}, 0 -0.03em ${colors.white}, 0.06em 0 ${
-          colors.white
-        }, -0.06em 0 ${colors.white}, 0.09em 0 ${colors.white}, -0.09em 0 ${
-          colors.white
-        }, 0.12em 0 ${colors.white}, -0.12em 0 ${colors.white}, 0.15em 0 ${
-          colors.white
-        }, -0.15em 0 ${colors.white}`,
+        textShadow: `0.03em 0 ${colors.white}, -0.03em 0 ${colors.white}, 0 0.03em ${colors.white}, 0 -0.03em ${colors.white}, 0.06em 0 ${colors.white}, -0.06em 0 ${colors.white}, 0.09em 0 ${colors.white}, -0.09em 0 ${colors.white}, 0.12em 0 ${colors.white}, -0.12em 0 ${colors.white}, 0.15em 0 ${colors.white}, -0.15em 0 ${colors.white}`,
         transition: `all 250ms cubic-bezier(0.4, 0, 0.2, 1)`,
         backgroundPosition: `0 98%`,
         backgroundRepeat: `repeat-x`,
@@ -172,9 +168,7 @@ const options = {
       },
       ".post a:not(.gatsby-resp-image-link):not(.anchor):hover, .link-underline:hover": {
         color: `${colors.linkHover}`,
-        backgroundImage: `linear-gradient(${colors.linkHover},${
-          colors.linkHover
-        })`,
+        backgroundImage: `linear-gradient(${colors.linkHover},${colors.linkHover})`,
       },
       ".post a.anchor": {
         textShadow: `0 !important`,

@@ -1,53 +1,56 @@
-import React from "react"
-import PropTypes from "prop-types"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import styled from "@emotion/styled"
-
-import presets, { colors } from "../utils/presets"
-import { rhythm, scale, options } from "../utils/typography"
-
-const horizontalPadding = rhythm(1 / 2)
-const backgroundColor = props =>
-  props.background ? props.background : colors.gatsby
-
-const BannerContainer = styled(`div`)`
-  background-color: ${props => backgroundColor(props)};
-  height: ${presets.bannerHeight};
-  position: fixed;
-  width: 100%;
-  z-index: 3;
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-`
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 const InnerContainer = styled(`div`)`
   align-items: center;
   display: flex;
-  height: ${presets.bannerHeight};
+  height: ${p => p.theme.sizes.bannerHeight};
   overflow-x: auto;
-  mask-image: ${`linear-gradient(to right, transparent, ${props =>
-    backgroundColor(props)} ${horizontalPadding}, ${props =>
-    backgroundColor(props)} 96%, transparent)`};
+  mask-image: ${props =>
+    `linear-gradient(to right, transparent, ${props.theme.colors.purple[90]} ${props.theme.space[6]}, ${props.theme.colors.purple[90]} 96%, transparent)`};
 `
 
 const Content = styled(`div`)`
-  color: ${colors.ui.bright};
-  font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: ${scale(-1 / 5).fontSize};
-  padding-left: ${horizontalPadding};
-  padding-right: ${horizontalPadding};
-  -webkit-font-smoothing: antialiased;
+  color: ${p => p.theme.colors.whiteFade[80]};
+  font-family: ${p => p.theme.fonts.heading};
+  padding-left: ${p => p.theme.space[6]};
+  padding-right: ${p => p.theme.space[6]};
   white-space: nowrap;
+
+  a {
+    color: ${p => p.theme.colors.white};
+    border-bottom: 1px solid ${p => p.theme.colors.white};
+  }
+
+  a:hover {
+    color: ${p => p.theme.colors.white};
+    border-bottom-color: ${p => p.theme.colors.white}a0;
+  }
 `
 
-const Banner = ({ children, background }) => (
-  <BannerContainer background={background} className="banner">
-    <InnerContainer>{children && <Content>{children}</Content>}</InnerContainer>
-  </BannerContainer>
+const Banner = () => (
+  <aside
+    className="banner"
+    sx={{
+      backgroundColor: `banner`,
+      height: `bannerHeight`,
+      position: `fixed`,
+      width: `100%`,
+      zIndex: `banner`,
+      px: `env(safe-area-inset-left)`,
+    }}
+  >
+    <InnerContainer>
+      <Content>
+        {`New! Try Incremental Builds with `}
+        <OutboundLink href="https://www.gatsbyjs.com">
+          Gatsby Cloud!
+        </OutboundLink>
+      </Content>
+    </InnerContainer>
+  </aside>
 )
-
-Banner.propTypes = {
-  children: PropTypes.node.isRequired,
-  background: PropTypes.any,
-}
 
 export default Banner

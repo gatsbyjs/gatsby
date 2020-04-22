@@ -1,21 +1,14 @@
 // @flow
-const fs = require(`fs`)
-const traverse = require(`@babel/traverse`).default
-const get = require(`lodash/get`)
-const { codeFrameColumns } = require(`@babel/code-frame`)
-const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
-const report = require(`gatsby-cli/lib/reporter`)
+import fs from "fs"
+import traverse from "@babel/traverse"
+import get from "lodash/get"
+import { codeFrameColumns } from "@babel/code-frame"
+import { babelParseToAst } from "../utils/babel-parse-to-ast"
+import report from "gatsby-cli/lib/reporter"
 
-/**
- * Given a `require.resolve()` compatible path pointing to a JS module,
- * return an array listing the names of the module's exports.
- *
- * Returns [] for invalid paths and modules without exports.
- *
- * @param {string} modulePath
- * @param {function} resolver
- */
-module.exports = (modulePath, resolver = require.resolve) => {
+import { testRequireError } from "../utils/test-require-error"
+
+const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
   let absPath
   const exportNames = []
 
@@ -79,6 +72,15 @@ module.exports = (modulePath, resolver = require.resolve) => {
       if (exportName) exportNames.push(exportName)
     },
 
+    // export default () => {}
+    // const foo = () => {}; export default foo
+    ExportDefaultDeclaration: function ExportDefaultDeclaration(astPath) {
+      const name = get(astPath, `node.declaration.name`)
+      const exportName = `export default${name ? ` ${name}` : ``}`
+      isES6 = true
+      exportNames.push(exportName)
+    },
+
     AssignmentExpression: function AssignmentExpression(astPath) {
       const nodeLeft = astPath.node.left
 
@@ -117,4 +119,39 @@ https://gatsby.dev/no-mixed-modules
     )
   }
   return exportNames
+}
+
+/**
+ * Given a `require.resolve()` compatible path pointing to a JS module,
+ * return an array listing the names of the module's exports.
+ *
+ * Returns [] for invalid paths and modules without exports.
+ *
+ * @param {string} modulePath
+ * @param {string} mode
+ * @param {function} resolver
+ */
+module.exports = (
+  modulePath,
+  { mode = `analysis`, resolver = require.resolve } = {}
+) => {
+  if (mode === `require`) {
+    let absPath
+    try {
+      absPath = resolver(modulePath)
+      return Object.keys(require(modulePath)).filter(
+        exportName => exportName !== `__esModule`
+      )
+    } catch (e) {
+      if (!testRequireError(modulePath, e)) {
+        // if module exists, but requiring it cause errors,
+        // show the error to the user and terminate build
+        report.panic(`Error in "${absPath}":`, e)
+      }
+    }
+  } else {
+    return staticallyAnalyzeExports(modulePath, resolver)
+  }
+
+  return []
 }

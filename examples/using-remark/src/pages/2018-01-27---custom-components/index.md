@@ -151,8 +151,8 @@ For example if you have a series of header components:
 
 ```javascript
 const PrimaryTitle = styled.h1`…`
-const SecondaryTitle styled.h2`…`
-const TertiaryTitle styled.h3`…`
+const SecondaryTitle = styled.h2`…`
+const TertiaryTitle = styled.h3`…`
 ```
 
 You can map headers defined in markdown to these components:

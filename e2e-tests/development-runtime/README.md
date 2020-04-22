@@ -17,16 +17,16 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
     Use the Gatsby CLI to create a new site, specifying the default starter.
 
-    ```sh
+    ```shell
     # create a new Gatsby site using the default starter
-    npx gatsby new my-default-starter
+    gatsby new my-default-starter
     ```
 
 1.  **Start developing.**
 
     Navigate into your new site’s directory and start it up.
 
-    ```sh
+    ```shell
     cd my-default-starter/
     gatsby develop
     ```

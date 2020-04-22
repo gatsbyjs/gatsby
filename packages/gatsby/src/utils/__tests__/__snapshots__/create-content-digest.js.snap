@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Create content digest returns the content digest when the input is a non string 1`] = `"d2ce28b9a7fd7e4407e2b0fd499b7fe4"`;
-
-exports[`Create content digest returns the content digest when the input is a string 1`] = `"d2ce28b9a7fd7e4407e2b0fd499b7fe4"`;

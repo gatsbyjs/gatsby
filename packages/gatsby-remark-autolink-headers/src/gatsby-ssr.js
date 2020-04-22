@@ -13,10 +13,16 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   )
 
   const styles = `
-    .${className} {
-      float: left;
+    .${className}.before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%);
       padding-right: 4px;
-      margin-left: -20px;
+    }
+    .${className}.after {
+      display: inline-block;
+      padding-left: 4px;
     }
     h1 .${className} svg,
     h2 .${className} svg,
@@ -42,13 +48,20 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     }
   `
 
+  // This script used to have `let scrollTop` and `let clientTop` instead of
+  // current ones which are `var`. It is changed due to incompatibility with
+  // older browsers (that do not implement `let`). See:
+  //  - https://github.com/gatsbyjs/gatsby/issues/21058
+  //  - https://github.com/gatsbyjs/gatsby/pull/21083
   const script = `
     document.addEventListener("DOMContentLoaded", function(event) {
       var hash = window.decodeURI(location.hash.replace('#', ''))
       if (hash !== '') {
         var element = document.getElementById(hash)
         if (element) {
-          var offset = element.offsetTop
+          var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+          var clientTop = document.documentElement.clientTop || document.body.clientTop || 0
+          var offset = element.getBoundingClientRect().top + scrollTop - clientTop
           // Wait for the browser to finish rendering before scrolling.
           setTimeout((function() {
             window.scrollTo(0, offset - ${offsetY})
@@ -62,9 +75,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     <style key={`gatsby-remark-autolink-headers-style`} type="text/css">
       {styles}
     </style>
-  ) : (
-    undefined
-  )
+  ) : undefined
 
   return setHeadComponents([
     style,

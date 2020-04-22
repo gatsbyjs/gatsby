@@ -13,7 +13,7 @@ Then we came across [Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/
 
 In January 2019 we shipped our new [Sanity Gatsby Source](https://github.com/sanity-io/gatsby-source-sanity) Plugin that uses the Sanity APIs to rebuild instantly as content changes. When developing this means a group of people can freely work together on both content models, UI design and the content itself. In real-time. Without rebuilds. This feels both a bit futuristic and pretty great. In the process we also to also make the static production builds themselves as fast as possible.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/STtpXBvJmDA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/STtpXBvJmDA
 
 You can experience it yourself with the sample [company website](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we built for the launch. We ship it in a monorepo along with a Sanity project that has content models for _people_, _project case studies_ and _blogging_. We made it pretty minimal to make it easier to extend.
 
@@ -27,7 +27,7 @@ Add the source plugin to your Gatsby project:
 npm install --save gatsby-source-sanity
 ```
 
-The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/introducing-graphiql/) to test queries and familiarize yourself with the schema documentation. It's super useful!
+The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/running-queries-with-graphiql/) to test queries and familiarize yourself with the schema documentation. It's super useful!
 
 Once you have installed the plugin, add this configuration to `gatsby-config.js`:
 
@@ -72,7 +72,7 @@ If you [add a token with read permissions](https://github.com/sanity-io/example-
 
 The source plugin uses Sanity.io’s export API. It streams all your documents in one go. So it's not only _very_ fast, it's also just a single API call for all your content. Regardless of the number of documents or their size. Thanks to this you can build your website with Gatsby thousands of times a month on the free developer plan (you can also add your card to the [dev plan](https://www.sanity.io/pricing/dev-2018-08-21) for an affordable pay-as-you-go option should you blow past the generous base quotas).
 
-You also avoid time consuming processing of images. Our image pipeline scales and crops the images for you and we have already baked in Low-Quality-Image-Placeholder (LQIP) into the image asset data structure so you don't need to extract it yourself to have it be part of your build. This while keeping compability with `gatsby-image`. We keep your image assets on a global edge cache and store the exact version you asked for to keep it fast.
+You also avoid time consuming processing of images. Our image pipeline scales and crops the images for you and we have already baked in Low-Quality-Image-Placeholder (LQIP) into the image asset data structure so you don't need to extract it yourself to have it be part of your build. This while keeping compatibility with `gatsby-image`. We keep your image assets on a global edge cache and store the exact version you asked for to keep it fast.
 
 We think some people might prefer to keep assets as part of their build and are thinking of including an option for this as well. [Let us know](https://slack.sanity.io) if you're one of them!
 

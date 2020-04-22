@@ -31,6 +31,6 @@ First make sure the version of `gatsby` specified in your `package.json` depende
 
 Now when issues arise that seem to be related to caching, you can use `npm run clean` to wipe out the cache and start from a fresh slate.
 
-_Note: If you find yourself using this command regularly, consider helping us out and [responding to our Github Issue][github-issue] with clear reproduction steps._
+_Note: If you find yourself using this command regularly, consider helping us out and [responding to our GitHub Issue][github-issue] with clear reproduction steps._
 
 [github-issue]: https://github.com/gatsbyjs/gatsby/issues/11747

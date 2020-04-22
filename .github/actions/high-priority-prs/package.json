@@ -1,0 +1,19 @@
+{
+  "name": "high-priority-prs-action",
+  "private": true,
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@slack/web-api": "^5.7.0",
+    "actions-toolkit": "^2.2.0",
+    "array-to-sentence": "^2.0.0",
+    "date-fns": "^2.9.0",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
+  }
+}

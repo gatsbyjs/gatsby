@@ -20,12 +20,12 @@ const Wrapper = styled.section`
 class IndexPage extends React.Component {
   handleClick = () => {
     console.log(`Sync-Click!`)
-    import(/* webpackChunkName: "async-alert", webpackPrefetch: true */ `../utils/async-alert`).then(
-      module => {
-        const asyncAlert = module.default
-        asyncAlert(`Async-Click!`)
-      }
-    )
+    import(
+      /* webpackChunkName: "async-alert", webpackPrefetch: true */ `../utils/async-alert`
+    ).then(module => {
+      const asyncAlert = module.default
+      asyncAlert(`Async-Click!`)
+    })
   }
 
   render() {

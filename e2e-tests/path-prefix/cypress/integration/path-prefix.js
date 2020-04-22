@@ -4,7 +4,7 @@ const withTrailingSlash = url => `${url}/`
 
 describe(`Production pathPrefix`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
   it(`returns 200 on base route`, () => {
@@ -38,11 +38,20 @@ describe(`Production pathPrefix`, () => {
     it(`can go back`, () => {
       cy.getTestElement(`page-2-link`)
         .click()
-        .waitForAPI(`onRouteUpdate`)
-
-      cy.go(`back`).waitForAPI(`onRouteUpdate`)
+        .waitForRouteChange()
+        .go(`back`)
+        .waitForRouteChange()
 
       cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
+    })
+
+    it(`can navigate to the blogtest page that contains the blog prefix`, () => {
+      cy.getTestElement(`page-blogtest-link`).click()
+
+      cy.location(`pathname`).should(
+        `eq`,
+        withTrailingSlash(`${pathPrefix}/blogtest`)
+      )
     })
   })
 })

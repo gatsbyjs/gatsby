@@ -2,6 +2,7 @@
 title: Announcing new Gatsby Company
 date: 2018-05-24
 author: "Kyle Mathews"
+tags: ["gatsby-inc"]
 ---
 
 Together with my co-founder, [Sam Bhagwat](https://twitter.com/calcsam), I’m thrilled to announce the formation of [Gatsby Inc.](https://www.gatsbyjs.com/) Based on the open source project Gatsby I founded, Gatsby the company will make feature-rich and blazing-fast websites easier to build and run.
@@ -95,15 +96,17 @@ But static sites, despite how much developers love them, have never gained wides
 
 As I thought deeply about this problem, it occurred to me that there were strong parallels between this problem and everything I’d learned about event sourcing and building cloud-native applications.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Static sites are the materialized views of websites.</p>&mdash; Kyle Mathews (@kylemathews) <a href="https://twitter.com/kylemathews/status/825512417337544705?ref_src=twsrc%5Etfw">January 29, 2017</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Event sourcing potentially fantastic model for static site builder. Continually rebuilding website on events.</p>&mdash; Kyle Mathews (@kylemathews) <a href="https://twitter.com/kylemathews/status/825513977329307648?ref_src=twsrc%5Etfw">January 29, 2017</a></blockquote>
+https://twitter.com/kylemathews/status/825512417337544705
+
+https://twitter.com/kylemathews/status/825513977329307648
 
 I realized you could view a website as the current computed state of a long stream of content and code changes. When viewed through that lens, the architecture became clear for a new version of Gatsby that would glue Gatsby to various data sources & solve the really hard problems of static sites: fast incremental builds and parallelizing builds for large and complex sites.
 
 This architecture would enable Gatsby to eliminate the build step entirely—any code or content change would be quickly incorporated into the site and go live immediately. We could port the ideas of real-time event processing to building websites.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Building for the web in the future will revolve entirely around thinking about design and data structures.</p>&mdash; Kyle Mathews (@kylemathews) <a href="https://twitter.com/kylemathews/status/916165920359198720?ref_src=twsrc%5Etfw">October 6, 2017</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Everything else can be automated</p>&mdash; Kyle Mathews (@kylemathews) <a href="https://twitter.com/kylemathews/status/916165988772487168?ref_src=twsrc%5Etfw">October 6, 2017</a></blockquote>
+https://twitter.com/kylemathews/status/916165920359198720
+
+https://twitter.com/kylemathews/status/916165988772487168
 
 ### Launching new version of Gatsby
 
@@ -119,7 +122,7 @@ We were lucky to find some great investors, led by [Dan Scholnick of Trinity Ven
 
 I want to emphasize that this new startup doesn’t signal any move away from open source. I’ve been heavily involved in open source communities since I started programming 12 years ago and strongly believe it’s the best way to build software. We will be building cloud services for Gatsby but Gatsby itself will remain 100% open source as will most of what we intend to do. What the investment and company will enable is a much larger amount of effort towards improving Gatsby core and its surrounding ecosystem. Several core contributors have already joined to work full-time on Gatsby. We’ve been able to work with upstreams to make targeted improvements that benefit not just Gatsby but the whole frontend ecosystem. And as our company grows, we’ll be able to proportionally increase our investment in open source.
 
-Gatsby, the company, is just getting off the ground, but, since the open source project is widely used, we wanted to talk about it now vs. keeping it a secret. If you’re a company exploring building some of your websites with React and headless CMSs, we would love to talk with you. If you are an engineer interested in helping us build the the future of web development, we’d love to talk with you as well.
+Gatsby, the company, is just getting off the ground, but, since the open source project is widely used, we wanted to talk about it now vs. keeping it a secret. If you’re a company exploring building some of your websites with React and headless CMSs, we would love to talk with you. If you are an engineer interested in helping us build the future of web development, we’d love to talk with you as well.
 
 It’s been an amazing journey so far. Wish Sam and I and our new colleagues luck on this new adventure.
 

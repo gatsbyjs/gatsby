@@ -4,12 +4,12 @@ import { Link, graphql } from "gatsby"
 import Layout from "../layouts"
 import Container from "../components/container"
 
-const AllRecipes = ({ data }) => (
+const Recipes = ({ data }) => (
   <Layout>
     <Container>
       <h1>Recipes</h1>
       <ul>
-        {data.allRecipes.edges.map(({ node }) => (
+        {data.recipes.edges.map(({ node }) => (
           <li key={node.fields.slug}>
             <Link to={node.fields.slug}>{node.title}</Link>
           </li>
@@ -19,11 +19,11 @@ const AllRecipes = ({ data }) => (
   </Layout>
 )
 
-export default AllRecipes
+export default Recipes
 
 export const query = graphql`
   query {
-    allRecipes(limit: 1000) {
+    recipes: allNodeRecipe(limit: 1000) {
       edges {
         node {
           title

@@ -1,28 +1,14 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import PropTypes from "prop-types"
-import styled from "@emotion/styled"
 
 import EcosystemSection from "./ecosystem-section"
-
-import presets from "../../utils/presets"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import {
   setupScrollersObserver,
   unobserveScrollers,
 } from "../../utils/scrollers-observer"
-
-const EcosystemBoardRoot = styled(`div`)`
-  display: flex;
-  flex-direction: column;
-
-  ${presets.Md} {
-    flex-direction: row;
-    flex-wrap: wrap;
-    height: calc(
-      100vh - (${presets.bannerHeight} + ${presets.headerHeight} + 1px)
-    );
-    padding: 2rem 1rem 1rem;
-  }
-`
 
 class EcosystemBoard extends Component {
   componentDidMount() {
@@ -41,7 +27,21 @@ class EcosystemBoard extends Component {
     } = this.props
 
     return (
-      <EcosystemBoardRoot>
+      <div
+        sx={{
+          display: `flex`,
+          flexDirection: `column`,
+          [mediaQueries.md]: {
+            flexDirection: `row`,
+            flexWrap: `wrap`,
+            height: t =>
+              `calc(100vh - (${t.sizes.bannerHeight} + ${t.sizes.headerHeight} + 1px))`,
+            pt: 7,
+            px: 4,
+            pb: 4,
+          },
+        }}
+      >
         <EcosystemSection
           title="Plugins"
           description="Plugins are packages that extend Gatsby sites. They can source content, transform data, and more!"
@@ -51,7 +51,7 @@ class EcosystemBoard extends Component {
             { label: `Browse Plugins`, to: `/plugins/` },
             {
               label: `Creating Plugins`,
-              to: `/docs/plugin-authoring/`,
+              to: `/docs/creating-plugins/`,
               secondary: true,
             },
             { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },
@@ -72,9 +72,14 @@ class EcosystemBoard extends Component {
         <EcosystemSection
           title="External Resources"
           description="A curated list of interesting Gatsby community projects and learning resources like podcasts and tutorials."
-          links={[{ label: `Browse Resources`, to: `/docs/awesome-gatsby/` }]}
+          links={[
+            {
+              label: `Browse Resources`,
+              to: `/docs/awesome-gatsby-resources/`,
+            },
+          ]}
         />
-      </EcosystemBoardRoot>
+      </div>
     )
   }
 }

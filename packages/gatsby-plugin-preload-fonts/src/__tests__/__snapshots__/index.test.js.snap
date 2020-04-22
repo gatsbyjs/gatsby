@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`prepare visits each provided route 1`] = `
+Object {
+  "assets": Object {
+    "/bar": Object {
+      "/path/to/another.ttf": true,
+      "https://foo.bar/path/to/a/font.woff": true,
+    },
+    "/baz": Object {
+      "/another/font.woff2": true,
+      "/some/external/font.ttf": true,
+      "https://foo.bar/another/font.ttf": true,
+    },
+    "/foo": Object {
+      "/path/to/font.otf": true,
+      "https://foo.bar/path/to/font.otf": true,
+    },
+  },
+  "hash": "09f5b092fb87d859e0ac53dbae299a9e",
+  "timestamp": Any<Number>,
+}
+`;

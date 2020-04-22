@@ -3,16 +3,8 @@ title: Per-Link Gatsby page transitions with TransitionLink
 date: 2018-12-27
 author: Tyler Barnes
 tags:
-  - gatsby
-  - gatsby-plugin
   - plugins
-  - animation
-  - page transitions
-  - gsap
-  - anime.js
-  - react-spring
-  - react-pose
-  - css
+  - cutting-edge-experiences
 ---
 
 When I started developing in React and Gatsby, one of the most exciting things to me was that it would be easier to code up page transitions than it had been before.

@@ -11,10 +11,8 @@ describe(`add page data dependency`, () => {
     }
 
     expect(reducer(undefined, action)).toEqual({
-      connections: {},
-      nodes: {
-        "123": [`/hi/`],
-      },
+      connections: new Map(),
+      nodes: new Map([[`123`, new Set([`/hi/`])]]),
     })
   })
   it(`lets you add a node dependency to multiple paths`, () => {
@@ -45,10 +43,8 @@ describe(`add page data dependency`, () => {
     state = reducer(state, action3)
 
     expect(state).toEqual({
-      connections: {},
-      nodes: {
-        "1.2.3": [`/hi/`, `/hi2/`, `/blog/`],
-      },
+      connections: new Map(),
+      nodes: new Map([[`1.2.3`, new Set([`/hi/`, `/hi2/`, `/blog/`])]]),
     })
   })
   it(`lets you add a connection dependency`, () => {
@@ -71,10 +67,8 @@ describe(`add page data dependency`, () => {
     state = reducer(state, action2)
 
     expect(state).toEqual({
-      connections: {
-        "Markdown.Remark": [`/hi/`, `/hi2/`],
-      },
-      nodes: {},
+      connections: new Map([[`Markdown.Remark`, new Set([`/hi/`, `/hi2/`])]]),
+      nodes: new Map(),
     })
   })
   it(`removes duplicate paths`, () => {
@@ -101,8 +95,8 @@ describe(`add page data dependency`, () => {
     // Add different action
     state = reducer(state, action2)
 
-    expect(state.connections[`MarkdownRemark`].length).toEqual(2)
-    expect(state.nodes[1].length).toEqual(2)
+    expect(state.connections.get(`MarkdownRemark`).size).toEqual(2)
+    expect(state.nodes.get(1).size).toEqual(2)
   })
   it(`lets you add both a node and connection in one action`, () => {
     const action = {

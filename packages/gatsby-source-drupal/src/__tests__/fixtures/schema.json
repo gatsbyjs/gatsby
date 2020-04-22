@@ -1,0 +1,40 @@
+{
+    "$schema": "https:\/\/json-schema.org\/draft\/2019-09\/hyper-schema",
+    "$id": "http:\/\/fixture\/jsonapi\/schema",
+    "allOf": [
+        {
+            "$ref": "https:\/\/jsonapi.org\/schema#\/definitions\/success"
+        },
+        {
+            "type": "object",
+            "links": [
+                {
+                    "href": "{instanceHref}",
+                    "rel": "related",
+                    "title": "Article",
+                    "targetMediaType": "application\/vnd.api+json",
+                    "targetSchema": "http:\/\/fixture\/jsonapi\/node\/article\/collection\/schema",
+                    "templatePointers": {
+                        "instanceHref": "\/links\/node--article\/href"
+                    },
+                    "templateRequired": [
+                        "instanceHref"
+                    ]
+                },
+                {
+                    "href": "{instanceHref}",
+                    "rel": "related",
+                    "title": "Files",
+                    "targetMediaType": "application\/vnd.api+json",
+                    "targetSchema": "http:\/\/fixture\/jsonapi\/file\/file\/collection\/schema",
+                    "templatePointers": {
+                        "instanceHref": "\/links\/file--file\/href"
+                    },
+                    "templateRequired": [
+                        "instanceHref"
+                    ]
+                }
+            ]
+        }
+    ]
+}

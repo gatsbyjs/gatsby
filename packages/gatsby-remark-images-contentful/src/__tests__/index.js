@@ -1,11 +1,3 @@
-const Remark = require(`remark`)
-const plugin = require(`../`)
-const remark = new Remark().data(`settings`, {
-  commonmark: true,
-  footnotes: true,
-  pedantic: true,
-})
-
 jest.mock(`../utils/`, () => {
   return {
     getBase64Img: jest.fn().mockReturnValue(`data:image;`),
@@ -13,11 +5,25 @@ jest.mock(`../utils/`, () => {
       base64: `data:image;`,
       aspectRatio: 1,
       srcSet: `srcSet`,
+      webpSrcSet: `webpSrcSet`,
       src: `imageUrl`,
       sizes: [`128px`, `250px`],
       density: 140,
       presentationWidth: 600,
       presentationHeight: 450,
+    }),
+  }
+})
+
+jest.mock(`axios`)
+jest.mock(`sharp`, () => () => {
+  return {
+    metadata: jest.fn(() => {
+      return {
+        width: 200,
+        height: 200,
+        density: 75,
+      }
     }),
   }
 })
@@ -46,7 +52,7 @@ const createNode = content => {
   return markdownNode
 }
 
-const createPluginOptions = (content, imagePaths = `/`) => {
+const createPluginOptions = (content, imagePaths = `/`, options = {}) => {
   const dirName = `not-a-real-dir`
   return {
     files: [].concat(imagePaths).map(imagePath => {
@@ -62,28 +68,29 @@ const createPluginOptions = (content, imagePaths = `/`) => {
         dir: dirName,
       }
     },
+    createContentDigest: jest.fn().mockReturnValue(`contentDigest`),
+    ...options,
   }
 }
+const Remark = require(`remark`)
+const plugin = require(`../index`)
+const remark = new Remark().data(`settings`, {
+  commonmark: true,
+  footnotes: true,
+  pedantic: true,
+})
+const axios = require(`axios`)
 
-jest.mock(`axios`, () => () =>
-  Promise.resolve({
-    data: {
-      pipe: jest.fn(),
-      destroy: jest.fn(),
-    },
-  })
-)
-
-jest.mock(`sharp`, () => () => {
-  return {
-    metadata: jest.fn(() => {
-      return {
-        width: 200,
-        height: 200,
-        density: 75,
-      }
-    }),
-  }
+beforeEach(() => {
+  axios.mockClear()
+  axios.mockImplementation(() =>
+    Promise.resolve({
+      data: {
+        pipe: jest.fn(),
+        destroy: jest.fn(),
+      },
+    })
+  )
 })
 
 test(`it returns empty array when 0 images`, async () => {
@@ -151,6 +158,24 @@ test(`it transforms images with a https scheme in markdown`, async () => {
   expect(node.value).not.toMatch(`<html>`)
 })
 
+test(`it throws specific error if the image is not found`, async () => {
+  axios.mockImplementationOnce(() => Promise.reject(new Error(`oh no`)))
+  const reporter = {
+    panic: jest.fn(),
+  }
+  const imagePath = `https://images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/doesnotexist.jpg`
+  const content = `
+![image](${imagePath})
+  `.trim()
+
+  await plugin(createPluginOptions(content, imagePath, { reporter }))
+  expect(reporter.panic).toHaveBeenCalledTimes(1)
+  expect(reporter.panic).toHaveBeenCalledWith(
+    `Image downloading failed for ${imagePath}, please check if the image still exists on contentful`,
+    expect.any(Error)
+  )
+})
+
 test(`it transforms multiple images in markdown`, async () => {
   const imagePaths = [
     `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,
@@ -193,4 +218,22 @@ test(`it leaves relative HTML img tags alone`, async () => {
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
   expect(nodes[0].value).toBe(content)
+})
+
+test(`it transforms images in markdown with webp srcSets if option is enabled`, async () => {
+  const imagePath = `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
+  const content = `
+![image](${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath), {
+    withWebp: true,
+  })
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
 })

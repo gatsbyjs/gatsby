@@ -1,6 +1,7 @@
 ---
 name: Question 🤔
 about: Usage question or discussion about Gatsby.
+labels: "type: question or discussion"
 ---
 
 <!--
@@ -28,7 +29,7 @@ about: Usage question or discussion about Gatsby.
 ### Environment (if relevant)
 
 <!--
-  Required. Run `npx gatsby info --clipboard` in your gatsby project directory and paste its contents here.
+  Required. Run `gatsby info --clipboard` in your gatsby project directory and paste its contents here.
 -->
 
 ### File contents (if changed)

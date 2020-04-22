@@ -31,6 +31,20 @@ this program running.
 Typically you'll also want to run `npm run watch` in the Gatsby repo to set up
 watchers to build Gatsby source code.
 
+## Revert to current packages
+
+If you've recently run `gatsby-dev` your `node_modules` will be out of sync with current published packages. In order to undo this, you can remove the `node_modules` directory or run:
+
+```shell
+git checkout package.json; yarn --force
+```
+
+or
+
+```shell
+git checkout package.json; npm install --force
+```
+
 **[Demo Video](https://www.youtube.com/watch?v=D0SwX1MSuas)**
 
 More detailed instruction for setting up your Gatsby development environment can
@@ -55,7 +69,7 @@ https://github.com/gatsbyjs/gatsby/blob/master/scripts/publish-site.sh.
 
 #### `--quiet`
 
-Don't output anything except for a quit message when used together with
+Don't output anything except for a success message when used together with
 `--scan-once`.
 
 #### `--copy-all`

@@ -1,6 +1,6 @@
 describe(`anonymous arrow function pages`, () => {
   beforeEach(() => {
-    cy.visit(`/anonymous-arrow`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/anonymous-arrow`).waitForRouteChange()
   })
 
   it(`displays arrow function component correctly`, () => {
@@ -10,12 +10,8 @@ describe(`anonymous arrow function pages`, () => {
   })
 
   it(`updates page on navigation`, () => {
-    cy.getTestElement(`link`)
-      .click()
-      .waitForAPI(`onRouteUpdate`)
+    cy.getTestElement(`link`).click().waitForRouteChange()
 
-    cy.getTestElement(`title`)
-      .invoke(`text`)
-      .should(`contain`, `Two`)
+    cy.getTestElement(`title`).invoke(`text`).should(`contain`, `Two`)
   })
 })

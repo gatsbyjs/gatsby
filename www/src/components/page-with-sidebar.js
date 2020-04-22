@@ -1,36 +1,40 @@
-import React, { Fragment } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Fragment } from "react"
 
+import { getItemList } from "../utils/sidebar/item-list"
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
-import presets from "../utils/presets"
-import { rhythm } from "../utils/typography"
 
-export default props => {
-  if (props.disable) {
-    return props.renderContent()
-  } else {
-    return (
-      <Fragment>
-        <div
-          css={{
-            [presets.Md]: { paddingLeft: rhythm(10) },
-            [`${presets.Md} and (max-width:980px)`]: {
-              ".gatsby-highlight": {
-                marginLeft: 0,
-                marginRight: 0,
-              },
-            },
-            [presets.Lg]: { paddingLeft: rhythm(12) },
-          }}
-        >
-          {props.renderContent()}
-        </div>
-        <StickyResponsiveSidebar
-          enableScrollSync={props.enableScrollSync}
-          itemList={props.itemList}
-          key={props.location.pathname}
-          location={props.location}
-        />
-      </Fragment>
-    )
+export default ({ children, enableScrollSync, location }) => {
+  const itemList = getItemList(location.pathname)
+  if (!itemList) {
+    return children
   }
+  return (
+    <Fragment>
+      <div
+        sx={{
+          pl: [
+            null,
+            null,
+            null,
+            t => t.sizes.sidebarWidth.default,
+            t => t.sizes.sidebarWidth.large,
+          ],
+        }}
+      >
+        {children}
+      </div>
+      <StickyResponsiveSidebar
+        enableScrollSync={enableScrollSync}
+        itemList={itemList.items}
+        title={itemList.title}
+        sidebarKey={itemList.key}
+        disableExpandAll={itemList.disableExpandAll}
+        disableAccordions={itemList.disableAccordions}
+        key={location.pathname}
+        location={location}
+      />
+    </Fragment>
+  )
 }

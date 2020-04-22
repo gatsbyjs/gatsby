@@ -1,63 +1,56 @@
-import React, { Fragment } from "react"
-import PluginSearchBar from "./plugin-searchbar-body"
-import { rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
-import { scrollbarStyles } from "../utils/styles"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Fragment } from "react"
+import loadable from "@loadable/component"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+
+const PluginSearchBar = loadable(() => import("./plugin-searchbar-body"))
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
   <Fragment>
-    <section
-      css={{
-        ...styles.sidebar,
+    <nav
+      sx={{
         // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
         display: !isPluginsIndex ? `none` : false,
+        height: t => `calc(100vh - ${t.sizes.headerHeight})`,
+        top: t =>
+          `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} - 1px)`,
+        width: `100%`,
+        zIndex: 1,
+        [mediaQueries.md]: {
+          backgroundColor: `background`,
+          borderColor: `ui.border`,
+          borderRightStyle: `solid`,
+          borderRightWidth: `1px`,
+          display: `block`,
+          position: `fixed`,
+          width: `pluginsSidebarWidthDefault`,
+        },
+        [mediaQueries.lg]: {
+          width: `pluginsSidebarWidthLarge`,
+        },
       }}
+      aria-label="Plugin navigation"
     >
       <PluginSearchBar location={location} />
-    </section>
+    </nav>
     <main
       id={`reach-skip-nav`}
-      css={{
-        ...styles.content,
+      sx={{
         // mobile: hide README on gatsbyjs.org/plugins index page
         display: isPluginsIndex ? `none` : false,
+        [mediaQueries.md]: {
+          display: `block`,
+          pl: t => t.sizes.pluginsSidebarWidthDefault,
+        },
+        [mediaQueries.lg]: {
+          pl: t => t.sizes.pluginsSidebarWidthLarge,
+        },
       }}
     >
       {children}
     </main>
   </Fragment>
 )
-
-const widthDefault = rhythm(14)
-const widthLarge = rhythm(16)
-
-const styles = {
-  sidebar: {
-    height: `calc(100vh - ${presets.headerHeight})`,
-    width: `100%`,
-    zIndex: 1,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
-    ...scrollbarStyles,
-    [presets.Md]: {
-      display: `block`,
-      width: widthDefault,
-      position: `fixed`,
-      background: colors.ui.whisper,
-      borderRight: `1px solid ${colors.ui.light}`,
-    },
-    [presets.Lg]: {
-      width: widthLarge,
-    },
-  },
-  content: {
-    [presets.Md]: {
-      display: `block`,
-      paddingLeft: widthDefault,
-    },
-    [presets.Lg]: {
-      paddingLeft: widthLarge,
-    },
-  },
-}
 
 export default PageWithPluginSearchBar
