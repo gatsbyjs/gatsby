@@ -10,7 +10,7 @@ tags:
   - wordpress
 ---
 
-Today I’m thrilled to announce the release of Incremental Builds on Gatsby Cloud. In January we announced Gatsby Builds, bringing you up to 60x faster builds for Gatsby sites compared to other solutions. Now Incremental Builds reliably brings build times on data changes to _under 10 seconds_.
+Today I’m thrilled to announce the release of Incremental Builds on Gatsby Cloud. In January we announced Gatsby Builds, bringing you up to 60x faster builds for Gatsby sites compared to other solutions. Now, when you make a data change in a CMS, the Gatsby Cloud Incremental Builds feature will rebuild only what’s necessary—giving you up to 1000x faster builds. **That is an average build time of < 10 seconds!**
 
 I’m excited about what this means for the Gatsby community and the use cases it unlocks—and even more excited for what this means for the future of the web.
 
