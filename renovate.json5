@@ -79,10 +79,6 @@
       ],
     },
     {
-      groupName: "type updates",
-      packagePatters: ["^@types"],
-    },
-    {
       groupName: "patch updates in packages",
       updateTypes: ["patch"],
     },
