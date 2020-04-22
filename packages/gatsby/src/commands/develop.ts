@@ -37,6 +37,44 @@ const globalConfigPath =
   process.env.XDG_CONFIG_HOME || path.join(os.homedir(), `.config`)
 const lock = util.promisify(lockFile.lock)
 
+const hashString = str =>
+  crypto
+    .createHash(`md5`)
+    .update(str)
+    .digest(`hex`)
+
+const createServiceLock = async (programPath, name, content) => {
+  const hash = hashString(programPath)
+
+  const lockfileDir = path.join(globalConfigPath, `gatsby`, `sites`, hash)
+
+  await fse.ensureDir(lockfileDir)
+  const lockfilePath = path.join(lockfileDir, `${name}.lock`)
+
+  try {
+    await lock(lockfilePath, {})
+  } catch (err) {
+    console.log(err)
+    // TODO: Nice helpful error message
+    throw new Error(`Another process probably already running.`)
+  }
+
+  await fse.writeFile(lockfilePath, content)
+}
+
+const getServiceLock = (programPath, name) => {
+  const hash = hashString(programPath)
+
+  try {
+    const lockfileDir = path.join(globalConfigPath, `gatsby`, `sites`, hash)
+    const lockfilePath = path.join(lockfileDir, `${name}.lock`)
+
+    return fse.readFile(lockfilePath)
+  } catch (err) {
+    return Promise.resolve(null)
+  }
+}
+
 module.exports = async (program: IProgram): Promise<void> => {
   const developProcessPath = resolveCwd.silent(
     `gatsby/dist/commands/develop-process`
@@ -61,28 +99,10 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 
   const wsServerPort = await getRandomPort()
+
+  await createServiceLock(program.directory, `ws`, wsServerPort)
+
   const wsServer = http.createServer().listen(wsServerPort)
-
-  const hash = crypto
-    .createHash(`md5`)
-    .update(program.directory)
-    .digest(`hex`)
-
-  const wsLockfileDir = path.join(globalConfigPath, `gatsby`, `sites`, hash)
-
-  await fse.ensureDir(wsLockfileDir)
-  const wsLockfilePath = path.join(wsLockfileDir, `ws.lock`)
-
-  try {
-    await lock(wsLockfilePath, {})
-  } catch (err) {
-    console.log(err)
-    // TODO: Nice helpful error message
-    throw new Error(`Another process probably already running.`)
-  }
-
-  await fse.writeFile(wsLockfilePath, wsServerPort)
-
   const io = socket(wsServer)
 
   io.on(`connection`, socket => {
