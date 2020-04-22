@@ -2,7 +2,7 @@ import React from "react"
 import { useQuery, useMutation } from "urql"
 
 const InstallInput: React.FC<{}> = () => {
-  const [value, setValue] = React.useState("")
+  const [value, setValue] = React.useState(``)
 
   const [_, installGatbyPlugin] = useMutation(`
     mutation installGatsbyPlugin($name: String!) {
@@ -24,7 +24,7 @@ const InstallInput: React.FC<{}> = () => {
 
   return (
     <form
-      onSubmit={evt => {
+      onSubmit={(evt): void => {
         evt.preventDefault()
         installGatbyPlugin({
           name: value,
@@ -35,7 +35,7 @@ const InstallInput: React.FC<{}> = () => {
         Install:
         <input
           value={value}
-          onChange={evt => setValue(evt.target.value)}
+          onChange={(evt): void => setValue(evt.target.value)}
           type="text"
           placeholder="gatsby-plugin-cool"
         />
@@ -65,7 +65,15 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
     }
   `)
 
-  return <button onClick={() => deleteGatsbyPlugin({ name })}>X</button>
+  return (
+    <button
+      onClick={(): void => {
+        deleteGatsbyPlugin({ name })
+      }}
+    >
+      X
+    </button>
+  )
 }
 
 const Index: React.FC<{}> = () => {
