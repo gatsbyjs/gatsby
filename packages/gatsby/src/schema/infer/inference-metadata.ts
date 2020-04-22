@@ -116,7 +116,7 @@ export type ValueType = keyof IValueDescriptor
 
 export interface ITypeMetadata {
   typeName?: string
-  disabled: boolean
+  disabled?: boolean
   ignored?: boolean
   dirty?: boolean
   total?: number

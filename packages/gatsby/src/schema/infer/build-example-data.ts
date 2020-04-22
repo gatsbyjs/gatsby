@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { groupBy } from "lodash"
-import { IValueDescriptor, ValueType } from "./inference-metadata"
+import {
+  IValueDescriptor,
+  ValueType,
+  ITypeMetadata,
+} from "./inference-metadata"
 import {
   TypeConflictReporter,
   ITypeConflictExample,
@@ -12,11 +16,7 @@ const getExampleObject = ({
   fieldMap = {},
   typeName,
   typeConflictReporter,
-}: {
-  fieldMap: { [key: string]: IValueDescriptor }
-  typeName: ValueType
-  typeConflictReporter?: TypeConflictReporter
-}): { [k: string]: unknown } =>
+}: ITypeMetadata): { [k: string]: unknown } =>
   Object.keys(fieldMap).reduce((acc, key) => {
     const value = buildExampleValue({
       path: `${typeName}.${key}`,
