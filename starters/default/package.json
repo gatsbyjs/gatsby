@@ -5,9 +5,9 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.20.25",
+    "gatsby": "^2.20.29",
     "gatsby-image": "^2.3.4",
-    "gatsby-plugin-manifest": "^2.3.5",
+    "gatsby-plugin-manifest": "^2.3.6",
     "gatsby-plugin-offline": "^3.1.4",
     "gatsby-plugin-react-helmet": "^3.2.4",
     "gatsby-plugin-sharp": "^2.5.6",
@@ -19,7 +19,7 @@
     "react-helmet": "^6.0.0"
   },
   "devDependencies": {
-    "prettier": "2.0.4"
+    "prettier": "2.0.5"
   },
   "keywords": [
     "gatsby"
