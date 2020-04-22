@@ -4,6 +4,8 @@
     "package.json",
     "packages/**",
     "www/package.json",
+    "starters/**",
+    "examples/**",
   ],
   major: {
     masterIssueApproval: true,
@@ -77,10 +79,6 @@
       ],
     },
     {
-      groupName: "type updates",
-      packagePatters: ["^@types"],
-    },
-    {
       groupName: "patch updates in packages",
       updateTypes: ["patch"],
     },
@@ -92,6 +90,10 @@
       groupName: "updates in starters",
       paths: ["starters/**"],
       updateTypes: ["patch"],
+    },
+    {
+      groupName: "type updates",
+      packagePatterns: ["^@types"],
     },
   ],
   timezone: "GMT",
