@@ -123,25 +123,14 @@ To learn more about how theming works with Theme UI, head over to the [Theme UI 
 and to learn more about using the official Gatsby themes, see our [documentation on themes][theme-docs].
 
 [progressive disclosure]: /docs/gatsby-core-philosophy/#progressively-disclose-complexity
-
 [mdx]: /docs/mdx/
-
 [theme-docs]: /docs/themes/
-
 [shadowing]: /blog/2019-04-29-component-shadowing/
-
 [typography.js]: /docs/typography-js/
-
 [theme ui]: https://theme-ui.com
-
 [overreacted.io]: https://overreacted.io
-
 [digital garden]: https://tomcritchlow.com/2019/02/17/building-digital-garden/
-
 [styled system]: https://styled-system.com
-
 [theme specification]: https://github.com/system-ui/theme-specification
-
 [amberley romo]: https://mobile.twitter.com/amber1ey
-
 [john otander]: https://mobile.twitter.com/4lpine

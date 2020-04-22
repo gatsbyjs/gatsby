@@ -140,7 +140,6 @@ Take the example of creating a custom button. In the past, you would create a CS
 In the world of components, you instead create a `PrimaryButton` component with your button styles and use it throughout your site like:
 
 <!-- prettier-ignore -->
-
 ```jsx
 <PrimaryButton>Click me</PrimaryButton>
 ```

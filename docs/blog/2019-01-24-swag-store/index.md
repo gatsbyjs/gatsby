@@ -38,7 +38,7 @@ We also saw that people were excited about:
 
 - Stickers
 
-<https://twitter.com/the_becca_lee/status/1009920104019083264>
+https://twitter.com/the_becca_lee/status/1009920104019083264
 
 Since we had so many things to choose from, we needed something lightweight as a trial run. We decided on shirts because we already had the design for those. We also got socks for people (like me) who always find off the rack shirts impossible to wear and look good. And of course we got some stickers so that we could wallpaper our laptops with Gatsby.
 
@@ -256,11 +256,11 @@ Setting up a mostly automated process for swag gave us the best of both worlds, 
 
 It also meant that we got to see pictures like this:
 
-<https://twitter.com/ryanwiemer/status/1022267081998266368>
+https://twitter.com/ryanwiemer/status/1022267081998266368
 
 And this:
 
-<https://twitter.com/NikkitaFTW/status/1024332058125107200>
+https://twitter.com/NikkitaFTW/status/1024332058125107200
 
 Dogs and cats in Gatsby swag? Yes please. I’ll have another. Find out how you can [#buildwithgatsby](https://twitter.com/search?src=typd&q=%23buildwithgatsby) on [Twitter](https://twitter.com/gatsbyjs) or on our [site](https://www.gatsbyjs.com/)!
 

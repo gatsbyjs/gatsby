@@ -10,7 +10,7 @@ I love pair programming. This is one of the practices we do in our trainings at 
 
 A couple of weeks ago, we were planning to rebuild our websites using Gatsby, and then I saw this:
 
-<https://twitter.com/jlengstorf/status/1016721019376025600>
+https://twitter.com/jlengstorf/status/1016721019376025600
 
 I didn’t have to think about that twice--I booked it! It was funny because the week before this tweet I was talking to [Alex](https://twitter.com/alex_lobera) and [Richard](https://twitter.com/ric9176) about a similar idea I had with ReactJS Academy. We want to do something similar to pair programming with developers who want to learn React (if you are interested please send me a DM!).
 

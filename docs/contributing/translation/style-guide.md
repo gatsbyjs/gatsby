@@ -113,5 +113,4 @@ Los elementos de React son [inmutables](https://es.wikipedia.org/wiki/Objeto_inm
 For links that have no equivalent (Stack Overflow, YouTube videos, etc.), use the English link.
 
 [mdn]: https://developer.mozilla.org/en-US/
-
 [wikipedia]: https://en.wikipedia.org/wiki/Main_Page

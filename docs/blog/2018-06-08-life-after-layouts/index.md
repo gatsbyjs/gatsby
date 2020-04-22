@@ -109,7 +109,7 @@ Removing layouts isn't the only improvement coming in Gatsby V2. We're really ex
 
 - Much faster hot reloading, which enables Ludicrous Mode
 
-<https://twitter.com/gatsbyjs/status/974507205121617920>
+https://twitter.com/gatsbyjs/status/974507205121617920
 
 - We can now add GraphQL queries to any component in our app (not just page components) using [`StaticQuery`](/docs/static-query/)
 - Upgraded to the latest versions of React, Babel, Webpack, and other libraries Gatsby depends on

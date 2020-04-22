@@ -58,9 +58,6 @@ Gatsby enables these hooks to deliver app-like functionality, just as it does fo
 If these briefly described topics and use cases sound interesting to you then please consider [signing up for the Webinar][webinar]. I can't wait to share some practical advice, excellent tooling, and a live demo to show you how you can #BuildWithGatsby in more ways than _just_ static. I hope to see you there!
 
 [reddit-thread]: https://www.reddit.com/r/reactjs/comments/992n2r/next_vs_gatsby/?st=jn6cojmr&sh=1a53fac1
-
 [webinar]: https://www.gatsbyjs.com/build-web-apps-webinar
-
 [hydrate]: https://reactjs.org/docs/react-dom.html#hydrate
-
 [reconciler]: https://reactjs.org/docs/reconciliation.html

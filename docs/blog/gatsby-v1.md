@@ -22,11 +22,11 @@ code splitting, service workers, offline support, and more.
 
 Gatsby means no more compromising between developers, designers, and authors.
 
-<https://twitter.com/krist/status/882953204119556097>
+https://twitter.com/krist/status/882953204119556097
 
-<https://twitter.com/charlotte_dann/status/882596284116480000>
+https://twitter.com/charlotte_dann/status/882596284116480000
 
-<https://twitter.com/SachaGreif/status/841058065856192512>
+https://twitter.com/SachaGreif/status/841058065856192512
 
 ## Gatsby is growing like crazy
 
@@ -218,7 +218,7 @@ well as transformer plugins for
 [JSDoc](/packages/gatsby-transformer-documentationjs/), React prop-types, and
 [images](/packages/gatsby-plugin-sharp/). We're collecting a list of additional
 source/transformer plugins that'd be useful to have over at
-<https://github.com/gatsbyjs/gatsby/issues/1199>
+https://github.com/gatsbyjs/gatsby/issues/1199
 
 These plugins are easy to write (somewhat similar to webpack loaders) so we
 expect to see the list of plugins grow rapidly.

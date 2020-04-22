@@ -15,7 +15,7 @@ Using a Gatsby site is the most productive way to learn and master JavaScript, [
 
 I've discovered firsthand a counterintuitive truth - the best way to learn web development is abstractions on down, not core primitives on up.
 
-<https://twitter.com/hashim_warren/status/1190612851527966721>
+https://twitter.com/hashim_warren/status/1190612851527966721
 
 When I worked at a [coding bootcamp](https://www.coderfoundry.com/), I witnessed students build three production quality apps in 12 weeks by using a framework like ASP.NET, and a front-end component library like Bootstrap. The brilliance of this approach is a learner can focus on mastering what's important, what's unique, and what's difficult, instead of wasting time solving trivial problems, or fiddling with infinite options.
 

@@ -50,23 +50,29 @@ To test changes locally against the Gatsby [site and project files](https://gith
   ```
 
 - Once you have changes in Git you want to push, [add them and create a commit](https://help.github.com/en/articles/adding-a-file-to-a-repository-using-the-command-line). For information on how to structure your commits, check out the [Managing PRs](/contributing/managing-pull-requests/#commit-and-pr-title) doc.
+
   - Using a dot character `.` will add all untracked files in the current directory and subdirectories.
+
   ```shell
   git add .
   ```
+
   - Using a visual tool like [GitHub Desktop](https://desktop.github.com/) or [GitX](https://rowanj.github.io/gitx/) can help for choosing which files and lines to commit.
 
 - Committing code will run the automated linter using [Prettier](https://prettier.io). To run the linter manually, run an npm script in the project's base directory:
+
   ```shell
   npm run format
   ```
 
 - Commit any linting changes before pushing by [amending the previous commit](https://help.github.com/en/articles/changing-a-commit-message) or by adding a new commit. For more on linting and tests, visit the [Managing PRs](/contributing/managing-pull-requests/#automated-checks) doc.
+
   ```shell
   git commit --amend
   ```
 
 - Push your changes to your fork, assuming it is set up as [`origin`](https://www.git-tower.com/learn/git/glossary/origin):
+
   ```shell
   git push origin head
   ```

@@ -222,55 +222,29 @@ Check out the [GitHub repo][gatsby-mail-repo] to learn more about how it was bui
 We can't wait to see what you build.
 
 [beyond-static]: https://www.gatsbyjs.com/build-web-apps-webinar
-
 [whats-an-app]: /blog/2018-10-15-beyond-static-intro/#what-is-an-app
-
 [gmail]: https://gmail.com
-
 [twitter-lite]: https://m.twitter.com
-
 [prpl]: https://developers.google.com/web/fundamentals/performance/prpl-pattern/
-
 [app-shell]: https://developers.google.com/web/fundamentals/architecture/app-shell
-
 [case-study]: https://developers.google.com/web/showcase/2017/twitter
-
 [gatsby-graphql]: /docs/graphql-concepts/
-
 [gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
-
 [client-only-routes]: /docs/client-only-routes-and-user-authentication
-
 [create-react-app]: https://facebook.github.io/create-react-app/
-
 [react-dom-render-to-string]: https://reactjs.org/docs/react-dom-server.html#rendertostring
-
 [cdm]: https://reactjs.org/docs/react-component.html#componentdidmount
-
 [react-context]: https://reactjs.org/docs/context.html
-
 [react-lifecycle-methods]: https://reactjs.org/docs/state-and-lifecycle.html
-
 [authentication-tutorial]: /tutorial/authentication-tutorial/
-
 [using-gatsby-image]: https://using-gatsby-image.gatsbyjs.org/
-
 [traced-svg]: https://using-gatsby-image.gatsbyjs.org/traced-svg/
-
 [gatsby-plugin-offline]: /packages/gatsby-plugin-offline/
-
 [gatsby-plugin-sharp]: /packages/gatsby-plugin-sharp/
-
 [gatsby-source-graphql]: /packages/gatsby-source-graphql/
-
 [gatsby-source-wordpress]: /packages/gatsby-source-wordpress/
-
 [gatsby-transformer-yaml]: /packages/gatsby-transformer-yaml/
-
 [gatsby-plugins]: /plugins
-
 [gatsby-mail-app]: https://gatsby-mail.netlify.com
-
 [gatsby-mail-repo]: https://github.com/dschau/gatsby-mail
-
 [apollo-boost]: https://github.com/apollographql/apollo-client/tree/master/packages/apollo-boost

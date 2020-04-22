@@ -50,11 +50,11 @@ Firstly, though, why do we want a Headless CMS and a JAMstack for the project? T
 
 This is the one I’ve heard the most about in my research. Contentful is big and well-known - used by over 130 thousand developers if their website is to be believed. I also like their description “Fast. Flexible. Future-proof. It’s everything your CMS isn’t.” It might as well say “My CMS could beat up your CMS.”
 
-With all the acclaim, however, can come a hefty price tag. Contentful does have a free tier if you display their logo in the footer, you can keep up to 10,000 records and have 3 users - which isn’t bad at all. For my personal site I’m happy to plaster whatever attribution on the bottom. If you wanted to use this for a client and they were dead against someone else’s logo being on there, you can go up a half-tier with the same spec for $39 a month.
+With all the acclaim, however, can come a hefty price tag. Contentful does have a free tier if you display their logo in the footer, you can keep up to 10,000 records and have 3 users - which isn’t bad at all. For my personal site I’m happy to plaster whatever attribution on the bottom. If you wanted to use this for a client and they were dead against someone else’s logo being on there, you can go up a half-tier with the same spec for \$39 a month.
 
 ![Contentful's Pricing Packages](contentful-pricing.png)
 
-From the paid Developer edition upwards, it seems a pretty steep fee, especially compared to some others. That said, if you’ve got a client willing to fork out a hot $949, why not?
+From the paid Developer edition upwards, it seems a pretty steep fee, especially compared to some others. That said, if you’ve got a client willing to fork out a hot \$949, why not?
 
 ![A quick sample project](contentful-project.png)
 

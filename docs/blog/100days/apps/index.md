@@ -16,7 +16,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 Did you know Gatsby can be used for websites as well as dynamic apps? Dustin Schau presented about this topic at Gatsby Days London:
 
-<https://www.youtube.com/watch?v=zeVC-gD3u7M>
+https://www.youtube.com/watch?v=zeVC-gD3u7M
 
 For example, if your project needs private routes, or sections of the site that only authenticated users can view, Gatsby can enable that with just a plugin, or by creating a few components from scratch. In the following resources we invite you to try both paths, and experiment with powerful third-party authentication services.
 

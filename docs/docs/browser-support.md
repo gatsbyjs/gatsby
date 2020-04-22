@@ -16,7 +16,7 @@ If you start using a newer JavaScript API like `[].includes` that isn't supporte
 
 You may customize your list of supported browser versions by declaring a [`"browserslist"`](https://github.com/ai/browserslist) key within your `package.json`. Changing these values will modify your JavaScript (via[`babel-preset-env`](https://github.com/babel/babel-preset-env#targetsbrowsers)) and your CSS (via [`autoprefixer`](https://github.com/postcss/autoprefixer)) output.
 
-This article is a good introduction to the growing community of tools around Browserslist — <https://css-tricks.com/browserlist-good-idea/>
+This article is a good introduction to the growing community of tools around Browserslist — https://css-tricks.com/browserlist-good-idea/
 
 By default, Gatsby emulates the following config:
 

@@ -76,7 +76,7 @@ module.exports = require("babel-jest").createTransformer(babelOptions)
   The convention is to create a directory called `__mocks__` in the root directory
   for this. Note the pair of double underscores in the name.
 
-```js:title=\_\_mocks\_\_/file-mock.js
+```js:title=__mocks__/file-mock.js
 module.exports = "test-file-stub"
 ```
 
@@ -125,7 +125,7 @@ Finally, it's a good idea to mock the `gatsby` module itself. This may not be
 needed at first, but will make things a lot easier if you want to test
 components that use `Link` or GraphQL.
 
-```js:title=\_\_mocks\_\_/gatsby.js
+```js:title=__mocks__/gatsby.js
 const React = require("react")
 const gatsby = jest.requireActual("gatsby")
 
@@ -167,7 +167,7 @@ directory, or put them elsewhere (usually next to the component itself), with
 the extension `.spec.js` or `.test.js`. The decision comes down to your own
 preference. In this guide, you will use the `__tests__` folder convention. To test the header component, create a `header.js` file in `src/components/__tests__/`:
 
-```js:title=src/components/\_\_tests\_\_/header.js
+```js:title=src/components/__tests__/header.js
 import React from "react"
 import renderer from "react-test-renderer"
 
@@ -251,5 +251,4 @@ For more information on Jest testing, visit
 For an example encapsulating all of these techniques--and a full unit test suite with [@testing-library/react][react-testing-library], check out the [using-jest][using-jest] example.
 
 [using-jest]: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest
-
 [react-testing-library]: https://github.com/testing-library/react-testing-library

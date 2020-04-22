@@ -22,7 +22,7 @@ The two open-source Gatsby-Cloudinary plugins combine the best of both worlds:
 
 For example, an image uploaded to Cloudinary can be retrieved with a dynamic URL that transforms the original image into a cropped circular image, with a fixed width and height. The final URL becomes:
 
-<https://res.cloudinary.com/demo/image/upload/w_400,h_400,c_crop,r_max/w_200/lady.jpg>
+https://res.cloudinary.com/demo/image/upload/w_400,h_400,c_crop,r_max/w_200/lady.jpg
 
 Several transformation parameters can be included in the URL to modify the image on the fly. You can find more about [Cloudinary here](http://bit.ly/2GbkeT3).
 

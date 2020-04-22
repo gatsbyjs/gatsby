@@ -205,5 +205,5 @@ The chart is rendered inside our MDX document.
 
 ## Helpful resources
 
-- <https://daringfireball.net/projects/markdown/syntax>
-- <https://www.markdownguide.org/basic-syntax>
+- https://daringfireball.net/projects/markdown/syntax
+- https://www.markdownguide.org/basic-syntax

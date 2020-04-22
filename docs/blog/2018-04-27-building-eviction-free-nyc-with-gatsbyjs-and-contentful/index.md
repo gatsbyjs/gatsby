@@ -66,7 +66,7 @@ perfect fit for a number of reasons:
 2. GatsbyJS ships with an incredible amount of pre-handled optimization features,
    from prefetching resources to progressive image loading to inlining code blocks
    so they don’t need to be fetched via
-   [AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)). There was no way we
+   [AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>). There was no way we
    could have achieved this level of optimization on our own in this timeframe.
 3. A growing plugin library that allows for easy integrations that utilize Gatsby’s
    GraphQL data query system. With these we could easily use things like

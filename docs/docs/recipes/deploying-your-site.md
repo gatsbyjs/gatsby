@@ -112,7 +112,7 @@ Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to
 ### Prerequisites
 
 - An account on [Cloudflare](https://dash.cloudflare.com/sign-up)
-- A [Workers Unlimited plan](https://developers.cloudflare.com/workers/about/pricing/) for $5/month to enable the KV store, which is required to serve the Gatsby files.
+- A [Workers Unlimited plan](https://developers.cloudflare.com/workers/about/pricing/) for \$5/month to enable the KV store, which is required to serve the Gatsby files.
 - A [Gatsby site](/docs/quick-start) set up with Gatsby's CLI
 - [wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/install/) installed globally (`npm i -g @cloudflare/wrangler`)
 

@@ -201,7 +201,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Gatsby Use Cases
 
 **Question:** To use gatsby for a blog - is this overengineering?
-**Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — <https://overreacted.io/>
+**Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — https://overreacted.io/
 
 **Question:** Is it overkill to build every site with Gatsby.js?
 **Answer:** We don't think so :)

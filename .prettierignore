@@ -32,6 +32,3 @@ coverage
 
 # forestry files
 .forestry/**/*
-
-# docs (we use remark instead)
-docs/

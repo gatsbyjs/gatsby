@@ -87,7 +87,7 @@
       "eslint --cache --ext .js,.jsx,.ts,.tsx --fix",
       "git add"
     ],
-    "*.{css,scss,yaml,yml}": [
+    "*.{md,css,scss,yaml,yml}": [
       "prettier --write",
       "git add"
     ],
@@ -108,7 +108,6 @@
     "format": "npm run format:code && npm run format:docs && npm run format:other && npm run format:svg",
     "format:other": "npm run prettier -- --write",
     "format:code": "npm run lint:code -- --fix",
-    "format:docs": "remark \"./docs/\" -o",
     "format:svg": "node scripts/format-svg.js",
     "hooks:uninstall": "node node_modules/husky/husky.js uninstall",
     "hooks:install": "node node_modules/husky/husky.js install",

@@ -374,7 +374,7 @@ Two common ways this change _might_ break your site is:
 - You use the object form of the `to` prop in the `<Link>` component
 - You have client side routes
 
-Read more about the features of our new router at <https://reach.tech/router>
+Read more about the features of our new router at https://reach.tech/router
 
 **NOTE:** One prominent feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence on hopefully supporting it soon.
 

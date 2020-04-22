@@ -62,5 +62,4 @@ The new Carbon Design System website launched October 3, 2018, and is referenced
 IBM is the original tech company. Reaching for Gatsby shows they are still on the leading edge of technology and finding the newest and best routes for their people and clients. As the only developer on the Carbon team able to focus solely on the website rebuild, Alison used Gatsby to completely transform the vast mesh of content to provide an experience that literally any user can access, use, update and transform - leaving it even better for the next person. How can Gatsby do the same for you?
 
 [carbon]: https://www.carbondesignsystem.com/
-
 [lighthouse]: https://developers.google.com/web/tools/lighthouse/

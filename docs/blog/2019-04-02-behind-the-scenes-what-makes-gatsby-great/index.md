@@ -97,7 +97,7 @@ This is the central idea of server-side rendering. Gatsby uses server-side APIs 
 
 ### Zero Node.js servers required ✋
 
-<https://twitter.com/jlengstorf/status/1090659696233463808>
+https://twitter.com/jlengstorf/status/1090659696233463808
 
 To begin describing why build-time SSR is so appealing, let's first take a look at what a deploy and release looks like if we don't require a server. What's required for a typical set-up for deploying static content (which Gatsby produces)? It looks something like:
 

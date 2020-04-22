@@ -130,7 +130,7 @@ We're really excited about this pattern and everything it enables. With our upco
 
 ## Where can I get this?
 
-<https://twitter.com/jacobimpson/status/1095930703504584706>
+https://twitter.com/jacobimpson/status/1095930703504584706
 
 The astute reader (Jacob is astute, be like Jacob) would've noticed that we _stealthily_ released `useStaticQuery` last week.
 
@@ -155,11 +155,7 @@ We're working on fixing this soon.
 We hope you enjoy using `useStaticQuery` in your Gatsby apps. Happy building!
 
 [use-static-query]: /docs/use-static-query/
-
 [use-static-query-livestream]: https://www.youtube.com/watch?v=asrdFuAxPaU&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
-
 [sidhartha-twitter]: https://twitter.com/chatsidhartha
-
 [hooks-intro]: https://reactjs.org/docs/hooks-intro.html
-
 [themes]: /blog/2019-02-11-gatsby-themes-livestream-and-example/

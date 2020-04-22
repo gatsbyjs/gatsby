@@ -89,9 +89,9 @@ ButterCMS has integrated with a rich image transformation API called Filestack. 
 
 After you upload an image to ButterCMS, it's stored on your CDN. To create a thumbnail, here's an example:
 
-Original URL = <https://cdn.buttercms.com/zjypya5tRny63LqhHQrv>
+Original URL = https://cdn.buttercms.com/zjypya5tRny63LqhHQrv
 
-Thumbnail URL = <https://fs.buttercms.com/resize=width:200,height:200/zjypya5tRny63LqhHQrv>
+Thumbnail URL = https://fs.buttercms.com/resize=width:200,height:200/zjypya5tRny63LqhHQrv
 
 Resizing is just one of the many different transformations you can do to your images. Refer to the [Filestack docs](https://www.filestack.com/docs/) for full details.
 

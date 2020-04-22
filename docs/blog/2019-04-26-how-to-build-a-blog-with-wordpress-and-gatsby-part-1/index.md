@@ -22,7 +22,7 @@ One such drawback is the difficulties faced when trying to rank for SEO, because
 
 In this series of blog posts, I'll be talking about how to build a Gatsby.js site with a WordPress backend. The aim of the setup is to allow non-developer users to make changes on their website while allowing developers to use a fast, modern, and enjoyable tool to build with.
 
-<https://giphy.com/gifs/justin-g-thumbs-up-kylo-ren-approval-3o7ZeTmU77UlPyeR2w>
+https://giphy.com/gifs/justin-g-thumbs-up-kylo-ren-approval-3o7ZeTmU77UlPyeR2w
 
 ## Why use Gatsby.js with WordPress at all?
 
@@ -34,7 +34,7 @@ First, it really allows a lot of customization for the developer to choose tools
 
 Second, I believe that plugins are a double-edged sword. They allow some cool functionality which otherwise wouldn't exist for non-coders, but people get slap-happy with them and start putting them on unnecessarily. I've seen sites with more than 60 plugins activated at once and they wondered why their site was so slow! Having 60 different plugins could mean having a ridiculous amount of HTTP requests being sent because each plugin is loading a new library. Using a separate frontend means the developer is in control of this. It does mean that the client will have to pay to have some changes made, but at the same time it will ensure that the site is staying optimized and that a developer can make the change without adding a bunch of unnecessary junk.
 
-<https://giphy.com/gifs/random-explosions-unnecessary-CBFgxojcXwac>
+https://giphy.com/gifs/random-explosions-unnecessary-CBFgxojcXwac
 
 Third, I've seen cases where the developer and designer create an amazing site for a client and then the client decides to start poking around trying to change something minute like font-size from 12px to 14px and ends up taking the whole site down. This is an extreme example, but it definitely happens. If the frontend is a totally separate entity, then the client doesn't have the ability to do so.
 
@@ -50,7 +50,7 @@ As a matter of fact, [my portfolio site](https://www.iamtimsmith.com) is built u
 
 Now let's get down to business...
 
-<https://giphy.com/gifs/cbc-funny-reaction-xUOwGmsFStnxzIGC2s>
+https://giphy.com/gifs/cbc-funny-reaction-xUOwGmsFStnxzIGC2s
 
 ## Setting up WordPress
 

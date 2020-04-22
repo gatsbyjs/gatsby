@@ -200,8 +200,8 @@ Thanks to [Fable](https://twitter.com/FableTechLabs) and your community of teste
 
 Links on accessible routing techniques in JavaScript apps
 
-- <https://www.smashingmagazine.com/2015/05/client-rendered-accessibility/>
-- <https://www.deque.com/blog/accessibility-tips-in-single-page-applications/>
-- <https://www.slideshare.net/frontenders-valtech/accessible-client-side-routing-nick-colley>
-- <https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf>
+- https://www.smashingmagazine.com/2015/05/client-rendered-accessibility/
+- https://www.deque.com/blog/accessibility-tips-in-single-page-applications/
+- https://www.slideshare.net/frontenders-valtech/accessible-client-side-routing-nick-colley
+- https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf
 - <http://shortdiv.com/posts/client-side-a11y/>

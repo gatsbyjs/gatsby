@@ -7,7 +7,7 @@ Learn what a content delivery network or CDN is, how a CDN works, and why you ma
 
 ## What is a Content Delivery Network (CDN)?
 
-A Content Delivery Network or CDN is a highly distributed network of servers that speed up the delivery of web content. A CDN copies content from an _origin_ and [caches](/docs/glossary/#cache) it on servers around the world. CDN servers put your content closer to your site's visitors, and reduces the time needed to complete a network request.
+A Content Delivery Network or CDN is a highly distributed network of servers that speed up the delivery of web content. A CDN copies content from an *origin* and [caches](/docs/glossary/#cache) it on servers around the world. CDN servers put your content closer to your site's visitors, and reduces the time needed to complete a network request.
 
 Without a content delivery network, a request from Singapore to a server based in New York City has to hop through a network of servers separated by an ocean, and a continent — which can take several seconds. With a content delivery network, a request from Singapore may instead get a response from a CDN server based in Singapore, taking milliseconds.
 

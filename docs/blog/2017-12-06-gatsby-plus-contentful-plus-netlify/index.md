@@ -44,7 +44,7 @@ down into code.
 
 I know it’s bad to make assumptions, but I’m going to assume that if you’re here
 and reading this, you at least know a little about the perks of static sites and
-the JAMstack. If not, check out <https://jamstack.org/>
+the JAMstack. If not, check out https://jamstack.org/
 for a quick breakdown on why web development is, for lack of a better phrase,
 “going back to the basics.”
 
@@ -278,7 +278,7 @@ through this section without a bullet list of why Netlify is so fantastic.
 - [And a lot more....](https://www.netlify.com/features/)
 - Did I mention you get all this for FREE?
 
-<https://giphy.com/gifs/vMnuZGHJfFSTe>
+https://giphy.com/gifs/vMnuZGHJfFSTe
 
 And back to using it with Gatsby.
 
@@ -328,4 +328,4 @@ buttons and leaves you with a “Is it really this easy?” kind of feeling.
 
 Now, hopefully, our customers will feel the same with our site.
 
-<https://giphy.com/gifs/shia-labeouf-12NUbkX6p4xOO4>
+https://giphy.com/gifs/shia-labeouf-12NUbkX6p4xOO4

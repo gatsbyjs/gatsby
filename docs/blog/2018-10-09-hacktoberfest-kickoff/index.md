@@ -26,7 +26,7 @@ Check out the complete participation details and rules over at the [Hacktoberfes
 
 We couldn’t be more excited about Hacktoberfest -- it’s right up our alley! Back in August, we were excited to celebrate hitting 1,000 contributors! (As of this writing, it’s 1,197 😄)
 
-<https://twitter.com/gatsbyjs/status/1027876829615595520>
+https://twitter.com/gatsbyjs/status/1027876829615595520
 
 Gatsby is a great project to contribute to because you can learn about Gatsby while tackling a list of carefully curated issues, prepared especially for Hacktoberfest.
 
@@ -37,7 +37,7 @@ Our Hacktoberfest goals are:
 
 Plus, if you’ve never contributed to Gatsby before, after your very first PR is merged, you can redeem some [free Gatsby swag](/contributing/contributor-swag/)! (_Note: Not Hacktoberfest related. We do this always!_)
 
-<https://twitter.com/ryanwiemer/status/1022267081998266368>
+https://twitter.com/ryanwiemer/status/1022267081998266368
 
 We so appreciate everyone who puts in the time to contribute to making Gatsby, and the whole open source community, even better 💜.
 

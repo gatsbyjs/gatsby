@@ -18,7 +18,7 @@ You have three choices.
 
 ## Client side
 
-The second is the simplest choice. [Disqus](https://disqus.com/) is a popular client side comment service. They offer a free tier for non-commercial sites. Or plans start from $10/month.
+The second is the simplest choice. [Disqus](https://disqus.com/) is a popular client side comment service. They offer a free tier for non-commercial sites. Or plans start from \$10/month.
 
 There are also open source alternatives like [commento](https://github.com/adtac/commento). You need to install them. You need to manage and maintain a server. This is probably too much work to be worthwhile.
 

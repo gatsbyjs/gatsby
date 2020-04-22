@@ -7,7 +7,7 @@ This tutorial will walk you through the process of building a new e-commerce sit
 
 ## Why build a site like this?
 
-If you're willing to do a little more of the legwork yourself and make less than $1,500 in monthly sales, [Snipcart](https://snipcart.com/) may be a lower-cost option for you than other popular options like [Shopify](https://www.shopify.com/). Snipcart also requires far less configuration. Both options use [Stripe](https://stripe.com/) to handle payments, so be sure to factor _Stripe's_ fees into your calculations as well. (Stripe currently charges 2.9% + 30¢ for each transaction.)
+If you're willing to do a little more of the legwork yourself and make less than \$1,500 in monthly sales, [Snipcart](https://snipcart.com/) may be a lower-cost option for you than other popular options like [Shopify](https://www.shopify.com/). Snipcart also requires far less configuration. Both options use [Stripe](https://stripe.com/) to handle payments, so be sure to factor _Stripe's_ fees into your calculations as well. (Stripe currently charges 2.9% + 30¢ for each transaction.)
 
 The setup described in this tutorial is particularly powerful thanks to [DatoCMS](https://www.datocms.com/). DatoCMS is a content management system (CMS) that allows you to decide exactly how your content should be organized.
 

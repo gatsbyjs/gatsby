@@ -36,5 +36,4 @@ Check out the below podcast for more detail on why Gatsby, why Gatsby Cloud, and
 </ScriptLoader>
 
 [jsparty]: https://changelog.com/jsparty
-
 [cloud]: https://gatsbyjs.com/cloud/
