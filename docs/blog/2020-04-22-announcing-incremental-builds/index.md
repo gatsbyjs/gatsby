@@ -15,7 +15,7 @@ Today I’m thrilled to announce the release of Incremental Builds on Gatsby Clo
 I’m excited about what this means for the Gatsby community and the use cases it unlocks—and even more excited for what this means for the future of the web.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./inc-builds3.mp4" />
+  <source type="video/mp4" src="./inc-builds.mp4" />
   <p>Sorry! Your browser doesn't support this video.</p>
 </video>
 
