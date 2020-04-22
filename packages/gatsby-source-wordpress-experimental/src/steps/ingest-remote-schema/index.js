@@ -9,9 +9,13 @@ import { buildNodeQueries } from "./build-queries-from-introspection/build-node-
 import { cacheFetchedTypes } from "./cache-fetched-types"
 
 const ingestRemoteSchema = async (helpers, pluginOptions) => {
-  if (helpers.traceId === `refresh-createSchemaCustomization`) {
-    return
-  }
+  // @todo if this is an inc build or preview, we need quicker logic
+  // around determining if the remote schema has changed.
+  // for now, we need to do a full check each time
+  // Eventually this should happen per-Type
+  // if (helpers.traceId === `refresh-createSchemaCustomization`) {
+  //   return
+  // }
 
   const activity = helpers.reporter.activityTimer(
     formatLogMessage(`ingest WPGraphQL schema`)

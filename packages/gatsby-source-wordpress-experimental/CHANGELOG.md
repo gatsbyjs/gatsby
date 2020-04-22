@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.0.37
+
+### Bug Fixes
+
+- Adding Preview support in an earlier release broke inc-builds in an effort to speed up previews. This release restores inc-builds functionality
+
 ## 0.0.36
 
 ### Bug Fixes

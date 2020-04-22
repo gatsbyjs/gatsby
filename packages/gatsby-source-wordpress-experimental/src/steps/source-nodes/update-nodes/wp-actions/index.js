@@ -17,6 +17,9 @@ const previouslyFetchedActionIds = []
 export const getWpActions = async ({ variables, helpers }) => {
   // current time minus 5 seconds so we don't lose updates between the cracks
   // if someone bulk-edits a list of nodes in WP
+  // @todo make this cursor based so we don't need to do this.
+  // give me changes since x change. if x change doesn't exist,
+  // then we need to fetch everything
   const sourceTime = Date.now() - 5000
 
   // @todo add pagination in case there are more than 100 actions since the last build

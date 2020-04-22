@@ -10,14 +10,20 @@ import { formatLogMessage } from "~/utils/format-log-message"
  * see https://github.com/wp-graphql/wp-graphql/issues/1045
  */
 export const createContentTypeNodes = async (
-  { webhookBody: { preview } },
+  { webhookBody: { preview }, cache },
   pluginOptions
 ) => {
   if (preview) {
-    return
+    return null
   }
 
+  const contentTypesCacheKey = `WP_CONTENT_TYPES_DATA`
+  let cachedContentTypesData = await cache.get(contentTypesCacheKey)
+
   const state = store.getState()
+  const { schemaWasChanged } = state.remoteSchema
+
+  const refetchContentTypes = schemaWasChanged || !cachedContentTypesData
 
   const { nodeQueries, fieldBlacklist } = state.remoteSchema
 
@@ -27,13 +33,19 @@ export const createContentTypeNodes = async (
     formatLogMessage(`fetch content types`)
   )
 
-  if (pluginOptions.verbose) {
-    activity.start()
+  if (refetchContentTypes) {
+    if (pluginOptions.verbose) {
+      activity.start()
+    }
+
+    const { data } = await fetchGraphql({ query: availablePostTypesQuery })
+
+    await cache.set(contentTypesCacheKey, data)
+
+    cachedContentTypesData = data
   }
 
-  const { data } = await fetchGraphql({ query: availablePostTypesQuery })
-
-  const contentTypes = data.postTypes
+  const contentTypes = cachedContentTypesData.postTypes
     .filter(
       contentType => !fieldBlacklist.includes(contentType.fieldNames.plural)
     )
@@ -54,7 +66,7 @@ export const createContentTypeNodes = async (
       })
     })
 
-  if (pluginOptions.verbose) {
+  if (pluginOptions.verbose && refetchContentTypes) {
     activity.end()
   }
 
