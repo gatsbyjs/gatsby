@@ -30,7 +30,7 @@ module.exports = (
   visit(markdownAST, `heading`, node => {
     // If elements array exists, do not create links for heading types not included in array
     if (Array.isArray(elements) && !elements.includes(`h${node.depth}`)) {
-      return markdownAST
+      return
     }
 
     let id
