@@ -23,7 +23,7 @@ To complete this challenge, we would like you to:
 2. then use a “build service” to create a production version of your site
 3. and automatically publish your site’s assets directly to a Content Delivery Network (CDN).
 
-Amazingly, for small projects you can use all of these services for free. There are many Gatsby sites in the wild that pay \\$0 for hosting!
+Amazingly, for small projects you can use all of these services for free. There are many Gatsby sites in the wild that pay $0 for hosting!
 
 Bonus: Try deploying your site to the free tier of multiple services to see first hand which one you’d like to adopt. You may notice differences in features, developer experience, and build speeds and limits.
 

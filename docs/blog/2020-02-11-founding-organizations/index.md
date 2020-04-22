@@ -128,9 +128,9 @@ What a sustainable business looks like will depend on the space; the right metri
 
 On the web, one metric for a company’s ability to generate revenue, given a certain level of adoptions is called “monetization intensity”—a company’s revenue divided by the proportion of the web running on the open source framework, measured in percentage points.
 
-Closed-source vendors like Shopify, Bigcommerce, Wix, and Squarespace typically [make \\$500M or more in annual revenue and up for each percentage point of the web they occupy](https://docs.google.com/spreadsheets/u/1/d/1WaHgOjtnVHaFzMLCakk-dXwH4cWUf6UBQzYv9t3ETUU/edit#gid=0).
+Closed-source vendors like Shopify, Bigcommerce, Wix, and Squarespace typically [make $500M or more in annual revenue and up for each percentage point of the web they occupy](https://docs.google.com/spreadsheets/u/1/d/1WaHgOjtnVHaFzMLCakk-dXwH4cWUf6UBQzYv9t3ETUU/edit#gid=0).
 
-To be competitive in this world, “founding organization” website company needs to be making something in the ballpark of that -- based on data we share a bit later, at least \\$100M in revenue per percentage point of the web.
+To be competitive in this world, “founding organization” website company needs to be making something in the ballpark of that -- based on data we share a bit later, at least $100M in revenue per percentage point of the web.
 
 #### Investing back in open source
 

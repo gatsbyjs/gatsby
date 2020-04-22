@@ -238,7 +238,7 @@ export const tagPageQuery = graphql`
 
 This query uses $tag from React context (which was created in gatsby-node.js) to do the filtering. If $tag is found in the array of tags (for that row), then it returns that row (which is a video). This is how I can create separate instructor and tag pages that only show those relevant videos (the videos with those specific tags or instructors).
 
-At the top of my tag pages, I have a title that says “24 videos tagged with [the tag]”. To get the tag for that page, I need to pass pageContext as a prop to this template component. That allows me to access that \\$tag variable within the template (instead of a graphql query). Now I can make the title with the following code:
+At the top of my tag pages, I have a title that says “24 videos tagged with [the tag]”. To get the tag for that page, I need to pass pageContext as a prop to this template component. That allows me to access that $tag variable within the template (instead of a graphql query). Now I can make the title with the following code:
 
 ```jsx
 {itemsWithTag.length} {itemsWithTag.length > 1 ? 'videos' : 'video'} tagged with

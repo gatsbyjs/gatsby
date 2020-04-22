@@ -117,7 +117,7 @@ Felicity Sissener, the Chief Digital Officer at StriVectin had this to say about
 
 We confidently ship code to production many times per day. At the time of writing this, we have not had a single site outage.
 
-StriVectin’s hosting costs have gone from \\$2,000/month to just a few dollars per day. The servers will be decommissioned very soon.
+StriVectin’s hosting costs have gone from $2,000/month to just a few dollars per day. The servers will be decommissioned very soon.
 
 Feature development and maintenance is much simpler. The codebase was around 20,000 files on Magento and went down to around 300.
 

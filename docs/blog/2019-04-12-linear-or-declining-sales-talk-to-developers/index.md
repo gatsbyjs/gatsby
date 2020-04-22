@@ -56,7 +56,7 @@ I know first-hand the positive impacts that website and application performance 
 **How does that impact revenue?**
 
 - If your e-commerce site is making $100,000 per day, a 1 second page delay could potentially cost you $2.5 million in lost sales every year.
-- 1 second of load lag time would cost Amazon \\$1.6 billion in sales per year
+- 1 second of load lag time would cost Amazon $1.6 billion in sales per year
 
 Are you starting to see the picture of how poor site performance will dramatically hurt your top of funnel, and then ultimately your sales?
 
