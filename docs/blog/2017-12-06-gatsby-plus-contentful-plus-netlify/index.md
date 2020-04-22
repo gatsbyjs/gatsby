@@ -17,7 +17,7 @@ tags:
 ---
 
 Gatsby has been getting a lot of recognition and
-[adoption](https://github.com/gatsbyjs/gatsby##showcase) lately, and for good
+[adoption](https://github.com/gatsbyjs/gatsby#showcase) lately, and for good
 reason. It’s so flexible and it works well with nearly everything.
 
 If you’re on a tight budget and don’t want to sacrifice developer experience or
@@ -189,7 +189,7 @@ indexed properly. Algolia does have helpful documentation on indexing.
 
 It was more of a challenge of how to break down the content in the articles into
 the chunks that the index requires. The
-[Algolia Docs](https://www.algolia.com/doc/guides/indexing/structuring-your-data/?language=php##indexing-long-documents)
+[Algolia Docs](https://www.algolia.com/doc/guides/indexing/structuring-your-data/?language=php#indexing-long-documents)
 state that your index records shouldn’t be more than 10kb each which roughly
 equates to a paragraph or two each. This suddenly became a challenge in how to
 parse my article content by section. There wasn’t a good example out there of

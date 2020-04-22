@@ -26,7 +26,7 @@ Gatsby Builds solves this problem by making our deployment process as fast as ou
 
 - [Third and Grove](https://www.thirdandgrove.com/) saw _60x_ build-time reductions from **60 minutes to 1 minute** for their large 15,000 page, image-heavy Gatsby/Drupal site.
 - [Gatsbyjs.org](https://gatsbyjs.org) saw _9x_ reduced build times from **45 minutes to 5 minutes**.
-- Our [image processing benchmark site](https://github.com/KyleAMathews/gatsby-image-processing-test) saw \_5x \_reduced build times from **200 seconds to 40 seconds.**
+- Our [image processing benchmark site](https://github.com/KyleAMathews/gatsby-image-processing-test) saw _5x_ reduced build times from **200 seconds to 40 seconds.**
 
 **All sites should see at least a 2-3x improvement in build speeds.**
 
