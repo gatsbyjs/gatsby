@@ -281,7 +281,7 @@ module.exports = (
 
         let toc
         if (tocAst.map) {
-          const addSlugToUrl = function(node) {
+          const addSlugToUrl = function (node) {
             if (node.url) {
               if (
                 _.get(markdownNode, appliedTocOptions.pathToSlugField) ===
@@ -443,9 +443,7 @@ module.exports = (
         truncate,
         excerptSeparator,
       })
-      var excerptMarkdown = unified()
-        .use(stringify)
-        .stringify(excerptAST)
+      var excerptMarkdown = unified().use(stringify).stringify(excerptAST)
       return excerptMarkdown
     }
 
@@ -635,12 +633,7 @@ module.exports = (
 
           unified()
             .use(parse)
-            .use(
-              remark2retext,
-              unified()
-                .use(english)
-                .use(count)
-            )
+            .use(remark2retext, unified().use(english).use(count))
             .use(stringify)
             .processSync(markdownNode.internal.content)
 

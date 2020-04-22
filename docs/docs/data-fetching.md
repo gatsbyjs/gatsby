@@ -74,6 +74,7 @@ exports.sourceNodes = async ({
   const resultData = await result.json()
   // create node for build time data example in the docs
   createNode({
+    // nameWithOwner and url are arbitrary fields from the data
     nameWithOwner: resultData.full_name,
     url: resultData.html_url,
     // required fields
@@ -87,6 +88,8 @@ exports.sourceNodes = async ({
   })
 }
 ```
+
+It is important to note that node fields can indeed be arbitrary. The `nameWithOwner` and `url` fields from above are examples of this.
 
 This node created manually could be retrieved with a query like this:
 
@@ -214,6 +217,6 @@ The repo's star count is fetched at runtime; if you refresh the page, this numbe
 You may be interested in other projects (both used in production and proof-of-concepts) that illustrate this usage:
 
 - [Live example](https://gatsby-data-fetching.netlify.com) of the code used in this guide
-- [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org): with static product pages at build time and client-side interactions for ecommerce features
+- [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org): with static product pages at build time and client-side interactions for e-commerce features
 - [Gatsby mail](https://github.com/DSchau/gatsby-mail): a client-side email application
 - [Example repo fetching data using Apollo](https://github.com/jlengstorf/gatsby-with-apollo)

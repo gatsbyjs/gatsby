@@ -16,7 +16,7 @@ jest.mock(`fs-extra`, () => {
       mockWrittenContent.set(file, content)
     ),
     readFileSync: jest.fn(file => mockWrittenContent.get(file)),
-    renameSync: jest.fn((from, to) => {
+    moveSync: jest.fn((from, to) => {
       // This will only work for folders if they are always the full prefix
       // of the file... (that goes for both input dirs). That's the case here.
       if (mockWrittenContent.has(to)) {

@@ -100,3 +100,4 @@ exports.createPages = async ({ actions, graphql }) => {
 - [Example with GraphCMS](https://github.com/freiksenet/gatsby-graphcms)
 - [Example with Hasura](https://github.com/hasura/graphql-engine/tree/master/community/sample-apps/gatsby-postgres-graphql)
 - [Example with AWS AppSync](https://github.com/aws-samples/aws-appsync-gatsby-sample)
+- [Example with Dgraph](https://github.com/dgraph-io/gatsby-dgraph-graphql)

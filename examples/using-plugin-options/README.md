@@ -5,20 +5,21 @@ This is an example repository demonstrating how to add options to a plugin you'v
 ## Running the example
 
 In this directory, be sure to install dependencies for Gatsby:
+ell
 
-```sh
+```shell
 npm install
 ```
 
 Then run `gatsby develop`:
 
-```sh
+```shell
 gatsby develop
 ```
 
 In your command line output, you should then see the text listed below. This text is showing how the code for each plugin is run sequentially thanks to the Node API implemented.
 
-```sh
+```shell
 $ gatsby develop
 success open and validate gatsby-configs - 0.034s
 success load plugins - 0.050s

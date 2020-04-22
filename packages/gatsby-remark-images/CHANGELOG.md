@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.2.3...gatsby-remark-images@3.2.4) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [3.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.2.2...gatsby-remark-images@3.2.3) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.2.1...gatsby-remark-images@3.2.2) (2020-04-04)
+
+### Bug Fixes
+
+- **dependencies:** bump potrace version ([#22803](https://github.com/gatsbyjs/gatsby/issues/22803)) ([7a8f016](https://github.com/gatsbyjs/gatsby/commit/7a8f016))
+
+## [3.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.2.0...gatsby-remark-images@3.2.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+# [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.50...gatsby-remark-images@3.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [3.1.50](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.49...gatsby-remark-images@3.1.50) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.48...gatsby-remark-images@3.1.49) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.47...gatsby-remark-images@3.1.48) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.46...gatsby-remark-images@3.1.47) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.45...gatsby-remark-images@3.1.46) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.44...gatsby-remark-images@3.1.45) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-remark-images
+
 ## [3.1.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.43...gatsby-remark-images@3.1.44) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-remark-images

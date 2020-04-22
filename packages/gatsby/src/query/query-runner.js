@@ -4,6 +4,7 @@ const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const path = require(`path`)
+const _ = require(`lodash`)
 const { store } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const pageDataUtil = require(`../utils/page-data`)
@@ -25,7 +26,38 @@ type QueryJob = {
 module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   const { program } = store.getState()
 
-  const graphql = (query, context) => graphqlRunner.query(query, context)
+  const graphql = (query, context) => {
+    // Check if query takes too long, print out warning
+    const promise = graphqlRunner.query(query, context)
+    let isPending = true
+
+    const timeoutId = setTimeout(() => {
+      if (isPending) {
+        const messageParts = [
+          `Query takes too long:`,
+          `File path: ${queryJob.componentPath}`,
+        ]
+
+        if (queryJob.isPage) {
+          const { path, context } = queryJob.context
+          messageParts.push(`URL path: ${path}`)
+
+          if (!_.isEmpty(context)) {
+            messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
+          }
+        }
+
+        report.warn(messageParts.join(`\n`))
+      }
+    }, 15000)
+
+    promise.finally(() => {
+      isPending = false
+      clearTimeout(timeoutId)
+    })
+
+    return promise
+  }
 
   // Run query
   let result
@@ -98,7 +130,6 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
     .createHash(`sha1`)
     .update(resultJSON)
     .digest(`base64`)
-
   if (resultHash !== resultHashes.get(queryJob.id)) {
     resultHashes.set(queryJob.id, resultHash)
 
@@ -117,7 +148,6 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
         `d`,
         `${queryJob.hash}.json`
       )
-
       await fs.outputFile(resultPath, resultJSON)
     }
   }
@@ -128,5 +158,15 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
     isPage: queryJob.isPage,
   })
 
+  // Sets pageData to the store, here for easier access to the resultHash
+  if (
+    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
+    queryJob.isPage
+  ) {
+    boundActionCreators.setPageData({
+      id: queryJob.id,
+      resultHash,
+    })
+  }
   return result
 }

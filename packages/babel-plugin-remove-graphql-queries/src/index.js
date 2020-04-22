@@ -159,16 +159,13 @@ function isUseStaticQuery(path) {
   return (
     (path.node.callee.type === `MemberExpression` &&
       path.node.callee.property.name === `useStaticQuery` &&
-      path
-        .get(`callee`)
-        .get(`object`)
-        .referencesImport(`gatsby`)) ||
+      path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
     (path.node.callee.name === `useStaticQuery` &&
       path.get(`callee`).referencesImport(`gatsby`))
   )
 }
 
-export default function({ types: t }) {
+export default function ({ types: t }) {
   return {
     visitor: {
       Program(path, state) {
@@ -221,11 +218,6 @@ export default function({ types: t }) {
               const filename = state.file.opts.filename
               const shortResultPath = `public/static/d/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
-
-              // Remove query variable since it is useless now
-              if (this.templatePath.parentPath.isVariableDeclarator()) {
-                this.templatePath.parentPath.remove()
-              }
 
               // only remove the import if its like:
               // import { useStaticQuery } from 'gatsby'

@@ -145,8 +145,9 @@ module.exports = function highlightLineRange(code, highlights = []) {
             )
             .join(`\n`)
           throw Error(
-            `Line ${index +
-              1} has been marked as both hidden and highlighted.\n${formattedSources}`
+            `Line ${
+              index + 1
+            } has been marked as both hidden and highlighted.\n${formattedSources}`
           )
         }
 
