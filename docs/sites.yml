@@ -10449,3 +10449,25 @@
     - Web Development
     - Business
   built_by: Jimdo GmbH
+- title: Resume on the Web
+  main_url: https://amruthpillai.com
+  url: https://amruthpillai.com
+  source_url: https://github.com/AmruthPillai/ResumeOnTheWeb-Gatsby
+  description: >
+    Everyone needs their own little spot on the interwebs, and this is mine. Welcome to my resume, on the web!
+  categories:
+    - Blog
+    - Design
+    - Freelance
+    - Gallery
+    - JavaScript
+    - Landing Page
+    - Mobile Development
+    - Open Source
+    - Photography
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: Amruth Pillai
+  built_by_url: https://amruthpillai.com
+  featured: false
