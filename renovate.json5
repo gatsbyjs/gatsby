@@ -93,7 +93,7 @@
     },
     {
       groupName: "type updates",
-      packagePatters: ["^@types"],
+      packagePatterns: ["^@types"],
     },
   ],
   timezone: "GMT",
