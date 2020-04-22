@@ -9,6 +9,7 @@ tags:
   - incremental-builds
   - wordpress
 ---
+
 Today I’m thrilled to announce the release of Incremental Builds on Gatsby Cloud. In January we announced Gatsby Builds, bringing you up to 60x faster builds for Gatsby sites compared to other solutions. Now Incremental Builds reliably brings build times on data changes to _under 10 seconds_.
 
 I’m excited about what this means for the Gatsby community and the use cases it unlocks—and even more excited for what this means for the future of the web.
@@ -19,6 +20,7 @@ I’m excited about what this means for the Gatsby community and the use cases i
 </video>
 
 ## A brief history of static sites
+
 Static websites are where the web was born.
 
 In the beginning, the web consisted of hand-written static HTML pages. As sites grew larger and more interactive, database-driven site technology emerged to support more dynamic features. Static site generators also grew more sophisticated, however, and—thanks to pre-rendering—remained faster and more efficient. By the early 2000s there was a kind of proxy war between static vs. database approaches in the form of two different CMSs, Moveable Type and WordPress, competing for dominance as the content web expanded exponentially.
@@ -40,6 +42,7 @@ Many people have proposed “incremental builds” as a solution for static site
 Until now.
 
 ## Introducing Incremental Builds for Gatsby
+
 Starting today, Incremental Builds is available in public beta on [Gatsby Cloud](http://gatsbyjs.com). It’s the fastest way yet for building true JAMstack pre-rendered websites—making real-time deployments a possibility.
 
 **Using Incremental Builds on Gatsby Cloud, we are showing build speeds of under 10 seconds for data edits.** This is oftentimes a 1000x improvement over existing build solutions, where the entire site must be re-built for even the smallest data change.
@@ -51,6 +54,7 @@ I think it’s not an exaggeration to say that _this changes everything_.
 ![Bar graph showing traditional build times of 20 minutes vs Gatsby Incremental Build times of 1 minute for initial build and ten seconds for subsequent builds. ](./incremental-builds-infographicV2.jpg "Bar graph showing traditional build times of 20 minutes vs Gatsby Incremental Build times of 1 minute for initial build and ten seconds for subsequent builds.")
 
 ## Making developers and marketers _both_ happy
+
 Another problem that has long blocked Gatsby and other static site generators: no matter how fast and elegant they are as a platform, no matter how much developers love them, content creators often find them intimidating. And, in most organizations, the marketing team gets to choose the technology stack...or at least has veto power. For a long time this meant that developers and marketers were at odds with each other when it came to deciding how sites got built. No longer.
 
 **With Incremental Builds on Gatsby Cloud, content people can keep using their CMS.** We’ve worked with agencies who have simply swapped in Gatsby without client content editors ever knowing there's been a change. Developers can get the tools they want to help them build and ship more quickly, plus the ability to embrace modern software practices like CI/CD and automated testing. They can run the site effectively, experiment easily, and build out new features quickly. All of which drives the business outcomes that are the ultimate goal for all involved.
@@ -60,6 +64,7 @@ Incremental Builds has been available in private beta for several months for sel
 > There used to be a trade-off in discussing Gatsby with clients. We always wanted to use Gatsby for the great developer experience and ahead-of-time compilation, but build time was prohibitive for some of our clients—those whose sites were hundreds of thousands of pages, or who needed their changes up immediately. Before Incremental Builds, we used to wait for some sites up to twenty minutes for our builds to finish. Now we publish the data change and builds are live in ten seconds.
 
 ## Bringing the web full circle
+
 We’ve been working towards this moment since 2016, when I designed Gatsby v1’s event-driven architecture. In 2018, when we launched the Gatsby company, we talked to [The New Stack](https://thenewstack.io/gatsbyjs-the-open-source-react-based-ssg-creates-company-to-evolve-cloud-native-website-builds/) about how central incremental builds were to the Gatsby vision:
 
 > The impetus to create a company around open-source Gatsby came because, Mathews said, in order to reach full potential as a real-time stream processing system applied to website builds, Gatsby would need custom-built cloud support.
@@ -76,9 +81,10 @@ With this launch, websites have come full circle. We started out static, then sh
 
 Now, with no extra work for developers and content authors, changes can be applied just about instantly, intelligently updating just the parts of the site that are affected. We can, across an entire site, make one change, update seven different places, and deploy it all in less than ten seconds.
 
-People have been asking us for incremental builds all along—it just makes sense: “When I change one thing, I only want that part rebuilt and not the whole thing, and I want it to happen immediately.”  And now we can finally just be like, “Yeah, that's exactly what we're doing.”
+People have been asking us for incremental builds all along—it just makes sense: “When I change one thing, I only want that part rebuilt and not the whole thing, and I want it to happen immediately.” And now we can finally just be like, “Yeah, that's exactly what we're doing.”
 
 ## Get stared with Incremental Builds
+
 Incremental Builds is now available in public beta on [Gatsby Cloud](http://gatsbyjs.com). All Gatsby Cloud users get a free 14 day trial, with full availability on all Professional, Business, and Enterprise plans. Incremental Builds works with Gatsby 2.20.16 and higher.
 
 We’re currently fully supporting incremental Builds for our first-class integrations with Gatsby Cloud, including Contentful, Sanity, DatoCMS and CosmicJS. WordPress and Drupal support are in alpha. If you’re interested in building a first-class integration with Gatsby Cloud for Incremental Builds, please reach out to partners@gatsbyjs.com.
