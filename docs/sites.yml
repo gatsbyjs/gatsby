@@ -675,18 +675,6 @@
     - Open Source
     - Web Development
     - Documentation
-- title: manu.ninja
-  main_url: https://manu.ninja/
-  url: https://manu.ninja/
-  source_url: https://github.com/Lorti/manu.ninja
-  featured: false
-  description: >-
-    manu.ninja is the personal blog of Manuel Wieser, where he talks about
-    frontend development, games and digital art
-  categories:
-    - Blog
-    - Technology
-    - Web Development
 - title: Fabric
   main_url: https://meetfabric.com/
   url: https://meetfabric.com/
@@ -1009,7 +997,6 @@
 - title: The Bastion Bot
   main_url: https://bastionbot.org/
   url: https://bastionbot.org/
-  source_url: https://github.com/TheBastionBot/Bastion-Website
   description: Give awesome perks to your Discord server!
   featured: false
   categories:
@@ -2541,12 +2528,6 @@
   built_by: Kiko Beats
   built_by_url: https://kikobeats.com/
   featured: false
-- title: Markets.com
-  main_url: https://www.markets.com/
-  url: https://www.markets.com/
-  featured: false
-  categories:
-    - Finance
 - title: Kevin Legrand
   url: https://k-legrand.com
   main_url: https://k-legrand.com
@@ -3607,22 +3588,6 @@
     - Blog
     - Portfolio
     - Web Development
-  featured: false
-- title: Equithon
-  url: https://equithon.org/
-  main_url: https://equithon.org/
-  source_url: https://github.com/equithon/site-main/
-  built_by: Alex Xie
-  built_by_url: https://alexieyizhe.me/
-  description: >
-    Equithon is the largest social innovation hackathon in Waterloo, Canada. It was founded in 2016 to tackle social equity issues and create change.
-  categories:
-    - Education
-    - Event
-    - Learning
-    - Open Source
-    - Nonprofit
-    - Technology
   featured: false
 - title: Dale Blackburn - Portfolio
   url: https://dakebl.co.uk/
@@ -5333,20 +5298,6 @@
     - Technology
   built_by: Frisko Mayufid
   built_by_url: https://frisko.space
-- title: Sindhuka
-  url: https://sindhuka.org/
-  main_url: https://sindhuka.org/
-  description: >
-    Official website of the Sindhuka initiative, a sustainable farmers' network in Nepal.
-  categories:
-    - Business
-    - Community
-    - Government
-    - Marketing
-  source_url: https://github.com/Polcius/sindhuka-serif
-  built_by: Pol Milian
-  built_by_url: https://github.com/Polcius/
-  featured: false
 - title: ERS HCL Open Source Portal
   url: https://ers-hcl.github.io/
   main_url: https://ers-hcl.github.io/
@@ -6526,16 +6477,6 @@
     - Documentation
   built_by: afc163
   built_by_url: https://github.com/afc163
-- title: Fourpost
-  url: https://www.fourpost.com
-  main_url: https://www.fourpost.com
-  description: >
-    Fourpost is a shopping destination for today’s family that combines the best brands and experiences under one roof.
-  categories:
-    - Marketing
-  built_by: Fourpost
-  built_by_url: https://github.com/fourpost
-  featured: false
 - title: ReactStudy Blog
   url: https://elated-lewin-51cf0d.netlify.com
   main_url: https://elated-lewin-51cf0d.netlify.com
