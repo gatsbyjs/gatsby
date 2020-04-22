@@ -10485,3 +10485,15 @@
   built_by: SofaScore
   built_by_url: https://www.sofascore.com
   featured: false
+- title: Jimdo.com
+  description: >
+    Jimdo is an international tech company and one of the world's leading providers of online services for small and medium businesses (SMBs). The company empowers entrepreneurs to create their own website or store without coding and to digitize their business ideas.
+  main_url: https://www.jimdo.com/
+  url: https://www.jimdo.com/
+  categories:
+    - Marketing
+    - Technology
+    - E-commerce
+    - Web Development
+    - Business
+  built_by: Jimdo GmbH
