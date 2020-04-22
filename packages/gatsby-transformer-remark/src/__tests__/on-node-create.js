@@ -1,17 +1,9 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
-
 const onCreateNode = require(`../on-node-create`)
+const { graphql } = require(`gatsby/graphql`)
 
-const {
-  graphql,
-  GraphQLObjectType,
-  GraphQLList,
-  GraphQLSchema,
-} = require(`gatsby/graphql`)
-const {
-  inferObjectStructureFromNodes,
-} = require(`../../../gatsby/src/schema/infer-graphql-type`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 let node
 let actions
@@ -48,6 +40,7 @@ Where oh where is my little pony?
         loadNodeContent,
         actions,
         createNodeId,
+        createContentDigest,
       }).then(() => {
         expect(actions.createNode.mock.calls).toMatchSnapshot()
         expect(
@@ -85,6 +78,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
           loadNodeContent,
           actions,
           createNodeId,
+          createContentDigest,
         },
         { excerpt_separator: `<!-- end -->` }
       ).then(() => {
@@ -116,6 +110,7 @@ yadda yadda
         actions,
         createNodeId,
         loadNodeContent,
+        createContentDigest,
       })
 
       expect(parsed.frontmatter.date).toEqual(new Date(date).toJSON())
@@ -124,31 +119,33 @@ yadda yadda
 
   describe(`process graphql correctly`, () => {
     // given a set of nodes and a query, return the result of the query
-    async function queryResult(nodes, fragment, { types = [] } = {}) {
-      const schema = new GraphQLSchema({
-        query: new GraphQLObjectType({
-          name: `RootQueryType`,
-          fields: () => {
-            return {
-              listNode: {
-                name: `LISTNODE`,
-                type: new GraphQLList(
-                  new GraphQLObjectType({
-                    name: `MarkdownRemark`,
-                    fields: inferObjectStructureFromNodes({
-                      nodes,
-                      types: [...types],
-                    }),
-                  })
-                ),
-                resolve() {
-                  return nodes
-                },
-              },
-            }
-          },
-        }),
+    async function queryResult(nodes, fragment) {
+      const {
+        createSchemaComposer,
+      } = require(`../../../gatsby/src/schema/schema-composer`)
+      const {
+        addInferredFields,
+      } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
+      const {
+        addNodes,
+      } = require(`../../../gatsby/src/schema/infer/inference-metadata`)
+      const {
+        getExampleObject,
+      } = require(`../../../gatsby/src/schema/infer/build-example-data`)
+
+      const sc = createSchemaComposer()
+      const typeName = `MarkdownRemark`
+      const tc = sc.createObjectTC(typeName)
+      const inferenceMetadata = addNodes({ typeName }, nodes)
+      addInferredFields({
+        schemaComposer: sc,
+        typeComposer: tc,
+        exampleValue: getExampleObject(inferenceMetadata),
       })
+      sc.Query.addFields({
+        listNode: { type: [tc], resolve: () => nodes },
+      })
+      const schema = sc.buildSchema()
 
       const result = await graphql(
         schema,
@@ -191,8 +188,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
                     frontmatter {
                         title
                     }
-                `,
-          { types: [{ name: `MarkdownRemark` }] }
+                `
         ).then(result => {
           try {
             createdNode = result.data.listNode[0]
@@ -220,6 +216,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
           loadNodeContent,
           actions,
           createNodeId,
+          createContentDigest,
         },
         { excerpt_separator: `<!-- end -->` }
       )
@@ -252,8 +249,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
                     frontmatter {
                         title
                     }
-                `,
-          { types: [{ name: `MarkdownRemark` }] }
+                `
         ).then(result => {
           try {
             createdNode = result.data.listNode[0]
@@ -275,6 +271,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
         loadNodeContent,
         actions,
         createNodeId,
+        createContentDigest,
       })
     })
   })

@@ -2,7 +2,7 @@
 title: Using Gatsby without GraphQL
 date: 2018-10-25
 author: Amberley Romo
-tags: ["sourcing", "data"]
+tags: ["content-mesh"]
 ---
 
 When creating web experiences, an inevitable question is, "how do I get my data from point A (the source) to point B (the component)?". This can end up being a deceptively complex question.
@@ -10,10 +10,12 @@ When creating web experiences, an inevitable question is, "how do I get my data 
 Gatsby’s rich data plugin ecosystem lets you build sites with the data you want — from one or many sources. You can pull data from headless CMSs, SaaS services, APIs, databases, your file system & more directly into your components.
 
 <figure>
-  <img alt="An assortment of possible data sources (CMSs, Markdown, APIs, etc)" height="400" src="./data_sources.png" />
-  <figcaption>
-    Your data could come from anywhere
-  </figcaption>
+  <img
+    alt="An assortment of possible data sources (CMSs, Markdown, APIs, etc)"
+    height="400"
+    src="./data_sources.png"
+  />
+  <figcaption>Your data could come from anywhere</figcaption>
 </figure>
 
 Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. And rightly so! Gatsby's GraphQL data layer is powerful and extremely effective; it solves the "integration problem" of decoupled CMSs -- it's the glue between presentation layer and wherever your data is sourced from.
@@ -21,13 +23,14 @@ Most examples in the Gatsby docs and on the web at large focus on leveraging sou
 <figure>
   <img alt="" height="400" src="./integration_layer.png" />
   <figcaption>
-    Gatsby's GraphQL integration layer is the glue between presentation layer and where your data lives
+    Gatsby's GraphQL integration layer is the glue between presentation layer
+    and where your data lives
   </figcaption>
 </figure>
 
-> _[Source plugins](/docs/create-source-plugin/)_ “source” data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
+> _[Source plugins](/docs/creating-a-source-plugin/)_ “source” data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
 
-We're calling this the **"content mesh"** — the infrastructure layer for a decoupled website. ([Sam Bhagwat](https://twitter.com/calcsam) introduced and explored this concept in his recent five-part series, [The Journey to a Content Mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh)).
+We're calling this the **"content mesh"** — the infrastructure layer for a decoupled website. ([Sam Bhagwat](https://twitter.com/calcsam) introduced and explored this concept in his recent five-part series, [The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh)).
 
 **However, you don't _need_ to use source plugins (or create Gatsby nodes) to pull data into a Gatsby site!** In this post we'll explore how to use Gatsby without GraphQL (using "unstructured data"), and some of the pros and cons of doing so.
 
@@ -44,7 +47,7 @@ That's it!
 
 ### The tldr; (in tweet form)
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">➡ Did you know you can create pages in <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> w/unstructured data? This code will:<br><br>✅ Load data from the <a href="https://twitter.com/PokeAPI?ref_src=twsrc%5Etfw">@PokeAPI</a> <br>✅ Create a page with links to all Pokémon<br>✅ Create individual Pokémon pages<br>✅ Create pages for abilities of each Pokémon<br><br>Repo: <a href="https://t.co/GoQoOYteLW">https://t.co/GoQoOYteLW</a> <a href="https://t.co/CrQWIGnVfl">pic.twitter.com/CrQWIGnVfl</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1050855455759593472?ref_src=twsrc%5Etfw">October 12, 2018</a></blockquote>
+https://twitter.com/jlengstorf/status/1050855455759593472
 
 ### Breaking down the example
 
@@ -52,7 +55,7 @@ That's it!
 
 #### 1. Use Gatsby's `createPages` API.
 
-`createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](https://www.gatsbyjs.org/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
+`createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
 
 By [exporting `createPages`](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L21) from our example Gatsby site's `gatsby-node.js` file, we're saying, "at this point in the bootstrapping sequence, run this code".
 
@@ -212,9 +215,9 @@ Using Gatsby's data layer provides the following benefits:
 - Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries (e.g. Markdown -> HTML, images -> responsive images, etc)
 - It’s the perfect data querying language for the often complex/nested data dependencies of modern applications
 - Improves performance by removing data bloat — GraphQL enables you to select only the data you need, not whatever an API returns
-- Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
+- Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 
-> Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql/).
+> Learn more about [GraphQL in Gatsby](/docs/graphql-concepts/).
 
 Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
 

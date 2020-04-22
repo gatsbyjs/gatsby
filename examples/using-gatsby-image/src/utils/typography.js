@@ -44,9 +44,7 @@ const _options = {
         marginTop: rhythm(2),
       },
       a: {
-        backgroundImage: `linear-gradient(to top, ${colors.ui.bright}, ${
-          colors.ui.bright
-        } 1px, rgba(0, 0, 0, 0) 2px)`,
+        backgroundImage: `linear-gradient(to top, ${colors.ui.bright}, ${colors.ui.bright} 1px, rgba(0, 0, 0, 0) 2px)`,
         color: colors.gatsby,
         fontWeight: `bold`,
         textDecoration: `none`,

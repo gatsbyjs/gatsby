@@ -2,100 +2,70 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { svgStyles } from "../../utils/styles"
 
 const PageHeadingContainer = styled(`header`)`
-  padding: ${rhythm(options.blockMarginBottom)};
+  padding: ${p => p.theme.space[6]};
 
-  ${presets.Md} {
+  ${mediaQueries.md} {
     left: 0;
     position: fixed;
     padding: 0;
-    top: ${`calc(${presets.bannerHeight} + ${presets.headerHeight})`};
+    top: ${`calc(${p => p.theme.sizes.bannerHeight} + ${props =>
+      props.theme.sizes.headerHeight})`};
   }
 `
 
 const H1 = styled(`h1`)`
   align-items: center;
-  color: ${colors.lilac};
+  font-weight: bold;
+  color: ${p => p.theme.colors.heading};
   display: flex;
-  font-size: 1.5rem;
+  font-size: ${p => p.theme.fontSizes[4]};
+  line-height: ${p => p.theme.lineHeights.solid};
   margin: 0;
   position: relative;
   width: 100%;
 
-  ${presets.Md} {
-    transform: rotate(-90deg) translate(calc(-100% - 2rem), 0.7rem);
+  ${mediaQueries.md} {
+    transform: rotate(-90deg)
+      translate(
+        calc(-100% - ${p => p.theme.space[7]}),
+        ${p => p.theme.space[4]}
+      );
     transform-origin: top left;
   }
 
   :after {
-    bottom: 2rem;
+    bottom: -${p => p.theme.space[4]};
     content: attr(data-title);
     display: none;
     font-size: 12rem;
-    opacity: 0.03;
     position: absolute;
-    right: -0.7rem;
+    right: -${p => p.theme.space[3]};
     z-index: -1;
+    color: ${p => p.theme.colors.blackFade[10]};
 
-    ${presets.Md} {
+    ${mediaQueries.md} {
       display: block;
     }
   }
 `
 
 const Icon = styled(`span`)`
-  display: block;
-  width: 36px;
-  height: 32px;
-  margin: 0.1rem 0.1rem 0 -0.3rem;
+  display: flex;
+  align-items: center;
+  margin-right: ${p => p.theme.space[2]};
 
-  .svg-stroke {
-    stroke-miterlimit: 10;
-    stroke-width: 1.4173;
+  svg {
+    width: ${p => p.theme.space[7]};
+    height: auto;
+    margin: 0;
   }
 
-  .svg-stroke-accent {
-    stroke: ${colors.lavender};
-  }
-  .svg-stroke-lilac {
-    stroke: ${colors.lavender};
-  }
-  .svg-fill-lilac {
-    fill: ${colors.lavender};
-  }
-  .svg-fill-gatsby {
-    fill: ${colors.lavender};
-  }
-  .svg-fill-brightest {
-    fill: #fff;
-  }
-  .svg-fill-accent {
-    fill: ${colors.lavender};
-  }
-  .svg-stroke-gatsby {
-    stroke: ${colors.lavender};
-  }
-  .svg-fill-gradient-accent-white-top {
-    fill: transparent;
-  }
-  .svg-fill-gradient-accent-white-45deg {
-    fill: transparent;
-  }
-  .svg-fill-gradient-accent-white-bottom: {
-    fill: #fff;
-  }
-  .svg-fill-gradient-purple {
-    fill: ${colors.lavender};
-  }
-  .svg-stroke-gradient-purple {
-    stroke: ${colors.lavender};
-  }
-  .svg-fill-wisteria {
-    fill: transparent;
-  }
+  ${svgStyles.stroke}
+  ${svgStyles.default}
 `
 
 const PageHeading = ({ title, icon }) => (

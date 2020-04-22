@@ -1,57 +1,43 @@
-import React from "react"
-import { Link } from "gatsby"
-import presets, { colors } from "../../utils/presets"
-import { rhythm, scale, options } from "../../utils/typography"
-import sharedStyles from "../shared/styles"
-import MdArrowBack from "react-icons/lib/md/arrow-back"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import Link from "../../components/localized-link"
+import { MdArrowBack } from "react-icons/md"
+
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { withTitleHover } from "../shared/styles"
 
 const Header = ({ stub }) => (
   <div
     className="starter-detail-header"
-    css={{
-      fontFamily: options.headerFontFamily.join(`,`),
-      padding: sharedStyles.gutter,
-      paddingBottom: rhythm(options.blockMarginBottom),
-      [presets.Sm]: {
-        paddingBottom: 0,
-      },
-      [presets.Lg]: {
-        padding: sharedStyles.gutterDesktop,
-        paddingBottom: 0,
-      },
+    sx={{
+      p: 6,
+      [mediaQueries.sm]: { pb: 0 },
+      [mediaQueries.lg]: { p: 8, pb: 0 },
     }}
   >
-    <div
-      css={{
-        paddingBottom: rhythm(1 / 4),
-      }}
-    >
+    <div sx={{ pb: 1 }}>
       <Link
         to={`/starters`}
-        css={{
+        sx={{
           "&&": {
-            ...scale(1 / 5),
-            boxShadow: `none`,
+            fontSize: 1,
             borderBottom: 0,
-            color: colors.gatsby,
-            cursor: `pointer`,
-            fontFamily: options.headerFontFamily.join(`,`),
-            fontWeight: `normal`,
+            color: `link.color`,
+            fontWeight: `body`,
             "&:hover": {
-              background: `transparent`,
-              color: colors.lilac,
+              color: `link.hoverColor`,
             },
           },
-          ...sharedStyles.withTitleHover,
+          ...withTitleHover,
         }}
       >
-        <MdArrowBack style={{ marginRight: 4, verticalAlign: `sub` }} />
+        <MdArrowBack sx={{ mr: 1 }} />
         &nbsp;
         <span className="title">All Starters</span>
       </Link>
     </div>
     <div>
-      <h1 css={{ margin: 0, display: `inline-block` }}>{stub}</h1>
+      <h1 sx={{ m: 0, display: `inline-block` }}>{stub}</h1>
     </div>
   </div>
 )

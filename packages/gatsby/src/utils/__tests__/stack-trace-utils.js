@@ -15,7 +15,7 @@ jest.mock(`fs-extra`, () => {
 const trace = require(`stack-trace`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const { getNonGatsbyCodeFrame } = require(`../stack-trace-utils`)
+const { getNonGatsbyCodeFrameFormatted } = require(`../stack-trace-utils`)
 
 beforeEach(() => {
   trace.get.mockClear()
@@ -32,7 +32,7 @@ const setup = ({ columnNumber, fileName, lineNumber }, code = ``) => {
   trace.get.mockReturnValueOnce([stack])
   fs.readFileSync.mockReturnValueOnce(code)
 
-  return getNonGatsbyCodeFrame({ highlightCode: false })
+  return getNonGatsbyCodeFrameFormatted({ highlightCode: false })
 }
 
 describe(`ignores gatsby stack traces`, () => {

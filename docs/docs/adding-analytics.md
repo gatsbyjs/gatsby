@@ -1,5 +1,5 @@
 ---
-title: Adding analytics
+title: Adding Analytics
 ---
 
 ## Why use analytics?
@@ -50,7 +50,7 @@ module.exports = {
 }
 ```
 
-> Note: Read more about [gatsby-config.js](https://www.gatsbyjs.org/docs/gatsby-config/)
+> Note: Read more about [gatsby-config.js](/docs/gatsby-config/)
 
 Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-analytics/).
 
@@ -62,8 +62,11 @@ Once this is configured you can deploy your site to test! If you navigate to the
 
 - [Google Tag Manager](/packages/gatsby-plugin-google-tagmanager/)
 - [Google Analytics gtag.js](/packages/gatsby-plugin-gtag/)
-- [Segment](/packages/gatsby-plugin-segment)
+- [Segment](/packages/gatsby-plugin-segment-js)
 - [Amplitude Analytics](/packages/gatsby-plugin-amplitude-analytics)
 - [Fathom](/packages/gatsby-plugin-fathom/)
 - [Baidu](/packages/gatsby-plugin-baidu-analytics/)
 - [Matomo (formerly Piwik)](/packages/gatsby-plugin-matomo/)
+- [Simple Analytics](/packages/gatsby-plugin-simple-analytics)
+- [Parse.ly Analytics](/packages/gatsby-plugin-parsely-analytics/)
+- [GoatCounter](/packages/gatsby-plugin-goatcounter/)

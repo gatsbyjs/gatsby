@@ -21,11 +21,14 @@ export const SECURITY_HEADERS = {
     `X-Frame-Options: DENY`,
     `X-XSS-Protection: 1; mode=block`,
     `X-Content-Type-Options: nosniff`,
+    `Referrer-Policy: same-origin`,
   ],
 }
 
+export const IMMUTABLE_CACHING_HEADER = `Cache-Control: public, max-age=31536000, immutable`
+
 export const CACHING_HEADERS = {
-  "/static/*": [`Cache-Control: public, max-age=31536000, immutable`],
+  "/static/*": [IMMUTABLE_CACHING_HEADER],
   "/sw.js": [`Cache-Control: no-cache`],
 }
 
@@ -35,3 +38,5 @@ export const ROOT_WILDCARD = `/*`
 export const COMMON_BUNDLES = [`commons`, `app`]
 
 export const HEADER_COMMENT = `## Created with gatsby-plugin-netlify`
+
+export const PAGE_DATA_DIR = `page-data/`

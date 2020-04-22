@@ -1,10 +1,10 @@
 "use strict"
 
+const path = require(`path`)
 const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
 const visit = require(`unist-util-visit`)
-
-const highlightCode = require(`gatsby-remark-prismjs/highlight-code`)
+const rangeParser = require(`parse-numeric-range`)
 
 // Language defaults to extension.toLowerCase();
 // This map tracks languages that don't match their extension.
@@ -12,6 +12,13 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   js: `jsx`,
   md: `markup`,
   sh: `bash`,
+  rb: `ruby`,
+  py: `python`,
+  ps1: `powershell`,
+  psm1: `powershell`,
+  bat: `batch`,
+  h: `c`,
+  tex: `latex`,
 }
 
 const getLanguage = file => {
@@ -26,16 +33,13 @@ const getLanguage = file => {
     : extension.toLowerCase()
 }
 
-module.exports = (
-  { markdownAST },
-  { classPrefix = `language-`, directory } = {}
-) => {
+module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
   if (!directory) {
-    throw Error(`Required option "directory" not specified`)
-  } else if (!fs.existsSync(directory)) {
+    directory = path.dirname(markdownNode.fileAbsolutePath)
+  }
+
+  if (!fs.existsSync(directory)) {
     throw Error(`Invalid directory specified "${directory}"`)
-  } else if (!directory.endsWith(`/`)) {
-    directory += `/`
   }
 
   visit(markdownAST, `inlineCode`, node => {
@@ -43,13 +47,33 @@ module.exports = (
 
     if (value.startsWith(`embed:`)) {
       const file = value.substr(6)
-      const path = normalizePath(`${directory}${file}`)
+      let snippetPath = normalizePath(path.join(directory, file))
 
-      if (!fs.existsSync(path)) {
-        throw Error(`Invalid snippet specified; no such file "${path}"`)
+      // Embed specific lines numbers of a file
+      let lines = []
+      const rangePrefixIndex = snippetPath.indexOf(`#L`)
+      if (rangePrefixIndex > -1) {
+        const range = snippetPath.slice(rangePrefixIndex + 2)
+        if (range.length === 1) {
+          lines = [Number.parseInt(range, 10)]
+        } else {
+          lines = rangeParser.parse(range)
+        }
+        // Remove everything after the range prefix from file path
+        snippetPath = snippetPath.slice(0, rangePrefixIndex)
       }
 
-      const code = fs.readFileSync(path, `utf8`).trim()
+      if (!fs.existsSync(snippetPath)) {
+        throw Error(`Invalid snippet specified; no such file "${snippetPath}"`)
+      }
+
+      let code = fs.readFileSync(snippetPath, `utf8`).trim()
+      if (lines.length) {
+        code = code
+          .split(`\n`)
+          .filter((_, lineNumber) => lines.includes(lineNumber + 1))
+          .join(`\n`)
+      }
 
       // PrismJS's theme styles are targeting pre[class*="language-"]
       // to apply its styles. We do the same here so that users
@@ -57,31 +81,12 @@ module.exports = (
       // outcome without any additional CSS.
       //
       // @see https://github.com/PrismJS/prism/blob/1d5047df37aacc900f8270b1c6215028f6988eb1/themes/prism.css#L49-L54
-      const language = getLanguage(file)
+      const language = getLanguage(snippetPath)
 
-      // Allow users to specify a custom class prefix to avoid breaking
-      // line highlights if Prism is required by any other code.
-      // This supports custom user styling without causing Prism to
-      // re-process our already-highlighted markup.
-      // @see https://github.com/gatsbyjs/gatsby/issues/1486
-      const className = language
-        .split(` `)
-        .map(token => `${classPrefix}${token}`)
-        .join(` `)
-
-      // Replace the node with the markup we need to make 100% width highlighted code lines work
-      try {
-        node.value = `<div class="gatsby-highlight">
-        <pre class="${className}"><code>${highlightCode(
-          language,
-          code
-        ).trim()}</code></pre>
-        </div>`
-        node.type = `html`
-      } catch (e) {
-        // rethrow error pointing to a file
-        throw Error(`${e.message}\nFile: ${file}`)
-      }
+      // Change the node type to code, insert our file as value and set language.
+      node.type = `code`
+      node.value = code
+      node.lang = language
     }
   })
 

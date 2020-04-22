@@ -1,47 +1,42 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import HomepageSection from "./homepage-section"
 import EcosystemSection from "../ecosystem/ecosystem-section"
 import EcosystemFeaturedItem, {
   BlockLink as FeaturedItemBlockLink,
 } from "../ecosystem/ecosystem-featured-item"
-
 import {
   HorizontalScroller,
   HorizontalScrollerContent,
 } from "../shared/horizontal-scroller"
-
-import { EcosystemIcon } from "../../assets/mobile-nav-icons"
-import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
-
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
-
+import { EcosystemIcon } from "../../assets/icons"
+import { PluginsIcon, StartersIcon } from "../../assets/icons/ecosystem-icons"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const Sections = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${presets.Md} {
+  ${mediaQueries.md} {
     flex-direction: row;
-    margin: 0 -8px;
+    margin: 0 -${p => p.theme.space[2]};
   }
 `
 
 const Section = styled(EcosystemSection)`
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radiusLg}px;
-  margin-bottom: ${rhythm(presets.gutters.default / 2)};
-  padding: ${rhythm(options.blockMarginBottom)};
+  box-shadow: ${p => p.theme.shadows.raised};
+  border-radius: ${p => p.theme.radii[2]};
+  margin-bottom: ${p => p.theme.space[6]};
+  padding: ${p => p.theme.space[6]};
 
-  ${presets.Md} {
-    margin: 0 8px 0px;
-    padding: ${rhythm(options.blockMarginBottom)};
+  ${mediaQueries.md} {
+    margin: 0 ${p => p.theme.space[2]} 0;
+    padding: ${p => p.theme.space[6]};
+    max-height: none;
 
     :last-child {
       align-self: stretch;
@@ -50,28 +45,27 @@ const Section = styled(EcosystemSection)`
 `
 
 const SubTitle = styled(`h3`)`
-  color: ${colors.lemon};
-  font-size: 1.2rem;
-  margin-bottom: 0.25rem;
-  margin-top: 2rem;
+  font-size: ${p => p.theme.fontSizes[3]};
+  margin-bottom: ${p => p.theme.space[1]};
+  margin-top: ${p => p.theme.space[7]};
 
-  ${presets.Lg} {
-    margin-left: 3rem;
-    margin-bottom: 1rem;
+  ${mediaQueries.lg} {
+    margin-left: ${p => p.theme.space[9]};
+    margin-bottom: ${p => p.theme.space[4]};
   }
 `
 
 const FeaturedItems = styled(HorizontalScroller)`
-  margin: 0 -${rhythm(presets.gutters.default / 2)};
+  margin: 0 -${p => p.theme.space[6]};
 
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     margin: 0;
     overflow-x: visible;
   }
 `
 
 const FeaturedItemsList = styled(HorizontalScrollerContent)`
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
@@ -80,17 +74,17 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 `
 
 const FeaturedItem = styled(EcosystemFeaturedItem)`
-  margin-right: ${rhythm(presets.gutters.default / 2)};
+  margin-right: ${p => p.theme.space[6]};
 
-  ${presets.Md} {
+  ${mediaQueries.md} {
     border-bottom: none;
-    margin: ${rhythm(presets.gutters.default / 2)};
+    margin: ${p => p.theme.space[6]};
     margin-top: 0;
     margin-left: 0;
-    width: 320px;
+    width: 20rem;
   }
 
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     flex-basis: 28%;
 
     :nth-of-type(4) {
@@ -99,44 +93,49 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${rhythm(3 / 4)} + 1.1rem);
+    padding-left: calc(${p => p.theme.space[5]} + ${props =>
+  props.theme.space[6]});
     position: relative;
+    border: 0;
+    box-shadow: ${p => p.theme.shadows.raised};
 
-    /* this ovveride the .main-body a style*/
-    box-shadow: none;
-    font-weight: normal;
-
-    ${presets.Md} {
-      border-radius: ${presets.radiusLg}px;
+    ${mediaQueries.md} {
+      border-radius: ${p => p.theme.radii[2]};
     }
 
-    ${presets.Lg} {
+    ${mediaQueries.lg} {
       :hover {
-        background: ${colors.ui.whisper};
+        background: ${p => p.theme.colors.ui.hover};
       }
     }
 
     :before {
       background: ${props =>
-        props.item.type === `Starter` ? colors.skyLight : colors.accentLight};
-      border-radius: ${presets.radiusLg}px 0 0 ${presets.radiusLg}px;
+        props.item.type === `Starter`
+          ? props.theme.colors.card.starterLabelBackground
+          : props.theme.colors.card.pluginLabelBackground};
+      border-radius: ${p => p.theme.radii[2]} 0 0 ${props =>
+  props.theme.radii[2]};
       bottom: 0;
       content: "";
       left: 0;
       position: absolute;
       top: 0;
-      width: 1.1rem;
+      width: ${p => p.theme.space[5]};
     }
 
     :after {
       bottom: 0;
       content: "${props => props.item.type}";
       color: ${props =>
-        props.item.type === `Starter` ? colors.skyDark : colors.accentDark};
-      font-family: ${options.headerFontFamily.join(`,`)};
-      font-size: 0.8rem;
+        props.item.type === `Starter`
+          ? props.theme.colors.card.starterLabelText
+          : props.theme.colors.card.pluginLabelText};
+      font-family: ${p => p.theme.fonts.heading};
+      font-size: ${p => p.theme.fontSizes[0]};
       left: 0;
-      letter-spacing: 0.05em;
+      letter-spacing: ${p => p.theme.letterSpacings.tracked};
+      text-transform: uppercase;
       position: absolute;
       transform: rotate(-90deg) translate(-0.5em, -0);
       transform-origin: top left;
@@ -158,7 +157,6 @@ const HomepageEcosystem = ({ featuredItems }) => (
         tracking: `Plugins - Explore the Gatsby Ecosystem`,
       },
     ]}
-    inverseStyle={true}
   >
     <Sections>
       <Section
@@ -169,7 +167,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
           { label: `Browse Plugins`, to: `/plugins/` },
           {
             label: `Creating Plugins`,
-            to: `/docs/plugin-authoring/`,
+            to: `/docs/creating-plugins/`,
             secondary: true,
           },
           { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },
@@ -189,16 +187,20 @@ const HomepageEcosystem = ({ featuredItems }) => (
       <Section
         title="External Resources"
         description="A curated list of interesting Gatsby community projects and learning resources like podcasts and tutorials."
-        links={[{ label: `Browse Resources`, to: `/docs/awesome-gatsby/` }]}
+        links={[
+          { label: `Browse Resources`, to: `/docs/awesome-gatsby-resources/` },
+        ]}
       />
     </Sections>
     <SubTitle>Some of our recent favorites</SubTitle>
     <FeaturedItems className={SCROLLER_CLASSNAME}>
       <FeaturedItemsList>
-        {featuredItems.map(item => {
-          const { slug } = item
-          return <FeaturedItem key={slug} item={item} />
-        })}
+        {featuredItems
+          .filter(e => Boolean(e))
+          .map(item => {
+            const { slug } = item
+            return <FeaturedItem key={slug} item={item} />
+          })}
       </FeaturedItemsList>
     </FeaturedItems>
   </HomepageSection>

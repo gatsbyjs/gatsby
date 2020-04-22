@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 
 const EmptyGridItems = ({ styles }) => {
@@ -8,10 +10,9 @@ const EmptyGridItems = ({ styles }) => {
       <div
         key={`empty-grid-item-${i}`}
         aria-hidden="true"
-        css={{
+        sx={{
           ...styles,
-          marginTop: 0,
-          marginBottom: 0,
+          my: 0,
         }}
       />
     )

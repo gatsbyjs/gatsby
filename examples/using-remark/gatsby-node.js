@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 const LodashModuleReplacementPlugin = require(`lodash-webpack-plugin`)
 

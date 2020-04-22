@@ -2,50 +2,52 @@ import React from "react"
 import styled from "@emotion/styled"
 
 import HomepageSection from "./homepage-section"
-import EmailCaptureForm from "../../components/email-capture-form"
+import EmailCaptureForm from "../email-capture-form"
 
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const stripedBorderHeight = `8px`
+const stripedBorderHeight = 1
 
 const Container = styled(`div`)`
-  border: 1px solid ${colors.ui.light};
-  border-radius: ${presets.radiusLg}px;
+  background: ${p => p.theme.colors.newsletter.background};
+  border: 1px solid ${p => p.theme.colors.newsletter.border};
+  border-radius: ${p => p.theme.radii[2]};
   display: flex;
   flex-direction: column;
-  margin-bottom: ${rhythm(presets.gutters.default)};
-  padding: ${rhythm(presets.gutters.default * 1.2)};
+  margin-bottom: ${p => p.theme.space[8]};
+  padding: calc(${p => p.theme.space[8]} * 1.2);
   padding-bottom: calc(
-    ${rhythm(presets.gutters.default * 1.2)} + ${stripedBorderHeight}
+    ${props => rhythm(props.theme.space[8] * 1.2)} +
+      ${p => p.theme.space[stripedBorderHeight]}
   );
   position: relative;
 
   :after {
-    border-radius: 0 0 ${presets.radiusLg}px ${presets.radiusLg}px;
-    background: ${colors.ui.whisper}
+    border-radius: 0 0 ${p => p.theme.radii[2]} ${p => p.theme.radii[2]};
+    background: ${p => p.theme.colors.newsletter.background}
       repeating-linear-gradient(
         135deg,
-        ${colors.lemon},
-        ${colors.lemon} 20px,
+        ${p => p.theme.colors.newsletter.stripeColorA},
+        ${p => p.theme.colors.newsletter.stripeColorA} 20px,
         transparent 20px,
         transparent 40px,
-        ${colors.mint} 40px,
-        ${colors.mint} 60px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 40px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 60px,
         transparent 60px,
         transparent 80px
       );
     bottom: 0;
     content: "";
-    height: ${stripedBorderHeight};
+    height: ${p => p.theme.space[stripedBorderHeight]};
     left: 0;
     right: 0;
     position: absolute;
   }
 
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -56,32 +58,34 @@ const Container = styled(`div`)`
 `
 
 const Ornament = styled(`span`)`
-  left: -4px;
+  left: -${p => p.theme.space[1]};
   position: absolute;
-  top: -8px;
+  top: -${p => p.theme.space[2]};
 `
 
 const Name = styled(`h3`)`
-  color: ${colors.lilac};
-  font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: 0.875rem;
-  font-weight: normal;
+  color: ${p => p.theme.colors.textMuted};
+  font-family: ${p => p.theme.fonts.heading};
+  font-size: ${p => p.theme.fontSizes[1]};
+  font-weight: ${p => p.theme.fontWeights.body};
+  letter-spacing: ${p => p.theme.letterSpacings.tracked};
   margin: 0;
   text-transform: uppercase;
 `
 
 const Title = styled(`h1`)`
-  color: ${colors.gatsby};
-  font-size: 1.25rem;
-  line-height: 1.3;
+  color: ${p => p.theme.colors.newsletter.heading};
+  font-size: ${p => p.theme.fontSizes[4]};
+  font-weight: ${p => p.theme.fontWeights.heading};
+  line-height: ${p => p.theme.lineHeights.dense};
   margin: 0;
-  margin-top: 0.2rem;
+  margin-top: ${p => p.theme.space[1]};
 `
 
 const Form = styled(EmailCaptureForm)`
-  margin-top: 1.25rem;
+  margin-top: ${p => p.theme.space[5]};
 
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     margin-top: 0;
   }
 `

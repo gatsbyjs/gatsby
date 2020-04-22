@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet"
 
-exports.onRenderBody = ({
+export const onRenderBody = ({
   setHeadComponents,
   setHtmlAttributes,
   setBodyAttributes,
@@ -20,5 +20,6 @@ exports.onRenderBody = ({
     helmet.noscript.toComponent(),
     helmet.script.toComponent(),
     helmet.style.toComponent(),
+    helmet.base.toComponent(),
   ])
 }

@@ -1,5 +1,5 @@
 ---
-title: "Creating and Modifying Pages"
+title: Creating and Modifying Pages
 ---
 
 Gatsby makes it easy to programmatically control your pages.
@@ -12,7 +12,7 @@ Pages can be created in three ways:
 - Plugins can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
-to modify pages created in core or plugins or to create [client-only routes](/docs/building-apps-with-gatsby/).
+to modify pages created in core or plugins or to create [client-only routes](/docs/client-only-routes-and-user-authentication/).
 
 ## Debugging help
 
@@ -20,7 +20,7 @@ To see what pages are being created by your code or plugins, you can query for
 page information while developing in Graph*i*QL. Paste the following query in
 the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running
 your sites development server at `HOST:PORT/___graphql` e.g.
-`localhost:8000/___graphql`.
+`http://localhost:8000/___graphql`.
 
 ```graphql
 {
@@ -39,7 +39,11 @@ your sites development server at `HOST:PORT/___graphql` e.g.
 }
 ```
 
+The `context` property accepts an object, and we can pass in any data we want the page to be able to access.
+
 You can also query for any `context` data you or plugins added to pages.
+
+> **NOTE:** There are a few reserved names that _cannot_ be used in `context`. They are: `path`, `matchPath`, `component`, `componentChunkName`, `pluginCreator___NODE`, and `pluginCreatorId`.
 
 ## Creating pages in gatsby-node.js
 
@@ -52,50 +56,138 @@ of the markdown file.
 ```javascript:title=gatsby-node.js
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
-    // Query for markdown nodes to use in creating pages.
-    resolve(
-      graphql(
-        `
-          {
-            allMarkdownRemark(limit: 1000) {
-              edges {
-                node {
-                  frontmatter {
-                    path
-                  }
-                }
+  // Query for markdown nodes to use in creating pages.
+  const result = await graphql(
+    `
+      {
+        allMarkdownRemark(limit: 1000) {
+          edges {
+            node {
+              frontmatter {
+                path
               }
             }
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          reject(result.errors)
         }
+      }
+    `
+  )
 
-        // Create pages for each markdown file.
-        result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-          const path = node.frontmatter.path
-          createPage({
-            path,
-            component: blogPostTemplate,
-            // In your blog post template's graphql query, you can use path
-            // as a GraphQL variable to query for data from the markdown file.
-            context: {
-              path,
-            },
-          })
-        })
-      })
-    )
+  // Handle errors
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+
+  // Create pages for each markdown file.
+  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    const path = node.frontmatter.path
+    createPage({
+      path,
+      component: blogPostTemplate,
+      // In your blog post template's graphql query, you can use pagePath
+      // as a GraphQL variable to query for data from the markdown file.
+      context: {
+        pagePath: path,
+      },
+    })
   })
 }
 ```
+
+## Trade-offs of querying for all fields in the context object of `gatsby-node.js`
+
+Imagine a scenario where you could query for all the parameters your template would need in the `gatsby-node.js`. What would the implications be? In this section, you will look into this.
+
+In the initial approach you have seen how the `gatsby-node.js` file would have a query block like so :
+
+```graphql
+  const queryResults = await graphql(`
+    query AllProducts {
+      allProducts {
+        nodes {
+          id
+        }
+      }
+    }
+  `);
+```
+
+Using the `id` as an access point to query for other properties in the template is the default approach. However, suppose you had a list of products with properties you would like to query for. Handling the query entirely from `gatsby-node.js` would result in the query looking like this:
+
+```javascript:title=gatsby-node.js
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions;
+  const queryResults = await graphql(`
+    query AllProducts {
+      allProducts {
+        nodes {
+          id
+          name
+          price
+          description
+        }
+      }
+    }
+  `);
+
+  const productTemplate = path.resolve(`src/templates/product.js`);
+  queryResults.data.allProducts.nodes.forEach(node => {
+    createPage({
+      path: `/products/${node.id}`,
+      component: productTemplate,
+      context: {
+        // This time the entire product is passed down as context
+        product
+      }
+    });
+  });
+};
+};
+```
+
+> You are now requesting all the data you need in a single query (this requires server-side support to fetch many products in a single database query).
+
+> As long as you can pass this data down to the template component via `pageContext`, there is no need for the template to make a GraphQL query at all.
+
+Your template file would look like this:
+
+```javascript:title=src/templates/product.js
+function Product({ pageContext }) {
+  return (
+    <div>
+      Name: {pageContext.name}
+      Price: {pageContext.price}
+      Description: {pageContext.description}
+    </div>
+  )
+}
+```
+
+### Performance implications
+
+Using the `pageContext` props in the template component can come with its performance advantages, of getting in all the data you need at build time; from the createPages API. This removes the need to have a GraphQL query in the template component.
+
+It does come with the advantage of querying your data from one place after declaring the `context` parameter.
+
+However, it doesn’t give you the opportunity to know what exactly you are querying for in the template and if any changes occur in the component query structure in `gatsby-node.js`. [Hot reload](/docs/glossary#hot-module-replacement) is taken off the table and the site needs to be rebuilt for changes to reflect.
+
+Gatsby stores page metadata (including context) in a redux store (which also means that it stores the memory of the page). For larger sites (either number of pages and/or amount of data that is being passed via page context) this will cause problems. There might be "out of memory" crashes if it's too much data or degraded performance.
+
+> If there is memory pressure, Node.js will try to garbage collect more often, which is a known performance issue.
+
+Page query results are not stored in memory permanently and are being saved to disk immediately after running the query.
+
+We recommend passing "ids" or "slugs" and making full queries in the page template query to avoid this.
+
+### Incremental builds trade-off of this method
+
+Another disadvantage of querying all of your data in `gatsby-node.js` is that your site has to be rebuilt every time you make a change, so you will not be able to take advantage of incremental builds.
 
 ## Modifying pages created by core or plugins
 
@@ -147,7 +239,8 @@ exports.onCreatePage = ({ page, actions }) => {
   createPage({
     ...page,
     context: {
-      house: Gryffindor,
+      ...page.context,
+      house: `Gryffindor`,
     },
   })
 }
@@ -164,3 +257,9 @@ const Page = ({ pageContext }) => {
 
 export default Page
 ```
+
+Page context is serialized before being passed to pages: This means it can't be used to pass functions into components.
+
+## Creating Client-only routes
+
+In specific cases, you might want to create a site with client-only portions that are gated by authentication. For more on how to achieve this, refer to [client-only routes & user authentication](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication/).

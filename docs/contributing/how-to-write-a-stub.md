@@ -29,3 +29,5 @@ If you create a stub or see an existing one on the Gatsby.js site and feel inter
 
 To change a stub into a living-breathing document, remove the `issue` entry from a stub's frontmatter (a fancy name for Markdown metadata) and replace the boilerplate content with
 your wonderful prose and code. Save the file, commit to GitHub, open a PR, get feedback. Learn more in our page on [docs contributions](/contributing/docs-contributions/).
+
+If you wish to see any of the available stubs, head over to the current [Stub List](/contributing/stub-list/).

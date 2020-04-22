@@ -34,6 +34,12 @@ describe(`gatsby-plugin-sass`, () => {
           camelCase: false,
         },
       },
+      "sass rule test options": {
+        sassRuleTest: /\.global\.s(a|c)ss$/,
+      },
+      "sass rule modules test options": {
+        sassRuleModulesTest: /\.global\.s(a|c)ss$/,
+      },
     },
   }
 

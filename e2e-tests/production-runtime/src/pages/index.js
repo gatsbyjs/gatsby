@@ -1,9 +1,9 @@
-import React from 'react'
-import { Link } from 'gatsby'
+import * as React from "react"
+import { Link } from "gatsby"
 
-import Bio from '../components/bio'
-import Layout from '../components/layout'
-import InstrumentPage from '../utils/instrument-page'
+import Bio from "../components/bio"
+import Layout from "../components/layout"
+import InstrumentPage from "../utils/instrument-page"
 
 const IndexPage = ({ pageContext }) => (
   <Layout>
@@ -44,6 +44,21 @@ const IndexPage = ({ pageContext }) => (
       <li>
         <Link to="/static-query/" data-testid="static-query">
           StaticQuery and useStaticQuery
+        </Link>
+      </li>
+      <li>
+        <Link to="/compilation-hash/" data-testid="compilation-hash">
+          Compilation Hash Page
+        </Link>
+      </li>
+      <li>
+        <Link to="/path-context/" data-testid="path-context">
+          Path Context
+        </Link>
+      </li>
+      <li>
+        <Link to="/안녕" data-testid="page-with-unicode-path">
+          Go to page with unicode path
         </Link>
       </li>
     </ul>

@@ -1,7 +1,5 @@
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
-import Layout from "../../components/layout"
-import Unbird from "../../components/unbird"
 import RRSM from "../../utils/reach-router-state-manager"
 import queryString from "query-string"
 
@@ -24,7 +22,7 @@ class StarterLibraryPage extends Component {
         : `Library` // if no search term or single dependency
 
     return (
-      <Layout location={location}>
+      <>
         <Helmet>
           <title>Starter Library</title>
           <meta
@@ -56,12 +54,7 @@ class StarterLibraryPage extends Component {
           )}
           defaultSearchState={{ v: [`2`] }}
         />
-        <Unbird
-          dataSetId="5c113a828240aa564734d954"
-          publicKey={process.env.GATSBY_FEEDBACK_KEY_STARTERLIB}
-          feedbackPrompt="Have feedback on the Starter Library?"
-        />
-      </Layout>
+      </>
     )
   }
 }

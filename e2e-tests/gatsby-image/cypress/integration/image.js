@@ -2,7 +2,7 @@ const fluidTestId = `image-fluid`
 
 describe(`Production gatsby-image`, () => {
   beforeEach(() => {
-    cy.visit(`/fluid`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/fluid`).waitForRouteChange()
   })
 
   describe(`wrapping elements`, () => {
@@ -46,10 +46,7 @@ describe(`Production gatsby-image`, () => {
   })
 
   it(`renders a picture tag`, () => {
-    cy.getTestElement(fluidTestId)
-      .find(`picture`)
-      .its(`length`)
-      .should(`eq`, 1)
+    cy.getTestElement(fluidTestId).find(`picture`).its(`length`).should(`eq`, 1)
   })
 
   it(`renders a picture > source`, () => {

@@ -6,7 +6,7 @@ author: Jason Lengstorf
 tags:
   - themes
   - livestream
-  - tutorials
+  - getting-started
 ---
 
 One of the most exciting things we’re working on at Gatsby right now is themes.
@@ -29,9 +29,7 @@ No code. No assembling plugins. Just writing content.
 
 Recently I had the pleasure of building a theme from scratch with Gatsby’s own [John Otander](https://twitter.com/4lpine) live on [my weekly livestream](https://twitch.tv/jlengstorf).
 
-<iframe id="ytplayer" title="Theme livestream on YouTube" type="text/html" width="720" height="405"
-src="https://www.youtube.com/embed/PS2784YfPpw?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx"
-frameborder="0" allowfullscreen />
+https://youtu.be/PS2784YfPpw?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
 
 On the stream, we covered multiple topics:
 

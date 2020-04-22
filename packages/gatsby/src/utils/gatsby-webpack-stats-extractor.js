@@ -7,7 +7,7 @@ class GatsbyWebpackStatsExtractor {
     this.options = options || {}
   }
   apply(compiler) {
-    compiler.hooks.done.tapAsync(this.plugin, (stats, done) => {
+    compiler.hooks.done.tapAsync(this.plugin.name, (stats, done) => {
       let assets = {}
       let assetsMap = {}
       for (let chunkGroup of stats.compilation.chunkGroups) {

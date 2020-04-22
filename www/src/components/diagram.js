@@ -1,40 +1,25 @@
-import React, { Fragment } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Fragment } from "react"
 import { keyframes } from "@emotion/core"
-import { Link, StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
+import Link from "./localized-link"
 
-import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
-import logo from "../monogram.svg"
-import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
-import FuturaParagraph from "../components/futura-paragraph"
-import TechWithIcon from "../components/tech-with-icon"
+import logo from "../assets/monogram.svg"
+import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
+import FuturaParagraph from "./futura-paragraph"
+import TechWithIcon from "./tech-with-icon"
 
-const stripeColor = `255, 255, 255, 0.9`
-const stripeSize = 15
-const stripeAnimation = keyframes({
-  "0%": {
-    backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
-  },
-  "100%": { backgroundPosition: `0 0` },
-})
-const stripeBg = {
-  backgroundColor: colors.ui.whisper,
-  backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
-  backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
-  animation: `${stripeAnimation} 14s linear infinite`,
-}
 const lineAnimation = keyframes({
-  to: {
-    strokeDashoffset: 10,
-  },
+  to: { strokeDashoffset: 10 },
 })
 
 const Segment = ({ className, children }) => (
   <div
     className={`Segment ${className}`}
     css={{
-      maxWidth: rhythm(30),
       margin: `0 auto`,
+      maxWidth: `48rem`,
       textAlign: `center`,
     }}
   >
@@ -45,19 +30,20 @@ const Segment = ({ className, children }) => (
 const SegmentTitle = ({ children }) => (
   <h2
     className="Segment-title"
-    css={{
+    sx={{
+      bg: `accent`,
+      borderRadius: 1,
+      bottom: t => `-${t.space[2]}`,
+      color: `black`,
       display: `inline`,
-      background: colors.accent,
-      color: colors.gray.copy,
-      borderRadius: presets.radius,
+      fontSize: 1,
+      fontWeight: `body`,
+      letterSpacing: `tracked`,
+      lineHeight: `solid`,
       margin: `0 auto`,
       position: `relative`,
-      bottom: `-.5rem`,
-      padding: `.35rem .6rem`,
-      fontWeight: `normal`,
-      letterSpacing: `.5px`,
-      ...scale(-2 / 5),
-      lineHeight: 1,
+      px: 3,
+      py: 2,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
     }}
@@ -75,8 +61,8 @@ const VerticalLine = () => (
   >
     <path
       d="M10 40 L10 -10"
-      css={{
-        stroke: colors.lilac,
+      sx={{
+        stroke: t => t.colors.lilac,
         strokeWidth: `3`,
         strokeLinecap: `round`,
         strokeDasharray: `0.5 10`,
@@ -87,24 +73,26 @@ const VerticalLine = () => (
 )
 
 const box = {
-  border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radiusLg,
-  padding: `${rhythm(1)} ${rhythm(1)} 0`,
-  background: `#fff`,
+  borderColor: `ui.border`,
+  borderRadius: 2,
+  borderStyle: `solid`,
+  borderWidth: `1px`,
+  px: 7,
+  py: 5,
 }
 
 const borderAndBoxShadow = {
-  ...presets.boxShadows.card,
-  border: `1px solid ${colors.ui.light}`,
-  background: `#fff`,
-  width: `100%`,
-  borderRadius: presets.radius,
+  bg: `card.background`,
+  border: 0,
+  borderRadius: 1,
+  boxShadow: `raised`,
   transform: `translateZ(0)`,
+  width: `100%`,
 }
 
 const SourceItems = ({ children }) => (
   <div
-    css={{
+    sx={{
       display: `flex`,
       flexWrap: `wrap`,
       justifyContent: `center`,
@@ -115,28 +103,23 @@ const SourceItems = ({ children }) => (
   </div>
 )
 
-const boxPadding = { padding: `${rhythm(1 / 3)} ${rhythm(2 / 4)}` }
+const boxPadding = { py: 3, px: 4 }
 
 const SourceItem = ({ children }) => (
   <div
-    css={{
-      boxSizing: `border-box`,
-      padding: `0 ${rhythm(2 / 3)} ${rhythm(1)}`,
+    sx={{
+      py: 4,
+      px: 5,
       display: `flex`,
-      [presets.Xs]: {
-        flex: `1 1 50%`,
-      },
-      [presets.Sm]: {
-        flex: `1 1 33%`,
-        maxWidth: `33%`,
-      },
+      flex: [null, `1 1 50%`, null, `1 1 33%`],
+      maxWidth: [null, null, null, `33%`],
     }}
   >
     <div
-      css={{
+      sx={{
         ...borderAndBoxShadow,
         ...boxPadding,
-        lineHeight: 1.2,
+        lineHeight: `dense`,
         textAlign: `left`,
       }}
     >
@@ -147,26 +130,24 @@ const SourceItem = ({ children }) => (
 
 const ItemTitle = ({ children }) => (
   <h3
-    css={{
-      color: colors.gatsby,
+    sx={{
+      fontSize: 2,
       margin: 0,
-      fontStyle: `normal`,
-      ...scale(0),
+      color: `card.header`,
     }}
   >
     {children}
   </h3>
 )
 
-const ItemDescription = ({ children }) => (
+const ItemDescription = ({ children, color }) => (
   <small
-    css={{
-      lineHeight: 1.2,
+    sx={{
+      color: color ? color : `textMuted`,
       display: `block`,
-      color: colors.gatsby,
-      [presets.Xl]: {
-        fontSize: scale(-1 / 5).fontSize,
-      },
+      fontFamily: `body`,
+      fontSize: 1,
+      lineHeight: `dense`,
     }}
   >
     {children}
@@ -174,54 +155,45 @@ const ItemDescription = ({ children }) => (
 )
 
 const ItemDescriptionLink = ({ to, children }) => (
-  <Link css={{ "&&": { fontWeight: `normal` } }} to={to}>
+  <Link css={{ "&&": { color: `purple.80` } }} to={to}>
     {children}
   </Link>
 )
 
-const Gatsby = ({ children }) => (
+const Gatsby = () => (
   <div
-    css={{
+    sx={{
       ...borderAndBoxShadow,
-      padding: rhythm(1),
+      bg: `white`,
+      p: 5,
       margin: `0 auto`,
-      width: rhythm(5.5),
-      height: rhythm(5.5),
-      [presets.Lg]: {
-        width: rhythm(6),
-        height: rhythm(6),
-      },
+      width: `8.5rem`,
+      height: `8.5rem`,
     }}
   >
     <img
       src={logo}
-      css={{
+      sx={{
         display: `inline-block`,
-        height: rhythm(1.75),
-        width: rhythm(1.75),
-        [presets.Lg]: {
-          width: rhythm(2.25),
-          height: rhythm(2.25),
-        },
+        height: [t => t.space[8], null, null, null, t => t.space[9]],
         margin: 0,
         verticalAlign: `middle`,
+        width: `auto`,
       }}
       alt="Gatsby"
     />
     <ItemDescription>
       <small
-        css={{
-          marginTop: `.25rem`,
+        sx={{
+          color: `grey.50`,
           display: `block`,
+          mt: 2,
+          mb: 1,
         }}
       >
         powered by
       </small>
-      <span
-        css={{
-          color: colors.gatsby,
-        }}
-      >
+      <span sx={{ color: `gatsby` }}>
         <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>
       </span>
     </ItemDescription>
@@ -233,40 +205,34 @@ const Diagram = () => (
     query={graphql`
       query StaticHostsQuery {
         allStaticHostsYaml {
-          edges {
-            node {
-              title
-              url
-            }
+          nodes {
+            title
+            url
           }
         }
       }
     `}
-    render={({ allStaticHostsYaml: { edges: staticHosts } }) => (
+    render={({ allStaticHostsYaml: { nodes: staticHosts } }) => (
       <section
         className="Diagram"
-        css={{
-          fontFamily: options.headerFontFamily.join(`,`),
-          padding: rhythm(presets.gutters.default),
-          textAlign: `center`,
+        sx={{
           flex: `1 1 100%`,
+          fontFamily: `heading`,
+          p: 6,
+          textAlign: `center`,
         }}
       >
         <h1
-          css={{
-            marginTop: 0, //rhythm(1 / 4),
-            marginBottom: rhythm(3 / 4),
-            ...scale(0.9),
-            [presets.Md]: {
-              marginTop: rhythm(3 / 4),
-            },
+          sx={{
+            fontWeight: `heading`,
+            mb: 6,
           }}
         >
           How Gatsby works
         </h1>
-        <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
+        <div sx={{ maxWidth: `30rem`, mt: 0, mx: `auto`, mb: 9 }}>
           <FuturaParagraph>
-            Pull data from <em>anywhere</em> in minutes
+            Pull data from <em>anywhere</em>
           </FuturaParagraph>
         </div>
 
@@ -296,27 +262,29 @@ const Diagram = () => (
           <VerticalLine />
           <SegmentTitle>Build</SegmentTitle>
           <div
-            css={{
+            sx={{
               ...box,
-              ...stripeBg,
-              paddingTop: 0,
-              paddingBottom: 0,
+              backgroundColor: `purple.70`,
+              backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
+              backgroundImage: t =>
+                `linear-gradient(45deg, ${t.colors.purple[80]} 25%, transparent 25%, transparent 50%, ${t.colors.purple[80]} 50%, ${t.colors.purple[80]} 75%, transparent 75%, transparent)`,
+              py: 0,
             }}
           >
             <VerticalLine />
             <Gatsby />
             <VerticalLine />
             <div
-              css={{
+              sx={{
                 ...borderAndBoxShadow,
                 ...boxPadding,
-                paddingTop: rhythm(1 / 2),
-                paddingBottom: rhythm(1 / 2),
-                width: `auto`,
+                bg: `white`,
                 display: `inline-block`,
+                py: 3,
+                width: `auto`,
               }}
             >
-              <ItemDescription>
+              <ItemDescription color="grey.50">
                 HTML &middot; CSS &middot;
                 {` `}
                 <TechWithIcon icon={ReactJSIcon} height="1.1em">
@@ -332,14 +300,14 @@ const Diagram = () => (
           <VerticalLine />
           <SegmentTitle>Deploy</SegmentTitle>
           <div
-            css={{
+            sx={{
               ...box,
-              paddingBottom: rhythm(1),
+              pb: 5,
             }}
           >
-            <ItemTitle>Static Web Host</ItemTitle>
+            <ItemTitle>Web Hosting</ItemTitle>
             <ItemDescription>
-              {staticHosts.map(({ node: staticHost }, index) => (
+              {staticHosts.map((staticHost, index) => (
                 <Fragment key={staticHost.url}>
                   {index > 0 && `, `}
                   <ItemDescriptionLink to={staticHost.url}>

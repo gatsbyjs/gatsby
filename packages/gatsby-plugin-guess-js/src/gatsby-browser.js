@@ -12,7 +12,7 @@ exports.onRouteUpdate = ({ location }) => {
   initialPath = location.pathname
 }
 
-exports.onPrefetchPathname = ({ getResourcesForPathname }, pluginOptions) => {
+exports.onPrefetchPathname = ({ loadPage }, pluginOptions) => {
   if (process.env.NODE_ENV !== `production`) return
 
   const matchedPaths = Object.keys(
@@ -24,6 +24,7 @@ exports.onPrefetchPathname = ({ getResourcesForPathname }, pluginOptions) => {
 
   // Don't prefetch from client for the initial path as we did that
   // during SSR
-  if (!(notNavigated && initialPath === window.location.pathname))
-    matchedPaths.forEach(getResourcesForPathname)
+  if (!(notNavigated && initialPath === window.location.pathname)) {
+    matchedPaths.forEach(loadPage)
+  }
 }

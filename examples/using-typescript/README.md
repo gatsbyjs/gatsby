@@ -2,4 +2,4 @@
 
 https://using-typescript.gatsbyjs.org
 
-Demonstrates using Typescript to build Gatsby sites.
+Demonstrates using TypeScript to build Gatsby sites.

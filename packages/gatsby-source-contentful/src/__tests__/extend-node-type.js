@@ -56,9 +56,21 @@ describe(`contentful extend node type`, () => {
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
     })
-    it(`If the height isn't specified it should be set keeping with the aspect ratio of the original image`, async () => {
+    it(`resorts to a default width if no arguments are given`, async () => {
+      const resp = await resolveFixed(image, {})
+      expect(resp.width).toBe(400)
+      expect(resp.height).toBe(533)
+    })
+    it(`resolves the height if only a width is given`, async () => {
       const resp = await resolveFixed(image, {
         width: 450,
+      })
+      expect(resp.width).toBe(450)
+      expect(resp.height).toBe(600)
+    })
+    it(`resolves the width if only a height is given`, async () => {
+      const resp = await resolveFixed(image, {
+        height: 600,
       })
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(600)
@@ -89,13 +101,23 @@ describe(`contentful extend node type`, () => {
       const resp = await resolveFixed(image, {
         width: 2250,
       })
-      expect(resp.srcSet.split(`,`).length).toBe(3)
+      expect(resp.srcSet.split(`,`).length).toBe(1)
       expect(resp).toMatchSnapshot()
     })
   })
   describe(`resolveFluid`, () => {
-    it(`generates responsive size data for images`, async () => {
+    it(`generates responsive size data for images using a default maxWidth`, async () => {
+      const resp = await resolveFluid(image, {})
+      expect(resp.srcSet.length).toBeGreaterThan(1)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`generates responsive size data for images given a maxWidth`, async () => {
       const resp = await resolveFluid(image, { maxWidth: 400 })
+      expect(resp.srcSet.length).toBeGreaterThan(1)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`generates responsive size data for images given a maxHeight`, async () => {
+      const resp = await resolveFluid(image, { maxHeight: 400 })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
     })
@@ -119,13 +141,21 @@ describe(`contentful extend node type`, () => {
       const resp = await resolveFluid(image, {
         maxWidth: 2250,
       })
-      expect(resp.srcSet.split(`,`).length).toBe(5)
+      expect(resp.srcSet.split(`,`).length).toBe(3)
       expect(resp).toMatchSnapshot()
     })
   })
   describe(`resolveResize`, () => {
-    it(`generates resized images`, async () => {
+    it(`generates resized images using a default width`, async () => {
+      const resp = await resolveResize(image, {})
+      expect(resp).toMatchSnapshot()
+    })
+    it(`generates resized images given a certain width`, async () => {
       const resp = await resolveResize(image, { width: 400 })
+      expect(resp).toMatchSnapshot()
+    })
+    it(`generates resized images given a certain height`, async () => {
+      const resp = await resolveResize(image, { height: 600 })
       expect(resp).toMatchSnapshot()
     })
     it(`generates resized images using all options`, async () => {

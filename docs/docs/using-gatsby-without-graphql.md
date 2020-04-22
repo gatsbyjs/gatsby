@@ -1,12 +1,12 @@
 ---
-title: Using Gatsby without GraphQL
+title: Gatsby without GraphQL
 ---
 
 Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. However, source plugins (or even Gatsby nodes) aren't strictly necessary to pull data into a Gatsby site! It's also possible to use an “unstructured data” approach in Gatsby sites, no GraphQL required.
 
 > Note: For our purposes here, “unstructured data” means data “handled outside of Gatsby’s data layer” (we’re using the data directly, and not transforming the data into Gatsby nodes).
 
-## The approach: Fetch data and use Gatsby's `createPages` API
+## The approach: fetch data and use Gatsby's `createPages` API
 
 > _Note_: This example is drawn from an example repo built specifically to model how to use this "unstructured data" approach. [View the full repo on GitHub](https://github.com/jlengstorf/gatsby-with-unstructured-data).
 
@@ -35,8 +35,8 @@ exports.createPages = async ({ actions: { createPage } }) => {
 }
 ```
 
-- `createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](https://www.gatsbyjs.org/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
-- The [`createPage` action](https://www.gatsbyjs.org/docs/actions/#createPage) is what actually creates the page.
+- `createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
+- The [`createPage` action](/docs/actions/#createPage) is what actually creates the page.
 
 On the highlighted lines, the data is being supplied to the page template, where it can be accessed as props:
 
@@ -85,7 +85,7 @@ Using Gatsby's data layer provides the following benefits:
 - Improves performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
 - Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 
-> Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql/).
+> Learn more about [GraphQL in Gatsby](/docs/graphql/).
 
 Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
 
@@ -99,9 +99,10 @@ Another difficulty added when working with unstructured data is that your data f
 
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
-1.  Check out the [Plugin Library](/packages/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/plugin-authoring/) guide and consider building your own!
+1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
+2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
 
 ## Further reading
 
-Amberley Romo's guide to [using Gatsby without GraphQL](/blog/2018-10-25-using-gatsby-without-graphql/)
+- Amberley Romo's guide to [using Gatsby without GraphQL](/blog/2018-10-25-using-gatsby-without-graphql/)
+- [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)

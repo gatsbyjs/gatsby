@@ -39,10 +39,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     {
       absolutePath: path.posix.normalize(filePath),
       internal: {},
-      extension: filePath
-        .split(`.`)
-        .pop()
-        .trim(),
+      extension: filePath.split(`.`).pop().trim(),
     },
   ]
 
@@ -122,6 +119,22 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
+  it(`can copy JSX images`, async () => {
+    const mdx = require(`remark-mdx`)
+    const path = `images/sample-image.gif`
+
+    const markdownAST = remark().use(mdx).parse(`<img src="${path}" />`)
+
+    await plugin({
+      files: getFiles(path),
+      markdownAST,
+      markdownNode,
+      getNode,
+    })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
   it(`can copy HTML multiple images`, async () => {
     const path1 = `images/sample-image.gif`
     const path2 = `images/another-sample-image.gif`
@@ -182,6 +195,36 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
+  it(`can copy HTML images from video elements with the poster attribute `, async () => {
+    const videoPath = `videos/sample-video.mp4`
+    const posterPath = `images/sample-image.jpg`
+
+    const markdownAST = remark.parse(
+      `<video controls="controls" autoplay="true" src="${videoPath}" poster="${posterPath}">\n<p>Your browser does not support the video element.</p>\n</video>`
+    )
+
+    await plugin({
+      files: [...getFiles(videoPath), ...getFiles(posterPath)],
+      markdownAST,
+      markdownNode,
+      getNode,
+    })
+
+    expect(fsExtra.copy).toHaveBeenCalledTimes(2)
+  })
+
+  it(`can copy flash from object elements with the value attribute`, async () => {
+    const path = `myMovie.swf`
+
+    const markdownAST = remark.parse(
+      `<object type="application/x-shockwave-flash">\n<param name="movie" value="${path}" />\n</object>`
+    )
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
   it(`can copy HTML videos when some siblings are in ignore extensions`, async () => {
     const path = `videos/sample-video.mp4`
     const path1 = `images/sample-image.jpg`
@@ -225,7 +268,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   describe(`options.destinationDir`, () => {
     const imagePath = `images/sample-image.gif`
 
-    it(`throws an error if the destination directory is not within 'public'`, async () => {
+    it(`throws an error if the destination supplied by destinationDir points outside of the root dir`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const invalidDestinationDir = `../destination`
       expect.assertions(2)
@@ -240,14 +283,31 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       })
     })
 
-    it(`copies file to destinationDir when supplied`, async () => {
+    it(`throws an error if the destination supplied by the destinationDir function points outside of the root dir`, async () => {
+      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const invalidDestinationDir = `../destination`
+      const customDestinationDir = f =>
+        `../destination/${f.hash}/${f.name}/${f.notexist}`
+      expect.assertions(2)
+      return plugin(
+        { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
+        {
+          destinationDir: customDestinationDir,
+        }
+      ).catch(e => {
+        expect(e).toEqual(expect.stringContaining(invalidDestinationDir))
+        expect(fsExtra.copy).not.toHaveBeenCalled()
+      })
+    })
+
+    it(`copies file to the destination supplied by destinationDir`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const validDestinationDir = `path/to/dir`
       const expectedNewPath = path.posix.join(
         process.cwd(),
         `public`,
         validDestinationDir,
-        `/undefined-undefined.gif`
+        `/undefined/undefined.gif`
       )
       expect.assertions(3)
       await plugin(
@@ -259,12 +319,30 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         expect(v).toBeDefined()
         expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
         expect(imageURL(markdownAST)).toEqual(
-          `/path/to/dir/undefined-undefined.gif`
+          `/path/to/dir/undefined/undefined.gif`
         )
       })
     })
 
-    it(`copies file to destinationDir when supplied (with pathPrefix)`, async () => {
+    it(`copies file to the destination supplied by the destinationDir function`, async () => {
+      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const customDestinationDir = f => `foo/${f.hash}--bar`
+      const expectedDestination = `foo/undefined--bar.gif`
+      expect.assertions(3)
+      await plugin(
+        { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
+        { destinationDir: customDestinationDir }
+      ).then(v => {
+        const expectedNewPath = path.posix.join(
+          ...[process.cwd(), `public`, expectedDestination]
+        )
+        expect(v).toBeDefined()
+        expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
+        expect(imageURL(markdownAST)).toEqual(`/${expectedDestination}`)
+      })
+    })
+
+    it(`copies file to the destination supplied by destinationDir (with pathPrefix)`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const pathPrefix = `/blog`
       const validDestinationDir = `path/to/dir`
@@ -272,7 +350,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         process.cwd(),
         `public`,
         validDestinationDir,
-        `/undefined-undefined.gif`
+        `/undefined/undefined.gif`
       )
       expect.assertions(3)
       await plugin(
@@ -290,17 +368,44 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         expect(v).toBeDefined()
         expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
         expect(imageURL(markdownAST)).toEqual(
-          `${pathPrefix}/path/to/dir/undefined-undefined.gif`
+          `${pathPrefix}/path/to/dir/undefined/undefined.gif`
         )
       })
     })
 
-    it(`copies file to root dir when not supplied'`, async () => {
+    it(`copies file to the destination supplied by the destinationDir function (with pathPrefix)`, async () => {
+      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const pathPrefix = `/blog`
+      const customDestinationDir = f => `hello${f.name}123`
+      const expectedDestination = `helloundefined123.gif`
+      expect.assertions(3)
+      await plugin(
+        {
+          files: getFiles(imagePath),
+          markdownAST,
+          markdownNode,
+          pathPrefix,
+          getNode,
+        },
+        { destinationDir: customDestinationDir }
+      ).then(v => {
+        const expectedNewPath = path.posix.join(
+          ...[process.cwd(), `public`, expectedDestination]
+        )
+        expect(v).toBeDefined()
+        expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
+        expect(imageURL(markdownAST)).toEqual(
+          `${pathPrefix}/${expectedDestination}`
+        )
+      })
+    })
+
+    it(`copies file to the root dir when destinationDir is not supplied'`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const expectedNewPath = path.posix.join(
         process.cwd(),
         `public`,
-        `/undefined-undefined.gif`
+        `/undefined/undefined.gif`
       )
       expect.assertions(3)
       await plugin({
@@ -311,7 +416,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       }).then(v => {
         expect(v).toBeDefined()
         expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
-        expect(imageURL(markdownAST)).toEqual(`/undefined-undefined.gif`)
+        expect(imageURL(markdownAST)).toEqual(`/undefined/undefined.gif`)
       })
     })
   })

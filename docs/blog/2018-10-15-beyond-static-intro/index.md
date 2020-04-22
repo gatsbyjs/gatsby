@@ -4,7 +4,7 @@ date: 2018-10-15
 author: Dustin Schau
 image: images/dynamic.jpg
 showImageInArticle: false
-tags: ["apps", "beyond static", "webinar"]
+tags: ["apps"]
 ---
 
 We hear it regularly. Gatsby is for static sites, Next.js (or similar) is for when your data changes regularly and/or you need an "app." This raises a question... what actually _is_ an app?
@@ -42,6 +42,8 @@ One of the central ideas of Gatsby is that we statically generate our HTML conte
 1. Build and render static HTML, creating content and pages with data injected at build time
 1. Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
 1. Transfer rendering to the [React reconciler][reconciler]
+
+_This process is spelled out in more detail in the ["Understanding React Hydration" guide](/docs/react-hydration)_
 
 It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make data calls, authenticate users, and perform all the app-like functionality you desire.
 

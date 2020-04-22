@@ -14,10 +14,8 @@ export default AgenciesPage
 export const pageQuery = graphql`
   query {
     allCreatorsYaml(filter: { type: { eq: "agency" } }) {
-      edges {
-        node {
-          ...CreatorData
-        }
+      nodes {
+        ...CreatorData
       }
     }
   }

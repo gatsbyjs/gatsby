@@ -45,6 +45,7 @@ function cloneTreeUntil(root, endCondition) {
         clonedRoot = newNode
         preOrderTraversal(child)
       })
+      clonedRoot = newNode
     }
   }
   preOrderTraversal(root)
@@ -57,7 +58,7 @@ function findLastTextNode(node, textNode) {
   }
   if (node.children) {
     node.children.forEach(child => {
-      const laterTextNode = findLastTextNode(child)
+      const laterTextNode = findLastTextNode(child, textNode)
       if (laterTextNode !== textNode) {
         textNode = laterTextNode
       }

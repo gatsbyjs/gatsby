@@ -1,65 +1,87 @@
-import React from "react"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
+import { trackCustomEvent } from "gatsby-plugin-google-analytics"
 
-import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
 import Button from "./button"
 
 const MastheadContent = () => (
   <div
     className="masthead-content"
-    css={{
-      margin: `0 ${rhythm(presets.gutters.default)}`,
-      paddingBottom: rhythm(2),
-      paddingTop: rhythm(2),
-      textAlign: `center`,
-      [presets.Md]: {
-        paddingTop: `calc(${presets.headerHeight} + ${
-          presets.bannerHeight
-        } + ${rhythm(1)})`,
-      },
-      [presets.Lg]: {
-        paddingBottom: rhythm(3),
-      },
+    sx={{
+      margin: `0 auto`,
+      px: 8,
+      py: [9, null, null, 12],
+      mb: [null, null, null, 6],
+      textAlign: `center`
     }}
   >
     <h1
-      css={{
-        color: colors.gatsby,
-        fontSize: `calc(12px + 2vh + 1.5vw)`,
-        letterSpacing: `-1px`,
-        lineHeight: 1.1,
-        margin: `0 auto 1.75rem`,
-        maxWidth: `11em`,
-        WebkitFontSmoothing: `antialiased`,
+      sx={{
+        fontSize: `calc(28px + 0.5vh + 1.5vw)`,
+        letterSpacing: `tight`,
+        lineHeight: `solid`,
+        maxWidth: `15em`,
+        mb: 6,
+        mt: 0,
+        mx: `auto`
       }}
     >
-      Build blazing fast apps and websites with React
+      Fast in every way that&nbsp;matters
     </h1>
     <p
-      css={{
-        color: colors.gray.copy,
-        fontFamily: options.headerFontFamily.join(`,`),
-        fontSize: scale(1 / 5).fontSize,
-        maxWidth: rhythm(26),
-        margin: `0 auto 2rem`,
-        WebkitFontSmoothing: `antialiased`,
-        [presets.Sm]: {
-          fontSize: scale(2 / 5).fontSize,
-        },
+      sx={{
+        color: `text`,
+        fontFamily: `heading`,
+        fontSize: [4, 5],
+        lineHeight: `dense`,
+        maxWidth: `45rem`,
+        mb: 10,
+        mt: 0,
+        mx: `auto`
       }}
     >
-      Gatsby is a free and open source developer framework based on React for
-      building blazing fast websites and apps
+      Gatsby is a free and open source framework based on React that helps
+      developers build blazing fast <strong>websites</strong> and
+      {` `}
+      <strong>apps</strong>
     </p>
     <Button
-      large
+      variant="large"
       to="/docs/"
       tracking="MasterHead -> Get Started"
       icon={<ArrowForwardIcon />}
+      sx={{
+        mb: 5
+      }}
     >
       Get Started
     </Button>
+    <p
+      sx={{
+        color: `text`,
+        fontFamily: `heading`,
+        fontSize: [3, 3],
+        lineHeight: `dense`,
+        maxWidth: `30rem`,
+        mx: `auto`
+      }}
+    >
+      Already using Gatsby? Preview, build, and deploy faster with{" "}
+      <a
+        href="https://www.gatsbyjs.com"
+        onClick={() =>
+          trackCustomEvent({
+            category: `home-masthead`,
+            action: `click`,
+            label: `Gatsby Cloud`
+          })
+        }
+      >
+        Gatsby Cloud
+      </a>
+      .
+    </p>
   </div>
 )
 

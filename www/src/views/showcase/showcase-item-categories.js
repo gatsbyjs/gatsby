@@ -1,7 +1,8 @@
-import React, { Fragment } from "react"
-import { Link } from "gatsby"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Fragment } from "react"
+import Link from "../../components/localized-link"
 import qs from "qs"
-import { colors } from "../../utils/presets"
 
 const ScrollToLink = ({ to, ...rest }) => <a href={to} {...rest} />
 
@@ -11,19 +12,17 @@ const ShowcaseItemCategories = ({ categories, onCategoryClick }) => {
   return categories.map((c, i) => (
     <Fragment key={c}>
       <LinkComponent
-        css={{
+        sx={{
           "&&": {
-            color: colors.gray.calm,
-            fontWeight: `normal`,
+            color: `textMuted`,
+            fontWeight: `body`,
             borderBottom: `none`,
-            boxShadow: `none`,
             "&:hover": {
-              background: `none`,
-              color: colors.gatsby,
+              color: `link.hoverColor`,
             },
           },
         }}
-        to={`/showcase?${qs.stringify({
+        to={`/showcase/?${qs.stringify({
           filters: [c],
         })}`}
         onClick={e => {

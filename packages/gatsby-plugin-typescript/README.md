@@ -17,9 +17,11 @@ Provides drop-in support for TypeScript and TSX.
 ```javascript
 module.exports = {
   // ...,
-  plugins: [...`gatsby-plugin-typescript`],
+  plugins: [`gatsby-plugin-typescript`],
 }
 ```
+
+_**Please note**: If packages don't ship with TypeScript definitions you'll need to manually install those type definitions, e.g. for React. A typical Gatsby project would need: `npm install --save-dev @types/react @types/react-dom @types/node`_
 
 ## Options
 
@@ -46,7 +48,7 @@ For more detailed documentation on the available options, visit https://babeljs.
 ## Caveats
 
 This plugin uses [`babel-plugin-transform-typescript`](https://babeljs.io/docs/en/babel-plugin-transform-typescript.html)
-to transpile typescript. It does _not do type checking_. Also since the TypeScript
+to transpile TypeScript. It does _not do type checking_. Also since the TypeScript
 compiler is not involved, the following applies:
 
 > Does not support namespaces.
@@ -61,6 +63,10 @@ compiler is not involved, the following applies:
 > cannot be compiled to ES.next. Workaround: Convert
 > to using export default and export const,
 > and import x, {y} from "z".
+>
+> Does not support baseUrl.
+> Workaround: use [gatsby-plugin-root-import](https://www.gatsbyjs.org/packages/gatsby-plugin-root-import/)
+> and configure it to point the baseUrl value (also set baseUrl option in tsconfig.json file).
 
 https://babeljs.io/docs/en/babel-plugin-transform-typescript.html
 

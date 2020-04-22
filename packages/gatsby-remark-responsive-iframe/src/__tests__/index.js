@@ -27,15 +27,11 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     `)
 
       const transformed = await plugin({ markdownAST })
-      const node = find(transformed, function(node) {
-        return node.type === `unknown`
+      const node = find(transformed, function (node) {
+        return node.type === `html`
       })
       expect(node).toBeDefined()
-      expect(node.data).toBeDefined()
-      expect(node.data.hChildren).toBeDefined()
-      expect(node.data.hChildren.length).toBeGreaterThan(0)
-      const [child] = node.data.hChildren
-      expect(child.value).toMatchSnapshot()
+      expect(node.value).toMatchSnapshot()
     })
   })
   ;[`iframe`, `object`].forEach(tag => {
@@ -45,16 +41,52 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     `)
 
       const transformed = await plugin({ markdownAST })
-      const node = find(transformed, function(node) {
-        return node.type === `unknown`
+      const node = find(transformed, function (node) {
+        return node.type === `html`
       })
       expect(node).toBeDefined()
-      expect(node.data).toBeDefined()
-      expect(node.data.hChildren).toBeDefined()
-      expect(node.data.hChildren.length).toBeGreaterThan(0)
-      const [child] = node.data.hChildren
-      expect(child.value).toMatchSnapshot()
+      expect(node.value).toMatchSnapshot()
     })
+    it(`transforms an ${tag} and maintains existing styles`, async () => {
+      const markdownAST = remark.parse(`
+<${tag} url="http://www.example.com/" style="border:0" width="600px" height="400px"></${tag}>
+    `)
+
+      const transformed = await plugin({ markdownAST })
+      const node = find(transformed, function (node) {
+        return node.type === `html`
+      })
+      expect(node).toBeDefined()
+      expect(node.value).toMatchSnapshot()
+    })
+    it(`transforms an ${tag} and maintains existing styles when a semicolon exists`, async () => {
+      const markdownAST = remark.parse(`
+<${tag} url="http://www.example.com/" style="border:0;" width="600px" height="400px"></${tag}>
+    `)
+
+      const transformed = await plugin({ markdownAST })
+      const node = find(transformed, function (node) {
+        return node.type === `html`
+      })
+      expect(node).toBeDefined()
+      expect(node.value).toMatchSnapshot()
+    })
+  })
+
+  it(`can copy JSX images`, async () => {
+    const mdx = require(`remark-mdx`)
+
+    const markdownAST = remark().use(mdx).parse(`
+<iframe url="http://www.example.com/" style="border:0;" width="600px" height="400px"></iframe>
+    `)
+
+    const transformed = await plugin({ markdownAST })
+    const node = find(transformed, function (node) {
+      return node.type === `html`
+    })
+
+    expect(node).toBeDefined()
+    expect(node.value).toMatchSnapshot()
   })
 
   const shouldntTransform = [
@@ -75,7 +107,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
         // differently, wrapping an object tag in <p></p> tags. It also parses
         // out the object tag into three separate nodes - one for the opening
         // tag, one for the closing tag and one for a newline inside. So for any
-        // tests that recieve untransformed node back from the plugin, we strip
+        // tests that receive untransformed node back from the plugin, we strip
         // the p tags and combine the nodes into a single html string.
         if (tag === `iframe`) {
           const iframeHTML = extractIframeTag(transformed)

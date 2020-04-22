@@ -27,7 +27,7 @@
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
   </a>
-  <a href="https://gatsbyjs.org/docs/how-to-submit-a-pr/">
+  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
 </p>
@@ -70,12 +70,12 @@ A starter is a simplified example to get up and running with Gatsby quickly and 
 
 ## 🚀 Get Up and Running in 5 Minutes
 
-```sh
+```shell
 # create a new Gatsby site using the default starter
-npx gatsby new my-blazing-fast-site
+gatsby new my-blazing-fast-site
 ```
 
-e.g. `npx gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-blog` or `npx gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-hello-world` to use a specific starter!
+e.g. `gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-blog` or `gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-hello-world` to use a specific starter!
 
 This will clone the starter of specified name into the folder `my-blazing-fast-site` and get you up and running in under 5 minutes with Gatsby and a fantastic starter. We can't wait to see what you build!
 

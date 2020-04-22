@@ -1,10 +1,17 @@
-jest.mock(`fs`)
+jest.mock(`fs`, () => {
+  const fs = jest.requireActual(`fs`)
+  return {
+    ...fs,
+    readFileSync: jest.fn(),
+  }
+})
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     panic: jest.fn(),
   }
 })
 
+const fs = require(`fs`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const resolveModuleExports = require(`../resolve-module-exports`)
 let resolver
@@ -16,7 +23,7 @@ describe(`Resolve module exports`, () => {
     "/export/const": `export const fooConst = '';`,
     "/module/exports": `module.exports.barExports = '';`,
     "/multiple/export": `exports.bar = () => ''; exports.baz = {}; exports.foo = '';`,
-    "/import/with/export": `import React from 'react'; exports.baz = '';`,
+    "/import/with/export": `import * as React from 'react'; exports.baz = '';`,
     "/realistic/export": `
       /* eslint-disable react/prop-types */
       /* globals window CustomEvent */
@@ -115,11 +122,16 @@ describe(`Resolve module exports`, () => {
     "/export/named/from": `export { Component } from 'react';`,
     "/export/named/as": `const foo = ''; export { foo as bar };`,
     "/export/named/multiple": `const foo = ''; const bar = ''; const baz = ''; export { foo, bar, baz };`,
+    "/export/default": `export default () => {}`,
+    "/export/default/name": `const foo = () => {}; export default foo`,
   }
 
   beforeEach(() => {
     resolver = jest.fn(arg => arg)
-    require(`fs`).__setMockFiles(MOCK_FILE_INFO)
+    fs.readFileSync.mockImplementation(file => {
+      const existing = MOCK_FILE_INFO[file]
+      return existing
+    })
     reporter.panic.mockClear()
   })
 
@@ -134,7 +146,7 @@ describe(`Resolve module exports`, () => {
   })
 
   it(`Show meaningful error message for invalid JavaScript`, () => {
-    resolveModuleExports(`/bad/file`, resolver)
+    resolveModuleExports(`/bad/file`, { resolver })
     expect(
       reporter.panic.mock.calls.map(c =>
         // Remove console colors + trim whitespace
@@ -145,57 +157,102 @@ describe(`Resolve module exports`, () => {
   })
 
   it(`Resolves an export`, () => {
-    const result = resolveModuleExports(`/simple/export`, resolver)
+    const result = resolveModuleExports(`/simple/export`, { resolver })
     expect(result).toEqual([`foo`])
   })
 
   it(`Resolves multiple exports`, () => {
-    const result = resolveModuleExports(`/multiple/export`, resolver)
+    const result = resolveModuleExports(`/multiple/export`, { resolver })
     expect(result).toEqual([`bar`, `baz`, `foo`])
   })
 
   it(`Resolves an export from an ES6 file`, () => {
-    const result = resolveModuleExports(`/import/with/export`, resolver)
+    const result = resolveModuleExports(`/import/with/export`, { resolver })
     expect(result).toEqual([`baz`])
   })
 
   it(`Resolves an exported const`, () => {
-    const result = resolveModuleExports(`/export/const`, resolver)
+    const result = resolveModuleExports(`/export/const`, { resolver })
     expect(result).toEqual([`fooConst`])
   })
 
   it(`Resolves module.exports`, () => {
-    const result = resolveModuleExports(`/module/exports`, resolver)
+    const result = resolveModuleExports(`/module/exports`, { resolver })
     expect(result).toEqual([`barExports`])
   })
 
   it(`Resolves exports from a larger file`, () => {
-    const result = resolveModuleExports(`/realistic/export`, resolver)
+    const result = resolveModuleExports(`/realistic/export`, { resolver })
     expect(result).toEqual([`replaceHistory`, `replaceComponentRenderer`])
   })
 
   it(`Ignores exports.__esModule`, () => {
-    const result = resolveModuleExports(`/esmodule/export`, resolver)
+    const result = resolveModuleExports(`/esmodule/export`, { resolver })
     expect(result).toEqual([`foo`])
   })
 
   it(`Resolves a named export`, () => {
-    const result = resolveModuleExports(`/export/named`, resolver)
+    const result = resolveModuleExports(`/export/named`, { resolver })
     expect(result).toEqual([`foo`])
   })
 
   it(`Resolves a named export from`, () => {
-    const result = resolveModuleExports(`/export/named/from`, resolver)
+    const result = resolveModuleExports(`/export/named/from`, { resolver })
     expect(result).toEqual([`Component`])
   })
 
   it(`Resolves a named export as`, () => {
-    const result = resolveModuleExports(`/export/named/as`, resolver)
+    const result = resolveModuleExports(`/export/named/as`, { resolver })
     expect(result).toEqual([`bar`])
   })
 
   it(`Resolves multiple named exports`, () => {
-    const result = resolveModuleExports(`/export/named/multiple`, resolver)
+    const result = resolveModuleExports(`/export/named/multiple`, { resolver })
     expect(result).toEqual([`foo`, `bar`, `baz`])
+  })
+
+  it(`Resolves default export`, () => {
+    const result = resolveModuleExports(`/export/default`, { resolver })
+    expect(result).toEqual([`export default`])
+  })
+
+  it(`Resolves default export with name`, () => {
+    const result = resolveModuleExports(`/export/default/name`, { resolver })
+    expect(result).toEqual([`export default foo`])
+  })
+
+  it(`Resolves exports when using require mode - simple case`, () => {
+    jest.mock(`require/exports`)
+
+    const result = resolveModuleExports(`require/exports`, {
+      mode: `require`,
+    })
+    expect(result).toEqual([`foo`, `bar`])
+  })
+
+  it(`Resolves exports when using require mode - unusual case`, () => {
+    jest.mock(`require/unusual-exports`)
+
+    const result = resolveModuleExports(`require/unusual-exports`, {
+      mode: `require`,
+    })
+    expect(result).toEqual([`foo`])
+  })
+
+  it(`Resolves exports when using require mode - returns empty array when module doesn't exist`, () => {
+    const result = resolveModuleExports(`require/not-existing-module`, {
+      mode: `require`,
+    })
+    expect(result).toEqual([])
+  })
+
+  it(`Resolves exports when using require mode - panic on errors`, () => {
+    jest.mock(`require/module-error`)
+
+    resolveModuleExports(`require/module-error`, {
+      mode: `require`,
+    })
+
+    expect(reporter.panic).toBeCalled()
   })
 })

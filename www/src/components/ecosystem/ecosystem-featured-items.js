@@ -6,37 +6,26 @@ import {
   HorizontalScroller,
   HorizontalScrollerContent,
 } from "../shared/horizontal-scroller"
-
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
-import { scrollbarStyles } from "../../utils/styles"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
-  margin: ${rhythm(0.1)} -${rhythm(options.blockMarginBottom)};
+  margin: 0 -${p => p.theme.space[6]};
 
-  ${presets.Md} {
-    border-top: 1px solid ${colors.gray.superLight};
-    margin-top: ${rhythm(0.4)};
+  ${mediaQueries.md} {
+    border-top: 1px solid ${p => p.theme.colors.ui.border};
+    margin-top: ${p => p.theme.space[3]};
     margin-bottom: 0;
     overflow-y: scroll;
     overflow-x: hidden;
-    ${scrollbarStyles};
   }
 `
 
-export const ListBase = styled(`ul`)`
-  display: inline-flex;
-  list-style: none;
-  margin: 0;
-  padding: 0 calc(${rhythm(options.blockMarginBottom)} - 5px) 4px;
-`
-
 const List = styled(HorizontalScrollerContent)`
-  padding-left: ${rhythm(options.blockMarginBottom)};
-  padding-right: ${rhythm(options.blockMarginBottom)};
+  padding-left: ${p => p.theme.space[6]};
+  padding-right: ${p => p.theme.space[6]};
 
-  ${presets.Md} {
+  ${mediaQueries.md} {
     flex-direction: column;
     padding: 0;
     width: 100%;

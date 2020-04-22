@@ -2,7 +2,7 @@
 title: How Boston.gov used Gatsby to be selected as an Amazon HQ2 candidate city
 date: 2018-01-18
 author: "Sam Bhagwat"
-tags: ["case-studies", "component-library", "iteration-speed"]
+tags: ["case-studies", "building-sites-faster"]
 ---
 
 [Boston.gov](http://boston.gov) is a small team with a huge responsibility: ten people tasked with the digital presence of New England’s most iconic city.

@@ -10,7 +10,7 @@ Lighthouse is included in Chrome DevTools. Running its audit -- and then address
 
 If you haven't yet, you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast, but the site that it generates, while closely resembling a production version of the site, isn't as optimized.
 
-### Create a production build
+## Create a production build
 
 1.  Stop the development server (if it's still running) and run:
 
@@ -26,11 +26,11 @@ gatsby build
 gatsby serve
 ```
 
-Once this starts, you can now view your site at `localhost:9000`.
+Once this starts, you can now view your site at `http://localhost:9000`.
 
-### Run a Lighthouse audit
+## Run a Lighthouse audit
 
-Now let's run your first Lighthouse test.
+Now run your first Lighthouse test.
 
 1.  Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools.
 
@@ -42,10 +42,18 @@ Now let's run your first Lighthouse test.
 
 ![Lighthouse audit results](./images/lighthouse-audit-results.png)
 
-As you can see, Gatsby's performance is excellent out of the box but we're missing some things for PWA, Accessibility, Best Practices, and SEO that will improve your scores (and in the process make your site much more friendly to visitors and search engines). To improve your scores further, see the links under "Next steps" below.
+## Using Gatsby Cloud
 
-Next steps:
+If you use [Gatsby Cloud](https://www.gatsbyjs.com/cloud), a Lighthouse audit runs automatically every time your site builds. In Cloud, every code commit to GitHub triggers a build, allowing you to see any shifts in your scores and what code changes caused them.
+
+![Lighthouse audit in Cloud](./images/cloud-lighthouse.png)
+
+## Next steps
+
+As you can see, Gatsby's performance is excellent out of the box but we're missing some things for PWA, Accessibility, Best Practices, and SEO that will improve your scores (and in the process make your site much more friendly to visitors and search engines).
+
+To improve your scores further, see the links below:
 
 - [Add a manifest file](/docs/add-a-manifest-file/)
-- [Add offline support](/docs/add-offline-support/)
+- [Add offline support](/docs/add-offline-support-with-a-service-worker/)
 - [Add page metadata](/docs/add-page-metadata/)

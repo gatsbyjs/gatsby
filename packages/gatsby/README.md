@@ -12,7 +12,7 @@
 </h3>
 <p align="center">
   <strong>Blazing fast modern site generator for React</strong><br>
-  Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby.
+  Go beyond static sites: build blogs, e-commerce sites, full-blown apps, and more with Gatsby.
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
@@ -54,7 +54,7 @@ Gatsby is a modern framework for blazing fast websites.
 
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
   limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
-  dynamic web apps, from blogs to ecommerce sites to user dashboards.
+  dynamic web apps, from blogs to e-commerce sites to user dashboards.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
   built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
@@ -90,16 +90,16 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     Get your Gatsby blog set up in a single command:
 
-    ```sh
+    ```shell
     # create a new Gatsby site using the default starter
-    npx gatsby new my-blazing-fast-site
+    gatsby new my-blazing-fast-site
     ```
 
 2.  **Start the site in `develop` mode.**
 
     Next, move into your new site’s directory and start it up:
 
-    ```sh
+    ```shell
     cd my-blazing-fast-site/
     npm run develop
     ```

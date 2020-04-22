@@ -1,7 +1,6 @@
 const XLSX = require(`xlsx`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 
 // read files as `binary` from file system
 function _loadNodeContent(fileNode, fallback) {
@@ -11,7 +10,7 @@ function _loadNodeContent(fileNode, fallback) {
 }
 
 async function onCreateNode(
-  { node, actions, loadNodeContent, createNodeId },
+  { node, actions, loadNodeContent, createNodeId, createContentDigest },
   options = {}
 ) {
   const { createNode, createParentChildLink } = actions
@@ -45,12 +44,7 @@ async function onCreateNode(
 
     if (_.isArray(parsedContent)) {
       const csvArray = parsedContent.map((obj, i) => {
-        const objStr = JSON.stringify(obj)
-        const contentDigest = crypto
-          .createHash(`md5`)
-          .update(objStr)
-          .digest(`hex`)
-
+        const contentDigest = createContentDigest(obj)
         return {
           ...obj,
           id: obj.id
@@ -74,12 +68,7 @@ async function onCreateNode(
       })
 
       const shObj = { name: n, idx: idx }
-      const shStr = JSON.stringify(shObj)
-      const contentDigest = crypto
-        .createHash(`md5`)
-        .update(shStr)
-        .digest(`hex`)
-
+      const contentDigest = createContentDigest(shObj)
       const z = {
         id: createNodeId(`${node.id} [${idx}] >>> ${node.extension}`),
         children: [],

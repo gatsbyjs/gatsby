@@ -1,17 +1,23 @@
-const sharp = require(`sharp`)
-const crypto = require(`crypto`)
+const sharp = require(`./safe-sharp`)
+
 const imageSize = require(`probe-image-size`)
+
 const _ = require(`lodash`)
-const Promise = require(`bluebird`)
 const fs = require(`fs-extra`)
-const ProgressBar = require(`progress`)
-const imagemin = require(`imagemin`)
-const imageminMozjpeg = require(`imagemin-mozjpeg`)
-const imageminPngquant = require(`imagemin-pngquant`)
-const imageminWebp = require(`imagemin-webp`)
-const queue = require(`async/queue`)
 const path = require(`path`)
-const existsSync = require(`fs-exists-cached`).sync
+
+const { scheduleJob } = require(`./scheduler`)
+const { createArgsDigest } = require(`./process-file`)
+const { reportError } = require(`./report-error`)
+const {
+  getPluginOptions,
+  healOptions,
+  createTransformObject,
+  removeDefaultValues,
+} = require(`./plugin-options`)
+const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
+const duotone = require(`./duotone`)
+const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -24,470 +30,295 @@ const getImageSize = file => {
     const dimensions = imageSize.sync(
       toArray(fs.readFileSync(file.absolutePath))
     )
+
+    if (!dimensions) {
+      reportError(
+        `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+        ``
+      )
+    }
+
     imageSizeCache.set(file.internal.contentDigest, dimensions)
     return dimensions
   }
 }
-
-const duotone = require(`./duotone`)
 
 // Bound action creators should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let { boundActionCreators } = require(`gatsby/dist/redux/actions`)
+let boundActionCreators
 exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
-/// Plugin options are loaded onPreInit in gatsby-node
-const pluginDefaults = {
-  useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
-  stripMetadata: true,
-  defaultQuality: 50,
-}
-let pluginOptions = Object.assign({}, pluginDefaults)
-exports.setPluginOptions = opts => {
-  pluginOptions = Object.assign({}, pluginOptions, opts)
-}
+function calculateImageDimensionsAndAspectRatio(file, options) {
+  // Calculate the eventual width/height of the image.
+  const dimensions = getImageSize(file)
+  const imageAspectRatio = dimensions.width / dimensions.height
 
-// Promisify the sharp prototype (methods) to promisify the alternative (for
-// raw) callback-accepting toBuffer(...) method
-Promise.promisifyAll(sharp.prototype, { multiArgs: true })
+  let width = options.width
+  let height = options.height
 
-// Try to enable the use of SIMD instructions. Seems to provide a smallish
-// speedup on resizing heavy loads (~10%). Sharp disables this feature by
-// default as there's been problems with segfaulting in the past but we'll be
-// adventurous and see what happens with it on.
-sharp.simd(true)
-
-const bar = new ProgressBar(
-  `Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
-  }
-)
-
-const reportError = (message, err, reporter) => {
-  if (reporter) {
-    reporter.error(message, err)
-  } else {
-    console.error(message, err)
-  }
-
-  if (process.env.gatsby_executing_command === `build`) {
-    process.exit(1)
-  }
-}
-
-const generalArgs = {
-  quality: 50,
-  jpegProgressive: true,
-  pngCompressionLevel: 9,
-  // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
-  pngCompressionSpeed: 4,
-  base64: true,
-  grayscale: false,
-  duotone: false,
-  pathPrefix: ``,
-  toFormat: ``,
-  sizeByPixelDensity: false,
-}
-
-const healOptions = ({ defaultQuality: quality }, args, defaultArgs) => {
-  let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
-  options.quality = parseInt(options.quality, 10)
-  options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
-  options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
-  options.toFormat = options.toFormat.toLowerCase()
-
-  // only set width to 400 if neither width nor height is passed
-  if (options.width === undefined && options.height === undefined) {
-    options.width = 400
-  } else if (options.width !== undefined) {
-    options.width = parseInt(options.width, 10)
-  } else if (options.height !== undefined) {
-    options.height = parseInt(options.height, 10)
-  }
-
-  // only set maxWidth to 800 if neither maxWidth nor maxHeight is passed
-  if (options.maxWidth === undefined && options.maxHeight === undefined) {
-    options.maxWidth = 800
-  } else if (options.maxWidth !== undefined) {
-    options.maxWidth = parseInt(options.maxWidth, 10)
-  } else if (options.maxHeight !== undefined) {
-    options.maxHeight = parseInt(options.maxHeight, 10)
-  }
-
-  return options
-}
-
-let totalJobs = 0
-const processFile = (file, jobs, cb, reporter) => {
-  bar.total = totalJobs
-
-  let imagesFinished = 0
-
-  // Wait for each job promise to resolve.
-  Promise.all(jobs.map(job => job.finishedPromise)).then(() => cb())
-
-  let pipeline
-  try {
-    pipeline = sharp(file)
-
-    // Keep Metadata
-    if (!pluginOptions.stripMetadata) {
-      pipeline = pipeline.withMetadata()
+  switch (options.fit) {
+    case sharp.fit.fill: {
+      width = options.width ? options.width : dimensions.width
+      height = options.height ? options.height : dimensions.height
+      break
     }
+    case sharp.fit.inside: {
+      const widthOption = options.width
+        ? options.width
+        : Number.MAX_SAFE_INTEGER
+      const heightOption = options.height
+        ? options.height
+        : Number.MAX_SAFE_INTEGER
 
-    pipeline = pipeline.rotate()
-  } catch (err) {
-    reportError(`Failed to process image ${file}`, err, reporter)
-    jobs.forEach(job => job.outsideReject(err))
-    return
-  }
-
-  jobs.forEach(async job => {
-    const args = job.args
-    let clonedPipeline
-    if (jobs.length > 1) {
-      clonedPipeline = pipeline.clone()
-    } else {
-      clonedPipeline = pipeline
-    }
-    // Sharp only allows ints as height/width. Since both aren't always
-    // set, check first before trying to round them.
-    let roundedHeight = args.height
-    if (roundedHeight) {
-      roundedHeight = Math.round(roundedHeight)
-    }
-
-    let roundedWidth = args.width
-    if (roundedWidth) {
-      roundedWidth = Math.round(roundedWidth)
-    }
-
-    clonedPipeline
-      .resize(roundedWidth, roundedHeight, {
-        position: args.cropFocus,
-      })
-      .png({
-        compressionLevel: args.pngCompressionLevel,
-        adaptiveFiltering: false,
-        force: args.toFormat === `png`,
-      })
-      .webp({
-        quality: args.quality,
-        force: args.toFormat === `webp`,
-      })
-      .tiff({
-        quality: args.quality,
-        force: args.toFormat === `tiff`,
-      })
-
-    // jpeg
-    if (!pluginOptions.useMozJpeg) {
-      clonedPipeline = clonedPipeline.jpeg({
-        quality: args.quality,
-        progressive: args.jpegProgressive,
-        force: args.toFormat === `jpg`,
-      })
-    }
-
-    // grayscale
-    if (args.grayscale) {
-      clonedPipeline = clonedPipeline.grayscale()
-    }
-
-    // rotate
-    if (args.rotate && args.rotate !== 0) {
-      clonedPipeline = clonedPipeline.rotate(args.rotate)
-    }
-
-    // duotone
-    if (args.duotone) {
-      clonedPipeline = await duotone(
-        args.duotone,
-        args.toFormat || job.file.extension,
-        clonedPipeline
+      width = Math.min(widthOption, Math.round(heightOption * imageAspectRatio))
+      height = Math.min(
+        heightOption,
+        Math.round(widthOption / imageAspectRatio)
       )
+      break
+    }
+    case sharp.fit.outside: {
+      const widthOption = options.width ? options.width : 0
+      const heightOption = options.height ? options.height : 0
+
+      width = Math.max(widthOption, Math.round(heightOption * imageAspectRatio))
+      height = Math.max(
+        heightOption,
+        Math.round(widthOption / imageAspectRatio)
+      )
+      break
     }
 
-    const onFinish = err => {
-      imagesFinished += 1
-      bar.tick()
-      boundActionCreators.setJob(
-        {
-          id: `processing image ${job.file.absolutePath}`,
-          imagesFinished,
-        },
-        { name: `gatsby-plugin-sharp` }
-      )
+    default: {
+      if (options.width && !options.height) {
+        width = options.width
+        height = Math.round(options.width / imageAspectRatio)
+      }
 
-      if (err) {
-        reportError(`Failed to process image ${file}`, err, reporter)
-        job.outsideReject(err)
-      } else {
-        job.outsideResolve()
+      if (options.height && !options.width) {
+        width = Math.round(options.height * imageAspectRatio)
+        height = options.height
       }
     }
-    if (
-      (job.file.extension === `png` && args.toFormat === ``) ||
-      args.toFormat === `png`
-    ) {
-      clonedPipeline
-        .toBuffer()
-        .then(sharpBuffer =>
-          imagemin
-            .buffer(sharpBuffer, {
-              plugins: [
-                imageminPngquant({
-                  quality: `${args.quality}-${Math.min(
-                    args.quality + 25,
-                    100
-                  )}`,
-                  speed: args.pngCompressionSpeed
-                    ? args.pngCompressionSpeed
-                    : undefined,
-                  strip: !!pluginOptions.stripMetadata, // Must be a bool
-                }),
-              ],
-            })
-            .then(imageminBuffer => {
-              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
-            })
-            .catch(onFinish)
-        )
-        .catch(onFinish)
-      // Compress jpeg
-    } else if (
-      pluginOptions.useMozJpeg &&
-      ((job.file.extension === `jpg` && args.toFormat === ``) ||
-        (job.file.extension === `jpeg` && args.toFormat === ``) ||
-        args.toFormat === `jpg`)
-    ) {
-      clonedPipeline
-        .toBuffer()
-        .then(sharpBuffer =>
-          imagemin
-            .buffer(sharpBuffer, {
-              plugins: [
-                imageminMozjpeg({
-                  quality: args.quality,
-                  progressive: args.jpegProgressive,
-                }),
-              ],
-            })
-            .then(imageminBuffer => {
-              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
-            })
-            .catch(onFinish)
-        )
-        .catch(onFinish)
-      // Compress webp
-    } else if (
-      (job.file.extension === `webp` && args.toFormat === ``) ||
-      args.toFormat === `webp`
-    ) {
-      clonedPipeline
-        .toBuffer()
-        .then(sharpBuffer =>
-          imagemin
-            .buffer(sharpBuffer, {
-              plugins: [imageminWebp({ quality: args.quality })],
-            })
-            .then(imageminBuffer => {
-              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
-            })
-            .catch(onFinish)
-        )
-        .catch(onFinish)
-      // any other format (tiff) - don't compress it just handle output
-    } else {
-      clonedPipeline.toFile(job.outputPath, onFinish)
-    }
-  })
-}
-
-const toProcess = {}
-const q = queue((task, callback) => {
-  task(callback)
-}, 1)
-
-const queueJob = (job, reporter) => {
-  const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
-  const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
-  const jobPath = `${inputFileKey}.${outputFileKey}`
-
-  // Check if the job has already been queued. If it has, there's nothing
-  // to do, return.
-  if (_.has(toProcess, jobPath)) {
-    return
   }
 
-  // Check if the output file already exists so we don't redo work.
-  if (existsSync(job.outputPath)) {
-    return
-  }
-
-  let notQueued = true
-  if (toProcess[inputFileKey]) {
-    notQueued = false
-  }
-  _.set(toProcess, jobPath, job)
-
-  totalJobs += 1
-
-  if (notQueued) {
-    q.push(cb => {
-      const jobs = _.values(toProcess[inputFileKey])
-      // Delete the input key from the toProcess list so more jobs can be queued.
-      delete toProcess[inputFileKey]
-      boundActionCreators.createJob(
-        {
-          id: `processing image ${job.file.absolutePath}`,
-          imagesCount: _.values(toProcess[inputFileKey]).length,
-        },
-        { name: `gatsby-plugin-sharp` }
-      )
-      // We're now processing the file's jobs.
-      processFile(
-        job.file.absolutePath,
-        jobs,
-        () => {
-          boundActionCreators.endJob(
-            {
-              id: `processing image ${job.file.absolutePath}`,
-            },
-            { name: `gatsby-plugin-sharp` }
-          )
-          cb()
-        },
-        reporter
-      )
-    })
+  return {
+    width,
+    height,
+    aspectRatio: width / height,
   }
 }
 
-function queueImageResizing({ file, args = {}, reporter }) {
-  const options = healOptions(pluginOptions, args, {})
-  // Filter out false args, and args not for this extension and put width at
-  // end (for the file path)
-  const pairedArgs = _.toPairs(args)
-  let filteredArgs
-  // Remove non-true arguments
-  filteredArgs = _.filter(pairedArgs, arg => arg[1])
-  // Remove pathPrefix
-  filteredArgs = _.filter(filteredArgs, arg => arg[0] !== `pathPrefix`)
-  filteredArgs = _.filter(filteredArgs, arg => {
-    if (file.extension.match(/^jp*/)) {
-      return !_.includes(arg[0], `png`)
-    } else if (file.extension.match(/^png/)) {
-      return !arg[0].match(/^jp*/)
-    }
-    return true
-  })
-  const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
-  const fileExtension = options.toFormat ? options.toFormat : file.extension
-
-  const argsDigest = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(sortedArgs))
-    .digest(`hex`)
-
-  const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
-
-  const imgSrc = `/${file.name}.${fileExtension}`
-  const dirPath = path.join(
+function prepareQueue({ file, args }) {
+  const { pathPrefix, ...options } = args
+  const argsDigestShort = createArgsDigest(options)
+  const imgSrc = `/${file.name}.${options.toFormat}`
+  const outputDir = path.join(
     process.cwd(),
     `public`,
     `static`,
-    file.internal.contentDigest,
-    argsDigestShort
+    file.internal.contentDigest
   )
-  const filePath = path.join(dirPath, imgSrc)
-  fs.ensureDirSync(dirPath)
+  const outputFilePath = path.join(argsDigestShort, imgSrc)
 
-  // Create function to call when the image is finished.
-  let outsideResolve, outsideReject
-  const finishedPromise = new Promise((resolve, reject) => {
-    outsideResolve = resolve
-    outsideReject = reject
-  })
+  // make sure outputDir is created
+  fs.ensureDirSync(outputDir)
 
-  let width
-  let height
-  // Calculate the eventual width/height of the image.
-  const dimensions = getImageSize(file)
-  let aspectRatio = dimensions.width / dimensions.height
-  const originalName = file.base
-
-  // If the width/height are both set, we're cropping so just return
-  // that.
-  if (options.width && options.height) {
-    width = options.width
-    height = options.height
-    // Recalculate the aspectRatio for the cropped photo
-    aspectRatio = width / height
-  } else if (options.width) {
-    // Use the aspect ratio of the image to calculate what will be the resulting
-    // height.
-    width = options.width
-    height = Math.round(options.width / aspectRatio)
-  } else {
-    // Use the aspect ratio of the image to calculate what will be the resulting
-    // width.
-    height = options.height
-    width = Math.round(options.height * aspectRatio)
-  }
-
-  // Create job and process.
-  const job = {
+  const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
     file,
-    args: options,
-    finishedPromise,
-    outsideResolve,
-    outsideReject,
-    inputPath: file.absolutePath,
-    outputPath: filePath,
-  }
-
-  queueJob(job, reporter)
+    options
+  )
 
   // encode the file name for URL
-  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${fileExtension}`
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
 
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
   const prefixedSrc =
-    options.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
+    (pathPrefix ? pathPrefix : ``) +
+    `/static/${digestDirPrefix}` +
+    encodedImgSrc
 
   return {
     src: prefixedSrc,
-    absolutePath: filePath,
+    outputDir: outputDir,
+    relativePath: outputFilePath,
+    width,
+    height,
+    aspectRatio,
+    options: removeDefaultValues(args, getPluginOptions()),
+  }
+}
+
+function createJob(job, { reporter }) {
+  if (!boundActionCreators) {
+    reporter.panic(
+      `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
+    )
+  }
+
+  // Jobs can be duplicates and usually are long running tasks.
+  // Because of that we shouldn't use async/await and instead opt to use
+  // .then() /.catch() handlers, because this allows V8 to release
+  // duplicate jobs from memory quickly (as job is not referenced
+  // in resolve / reject handlers). If we would use async/await
+  // entire closure would keep duplicate job in memory until
+  // initial job finish.
+  let promise = null
+  if (boundActionCreators.createJobV2) {
+    promise = boundActionCreators.createJobV2(job)
+  } else {
+    promise = scheduleJob(job, boundActionCreators, reporter)
+  }
+
+  promise.catch(err => {
+    reporter.panic(err)
+  })
+
+  return promise
+}
+
+function queueImageResizing({ file, args = {}, reporter }) {
+  const fullOptions = healOptions(getPluginOptions(), args, file.extension)
+  const {
+    src,
+    width,
+    height,
+    aspectRatio,
+    relativePath,
+    outputDir,
+    options,
+  } = prepareQueue({ file, args: createTransformObject(fullOptions) })
+
+  // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
+  const finishedPromise = createJob(
+    {
+      name: IMAGE_PROCESSING_JOB_NAME,
+      inputPaths: [file.absolutePath],
+      outputDir,
+      args: {
+        operations: [
+          {
+            outputPath: relativePath,
+            args: options,
+          },
+        ],
+        pluginOptions: getPluginOptions(),
+      },
+    },
+    { reporter }
+  )
+
+  return {
+    src,
+    absolutePath: path.join(outputDir, relativePath),
     width,
     height,
     aspectRatio,
     finishedPromise,
-    originalName: originalName,
+    originalName: file.base,
   }
 }
 
-async function generateBase64({ file, args, reporter }) {
-  const options = healOptions(pluginOptions, args, { width: 20 })
+function batchQueueImageResizing({ file, transforms = [], reporter }) {
+  const operations = []
+  const images = []
+
+  // loop through all transforms to set correct variables
+  transforms.forEach(transform => {
+    const {
+      src,
+      width,
+      height,
+      aspectRatio,
+      relativePath,
+      outputDir,
+      options,
+    } = prepareQueue({ file, args: transform })
+    // queue operations of an image
+    operations.push({
+      outputPath: relativePath,
+      args: options,
+    })
+
+    // create output results
+    images.push({
+      src,
+      absolutePath: path.join(outputDir, relativePath),
+      width,
+      height,
+      aspectRatio,
+      originalName: file.base,
+      finishedPromise: null,
+    })
+  })
+
+  const finishedPromise = createJob(
+    {
+      name: IMAGE_PROCESSING_JOB_NAME,
+      inputPaths: [file.absolutePath],
+      outputDir: path.join(
+        process.cwd(),
+        `public`,
+        `static`,
+        file.internal.contentDigest
+      ),
+      args: {
+        operations,
+        pluginOptions: getPluginOptions(),
+      },
+    },
+    { reporter }
+  )
+
+  return images.map(image => {
+    image.finishedPromise = finishedPromise
+
+    return image
+  })
+}
+
+// A value in pixels(Int)
+const defaultBase64Width = () => getPluginOptions().base64Width || 20
+async function generateBase64({ file, args = {}, reporter }) {
+  const pluginOptions = getPluginOptions()
+  const options = healOptions(pluginOptions, args, file.extension, {
+    width: defaultBase64Width(),
+  })
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath).rotate()
+    pipeline = sharp(file.absolutePath)
+
+    if (!options.rotate) {
+      pipeline.rotate()
+    }
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
   }
 
+  if (options.trim) {
+    pipeline = pipeline.trim(options.trim)
+  }
+
+  const forceBase64Format =
+    args.toFormatBase64 || pluginOptions.forceBase64Format
+  if (forceBase64Format) {
+    args.toFormat = forceBase64Format
+  }
+
   pipeline
-    .resize(options.width, options.height, {
+    .resize({
+      width: options.width,
+      height: options.height,
       position: options.cropFocus,
+      fit: options.fit,
+      background: options.background,
     })
     .png({
       compressionLevel: options.pngCompressionLevel,
@@ -495,9 +326,13 @@ async function generateBase64({ file, args, reporter }) {
       force: args.toFormat === `png`,
     })
     .jpeg({
-      quality: options.quality,
+      quality: options.jpegQuality || options.quality,
       progressive: options.jpegProgressive,
       force: args.toFormat === `jpg`,
+    })
+    .webp({
+      quality: options.webpQuality || options.quality,
+      force: args.toFormat === `webp`,
     })
 
   // grayscale
@@ -512,13 +347,11 @@ async function generateBase64({ file, args, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(
-      options.duotone,
-      args.toFormat || file.extension,
-      pipeline
-    )
+    pipeline = await duotone(options.duotone, args.toFormat, pipeline)
   }
-  const [buffer, info] = await pipeline.toBufferAsync()
+  const { data: buffer, info } = await pipeline.toBuffer({
+    resolveWithObject: true,
+  })
   const base64output = {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
@@ -529,63 +362,107 @@ async function generateBase64({ file, args, reporter }) {
   return base64output
 }
 
-const base64CacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+const generateCacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
 
-const memoizedBase64 = _.memoize(generateBase64, base64CacheKey)
+const memoizedBase64 = _.memoize(generateBase64, generateCacheKey)
 
-const cachifiedBase64 = async ({ cache, ...arg }) => {
-  const cacheKey = base64CacheKey(arg)
+const cachifiedProcess = async ({ cache, ...arg }, genKey, processFn) => {
+  const cachedKey = genKey(arg)
+  const cached = await cache.get(cachedKey)
 
-  const cachedBase64 = await cache.get(cacheKey)
-  if (cachedBase64) {
-    return cachedBase64
+  if (cached) {
+    return cached
   }
 
-  const base64output = await generateBase64(arg)
+  const result = await processFn(arg)
+  await cache.set(cachedKey, result)
 
-  await cache.set(cacheKey, base64output)
-
-  return base64output
+  return result
 }
 
 async function base64(arg) {
   if (arg.cache) {
-    // Not all tranformer plugins are going to provide cache
-    return await cachifiedBase64(arg)
+    // Not all transformer plugins are going to provide cache
+    return await cachifiedProcess(arg, generateCacheKey, generateBase64)
   }
 
   return await memoizedBase64(arg)
 }
 
-async function getTracedSVG(options, file) {
+async function traceSVG(args) {
+  if (args.cache) {
+    // Not all transformer plugins are going to provide cache
+    return await cachifiedProcess(args, generateCacheKey, notMemoizedtraceSVG)
+  }
+  return await memoizedTraceSVG(args)
+}
+
+async function getTracedSVG({ file, options, cache, reporter }) {
   if (options.generateTracedSVG && options.tracedSVG) {
     const tracedSVG = await traceSVG({
-      file,
       args: options.tracedSVG,
       fileArgs: options,
+      file,
+      cache,
+      reporter,
     })
     return tracedSVG
   }
   return undefined
 }
 
+async function stats({ file, reporter }) {
+  let imgStats
+  try {
+    imgStats = await sharp(file.absolutePath).stats()
+  } catch (err) {
+    reportError(
+      `Failed to get stats for image ${file.absolutePath}`,
+      err,
+      reporter
+    )
+    return null
+  }
+
+  return {
+    isTransparent: !imgStats.isOpaque,
+  }
+}
+
 async function fluid({ file, args = {}, reporter, cache }) {
-  const options = healOptions(pluginOptions, args, {})
+  const options = healOptions(getPluginOptions(), args, file.extension)
+
+  if (options.sizeByPixelDensity) {
+    /*
+     * We learned that `sizeByPixelDensity` is only valid for vector images,
+     * and Gatsby’s implementation of Sharp doesn’t support vector images.
+     * This means we should remove this option in the next major version of
+     * Gatsby, but for now we can no-op and warn.
+     *
+     * See https://github.com/gatsbyjs/gatsby/issues/12743
+     *
+     * TODO: remove the sizeByPixelDensity option in the next breaking release
+     */
+    reporter.warn(
+      `the option sizeByPixelDensity is deprecated and should not be used. It will be removed in the next major release of Gatsby.`
+    )
+  }
+
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata
   try {
     metadata = await sharp(file.absolutePath).metadata()
   } catch (err) {
-    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
+    reportError(
+      `Failed to retrieve metadata from image ${file.absolutePath}`,
+      err,
+      reporter
+    )
     return null
   }
 
   const { width, height, density, format } = metadata
-  const pixelRatio =
-    options.sizeByPixelDensity && typeof density === `number` && density > 0
-      ? density / 72
-      : 1
 
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
   const fixedDimension =
@@ -593,24 +470,16 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   if (options[fixedDimension] < 1) {
     throw new Error(
-      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${
-        options[fixedDimension]
-      }`
+      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`
     )
   }
 
   let presentationWidth, presentationHeight
   if (fixedDimension === `maxWidth`) {
-    presentationWidth = Math.min(
-      options.maxWidth,
-      Math.round(width / pixelRatio)
-    )
+    presentationWidth = Math.min(options.maxWidth, width)
     presentationHeight = Math.round(presentationWidth * (height / width))
   } else {
-    presentationHeight = Math.min(
-      options.maxHeight,
-      Math.round(height / pixelRatio)
-    )
+    presentationHeight = Math.min(options.maxHeight, height)
     presentationWidth = Math.round(presentationHeight * (width / height))
   }
 
@@ -621,7 +490,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   // Create sizes (in width) for the image if no custom breakpoints are
   // provided. If the max width of the container for the rendered markdown file
-  // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400.
+  // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600.
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution while (hopefully) not requiring too much
@@ -636,7 +505,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     fluidSizes.push(options[fixedDimension] / 2)
     fluidSizes.push(options[fixedDimension] * 1.5)
     fluidSizes.push(options[fixedDimension] * 2)
-    fluidSizes.push(options[fixedDimension] * 3)
   } else {
     options.srcSetBreakpoints.forEach(breakpoint => {
       if (breakpoint < 1) {
@@ -660,39 +528,52 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // the original image.
   filteredSizes.push(fixedDimension === `maxWidth` ? width : height)
 
-  // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
-
   // Queue sizes for processing.
   const dimensionAttr = fixedDimension === `maxWidth` ? `width` : `height`
   const otherDimensionAttr = fixedDimension === `maxWidth` ? `height` : `width`
-  const images = sortedSizes.map(size => {
-    const arrrgs = {
-      ...options,
-      [otherDimensionAttr]: undefined,
-      [dimensionAttr]: Math.round(size),
+
+  // Sort sizes for prettiness.
+  const transforms = _.sortBy(filteredSizes).map(size => {
+    const arrrgs = createTransformObject(options)
+    if (arrrgs[otherDimensionAttr]) {
+      arrrgs[otherDimensionAttr] = undefined
     }
-    // Queue sizes for processing.
+    arrrgs[dimensionAttr] = Math.round(size)
+
+    // we need pathPrefix to calculate the correct outputPath
+    if (options.pathPrefix) {
+      arrrgs.pathPrefix = options.pathPrefix
+    }
+
     if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
       arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
     }
 
-    return queueImageResizing({
-      file,
-      args: arrrgs, // matey
-      reporter,
-    })
+    return arrrgs
+  })
+
+  const images = batchQueueImageResizing({
+    file,
+    transforms,
+    reporter,
   })
 
   let base64Image
   if (options.base64) {
-    const base64Width = 20
-    const base64Height = Math.max(1, Math.round((base64Width * height) / width))
+    const base64Width = options.base64Width || defaultBase64Width()
+    const base64Height = Math.max(
+      1,
+      Math.round(base64Width / images[0].aspectRatio)
+    )
     const base64Args = {
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
+      trim: options.trim,
       toFormat: options.toFormat,
+      toFormatBase64: options.toFormatBase64,
+      cropFocus: options.cropFocus,
+      fit: options.fit,
       width: base64Width,
       height: base64Height,
     }
@@ -700,7 +581,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     base64Image = await base64({ file, args: base64Args, reporter, cache })
   }
 
-  const tracedSVG = await getTracedSVG(options, file)
+  const tracedSVG = await getTracedSVG({ options, file, cache, reporter })
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -750,17 +631,16 @@ async function fluid({ file, args = {}, reporter, cache }) {
 }
 
 async function fixed({ file, args = {}, reporter, cache }) {
-  const options = healOptions(pluginOptions, args, {})
+  const options = healOptions(getPluginOptions(), args, file.extension)
 
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
 
-  // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
+  // Create sizes for different resolutions — we do 1x, 1.5x, and 2x.
   const sizes = []
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
-  sizes.push(options[fixedDimension] * 3)
   const dimensions = getImageSize(file)
 
   const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
@@ -771,47 +651,56 @@ async function fixed({ file, args = {}, reporter, cache }) {
     filteredSizes.push(dimensions[fixedDimension])
     console.warn(
       `
-                 The requested ${fixedDimension} "${
-        options[fixedDimension]
-      }px" for a resolutions field for
+                 The requested ${fixedDimension} "${options[fixedDimension]}px" for a resolutions field for
                  the file ${file.absolutePath}
-                 was larger than the actual image ${fixedDimension} of ${
-        dimensions[fixedDimension]
-      }px!
+                 was larger than the actual image ${fixedDimension} of ${dimensions[fixedDimension]}px!
                  If possible, replace the current image with a larger one.
                  `
     )
   }
 
   // Sort images for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
+  const transforms = _.sortBy(filteredSizes).map(size => {
+    const arrrgs = createTransformObject(options)
+    arrrgs[fixedDimension] = Math.round(size)
 
-  const images = sortedSizes.map(size => {
-    const arrrgs = {
-      ...options,
-      [fixedDimension]: Math.round(size),
-    }
     // Queue images for processing.
     if (options.width !== undefined && options.height !== undefined) {
       arrrgs.height = Math.round(size * (options.height / options.width))
     }
+    // we need pathPrefix to calculate the correct outputPath
+    if (options.pathPrefix) {
+      arrrgs.pathPrefix = options.pathPrefix
+    }
 
-    return queueImageResizing({
-      file,
-      args: arrrgs,
-      reporter,
-    })
+    return arrrgs
+  })
+
+  const images = batchQueueImageResizing({
+    file,
+    transforms,
+    reporter,
   })
 
   let base64Image
   if (options.base64) {
+    const base64Width = options.base64Width || defaultBase64Width()
+    const base64Height = Math.max(
+      1,
+      Math.round(base64Width / images[0].aspectRatio)
+    )
     const base64Args = {
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
+      trim: options.trim,
       toFormat: options.toFormat,
+      toFormatBase64: options.toFormatBase64,
+      cropFocus: options.cropFocus,
+      fit: options.fit,
+      width: base64Width,
+      height: base64Height,
     }
-
     // Get base64 version
     base64Image = await base64({
       file,
@@ -821,7 +710,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     })
   }
 
-  const tracedSVG = await getTracedSVG(options, file)
+  const tracedSVG = await getTracedSVG({ options, file, reporter, cache })
 
   const fallbackSrc = images[0].src
   const srcSet = images
@@ -836,9 +725,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
           break
         case 2:
           resolution = `2x`
-          break
-        case 3:
-          resolution = `3x`
           break
         default:
       }
@@ -860,96 +746,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
   }
 }
 
-async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
-  const potrace = require(`potrace`)
-  const svgToMiniDataURI = require(`mini-svg-data-uri`)
-  const trace = Promise.promisify(potrace.trace)
-  const defaultArgs = {
-    color: `lightgray`,
-    optTolerance: 0.4,
-    turdSize: 100,
-    turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
-  }
-  const optionsSVG = _.defaults(args, defaultArgs)
-  const options = healOptions(pluginOptions, fileArgs, {})
-  let pipeline
-  try {
-    pipeline = sharp(file.absolutePath).rotate()
-  } catch (err) {
-    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
-    return null
-  }
-
-  pipeline
-    .resize(options.width, options.height, {
-      position: options.cropFocus,
-    })
-    .png({
-      compressionLevel: options.pngCompressionLevel,
-      adaptiveFiltering: false,
-      force: args.toFormat === `png`,
-    })
-    .jpeg({
-      quality: options.quality,
-      progressive: options.jpegProgressive,
-      force: args.toFormat === `jpg`,
-    })
-
-  // grayscale
-  if (options.grayscale) {
-    pipeline = pipeline.grayscale()
-  }
-
-  // rotate
-  if (options.rotate && options.rotate !== 0) {
-    pipeline = pipeline.rotate(options.rotate)
-  }
-
-  // duotone
-  if (options.duotone) {
-    pipeline = await duotone(
-      options.duotone,
-      args.toFormat || file.extension,
-      pipeline
-    )
-  }
-
-  const tmpDir = require(`os`).tmpdir()
-  const tmpFilePath = `${tmpDir}/${file.internal.contentDigest}-${
-    file.name
-  }-${crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(fileArgs))
-    .digest(`hex`)}.${file.extension}`
-
-  await new Promise(resolve =>
-    pipeline.toFile(tmpFilePath, (err, info) => {
-      resolve()
-    })
-  )
-
-  return trace(tmpFilePath, optionsSVG)
-    .then(svg => optimize(svg))
-    .then(svg => svgToMiniDataURI(svg))
-}
-
-const memoizedTraceSVG = _.memoize(
-  notMemoizedtraceSVG,
-  ({ file, args }) => `${file.absolutePath}${JSON.stringify(args)}`
-)
-
-async function traceSVG(args) {
-  return await memoizedTraceSVG(args)
-}
-
-const optimize = svg => {
-  const SVGO = require(`svgo`)
-  const svgo = new SVGO({ multipass: true, floatPrecision: 0 })
-  return new Promise((resolve, reject) => {
-    svgo.optimize(svg, ({ data }) => resolve(data))
-  })
-}
-
 function toArray(buf) {
   var arr = new Array(buf.length)
 
@@ -969,3 +765,4 @@ exports.resolutions = fixed
 exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
+exports.stats = stats

@@ -5,25 +5,23 @@ import styled from "@emotion/styled"
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
-
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const EcosystemSectionRoot = styled(`section`)`
-  background: #fff;
-  padding: 0 ${rhythm(options.blockMarginBottom)};
-  margin-bottom: ${rhythm(1 / 2)};
+  background: ${p => p.theme.colors.card.background};
+  padding: 0 ${p => p.theme.space[6]};
+  margin-bottom: ${p => p.theme.space[3]};
 
-  ${presets.Md} {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-    border-radius: ${presets.radiusLg}px;
+  ${mediaQueries.md} {
+    box-shadow: ${p => p.theme.shadows.raised};
+    border-radius: ${p => p.theme.radii[2]};
     display: flex;
-    flex-basis: calc(50% - 20px);
+    flex-basis: calc(50% - ${p => p.theme.space[5]});
     flex-direction: column;
     flex-grow: 0;
-    margin: 0 10px 20px;
+    margin: 0 ${p => p.theme.space[2]} ${p => p.theme.space[6]};
     max-height: 60vh;
-    padding: ${rhythm(options.blockMarginBottom)};
+    padding: ${p => p.theme.space[6]};
     padding-bottom: 0;
 
     :last-child {
@@ -31,13 +29,13 @@ const EcosystemSectionRoot = styled(`section`)`
     }
   }
 
-  ${presets.Lg} {
-    flex-basis: calc(33.33% - 20px);
+  ${mediaQueries.lg} {
+    flex-basis: calc(33.33% - ${p => p.theme.space[5]});
     max-height: 100%;
 
     :last-child {
       align-self: flex-start;
-      padding-bottom: ${rhythm(options.blockMarginBottom)};
+      padding-bottom: ${p => p.theme.space[6]};
     }
   }
 
@@ -52,48 +50,49 @@ export const Header = styled(`header`)`
 
 const Title = styled(`h1`)`
   align-items: center;
-  color: ${colors.gatsby};
+  color: ${p => p.theme.colors.heading};
   display: flex;
-  font-size: 1.25rem;
-  line-height: 1;
+  font-size: ${p => p.theme.fontSizes[4]};
+  font-weight: ${p => p.theme.fontWeights.heading};
+  line-height: ${p => p.theme.lineHeights.solid};
   margin: 0;
-  margin-bottom: ${rhythm(0.25)};
-  min-height: 32px;
+  margin-bottom: ${p => p.theme.space[1]};
+  min-height: ${p => p.theme.space[7]};
 
   span {
-    margin: 0 0.3rem 0 -0.1rem;
+    margin: 0 ${p => p.theme.space[1]} 0 0;
   }
 `
 
 const Icon = styled(`span`)`
   display: block;
-  height: 32px;
-  width: 32px;
+  height: ${p => p.theme.space[7]};
+  width: ${p => p.theme.space[7]};
 `
 
 const SubTitle = styled(`h2`)`
-  color: ${colors.lilac};
-  font-size: 0.875rem;
-  font-weight: 300;
-  letter-spacing: 0.05em;
+  color: ${p => p.theme.colors.lilac};
+  font-size: ${p => p.theme.fontSizes[1]};
+  font-weight: normal;
+  letter-spacing: ${p => p.theme.letterSpacings.tracked};
   margin: 0;
-  margin-top: ${rhythm(1)};
+  margin-top: ${p => p.theme.space[5]};
   text-transform: uppercase;
 `
 
 const Description = styled(`p`)`
-  color: ${colors.gray.lightCopy};
-  font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: 0.8125rem;
+  color: ${p => p.theme.colors.text};
+  font-size: ${p => p.theme.fontSizes[2]};
 `
 
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin-top: -${rhythm(1 / 4)};
+  margin-top: -${p => p.theme.space[1]};
 
   > a {
-    margin: 4px 8px 4px 0;
+    margin: ${p => p.theme.space[1]} ${p => p.theme.space[2]}
+      ${p => p.theme.space[1]} 0;
   }
 `
 
@@ -114,11 +113,11 @@ const EcosystemSection = ({
       </Title>
       <Description>{description}</Description>
       <Actions>
-        {links.map((item, idx) => {
+        {links.map(item => {
           const { to, label, secondary } = item
 
           return (
-            <Button key={to} to={to} secondary={secondary} tiny>
+            <Button key={to} to={to} secondary={secondary} variant="small">
               {label}
             </Button>
           )

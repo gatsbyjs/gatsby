@@ -1,32 +1,30 @@
-import React, { Component } from "react"
+import React from "react"
+import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import Counter from "./Counter"
 
-import DevTools from "mobx-react-devtools"
+const DefaultLayout = ({ children }) => (
+  <div>
+    <Link to="/">
+      <h3>MobX example</h3>
+    </Link>
+    <Counter />
 
-class DefaultLayout extends Component {
-  render() {
-    return (
-      <div>
-        <Link to="/">
-          <h3>MobX example</h3>
-        </Link>
-        <DevTools />
-        <Counter />
-        <ul>
-          <li>
-            <Link to="/a/">a</Link>
-          </li>
-          <li>
-            <Link to="/b/">b</Link>
-          </li>
-          <li>
-            <Link to="/c/">c</Link>
-          </li>
-        </ul>
-        {this.props.children}
-      </div>
-    )
-  }
+    <ul>
+      <li>
+        <Link to="/a/">a</Link>
+      </li>
+      <li>
+        <Link to="/b/">b</Link>
+      </li>
+      <li>
+        <Link to="/c/">c</Link>
+      </li>
+    </ul>
+    {children}
+  </div>
+)
+DefaultLayout.propTypes = {
+  children: PropTypes.object.isRequired,
 }
 export default DefaultLayout

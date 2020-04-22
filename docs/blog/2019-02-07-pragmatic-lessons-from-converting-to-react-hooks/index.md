@@ -4,7 +4,6 @@ date: 2019-02-07
 author: Daniel Lemay
 tags:
   - react
-  - react hooks
 image: "./images/hooks-diff.jpg"
 showImageInArticle: true
 canonicalLink: "https://www.dslemay.com/blog/2019/02/06/pragmatic-lessons-from-converting-to-react-hooks"
@@ -16,7 +15,7 @@ Last week I decided to install the React 16.8 alpha on a branch and experiment w
 
 The [Hooks documentation](https://reactjs.org/docs/hooks-intro.html) is well presented and an excellent resource to getting started with hooks. I previously championed the render props pattern for reusable logic and composability. However, the extra syntax often comes with tradeoffs in clarity. These concerns include: "wrapper hell" and more mental overhead to parse nested JSX structure within the component. Adding a second render prop component or ternary operator further compounds these concerns. These additional wrappers also display in the React devTools and can get out of hand. The possibility of cleaning up this syntax and providing clearer code is alluring.
 
-```javascript
+```jsx
 export const PureRandomQuote = ({
   data: {
     contentfulSlideshow: { slides },
@@ -48,7 +47,7 @@ const updateStateGood = () =>
   this.setState(state => ({ count: state.count + 1 }))
 ```
 
-The custom `useSlideshow` hook utilizes two different hooks to replace the functionality of the render props component: `useState` and `useEffect`. The current index and playing states are both set with their own calls to useState. The `useEffect` hook checks if the isPlaying state is true and then sets the timeout to advance the slide to the next index. It resets to the first slide after it reaches the last index. The hook clears the timeout when the current index or isPlaying state changes. The hook includes a function to update the the slide. The necessary state and functions are return in an object.
+The custom `useSlideshow` hook utilizes two different hooks to replace the functionality of the render props component: `useState` and `useEffect`. The current index and playing states are both set with their own calls to useState. The `useEffect` hook checks if the isPlaying state is true and then sets the timeout to advance the slide to the next index. It resets to the first slide after it reaches the last index. The hook clears the timeout when the current index or isPlaying state changes. The hook includes a function to update the slide. The necessary state and functions are return in an object.
 
 ```javascript
 function useSlideshow(slides, { timerLength = 5000 } = {}) {
@@ -95,7 +94,7 @@ An extra benefit of `useState` is the ability to reference the current state wit
 
 ## Structuring Hooks in Gatsby
 
-Currently I am structuring all my custom hooks in a top level folder so that other components can import them from a central location. Pulling the React dependencies out of Gatsby in version 2 allows for using Hooks immediately. To begin using Hooks today, update React and React-DOM to 16.8.0. There are considerations to take with the `useEffect Hook`. If it references the window object, you need to check that window is defined to avoid Gatsby build errors. These effects would normally live in `componentDidMount` where the component hydrates in the DOM. Hooks are called in the build process. The Gatsby docs have great resources for [debugging HTML builds](docs/debugging-html-builds/) if you encounter this issue.
+Currently I am structuring all my custom hooks in a top level folder so that other components can import them from a central location. Pulling the React dependencies out of Gatsby in version 2 allows for using Hooks immediately. To begin using Hooks today, update React and React-DOM to 16.8.0. There are considerations to take with the `useEffect Hook`. If it references the window object, you need to check that window is defined to avoid Gatsby build errors. These effects would normally live in `componentDidMount` where the component hydrates in the DOM. Hooks are called in the build process. The Gatsby docs have great resources for [debugging HTML builds](/docs/debugging-html-builds/) if you encounter this issue.
 
 ```javascript
 function useMediaQuery() {

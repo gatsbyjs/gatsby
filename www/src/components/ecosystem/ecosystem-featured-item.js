@@ -1,24 +1,23 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import { Link } from "gatsby"
+import Link from "../localized-link"
 import Img from "gatsby-image"
+import {
+  MdStar as StarIcon,
+  MdArrowDownward as ArrowDownwardIcon,
+} from "react-icons/md"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
-
-import StarIcon from "react-icons/lib/md/star"
-import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
-
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
-  margin-right: ${rhythm(options.blockMarginBottom)};
+  margin-right: ${p => p.theme.space[6]};
 
-  ${presets.Md} {
-    border-bottom: 1px solid ${colors.gray.superLight};
+  ${mediaQueries.md} {
+    border-bottom: 1px solid ${p => p.theme.colors.ui.border};
     box-shadow: none;
     margin: 0;
     padding: 0;
@@ -27,24 +26,24 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 `
 
 export const BlockLink = styled(Link)`
-  background: #fff;
-  border-radius: ${presets.radiusLg}px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  background: ${p => p.theme.colors.card.background};
+  border-radius: ${p => p.theme.radii[2]};
+  box-shadow: ${p => p.theme.shadows.raised};
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: ${rhythm(3 / 4)};
+  padding: ${p => p.theme.space[6]};
 
-  ${presets.Md} {
+  ${mediaQueries.md} {
     border-radius: 0;
     box-shadow: none;
-    transition: all ${presets.animation.speedDefault}
-      ${presets.animation.curveDefault};
+    transition: all ${p => p.theme.transition.speed.default}
+      ${p => p.theme.transition.curve.default};
   }
 
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     :hover {
-      background: ${colors.ui.whisper};
+      background: ${p => p.theme.colors.ui.hover};
     }
   }
 `
@@ -55,24 +54,23 @@ const Header = styled(`header`)`
   justify-content: space-between;
 
   h3 {
-    color: ${colors.gatsbyDark};
-    font-size: 1rem;
+    color: ${p => p.theme.colors.heading};
+    font-size: ${p => p.theme.fontSizes[2]};
     margin: 0;
   }
 
   span {
     align-items: center;
-    color: ${colors.lilac};
+    color: ${p => p.theme.colors.textMuted};
     display: flex;
-    font-size: 0.8125rem;
-    font-family: ${options.systemFontFamily.join(`,`)};
-    padding-left: 5px;
+    font-size: ${p => p.theme.fontSizes[1]};
+    padding-left: ${p => p.theme.space[3]};
 
     svg {
-      fill: ${colors.gray.light};
-      height: 1.2em;
-      margin-left: 2px;
-      width: 1.2em;
+      fill: ${p => p.theme.colors.textMuted};
+      height: auto;
+      margin-left: ${p => p.theme.space[1]};
+      width: ${p => p.theme.space[4]};
     }
   }
 `
@@ -80,25 +78,25 @@ const Header = styled(`header`)`
 const Digest = styled(`div`)`
   display: flex;
   flex-grow: 1;
-  font-family: ${options.systemFontFamily.join(`,`)};
+  font-family: ${p => p.theme.fonts.system};
   justify-content: space-between;
-  padding: ${rhythm(0.5)} 0 0;
+  padding: ${p => p.theme.space[3]} 0 0;
 `
 
 const Thumbnail = styled(`div`)`
-  height: 64px;
-  padding-right: ${rhythm(2 / 3)};
-  margin-top: ${rhythm(1 / 12)};
+  height: ${p => p.theme.space[11]};
+  padding-right: ${p => p.theme.space[4]};
+  margin-top: ${p => p.theme.space[1]};
 
   img {
-    border: 1px solid ${colors.gray.superLight};
+    border: 1px solid ${p => p.theme.colors.ui.border};
   }
 `
 
 const Description = styled(`p`)`
-  color: ${colors.gray.lightCopy};
+  color: ${p => p.theme.colors.textMuted};
   flex-grow: 1;
-  font-size: 0.85rem;
+  font-size: ${p => p.theme.fontSizes[1]};
   margin: 0;
 `
 

@@ -20,12 +20,10 @@ describe(`gatsby-remark-embed-snippet`, () => {
     fs.readFileSync.mockReturnValue(`const foo = "bar";`)
   })
 
-  it(`should error if missing required config options`, () => {
+  it(`should not error if missing optional config options`, () => {
     const markdownAST = remark.parse(`\`embed:hello-world.js\``)
 
-    expect(() => plugin({ markdownAST })).toThrow(
-      `Required option "directory" not specified`
-    )
+    expect(() => plugin({ markdownAST })).toMatchSnapshot()
   })
 
   it(`should error if the specified directory does not exist`, () => {
@@ -36,6 +34,56 @@ describe(`gatsby-remark-embed-snippet`, () => {
     expect(() => plugin({ markdownAST }, { directory: `invalid` })).toThrow(
       `Invalid directory specified "invalid"`
     )
+  })
+
+  it(`should display a code block of a single line`, () => {
+    const codeBlockValue = `  console.log('hello world')`
+    fs.readFileSync.mockReturnValue(`function test() {
+${codeBlockValue}
+}`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#L2\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should display a code block of a range of lines`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+${codeBlockValue}
+}`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#L2-4\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should display a code block of a range of non-consecutive lines`, () => {
+    const notInSnippet = `lineShouldNotBeInSnippet();`
+    fs.readFileSync.mockReturnValue(`function test() {
+  if (window.location.search.indexOf('query') > -1) {
+    console.log('The user is searching')
+  }
+}
+${notInSnippet}
+window.addEventListener('resize', () => {
+  test();
+})`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#L2-4,7-9\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).not.toContain(notInSnippet)
   })
 
   it(`should error if an invalid file path is specified`, () => {
