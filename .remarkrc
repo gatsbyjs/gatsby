@@ -1,10 +1,4 @@
 {
- "settings": {
-    "fences": true,
-    "rule": "-",
-    "ruleSpaces": false,
-    "listItemIndent": "1" 
- },
  "plugins": [
     ["remark-frontmatter", "yaml"],
     "remark-preset-lint-recommended",
