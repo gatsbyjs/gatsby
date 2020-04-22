@@ -520,3 +520,14 @@
   website: https://softblues.io/
   for_hire: true
   portfolio: true
+- name: Amruth Pillai
+  type: individual
+  description: >-
+    I build beautiful websites and applications that help people around the world. Some of my open source works include Reactive Resume, a resume builder that has over 1k+ starts, and Be Thrifty Today, a money management app that has about 1000+ downloads on Google Play Store.
+  location: Bangalore, India
+  website: https://amruthpillai.com
+  github: https://github.com/AmruthPillai
+  image: images/amruth-pillai.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
