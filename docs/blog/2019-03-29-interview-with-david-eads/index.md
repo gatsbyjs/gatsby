@@ -124,7 +124,7 @@ For translation, pulling from Google Sheets is really powerful.
 
 **David:** I used that technique quite extensively at NPR. ProPublica uses the same techniques as well as ArchieML in Google Docs, which is helpful for longer pieces of text and more complex data structures.
 
-<http://archieml.org/>
+http://archieml.org/
 ArchieML.org
 
 Archie Markup Language (ArchieML). ArchieML is a text format optimized for human writability, with a syntax designed to be as simple as possible.

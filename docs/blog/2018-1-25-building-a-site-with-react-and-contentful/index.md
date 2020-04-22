@@ -21,7 +21,7 @@ Well, easy if you already know React, at least. I wanted to make little site abo
 
 Sometimes a friend or family member babysits him, and it's time-consuming to either write instructions or update and print new guides for babysitters since he learns new commands every day. A website seemed like a better way to manage this.
 
-Here’s the site I built for my dog's babysitters after learning the basics of Contentful and React: <http://watson.surge.sh/>. Following are instructions on how you can also build a site with Contentful and React with tips I learned while building my site.
+Here’s the site I built for my dog's babysitters after learning the basics of Contentful and React: http://watson.surge.sh/. Following are instructions on how you can also build a site with Contentful and React with tips I learned while building my site.
 
 ![Home page of the new site about my dog](watson-welcome-page.png)
 
