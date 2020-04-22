@@ -1,15 +1,17 @@
 // NOTE: Previously `data-tree-utils-test.js`
-const _ = require(`lodash`)
+import _ from "lodash"
 
-const {
+import {
   addNode,
   deleteNode,
   addNodes,
   haveEqualFields,
-} = require(`../inference-metadata`)
-const { getExampleObject } = require(`../build-example-data`)
+  ITypeMetadata,
+} from "../inference-metadata"
+import { getExampleObject } from "../build-example-data"
 
-const { TypeConflictReporter } = require(`../type-conflict-reporter`)
+import { TypeConflictReporter } from "../type-conflict-reporter"
+import { Node } from "../../../../index"
 
 const INVALID_VALUE = undefined
 
@@ -18,23 +20,23 @@ const getExampleValue = ({
   typeName,
   typeConflictReporter,
   ignoreFields,
-}) => {
+}: any): any => {
   const initialMetadata = {
     typeName,
     typeConflictReporter,
     ignoredFields: new Set(ignoreFields),
-  }
-  const inferenceMetadata = addNodes(initialMetadata, nodes)
+  } as ITypeMetadata
+  const inferenceMetadata: ITypeMetadata = addNodes(initialMetadata, nodes)
   return getExampleObject(inferenceMetadata)
 }
 
-const getExampleValueWithoutConflicts = args => {
+const getExampleValueWithoutConflicts = (args): any => {
   const value = getExampleValue(args)
   expect(args.typeConflictReporter.getConflicts()).toEqual([])
   return value
 }
 
-const getExampleValueConflicts = args => {
+const getExampleValueConflicts = (args): any => {
   const typeConflictReporter = new TypeConflictReporter()
   getExampleValue({ ...args, typeConflictReporter })
   return typeConflictReporter.getConflicts()
@@ -154,9 +156,9 @@ describe(`Get example value for type inference`, () => {
   it(`should not mutate the nodes`, () => {
     getExampleValueWithoutConflicts({ nodes, typeConflictReporter })
     expect(nodes[0].context.nestedObject).toBeNull()
-    expect(nodes[1].context.nestedObject.someOtherProperty).toEqual(1)
-    expect(nodes[2].context.nestedObject.someOtherProperty).toEqual(2)
-    expect(nodes[3].context.nestedObject.someOtherProperty).toEqual(3)
+    expect(nodes[1].context.nestedObject?.someOtherProperty).toEqual(1)
+    expect(nodes[2].context.nestedObject?.someOtherProperty).toEqual(2)
+    expect(nodes[3].context.nestedObject?.someOtherProperty).toEqual(3)
   })
 
   it(`skips empty or sparse arrays`, () => {
@@ -215,7 +217,7 @@ describe(`Get example value for type inference`, () => {
   })
 
   it(`turns polymorphic fields null`, () => {
-    let example = getExampleValue({
+    const example = getExampleValue({
       nodes: [{ foo: null }, { foo: [1] }, { foo: { field: 1 } }],
       typeConflictReporter,
     })
@@ -223,7 +225,7 @@ describe(`Get example value for type inference`, () => {
   })
 
   it(`handles polymorphic arrays`, () => {
-    let example = getExampleValue({
+    const example = getExampleValue({
       nodes: [{ foo: [[`foo`, `bar`]] }, { foo: [{ field: 1 }] }],
       typeConflictReporter,
     })
@@ -251,14 +253,14 @@ describe(`Get example value for type inference`, () => {
   it(`skips unsupported types`, () => {
     // Skips functions
     let example = getExampleValueWithoutConflicts({
-      nodes: [{ foo: () => {} }],
+      nodes: [{ foo: (): void => {} }],
       typeConflictReporter,
     })
     expect(example.foo).not.toBeDefined()
 
     // Skips array of functions
     example = getExampleValueWithoutConflicts({
-      nodes: [{ foo: [() => {}] }],
+      nodes: [{ foo: [(): void => {}] }],
       typeConflictReporter,
     })
     expect(example.foo).not.toBeDefined()
@@ -342,7 +344,9 @@ describe(`Get example value for type inference`, () => {
 
   it(`goes through nested object-like objects`, () => {
     class ObjectLike {
-      constructor(key1, key2) {
+      key1: number
+      key2: string
+      constructor(key1: number, key2: string) {
         this.key1 = key1
         this.key2 = key2
       }
@@ -717,7 +721,7 @@ describe(`Get example value for type inference`, () => {
   })
 
   describe(`Incremental example value building`, () => {
-    const nodes = [
+    const _nodes = [
       {
         name: `The Mad Max`,
         hair: 1,
@@ -766,12 +770,13 @@ describe(`Get example value for type inference`, () => {
         },
       },
     ]
+    const nodes = (_nodes as unknown) as Node[]
     it(`updates example value when nodes are added`, () => {
       let inferenceMetadata = {
         typeName: `IncrementalExampleValue`,
         typeConflictReporter,
         ignoredFields: new Set(),
-      }
+      } as ITypeMetadata
 
       const revisions = nodes.map(node => {
         inferenceMetadata = addNode(inferenceMetadata, node)
@@ -787,7 +792,7 @@ describe(`Get example value for type inference`, () => {
         typeName: `IncrementalExampleValue`,
         typeConflictReporter,
         ignoredFields: new Set(),
-      }
+      } as ITypeMetadata
       inferenceMetadata = addNodes(inferenceMetadata, nodes)
       const fullExampleValue = getExampleObject(inferenceMetadata)
 
@@ -1035,7 +1040,7 @@ describe(`Type conflicts`, () => {
 describe(`Type change detection`, () => {
   let initialMetadata
 
-  const nodes = () => [
+  const nodes = (): object[] => [
     { foo: `foo` },
     { object: { foo: `foo`, bar: `bar` } },
     { list: [`item`], bar: `bar` },
@@ -1044,13 +1049,16 @@ describe(`Type change detection`, () => {
     { relatedNodeList___NODE: [`foo`] },
   ]
 
-  const addOne = (node, metadata = initialMetadata) =>
-    addNode(_.cloneDeep(metadata), node)
-  const deleteOne = (node, metadata = initialMetadata) =>
-    deleteNode(_.cloneDeep(metadata), node)
+  const addOne = (
+    node: object,
+    metadata: ITypeMetadata = initialMetadata
+  ): ITypeMetadata => addNode(_.cloneDeep(metadata), node as Node)
+
+  const deleteOne = (node: object, metadata = initialMetadata): ITypeMetadata =>
+    deleteNode(_.cloneDeep(metadata), node as Node)
 
   beforeEach(() => {
-    initialMetadata = addNodes({}, nodes())
+    initialMetadata = addNodes(undefined, nodes() as Node[])
     initialMetadata.dirty = false
   })
 

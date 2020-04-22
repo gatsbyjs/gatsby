@@ -3,31 +3,29 @@ import { Box, Color, StdoutContext } from "ink"
 import StoreStateContext from "../context"
 
 // Track the width and height of the terminal. Responsive app design baby!
-const useTerminalResize = () => {
+const useTerminalResize = (): Array<number> => {
   const { stdout } = useContext(StdoutContext)
   const [sizes, setSizes] = useState([stdout.columns, stdout.rows])
   useEffect(() => {
-    stdout.on(`resize`, () => {
+    const resizeListener = (): void => {
       setSizes([stdout.columns, stdout.rows])
-    })
-    return () => {
-      stdout.off(`resize`)
+    }
+    stdout.on(`resize`, resizeListener)
+    return (): void => {
+      stdout.off(`resize`, resizeListener)
     }
   }, [stdout])
 
   return sizes
 }
 
-const mapConstantToStatus = {
-  IN_PROGRESS: `In Progress`,
-  NOT_STARTED: `Not Started`,
-  INTERRUPTED: `Interrupted`,
-  FAILED: `Failed`,
-  SUCCESS: `Success`,
-  CANCELLED: `Cancelled`,
+interface IDevelopProps {
+  pagesCount: number
+  appName: string
+  status: string
 }
 
-const Develop = ({ pagesCount, appName, status }) => {
+const Develop: React.FC<IDevelopProps> = ({ pagesCount, appName, status }) => {
   const [width] = useTerminalResize()
 
   return (
@@ -36,7 +34,7 @@ const Develop = ({ pagesCount, appName, status }) => {
       <Box height={1} flexDirection="row">
         <Color>{pagesCount} pages</Color>
         <Box flexGrow={1} />
-        <Color>{mapConstantToStatus[status]}</Color>
+        <Color>{status}</Color>
         <Box flexGrow={1} />
         <Color>{appName}</Color>
       </Box>
@@ -44,14 +42,14 @@ const Develop = ({ pagesCount, appName, status }) => {
   )
 }
 
-const ConnectedDevelop = () => {
+const ConnectedDevelop: React.FC = () => {
   const state = useContext(StoreStateContext)
 
   return (
     <Develop
-      pagesCount={state.pages ? state.pages.size : 0}
-      appName={state.program ? state.program.sitePackageJson.name || `` : ``}
-      status={state.logs ? state.logs.status : ``}
+      pagesCount={state.pages?.size || 0}
+      appName={state.program?.sitePackageJson.name || ``}
+      status={state.logs?.status || ``}
     />
   )
 }

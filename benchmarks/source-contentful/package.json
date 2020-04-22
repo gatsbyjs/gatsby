@@ -7,6 +7,7 @@
   "scripts": {
     "clean": "gatsby clean",
     "build": "gatsby build",
+    "data-update": "ts-node scripts/data-update.ts",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "serve": "gatsby serve",
@@ -26,7 +27,9 @@
     "gatsby-source-filesystem": "^2.1.48",
     "gatsby-transformer-sharp": "^2.3.14",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3"
   },
   "devDependencies": {
     "chalk": "^2.4.2",

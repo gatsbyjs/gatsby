@@ -1,12 +1,15 @@
 // This file is heavily based on create-react-app's implementation
 // @see https://github.com/facebook/create-react-app/blob/master/packages/babel-preset-react-app/dependencies.js
 
-const path = require(`path`)
-const resolve = m => require.resolve(m)
+import path from "path"
 
-module.exports = function (api, options = {}) {
+// export default is required here because it is passed directly to webpack
+// via require.resolve
+// This function has a better inference than would be beneficial to type, and it's relatively easy to grok.
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export default () => {
   const absoluteRuntimePath = path.dirname(
-    resolve(`@babel/runtime/package.json`)
+    require.resolve(`@babel/runtime/package.json`)
   )
 
   return {
@@ -18,7 +21,7 @@ module.exports = function (api, options = {}) {
     presets: [
       [
         // Latest stable ECMAScript features
-        resolve(`@babel/preset-env`),
+        require.resolve(`@babel/preset-env`),
         {
           // Allow importing core-js in entrypoint and use browserlist to select polyfills
           useBuiltIns: `usage`,
@@ -33,7 +36,7 @@ module.exports = function (api, options = {}) {
       // Polyfills the runtime needed for async/await, generators, and friends
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
       [
-        resolve(`@babel/plugin-transform-runtime`),
+        require.resolve(`@babel/plugin-transform-runtime`),
         {
           corejs: false,
           helpers: true,
@@ -49,7 +52,7 @@ module.exports = function (api, options = {}) {
         },
       ],
       // Adds syntax support for import()
-      resolve(`@babel/plugin-syntax-dynamic-import`),
+      require.resolve(`@babel/plugin-syntax-dynamic-import`),
     ],
   }
 }
