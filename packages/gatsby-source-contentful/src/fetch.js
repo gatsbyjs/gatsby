@@ -29,7 +29,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   let locales
   let defaultLocale = `en-US`
   try {
-    console.log(`Fetching default locale`)
+    reporter.info(`Fetching default locale`)
     space = await client.getSpace()
     let contentfulLocales = await client
       .getLocales()
@@ -44,7 +44,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
         )}' were found but were filtered down to none.`
       )
     }
-    console.log(`default locale is : ${defaultLocale}`)
+    reporter.info(`default locale is: ${defaultLocale}`)
   } catch (e) {
     let details
     let errors
@@ -100,9 +100,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   try {
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    console.log(`error fetching content types`, e)
+    reporter.panic(`error fetching content types`, e)
   }
-  console.log(`contentTypes fetched`, contentTypes.items.length)
+  reporter.info(`contentTypes fetched ${contentTypes.items.length}`)
 
   let contentTypeItems = contentTypes.items
 
