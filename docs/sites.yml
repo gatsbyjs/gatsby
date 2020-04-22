@@ -1219,6 +1219,64 @@
     - Marketing
   built_by: Bejamas
   built_by_url: https://bejamas.io/
+- title: Mambu
+  main_url: https://www.mambu.com/
+  url: https://www.mambu.com/
+  featured: false
+  description: >-
+    Mambu is the cloud platform for banking and lending businesses that
+    puts customer relationships first.
+  categories:
+    - Technology
+    - Finance
+  built_by: Bejamas
+  built_by_url: https://bejamas.io/
+- title: Avenues
+  main_url: https://www.avenues.org
+  url: https://www.avenues.org
+  featured: false
+  description: >-
+    One school with many campuses, providing transformative,
+    world-focused learning experiences to students around the globe
+  categories:
+    - Education
+  built_by: Bejamas
+  built_by_url: https://bejamas.io/
+- title: Multicoin Capital
+  main_url: https://multicoin.capital
+  url: https://multicoin.capital
+  featured: false
+  description: >-
+    Multicoin Capital is a thesis-driven investment firm that
+    invests in cryptocurrencies, tokens, and blockchain
+    companies reshaping trillion-dollar markets.
+  categories:
+    - Technology
+    - Finance
+  built_by: Bejamas
+  built_by_url: https://bejamas.io/
+- title: Argent
+  main_url: https://www.argent.xyz/
+  url: https://www.argent.xyz/
+  featured: false
+  description: Argent is the simplest and safest Ethereum wallet for DeFi.
+  categories:
+    - Technology
+    - Finance
+  built_by: Bejamas
+  built_by_url: https://bejamas.io/
+- title: Meet Flo
+  main_url: https://meetflo.com/
+  url: https://meetflo.com/
+  featured: false
+  description: >-
+    The Flo by Moen Smart Water Shutoff is a comprehensive
+    water monitoringand shut-off system with leak detection
+    and proactive leak prevention technologies.
+  categories:
+    - E-commerce
+  built_by: Bejamas
+  built_by_url: https://bejamas.io/
 - title: Matthias Kretschmann Portfolio
   main_url: https://matthiaskretschmann.com/
   url: https://matthiaskretschmann.com/
@@ -10356,6 +10414,17 @@
     - Agency
     - Web Development
   featured: false
+- title: Shrey Sachdeva
+  url: https://www.shreysachdeva.tech/
+  main_url: https://www.shreysachdeva.tech/
+  source_url: https://github.com/shrey-sachdeva2000/Shrey-Sachdeva
+  description: >
+    Personal website for Shrey Sachdeva. An abstract thinker who writes code and designs pixel-perfect user-interfaces with industry experience.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Shrey Sachdeva
+  built_by_url: https://www.shreysachdeva.tech/
 - title: The Cares Family
   main_url: https://thecaresfamily.org.uk/home
   url: https://thecaresfamily.org.uk/home
@@ -10377,4 +10446,42 @@
     - Community
   built_by: Andrew Louis
   built_by_url: https://hyfen.net
+  featured: false
+- title: "Besoegsvenner - Visiting Friends for the Elderly"
+  main_url: https://www.xn--besgsvenner-igb.dk
+  url: https://www.xn--besgsvenner-igb.dk/ruths-historie
+  description: >
+    50.000 elderly people in Denmark feel lonely. This project seeks to inform people to become visitor friends ("Besøgsven" in Danish) to help fight loneliness and bring new friendships in to the world.
+  categories:
+    - Marketing
+    - Nonprofit
+    - Landing Page
+  built_by: Hello Great Works
+  built_by_url: https://hellogreatworks.com
+- title: Interficie Internet Services
+  main_url: https://www.interficie.com
+  url: https://www.interficie.com/our-work/
+  description: >
+    Located in Barcelona, we develop innovative websites, ecommerce solutions and software platforms for global brands, startups and organizations.
+  categories:
+    - E-commerce
+    - Web Development
+    - Consulting
+    - JavaScript
+    - Agency
+    - Business
+  built_by: Interficie Internet Services
+  built_by_url: https://github.com/InterficieIS
+- title: SofaScore Corporate
+  url: https://corporate.sofascore.com
+  main_url: https://corporate.sofascore.com
+  description: >
+    SofaScore is a leading provider of advanced sports insights and content with global coverage of 20+ sports.
+  categories:
+    - App
+    - Data
+    - Sports
+    - Technology
+  built_by: SofaScore
+  built_by_url: https://www.sofascore.com
   featured: false
