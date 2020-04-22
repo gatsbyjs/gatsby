@@ -1,4 +1,3 @@
-import "@babel/polyfill"
 import React from "react"
 import { render, cleanup, fireEvent } from "@testing-library/react"
 import Image from "../"
