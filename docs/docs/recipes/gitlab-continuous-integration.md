@@ -26,20 +26,22 @@ yarn develop
 4. Create a `.gitlab-ci.yml` with the following content:
 
 ```
-image: node:12.16.1
+    image: node:latest
 
-cache:
-  paths:
-    - node_modules/
+    stages:
+      - build
 
-stages:
-  - build
+    cache:
+      paths:
+        - node_modules/
 
-build:
-  stage: build
-  script:
-    - yarn
-    - yarn build
+    install_dependencies:
+      stage: build
+      script:
+        - npm install
+      artifacts:
+        paths:
+          - node_modules/
 ```
 
 3. `git push <you-remote-gitlab-repo>`
