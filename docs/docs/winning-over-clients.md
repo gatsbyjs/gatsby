@@ -19,7 +19,7 @@ Some benefits that you can use to pitch Gatsby to clients include:
 
 [This one-pager](/gatsby-one-pager.pdf) may also be useful for clients -- it explains Gatsby in their language.
 
-\--
+---
 
 This is a stub. Help our community expand it.
 

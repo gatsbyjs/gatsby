@@ -65,7 +65,7 @@ You may find that many of your developer friends and colleagues have some questi
 
 Sometimes the most effective way to get a developer's attention is to show them examples of real sites and dev teams using Gatsby. Here are some case studies you might want to share:
 
-- [Delicious Simplicity &lt;3 Gatsby: Building Happily Ever After](/blog/2019-06-08-delicious-simplicity-case-study-part-1/)
+- [Delicious Simplicity <3 Gatsby: Building Happily Ever After](/blog/2019-06-08-delicious-simplicity-case-study-part-1/)
 - [Beyond Static: Haptic Media Uses Gatsby to Build a Dynamic Web App](/blog/2019-02-05-hapticmedia-case-study/)
 - [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
 

@@ -31,7 +31,7 @@ That drove some impressive improvements to build speeds:
 
 **We’re working on a dramatically improved way to cache between builds (making builds even more “incremental”) that’ll make all site builds a lot lot faster.** We’ll be making more noise about this soon as we ready it for launch.
 
-We want to make consistent &lt; 10 second deploys a reality for everyone and any type of site & we’re very focused on making that happen.
+We want to make consistent < 10 second deploys a reality for everyone and any type of site & we’re very focused on making that happen.
 
 ## What is the roadmap on SSR support for Gatsby?
 

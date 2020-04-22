@@ -46,7 +46,7 @@ With Gatsby, the CMS-agnostic development workflow gives teams tools to continue
 
 ## QA and Testing
 
-Gatsby's extensible system of API hooks, tight integration with static hosts like Netlify, and use of React's modular component architecture, allow website teams to enable more effective QA &lt;-> Development workflows.
+Gatsby's extensible system of API hooks, tight integration with static hosts like Netlify, and use of React's modular component architecture, allow website teams to enable more effective QA <-> Development workflows.
 
 _Use development pages to communicate project status & collaborate with designers_
 
