@@ -47,7 +47,7 @@ We know it’s particularly frustrating if something fails to build but there’
 
 See how you can troubleshoot and add or remove contributors:
 
-https://youtu.be/kN5vrRVD_6Q
+<https://youtu.be/kN5vrRVD_6Q>
 
 ## How to sign up
 
@@ -63,4 +63,4 @@ The initial invites for the closed beta have just gone out! We’ll be talking d
 
 Curious to see Gatsby Preview in action? Watch our short demo to see how it works:
 
-https://youtu.be/RrQi6W_8SVQ
+<https://youtu.be/RrQi6W_8SVQ>

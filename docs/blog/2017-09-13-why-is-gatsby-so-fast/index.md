@@ -161,7 +161,7 @@ Let's discuss some ways to improve performance.
 ![reactnext-gatsby-performance.039](reactnext-gatsby-performance.039.png)
 
 Clickable
-link—https://developers.google.com/web/fundamentals/performance/critical-rendering-path/
+link—<https://developers.google.com/web/fundamentals/performance/critical-rendering-path/>
 
 ![reactnext-gatsby-performance.040](reactnext-gatsby-performance.040.png)
 

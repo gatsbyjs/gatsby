@@ -13,9 +13,9 @@ Before going through the steps for adding search to your Gatsby website, examine
 
 There are three required components for adding search to your Gatsby website:
 
-1.  index
-2.  engine
-3.  UI
+1. index
+2. engine
+3. UI
 
 ## Site search components
 
@@ -65,4 +65,4 @@ If your website does not qualify as documentation, you need to collect the searc
 
 When using Algolia, they host the search index and search engine for you. Your search queries will be sent to their servers which will respond with any results. You'll need to implement your own UI; Algolia provides a [React library](https://github.com/algolia/react-instantsearch) which may have components you'd like to use.
 
-Elasticsearch has several React component libraries for search e.g. https://github.com/appbaseio/reactivesearch
+Elasticsearch has several React component libraries for search e.g. <https://github.com/appbaseio/reactivesearch>

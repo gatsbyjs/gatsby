@@ -29,7 +29,7 @@ No code. No assembling plugins. Just writing content.
 
 Recently I had the pleasure of building a theme from scratch with Gatsby’s own [John Otander](https://twitter.com/4lpine) live on [my weekly livestream](https://twitch.tv/jlengstorf).
 
-https://youtu.be/PS2784YfPpw?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
+<https://youtu.be/PS2784YfPpw?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx>
 
 On the stream, we covered multiple topics:
 

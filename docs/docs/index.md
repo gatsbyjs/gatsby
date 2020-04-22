@@ -16,6 +16,7 @@ There are two main ways to get started with Gatsby:
 ## Go further
 
 1. [Recipes](/docs/recipes/): Find some quick answers for how to accomplish some specific, common tasks with Gatsby.
+
 2. Choose your own adventure and peruse the various sections of the Gatsby docs:
 
    - [Reference Guides](/docs/guides/): Learn about the many different topics around building with Gatsby, like sourcing data, deployment, and more.

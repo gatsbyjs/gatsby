@@ -287,9 +287,9 @@ A canonical link is a hint to a search engine that this is the _source_ for this
 To implement this functionality, you need to do the following:
 
 1. Enable passing a `pathname` prop to your SEO component
-1. Prefix your `pathname` prop with your `siteUrl` (from `gatsby-config.js`)
+2. Prefix your `pathname` prop with your `siteUrl` (from `gatsby-config.js`)
    - A canonical link should be _absolute_ (e.g. `https://your-site.com/canonical-link`), so you will need to prefix with this `siteUrl`
-1. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
+3. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
 
 ```jsx:title=src/components/seo.js
 import React from "react"
@@ -612,27 +612,44 @@ This tutorial is merely a shallow dive into the depths of SEO. Consider it a pri
 - Twitter uses `twitter:` keywords. See [Twitter Cards][twitter-cards] for more info
 - Slack reads tags in the following order ([source][slack-unfurl])
   1. oEmbed server
-  1. Twitter cards tags / Facebook Open Graph tags
-  1. HTML meta tags
+  2. Twitter cards tags / Facebook Open Graph tags
+  3. HTML meta tags
 - Both [Google][google-json-ld] and [Apple][apple-json-ld] offer support for JSON-LD, which is _not covered_ in this guide
   - If you'd like to learn more, check out [this excellent guide](https://nystudio107.com/blog/json-ld-structured-data-and-erotica) for more info on JSON-LD
 - Check out the [`gatsby-seo-example`][gatsby-seo-example] for a ready-to-use starter for powering your Markdown-based blog.
 
 [gatsby-starter-default]: https://github.com/gatsbyjs/gatsby-starter-default
+
 [gatsby-static-query]: /docs/static-query/
+
 [gatsby-markdown-blog]: /docs/adding-markdown-pages/
+
 [gatsby-plugin-react-helmet]: /packages/gatsby-plugin-react-helmet/
+
 [react-helmet]: https://github.com/nfl/react-helmet
+
 [unstructured-data]: /docs/using-gatsby-without-graphql/
+
 [og]: https://developers.facebook.com/docs/sharing/webmasters/#markup
+
 [twitter-cards]: https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards.html
+
 [seo-description-length]: https://yoast.com/shorter-meta-descriptions/
+
 [facebook-og-image]: https://developers.facebook.com/docs/sharing/best-practices#images
+
 [twitter-image]: https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary-card-with-large-image.html
+
 [slack-unfurl]: https://medium.com/slack-developer-blog/everything-you-ever-wanted-to-know-about-unfurling-but-were-afraid-to-ask-or-how-to-make-your-e64b4bb9254
+
 [google-validation]: https://support.google.com/webmasters/answer/6066468?hl=en
+
 [twitter-validation]: https://cards-dev.twitter.com/validator
+
 [facebook-validation]: https://developers.facebook.com/tools/debug/sharing
+
 [gatsby-seo-example]: https://github.com/DSchau/gatsby-seo-example
+
 [google-json-ld]: https://developers.google.com/search/docs/guides/intro-structured-data
+
 [apple-json-ld]: https://developer.apple.com/library/archive/releasenotes/General/WhatsNewIniOS/Articles/iOS10.html#//apple_ref/doc/uid/TP40017084-DontLinkElementID_2

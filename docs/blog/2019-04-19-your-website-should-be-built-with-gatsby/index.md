@@ -74,7 +74,7 @@ A primary driver of SEO is the content contained on your website and the way it 
 
 Also, in early 2018, Google announced that a [website’s performance would also be a factor in page ranking](https://webmasters.googleblog.com/2018/01/using-page-speed-in-mobile-search.html), which took effect in July that year.
 
-Recently Google has released a tool called [web.dev](https://web.dev/) to allow people to audit their site to see how well the site meets Google’s expectations for modern web practices. How well Gatsby sites score using this tool has been a bit of a proof in the pudding on this subject. This site (https://www.littleandbig.com.au/) has been built in Gatsby, you’re welcome to weigh up a site against it in comparison.
+Recently Google has released a tool called [web.dev](https://web.dev/) to allow people to audit their site to see how well the site meets Google’s expectations for modern web practices. How well Gatsby sites score using this tool has been a bit of a proof in the pudding on this subject. This site (<https://www.littleandbig.com.au/>) has been built in Gatsby, you’re welcome to weigh up a site against it in comparison.
 
 ![Little and Big Website Performance](./images/littleandbig-site-performance.jpg)
 

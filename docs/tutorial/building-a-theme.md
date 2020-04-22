@@ -1087,7 +1087,7 @@ Once this is running, you'll observe two things:
 
 However, you don't have any event data in the site. Copy the `events.yml` file from `gatsby-theme-events/data` into `site/events`. Then, restart the dev server:
 
-![Running the site, the basepath is now `/events`](./images/building-a-theme-changed-basepath.png)
+![Running the site, the basepath is now \`/events\`](./images/building-a-theme-changed-basepath.png)
 
 The events listing page will now be accessible at `http://localhost:8000/events`. Hitting `http://localhost:8000/` will return a 404.
 

@@ -113,8 +113,8 @@ as we do and find it useful for all your projects.
 
 When starting out with GraphQL, we recommend the following two tutorials:
 
-- https://www.howtographql.com/
-- https://graphql.org/learn/
+- <https://www.howtographql.com/>
+- <https://graphql.org/learn/>
 
 [The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
 
@@ -367,10 +367,10 @@ export const query = graphql`
 
 ### Getting started with GraphQL
 
-- https://graphql.org/learn/
-- https://www.howtographql.com/
-- https://reactjs.org/blog/2015/05/01/graphql-introduction.html
-- https://services.github.com/on-demand/graphql/
+- <https://graphql.org/learn/>
+- <https://www.howtographql.com/>
+- <https://reactjs.org/blog/2015/05/01/graphql-introduction.html>
+- <https://services.github.com/on-demand/graphql/>
 
 ### Advanced readings on GraphQL
 

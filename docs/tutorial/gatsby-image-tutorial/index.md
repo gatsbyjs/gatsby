@@ -51,7 +51,7 @@ Determine where your image files are located. In this example they're in `src/da
 
 If you haven't already, make sure that your project is set up to see content inside that directory. That means doing two things:
 
-1.  Install `gatsby-source-filesystem`. Note: If you created your project using `gatsby new <name>`, this first step should already be done for you via the default starter.
+1. Install `gatsby-source-filesystem`. Note: If you created your project using `gatsby new <name>`, this first step should already be done for you via the default starter.
 
 ```bash
 npm install gatsby-source-filesystem

@@ -80,7 +80,7 @@ I've read that [ButterCMS](https://buttercms.com) is particularly good for blogs
 
 ### Contentful
 
-I already built this site http://watson.surge.sh/ with Contentful and talk about that experience [here](/blog/2018-1-25-building-a-site-with-react-and-contentful/). Another thing I like about Contentful, which I didn't mention in the other article, is how smooth it is to toggle between content models (categories of content types). Their recent product update says you can add images inline in chunks of text, which makes the editing experience feel more like using a WYSIWYG. This seems like it would make things easy on the editing side, although I haven't explored if this would affect image presentation.
+I already built this site <http://watson.surge.sh/> with Contentful and talk about that experience [here](/blog/2018-1-25-building-a-site-with-react-and-contentful/). Another thing I like about Contentful, which I didn't mention in the other article, is how smooth it is to toggle between content models (categories of content types). Their recent product update says you can add images inline in chunks of text, which makes the editing experience feel more like using a WYSIWYG. This seems like it would make things easy on the editing side, although I haven't explored if this would affect image presentation.
 
 ### CloudCMS
 

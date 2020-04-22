@@ -84,9 +84,9 @@ Our `pt1` PR is approved (🎉), but now we have to reconcile our `pt2` branch. 
 
 We check out the `pt2` branch and rebase it onto the updated `pt1` branch:
 
-```bash
-$ git checkout feat/headless-cms-pt2
-$ git rebase feat/headless-cms-pt1
+```shell
+git checkout feat/headless-cms-pt2
+git rebase feat/headless-cms-pt1
 ```
 
 If you're not familiar with rebasing, it's an alternative to merging that involves "replaying" commits over a different branch. This can be a weird idea for folks who are used to merging, and it takes most people a bit of practice to get comfortable with it. You can learn more about rebasing in [this article from Algolia](https://blog.algolia.com/master-git-rebase/).
@@ -256,7 +256,7 @@ $ git rebase feat/headless-cms
 
 Essentially, we're scooting all of our changes to happen _after_ the most recent commit on master. It's important to rebase instead of merge so that we don't "interleave" the changes from other branches—we're keeping all of our work tightly clustered for now. This can be a bit tedious if you have lots of incremental branches, so you may wish to hold off on this until you've merged everything into the root branch.
 
-# And on and on
+## And on and on
 
 The neat thing about this flow is that it isn't limited to two incremental branches; we can keep going!
 
@@ -279,7 +279,7 @@ No matter how many branches we have, the process is always the same when we're r
 - Merge the earliest open PR into the root branch, using the standard "merge" option.
 - _Change the base_ of the next branch to point at the root branch
 
-# Ship it
+## Ship it
 
 What about when all the work is done, and we're ready to release?
 
@@ -287,7 +287,7 @@ At this point, we'll have a string of commits on our root branch, `feat/headless
 
 At this point, we have the freedom to organize our commits however we want. We can squash it all into 1 commit, or combine them into logical chunks. It's up to us to decide how we want our work to be reflected in the history.
 
-# Drawbacks
+## Drawbacks
 
 No flow is without tradeoffs, and this one has a couple:
 
@@ -301,7 +301,7 @@ This also makes it harder to collaborate on a feature; you need to communicate c
 
 With 3-4 incremental branches, developers have to bounce between them and make sure they're kept in sync. This can be tedious.
 
-# When should I use this flow?
+## When should I use this flow?
 
 Given the drawbacks mentioned above, this is probably not something that should be adopted for _every_ change. It provides the most benefit for changes that are too big to fit into a single PR.
 
@@ -315,7 +315,7 @@ Feature flags are great because they allow developers to break monolithic change
 
 When using feature flags, a streamlined version of this flow can still be useful, to ensure that developers aren't blocked while waiting for feedback.
 
-# Conclusion
+## Conclusion
 
 We've been using this flow on the Cloud team for a few weeks now, and it's been a pretty big boon to our productivity! PRs are tailored to be easy to review, and developers don't have to switch tasks to avoid being blocked while awaiting feedback. It's pretty great.
 

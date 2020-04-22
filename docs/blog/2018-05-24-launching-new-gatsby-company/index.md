@@ -96,17 +96,17 @@ But static sites, despite how much developers love them, have never gained wides
 
 As I thought deeply about this problem, it occurred to me that there were strong parallels between this problem and everything I’d learned about event sourcing and building cloud-native applications.
 
-https://twitter.com/kylemathews/status/825512417337544705
+<https://twitter.com/kylemathews/status/825512417337544705>
 
-https://twitter.com/kylemathews/status/825513977329307648
+<https://twitter.com/kylemathews/status/825513977329307648>
 
 I realized you could view a website as the current computed state of a long stream of content and code changes. When viewed through that lens, the architecture became clear for a new version of Gatsby that would glue Gatsby to various data sources & solve the really hard problems of static sites: fast incremental builds and parallelizing builds for large and complex sites.
 
 This architecture would enable Gatsby to eliminate the build step entirely—any code or content change would be quickly incorporated into the site and go live immediately. We could port the ideas of real-time event processing to building websites.
 
-https://twitter.com/kylemathews/status/916165920359198720
+<https://twitter.com/kylemathews/status/916165920359198720>
 
-https://twitter.com/kylemathews/status/916165988772487168
+<https://twitter.com/kylemathews/status/916165988772487168>
 
 ### Launching new version of Gatsby
 
@@ -118,7 +118,7 @@ I posted my plans on GitHub and with help from 100s of developers in the communi
 
 After spending fall 2016, and most of 2017 consulting with companies around Gatsby and interacting with 100s of developers in the open source world, I started feeling confident that it was time to create a company devoted to bringing the full vision of Gatsby to fruition. My longtime best friend and Gatsby core contributor Sam Bhagwat and I started chatting about forming this startup to bring Gatsby to the world.
 
-We were lucky to find some great investors, led by [Dan Scholnick of Trinity Ventures](http://www.trinityventures.com/team/dan-scholnick/), who shared our vision for new cloud-native website infrastructure and has extensive experience investing in and working with open source & cloud infrastructure startups like New Relic, Docker, Meteor, InfluxData and more, to back us with \$3.8M in seed funding.
+We were lucky to find some great investors, led by [Dan Scholnick of Trinity Ventures](http://www.trinityventures.com/team/dan-scholnick/), who shared our vision for new cloud-native website infrastructure and has extensive experience investing in and working with open source & cloud infrastructure startups like New Relic, Docker, Meteor, InfluxData and more, to back us with \\$3.8M in seed funding.
 
 I want to emphasize that this new startup doesn’t signal any move away from open source. I’ve been heavily involved in open source communities since I started programming 12 years ago and strongly believe it’s the best way to build software. We will be building cloud services for Gatsby but Gatsby itself will remain 100% open source as will most of what we intend to do. What the investment and company will enable is a much larger amount of effort towards improving Gatsby core and its surrounding ecosystem. Several core contributors have already joined to work full-time on Gatsby. We’ve been able to work with upstreams to make targeted improvements that benefit not just Gatsby but the whole frontend ecosystem. And as our company grows, we’ll be able to proportionally increase our investment in open source.
 

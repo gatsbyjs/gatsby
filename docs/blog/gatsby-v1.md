@@ -22,11 +22,11 @@ code splitting, service workers, offline support, and more.
 
 Gatsby means no more compromising between developers, designers, and authors.
 
-https://twitter.com/krist/status/882953204119556097
+<https://twitter.com/krist/status/882953204119556097>
 
-https://twitter.com/charlotte_dann/status/882596284116480000
+<https://twitter.com/charlotte_dann/status/882596284116480000>
 
-https://twitter.com/SachaGreif/status/841058065856192512
+<https://twitter.com/SachaGreif/status/841058065856192512>
 
 ## Gatsby is growing like crazy
 
@@ -71,11 +71,11 @@ static React sites are useful.
 But in many conversations among community members building Gatsby sites, two
 more questions kept coming up.
 
-1.  How could we _query_ data from _anywhere_ and have that data show up in our
-    pages **without** any custom scripting?
-2.  How should a website framework work for an _internet dominated by smartphones
-    on unreliable networks_ — an internet vastly different and larger than the
-    one frameworks were designed for a decade ago?
+1. How could we _query_ data from _anywhere_ and have that data show up in our
+   pages **without** any custom scripting?
+2. How should a website framework work for an _internet dominated by smartphones
+   on unreliable networks_ — an internet vastly different and larger than the
+   one frameworks were designed for a decade ago?
 
 ## Plugin system
 
@@ -218,7 +218,7 @@ well as transformer plugins for
 [JSDoc](/packages/gatsby-transformer-documentationjs/), React prop-types, and
 [images](/packages/gatsby-plugin-sharp/). We're collecting a list of additional
 source/transformer plugins that'd be useful to have over at
-https://github.com/gatsbyjs/gatsby/issues/1199
+<https://github.com/gatsbyjs/gatsby/issues/1199>
 
 These plugins are easy to write (somewhat similar to webpack loaders) so we
 expect to see the list of plugins grow rapidly.

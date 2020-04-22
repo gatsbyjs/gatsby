@@ -45,7 +45,7 @@ In addition to these Project Environment Variables defined in `.env.*` files, yo
 OS Env Vars. OS Env Vars which are prefixed with `GATSBY_` will become available in
 browser JavaScript.
 
-```text:title=.env.*
+```text:title=.env.\*
 GATSBY_API_URL=https://dev.example.com/api
 ```
 

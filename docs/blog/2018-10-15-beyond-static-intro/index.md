@@ -40,8 +40,8 @@ Gatsby is great for static sites and for truly maximizing performance, while als
 One of the central ideas of Gatsby is that we statically generate our HTML content--using React DOM server-side APIs. A less-often illustrated feature is that this static HTML content can then be _enhanced_ with client-side JavaScript via React hydration. The general approach is as follows:
 
 1. Build and render static HTML, creating content and pages with data injected at build time
-1. Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
-1. Transfer rendering to the [React reconciler][reconciler]
+2. Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
+3. Transfer rendering to the [React reconciler][reconciler]
 
 _This process is spelled out in more detail in the ["Understanding React Hydration" guide](/docs/react-hydration)_
 
@@ -58,6 +58,9 @@ Gatsby enables these hooks to deliver app-like functionality, just as it does fo
 If these briefly described topics and use cases sound interesting to you then please consider [signing up for the Webinar][webinar]. I can't wait to share some practical advice, excellent tooling, and a live demo to show you how you can #BuildWithGatsby in more ways than _just_ static. I hope to see you there!
 
 [reddit-thread]: https://www.reddit.com/r/reactjs/comments/992n2r/next_vs_gatsby/?st=jn6cojmr&sh=1a53fac1
+
 [webinar]: https://www.gatsbyjs.com/build-web-apps-webinar
+
 [hydrate]: https://reactjs.org/docs/react-dom.html#hydrate
+
 [reconciler]: https://reactjs.org/docs/reconciliation.html

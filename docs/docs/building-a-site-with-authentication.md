@@ -47,6 +47,7 @@ Gatsby is a little [different from a traditional React app](/docs/adding-app-and
 Taking advantage of this client-side routing allows you to protect or customize your routes. Using the [`@reach/router` library](https://reach.tech/router/), which comes installed with Gatsby, you can set up a router on a page and control which component loads when a certain route is called, and check for the existence of a variable like authentication state before serving the content.
 
 <!-- prettier-ignore -->
+
 ```jsx
 <Router>
   {isAuthenticated ? <PrivateRoute /> : <Login />}

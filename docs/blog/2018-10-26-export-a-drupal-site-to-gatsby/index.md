@@ -225,4 +225,4 @@ function slugify(string) {
 
 Run `node src/scripts/export_comments.js ../mysqlite.db > comments.xml` and that's it. This will generate a **comments.xml** file that you can [import into disqus](https://import.disqus.com/). Just remember to change the **yourSite** variable in the script, and it will link each comment to the correct post in your new blog using the slug used in the posts import.
 
-You now have all the posts and all comments ready to be used on your Gatsby blog. You can see a working example here: https://github.com/jackbravo/joaquin.axai.mx.
+You now have all the posts and all comments ready to be used on your Gatsby blog. You can see a working example here: <https://github.com/jackbravo/joaquin.axai.mx>.

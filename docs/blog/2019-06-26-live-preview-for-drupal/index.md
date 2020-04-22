@@ -35,7 +35,7 @@ Here's how it works:
 
 ## Getting started
 
-https://youtu.be/H72PY3wNMcI
+<https://youtu.be/H72PY3wNMcI>
 
 ### Step 1: Sign Up for Gatsby Preview Beta
 

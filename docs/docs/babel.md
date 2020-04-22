@@ -21,6 +21,7 @@ npm install --save-dev babel-preset-gatsby
 ```
 
 <!-- prettier-ignore-start -->
+
 ```json:title=.babelrc
 {
   "plugins": ["@babel/plugin-proposal-optional-chaining"],
@@ -36,6 +37,7 @@ npm install --save-dev babel-preset-gatsby
   ]
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 For more advanced configurations, you can also copy the defaults from [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby) and customize them to suit your needs.

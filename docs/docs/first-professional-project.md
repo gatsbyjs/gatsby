@@ -11,7 +11,7 @@ Why is that?
 - **Shipped means more real.** It's common to talk about exciting new technologies, but much less common to actually see them used in production. Shipping a Gatsby website will make others see Gatsby as an actual choice to consider.
 - **Seeing is believing.** Gatsby sites shock people by how fast they are. When someone ships a Gatsby site, other people start asking how they can get sites that fast.
 
-https://twitter.com/Netlify/status/1011344285529182211
+<https://twitter.com/Netlify/status/1011344285529182211>
 
 - **Discover allies.** Once you ship a Gatsby website, other Gatsby enthusiasts may come out of the woodwork. It's common to want change, but believe it's impossible. When the first Gatsby site ships, others may join you in trying to push for increased Gatsby usage.
 

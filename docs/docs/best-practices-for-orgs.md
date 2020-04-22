@@ -7,7 +7,7 @@ When you have multiple teams building Gatsby sites, there are some best practice
 
 <GuideList slug={props.slug} />
 
---
+\--
 
 This is a stub. Help our community expand it.
 

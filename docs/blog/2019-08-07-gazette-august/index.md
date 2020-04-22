@@ -29,7 +29,7 @@ Similarly, earlier last month, we felt like we needed to take some time to slow 
 
 We feel this went quite well, so we intend to keep doing this fairly regularly to keep Gatsby stable and ensure you have painless upgrades. Our goal is to always enable the experience [Brian Holt](https://twitter.com/holtbt) depicts below, specifically painless upgrades and all the while delivering real value and fixes in every version of Gatsby.
 
-https://twitter.com/holtbt/status/1158559782451609600
+<https://twitter.com/holtbt/status/1158559782451609600>
 
 Check out the [project](https://github.com/gatsbyjs/gatsby/projects/13) on GitHub if you're interested.
 
@@ -66,7 +66,7 @@ If you're curious about the implementation, [here](https://github.com/gatsbyjs/g
 
 [Native Lazy Loading](https://web.dev/native-lazy-loading) just launched in Chrome 76. We shipped support for this in `gatsby-image` back in May! So if you're using Gatsby, your site already does this out of the box.
 
-https://twitter.com/chatsidhartha/status/1129118956193640448
+<https://twitter.com/chatsidhartha/status/1129118956193640448>
 
 Check out the implementation on the [PR on GitHub](https://github.com/gatsbyjs/gatsby/pull/13217).
 
@@ -101,7 +101,7 @@ Firstly, thank you for all your contributions, folks! Every single contribution 
 
 Gatsby has always been a community effort. You make a _lot_ of contributions. In fact, we achieved a new record in merged PRs last month:
 
-https://twitter.com/chatsidhartha/status/1156334013247737856
+<https://twitter.com/chatsidhartha/status/1156334013247737856>
 
 ## Gatsby Site of the month
 

@@ -41,7 +41,7 @@ Thanks to everyone's contributions, throughout October we merged 439 pull reques
 
 Of the 250 different authors who contributed to this month, over 170 were first-time contributors to the Gatsby repo!
 
-https://twitter.com/gatsbyjs/status/1056235954824871936
+<https://twitter.com/gatsbyjs/status/1056235954824871936>
 
 (We celebrated a bit early).
 

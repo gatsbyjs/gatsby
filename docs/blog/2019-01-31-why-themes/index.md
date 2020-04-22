@@ -59,24 +59,24 @@ But for many other users, that want easy solutions to a common problems, they fi
 
 Some tweets to that effect:
 
-https://twitter.com/sebmck/status/1085279417151057920
+<https://twitter.com/sebmck/status/1085279417151057920>
 
 ---
 
-https://twitter.com/ericalli/status/1083271854653992962
+<https://twitter.com/ericalli/status/1083271854653992962>
 
-https://twitter.com/ericalli/status/1083271856809897985
+<https://twitter.com/ericalli/status/1083271856809897985>
 
-https://twitter.com/ericalli/status/1083271858605023232
+<https://twitter.com/ericalli/status/1083271858605023232>
 
 ---
 
-https://twitter.com/jtth/status/1080519113930350592
+<https://twitter.com/jtth/status/1080519113930350592>
 
-https://twitter.com/jtth/status/1080519116195356674
+<https://twitter.com/jtth/status/1080519116195356674>
 
-https://twitter.com/jtth/status/1080519116992249858
+<https://twitter.com/jtth/status/1080519116992249858>
 
-https://twitter.com/jtth/status/1080519117688442880
+<https://twitter.com/jtth/status/1080519117688442880>
 
-https://twitter.com/jtth/status/1081288682785726464
+<https://twitter.com/jtth/status/1081288682785726464>

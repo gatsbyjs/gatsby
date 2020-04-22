@@ -89,9 +89,9 @@ ButterCMS has integrated with a rich image transformation API called Filestack. 
 
 After you upload an image to ButterCMS, it's stored on your CDN. To create a thumbnail, here's an example:
 
-Original URL = https://cdn.buttercms.com/zjypya5tRny63LqhHQrv
+Original URL = <https://cdn.buttercms.com/zjypya5tRny63LqhHQrv>
 
-Thumbnail URL = https://fs.buttercms.com/resize=width:200,height:200/zjypya5tRny63LqhHQrv
+Thumbnail URL = <https://fs.buttercms.com/resize=width:200,height:200/zjypya5tRny63LqhHQrv>
 
 Resizing is just one of the many different transformations you can do to your images. Refer to the [Filestack docs](https://www.filestack.com/docs/) for full details.
 
@@ -603,8 +603,8 @@ Suppose you want to add a CMS to a static FAQ page with a title and a list of qu
 Making your content dynamic with Butter is a two-step process:
 
 1. **Setup custom content fields in Butter**
-1. **Integrate the fields into your application**
-1. **To setup custom content fields, first sign in to the Butter dashboard.**
+2. **Integrate the fields into your application**
+3. **To setup custom content fields, first sign in to the Butter dashboard.**
 
 Create a new workspace or click on an existing one. Workspaces let you organize content fields in a friendly way for content editors and have no effect on development or the API. For example, a real-estate website might have a workspace called "Properties" and another called "About Page".
 

@@ -57,4 +57,5 @@ Zach and the Youfit team were happy with the results, amazed by the fast page lo
 By using Gatsby, Youfit significantly increased their organic traffic, lead capture and ROI. Youfit also laid the foundation for long-term success by improving their Google ranking and making their site mobile friendly. This enabled Youfit to focus on what it does best: making proactive wellness more accessible to all.
 
 [youfit-health-clubs]: https://www.youfit.com/
+
 [64-labs]: http://www.64labs.com/

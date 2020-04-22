@@ -16,7 +16,7 @@ We’re starting to roll out Gatsby Days across the US and internationally. The 
 
 We’ll also be planning more Gatsby Days after the New Year. We did a Twitter poll a few weeks ago to gauge interest in locations for Gatsby Days and London gathered over 250 votes! There were also a lot of write-in votes for Chicago, Dallas, Paris, and Berlin. Here are the results of the Twitter poll:
 
-https://twitter.com/gatsbyjs/status/1050456663138820097
+<https://twitter.com/gatsbyjs/status/1050456663138820097>
 
 If you didn’t get a chance to cast your vote for a Gatsby Days host city, you can [cast your vote here](https://www.gatsbyjs.com/gatsby-days-signup) (and get notified when a Gatsby Days comes to your city).
 

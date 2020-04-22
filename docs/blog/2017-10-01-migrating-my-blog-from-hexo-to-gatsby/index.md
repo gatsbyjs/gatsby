@@ -247,7 +247,7 @@ As before, add it to the `plugins` field in `gatsby-config.js`:
 This particular plugin can also take _its own_ plugins via the `plugins` option.
 I've left it empty but this is where you can add things like syntax highlighting
 or auto-linking of headers. Here's the current list:
-https://www.npmjs.com/search?q=gatsby-remark
+<https://www.npmjs.com/search?q=gatsby-remark>
 
 Save and restart your dev server, then go into GraphiQL and try out the new
 `allMarkdownRemark` field:

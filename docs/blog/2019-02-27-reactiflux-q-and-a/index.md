@@ -5,7 +5,7 @@ author: Linda Watkins
 canonicalLink: https://www.reactiflux.com/transcripts/gatsby-team/
 ---
 
-Below is a transcript of an interview with Kyle Mathews, Chris Biscardi, and Dustin Schau that took place on the [Reactiflux Discord](https://reactiflux.com). Thanks to the Reactiflux team for organizing this Q&A and writing the original post (https://www.reactiflux.com/transcripts/gatsby-team/). Read on to hear members of the Gatsby team answer the most burning questions about Gatsby.
+Below is a transcript of an interview with Kyle Mathews, Chris Biscardi, and Dustin Schau that took place on the [Reactiflux Discord](https://reactiflux.com). Thanks to the Reactiflux team for organizing this Q&A and writing the original post (<https://www.reactiflux.com/transcripts/gatsby-team/>). Read on to hear members of the Gatsby team answer the most burning questions about Gatsby.
 
 Date of interview: December 13 2018
 
@@ -171,7 +171,7 @@ Check it out, and hope it's helpful!
 
 **Q:** What is the most exciting feature you are working right now? — Checkmatez
 
-**A:** I'm very excited about themes right now. With the core functionality (composable gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, e-commerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (https://spectrum.chat/gatsby-themes) or on Twitter (https://twitter.com/chrisbiscardi)
+**A:** I'm very excited about themes right now. With the core functionality (composable gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, e-commerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (<https://spectrum.chat/gatsby-themes>) or on Twitter (<https://twitter.com/chrisbiscardi>)
 
 A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by creating an account on GitHub.
 
@@ -233,8 +233,8 @@ P.S. Gatsby is hiring worldwide for OSS Maintainers
 
 **A:** Here's two!
 
-https://www.gatsbyjs.com/careers/open-source-maintainer/
+<https://www.gatsbyjs.com/careers/open-source-maintainer/>
 
-https://www.gatsbyjs.com/careers/cloud-services-engineer/
+<https://www.gatsbyjs.com/careers/cloud-services-engineer/>
 
 — kylemathews

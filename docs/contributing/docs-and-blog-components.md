@@ -164,6 +164,7 @@ The Horizontal Nav List component takes two props:
 The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/) plugin to automatically apply hover links to heading tags across docs pages. Because it automatically creates links to subheadings on pages like the glossary, the Horizontal Nav List can supply matching links (like `"guide-list"` which would align with the automatically created link at `/docs/docs-and-blog-components#guide-list`).
 
 <!-- prettier-ignore -->
+
 ```markdown
 ---
 title: Glossary
@@ -185,7 +186,7 @@ The glossary defines key vocabulary...
 
 Rendered, it looks like this:
 
-<HorizontalNavList
+&lt;HorizontalNavList
   items={[
     "guide-list",
     "egghead-embed",
@@ -296,6 +297,7 @@ Code can be formatted using regular Markdown syntax, but the docs site has addit
 Code blocks are wrapped in 3 backticks. A language can be added immediately after the first set of back ticks to provide syntax highlighting for the language. A `title` of the file can be added after the language. Line highlighting can be included in the code block by commenting `highlight-line`, or `highlight-start` followed by a `highlight-end`.
 
 <!-- prettier-ignore -->
+
 ````markdown
 ```javascript:title=gatsby-config.js
 // In your gatsby-config.js
@@ -337,6 +339,7 @@ plugins: [
 The above code block is rendered like this:
 
 <!-- prettier-ignore -->
+
 ```javascript:title=gatsby-config.js
 // In your gatsby-config.js
 plugins: [

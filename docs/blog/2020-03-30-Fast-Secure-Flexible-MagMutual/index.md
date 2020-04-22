@@ -47,7 +47,7 @@ A decoupled design approach offers limitless possibilities to evolve the site wi
 
 In this video, hear from project leaders Bob Kepford, Director of Development at Mediacurrent and Ben Robertson, Senior Software Engineer at Gatsby about their development approach and results of the new site.
 
-https://players.brightcove.net/1027729815001/befDVqJZ_default/index.html?videoId=6133184295001
+<https://players.brightcove.net/1027729815001/befDVqJZ_default/index.html?videoId=6133184295001>
 
 ## MagMutual on the JAMstack
 

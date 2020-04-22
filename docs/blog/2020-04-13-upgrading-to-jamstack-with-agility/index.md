@@ -23,7 +23,7 @@ This was just the opportunity I’d been looking for: A chance to practice what 
 
 ## tl;dr
 
-For those of you who just want to see the code for the new site (it only has code for the modules that are on the homepage right now, but it will expand over time), it's all here on GitHub: https://github.com/agility/agility-website-gatsby.
+For those of you who just want to see the code for the new site (it only has code for the modules that are on the homepage right now, but it will expand over time), it's all here on GitHub: <https://github.com/agility/agility-website-gatsby>.
 
 ## Steps
 

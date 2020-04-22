@@ -648,21 +648,39 @@ Now go build something great.
     advanced functionality
 
 [react-dom-server]: https://reactjs.org/docs/react-dom-server.html
+
 [gatsby-release]: /blog/gatsby-v1/
+
 [gatsby-plugins]: /docs/plugins/
+
 [gatsby-plugin-catch-links]: /packages/gatsby-plugin-catch-links/
+
 [gatsby-plugin-react-helmet]: /packages/gatsby-plugin-react-helmet/
+
 [gatsby-plugin-preact]: /packages/gatsby-plugin-preact/
+
 [gatsby-transformer-remark]: /packages/gatsby-transformer-remark/
+
 [remark]: https://github.com/wooorm/remark
+
 [gatsby-source-filesystem]: /packages/gatsby-source-filesystem/
+
 [react-helmet]: https://github.com/nfl/react-helmet
+
 [frontmatter]: https://jekyllrb.com/docs/frontmatter/
+
 [learn-graphql]: https://www.howtographql.com
+
 [node-spec]: /docs/node-apis/
+
 [gatsby-actions]: /docs/actions/
+
 [styled-components]: https://github.com/styled-components/styled-components
+
 [yarn]: https://yarnpkg.com/en/
+
 [source-code]: https://github.com/dschau/gatsby-blog-starter-kit
+
 [blog-source-code]: https://github.com/dschau/blog
+
 [create-gatsby-blog-post]: https://github.com/DSchau/create-gatsby-blog-post

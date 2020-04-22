@@ -47,7 +47,7 @@ That's it!
 
 ### The tldr; (in tweet form)
 
-https://twitter.com/jlengstorf/status/1050855455759593472
+<https://twitter.com/jlengstorf/status/1050855455759593472>
 
 ### Breaking down the example
 

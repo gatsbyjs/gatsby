@@ -61,7 +61,7 @@ And finally... [no-mouse-days](https://www.npmjs.com/package/no-mouse-days). I c
 
 > Ever wanted a package that disables the mouse cursor one day a week so you can test keyboard accessibility as a team? No? Well here you go anyway.
 
-Grab it from https://www.npmjs.com/package/no-mouse-days.
+Grab it from <https://www.npmjs.com/package/no-mouse-days>.
 
 ## Community Highlights
 

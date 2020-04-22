@@ -114,7 +114,7 @@ inherited from the theme's own plugin declarations or apply gatsby
 lifecycle hooks such as [`onCreatePage`](/docs/node-apis/#onCreatePage).
 
 Check out the theme examples in this multi-package repo for more
-examples of using and building themes: https://github.com/ChristopherBiscardi/gatsby-theme-examples.
+examples of using and building themes: <https://github.com/ChristopherBiscardi/gatsby-theme-examples>.
 
 ## Next Steps
 

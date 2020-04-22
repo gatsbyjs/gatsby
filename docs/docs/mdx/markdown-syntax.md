@@ -63,6 +63,7 @@ Here's how those tags render in HTML:
 - can use `*`, `-`, or `+` for each list item
 
 <!-- prettier-ignore-start -->
+
 ```markdown
 * Gatsby
   * docs
@@ -71,6 +72,7 @@ Here's how those tags render in HTML:
 + Gatsby
   + docs
 ```
+
 <!-- prettier-ignore-end -->
 
 How unordered lists are rendered in HTML:
@@ -94,8 +96,8 @@ How unordered lists are rendered in HTML:
 ```
 
 1. One
-1. Two
-1. Three
+2. Two
+3. Three
 
 ## Links and images
 
@@ -203,5 +205,5 @@ The chart is rendered inside our MDX document.
 
 ## Helpful resources
 
-- https://daringfireball.net/projects/markdown/syntax
-- https://www.markdownguide.org/basic-syntax
+- <https://daringfireball.net/projects/markdown/syntax>
+- <https://www.markdownguide.org/basic-syntax>

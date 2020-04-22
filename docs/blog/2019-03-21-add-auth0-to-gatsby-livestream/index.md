@@ -19,7 +19,7 @@ We regularly get questions about how to add authentication to Gatsby, and while 
 
 On a recent livestream, [Ado Kukic](https://twitter.com/KukicAdo) helped me create an example for setting up auth for a Gatsby account page.
 
-https://youtu.be/j-vuF2PYHmU?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
+<https://youtu.be/j-vuF2PYHmU?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx>
 
 **This is part of the [Learn With Jason series](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx), which [streams live on Twitch][twitch] every Thursday at 9 am Pacific.**
 

@@ -17,7 +17,7 @@ tags:
 ---
 
 Gatsby has been getting a lot of recognition and
-[adoption](https://github.com/gatsbyjs/gatsby#showcase) lately, and for good
+[adoption](https://github.com/gatsbyjs/gatsby##showcase) lately, and for good
 reason. It’s so flexible and it works well with nearly everything.
 
 If you’re on a tight budget and don’t want to sacrifice developer experience or
@@ -40,11 +40,11 @@ The following is a report on my high-level experience of using Gatsby with
 Contentful, Netlify and Algolia and the problems they solve — without getting
 down into code.
 
-# Static to the Rescue?
+## Static to the Rescue?
 
 I know it’s bad to make assumptions, but I’m going to assume that if you’re here
 and reading this, you at least know a little about the perks of static sites and
-the JAMstack. If not, check out [https://jamstack.org/](https://jamstack.org/)
+the JAMstack. If not, check out <https://jamstack.org/>
 for a quick breakdown on why web development is, for lack of a better phrase,
 “going back to the basics.”
 
@@ -76,7 +76,7 @@ that’s a common consensus.
 
 Okay, now back to some static hurdles.
 
-# A Problem of Content
+## A Problem of Content
 
 Our site has a lot of content (~300 articles) that needs to be maintained by
 non-developers, my co-workers. This meant we needed an approachable interface
@@ -90,7 +90,7 @@ repo.
 > plugin that pulls in content via a WordPress API. However, to me, this was not
 > appealing because I was trying to avoid hosting a traditional CMS entirely.
 
-# Solution: Contentful + Gatsby
+## Solution: Contentful + Gatsby
 
 Contentful is a hosted [headless CMS](/docs/headless-cms/) with a fantastic user experience. It’s
 similar to having a backend like WordPress, but you are fully responsible for
@@ -159,7 +159,7 @@ get converted to HTML via a transformer plugin within Gatsby. The markdown
 editing in Contentful is quite practical with standard WYSIWYG-like editor
 features. I haven’t heard any complaints from my co-workers.
 
-# Searching for a Search Solution
+## Searching for a Search Solution
 
 Another “problem” with static sites is the lack of out-of-the-box site search.
 Most search implementations occur between the server and the database. As a doc
@@ -179,7 +179,7 @@ something that would operate client-side, but that had the search brains still
 residing in the cloud somewhere. Though an option, I didn’t have time to build
 my own solution.
 
-# Solution: Algolia + Gatsby
+## Solution: Algolia + Gatsby
 
 This solution was a bit of a trial and error process for me. I had seen many doc
 sites use Algolia online in my dev travels. I knew it offered a usable free tier
@@ -189,7 +189,7 @@ indexed properly. Algolia does have helpful documentation on indexing.
 
 It was more of a challenge of how to break down the content in the articles into
 the chunks that the index requires. The
-[Algolia Docs](https://www.algolia.com/doc/guides/indexing/structuring-your-data/?language=php#indexing-long-documents)
+[Algolia Docs](https://www.algolia.com/doc/guides/indexing/structuring-your-data/?language=php##indexing-long-documents)
 state that your index records shouldn’t be more than 10kb each which roughly
 equates to a paragraph or two each. This suddenly became a challenge in how to
 parse my article content by section. There wasn’t a good example out there of
@@ -235,7 +235,7 @@ Reactjs.org repo had the answer right in their
 They use DocSearch instead of rolling their own indexing and search interface.
 Oh well.
 
-# Hosting & Deployment
+## Hosting & Deployment
 
 A great thing about static sites is that you can host them just about anywhere.
 You get a folder of pre-built files that you can throw up on any web server and
@@ -259,7 +259,7 @@ for free?
 Luckily I already knew the answers to these questions because I had already
 discovered Netlify for some other projects.
 
-# Solution: Netlify + Gatsby
+## Solution: Netlify + Gatsby
 
 Plugging any static site into the Netlify workflow is a no brainer, but after I
 found Gatsby, I knew there was no other option for me. These two pair so well
@@ -278,7 +278,7 @@ through this section without a bullet list of why Netlify is so fantastic.
 - [And a lot more....](https://www.netlify.com/features/)
 - Did I mention you get all this for FREE?
 
-https://giphy.com/gifs/vMnuZGHJfFSTe
+<https://giphy.com/gifs/vMnuZGHJfFSTe>
 
 And back to using it with Gatsby.
 
@@ -317,7 +317,7 @@ addition, and Netlify rebuilds the site and deploys it.
 
 It’s a match made in JAMstack heaven.
 
-# Is it Magic?
+## Is it Magic?
 
 Gatsby makes building the site fun and painless. It gets out of the way and lets
 you be creative with your craft — yet also adds some insane perks, like
@@ -328,4 +328,4 @@ buttons and leaves you with a “Is it really this easy?” kind of feeling.
 
 Now, hopefully, our customers will feel the same with our site.
 
-https://giphy.com/gifs/shia-labeouf-12NUbkX6p4xOO4
+<https://giphy.com/gifs/shia-labeouf-12NUbkX6p4xOO4>

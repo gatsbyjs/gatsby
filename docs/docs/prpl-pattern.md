@@ -8,7 +8,7 @@ PRPL is a web site architecture developed by Google for building websites and
 apps that work exceptionally well on smartphones and other devices with
 unreliable network connections.
 
-https://developers.google.com/web/fundamentals/performance/prpl-pattern/
+<https://developers.google.com/web/fundamentals/performance/prpl-pattern/>
 
 PRPL stands for:
 
@@ -32,7 +32,7 @@ demand_ on the client.
 This issue written at the start of Gatsby's 1.0 work provides further background
 on how Gatsby works to guarantee high performance.
 
-https://github.com/gatsbyjs/gatsby/issues/431
+<https://github.com/gatsbyjs/gatsby/issues/431>
 
 This blog post also covers how we think about performance —
 [Web Performance 101—also, why is Gatsby so fast?](/blog/2017-09-13-why-is-gatsby-so-fast/)

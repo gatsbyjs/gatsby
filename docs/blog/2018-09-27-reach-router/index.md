@@ -25,7 +25,7 @@ When a user navigates between traditional server-rendered pages, the page is ful
 
 The video below demonstrates this challenge (Video by [Rob DeLuca](https://twitter.com/robdel12), which accompanied his related article, “[Single page app routers are broken](https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf)”)
 
-https://youtu.be/NKTdNv8JpuM
+<https://youtu.be/NKTdNv8JpuM>
 
 A primary focus (no pun intended) of @reach/router is to manage focus in client-side routing, out of the box, lifting the onus from devs to manage it from scratch. From the @reach/router documentation:
 
@@ -49,7 +49,7 @@ A primary focus (no pun intended) of @reach/router is to manage focus in client-
 
 The video below demonstrates this focus management:
 
-https://twitter.com/ryanflorence/status/1002219535921889281
+<https://twitter.com/ryanflorence/status/1002219535921889281>
 
 In terms of the development experience with Gatsby, this change is mostly under the hood, folded into the implementation of the Gatsby Link component. In terms of usability, accessibility by default is a win for everyone 🙌🏻.
 
@@ -63,7 +63,7 @@ For most sites, migrating from v1 to v2 shouldn’t be too painful, but there ar
 
 We look forward to continuing to work actively with Ryan!
 
-https://twitter.com/ryanflorence/status/1042117992140554241
+<https://twitter.com/ryanflorence/status/1042117992140554241>
 
 Related Gatsby docs:
 

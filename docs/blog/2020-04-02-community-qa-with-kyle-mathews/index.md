@@ -15,7 +15,7 @@ I’m guessing this question is referring to [my blog post on the launch of our 
 
 This has always been my goal with Gatsby. The Gatsby v1 architecture was designed specifically to support this. Here’s the original tweet announcing when the basic support for incremental builds was added to the framework in a 1.0 alpha:
 
-https://twitter.com/kylemathews/status/856638851158220800
+<https://twitter.com/kylemathews/status/856638851158220800>
 
 Gatsby has always used “incremental building” to drive developing on sites. When you edit a markdown file, Gatsby “incrementally” updates just the pages affected by that change to the markdown file.
 
@@ -31,7 +31,7 @@ That drove some impressive improvements to build speeds:
 
 **We’re working on a dramatically improved way to cache between builds (making builds even more “incremental”) that’ll make all site builds a lot lot faster.** We’ll be making more noise about this soon as we ready it for launch.
 
-We want to make consistent < 10 second deploys a reality for everyone and any type of site & we’re very focused on making that happen.
+We want to make consistent &lt; 10 second deploys a reality for everyone and any type of site & we’re very focused on making that happen.
 
 ## What is the roadmap on SSR support for Gatsby?
 
@@ -89,7 +89,7 @@ Yup! We hired recently [Shane Thomas](https://www.drupal.org/u/codekarate) to wo
 
 ## Will Gatsby v3 have any breaking changes?
 
-A few, though we don’t anticipate it being a difficult upgrade. We’ve been collecting ideas in this issue (none of them are for sure yet) [https://github.com/gatsbyjs/gatsby/issues/15277](https://github.com/gatsbyjs/gatsby/issues/15277)
+A few, though we don’t anticipate it being a difficult upgrade. We’ve been collecting ideas in this issue (none of them are for sure yet) <https://github.com/gatsbyjs/gatsby/issues/15277>
 
 ## Shadowing pages is difficult. Query collection gets in the way of shadowing pages effectively when using different data sources. Known issue? Being addressed?
 
@@ -109,9 +109,9 @@ Awww thanks! I don’t know there’s anything magic other than just caring enou
 
 ## Is native TypeScript on the roadmap?
 
-Yes! This is something we’re pretty excited about shipping. If you’re interested in learning more or helping out, check out this issue [Sidhartha Chatterjee](https://github.com/sidharthachatterjee) put together — [https://github.com/gatsbyjs/gatsby/issues/18983](https://github.com/gatsbyjs/gatsby/issues/18983)
+Yes! This is something we’re pretty excited about shipping. If you’re interested in learning more or helping out, check out this issue [Sidhartha Chatterjee](https://github.com/sidharthachatterjee) put together — <https://github.com/gatsbyjs/gatsby/issues/18983>
 
-[Blaine Kasten](https://twitter.com/blainekasten) has also been leading the effort to convert the entire codebase to TypeScript which has been a massive effort by dozens of people — [https://github.com/gatsbyjs/gatsby/issues/21995](https://github.com/gatsbyjs/gatsby/issues/21995)
+[Blaine Kasten](https://twitter.com/blainekasten) has also been leading the effort to convert the entire codebase to TypeScript which has been a massive effort by dozens of people — <https://github.com/gatsbyjs/gatsby/issues/21995>
 
 ## Are you guys trying to catch up to Next.js's smaller JavaScript bundle size?
 

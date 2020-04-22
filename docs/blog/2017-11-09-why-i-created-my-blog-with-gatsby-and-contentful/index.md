@@ -57,7 +57,7 @@ If you are a little bit more tech savvy and have experience provisioning
 software in a Linux distribution, you might prefer to rent a droplet from
 Digital Ocean and host the blog yourself. This, in turn, will allow you to have
 greater control over your site. However, you will also to pay for that droplet,
-even if it's the cheaper \$5/month one.
+even if it's the cheaper \\$5/month one.
 
 Whatever path you take, let's say that you now have your new WordPress blog up
 and running. Now what?
@@ -80,15 +80,15 @@ WordPress is _the_ Windows of Content Management Systems.
 Alright, let's say that you have done enough to secure your site and start
 writing your posts.
 
-https://giphy.com/gifs/funny-computer-virus-VBwXWPvUdxzPi
+<https://giphy.com/gifs/funny-computer-virus-VBwXWPvUdxzPi>
 
 Unfortunately, you start realizing that your new awesome WordPress blog is
 actually kind of slow...
 
-https://giphy.com/gifs/angry-computer-frustrated-kkpcRessCvNyo
+<https://giphy.com/gifs/angry-computer-frustrated-kkpcRessCvNyo>
 
 There are many reasons this could be happening: Maybe your shared hosting
-provider sucks, or maybe that shiny new \$50 theme you bought on ThemeForest
+provider sucks, or maybe that shiny new \\$50 theme you bought on ThemeForest
 actually contains a lot of crap code -- a very common and too well-known
 scenario.
 
@@ -124,10 +124,10 @@ applications is usually a time-consuming task, to say the least.
 You might decide to take the easy route and host your blog on a WordPress
 specialized hosting service like [WP Engine](https://wpengine.com/), which will
 take care of all things related to security and scaling for you. But then you
-better be prepared to set aside \$29 each month, which is what their cheapest
+better be prepared to set aside \\$29 each month, which is what their cheapest
 plan costs.
 
-I don't know about you, but spending \$29 each month on a simple blog seems a
+I don't know about you, but spending \\$29 each month on a simple blog seems a
 little bit excessive to me, especially considering we could be spending next to
 nothing and end up with an infinitely more secure, scalable and faster website.
 
@@ -236,7 +236,7 @@ opportunity of setting up the [RSS feed](https://reactjs.org/feed.xml)!
 In the process, I learned what the 1.0 release of Gatsby was all about, and I
 was completely mindblown.
 
-https://giphy.com/gifs/tim-and-eric-mind-blown-EldfH1VJdbrwY
+<https://giphy.com/gifs/tim-and-eric-mind-blown-EldfH1VJdbrwY>
 
 Not only did it have all the standard goodness of a typical React/Webpack static
 site generator (CSS Modules, PostCSS, Hot Reloading, etc), but more importantly,
@@ -295,7 +295,7 @@ All of that content is stored in their databases, which means that you don't
 have to worry about maintaining or securing any server or database yourself.
 Hooray!
 
-https://giphy.com/gifs/hooray-skeletor-aWRWTF27ilPzy
+<https://giphy.com/gifs/hooray-skeletor-aWRWTF27ilPzy>
 
 Of course, there's a little catch. As most "(blank)-as-a-service" providers out
 there, Contentful is not always free. Although they have a very generous free
@@ -328,7 +328,7 @@ projects.
 And so it was that my quest for having a very cheap, secure, fast, scalable,
 customizable and easy to maintain blog concluded. It's certainly not the most
 exciting or well-looking blog out there, but it's everything I wanted it to be
--- both as a developer and as a blogger.
+\-- both as a developer and as a blogger.
 
 Personally I cannot wait to see how far can the limits of technologies like
 Gatsby.js can be stretched, and with the advent and spread of new architectural
@@ -338,4 +338,4 @@ But whatever that limit is, I am quite sure that this is a step in the right
 direction towards making the web a safer, faster and more enjoyable experience
 for both developers and end users.
 
-https://giphy.com/gifs/black-and-white-end-ending-12xSrwKxHxB3BS
+<https://giphy.com/gifs/black-and-white-end-ending-12xSrwKxHxB3BS>

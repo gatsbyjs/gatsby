@@ -2,7 +2,7 @@
 title: Deploying to Microsoft Internet Information Server (IIS)
 ---
 
-Deploying to Microsoft IIS is mostly copy &amp; paste.
+Deploying to Microsoft IIS is mostly copy & paste.
 After `gatsby build` copy the contents of the `public` folder into the `wwwroot` folder of your IIS web.
 
 One important and sometimes overlooked aspect is to configure caching correctly.
@@ -17,7 +17,7 @@ during `gatsby build`.
 Please note that local settings you make for your web in IIS Manager change the `web.config` file;
 you have to be careful to copy any changes to `web.config` on your server back to the version in your Gatsby `static` folder.
 
-```xml:file=static\web.config
+```xml:file=static\\web.config
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <location path="static">
