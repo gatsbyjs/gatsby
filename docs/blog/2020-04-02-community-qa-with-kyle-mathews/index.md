@@ -65,7 +65,7 @@ Last fall [Tyler Barnes](https://github.com/TylerBarnes) — a long-time Gatsby/
 
 They’ve been making incredible progress. Check out [the umbrella issue for the epic](https://github.com/gatsbyjs/gatsby/issues/19292). A number of people are experimenting with the alphas and even shipping sites! If you’re interested in this space, please dive in.
 
-What’s amazing about this work is that **you’ll soon be able to seamlessly swap out the WordPress presentation layer for Gatsby **without** anyone working in the WordPress CMS noticing**. As a developer, you’ll be able to deliver way faster sites, enjoy far simpler hosting, put WordPress behind a firewall (maybe even skip some of those security updates! 😅🤪), and enjoy all the advantages of working in the world of modern React/JavaScript tooling.
+What’s amazing about this work is that _you’ll soon be able to seamlessly swap out the WordPress presentation layer for Gatsby **without** anyone working in the WordPress CMS noticing_. As a developer, you’ll be able to deliver way faster sites, enjoy far simpler hosting, put WordPress behind a firewall (maybe even skip some of those security updates! 😅🤪), and enjoy all the advantages of working in the world of modern React/JavaScript tooling.
 
 ## Working with images is a pain, and the distinction between page and static query seems a wrong API. The [issue #10482](https://github.com/gatsbyjs/gatsby/issues/10482) seems to fix both. What's the plan?
 

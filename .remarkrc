@@ -13,7 +13,6 @@
     ["remark-lint-no-duplicate-headings", false],
     ["remark-lint-no-duplicate-headings-in-section", true],
     ["remark-lint-no-emphasis-as-heading", false],
-    ["remark-lint-no-inline-padding", false],
     ["remark-lint-no-literal-urls", false],
     ["remark-lint-no-reference-like-url", true],
     ["remark-lint-no-shortcut-reference-link", false],

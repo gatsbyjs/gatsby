@@ -194,7 +194,7 @@ Each successful build is counted as only one real-time edit—regardless of how 
 
 We have three pricing tiers:
 
-- **Free. **Designed for teams working on smaller sites. Includes 25 daily real-time edits (e.g. 25 builds).
+- **Free.** Designed for teams working on smaller sites. Includes 25 daily real-time edits (e.g. 25 builds).
 - **Professional**. \$99/month and includes 125 real-time daily edits
 - **Business**. \$249/month and includes 300 daily edits.
 
