@@ -7,7 +7,7 @@ Push your code to gitlab and automate your production build!
 
 ### Prerequisites
 
-- Make sure you have the [Gatsby CLI](https://www.gatsbyjs.org/docs/gatsby-cli) installed
+- Make sure you have the [Gatsby CLI](/docs/gatsby-cli) installed
 - A [Gitlab](https://gitlab.com/) account 
 
 ### Directions
