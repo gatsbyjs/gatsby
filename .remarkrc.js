@@ -1,5 +1,5 @@
-{
- "plugins": [
+module.exports = {
+  plugins: [
     ["remark-frontmatter", "yaml"],
     "remark-preset-lint-recommended",
     "remark-preset-lint-markdown-style-guide",
@@ -17,6 +17,6 @@
     ["remark-lint-no-reference-like-url", true],
     ["remark-lint-no-shortcut-reference-link", false],
     ["remark-lint-no-undefined-references", false],
-    ["remark-lint-ordered-list-marker-value", "ordered"]
- ] 
+    ["remark-lint-ordered-list-marker-value", "ordered"],
+  ],
 }
