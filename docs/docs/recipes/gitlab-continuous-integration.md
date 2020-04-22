@@ -7,14 +7,23 @@ Push your code to gitlab and automate your production build!
 
 ### Prerequisites
 
-- A [Gatsby site](/docs/quick-start)
+- Make sure you have the [Gatsby CLI](https://www.gatsbyjs.org/docs/gatsby-cli) installed
 - A [Gitlab](https://gitlab.com/) account 
 
 ### Directions
+1. Create a gatsby site
+```shell
+gatsby new {your-project-name}
+```
+2. Change directory and start a development server
+```shell
+cd {your-project-name}
+yarn develop
+```
 
-1. Stop your development server if it is running (`Ctrl + C` on your command line in most cases)
+3. Stop your development server (`Ctrl + C` on your command line in most cases)
 
-2. Create a `.gitlab-ci.yml` with the following content:
+4. Create a `.gitlab-ci.yml` with the following content:
 
 ```
 image: node:12.16.1
