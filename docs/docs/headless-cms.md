@@ -47,6 +47,7 @@ Here are more resources for guides, plugins, and starters for CMS systems you ca
 | [Forestry](https://forestry.io/)              | [guide](/docs/sourcing-from-forestry/)                                           |                                                      |                                                                     |
 | [Gentics Mesh](https://getmesh.io)            | [guide](/docs/sourcing-from-gentics-mesh)                                        |                                                      |                                                                     |
 | [Seams-CMS](https://seams-cms.com/)           | [guide](/docs/sourcing-from-seams-cms)                                           |                                                      |                                                                     |
+| [Builder.io](https://www.bulider.io/)         | [guide](/docs/sourcing-from-builder-io/)                                         | [docs](/packages/@builder.io/gatsby/)                | [starter](https://github.com/BuilderIO/gatsby-starter-builder)      |
 
 ## How to add new guides to this section
 
