@@ -2,7 +2,9 @@
 title: Deploying to Vercel Now
 ---
 
-[Vercel Now](https://vercel.com/now) is a cloud platform for websites and serverless APIs, that you can use to deploy your Gatsby projects to your personal domain (or a free `.now.sh` suffixed URL).
+[Vercel Now](https://vercel.com/now)(formally ZEIT) is a cloud platform for websites and serverless APIs, that you can use to deploy your Gatsby projects to your personal domain (or a free `.now.sh` suffixed URL).
+
+> Here is a link to the [offical announcement](https://vercel.com/blog/zeit-is-now-vercel)
 
 This guide will show you how to get started in a few quick steps:
 
