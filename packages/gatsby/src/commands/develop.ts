@@ -50,11 +50,13 @@ module.exports = async (program: IProgram): Promise<void> => {
   startDevelopProxy({
     proxyPort: proxyPort,
     targetPort: developPort,
+    programPath: program.directory,
   })
 
   const wsServerPort = await getRandomPort()
 
-  await createServiceLock(program.directory, `ws`, wsServerPort)
+  // TODO: Listen to project crash and make sure lockfile is gone
+  await createServiceLock(program.directory, `ws`, wsServerPort.toString())
 
   const wsServer = http.createServer().listen(wsServerPort)
   const io = socket(wsServer)

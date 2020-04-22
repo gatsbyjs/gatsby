@@ -53,3 +53,22 @@ export const getService = (
     return Promise.resolve(null)
   }
 }
+
+export const getServices = async (programPath: string): Promise<any> => {
+  const hash = hashString(programPath)
+  const lockfileDir = path.join(globalConfigPath, `gatsby`, `sites`, hash)
+
+  const files = await fse.readdir(lockfileDir)
+  let services = {}
+
+  await Promise.all(
+    files
+      .filter(file => file.endsWith(".lock"))
+      .map(async file => {
+        const service = file.replace(`.lock`, "")
+        services[service] = await getService(programPath, service)
+      })
+  )
+
+  return services
+}
