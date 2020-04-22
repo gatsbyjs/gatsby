@@ -1,0 +1,7 @@
+---
+label: Docs
+hide_body: false
+fields:
+- type: text
+  name: title
+  label: Title

@@ -1,0 +1,722 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`disableBgImage disables background image when disableBgImage === true 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>"
+`;
+
+exports[`disableBgImage does not disable background image when disableBgImage === false 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>"
+`;
+
+exports[`disableBgImageOnAlpha disables background image on transparent images when disableBgImageOnAlpha === true 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>"
+`;
+
+exports[`disableBgImageOnAlpha does not disable background image on transparent images when disableBgImageOnAlpha === false 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>"
+`;
+
+exports[`it handles goofy nesting properly 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"test\\"
+        title=\\"test\\"
+        src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\"
+        srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+    </span>"
+`;
+
+exports[`it leaves images that are already linked alone 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"img\\"
+        title=\\"img\\"
+        src=\\"not-a-real-dir/image/my-image.jpg\\"
+        srcset=\\"not-a-real-dir/image/my-image.jpg, not-a-real-dir/image/my-image.jpg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+    </span>"
+`;
+
+exports[`it leaves linked HTML img tags alone 1`] = `
+"<a href=\\"https://example.org\\">
+  <span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\">
+      <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image already has a link\\" title=\\"this image already has a link\\" src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
+    </span>
+</a>"
+`;
+
+exports[`it leaves single-line linked HTML img tags alone 1`] = `
+"<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\">
+      <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image already has a link\\" title=\\"this image already has a link\\" src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
+    </span>"
+`;
+
+exports[`it transforms HTML img tags 1`] = `
+"<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\">
+      <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/image/my-image.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
+    <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"my image\\" title=\\"my image\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
+  </a>
+    </span>"
+`;
+
+exports[`it transforms HTML img tags with query strings 1`] = `
+"<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\">
+      <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/image/my-image.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
+    <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"my image\\" title=\\"my image\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
+  </a>
+    </span>"
+`;
+
+exports[`it transforms image references in markdown 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"alt text\\"
+        title=\\"Ref Image Title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>"
+`;
+
+exports[`it transforms images in markdown 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"image\\"
+        title=\\"image\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>"
+`;
+
+exports[`it transforms images in markdown with query strings 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"image\\"
+        title=\\"image\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>"
+`;
+
+exports[`it transforms images in markdown with the "withWebp" option 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <picture>
+        <source
+          srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+          sizes=\\"(max-width: 650px) 100vw, 650px\\"
+          type=\\"undefined\\"
+        />
+        <source
+          srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+          sizes=\\"(max-width: 650px) 100vw, 650px\\"
+          type=\\"undefined\\"
+        />
+        <img
+          class=\\"gatsby-resp-image-image\\"
+          src=\\"not-a-real-dir/images/my-image.jpeg\\"
+          alt=\\"image\\"
+          title=\\"image\\"
+          loading=\\"lazy\\"
+          style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        />
+      </picture>
+  </a>
+    </span>"
+`;
+
+exports[`it uses tracedSVG placeholder when enabled 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/svg+xml,%3csvg /'MOCK SVG/'%3c/svg%3e'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"image\\"
+        title=\\"image\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>"
+`;
+
+exports[`markdownCaptions display title in markdown as caption when showCaptions === true && markdownCaptions === true 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some _title_\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\"><p>some <em>title</em></p></figcaption>
+  </figure>"
+`;
+
+exports[`markdownCaptions display title in text as caption when showCaptions === true && markdownCaptions === false 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some _title_\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">some _title_</figcaption>
+  </figure>"
+`;
+
+exports[`showCaptions display alt as caption if specified first in showCaptions array 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
+  </figure>"
+`;
+
+exports[`showCaptions display alt as caption if specified in showCaptions array 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
+  </figure>"
+`;
+
+exports[`showCaptions display alt as caption if specified in showCaptions array, even if it matches filename 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"my image\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">my image</figcaption>
+  </figure>"
+`;
+
+exports[`showCaptions display alt as caption if title was not found and showCaptions === true 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some alt\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
+  </figure>"
+`;
+
+exports[`showCaptions display title as caption if specified first in showCaptions array 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
+  </figure>"
+`;
+
+exports[`showCaptions display title as caption if specified in showCaptions array 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
+  </figure>"
+`;
+
+exports[`showCaptions display title as caption when showCaptions === true 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
+  </figure>"
+`;
+
+exports[`showCaptions fallback to alt as caption if specified second in showCaptions array 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some alt\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
+  </figure>"
+`;
+
+exports[`showCaptions fallback to title as caption if specified second in showCaptions array 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"my image\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
+  </figure>"
+`;

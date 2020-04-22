@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Status actions/reducer allows setting plugin status 1`] = `
+Object {
+  "payload": Object {
+    "something": "test status",
+  },
+  "plugin": undefined,
+  "type": "SET_PLUGIN_STATUS",
+}
+`;
+
+exports[`Status actions/reducer throws an error if status isn't an object 1`] = `"You must pass an object into setPluginStatus. What was passed in was \\"test job\\""`;
+
+exports[`Status actions/reducer throws an error if the plugin name isn't set 1`] = `"Cannot read property 'name' of undefined"`;

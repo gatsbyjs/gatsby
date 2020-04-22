@@ -1,0 +1,22 @@
+{
+  "name": "using-path-prefix",
+  "private": true,
+  "description": "Gatsby example site using using-path-prefix",
+  "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
+  "dependencies": {
+    "gatsby": "^2.0.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "start": "npm run develop",
+    "serve": "gatsby serve"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "data": [
+    {
+      "type": "node--article",
+      "id": "article-1",
+      "attributes": {
+        "id": 21,
+        "uuid": "article-1",
+        "title": "Article #1",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent accumsan nisl nulla, a commodo neque luctus viverra. Praesent sed elit nisl. In sagittis, velit lacinia varius cursus, lectus urna aliquet tortor, in convallis lacus justo ut enim. Nullam tempus diam non mattis pulvinar. Fusce viverra vitae ex eget efficitur. Nunc sed ligula magna. Fusce ligula diam, lobortis et neque vel, finibus laoreet augue. Duis tristique lacinia odio, tincidunt lacinia nunc cursus a. Vivamus nec mauris sed lectus commodo bibendum vel a felis."
+      },
+      "relationships": {
+        "field_main_image": {
+          "data": null
+        },
+        "field_tags": {
+          "data": [
+            {
+              "type": "taxonomy_term--tags",
+              "id": "tag-1"
+            },
+            {
+              "type": "taxonomy_term--tags",
+              "id": "tag-2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "node--article",
+      "id": "article-2",
+      "attributes": {
+        "id": 22,
+        "uuid": "article-2",
+        "title": "Article #2",
+        "body": "Proin pulvinar hendrerit magna nec maximus. Donec rhoncus libero ac nisi porttitor pulvinar. Quisque semper ultricies nulla sit amet vestibulum. Ut vel libero erat. Ut ultrices eleifend scelerisque. Nam non massa sit amet magna molestie tempus vel non neque. Praesent ac est congue, euismod mi ut, tristique mi. Etiam dapibus feugiat lectus, vel condimentum nisl maximus et. Praesent et placerat magna. Sed nec risus non ipsum venenatis placerat. Vestibulum vitae felis eget nunc mattis congue. Morbi volutpat odio purus. Donec placerat massa sed neque molestie, sed finibus nibh scelerisque. In faucibus ante tortor, in efficitur lectus feugiat vitae. Aliquam sodales mollis consectetur."
+      },
+      "relationships": {
+        "field_main_image": {
+          "data": {
+            "type": "file--file",
+            "id": "file-1"
+          }
+        },
+        "field_tags": {
+          "data": null
+        }
+      }
+    }
+  ],
+  "links": {
+    "next": "http://fixture/jsonapi/node/article-2"
+  }
+}

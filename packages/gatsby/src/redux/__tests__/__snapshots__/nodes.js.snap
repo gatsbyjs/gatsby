@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create and update nodes allows adding fields to nodes 1`] = `
+Object {
+  "hi": Object {
+    "children": Array [],
+    "fields": Object {
+      "joy": "soul's delight",
+    },
+    "id": "hi",
+    "internal": Object {
+      "contentDigest": "hasdfljds",
+      "counter": Any<Number>,
+      "fieldOwners": Object {
+        "joy": "test",
+      },
+      "owner": "tests",
+      "type": "Test",
+    },
+    "parent": "test",
+    "pickle": true,
+  },
+}
+`;
+
+exports[`Create and update nodes allows creating nodes 1`] = `
+Object {
+  "oldNode": undefined,
+  "payload": Object {
+    "children": Array [],
+    "id": "hi",
+    "internal": Object {
+      "contentDigest": "hasdfljds",
+      "counter": Any<Number>,
+      "owner": "tests",
+      "type": "Test",
+    },
+    "parent": "test",
+    "pickle": true,
+  },
+  "plugin": Object {
+    "name": "tests",
+  },
+  "type": "CREATE_NODE",
+}
+`;
+
+exports[`Create and update nodes allows creating nodes 2`] = `
+Object {
+  "hi": Object {
+    "children": Array [],
+    "id": "hi",
+    "internal": Object {
+      "contentDigest": "hasdfljds",
+      "counter": Any<Number>,
+      "owner": "tests",
+      "type": "Test",
+    },
+    "parent": "test",
+    "pickle": true,
+  },
+}
+`;

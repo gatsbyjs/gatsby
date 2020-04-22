@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Prepare regex for Sift.js handles flags regex 1`] = `/blue/i`;
+
+exports[`Prepare regex for Sift.js handles simple regex 1`] = `/blue/`;
+
+exports[`Prepare regex for Sift.js handles slashes 1`] = `/bl\\\\/ue/i`;
