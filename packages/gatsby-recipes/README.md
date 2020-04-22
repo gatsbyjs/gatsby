@@ -199,7 +199,7 @@ a step
 
 But this won't
 
-<!-- prettier-ignore -->
+<!-- prettier-ignore-start -->
 ```mdx
 # Recipes
 ---
@@ -208,6 +208,7 @@ a step
 
 <File src="something.txt" content="something" />
 ```
+<!-- prettier-ignore-end -->
 
 ### Q) What kind of recipe should I write?
 
