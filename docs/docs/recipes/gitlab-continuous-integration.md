@@ -34,7 +34,7 @@ build:
 ```
 
 3. `git push <you-remote-gitlab-repo>`
-4. Check out your pipeline working!
+4. Check out your pipeline under the CI/CD option. 
 
 ### Additional resources
 
