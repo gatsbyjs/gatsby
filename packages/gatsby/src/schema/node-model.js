@@ -8,7 +8,7 @@ const {
   GraphQLList,
   getNamedType,
   getNullableType,
-  isCompositeType
+  isCompositeType,
 } = require(`graphql`)
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -217,7 +217,7 @@ class LocalNodeModel {
       filter: query.filter,
       sort: query.sort,
       group: query.group,
-      distinct: query.distinct
+      distinct: query.distinct,
     })
     const fieldsToResolve = determineResolvableFields(
       this.schemaComposer,
@@ -238,7 +238,7 @@ class LocalNodeModel {
       resolvedFields: fieldsToResolve,
       nodeTypeNames,
       filtersCache: this._filtersCache,
-      stats
+      stats,
     })
 
     let result = queryResult
@@ -264,7 +264,7 @@ class LocalNodeModel {
 
     this._prepareNodesQueues[typeName].push({
       queryFields,
-      fieldsToResolve
+      fieldsToResolve,
     })
 
     if (!this._prepareNodesPromises[typeName]) {
@@ -292,12 +292,12 @@ class LocalNodeModel {
       ) => {
         return {
           queryFields: _.merge(queryFields, nextQueryFields),
-          fieldsToResolve: _.merge(fieldsToResolve, nextFieldsToResolve)
+          fieldsToResolve: _.merge(fieldsToResolve, nextFieldsToResolve),
         }
       },
       {
         queryFields: {},
-        fieldsToResolve: {}
+        fieldsToResolve: {},
       }
     )
 
@@ -429,14 +429,14 @@ class ContextualNodeModel {
   withContext(context) {
     return new ContextualNodeModel(this.nodeModel, {
       ...this.context,
-      ...context
+      ...context,
     })
   }
 
   _getFullDependencies(pageDependencies) {
     return {
       path: this.context.path,
-      ...(pageDependencies || {})
+      ...(pageDependencies || {}),
     }
   }
 
@@ -666,12 +666,12 @@ function resolveField(
     withResolverContext({
       schema,
       schemaComposer,
-      nodeModel
+      nodeModel,
     }),
     {
       fieldName,
       schema,
-      returnType: gqlField.type
+      returnType: gqlField.type,
     }
   )
 }
@@ -692,7 +692,7 @@ const determineResolvableFields = (
     const typeComposer = schemaComposer.getAnyTC(type.name)
     const possibleTCs = [
       typeComposer,
-      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name))
+      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
     ]
     let needsResolve = false
     for (const tc of possibleTCs) {
@@ -767,5 +767,5 @@ const deepObjectDifference = (from, to) => {
 }
 
 module.exports = {
-  LocalNodeModel
+  LocalNodeModel,
 }

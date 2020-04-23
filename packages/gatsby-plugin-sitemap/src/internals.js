@@ -62,9 +62,9 @@ export function filterQuery(
           ? allPages
           : allPages.map(page => {
               return { node: page }
-            })
+            }),
     },
-    site: { siteMetadata: { siteUrl } }
+    site: { siteMetadata: { siteUrl } },
   }
 }
 
@@ -90,7 +90,7 @@ export const defaultOptions = {
     `/dev-404-page`,
     `/404`,
     `/404.html`,
-    `/offline-plugin-app-shell-fallback`
+    `/offline-plugin-app-shell-fallback`,
   ],
   createLinkInHead: true,
   serialize: ({ site, allSitePage }) => {
@@ -99,11 +99,11 @@ export const defaultOptions = {
       return {
         url: `${site.siteMetadata?.siteUrl ?? ``}${page.path}`,
         changefreq: `daily`,
-        priority: 0.7
+        priority: 0.7,
       }
     })
   },
-  resolveSiteUrl: data => data.site.siteMetadata.siteUrl
+  resolveSiteUrl: data => data.site.siteMetadata.siteUrl,
 }
 
 function getNodes(results) {
@@ -114,7 +114,7 @@ function getNodes(results) {
   if (`edges` in results) {
     return {
       allPages: results?.edges?.map(edge => edge.node),
-      originalType: `edges`
+      originalType: `edges`,
     }
   }
   throw new Error(

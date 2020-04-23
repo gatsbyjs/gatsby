@@ -41,7 +41,7 @@ const { writeRedirects } = require(`./redirects-writer`)
 type BootstrapArgs = {
   directory: string,
   prefixPaths?: boolean,
-  parentSpan: Object
+  parentSpan: Object,
 }
 
 module.exports = async (args: BootstrapArgs) => {
@@ -75,12 +75,12 @@ module.exports = async (args: BootstrapArgs) => {
     ...args,
     browserslist: getBrowsersList(directory),
     // Fix program directory path for windows env.
-    directory
+    directory,
   }
 
   store.dispatch({
     type: `SET_PROGRAM`,
-    payload: program
+    payload: program,
   })
 
   let activityForJobs
@@ -103,7 +103,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Try opening the site's gatsby-config.js file.
   let activity = report.activityTimer(`open and validate gatsby-configs`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   const { configModule, configFilePath } = await getConfigFile(
@@ -118,8 +118,8 @@ module.exports = async (args: BootstrapArgs) => {
       id: `10126`,
       context: {
         configName: `gatsby-config`,
-        path: program.directory
-      }
+        path: program.directory,
+      },
     })
   }
 
@@ -131,19 +131,19 @@ module.exports = async (args: BootstrapArgs) => {
     const themes = await loadThemes(config, {
       useLegacyThemes: true,
       configFilePath,
-      rootDir: program.directory
+      rootDir: program.directory,
     })
     config = themes.config
 
     store.dispatch({
       type: `SET_RESOLVED_THEMES`,
-      payload: themes.themes
+      payload: themes.themes,
     })
   } else if (config) {
     const plugins = await loadThemes(config, {
       useLegacyThemes: false,
       configFilePath,
-      rootDir: program.directory
+      rootDir: program.directory,
     })
     config = plugins.config
   }
@@ -156,7 +156,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   store.dispatch({
     type: `SET_SITE_CONFIG`,
-    payload: config
+    payload: config,
   })
 
   activity.end()
@@ -173,16 +173,16 @@ module.exports = async (args: BootstrapArgs) => {
   // so we report an array of unique pairs
   const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
   telemetry.decorateEvent(`BUILD_END`, {
-    plugins: pluginsStr
+    plugins: pluginsStr,
   })
 
   telemetry.decorateEvent(`DEVELOP_STOP`, {
-    plugins: pluginsStr
+    plugins: pluginsStr,
   })
 
   // onPreInit
   activity = report.activityTimer(`onPreInit`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
@@ -197,7 +197,7 @@ module.exports = async (args: BootstrapArgs) => {
     activity = report.activityTimer(
       `delete html and css files from previous builds`,
       {
-        parentSpan: bootstrapSpan
+        parentSpan: bootstrapSpan,
       }
     )
     activity.start()
@@ -205,13 +205,13 @@ module.exports = async (args: BootstrapArgs) => {
       `public/**/*.{html,css}`,
       `!public/page-data/**/*`,
       `!public/static`,
-      `!public/static/**/*.{html,css}`
+      `!public/static/**/*.{html,css}`,
     ])
     activity.end()
   }
 
   activity = report.activityTimer(`initialize cache`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   // Check if any plugins have been updated since our last run. If so
@@ -231,7 +231,7 @@ module.exports = async (args: BootstrapArgs) => {
     ), // ignore as this file isn't required),
     Promise.resolve(
       md5File(`${program.directory}/gatsby-node.js`).catch(() => {})
-    ) // ignore as this file isn't required),
+    ), // ignore as this file isn't required),
   ])
   const pluginsHash = crypto
     .createHash(`md5`)
@@ -263,14 +263,14 @@ module.exports = async (args: BootstrapArgs) => {
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).
     store.dispatch({
-      type: `DELETE_CACHE`
+      type: `DELETE_CACHE`,
     })
   }
 
   // Update the store with the new plugins hash.
   store.dispatch({
     type: `UPDATE_PLUGINS_HASH`,
-    payload: pluginsHash
+    payload: pluginsHash,
   })
 
   // Now that we know the .cache directory is safe, initialize the cache
@@ -288,13 +288,13 @@ module.exports = async (args: BootstrapArgs) => {
     // saves). If data was saved from a previous build, it will be
     // loaded here
     activity = report.activityTimer(`start nodes db`, {
-      parentSpan: bootstrapSpan
+      parentSpan: bootstrapSpan,
     })
     activity.start()
     const dbSaveFile = `${cacheDirectory}/loki/loki.db`
     try {
       await loki.start({
-        saveFile: dbSaveFile
+        saveFile: dbSaveFile,
       })
     } catch (e) {
       report.error(
@@ -305,7 +305,7 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   activity = report.activityTimer(`copy gatsby files`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   const srcDir = `${__dirname}/../../cache-dir`
@@ -313,10 +313,10 @@ module.exports = async (args: BootstrapArgs) => {
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
     await fs.copy(srcDir, siteDir, {
-      clobber: true
+      clobber: true,
     })
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
-      clobber: true
+      clobber: true,
     })
     await fs.ensureDirSync(`${cacheDirectory}/json`)
 
@@ -359,7 +359,7 @@ module.exports = async (args: BootstrapArgs) => {
     flattenedPlugins.map(plugin => {
       return {
         resolve: hasAPIFile(`ssr`, plugin),
-        options: plugin.pluginOptions
+        options: plugin.pluginOptions,
       }
     }),
     plugin => plugin.resolve
@@ -369,7 +369,7 @@ module.exports = async (args: BootstrapArgs) => {
     flattenedPlugins.map(plugin => {
       return {
         resolve: hasAPIFile(`browser`, plugin),
-        options: plugin.pluginOptions
+        options: plugin.pluginOptions,
       }
     }),
     plugin => plugin.resolve
@@ -421,27 +421,27 @@ module.exports = async (args: BootstrapArgs) => {
 
   // onPreBootstrap
   activity = report.activityTimer(`onPreBootstrap`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(`onPreBootstrap`, {
-    parentSpan: activity.span
+    parentSpan: activity.span,
   })
   activity.end()
 
   // Prepare static schema types
   activity = report.activityTimer(`createSchemaCustomization`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await createSchemaCustomization({
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.end()
 
   // Source nodes
   activity = report.activityTimer(`source and transform nodes`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await require(`../utils/source-nodes`)({ parentSpan: activity.span })
@@ -449,7 +449,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Create Schema.
   activity = report.activityTimer(`building schema`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await require(`../schema`).build({ parentSpan: activity.span })
@@ -461,19 +461,19 @@ module.exports = async (args: BootstrapArgs) => {
   // for adding extensions.
   const apiResults = await apiRunnerNode(`resolvableExtensions`, {
     traceId: `initial-resolvableExtensions`,
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
 
   store.dispatch({
     type: `SET_PROGRAM_EXTENSIONS`,
-    payload: _.flattenDeep([extensions, apiResults])
+    payload: _.flattenDeep([extensions, apiResults]),
   })
 
   const graphqlRunner = createGraphQLRunner(store, report)
 
   // Collect pages.
   activity = report.activityTimer(`createPages`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(
@@ -482,7 +482,7 @@ module.exports = async (args: BootstrapArgs) => {
       graphql: graphqlRunner,
       traceId: `initial-createPages`,
       waitForCascadingActions: true,
-      parentSpan: activity.span
+      parentSpan: activity.span,
     },
     { activity }
   )
@@ -493,7 +493,7 @@ module.exports = async (args: BootstrapArgs) => {
   // "createPages" API is called every time (during development)
   // that data changes.
   activity = report.activityTimer(`createPagesStatefully`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(
@@ -502,16 +502,16 @@ module.exports = async (args: BootstrapArgs) => {
       graphql: graphqlRunner,
       traceId: `initial-createPagesStatefully`,
       waitForCascadingActions: true,
-      parentSpan: activity.span
+      parentSpan: activity.span,
     },
     {
-      activity
+      activity,
     }
   )
   activity.end()
 
   activity = report.activityTimer(`onPreExtractQueries`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
@@ -519,7 +519,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Update Schema for SitePage.
   activity = report.activityTimer(`update schema`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
@@ -529,7 +529,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Write out files.
   activity = report.activityTimer(`write out requires`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   try {
@@ -541,14 +541,14 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Write out redirects.
   activity = report.activityTimer(`write out redirect data`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await writeRedirects()
   activity.end()
 
   activity = report.activityTimer(`onPostBootstrap`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })

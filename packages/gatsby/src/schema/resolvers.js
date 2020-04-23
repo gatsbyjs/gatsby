@@ -15,7 +15,7 @@ const findMany = typeName => (source, args, context, info) => {
       query: args,
       firstOnly: false,
       type: info.schema.getType(typeName),
-      stats: context.stats
+      stats: context.stats,
     },
     { path: context.path, connectionType: typeName }
   )
@@ -30,7 +30,7 @@ const findOne = typeName => (source, args, context, info) => {
       query: { filter: args },
       firstOnly: true,
       type: info.schema.getType(typeName),
-      stats: context.stats
+      stats: context.stats,
     },
     { path: context.path }
   )
@@ -85,7 +85,7 @@ const group = (source, args, context, info) => {
       acc.push({
         ...paginate(groupedResults[fieldValue], args),
         field,
-        fieldValue
+        fieldValue,
       })
       return acc
     }, [])
@@ -114,7 +114,7 @@ const paginate = (results = [], { skip = 0, limit }) => {
       return {
         node: item,
         next: arr[i + 1],
-        previous: arr[i - 1]
+        previous: arr[i - 1],
       }
     }),
     nodes: items,
@@ -124,8 +124,8 @@ const paginate = (results = [], { skip = 0, limit }) => {
       hasNextPage,
       itemCount: items.length,
       pageCount,
-      perPage: limit
-    }
+      perPage: limit,
+    },
   }
 }
 
@@ -139,7 +139,7 @@ const link = (options = {}, fieldConfig) => async (
   const fieldValue = await resolver(source, args, context, {
     ...info,
     from: options.from || info.from,
-    fromNode: options.from ? options.fromNode : info.fromNode
+    fromNode: options.from ? options.fromNode : info.fromNode,
   })
 
   if (fieldValue == null) return null
@@ -176,7 +176,7 @@ const link = (options = {}, fieldConfig) => async (
   const operator = Array.isArray(fieldValue) ? oneOf : equals
   args.filter = options.by.split(`.`).reduceRight((acc, key, i, { length }) => {
     return {
-      [key]: i === length - 1 ? operator(acc) : acc
+      [key]: i === length - 1 ? operator(acc) : acc,
     }
   }, fieldValue)
 
@@ -216,7 +216,7 @@ const fileByPath = (options = {}, fieldConfig) => async (
   const fieldValue = await resolver(source, args, context, {
     ...info,
     from: options.from || info.from,
-    fromNode: options.from ? options.fromNode : info.fromNode
+    fromNode: options.from ? options.fromNode : info.fromNode,
   })
 
   if (fieldValue == null) return null
@@ -287,7 +287,7 @@ const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
             fragmentDef.selectionSet,
             fieldName,
             info
-          )
+          ),
         ]
       }
     } else if (selection.kind === Kind.INLINE_FRAGMENT) {
@@ -297,7 +297,7 @@ const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
           selection.selectionSet,
           fieldName,
           info
-        )
+        ),
       ]
     } /* FIELD_NODE */ else {
       if (selection.name.value === fieldName) {
@@ -330,5 +330,5 @@ module.exports = {
   link,
   distinct,
   group,
-  paginate
+  paginate,
 }

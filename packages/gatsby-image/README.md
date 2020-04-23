@@ -105,12 +105,12 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: path.join(__dirname, `src`, `images`)
-      }
+        path: path.join(__dirname, `src`, `images`),
+      },
     },
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`
-  ]
+    `gatsby-transformer-sharp`,
+  ],
 }
 ```
 
@@ -331,8 +331,8 @@ const NonStretchedImage = props => {
       style: {
         ...(props.style || {}),
         maxWidth: props.fluid.presentationWidth,
-        margin: "0 auto" // Used to center the image
-      }
+        margin: "0 auto", // Used to center the image
+      },
     }
   }
 
@@ -370,8 +370,8 @@ export default ({ data }) => {
     data.mobileImage.childImageSharp.fluid,
     {
       ...data.desktopImage.childImageSharp.fluid,
-      media: `(min-width: 768px)`
-    }
+      media: `(min-width: 768px)`,
+    },
   ]
 
   return (
