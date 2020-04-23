@@ -134,8 +134,5 @@
   },
   "workspaces": [
     "packages/*"
-  ],
-  "resolutions": {
-    "write-file-atomic": "2.4.3"
-  }
+  ]
 }
