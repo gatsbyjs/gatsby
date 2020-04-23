@@ -451,7 +451,20 @@ const applyFilters = (
     return result
   }
 
-  return filterWithSift(filters, firstOnly, nodeTypeNames, resolvedFields)
+  const siftResult = filterWithSift(
+    filters,
+    firstOnly,
+    nodeTypeNames,
+    resolvedFields
+  )
+
+  if (!siftResult || siftResult.length === 0) {
+    if (stats) {
+      stats.totalSiftHits++
+    }
+  }
+
+  return siftResult
 }
 
 const filterToStats = (
