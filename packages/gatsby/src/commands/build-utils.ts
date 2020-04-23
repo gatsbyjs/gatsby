@@ -83,7 +83,7 @@ export const removePageFiles = async (
   )
 
   const removePageData = pageKeys.map(pagePath =>
-    removePageDataFile({ publicDir }, pagePath)
+    removePageDataFile(publicDir, pagePath)
   )
 
   return Promise.all([...removePages, ...removePageData]).then(() => {

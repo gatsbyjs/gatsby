@@ -3,7 +3,7 @@ import { store } from "../redux"
 import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
 import fs from "fs"
-import pageDataUtil from "../utils/page-data"
+import { read } from "../utils/page-data"
 import telemetry from "gatsby-telemetry"
 import url from "url"
 import { createHash } from "crypto"
@@ -34,7 +34,7 @@ const getCachedPageData = async (
   const publicDir = path.join(program.directory, `public`)
   if (pages.has(denormalizePagePath(pagePath)) || pages.has(pagePath)) {
     try {
-      const pageData = await pageDataUtil.read({ publicDir }, pagePath)
+      const pageData = await read(publicDir, pagePath)
 
       return {
         result: pageData.result,
