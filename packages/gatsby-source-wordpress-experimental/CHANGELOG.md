@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.0.39 -- upcoming
+## 0.0.39
 
 ### Bug Fixes
 
