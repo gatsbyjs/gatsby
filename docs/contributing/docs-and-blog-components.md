@@ -124,6 +124,38 @@ Rendered, the component looks like this:
   To improve is to change, so to be perfect is to have changed often.
 </Pullquote>
 
+### Gatsby Cloud Callout
+
+The `<CloudCallout />` component is used to call attention and link to Gatsby Cloud. It wraps a small call to action in styles that make content stand out.
+
+#### Usage
+
+The Cloud Callout component takes one optional prop, and prepends the children it wraps to the general call to action:
+
+- `narrow` - styles the component by removing the left and right negative margins, keeping it inside the parent container. This prop is by default set to true since it's most commonly used in the docs where it's necessary to keep content from overlapping with other sections of the layout, such as the Table of Contents.
+
+It is used like this:
+
+```markdown:title=docs/deploying-to-storage-provider.md
+---
+title: Deploying to Storage Provider
+---
+
+<!-- highlight-start -->
+<CloudCallout>
+  Connect your Gatsby site to Storage Provider for automatic deployments
+</CloudCallout>
+<!-- highlight-end -->
+```
+
+#### Sample
+
+Rendered, the component looks like this:
+
+<CloudCallout>
+  Connect your Gatsby site to Storage Provider for automatic deployments
+</CloudCallout>
+
 ## Importing other components
 
 If you need to use a component that is not globally available, you can do by importing it using the special `@components` alias, which points to `www/src/components`:

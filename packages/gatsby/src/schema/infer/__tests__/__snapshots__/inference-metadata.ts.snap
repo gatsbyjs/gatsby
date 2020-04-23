@@ -1,0 +1,504 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Get example value for type inference Incremental example value building updates example value on node delete 1`] = `
+Object {
+  "anArray": Array [
+    1,
+  ],
+  "context": Object {
+    "nestedObject": Object {
+      "name": "Inner name",
+      "someOtherProperty": 2,
+    },
+  },
+  "date": "2006-07-22T22:39:53.000Z",
+  "frontmatter": Object {
+    "circle": "happy",
+    "draft": false,
+    "title": "The world of slash and adventure1",
+  },
+  "hair": 1,
+  "key-with..unsupported-values": true,
+  "name": "The Mad Max",
+  "nestedArrays": Array [
+    Array [
+      1,
+    ],
+  ],
+  "object": Object {
+    "foo": 1,
+  },
+  "objectsInArray": Array [
+    Object {
+      "baz": "baz",
+      "foo": "foo",
+    },
+  ],
+}
+`;
+
+exports[`Get example value for type inference Incremental example value building updates example value on node delete 2`] = `
+Object {
+  "anArray": Array [
+    1,
+  ],
+  "date": "2006-07-22T22:39:53.000Z",
+  "hair": 1,
+  "key-with..unsupported-values": true,
+  "name": "The Mad Max",
+  "nestedArrays": Array [
+    Array [
+      1,
+    ],
+  ],
+  "object": Object {
+    "foo": 1,
+  },
+  "objectsInArray": Array [
+    Object {
+      "foo": "foo",
+    },
+  ],
+}
+`;
+
+exports[`Get example value for type inference Incremental example value building updates example value on node delete 3`] = `
+Object {
+  "date": "2006-07-22T22:39:53.000Z",
+  "hair": 1,
+  "key-with..unsupported-values": true,
+  "name": "The Mad Max",
+}
+`;
+
+exports[`Get example value for type inference Incremental example value building updates example value when nodes are added 1`] = `
+Array [
+  Object {
+    "date": "2006-07-22T22:39:53.000Z",
+    "hair": 1,
+    "key-with..unsupported-values": true,
+    "name": "The Mad Max",
+  },
+  Object {
+    "anArray": Array [
+      1,
+    ],
+    "date": "2006-07-22T22:39:53.000Z",
+    "hair": 1,
+    "key-with..unsupported-values": true,
+    "name": "The Mad Max",
+    "nestedArrays": Array [
+      Array [
+        1,
+      ],
+    ],
+    "object": Object {
+      "foo": 1,
+    },
+    "objectsInArray": Array [
+      Object {
+        "foo": "foo",
+      },
+    ],
+  },
+  Object {
+    "anArray": Array [
+      1,
+    ],
+    "context": Object {
+      "nestedObject": Object {
+        "bar": "bar",
+        "someOtherProperty": 2,
+      },
+    },
+    "date": "2006-07-22T22:39:53.000Z",
+    "frontmatter": Object {
+      "blue": 10010,
+      "date": "2006-07-22T22:39:53.000Z",
+      "title": "The world of slash and adventure1",
+    },
+    "hair": 1,
+    "key-with..unsupported-values": true,
+    "name": "The Mad Max",
+    "nestedArrays": Array [
+      Array [
+        1,
+      ],
+    ],
+    "object": Object {
+      "bar": "bar",
+      "foo": 1,
+    },
+    "objectsInArray": Array [
+      Object {
+        "bar": "bar",
+        "foo": "foo",
+      },
+    ],
+  },
+  Object {
+    "anArray": Array [
+      1,
+    ],
+    "context": Object {
+      "nestedObject": Object {
+        "bar": "bar",
+        "name": "Inner name",
+        "someOtherProperty": 2,
+      },
+    },
+    "date": "2006-07-22T22:39:53.000Z",
+    "frontmatter": Object {
+      "blue": 10010,
+      "circle": "happy",
+      "date": "2006-07-22T22:39:53.000Z",
+      "draft": false,
+      "title": "The world of slash and adventure1",
+    },
+    "hair": 1,
+    "key-with..unsupported-values": true,
+    "name": "The Mad Max",
+    "nestedArrays": Array [
+      Array [
+        1,
+      ],
+    ],
+    "object": Object {
+      "bar": "bar",
+      "foo": 1,
+    },
+    "objectsInArray": Array [
+      Object {
+        "bar": "bar",
+        "baz": "baz",
+        "foo": "foo",
+      },
+    ],
+  },
+]
+`;
+
+exports[`Get example value for type inference build enum values for fields from array on nodes 1`] = `
+Object {
+  "anArray": Object {
+    "field": "anArray",
+  },
+  "context___nestedObject___name": Object {
+    "field": "context.nestedObject.name",
+  },
+  "context___nestedObject___someOtherProperty": Object {
+    "field": "context.nestedObject.someOtherProperty",
+  },
+  "date": Object {
+    "field": "date",
+  },
+  "frontmatter___blue": Object {
+    "field": "frontmatter.blue",
+  },
+  "frontmatter___circle": Object {
+    "field": "frontmatter.circle",
+  },
+  "frontmatter___date": Object {
+    "field": "frontmatter.date",
+  },
+  "frontmatter___draft": Object {
+    "field": "frontmatter.draft",
+  },
+  "frontmatter___title": Object {
+    "field": "frontmatter.title",
+  },
+  "hair": Object {
+    "field": "hair",
+  },
+  "key_with__unsupported_values": Object {
+    "field": "key_with__unsupported_values",
+  },
+  "name": Object {
+    "field": "name",
+  },
+  "nestedArrays": Object {
+    "field": "nestedArrays",
+  },
+  "objectsInArray": Object {
+    "field": "objectsInArray",
+  },
+  "objectsInArray___field1": Object {
+    "field": "objectsInArray.field1",
+  },
+  "objectsInArray___field2": Object {
+    "field": "objectsInArray.field2",
+  },
+  "objectsInArray___field3": Object {
+    "field": "objectsInArray.field3",
+  },
+}
+`;
+
+exports[`Get example value for type inference builds field examples from an array of nodes 1`] = `
+Object {
+  "anArray": Array [
+    1,
+  ],
+  "context": Object {
+    "nestedObject": Object {
+      "name": "Inner name",
+      "someOtherProperty": 1,
+    },
+  },
+  "date": "2006-07-22T22:39:53.000Z",
+  "frontmatter": Object {
+    "blue": 100,
+    "circle": "happy",
+    "date": "2006-07-22T22:39:53.000Z",
+    "draft": false,
+    "title": "The world of dash and adventure",
+  },
+  "hair": 1,
+  "key-with..unsupported-values": true,
+  "name": "The Mad Max",
+  "nestedArrays": Array [
+    Array [
+      1,
+    ],
+  ],
+  "objectsInArray": Array [
+    Object {
+      "field1": true,
+      "field2": 1,
+      "field3": "foo",
+    },
+  ],
+}
+`;
+
+exports[`Type conflicts doesn't report ignored fields 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_3.other",
+    "types": Map {
+      "number" => Object {
+        "description": "",
+        "value": 1,
+      },
+      "string" => Object {
+        "description": "",
+        "value": "foo",
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports conflict when array has mixed types and its origin 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_2.arrayOfMixedType",
+    "types": Map {
+      "[string,number,boolean]" => Object {
+        "description": "",
+        "value": Array [
+          "string1",
+          5,
+          true,
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports date and string conflicts 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_1.date",
+    "types": Map {
+      "date" => Object {
+        "description": "",
+        "value": "2019-01-01",
+      },
+      "string" => Object {
+        "description": "",
+        "value": "Totally not a date",
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports mixed scalars and arrays 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_8.numeric",
+    "types": Map {
+      "number" => Object {
+        "description": "",
+        "value": 1,
+      },
+      "array" => Object {
+        "description": "",
+        "value": Array [
+          1,
+        ],
+      },
+    },
+  },
+  TypeConflictEntry {
+    "selector": "Conflict_8.string",
+    "types": Map {
+      "string" => Object {
+        "description": "",
+        "value": "str",
+      },
+      "array" => Object {
+        "description": "",
+        "value": Array [
+          "str",
+        ],
+      },
+    },
+  },
+  TypeConflictEntry {
+    "selector": "Conflict_8.mixed",
+    "types": Map {
+      "boolean" => Object {
+        "description": "",
+        "value": true,
+      },
+      "array" => Object {
+        "description": "",
+        "value": Array [
+          1,
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports mixed scalars and objects 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_7.numeric",
+    "types": Map {
+      "number" => Object {
+        "description": "",
+        "value": 1,
+      },
+      "object" => Object {
+        "description": "",
+        "value": Object {
+          "value": 1,
+        },
+      },
+    },
+  },
+  TypeConflictEntry {
+    "selector": "Conflict_7.string",
+    "types": Map {
+      "string" => Object {
+        "description": "",
+        "value": "str",
+      },
+      "object" => Object {
+        "description": "",
+        "value": Object {
+          "value": "str",
+        },
+      },
+    },
+  },
+  TypeConflictEntry {
+    "selector": "Conflict_7.boolean",
+    "types": Map {
+      "boolean" => Object {
+        "description": "",
+        "value": true,
+      },
+      "object" => Object {
+        "description": "",
+        "value": Object {
+          "value": true,
+        },
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports on mixed ___NODE fields 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_4.related___NODE",
+    "types": Map {
+      "string" => Object {
+        "description": "",
+        "value": "foo",
+      },
+      "[string]" => Object {
+        "description": "",
+        "value": Array [
+          "bar",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports on mixed numbers and numeric strings in arrays 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_6.numeric",
+    "types": Map {
+      "[number]" => Object {
+        "description": "",
+        "value": Array [
+          1,
+        ],
+      },
+      "[string]" => Object {
+        "description": "",
+        "value": Array [
+          "5",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports on numbers represented as strings 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_5.numeric",
+    "types": Map {
+      "number" => Object {
+        "description": "",
+        "value": 1,
+      },
+      "string" => Object {
+        "description": "",
+        "value": "2",
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports type conflicts and its origin 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_1.stringOrNumber",
+    "types": Map {
+      "string" => Object {
+        "description": "",
+        "value": "string",
+      },
+      "number" => Object {
+        "description": "",
+        "value": 5,
+      },
+    },
+  },
+]
+`;
