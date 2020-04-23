@@ -1,6 +1,6 @@
 # gatsby-plugin-typescript
 
-Provides drop-in support for TypeScript and TSX.
+Allows Gatsby to build TypeScript and TSX files. Does NOT run type checking during build (see Caveats).
 
 ## Install
 
@@ -10,6 +10,7 @@ Provides drop-in support for TypeScript and TSX.
 
 1.  Include the plugin in your `gatsby-config.js` file.
 1.  Write your components in TSX or TypeScript.
+1.  Run TypeScript directly or with a build tool.
 1.  You're good to go.
 
 `gatsby-config.js`
