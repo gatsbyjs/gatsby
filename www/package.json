@@ -39,7 +39,7 @@
     "gatsby-plugin-netlify-cache": "^0.1.0",
     "gatsby-plugin-nprogress": "^2.1.21",
     "gatsby-plugin-offline": "^3.0.41",
-    "gatsby-plugin-react-helmet": "^3.1.24",
+    "gatsby-plugin-react-helmet": "^3.2.4",
     "gatsby-plugin-sharp": "^2.4.13",
     "gatsby-plugin-sitemap": "^2.2.30",
     "gatsby-plugin-theme-ui": "^0.3.0",
