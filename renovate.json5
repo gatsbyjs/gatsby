@@ -18,8 +18,21 @@
   semanticCommitScope: null,
   prHourlyLimit: 0,
   packageRules: [
+    // these rules define group names
     {
-      groupName: "minor updates in packages",
+      groupName: "packages",
+      paths: ["package.json", "packages/**"],
+    },
+    {
+      groupName: "www",
+      paths: ["www/package.json"],
+    },
+    {
+      groupName: "starters and examples",
+      paths: ["starters/**", "examples/**"],
+    },
+    // these rules define dependencies that we have special handling for
+    {
       updateTypes: ["minor"],
       excludePackageNames: [
         // below is list of packages that use 0.X version range, any minor bump there can contain breaking changes, so we just ignore minor bumps for those packages and will need to bump them manually
@@ -79,21 +92,14 @@
       ],
     },
     {
-      groupName: "patch updates in packages",
-      updateTypes: ["patch"],
-    },
-    {
       depTypeList: ["engines"],
       enabled: false,
     },
     {
-      groupName: "updates in starters",
-      paths: ["starters/**"],
-      updateTypes: ["patch"],
-    },
-    {
-      groupName: "type updates",
+      groupName: "types",
       packagePatterns: ["^@types"],
+      // only upgrade types with approval as they can break transitives
+      masterIssueApproval: true,
     },
   ],
   timezone: "GMT",
