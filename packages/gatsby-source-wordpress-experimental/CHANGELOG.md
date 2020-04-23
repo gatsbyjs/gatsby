@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.0.39 -- upcoming
+
+### Bug Fixes
+
+- Fixed normalizeUri helper to account for null uri (if a node has no uri)
+
 ## 0.0.38
 
 ### Bug Fixes

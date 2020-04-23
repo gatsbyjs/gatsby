@@ -26,7 +26,7 @@ const normalizeUri = ({ uri, id, singleName }) => {
   // /post_graphql_name/post_db_id
   // this same logic is on the WP side in the preview template
   // to account for this situation.
-  if (uri.includes(`?`)) {
+  if (uri?.includes(`?`)) {
     const dbId = getDbIdFromRelayId(id)
 
     return `/${singleName}/${dbId}`
