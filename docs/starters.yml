@@ -6011,13 +6011,11 @@
     - Phone browser Support
 - url: https://flotiq-starter-products.herokuapp.com/
   repo: https://github.com/flotiq/gatsby-starter-products
-  description: A Gatsby ecommerce starter with products sourced from Flotiq.
+  description: A Gatsby e-commerce starter with products sourced from Flotiq.
   tags:
     - CMS:Headless
     - E-commerce
-    - Snipcart
-    - CMS:Flotiq
-    - Snipcart
+    - CMS:Other
   features:
     - Snipcart e-commerce starter
     - Flotiq CMS as a product source
