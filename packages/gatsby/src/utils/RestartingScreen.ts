@@ -83,7 +83,7 @@ const RestartingScreen: React.FC<{}> = () => {
                 socket.on('gatsby:develop:restarted', () => {
                   window.location.reload()
                 })
-            
+
                 socket.on('gatsby:develop:needs-restart', () => {
                   socket.emit('gatsby:develop:do-restart')
                 })

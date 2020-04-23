@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import domReady from "@mikaelkristiansson/domready"
+import io from "socket.io-client"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
@@ -28,6 +29,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       window.location.reload()
     })
   }
+
+  fetch(`/___services`)
+    .then(res => res.json())
+    .then(services => {
+      const parentSocket = io(`http://localhost:${services.ws}`)
+      parentSocket.on(`gatsby:develop:needs-restart`, msg => {
+        if (
+          window.confirm(
+            `${msg.reason}, Gatsby develop process needs to be restarted.`
+          )
+        ) {
+          parentSocket.emit(`gatsby:develop:do-restart`)
+          // TODO: Fix race condition by listening to start restart
+          window.location.reload()
+        }
+      })
+    })
 
   /**
    * Service Workers are persistent by nature. They stick around,
