@@ -55,7 +55,6 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const wsServerPort = await getRandomPort()
 
-  // TODO: Listen to project crash and make sure lockfile is gone
   await createServiceLock(program.directory, `ws`, wsServerPort.toString())
 
   const wsServer = http.createServer().listen(wsServerPort)
