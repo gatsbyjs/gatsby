@@ -15,7 +15,7 @@ Join us for Virtual Gatsby Days, June 2nd and 3rd: Registration is now open at h
 
 ![Gatsby logo transposed on binary background receding into distance](./virutalGatsbyDays.jpg "Gatsby logo on futuristic binary background")
 
-Virtual Gatsby Days will continue to focus on the future of modern website development, use cases, and deep dive into topics such as what’s new in the web technology stack. You’ll have the opportunity to participate in a Q&A with Gatsby creators, Kyle Mathews and Sam Bhagwat, hear other Gatsby core team members speak, and connect with the Gatsby community. Sessions run 9am to noon PST on both days. 
+Virtual Gatsby Days will continue to focus on the future of modern website development, use cases, and deep dive into topics such as what’s new in the web technology stack. You’ll have the opportunity to participate in a Q&A with Gatsby creators, Kyle Mathews and Sam Bhagwat, hear other Gatsby core team members speak, and connect with the Gatsby community. Sessions run 9am to noon PST on both days.
 
 Register for Virtual Gatsby Days, mark your calendars for June 2nd - 3rd and follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with speaker announcements and other developments.
 
