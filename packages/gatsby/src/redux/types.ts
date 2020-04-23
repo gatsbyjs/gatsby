@@ -359,3 +359,8 @@ export interface ICreateRedirectAction {
   type: `CREATE_REDIRECT`
   payload: IRedirect
 }
+
+export interface ISetWebpackCompilationHashAction {
+  type: string
+  payload: IGatsbyState["webpackCompilationHash"]
+}
