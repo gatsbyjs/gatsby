@@ -9,7 +9,7 @@ import { Reporter } from "../.."
 import { ExecutionResult, Source } from "../../graphql"
 import { IGatsbyState } from "../redux/types"
 
-type Runner = (
+export type Runner = (
   query: string | Source,
   context: Record<string, any>
 ) => Promise<ExecutionResult<ExecutionResultDataDefault>>
