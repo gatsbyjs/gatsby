@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.0.38
+
+### Bug Fixes
+
+- For fields that are connections to lists of nodes, default variables were added to grab the first 100, before the max was 10. In the future an API will need to be added to resolve these lists of connections on the Gatsby-side, for now this works for a good deal of use-cases
+
 ## 0.0.37
 
 ### Bug Fixes

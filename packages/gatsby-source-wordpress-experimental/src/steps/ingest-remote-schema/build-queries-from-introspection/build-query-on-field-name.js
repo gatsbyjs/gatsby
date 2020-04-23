@@ -62,7 +62,16 @@ export const buildSelectionSet = fields => {
         return field
       }
 
-      const { fieldName, variables, fields, fragments } = field
+      let { fieldName, variables, fields, fragments } = field
+
+      // @todo instead of checking for a nodes field, include the field type here
+      // and check for input args instead. Maybe some kind of input args API or something would be helpful
+      if (
+        (!variables || variables === ``) &&
+        fields?.find(field => field.fieldName === `nodes`)
+      ) {
+        variables = `first: 100`
+      }
 
       if (fieldName && fragments) {
         return `
