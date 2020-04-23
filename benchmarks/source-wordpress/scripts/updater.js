@@ -52,7 +52,7 @@ const mutateArticle = async article => {
     }
   `)
 
-  console.log(`updated post ${article.id} with new title ${newTitle}`)
+  console.log(`Updated post ${article.id} with new title ${newTitle}`)
 }
 
 const getFirstArticle = async () => {
@@ -73,7 +73,7 @@ const getFirstArticle = async () => {
 const update = async ({ username, password, server }) => {
   if (!username || !password || !server) {
     console.error(
-      `You must add the username, password and server env variables`
+      `You must add the BENCHMARK_WORDPRESS_USERNAME, BENCHMARK_WORDPRESS_PASSWORD and BENCHMARK_WORDPRESS_BASE_URL env variables`
     )
     return
   }
