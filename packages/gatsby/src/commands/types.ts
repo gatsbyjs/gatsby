@@ -6,6 +6,8 @@ export interface ICert {
 }
 
 export interface IProgram {
+  _: `develop` | `build` | `clean` | `feedback` | `repl` | `serve`
+  status?: string // I think this type should not exist here. It seems to be added in the reducer, but not applicable to the caller site from gatsby-cli
   useYarn: boolean
   open: boolean
   openTracingConfigFile: string

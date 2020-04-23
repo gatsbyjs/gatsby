@@ -93,6 +93,10 @@ describe("sidebar", () => {
 
   describe("initialization", () => {
     it("opens sections with active items", () => {
+      // Render a page
+      renderSidebar("/plot-summary/").unmount()
+      // Render another page and make sure that its section is open even if
+      // a falsy value was stored in local storage
       const { queryByText } = renderSidebar("/characters/jay-gatsby/")
       expect(queryByText("Jay Gatsby")).toBeInTheDocument()
     })
