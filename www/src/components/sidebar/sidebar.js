@@ -142,8 +142,8 @@ export default withI18n()(function Sidebar({
       return {
         isExpanded: openSectionHash[item.title] || disableAccordions,
         isActive,
-        // TODO rename this variable to be more apparent about what it is
-        isParentOfActive:
+        // True if the item is active or a parent of an active item
+        inActiveTree:
           isActive ||
           activeItemParents.some(parent => parent.title === item.title),
       }

@@ -14,7 +14,7 @@ const bulletOffsetTop = `1.3em`
 
 export default function ItemLink({ item, overrideCSS }) {
   const { onLinkClick, getItemState } = useSidebarContext()
-  const { isActive, isParentOfActive } = getItemState(item)
+  const { isActive, inActiveTree } = getItemState(item)
 
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
@@ -57,7 +57,7 @@ export default function ItemLink({ item, overrideCSS }) {
             ...(isDraft && {
               color: `textMuted`,
             }),
-            ...(isParentOfActive && {
+            ...(inActiveTree && {
               color: `link.color`,
               fontWeight: `semiBold`,
             }),
