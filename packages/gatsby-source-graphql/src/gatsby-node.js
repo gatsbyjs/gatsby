@@ -4,7 +4,7 @@ const {
   transformSchema,
   introspectSchema,
   RenameTypes,
-} = require(`graphql-tools-fork`)
+} = require(`graphql-tools`)
 const { createHttpLink } = require(`apollo-link-http`)
 const nodeFetch = require(`node-fetch`)
 const invariant = require(`invariant`)

@@ -97,3 +97,5 @@ The above example is meant to demonstrate how to set up a simple Gatsby site tha
 
 - [Getting started with Contentstack and Gatsby](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack)
 - [Build an example website using Gatsby and Contentstack](https://www.contentstack.com/blog/announcements/best-content-management-platform-2019-siia-codie-award?utm_source=prnewswire&utm_medium=referral&utm_campaign=2019_06_18_best_cms_codie_award)
+
+<CloudCallout />

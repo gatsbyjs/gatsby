@@ -14,20 +14,29 @@ const {
   dbQueryToSiftQuery,
 } = require(`../db/common/query`)
 const {
-  ensureIndexByTypedChain,
-  getNodesByTypedChain,
+  ensureIndexByQuery,
+  ensureIndexByElemMatch,
+  getNodesFromCacheByValue,
   addResolvedNodes,
   getNode: siftGetNode,
 } = require(`./nodes`)
 
+const FAST_OPS = [
+  `$eq`,
+  // "$lt",
+  `$lte`,
+  // "$gt",
+  // "$gte"
+]
+
 /**
- * Creates a key for the filterCache
+ * Creates a key for one filterCache inside FiltersCache
  *
  * @param {Array<string>} typeNames
  * @param {DbQuery} filter
  * @returns {FilterCacheKey} (a string: `types.join()/path.join()/operator` )
  */
-const createTypedFilterCacheKey = (typeNames, filter) => {
+const createFilterCacheKey = (typeNames, filter) => {
   // Note: while `elemMatch` is a special case, in the key it's just `elemMatch`
   // (This function is future proof for elemMatch support, won't receive it yet)
   let f = filter
@@ -38,6 +47,9 @@ const createTypedFilterCacheKey = (typeNames, filter) => {
     if (f.type === `elemMatch`) {
       let q /*: IDbQueryElemMatch*/ = f
       f = q.nestedQuery
+      // Make distinction between filtering `a.elemMatch.b.eq` and `a.b.eq`
+      // In practice this is unlikely to be an issue, but it might
+      paths.push(`elemMatch`)
     } else {
       let q /*: IDbQueryQuery*/ = f
       comparator = q.query.comparator
@@ -46,7 +58,7 @@ const createTypedFilterCacheKey = (typeNames, filter) => {
   }
 
   // Note: the separators (`,` and `/`) are arbitrary but must be different
-  return typeNames.join(`,`) + `/` + comparator + `/` + paths.join(`,`)
+  return typeNames.join(`,`) + `/` + paths.join(`,`) + `/` + comparator
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -125,45 +137,47 @@ function handleMany(siftArgs, nodes) {
 }
 
 /**
- * Given the chain of a simple filter, return the set of nodes that pass the
- * filter. The chain should be a property chain leading to the property to
- * check, followed by the value to check against. Common example:
- *   `allThings(filter: { fields: { slug: { eq: $slug } } })`
+ * Given the path of a set of filters, return the sets of nodes that pass the
+ * filter.
  * Only nodes of given node types will be considered
  * A fast index is created if one doesn't exist yet so cold call is slower.
- * The empty result value is null if firstOnly is false, or else an empty array.
+ * Returns undefined if an op was not supported for fast indexes or when no
+ * nodes were found for given (query) value. In the zero nodes case, we have to
+ * go through Sift to make sure we're not missing an edge case, for now.
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {FiltersCache} filtersCache
  * @returns {Array<IGatsbyNode> | undefined}
  */
-const runFlatFiltersWithoutSift = (
-  filters,
-  nodeTypeNames,
-  typedKeyValueIndexes
-) => {
-  const caches = getBucketsForFilters(
+const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
+  const nodesPerValueSets /*: Array<Set<IGatsbyNode>> */ = getBucketsForFilters(
     filters,
     nodeTypeNames,
-    typedKeyValueIndexes
+    filtersCache
   )
 
-  if (!caches) {
+  if (!nodesPerValueSets) {
     // Let Sift take over as fallback
     return undefined
   }
 
   // Put smallest last (we'll pop it)
-  caches.sort((a, b) => b.length - a.length)
+  nodesPerValueSets.sort(
+    (a /*: Set<IGatsbyNode> */, b /*: Set<IGatsbyNode> */) => b.size - a.size
+  )
   // Iterate on the set with the fewest elements and create the intersection
-  const needles = caches.pop()
+  const needles /*: Set<IGatsbyNode>*/ = nodesPerValueSets.pop()
   // Take the intersection of the retrieved caches-by-value
-  const result = []
+  const result /*: Array<IGatsbyNode> */ = []
 
   // This _can_ still be expensive but the set of nodes should be limited ...
-  needles.forEach(node => {
-    if (caches.every(cache => cache.has(node))) {
+  needles.forEach((node /*: IGatsbyNode */) => {
+    if (
+      nodesPerValueSets.every((cache /*: Set<IGatsbyNode> */) =>
+        cache.has(node)
+      )
+    ) {
       // Every cache set contained this node so keep it
       result.push(node)
     }
@@ -173,57 +187,50 @@ const runFlatFiltersWithoutSift = (
   // Consider the case of {a: {eq: 5}, b: {eq: 10}}, do we cache the [5,10]
   // case for all value pairs? How likely is that to ever be reused?
 
+  if (result.length === 0) {
+    return undefined
+  }
   return result
 }
 
 /**
  * @param {Array<DbQuery>} filters
  * @param {Array<string>} nodeTypeNames
- * @param {Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {FiltersCache} filtersCache
  * @returns {Array<Set<IGatsbyNode>> | undefined} Undefined means at least one
  *   cache was not found. Must fallback to sift.
  */
-const getBucketsForFilters = (filters, nodeTypeNames, typedKeyValueIndexes) => {
-  const caches /*: Array<Map<string|number|boolean, Set<IGatsbyNode>>>*/ = []
+const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
+  const nodesPerValueSets /*: Array<Set<IGatsbyNode>>*/ = []
 
   // Fail fast while trying to create and get the value-cache for each path
   let every = filters.every((filter /*: DbQuery*/) => {
-    let {
-      path: chain,
-      query: { value: targetValue },
-    } = filter
-
-    let cacheKey = createTypedFilterCacheKey(nodeTypeNames, filter)
-
-    ensureIndexByTypedChain(
-      cacheKey,
-      chain,
-      nodeTypeNames,
-      typedKeyValueIndexes
-    )
-
-    const nodesByKeyValue = getNodesByTypedChain(
-      cacheKey,
-      targetValue,
-      typedKeyValueIndexes
-    )
-
-    // If we couldn't find the needle then maybe sift can, for example if the
-    // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
-    // There are also cases (and tests) where id exists with a different type
-    if (!nodesByKeyValue) {
-      return false
+    let filterCacheKey = createFilterCacheKey(nodeTypeNames, filter)
+    if (filter.type === `query`) {
+      // (Let TS warn us if a new query type gets added)
+      const q /*: IDbQueryQuery */ = filter
+      return getBucketsForQueryFilter(
+        filterCacheKey,
+        q,
+        nodeTypeNames,
+        filtersCache,
+        nodesPerValueSets
+      )
+    } else {
+      // (Let TS warn us if a new query type gets added)
+      const q /*: IDbQueryElemMatch*/ = filter
+      return collectBucketForElemMatch(
+        filterCacheKey,
+        q,
+        nodeTypeNames,
+        filtersCache,
+        nodesPerValueSets
+      )
     }
-
-    // In all other cases this must be a non-empty Set because the indexing
-    // mechanism does not create a Set unless there's a IGatsbyNode for it
-    caches.push(nodesByKeyValue)
-
-    return true
   })
 
   if (every) {
-    return caches
+    return nodesPerValueSets
   }
 
   // "failed at least one"
@@ -231,19 +238,138 @@ const getBucketsForFilters = (filters, nodeTypeNames, typedKeyValueIndexes) => {
 }
 
 /**
+ * Fetch all buckets for given query filter. That means it's not elemMatch.
+ *
+ * @param {FilterCacheKey} filterCacheKey
+ * @param {IDbQueryQuery} filter
+ * @param {Array<string>} nodeTypeNames
+ * @param {FiltersCache} filtersCache
+ * @param {Array<Set<IgatsbyNode>>} nodesPerValueSets
+ * @returns {boolean} false means soft fail, filter must go through Sift
+ */
+const getBucketsForQueryFilter = (
+  filterCacheKey,
+  filter,
+  nodeTypeNames,
+  filtersCache,
+  nodesPerValueSets
+) => {
+  let {
+    path: filterPath,
+    query: {
+      // Note: comparator is verified to be a FilterOp in filterWithoutSift
+      comparator /*: as FilterOp*/,
+      value: filterValue,
+    },
+  } = filter
+
+  if (!filtersCache.has(filterCacheKey)) {
+    ensureIndexByQuery(
+      comparator,
+      filterCacheKey,
+      filterPath,
+      nodeTypeNames,
+      filtersCache
+    )
+  }
+
+  const nodesPerValue /*: Set<IGatsbyNode> | undefined */ = getNodesFromCacheByValue(
+    filterCacheKey,
+    filterValue,
+    filtersCache
+  )
+
+  // If we couldn't find the needle then maybe sift can, for example if the
+  // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
+  // There are also cases (and tests) where id exists with a different type
+  if (!nodesPerValue) {
+    return false
+  }
+
+  // In all other cases this must be a non-empty Set because the indexing
+  // mechanism does not create a Set unless there's a IGatsbyNode for it
+  nodesPerValueSets.push(nodesPerValue)
+
+  return true
+}
+
+/**
+ * @param {FilterCacheKey} filterCacheKey
+ * @param {IDbQueryElemMatch} filter
+ * @param {Array<string>} nodeTypeNames
+ * @param {FiltersCache} filtersCache
+ * @param {Array<Set<IGatsbyNode>>} nodesPerValueSets Matching node sets are put in this array
+ */
+const collectBucketForElemMatch = (
+  filterCacheKey,
+  filter,
+  nodeTypeNames,
+  filtersCache,
+  nodesPerValueSets
+) => {
+  // Get comparator and target value for this elemMatch
+  let comparator = ``
+  let targetValue = null
+  let f /*: DbQuery*/ = filter
+  while (f) {
+    if (f.type === `elemMatch`) {
+      const q /*: IDbQueryElemMatch */ = f
+      f = q.nestedQuery
+    } else {
+      const q /*: IDbQueryQuery */ = f
+      comparator = q.query.comparator
+      targetValue = q.query.value
+      break
+    }
+  }
+
+  if (!FAST_OPS.includes(comparator)) {
+    return false
+  }
+
+  if (!filtersCache.has(filterCacheKey)) {
+    ensureIndexByElemMatch(
+      comparator,
+      filterCacheKey,
+      filter,
+      nodeTypeNames,
+      filtersCache
+    )
+  }
+
+  const nodesByValue /*: Set<IGatsbyNode> | undefined*/ = getNodesFromCacheByValue(
+    filterCacheKey,
+    targetValue,
+    filtersCache
+  )
+
+  // If we couldn't find the needle then maybe sift can, for example if the
+  // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
+  // There are also cases (and tests) where id exists with a different type
+  if (!nodesByValue) {
+    return false
+  }
+
+  // In all other cases this must be a non-empty Set because the indexing
+  // mechanism does not create a Set unless there's a IGatsbyNode for it
+  nodesPerValueSets.push(nodesByValue)
+
+  return true
+}
+
+/**
  * Filters and sorts a list of nodes using mongodb-like syntax.
  *
  * @param args raw graphql query filter/sort as an object
- * @property {boolean | number | string} args.type gqlType. See build-node-types
  * @property {boolean} args.firstOnly true if you want to return only the first
  *   result found. This will return a collection of size 1. Not a single element
  * @property {{filter?: Object, sort?: Object} | undefined} args.queryArgs
- * @property {undefined | Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} args.typedKeyValueIndexes
- *   May be undefined. A cache of indexes where you can look up Nodes grouped
- *   by a key: `types.join(',')+'/'+filterPath.join('+')`, which yields a Map
- *   which holds a Set of Nodes for the value that the filter is trying to eq
- *   against. If the property is `id` then there is no Set, it's just the IGatsbyNode.
- *   This object lives in query/query-runner.js and is passed down runQuery
+ * @property {undefined | null | FiltersCache} args.filtersCache May be null or
+ *   undefined. A cache of indexes where you can look up Nodes grouped by a
+ *   FilterCacheKey, which yields a Map which holds a Set of Nodes for the value
+ *   that the filter is trying to query against.
+ *   This object lives in query/query-runner.js and is passed down runQuery.
+ *   If it is undefined or null, do not consider to use a fast index at all.
  * @returns Collection of results. Collection will be limited to 1
  *   if `firstOnly` is true
  */
@@ -253,7 +379,7 @@ const runFilterAndSort = (args: Object) => {
     resolvedFields = {},
     firstOnly = false,
     nodeTypeNames,
-    typedKeyValueIndexes,
+    filtersCache,
     stats,
   } = args
 
@@ -261,7 +387,7 @@ const runFilterAndSort = (args: Object) => {
     filter,
     firstOnly,
     nodeTypeNames,
-    typedKeyValueIndexes,
+    filtersCache,
     resolvedFields,
     stats
   )
@@ -279,7 +405,7 @@ exports.runSift = runFilterAndSort
  * @param {Array<DbQuery> | undefined} filterFields
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
+ * @param {undefined | null | FiltersCache} filtersCache
  * @param resolvedFields
  * @returns {Array<IGatsbyNode> | undefined} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
@@ -288,7 +414,7 @@ const applyFilters = (
   filterFields,
   firstOnly,
   nodeTypeNames,
-  typedKeyValueIndexes,
+  filtersCache,
   resolvedFields,
   stats
 ) => {
@@ -314,7 +440,7 @@ const applyFilters = (
     }
   }
 
-  const result = filterWithoutSift(filters, nodeTypeNames, typedKeyValueIndexes)
+  const result = filterWithoutSift(filters, nodeTypeNames, filtersCache)
   if (result) {
     if (stats) {
       stats.totalIndexHits++
@@ -348,28 +474,40 @@ const filterToStats = (
 }
 
 /**
- * Check if the filter is "flat" (single leaf) and an "$eq". If so, uses custom
- * indexes based on filter and types and returns any result it finds.
- * If conditions are not met or no nodes are found, returns undefined.
+ * Check if filter op is supported (not all are). If so, uses custom
+ * fast indexes based on filter and types and returns any result it finds.
+ * If conditions are not met or no nodes are found, returns undefined and
+ * a slow run through Sift is executed instead.
+ * This function is a noop if no filter cache is given to it.
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {Map<FilterCacheKey, Map<string | number | boolean, Set<IGatsbyNode>>>} typedKeyValueIndexes
- * @returns {Array|undefined} Collection of results
+ * @param {undefined | null | FiltersCache} filtersCache
+ * @returns {Array<IGatsbyNode> | undefined} Collection of results
  */
-const filterWithoutSift = (filters, nodeTypeNames, typedKeyValueIndexes) => {
-  // This can also be `$ne`, `$in` or any other grapqhl comparison op
-  if (
-    !typedKeyValueIndexes ||
-    filters.length === 0 || // TODO: we should special case this
-    filters.some(
-      filter => filter.type === `elemMatch` || filter.query.comparator !== `$eq`
-    )
-  ) {
+const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
+  if (!filtersCache) {
+    // If no filter cache is passed on, explicitly don't use one
     return undefined
   }
 
-  return runFlatFiltersWithoutSift(filters, nodeTypeNames, typedKeyValueIndexes)
+  if (filters.length === 0) {
+    // If no filters are given, go through Sift. This does not appear to be
+    // slower than shortcutting it here.
+    return undefined
+  }
+
+  if (
+    filters.some(
+      filter =>
+        filter.type === `query` && !FAST_OPS.includes(filter.query.comparator)
+    )
+  ) {
+    // If there's a filter with non-supported op, stop now.
+    return undefined
+  }
+
+  return runFiltersWithoutSift(filters, nodeTypeNames, filtersCache)
 }
 
 // Not a public API
