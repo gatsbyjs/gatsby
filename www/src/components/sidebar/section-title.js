@@ -36,7 +36,8 @@ const Chevron = ({ isExpanded }) => (
   </span>
 )
 
-const SectionTitleItem = ({ children, disabled, item }) => {
+// Common styled heading component used in different types of SectionTitles
+const SectionHeading = ({ children, disabled, item }) => {
   const { getItemState } = useSidebarContext()
   const { isExpanded } = getItemState(item)
   return (
@@ -68,6 +69,7 @@ const SectionTitleItem = ({ children, disabled, item }) => {
   )
 }
 
+// A title with no interactability
 const Title = ({ item }) => (
   <div
     sx={{
@@ -77,12 +79,14 @@ const Title = ({ item }) => (
       minHeight: 40,
     }}
   >
-    <SectionTitleItem disabled item={item}>
+    <SectionHeading disabled item={item}>
       {item.title}
-    </SectionTitleItem>
+    </SectionHeading>
   </div>
 )
 
+// A title rendered as a button that can be clicked to expand/collapse
+// but does not represent a page itself
 const TitleButton = ({ item, uid }) => {
   const { onSectionTitleClick, getItemState } = useSidebarContext()
   const { isExpanded } = getItemState(item)
@@ -109,7 +113,7 @@ const TitleButton = ({ item, uid }) => {
       }}
       onClick={() => onSectionTitleClick(item)}
     >
-      <SectionTitleItem item={item}>
+      <SectionHeading item={item}>
         {item.title}
         <span
           sx={{
@@ -123,11 +127,13 @@ const TitleButton = ({ item, uid }) => {
         >
           <Chevron isExpanded={isExpanded} />
         </span>
-      </SectionTitleItem>
+      </SectionHeading>
     </button>
   )
 }
 
+// A split title with a link that can be navigated to, and a button
+// that can expand it
 const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
   const { getItemState, onSectionTitleClick } = useSidebarContext()
   const { isExpanded } = getItemState(item)
@@ -186,9 +192,11 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
 
 export default function SectionTitle({ itemRef, item, uid }) {
   const { disableAccordions } = useSidebarContext()
+  // If the item has a link, render it as a combination link and toggle button
   if (item.link) {
     return <SplitButton itemRef={itemRef} item={item} uid={uid} />
   }
+  // Otherwise, render the toggle button depending on if toggling is enabled
   const SectionTitleComponent = disableAccordions ? Title : TitleButton
   return <SectionTitleComponent item={item} uid={uid} />
 }
