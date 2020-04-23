@@ -39,7 +39,11 @@ const handleErrors = async ({
   }
 
   if (pluginOptions.debug.graphql.copyQueryOnError) {
-    await clipboardy.write(query)
+    try {
+      await clipboardy.write(query)
+    } catch (e) {
+      // do nothing
+    }
   }
 
   if (!responseJSON) {
