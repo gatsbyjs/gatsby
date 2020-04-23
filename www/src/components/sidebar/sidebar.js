@@ -23,17 +23,22 @@ try {
   hasLocalStorage = false
 }
 
-const isItemParentOfActive = (activeItemParents, item) => {
-  return activeItemParents.some(parent => parent.title === item.title)
+function isItemInActiveTree(item, activeItem, activeItemParents) {
+  return (
+    activeItem.title === item.title ||
+    activeItemParents.some(parent => parent.title === item.title)
+  )
 }
 
 function getOpenItemHash(itemList, activeItem, activeItemParents) {
   let result = {}
   for (let item of itemList) {
     if (item.items) {
-      result[item.title] =
-        isItemParentOfActive(activeItemParents, item) ||
-        activeItem.title === item.title
+      result[item.title] = isItemInActiveTree(
+        item,
+        activeItem,
+        activeItemParents
+      )
       result = {
         ...result,
         ...getOpenItemHash(item.items, activeItem, activeItemParents),
@@ -137,17 +142,11 @@ export default withI18n()(function Sidebar({
   }, [openSectionHash])
 
   const getItemState = React.useCallback(
-    item => {
-      const isActive = item.link === activeItem.link
-      return {
-        isExpanded: openSectionHash[item.title] || disableAccordions,
-        isActive,
-        // True if the item is active or a parent of an active item
-        inActiveTree:
-          isActive ||
-          activeItemParents.some(parent => parent.title === item.title),
-      }
-    },
+    item => ({
+      isExpanded: openSectionHash[item.title] || disableAccordions,
+      isActive: item.title === activeItem.title,
+      inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
+    }),
     [openSectionHash, disableAccordions, activeItem, activeItemParents]
   )
 
