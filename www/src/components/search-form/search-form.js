@@ -70,6 +70,7 @@ function SearchForm({ i18n }) {
           keyboardShortcuts: [`s`],
         },
       })
+      searchInput.current.focus()
     }
 
     return () => {
@@ -118,6 +119,7 @@ function SearchForm({ i18n }) {
       className="searchWrap"
       onMouseOver={() => loadAlgoliaJS()}
       onClick={() => loadAlgoliaJS()}
+      onFocus={() => loadAlgoliaJS()}
       onSubmit={e => e.preventDefault()}
     >
       <Global styles={algoliaStyles} />
