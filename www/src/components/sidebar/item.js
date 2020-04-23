@@ -9,7 +9,6 @@ const Item = ({ item }) => {
   const { isActive } = getItemState(item)
   const itemRef = React.useRef(null)
 
-  // Scroll the active item into view on
   React.useEffect(() => {
     // If the active item isn't a hash, scroll to it on page load
     if (isActive && !item.link.includes("#")) {
