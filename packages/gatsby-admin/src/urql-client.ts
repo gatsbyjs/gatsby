@@ -1,8 +1,5 @@
 const {
   createClient,
-  // useMutation,
-  // useSubscription,
-  // Provider,
   defaultExchanges,
   subscriptionExchange,
 } = require(`urql`)
