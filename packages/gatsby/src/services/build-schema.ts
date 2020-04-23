@@ -1,21 +1,24 @@
 import { IBuildContext } from "../state-machines/develop"
-import GraphQLRunner from "../query/graphql-runner"
 
-const { build } = require(`../schema`)
-const report = require(`gatsby-cli/lib/reporter`)
-const createGraphqlRunner = require(`../bootstrap/graphql-runner`)
+import { build } from "../schema"
+import report from "gatsby-cli/lib/reporter"
+import { createGraphQLRunner, Runner } from "../bootstrap/create-graphql-runner"
 
 export async function buildSchema({
   store,
   parentSpan,
-}: IBuildContext): Promise<{ graphqlRunner: GraphQLRunner }> {
+}: IBuildContext): Promise<{ graphqlRunner: Runner } | void> {
+  if (!store) {
+    report.panic(`Cannot build schema before store initialization`)
+    return undefined
+  }
   const activity = report.activityTimer(`building schema`, {
     parentSpan,
   })
   activity.start()
   await build({ parentSpan: activity.span })
   activity.end()
-  const graphqlRunner = createGraphqlRunner(store, report)
+  const graphqlRunner = createGraphQLRunner(store, report)
   return {
     graphqlRunner,
   }
