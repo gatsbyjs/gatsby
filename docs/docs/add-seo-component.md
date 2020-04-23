@@ -19,8 +19,8 @@ module.exports = {
       "Hogwarts Potions master, Head of Slytherin house and former Death Eater.",
     url: "https://www.doe.com", // No trailing slash allowed!
     image: "/images/snape.jpg", // Path to your image you placed in the 'static' folder
-    twitterUsername: "@occlumency"
-  }
+    twitterUsername: "@occlumency",
+  },
 }
 ```
 
@@ -99,14 +99,14 @@ const SEO = ({ title, description, image, article }) => {
     defaultDescription,
     siteUrl,
     defaultImage,
-    twitterUsername
+    twitterUsername,
   } = site.siteMetadata
 
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
     image: `${siteUrl}${image || defaultImage}`,
-    url: `${siteUrl}${pathname}`
+    url: `${siteUrl}${pathname}`,
   }
 
   return null
@@ -134,14 +134,14 @@ const SEO = ({ title, description, image, article }) => {
     defaultDescription,
     siteUrl,
     defaultImage,
-    twitterUsername
+    twitterUsername,
   } = site.siteMetadata
 
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
     image: `${siteUrl}${image || defaultImage}`,
-    url: `${siteUrl}${pathname}`
+    url: `${siteUrl}${pathname}`,
   }
 
   return (
@@ -184,14 +184,14 @@ SEO.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   image: PropTypes.string,
-  article: PropTypes.bool
+  article: PropTypes.bool,
 }
 
 SEO.defaultProps = {
   title: null,
   description: null,
   image: null,
-  article: false
+  article: false,
 }
 
 const query = graphql`

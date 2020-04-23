@@ -38,11 +38,11 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`
-      }
-    }
+        path: `${__dirname}/src/images`,
+      },
+    },
     // highlight-end
-  ]
+  ],
 }
 ```
 
@@ -97,8 +97,8 @@ my-plugin
 ```javascript:title=gatsby-site/gatsby-config.js
 module.exports = {
   plugins: [
-    require.resolve(`../my-plugin`) // highlight-line
-  ]
+    require.resolve(`../my-plugin`), // highlight-line
+  ],
 }
 ```
 
