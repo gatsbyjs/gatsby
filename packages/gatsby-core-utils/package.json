@@ -31,8 +31,8 @@
   "dependencies": {
     "ci-info": "2.0.0",
     "configstore": "^5.0.1",
-    "lockfile": "^1.0.4",
-    "node-object-hash": "^2.0.0"
+    "node-object-hash": "^2.0.0",
+    "proper-lockfile": "^4.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

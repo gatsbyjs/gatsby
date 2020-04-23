@@ -1,13 +1,16 @@
-import util from "util"
+/*
+ * Service lock: handles service discovery for Gatsby develop processes
+ * The problem:  the develop process starts a proxy server, the actual develop process and a websocket server for communication. The two latter ones have random ports that need to be discovered. We also cannot run multiple of the same site at the same time.
+ * The solution: lockfiles! We create a lockfolder in `.config/gatsby/sites/${sitePathHash} and then write a file to that lockfolder for every service with its port.
+ */
 import path from "path"
 import os from "os"
 import crypto from "crypto"
-import lockFile from "lockfile"
+import lockfile from "proper-lockfile"
 import fse from "fs-extra"
 
 const globalConfigPath =
   process.env.XDG_CONFIG_HOME || path.join(os.homedir(), `.config`)
-const lock = util.promisify(lockFile.lock)
 
 const hashString = str =>
   crypto
@@ -22,20 +25,24 @@ export const createServiceLock = async (
 ): Promise<void> => {
   const hash = hashString(programPath)
 
-  const lockfileDir = path.join(globalConfigPath, `gatsby`, `sites`, hash)
+  const lockfileDir = path.join(
+    globalConfigPath,
+    `gatsby`,
+    `sites`,
+    `${hash}.lock`
+  )
 
   await fse.ensureDir(lockfileDir)
-  const lockfilePath = path.join(lockfileDir, `${name}.lock`)
 
   try {
-    await lock(lockfilePath, {})
+    await lockfile.lock(lockfileDir)
   } catch (err) {
-    console.log(err)
     // TODO: Nice helpful error message
-    throw new Error(`Another process probably already running.`)
+    throw new Error(`The develop process is already running on another port.`)
   }
 
-  await fse.writeFile(lockfilePath, content)
+  // Once the directory for this site is locked, we write a file to the dir with the service metadata
+  await fse.writeFile(path.join(lockfileDir, `${name}.lock`), content)
 }
 
 export const getService = (
@@ -45,7 +52,12 @@ export const getService = (
   const hash = hashString(programPath)
 
   try {
-    const lockfileDir = path.join(globalConfigPath, `gatsby`, `sites`, hash)
+    const lockfileDir = path.join(
+      globalConfigPath,
+      `gatsby`,
+      `sites`,
+      `${hash}.lock`
+    )
     const lockfilePath = path.join(lockfileDir, `${name}.lock`)
 
     return fse.readFile(lockfilePath, "utf8")
@@ -56,7 +68,12 @@ export const getService = (
 
 export const getServices = async (programPath: string): Promise<any> => {
   const hash = hashString(programPath)
-  const lockfileDir = path.join(globalConfigPath, `gatsby`, `sites`, hash)
+  const lockfileDir = path.join(
+    globalConfigPath,
+    `gatsby`,
+    `sites`,
+    `${hash}.lock`
+  )
 
   const files = await fse.readdir(lockfileDir)
   let services = {}
