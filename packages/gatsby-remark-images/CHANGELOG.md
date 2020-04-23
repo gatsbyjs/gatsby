@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.2.4...gatsby-remark-images@3.2.5) (2020-04-22)
+
+### Features
+
+- **gatsby-remark-images:** support markdownCaptions in mdx + fix for remark ([#21188](https://github.com/gatsbyjs/gatsby/issues/21188)) ([82c05aa](https://github.com/gatsbyjs/gatsby/commit/82c05aa))
+
 ## [3.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.2.3...gatsby-remark-images@3.2.4) (2020-04-17)
 
 ### Bug Fixes
