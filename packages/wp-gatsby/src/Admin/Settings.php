@@ -105,7 +105,13 @@ class Settings {
 					'sanitize_callback' => function( $input ) {
 						return $this->sanitize_url_field( $input );
 					}
-				],
+        ],
+        [
+          'name' => 'enable_gatsby_preview',
+          'label' => __( 'Enable Gatsby Preview?', 'wpgatsby_settings' ),
+          'desc' => __( 'Yes', 'wpgatsby_settings' ),
+          'type' => 'checkbox'
+        ],
 				[
 					'name'              => 'preview_instance_url',
 					'label'             => __( 'Preview Instance', 'wpgatsby_settings' ),
