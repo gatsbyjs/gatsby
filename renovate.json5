@@ -1,5 +1,17 @@
 {
-  extends: ["config:base", ":disablePeerDependencies"],
+  extends: [
+    ":separateMajorReleases",
+    ":combinePatchMinorReleases",
+    ":ignoreUnstable",
+    ":prImmediately",
+    ":semanticPrefixFixDepsChoreOthers",
+    ":updateNotScheduled",
+    ":automergeDisabled",
+    ":disablePeerDependencies",
+    ":maintainLockFilesDisabled",
+    ":disableRateLimiting",
+    ":rebaseStalePrs",
+  ],
   includePaths: [
     "package.json",
     "packages/**",
@@ -16,16 +28,10 @@
     "**/tests/**",
     "**/__fixtures__/**",
   ],
-  hostRules: [
-    {
-      timeout: 60000,
-    },
-  ],
   major: {
     masterIssueApproval: true,
   },
   masterIssue: true,
-  rebaseStalePrs: false,
   ignoreDeps: ["react", "react-dom"],
   rangeStrategy: "bump",
   bumpVersion: null,
