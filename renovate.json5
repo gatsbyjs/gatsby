@@ -7,6 +7,15 @@
     "starters/**",
     "examples/**",
   ],
+  ignorePaths: [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**",
+    "**/__tests__/**",
+    "**/test/**",
+    "**/tests/**",
+    "**/__fixtures__/**",
+  ],
   major: {
     masterIssueApproval: true,
   },
