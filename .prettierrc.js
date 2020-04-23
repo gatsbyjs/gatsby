@@ -16,6 +16,7 @@ module.exports = {
       files: "docs/**/*.md",
       options: {
         parser: "mdx",
+        proseWrap: "never",
       },
     },
   ],
