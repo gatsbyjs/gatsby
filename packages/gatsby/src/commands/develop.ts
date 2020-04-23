@@ -17,6 +17,7 @@ interface IRespawnMonitor {
   start: () => void
   stop: (callback: () => void) => void
   status: "running" | "stopping" | "stopped" | "crashed" | "sleeping"
+  on: (type: string, callback: Function) => void
 }
 
 const createControllableScript = (script: string): IRespawnMonitor => {
@@ -25,7 +26,7 @@ const createControllableScript = (script: string): IRespawnMonitor => {
 
   return respawn([`node`, tmpFile.name], {
     env: process.env,
-    stdio: `inherit`,
+    stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
   })
 }
 
@@ -67,13 +68,20 @@ module.exports = async (program: IProgram): Promise<void> => {
       script.stop(() => {
         activity.end()
         script.start()
-        io.emit(`gatsby:develop:restarted`)
       })
     })
   })
 
+  script.on(`message`, msg => {
+    if (
+      msg.type === `LOG_ACTION` &&
+      msg.action.type === `SET_STATUS` &&
+      msg.action.payload === `SUCCESS`
+    ) {
+      io.emit(`gatsby:develop:restarted`)
+    }
+  })
   script.start()
-  io.emit(`gatsby:develop:restarted`)
 
   chokidar
     .watch([rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)])

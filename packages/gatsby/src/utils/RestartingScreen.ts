@@ -2,6 +2,10 @@
 import { jsx } from "theme-ui"
 import { keyframes } from "@emotion/core"
 
+/* This is the screen that is rendered while the Gatsby dev process is restarting
+ * Note that **this is not rendered with React on the client**, React is only used as a templating language here.
+ **Do not add any logic to the JS here**/
+
 const pulse = keyframes({
   "0%": {
     boxShadow: `0 0 0 0 rgba(102, 51, 153, 0.4)`,
