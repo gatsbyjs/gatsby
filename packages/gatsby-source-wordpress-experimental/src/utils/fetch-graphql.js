@@ -172,7 +172,7 @@ const handleFetchErrors = async ({
   if (response?.headers[`content-type`].includes(`text/html;`)) {
     reporter.panic(
       formatLogMessage(
-        `${e.message} \n\nReceived HTML as a response. Are you sure ${url} is the correct URL?\n\nIf that URL redirects to the correct URL via WordPress in the browser, you might receive this error.\nVisit that URL in your browser, and if it looks good, copy/paste it from your URL bar to your config.\n\n${ensureStatementsAreTrue}`,
+        `${e.message} \n\nReceived HTML as a response. Are you sure ${url} is the correct URL?\n\nIf that URL redirects to the correct URL via WordPress in the browser, or you've entered the wrong URL in settings, you might receive this error.\nVisit that URL in your browser, and if it looks good, copy/paste it from your URL bar to your config.\n\n${ensureStatementsAreTrue}`,
         {
           useVerboseStyle: true,
         }
