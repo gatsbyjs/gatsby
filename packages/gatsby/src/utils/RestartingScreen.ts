@@ -14,7 +14,7 @@ const pulse = keyframes({
   },
 })
 
-export default function App() {
+const RestartingScreen: React.FC<{}> = () => {
   return jsx(
     `html`,
     null,
@@ -71,10 +71,25 @@ export default function App() {
         }),
         jsx(`script`, {
           dangerouslySetInnerHTML: {
-            __html: `var socket = io(); socket.on('gatsby:develop:restarted', () => { console.log('dafuq'); window.location.reload(); });`,
+            __html: `
+            fetch('/___services')
+              .then(res => res.json())
+              .then(services => {
+                const socket = io('http://localhost:' + services.ws)
+                socket.on('gatsby:develop:restarted', () => {
+                  window.location.reload()
+                })
+            
+                socket.on('gatsby:develop:needs-restart', () => {
+                  socket.emit('gatsby:develop:do-restart')
+                })
+              })
+            `,
           },
         })
       )
     )
   )
 }
+
+export default RestartingScreen

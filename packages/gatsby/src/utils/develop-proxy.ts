@@ -26,6 +26,11 @@ export const startDevelopProxy = (input: {
       return
     }
 
+    if (req.url === `/___debug-restarting-screen`) {
+      res.end(renderToString(jsx(RestartingScreen)))
+      return
+    }
+
     proxy.web(req, res)
   })
 
