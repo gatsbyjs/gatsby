@@ -4665,8 +4665,10 @@
   description: ⚛️ Polished Gatsby theme for documentation site
   tags:
     - Documentation
-    - Markdown
-    - Styling:Other
+    - Markdown 
+    - Language:TypeScript
+    - Styling:Ant Design
+    - i18n
   features:
     - ⚛ Prerendered static site
     - 🌎 Internationalization support by i18next
