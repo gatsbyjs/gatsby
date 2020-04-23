@@ -136,7 +136,7 @@ Add `tsx` as a file type to look for in the `stories` array. This assumes the de
 stories: ["../stories/**/*.stories.js","../stories/**/*.stories.tsx"],
 ```
 
-After line 25 containing `config.resolve.mainFields = ["browser", "module", "main"];` and before line 27 containing `return config;`
+Add the following code after the line containing `config.resolve.mainFields = ["browser", "module", "main"];` (line 25) and before the `return config;` in the same function body (line 27):
 
 ```js:title=.storybook/main.js
 config.module.rules.push({
