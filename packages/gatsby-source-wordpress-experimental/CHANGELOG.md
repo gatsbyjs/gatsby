@@ -6,6 +6,10 @@
 
 - Fixed normalizeUri helper to account for null uri (if a node has no uri)
 
+### Features
+
+- Improved fetch error messages. Some users were getting confused when they added www. to their api url setting. Visiting that URL in browser brought them to the GraphQL api endpoint. The problem is that WP seems to sometimes redirect in browser and axios can't handle this. The new error messages account for this.
+
 ## 0.0.38
 
 ### Bug Fixes

@@ -130,11 +130,13 @@ const handleGraphQLErrors = async ({
   })
 }
 
+const ensureStatementsAreTrue = `${chalk.bold(
+  `Please ensure the following statements are true`
+)} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress backend`
+
 // @todo add a link to docs page for debugging
 const genericError = ({ url }) =>
-  `GraphQL request to ${chalk.bold(url)} failed.\n\n ${chalk.bold(
-    `Please ensure the following statements are true`
-  )} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress backend`
+  `GraphQL request to ${chalk.bold(url)} failed.\n\n${ensureStatementsAreTrue}`
 
 const handleFetchErrors = async ({
   e,
@@ -144,6 +146,7 @@ const handleFetchErrors = async ({
   variables,
   pluginOptions,
   query,
+  response,
 }) => {
   await handleErrors({
     panicOnError: false,
@@ -158,26 +161,30 @@ const handleFetchErrors = async ({
     reporter.panic(
       formatLogMessage(
         `It took too long for ${url} to respond (longer than ${timeout /
-          1000} seconds). \n${genericError({ url })}`,
+          1000} seconds). Either your URL is wrong, you need to increase server resources, or you need to increase your timeout in the gatsby-source-wordpress options. \n${genericError(
+          { url }
+        )}`,
         { useVerboseStyle: true }
       )
     )
-  } else if (
-    e.message.includes(`ECONNREFUSED`) ||
-    e.message === `Request failed with status code 405`
-  ) {
+  }
+
+  if (response.headers[`content-type`].includes(`text/html;`)) {
     reporter.panic(
-      formatLogMessage(`${e.message} \n\n${genericError({ url })}`, {
-        useVerboseStyle: true,
-      })
-    )
-  } else {
-    reporter.panic(
-      formatLogMessage(`${e.toString()} \n\n${genericError({ url })}`, {
-        useVerboseStyle: true,
-      })
+      formatLogMessage(
+        `${e.message} \n\nReceived HTML as a response. Are you sure ${url} is the correct URL?\n\nIf that URL redirects to the correct URL via WordPress in the browser, you might receive this error.\nVisit that URL in your browser, and if it looks good, copy/paste it from your URL bar to your config.\n\n${ensureStatementsAreTrue}`,
+        {
+          useVerboseStyle: true,
+        }
+      )
     )
   }
+
+  reporter.panic(
+    formatLogMessage(`${e.message} \n\n${genericError({ url })}`, {
+      useVerboseStyle: true,
+    })
+  )
 }
 
 const fetchGraphql = async ({
@@ -219,9 +226,7 @@ const fetchGraphql = async ({
     const contentType = response.headers[`content-type`]
 
     if (!contentType.includes(`application/json;`)) {
-      throw new Error(
-        `Unable to connect to WPGraphQL. \n\n${genericError({ url })}`
-      )
+      throw new Error(`Unable to connect to WPGraphQL.`)
     }
   } catch (e) {
     if (throwFetchErrors) {
@@ -236,6 +241,7 @@ const fetchGraphql = async ({
       variables,
       pluginOptions,
       query,
+      response,
     })
   }
 
