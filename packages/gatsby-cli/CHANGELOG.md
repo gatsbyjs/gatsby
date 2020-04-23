@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.14...gatsby-cli@2.11.15) (2020-04-22)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.11.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.13...gatsby-cli@2.11.14) (2020-04-21)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.11.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.12...gatsby-cli@2.11.13) (2020-04-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.11.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.11...gatsby-cli@2.11.12) (2020-04-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.11.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.10...gatsby-cli@2.11.11) (2020-04-18)
+
+### Bug Fixes
+
+- **gatsby:** Add self-signed cert to node trust store (https) ([#18703](https://github.com/gatsbyjs/gatsby/issues/18703)) ([4fd8f8e](https://github.com/gatsbyjs/gatsby/commit/4fd8f8e))
+
+## [2.11.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.9...gatsby-cli@2.11.10) (2020-04-17)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.11.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.8...gatsby-cli@2.11.9) (2020-04-16)
 
 ### Features

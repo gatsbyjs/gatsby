@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.11...gatsby-recipes@0.0.12) (2020-04-22)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.10...gatsby-recipes@0.0.11) (2020-04-21)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.9...gatsby-recipes@0.0.10) (2020-04-20)
+
+### Bug Fixes
+
+- **recipes:** Fix shadow-file resource for scoped NPM packages & re-enable e2e testing for resources ([#23274](https://github.com/gatsbyjs/gatsby/issues/23274)) ([d8fdee6](https://github.com/gatsbyjs/gatsby/commit/d8fdee6))
+
+## [0.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.8...gatsby-recipes@0.0.9) (2020-04-20)
+
+### Bug Fixes
+
+- **recipes:** adjust path to layout component ([#23251](https://github.com/gatsbyjs/gatsby/issues/23251)) ([4043129](https://github.com/gatsbyjs/gatsby/commit/4043129))
+
+## [0.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.7...gatsby-recipes@0.0.8) (2020-04-18)
+
+### Bug Fixes
+
+- **recipes:** Add missing package cors ([#23260](https://github.com/gatsbyjs/gatsby/issues/23260)) ([f48efad](https://github.com/gatsbyjs/gatsby/commit/f48efad))
+
+### Features
+
+- **recipes:** Update gatsby-recipes README.md ([#23232](https://github.com/gatsbyjs/gatsby/issues/23232)) ([2c5e3b8](https://github.com/gatsbyjs/gatsby/commit/2c5e3b8))
+
+## [0.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.6...gatsby-recipes@0.0.7) (2020-04-17)
+
+**Note:** Version bump only for package gatsby-recipes
+
 ## 0.0.6 (2020-04-16)
 
 ### Features
