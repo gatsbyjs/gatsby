@@ -458,8 +458,8 @@ const applyFilters = (
     resolvedFields
   )
 
-  if (!siftResult || siftResult.length === 0) {
-    if (stats) {
+  if (stats) {
+    if (!siftResult || siftResult.length === 0) {
       stats.totalSiftHits++
     }
   }
