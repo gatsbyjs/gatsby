@@ -2,9 +2,10 @@
   extends: ["config:base", ":disablePeerDependencies"],
   includePaths: [
     "package.json",
-    "starters/**",
     "packages/**",
     "www/package.json",
+    "starters/**",
+    "examples/**",
   ],
   major: {
     masterIssueApproval: true,
@@ -84,6 +85,15 @@
     {
       depTypeList: ["engines"],
       enabled: false,
+    },
+    {
+      groupName: "updates in starters",
+      paths: ["starters/**"],
+      updateTypes: ["patch"],
+    },
+    {
+      groupName: "type updates",
+      packagePatterns: ["^@types"],
     },
   ],
   timezone: "GMT",

@@ -118,6 +118,6 @@ function getNodes(results) {
     }
   }
   throw new Error(
-    `[gatsby-plugin-sitemap]: Plugin is unsure how to handle the results of your query, you'll need to write custom page filter and serilizer in your gatsby conig`
+    `[gatsby-plugin-sitemap]: Plugin is unsure how to handle the results of your query, you'll need to write custom page filter and serializer in your gatsby config`
   )
 }
