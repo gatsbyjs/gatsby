@@ -10,7 +10,6 @@
     ":disablePeerDependencies",
     ":maintainLockFilesDisabled",
     ":disableRateLimiting",
-    ":rebaseStalePrs",
   ],
   includePaths: [
     "package.json",
