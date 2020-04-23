@@ -258,7 +258,7 @@ export default ({ data }) => (
 )
 
 // highlight-start
-export const query = graphql`
+export const data = graphql`
   query {
     site {
       siteMetadata {
