@@ -1,8 +1,4 @@
-const {
-  createClient,
-  defaultExchanges,
-  subscriptionExchange,
-} = require(`urql`)
+const { createClient, defaultExchanges, subscriptionExchange } = require(`urql`)
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 
 const subscriptionClient = new SubscriptionClient(
