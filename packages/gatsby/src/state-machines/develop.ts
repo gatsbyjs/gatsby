@@ -3,7 +3,7 @@ import { initialize } from "../services/initialize"
 import { Express } from "express"
 import { startWebpackServer } from "../services/start-webpack-server"
 import { WebsocketManager } from "../utils/websocket-manager"
-import { Store } from "../.."
+import { Store } from "redux"
 import { Compiler } from "webpack"
 import { dataLayerStates } from "./data-layer"
 import { Span } from "opentracing"
@@ -17,6 +17,7 @@ import {
 import { IProgram } from "../commands/types"
 import { IGroupedQueryIds } from "../services/calculate-dirty-queries"
 import { machineActions } from "./actions"
+import { IGatsbyState } from "../redux/types"
 
 export interface IMutationAction {
   type: string
@@ -35,7 +36,7 @@ export interface IBuildContext {
   runningBatch: IMutationAction[]
   compiler?: Compiler
   websocketManager?: WebsocketManager
-  store?: Store
+  store?: Store<IGatsbyState>
   parentSpan?: Span
   graphqlRunner?: GraphQLRunner
   refresh?: boolean
