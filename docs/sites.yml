@@ -4528,8 +4528,8 @@
   built_by_url: https://github.com/nihgwu
   featured: false
 - title: herper.io
-  url: https://herper.io
-  main_url: https://herper.io
+  url: https://herper.io/
+  main_url: https://herper.io/
   description: >
     Portfolio website for Jacob Herper - a Front End Web Developer with a passion for all things digital. I have more than 10 years experience working in web development.
   categories:
@@ -4540,6 +4540,7 @@
     - SEO
   built_by: Jacob Herper
   built_by_url: https://github.com/jakeherp
+  source_url: https://github.com/jakeherp/portfolio
   featured: false
 - title: Artem Sapegin Photography
   description: >
