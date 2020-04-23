@@ -10471,3 +10471,23 @@
   built_by: Amruth Pillai
   built_by_url: https://amruthpillai.com
   featured: false
+- title: GeneOS
+  url: https://geneos.me/
+  main_url: https://geneos.me/
+  description: >
+    GeneOS is a privacy-preserving data monetization protocol for genetic, activity, and medical data.
+  categories:
+    - Landing Page
+    - Business
+  built_by: GeneOS Team
+- title: COVID KPI
+  url: https://covidkpi.com/
+  main_url: https://covidkpi.com/
+  description: >
+    COVID KPI aggregates COVID-19 data from numerous official sources then displays the Key Performance Indicators.
+  categories:
+    - Data
+    - Media
+    - Healthcare
+  built_by: Albert Chen
+  built_by_url: https://github.com/mralbertchen
