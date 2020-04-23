@@ -18,19 +18,18 @@ const hashString = str =>
     .update(str)
     .digest(`hex`)
 
+const getLockfileDir = programPath => {
+  const hash = hashString(programPath)
+
+  return path.join(globalConfigPath, `gatsby`, `sites`, `${hash}.lock`)
+}
+
 export const createServiceLock = async (
   programPath: string,
   name: string,
   content: string
 ): Promise<void> => {
-  const hash = hashString(programPath)
-
-  const lockfileDir = path.join(
-    globalConfigPath,
-    `gatsby`,
-    `sites`,
-    `${hash}.lock`
-  )
+  const lockfileDir = getLockfileDir(programPath)
 
   await fse.ensureDir(lockfileDir)
 
@@ -49,17 +48,10 @@ export const getService = (
   programPath: string,
   name: string
 ): Promise<string | null> => {
-  const hash = hashString(programPath)
+  const lockfileDir = getLockfileDir(programPath)
+  const lockfilePath = path.join(lockfileDir, `${name}.lock`)
 
   try {
-    const lockfileDir = path.join(
-      globalConfigPath,
-      `gatsby`,
-      `sites`,
-      `${hash}.lock`
-    )
-    const lockfilePath = path.join(lockfileDir, `${name}.lock`)
-
     return fse.readFile(lockfilePath, "utf8")
   } catch (err) {
     return Promise.resolve(null)
@@ -67,13 +59,7 @@ export const getService = (
 }
 
 export const getServices = async (programPath: string): Promise<any> => {
-  const hash = hashString(programPath)
-  const lockfileDir = path.join(
-    globalConfigPath,
-    `gatsby`,
-    `sites`,
-    `${hash}.lock`
-  )
+  const lockfileDir = getLockfileDir(programPath)
 
   const files = await fse.readdir(lockfileDir)
   let services = {}
