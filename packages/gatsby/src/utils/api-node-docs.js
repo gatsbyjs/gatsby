@@ -122,8 +122,8 @@ exports.sourceNodes = true
  * Called when a new node is created. Plugins wishing to extend or
  * transform nodes created by other plugins should implement this API.
  *
- * If you create new nodes in `onCreateNode`, remember to set the
- * the `parent` field to `node.id` when calling
+ * If you create new nodes in `onCreateNode`, remember to set the `parent`
+ * field to `node.id` when calling
  * [`createNode`](/docs/actions/#createNode). Not setting the `parent`
  * will cause cache issues.
  *
