@@ -16,6 +16,11 @@
     "**/tests/**",
     "**/__fixtures__/**",
   ],
+  hostRules: [
+    {
+      timeout: 60000,
+    },
+  ],
   major: {
     masterIssueApproval: true,
   },
