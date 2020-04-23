@@ -63,8 +63,14 @@ function buildLocalCommands(cli, isLocalSite) {
     }
 
     try {
+      const useStateMachine =
+        command === `develop` && process.env.GATSBY_EXPERIMENTAL_STATE_MACHINE
       const cmdPath =
-        resolveCwd.silent(`gatsby/dist/commands/${command}`) ||
+        resolveCwd.silent(
+          `gatsby/dist/commands/${
+            useStateMachine ? `develop-state-machine` : command
+          }`
+        ) ||
         // Old location of commands
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)
