@@ -115,6 +115,10 @@ All done! Once the deployment concludes, you can access your website using `fire
 
 Check the [Firebase Docs](https://firebase.google.com/docs/hosting/full-config) for information about how to customize your deployment further. Remember that each time you wish to redeploy your site, you will need to rerun `gatsby build` first.
 
+<CloudCallout>
+  For automatic setup of builds that are deployed straight to Firebase:
+</CloudCallout>
+
 ## References:
 
 - [Firebase CLI Reference](https://firebase.google.com/docs/cli)

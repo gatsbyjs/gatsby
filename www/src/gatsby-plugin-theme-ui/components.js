@@ -1,5 +1,6 @@
 import React from "react"
 
+import CloudCallout from "../components/shared/cloud-callout"
 import GuideList from "../components/guide-list.js"
 import HubspotForm from "../components/hubspot-form"
 import Pullquote from "../components/shared/pullquote"
@@ -19,6 +20,7 @@ import LangList from "../components/lang-list"
 import ScriptLoader from "../components/script-loader"
 
 export default {
+  CloudCallout,
   GuideList,
   HubspotForm,
   DateChart,
@@ -35,5 +37,5 @@ export default {
   LangList,
   ScriptLoader,
   a: MdxLink,
-  pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
+  pre: ({ children }) => <CodeBlock>{children}</CodeBlock>
 }

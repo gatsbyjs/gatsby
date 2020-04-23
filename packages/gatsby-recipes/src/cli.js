@@ -445,6 +445,10 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
                 <Text>
                   {` `}
                   <Spinner /> {p.describe}
+                  {` `}
+                  {state.context.elapsed > 0 && (
+                    <Text>({state.context.elapsed / 1000}s elapsed)</Text>
+                  )}
                 </Text>
               </Div>
             ))}

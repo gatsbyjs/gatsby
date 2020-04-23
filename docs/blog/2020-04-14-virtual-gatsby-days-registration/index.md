@@ -15,8 +15,8 @@ Join us for Virtual Gatsby Days, June 2nd and 3rd: Registration is now open at h
 
 ![Gatsby logo transposed on binary background receding into distance](./virutalGatsbyDays.jpg "Gatsby logo on futuristic binary background")
 
-Virtual Gatsby Days will continue to focus on the future of modern website development, use cases, and deep dive into topics such as what’s new in the web technology stack. You’ll have the opportunity to participate in a Q&A with Gatsby creators, Kyle Mathews and Sam Bhagwat, hear other Gatsby core team members speak, and connect with the Gatsby community.
+Virtual Gatsby Days will continue to focus on the future of modern website development, use cases, and deep dive into topics such as what’s new in the web technology stack. You’ll have the opportunity to participate in a Q&A with Gatsby creators, Kyle Mathews and Sam Bhagwat, hear other Gatsby core team members speak, and connect with the Gatsby community. Sessions run 9am to noon PST on both days.
 
 Register for Virtual Gatsby Days, mark your calendars for June 2nd - 3rd and follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with speaker announcements and other developments.
 
-In case you missed it, we’re still accepting speaker submissions! [Fill out the CFP](https://docs.google.com/forms/d/e/1FAIpQLSfjUpqpmRL18ydo_PmC4jxvPG8xhOlix43KeRHOhUbPp3u7Mw/viewform?usp=sf_link) by April 24th and let us know what you’re thinking about. We’re reviewing submissions as they come in so the earlier you submit, the better.
+In case you missed it, we’re still accepting speaker submissions! [Fill out the CFP](https://docs.google.com/forms/d/e/1FAIpQLSfjUpqpmRL18ydo_PmC4jxvPG8xhOlix43KeRHOhUbPp3u7Mw/viewform?usp=sf_link) by 11:59pm on Friday, May 1, and let us know what you’re thinking about. We’re reviewing submissions as they come in so the earlier you submit, the better.
