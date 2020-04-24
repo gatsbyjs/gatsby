@@ -6009,3 +6009,15 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://gatsby-starter-takeshape-startup.netlify.app
+  repo: https://github.com/colbyfayock/gatsby-starter-takeshape-startup
+  description: Integrate TakeShape CMS using a ready to go TakeShape Startup project!
+  tags:
+    - Blog
+    - CMS:TakeShape
+    - CMS:Headless
+    - Landing Page
+    - Styling:SCSS
+  features:
+    - Integrate TakeShape CMS
+    - Preconfigured to work with the TakeShape Startup project
