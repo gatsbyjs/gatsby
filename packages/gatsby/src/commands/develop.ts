@@ -87,7 +87,11 @@ module.exports = async (program: IProgram): Promise<void> => {
   chokidar
     .watch([rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)])
     .on(`change`, filePath => {
-      console.log(`${path.basename(filePath)} changed`)
+      report.info(report.stripIndent`
+        ${path.basename(
+          filePath
+        )} changed, develop process needs to be restarted
+      `)
       io.emit(`gatsby:develop:needs-restart`, {
         reason: `${path.basename(filePath)} changed`,
       })
