@@ -14,16 +14,10 @@ const remoteSchema = {
     },
     fetchedTypes: new Map(),
     fieldBlacklist: [
-      // these aren't useful without authentication
-      // @todo make this dynamic when authentication is added
-      `revisions`,
-      `edges`,
       `isWpGatsby`,
-      // the next two cause an error on the WPGQL side so I'm removing them temporarily
-      // https://github.com/wp-graphql/wp-graphql/issues/848
-      `postTypeInfo`,
-      `connectedPostTypes`,
-      // we don't need auth fields
+      `edges`,
+      // these aren't useful without authentication
+      `revisions`,
       `isJwtAuthSecretRevoked`,
       `isRestricted`,
       `jwtAuthExpiration`,

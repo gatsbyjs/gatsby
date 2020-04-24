@@ -3,10 +3,10 @@ import { formatLogMessage } from "~/utils/format-log-message"
 
 export const supportedWpPluginVersions = {
   WPGraphQL: {
-    version: `0.6.*`,
+    version: `~0.8.2`,
   },
   WPGatsby: {
-    version: `>=0.1.8 <0.3.0`,
+    version: `~0.2.2`,
   },
 }
 
@@ -66,14 +66,16 @@ const areRemotePluginVersionsSatisfied = async ({ helpers }) => {
   if (!wpgqlIsSatisfied && wpGatsbyIsSatisfied) {
     message = `Your remote version of WPGraphQL is not within the accepted range (${supportedWpPluginVersions.WPGraphQL.version}).
 
-\tDownload v0.6.3 at https://github.com/wp-graphql/wp-graphql/releases/tag/v0.6.3
+\tDownload v ~0.8.3 at https://github.com/wp-graphql/wp-graphql/releases
+
+\tIf you're upgrading from an earlier version, read the release notes for each version between your old and new versions to determine which breaking changes you might encounter based on your use of the schema.
 `
   }
 
   if (!wpGatsbyIsSatisfied) {
     message = `Your remote version of WPGatsby is not within the accepted range (${supportedWpPluginVersions.WPGatsby.version})
 
-\tDownload v0.2.0 at https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/blob/fdbe608643f135cc40817d7d6f381d9cc36ecba3/WordPress/plugins/wp-gatsby-0.2.0.zip`
+\tDownload v0.2.2 at https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/tree/master/WordPress/plugins/wp-gatsby-0.2.2.zip`
   }
 
   if (!wpGatsbyIsSatisfied && !wpgqlIsSatisfied) {

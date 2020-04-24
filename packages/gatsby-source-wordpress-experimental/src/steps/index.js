@@ -3,7 +3,7 @@ export { ensurePluginRequirementsAreMet } from "~/steps/check-plugin-requirement
 export { ingestRemoteSchema } from "~/steps/ingest-remote-schema"
 export { persistPreviouslyCachedImages } from "~/steps/persist-cached-images"
 export { sourcePreviews } from "~/steps/source-nodes/update-nodes/source-previews"
-export { sourceNodes, createContentTypeNodes } from "~/steps/source-nodes"
+export { sourceNodes } from "~/steps/source-nodes"
 export { createSchemaCustomization } from "~/steps/create-schema-customization"
 export { setImageNodeIdCache } from "~/steps/set-image-node-id-cache"
 export { startPollingForContentUpdates } from "~/steps/source-nodes/update-nodes/content-update-interval"

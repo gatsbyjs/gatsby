@@ -10,77 +10,70 @@ const getTemplates = () => {
 
 //
 // @todo move this to gatsby-theme-wordpress
-exports.createPages = async ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql, reporter }) => {
+  const templates = getTemplates()
+
   const {
-    data: { allWpContentType },
-  } = await graphql(`
-    query ALL_CONTENT_TYPES {
-      allWpContentType {
+    data: {
+      allWpContentNode: { nodes: contentNodes },
+    },
+  } = await graphql(/* GraphQL */ `
+    query ALL_CONTENT_NODES {
+      allWpContentNode(
+        sort: { fields: modifiedGmt, order: DESC }
+        filter: { nodeType: { ne: "MediaItem" } }
+      ) {
         nodes {
-          singularName
-          pluralName
-          nodesTypeName
+          nodeType
+          uri
+          id
         }
       }
     }
   `)
 
-  const templates = getTemplates()
-
+  const contentTypeTemplateDirectory = `./src/templates/single/`
   const contentTypeTemplates = templates.filter(path =>
-    path.includes(`./src/templates/types/`)
+    path.includes(contentTypeTemplateDirectory)
   )
 
-  for (const contentType of allWpContentType.nodes) {
-    const { nodesTypeName, singularName } = contentType
+  await Promise.all(
+    contentNodes.map(async (node, i) => {
+      const { nodeType, uri, id } = node
+      // this is a super super basic template hierarchy
+      // this doesn't reflect what our hierarchy will look like.
+      // this is for testing/demo purposes
+      const templatePath = `${contentTypeTemplateDirectory}${nodeType}.js`
 
-    // this is a super super basic template hierarchy
-    // this doesn't reflect what our hierarchy will look like.
-    // this is for testing/demo purposes
-    const contentTypeTemplate = contentTypeTemplates.find(
-      path => path === `./src/templates/types/${singularName}.js`
-    )
+      const contentTypeTemplate = contentTypeTemplates.find(
+        path => path === templatePath
+      )
 
-    if (!contentTypeTemplate) {
-      continue
-    }
-
-    const gatsbyNodeListFieldName = `allWp${nodesTypeName}`
-
-    const { data } = await graphql(`
-      query ALL_CONTENT_NODES {
-        ${gatsbyNodeListFieldName} {
-          nodes {
-            uri
-            id
-          }
-        }
+      if (!contentTypeTemplate) {
+        reporter.log(
+          `No template found at ${templatePath}\nfor single ${nodeType}`
+        )
+        return null
       }
-    `)
 
-    const { nodes } = data[gatsbyNodeListFieldName]
-
-    await Promise.all(
-      nodes.map(async (node, i) => {
-        // @todo: determine why pages using allWpContentNode queries
-        // don't get automatically updated with incremental data fetching
-        await actions.createPage({
-          component: resolve(contentTypeTemplate),
-          path: node.uri,
-          context: {
-            id: node.id,
-            nextPage: (nodes[i + 1] || {}).id,
-            previousPage: (nodes[i - 1] || {}).id,
-          },
-        })
+      await actions.createPage({
+        component: resolve(contentTypeTemplate),
+        path: uri,
+        context: {
+          id,
+          nextPage: (contentNodes[i + 1] || {}).id,
+          previousPage: (contentNodes[i - 1] || {}).id,
+        },
       })
-    )
-  }
+    })
+  )
 
   // create the homepage
-  const { data } = await graphql(`
+  const {
+    data: { allWpPost },
+  } = await graphql(/* GraphQL */ `
     {
-      allWpPost(sort: { fields: date, order: DESC }) {
+      allWpPost(sort: { fields: modifiedGmt, order: DESC }) {
         nodes {
           uri
           id
@@ -90,12 +83,13 @@ exports.createPages = async ({ actions, graphql }) => {
   `)
 
   const perPage = 10
-  const chunkedContentNodes = chunk(data.allWpPost.nodes, perPage)
+  const chunkedContentNodes = chunk(allWpPost.nodes, perPage)
 
   await Promise.all(
-    chunkedContentNodes.map(async (nodesChunk, i) => {
+    chunkedContentNodes.map(async (nodesChunk, index) => {
       const firstNode = nodesChunk[0]
-      const page = i + 1
+      const page = index + 1
+      const offset = perPage * index
 
       await actions.createPage({
         component: resolve(`./src/templates/index.js`),
@@ -103,8 +97,8 @@ exports.createPages = async ({ actions, graphql }) => {
         context: {
           firstId: firstNode.id,
           page: page,
-          offset: perPage * page,
-          totalPages: chunkedContentNodes.length - 1,
+          offset: offset,
+          totalPages: chunkedContentNodes.length,
           perPage,
         },
       })

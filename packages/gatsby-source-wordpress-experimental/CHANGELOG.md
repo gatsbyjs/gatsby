@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.1.0
+
+## Breaking changes
+
+- Changed accepted WPGatsby version range to ~0.2.2
+- Changed accepted WPGraphQL version range to ~0.8.3
+- Removed custom WpContentTypes type and contentTypes field as WPGraphQL 0.8.3 has this built in now
+
 ## 0.0.42
 
 ### Bug Fixes

@@ -5,7 +5,6 @@ import fetchAndApplyNodeUpdates, {
 import { fetchAndCreateAllNodes } from "./fetch-nodes/fetch-nodes"
 
 import { LAST_COMPLETED_SOURCE_TIME } from "~/constants"
-import { createContentTypeNodes } from "~/steps/get-content-types"
 import store from "~/store"
 import fetchAndCreateNonNodeRootFields from "./create-nodes/fetch-and-create-non-node-root-fields"
 
@@ -49,4 +48,4 @@ const sourceNodes = async (helpers, _pluginOptions) => {
   await fetchAndCreateNonNodeRootFields()
 }
 
-export { sourceNodes, createContentTypeNodes }
+export { sourceNodes }
