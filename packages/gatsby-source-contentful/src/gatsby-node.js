@@ -69,8 +69,8 @@ exports.sourceNodes = async (
       }
     })
 
-    console.log(`Using Contentful Offline cache ⚠️`)
-    console.log(
+    reporter.info(`Using Contentful Offline cache ⚠️`)
+    reporter.info(
       `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
     )
 
@@ -152,10 +152,10 @@ exports.sourceNodes = async (
 
   const assets = currentSyncData.assets
 
-  console.log(`Updated entries `, currentSyncData.entries.length)
-  console.log(`Deleted entries `, currentSyncData.deletedEntries.length)
-  console.log(`Updated assets `, currentSyncData.assets.length)
-  console.log(`Deleted assets `, currentSyncData.deletedAssets.length)
+  reporter.info(`Updated entries ${currentSyncData.entries.length}`)
+  reporter.info(`Deleted entries ${currentSyncData.deletedEntries.length}`)
+  reporter.info(`Updated assets ${currentSyncData.assets.length}`)
+  reporter.info(`Deleted assets ${currentSyncData.deletedAssets.length}`)
   console.timeEnd(`Fetch Contentful data`)
 
   // Update syncToken

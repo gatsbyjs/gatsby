@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.9...gatsby-plugin-mdx@1.1.10) (2020-04-22)
+
+### Features
+
+- **gatsby-remark-images:** support markdownCaptions in mdx + fix for remark ([#21188](https://github.com/gatsbyjs/gatsby/issues/21188)) ([82c05aa](https://github.com/gatsbyjs/gatsby/commit/82c05aa))
+
 ## [1.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.8...gatsby-plugin-mdx@1.1.9) (2020-04-17)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

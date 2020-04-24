@@ -101,10 +101,11 @@ function Sidebar({
   )
 
   // Merge hash in local storage and the derived hash from props
+  // so that all sections open in either hash are open
   const initialHash = (() => {
     const { openSectionHash = {} } = readLocalStorage(sidebarKey)
     for (const [key, isOpen] of Object.entries(derivedHash)) {
-      openSectionHash[key] = openSectionHash[key] ?? isOpen
+      openSectionHash[key] = openSectionHash[key] || isOpen
     }
     return openSectionHash
   })()
