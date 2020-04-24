@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.13...gatsby-recipes@0.0.14) (2020-04-24)
+
+### Bug Fixes
+
+- **gatsby-admin:** Setup Gatsby Admin site ([#23291](https://github.com/gatsbyjs/gatsby/issues/23291)) ([385dfae](https://github.com/gatsbyjs/gatsby/commit/385dfae))
+
 ## [0.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.12...gatsby-recipes@0.0.13) (2020-04-24)
 
 ### Bug Fixes
