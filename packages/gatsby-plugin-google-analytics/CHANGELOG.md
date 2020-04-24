@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.2.4...gatsby-plugin-google-analytics@2.2.5) (2020-04-24)
+
+### Features
+
+- **analytics:** defer google analytics script ([#22806](https://github.com/gatsbyjs/gatsby/issues/22806)) ([fb15bab](https://github.com/gatsbyjs/gatsby/commit/fb15bab))
+
 ## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.2.3...gatsby-plugin-google-analytics@2.2.4) (2020-04-17)
 
 ### Bug Fixes
