@@ -143,7 +143,6 @@ function getExitLocation(filters = {}) {
 
 function ShowcaseModal({ children, location, isModal }) {
   if (!isModal) return children
-  const { previousSite, nextSite } = usePrevAndNextSite(location.pathname)
   const { filters } = location.state || {}
   const { previousSite, nextSite } = usePrevAndNextSite(
     location.pathname,
