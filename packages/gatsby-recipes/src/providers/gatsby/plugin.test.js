@@ -61,14 +61,25 @@ describe(`gatsby-plugin resource`, () => {
 
   test(`does not add the same plugin twice by default`, async () => {
     const configSrc = await fs.readFile(configPath, `utf8`)
-    const newConfigSrc = addPluginToConfig(configSrc, {
+    let newConfigSrc = addPluginToConfig(configSrc, {
       name: `gatsby-plugin-react-helmet`,
     })
+    newConfigSrc = addPluginToConfig(newConfigSrc, {
+      name: `gatsby-plugin-foo`,
+    })
+    newConfigSrc = addPluginToConfig(newConfigSrc, {
+      name: `gatsby-plugin-mdx`,
+    })
     const plugins = getPluginsFromConfig(newConfigSrc)
+    const plugins1 = [...new Set(plugins)]
 
-    const result = [...new Set(plugins)]
+    newConfigSrc = addPluginToConfig(newConfigSrc, {
+      name: `gatsby-plugin-react-helmet`,
+    })
 
-    expect(result).toEqual(plugins)
+    const plugins2 = getPluginsFromConfig(newConfigSrc)
+
+    expect(plugins1).toEqual(plugins2)
   })
 
   // A key isn't required for gatsby plugin, but when you want to distinguish
