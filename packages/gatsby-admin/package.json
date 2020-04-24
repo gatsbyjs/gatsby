@@ -1,0 +1,23 @@
+{
+  "name": "gatsby-admin",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": "Max Stoiber",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@typescript-eslint/parser": "^2.28.0",
+    "@typescript-eslint/eslint-plugin": "^2.28.0",
+    "gatsby": "^2.20.25",
+    "gatsby-source-graphql": "^2.4.2",
+    "gatsby-plugin-typescript": "^2.3.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "subscriptions-transport-ws": "^0.9.16",
+    "typescript": "^3.8.3",
+    "urql": "^1.9.5"
+  },
+  "scripts": {
+    "develop": "gatsby develop"
+  }
+}
