@@ -629,7 +629,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     const urls = prepareUrls(
       program.ssl ? `https` : `http`,
       program.host,
-      program.port
+      program.proxyPort
     )
     const isSuccessful = !messages.errors.length
 

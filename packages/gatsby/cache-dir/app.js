@@ -37,7 +37,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       parentSocket.on(`gatsby:develop:needs-restart`, msg => {
         if (
           window.confirm(
-            `${msg.reason}, Gatsby develop process needs to be restarted.`
+            `${msg.reason}, Gatsby develop process needs to be restarted. Do you want to restart now?`
           )
         ) {
           parentSocket.emit(`gatsby:develop:do-restart`)

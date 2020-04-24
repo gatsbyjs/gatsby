@@ -44,6 +44,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     const args = ${JSON.stringify({
       ...program,
       port: developPort,
+      proxyPort,
     })};
     cmd(args);
   `)
