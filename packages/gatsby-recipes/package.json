@@ -8,7 +8,10 @@
   },
   "dependencies": {
     "@babel/core": "^7.8.7",
+    "@babel/generator": "^7.9.5",
     "@babel/standalone": "^7.9.5",
+    "@babel/template": "^7.8.6",
+    "@babel/types": "^7.9.5",
     "@hapi/joi": "^15.1.1",
     "@mdx-js/mdx": "^1.5.8",
     "@mdx-js/react": "^1.5.8",
