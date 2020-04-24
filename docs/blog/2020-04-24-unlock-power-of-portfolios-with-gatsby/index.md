@@ -9,7 +9,7 @@ tags:
 ---
 In our recent webinar [Getting Started with Gatsby: Building Your Portfolio Site](https://www.gatsbyjs.com/build-portfolio-site-webinar-video/), Tiffany White and Nathan Leon described how using Gatsby transformed the process of building their portfolios. These days, portfolios are far more than just "Resume 2.0" or the post-business-card business card. Modern portfolios showcase skills developers are passionate about, like animation or illustration, while adding to their marketable skill-sets.
 
-Portfolios are key to landing that dream job, and both Tiffany and Nathan were building their portfolios to pursue new better-fit positions that reflect their passions. Tiffany is a front end web developer, instructor at EggHead.io, and an extensive blogger. Nathan is a front end engineer in Washington DC and is passionate about CSS, React, and Gelato.  
+Portfolios are key to landing that dream job, and both Tiffany and Nathan were building their portfolios to pursue new better-fit positions that reflect their passions. Tiffany is a front end web developer, instructor at egghead.io, and an extensive blogger. Nathan is a front end engineer in Washington DC and is passionate about CSS, React, and Gelato.  
 
 ## Old-School Portfolios: Slow and Bland  
 
