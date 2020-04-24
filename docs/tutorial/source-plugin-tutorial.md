@@ -23,7 +23,7 @@ _**NOTE:** if your data is local i.e. on your file system and part of your site'
 
 ### Overview
 
-Your plugin will source blog posts and authors from the demo API, link the posts and authors, and take image URLs from the posts and optimize them automatically. You'll be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
+The plugin in this tutorial will source blog posts and authors from the demo API, link the posts and authors, and take image URLs from the posts and optimize them automatically. You'll be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
 
 The code for this tutorial can be referenced from [its place in the examples folder of the Gatsby repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins). You can clone this code and delete the `source-plugin` and `example-site` folders to follow along.
 
