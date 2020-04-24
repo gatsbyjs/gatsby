@@ -714,11 +714,11 @@ export const query = graphql`
 `
 ```
 
-This code uses a [page query](/docs/page-query/) to fetch all posts and provide them to the component in the `data` prop at build time. The posts are looped through and rendered to the DOM.
+This code uses a [page query](/docs/page-query/) to fetch all posts and provide them to the component in the `data` prop at build time. The JSX code loops through the posts so they can be rendered to the DOM.
 
 ### Using plugin options to customize plugin usage
 
-You can pass options into a plugin through the `gatsby-config.js`. Update the code where your plugin is installed in the `example-site`, changing it from a string, to an object with a `resolve` and `options` key.
+You can pass options into a plugin through a `gatsby-config.js` file. Update the code where your plugin is installed in the `example-site`, changing it from a string, to an object with a `resolve` and `options` key.
 
 ```javascript:title=example-site/gatsby-config.js
 module.exports = {
@@ -737,7 +737,7 @@ module.exports = {
 }
 ```
 
-Now you can access the second argument on Node APIs to access the options passed in. Add an argument called `pluginOptions` to your `sourceNodes` function.
+Now the options you designated (like `previewMode: true`) will be passed into each of the Gatsby Node APIs like `sourceNodes`, making options accessible inside of Gatsby APIs. Add an argument called `pluginOptions` to your `sourceNodes` function.
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
@@ -759,9 +759,9 @@ Options can be a good way of providing conditional paths to logic that you as a 
 
 The data sourced for your site was fetched using Apollo Client which supports subscriptions. GraphQL subscriptions _listen_ for changes in data and return changes to the GraphQL client. Your source plugin is able to listen—or subscribe—to the new data that is incoming. That means if a post has something on it updated, your source plugin can listen for that change and update the data in your site without having to restart your site, neat!
 
-The API you connect to needs to provides support for live changes to data in order for this to be possible. You can read about other options for live data updates in the [creating a source plugin guide](/docs/creating-a-source-plugin/).
+The API you connect to needs to provide support for live changes to data in order for this to be possible. You can read about other options for live data updates in the [creating a source plugin guide](/docs/creating-a-source-plugin/).
 
-You already setup your client to handle subscriptions by providing a websocket link (`ws://localhost:4000` or `ws://gatsby-source-plugin-api.glitch.me/`). Now you need to add some logic to your `sourceNodes` function to handle updating and deleting nodes, rather than just creating them. The first step will be touching nodes, to make sure that Gatsby doesn't discard the nodes that don't get updated when `sourceNodes` gets called.
+You already set up your client to handle subscriptions by providing a websocket link (`ws://localhost:4000` or `ws://gatsby-source-plugin-api.glitch.me/`). Now you need to add some logic to your `sourceNodes` function to handle updating and deleting nodes, rather than just creating them. The first step will be touching nodes, to make sure that Gatsby doesn't discard the nodes that don't get updated when `sourceNodes` gets called.
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
@@ -928,12 +928,12 @@ exports.sourceNodes = async (
 
 Posts that are changed on the backend while Gatsby is running will be created if they are new or updated, and deleted if they were deleted on the backend.
 
-You can test that this is working by running the site again and updating one of the posts. When you run the site this time you should see the message logged in the console: `Subscribing to content updates...` that was added. Now, running an `updatePost` or `deletePost` mutation on the GraphQL server will send information to the subscription because it is now listening.
+You can test that this is working by running the site again and updating one of the posts. When you run the site this time you should see a message logged in the console: `Subscribing to content updates...`. Now, running an `updatePost` or `deletePost` mutation on the GraphQL server will send information to the subscription because it is now listening.
 
 Follow these steps to test it out:
 
-1. open up your site at `localhost:8000` after you run `gatsby develop`
-2. open up the GraphQL playground at `localhost:4000` (if you are running the `api` folder locally) or `https://gatsby-source-plugin-api.glitch.me/` and first run a query for posts:
+1. Open up your site at `localhost:8000` after you run `gatsby develop`
+2. Open up the GraphQL playground at `localhost:4000` (if you are running the `api` folder locally) or `https://gatsby-source-plugin-api.glitch.me/` and first run a query for posts:
 
 ```graphql
 query {
@@ -944,8 +944,8 @@ query {
 }
 ```
 
-3. copy the ID from the post that you would like to update
-4. inside the GraphQL playground, run an update post mutation, replacing `<id>` with the ID you just copied
+3. Copy the ID from the post that you would like to update
+4. Inside the GraphQL playground, run an update post mutation, replacing `<id>` with the ID you just copied
 
 ```graphql
 mutation {
@@ -955,9 +955,9 @@ mutation {
 }
 ```
 
-5. when you run the mutation the data will be updated on the backend, the subscription will recognize the change, Gatsby will update the node, and your page query will render the new data
+5. When you run the mutation the data will be updated on the backend, the subscription will recognize the change, Gatsby will update the node, and your page query will render the new data
 
-It's so fast it's a blink and you'll miss it kind of moment, so try running another mutation or even run a `deletePost` mutation to make it easier to see the changes!
+It's so fast that it's a blink and you'll miss it kind of moment, so try running another mutation or even run a `deletePost` mutation to make it easier to see the changes!
 
 ## Publishing a plugin
 
