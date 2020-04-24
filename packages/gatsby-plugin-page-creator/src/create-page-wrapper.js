@@ -3,12 +3,12 @@ const {
   createPagesFromCollectionBuilder,
 } = require(`./create-pages-from-collection-builder`)
 const systemPath = require(`path`)
-const fs = require("fs-extra")
+const fs = require(`fs-extra`)
 
 const pathIsCCollectionBuilder = path => {
   if (fs.existsSync(path) === false) return false
   const js = fs.readFileSync(path).toString()
-  return js.includes("createPagesFromData")
+  return js.includes(`createPagesFromData`)
 }
 
 exports.createPage = (filePath, pagesDirectory, actions, ignore, graphql) => {

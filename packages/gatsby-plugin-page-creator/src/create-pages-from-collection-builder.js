@@ -1,13 +1,13 @@
 // Move this to gatsby-core-utils?
 
-const { babelParseToAst } = require("gatsby/dist/utils/babel-parse-to-ast")
+const { babelParseToAst } = require(`gatsby/dist/utils/babel-parse-to-ast`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const { derivePath } = require(`./utils/derive-path`)
-const fs = require("fs-extra")
-const traverse = require("@babel/traverse").default
-const generate = require("@babel/generator").default
-const t = require("@babel/types")
-const systemPath = require("path")
+const fs = require(`fs-extra`)
+const traverse = require(`@babel/traverse`).default
+const generate = require(`@babel/generator`).default
+const t = require(`@babel/types`)
+const systemPath = require(`path`)
 
 function isCreatePagesFromData(path) {
   return (
@@ -60,7 +60,7 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
     },
   })
 
-  const [root, route] = absolutePath.split("src/pages")
+  const [root, route] = absolutePath.split(`src/pages`)
   const id = createContentDigest(route)
   const collectionCoponentsFolder = systemPath.join(
     root,
@@ -69,8 +69,9 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
   const tempPath = systemPath.join(collectionCoponentsFolder, `${id}.js`)
 
   // -- create the dir if it doesnt exist
-  fs.existsSync(collectionCoponentsFolder) === false &&
+  if (fs.existsSync(collectionCoponentsFolder) === false) {
     fs.mkdirSync(collectionCoponentsFolder)
+  }
 
   // -- write the compiled component to a cache file
   fs.writeFileSync(tempPath, generate(ast).code)
