@@ -41,7 +41,6 @@
     "gatsby-plugin-emotion": "^4.2.3",
     "gatsby-plugin-mdx": "^1.1.11",
     "gatsby-plugin-meta-redirect": "^1.1.1",
-    "gatsby-plugin-og-image": "0.0.1",
     "gatsby-plugin-redirects": "^1.0.0",
     "gatsby-plugin-theme-ui": "^0.2.53",
     "gatsby-source-filesystem": "^2.2.5",
