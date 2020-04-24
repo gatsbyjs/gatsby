@@ -3,17 +3,17 @@ title: "Creating a Source Plugin"
 tableOfContentsDepth: 2
 ---
 
-In this tutorial you'll create your own source plugin that will gather data from an API. The plugin will source data, optimize remote images, and create foreign key relationships between data pulled by your plugin.
+In this tutorial you'll create your own source plugin that will gather data from an API. The plugin will source data, optimize remote images, and create foreign key relationships between data sourced by your plugin.
 
 ## What is a source plugin?
 
-Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface/). This tutorial uses a demo API so that you can see how the data works on both frontend and backend, but the same principles apply if you would like to source data from another API.
+Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface/). This tutorial uses a demo API so that you can see how the data works on both the frontend and backend, but the same principles apply if you would like to source data from another API.
 
-For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/creating-a-source-plugin/)
+For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/creating-a-source-plugin/).
 
 ## Why create a source plugin?
 
-Source plugins convert data from any source into a format that can be processed by Gatsby. Your Gatsby site could use several source plugins to combine data in interesting ways.
+Source plugins convert data from any source into a format that Gatsby can process. Your Gatsby site can use several source plugins to combine data in interesting ways.
 
 There may not be [an existing plugin](/plugins/?=gatsby-source) for your data source, so you can create your own.
 
@@ -23,13 +23,13 @@ _**NOTE:** if your data is local i.e. on your file system and part of your site'
 
 ### Overview
 
-Your plugin will source blog posts and authors from the demo API, link the posts and authors, and take image URLs from the posts and optimize them automatically. You'll be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
+The plugin in this tutorial will source blog posts and authors from the demo API, link the posts and authors, and take image URLs from the posts and optimize them automatically. You'll be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
 
-The code for this tutorial can be referenced from [its place in the examples folder of the Gatsby repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins). You can clone this code and delete the `source-plugin` and `example-site` folders to follow along.
+This tutorial builds off of an existing Gatsby site and some data. If you want to follow along with this tutorial you can find the codebase inside [the examples folder of the Gatsby repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins). Once you clone this code make sure to delete the `source-plugin` and `example-site` folders, otherwise the tutorial steps will already be done.
 
 #### An example API request
 
-To see the API in action you can run it locally by navigating into the `api` folder, installing dependencies with `npm install`, and starting the server with `npm start`. You will then be able to navigate to a GraphQL playground running at `http://localhost:4000`. This is a GraphQL server running in Node.js and is _separate from Gatsby_, this server could be replaced with a different backend and the patterns in this tutorial would remain the same.
+To see the API in action you can run it locally by navigating into the `api` folder, installing dependencies with `npm install`, and starting the server with `npm start`. You will then be able to navigate to a GraphQL playground running at `http://localhost:4000`. This is a GraphQL server running in Node.js and is _separate from Gatsby_, this server could be replaced with a different backend or data source and the patterns in this tutorial would remain the same. Other possible examples could be a REST API, local files, or even a database, so long as you can access data it can be sourced.
 
 If you paste the following query into the left side of the window and press the play button you should see data for posts with their IDs and descriptions returned:
 
@@ -56,11 +56,11 @@ Your plugin will have the following behavior:
 - Accept plugin options to customize how your plugin works
 - Optimize images from Unsplash URLs so they can be used with `gatsby-image`
 
-### Setup projects for plugin development
+### Set up projects for plugin development
 
 You'll need to setup an example site and create a plugin inside it to begin building.
 
-#### Setup an example site
+#### Set up an example site
 
 Create a new Gatsby site with the `gatsby new` command, based on the hello world starter.
 
@@ -70,7 +70,7 @@ gatsby new example-site https://github.com/gatsbyjs/gatsby-starter-hello-world
 
 This site generated by the `new` command is where the plugin will be installed, giving you a place to test the code for your plugin.
 
-#### Setup a source plugin
+#### Set up a source plugin
 
 Create a new Gatsby plugin with the `gatsby new` command, this time based on the plugin starter.
 
@@ -94,23 +94,23 @@ Your plugin starts with a few files from the starter, which can be seen in the s
 └── README.md
 ```
 
-The file where all the logic will live is in the **`gatsby-node.js`**. This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.org/docs/node-apis/). These allow customization/extension of default Gatsby settings affecting pieces of the site build process. This file is where all the logic for sourcing data will live.
+The biggest changes will be in **`gatsby-node.js`**. This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](/docs/node-apis/). These allow customization/extension of default Gatsby settings affecting pieces of the site build process. This file is where all the logic for sourcing data will live.
 
 #### Install your plugin in the example site
 
-You need to install your plugin in the site to be able to test that your code is running. Gatsby only knows to run plugins that are included in its `gatsby-config.js` file. Open up the `gatsby-config.js` file in the `example-site` and [add your plugin using `require.resolve`](/docs/creating-a-local-plugin/#using-requireresolve-and-a-filepath).
+You need to install your plugin in the site to be able to test that your code is running. Gatsby only knows to run plugins that are included in its `gatsby-config.js` file. Open up the `gatsby-config.js` file in the `example-site` and [add your plugin using `require.resolve`](/docs/creating-a-local-plugin/#using-requireresolve-and-a-filepath). If you decide to publish your plugin it can be installed with an `npm install <plugin-name>` and including the name of the plugin in the config instead of `require.resolve`.
 
 ```javascript:title=example-site/gatsby-config.js
 module.exports = {
-  plugins: [require.resolve(`../source-plugin`)]
+  plugins: [require.resolve(`../source-plugin`)],
 }
 ```
 
-_You can include the plugin by using solely its name if you are using [npm link or yarn workspaces](/docs/creating-a-local-plugin/#using-npm-link-or-yarn-link) or place your `source-plugin` in [`example-site/plugins`](/docs/creating-a-local-plugin/) instead of being in a folder a step above and using `require.resolve`._
+_You can include the plugin by using its name if you are using [npm link or yarn workspaces](/docs/creating-a-local-plugin/#using-npm-link-or-yarn-link) or place your `source-plugin` in [`example-site/plugins`](/docs/creating-a-local-plugin/) instead of being in a folder a step above and using `require.resolve`._
 
 You can now navigate into the `example-site` folder and run `gatsby develop`. You should see a line in the output in the terminal that shows your plugin loaded:
 
-```text
+```shell
 $ gatsby develop
 success open and validate gatsby-configs - 0.033s
 success load plugins - 0.074s
@@ -119,7 +119,7 @@ success onPreInit - 0.016s
 ...
 ```
 
-If you open your `gatsby-node.js` file you will see the `console.log` that is resulting in the output in the terminal.
+If you open your `gatsby-node.js` file you will see the `console.log` that produces that output in the terminal.
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.onPreInit = () => console.log("Loaded gatsby-starter-plugin")
@@ -131,7 +131,7 @@ Data is sourced in the `gatsby-node.js` file of source plugins or Gatsby sites. 
 
 #### Create nodes inside of `sourceNodes` with the `createNode` function
 
-Open up the `gatsby-node.js` file in the `source-plugin` and add the following code to create nodes from a hardcoded array of data :
+Open up the `gatsby-node.js` file in the `source-plugin` project and add the following code to create nodes from a hardcoded array of data :
 
 ```javascript:title=source-plugin/gatsby-node.js
 // constants for your GraphQL Post and Author types
@@ -141,15 +141,15 @@ exports.sourceNodes = async ({
   actions,
   createContentDigest,
   createNodeId,
-  getNodesByType
+  getNodesByType,
 }) => {
   const { createNode } = actions
 
   const data = {
     posts: [
       { id: 1, description: `Hello world!` },
-      { id: 2, description: `Second post!` }
-    ]
+      { id: 2, description: `Second post!` },
+    ],
   }
 
   // loop through data and create Gatsby nodes
@@ -162,8 +162,8 @@ exports.sourceNodes = async ({
       internal: {
         type: POST_NODE_TYPE,
         content: JSON.stringify(post),
-        contentDigest: createContentDigest(post)
-      }
+        contentDigest: createContentDigest(post),
+      },
     })
   )
 
@@ -171,9 +171,10 @@ exports.sourceNodes = async ({
 }
 ```
 
-This code creates Gatsby node's that are queryable in a site. To the following steps break down what is happening in the code:
+This code creates Gatsby nodes that are queryable in a site. The following bullets break down what is happening in the code:
 
 - you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process, and pulled out some Gatsby helpers (like `createContentDigest` and `createNodeId`) to facilitate creating nodes
+- you provided the required fields for the node like creating a node ID and a content digest (which Gatsby uses to track dirty nodes—or nodes that have changed), the content digest should include the whole content of the item (`post` in this case)
 - then you stored some data in an array and looped through it, calling `createNode` on each post in the array
 
 If you run the `example-site` with `gatsby develop`, you can now open up `http://localhost:8000/___graphql` and query your posts with this query:
@@ -209,7 +210,7 @@ Open your `package.json` file after installation and you'll see the packages hav
 
 #### Configure an Apollo client to fetch data
 
-Import the handful of Apollo packages that you installed that help setup an Apollo client in your plugin:
+Import the handful of Apollo packages that you installed to help set up an Apollo client in your plugin:
 
 ```javascript:title=source-plugin/gatsby-node.js
 // highlight-start
@@ -268,7 +269,7 @@ exports.sourceNodes = async ({
 // ...
 ```
 
-You can read about each of the packages that are working together in [Apollo's docs](https://www.apollographql.com/docs/react/), but the end result is creating a `client` that you can use to call methods like `query` on to get data from the source it's configured to work with. In this case, that is `localhost:4000` where you should have the API running. If you can't configure the API to run locally, you can update the URLs for the client to use `gatsby-source-plugin-api.glitch.me` where a version of the API is deployed, instead of `localhost:4000`.
+You can read about each of the packages that are working together in [Apollo's docs](https://www.apollographql.com/docs/react/). The end result is creating a `client` that you can use to call methods like `query` to get data from the source it's configured to work with. In this case, that is `localhost:4000` where you should have the API running. If you can't configure the API to run locally, you can update the URLs for the client to use `gatsby-source-plugin-api.glitch.me` where a version of the API is deployed, instead of `localhost:4000`.
 
 #### Query data from the API
 
@@ -303,7 +304,7 @@ Now you can replace the hardcoded data in the `sourceNodes` function with a Grap
     // ...
 ```
 
-Now you're creating nodes based on data coming from the API, neat! However, only the `id` and `description` fields are coming back from the API and being saved to each node, so add the rest of the fields to the query so that there will be the same data available to Gatsby.
+Now you're creating nodes based on data coming from the API, neat! However, only the `id` and `description` fields are coming back from the API and being saved to each node, so add the rest of the fields to the query so that the same data is available to Gatsby.
 
 This is also a good time to add data to your query so that it also returns authors.
 
@@ -329,7 +330,7 @@ const { data } = await client.query({
       }
       // highlight-end
     }
-  `
+  `,
 })
 ```
 
@@ -343,7 +344,7 @@ exports.sourceNodes = async ({
   actions,
   createContentDigest,
   createNodeId,
-  getNodesByType
+  getNodesByType,
 }) => {
   const { createNode, touchNode, deleteNode } = actions
 
@@ -366,7 +367,7 @@ exports.sourceNodes = async ({
           name
         }
       }
-    `
+    `,
   })
 
   // loop through data returned from the api and create Gatsby nodes for them
@@ -379,8 +380,8 @@ exports.sourceNodes = async ({
       internal: {
         type: POST_NODE_TYPE,
         content: JSON.stringify(post),
-        contentDigest: createContentDigest(post)
-      }
+        contentDigest: createContentDigest(post),
+      },
     })
   )
   // highlight-start
@@ -393,8 +394,8 @@ exports.sourceNodes = async ({
       internal: {
         type: AUTHOR_NODE_TYPE,
         content: JSON.stringify(author),
-        contentDigest: createContentDigest(author)
-      }
+        contentDigest: createContentDigest(author),
+      },
     })
   )
   // highlight-end
@@ -429,17 +430,17 @@ Each node of post data has an `imgUrl` field with the URL of an image on Unsplas
 
 You can read about [how to use Gatsby Image to prevent image bloat](/docs/using-gatsby-image/) if you are unfamiliar with it.
 
-#### Create `remoteFilenNode`'s from a URL
+#### Create `remoteFileNode`'s from a URL
 
-To create optimized images from URLs, `File` nodes for image files need to be added to your site's data. Then, `gatsby-plugin-sharp` and `gatsby-transformer-sharp` need to be installed, and they will automatically find image files and add the data needed for `gatsby-image`.
+To create optimized images from URLs, `File` nodes for image files need to be added to your site's data. Then, you can install `gatsby-plugin-sharp` and `gatsby-transformer-sharp` which will automatically find image files and add the data needed for `gatsby-image`.
 
-Start by installing `gatsby-source-filesystem` in the `source-plugin`:
+Start by installing `gatsby-source-filesystem` in the `source-plugin` project:
 
 ```shell:title=source-plugin
 npm install gatsby-source-filesystem
 ```
 
-Now in your plugin's `gatsby-node`, you can implement a new API that gets called everytime a node is created called `onCreateNode`. You can check if the node created was one of your `Post` nodes, and if it was, create a file from the URL on the `imgUrl` field.
+Now in your plugin's `gatsby-node.js` file, you can implement a new API,  called `onCreateNode`, that gets called every time a node is created. You can check if the node created was one of your `Post` nodes, and if it was, create a file from the URL on the `imgUrl` field.
 
 Import the `createRemoteFileNode` helper from `gatsby-source-filesystem`, which will download a file from a remote location and create a `File` node for you.
 
@@ -466,7 +467,7 @@ exports.onCreateNode = async ({
   node, // the node that was just created
   actions: { createNode },
   createNodeId,
-  getCache
+  getCache,
 }) => {
   if (node.internal.type === POST_NODE_TYPE) {
     const fileNode = await createRemoteFileNode({
@@ -475,7 +476,7 @@ exports.onCreateNode = async ({
       parentNodeId: node.id,
       createNode,
       createNodeId,
-      getCache
+      getCache,
     })
 
     if (fileNode) {
@@ -485,7 +486,7 @@ exports.onCreateNode = async ({
 }
 ```
 
-This code is called every time a node is created, i.e. when `createNode` is invoked. Each time it is called in the `sourceNodes` step, the condition will check if the node was a `Post` node since those are the only nodes with an image associated with them in your case. Then a remote node is created, if it's successful, the `fileNode` is returned. The next few lines are important:
+This code is called every time a node is created, e.g. when `createNode` is invoked. Each time it is called in the `sourceNodes` step, the condition will check if the node was a `Post` node. Since those are the only nodes with an image associated with them, that is the only time images need to be optimized. Then a remote node is created, if it's successful, the `fileNode` is returned. The next few lines are important:
 
 ```javascript:title=source-plugin/gatsby-node.js
 if (fileNode) {
@@ -494,7 +495,7 @@ if (fileNode) {
 }
 ```
 
-By assigning a field called `remoteImage___NODE` the ID of the `File` node that was created, Gatsby will be able to [infer](/docs/glossary#inference) a connection between this field and the file node. This will allow fields on the file to be queried from the post node.
+By assigning a field called `remoteImage___NODE` to the ID of the `File` node that was created, Gatsby will be able to [infer](/docs/glossary#inference) a connection between this field and the file node. This will allow fields on the file to be queried from the post node.
 
 ```graphql
 # leaving off the ___NODE field will give you:
@@ -542,13 +543,13 @@ module.exports = {
     require.resolve(`../source-plugin`),
     // highlight-start
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`
+    `gatsby-transformer-sharp`,
     // highlight-end
-  ]
+  ],
 }
 ```
 
-By installing the sharp plugins in the site, they'll run after the source plugin and transform the file nodes and add fields for the optimized versions at `childImageSharp`. The transformer plugin looks for `File` nodes with extensions like `.jpg` and `.png` to create optimized images from, and creates the GraphQL fields for you.
+By installing the sharp plugins in the site, they'll run after the source plugin and transform the file nodes and add fields for the optimized versions at `childImageSharp`. The transformer plugin looks for `File` nodes with extensions like `.jpg` and `.png` to create optimized images and creates the GraphQL fields for you.
 
 Now when you run your site, you will also be able to query a `childImageSharp` field on the `post.remoteImage`:
 
@@ -600,7 +601,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-The `author: Author @link(from: "author.name" by: "name")` line tells Gatsby to look for the value on the post node at `post.author.name` and relate it with an `Author` node with a matching `name`. This demonstrates the ability to link using more than just an ID.
+The `author: Author @link(from: "author.name" by: "name")` line tells Gatsby to look for the value on the `Post` node at `post.author.name` and relate it with an `Author` node with a matching `name`. This demonstrates the ability to link using more than just an ID.
 
 The line `remoteImage: File @link` tells Gatsby to look for a `remoteImage` field on a `Post` node and link it to a `File` node with the ID there.
 
@@ -635,9 +636,9 @@ query {
 
 ### Using data from the source plugin in a site
 
-In the `example-site`, data is now available to be queried from pages.
+In the `example-site`, you can now query data from pages.
 
-Add a file at `example-site/src/pages/index.js` and copy in the following code into it:
+Add a file at `example-site/src/pages/index.js` and copy the following code into it:
 
 ```javascript:title=example-site/src/pages/index.js
 import React from "react"
@@ -647,7 +648,7 @@ import Img from "gatsby-image"
 export default ({ data }) => (
   <div
     style={{
-      padding: 32
+      padding: 32,
     }}
   >
     <h1>Posts</h1>
@@ -656,7 +657,7 @@ export default ({ data }) => (
         display: `grid`,
         gridTemplateColumns: `repeat( auto-fit, minmax(250px, 1fr) )`,
         gridGap: 16,
-        justifyContent: "space-between"
+        justifyContent: "space-between",
       }}
     >
       {data.allPost.nodes.map(post => (
@@ -667,7 +668,7 @@ export default ({ data }) => (
             justifyContent: `space-between`,
             padding: 16,
             border: `1px solid #ccc`,
-            borderRadius: 8
+            borderRadius: 8,
           }}
         >
           <h2>{post.slug}</h2>
@@ -677,7 +678,7 @@ export default ({ data }) => (
             fluid={post.remoteImage.childImageSharp.fluid}
             alt={post.imgAlt}
             style={{
-              maxHeight: 300
+              maxHeight: 300,
             }}
           />
         </div>
@@ -713,11 +714,11 @@ export const query = graphql`
 `
 ```
 
-This code uses a [page query](/docs/page-query/) to fetch all posts and provide them to the component in the `data` prop at build time. The posts are looped through and rendered to the DOM.
+This code uses a [page query](/docs/page-query/) to fetch all posts and provide them to the component in the `data` prop at build time. The JSX code loops through the posts so they can be rendered to the DOM.
 
 ### Using plugin options to customize plugin usage
 
-You can pass options into a plugin through the `gatsby-config.js`. Update the code where your plugin is installed in the `example-site`, changing it from a string, to an object with a `resolve` and `options` key.
+You can pass options into a plugin through a `gatsby-config.js` file. Update the code where your plugin is installed in the `example-site`, changing it from a string, to an object with a `resolve` and `options` key.
 
 ```javascript:title=example-site/gatsby-config.js
 module.exports = {
@@ -726,17 +727,17 @@ module.exports = {
     {
       resolve: require.resolve(`../source-plugin`),
       options: {
-        previewMode: true
-      }
+        previewMode: true,
+      },
     },
     // highlight-end
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`
-  ]
+    `gatsby-transformer-sharp`,
+  ],
 }
 ```
 
-Now you can access the second argument on Node APIs to access the options passed in. Add an argument called `pluginOptions` to your `sourceNodes` function.
+Now the options you designated (like `previewMode: true`) will be passed into each of the Gatsby Node APIs like `sourceNodes`, making options accessible inside of Gatsby APIs. Add an argument called `pluginOptions` to your `sourceNodes` function.
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
@@ -758,9 +759,9 @@ Options can be a good way of providing conditional paths to logic that you as a 
 
 The data sourced for your site was fetched using Apollo Client which supports subscriptions. GraphQL subscriptions _listen_ for changes in data and return changes to the GraphQL client. Your source plugin is able to listen—or subscribe—to the new data that is incoming. That means if a post has something on it updated, your source plugin can listen for that change and update the data in your site without having to restart your site, neat!
 
-The API you connect to needs to provides support for live changes to data in order for this to be possible. You can read about other options for live data updates in the [creating a source plugin guide](/docs/creating-a-source-plugin/).
+The API you connect to needs to provide support for live changes to data in order for this to be possible. You can read about other options for live data updates in the [creating a source plugin guide](/docs/creating-a-source-plugin/).
 
-You already setup your client to handle subscriptions by providing a websocket link (`ws://localhost:4000` or `ws://gatsby-source-plugin-api.glitch.me/`). Now you need to add some logic to your `sourceNodes` function to handle updating and deleting nodes, rather than just creating them. The first step will be touching nodes, to make sure that Gatsby doesn't discard the nodes that don't get updated when `sourceNodes` gets called.
+You already set up your client to handle subscriptions by providing a websocket link (`ws://localhost:4000` or `ws://gatsby-source-plugin-api.glitch.me/`). Now you need to add some logic to your `sourceNodes` function to handle updating and deleting nodes, rather than just creating them. The first step will be touching nodes, to make sure that Gatsby doesn't discard the nodes that don't get updated when `sourceNodes` gets called.
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
@@ -842,7 +843,7 @@ exports.sourceNodes = async (
             status
           }
         }
-      `
+      `,
     })
     // highlight-end
   }
@@ -884,7 +885,7 @@ exports.sourceNodes = async (
             status
           }
         }
-      `
+      `,
     })
     // highlight-start
     subscription.subscribe(({ data }) => {
@@ -895,7 +896,7 @@ exports.sourceNodes = async (
         switch (post.status) {
           case "deleted":
             deleteNode({
-              node: getNode(nodeId)
+              node: getNode(nodeId),
             })
             break
           case "created":
@@ -911,8 +912,8 @@ exports.sourceNodes = async (
               internal: {
                 type: POST_NODE_TYPE,
                 content: JSON.stringify(post),
-                contentDigest: createContentDigest(post)
-              }
+                contentDigest: createContentDigest(post),
+              },
             })
             break
         }
@@ -927,12 +928,12 @@ exports.sourceNodes = async (
 
 Posts that are changed on the backend while Gatsby is running will be created if they are new or updated, and deleted if they were deleted on the backend.
 
-You can test that this is working by running the site again and updating one of the posts. When you run the site this time you should see the message logged in the console: `Subscribing to content updates...` that was added. Now, running an `updatePost` or `deletePost` mutation on the GraphQL server will send information to the subscription because it is now listening.
+You can test that this is working by running the site again and updating one of the posts. When you run the site this time you should see a message logged in the console: `Subscribing to content updates...`. Now, running an `updatePost` or `deletePost` mutation on the GraphQL server will send information to the subscription because it is now listening.
 
 Follow these steps to test it out:
 
-1. open up your site at `localhost:8000` after you run `gatsby develop`
-2. open up the GraphQL playground at `localhost:4000` (if you are running the `api` folder locally) or `https://gatsby-source-plugin-api.glitch.me/` and first run a query for posts:
+1. Open up your site at `localhost:8000` after you run `gatsby develop`
+2. Open up the GraphQL playground at `localhost:4000` (if you are running the `api` folder locally) or `https://gatsby-source-plugin-api.glitch.me/` and first run a query for posts:
 
 ```graphql
 query {
@@ -943,8 +944,8 @@ query {
 }
 ```
 
-3. copy the ID from the post that you would like to update
-4. inside the GraphQL playground, run an update post mutation, replacing `<id>` with the ID you just copied
+3. Copy the ID from the post that you would like to update
+4. Inside the GraphQL playground, run an update post mutation, replacing `<id>` with the ID you just copied
 
 ```graphql
 mutation {
@@ -954,9 +955,9 @@ mutation {
 }
 ```
 
-5. when you run the mutation the data will be updated on the backend, the subscription will recognize the change, Gatsby will update the node, and your page query will render the new data
+5. When you run the mutation the data will be updated on the backend, the subscription will recognize the change, Gatsby will update the node, and your page query will render the new data
 
-It's so fast it's a blink and you'll miss it kind of moment, so try running another mutation or even run a `deletePost` mutation to make it easier to see the changes!
+It's so fast that it's a blink and you'll miss it kind of moment, so try running another mutation or even run a `deletePost` mutation to make it easier to see the changes!
 
 ## Publishing a plugin
 
