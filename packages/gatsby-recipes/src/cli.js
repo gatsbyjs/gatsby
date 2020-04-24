@@ -19,6 +19,7 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 const SelectInput = require(`ink-select-input`).default
+const semver = require(`semver`)
 
 const MAX_UI_WIDTH = 67
 
@@ -29,6 +30,13 @@ const MAX_UI_WIDTH = 67
 // process.on("exit", () => {
 // process.stdout.write(leaveAltScreenCommand)
 // })
+
+// Check for what version of React is loaded & warn if it's too low.
+if (semver.lt(React.version, `16.8.0`)) {
+  console.log(
+    `Recipes works best with newer versions of React. Please file a bug report if you see this warning.`
+  )
+}
 
 const WelcomeMessage = () => (
   <>

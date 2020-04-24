@@ -53,6 +53,7 @@
     "pkg-dir": "^4.2.0",
     "prettier": "^2.0.4",
     "remark-stringify": "^8.0.0",
+    "semver": "^7.3.2",
     "single-trailing-newline": "^1.0.0",
     "style-to-object": "^0.3.0",
     "subscriptions-transport-ws": "^0.9.16",
