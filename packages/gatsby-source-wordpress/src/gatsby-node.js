@@ -26,6 +26,7 @@ let _normalizer
 let _normalizers
 let _keepMediaSizes
 let _restApiRoutePrefix
+let _status
 
 exports.sourceNodes = async (
   {
@@ -56,6 +57,7 @@ exports.sourceNodes = async (
     normalizers,
     keepMediaSizes = false,
     restApiRoutePrefix = `wp-json`,
+    status,
   }
 ) => {
   const { createNode, touchNode } = actions
@@ -76,6 +78,7 @@ exports.sourceNodes = async (
   _restApiRoutePrefix = restApiRoutePrefix
   _normalizer = normalizer
   _normalizers = normalizers
+  _status = status
 
   let entities = await fetch({
     baseUrl,
@@ -92,6 +95,7 @@ exports.sourceNodes = async (
     _excludedRoutes,
     _keepMediaSizes,
     _restApiRoutePrefix,
+    _status,
     typePrefix,
     refactoredEntityTypes,
   })

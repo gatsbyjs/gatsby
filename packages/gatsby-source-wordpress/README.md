@@ -119,6 +119,8 @@ module.exports = {
         },
         // Set how many simultaneous requests are sent at once.
         concurrentRequests: 10,
+        // Set which post and page statuses to retrieve if authenticated
+        status: "publish,draft",
         // Set WP REST API routes whitelists
         // and blacklists using glob patterns.
         // Defaults to whitelist the routes shown

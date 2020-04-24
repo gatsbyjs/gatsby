@@ -54,6 +54,7 @@ async function fetch({
   _includedRoutes,
   _excludedRoutes,
   _restApiRoutePrefix,
+  _status,
   typePrefix,
   refactoredEntityTypes,
 }) {
@@ -173,6 +174,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           _cookies,
           _accessToken,
           _concurrentRequests,
+          _status,
         })
       )
       if (_verbose) console.log(``)
@@ -259,6 +261,7 @@ async function fetchData({
   _cookies,
   _accessToken,
   _concurrentRequests,
+  _status,
 }) {
   const { type, url, optionPageId } = route
 
@@ -282,6 +285,7 @@ async function fetchData({
     _accessToken,
     _verbose,
     _concurrentRequests,
+    _status,
   })
 
   let entities = []
@@ -325,6 +329,7 @@ async function fetchData({
               _auth,
               _cookies,
               _accessToken,
+              _status,
             })
           )
         }
@@ -342,6 +347,7 @@ async function fetchData({
             _auth,
             _accessToken,
             _cookies,
+            _status,
           })
         )
       }
@@ -385,6 +391,7 @@ async function getPages(
     _accessToken,
     _concurrentRequests,
     _verbose,
+    _status,
   },
   page = 1
 ) {
@@ -397,6 +404,9 @@ async function getPages(
         url: `${url}?${querystring.stringify({
           per_page: _perPage,
           page: page,
+          ...(_status && (url.includes(`/pages`) || url.includes(`/posts`))
+            ? { status: _status }
+            : {}),
         })}`,
       }
 
