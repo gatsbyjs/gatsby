@@ -43,7 +43,7 @@ export function followVariableDeclarations(binding) {
   const node = binding.path?.node
   if (
     node?.type === `VariableDeclarator` &&
-    node?.id?.type === `Identifier` &&
+    node?.id.type === `Identifier` &&
     node?.init?.type === `Identifier`
   ) {
     return followVariableDeclarations(
