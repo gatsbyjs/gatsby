@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.0.42
+
+### Bug Fixes
+
+- Scoped babel plugin source-map-support to just development env to prevent `warn Module not found: Error: Can't resolve 'fs' in warn Module not found: Error: Can't resolve 'module' in` errors
+
 ## 0.0.41
 
 ### Bug Fixes

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-wordpress-experimental",
   "description": "Source data from WPGraphQL in an efficient and scalable way.",
-  "version": "0.0.41",
+  "version": "0.0.42",
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -54,7 +54,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "prepare": "cross-env NODE_ENV=production BABEL_ENV=production npm run build",
     "prepublishOnly": "npm run test",
     "watch": "babel -w src --out-dir . --ignore **/__tests__ --verbose",
     "setup-test-runtime": "yarn build && cd .test-runtime && rm -rf ./node_modules/gatsby-source-wordpress-experimental && yarn install --check-files && rm -rf ./node_modules/gatbsy-source-wordpress-experimental/.test-runtime",
