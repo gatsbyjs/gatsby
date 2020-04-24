@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.14...gatsby-recipes@0.0.15) (2020-04-24)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Add warning if the version of React is too low ([#23355](https://github.com/gatsbyjs/gatsby/issues/23355)) ([74463e9](https://github.com/gatsbyjs/gatsby/commit/74463e9))
+
+### Features
+
+- **gatsby-recipes:** Allow for basic config objects in plugin resource ([#23433](https://github.com/gatsbyjs/gatsby/issues/23433)) ([aad3716](https://github.com/gatsbyjs/gatsby/commit/aad3716))
+
 ## [0.0.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.13...gatsby-recipes@0.0.14) (2020-04-24)
 
 ### Bug Fixes

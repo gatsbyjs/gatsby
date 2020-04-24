@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.3.5...babel-preset-gatsby@0.3.6) (2020-04-24)
+
+### Bug Fixes
+
+- **optimize-hook-destructuring:** handle skipped items ([#23438](https://github.com/gatsbyjs/gatsby/issues/23438)) ([2cf2dc5](https://github.com/gatsbyjs/gatsby/commit/2cf2dc5))
+
 ## [0.3.5](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.3.4...babel-preset-gatsby@0.3.5) (2020-04-24)
 
 **Note:** Version bump only for package babel-preset-gatsby
