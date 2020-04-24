@@ -15,7 +15,7 @@ const { createPath, watchDirectory } = require(`gatsby-page-utils`)
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
 exports.createPagesStatefully = async (
-  { store, actions, reporter },
+  { store, actions, reporter, graphql },
   { path: pagesPath, pathCheck = true, ignore },
   doneCb
 ) => {
@@ -52,7 +52,7 @@ exports.createPagesStatefully = async (
   // Get initial list of files.
   let files = await glob(pagesGlob, { cwd: pagesPath })
   files.forEach(file =>
-    createPage(file, pagesDirectory, actions.createPage, ignore)
+    createPage(file, pagesDirectory, actions, ignore, graphql)
   )
 
   watchDirectory(
@@ -60,7 +60,7 @@ exports.createPagesStatefully = async (
     pagesGlob,
     addedPath => {
       if (!_.includes(files, addedPath)) {
-        createPage(addedPath, pagesDirectory, actions.createPage, ignore)
+        createPage(addedPath, pagesDirectory, actions, ignore, graphql)
         files.push(addedPath)
       }
     },
