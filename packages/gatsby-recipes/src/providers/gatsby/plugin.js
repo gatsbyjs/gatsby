@@ -320,6 +320,12 @@ const validate = resource => {
     }
   }
 
+  if (resource.key && resource.key === resource.name) {
+    return {
+      error: `${resource.name} requires a key to be different than the plugin name`,
+    }
+  }
+
   return Joi.validate(resource, schema, { abortEarly: false })
 }
 

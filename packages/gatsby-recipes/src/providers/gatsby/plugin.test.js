@@ -81,6 +81,17 @@ describe(`gatsby-plugin resource`, () => {
     )
   })
 
+  test(`validates the gatsby-source-filesystem specifies a key that isn't equal to the name`, async () => {
+    const result = plugin.validate({
+      name: `gatsby-source-filesystem`,
+      key: `gatsby-source-filesystem`,
+    })
+
+    expect(result.error).toEqual(
+      `gatsby-source-filesystem requires a key to be different than the plugin name`
+    )
+  })
+
   test(`adds multiple gatsby-source-filesystems and reads with key`, async () => {
     const context = { root: helloWorldRoot }
     const fooPlugin = {
