@@ -2,7 +2,7 @@
 
 const { babelParseToAst } = require(`gatsby/dist/utils/babel-parse-to-ast`)
 const { createContentDigest } = require(`gatsby-core-utils`)
-const { derivePath } = require(`./utils/derive-path`)
+const { derivePath } = require(`./derive-path`)
 const fs = require(`fs-extra`)
 const traverse = require(`@babel/traverse`).default
 const generate = require(`@babel/generator`).default
@@ -78,9 +78,11 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
 
   // -- Get the data, and create a page for each node
   // Not sure this is enough. Seems really brittle way of getting the array out of the query
-  const { data } = await graphql(queryString)
+  const { data, error } = await graphql(queryString)
+  console.log({ data, error, queryString })
   const nodes = Object.values(data)[0].nodes
   nodes.forEach(node => {
+    console.log(`path!!!`, derivePath(absolutePath, node))
     actions.createPage({
       path: derivePath(absolutePath, node),
       component: tempPath,
