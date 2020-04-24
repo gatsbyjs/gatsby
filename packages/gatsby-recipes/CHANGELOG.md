@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.14...gatsby-recipes@0.0.15) (2020-04-24)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Add warning if the version of React is too low ([#23355](https://github.com/gatsbyjs/gatsby/issues/23355)) ([74463e9](https://github.com/gatsbyjs/gatsby/commit/74463e9))
+
+### Features
+
+- **gatsby-recipes:** Allow for basic config objects in plugin resource ([#23433](https://github.com/gatsbyjs/gatsby/issues/23433)) ([aad3716](https://github.com/gatsbyjs/gatsby/commit/aad3716))
+
+## [0.0.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.13...gatsby-recipes@0.0.14) (2020-04-24)
+
+### Bug Fixes
+
+- **gatsby-admin:** Setup Gatsby Admin site ([#23291](https://github.com/gatsbyjs/gatsby/issues/23291)) ([385dfae](https://github.com/gatsbyjs/gatsby/commit/385dfae))
+
+## [0.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.12...gatsby-recipes@0.0.13) (2020-04-24)
+
+### Bug Fixes
+
+- **gatsby-recipes:** link to the raw gist of .estlintrc.js ([#23390](https://github.com/gatsbyjs/gatsby/issues/23390)) ([3c7d6ee](https://github.com/gatsbyjs/gatsby/commit/3c7d6ee))
+- **gatsby-recipes:** Raise an error when an unknown resource is used ([#23428](https://github.com/gatsbyjs/gatsby/issues/23428)) ([61d8192](https://github.com/gatsbyjs/gatsby/commit/61d8192))
+
+### Features
+
+- **gatsby-recipes:** While apply a step, show the time elapsed after 10 seconds ([#23362](https://github.com/gatsbyjs/gatsby/issues/23362)) ([e42e8e0](https://github.com/gatsbyjs/gatsby/commit/e42e8e0))
+- **gatsby-remark-autolink-headers:** Optionally specify header element types ([#23366](https://github.com/gatsbyjs/gatsby/issues/23366)) ([006953d](https://github.com/gatsbyjs/gatsby/commit/006953d))
+
+## [0.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.11...gatsby-recipes@0.0.12) (2020-04-22)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.10...gatsby-recipes@0.0.11) (2020-04-21)
+
+**Note:** Version bump only for package gatsby-recipes
+
 ## [0.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.9...gatsby-recipes@0.0.10) (2020-04-20)
 
 ### Bug Fixes
