@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.13...gatsby-recipes@0.0.14) (2020-04-24)
+
+### Bug Fixes
+
+- **gatsby-admin:** Setup Gatsby Admin site ([#23291](https://github.com/gatsbyjs/gatsby/issues/23291)) ([385dfae](https://github.com/gatsbyjs/gatsby/commit/385dfae))
+
+## [0.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.12...gatsby-recipes@0.0.13) (2020-04-24)
+
+### Bug Fixes
+
+- **gatsby-recipes:** link to the raw gist of .estlintrc.js ([#23390](https://github.com/gatsbyjs/gatsby/issues/23390)) ([3c7d6ee](https://github.com/gatsbyjs/gatsby/commit/3c7d6ee))
+- **gatsby-recipes:** Raise an error when an unknown resource is used ([#23428](https://github.com/gatsbyjs/gatsby/issues/23428)) ([61d8192](https://github.com/gatsbyjs/gatsby/commit/61d8192))
+
+### Features
+
+- **gatsby-recipes:** While apply a step, show the time elapsed after 10 seconds ([#23362](https://github.com/gatsbyjs/gatsby/issues/23362)) ([e42e8e0](https://github.com/gatsbyjs/gatsby/commit/e42e8e0))
+- **gatsby-remark-autolink-headers:** Optionally specify header element types ([#23366](https://github.com/gatsbyjs/gatsby/issues/23366)) ([006953d](https://github.com/gatsbyjs/gatsby/commit/006953d))
+
+## [0.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.11...gatsby-recipes@0.0.12) (2020-04-22)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.10...gatsby-recipes@0.0.11) (2020-04-21)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.9...gatsby-recipes@0.0.10) (2020-04-20)
+
+### Bug Fixes
+
+- **recipes:** Fix shadow-file resource for scoped NPM packages & re-enable e2e testing for resources ([#23274](https://github.com/gatsbyjs/gatsby/issues/23274)) ([d8fdee6](https://github.com/gatsbyjs/gatsby/commit/d8fdee6))
+
+## [0.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.8...gatsby-recipes@0.0.9) (2020-04-20)
+
+### Bug Fixes
+
+- **recipes:** adjust path to layout component ([#23251](https://github.com/gatsbyjs/gatsby/issues/23251)) ([4043129](https://github.com/gatsbyjs/gatsby/commit/4043129))
+
+## [0.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.7...gatsby-recipes@0.0.8) (2020-04-18)
+
+### Bug Fixes
+
+- **recipes:** Add missing package cors ([#23260](https://github.com/gatsbyjs/gatsby/issues/23260)) ([f48efad](https://github.com/gatsbyjs/gatsby/commit/f48efad))
+
+### Features
+
+- **recipes:** Update gatsby-recipes README.md ([#23232](https://github.com/gatsbyjs/gatsby/issues/23232)) ([2c5e3b8](https://github.com/gatsbyjs/gatsby/commit/2c5e3b8))
+
 ## [0.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.6...gatsby-recipes@0.0.7) (2020-04-17)
 
 **Note:** Version bump only for package gatsby-recipes

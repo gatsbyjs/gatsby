@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.2.3...gatsby-plugin-styled-jsx@3.2.4) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-plugin-styled-jsx
+
 ## [3.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.2.2...gatsby-plugin-styled-jsx@3.2.3) (2020-04-17)
 
 ### Bug Fixes
