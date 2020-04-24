@@ -45,6 +45,7 @@
     "ink-box": "^1.0.0",
     "ink-link": "^1.0.0",
     "ink-select-input": "^3.1.2",
+    "ink-spinner": "^3.0.1",
     "is-blank": "^2.1.0",
     "is-newline": "^1.0.0",
     "is-relative": "^1.0.0",
