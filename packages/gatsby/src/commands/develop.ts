@@ -62,7 +62,7 @@ import {
 } from "../utils/feedback"
 
 import { BuildHTMLStage, IProgram } from "./types"
-import { IPreparedUrls, prepareUrls } from "./print-url-utils"
+import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/

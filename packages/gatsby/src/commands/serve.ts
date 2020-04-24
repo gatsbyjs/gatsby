@@ -14,7 +14,7 @@ import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt
 import { getConfigFile } from "../bootstrap/get-config-file"
 import preferDefault from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
-import { IPreparedUrls, prepareUrls } from "./print-url-utils"
+import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 
 interface IMatchPath {
   path: string
