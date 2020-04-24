@@ -13,6 +13,27 @@ import { IProgram } from "./types"
 const rootFile = (filePath: string): string =>
   path.join(process.cwd(), filePath)
 
+// Copied from https://stackoverflow.com/a/16060619
+const requireUncached: NodeRequire = file => {
+  delete require.cache[require.resolve(file)]
+  return require(file)
+}
+
+// Heuristics for gatsby-config.js, as not all changes to it require a full restart to take effect
+const doesConfigChangeRequireRestart = (
+  lastConfig: Record<string, any>,
+  newConfig: Record<string, any>
+): boolean => {
+  // Ignore changes to siteMetadata
+  if (
+    JSON.stringify({ ...lastConfig, siteMetadata: null }) ===
+    JSON.stringify({ ...newConfig, siteMetadata: null })
+  )
+    return false
+
+  return true
+}
+
 interface IRespawnMonitor {
   start: () => void
   stop: (callback: () => void) => void
@@ -84,16 +105,28 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
   script.start()
 
-  chokidar
-    .watch([rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)])
-    .on(`change`, filePath => {
-      report.info(report.stripIndent`
-        ${path.basename(
-          filePath
-        )} changed, develop process needs to be restarted
-      `)
-      io.emit(`gatsby:develop:needs-restart`, {
-        reason: `${path.basename(filePath)} changed`,
-      })
+  const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
+  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
+
+  chokidar.watch(files).on(`change`, filePath => {
+    const file = path.basename(filePath)
+
+    if (file === `gatsby-config.js`) {
+      const newConfig = requireUncached(rootFile(`gatsby-config.js`))
+
+      if (!doesConfigChangeRequireRestart(lastConfig, newConfig)) {
+        lastConfig = newConfig
+        return
+      }
+
+      lastConfig = newConfig
+    }
+
+    report.warn(
+      `develop process needs to be restarted to apply the changes to ${file}`
+    )
+    io.emit(`gatsby:develop:needs-restart`, {
+      reason: `${path.basename(filePath)} changed`,
     })
+  })
 }
