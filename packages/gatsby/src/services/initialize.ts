@@ -8,7 +8,7 @@ const path = require(`path`)
 const Promise = require(`bluebird`)
 const telemetry = require(`gatsby-telemetry`)
 
-const apiRunnerNode = require(`../utils/api-runner-node`)
+import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store } from "../.."
 import { Span } from "opentracing"

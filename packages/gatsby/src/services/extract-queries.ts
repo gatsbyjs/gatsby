@@ -1,10 +1,8 @@
 import { IBuildContext } from "../state-machines/develop"
 
-const reporter = require(`gatsby-cli/lib/reporter`)
-const {
-  extractQueries: extractQueriesAndWatch,
-} = require(`../query/query-watcher`)
-const apiRunnerNode = require(`../utils/api-runner-node`)
+import reporter from "gatsby-cli/lib/reporter"
+import { extractQueries as extractQueriesAndWatch } from "../query/query-watcher"
+import apiRunnerNode from "../utils/api-runner-node"
 
 export async function extractQueries({
   parentSpan,

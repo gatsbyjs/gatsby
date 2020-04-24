@@ -1,7 +1,7 @@
 import { IBuildContext } from "../state-machines/develop"
 
-const reporter = require(`gatsby-cli/lib/reporter`)
-const apiRunnerNode = require(`../utils/api-runner-node`)
+import reporter from "gatsby-cli/lib/reporter"
+import apiRunnerNode from "../utils/api-runner-node"
 
 export async function createPagesStatefully({
   parentSpan,

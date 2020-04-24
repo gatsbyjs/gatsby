@@ -1,7 +1,7 @@
 import requiresWriter from "../bootstrap/requires-writer"
 import { IBuildContext } from "../state-machines/develop"
 
-const reporter = require(`gatsby-cli/lib/reporter`)
+import reporter from "gatsby-cli/lib/reporter"
 
 export async function writeOutRequires({
   store,

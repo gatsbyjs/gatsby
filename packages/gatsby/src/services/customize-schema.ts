@@ -1,4 +1,4 @@
-const reporter = require(`gatsby-cli/lib/reporter`)
+import reporter from "gatsby-cli/lib/reporter"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
 import { IBuildContext } from "../state-machines/develop"
 
