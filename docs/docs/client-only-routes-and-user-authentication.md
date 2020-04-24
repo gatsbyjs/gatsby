@@ -20,7 +20,7 @@ Gatsby converts components in the `pages` folder into static HTML files for the 
 
 Gatsby uses [@reach/router](https://reach.tech/router/) under the hood. This means you don't need to install it separately and it is the recommended approach to create client-only routes.
 
-You first need to add routes to a page that _is_ built by Gatsby. Below, we'll use `pages/app.js`:
+You first need to set up routes on a page that is built by Gatsby. You can see the routes added to `src/pages/app.js` in the code example below:
 
 ```jsx:title=src/pages/app.js
 import React from "react"
