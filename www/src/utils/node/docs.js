@@ -53,7 +53,6 @@ exports.createPages = async ({ graphql, actions }) => {
           fields {
             slug
             locale
-            package
             released
           }
           frontmatter {
