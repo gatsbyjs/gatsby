@@ -171,9 +171,10 @@ exports.sourceNodes = async ({
 }
 ```
 
-This code creates Gatsby node's that are queryable in a site. To the following steps break down what is happening in the code:
+This code creates Gatsby nodes that are queryable in a site. The following bullets break down what is happening in the code:
 
 - you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process, and pulled out some Gatsby helpers (like `createContentDigest` and `createNodeId`) to facilitate creating nodes
+- you provided the required fields for the node like creating a node ID and a content digest (which Gatsby uses to track dirty nodes—or nodes that have changed), the content digest should include the whole content of the item (`post` in this case)
 - then you stored some data in an array and looped through it, calling `createNode` on each post in the array
 
 If you run the `example-site` with `gatsby develop`, you can now open up `http://localhost:8000/___graphql` and query your posts with this query:
@@ -209,7 +210,7 @@ Open your `package.json` file after installation and you'll see the packages hav
 
 #### Configure an Apollo client to fetch data
 
-Import the handful of Apollo packages that you installed that help setup an Apollo client in your plugin:
+Import the handful of Apollo packages that you installed to help set up an Apollo client in your plugin:
 
 ```javascript:title=source-plugin/gatsby-node.js
 // highlight-start
@@ -268,7 +269,7 @@ exports.sourceNodes = async ({
 // ...
 ```
 
-You can read about each of the packages that are working together in [Apollo's docs](https://www.apollographql.com/docs/react/), but the end result is creating a `client` that you can use to call methods like `query` on to get data from the source it's configured to work with. In this case, that is `localhost:4000` where you should have the API running. If you can't configure the API to run locally, you can update the URLs for the client to use `gatsby-source-plugin-api.glitch.me` where a version of the API is deployed, instead of `localhost:4000`.
+You can read about each of the packages that are working together in [Apollo's docs](https://www.apollographql.com/docs/react/). The end result is creating a `client` that you can use to call methods like `query` to get data from the source it's configured to work with. In this case, that is `localhost:4000` where you should have the API running. If you can't configure the API to run locally, you can update the URLs for the client to use `gatsby-source-plugin-api.glitch.me` where a version of the API is deployed, instead of `localhost:4000`.
 
 #### Query data from the API
 
@@ -303,7 +304,7 @@ Now you can replace the hardcoded data in the `sourceNodes` function with a Grap
     // ...
 ```
 
-Now you're creating nodes based on data coming from the API, neat! However, only the `id` and `description` fields are coming back from the API and being saved to each node, so add the rest of the fields to the query so that there will be the same data available to Gatsby.
+Now you're creating nodes based on data coming from the API, neat! However, only the `id` and `description` fields are coming back from the API and being saved to each node, so add the rest of the fields to the query so that the same data is available to Gatsby.
 
 This is also a good time to add data to your query so that it also returns authors.
 
@@ -429,17 +430,17 @@ Each node of post data has an `imgUrl` field with the URL of an image on Unsplas
 
 You can read about [how to use Gatsby Image to prevent image bloat](/docs/using-gatsby-image/) if you are unfamiliar with it.
 
-#### Create `remoteFilenNode`'s from a URL
+#### Create `remoteFileNode`'s from a URL
 
-To create optimized images from URLs, `File` nodes for image files need to be added to your site's data. Then, `gatsby-plugin-sharp` and `gatsby-transformer-sharp` need to be installed, and they will automatically find image files and add the data needed for `gatsby-image`.
+To create optimized images from URLs, `File` nodes for image files need to be added to your site's data. Then, you can install `gatsby-plugin-sharp` and `gatsby-transformer-sharp` which will automatically find image files and add the data needed for `gatsby-image`.
 
-Start by installing `gatsby-source-filesystem` in the `source-plugin`:
+Start by installing `gatsby-source-filesystem` in the `source-plugin` project:
 
 ```shell:title=source-plugin
 npm install gatsby-source-filesystem
 ```
 
-Now in your plugin's `gatsby-node`, you can implement a new API that gets called everytime a node is created called `onCreateNode`. You can check if the node created was one of your `Post` nodes, and if it was, create a file from the URL on the `imgUrl` field.
+Now in your plugin's `gatsby-node.js` file, you can implement a new API,  called `onCreateNode`, that gets called every time a node is created. You can check if the node created was one of your `Post` nodes, and if it was, create a file from the URL on the `imgUrl` field.
 
 Import the `createRemoteFileNode` helper from `gatsby-source-filesystem`, which will download a file from a remote location and create a `File` node for you.
 
@@ -485,7 +486,7 @@ exports.onCreateNode = async ({
 }
 ```
 
-This code is called every time a node is created, i.e. when `createNode` is invoked. Each time it is called in the `sourceNodes` step, the condition will check if the node was a `Post` node since those are the only nodes with an image associated with them in your case. Then a remote node is created, if it's successful, the `fileNode` is returned. The next few lines are important:
+This code is called every time a node is created, e.g. when `createNode` is invoked. Each time it is called in the `sourceNodes` step, the condition will check if the node was a `Post` node. Since those are the only nodes with an image associated with them, that is the only time images need to be optimized. Then a remote node is created, if it's successful, the `fileNode` is returned. The next few lines are important:
 
 ```javascript:title=source-plugin/gatsby-node.js
 if (fileNode) {
@@ -494,7 +495,7 @@ if (fileNode) {
 }
 ```
 
-By assigning a field called `remoteImage___NODE` the ID of the `File` node that was created, Gatsby will be able to [infer](/docs/glossary#inference) a connection between this field and the file node. This will allow fields on the file to be queried from the post node.
+By assigning a field called `remoteImage___NODE` to the ID of the `File` node that was created, Gatsby will be able to [infer](/docs/glossary#inference) a connection between this field and the file node. This will allow fields on the file to be queried from the post node.
 
 ```graphql
 # leaving off the ___NODE field will give you:
@@ -548,7 +549,7 @@ module.exports = {
 }
 ```
 
-By installing the sharp plugins in the site, they'll run after the source plugin and transform the file nodes and add fields for the optimized versions at `childImageSharp`. The transformer plugin looks for `File` nodes with extensions like `.jpg` and `.png` to create optimized images from, and creates the GraphQL fields for you.
+By installing the sharp plugins in the site, they'll run after the source plugin and transform the file nodes and add fields for the optimized versions at `childImageSharp`. The transformer plugin looks for `File` nodes with extensions like `.jpg` and `.png` to create optimized images and creates the GraphQL fields for you.
 
 Now when you run your site, you will also be able to query a `childImageSharp` field on the `post.remoteImage`:
 
@@ -600,7 +601,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-The `author: Author @link(from: "author.name" by: "name")` line tells Gatsby to look for the value on the post node at `post.author.name` and relate it with an `Author` node with a matching `name`. This demonstrates the ability to link using more than just an ID.
+The `author: Author @link(from: "author.name" by: "name")` line tells Gatsby to look for the value on the `Post` node at `post.author.name` and relate it with an `Author` node with a matching `name`. This demonstrates the ability to link using more than just an ID.
 
 The line `remoteImage: File @link` tells Gatsby to look for a `remoteImage` field on a `Post` node and link it to a `File` node with the ID there.
 
@@ -635,9 +636,9 @@ query {
 
 ### Using data from the source plugin in a site
 
-In the `example-site`, data is now available to be queried from pages.
+In the `example-site`, you can now query data from pages.
 
-Add a file at `example-site/src/pages/index.js` and copy in the following code into it:
+Add a file at `example-site/src/pages/index.js` and copy the following code into it:
 
 ```javascript:title=example-site/src/pages/index.js
 import React from "react"
