@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.15...gatsby-recipes@0.0.16) (2020-04-24)
+
+### Bug Fixes
+
+- **gatsby-recipes:** add missing dependency ([#23460](https://github.com/gatsbyjs/gatsby/issues/23460)) ([095d5cc](https://github.com/gatsbyjs/gatsby/commit/095d5cc))
+
 ## [0.0.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.14...gatsby-recipes@0.0.15) (2020-04-24)
 
 ### Bug Fixes
