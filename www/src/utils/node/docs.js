@@ -193,15 +193,15 @@ exports.createPages = async ({ graphql, actions }) => {
             ...prevAndNext,
           },
         })
-      } else if (node.fields.package) {
-        // Local package template
-        createPage({
-          path: `${node.fields.slug}`,
-          component: slash(localPackageTemplate),
-          context: {
-            slug: node.fields.slug,
-          },
-        })
+        // } else if (node.fields.package) {
+        //   // Local package template
+        //   createPage({
+        //     path: `${node.fields.slug}`,
+        //     component: slash(localPackageTemplate),
+        //     context: {
+        //       slug: node.fields.slug,
+        //     },
+        //   })
       } else {
         // Docs template
         createPage({
@@ -281,19 +281,19 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     }
 
     // Add slugs for package READMEs.
-    if (
-      fileNode.sourceInstanceName === `packages` &&
-      parsedFilePath.name === `README`
-    ) {
-      locale = "en"
-      slug = `/packages/${parsedFilePath.dir}/`
-      createNodeField({
-        node,
-        name: `title`,
-        value: parsedFilePath.dir,
-      })
-      createNodeField({ node, name: `package`, value: true })
-    }
+    // if (
+    //   fileNode.sourceInstanceName === `packages` &&
+    //   parsedFilePath.name === `README`
+    // ) {
+    //   locale = "en"
+    //   slug = `/packages/${parsedFilePath.dir}/`
+    //   createNodeField({
+    //     node,
+    //     name: `title`,
+    //     value: parsedFilePath.dir,
+    //   })
+    //   createNodeField({ node, name: `package`, value: true })
+    // }
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
