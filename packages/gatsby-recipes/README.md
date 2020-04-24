@@ -173,6 +173,10 @@ Soon will support options.
 
 > Note that this content is stored in a [GitHub gist](https://gist.github.com/). When linking to a gist you'll want to click on the "Raw" button and copy the URL from that page.
 
+## Resources
+
+- A free 6 min eggheadio [collection](https://egghead.io/playlists/getting-started-with-gatsbyjs-recipes-c79a) by [Khaled Garbaya](https://twitter.com/khaled_garbaya)
+
 ## FAQ / common issues
 
 ### Q) My recipe is combining steps instead of running them seperately!
@@ -195,7 +199,7 @@ a step
 
 But this won't
 
-<!-- prettier-ignore -->
+<!-- prettier-ignore-start -->
 ```mdx
 # Recipes
 ---
@@ -204,6 +208,7 @@ a step
 
 <File src="something.txt" content="something" />
 ```
+<!-- prettier-ignore-end -->
 
 ### Q) What kind of recipe should I write?
 
