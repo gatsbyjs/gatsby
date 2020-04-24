@@ -1,10 +1,12 @@
 # Change Log
 
-## 0.0.40
+## 0.0.41
 
 ### Bug Fixes
 
 - The `copyQueryOnError` plugin option was throwing cryptic errors on systems that don't support copy (namely CI). Now this is in a try/catch and the error is tossed away. This helps ensure users see relevant errors.
+
+## 0.0.40 - skipped
 
 ## 0.0.39
 
