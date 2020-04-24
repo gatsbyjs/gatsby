@@ -217,6 +217,10 @@ class BabelPluginAddPluginsToGatsbyConfig {
                       return node
                     }
 
+                    if (!plugin.key && plugin.name !== pluginOrThemeName) {
+                      return node
+                    }
+
                     return buildPluginNode({
                       name: pluginOrThemeName,
                       options,
