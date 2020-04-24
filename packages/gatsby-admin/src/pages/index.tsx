@@ -67,6 +67,7 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
 
   return (
     <button
+      aria-label={`Delete ${name}`}
       onClick={(): void => {
         deleteGatsbyPlugin({ name })
       }}
