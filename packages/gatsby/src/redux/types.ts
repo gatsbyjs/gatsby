@@ -130,7 +130,7 @@ export interface IGatsbyState {
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   status: {
-    plugins: {}
+    plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
   }
   componentDataDependencies: {
@@ -224,7 +224,9 @@ export type ActionsUnion =
   | ICreateFieldExtension
   | IPrintTypeDefinitions
   | IRemoveStaticQuery
+  | ISetPluginStatusAction
   | ISetWebpackCompilationHashAction
+  | IUpdatePluginsHashAction
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
@@ -382,4 +384,18 @@ export interface IRemoveStaticQuery {
 export interface ISetWebpackCompilationHashAction {
   type: `SET_WEBPACK_COMPILATION_HASH`
   payload: IGatsbyState["webpackCompilationHash"]
+}
+
+export interface IUpdatePluginsHashAction {
+  type: `UPDATE_PLUGINS_HASH`
+  payload: Identifier
+}
+
+export interface ISetPluginStatusAction {
+  type: `SET_PLUGIN_STATUS`
+  plugin: IGatsbyPlugin
+  payload: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any
+  }
 }
