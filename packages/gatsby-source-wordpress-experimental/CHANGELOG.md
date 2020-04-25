@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.1.1
+
+## Breaking changes
+
+- Changed accepted WPGatsby version range to ~0.2.3
+
+## Bug Fixes
+
+- Because everything is fetched in a flat list, hierarchical terms weren't being properly sourced. Code was added to specifically support the Category type, but this will be made generic for all types soon as this is a reocurring problem.
+
 ## 0.1.0
 
 ## Breaking changes

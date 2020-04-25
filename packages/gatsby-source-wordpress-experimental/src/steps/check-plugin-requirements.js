@@ -1,17 +1,10 @@
 import fetchGraphql from "~/utils/fetch-graphql"
 import { formatLogMessage } from "~/utils/format-log-message"
 
-export const supportedWpPluginVersions = {
-  WPGraphQL: {
-    version: `~0.8.2`,
-  },
-  WPGatsby: {
-    version: `~0.2.2`,
-  },
-}
-
-// @todo replace this link with another once we're out of alpha
-const genericDownloadMessage = `\n\n\tVisit https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/tree/master/WordPress/plugins/\n\tto download the latest supported versions of WPGatsby and WPGraphL.`
+import {
+  supportedWpPluginVersions,
+  genericDownloadMessage,
+} from "~/supported-remote-plugin-versions"
 
 const areRemotePluginVersionsSatisfied = async ({ helpers }) => {
   let wpgqlIsSatisfied
@@ -66,7 +59,7 @@ const areRemotePluginVersionsSatisfied = async ({ helpers }) => {
   if (!wpgqlIsSatisfied && wpGatsbyIsSatisfied) {
     message = `Your remote version of WPGraphQL is not within the accepted range (${supportedWpPluginVersions.WPGraphQL.version}).
 
-\tDownload v ~0.8.3 at https://github.com/wp-graphql/wp-graphql/releases
+\tDownload v ${supportedWpPluginVersions.WPGraphQL.version} at https://github.com/wp-graphql/wp-graphql/releases
 
 \tIf you're upgrading from an earlier version, read the release notes for each version between your old and new versions to determine which breaking changes you might encounter based on your use of the schema.
 `
@@ -75,11 +68,12 @@ const areRemotePluginVersionsSatisfied = async ({ helpers }) => {
   if (!wpGatsbyIsSatisfied) {
     message = `Your remote version of WPGatsby is not within the accepted range (${supportedWpPluginVersions.WPGatsby.version})
 
-\tDownload v0.2.2 at https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/tree/master/WordPress/plugins/wp-gatsby-0.2.2.zip`
+\tDownload v ${supportedWpPluginVersions.WPGatsby.version} at https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/tree/master/WordPress/plugins`
   }
 
   if (!wpGatsbyIsSatisfied && !wpgqlIsSatisfied) {
-    message = `WPGatsby and WPGraphQL are both outside the accepted version ranges.`
+    message = `WPGatsby and WPGraphQL are both outside the accepted version ranges.
+visit https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/tree/master/WordPress/plugins to download the latest versions.`
   }
 
   if (message) {
