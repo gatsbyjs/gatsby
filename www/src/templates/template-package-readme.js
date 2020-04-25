@@ -55,7 +55,7 @@ export default function PackageReadmeTemplate({
   location,
   data: { npmPackage },
 }) {
-  const { childMarkdownRemark: readme } = npmPackage.readme
+  const { childMarkdownRemark: readmePage } = npmPackage.readme
   const isOfficial = npmPackage.fields.official
 
   const packageName = npmPackage.name
@@ -65,7 +65,8 @@ export default function PackageReadmeTemplate({
     : npmPackage.repository?.url ??
       `https://github.com/search?q=${npmPackage.name}`
 
-  const metaExcerpt = readme.excerpt ?? `Plugin information for ${packageName}`
+  const metaExcerpt =
+    readmePage.excerpt ?? `Plugin information for ${packageName}`
 
   return (
     <PageWithPluginSearchBar location={location}>
@@ -80,7 +81,7 @@ export default function PackageReadmeTemplate({
           <meta name="twitter.label1" content="Reading time" />
           <meta
             name="twitter:data1"
-            content={`${readme.timeToRead} min read`}
+            content={`${readmePage.timeToRead} min read`}
           />
         </Helmet>
         <div
@@ -121,9 +122,9 @@ export default function PackageReadmeTemplate({
         </div>
         <div
           css={{ position: `relative` }}
-          dangerouslySetInnerHTML={{ __html: readme.html }}
+          dangerouslySetInnerHTML={{ __html: readmePage.html }}
         />
-        <MarkdownPageFooter page={readme} packagePage />
+        {isOfficial && <MarkdownPageFooter page={readmePage} packagePage />}
       </Container>
       <FooterLinks />
     </PageWithPluginSearchBar>
@@ -146,6 +147,7 @@ export const pageQuery = graphql`
         url
       }
       readme {
+        # FIXME parent isn't a file in this case
         childMarkdownRemark {
           html
           excerpt
