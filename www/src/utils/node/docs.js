@@ -190,7 +190,6 @@ exports.createPages = async ({ graphql, actions }) => {
           },
         })
       } else {
-        // TODO prevent creation of extra package pages
         // Docs template
         createPage({
           path: `${node.fields.slug}`,
