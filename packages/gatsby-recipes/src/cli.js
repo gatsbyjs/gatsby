@@ -90,6 +90,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `emotion.mdx`,
     },
     {
+      label: `MDX Pages`,
+      value: `mdx-pages.mdx`,
+    },
+    {
       label: `Add Styled Components`,
       value: `styled-components.mdx`,
     },
