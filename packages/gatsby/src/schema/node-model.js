@@ -71,7 +71,7 @@ class LocalNodeModel {
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
-    this.replaceTypeKeyValueCache()
+    this.replaceFiltersCache()
   }
 
   /**
@@ -84,7 +84,7 @@ class LocalNodeModel {
    *   actually queried. If the filter targets `id` directly, only one Node is
    *   cached instead of a Set of Nodes. If null, don't create or use a cache.
    */
-  replaceTypeKeyValueCache(map = new Map()) {
+  replaceFiltersCache(map = new Map()) {
     this._filtersCache = map // See redux/nodes.js for usage
   }
 
