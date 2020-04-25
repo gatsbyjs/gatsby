@@ -208,23 +208,23 @@ export interface ICachedReduxState {
 }
 
 export type ActionsUnion =
+  | IAddThirdPartySchema
+  | ICreateFieldExtension
   | ICreatePageDependencyAction
+  | ICreateTypes
   | IDeleteCacheAction
   | IDeleteComponentDependenciesAction
-  | IReplaceComponentQueryAction
-  | IReplaceStaticQueryAction
+  | IPageQueryRunAction
+  | IPrintTypeDefinitions
   | IQueryExtractedAction
-  | IQueryExtractionGraphQLErrorAction
   | IQueryExtractedBabelSuccessAction
   | IQueryExtractionBabelErrorAction
-  | ISetProgramStatusAction
-  | IPageQueryRunAction
-  | IAddThirdPartySchema
-  | ICreateTypes
-  | ICreateFieldExtension
-  | IPrintTypeDefinitions
+  | IQueryExtractionGraphQLErrorAction
   | IRemoveStaticQuery
+  | IReplaceComponentQueryAction
+  | IReplaceStaticQueryAction
   | ISetPluginStatusAction
+  | ISetProgramStatusAction
   | ISetWebpackCompilationHashAction
   | IUpdatePluginsHashAction
 
