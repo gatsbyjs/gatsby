@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.16...gatsby-recipes@0.0.17) (2020-04-25)
+
+### Features
+
+- **gatsby-recipes:** Add MDX pages recipe ([#23467](https://github.com/gatsbyjs/gatsby/issues/23467)) ([27d8c6f](https://github.com/gatsbyjs/gatsby/commit/27d8c6f))
+
 ## [0.0.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.15...gatsby-recipes@0.0.16) (2020-04-24)
 
 ### Bug Fixes
