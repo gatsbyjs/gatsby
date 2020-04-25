@@ -53,10 +53,10 @@ aliases:
 
   test_template: &test_template
     steps:
-      - <<: *attach_to_bootstrap
-      - <<: *install_node_modules
-      - run: yarn list react
+      - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *attach_to_bootstrap
+      - run: yarn list react
       - run: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
       - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
 
@@ -148,7 +148,7 @@ commands:
         type: boolean
         default: false
     steps:
-      - <<: *attach_to_bootstrap
+      - checkout
       # In case of failure, add these steps again. Cache probably got deleted
       #- <<: *restore_cache
       #- <<: *install_node_modules
@@ -157,6 +157,8 @@ commands:
           condition: << parameters.skip_file_change_test >>
           steps:
             - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+
+      - <<: *attach_to_bootstrap
       - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
@@ -258,10 +260,11 @@ jobs:
     <<: *e2e-executor
     executor: node
     steps:
-      - <<: *attach_to_bootstrap
+      - checkout
       - run:
           name: Assert Changed Files
           command: ./scripts/assert-changed-files.sh "packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*"
+      - <<: *attach_to_bootstrap
       - run:
           name: Run tests (using defaults)
           command: cd integration-tests/gatsby-cli && yarn && yarn test
