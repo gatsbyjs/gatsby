@@ -69,6 +69,7 @@ aliases:
           - /blog.+/
     requires:
       - lint
+      - typecheck
       - unit_tests_node10
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
@@ -178,12 +179,6 @@ jobs:
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      # persist our git checkout and node_modules as the next step (assert-changed-files) might exit this step
-      # when no files have changed (master). We still need to have these files for jobs like lint & unit_tests_node10
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - "*"
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
@@ -194,12 +189,24 @@ jobs:
 
   lint:
     executor: node
-    parallelism: 2
     steps:
-      - <<: *attach_to_bootstrap
+      - checkout
+      # installation of dependencies takes a while because of the 100 packages we have inside the monorepo
+      # Linting only needs the root packages, we remove the workspace and only install root packages
+      - run:
+          name: "remove workspaces from package.json"
+          command: |
+            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
+      - <<: *install_node_modules
       - run: yarn lint:code
       - run: yarn lint:other
+
+  typecheck:
+    executor: node
+    steps:
+      - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *attach_to_bootstrap
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
@@ -474,24 +481,30 @@ workflows:
   build-test:
     jobs:
       - bootstrap
-      - windows_unit_tests:
-          <<: *ignore_docs
-      - lint:
+      - lint
+      - typecheck:
           requires:
             - bootstrap
+      - windows_unit_tests:
+          <<: *ignore_docs
+          requires:
+            - lint
       - unit_tests_node10:
           <<: *ignore_docs
           requires:
             - lint
+            - typecheck
             - bootstrap
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
             - lint
+            - typecheck
             - bootstrap
       - unit_tests_www:
           requires:
             - lint
+            - typecheck
             - bootstrap
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
