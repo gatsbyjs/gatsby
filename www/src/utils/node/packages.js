@@ -7,11 +7,7 @@ const ecosystemFeaturedItems = yaml.load(
   fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
 )
 
-const localPackages = `../packages`
-const localPackagesArr = []
-fs.readdirSync(localPackages).forEach(file => {
-  localPackagesArr.push(file)
-})
+const localPackages = fs.readdirSync(`../packages`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -24,17 +20,16 @@ exports.createPages = async ({ graphql, actions }) => {
     query {
       allNpmPackage {
         nodes {
-          id
           name
+          slug
         }
       }
     }
   `)
   if (errors) throw errors
 
-  const allPackages = data.allNpmPackage.nodes
   // Create package readme
-  allPackages.forEach(node => {
+  data.allNpmPackage.nodes.forEach(node => {
     if (!node.slug) {
       return
     }
@@ -43,7 +38,6 @@ exports.createPages = async ({ graphql, actions }) => {
       component: slash(packageTemplate),
       context: {
         slug: node.slug,
-        official: _.includes(localPackagesArr, node.name),
       },
     })
   })
@@ -56,6 +50,14 @@ exports.onCreateNode = ({ node, actions }) => {
       createNodeField({ node, name: `featured`, value: true })
     }
 
-    // createNodeField({ node, name: `slug`, value: `/packages/${node.name}` })
+    if (localPackages.includes(node.name)) {
+      console.log(node.name)
+    }
+
+    createNodeField({
+      node,
+      name: `official`,
+      value: localPackages.includes(node.name),
+    })
   }
 }

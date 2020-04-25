@@ -2,17 +2,17 @@
 
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
-import React from "react"
 import { Helmet } from "react-helmet"
 
-import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
-import Link from "./localized-link"
-import Container from "./container"
-import MarkdownPageFooter from "./markdown-page-footer"
-import FooterLinks from "./shared/footer-links"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
-import GatsbyIcon from "./gatsby-monogram"
 import { FaUsers as CommunityIcon } from "react-icons/fa"
+
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
+import Link from "../components/localized-link"
+import Container from "../components/container"
+import MarkdownPageFooter from "../components/markdown-page-footer"
+import FooterLinks from "../components/shared/footer-links"
+import GatsbyIcon from "../components/gatsby-monogram"
 
 const GatsbyPluginBadge = ({ isOfficial }) => {
   const Icon = isOfficial ? GatsbyIcon : CommunityIcon
@@ -54,14 +54,12 @@ const GatsbyPluginBadge = ({ isOfficial }) => {
 export default function PackageReadmeTemplate({
   location,
   data: { npmPackage },
-  pageContext: { isOfficial },
 }) {
   const { childMarkdownRemark: readme } = npmPackage.readme
+  const isOfficial = npmPackage.fields.official
 
   const packageName = npmPackage.name
 
-  // FIXME doesn't work for gatsby packages
-  // githubUrl={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${npmPackage.name}`}
   const githubUrl = isOfficial
     ? `https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`
     : npmPackage.repository?.url ??
@@ -137,6 +135,9 @@ export const pageQuery = graphql`
     npmPackage(slug: { eq: $slug }) {
       name
       keywords
+      fields {
+        official
+      }
       lastPublisher {
         name
         avatar
