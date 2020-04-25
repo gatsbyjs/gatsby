@@ -1,4 +1,5 @@
 jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+jest.mock(`coffeescript`)
 
 const {
   resolvableExtensions,
@@ -6,12 +7,14 @@ const {
   preprocessSource,
 } = require(`../gatsby-node`)
 
+const { compile } = require(`coffeescript`)
+
 describe(`gatsby-plugin-coffeescript`, () => {
   it(`contains coffee script extensions`, () => {
-    expect(resolvableExtensions()).toMatchSnapshot()
+    expect(resolvableExtensions()).toContain(`.coffee`)
   })
 
-  it(`modifies webpack config with cofeescript extensions`, () => {
+  it(`modifies webpack config with coffeescript extensions`, () => {
     const actions = {
       setWebpackConfig: jest.fn(),
     }
@@ -23,11 +26,23 @@ describe(`gatsby-plugin-coffeescript`, () => {
       resolvableExtensions().length
     )
 
-    const lastCall = actions.setWebpackConfig.mock.calls.pop()
-    expect(lastCall).toMatchSnapshot()
+    expect(actions.setWebpackConfig).toHaveBeenLastCalledWith({
+      module: {
+        rules: [
+          {
+            test: /\.coffee$/,
+            use: [`babel-loader`, `/resolved/path/coffee-loader`],
+          },
+        ],
+      },
+    })
   })
 
   describe(`pre processing`, () => {
+    beforeEach(() => {
+      compile.mockReturnValue(`complied-code`)
+    })
+
     it(`returns null if non-coffeescript file`, () => {
       expect(
         preprocessSource({
@@ -35,6 +50,7 @@ describe(`gatsby-plugin-coffeescript`, () => {
           contents: `alert('hello');`,
         })
       ).toBe(null)
+      expect(compile).not.toBeCalled()
     })
 
     it(`transforms .coffee files`, () => {
@@ -46,7 +62,7 @@ describe(`gatsby-plugin-coffeescript`, () => {
           },
           {}
         )
-      ).toMatchSnapshot()
+      ).toEqual(`complied-code`)
     })
   })
 })
