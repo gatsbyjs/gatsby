@@ -3,7 +3,7 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
 const yaml = require(`js-yaml`)
-const ecosystemFeaturedItems = yaml.load(
+const { plugins: featuredPlugins } = yaml.load(
   fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
 )
 
@@ -46,13 +46,11 @@ exports.createPages = async ({ graphql, actions }) => {
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
   if (node.internal.type === `NPMPackage`) {
-    if (ecosystemFeaturedItems.plugins.includes(node.name)) {
-      createNodeField({ node, name: `featured`, value: true })
-    }
-
-    if (localPackages.includes(node.name)) {
-      console.log(node.name)
-    }
+    createNodeField({
+      node,
+      name: `featured`,
+      value: featuredPlugins.inclues(node.name),
+    })
 
     createNodeField({
       node,
