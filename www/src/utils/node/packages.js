@@ -16,11 +16,8 @@ fs.readdirSync(localPackages).forEach(file => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const localPackageTemplate = path.resolve(
-    `src/templates/template-docs-local-packages.js`
-  )
-  const remotePackageTemplate = path.resolve(
-    `src/templates/template-docs-remote-packages.js`
+  const packageTemplate = path.resolve(
+    `src/templates/template-package-readme.js`
   )
 
   const { data, errors } = await graphql(`
@@ -28,8 +25,7 @@ exports.createPages = async ({ graphql, actions }) => {
       allNpmPackage {
         nodes {
           id
-          title
-          slug
+          name
         }
       }
     }
@@ -39,25 +35,17 @@ exports.createPages = async ({ graphql, actions }) => {
   const allPackages = data.allNpmPackage.nodes
   // Create package readme
   allPackages.forEach(node => {
-    if (_.includes(localPackagesArr, node.title)) {
-      createPage({
-        path: node.slug,
-        component: slash(localPackageTemplate),
-        context: {
-          slug: node.slug,
-          id: node.id,
-        },
-      })
-    } else {
-      createPage({
-        path: node.slug,
-        component: slash(remotePackageTemplate),
-        context: {
-          slug: node.slug,
-          id: node.id,
-        },
-      })
+    if (!node.slug) {
+      return
     }
+    createPage({
+      path: node.slug,
+      component: slash(packageTemplate),
+      context: {
+        slug: node.slug,
+        official: _.includes(localPackagesArr, node.name),
+      },
+    })
   })
 }
 
@@ -67,5 +55,7 @@ exports.onCreateNode = ({ node, actions }) => {
     if (ecosystemFeaturedItems.plugins.includes(node.name)) {
       createNodeField({ node, name: `featured`, value: true })
     }
+
+    // createNodeField({ node, name: `slug`, value: `/packages/${node.name}` })
   }
 }
