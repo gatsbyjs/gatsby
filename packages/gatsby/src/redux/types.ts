@@ -225,6 +225,7 @@ export type ActionsUnion =
   | IReplaceStaticQueryAction
   | ISetPluginStatusAction
   | ISetProgramStatusAction
+  | ISetSchemaAction
   | ISetWebpackCompilationHashAction
   | IUpdatePluginsHashAction
 
@@ -398,4 +399,9 @@ export interface ISetPluginStatusAction {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any
   }
+}
+
+export interface ISetSchemaAction {
+  type: `SET_SCHEMA`
+  payload: IGatsbyState["schema"]
 }
