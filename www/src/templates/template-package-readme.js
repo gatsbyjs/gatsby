@@ -141,16 +141,16 @@ export const pageQuery = graphql`
         name
         avatar
       }
-    }
-    repository {
-      url
-    }
-    readme {
-      childMarkdownRemark {
-        html
-        excerpt
-        timeToRead
-        ...MarkdownPageFooter
+      repository {
+        url
+      }
+      readme {
+        childMarkdownRemark {
+          html
+          excerpt
+          timeToRead
+          ...MarkdownPageFooter
+        }
       }
     }
   }
