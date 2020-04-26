@@ -105,12 +105,12 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: path.join(__dirname, `src`, `images`)
-      }
+        path: path.join(__dirname, `src`, `images`),
+      },
     },
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`
-  ]
+    `gatsby-transformer-sharp`,
+  ],
 }
 ```
 
@@ -262,7 +262,7 @@ format, use the `withWebp` fragments. If the browser doesn't support WebP,
 `gatsby-image` will fall back to the default image format.
 
 For more information about these options, please see the
-[Gatsby Image API](https://www.gatsbyjs.org/docs/gatsby-image/#image-query-fragments).
+[Gatsby Image API](/docs/gatsby-image/#image-query-fragments).
 
 _Please see the
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#tracedsvg)
@@ -331,8 +331,8 @@ const NonStretchedImage = props => {
       style: {
         ...(props.style || {}),
         maxWidth: props.fluid.presentationWidth,
-        margin: "0 auto" // Used to center the image
-      }
+        margin: "0 auto", // Used to center the image
+      },
     }
   }
 
@@ -370,8 +370,8 @@ export default ({ data }) => {
     data.mobileImage.childImageSharp.fluid,
     {
       ...data.desktopImage.childImageSharp.fluid,
-      media: `(min-width: 768px)`
-    }
+      media: `(min-width: 768px)`,
+    },
   ]
 
   return (

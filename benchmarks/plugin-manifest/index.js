@@ -67,10 +67,9 @@ async function runTest() {
   )
 
   console.info(
-    `\nRange execution time (hr): ${
-      (Math.max(...results.nanoseconds) - Math.min(...results.nanoseconds)) /
-      1000000
-    }ms`
+    `\nRange execution time (hr): ${(Math.max(...results.nanoseconds) -
+      Math.min(...results.nanoseconds)) /
+      1000000}ms`
   )
 }
 

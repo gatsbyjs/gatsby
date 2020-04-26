@@ -29,7 +29,7 @@ exports.onCreateWebpackConfig = ({
   rules,
   loaders,
   plugins,
-  actions
+  actions,
 }) => {
   actions.setWebpackConfig({
     module: {
@@ -45,16 +45,16 @@ exports.onCreateWebpackConfig = ({
             // the postcss loader comes with some nice defaults
             // including autoprefixer for our configured browsers
             loaders.postcss(),
-            `less-loader`
-          ]
-        }
-      ]
+            `less-loader`,
+          ],
+        },
+      ],
     },
     plugins: [
       plugins.define({
-        __DEVELOPMENT__: stage === `develop` || stage === `develop-html`
-      })
-    ]
+        __DEVELOPMENT__: stage === `develop` || stage === `develop-html`,
+      }),
+    ],
   })
 }
 ```
@@ -67,26 +67,13 @@ Instead of writing `import Header from '../../components/header'` over and over 
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   actions.setWebpackConfig({
     resolve: {
-      modules: [path.resolve(__dirname, "src"), "node_modules"]
-    }
+      modules: [path.resolve(__dirname, "src"), "node_modules"],
+    },
   })
 }
 ```
 
 You can always find more information on _resolve_ and other options in the official [Webpack docs](https://webpack.js.org/concepts/).
-
-### Importing non-webpack tools using `yarn`
-
-Note that using absolute imports only applies to webpack resolutions and will not work for other tools, e.g. eslint or typescript.
-But if you are using yarn, then the best practice is to set up your imports in package.json as shown below:
-
-```js
-{
-  "dependencies": {
-      "hooks": "link:./src/hooks",
-  }
-}
-```
 
 ### Modifying the Babel loader
 
@@ -121,8 +108,8 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
       // Exclude all node_modules from transpilation, except for 'swiper' and 'dom7'
       exclude: modulePath =>
         /node_modules/.test(modulePath) &&
-        !/node_modules\/(swiper|dom7)/.test(modulePath)
-    }
+        !/node_modules\/(swiper|dom7)/.test(modulePath),
+    },
   ]
 
   // This will completely replace the webpack config with the modified object.

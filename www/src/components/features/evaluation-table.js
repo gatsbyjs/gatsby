@@ -81,7 +81,9 @@ class EvaluationTable extends Component {
                             }}
                             id={
                               j === 0
-                                ? row.Feature.toLowerCase().split(` `).join(`-`)
+                                ? row.Feature.toLowerCase()
+                                    .split(` `)
+                                    .join(`-`)
                                 : undefined
                             }
                             onClick={() => {

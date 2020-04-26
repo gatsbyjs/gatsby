@@ -4,7 +4,9 @@ describe(`StaticQuery behavior`, () => {
   })
 
   it(`works with inline query`, () => {
-    cy.getTestElement(`inline`).invoke(`text`).should(`not.contain`, `Loading`)
+    cy.getTestElement(`inline`)
+      .invoke(`text`)
+      .should(`not.contain`, `Loading`)
   })
 
   it(`works with variable query`, () => {

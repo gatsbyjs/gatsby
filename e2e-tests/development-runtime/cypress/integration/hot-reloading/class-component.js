@@ -16,7 +16,9 @@ describe(`reloading class component`, () => {
       `npm run update -- --file src/components/class-component.js --replacements "CLASS_COMPONENT:${text}"`
     )
 
-    cy.getTestElement(TEST_ID).invoke(`text`).should(`contain`, text)
+    cy.getTestElement(TEST_ID)
+      .invoke(`text`)
+      .should(`contain`, text)
   })
 
   it(`updates state and hot reloads`, () => {

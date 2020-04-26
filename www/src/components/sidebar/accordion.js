@@ -8,9 +8,11 @@ import { Title, TitleButton, SplitButton } from "./section-title"
 const ItemWithSubitems = ({
   itemRef,
   activeItemLink,
+  createLink,
   isExpanded,
   isParentOfActiveItem,
   item,
+  location,
   onLinkClick,
   onSectionTitleClick,
   uid,
@@ -22,10 +24,12 @@ const ItemWithSubitems = ({
   return item.link ? (
     <SplitButton
       itemRef={itemRef}
+      createLink={createLink}
       isActive={isActive}
       isExpanded={isExpanded}
       isParentOfActiveItem={isParentOfActiveItem}
       item={item}
+      location={location}
       onLinkClick={onLinkClick}
       onSectionTitleClick={onSectionTitleClick}
       uid={uid}
@@ -68,6 +72,7 @@ class Accordion extends React.Component {
       itemRef,
       activeItemLink,
       activeItemParents,
+      createLink,
       isActive,
       isParentOfActiveItem,
       item,
@@ -123,51 +128,53 @@ class Accordion extends React.Component {
           itemRef={itemRef}
           activeItemLink={activeItemLink}
           activeItemParents={activeItemParents}
+          createLink={createLink}
           isActive={isActive}
           isExpanded={isExpanded}
           isParentOfActiveItem={isParentOfActiveItem}
           item={item}
+          location={location}
           onLinkClick={onLinkClick}
           onSectionTitleClick={onSectionTitleClick}
           uid={uid}
           disableAccordions={disableAccordions}
         />
-        {isExpanded && (
-          <ul
-            id={uid}
-            sx={{
-              listStyle: `none`,
-              margin: 0,
-              position: `relative`,
-              ...(item.ui === `steps` && {
-                "&:after": {
-                  backgroundColor: `ui.border`,
-                  bottom: 0,
-                  content: `''`,
-                  left: 27,
-                  position: `absolute`,
-                  top: 0,
-                  width: 1,
-                },
-              }),
-            }}
-          >
-            {item.items.map(subitem => (
-              <Item
-                activeItemLink={activeItemLink}
-                activeItemParents={activeItemParents}
-                item={subitem}
-                key={subitem.title}
-                location={location}
-                onLinkClick={onLinkClick}
-                isExpanded={isExpanded}
-                onSectionTitleClick={onSectionTitleClick}
-                openSectionHash={openSectionHash}
-                ui={item.ui}
-              />
-            ))}
-          </ul>
-        )}
+        <ul
+          id={uid}
+          sx={{
+            display: isExpanded ? `block` : `none`,
+            listStyle: `none`,
+            margin: 0,
+            position: `relative`,
+            ...(item.ui === `steps` && {
+              "&:after": {
+                backgroundColor: `ui.border`,
+                bottom: 0,
+                content: `''`,
+                left: 27,
+                position: `absolute`,
+                top: 0,
+                width: 1,
+              },
+            }),
+          }}
+        >
+          {item.items.map(subitem => (
+            <Item
+              activeItemLink={activeItemLink}
+              activeItemParents={activeItemParents}
+              createLink={createLink}
+              item={subitem}
+              key={subitem.title}
+              location={location}
+              onLinkClick={onLinkClick}
+              isExpanded={isExpanded}
+              onSectionTitleClick={onSectionTitleClick}
+              openSectionHash={openSectionHash}
+              ui={item.ui}
+            />
+          ))}
+        </ul>
       </li>
     )
   }

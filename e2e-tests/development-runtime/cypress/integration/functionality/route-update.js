@@ -8,7 +8,9 @@ describe(`hooks`, () => {
   })
 
   it(`registers new route update on page navigation`, () => {
-    cy.getTestElement(`page-two`).click().waitForRouteChange()
+    cy.getTestElement(`page-two`)
+      .click()
+      .waitForRouteChange()
 
     cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
   })

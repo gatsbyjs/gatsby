@@ -103,7 +103,10 @@ const commonAssertions = events => {
     const actionSchema = joi.alternatives().try(
       joi
         .object({
-          type: joi.string().required().valid([`SET_STATUS`]),
+          type: joi
+            .string()
+            .required()
+            .valid([`SET_STATUS`]),
           // TODO: We should change this to always be an Object I think pieh
           payload: joi
             .string()
@@ -133,7 +136,10 @@ const commonAssertions = events => {
     )
 
     const eventSchema = joi.object({
-      type: joi.string().required().valid([`LOG_ACTION`]),
+      type: joi
+        .string()
+        .required()
+        .valid([`LOG_ACTION`]),
       action: actionSchema,
     })
     events.forEach(event => {

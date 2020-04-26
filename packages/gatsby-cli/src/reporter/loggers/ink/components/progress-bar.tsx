@@ -7,7 +7,7 @@ const minWidth = 10
 
 const getLength = (prop: string | number): number => String(prop).length
 
-export interface IProgressbarProps {
+interface IProps {
   message: string
   current: number
   total: number
@@ -19,7 +19,7 @@ export function ProgressBar({
   current,
   total,
   startTime,
-}: IProgressbarProps): JSX.Element {
+}: IProps): JSX.Element {
   const percentage = total ? Math.round((current / total) * 100) : 0
   const terminalWidth = process.stdout.columns || 80
   const availableWidth =

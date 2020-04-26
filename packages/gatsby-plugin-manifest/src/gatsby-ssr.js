@@ -2,7 +2,7 @@ import React from "react"
 import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
 import fs from "fs"
 import { createContentDigest } from "gatsby-core-utils"
-import { defaultIcons, addDigestToPath, favicons } from "./common.js"
+import { defaultIcons, addDigestToPath } from "./common.js"
 import getManifestForPathname from "./get-manifest-pathname"
 
 // TODO: remove for v3
@@ -30,6 +30,8 @@ exports.onRenderBody = (
 
   // If icons were generated, also add a favicon link.
   if (srcIconExists) {
+    const favicon = icons && icons.length ? icons[0].src : null
+
     if (cacheBusting !== `none`) {
       iconDigest = createContentDigest(fs.readFileSync(pluginOptions.icon))
     }
@@ -39,18 +41,14 @@ exports.onRenderBody = (
         ? pluginOptions.include_favicon
         : true
 
-    if (insertFaviconLinkTag) {
-      favicons.forEach(favicon => {
-        headComponents.push(
-          <link
-            key={`gatsby-plugin-manifest-icon-link`}
-            rel="icon"
-            href={withPrefix(
-              addDigestToPath(favicon.src, iconDigest, cacheBusting)
-            )}
-          />
-        )
-      })
+    if (favicon && insertFaviconLinkTag) {
+      headComponents.push(
+        <link
+          key={`gatsby-plugin-manifest-icon-link`}
+          rel="icon"
+          href={withPrefix(addDigestToPath(favicon, iconDigest, cacheBusting))}
+        />
+      )
     }
   }
 

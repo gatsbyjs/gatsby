@@ -1,6 +1,6 @@
 # gatsby-plugin-typescript
 
-Allows Gatsby to build TypeScript and TSX files. Does NOT run type checking during build (see Caveats).
+Provides drop-in support for TypeScript and TSX.
 
 ## Install
 
@@ -10,7 +10,6 @@ Allows Gatsby to build TypeScript and TSX files. Does NOT run type checking duri
 
 1.  Include the plugin in your `gatsby-config.js` file.
 1.  Write your components in TSX or TypeScript.
-1.  Run TypeScript directly or with a build tool.
 1.  You're good to go.
 
 `gatsby-config.js`
@@ -18,11 +17,9 @@ Allows Gatsby to build TypeScript and TSX files. Does NOT run type checking duri
 ```javascript
 module.exports = {
   // ...,
-  plugins: [`gatsby-plugin-typescript`]
+  plugins: [`gatsby-plugin-typescript`],
 }
 ```
-
-> When [creating pages programmatically](/docs/programmatically-create-pages-from-data/#creating-pages), you can pass the `.tsx` filename directly as the `component` for [`createPage`](/docs/actions/#createPage).
 
 _**Please note**: If packages don't ship with TypeScript definitions you'll need to manually install those type definitions, e.g. for React. A typical Gatsby project would need: `npm install --save-dev @types/react @types/react-dom @types/node`_
 
@@ -39,10 +36,10 @@ module.exports = {
       options: {
         isTSX: true, // defaults to false
         jsxPragma: `jsx`, // defaults to "React"
-        allExtensions: true // defaults to false
-      }
-    }
-  ]
+        allExtensions: true, // defaults to false
+      },
+    },
+  ],
 }
 ```
 

@@ -29,8 +29,7 @@ const Source = ({ description, linkText }: SourceProps): ReactElement => {
   return (
     <React.Fragment>
       <p>
-        {description} <br />{" "}
-        <a href={data.site.siteMetadata.exampleUrl}>{linkText}</a>
+        {description} <br /> <a href={data.site.siteMetadata.exampleUrl}>{linkText}</a>
       </p>
     </React.Fragment>
   )

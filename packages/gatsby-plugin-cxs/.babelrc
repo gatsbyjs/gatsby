@@ -1,10 +1,7 @@
 {
   "presets": [
-    [
-      "babel-preset-gatsby-package",
-      {
-        "browser": true
-      }
-    ]
+    ["babel-preset-gatsby-package", {
+      "browser": true
+    }]
   ]
 }

@@ -15,10 +15,7 @@ const read = async ({ publicDir }, pagePath) => {
 
 const remove = async ({ publicDir }, pagePath) => {
   const filePath = getFilePath({ publicDir }, pagePath)
-  if (fs.existsSync(filePath)) {
-    return await fs.remove(filePath)
-  }
-  return Promise.resolve()
+  return fs.remove(filePath)
 }
 
 const write = async ({ publicDir }, page, result) => {
@@ -27,7 +24,7 @@ const write = async ({ publicDir }, page, result) => {
     componentChunkName: page.componentChunkName,
     path: page.path,
     matchPath: page.matchPath,
-    result
+    result,
   }
   const bodyStr = JSON.stringify(body)
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
@@ -37,8 +34,8 @@ const write = async ({ publicDir }, page, result) => {
     type: `ADD_PAGE_DATA_STATS`,
     payload: {
       filePath,
-      size: pageDataSize
-    }
+      size: pageDataSize,
+    },
   })
 
   await fs.outputFile(filePath, bodyStr)
@@ -48,5 +45,5 @@ module.exports = {
   read,
   write,
   remove,
-  fixedPagePath
+  fixedPagePath,
 }

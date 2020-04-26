@@ -23,9 +23,13 @@ describe(`Production build tests`, () => {
   it(`should navigate back after a reload`, () => {
     cy.getTestElement(`page2`).click()
 
-    cy.waitForRouteChange().location(`pathname`).should(`equal`, `/page-2/`)
+    cy.waitForRouteChange()
+      .location(`pathname`)
+      .should(`equal`, `/page-2/`)
 
-    cy.reload().waitForRouteChange().go(`back`)
+    cy.reload()
+      .waitForRouteChange()
+      .go(`back`)
 
     cy.waitForRouteChange()
       .getTestElement(`page2`)
@@ -60,7 +64,9 @@ describe(`Production build tests`, () => {
       failOnStatusCode: false,
     })
 
-    cy.waitForRouteChange().getTestElement(`404`).should(`exist`)
+    cy.waitForRouteChange()
+      .getTestElement(`404`)
+      .should(`exist`)
   })
 
   it(`should navigate back after a 404 from a direct link entry`, () => {
@@ -117,7 +123,9 @@ describe(`Production build tests`, () => {
 
     it(`Can navigate on client`, () => {
       cy.visit(`/`).waitForRouteChange()
-      cy.getTestElement(`page-with-unicode-path`).click().waitForRouteChange()
+      cy.getTestElement(`page-with-unicode-path`)
+        .click()
+        .waitForRouteChange()
 
       cy.getTestElement(`page-2-message`)
         .invoke(`text`)

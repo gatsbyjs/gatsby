@@ -14,10 +14,7 @@ module.exports = async ({ page, actions }, pluginOptions) => {
   // we're trying to insert and if we don't check we can end up in infinite loops
   if (extensions.includes(ext) && !page.context.frontmatter) {
     const content = await fs.readFile(page.component, `utf8`)
-    const code = await mdx(content, {
-      filepath: page.component,
-      ...options
-    })
+    const code = await mdx(content, options)
 
     // grab the exported frontmatter
     const { frontmatter } = extractExports(code)
@@ -28,9 +25,9 @@ module.exports = async ({ page, actions }, pluginOptions) => {
         {
           context: {
             frontmatter: {
-              ...frontmatter
-            }
-          }
+              ...frontmatter,
+            },
+          },
         },
         page
       )

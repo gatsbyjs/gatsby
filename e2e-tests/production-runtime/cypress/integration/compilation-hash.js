@@ -52,7 +52,9 @@ describe(`Webpack Compilation Hash tests`, () => {
 
         // If the window compilation hash has changed, we know the
         // page was refreshed
-        cy.window().its(`___webpackCompilationHash`).should(`equal`, mockHash)
+        cy.window()
+          .its(`___webpackCompilationHash`)
+          .should(`equal`, mockHash)
       })
 
       // Cleanup

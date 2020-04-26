@@ -33,8 +33,6 @@ function getLanguages(localeStr) {
 const langs = getLanguages(process.env.LOCALES)
 const langCodes = langs.map(lang => lang.code)
 
-const i18nEnabled = langs.length > 0
-
 function isDefaultLang(locale) {
   return locale === defaultLang
 }
@@ -80,7 +78,6 @@ function getLocaleAndBasePath(path, codes = langCodes) {
 }
 
 module.exports = {
-  i18nEnabled,
   langCodes,
   langs,
   defaultLang,

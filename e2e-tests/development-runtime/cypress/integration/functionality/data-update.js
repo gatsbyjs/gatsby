@@ -20,7 +20,9 @@ describe(`on new file`, () => {
       `npm run update -- --file content/new-file.md --file-content \\"${content}\\"`
     )
 
-    cy.get(`ul`).find(`li:nth-child(2)`).should(`exist`, 1)
+    cy.get(`ul`)
+      .find(`li:nth-child(2)`)
+      .should(`exist`, 1)
   })
 })
 

@@ -1,9 +1,10 @@
+import "@babel/polyfill"
 import React from "react"
 import { render, cleanup } from "@testing-library/react"
 import {
   createMemorySource,
   createHistory,
-  LocationProvider
+  LocationProvider,
 } from "@reach/router"
 import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
 
@@ -65,7 +66,7 @@ const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
   )
 
   return Object.assign({}, utils, {
-    link: utils.getByText(`link`)
+    link: utils.getByText(`link`),
   })
 }
 
@@ -82,7 +83,7 @@ describe(`<Link />`, () => {
 
   it(`matches partially active snapshot`, () => {
     const { container } = setup({
-      linkProps: { to: `/active/nested`, partiallyActive: true }
+      linkProps: { to: `/active/nested`, partiallyActive: true },
     })
     expect(container).toMatchSnapshot()
   })
@@ -118,7 +119,7 @@ describe(`<Link />`, () => {
 
   describe(`the location to link to`, () => {
     global.___loader = {
-      enqueue: jest.fn()
+      enqueue: jest.fn(),
     }
 
     it(`accepts to as a string`, () => {

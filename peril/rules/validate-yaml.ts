@@ -87,8 +87,12 @@ const getSitesSchema = categories => {
     .items(
       Joi.object().keys({
         title: Joi.string().required(),
-        url: Joi.string().uri(uriOptions).required(),
-        main_url: Joi.string().uri(uriOptions).required(),
+        url: Joi.string()
+          .uri(uriOptions)
+          .required(),
+        main_url: Joi.string()
+          .uri(uriOptions)
+          .required(),
         source_url: Joi.string().uri(uriOptions),
         description: Joi.string(),
         categories: Joi.array()
@@ -115,7 +119,9 @@ const getCreatorsSchema = async () => {
         description: Joi.string(),
         location: Joi.string(),
         // need to explicitly allow `null` to not fail on github: null fields
-        github: Joi.string().uri(uriOptions).allow(null),
+        github: Joi.string()
+          .uri(uriOptions)
+          .allow(null),
         website: Joi.string().uri(uriOptions),
         for_hire: Joi.boolean(),
         portfolio: Joi.boolean(),
@@ -151,13 +157,20 @@ const getStartersSchema = categories => {
   return Joi.array()
     .items(
       Joi.object().keys({
-        url: Joi.string().uri(uriOptions).required(),
-        repo: Joi.string().uri(uriOptions).regex(githubRepoRegex).required(),
+        url: Joi.string()
+          .uri(uriOptions)
+          .required(),
+        repo: Joi.string()
+          .uri(uriOptions)
+          .regex(githubRepoRegex)
+          .required(),
         description: Joi.string().required(),
         tags: Joi.array()
           .items(Joi.string().valid(categories.starter))
           .required(),
-        features: Joi.array().items(Joi.string()).required(),
+        features: Joi.array()
+          .items(Joi.string())
+          .required(),
       })
     )
     .unique("url")

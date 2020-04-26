@@ -15,7 +15,7 @@
     "react-dom": "^16.9.0"
   },
   "devDependencies": {
-    "prettier": "2.0.4"
+    "prettier": "^1.18.2"
   },
   "keywords": [
     "gatsby"

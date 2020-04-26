@@ -1,6 +1,9 @@
 module.exports = {
-  arrowParens: "avoid",
+  endOfLine: "lf",
   semi: false,
+  singleQuote: false,
+  tabWidth: 2,
+  trailingComma: "es5",
   overrides: [
     {
       // This file uses semicolons. It's needed here because `documentation`
@@ -13,10 +16,10 @@ module.exports = {
       },
     },
     {
-      files: "docs/**/*.md",
-      options: {
-        parser: "mdx",
-      },
+      "files": "docs/**/*.md",
+      "options": {
+        "parser": "mdx"
+      }
     },
   ],
 }

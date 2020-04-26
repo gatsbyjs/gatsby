@@ -31,13 +31,13 @@ module.exports = {
     `<rootDir>/www/`,
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
-    `__tests__/fixtures`
+    `__tests__/fixtures`,
   ],
   transform: {
-    "^.+\\.[jt]sx?$": `<rootDir>/jest-transformer.js`
+    "^.+\\.[jt]sx?$": `<rootDir>/jest-transformer.js`,
   },
   moduleNameMapper: {
-    "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`
+    "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverage: useCoverage,
@@ -47,8 +47,8 @@ module.exports = {
       lines: 45,
       statements: 44,
       functions: 42,
-      branches: 43
-    }
+      branches: 43,
+    },
   },
   collectCoverageFrom: coverageDirs,
   reporters: process.env.CI
@@ -56,5 +56,4 @@ module.exports = {
     : [`default`].concat(useCoverage ? `jest-junit` : []),
   testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
-  setupFiles: [`<rootDir>/.jestSetup.js`]
 }

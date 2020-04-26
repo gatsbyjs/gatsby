@@ -18,7 +18,7 @@ const prune = require(`underscore.string/prune`)
 const {
   getConcatenatedValue,
   cloneTreeUntil,
-  findLastTextNode
+  findLastTextNode,
 } = require(`./hast-processing`)
 const codeHandler = require(`./code-handler`)
 const { timeToRead } = require(`./utils/time-to-read`)
@@ -71,7 +71,7 @@ const SpaceMarkdownNodeTypesSet = new Set([
   `paragraph`,
   `heading`,
   `tableCell`,
-  `break`
+  `break`,
 ])
 
 const headingLevels = [...Array(6).keys()].reduce((acc, i) => {
@@ -110,15 +110,15 @@ module.exports = (
       pedantic = true,
       tableOfContents = {
         heading: null,
-        maxDepth: 6
-      }
+        maxDepth: 6,
+      },
     } = pluginOptions
     const tocOptions = tableOfContents
     const remarkOptions = {
       commonmark,
       footnotes,
       gfm,
-      pedantic
+      pedantic,
     }
     if (_.isArray(blocks)) {
       remarkOptions.blocks = blocks
@@ -165,21 +165,35 @@ module.exports = (
       }
     }
 
-    // Parse a markdown string and its AST representation,
-    // applying the remark plugins if necesserary
-    async function parseString(string, markdownNode) {
-      // compiler to inject in the remark plugins
-      // so that they can use our parser/generator
-      // with all the options and plugins from the user
-      const compiler = {
-        parseString: string => parseString(string, markdownNode),
-        generateHTML: ast =>
-          hastToHTML(markdownASTToHTMLAst(ast), {
-            allowDangerousHTML: true
-          })
+    async function getMarkdownAST(markdownNode) {
+      if (process.env.NODE_ENV !== `production` || !fileNodes) {
+        fileNodes = getNodesByType(`File`)
       }
-
-      const markdownAST = remark.parse(string)
+      // Use Bluebird's Promise function "each" to run remark plugins serially.
+      await Promise.each(pluginOptions.plugins, plugin => {
+        const requiredPlugin = require(plugin.resolve)
+        if (_.isFunction(requiredPlugin.mutateSource)) {
+          return requiredPlugin.mutateSource(
+            {
+              markdownNode,
+              files: fileNodes,
+              getNode,
+              reporter,
+              cache: getCache(plugin.name),
+              getCache,
+              compiler: {
+                parseString: remark.parse.bind(remark),
+                generateHTML: getHTML,
+              },
+              ...rest,
+            },
+            plugin.pluginOptions
+          )
+        } else {
+          return Promise.resolve()
+        }
+      })
+      const markdownAST = remark.parse(markdownNode.internal.content)
 
       if (basePath) {
         // Ensure relative links include `pathPrefix`
@@ -218,8 +232,11 @@ module.exports = (
               reporter,
               cache: getCache(plugin.name),
               getCache,
-              compiler,
-              ...rest
+              compiler: {
+                parseString: remark.parse.bind(remark),
+                generateHTML: getHTML,
+              },
+              ...rest,
             },
             plugin.pluginOptions
           )
@@ -231,38 +248,6 @@ module.exports = (
       return markdownAST
     }
 
-    async function getMarkdownAST(markdownNode) {
-      if (process.env.NODE_ENV !== `production` || !fileNodes) {
-        fileNodes = getNodesByType(`File`)
-      }
-
-      // Execute the remark plugins that can mutate the node
-      // before parsing its content
-      //
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
-        const requiredPlugin = require(plugin.resolve)
-        if (_.isFunction(requiredPlugin.mutateSource)) {
-          return requiredPlugin.mutateSource(
-            {
-              markdownNode,
-              files: fileNodes,
-              getNode,
-              reporter,
-              cache: getCache(plugin.name),
-              getCache,
-              ...rest
-            },
-            plugin.pluginOptions
-          )
-        } else {
-          return Promise.resolve()
-        }
-      })
-
-      return parseString(markdownNode.internal.content, markdownNode)
-    }
-
     async function getHeadings(markdownNode) {
       const cachedHeadings = await cache.get(headingsCacheKey(markdownNode))
       if (cachedHeadings) {
@@ -272,7 +257,7 @@ module.exports = (
         const headings = select(ast, `heading`).map(heading => {
           return {
             value: mdastToString(heading),
-            depth: heading.depth
+            depth: heading.depth,
           }
         })
 
@@ -310,7 +295,7 @@ module.exports = (
               node.url = [
                 basePath,
                 _.get(markdownNode, appliedTocOptions.pathToSlugField),
-                node.url
+                node.url,
               ]
                 .join(`/`)
                 .replace(/\/\//g, `/`)
@@ -328,7 +313,7 @@ module.exports = (
           }
 
           toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
-            allowDangerousHTML: true
+            allowDangerousHTML: true,
           })
         } else {
           toc = ``
@@ -338,20 +323,16 @@ module.exports = (
       }
     }
 
-    function markdownASTToHTMLAst(ast) {
-      return toHAST(ast, {
-        allowDangerousHTML: true,
-        handlers: { code: codeHandler }
-      })
-    }
-
     async function getHTMLAst(markdownNode) {
       const cachedAst = await cache.get(htmlAstCacheKey(markdownNode))
       if (cachedAst) {
         return cachedAst
       } else {
         const ast = await getAST(markdownNode)
-        const htmlAst = markdownASTToHTMLAst(ast)
+        const htmlAst = toHAST(ast, {
+          allowDangerousHTML: true,
+          handlers: { code: codeHandler },
+        })
 
         // Save new HTML AST to cache and return
         cache.set(htmlAstCacheKey(markdownNode), htmlAst)
@@ -360,18 +341,22 @@ module.exports = (
     }
 
     async function getHTML(markdownNode) {
-      const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
+      const shouldCache = markdownNode && markdownNode.internal
+      const cachedHTML =
+        shouldCache && (await cache.get(htmlCacheKey(markdownNode)))
       if (cachedHTML) {
         return cachedHTML
       } else {
         const ast = await getHTMLAst(markdownNode)
         // Save new HTML to cache and return
         const html = hastToHTML(ast, {
-          allowDangerousHTML: true
+          allowDangerousHTML: true,
         })
 
-        // Save new HTML to cache
-        cache.set(htmlCacheKey(markdownNode), html)
+        if (shouldCache) {
+          // Save new HTML to cache
+          cache.set(htmlCacheKey(markdownNode), html)
+        }
 
         return html
       }
@@ -418,7 +403,7 @@ module.exports = (
       } else {
         lastTextNode.value = _.truncate(lastTextNode.value, {
           length: pruneLength,
-          omission: `…`
+          omission: `…`,
         })
       }
       return excerptAST
@@ -434,10 +419,10 @@ module.exports = (
       const excerptAST = await getExcerptAst(fullAST, markdownNode, {
         pruneLength,
         truncate,
-        excerptSeparator
+        excerptSeparator,
       })
       const html = hastToHTML(excerptAST, {
-        allowDangerousHTML: true
+        allowDangerousHTML: true,
       })
       return html
     }
@@ -456,7 +441,7 @@ module.exports = (
       const excerptAST = await getExcerptAst(ast, markdownNode, {
         pruneLength,
         truncate,
-        excerptSeparator
+        excerptSeparator,
       })
       var excerptMarkdown = unified()
         .use(stringify)
@@ -500,7 +485,7 @@ module.exports = (
         }
         return _.truncate(excerptText, {
           length: pruneLength,
-          omission: `…`
+          omission: `…`,
         })
       })
       return text
@@ -538,7 +523,7 @@ module.exports = (
         type: `String`,
         resolve(markdownNode) {
           return getHTML(markdownNode)
-        }
+        },
       },
       htmlAst: {
         type: `JSON`,
@@ -547,44 +532,44 @@ module.exports = (
             const strippedAst = stripPosition(_.clone(ast), true)
             return hastReparseRaw(strippedAst)
           })
-        }
+        },
       },
       excerpt: {
         type: `String`,
         args: {
           pruneLength: {
             type: `Int`,
-            defaultValue: 140
+            defaultValue: 140,
           },
           truncate: {
             type: `Boolean`,
-            defaultValue: false
+            defaultValue: false,
           },
           format: {
             type: `MarkdownExcerptFormats`,
-            defaultValue: `PLAIN`
-          }
+            defaultValue: `PLAIN`,
+          },
         },
         resolve(markdownNode, { format, pruneLength, truncate }) {
           return getExcerpt(markdownNode, {
             format,
             pruneLength,
             truncate,
-            excerptSeparator: pluginOptions.excerpt_separator
+            excerptSeparator: pluginOptions.excerpt_separator,
           })
-        }
+        },
       },
       excerptAst: {
         type: `JSON`,
         args: {
           pruneLength: {
             type: `Int`,
-            defaultValue: 140
+            defaultValue: 140,
           },
           truncate: {
             type: `Boolean`,
-            defaultValue: false
-          }
+            defaultValue: false,
+          },
         },
         resolve(markdownNode, { pruneLength, truncate }) {
           return getHTMLAst(markdownNode)
@@ -592,19 +577,19 @@ module.exports = (
               getExcerptAst(fullAST, markdownNode, {
                 pruneLength,
                 truncate,
-                excerptSeparator: pluginOptions.excerpt_separator
+                excerptSeparator: pluginOptions.excerpt_separator,
               })
             )
             .then(ast => {
               const strippedAst = stripPosition(_.clone(ast), true)
               return hastReparseRaw(strippedAst)
             })
-        }
+        },
       },
       headings: {
         type: [`MarkdownHeading`],
         args: {
-          depth: `MarkdownHeadingLevels`
+          depth: `MarkdownHeadingLevels`,
         },
         resolve(markdownNode, { depth }) {
           return getHeadings(markdownNode).then(headings => {
@@ -614,13 +599,13 @@ module.exports = (
             }
             return headings
           })
-        }
+        },
       },
       timeToRead: {
         type: `Int`,
         resolve(markdownNode) {
           return getHTML(markdownNode).then(timeToRead)
-        }
+        },
       },
       tableOfContents: {
         type: `String`,
@@ -628,19 +613,19 @@ module.exports = (
           // TODO:(v3) set default value to false
           absolute: {
             type: `Boolean`,
-            defaultValue: true
+            defaultValue: true,
           },
           // TODO:(v3) set default value to empty string
           pathToSlugField: {
             type: `String`,
-            defaultValue: `fields.slug`
+            defaultValue: `fields.slug`,
           },
           maxDepth: `Int`,
-          heading: `String`
+          heading: `String`,
         },
         resolve(markdownNode, args) {
           return getTableOfContents(markdownNode, args)
-        }
+        },
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
       wordCount: {
@@ -662,7 +647,7 @@ module.exports = (
           return {
             paragraphs: counts.ParagraphNode,
             sentences: counts.SentenceNode,
-            words: counts.WordNode
+            words: counts.WordNode,
           }
 
           function count() {
@@ -674,8 +659,8 @@ module.exports = (
               }
             }
           }
-        }
-      }
+        },
+      },
     })
   })
 }

@@ -10,10 +10,7 @@ module.exports = async function preprocessSource(
   const ext = path.extname(filename)
 
   if (extensions.includes(ext)) {
-    const code = await mdx(contents, {
-      filepath: filename,
-      ...options
-    })
+    const code = await mdx(contents, options)
     return code
   }
   return null

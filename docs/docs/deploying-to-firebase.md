@@ -47,61 +47,61 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
 
 1. Update the `firebase.json` with the following cache settings
 
-   ```json
-   {
-     "hosting": {
-       "public": "public",
-       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-       "headers": [
-         {
-           "source": "**/*",
-           "headers": [
-             {
-               "key": "cache-control",
-               "value": "cache-control: public, max-age=0, must-revalidate"
-             }
-           ]
-         },
-         {
-           "source": "static/**",
-           "headers": [
-             {
-               "key": "cache-control",
-               "value": "public, max-age=31536000, immutable"
-             }
-           ]
-         },
-         {
-           "source": "**/*.@(css|js)",
-           "headers": [
-             {
-               "key": "cache-control",
-               "value": "public, max-age=31536000, immutable"
-             }
-           ]
-         },
-         {
-           "source": "sw.js",
-           "headers": [
-             {
-               "key": "cache-control",
-               "value": "cache-control: public, max-age=0, must-revalidate"
-             }
-           ]
-         },
-         {
-           "source": "page-data/**",
-           "headers": [
-             {
-               "key": "cache-control",
-               "value": "cache-control: public, max-age=0, must-revalidate"
-             }
-           ]
-         }
-       ]
-     }
-   }
-   ```
+```json
+{
+  "hosting": {
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "headers": [
+      {
+        "source": "**/*",
+        "headers": [
+          {
+            "key": "cache-control",
+            "value": "cache-control: public, max-age=0, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "static/**",
+        "headers": [
+          {
+            "key": "cache-control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(css|js)",
+        "headers": [
+          {
+            "key": "cache-control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "sw.js",
+        "headers": [
+          {
+            "key": "cache-control",
+            "value": "cache-control: public, max-age=0, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "page-data/**",
+        "headers": [
+          {
+            "key": "cache-control",
+            "value": "cache-control: public, max-age=0, must-revalidate"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
 
 1. Prepare your site for deployment by running `gatsby build`. This generates a publishable version of your site in the `public` folder.
 
@@ -114,10 +114,6 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
 All done! Once the deployment concludes, you can access your website using `firebaseProjectId.firebaseapp.com` or `firebaseProjectId.web.app`.
 
 Check the [Firebase Docs](https://firebase.google.com/docs/hosting/full-config) for information about how to customize your deployment further. Remember that each time you wish to redeploy your site, you will need to rerun `gatsby build` first.
-
-<CloudCallout>
-  For automatic setup of builds that are deployed straight to Firebase:
-</CloudCallout>
 
 ## References:
 

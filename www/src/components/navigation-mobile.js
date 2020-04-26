@@ -75,7 +75,7 @@ const MobileNavigation = ({ i18n }) => (
       <MobileNavItem
         linkTo={`/${id}/`}
         key={id}
-        label={i18n._(text)}
+        text={i18n._(text)}
         icon={icon}
       />
     ))}

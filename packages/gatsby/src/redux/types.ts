@@ -1,20 +1,10 @@
 import { IProgram } from "../commands/types"
-import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
-import { DocumentNode, GraphQLSchema } from "graphql"
+import { GraphQLSchema } from "graphql"
 import { SchemaComposer } from "graphql-compose"
-import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 
 type SystemPath = string
 type Identifier = string
-
-export interface IRedirect {
-  fromPath: string
-  toPath: string
-  isPermanent?: boolean
-  redirectInBrowser?: boolean
-  // Users can add anything to this createRedirect API
-  [key: string]: any
-}
+type StructuredLog = any // TODO this should come from structured log interface
 
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
@@ -70,15 +60,6 @@ export interface IGatsbyNode {
   }
   __gatsby_resolved: any // TODO
   [key: string]: unknown
-}
-
-export interface IGatsbyPlugin {
-  name: string
-  version: string
-}
-
-export interface IGatsbyPluginContext {
-  [key: string]: (...args: any[]) => any
 }
 
 type GatsbyNodes = Map<string, IGatsbyNode>
@@ -159,7 +140,7 @@ export interface IGatsbyState {
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
-  redirects: IRedirect[]
+  redirects: any[] // TODO
   babelrc: {
     stages: {
       develop: any // TODO
@@ -177,7 +158,24 @@ export interface IGatsbyState {
     types: any[] // TODO
   }
   themes: any // TODO
-  logs: IGatsbyCLIState
+  logs: {
+    messages: StructuredLog[]
+    activities: {
+      [key: string]: {
+        id: Identifier
+        uuid: Identifier
+        text: string
+        type: string // TODO make enum
+        status: string // TODO make enum
+        startTime: [number, number]
+        statusText: string
+        current: undefined | any // TODO
+        total: undefined | any // TODO
+        duration: number
+      }
+    }
+    status: string // TODO make enum
+  }
   inferenceMetadata: {
     step: string // TODO make enum or union
     typeMap: {
@@ -216,10 +214,6 @@ export type ActionsUnion =
   | IQueryExtractionBabelErrorAction
   | ISetProgramStatusAction
   | IPageQueryRunAction
-  | IAddThirdPartySchema
-  | ICreateTypes
-  | ICreateFieldExtension
-  | IPrintTypeDefinitions
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
@@ -248,7 +242,7 @@ export interface IReplaceComponentQueryAction {
 
 export interface IReplaceStaticQueryAction {
   type: `REPLACE_STATIC_QUERY`
-  plugin: IGatsbyPlugin | null | undefined
+  plugin: Plugin | null | undefined
   payload: {
     name: string
     componentPath: string
@@ -260,28 +254,28 @@ export interface IReplaceStaticQueryAction {
 
 export interface IQueryExtractedAction {
   type: `QUERY_EXTRACTED`
-  plugin: IGatsbyPlugin
+  plugin: Plugin
   traceId: string | undefined
   payload: { componentPath: string; query: string }
 }
 
 export interface IQueryExtractionGraphQLErrorAction {
   type: `QUERY_EXTRACTION_GRAPHQL_ERROR`
-  plugin: IGatsbyPlugin
+  plugin: Plugin
   traceId: string | undefined
   payload: { componentPath: string; error: string }
 }
 
 export interface IQueryExtractedBabelSuccessAction {
   type: `QUERY_EXTRACTION_BABEL_SUCCESS`
-  plugin: IGatsbyPlugin
+  plugin: Plugin
   traceId: string | undefined
   payload: { componentPath: string }
 }
 
 export interface IQueryExtractionBabelErrorAction {
   type: `QUERY_EXTRACTION_BABEL_ERROR`
-  plugin: IGatsbyPlugin
+  plugin: Plugin
   traceId: string | undefined
   payload: {
     componentPath: string
@@ -291,71 +285,21 @@ export interface IQueryExtractionBabelErrorAction {
 
 export interface ISetProgramStatusAction {
   type: `SET_PROGRAM_STATUS`
-  plugin: IGatsbyPlugin
+  plugin: Plugin
   traceId: string | undefined
   payload: ProgramStatus
 }
 
 export interface IPageQueryRunAction {
   type: `PAGE_QUERY_RUN`
-  plugin: IGatsbyPlugin
+  plugin: Plugin
   traceId: string | undefined
   payload: { path: string; componentPath: string; isPage: boolean }
 }
 
 export interface IRemoveStaleJobAction {
   type: `REMOVE_STALE_JOB_V2`
-  plugin: IGatsbyPlugin
+  plugin: Plugin
   traceId?: string
   payload: { contentDigest: string }
-}
-
-export interface IAddThirdPartySchema {
-  type: `ADD_THIRD_PARTY_SCHEMA`
-  plugin: IGatsbyPlugin
-  traceId?: string
-  payload: GraphQLSchema
-}
-
-export interface ICreateTypes {
-  type: `CREATE_TYPES`
-  plugin: IGatsbyPlugin
-  traceId?: string
-  payload: DocumentNode | DocumentNode[]
-}
-
-export interface ICreateFieldExtension {
-  type: `CREATE_FIELD_EXTENSION`
-  plugin: IGatsbyPlugin
-  traceId?: string
-  payload: {
-    name: string
-    extension: GraphQLFieldExtensionDefinition
-  }
-}
-
-export interface IPrintTypeDefinitions {
-  type: `PRINT_SCHEMA_REQUESTED`
-  plugin: IGatsbyPlugin
-  traceId?: string
-  payload: {
-    path?: string
-    include?: { types?: Array<string>; plugins?: Array<string> }
-    exclude?: { types?: Array<string>; plugins?: Array<string> }
-    withFieldTypes?: boolean
-  }
-}
-
-export interface ICreateResolverContext {
-  type: `CREATE_RESOLVER_CONTEXT`
-  plugin: IGatsbyPlugin
-  traceId?: string
-  payload:
-    | IGatsbyPluginContext
-    | { [camelCasedPluginNameWithoutPrefix: string]: IGatsbyPluginContext }
-}
-
-export interface ICreateRedirectAction {
-  type: `CREATE_REDIRECT`
-  payload: IRedirect
 }

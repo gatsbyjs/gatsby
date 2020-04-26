@@ -71,7 +71,7 @@ const navigate = (to, options = {}) => {
   const timeoutId = setTimeout(() => {
     emitter.emit(`onDelayedLoadPageResources`, { pathname })
     apiRunner(`onRouteUpdateDelayed`, {
-      location: window.location
+      location: window.location,
     })
   }, 1000)
 
@@ -103,7 +103,7 @@ const navigate = (to, options = {}) => {
           navigator.serviceWorker.controller.state === `activated`
         ) {
           navigator.serviceWorker.controller.postMessage({
-            gatsbyApi: `clearPathResources`
+            gatsbyApi: `clearPathResources`,
           })
         }
 
@@ -123,7 +123,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     // `pathname` for backwards compatibility
     pathname,
     routerProps: { location },
-    getSavedScrollPosition: args => this._stateStorage.read(args)
+    getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
     // Use the latest registered shouldUpdateScroll result, this allows users to override plugin's configuration
@@ -133,7 +133,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
 
   if (prevRouterProps) {
     const {
-      location: { pathname: oldPathname }
+      location: { pathname: oldPathname },
     } = prevRouterProps
     if (oldPathname === pathname) {
       // Scroll to element if it exists, if it doesn't, or no hash is provided,
@@ -171,7 +171,9 @@ class RouteAnnouncer extends React.Component {
       if (document.title) {
         pageName = document.title
       }
-      const pageHeadings = document.querySelectorAll(`#gatsby-focus-wrapper h1`)
+      const pageHeadings = document
+        .getElementById(`gatsby-focus-wrapper`)
+        .getElementsByTagName(`h1`)
       if (pageHeadings && pageHeadings.length) {
         pageName = pageHeadings[0].textContent
       }
@@ -225,7 +227,7 @@ class RouteUpdates extends React.Component {
 }
 
 RouteUpdates.propTypes = {
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
 }
 
 export { init, shouldUpdateScroll, RouteUpdates }

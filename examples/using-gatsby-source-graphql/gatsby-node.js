@@ -48,7 +48,9 @@ exports.createResolvers = ({
       },
       post: {
         resolve(source, args, context, info) {
-          return remark().use(html).processSync(source.post).contents
+          return remark()
+            .use(html)
+            .processSync(source.post).contents
         },
       },
     },

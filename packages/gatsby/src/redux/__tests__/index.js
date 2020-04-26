@@ -5,7 +5,7 @@ const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const { saveState, store, readState } = require(`../index`)
 
 const {
-  actions: { createPage }
+  actions: { createPage },
 } = require(`../actions`)
 
 const mockWrittenContent = new Map()
@@ -16,7 +16,7 @@ jest.mock(`fs-extra`, () => {
       mockWrittenContent.set(file, content)
     ),
     readFileSync: jest.fn(file => mockWrittenContent.get(file)),
-    moveSync: jest.fn((from, to) => {
+    renameSync: jest.fn((from, to) => {
       // This will only work for folders if they are always the full prefix
       // of the file... (that goes for both input dirs). That's the case here.
       if (mockWrittenContent.has(to)) {
@@ -42,7 +42,7 @@ jest.mock(`fs-extra`, () => {
       mockWrittenContent.set(dir, Buffer(`empty dir`))
       return dir
     }),
-    removeSync: jest.fn(file => mockWrittenContent.delete(file))
+    removeSync: jest.fn(file => mockWrittenContent.delete(file)),
   }
 })
 jest.mock(`glob`, () => {
@@ -64,7 +64,7 @@ jest.mock(`glob`, () => {
         }
       })
       return files
-    })
+    }),
   }
 })
 
@@ -75,14 +75,14 @@ function getFakeNodes() {
   map.set(`pageA`, {
     id: `pageA`,
     internal: {
-      type: `Ding`
-    }
+      type: `Ding`,
+    },
   })
   map.set(`pageB`, {
     id: `pageB`,
     internal: {
-      type: `Dong`
-    }
+      type: `Dong`,
+    },
   })
   return map
 }
@@ -100,8 +100,8 @@ describe(`redux db`, () => {
           // The context is passed as props to the component as well
           // as into the component's GraphQL query.
           context: {
-            id: `123456`
-          }
+            id: `123456`,
+          },
         },
         { name: `default-site-plugin` }
       )
@@ -126,7 +126,7 @@ describe(`redux db`, () => {
 
       // reset state in memory
       store.dispatch({
-        type: `DELETE_CACHE`
+        type: `DELETE_CACHE`,
       })
       // make sure store in memory is empty
       expect(store.getState().components).toEqual(initialComponentsState)
@@ -152,7 +152,7 @@ describe(`redux db`, () => {
 
       // reset state in memory
       store.dispatch({
-        type: `DELETE_CACHE`
+        type: `DELETE_CACHE`,
       })
       // make sure store in memory is empty
       expect(store.getState().components).toEqual(initialComponentsState)

@@ -48,10 +48,10 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `./src/data/`
-      }
-    }
-  ]
+        path: `./src/data/`,
+      },
+    },
+  ],
 }
 ```
 
@@ -102,8 +102,6 @@ Now you have a `File` node to work with:
 
 Now, transform the newly created `File` nodes by hooking into the `onCreateNode` API in `gatsby-node.js`.
 
-#### Convert yaml into JSON for storage in Gatsby nodes
-
 If you're following along in an example project, install the following packages:
 
 ```shell
@@ -139,67 +137,41 @@ File content:
 
 Parsed YAML content:
 
-```json
-[
+```javascript
+;[
   {
-    "id": "Jane Doe",
-    "bio": "Developer based in Somewhere, USA"
+    id: "Jane Doe",
+    bio: "Developer based in Somewhere, USA",
   },
   {
-    "id": "John Smith",
-    "bio": "Developer based in Maintown, USA"
-  }
+    id: "John Smith",
+    bio: "Developer based in Maintown, USA",
+  },
 ]
 ```
 
 Now you'll write a helper function to transform the parsed YAML content into new Gatsby nodes:
 
-```javascript:title=gatsby-node.js
+```javascript
 function transformObject(obj, id, type) {
   const yamlNode = {
     ...obj,
     id,
     children: [],
-    parent: null,
+    parent: node.id,
     internal: {
       contentDigest: createContentDigest(obj),
-      type
-    }
+      type,
+    },
   }
   createNode(yamlNode)
+  createParentChildLink({ parent: node, child: yamlNode })
 }
 ```
 
 Above, you create a `yamlNode` object with the shape expected by the [`createNode` action](/docs/actions/#createNode).
 
-#### Creating the transformer relationship
-
-You then need to create a link between the parent node (file) and the child node (yaml content) using the `createParentChildLink` function after adding the parent node's id to the `yamlNode`:
-
-```javascript:title=gatsby-node.js
-function transformObject(obj, id, type) {
-  const yamlNode = {
-    ...obj,
-    id,
-    children: [],
-    parent: node.id, // highlight-line
-    internal: {
-      contentDigest: createContentDigest(obj),
-      type
-    }
-  }
-  createNode(yamlNode)
-  createParentChildLink({ parent: node, child: yamlNode }) // highlight-line
-}
-```
-
-Another example of a transformation relationship is the `gatsby-source-filesystem` plugin used with the `gatsby-transformer-remark` plugin. This combination transforms a parent `File` node's markdown string into a `MarkdownRemark` node. The remark transformer plugin adds its newly created child node as a child of the parent node using the action [`createParentChildLink`](/docs/actions/#createParentChildLink). Transformation relationships like this are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `File` node and would not exist if the parent `File` node hadn't been created.
-
-Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on). Gatsby does so with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there are no nodes left over that were derived from older versions of data but should no longer exist.
-
-_For examples of other plugins creating transformation relationships, you can see the [`gatsby-transformer-remark` plugin](https://github.com/gatsbyjs/gatsby/blob/72077527b4acd3f2109ed5a2fcb780cddefee35a/packages/gatsby-transformer-remark/src/on-node-create.js#L39-L67) (from the above example) or the [`gatsby-transformer-sharp` plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25)._
-
-#### Create new nodes from the derived data
+You then create a link between the parent node (file) and the child node (yaml content).
 
 In your updated `gatsby-node.js`, you'll then iterate through the parsed YAML content, using the helper function to transform each into a new node:
 
@@ -212,7 +184,7 @@ async function onCreateNode({
   actions, // highlight-line
   loadNodeContent,
   createNodeId, // highlight-line
-  createContentDigest // highlight-line
+  createContentDigest, // highlight-line
 }) {
   // highlight-start
   function transformObject(obj, id, type) {
@@ -223,8 +195,8 @@ async function onCreateNode({
       parent: node.id,
       internal: {
         contentDigest: createContentDigest(obj),
-        type
-      }
+        type,
+      },
     }
 
     createNode(yamlNode)
@@ -254,8 +226,6 @@ async function onCreateNode({
 
 exports.onCreateNode = onCreateNode
 ```
-
-#### Query for the transformed data
 
 Now you can query for your new nodes containing our transformed YAML data:
 

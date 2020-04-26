@@ -91,7 +91,7 @@ const handleWebhookUpdate = async (
     getCache,
     getNode,
     reporter,
-    store
+    store,
   },
   pluginOptions
 ) => {
@@ -103,7 +103,7 @@ const handleWebhookUpdate = async (
 
   handleReferences(newNode, {
     getNode,
-    createNodeId
+    createNodeId,
   })
 
   const oldNode = getNode(newNode.id)
@@ -147,10 +147,10 @@ const handleWebhookUpdate = async (
     nodesToUpdate.push(...addedReferencedNodes)
   } else {
     // if we are inserting new node, we need to update all referenced nodes
-    const newNodes = referencedNodesLookup.get(newNode)
-    if (typeof newNodes !== `undefined`) {
-      newNodes.forEach(id => nodesToUpdate.push(getNode(id)))
-    }
+    const newNodeReferencedNodes = referencedNodesLookup
+      .get(newNode)
+      .map(id => getNode(id))
+    nodesToUpdate.push(...newNodeReferencedNodes)
   }
 
   // download file
@@ -162,7 +162,7 @@ const handleWebhookUpdate = async (
         cache,
         createNode,
         createNodeId,
-        getCache
+        getCache,
       },
       pluginOptions
     )

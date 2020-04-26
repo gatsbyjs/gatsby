@@ -410,11 +410,3 @@
 - id: Debra Combs
   bio: "Product Manager, Writer, Gamer, and lover of laughter."
   avatar: avatars/debra-combs.png
-- id: Joel Varty
-  bio: "Dad to teens, HS football coach, president of Agility CMS."
-  avatar: avatars/joel-varty.jpg
-  twitter: "@joelvarty"
-- id: Paul Scanlon
-  bio: "Front End React UI Developer/UX Engineer based in Worthing, UK. After all is said and done, structure + order = fun."
-  avatar: avatars/paul-scanlon.jpg
-  twitter: "@PaulieScanlon"

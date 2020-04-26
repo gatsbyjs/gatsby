@@ -5,7 +5,9 @@ describe(`hot reloading page component`, () => {
     cy.visit(`/`).waitForRouteChange()
   })
   it(`displays placeholder content on launch`, () => {
-    cy.getTestElement(TEST_ID).invoke(`text`).should(`contain`, `%GATSBY_SITE%`)
+    cy.getTestElement(TEST_ID)
+      .invoke(`text`)
+      .should(`contain`, `%GATSBY_SITE%`)
   })
 
   it(`hot reloads with new content`, () => {
@@ -14,6 +16,8 @@ describe(`hot reloading page component`, () => {
       `npm run update -- --file src/pages/index.js --replacements "GATSBY_SITE:${text}"`
     )
 
-    cy.getTestElement(TEST_ID).invoke(`text`).should(`contain`, text)
+    cy.getTestElement(TEST_ID)
+      .invoke(`text`)
+      .should(`contain`, text)
   })
 })

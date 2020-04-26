@@ -13,6 +13,8 @@ describe(`hot-reloading hooks`, () => {
 
     cy.getTestElement(`increment`).click()
 
-    cy.getTestElement(COUNT_ID).invoke(`text`).should(`eq`, `${amount}`)
+    cy.getTestElement(COUNT_ID)
+      .invoke(`text`)
+      .should(`eq`, `${amount}`)
   })
 })

@@ -1,7 +1,8 @@
+import "@babel/polyfill"
 const {
   reportError,
   clearError,
-  errorMap
+  errorMap,
 } = require(`../error-overlay-handler`)
 
 import * as ErrorOverlay from "react-error-overlay"
@@ -11,7 +12,7 @@ jest.mock(`react-error-overlay`, () => {
     reportBuildError: jest.fn(),
     dismissBuildError: jest.fn(),
     startReportingRuntimeErrors: jest.fn(),
-    setEditorHandler: jest.fn()
+    setEditorHandler: jest.fn(),
   }
 })
 

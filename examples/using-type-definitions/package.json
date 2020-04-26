@@ -27,7 +27,7 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "devDependencies": {
-    "prettier": "2.0.4"
+    "prettier": "^1.15.2"
   },
   "repository": {
     "type": "git",

@@ -38,14 +38,13 @@ const getLabel = (
   }
 }
 
-export interface IMessageProps {
+interface IProps {
   level: ActivityLogLevels | LogLevels
   text: string
-  duration?: number
-  statusText?: string
+  duration: number
+  statusText: string
 }
-
-export const Message = React.memo<IMessageProps>(
+export const Message = React.memo<IProps>(
   ({ level, text, duration, statusText }) => {
     let message = text
     if (duration) {

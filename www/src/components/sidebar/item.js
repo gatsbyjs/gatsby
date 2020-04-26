@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback } from "react"
 
 import Accordion from "./accordion"
-import ItemLink from "./item-link"
+import createLink from "../../utils/sidebar/create-link"
 
 const isItemActive = (activeItemParents, item) => {
   if (activeItemParents) {
@@ -34,7 +34,7 @@ const Item = ({
         // will only scroll to the correct location on a full page refresh,
         // instead of navigating between pages with the prev/next buttons
         // or clicking on linking guides or urls
-        await function () {}
+        await function() {}
         node.scrollIntoView({ block: `center` })
       }
     },
@@ -50,6 +50,7 @@ const Item = ({
           itemRef={itemRef}
           activeItemLink={activeItemLink}
           activeItemParents={activeItemParents}
+          createLink={createLink}
           isActive={
             isActive ||
             item.link === location.pathname ||
@@ -67,12 +68,14 @@ const Item = ({
         />
       ) : (
         <li ref={itemRef}>
-          <ItemLink
-            isActive={item.link === activeItemLink.link}
-            item={item}
-            onLinkClick={onLinkClick}
-            ui={ui}
-          />
+          {createLink({
+            isActive: item.link === activeItemLink.link,
+            item,
+            location,
+            onLinkClick,
+            ui,
+            level: item.level,
+          })}
         </li>
       )}
     </Fragment>
