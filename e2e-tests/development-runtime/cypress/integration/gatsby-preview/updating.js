@@ -13,9 +13,7 @@ const reset = () => cy.exec(`npm run reset:preview`)
 
 describe(`Gatsby Preview (Updating)`, () => {
   it(`displays initial data`, () => {
-    cy.get(`li:eq(0) a`)
-      .click()
-      .waitForRouteChange()
+    cy.get(`li:eq(0) a`).click().waitForRouteChange()
 
     cy.queryByText(`Hello World (1)`).should(`exist`)
 
@@ -23,9 +21,7 @@ describe(`Gatsby Preview (Updating)`, () => {
   })
 
   it(`updates and hot-reloads changes to content`, () => {
-    cy.get(`li:eq(0) a`)
-      .click()
-      .waitForRouteChange()
+    cy.get(`li:eq(0) a`).click().waitForRouteChange()
 
     update()
 
@@ -46,9 +42,7 @@ describe(`Gatsby Preview (Updating)`, () => {
 
     reset()
 
-    cy.get(`li`)
-      .its(`length`)
-      .should(`be`, 1)
+    cy.get(`li`).its(`length`).should(`be`, 1)
   })
 
   /*

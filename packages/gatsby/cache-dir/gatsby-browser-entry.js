@@ -7,7 +7,7 @@ import Link, {
   push,
   replace,
   navigateTo,
-  parsePath,
+  parsePath
 } from "gatsby-link"
 import PageRenderer from "./public-page-renderer"
 import loader from "./loader"
@@ -57,6 +57,19 @@ const useStaticQuery = query => {
     )
   }
   const context = React.useContext(StaticQueryContext)
+
+  // query is a stringified number like `3303882` when wrapped with graphql, If a user forgets
+  // to wrap the query in a grqphql, then casting it to a Number results in `NaN` allowing us to
+  // catch the misuse of the API and give proper direction
+  if (isNaN(Number(query))) {
+    throw new Error(`useStaticQuery was called with a string but expects to be called using \`graphql\`. Try this:
+
+import { useStaticQuery, graphql } from 'gatsby';
+
+useStaticQuery(graphql\`${query}\`);
+`)
+  }
+
   if (context[query] && context[query].data) {
     return context[query].data
   } else {
@@ -72,7 +85,7 @@ StaticQuery.propTypes = {
   data: PropTypes.object,
   query: PropTypes.string.isRequired,
   render: PropTypes.func,
-  children: PropTypes.func,
+  children: PropTypes.func
 }
 
 function graphql() {
@@ -98,5 +111,5 @@ export {
   StaticQuery,
   PageRenderer,
   useStaticQuery,
-  prefetchPathname,
+  prefetchPathname
 }

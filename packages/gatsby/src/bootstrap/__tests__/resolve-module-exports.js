@@ -2,12 +2,12 @@ jest.mock(`fs`, () => {
   const fs = jest.requireActual(`fs`)
   return {
     ...fs,
-    readFileSync: jest.fn(),
+    readFileSync: jest.fn()
   }
 })
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
-    panic: jest.fn(),
+    panic: jest.fn()
   }
 })
 
@@ -122,6 +122,8 @@ describe(`Resolve module exports`, () => {
     "/export/named/from": `export { Component } from 'react';`,
     "/export/named/as": `const foo = ''; export { foo as bar };`,
     "/export/named/multiple": `const foo = ''; const bar = ''; const baz = ''; export { foo, bar, baz };`,
+    "/export/default": `export default () => {}`,
+    "/export/default/name": `const foo = () => {}; export default foo`
   }
 
   beforeEach(() => {
@@ -209,11 +211,21 @@ describe(`Resolve module exports`, () => {
     expect(result).toEqual([`foo`, `bar`, `baz`])
   })
 
+  it(`Resolves default export`, () => {
+    const result = resolveModuleExports(`/export/default`, { resolver })
+    expect(result).toEqual([`export default`])
+  })
+
+  it(`Resolves default export with name`, () => {
+    const result = resolveModuleExports(`/export/default/name`, { resolver })
+    expect(result).toEqual([`export default foo`])
+  })
+
   it(`Resolves exports when using require mode - simple case`, () => {
     jest.mock(`require/exports`)
 
     const result = resolveModuleExports(`require/exports`, {
-      mode: `require`,
+      mode: `require`
     })
     expect(result).toEqual([`foo`, `bar`])
   })
@@ -222,14 +234,14 @@ describe(`Resolve module exports`, () => {
     jest.mock(`require/unusual-exports`)
 
     const result = resolveModuleExports(`require/unusual-exports`, {
-      mode: `require`,
+      mode: `require`
     })
     expect(result).toEqual([`foo`])
   })
 
   it(`Resolves exports when using require mode - returns empty array when module doesn't exist`, () => {
     const result = resolveModuleExports(`require/not-existing-module`, {
-      mode: `require`,
+      mode: `require`
     })
     expect(result).toEqual([])
   })
@@ -238,7 +250,7 @@ describe(`Resolve module exports`, () => {
     jest.mock(`require/module-error`)
 
     resolveModuleExports(`require/module-error`, {
-      mode: `require`,
+      mode: `require`
     })
 
     expect(reporter.panic).toBeCalled()

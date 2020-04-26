@@ -45,7 +45,7 @@ const getGitRemoteWithGit = () => {
     if (repo) {
       return {
         repositoryId: `git:${hash(repo)}`,
-        repositoryData: getRepoMetadata(repo),
+        repositoryData: getRepoMetadata(repo)
       }
     }
   } catch (e) {
@@ -62,7 +62,7 @@ const getRepositoryFromNetlifyEnv = () => {
       if (repoPart) {
         return {
           repositoryId: `git:${hash(repoPart)}`,
-          repositoryData: getRepoMetadata(url),
+          repositoryData: getRepoMetadata(url)
         }
       }
     } catch (e) {
@@ -79,5 +79,5 @@ const hash = str =>
 
 module.exports = {
   getRepositoryId,
-  getRepoMetadata,
+  getRepoMetadata
 }

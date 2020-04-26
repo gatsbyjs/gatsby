@@ -20,7 +20,9 @@ export function filterQuery(
     throw new Error(errors.join(`, `))
   }
 
-  let { allPages, originalType } = getNodes(data.allSitePage)
+  const { allSitePage, ...otherData } = data
+
+  let { allPages, originalType } = getNodes(allSitePage)
 
   // Removing excluded paths
   allPages = allPages.filter(
@@ -53,15 +55,16 @@ export function filterQuery(
   siteUrl = withoutTrailingSlash(siteUrl)
 
   return {
+    ...otherData,
     allSitePage: {
       [originalType]:
         originalType === `nodes`
           ? allPages
           : allPages.map(page => {
               return { node: page }
-            }),
+            })
     },
-    site: { siteMetadata: { siteUrl } },
+    site: { siteMetadata: { siteUrl } }
   }
 }
 
@@ -87,7 +90,7 @@ export const defaultOptions = {
     `/dev-404-page`,
     `/404`,
     `/404.html`,
-    `/offline-plugin-app-shell-fallback`,
+    `/offline-plugin-app-shell-fallback`
   ],
   createLinkInHead: true,
   serialize: ({ site, allSitePage }) => {
@@ -96,11 +99,11 @@ export const defaultOptions = {
       return {
         url: `${site.siteMetadata?.siteUrl ?? ``}${page.path}`,
         changefreq: `daily`,
-        priority: 0.7,
+        priority: 0.7
       }
     })
   },
-  resolveSiteUrl: data => data.site.siteMetadata.siteUrl,
+  resolveSiteUrl: data => data.site.siteMetadata.siteUrl
 }
 
 function getNodes(results) {
@@ -111,10 +114,10 @@ function getNodes(results) {
   if (`edges` in results) {
     return {
       allPages: results?.edges?.map(edge => edge.node),
-      originalType: `edges`,
+      originalType: `edges`
     }
   }
   throw new Error(
-    `[gatsby-plugin-sitemap]: Plugin is unsure how to handle the results of your query, you'll need to write custom page filter and serilizer in your gatsby conig`
+    `[gatsby-plugin-sitemap]: Plugin is unsure how to handle the results of your query, you'll need to write custom page filter and serializer in your gatsby config`
   )
 }

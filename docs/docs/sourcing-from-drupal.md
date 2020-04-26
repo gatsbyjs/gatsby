@@ -27,21 +27,21 @@ An example of how to include the `gatsby-source-drupal` plugin in your `gatsby-c
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby with Drupal`,
+    title: `Gatsby with Drupal`
   },
   plugins: [
     {
       resolve: `gatsby-source-drupal`,
       options: {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
-        apiBase: `api`,
-      },
+        apiBase: `api`
+      }
     },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: `UA-93349937-2`,
-      },
+        trackingId: `UA-93349937-2`
+      }
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-glamor`,
@@ -50,10 +50,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography.js`,
-      },
-    },
-  ],
+        pathToConfigModule: `src/utils/typography.js`
+      }
+    }
+  ]
 }
 ```
 
@@ -78,3 +78,5 @@ Using Gatsby together with Drupal offers a powerful, full-featured, open-source,
 - Take a [free course on building a Gatsby site with Drupal](https://gatsbyguides.com/).
 - Read [Gatsby blog posts on Gatsby + Drupal](/blog/tags/drupal/).
 - Watch a [video series on getting started with Gatsby and Drupal](https://www.youtube.com/playlist?list=PL-Ve2ZZ1kZNT9BhQMMI9jUySfdnQ8-S3n).
+
+<CloudCallout />

@@ -25,7 +25,7 @@ const q = queue(
         args.operations.map(operation => {
           return {
             outputPath: path.join(outputDir, operation.outputPath),
-            args: operation.args,
+            args: operation.args
           }
         }),
         args.pluginOptions

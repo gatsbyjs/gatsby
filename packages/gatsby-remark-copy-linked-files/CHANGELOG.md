@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.2.3...gatsby-remark-copy-linked-files@2.2.4) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.2.2...gatsby-remark-copy-linked-files@2.2.3) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.2.1...gatsby-remark-copy-linked-files@2.2.2) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
 ## [2.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.2.0...gatsby-remark-copy-linked-files@2.2.1) (2020-03-23)
 
 **Note:** Version bump only for package gatsby-remark-copy-linked-files

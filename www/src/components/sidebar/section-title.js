@@ -5,6 +5,7 @@ import { withI18n } from "@lingui/react"
 
 import ChevronSvg from "./chevron-svg"
 import indention from "../../utils/sidebar/indention"
+import ItemLink from "./item-link"
 
 const Chevron = ({ isExpanded }) => (
   <span
@@ -85,12 +86,10 @@ const SplitButton = withI18n()(
   ({
     i18n,
     itemRef,
-    createLink,
     isActive,
     isExpanded,
     isParentOfActiveItem,
     item,
-    location,
     onLinkClick,
     onSectionTitleClick,
     uid,
@@ -112,15 +111,12 @@ const SplitButton = withI18n()(
           flexGrow: 1,
         }}
       >
-        {createLink({
-          isActive,
-          isExpanded,
-          isParentOfActiveItem,
-          item,
-          location,
-          onLinkClick,
-          level: item.level,
-          overrideCSS: {
+        <ItemLink
+          isActive={isActive}
+          isParentOfActiveItem={isParentOfActiveItem}
+          item={item}
+          onLinkClick={onLinkClick}
+          overrideCSS={{
             ...(item.level === 0 &&
               item.ui !== `steps` && {
                 "&&": {
@@ -132,15 +128,17 @@ const SplitButton = withI18n()(
                 },
               }),
             pr: t => t.sizes.sidebarItemMinHeight,
-          },
-        })}
+          }}
+        />
       </span>
       <button
         aria-controls={uid}
         aria-expanded={isExpanded}
-        aria-label={i18n._(
-          isExpanded ? t`${item.title} collapse` : t`${item.title} expand`
-        )}
+        aria-label={
+          isExpanded
+            ? i18n._(t`${item.title} collapse`)
+            : i18n._(t`${item.title} expand`)
+        }
         sx={{
           ...styles.resetButton,
           bottom: 0,
@@ -180,7 +178,7 @@ const Title = ({ item, isActive, isExpanded }) => (
   </div>
 )
 
-const SectionTitle = ({ children, isExpanded, isActive, disabled, item }) => (
+const SectionTitle = ({ children, isExpanded, disabled, item }) => (
   <h3
     sx={{
       alignItems: `center`,

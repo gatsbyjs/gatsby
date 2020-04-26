@@ -1,4 +1,5 @@
 const remark = require(`remark`)
+const cheerio = require(`cheerio`)
 let plugin
 
 describe(`remark prism plugin`, () => {
@@ -122,6 +123,24 @@ describe(`remark prism plugin`, () => {
       expect(markdownAST).toMatchSnapshot()
     })
 
+    it(`correctly counts line-numbers for markup using highlight classes`, () => {
+      const code =
+        `\`\`\`js\n` +
+        `function highlightTest() {\n` +
+        `// highlight-start\n` +
+        `return "this is a highlight test"\n` +
+        `// highlight-end\n` +
+        `}\n` +
+        `\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST }, { showLineNumbers: true })
+
+      const htmlResult = markdownAST.children[0].value
+      const $ = cheerio.load(htmlResult)
+      const numberOfLineNumbers = $(`.line-numbers-rows > span`).length
+      expect(numberOfLineNumbers).toEqual(3)
+    })
+
     it(`does not add line-number markup when not configured globally`, () => {
       const code = `\`\`\`js\n//.foo { \ncolor: red;\n }\``
       const markdownAST = remark.parse(code)
@@ -149,9 +168,9 @@ describe(`remark prism plugin`, () => {
         languageExtensions: {
           extend: `c`,
           definition: {
-            extended_keywords: /(aRandomTypeKeyword)/,
-          },
-        },
+            extended_keywords: /(aRandomTypeKeyword)/
+          }
+        }
       }
 
       plugin({ markdownAST }, config)
