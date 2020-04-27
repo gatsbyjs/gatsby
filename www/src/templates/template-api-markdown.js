@@ -15,7 +15,8 @@ import FooterLinks from "../components/shared/footer-links"
 import Breadcrumb from "../components/docs-breadcrumb"
 import Container from "../components/container"
 import PrevAndNext from "../components/prev-and-next"
-import APIReference, { APIContents } from "../components/api-reference"
+import APIReference from "../components/api-reference"
+import TableOfContents from "../components/docs-table-of-contents"
 
 const normalizeGatsbyApiCall = array =>
   array.map(entry => {
@@ -74,6 +75,12 @@ const mergeFunctions = (data, context) => {
   return mergedFuncs
 }
 
+const containerStyles = {
+  maxWidth: t =>
+    `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${t.space[9]} + ${t.space[9]} + ${t.space[9]})`,
+  px: 9,
+}
+
 export default function APITemplate({ data, location, pageContext }) {
   const { next, prev } = pageContext
   const page = data.mdx
@@ -81,6 +88,33 @@ export default function APITemplate({ data, location, pageContext }) {
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
   const description = page.frontmatter.description || page.excerpt
+
+  const getAPIItems = () => {
+    return {
+      title: "APIs",
+      url: '#APIs',
+      items: mergedFuncs.map(item => ({
+        url: `#${item.name}`,
+        title: item.name
+      }))
+    };
+  }
+
+  const getTOCItems = () => {
+    if (page.frontmatter.disableTableOfContents) {
+      return []
+    }
+
+    return [...page.tableOfContents.items, getAPIItems()]
+  }
+
+  const getTOCDepth = () => {
+    return Math.max(page.frontmatter.tableOfContentsDepth, 2)
+  }
+
+  const items = getTOCItems();
+  const depth = getTOCDepth();
+  const isTOCVisible = items.length > 0;
 
   return (
     <PageWithSidebar location={location}>
@@ -101,6 +135,9 @@ export default function APITemplate({ data, location, pageContext }) {
             [mediaQueries.lg]: {
               pt: 9,
             },
+            [isTOCVisible && mediaQueries.xl]: {
+              ...containerStyles,
+            },
           }}
         >
           <Breadcrumb location={location} />
@@ -115,13 +152,46 @@ export default function APITemplate({ data, location, pageContext }) {
             [mediaQueries.lg]: {
               pb: 9,
             },
+            [isTOCVisible && mediaQueries.xl]: {
+              ...containerStyles,
+              display: `flex`,
+              alignItems: `flex-start`,
+            },
           }}
         >
-          <div>
+          {isTOCVisible && (
+            <div
+              sx={{
+                order: 2,
+                [mediaQueries.xl]: {
+                  ml: 9,
+                  maxWidth: `tocWidth`,
+                  position: `sticky`,
+                  top: t =>
+                    `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + ${t.space[9]})`,
+                  maxHeight: t =>
+                    `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${t.space[9]} - ${t.space[9]})`,
+                  overflow: `auto`,
+                },
+              }}
+            >
+              <TableOfContents
+                items={items}
+                location={location}
+                depth={depth}
+              />
+            </div>
+          )}
+          <div
+            sx={{
+              [page.tableOfContents.items && mediaQueries.xl]: {
+                maxWidth: `mainContentWidth.withSidebar`,
+                minWidth: 0,
+              },
+            }}
+          >
             <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
-            <h2>{page.frontmatter.contentsHeading || "APIs"}</h2>
-            <APIContents docs={mergedFuncs} />
-            <h2>Reference</h2>
+            <h2 id="APIs">{page.frontmatter.contentsHeading || "APIs"}</h2>
             <APIReference
               docs={mergedFuncs}
               showTopLevelSignatures={page.frontmatter.showTopLevelSignatures}
@@ -142,6 +212,7 @@ export const pageQuery = graphql`
       body
       excerpt
       timeToRead
+      tableOfContents
       fields {
         slug
         anchor
@@ -151,6 +222,8 @@ export const pageQuery = graphql`
         description
         contentsHeading
         showTopLevelSignatures
+        disableTableOfContents
+        tableOfContentsDepth
       }
       ...MarkdownPageFooterMdx
     }
