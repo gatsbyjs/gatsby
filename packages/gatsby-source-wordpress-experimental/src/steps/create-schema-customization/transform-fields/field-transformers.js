@@ -3,16 +3,7 @@ import { transformUnion, transformListOfUnions } from "./transform-union"
 import { transformGatsbyNodeObject } from "~/steps/create-schema-customization/transform-fields/transform-object"
 import { transformListOfGatsbyNodes } from "./transform-object"
 import { getGatsbyNodeTypeNames } from "~/steps/source-nodes/fetch-nodes/fetch-nodes"
-
-const builtInScalarTypeNames = [
-  `Int`,
-  `String`,
-  `Boolean`,
-  `Float`,
-  `Date`,
-  `ID`,
-  `JSON`,
-]
+import { typeIsABuiltInScalar } from "~/steps/create-schema-customization/helpers"
 
 export const fieldTransformers = [
   {
@@ -21,7 +12,7 @@ export const fieldTransformers = [
       field.type.kind === `NON_NULL` && field.type.ofType.kind === `SCALAR`,
 
     transform: ({ field }) => {
-      if (builtInScalarTypeNames.includes(field.type.ofType.name)) {
+      if (typeIsABuiltInScalar(field.type)) {
         return `${field.type.ofType.name}!`
       } else {
         return `JSON!`
@@ -34,9 +25,28 @@ export const fieldTransformers = [
     test: field =>
       field.type.kind === `NON_NULL` &&
       field.type.ofType.kind === `LIST` &&
-      field.type.ofType.name,
+      (field.type.ofType.name || field.type.ofType?.ofType?.name),
 
-    transform: ({ field }) => `[${field.type.ofType.name}]!`,
+    transform: ({ field }) => {
+      if (typeIsABuiltInScalar(field.type)) {
+        return `[${field.type.ofType.name || field.type.ofType?.ofType?.name}]!`
+      }
+
+      return `[${buildTypeName(field.type.ofType.name) ??
+        buildTypeName(field.type.ofType?.ofType?.name)}]!`
+    },
+  },
+
+  {
+    // lists of non null builtin types
+    test: field =>
+      field.type.kind === `LIST` &&
+      field.type.ofType.kind === `NON_NULL` &&
+      (field.type.ofType.name ?? field.type.ofType?.ofType?.name) &&
+      typeIsABuiltInScalar(field.type),
+
+    transform: ({ field }) =>
+      `[${field.type.ofType.name ?? field.type.ofType?.ofType?.name}!]`,
   },
 
   {
@@ -55,7 +65,7 @@ export const fieldTransformers = [
     // scalars
     test: field => field.type.kind === `SCALAR`,
     transform: ({ field }) => {
-      if (builtInScalarTypeNames.includes(field.type.name)) {
+      if (typeIsABuiltInScalar(field.type)) {
         return field.type.name
       } else {
         return `JSON`
@@ -120,7 +130,7 @@ export const fieldTransformers = [
       field.type.kind === `LIST` && field.type.ofType.kind === `SCALAR`,
 
     transform: ({ field }) => {
-      if (builtInScalarTypeNames.includes(field.type.ofType.name)) {
+      if (typeIsABuiltInScalar(field.type)) {
         return `[${field.type.ofType.name}]`
       } else {
         return `[JSON]`

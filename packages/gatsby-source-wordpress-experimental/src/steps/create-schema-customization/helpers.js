@@ -40,25 +40,37 @@ export const fieldOfTypeWasFetched = type => {
   return false
 }
 
+const supportedScalars = [
+  `Int`,
+  `Float`,
+  `String`,
+  `Boolean`,
+  `ID`,
+  `Date`,
+  `JSON`,
+]
+
+export const typeIsABuiltInScalar = type =>
+  // @todo the next function and this one are redundant.
+  // see the next todo on how to fix the issue. If that todo is resolved, these functions will be identical. :(
+  supportedScalars.includes(
+    type.name || type.ofType.name || type.ofType?.ofType?.name
+  )
+
 export const typeIsASupportedScalar = type => {
   if (
     type.kind !== `SCALAR` ||
-    (type.ofType && type.ofType.kind !== `SCALAR`)
+    type?.ofType?.kind !== `SCALAR` ||
+    type?.ofType?.ofType?.kind !== `SCALAR`
   ) {
+    // @todo returning true here seems wrong since a type that is not a scalar can't be a supported scalar... so there is some other logic elsewhere that is wrong
+    // making this return false causes errors in the schema
     return true
   }
 
-  const supportedScalars = [
-    `Int`,
-    `Float`,
-    `String`,
-    `Boolean`,
-    `ID`,
-    `Date`,
-    `JSON`,
-  ]
-
-  return supportedScalars.includes(type.name || type.ofType.name)
+  return supportedScalars.includes(
+    type.name || type.ofType.name || type.ofType?.ofType?.name
+  )
 }
 
 // retrieves plugin settings for the provided type

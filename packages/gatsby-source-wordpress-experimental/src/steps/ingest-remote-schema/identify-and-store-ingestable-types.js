@@ -1,5 +1,6 @@
 import store from "~/store"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
+import { typeIsABuiltInScalar } from "../create-schema-customization/helpers"
 
 const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const nodeListFilter = field => field.name === `nodes`
@@ -109,7 +110,11 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
       continue
     }
 
-    store.dispatch.remoteSchema.addFetchedType(field.type)
+    // we don't need to mark types as fetched if they're supported SCALAR types
+    if (!typeIsABuiltInScalar(field.type)) {
+      store.dispatch.remoteSchema.addFetchedType(field.type)
+    }
+
     nonNodeRootFields.push(field)
   }
 

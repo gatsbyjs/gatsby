@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.3
+
+### Bug fixes
+
+- Previously root fields that were lists of non_null built in Scalars or non_null lists of Scalars on RootQuery fields that weren't lists of nodes could throw errors in some cases. This release fixes that.
+
 ## 0.1.2
 
 ### New Features
