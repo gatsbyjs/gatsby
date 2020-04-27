@@ -40,6 +40,7 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
   )
 
   let queryString
+  let transformer = data => Object.values(data)[0].nodes
 
   // -- Use the ast to find the component and query, and change the code
   // -- to export default the component, instead of our fancy api
@@ -49,7 +50,13 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
       if (!isCreatePagesFromData(path)) return
       if (!t.isCallExpression(path)) return // this might not be needed...
 
-      const [componentAst, queryAst] = path.node.arguments
+      const [componentAst, queryAst, optionalTransformer] = path.node.arguments
+
+      // Get the transformer out of here. Wonder if this could cause problems.. like if you have relative imports.
+      // damn, this could get super tricky
+      if (optionalTransformer) {
+        transformer = generate(optionalTransformer).code
+      }
 
       // 3 options for queryAst also
       queryString = queryAst.quasi.quasis[0].value.raw
@@ -87,9 +94,10 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
   // -- Get the data, and create a page for each node
   // Not sure this is enough. Seems really brittle way of getting the array out of the query
   const { data, error } = await graphql(queryString)
-  console.log({ data, error, queryString })
-  const nodes = Object.values(data)[0].nodes
-  nodes.forEach(node => {
+
+  // console.log({ data, error, queryString })
+  // TODO: Will this fail on circular dependencies???
+  eval(`(${transformer})(${JSON.stringify(data)})`).forEach(node => {
     console.log(`path!!!`, derivePath(absolutePath, node))
     actions.createPage({
       path: derivePath(absolutePath, node),

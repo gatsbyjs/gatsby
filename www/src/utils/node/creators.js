@@ -4,11 +4,9 @@ const slugify = require(`slugify`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-
   const creatorPageTemplate = path.resolve(
     `src/templates/template-creator-details.js`
   )
-
   const { data, errors } = await graphql(`
     query {
       allCreatorsYaml {
@@ -22,7 +20,6 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
   if (errors) throw errors
-
   data.allCreatorsYaml.nodes.forEach(node => {
     if (!node.fields) return
     if (!node.fields.slug) return
@@ -56,6 +53,8 @@ exports.onCreateNode = ({ node, actions }) => {
     slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
       lower: true,
     })}`
+
     createNodeField({ node, name: `slug`, value: slug })
+    createNodeField({ node, name: `creatorType`, value: validTypes[node.type] })
   }
 }
