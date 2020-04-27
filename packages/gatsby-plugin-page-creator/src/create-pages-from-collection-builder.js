@@ -3,6 +3,7 @@
 const { babelParseToAst } = require(`gatsby/dist/utils/babel-parse-to-ast`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const { derivePath } = require(`./derive-path`)
+const { rewriteImports } = require(`./rewrite-imports`)
 const fs = require(`fs-extra`)
 const traverse = require(`@babel/traverse`).default
 const generate = require(`@babel/generator`).default
@@ -25,6 +26,14 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
   actions,
   graphql
 ) {
+  const [root, route] = absolutePath.split(`src/pages`)
+  const id = createContentDigest(route)
+  const collectionCoponentsFolder = systemPath.join(
+    root,
+    `.cache/collection-components`
+  )
+  const tempPath = systemPath.join(collectionCoponentsFolder, `${id}.js`)
+
   const ast = babelParseToAst(
     fs.readFileSync(absolutePath).toString(),
     absolutePath
@@ -58,15 +67,14 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
         exportDeclaration.node.declaration = componentAst
       }
     },
-  })
+    Program(path) {
+      const imports = path.get(`body`).filter(p => p.isImportDeclaration())
 
-  const [root, route] = absolutePath.split(`src/pages`)
-  const id = createContentDigest(route)
-  const collectionCoponentsFolder = systemPath.join(
-    root,
-    `.cache/collection-components`
-  )
-  const tempPath = systemPath.join(collectionCoponentsFolder, `${id}.js`)
+      imports.forEach(importDeclaration =>
+        rewriteImports(absolutePath, importDeclaration)
+      )
+    },
+  })
 
   // -- create the dir if it doesnt exist
   if (fs.existsSync(collectionCoponentsFolder) === false) {
