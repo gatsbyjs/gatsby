@@ -21,19 +21,19 @@
   },
   "homepage": "https://www.gatsbyjs.org",
   "dependencies": {
-    "bulma": "0.4.2",
-    "d3": "4.9.1",
-    "gatsby": "^2.0.0",
-    "gatsby-plugin-sass": "^2.0.1",
-    "gatsby-remark-prismjs": "^3.0.0",
-    "gatsby-source-filesystem": "^2.0.1",
-    "gatsby-transformer-javascript-frontmatter": "^2.0.0",
-    "gatsby-transformer-remark": "^2.1.1",
-    "moment": "^2.14.1",
-    "node-sass": "^4.9.0",
+    "bulma": "0.8.2",
+    "d3": "4.13.0",
+    "gatsby": "^2.20.36",
+    "gatsby-plugin-sass": "^2.2.4",
+    "gatsby-remark-prismjs": "^3.4.5",
+    "gatsby-source-filesystem": "^2.2.5",
+    "gatsby-transformer-javascript-frontmatter": "^2.2.4",
+    "gatsby-transformer-remark": "^2.7.5",
+    "moment": "^2.24.0",
+    "node-sass": "^4.14.0",
     "normalize.css": "^7.0.0",
-    "prismjs": "^1.13.0",
-    "prop-types": "^15.5.8",
-    "react-helmet": "^5.2.0"
+    "prismjs": "^1.20.0",
+    "prop-types": "^15.7.2",
+    "react-helmet": "^5.2.1"
   }
 }

@@ -7,8 +7,8 @@
   "author": "Kyle Gill <kyle.robert.gill@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "file-loader": "^4.1.0",
-    "gatsby": "^2.0.0",
+    "file-loader": "^4.3.0",
+    "gatsby": "^2.20.36",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },

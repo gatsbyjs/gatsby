@@ -18,8 +18,8 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
-    "gatsby": "^2.0.104",
-    "js-search": "^1.4.2",
+    "gatsby": "^2.20.36",
+    "js-search": "^1.4.3",
     "react": "^16.5.1",
     "react-dom": "^16.5.1"
   }
