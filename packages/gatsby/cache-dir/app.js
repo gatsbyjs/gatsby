@@ -34,15 +34,20 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     .then(res => res.json())
     .then(services => {
       const parentSocket = io(`http://localhost:${services.ws}`)
-      parentSocket.on(`gatsby:develop:needs-restart`, msg => {
+
+      parentSocket.on(`develop:needs-restart`, msg => {
         if (
           window.confirm(
-            `${msg.reason}, Gatsby develop process needs to be restarted. Do you want to restart now?`
+            `The develop process needs to be restarted for the changes to ${msg.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
           )
         ) {
-          parentSocket.emit(`gatsby:develop:do-restart`)
-          // TODO: Fix race condition by listening to start restart
-          window.location.reload()
+          parentSocket.once(`develop:is-starting`, msg => {
+            window.location.reload()
+          })
+          parentSocket.once(`develop:started`, msg => {
+            window.location.reload()
+          })
+          parentSocket.emit(`develop:restart`)
         }
       })
     })

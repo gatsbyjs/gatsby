@@ -80,12 +80,12 @@ const RestartingScreen: React.FC<{}> = () => {
               .then(res => res.json())
               .then(services => {
                 const socket = io('http://localhost:' + services.ws)
-                socket.on('gatsby:develop:restarted', () => {
+                socket.on('develop:started', () => {
                   window.location.reload()
                 })
 
-                socket.on('gatsby:develop:needs-restart', () => {
-                  socket.emit('gatsby:develop:do-restart')
+                socket.on('develop:needs-restart', () => {
+                  socket.emit('develop:restart')
                 })
               })
             `,

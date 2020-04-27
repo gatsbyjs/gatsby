@@ -70,7 +70,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     cmd(args);
   `)
 
-  startDevelopProxy({
+  const proxy = startDevelopProxy({
     proxyPort: proxyPort,
     targetPort: developPort,
     programPath: program.directory,
@@ -84,7 +84,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   const io = socket(wsServer)
 
   io.on(`connection`, socket => {
-    socket.on(`gatsby:develop:do-restart`, () => {
+    socket.on(`develop:restart`, () => {
       const activity = report.activityTimer(`Restarting develop process...`)
       activity.start()
       script.stop(() => {
@@ -98,9 +98,19 @@ module.exports = async (program: IProgram): Promise<void> => {
     if (
       msg.type === `LOG_ACTION` &&
       msg.action.type === `SET_STATUS` &&
+      msg.action.payload === `IN_PROGRESS`
+    ) {
+      proxy.serveRestartingScreen()
+      io.emit(`develop:is-starting`)
+    }
+
+    if (
+      msg.type === `LOG_ACTION` &&
+      msg.action.type === `SET_STATUS` &&
       msg.action.payload === `SUCCESS`
     ) {
-      io.emit(`gatsby:develop:restarted`)
+      proxy.serveSite()
+      io.emit(`develop:started`)
     }
   })
   script.start()
@@ -125,8 +135,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     report.warn(
       `develop process needs to be restarted to apply the changes to ${file}`
     )
-    io.emit(`gatsby:develop:needs-restart`, {
-      reason: `${path.basename(filePath)} changed`,
+    io.emit(`develop:needs-restart`, {
+      dirtyFile: file,
     })
   })
 }
