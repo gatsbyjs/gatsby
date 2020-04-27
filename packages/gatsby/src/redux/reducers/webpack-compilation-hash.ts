@@ -1,8 +1,8 @@
-import { IGatsbyState, ISetWebpackCompilationHashAction } from "../types"
+import { ActionsUnion, IGatsbyState } from "../types"
 
 export const webpackCompilationHashReducer = (
   state: IGatsbyState["webpackCompilationHash"] = ``,
-  action: ISetWebpackCompilationHashAction
+  action: ActionsUnion
 ): IGatsbyState["webpackCompilationHash"] => {
   switch (action.type) {
     case `SET_WEBPACK_COMPILATION_HASH`:
