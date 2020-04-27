@@ -10492,3 +10492,22 @@
     - Healthcare
   built_by: Albert Chen
   built_by_url: https://github.com/mralbertchen
+- title: Chris Nager
+  main_url: https://chrisnager.com
+  url: https://chrisnager.com
+  source_url: https://github.com/chrisnager/chrisnager-dot-com
+  description: >
+    Developer and designer in Brooklyn, NY passionate about performance, accessibility, and systematic design.
+  categories:
+    - Accessibility
+    - Blog
+    - Design
+    - Netlify
+    - Portfolio
+    - Styling:Theme-UI
+    - Language:TypeScript
+    - User Experience
+    - Web Development
+  built_by: Chris Nager
+  built_by_url: https://twitter.com/chrisnager
+  featured: false
