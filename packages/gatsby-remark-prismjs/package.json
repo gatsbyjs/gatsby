@@ -7,17 +7,17 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
+    "@babel/runtime": "^7.9.2",
     "parse-numeric-range": "^0.0.2",
     "unist-util-visit": "^1.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
+    "@babel/core": "^7.9.0",
     "babel-preset-gatsby-package": "^0.3.2",
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^5.2.1",
-    "prismjs": "^1.19.0",
+    "prismjs": "^1.20.0",
     "remark": "^9.0.0"
   },
   "peerDependencies": {

@@ -15,11 +15,11 @@
     "lodash": "^4.17.15",
     "mini-css-extract-plugin": "^0.8.2",
     "netlify-identity-widget": "^1.5.6",
-    "webpack": "^4.42.0"
+    "webpack": "^4.43.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
+    "@babel/core": "^7.9.0",
     "babel-preset-gatsby-package": "^0.3.2",
     "cross-env": "^5.2.1",
     "react": "^16.12.0",

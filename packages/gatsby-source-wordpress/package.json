@@ -8,7 +8,7 @@
   },
   "bundledDependencies": [],
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
+    "@babel/runtime": "^7.9.2",
     "axios": "^0.19.2",
     "better-queue": "^3.8.10",
     "bluebird": "^3.7.2",
@@ -18,12 +18,12 @@
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",
     "minimatch": "^3.0.4",
-    "qs": "^6.9.1"
+    "qs": "^6.9.3"
   },
   "deprecated": false,
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
+    "@babel/core": "^7.9.0",
     "babel-preset-gatsby-package": "^0.3.2",
     "cross-env": "^5.2.1"
   },

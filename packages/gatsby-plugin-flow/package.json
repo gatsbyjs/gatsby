@@ -24,12 +24,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/preset-flow": "^7.8.3",
-    "@babel/runtime": "^7.8.7"
+    "@babel/preset-flow": "^7.9.0",
+    "@babel/runtime": "^7.9.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
+    "@babel/core": "^7.9.0",
     "babel-preset-gatsby-package": "^0.3.2",
     "cross-env": "^5.2.1"
   },
