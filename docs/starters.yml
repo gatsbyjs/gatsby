@@ -6009,3 +6009,16 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://goodpraxis.coop
+  repo: https://github.com/GoodPraxis/gp-gatsby-starter-ts-sass-jest
+  description: A solid, basic Gatsby starter used by Good Praxis suitable for many different types of projects
+  tags:
+    - Language:TypeScript
+    - Styling:SCSS
+    - SEO
+    - Testing
+  features:
+    - TypeScript support
+    - SCSS for styling
+    - JEST tests
+    - Simple SEO setup
