@@ -12,13 +12,10 @@ import fse from "fs-extra"
 const globalConfigPath =
   process.env.XDG_CONFIG_HOME || path.join(os.homedir(), `.config`)
 
-const hashString = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
+const hashString = (str: string): string =>
+  crypto.createHash(`md5`).update(str).digest(`hex`)
 
-const getLockfileDir = programPath => {
+const getLockfileDir = (programPath: string): string => {
   const hash = hashString(programPath)
 
   return path.join(globalConfigPath, `gatsby`, `sites`, `${hash}.lock`)
@@ -52,7 +49,7 @@ export const getService = (
   const lockfilePath = path.join(lockfileDir, `${name}.lock`)
 
   try {
-    return fse.readFile(lockfilePath, "utf8")
+    return fse.readFile(lockfilePath, `utf8`)
   } catch (err) {
     return Promise.resolve(null)
   }
@@ -62,13 +59,13 @@ export const getServices = async (programPath: string): Promise<any> => {
   const lockfileDir = getLockfileDir(programPath)
 
   const files = await fse.readdir(lockfileDir)
-  let services = {}
+  const services = {}
 
   await Promise.all(
     files
-      .filter(file => file.endsWith(".lock"))
+      .filter(file => file.endsWith(`.lock`))
       .map(async file => {
-        const service = file.replace(`.lock`, "")
+        const service = file.replace(`.lock`, ``)
         services[service] = await getService(programPath, service)
       })
   )

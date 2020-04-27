@@ -18,8 +18,8 @@ const pulse = keyframes({
   },
 })
 
-const RestartingScreen: React.FC<{}> = () => {
-  return jsx(
+const RestartingScreen: React.FC<{}> = () =>
+  jsx(
     `html`,
     null,
     jsx(
@@ -94,6 +94,5 @@ const RestartingScreen: React.FC<{}> = () => {
       )
     )
   )
-}
 
 export default RestartingScreen
