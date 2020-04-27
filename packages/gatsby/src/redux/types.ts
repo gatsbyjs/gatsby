@@ -320,7 +320,7 @@ export interface IPageQueryRunAction {
 
 export interface IRemoveStaleJobAction {
   type: `REMOVE_STALE_JOB_V2`
-  plugin: IGatsbyPlugin
+  plugin: IGatsbyPlugin | undefined
   traceId?: string
   payload: { contentDigest: string }
 }

@@ -19,7 +19,7 @@ describe(`remove-stale-jobs`, () => {
     }
 
     publicActions.createJobV2 = jest.fn()
-    internalActions.removeStaleJob.mockClear()
+    ;(internalActions.removeStaleJob as jest.Mock).mockClear()
   })
 
   it(`should remove stale jobs from complete cache`, () => {
