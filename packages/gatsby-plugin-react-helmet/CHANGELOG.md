@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-react-helmet@3.2.5...gatsby-plugin-react-helmet@3.3.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-plugin-react-helmet
+
 ## [3.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-react-helmet@3.2.4...gatsby-plugin-react-helmet@3.2.5) (2020-04-24)
 
 **Note:** Version bump only for package gatsby-plugin-react-helmet

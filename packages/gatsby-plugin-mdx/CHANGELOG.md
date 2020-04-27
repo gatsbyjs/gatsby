@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.11...gatsby-plugin-mdx@1.2.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 ## [1.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.1.10...gatsby-plugin-mdx@1.1.11) (2020-04-24)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
