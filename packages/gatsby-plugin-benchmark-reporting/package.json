@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-benchmark-reporting",
   "description": "Gatsby Benchmark Reporting",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Peter van der Zee <pvdz@github>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-benchmark-reporting#readme",
   "devDependencies": {
-    "babel-preset-gatsby-package": "^0.3.1"
+    "babel-preset-gatsby-package": "^0.3.2"
   },
   "dependencies": {
     "fast-glob": "^3.2.2",
