@@ -170,14 +170,18 @@ const errors = {
   // Undefined variables in Queries
   "85920": {
     text: (context): string => {
-      const generalMessage = stripIndents(`You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Have a look at the docs to learn how to add data to context:
+      const staticQueryMessage = stripIndents(`Suggestion 1:
 
-      https://www.gatsbyjs.org/docs/page-query/#how-to-add-query-variables-to-a-page-query`)
-
-      const staticQueryMessage = stripIndents(`If you're not using a page query but a useStaticQuery / StaticQuery you see this error because they currently don't support variables. To learn more about the limitations of useStaticQuery / StaticQuery, please visit these docs:
+      If you're not using a page query but a useStaticQuery / StaticQuery you see this error because they currently don't support variables. To learn more about the limitations of useStaticQuery / StaticQuery, please visit these docs:
 
       https://www.gatsbyjs.org/docs/use-static-query/
       https://www.gatsbyjs.org/docs/static-query/`)
+
+      const generalMessage = stripIndents(`Suggestion 2:
+
+      You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Have a look at the docs to learn how to add data to context:
+
+      https://www.gatsbyjs.org/docs/page-query/#how-to-add-query-variables-to-a-page-query`)
 
       return stripIndent(`
         There was an error in your GraphQL query:\n\n${
