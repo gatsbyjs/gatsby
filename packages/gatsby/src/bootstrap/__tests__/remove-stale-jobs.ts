@@ -1,11 +1,11 @@
 jest.mock(`../../utils/jobs-manager`)
 
-const { isJobStale } = require(`../../utils/jobs-manager`)
-const { internalActions, publicActions } = require(`../../redux/actions`)
+import { isJobStale } from "../../utils/jobs-manager"
+import { internalActions, publicActions } from "../../redux/actions"
 
 jest.spyOn(internalActions, `removeStaleJob`)
 
-const removeStaleJobs = require(`../remove-stale-jobs`)
+import { removeStaleJobs } from "../remove-stale-jobs"
 
 describe(`remove-stale-jobs`, () => {
   let state
