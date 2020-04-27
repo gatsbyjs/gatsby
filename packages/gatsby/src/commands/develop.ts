@@ -14,9 +14,13 @@ const rootFile = (filePath: string): string =>
   path.join(process.cwd(), filePath)
 
 // Copied from https://stackoverflow.com/a/16060619
-const requireUncached: NodeRequire = file => {
+const requireUncached = (file: string): any => {
   delete require.cache[require.resolve(file)]
-  return require(file)
+  try {
+    return require(file)
+  } catch (e) {
+    return null
+  }
 }
 
 // Heuristics for gatsby-config.js, as not all changes to it require a full restart to take effect
