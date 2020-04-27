@@ -12,9 +12,9 @@
     "lint": "eslint . --ignore-path .gitignore --ext .ts,.tsx,.js"
   },
   "dependencies": {
-    "gatsby": "^2.20.36",
-    "gatsby-plugin-typescript": "^2.3.5",
-    "gatsby-plugin-typography": "^2.4.4",
+    "gatsby": "^2.21.0",
+    "gatsby-plugin-typescript": "^2.4.0",
+    "gatsby-plugin-typography": "^2.5.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-typography": "^0.16.19",

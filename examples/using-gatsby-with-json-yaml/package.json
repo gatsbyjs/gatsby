@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "jonniebigodes",
   "dependencies": {
-    "gatsby": "^2.20.36",
+    "gatsby": "^2.21.0",
     "js-yaml": "^3.13.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",

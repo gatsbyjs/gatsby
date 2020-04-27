@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@mdx-js/react": "^1.5.9",
-    "gatsby": "^2.20.36",
-    "gatsby-theme-blog-core": "^1.3.37",
+    "gatsby": "^2.21.0",
+    "gatsby-theme-blog-core": "^1.4.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   }

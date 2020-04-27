@@ -13,10 +13,10 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.5.9",
     "@mdx-js/react": "^1.5.9",
-    "gatsby": "^2.20.36",
-    "gatsby-plugin-mdx": "^1.1.11",
-    "gatsby-source-filesystem": "^2.2.5",
-    "gatsby-transformer-json": "^2.3.4",
+    "gatsby": "^2.21.0",
+    "gatsby-plugin-mdx": "^1.2.0",
+    "gatsby-source-filesystem": "^2.3.0",
+    "gatsby-transformer-json": "^2.4.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   }

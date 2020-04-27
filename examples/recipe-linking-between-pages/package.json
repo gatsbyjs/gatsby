@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "@gatsbyjs",
   "dependencies": {
-    "gatsby": "^2.20.36",
+    "gatsby": "^2.21.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "cypress": "^4.4.1",
-    "gatsby-cypress": "^0.3.4",
+    "gatsby-cypress": "^0.4.0",
     "prettier": "2.0.5",
     "start-server-and-test": "^1.11.0"
   },
