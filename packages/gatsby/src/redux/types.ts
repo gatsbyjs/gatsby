@@ -81,6 +81,14 @@ export interface IGatsbyPluginContext {
   [key: string]: (...args: any[]) => any
 }
 
+export interface IGatsbyStaticQueryComponents {
+  name: string
+  componentPath: SystemPath
+  id: Identifier
+  query: string
+  hash: string
+}
+
 type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyState {
@@ -139,14 +147,8 @@ export interface IGatsbyState {
     }
   >
   staticQueryComponents: Map<
-    number,
-    {
-      name: string
-      componentPath: SystemPath
-      id: Identifier
-      query: string
-      hash: string
-    }
+    IGatsbyStaticQueryComponents["id"],
+    IGatsbyStaticQueryComponents
   >
   // @deprecated
   jobs: {
@@ -207,6 +209,7 @@ export interface ICachedReduxState {
 
 export type ActionsUnion =
   | ICreatePageDependencyAction
+  | IDeleteCacheAction
   | IDeleteComponentDependenciesAction
   | IReplaceComponentQueryAction
   | IReplaceStaticQueryAction
@@ -220,6 +223,7 @@ export type ActionsUnion =
   | ICreateTypes
   | ICreateFieldExtension
   | IPrintTypeDefinitions
+  | IRemoveStaticQuery
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
@@ -358,4 +362,18 @@ export interface ICreateResolverContext {
 export interface ICreateRedirectAction {
   type: `CREATE_REDIRECT`
   payload: IRedirect
+}
+
+export interface IDeleteCacheAction {
+  type: `DELETE_CACHE`
+}
+
+export interface IReplaceStaticQueryAction {
+  type: `REPLACE_STATIC_QUERY`
+  payload: IGatsbyStaticQueryComponents
+}
+
+export interface IRemoveStaticQuery {
+  type: `REMOVE_STATIC_QUERY`
+  payload: IGatsbyStaticQueryComponents["id"]
 }
