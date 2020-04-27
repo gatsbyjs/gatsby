@@ -1,3 +1,17 @@
+- url: https://gatsby-starter-wordpress-twenty-twenty.netlify.app/
+  repo: https://github.com/henrikwirth/gatsby-starter-wordpress-twenty-twenty
+  description: A port of the WordPress Twenty Twenty theme to Gatsby.
+  tags:
+    - Blog
+    - CMS:WordPress
+    - Styling:Other
+    - Pagination
+  features:
+    - Data sourcing from WordPress
+    - Uses WPGraphQL as an API
+    - Using the new gatsby-wordpress-source@v4
+    - Responsive design
+    - Works well with Gatsby Cloud incremental updates
 - url: https://22boxes-gatsby-uno.netlify.com/
   repo: https://github.com/iamtherealgd/gatsby-starter-22boxes-uno
   description: A Gatsby starter for creating blogs and showcasing your work
