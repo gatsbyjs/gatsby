@@ -1,18 +1,24 @@
 # Change Log
 
+## 0.1.2
+
+### New Features
+
+- Using the types.TypeName.lazyNodes option now works properly. Essentially what this option does is prevent fetching remote files and processing them via gatsby-image/Sharp unless they're queried for. When queried for, remote files are fetched in the gql resolver if the file doesn't exist locally. It's not recommended to use this if you're using gatsby-image a lot as fetching images this way is much slower. You might want to use this if you mostly use the original WP hosted media files 95% of the time and then just use a few gatsby-image's locally.
+
 ## 0.1.1
 
-## Breaking changes
+### Breaking changes
 
 - Changed accepted WPGatsby version range to ~0.2.3
 
-## Bug Fixes
+### Bug Fixes
 
 - Because everything is fetched in a flat list, hierarchical terms weren't being properly sourced. Code was added to specifically support the Category type, but this will be made generic for all types soon as this is a reocurring problem.
 
 ## 0.1.0
 
-## Breaking changes
+### Breaking changes
 
 - Changed accepted WPGatsby version range to ~0.2.2
 - Changed accepted WPGraphQL version range to ~0.8.3

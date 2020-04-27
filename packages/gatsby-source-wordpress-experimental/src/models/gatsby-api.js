@@ -64,7 +64,14 @@ const defaultPluginOptions = {
     },
     MediaItem: {
       lazyNodes: false,
-      beforeChangeNode: async ({ remoteNode, actionType }) => {
+      beforeChangeNode: async ({ remoteNode, actionType, typeSettings }) => {
+        // we fetch lazy nodes files in resolvers, no need to fetch them here.
+        if (typeSettings.lazyNodes) {
+          return {
+            remoteNode,
+          }
+        }
+
         if (actionType === `CREATE` || actionType === `UPDATE`) {
           const createdMediaItem = await createRemoteMediaItemNode({
             mediaItemNode: remoteNode,
