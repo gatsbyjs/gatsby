@@ -90,12 +90,20 @@ const RecipesList = ({ setRecipe }) => {
       value: `emotion.mdx`,
     },
     {
-      label: `MDX Pages`,
+      label: `Add support for MDX Pages`,
       value: `mdx-pages.mdx`,
+    },
+    {
+      label: `Add support for MDX Pages with images`,
+      value: `mdx-images.mdx`,
     },
     {
       label: `Add Styled Components`,
       value: `styled-components.mdx`,
+    },
+    {
+      label: `Add Tailwind`,
+      value: `tailwindcss.mdx`,
     },
     {
       label: `Add Sass`,
