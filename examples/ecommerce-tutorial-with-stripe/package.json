@@ -5,16 +5,16 @@
   "version": "0.1.0",
   "author": "@thorwebdev",
   "dependencies": {
-    "@stripe/stripe-js": "^1.0.1",
-    "gatsby": "^2.19.19",
-    "gatsby-image": "^2.2.41",
-    "gatsby-plugin-manifest": "^2.2.41",
+    "@stripe/stripe-js": "^1.4.0",
+    "gatsby": "^2.20.36",
+    "gatsby-image": "^2.3.5",
+    "gatsby-plugin-manifest": "^2.3.7",
     "gatsby-plugin-offline": "^2.2.10",
-    "gatsby-plugin-react-helmet": "^3.1.22",
-    "gatsby-plugin-sharp": "^2.4.5",
-    "gatsby-source-filesystem": "^2.1.48",
+    "gatsby-plugin-react-helmet": "^3.2.5",
+    "gatsby-plugin-sharp": "^2.5.7",
+    "gatsby-source-filesystem": "^2.2.5",
     "gatsby-source-stripe": "^2.2.2",
-    "gatsby-transformer-sharp": "^2.3.14",
+    "gatsby-transformer-sharp": "^2.4.7",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -32,7 +32,7 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "devDependencies": {
-    "prettier": "2.0.4"
+    "prettier": "2.0.5"
   },
   "repository": {
     "type": "git",

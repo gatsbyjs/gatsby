@@ -15,14 +15,14 @@
   "dependencies": {
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
-    "apollo-link": "^1.2.13",
-    "apollo-link-http": "^1.5.16",
-    "apollo-link-ws": "^1.0.19",
+    "apollo-link": "^1.2.14",
+    "apollo-link-http": "^1.5.17",
+    "apollo-link-ws": "^1.0.20",
     "apollo-utilities": "^1.3.3",
-    "gatsby-source-filesystem": "^2.2.2",
+    "gatsby-source-filesystem": "^2.2.5",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "node-fetch": "^2.6.0",
-    "ws": "^7.2.3"
+    "ws": "^7.2.5"
   }
 }
