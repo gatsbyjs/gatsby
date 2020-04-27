@@ -179,7 +179,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ### Scaling Gatsby (Gatsby for Large Apps)
 
-**Question:** I'm working for a e-Commerce company. We have millions of products in our shop. The product detail site is somewhat the same but for the data. Is there a way to generate all those pages for each of those products in a feasible time?
+**Question:** I'm working for a e-commerce company. We have millions of products in our shop. The product detail site is somewhat the same but for the data. Is there a way to generate all those pages for each of those products in a feasible time?
 **Answer:** Gatsby generally maxes out at 50k pages or so (right now) but you could break up the page, check out [Building a large, internationalized e-commerce website with Gatsby at Daniel Wellington
 ](/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/)
 
@@ -209,8 +209,8 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Do you think there will be a market for Gatsby premium themes (like for WordPress)?
 **Answer:** Yep :) it's on the roadmap!
 
-**Question:** Beyond blogs and ecommerce websites, what other use cases are you seeing people building with Gatsby?
-**Answer:** We see all use cases....dynamic apps, ecommerce, financial services, docs sites, portfolios, and company marketing sites are all very common!
+**Question:** Beyond blogs and e-commerce websites, what other use cases are you seeing people building with Gatsby?
+**Answer:** We see all use cases....dynamic apps, e-commerce, financial services, docs sites, portfolios, and company marketing sites are all very common!
 
 **Question:** Who does the Gatsby team consider its users? Content creators? Engineers? Other?
 **Answer:** All of the above!

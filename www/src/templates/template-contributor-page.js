@@ -5,7 +5,6 @@ import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 import Avatar from "../components/avatar"
-import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FooterLinks from "../components/shared/footer-links"
@@ -20,7 +19,7 @@ class ContributorPageTemplate extends React.Component {
     )
 
     return (
-      <Layout location={this.props.location}>
+      <main>
         <Helmet>
           <title>{`${contributor.id} - Contributor`}</title>
           <meta name="description" content={contributor.bio} />
@@ -40,49 +39,47 @@ class ContributorPageTemplate extends React.Component {
             />
           )}
         </Helmet>
-        <main>
-          <Container>
-            <div
-              sx={{
-                textAlign: `center`,
-                py: 7,
-                px: 6,
-              }}
-            >
-              <div>
-                <Avatar image={contributor.avatar.childImageSharp.fixed} />
-                <h1 sx={{ mt: 0, mb: 3 }}>{contributor.id}</h1>
-                <p
-                  sx={{
-                    fontFamily: `heading`,
-                    fontSize: 3,
-                    maxWidth: `28rem`,
-                    mx: `auto`,
-                  }}
-                >
-                  {contributor.bio}
-                </p>
-                {contributor.twitter && (
-                  <a href={`https://twitter.com/${contributor.twitter}`}>
-                    {` `}
-                    {contributor.twitter}
-                  </a>
-                )}
-              </div>
+        <Container>
+          <div
+            sx={{
+              textAlign: `center`,
+              py: 7,
+              px: 6,
+            }}
+          >
+            <div>
+              <Avatar image={contributor.avatar.childImageSharp.fixed} />
+              <h1 sx={{ mt: 0, mb: 3 }}>{contributor.id}</h1>
+              <p
+                sx={{
+                  fontFamily: `heading`,
+                  fontSize: 3,
+                  maxWidth: `28rem`,
+                  mx: `auto`,
+                }}
+              >
+                {contributor.bio}
+              </p>
+              {contributor.twitter && (
+                <a href={`https://twitter.com/${contributor.twitter}`}>
+                  {` `}
+                  {contributor.twitter}
+                </a>
+              )}
             </div>
-            <div sx={{ py: 7, px: 6 }}>
-              {posts.map(node => (
-                <BlogPostPreviewItem
-                  post={node}
-                  key={node.fields.slug}
-                  sx={{ mb: 9 }}
-                />
-              ))}
-            </div>
-          </Container>
-          <FooterLinks />
-        </main>
-      </Layout>
+          </div>
+          <div sx={{ py: 7, px: 6 }}>
+            {posts.map(node => (
+              <BlogPostPreviewItem
+                post={node}
+                key={node.fields.slug}
+                sx={{ mb: 9 }}
+              />
+            ))}
+          </div>
+        </Container>
+        <FooterLinks />
+      </main>
     )
   }
 }

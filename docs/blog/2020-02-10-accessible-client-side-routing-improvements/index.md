@@ -21,26 +21,25 @@ While this work prioritizes screen reader users, we are still far from the most 
 
 For this reason, we recommend that developers take control of focus themselves and assert the functionality in [automated tests](/docs/end-to-end-testing/#writing-tests). We encourage you to take advantage of `@reach/router’s` [skip nav functionality](https://reacttraining.com/reach-ui/skip-nav/) (or implement a skip link yourself) on your site.
 
-```javascript:title=layout.js
+```jsx:title=layout.js
 import { SkipNavLink, SkipNavContent } from "@reach/skip-nav"
 import "@reach/skip-nav/styles.css" //this will auto show and hide the link on focus
 
 const Layout = ({ children }) => {
   return (
-    <>
-        <SkipNavLink />
-        <header>
-          <h3>Welcome to my site</h3>
-        </header>
-        <SkipNavContent/>
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
-      </div>
-    </>
+    <React.Fragment>
+      <SkipNavLink />
+      <header>
+        <h3>Welcome to my site</h3>
+      </header>
+      <SkipNavContent />
+      <main>{children}</main>
+      <footer>
+        © {new Date().getFullYear()}, Built with
+        {` `}
+        <a href="https://www.gatsbyjs.org">Gatsby</a>
+      </footer>
+    </React.Fragment>
   )
 }
 ```

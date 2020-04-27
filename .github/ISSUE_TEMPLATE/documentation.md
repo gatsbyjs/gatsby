@@ -1,6 +1,7 @@
 ---
 name: Documentation 📝
 about: Suggest better docs coverage for a particular tool or process.
+labels: "type: documentation"
 ---
 
 <!--

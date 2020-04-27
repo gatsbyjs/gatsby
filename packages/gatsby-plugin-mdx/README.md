@@ -1,6 +1,6 @@
 ![Logo](./img/gatsby-mdx.png)
 
-> gatsby-plugin-mdx is the official integration for using [MDX](https://mdxjs.com)
+> `gatsby-plugin-mdx` is the official integration for using [MDX](https://mdxjs.com)
 > with [Gatsby](https://www.gatsbyjs.org/).
 
 # What’s MDX?
@@ -36,10 +36,11 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
       - [Imports](#imports)
       - [Shortcodes](#shortcodes)
       - [Gatsby remark plugins](#gatsby-remark-plugins)
-      - [MD plugins](#md-plugins)
-      - [HAST plugins](#hast-plugins)
+      - [Remark plugins](#remark-plugins)
+      - [Rehype plugins](#rehype-plugins)
       - [Media types](#media-types)
         - [Explanation](#explanation)
+      - [shouldBlockNodeFromTransformation](#shouldblocknodefromtransformation)
     - [Components](#components)
       - [MDXProvider](#mdxprovider)
         - [Related](#related)
@@ -51,7 +52,7 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 Install with npm:
 
 ```shell
-npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
@@ -62,7 +63,7 @@ yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 
 ## Usage
 
-After installing gatsby-plugin-mdx you can add it to your plugins list in your
+After installing `gatsby-plugin-mdx` you can add it to your plugins list in your
 `gatsby-config.js`.
 
 ```js
@@ -84,7 +85,7 @@ By default, this configuration will allow you to automatically create pages
 with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
 
-Note that gatsby-plugin-mdx requires gatsby-source-filesystem to be present
+Note that `gatsby-plugin-mdx` requires gatsby-source-filesystem to be present
 and configured to process local markdown files in order to
 generate the resulting Gatsby nodes.
 
@@ -114,18 +115,19 @@ module.exports = {
 
 ### Configuration
 
-gatsby-plugin-mdx exposes a configuration API that can be used similarly to
+`gatsby-plugin-mdx` exposes a configuration API that can be used similarly to
 any other Gatsby plugin. You can define MDX extensions, layouts, global
 scope, and more.
 
-| Key                                             | Default                                | Description                                                       |
-| ----------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------- |
-| [`extensions`](#extensions)                     | `[".mdx"]`                             | Configure the file extensions that gatsby-plugin-mdx will process |
-| [`defaultLayouts`](#default-layouts)            | `{}`                                   | Set the layout components for MDX source types                    |
-| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`                                   | Use Gatsby-specific remark plugins                                |
-| [`remarkPlugins`](#remark-plugins)              | `[]`                                   | Specify remark plugins                                            |
-| [`rehypePlugins`](#rehype-plugins)              | `[]`                                   | Specify rehype plugins                                            |
-| [`mediaTypes`](#media-types)                    | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                  |
+| Key                                                                       | Default                                | Description                                                           |
+| ------------------------------------------------------------------------- | -------------------------------------- | --------------------------------------------------------------------- |
+| [`extensions`](#extensions)                                               | `[".mdx"]`                             | Configure the file extensions that gatsby-plugin-mdx will process     |
+| [`defaultLayouts`](#default-layouts)                                      | `{}`                                   | Set the layout components for MDX source types                        |
+| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins)                           | `[]`                                   | Use Gatsby-specific remark plugins                                    |
+| [`remarkPlugins`](#remark-plugins)                                        | `[]`                                   | Specify remark plugins                                                |
+| [`rehypePlugins`](#rehype-plugins)                                        | `[]`                                   | Specify rehype plugins                                                |
+| [`mediaTypes`](#media-types)                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                      |
+| [`shouldBlockNodeFromTransformation`](#shouldblocknodefromtransformation) | `(node) => false`                      | Disable MDX transformation for nodes where this function returns true |
 
 #### Extensions
 
@@ -333,6 +335,7 @@ images can be optimized by Gatsby and you should continue using it.
 // gatsby-config.js
 module.exports = {
   plugins: [
+    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -356,7 +359,9 @@ Using a string reference is also supported for `gatsbyRemarkPlugins`.
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
 ```
 
-#### MD plugins
+> Note that in the case of `gatsby-remark-images` the plugin needs to be included as both a sub-plugin of gatsby-plugin-mdx and a string entry in the plugins array.
+
+#### Remark plugins
 
 This is a configuration option that is [mirrored from the core MDX
 processing pipeline](https://mdxjs.com/plugins). It enables the use of
@@ -378,7 +383,7 @@ module.exports = {
 }
 ```
 
-#### HAST plugins
+#### Rehype plugins
 
 This is a configuration option that is [mirrored from the core MDX
 processing pipeline](https://mdxjs.com/plugins). It enables the use of
@@ -402,7 +407,7 @@ module.exports = {
 
 #### Media types
 
-Deciding what content gets processed by gatsby-plugin-mdx. This is an
+Deciding what content gets processed by `gatsby-plugin-mdx`. This is an
 advanced option that is useful for dealing with specialized generated
 content. It is not intended to be configured for most users.
 
@@ -427,9 +432,33 @@ Gatsby includes the media-type of the content on any given node. For
 by the file extension. For remote content or generated content, we
 choose which nodes to process by looking at the media type.
 
+#### shouldBlockNodeFromTransformation
+
+Given a function `(node) => Boolean` allows you to decide for each node if it should be transformed or not.
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        shouldBlockNodeFromTransformation(node) {
+          return (
+            [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
+            (node.internal.type === `File` &&
+              path.parse(node.dir).dir.endsWith(`packages`))
+          )
+        },
+      },
+    },
+  ],
+}
+```
+
 ### Components
 
-MDX and gatsby-plugin-mdx use components for different things like rendering
+MDX and `gatsby-plugin-mdx` use components for different things like rendering
 and component mappings.
 
 #### MDXProvider
@@ -487,7 +516,7 @@ The following components can be customized with the MDXProvider:
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
 
-It's important to define the `components` you pass in in a stable way
+It's important to define the `components` you pass in a stable way
 so that the references don't change if you want to be able to navigate
 to a hash. That's why we defined `components` outside of any render
 functions in these examples.
@@ -531,6 +560,22 @@ export const pageQuery = graphql`
     }
   }
 `
+```
+
+## Troubleshooting
+
+### Excerpts for non-latin languages
+
+By default, `excerpt` uses `underscore.string/prune` which doesn't handle non-latin characters ([https://github.com/epeli/underscore.string/issues/418](https://github.com/epeli/underscore.string/issues/418)).
+
+If that is the case, you can set `truncate` option on `excerpt` field, like:
+
+```graphql
+{
+  markdownRemark {
+    excerpt(truncate: true)
+  }
+}
 ```
 
 ## License

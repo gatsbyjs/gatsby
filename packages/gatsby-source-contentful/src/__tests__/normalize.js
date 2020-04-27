@@ -60,7 +60,7 @@ describe(`Process contentful data (by name)`, () => {
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     contentTypeItems.forEach((contentTypeItem, i) => {
       entryList[i].forEach(normalize.fixIds)
-      normalize.createContentTypeNodes({
+      normalize.createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
@@ -139,7 +139,7 @@ describe(`Process contentful data (by id)`, () => {
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     contentTypeItems.forEach((contentTypeItem, i) => {
       entryList[i].forEach(normalize.fixIds)
-      normalize.createContentTypeNodes({
+      normalize.createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,

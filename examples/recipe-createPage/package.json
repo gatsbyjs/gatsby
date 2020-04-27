@@ -1,7 +1,7 @@
 {
   "name": "recipe-create-page",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "A Gatsby docs recipe example on creating pages programmatically",
   "version": "0.1.0",
   "author": "@gatsbyjs",
   "dependencies": {
@@ -12,7 +12,7 @@
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "prettier": "2.0.4"
   },
   "keywords": [
     "gatsby"
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/gatsbyjs/gatsby"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

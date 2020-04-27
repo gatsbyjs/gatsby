@@ -88,7 +88,7 @@ Beautiful.
 ## GraphQL: SQL-like data queries
 
 One thing I particularly love about Gatsby.js is its inclusion of
-[GraphQL](http://graphql.org/). Like SQL, you
+[GraphQL](https://graphql.org/). Like SQL, you
 use GraphQL to query your data, whether from the WordPress API, Contentful or
 Markdown, and extract a dataset to display in your template.
 

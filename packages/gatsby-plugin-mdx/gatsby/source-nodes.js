@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const { GraphQLBoolean } = require(`gatsby/graphql`)
 const remark = require(`remark`)
 const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
@@ -14,6 +15,7 @@ const getTableOfContents = require(`../utils/get-table-of-content`)
 const defaultOptions = require(`../utils/default-options`)
 const genMDX = require(`../utils/gen-mdx`)
 const { mdxHTMLLoader: loader } = require(`../utils/render-html`)
+const { interopDefault } = require(`../utils/interop-default`)
 
 async function getCounts({ mdast }) {
   let counts = {}
@@ -26,12 +28,7 @@ async function getCounts({ mdast }) {
   })
 
   await remark()
-    .use(
-      remark2retext,
-      unified()
-        .use(english)
-        .use(count)
-    )
+    .use(remark2retext, unified().use(english).use(count))
     .run(mdast)
 
   function count() {
@@ -96,7 +93,7 @@ module.exports = (
    */
   for (let plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
-    const requiredPlugin = require(plugin.resolve)
+    const requiredPlugin = interopDefault(require(plugin.resolve))
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (let parserPlugin of requiredPlugin.setParserPlugins(
@@ -150,8 +147,12 @@ module.exports = (
             type: `Int`,
             defaultValue: 140,
           },
+          truncate: {
+            type: GraphQLBoolean,
+            defaultValue: false,
+          },
         },
-        async resolve(mdxNode, { pruneLength }) {
+        async resolve(mdxNode, { pruneLength, truncate }) {
           if (mdxNode.excerpt) {
             return Promise.resolve(mdxNode.excerpt)
           }
@@ -165,7 +166,14 @@ module.exports = (
             return
           })
 
-          return prune(excerptNodes.join(` `), pruneLength, `…`)
+          if (!truncate) {
+            return prune(excerptNodes.join(` `), pruneLength, `…`)
+          }
+
+          return _.truncate(excerptNodes.join(` `), {
+            length: pruneLength,
+            omission: `…`,
+          })
         },
       },
       headings: {

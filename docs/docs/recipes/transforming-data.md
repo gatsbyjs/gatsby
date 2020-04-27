@@ -55,3 +55,94 @@ export const query = graphql`
 
 - [Tutorial on transforming Markdown to HTML](/tutorial/part-six/#transformer-plugins) using `gatsby-transformer-remark`
 - Browse available transformer plugins in the [Gatsby plugin library](/plugins/?=transformer)
+
+## Transforming images into grayscale using GraphQL
+
+### Prerequisites
+
+- A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file and an `index.js` page
+- The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed
+- A source plugin installed, such as `gatsby-source-filesystem`
+- An image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `src/images` folder
+
+### Directions
+
+1. Edit your `gatsby-config.js` file to source images and configure plugins for Gatsby's GraphQL data layer. A common approach is to source them from an images directory using the `gatsby-source-filesystem` plugin:
+
+```javascript:title=gatsby-config.js
+
+ plugins: [
+   {
+     resolve: `gatsby-source-filesystem`,
+     options: {
+       name: `images`,
+       path: `${__dirname}/src/images`,
+     },
+   },
+   `gatsby-transformer-sharp`,
+   `gatsby-plugin-sharp`,
+ ],
+```
+
+2.  Query your image using GraphQL and apply a grayscale transformation to the image inline. The `relativePath` should be relative to the path you configured in `gatsby-source-filesystem`.
+
+```graphql
+  query {
+     file(relativePath: { eq: "corgi.jpg" }) {
+       childImageSharp {
+         // highlight-next-line
+         fluid(grayscale: true) {
+           ...GatsbyImageSharpFluid
+         }
+       }
+     }
+   }
+```
+
+Note: You can find these and other parameters in your GraphQL playground located at `http://localhost:8000/__graphql`
+
+3. Next import the `Img` component from "gatsby-image". You'll use this inside your JSX to display the image.
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import Layout from "../components/layout"
+// highlight-next-line
+import Img from "gatsby-image"
+
+export default () => {
+  const data = useStaticQuery(graphql`
+    query {
+     file(relativePath: { eq: "corgi.jpg" }) {
+       childImageSharp {
+         // highlight-next-line
+         fluid(grayscale: true) {
+           ...GatsbyImageSharpFluid
+         }
+       }
+     }
+   }
+  `)
+  return (
+    <Layout>
+      <h1>I love my corgi!</h1>
+      // highlight-start
+      <Img
+        fluid={data.file.childImageSharp.fluid}
+        alt="A corgi smiling happily"
+      />
+      // highlight-end
+    </Layout>
+  )
+}
+```
+
+4. Run `gatsby develop` to start the development server.
+
+5. View your image in the browser: `http://localhost:8000/`
+
+### Additional resources
+
+- [API docs, including grayscale and duotone query tips](/docs/gatsby-image/#shared-query-parameters)
+- [Gatsby Image docs](/docs/gatsby-image/)
+- [Image processing examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing)

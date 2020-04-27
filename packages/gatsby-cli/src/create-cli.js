@@ -3,7 +3,7 @@ const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const { setStore } = require(`./reporter/redux`)
-const didYouMean = require(`./did-you-mean`)
+const { didYouMean } = require(`./did-you-mean`)
 const { getLocalGatsbyVersion } = require(`./util/version`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
@@ -13,6 +13,7 @@ const {
   setDefaultTags,
   setTelemetryEnabled,
 } = require(`gatsby-telemetry`)
+const { recipesHandler } = require(`./recipes`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -32,7 +33,7 @@ function buildLocalCommands(cli, isLocalSite) {
       ? [`> 1%`, `last 2 versions`, `IE >= 9`]
       : [`>0.25%`, `not dead`]
 
-  let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
+  const siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
@@ -94,8 +95,8 @@ function buildLocalCommands(cli, isLocalSite) {
       process.env.gatsby_executing_command = command
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
-      let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, report, useYarn, setStore }
+      const localCmd = resolveLocalCommand(command)
+      const args = { ...argv, ...siteInfo, report, useYarn, setStore }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -136,13 +137,18 @@ function buildLocalCommands(cli, isLocalSite) {
           alias: `cert-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS cert file (also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`k`, {
           alias: `key-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS key file (also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`ca-file`, {
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
@@ -166,13 +172,20 @@ function buildLocalCommands(cli, isLocalSite) {
     builder: _ =>
       _.option(`prefix-paths`, {
         type: `boolean`,
-        default: false,
-        describe: `Build site with link paths prefixed (set pathPrefix in your gatsby-config.js).`,
+        default:
+          process.env.PREFIX_PATHS === `true` ||
+          process.env.PREFIX_PATHS === `1`,
+        describe: `Build site with link paths prefixed with the pathPrefix value in gatsby-config.js. Default is env.PREFIX_PATHS or false.`,
       })
         .option(`no-uglify`, {
           type: `boolean`,
           default: false,
           describe: `Build site without uglifying JS bundles (for debugging).`,
+        })
+        .option(`profile`, {
+          type: `boolean`,
+          default: false,
+          describe: `Build site with react profiling (this can add some additional overhead). See https://reactjs.org/docs/profiler`,
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
@@ -209,8 +222,10 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`prefix-paths`, {
           type: `boolean`,
-          default: false,
-          describe: `Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js).`,
+          default:
+            process.env.PREFIX_PATHS === `true` ||
+            process.env.PREFIX_PATHS === `1`,
+          describe: `Serve site with link paths prefixed with the pathPrefix value in gatsby-config.js.Default is env.PREFIX_PATHS or false.`,
         }),
 
     handler: getCommandHandler(`serve`),
@@ -258,6 +273,19 @@ function buildLocalCommands(cli, isLocalSite) {
   })
 
   cli.command({
+    command: `feedback`,
+    builder: _ =>
+      _.option(`disable`, {
+        type: `boolean`,
+        describe: `Opt out of future feedback requests`,
+      }).option(`enable`, {
+        type: `boolean`,
+        describe: `Opt into future feedback requests`,
+      }),
+    handler: getCommandHandler(`feedback`),
+  })
+
+  cli.command({
     command: `clean`,
     desc: `Wipe the local gatsby environment including built assets and cache`,
     handler: getCommandHandler(`clean`),
@@ -271,12 +299,18 @@ function buildLocalCommands(cli, isLocalSite) {
       return cmd(args)
     }),
   })
+
+  cli.command({
+    command: `recipes [recipe]`,
+    desc: `[EXPERIMENTAL] Run a recipe`,
+    handler: handlerP(({ recipe }) => recipesHandler(recipe)),
+  })
 }
 
 function isLocalGatsbySite() {
   let inGatsbySite = false
   try {
-    let { dependencies, devDependencies } = require(path.resolve(
+    const { dependencies, devDependencies } = require(path.resolve(
       `./package.json`
     ))
     inGatsbySite =
@@ -308,8 +342,8 @@ Gatsby version: ${gatsbyVersion}
 }
 
 module.exports = argv => {
-  let cli = yargs()
-  let isLocalSite = isLocalGatsbySite()
+  const cli = yargs()
+  const isLocalSite = isLocalGatsbySite()
 
   cli
     .scriptName(`gatsby`)
@@ -357,7 +391,7 @@ module.exports = argv => {
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
       handler: handlerP(({ rootPath, starter }) => {
-        const initStarter = require(`./init-starter`)
+        const { initStarter } = require(`./init-starter`)
         return initStarter(starter, { rootPath })
       }),
     })
@@ -378,11 +412,12 @@ Using a plugin:
 Creating a plugin:
 - Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin/)
 - Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)
+- Creating a Generic Plugin (https://www.gatsbyjs.org/docs/creating-a-generic-plugin/)
 - Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin/)
 - Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
 - Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
 - Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
-- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/docs/pixabay-source-plugin-tutorial/)
+- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/tutorial/pixabay-source-plugin-tutorial/)
 - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
 - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
           `)

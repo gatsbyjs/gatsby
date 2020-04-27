@@ -1,5 +1,5 @@
 ---
-title: Customizing Components
+title: Customizing Markdown Components
 ---
 
 Using MDX, you can replace every HTML element that Markdown renders with a
@@ -27,6 +27,8 @@ export default function Layout({ children }) {
   )
 }
 ```
+
+**Note**: you can also provide your own custom components to the `MDXProvider` that make them globally available while writing MDX. You can find more details about this pattern in the [Importing and Using Components in MDX guide](/docs/mdx/importing-and-using-components/#make-components-available-globally-as-shortcodes).
 
 The following components can be customized with the MDXProvider:
 

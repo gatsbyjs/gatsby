@@ -1,6 +1,6 @@
 import React from "react"
-import MdWarning from "react-icons/lib/md/warning"
-import Link from "gatsby-link"
+import { MdWarning } from "react-icons/md"
+import Link from "../../components/localized-link"
 
 import {
   Container,
@@ -69,7 +69,7 @@ const ColorExample = ({ hex, token }) => (
 )
 
 const DesignTokens = ({ location }) => (
-  <Layout pathname={location.pathname} pageTitle="Design Tokens">
+  <Layout location={location} pageTitle="Design Tokens">
     <Container>
       <div css={{ position: `relative`, zIndex: 1 }}>
         <PageHeading>Design Tokens</PageHeading>

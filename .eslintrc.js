@@ -85,6 +85,25 @@ module.exports = {
       plugins: ["@typescript-eslint/eslint-plugin"],
       rules: {
         ...TSEslint.configs.recommended.rules,
+        // This rule is great. It helps us not throw on types for areas that are
+        // easily inferrable. However we have a desire to have all function inputs
+        // and outputs declaratively typed. So this let's us ignore the parameters
+        // inferrable lint.
+        "@typescript-eslint/no-inferrable-types": [
+          "error",
+          { ignoreParameters: true },
+        ],
+        // This rule tries to ensure we use camelCase for all variables, properties
+        // functions, etc. However, it is not always possible to ensure properties
+        // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
+        // this rule. This allows properties to be whatever they need to be.
+        "@typescript-eslint/camelcase": ["error", { properties: "never" }],
+        // This rule tries to prevent using `require()`. However in node code,
+        // there are times where this makes sense. And it specifically is causing
+        // problems in our tests where we often want this functionality for module
+        // mocking. At this point it's easier to have it off and just encouarge
+        // using top-level imports via code reviews.
+        "@typescript-eslint/no-var-requires": "off",
         // This rule ensures that typescript types do not have semicolons
         // at the end of their lines, since our prettier setup is to have no semicolons
         // e.g.,
@@ -119,7 +138,10 @@ module.exports = {
           "error",
           "interface",
         ],
-
+        "@typescript-eslint/no-use-before-define": [
+          "error",
+          { functions: false },
+        ],
         // Allows us to write unions like `type Foo = "baz" | "bar"`
         // otherwise eslint will want to switch the strings to backticks,
         // which then crashes the ts compiler
@@ -131,6 +153,9 @@ module.exports = {
             avoidEscape: true,
           },
         ],
+        // bump to @typescript-eslint/parser started showing Flow related errors in ts(x) files
+        // so disabling them in .ts(x) files
+        "flowtype/no-types-missing-file-annotation": "off",
       },
     },
   ],

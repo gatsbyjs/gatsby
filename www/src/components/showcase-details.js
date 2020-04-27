@@ -1,23 +1,23 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
+import Link from "./localized-link"
 import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import Layout from "../components/layout"
-import Modal from "../components/modal"
-import ShareMenu from "../components/share-menu"
-import Button from "../components/button"
+import Modal from "./modal"
+import ShareMenu from "./share-menu"
+import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
 
-import MdArrowUpward from "react-icons/lib/md/arrow-upward"
-import MdLink from "react-icons/lib/md/link"
 import FeaturedIcon from "../assets/icons/featured-sites-icons"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { MdArrowUpward, MdLink } from "react-icons/md"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import { filterByCategories } from "../views/showcase/filtered-showcase"
 
 const gutter = 6
 const gutterDesktop = 8
@@ -92,20 +92,18 @@ const SourceLink = ({ ...props }) => (
   </a>
 )
 
-function usePrevAndNextSite(item) {
+function usePrevAndNextSite(item, filters = []) {
   const { allSitesYaml } = useStaticQuery(graphql`
     query {
       allSitesYaml(
         filter: {
-          featured: { eq: true }
           main_url: { ne: null }
           fields: { hasScreenshot: { eq: true } }
         }
       ) {
         nodes {
-          id
-          url
           title
+          categories
           fields {
             slug
           }
@@ -123,7 +121,7 @@ function usePrevAndNextSite(item) {
     }
   `)
 
-  const sites = allSitesYaml.nodes
+  const sites = filterByCategories(allSitesYaml.nodes, filters)
   const currentIndex = sites.findIndex(node => node.fields.slug === item)
   const nextSite = sites[(currentIndex + 1) % sites.length]
   const previousSite =
@@ -143,9 +141,13 @@ function getExitLocation(filters = {}) {
   }
 }
 
-function ShowcaseModal({ children, location }) {
-  const { previousSite, nextSite } = usePrevAndNextSite(location.pathname)
+function ShowcaseModal({ children, location, isModal }) {
+  if (!isModal) return children
   const { filters } = location.state || {}
+  const { previousSite, nextSite } = usePrevAndNextSite(
+    location.pathname,
+    filters
+  )
   return (
     <Modal
       modalBackgroundPath={getExitLocation(filters)}
@@ -155,7 +157,7 @@ function ShowcaseModal({ children, location }) {
       modalNextLink={
         <>
           <Img
-            key={nextSite.id}
+            key={nextSite.fields.slug}
             sx={styles.prevNextImage}
             backgroundColor
             fixed={{
@@ -198,7 +200,7 @@ function ShowcaseModal({ children, location }) {
       modalPreviousLink={
         <>
           <Img
-            key={previousSite.id}
+            key={previousSite.fields.slug}
             sx={styles.prevNextImage}
             backgroundColor
             fixed={{
@@ -248,9 +250,8 @@ function ShowcaseModal({ children, location }) {
 const ShowcaseDetails = ({ location, site, isModal, categories }) => {
   const screenshotFile = site.childScreenshot.screenshotFile.childImageSharp
 
-  const PageLayout = isModal ? ShowcaseModal : Layout
   return (
-    <PageLayout location={location}>
+    <ShowcaseModal isModal={isModal} location={location}>
       <div
         sx={{
           display: `flex`,
@@ -398,7 +399,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </ShowcaseModal>
   )
 }
 

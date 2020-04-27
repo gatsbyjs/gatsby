@@ -29,7 +29,7 @@ Gatsby still works with all the `react` packages running in a Create React App p
 
 ### Unified GraphQL data layer
 
-Plugins can also pull in data from any number of sources like APIs, CMSs, or the filesystem. That data is combined into a unified data layer that you can [query with GraphQL](/docs/querying-with-graphql/) throughout your app.
+Plugins can also pull in data from any number of sources like APIs, CMSs, or the filesystem. That data is combined into a unified data layer that you can [query with GraphQL](/docs/graphql-concepts/) throughout your app.
 
 This data layer simplifies the process of pulling data from different sources and providing them in your pages and components. This combination of data from different sources stitched together in a modern workflow is referred to as [the content mesh](/blog/2018-10-04-journey-to-the-content-mesh/).
 
@@ -119,11 +119,11 @@ The `gatsby build` command also won't be able to use browser APIs, so some code 
 
 Some common globals that would need to be protected are:
 
-- `window`
-- `localStorage`
-- `sessionStorage`
-- `navigator`
-- `document`
+- [`window`](https://developer.mozilla.org/en-US/docs/Web/API/Window)
+- [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+- [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+- [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator)
+- [`document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)
 
 Additionally, some packages that depend on globals existing (e.g. `react-router-dom`) may need to be [patched](/docs/debugging-html-builds/#fixing-third-party-modules) or migrated to other packages.
 
@@ -290,9 +290,24 @@ function App() {
 export default App
 ```
 
-In Gatsby, if you want your providers to be global across pages you would move those providers to `gatsby-browser.js`:
+In Gatsby, if you want your providers to be global across pages you would move those providers to `gatsby-browser.js` and `gatsby-ssr.js` :
 
 ```jsx:title=gatsby/gatsby-browser.js
+import React from "react"
+
+const defaultTheme = "light"
+export const ThemeContext = React.createContext(defaultTheme)
+
+export const wrapRootElement = ({ element }) => {
+  return (
+    <ThemeContext.Provider value={defaultTheme}>
+      {element}
+    </ThemeContext.Provider>
+  )
+}
+```
+
+```jsx:title=gatsby/gatsby-ssr.js
 import React from "react"
 
 const defaultTheme = "light"

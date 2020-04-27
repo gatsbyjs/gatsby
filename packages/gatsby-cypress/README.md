@@ -25,9 +25,7 @@ Once imported, the following additional commands are available:
 
   ```js
   // after navigating to another page via a link
-  cy.waitForRouteChange()
-    .get(`#element-with-event-handler`)
-    .click()
+  cy.waitForRouteChange().get(`#element-with-event-handler`).click()
   ```
 
 - [**no longer recommended**] `cy.getTestElement(selector)`: Selects elements where the `data-testid`

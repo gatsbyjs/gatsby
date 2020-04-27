@@ -10,8 +10,6 @@ If you're a Gatsby community member, you may have noticed something: we write _a
 
 Community members are often surprised by the comprehensiveness of our [documentation](/docs/). We publish new articles on this blog multiple times per week, from both the core team and the community.
 
-https://twitter.com/mattconvente/status/1099706762897342465
-
 Writing isn't something we just do because we love it (although we do). Writing is core to who we are as a project, a company, and a community.
 
 Writing is core to the success we've enjoyed so far, and it's core to our strategy to become the default way to build on the web.

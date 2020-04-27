@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import styled from "@emotion/styled"
-import MdWarning from "react-icons/lib/md/warning"
+import { MdWarning } from "react-icons/md"
 
 import {
   Container,
@@ -86,7 +86,7 @@ const Weight = ({ children, fontFamily, fontWeight }) => (
 )
 
 const Typography = ({ location }) => (
-  <Layout pathname={location.pathname} pageTitle="Typography">
+  <Layout location={location} pageTitle="Typography">
     <Container>
       <div css={{ position: `relative`, zIndex: 1 }}>
         <PageHeading>Typography</PageHeading>
@@ -468,9 +468,9 @@ const Typography = ({ location }) => (
 
         <Box display={{ md: `flex ` }} mt={12} pb={12} textAlign="left">
           <MarketingColumn title="Modern web tech without the headache">
-            Enjoy the power of the latest web technologies – React.js , Webpack
-            , modern JavaScript and CSS and more — all set up and waiting for
-            you to start building.
+            Enjoy the power of the latest web technologies – React.js, Webpack,
+            modern JavaScript and CSS and more — all set up and waiting for you
+            to start building.
           </MarketingColumn>
           <MarketingColumn title="Bring your own data">
             Gatsby’s rich data plugin ecosystem lets you build sites with the

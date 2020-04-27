@@ -44,7 +44,7 @@ module.exports = async (
   // This will also allow the use of html image tags
   const rawHtmlNodes = select(markdownAST, `html`)
 
-  const generateImagesAndUpdateNode = async function(node, resolve) {
+  const generateImagesAndUpdateNode = async function (node, resolve) {
     // Ignore if it is not contentful image
 
     if (node.url.indexOf(`images.ctfassets.net`) === -1) {
@@ -70,11 +70,20 @@ module.exports = async (
     }
     const metaReader = sharp()
 
-    const response = await axios({
-      method: `GET`,
-      url: originalImg, // for some reason there is a './' prefix
-      responseType: `stream`,
-    })
+    let response
+    try {
+      response = await axios({
+        method: `GET`,
+        url: originalImg, // for some reason there is a './' prefix
+        responseType: `stream`,
+      })
+    } catch (err) {
+      reporter.panic(
+        `Image downloading failed for ${originalImg}, please check if the image still exists on contentful`,
+        err
+      )
+      return []
+    }
 
     response.data.pipe(metaReader)
 
@@ -234,7 +243,7 @@ ${rawHTML}
             }
 
             let imageRefs = []
-            $(`img`).each(function() {
+            $(`img`).each(function () {
               imageRefs.push($(this))
             })
 

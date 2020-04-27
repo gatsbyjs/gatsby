@@ -19,6 +19,8 @@ This quick start is intended for intermediate to advanced developers. For a gent
 npm install -g gatsby-cli
 ```
 
+> The above command installs Gatsby CLI globally on your machine.
+
 ### Create a new site
 
 ```shell
