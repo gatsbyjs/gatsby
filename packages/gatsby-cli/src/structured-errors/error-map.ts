@@ -174,17 +174,17 @@ const errors = {
 
       https://www.gatsbyjs.org/docs/page-query/#how-to-add-query-variables-to-a-page-query`)
 
-      const staticQueryMessage = stripIndents(`If you're not using a page query but a StaticQuery / useStaticQuery you see this error because they currently don't support variables. To learn more about the limitations of StaticQuery / useStaticQuery, please visit these docs:
+      const staticQueryMessage = stripIndents(`If you're not using a page query but a useStaticQuery / StaticQuery you see this error because they currently don't support variables. To learn more about the limitations of useStaticQuery / StaticQuery, please visit these docs:
 
-      https://www.gatsbyjs.org/docs/static-query/
-      https://www.gatsbyjs.org/docs/use-static-query/`)
+      https://www.gatsbyjs.org/docs/use-static-query/
+      https://www.gatsbyjs.org/docs/static-query/`)
 
       return stripIndent(`
         There was an error in your GraphQL query:\n\n${
           context.sourceMessage
         }${optionalGraphQLInfo(
         context
-      )}\n\n${generalMessage}\n\n${staticQueryMessage}`)
+      )}\n\n${staticQueryMessage}\n\n${generalMessage}`)
     },
     type: Type.GRAPHQL,
     level: Level.ERROR,
