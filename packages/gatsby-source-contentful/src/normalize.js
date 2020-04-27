@@ -97,17 +97,18 @@ const fixIds = object => {
 }
 exports.fixIds = fixIds
 
-const makeId = ({ spaceId, id, currentLocale, defaultLocale }) =>
+const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) =>
   currentLocale === defaultLocale
-    ? `${spaceId}___${id}`
-    : `${spaceId}___${id}___${currentLocale}`
+    ? `${spaceId}___${id}___${type}`
+    : `${spaceId}___${id}___${type}___${currentLocale}`
 
 exports.makeId = makeId
 
 const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
   spaceId,
-  id
-) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale }))
+  id,
+  type
+) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
 exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
   contentTypeItems.map(contentType =>
@@ -194,6 +195,7 @@ exports.buildForeignReferenceMap = ({
                   name: `${contentTypeItemId}___NODE`,
                   id: entryItem.sys.id,
                   spaceId: space.sys.id,
+                  type: entryItem.sys.type,
                 })
               })
             }
@@ -211,6 +213,7 @@ exports.buildForeignReferenceMap = ({
               name: `${contentTypeItemId}___NODE`,
               id: entryItem.sys.id,
               spaceId: space.sys.id,
+              type: entryItem.sys.type,
             })
           }
         }
@@ -393,7 +396,7 @@ exports.createNodesForContentType = ({
                   return resolvable.has(v.sys.id)
                 })
                 .map(function (v) {
-                  return mId(space.sys.id, v.sys.id)
+                  return mId(space.sys.id, v.sys.id, v.sys.type)
                 })
               if (resolvableEntryItemFieldValue.length !== 0) {
                 entryItemFields[
@@ -412,7 +415,8 @@ exports.createNodesForContentType = ({
             if (resolvable.has(entryItemFieldValue.sys.id)) {
               entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
                 space.sys.id,
-                entryItemFieldValue.sys.id
+                entryItemFieldValue.sys.id,
+                entryItemFieldValue.sys.type
               )
             }
             delete entryItemFields[entryItemFieldKey]
@@ -431,21 +435,29 @@ exports.createNodesForContentType = ({
             // skip it. However, if it is an array, add it:
             if (Array.isArray(existingReference)) {
               entryItemFields[foreignReference.name].push(
-                mId(foreignReference.spaceId, foreignReference.id)
+                mId(
+                  foreignReference.spaceId,
+                  foreignReference.id,
+                  foreignReference.type
+                )
               )
             }
           } else {
             // If there is one foreign reference, there can be many.
             // Best to be safe and put it in an array to start with.
             entryItemFields[foreignReference.name] = [
-              mId(foreignReference.spaceId, foreignReference.id),
+              mId(
+                foreignReference.spaceId,
+                foreignReference.id,
+                foreignReference.type
+              ),
             ]
           }
         })
       }
 
       let entryNode = {
-        id: mId(space.sys.id, entryItem.sys.id),
+        id: mId(space.sys.id, entryItem.sys.id, entryItem.sys.type),
         spaceId: space.sys.id,
         contentful_id: entryItem.sys.contentful_id,
         createdAt: entryItem.sys.createdAt,
@@ -611,7 +623,7 @@ exports.createAssetNodes = ({
 
     const assetNode = {
       contentful_id: assetItem.sys.contentful_id,
-      id: mId(space.sys.id, assetItem.sys.id),
+      id: mId(space.sys.id, assetItem.sys.id, assetItem.sys.type),
       parent: null,
       children: [],
       file: assetItem.fields.file ? getField(assetItem.fields.file) : null,

@@ -129,6 +129,7 @@ exports.sourceNodes = async (
             id: node.sys.id,
             currentLocale: locale.code,
             defaultLocale,
+            type: node.sys.type,
           })
         )
         return getNode(nodeId)

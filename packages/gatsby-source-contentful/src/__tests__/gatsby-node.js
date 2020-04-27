@@ -57,6 +57,7 @@ describe(`gatsby-node`, () => {
             defaultLocale: defaultLocale,
             currentLocale: locale,
             id: entry.sys.id,
+            type: entry.sys.type,
           })
         )
 
@@ -79,6 +80,7 @@ describe(`gatsby-node`, () => {
                   defaultLocale: defaultLocale,
                   currentLocale: locale,
                   id: value.sys.id,
+                  type: value.sys.type,
                 })
               )
               matchedObject[`${field}___NODE`] = linkId
@@ -142,6 +144,7 @@ describe(`gatsby-node`, () => {
             defaultLocale: defaultLocale,
             currentLocale: locale,
             id: entry.sys.id,
+            type: entry.sys.type,
           })
         )
 
@@ -170,6 +173,7 @@ describe(`gatsby-node`, () => {
             defaultLocale: defaultLocale,
             currentLocale: locale,
             id: asset.sys.id,
+            type: asset.sys.type,
           })
         )
 
@@ -198,6 +202,7 @@ describe(`gatsby-node`, () => {
             defaultLocale: defaultLocale,
             currentLocale: locale,
             id: asset.sys.id,
+            type: asset.sys.type,
           })
         )
 
@@ -269,6 +274,7 @@ describe(`gatsby-node`, () => {
         currentLocale: locale,
         defaultLocale: locales[0],
         id: createdBlogEntry.sys.id,
+        type: createdBlogEntry.sys.type,
       })
     )
 
@@ -335,6 +341,7 @@ describe(`gatsby-node`, () => {
         currentLocale: locale,
         defaultLocale: locales[0],
         id: updatedBlogEntry.sys.id,
+        type: updatedBlogEntry.sys.type,
       })
     )
 
@@ -414,6 +421,7 @@ describe(`gatsby-node`, () => {
         currentLocale: locale,
         defaultLocale: locales[0],
         id: removedBlogEntry.sys.id,
+        type: removedBlogEntry.sys.type,
       })
     )
 
@@ -492,6 +500,7 @@ describe(`gatsby-node`, () => {
         currentLocale: locale,
         defaultLocale: locales[0],
         id: removedAssetEntry.sys.id,
+        type: removedAssetEntry.sys.type,
       })
     )
 
