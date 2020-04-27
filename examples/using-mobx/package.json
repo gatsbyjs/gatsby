@@ -16,7 +16,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "gatsby": "^2.20.36",
+    "gatsby": "^2.21.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "prop-types": "^15.7.2",

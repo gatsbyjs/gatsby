@@ -4,8 +4,8 @@
   "description": "Gatsby example site using using-page-loading-indicator",
   "author": "Kyle Mathews<mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.20.36",
-    "gatsby-plugin-nprogress": "^2.2.4",
+    "gatsby": "^2.21.0",
+    "gatsby-plugin-nprogress": "^2.3.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },

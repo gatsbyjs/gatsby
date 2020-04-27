@@ -5,9 +5,9 @@
   "version": "0.1.0",
   "author": "Vishwa Mehta <vishwa.mehta30@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.20.36",
-    "gatsby-core-utils": "^1.1.4",
-    "gatsby-source-wordpress": "^3.2.6",
+    "gatsby": "^2.21.0",
+    "gatsby-core-utils": "^1.2.0",
+    "gatsby-source-wordpress": "^3.3.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"

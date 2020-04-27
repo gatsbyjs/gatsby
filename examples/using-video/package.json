@@ -8,7 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "file-loader": "^4.3.0",
-    "gatsby": "^2.20.36",
+    "gatsby": "^2.21.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },
