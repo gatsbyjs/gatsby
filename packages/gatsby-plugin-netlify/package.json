@@ -13,7 +13,7 @@
     }
   ],
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
+    "@babel/runtime": "^7.9.2",
     "fs-extra": "^8.1.0",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.15",
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
+    "@babel/core": "^7.9.0",
     "babel-preset-gatsby-package": "^0.3.2",
     "cross-env": "^5.2.1"
   },
