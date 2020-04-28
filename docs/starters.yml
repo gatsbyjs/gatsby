@@ -6009,6 +6009,17 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://flotiq-starter-products.herokuapp.com/
+  repo: https://github.com/flotiq/gatsby-starter-products
+  description: A Gatsby e-commerce starter with products sourced from Flotiq.
+  tags:
+    - CMS:Headless
+    - E-commerce
+    - CMS:Other
+  features:
+    - Snipcart e-commerce starter
+    - Flotiq CMS as a product source
+    - Deploy to Heroku
 - url: https://goodpraxis.coop
   repo: https://github.com/GoodPraxis/gp-gatsby-starter-ts-sass-jest
   description: A solid, basic Gatsby starter used by Good Praxis suitable for many different types of projects
