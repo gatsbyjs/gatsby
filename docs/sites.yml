@@ -10471,3 +10471,13 @@
   featured: false
   main_url: https://sztuka-programowania.pl/
   url: https://sztuka-programowania.pl/
+- title: Resistbot
+  url: https://resist.bot
+  main_url: https://resist.bot
+  description: >
+    A chatbot that helps you contact your representatives, and be an informed citizen.
+  categories:
+    - Blog
+    - Government
+    - Nonprofit
+  featured: false
