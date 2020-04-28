@@ -111,7 +111,7 @@
     "parseurl": "^1.3.3",
     "physical-cpu-count": "^2.0.0",
     "pnp-webpack-plugin": "^1.6.4",
-    "postcss-flexbugs-fixes": "^4.2.0",
+    "postcss-flexbugs-fixes": "^4.2.1",
     "postcss-loader": "^3.0.0",
     "prompts": "^2.3.2",
     "prop-types": "^15.7.2",
