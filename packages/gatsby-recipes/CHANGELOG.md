@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.0...gatsby-recipes@0.1.1) (2020-04-28)
+
+### Bug Fixes
+
+- update packages ([#23525](https://github.com/gatsbyjs/gatsby/issues/23525)) ([e65dd1e](https://github.com/gatsbyjs/gatsby/commit/e65dd1e))
+- **gatsby-recipes:** remove gatsby-transformer-remark package from mdx-images recipe ([#23511](https://github.com/gatsbyjs/gatsby/issues/23511)) ([f261d6e](https://github.com/gatsbyjs/gatsby/commit/f261d6e))
+
+### Features
+
+- **gatsby-recipes:** Add Gatsby react helmet recipe ([#23495](https://github.com/gatsbyjs/gatsby/issues/23495)) ([9e72691](https://github.com/gatsbyjs/gatsby/commit/9e72691))
+
 # [0.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.19...gatsby-recipes@0.1.0) (2020-04-27)
 
 **Note:** Version bump only for package gatsby-recipes
