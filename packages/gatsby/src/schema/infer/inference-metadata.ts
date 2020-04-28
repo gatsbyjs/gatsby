@@ -63,44 +63,44 @@ import { looksLikeADate } from "../types/date"
 import { Node } from "../../../index"
 import { TypeConflictReporter } from "./type-conflict-reporter"
 
-interface ITypeInfo {
+export interface ITypeInfo {
   first?: string
   total: number
   example?: unknown
 }
 
-interface ITypeInfoString extends ITypeInfo {
+export interface ITypeInfoString extends ITypeInfo {
   empty: number
   example: string
 }
 
-interface ITypeInfoDate extends ITypeInfo {
+export interface ITypeInfoDate extends ITypeInfo {
   example: string
 }
 
-interface ITypeInfoNumber extends ITypeInfo {
+export interface ITypeInfoNumber extends ITypeInfo {
   example: number
 }
 
-interface ITypeInfoBoolean extends ITypeInfo {
+export interface ITypeInfoBoolean extends ITypeInfo {
   example: boolean
 }
 
-interface ITypeInfoArray extends ITypeInfo {
+export interface ITypeInfoArray extends ITypeInfo {
   item: IValueDescriptor
 }
 
-interface ITypeInfoRelatedNodes extends ITypeInfo {
+export interface ITypeInfoRelatedNodes extends ITypeInfo {
   nodes: { [key: string]: number }
 }
 
-interface ITypeInfoObject extends ITypeInfo {
+export interface ITypeInfoObject extends ITypeInfo {
   dprops: {
     [name: string]: IValueDescriptor
   }
 }
 
-interface IValueDescriptor {
+export interface IValueDescriptor {
   int?: ITypeInfoNumber
   float?: ITypeInfoNumber
   date?: ITypeInfoDate
@@ -112,11 +112,11 @@ interface IValueDescriptor {
   object?: ITypeInfoObject
 }
 
-type ValueType = keyof IValueDescriptor
+export type ValueType = keyof IValueDescriptor
 
 export interface ITypeMetadata {
   typeName?: string
-  disabled: boolean
+  disabled?: boolean
   ignored?: boolean
   dirty?: boolean
   total?: number
