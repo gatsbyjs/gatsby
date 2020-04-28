@@ -10446,3 +10446,15 @@
   built_by: WatchKeeper Engineering
   built_by_url: https://twitter.com/watchkeeper
   featured: false
+- title: Sztuka Programowania
+  built_by: Piotr Fedorczyk
+  built_by_url: https://piotrf.pl
+  categories:
+    - Event
+    - Learning
+    - Web Development
+  description: >
+    Landing page of a series of web development workshops held in Gdańsk, Poland.
+  featured: false
+  main_url: https://sztuka-programowania.pl/
+  url: https://sztuka-programowania.pl/
