@@ -272,7 +272,7 @@ it(`should use the cache argument`, async () => {
   if (IS_LOKI) return
 
   const filtersCache = new Map()
-  const [result, allNodes] = await runFilterOnCache(
+  const [result] = await runFilterOnCache(
     { hair: { eq: 2 } },
     filtersCache
   )
@@ -285,7 +285,7 @@ it(`should use the cache argument`, async () => {
   expect(filtersCache.size === 1).toBe(true)
   filtersCache.forEach((
     filterCache /*: FilterCache */,
-    cacheKey /*: FilterCacheKey */
+    //cacheKey /*: FilterCacheKey */
   ) => {
     // This test will change when the composition of the FilterCache changes
     // For now it should be a Map of values to Set of nodes
@@ -409,7 +409,7 @@ it(`should use the cache argument`, async () => {
 
         it(`does not coerce numbers against single-element arrays`, async () => {
           const needle = `8` // note: `('8' == [8]) === true`
-          const [result, allNodes] = await runFilter({
+          const [result] = await runFilter({
             singleArray: { eq: needle },
           })
 
@@ -448,7 +448,7 @@ it(`should use the cache argument`, async () => {
           if (IS_LOKI) return
 
           const needle = `2` // Note: `id` is a numstr
-          const [result, allNodes] = await runFilter({ id: { hair: needle } })
+          const [result] = await runFilter({ id: { hair: needle } })
 
           expect(result).toEqual(null)
         })
@@ -634,12 +634,12 @@ it(`should use the cache argument`, async () => {
           if (IS_LOKI) return
 
           const needle = null
-          const [result, allNodes] = await runFilter({ nil: { lte: null } })
+          const [result, allNodes] = await runFilter({ nil: { lte: needle } })
 
           // lte null matches null but no nodes without the property (NULL)
-          expect(result?.length).toEqual(allNodes.filter(node => node.nil === null).length)
+          expect(result?.length).toEqual(allNodes.filter(node => node.nil === needle).length)
           expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
-          result.forEach(node => expect(node.nil === null).toEqual(true))
+          result.forEach(node => expect(node.nil === needle).toEqual(true))
         })
       })
 
@@ -750,12 +750,12 @@ it(`should use the cache argument`, async () => {
           if (IS_LOKI) return
 
           const needle = null
-          const [result, allNodes] = await runFilter({ nil: { gte: null } })
+          const [result, allNodes] = await runFilter({ nil: { gte: needle } })
 
           // gte null matches null but no nodes without the property (NULL)
-          expect(result?.length).toEqual(allNodes.filter(node => node.nil === null).length)
+          expect(result?.length).toEqual(allNodes.filter(node => node.nil === needle).length)
           expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
-          result.forEach(node => expect(node.nil === null).toEqual(true))
+          result.forEach(node => expect(node.nil === needle).toEqual(true))
         })
       })
 
@@ -934,7 +934,7 @@ it(`should use the cache argument`, async () => {
 
       describe(`$elemMatch`, () => {
         it(`handles the elemMatch operator on a proper single tree`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result] = await runFilter({
             singleElem: {
               things: {
                 elemMatch: {
@@ -955,7 +955,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the elemMatch operator on the second element`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             singleElem: {
               things: {
                 elemMatch: {
@@ -976,7 +976,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`should return only one node if elemMatch hits multiples`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             singleElem: {
               things: {
                 elemMatch: {
@@ -1001,7 +1001,7 @@ it(`should use the cache argument`, async () => {
         it(`ignores the elemMatch operator on a partial sub tree`, async () => {
           if (IS_LOKI) return
 
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             singleElem: {
               things: {
                 elemMatch: {
@@ -1015,7 +1015,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the elemMatch operator for array of objects (1)`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             data: {
               tags: {
                 elemMatch: {
@@ -1038,7 +1038,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the elemMatch operator for array of objects (2)`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             data: {
               tags: {
                 elemMatch: {
@@ -1063,7 +1063,7 @@ it(`should use the cache argument`, async () => {
         it(`works for elemMatch on boolean field`, async () => {
           if (IS_LOKI) return
 
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             boolean: {
               elemMatch: {
                 eq: true,
@@ -1079,7 +1079,7 @@ it(`should use the cache argument`, async () => {
         it(`skips nodes without the field for elemMatch on boolean`, async () => {
           if (IS_LOKI) return
 
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             boolSecondOnly: {
               elemMatch: {
                 eq: false,
@@ -1095,7 +1095,7 @@ it(`should use the cache argument`, async () => {
         it(`works for elemMatch on string field`, async () => {
           if (IS_LOKI) return
 
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             string: {
               elemMatch: {
                 eq: `a`,
@@ -1111,7 +1111,7 @@ it(`should use the cache argument`, async () => {
         it(`should return all nodes for elemMatch on non-arrays too`, async () => {
           if (IS_LOKI) return
 
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             name: {
               elemMatch: {
                 eq: `The Mad Wax`,
@@ -1129,7 +1129,7 @@ it(`should use the cache argument`, async () => {
         it(`skips nodes without the field for elemMatch on string`, async () => {
           if (IS_LOKI) return
 
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             strSecondOnly: {
               elemMatch: {
                 eq: `needle`,
@@ -1145,7 +1145,7 @@ it(`should use the cache argument`, async () => {
         it(`works for elemMatch on number field`, async () => {
           if (IS_LOKI) return
 
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             float: {
               elemMatch: {
                 eq: 1.5,
@@ -1161,7 +1161,7 @@ it(`should use the cache argument`, async () => {
 
       describe(`$nin`, () => {
         it(`handles the nin operator for array [5]`, async () => {
-          const [result, allNodes] = await runFilter({ anArray: { nin: [5] } })
+          const [result, ] = await runFilter({ anArray: { nin: [5] } })
 
           // Since the array does not contain `null`, the query should also return the
           // nodes that do not have the field at all (NULL).
@@ -1180,7 +1180,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the nin operator for array [null]`, async () => {
           if (IS_LOKI) return
 
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             nullArray: { nin: [null] },
           })
 
@@ -1192,7 +1192,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for strings`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             string: { nin: [`b`, `c`] },
           })
 
@@ -1204,7 +1204,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for ints`, async () => {
-          const [result, allNodes] = await runFilter({ index: { nin: [0, 2] } })
+          const [result, ] = await runFilter({ index: { nin: [0, 2] } })
 
           expect(result.length).toEqual(1)
           result.forEach(node => {
@@ -1214,7 +1214,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for floats`, async () => {
-          const [result, allNodes] = await runFilter({ float: { nin: [1.5] } })
+          const [result, ] = await runFilter({ float: { nin: [1.5] } })
 
           expect(result.length).toEqual(2)
           result.forEach(node => {
@@ -1224,7 +1224,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for booleans`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             boolean: { nin: [true, null] },
           })
 
@@ -1240,7 +1240,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the nin operator for double null`, async () => {
           if (IS_LOKI) return
 
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             nil: { nin: [null, null] },
           })
 
@@ -1256,7 +1256,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the nin operator for null in int+null`, async () => {
           if (IS_LOKI) return
 
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             nil: { nin: [5, null] },
           })
 
@@ -1270,7 +1270,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for int in int+null`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result, ] = await runFilter({
             index: { nin: [2, null] },
           })
 
@@ -1286,7 +1286,7 @@ it(`should use the cache argument`, async () => {
 
       describe(`$glob`, () => {
         it(`handles the glob operator`, async () => {
-          const [result, allNodes] = await runFilter({ name: { glob: `*Wax` } })
+          const [result, ] = await runFilter({ name: { glob: `*Wax` } })
 
           expect(result.length).toEqual(2)
           expect(result[0].name).toEqual(`The Mad Wax`)
@@ -1295,7 +1295,7 @@ it(`should use the cache argument`, async () => {
 
       describe(`date`, () => {
         it(`filters date fields`, async () => {
-          const [result, allNodes] = await runFilter({ date: { ne: null } })
+          const [result, ] = await runFilter({ date: { ne: null } })
 
           expect(result.length).toEqual(2)
           expect(result[0].index).toEqual(0)
