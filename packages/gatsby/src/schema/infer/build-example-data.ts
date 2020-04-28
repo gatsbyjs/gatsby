@@ -1,8 +1,22 @@
-const { groupBy } = require(`lodash`)
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import { groupBy } from "lodash"
+import {
+  IValueDescriptor,
+  ValueType,
+  ITypeMetadata,
+} from "./inference-metadata"
+import {
+  TypeConflictReporter,
+  ITypeConflictExample,
+} from "./type-conflict-reporter"
 
-// See gatsby/src/schema/infer/inference-metadata.js for the ValueDescriptor structs (-> typeInfo)
+// See gatsby/src/schema/infer/inference-metadata.ts for the ValueDescriptor structs (-> typeInfo)
 
-const getExampleObject = ({ fieldMap = {}, typeName, typeConflictReporter }) =>
+const getExampleObject = ({
+  fieldMap = {},
+  typeName,
+  typeConflictReporter,
+}: ITypeMetadata): { [k: string]: unknown } =>
   Object.keys(fieldMap).reduce((acc, key) => {
     const value = buildExampleValue({
       path: `${typeName}.${key}`,
@@ -20,7 +34,12 @@ const buildExampleValue = ({
   typeConflictReporter,
   isArrayItem = false,
   path = ``,
-}) => {
+}: {
+  descriptor: IValueDescriptor
+  typeConflictReporter?: TypeConflictReporter
+  path?: string
+  isArrayItem?: boolean
+}): unknown | null => {
   const [type, conflicts = false] = resolveWinnerType(descriptor)
 
   if (conflicts && typeConflictReporter) {
@@ -89,7 +108,9 @@ const buildExampleValue = ({
   }
 }
 
-const resolveWinnerType = descriptor => {
+const resolveWinnerType = (
+  descriptor: IValueDescriptor
+): [ValueType | "null", boolean?] => {
   const candidates = possibleTypes(descriptor)
   if (candidates.length === 1) {
     return [candidates[0]]
@@ -106,8 +127,11 @@ const resolveWinnerType = descriptor => {
   return [`null`]
 }
 
-const prepareConflictExamples = (descriptor, isArrayItem) => {
-  const typeNameMapper = typeName => {
+const prepareConflictExamples = (
+  descriptor: IValueDescriptor,
+  isArrayItem: boolean
+): ITypeConflictExample[] => {
+  const typeNameMapper = (typeName: ValueType): string => {
     if (typeName === `relatedNode`) {
       return `string`
     }
@@ -116,26 +140,35 @@ const prepareConflictExamples = (descriptor, isArrayItem) => {
     }
     return [`float`, `int`].includes(typeName) ? `number` : typeName
   }
-  const reportedValueMapper = typeName => {
+  const reportedValueMapper = (typeName: ValueType): unknown => {
     if (typeName === `relatedNode`) {
+      // See FIXME in ./inference-metadata.ts
+      // eslint-disable-next-line
+      // @ts-ignore
       const { nodes } = descriptor.relatedNode
       return Object.keys(nodes).find(key => nodes[key] > 0)
     }
     if (typeName === `relatedNodeList`) {
+      // See FIXME in ./inference-metadata.ts
+      // eslint-disable-next-line
+      // @ts-ignore
       const { nodes } = descriptor.relatedNodeList
       return Object.keys(nodes).filter(key => nodes[key] > 0)
     }
     if (typeName === `object`) {
-      return getExampleObject({ typeName, fieldMap: descriptor.object.dprops })
+      return getExampleObject({
+        typeName,
+        fieldMap: descriptor!.object!.dprops,
+      })
     }
     if (typeName === `array`) {
       const itemValue = buildExampleValue({
-        descriptor: descriptor.array.item,
+        descriptor: descriptor!.array!.item,
         isArrayItem: true,
       })
       return itemValue === null || itemValue === undefined ? [] : [itemValue]
     }
-    return descriptor[typeName].example
+    return descriptor[typeName]?.example
   }
   const conflictingTypes = possibleTypes(descriptor)
 
@@ -144,7 +177,7 @@ const prepareConflictExamples = (descriptor, isArrayItem) => {
     // See Caveats section in the header of this file
     const groups = groupBy(
       conflictingTypes,
-      type => descriptor[type].first || ``
+      type => descriptor[type]?.first || ``
     )
     return Object.keys(groups).map(nodeId => {
       return {
@@ -162,16 +195,24 @@ const prepareConflictExamples = (descriptor, isArrayItem) => {
   })
 }
 
-const isMixedNumber = ({ float, int }) =>
-  float && float.total > 0 && int && int.total > 0
+const isMixedNumber = (descriptor: IValueDescriptor): boolean => {
+  const { float, int } = descriptor
+  return Boolean(float?.total) && Boolean(int?.total)
+}
 
-const isMixOfDateAndString = ({ date, string }) =>
-  date && date.total > 0 && string && string.total > 0
+const isMixOfDateAndString = (descriptor: IValueDescriptor): boolean => {
+  const { date, string } = descriptor
+  return Boolean(date?.total) && Boolean(string?.total)
+}
 
-const hasOnlyEmptyStrings = ({ string }) =>
-  string && string.empty === string.total
+const hasOnlyEmptyStrings = (descriptor: IValueDescriptor): boolean => {
+  const { string } = descriptor
+  return string !== undefined && string?.empty === string?.total
+}
 
-const possibleTypes = (descriptor = {}) =>
-  Object.keys(descriptor).filter(type => descriptor[type].total > 0)
+const possibleTypes = (descriptor: IValueDescriptor = {}): ValueType[] =>
+  Object.keys(descriptor).filter(
+    type => descriptor[type].total > 0
+  ) as ValueType[]
 
 export { getExampleObject }

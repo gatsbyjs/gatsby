@@ -39,6 +39,22 @@ const generateQueryName = ({ def, hash, file }) => {
   return def
 }
 
+// taken from `babel-plugin-remove-graphql-queries`, in the future import from
+// there
+function followVariableDeclarations(binding) {
+  const node = binding.path?.node
+  if (
+    node?.type === `VariableDeclarator` &&
+    node?.id.type === `Identifier` &&
+    node?.init?.type === `Identifier`
+  ) {
+    return followVariableDeclarations(
+      binding.path.scope.getBinding(node.init.name)
+    )
+  }
+  return binding
+}
+
 function isUseStaticQuery(path) {
   return (
     (path.node.callee.type === `MemberExpression` &&
@@ -343,21 +359,6 @@ async function findGraphQLTags(
           )
 
           documents.push(docInFile)
-        }
-
-        function followVariableDeclarations(binding) {
-          const node = binding.path?.node
-          if (
-            node &&
-            node.type === `VariableDeclarator` &&
-            node.id.type === `Identifier` &&
-            node.init.type === `Identifier`
-          ) {
-            return followVariableDeclarations(
-              binding.path.scope.getBinding(node.init.name)
-            )
-          }
-          return binding
         }
 
         // When a component has a StaticQuery we scan all of its exports and follow those exported variables
