@@ -10432,3 +10432,16 @@
     - Healthcare
   built_by: Albert Chen
   built_by_url: https://github.com/mralbertchen
+- title: WatchKeeper
+  url: https://www.watchkeeperintl.com
+  main_url: https://www.watchkeeperintl.com
+  description: >
+    WatchKeeper helps organisations to manage global security risks such as natural disasters, extreme weather and violent incidents.
+  categories:
+    - Data
+    - Business
+    - Technology
+    - Consulting
+    - Security
+  built_by: WatchKeeper Engineering
+  built_by_url: https://github.com/watchkeeper-international
