@@ -244,13 +244,19 @@ const loadPlugins = (config = {}, rootDir = null) => {
   }
 
   // TypeScript support by default! use the user-provided one if it exists
-  const typescriptPlugin = (config?.plugins || []).find(
-    plugin => plugin.resolve === `gatsby-plugin-typescript`
-  ) || {
-    resolve: require.resolve(`gatsby-plugin-typescript`),
-  }
+  const typescriptPlugin = (config.plugins || []).find(
+    plugin =>
+      plugin.resolve === `gatsby-plugin-typescript` ||
+      plugin === `gatsby-plugin-typescript`
+  )
 
-  plugins.push(processPlugin(typescriptPlugin))
+  if (typescriptPlugin === undefined) {
+    plugins.push(
+      processPlugin({
+        resolve: require.resolve(`gatsby-plugin-typescript`),
+      })
+    )
+  }
 
   plugins.push(
     processPlugin({
