@@ -77,7 +77,7 @@ There are three modes in which icon generation can function: automatic, hybrid, 
 
 - ...at least as big as the largest icon being generated (512x512 by default).
 - ...square (if it's not, transparent bars will automatically be added to make it square).
-- ...of one of the follow formats: JPEG, PNG, WebP, TIFF, GIF or SVG.
+- ...of one of the following formats: JPEG, PNG, WebP, TIFF, GIF or SVG.
 
 #### Automatic mode configuration
 
