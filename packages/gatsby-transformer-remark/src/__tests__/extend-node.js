@@ -1248,7 +1248,6 @@ describe(`Headings are generated correctly from schema`, () => {
 ## second title
 `,
     `headings {
-      id
       value
       depth
     }`,
@@ -1256,12 +1255,10 @@ describe(`Headings are generated correctly from schema`, () => {
       expect(node).toMatchSnapshot()
       expect(node.headings).toEqual([
         {
-          id: null,
           value: `first title`,
           depth: 1,
         },
         {
-          id: null,
           value: `second title`,
           depth: 2,
         },
@@ -1270,7 +1267,7 @@ describe(`Headings are generated correctly from schema`, () => {
   )
 
   bootstrapTest(
-    `returns value`,
+    `returns null id, value and depth`,
     `
   # first title
 
@@ -1285,25 +1282,16 @@ describe(`Headings are generated correctly from schema`, () => {
       expect(node).toMatchSnapshot()
       expect(node.headings).toEqual([
         {
-          id: `#first-title`,
+          id: null,
           value: `first title`,
           depth: 1,
         },
         {
-          id: `#second-title`,
+          id: null,
           value: `second title`,
           depth: 2,
         },
       ])
-    },
-    {
-      pluginOptions: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-autolink-headers`,
-          },
-        ],
-      },
     }
   )
 

@@ -523,6 +523,23 @@ Object {
 }
 `;
 
+exports[`Headings are generated correctly from schema returns null id, value and depth 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "id": null,
+      "value": "first title",
+    },
+    Object {
+      "depth": 2,
+      "id": null,
+      "value": "second title",
+    },
+  ],
+}
+`;
+
 exports[`Headings are generated correctly from schema returns value 1`] = `
 Object {
   "headings": Array [

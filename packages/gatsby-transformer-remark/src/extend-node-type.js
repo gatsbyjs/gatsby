@@ -22,6 +22,7 @@ const {
 } = require(`./hast-processing`)
 const codeHandler = require(`./code-handler`)
 const { timeToRead } = require(`./utils/time-to-read`)
+const { getHeadingID } = require(`./utils/get-heading-id`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -268,22 +269,6 @@ module.exports = (
       if (cachedHeadings) {
         return cachedHeadings
       } else {
-        const getHeadingID = heading => {
-          const data = heading.data
-          if (data) {
-            if (data.id) return data.id
-            if (data.htmlAttributes && data.htmlAttributes.id) {
-              return data.htmlAttributes.id
-            }
-
-            if (data.hProperties && data.hProperties.id) {
-              return data.hProperties.id
-            }
-          }
-
-          return null
-        }
-
         const ast = await getAST(markdownNode)
         const headings = select(ast, `heading`).map(heading => {
           return {
