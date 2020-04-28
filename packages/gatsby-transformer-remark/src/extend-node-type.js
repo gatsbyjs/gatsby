@@ -268,9 +268,22 @@ module.exports = (
       if (cachedHeadings) {
         return cachedHeadings
       } else {
+        const getHeadingID = heading => {
+          const data = heading.data
+          if (data) {
+            if (data.id) return data.id
+            if (data.htmlAttributes && data.htmlAttributes.id) {
+              return data.htmlAttributes.id
+            }
+          }
+
+          return ``
+        }
+
         const ast = await getAST(markdownNode)
         const headings = select(ast, `heading`).map(heading => {
           return {
+            id: getHeadingID(heading),
             value: mdastToString(heading),
             depth: heading.depth,
           }
