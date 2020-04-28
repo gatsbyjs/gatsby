@@ -62,6 +62,5 @@ const restore = () => {
 
 module.exports = {
   restoreAllBlockedResources: restore,
-  // blockAssetsForChunk,
   blockAssetsForPage,
 }
