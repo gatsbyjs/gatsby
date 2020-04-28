@@ -269,14 +269,6 @@
   categories:
     - Marketing
     - Technology
-- title: Hack Club
-  main_url: https://hackclub.com/
-  url: https://hackclub.com/
-  source_url: https://github.com/hackclub/site
-  featured: false
-  categories:
-    - Education
-    - Web Development
 - title: Matthias Jordan Portfolio
   main_url: https://iammatthias.com/
   url: https://iammatthias.com/
@@ -1180,20 +1172,6 @@
     - Education
   built_by: Stephanie Langers (content), Adrian Wenke (development)
   built_by_url: https://twitter.com/AdrianWenke
-- title: Zensum
-  main_url: https://zensum.se/
-  url: https://zensum.se/
-  featured: false
-  description: >-
-    Borrow money quickly and safely through Zensum. We compare Sweden's leading
-    banks and credit institutions. Choose from multiple offers and lower your
-    monthly cost. [Translated from Swedish]
-  categories:
-    - Technology
-    - Finance
-    - Marketing
-  built_by: Bejamas
-  built_by_url: https://bejamas.io/
 - title: StatusHub - Easy to use Hosted Status Page Service
   main_url: https://statushub.com/
   url: https://statushub.com/
@@ -1452,14 +1430,6 @@
   url: https://www.kalixhealth.com/
   categories:
     - Healthcare
-  featured: false
-- title: HyperPlay
-  description: |
-    In Asean's 1st Ever LOL Esports X Music Festival
-  main_url: https://hyperplay.leagueoflegends.com/
-  url: https://hyperplay.leagueoflegends.com/
-  categories:
-    - Music
   featured: false
 - title: Bad Credit Loans
   description: |
@@ -7765,17 +7735,6 @@
   built_by: Musthaq Ahamad
   built_by_url: https://haxzie.com
   featured: false
-- title: GBT
-  url: https://yangmuzi.com/
-  main_url: https://yangmuzi.com/
-  source_url: https://github.com/yangnianbing/blog-by-gatsby
-  description: >
-    It is a basic Gatsby site project
-  categories:
-    - Blog
-    - Portfolio
-  built_by: yangnianbing
-  featured: false
 - title: Robin Wieruch's Blog
   url: https://www.robinwieruch.de/
   main_url: https://www.robinwieruch.de/
@@ -7900,16 +7859,6 @@
   built_by: The Couch
   built_by_url: https://thecouch.nyc
   featured: false
-- title: Bululu Eventos
-  url: https://bululueventos.cl/
-  main_url: https://bululueventos.cl/
-  source_url: https://github.com/enBonnet/bululu-front
-  description: >
-    Sitio de organizadores de eventos
-  categories:
-    - Marketing
-  built_by: Ender Bonnet
-  built_by_url: https://enbonnet.me/
 - title: MyPrograming Steps
   main_url: https://mysteps.netlify.com/
   url: https://mysteps.netlify.com/
@@ -8928,18 +8877,6 @@
   categories:
     - Blog
     - Web Development
-- title: Engleezi
-  main_url: https://www.myengleezi.com
-  url: https://myengleezi.com/teachers/
-  description: >-
-    Affordable, accessible and fun, Engleezi is an English tutoring service that aims to make your child a better and more fluent English speaker. Our unique online approach gets your children learning English one-on-one from a native English teacher from the comfort of your home.
-  built_by: Suleiman Mayow
-  built_by_url: https://github.com/sullom101
-  featured: false
-  categories:
-    - Education
-    - Learning
-    - Technology
 - title: The Rebigulator
   main_url: https://www.rebigulator.org/
   source_url: https://github.com/Me4502/Rebigulator/
@@ -9121,17 +9058,6 @@
     - Technology
   built_by: Max Dietrich
   built_by_url: https://www.gis-netzwerk.com/
-  featured: false
-- title: Hand in Hand Preschool
-  url: https://handinhand-preschool.com/
-  main_url: https://handinhand-preschool.com/
-  description: >
-    Hand in Hand Preschool is a preschool located in Geneva, IL.
-  categories:
-    - Education
-    - Business
-  built_by: ccalamos
-  built_by_url: https://github.com/ccalamos
   featured: false
 - title: Krishna Gopinath
   main_url: https://krishnagopinath.me
