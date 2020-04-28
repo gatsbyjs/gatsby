@@ -3,5 +3,5 @@ publish: app
 services:
   app:
     build: 
-    - type: dockerfile
+      type: dockerfile
       config: ./.runme/Dockerfile
