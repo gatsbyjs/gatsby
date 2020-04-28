@@ -40,12 +40,6 @@ class DevLoader extends BaseLoader {
   doPrefetch(pagePath) {
     return Promise.resolve(require(`./socketIo`).getPageData(pagePath))
   }
-
-  __internal__doesPageExist(rawPath) {
-    const pagePath = findPath(rawPath)
-    const page = this.pageDb.get(pagePath)
-    return !!page && page.notFound !== true
-  }
 }
 
 export default DevLoader

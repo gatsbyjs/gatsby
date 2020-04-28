@@ -455,10 +455,4 @@ export const publicLoader = {
   loadAppData: () => instance.loadAppData(),
 }
 
-if (process.env.NODE_ENV !== `production`) {
-  // this function is only used in development for dev-only messages
-  publicLoader.__internal__doesPageExist = rawPath =>
-    instance.__internal__doesPageExist(rawPath)
-}
-
 export default publicLoader
