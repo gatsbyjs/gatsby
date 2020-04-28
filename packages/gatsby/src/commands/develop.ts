@@ -13,9 +13,14 @@ import { IProgram } from "./types"
 const rootFile = (filePath: string): string =>
   path.join(process.cwd(), filePath)
 
-// Copied from https://stackoverflow.com/a/16060619
+// Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
-  delete require.cache[require.resolve(file)]
+  try {
+    delete require.cache[require.resolve(file)]
+  } catch (e) {
+    return null
+  }
+
   try {
     return require(file)
   } catch (e) {
