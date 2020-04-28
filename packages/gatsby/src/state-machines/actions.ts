@@ -1,7 +1,20 @@
 import { Store } from "../.."
-import { assign, AnyEventObject, ActionFunction, AssignAction } from "xstate"
+import {
+  assign,
+  AnyEventObject,
+  ActionFunction,
+  AssignAction,
+  spawn,
+  DoneInvokeEvent,
+} from "xstate"
 import { IBuildContext, IMutationAction } from "./develop"
 import { actions } from "../redux/actions"
+import path from "path"
+import { write as writeAppData } from "../utils/app-data"
+import { listenForMutations } from "../services/listen-for-mutations"
+
+const concatUnique = <T>(array1?: T[], array2?: T[]): T[] =>
+  Array.from(new Set((array1 || []).concat(array2 || [])))
 
 export const callRealApi = async (
   event: IMutationAction,
@@ -12,6 +25,7 @@ export const callRealApi = async (
     return null
   }
   const { type, payload } = event
+  console.log(`calling real api`, type, (payload as any[])?.[0]?.internal?.type)
   if (type in actions) {
     return actions[type](...payload)(store.dispatch.bind(store))
   }
@@ -35,10 +49,38 @@ export const callApi: BuildMachineAction = async (
  * mutations. Instead we add it to a batch to process when we're next idle
  */
 export const addNodeMutation: BuildMachineAction = assign((ctx, event) => {
+  console.log(`adding node mutation`, event.payload)
   return {
     nodeMutationBatch: ctx.nodeMutationBatch.concat([event.payload]),
   }
 })
+
+export const assignChangedPages: BuildMachineAction = assign<
+  IBuildContext,
+  DoneInvokeEvent<{
+    changedPages: string[]
+    deletedPages: string[]
+  }>
+>((context, event) => {
+  console.log({ event })
+  return {
+    pagesToBuild: concatUnique(context.pagesToBuild, event.data.changedPages),
+    deletedPages: concatUnique(context.pagesToDelete, event.data.deletedPages),
+  }
+})
+
+export const spawnMutationListener: BuildMachineAction = assign<IBuildContext>({
+  mutationListener: () => spawn(listenForMutations, `listen-for-mutations`),
+})
+
+export const trackNewAndChangedPages: BuildMachineAction = assign(
+  (_ctx, event) => {
+    if (event.type === `CREATE_NODE` || event.type === `DELETE_NODE`) {
+      console.log(`mutate`, event)
+    }
+    return {}
+  }
+)
 
 /**
  * Event handler used in all states where we're not ready to process a file change
@@ -52,11 +94,34 @@ export const markNodesDirty: BuildMachineAction = assign<IBuildContext>({
   nodesMutatedDuringQueryRun: true,
 })
 
-export const machineActions = {
+export const writeCompilationHash: BuildMachineAction = async (
+  { store, program },
+  { stats }
+) => {
+  if (!store || !stats || !program) {
+    return
+  }
+  const prevCompilationHash = store.getState().webpackCompilationHash
+
+  if (stats.hash !== prevCompilationHash) {
+    store.dispatch({
+      type: `SET_WEBPACK_COMPILATION_HASH`,
+      payload: stats.hash,
+    })
+
+    const publicDir = path.join(program.directory, `public`)
+    await writeAppData(publicDir, stats.hash)
+  }
+}
+
+export const buildActions = {
   callApi,
   addNodeMutation,
   markFilesDirty,
   markNodesDirty,
+  writeCompilationHash,
+  spawnMutationListener,
+  assignChangedPages,
 }
 
 // export const dummyActions = {
