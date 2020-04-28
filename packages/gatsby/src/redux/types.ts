@@ -224,6 +224,7 @@ export type ActionsUnion =
   | ICreateFieldExtension
   | IPrintTypeDefinitions
   | IRemoveStaticQuery
+  | ISetWebpackCompilationHashAction
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
@@ -376,4 +377,9 @@ export interface IReplaceStaticQueryAction {
 export interface IRemoveStaticQuery {
   type: `REMOVE_STATIC_QUERY`
   payload: IGatsbyStaticQueryComponents["id"]
+}
+
+export interface ISetWebpackCompilationHashAction {
+  type: `SET_WEBPACK_COMPILATION_HASH`
+  payload: IGatsbyState["webpackCompilationHash"]
 }
