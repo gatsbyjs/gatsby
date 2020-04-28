@@ -275,10 +275,18 @@ jobs:
     steps:
       - checkout
       - run:
+          command: cp -r ./starters/default ./e2e-tests/gatsby-pnp
+      - run:
           command: touch yarn.lock
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run:
-          command: yarn install
+          command: cp -r ./starters/default ./e2e-tests/gatsby-pnp
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # Quick upgrade to the v2 (any version, we just need the real set version)
+          command: yarn policies set-version berry
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # Pins the Yarn version
+          command: yarn set version 2.0.0-rc.32
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run:
           command: yarn test
