@@ -1270,6 +1270,44 @@ describe(`Headings are generated correctly from schema`, () => {
   )
 
   bootstrapTest(
+    `returns value`,
+    `
+  # first title
+
+  ## second title
+  `,
+    `headings {
+        id
+        value
+        depth
+      }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          id: `#first-title`,
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          id: `#second-title`,
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    },
+    {
+      pluginOptions: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+          },
+        ],
+      },
+    }
+  )
+
+  bootstrapTest(
     `returns value with inlineCode`,
     `
 # first title
