@@ -10352,6 +10352,19 @@
     - Technology
   built_by: SofaScore
   built_by_url: https://www.sofascore.com
+- title: "#compraaospequenos: buy local during Covid-19"
+  url: https://compraaospequenos.pt/
+  main_url: https://compraaospequenos.pt/
+  source_url: https://github.com/marzeelabs/compraaospequenos
+  description: >
+    Helping local stores survive and thrive during the Covid-19 crisis (Portugal).
+  categories:
+    - Community
+    - Food
+    - Data
+    - Directory
+  built_by: Marzee Labs
+  built_by_url: https://marzeelabs.org
   featured: false
 - title: Hasura
   url: https://hasura.io
