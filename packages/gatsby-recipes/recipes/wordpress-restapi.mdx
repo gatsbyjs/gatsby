@@ -1,0 +1,92 @@
+# Setup Gatsby with WordPress REST API 
+
+This recipes setups and configures gatsby-source-wordpress and starter templates for a WordPress-powered Gatsby site.
+
+---
+
+Install necessary NPM packages
+
+<NPMPackage name="gatsby-source-wordpress" />
+
+---
+
+Install necessary Gatsby Plugins
+Configuration options are required for this plugin, but it is not supported by Gatsby Recipes api yet, so you will have to do this manually.
+
+<GatsbyPlugin name="gatsby-source-wordpress" options={{
+  baseUrl: `cms.learnjam.org`,
+  protocol: `https`,
+  hostingWPCOM: false,
+  useACF: true,
+  includedRoutes: [
+      "**/posts",
+      "**/pages",
+      "**/users",
+      "**/categories",
+      "**/tags",
+  ]
+}} />
+
+---
+
+Setup necessary files
+
+<File
+  path="gatsby-node.example.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/gatsby-node.restapi.js"
+/>
+
+
+<File
+  path="src/templates/post.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/templates/post.js"
+/>
+<File
+  path="src/styles/post.css"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/styles/post.css"
+/>
+
+
+<File
+  path="src/templates/page.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/templates/page.js"
+/>
+<File
+  path="src/styles/page.css"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/styles/page.css"
+/>
+
+
+<File
+  path="src/templates/category.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/templates/category.js"
+/>
+<File
+  path="src/styles/category.css"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/styles/category.css"
+/>
+
+
+<File
+  path="src/templates/tag.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/templates/tag.js"
+/>
+<File
+  path="src/styles/tag.css"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/styles/tag.css"
+/>
+
+
+<File
+  path="src/templates/user.js"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/templates/user.js"
+/>
+<File
+  path="src/styles/user.css"
+  content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/styles/user.css"
+/>
+
+---
+
+You are good to go!
+IMPORTANT: Be sure to rename gatsby-node.example.js to gatsby-node.js after copying over your existing code.
