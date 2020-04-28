@@ -145,7 +145,6 @@ export const pageQuery = graphql`
         url
       }
       readme {
-        # FIXME parent isn't a file in this case
         childMarkdownRemark {
           html
           excerpt
