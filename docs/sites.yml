@@ -269,14 +269,6 @@
   categories:
     - Marketing
     - Technology
-- title: Hack Club
-  main_url: https://hackclub.com/
-  url: https://hackclub.com/
-  source_url: https://github.com/hackclub/site
-  featured: false
-  categories:
-    - Education
-    - Web Development
 - title: Matthias Jordan Portfolio
   main_url: https://iammatthias.com/
   url: https://iammatthias.com/
@@ -1193,20 +1185,6 @@
     - Education
   built_by: Stephanie Langers (content), Adrian Wenke (development)
   built_by_url: https://twitter.com/AdrianWenke
-- title: Zensum
-  main_url: https://zensum.se/
-  url: https://zensum.se/
-  featured: false
-  description: >-
-    Borrow money quickly and safely through Zensum. We compare Sweden's leading
-    banks and credit institutions. Choose from multiple offers and lower your
-    monthly cost. [Translated from Swedish]
-  categories:
-    - Technology
-    - Finance
-    - Marketing
-  built_by: Bejamas
-  built_by_url: https://bejamas.io/
 - title: StatusHub - Easy to use Hosted Status Page Service
   main_url: https://statushub.com/
   url: https://statushub.com/
@@ -1407,14 +1385,6 @@
   url: https://www.kalixhealth.com/
   categories:
     - Healthcare
-  featured: false
-- title: HyperPlay
-  description: |
-    In Asean's 1st Ever LOL Esports X Music Festival
-  main_url: https://hyperplay.leagueoflegends.com/
-  url: https://hyperplay.leagueoflegends.com/
-  categories:
-    - Music
   featured: false
 - title: Bad Credit Loans
   description: |
@@ -7773,17 +7743,6 @@
   built_by: Musthaq Ahamad
   built_by_url: https://haxzie.com
   featured: false
-- title: GBT
-  url: https://yangmuzi.com/
-  main_url: https://yangmuzi.com/
-  source_url: https://github.com/yangnianbing/blog-by-gatsby
-  description: >
-    It is a basic Gatsby site project
-  categories:
-    - Blog
-    - Portfolio
-  built_by: yangnianbing
-  featured: false
 - title: Robin Wieruch's Blog
   url: https://www.robinwieruch.de/
   main_url: https://www.robinwieruch.de/
@@ -7908,16 +7867,6 @@
   built_by: The Couch
   built_by_url: https://thecouch.nyc
   featured: false
-- title: Bululu Eventos
-  url: https://bululueventos.cl/
-  main_url: https://bululueventos.cl/
-  source_url: https://github.com/enBonnet/bululu-front
-  description: >
-    Sitio de organizadores de eventos
-  categories:
-    - Marketing
-  built_by: Ender Bonnet
-  built_by_url: https://enbonnet.me/
 - title: MyPrograming Steps
   main_url: https://mysteps.netlify.com/
   url: https://mysteps.netlify.com/
@@ -8937,18 +8886,6 @@
   categories:
     - Blog
     - Web Development
-- title: Engleezi
-  main_url: https://www.myengleezi.com
-  url: https://myengleezi.com/teachers/
-  description: >-
-    Affordable, accessible and fun, Engleezi is an English tutoring service that aims to make your child a better and more fluent English speaker. Our unique online approach gets your children learning English one-on-one from a native English teacher from the comfort of your home.
-  built_by: Suleiman Mayow
-  built_by_url: https://github.com/sullom101
-  featured: false
-  categories:
-    - Education
-    - Learning
-    - Technology
 - title: The Rebigulator
   main_url: https://www.rebigulator.org/
   source_url: https://github.com/Me4502/Rebigulator/
@@ -9130,17 +9067,6 @@
     - Technology
   built_by: Max Dietrich
   built_by_url: https://www.gis-netzwerk.com/
-  featured: false
-- title: Hand in Hand Preschool
-  url: https://handinhand-preschool.com/
-  main_url: https://handinhand-preschool.com/
-  description: >
-    Hand in Hand Preschool is a preschool located in Geneva, IL.
-  categories:
-    - Education
-    - Business
-  built_by: ccalamos
-  built_by_url: https://github.com/ccalamos
   featured: false
 - title: Krishna Gopinath
   main_url: https://krishnagopinath.me
@@ -10354,3 +10280,199 @@
   built_by: Masatoshi Nishiguchi
   built_by_url: https://mnishiguchi.com
   featured: false
+- title: WhileNext
+  url: https://whilenext.com
+  main_url: https://whilenext.com
+  description: >
+    A Blog on Software Development
+  categories:
+    - Blog
+    - Learning
+    - Programming
+    - Web Development
+  built_by: Masoud Karimi
+  built_by_url: https://github.com/masoudkarimif
+- title: Jamify.me
+  description: >
+    We build websites & PWAs with JAMstack. Delivering faster, more secure web.
+  main_url: https://jamify.me
+  url: https://jamify.me
+  categories:
+    - Agency
+    - Web Development
+  featured: false
+- title: Shrey Sachdeva
+  url: https://www.shreysachdeva.tech/
+  main_url: https://www.shreysachdeva.tech/
+  source_url: https://github.com/shrey-sachdeva2000/Shrey-Sachdeva
+  description: >
+    Personal website for Shrey Sachdeva. An abstract thinker who writes code and designs pixel-perfect user-interfaces with industry experience.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Shrey Sachdeva
+  built_by_url: https://www.shreysachdeva.tech/
+- title: The Cares Family
+  main_url: https://thecaresfamily.org.uk/home
+  url: https://thecaresfamily.org.uk/home
+  description: >
+    The Cares Family helps people find connection and community in a disconnected age. They relaunched their website in Gatsby during the COVID-19 outbreak of 2020 to help connect neighbours.
+  categories:
+    - Nonprofit
+    - Blog
+    - Community
+  built_by: Mutual
+  built_by_url: https://www.madebymutual.com
+- title: "Due to COVID-19: Documenting the Signs of the Pandemic"
+  url: https://duetocovid19.com
+  main_url: https://duetocovid19.com
+  description: >
+    A project to document all the signs that have gone up on the storefronts of our cities in response to the coronavirus pandemic.
+  categories:
+    - Photography
+    - Community
+  built_by: Andrew Louis
+  built_by_url: https://hyfen.net
+  featured: false
+- title: "Besoegsvenner - Visiting Friends for the Elderly"
+  main_url: https://www.xn--besgsvenner-igb.dk
+  url: https://www.xn--besgsvenner-igb.dk/ruths-historie
+  description: >
+    50.000 elderly people in Denmark feel lonely. This project seeks to inform people to become visitor friends ("Besøgsven" in Danish) to help fight loneliness and bring new friendships in to the world.
+  categories:
+    - Marketing
+    - Nonprofit
+    - Landing Page
+  built_by: Hello Great Works
+  built_by_url: https://hellogreatworks.com
+- title: Interficie Internet Services
+  main_url: https://www.interficie.com
+  url: https://www.interficie.com/our-work/
+  description: >
+    Located in Barcelona, we develop innovative websites, ecommerce solutions and software platforms for global brands, startups and organizations.
+  categories:
+    - E-commerce
+    - Web Development
+    - Consulting
+    - JavaScript
+    - Agency
+    - Business
+  built_by: Interficie Internet Services
+  built_by_url: https://github.com/InterficieIS
+- title: SofaScore Corporate
+  url: https://corporate.sofascore.com
+  main_url: https://corporate.sofascore.com
+  description: >
+    SofaScore is a leading provider of advanced sports insights and content with global coverage of 20+ sports.
+  categories:
+    - App
+    - Data
+    - Sports
+    - Technology
+  built_by: SofaScore
+  built_by_url: https://www.sofascore.com
+- title: "#compraaospequenos: buy local during Covid-19"
+  url: https://compraaospequenos.pt/
+  main_url: https://compraaospequenos.pt/
+  source_url: https://github.com/marzeelabs/compraaospequenos
+  description: >
+    Helping local stores survive and thrive during the Covid-19 crisis (Portugal).
+  categories:
+    - Community
+    - Food
+    - Data
+    - Directory
+  built_by: Marzee Labs
+  built_by_url: https://marzeelabs.org
+  featured: false
+- title: Hasura
+  url: https://hasura.io
+  main_url: https://hasura.io
+  description: >
+    Hasura is an open source engine that connects to your databases & microservices and auto-generates a production-ready GraphQL backend.
+  categories:
+    - API
+    - Web Development
+    - Technology
+    - Open Source
+  featured: false
+- title: Jimdo.com
+  description: >
+    Jimdo is an international tech company and one of the world's leading providers of online services for small and medium businesses (SMBs). The company empowers entrepreneurs to create their own website or store without coding and to digitize their business ideas.
+  main_url: https://www.jimdo.com/
+  url: https://www.jimdo.com/
+  categories:
+    - Marketing
+    - Technology
+    - E-commerce
+    - Web Development
+    - Business
+  built_by: Jimdo GmbH
+- title: Resume on the Web
+  main_url: https://amruthpillai.com
+  url: https://amruthpillai.com
+  source_url: https://github.com/AmruthPillai/ResumeOnTheWeb-Gatsby
+  description: >
+    Everyone needs their own little spot on the interwebs, and this is mine. Welcome to my resume, on the web!
+  categories:
+    - Blog
+    - Design
+    - Freelance
+    - Gallery
+    - JavaScript
+    - Landing Page
+    - Mobile Development
+    - Open Source
+    - Photography
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: Amruth Pillai
+  built_by_url: https://amruthpillai.com
+  featured: false
+- title: Landmarks.ro
+  main_url: https://landmarks.ro/
+  url: https://landmarks.ro/
+  description: >
+    Lead generation technology for real estate developers
+  categories:
+    - Real Estate
+    - Marketing
+    - Technology
+    - Web Development
+    - Landing Page
+  built_by: Horia Miron
+  built_by_url: https://github.com/ancashoria
+  featured: false
+- title: GeneOS
+  url: https://geneos.me/
+  main_url: https://geneos.me/
+  description: >
+    GeneOS is a privacy-preserving data monetization protocol for genetic, activity, and medical data.
+  categories:
+    - Landing Page
+    - Business
+  built_by: GeneOS Team
+- title: COVID KPI
+  url: https://covidkpi.com/
+  main_url: https://covidkpi.com/
+  description: >
+    COVID KPI aggregates COVID-19 data from numerous official sources then displays the Key Performance Indicators.
+  categories:
+    - Data
+    - Media
+    - Healthcare
+  built_by: Albert Chen
+  built_by_url: https://github.com/mralbertchen
+- title: Sztuka Programowania
+  built_by: Piotr Fedorczyk
+  built_by_url: https://piotrf.pl
+  categories:
+    - Event
+    - Learning
+    - Web Development
+  description: >
+    Landing page of a series of web development workshops held in Gdańsk, Poland.
+  featured: false
+  main_url: https://sztuka-programowania.pl/
+  url: https://sztuka-programowania.pl/

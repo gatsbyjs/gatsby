@@ -28,7 +28,7 @@ exports.onCreateNode = function onCreateNode({
 }
 
 exports.createPages = async function createPages({
-  actions: { createPage },
+  actions: { createPage, createRedirect },
   graphql,
 }) {
   const { data } = await graphql(`
@@ -86,6 +86,20 @@ exports.createPages = async function createPages({
   createPage({
     path: `/client-only-paths/static`,
     component: path.resolve(`src/templates/static-page.js`),
+  })
+
+  createRedirect({
+    fromPath: `/redirect-without-page`,
+    toPath: `/`,
+    isPermanent: true,
+    redirectInBrowser: true,
+  })
+
+  createRedirect({
+    fromPath: `/redirect`,
+    toPath: `/`,
+    isPermanent: true,
+    redirectInBrowser: true,
   })
 }
 

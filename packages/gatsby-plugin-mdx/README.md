@@ -128,6 +128,7 @@ scope, and more.
 | [`rehypePlugins`](#rehype-plugins)                                        | `[]`                                   | Specify rehype plugins                                                |
 | [`mediaTypes`](#media-types)                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                      |
 | [`shouldBlockNodeFromTransformation`](#shouldblocknodefromtransformation) | `(node) => false`                      | Disable MDX transformation for nodes where this function returns true |
+| [`timeToRead`](#time-to-read)                                             | `wordCount => wordCount / 265`         | Calculate `timeToRead` from the word count, html, and raw MDX content |
 
 #### Extensions
 
@@ -456,6 +457,27 @@ module.exports = {
 }
 ```
 
+#### Time to read
+
+Calculating the time to read a Markdown document based on the word
+count or Markdown node. This is useful for customizing the time to
+read a document based on a faster or slower words per minute reading
+rate or by custom heuristics based on the markdown node.
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        timeToRead: (wordCount, html, rawMDX) => wordCount / 42,
+      },
+    },
+  ],
+}
+```
+
 ### Components
 
 MDX and `gatsby-plugin-mdx` use components for different things like rendering
@@ -474,8 +496,10 @@ all of the MDX content.
 ```jsx
 import { MDXProvider } from "@mdx-js/react"
 
-const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />
-const MyParagraph = props => <p style={{ fontSize: "18px", lineHeight: 1.6 }} />
+const MyH1 = (props) => <h1 style={{ color: "tomato" }} {...props} />
+const MyParagraph = (props) => (
+  <p style={{ fontSize: "18px", lineHeight: 1.6 }} />
+)
 
 const components = {
   h1: MyH1,

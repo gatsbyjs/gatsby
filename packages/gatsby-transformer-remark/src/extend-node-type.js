@@ -21,18 +21,18 @@ const {
   findLastTextNode,
 } = require(`./hast-processing`)
 const codeHandler = require(`./code-handler`)
-const { timeToRead } = require(`./utils/time-to-read`)
+const { calculateTimeToRead } = require(`./utils/time-to-read`)
 
 let fileNodes
 let pluginsCacheStr = ``
 let pathPrefixCacheStr = ``
-const astCacheKey = node =>
+const astCacheKey = (node) =>
   `transformer-remark-markdown-ast-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const htmlCacheKey = node =>
+const htmlCacheKey = (node) =>
   `transformer-remark-markdown-html-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const htmlAstCacheKey = node =>
+const htmlAstCacheKey = (node) =>
   `transformer-remark-markdown-html-ast-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const headingsCacheKey = node =>
+const headingsCacheKey = (node) =>
   `transformer-remark-markdown-headings-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const tableOfContentsCacheKey = (node, appliedTocOptions) =>
   `transformer-remark-markdown-toc-${
@@ -46,7 +46,7 @@ const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
 // TODO: remove this check with next major release
-const safeGetCache = ({ getCache, cache }) => id => {
+const safeGetCache = ({ getCache, cache }) => (id) => {
   if (!getCache) {
     return cache
   }
@@ -95,7 +95,7 @@ module.exports = (
   if (type.name !== `MarkdownRemark`) {
     return {}
   }
-  pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
+  pluginsCacheStr = pluginOptions.plugins.map((p) => p.name).join(``)
   pathPrefixCacheStr = basePath || ``
 
   const getCache = safeGetCache({ cache, getCache: possibleGetCache })
@@ -112,6 +112,7 @@ module.exports = (
         heading: null,
         maxDepth: 6,
       },
+      timeToRead = null,
     } = pluginOptions
     const tocOptions = tableOfContents
     const remarkOptions = {
@@ -151,10 +152,10 @@ module.exports = (
         return await ASTPromiseMap.get(cacheKey)
       } else {
         const ASTGenerationPromise = getMarkdownAST(markdownNode)
-        ASTGenerationPromise.then(markdownAST => {
+        ASTGenerationPromise.then((markdownAST) => {
           ASTPromiseMap.delete(cacheKey)
           return cache.set(cacheKey, markdownAST)
-        }).catch(err => {
+        }).catch((err) => {
           ASTPromiseMap.delete(cacheKey)
           return err
         })
@@ -170,7 +171,7 @@ module.exports = (
         fileNodes = getNodesByType(`File`)
       }
       // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+      await Promise.each(pluginOptions.plugins, (plugin) => {
         const requiredPlugin = require(plugin.resolve)
         if (_.isFunction(requiredPlugin.mutateSource)) {
           return requiredPlugin.mutateSource(
@@ -197,7 +198,7 @@ module.exports = (
 
       if (basePath) {
         // Ensure relative links include `pathPrefix`
-        visit(markdownAST, [`link`, `definition`], node => {
+        visit(markdownAST, [`link`, `definition`], (node) => {
           if (
             node.url &&
             node.url.startsWith(`/`) &&
@@ -212,7 +213,7 @@ module.exports = (
         fileNodes = getNodesByType(`File`)
       }
       // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+      await Promise.each(pluginOptions.plugins, (plugin) => {
         const requiredPlugin = require(plugin.resolve)
         // Allow both exports = function(), and exports.default = function()
         const defaultFunction = _.isFunction(requiredPlugin)
@@ -254,7 +255,7 @@ module.exports = (
         return cachedHeadings
       } else {
         const ast = await getAST(markdownNode)
-        const headings = select(ast, `heading`).map(heading => {
+        const headings = select(ast, `heading`).map((heading) => {
           return {
             value: mdastToString(heading),
             depth: heading.depth,
@@ -281,7 +282,7 @@ module.exports = (
 
         let toc
         if (tocAst.map) {
-          const addSlugToUrl = function(node) {
+          const addSlugToUrl = function (node) {
             if (node.url) {
               if (
                 _.get(markdownNode, appliedTocOptions.pathToSlugField) ===
@@ -302,7 +303,7 @@ module.exports = (
             }
             if (node.children) {
               node.children = node.children
-                .map(node => addSlugToUrl(node))
+                .map((node) => addSlugToUrl(node))
                 .filter(Boolean)
             }
 
@@ -443,9 +444,7 @@ module.exports = (
         truncate,
         excerptSeparator,
       })
-      var excerptMarkdown = unified()
-        .use(stringify)
-        .stringify(excerptAST)
+      var excerptMarkdown = unified().use(stringify).stringify(excerptAST)
       return excerptMarkdown
     }
 
@@ -455,13 +454,13 @@ module.exports = (
       truncate,
       excerptSeparator
     ) {
-      const text = await getAST(markdownNode).then(ast => {
+      const text = await getAST(markdownNode).then((ast) => {
         let excerptNodes = []
         let isBeforeSeparator = true
         visit(
           ast,
-          node => isBeforeSeparator,
-          node => {
+          (node) => isBeforeSeparator,
+          (node) => {
             if (excerptSeparator && node.value === excerptSeparator) {
               isBeforeSeparator = false
             } else if (node.type === `text` || node.type === `inlineCode`) {
@@ -528,7 +527,7 @@ module.exports = (
       htmlAst: {
         type: `JSON`,
         resolve(markdownNode) {
-          return getHTMLAst(markdownNode).then(ast => {
+          return getHTMLAst(markdownNode).then((ast) => {
             const strippedAst = stripPosition(_.clone(ast), true)
             return hastReparseRaw(strippedAst)
           })
@@ -573,14 +572,14 @@ module.exports = (
         },
         resolve(markdownNode, { pruneLength, truncate }) {
           return getHTMLAst(markdownNode)
-            .then(fullAST =>
+            .then((fullAST) =>
               getExcerptAst(fullAST, markdownNode, {
                 pruneLength,
                 truncate,
                 excerptSeparator: pluginOptions.excerpt_separator,
               })
             )
-            .then(ast => {
+            .then((ast) => {
               const strippedAst = stripPosition(_.clone(ast), true)
               return hastReparseRaw(strippedAst)
             })
@@ -592,10 +591,10 @@ module.exports = (
           depth: `MarkdownHeadingLevels`,
         },
         resolve(markdownNode, { depth }) {
-          return getHeadings(markdownNode).then(headings => {
+          return getHeadings(markdownNode).then((headings) => {
             const level = depth && headingLevels[depth]
             if (typeof level === `number`) {
-              headings = headings.filter(heading => heading.depth === level)
+              headings = headings.filter((heading) => heading.depth === level)
             }
             return headings
           })
@@ -604,7 +603,9 @@ module.exports = (
       timeToRead: {
         type: `Int`,
         resolve(markdownNode) {
-          return getHTML(markdownNode).then(timeToRead)
+          return getHTML(markdownNode).then((html) =>
+            calculateTimeToRead(markdownNode, html, timeToRead)
+          )
         },
       },
       tableOfContents: {
@@ -635,12 +636,7 @@ module.exports = (
 
           unified()
             .use(parse)
-            .use(
-              remark2retext,
-              unified()
-                .use(english)
-                .use(count)
-            )
+            .use(remark2retext, unified().use(english).use(count))
             .use(stringify)
             .processSync(markdownNode.internal.content)
 

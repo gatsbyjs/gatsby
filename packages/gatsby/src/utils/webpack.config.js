@@ -126,7 +126,7 @@ module.exports = async (
           pathinfo: true,
           // Point sourcemap entries to original disk location (format as URL on Windows)
           publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `/`,
-          devtoolModuleFilenameTemplate: info =>
+          devtoolModuleFilenameTemplate: (info) =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
           // Avoid React cross-origin errors
           // See https://reactjs.org/docs/cross-origin-errors.html
@@ -294,7 +294,7 @@ module.exports = async (
 
     if (store.getState().themes.themes) {
       configRules = configRules.concat(
-        store.getState().themes.themes.map(theme => {
+        store.getState().themes.themes.map((theme) => {
           return {
             test: /\.jsx?$/,
             include: theme.themeDir,
@@ -401,6 +401,9 @@ module.exports = async (
           `.cache/react-lifecycles-compat.js`
         ),
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
+        "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
+          require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
+        ),
       },
       plugins: [
         // Those two folders are special and contain gatsby-generated files
@@ -484,7 +487,7 @@ module.exports = async (
 
   if (stage === `build-javascript`) {
     const componentsCount = store.getState().components.size
-    const isCssModule = module => module.type === `css/mini-extract`
+    const isCssModule = (module) => module.type === `css/mini-extract`
 
     const splitChunks = {
       chunks: `all`,
@@ -628,18 +631,18 @@ module.exports = async (
       return false
     }
 
-    const isExternal = request => {
-      if (externalList.some(item => checkItem(item, request))) {
+    const isExternal = (request) => {
+      if (externalList.some((item) => checkItem(item, request))) {
         return `umd ${require.resolve(request)}`
       }
-      if (userExternalList.some(item => checkItem(item, request))) {
+      if (userExternalList.some((item) => checkItem(item, request))) {
         return `umd ${request}`
       }
       return null
     }
 
     config.externals = [
-      function(context, request, callback) {
+      function (context, request, callback) {
         const external = isExternal(request)
         if (external !== null) {
           callback(null, external)

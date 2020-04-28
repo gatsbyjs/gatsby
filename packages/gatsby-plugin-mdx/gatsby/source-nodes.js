@@ -22,17 +22,12 @@ async function getCounts({ mdast }) {
   // convert the mdxast to back to mdast
   remove(mdast, `import`)
   remove(mdast, `export`)
-  visit(mdast, `jsx`, node => {
+  visit(mdast, `jsx`, (node) => {
     node.type = `html`
   })
 
   await remark()
-    .use(
-      remark2retext,
-      unified()
-        .use(english)
-        .use(count)
-    )
+    .use(remark2retext, unified().use(english).use(count))
     .run(mdast)
 
   function count() {
@@ -130,6 +125,29 @@ module.exports = (
       ...helpers,
     })
 
+  async function getHTML(mdxNode) {
+    if (mdxNode.html) {
+      return Promise.resolve(mdxNode.html)
+    }
+    const { body } = await processMDX({ node: mdxNode })
+    try {
+      if (!mdxHTMLLoader) {
+        mdxHTMLLoader = loader({ reporter, cache, store })
+      }
+      const html = await mdxHTMLLoader.load({ ...mdxNode, body })
+      return html
+    } catch (e) {
+      reporter.error(
+        `gatsby-plugin-mdx: Error querying the \`html\` field.
+        This field is intended for use with RSS feed generation.
+        If you're trying to use it in application-level code, try querying for \`Mdx.body\` instead.
+        Original error:
+        ${e}`
+      )
+      return undefined
+    }
+  }
+
   // New Code // Schema
   const MdxType = schema.buildObjectType({
     name: `Mdx`,
@@ -159,7 +177,7 @@ module.exports = (
           const { mdast } = await processMDX({ node: mdxNode })
 
           const excerptNodes = []
-          visit(mdast, node => {
+          visit(mdast, (node) => {
             if (node.type === `text` || node.type === `inlineCode`) {
               excerptNodes.push(node.value)
             }
@@ -180,14 +198,16 @@ module.exports = (
           // TODO: change this to operate on html instead of mdast
           const { mdast } = await processMDX({ node: mdxNode })
           let headings = []
-          visit(mdast, `heading`, heading => {
+          visit(mdast, `heading`, (heading) => {
             headings.push({
               value: toString(heading),
               depth: heading.depth,
             })
           })
           if (headingsMdx.includes(depth)) {
-            headings = headings.filter(heading => `h${heading.depth}` === depth)
+            headings = headings.filter(
+              (heading) => `h${heading.depth}` === depth
+            )
           }
           return headings
         },
@@ -195,26 +215,7 @@ module.exports = (
       html: {
         type: `String`,
         async resolve(mdxNode) {
-          if (mdxNode.html) {
-            return Promise.resolve(mdxNode.html)
-          }
-          const { body } = await processMDX({ node: mdxNode })
-          try {
-            if (!mdxHTMLLoader) {
-              mdxHTMLLoader = loader({ reporter, cache, store })
-            }
-            const html = await mdxHTMLLoader.load({ ...mdxNode, body })
-            return html
-          } catch (e) {
-            reporter.error(
-              `gatsby-plugin-mdx: Error querying the \`html\` field.
-This field is intended for use with RSS feed generation.
-If you're trying to use it in application-level code, try querying for \`Mdx.body\` instead.
-Original error:
-${e}`
-            )
-            return undefined
-          }
+          return await getHTML(mdxNode)
         },
       },
       mdxAST: {
@@ -242,15 +243,20 @@ ${e}`
       timeToRead: {
         type: `Int`,
         async resolve(mdxNode) {
-          const { mdast } = await processMDX({ node: mdxNode })
+          const html = await getHTML(mdxNode)
+          const { mdast, body } = await processMDX({ node: mdxNode })
           const { words } = await getCounts({ mdast })
-          let timeToRead = 0
+          const { timeToRead } = pluginOptions
           const avgWPM = 265
-          timeToRead = Math.round(words / avgWPM)
-          if (timeToRead === 0) {
-            timeToRead = 1
-          }
-          return timeToRead
+          const timeToReadInMinutes = Math.max(
+            1,
+            Math.round(
+              _.isFunction(timeToRead)
+                ? timeToRead(words, html, body)
+                : words / avgWPM
+            )
+          )
+          return timeToReadInMinutes
         },
       },
       wordCount: {
