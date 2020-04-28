@@ -6009,3 +6009,14 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://flotiq-starter-products.herokuapp.com/
+  repo: https://github.com/flotiq/gatsby-starter-products
+  description: A Gatsby e-commerce starter with products sourced from Flotiq.
+  tags:
+    - CMS:Headless
+    - E-commerce
+    - CMS:Other
+  features:
+    - Snipcart e-commerce starter
+    - Flotiq CMS as a product source
+    - Deploy to Heroku
