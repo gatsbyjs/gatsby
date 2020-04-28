@@ -37,7 +37,7 @@ While they initially intended to use Butter only for content management for thei
 
 “I could host static assets for my homepage and others. Let’s say there’s a feature description on our About page. Now, a content creator could just go in and change the wording whenever they want to,” Josh says. “There’s a lot of power in that, especially since we’re a relatively small company.”
 
-![car loans Canada website landing page](./car_loans_canada.png)
+![car loans Canada website landing page](./car_loans_canada_web.png)
 
 In addition, the team could address special content needs. For example, the team has a different page for every city in Ontario (more than thirty cities, at least). Using Butter, Josh created a collection, all the content for those pages, and iterates them through Gatsby to create a new page for every single collection item.
 
