@@ -1,7 +1,6 @@
 ---
-title: "Faster, Easier and Also in French: Codebrahma accelerates Serverless.com with Gatsby"
+title: "Faster, Easier and Also in French: Butter CMS is the power behind Car Loans Canada"
 date: 2020-04-28
-author: Jake Lumetta
 excerpt: "CarLoansCanada.com’s growing marketplace team wanted to make their content marketing leaner and meaner. They tuned up their performance with a new website built on Gatsby paired with supremely easy content management from headless ButterCMS."
 tags:
   - case-studies
@@ -12,7 +11,7 @@ Car Loans Canada helps connect prospective car buyers with automotive loans and 
 
 The company needed to scale its website’s performance to keep pace with this growth and success. The team already knew they wanted to build it with Gatsby. However, blog content needed to scale along with the new site, meaning that content creators must be able to easily publish or change content without any developer intervention.
 
-Because the Car Loans Canada team outsources most of its blog content at a rather large scale, it needed an efficient way to move its writers through the content creation workflow with minimal intervention from Car Loans Canada engineers. Blog management had originated in Wordpress, which had resulted also using Wordpress on the frontend in to run the blog engine. The engineering team was eager to move away from this and quickly concluded that a headless content management system (CMS) was the best and only option.
+Because the Car Loans Canada team outsources most of its blog content at a rather large scale, it needed an efficient way to move its writers through the content creation workflow with minimal intervention from Car Loans Canada engineers. Blog management had originated in Wordpress, which had resulted in also using Wordpress on the front end to simplify running the blog engine. The engineering team was eager to move away from this setup and quickly concluded that a headless content management system (CMS) was the best and only option.
 
 The prime directive was static asset management. “I needed something that would allow my writers to go in and create a blog that I could just post on my website without having to worry about how they’re going to style it or anything,”says Josh Elias, Car Loans Canada’s CTO. “Not to mention avoid having to pull developers off other tasks to help them make it happen.”
 
@@ -28,13 +27,13 @@ The decision came down to two final CMS contenders: Contentful and ButterCMS. Th
 - Clear and simple pricing meant the team knew exactly how many collections and pages they’d get, and for what price.
 - The speedy API responds quickly thanks to static querying, which allowed Car Loans Canada to take full advantage of building a very fast, highly responsive website using Gatsby.
 
-Relying solely on Butter documentation, Josh and his team were able to rebuild the entire Car Loans Canada blog in React and Gatsby in just two days. “Like I said, the documentation was such that there were no special edge cases that I needed clarification on,” says Josh. “I was able to just get going just off your guides.” Because Butter is cloud-hosted, the Car Loans Canada team doesn’t have to host any new infrastructure for their CMS. Instead, they use a number of queries while building their project at no additional cost at all.
+Relying solely on Butter documentation, Josh and his team were able to rebuild the entire Car Loans Canada blog in React and Gatsby in just two days. “Like I said, the documentation was such that there were no special edge cases that I needed clarification on,” says Josh. “I was able to just get going just off the guides.” Because Butter is cloud-hosted, the Car Loans Canada team doesn’t have to configure or host any new infrastructure for their CMS. Instead, they use a number of queries while building their project at no additional cost at all.
 
 In terms of localization, the ability to localize content in French and English versions of the site was a huge win in terms of ease of use and time saved.
 
 ## So much more than blog posts
 
-While they initially intended to use Butter only for their blog, the team at Car Loans Canada soon realized they could do much more than that.
+While they initially intended to use Butter only for content management for their blog, the team at Car Loans Canada soon realized they could do much more than that.
 
 “I could host static assets for my homepage and others. Let’s say there’s a feature description on our About page. Now, a content creator could just go in and change the wording whenever they want to,” Josh says. “There’s a lot of power in that, especially since we’re a relatively small company.”
 
@@ -45,7 +44,7 @@ In addition, the team could address special content needs. For example, the team
 > Pretty much everything that I can put in Butter, I will. Anything touched by any kind of content creator, I just put that on Butter so they can edit it and then just create a front viewport in my web stack. It’s working out very well.
 
 
-Today, content on the Canada Car Loans website loads significantly faster than it did before moving to Gatsby and ButterCMS. And it’s not just optimization: the content itself has been upgraded, including structure and visuals, to create better and richer content experiences. All of which could be done fearlessly thanks to Gatsby’s best-practice front-end development patterns like route-based code splitting, PRPL, service workers, and offline support with dynamic data integrations.
+Today, content on the Canada Car Loans website loads significantly faster than it did before moving to Gatsby and ButterCMS. And it’s not just optimization: the content itself has been upgraded, including structure and visuals, to create better and richer content experiences. All of which could be done fearlessly thanks to Gatsby’s best-practice front end development patterns like route-based code splitting, PRPL, service workers, and offline support with dynamic data integrations.
 
 So far, the new site is performing wonderfully, Josh reports. The team is seeing impressive outcomes from the blazing fast performance, including:
 
