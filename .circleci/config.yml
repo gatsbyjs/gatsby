@@ -276,6 +276,7 @@ jobs:
       - checkout
       - run:
           command: cp -r ./starters/default ./e2e-tests/gatsby-pnp
+          working_directory: ~/project
       - run:
           command: touch yarn.lock
           working_directory: ~/project/e2e-tests/gatsby-pnp
