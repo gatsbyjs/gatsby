@@ -6,7 +6,7 @@
 **/README.md                                    @gatsbyjs/learning
 
 # All blog posts must be reviewed by the content team.
-/docs/blog                                      @gatsbyjs/content
+/docs/blog/                                     @gatsbyjs/content
 
 # The website auto-deploys, so we need an extra check to avoid shenanigans.
 /www/                                           @gatsbyjs/website
