@@ -121,6 +121,10 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add animated page transition support`,
       value: `animated-page-transitions.mdx`,
     },
+    {
+      label: `Add React Helmet`,
+      value: `gatsby-plugin-react-helmet.mdx`,
+    },
     // TODO remaining recipes
   ]
 
