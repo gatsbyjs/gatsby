@@ -74,13 +74,13 @@ Gatsby by default sources pages relative from `src/pages`, like a regular Gatsby
 npm install --save gatsby-plugin-page-creator
 ```
 
-Then, tell the plugin to look in your theme's `src/pages` directory.
+Then, tell the plugin to look in your theme's `src/<custom-directory>` directory.
 
 ```js:title=gatsby-config.js
 {
   resolve: `gatsby-plugin-page-creator`,
   options: {
-    path: path.join(__dirname, `src`, `pages`),
+    path: path.join(__dirname, `src`, `<custom-directory>`),
   },
 },
 ```
