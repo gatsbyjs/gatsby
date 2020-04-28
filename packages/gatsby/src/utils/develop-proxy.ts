@@ -1,9 +1,7 @@
 import { createServer } from "http"
 import httpProxy from "http-proxy"
-import { jsx } from "theme-ui"
-import { renderToString } from "react-dom/server"
 import { getServices } from "gatsby-core-utils"
-import RestartingScreen from "../utils/RestartingScreen"
+import restartingScreen from "./restarting-screen"
 
 interface IProxyControls {
   serveRestartingScreen: () => void
@@ -49,8 +47,11 @@ export const startDevelopProxy = (input: {
       return
     }
 
-    if (shouldServeRestartingScreen) {
-      res.end(renderToString(jsx(RestartingScreen)))
+    if (
+      shouldServeRestartingScreen ||
+      req.url === `/___debug-restarting-screen`
+    ) {
+      res.end(restartingScreen)
       return
     }
 
