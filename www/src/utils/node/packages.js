@@ -7,8 +7,6 @@ const { plugins: featuredPlugins } = yaml.load(
   fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
 )
 
-const localPackages = fs.readdirSync(`../packages`)
-
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -55,7 +53,7 @@ exports.onCreateNode = ({ node, actions }) => {
     createNodeField({
       node,
       name: `official`,
-      value: localPackages.includes(node.name),
+      value: node.owner === `gatsbyjs`,
     })
   }
 }
