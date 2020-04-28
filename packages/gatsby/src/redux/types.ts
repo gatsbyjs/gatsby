@@ -2,10 +2,10 @@ import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema } from "graphql"
 import { SchemaComposer } from "graphql-compose"
+import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 
 type SystemPath = string
 type Identifier = string
-type StructuredLog = any // TODO this should come from structured log interface
 
 export interface IRedirect {
   fromPath: string
@@ -81,6 +81,14 @@ export interface IGatsbyPluginContext {
   [key: string]: (...args: any[]) => any
 }
 
+export interface IGatsbyStaticQueryComponents {
+  name: string
+  componentPath: SystemPath
+  id: Identifier
+  query: string
+  hash: string
+}
+
 type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyState {
@@ -139,14 +147,8 @@ export interface IGatsbyState {
     }
   >
   staticQueryComponents: Map<
-    number,
-    {
-      name: string
-      componentPath: SystemPath
-      id: Identifier
-      query: string
-      hash: string
-    }
+    IGatsbyStaticQueryComponents["id"],
+    IGatsbyStaticQueryComponents
   >
   // @deprecated
   jobs: {
@@ -177,24 +179,7 @@ export interface IGatsbyState {
     types: any[] // TODO
   }
   themes: any // TODO
-  logs: {
-    messages: StructuredLog[]
-    activities: {
-      [key: string]: {
-        id: Identifier
-        uuid: Identifier
-        text: string
-        type: string // TODO make enum
-        status: string // TODO make enum
-        startTime: [number, number]
-        statusText: string
-        current: undefined | any // TODO
-        total: undefined | any // TODO
-        duration: number
-      }
-    }
-    status: string // TODO make enum
-  }
+  logs: IGatsbyCLIState
   inferenceMetadata: {
     step: string // TODO make enum or union
     typeMap: {
@@ -224,6 +209,7 @@ export interface ICachedReduxState {
 
 export type ActionsUnion =
   | ICreatePageDependencyAction
+  | IDeleteCacheAction
   | IDeleteComponentDependenciesAction
   | IReplaceComponentQueryAction
   | IReplaceStaticQueryAction
@@ -237,6 +223,8 @@ export type ActionsUnion =
   | ICreateTypes
   | ICreateFieldExtension
   | IPrintTypeDefinitions
+  | IRemoveStaticQuery
+  | ISetWebpackCompilationHashAction
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
@@ -375,4 +363,23 @@ export interface ICreateResolverContext {
 export interface ICreateRedirectAction {
   type: `CREATE_REDIRECT`
   payload: IRedirect
+}
+
+export interface IDeleteCacheAction {
+  type: `DELETE_CACHE`
+}
+
+export interface IReplaceStaticQueryAction {
+  type: `REPLACE_STATIC_QUERY`
+  payload: IGatsbyStaticQueryComponents
+}
+
+export interface IRemoveStaticQuery {
+  type: `REMOVE_STATIC_QUERY`
+  payload: IGatsbyStaticQueryComponents["id"]
+}
+
+export interface ISetWebpackCompilationHashAction {
+  type: `SET_WEBPACK_COMPILATION_HASH`
+  payload: IGatsbyState["webpackCompilationHash"]
 }
