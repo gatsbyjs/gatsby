@@ -68,9 +68,7 @@ There may be other locations where you will need to update the path resolution l
 
 ## Sourcing pages
 
-If your theme provides pages for things like the blog post index and a homepage, you will need to source them.
-Gatsby will only look in the relative `src/pages` directory when `gatsby develop` is run.
-You will need to use the [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/).
+Gatsby by default sources pages relative from `src/pages`, like a regular Gatsby site does. However, if you would like to source pages from a different directory you'll have to setup `gatsby-plugin-page-creator`.
 
 ```shell
 npm install --save gatsby-plugin-page-creator
