@@ -71,4 +71,76 @@ describe(`Load plugins`, () => {
 
     expect(plugins).toMatchSnapshot()
   })
+
+  describe(`TypeScript support`, () => {
+    it(`loads gatsby-plugin-typescript if not provided`, async () => {
+      const config = {
+        plugins: [],
+      }
+
+      let plugins = await loadPlugins(config)
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(plugins).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            browserAPIs: [],
+            id: ``,
+            name: `gatsby-plugin-typescript`,
+            nodeAPIs: [
+              `resolvableExtensions`,
+              `onCreateBabelConfig`,
+              `onCreateWebpackConfig`,
+            ],
+            pluginOptions: {
+              plugins: [],
+            },
+            resolve: ``,
+            ssrAPIs: [],
+            version: `1.0.0`,
+          }),
+        ])
+      )
+    })
+
+    it(`uses the user provided plugin-typescript if provided`, async () => {
+      const config = {
+        plugins: [
+          {
+            resolve: `gatsby-plugin-typescript`,
+            options: {
+              jsxPragma: `h`,
+            },
+          },
+        ],
+      }
+
+      let plugins = await loadPlugins(config)
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(plugins).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            browserAPIs: [],
+            id: ``,
+            name: `gatsby-plugin-typescript`,
+            nodeAPIs: [
+              `resolvableExtensions`,
+              `onCreateBabelConfig`,
+              `onCreateWebpackConfig`,
+            ],
+            pluginOptions: {
+              plugins: [],
+              jsxPragma: `h`,
+            },
+            resolve: ``,
+            ssrAPIs: [],
+            version: `1.0.0`,
+          }),
+        ])
+      )
+    })
+  })
 })
