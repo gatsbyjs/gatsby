@@ -223,9 +223,11 @@ export type ActionsUnion =
   | IRemoveStaticQuery
   | IReplaceComponentQueryAction
   | IReplaceStaticQueryAction
+  | IReplaceWebpackConfigAction
   | ISetPluginStatusAction
   | ISetProgramStatusAction
   | ISetWebpackCompilationHashAction
+  | ISetWebpackConfigAction
   | IUpdatePluginsHashAction
 
 export interface ICreatePageDependencyAction {
@@ -398,4 +400,14 @@ export interface ISetPluginStatusAction {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any
   }
+}
+
+export interface IReplaceWebpackConfigAction {
+  type: `REPLACE_WEBPACK_CONFIG`
+  payload: IGatsbyState["webpack"]
+}
+
+export interface ISetWebpackConfigAction {
+  type: `SET_WEBPACK_CONFIG`
+  payload: Partial<IGatsbyState["webpack"]>
 }
