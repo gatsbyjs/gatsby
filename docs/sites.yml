@@ -10398,6 +10398,20 @@
   built_by: Amruth Pillai
   built_by_url: https://amruthpillai.com
   featured: false
+- title: Landmarks.ro
+  main_url: https://landmarks.ro/
+  url: https://landmarks.ro/
+  description: >
+    Lead generation technology for real estate developers
+  categories:
+    - Real Estate
+    - Marketing
+    - Technology
+    - Web Development
+    - Landing Page
+  built_by: Horia Miron
+  built_by_url: https://github.com/ancashoria
+  featured: false
 - title: GeneOS
   url: https://geneos.me/
   main_url: https://geneos.me/
