@@ -7,7 +7,7 @@ const NODE_MUTATION_BATCH_TIMEOUT = 1000
 
 const extractQueriesIfDirty = {
   cond: (ctx): boolean => !!ctx.filesDirty,
-  target: `#build.extractingAndRunningQueries`,
+  target: `#extractingAndRunningQueries`,
 }
 
 export const idleStates: MachineConfig<IBuildContext, any, any> = {
@@ -44,7 +44,7 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
           target: `batchingNodeMutations`,
         },
         SOURCE_FILE_CHANGED: {
-          target: `#build.extractingAndRunningQueries`,
+          target: `#extractingAndRunningQueries`,
         },
       },
     },
@@ -54,7 +54,7 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
         src: async (): Promise<void> => {},
         id: `refreshing`,
         onDone: {
-          target: `#build.initializingDataLayer`,
+          target: `#initializingDataLayer`,
           actions: assign<IBuildContext>({
             refresh: true,
           }),
@@ -108,7 +108,7 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
           // )
           // Move the contents of the batch into a batch for running
           return {
-            target: `#build.initializingDataLayer.buildingSchema`,
+            target: `#initializingDataLayer.buildingSchema`,
             nodeMutationBatch: [],
             runningBatch: context.nodeMutationBatch,
           }
@@ -119,7 +119,7 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
           // Consume the entire batch and run actions
           Promise.all(runningBatch.map(payload => callRealApi(payload, store))),
         onDone: {
-          target: `#build.initializingDataLayer.buildingSchema`,
+          target: `#initializingDataLayer.buildingSchema`,
           actions: assign<IBuildContext>({
             runningBatch: [],
           }),

@@ -1,4 +1,4 @@
-import { TransitionConfig, AnyEventObject } from "xstate"
+import { TransitionConfig, AnyEventObject, DoneInvokeEvent } from "xstate"
 import { IBuildContext } from "./develop"
 
 type BuildTransition = TransitionConfig<IBuildContext, AnyEventObject>
@@ -24,5 +24,12 @@ export const SOURCE_FILE_CHANGED: BuildTransition = {
  * want to re-run queries and schema inference
  */
 export const runMutationAndMarkDirty: BuildTransition = {
-  actions: [`markNodesDirty`, `callApi`],
+  actions: [() => console.log(`marking dirty`), `markNodesDirty`, `callApi`],
+}
+
+export const onError: TransitionConfig<IBuildContext, DoneInvokeEvent<any>> = {
+  target: `#build.waiting`,
+  actions: (_context, event): void => {
+    console.error(`Error`, event)
+  },
 }

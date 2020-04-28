@@ -1,84 +1,65 @@
-import { customizeSchema } from "../services/customize-schema"
-import { sourceNodes } from "../services/source-nodes"
-import { DoneInvokeEvent, assign, MachineConfig } from "xstate"
-import { createPages } from "../services/create-pages"
-import { buildSchema } from "../services/build-schema"
 import { IBuildContext } from "./develop"
-import { createPagesStatefully } from "../services/create-pages-statefully"
-import { runMutationAndMarkDirty } from "./shared-transition-configs"
-
-const assignMutatedNodes = assign<any, DoneInvokeEvent<any>>(
-  (context, event) => {
-    return {
-      nodesMutatedDuringQueryRun:
-        context.nodesMutatedDuringQueryRun || event.data?.nodesMutated,
-    }
-  }
-)
+import { DoneInvokeEvent, assign, MachineConfig } from "xstate"
+import { runMutationAndMarkDirty, onError } from "./shared-transition-configs"
 
 export const dataLayerStates: MachineConfig<IBuildContext, any, any> = {
   initial: `customizingSchema`,
   states: {
     customizingSchema: {
       invoke: {
-        src: customizeSchema,
+        src: `customizeSchema`,
         id: `customizing-schema`,
         onDone: {
           target: `sourcingNodes`,
         },
-        onError: {
-          target: `#build.waiting`,
-        },
+        onError,
       },
     },
     sourcingNodes: {
       invoke: {
-        src: sourceNodes,
+        src: `sourceNodes`,
         id: `sourcing-nodes`,
         onDone: {
           target: `buildingSchema`,
         },
-        onError: {
-          target: `#build.waiting`,
-        },
+        onError,
       },
     },
     buildingSchema: {
       invoke: {
         id: `building-schema`,
-        src: buildSchema,
+        src: `buildSchema`,
         onDone: {
           target: `creatingPages`,
-          actions: assign<any, DoneInvokeEvent<any>>((context, event) => {
-            const { graphqlRunner } = event.data
-            return {
-              graphqlRunner,
+          actions: assign<IBuildContext, DoneInvokeEvent<any>>(
+            (_context, event) => {
+              const { graphqlRunner } = event.data
+              return {
+                graphqlRunner,
+              }
             }
-          }),
+          ),
         },
-        onError: {
-          target: `#build.waiting`,
-        },
+        onError,
       },
     },
     creatingPages: {
       on: { ADD_NODE_MUTATION: runMutationAndMarkDirty },
       invoke: {
         id: `creating-pages`,
-        src: createPages,
+        src: `createPages`,
         onDone: [
           {
             target: `creatingPagesStatefully`,
+            actions: `assignChangedPages`,
             cond: (context): boolean => context.firstRun,
           },
           {
-            target: `#build.extractingAndRunningQueries`,
-            actions: assignMutatedNodes,
+            target: `#build.running.extractingAndRunningQueries`,
+            actions: `assignChangedPages`,
           },
         ],
-        onError: {
-          target: `#build.waiting`,
-        },
+        onError,
       },
     },
     creatingPagesStatefully: {
@@ -86,20 +67,18 @@ export const dataLayerStates: MachineConfig<IBuildContext, any, any> = {
         "": [
           {
             cond: (ctx): boolean => !!ctx.filesDirty,
-            target: `#build.extractingAndRunningQueries`,
+            target: `#extracting-queries`,
           },
         ],
         ADD_NODE_MUTATION: runMutationAndMarkDirty,
       },
       invoke: {
-        src: createPagesStatefully,
+        src: `createPagesStatefully`,
         id: `creating-pages-statefully`,
         onDone: {
-          target: `#build.extractingAndRunningQueries`,
+          target: `#build.running.extractingAndRunningQueries`,
         },
-        onError: {
-          target: `#build.waiting`,
-        },
+        onError,
       },
     },
   },

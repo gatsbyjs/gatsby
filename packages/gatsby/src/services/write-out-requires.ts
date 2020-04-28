@@ -16,6 +16,7 @@ export async function writeOutRequires({
   })
   activity.start()
   try {
+    console.log(`about to write requires`, store.getState().pages.keys())
     await requiresWriter.writeAll(store.getState())
   } catch (err) {
     reporter.panic(`Failed to write out requires`, err)

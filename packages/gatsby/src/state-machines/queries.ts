@@ -1,12 +1,7 @@
 import { MachineConfig, DoneInvokeEvent, assign } from "xstate"
 import { IBuildContext } from "./develop"
-import { extractQueries } from "../services/extract-queries"
-import { writeOutRequires } from "../services/write-out-requires"
-import { calculateDirtyQueries } from "../services/calculate-dirty-queries"
-import { runStaticQueries } from "../services/run-static-queries"
-import { runPageQueries } from "../services/run-page-queries"
-import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
-import { runMutationAndMarkDirty } from "./shared-transition-configs"
+import { runMutationAndMarkDirty, onError } from "./shared-transition-configs"
+import { log } from "xstate/lib/actions"
 
 const MAX_RECURSION = 2
 
@@ -19,10 +14,9 @@ const emitStaticQueryDataToWebsocket = (
   { websocketManager }: IBuildContext,
   { data: { results } }: DoneInvokeEvent<any>
 ): void => {
-  if (results) {
+  if (websocketManager && results) {
     results.forEach((result, id) => {
-      // eslint-disable-next-line no-unused-expressions
-      websocketManager?.emitStaticQueryData({
+      websocketManager.emitStaticQueryData({
         result,
         id,
       })
@@ -34,10 +28,10 @@ const emitPageDataToWebsocket = (
   { websocketManager }: IBuildContext,
   { data: { results } }: DoneInvokeEvent<any>
 ): void => {
-  if (results) {
+  console.log({ websocketManager, results })
+  if (websocketManager && results) {
     results.forEach((result, id) => {
-      // eslint-disable-next-line no-unused-expressions
-      websocketManager?.emitPageData({
+      websocketManager.emitPageData({
         result,
         id,
       })
@@ -49,22 +43,21 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
   initial: `extractingQueries`,
   states: {
     extractingQueries: {
+      id: `extracting-queries`,
       invoke: {
         id: `extracting-queries`,
-        src: extractQueries,
+        src: `extractQueries`,
         onDone: [
           {
             target: `writingRequires`,
           },
         ],
-        onError: {
-          target: `#build.waiting`,
-        },
+        onError,
       },
     },
     writingRequires: {
       invoke: {
-        src: writeOutRequires,
+        src: `writeOutRequires`,
         id: `writing-requires`,
         onDone: {
           target: `calculatingDirtyQueries`,
@@ -80,22 +73,22 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
       },
       invoke: {
         id: `calculating-dirty-queries`,
-        src: calculateDirtyQueries,
+        src: `calculateDirtyQueries`,
         onDone: [
           {
             target: `runningStaticQueries`,
-            actions: assign<any, DoneInvokeEvent<any>>((context, { data }) => {
-              const { queryIds } = data
-              return {
-                filesDirty: false,
-                queryIds,
+            actions: assign<IBuildContext, DoneInvokeEvent<any>>(
+              (context, { data }) => {
+                const { queryIds } = data
+                return {
+                  filesDirty: false,
+                  queryIds,
+                }
               }
-            }),
+            ),
           },
         ],
-        onError: {
-          target: `#build.waiting`,
-        },
+        onError,
       },
     },
     runningStaticQueries: {
@@ -104,15 +97,19 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
         ADD_NODE_MUTATION: runMutationAndMarkDirty,
       },
       invoke: {
-        src: runStaticQueries,
+        src: `runStaticQueries`,
         id: `running-static-queries`,
-        onDone: {
-          target: `runningPageQueries`,
-          actions: emitStaticQueryDataToWebsocket,
-        },
-        onError: {
-          target: `#build.waiting`,
-        },
+        onDone: [
+          {
+            target: `runningPageQueries`,
+            actions: emitStaticQueryDataToWebsocket,
+            cond: (context): boolean => !!context.websocketManager,
+          },
+          {
+            target: `runningPageQueries`,
+          },
+        ],
+        onError,
       },
     },
     runningPageQueries: {
@@ -121,17 +118,20 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
         ADD_NODE_MUTATION: runMutationAndMarkDirty,
       },
       invoke: {
-        src: runPageQueries,
+        src: `runPageQueries`,
         id: `running-page-queries`,
         onDone: [
           {
             target: `checkingForMutatedNodes`,
             actions: emitPageDataToWebsocket,
+            cond: (context): boolean => !!context.websocketManager,
+          },
+          {
+            target: `checkingForMutatedNodes`,
+            actions: log(() => `checking mutatted`),
           },
         ],
-        onError: {
-          target: `#build.waiting`,
-        },
+        // onError,
       },
     },
     checkingForMutatedNodes: {
@@ -141,6 +141,7 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
           {
             target: `waitingForJobs`,
             cond: (context): boolean => !context.nodesMutatedDuringQueryRun,
+            actions: log(() => `nothing mutated`),
           },
           // Nodes were mutated. Starting again.
           {
@@ -151,8 +152,9 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
                   nodesMutatedDuringQueryRun: false, // Resetting
                 }
               }),
+              log(context => `mutated. count ${context.recursionCount}`),
             ],
-            target: `#build.initializingDataLayer`,
+            target: `#initializingDataLayer`,
             cond: (ctx): boolean => ctx.recursionCount < MAX_RECURSION,
           },
           // We seem to be stuck in a loop. Bailing.
@@ -162,6 +164,7 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
                 recursionCount: 0,
                 nodesMutatedDuringQueryRun: false, // Resetting
               }),
+              log(`Errro`),
             ],
             target: `#build.waiting`,
           },
@@ -170,21 +173,15 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
     },
     waitingForJobs: {
       invoke: {
-        src: waitUntilAllJobsComplete,
+        src: `waitUntilAllJobsComplete`,
         id: `waiting-for-jobs`,
-        onDone: [
-          {
-            target: `#build.runningWebpack`,
-            cond: (ctx): boolean => ctx.firstRun,
-          },
-          {
-            target: `#build.waiting`,
-          },
-        ],
-        onError: {
-          target: `#build.waiting`,
+        onDone: {
+          target: `done`,
         },
       },
+    },
+    done: {
+      type: `final`,
     },
   },
 }
