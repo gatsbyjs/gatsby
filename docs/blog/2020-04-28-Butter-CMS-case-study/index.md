@@ -1,5 +1,5 @@
 ---
-title: "Faster, Easier and Also in French: Butter CMS is the power behind Car Loans Canada"
+title: "Faster, Easier and Also in French: CarLoansCanada.com puts ButterCMS + Gatsby under the hood"
 date: 2020-04-28
 excerpt: "CarLoansCanada.com’s growing marketplace team wanted to make their content marketing leaner and meaner. They tuned up their performance with a new website built on Gatsby paired with supremely easy content management from headless ButterCMS."
 tags:
