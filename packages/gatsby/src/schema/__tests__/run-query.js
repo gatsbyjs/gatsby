@@ -407,6 +407,8 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`does not coerce numbers against single-element arrays`, async () => {
+          if (IS_LOKI) return
+
           const needle = `8` // note: `('8' == [8]) === true`
           const [result] = await runFilter({
             singleArray: { eq: needle },
