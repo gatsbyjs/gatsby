@@ -19,6 +19,7 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const fetch = require(`node-fetch`)
 const ws = require(`ws`)
 const SelectInput = require(`ink-select-input`).default
+const semver = require(`semver`)
 
 const MAX_UI_WIDTH = 67
 
@@ -29,6 +30,13 @@ const MAX_UI_WIDTH = 67
 // process.on("exit", () => {
 // process.stdout.write(leaveAltScreenCommand)
 // })
+
+// Check for what version of React is loaded & warn if it's too low.
+if (semver.lt(React.version, `16.8.0`)) {
+  console.log(
+    `Recipes works best with newer versions of React. Please file a bug report if you see this warning.`
+  )
+}
 
 const WelcomeMessage = () => (
   <>
@@ -82,8 +90,20 @@ const RecipesList = ({ setRecipe }) => {
       value: `emotion.mdx`,
     },
     {
+      label: `Add support for MDX Pages`,
+      value: `mdx-pages.mdx`,
+    },
+    {
+      label: `Add support for MDX Pages with images`,
+      value: `mdx-images.mdx`,
+    },
+    {
       label: `Add Styled Components`,
       value: `styled-components.mdx`,
+    },
+    {
+      label: `Add Tailwind`,
+      value: `tailwindcss.mdx`,
     },
     {
       label: `Add Sass`,
@@ -100,6 +120,10 @@ const RecipesList = ({ setRecipe }) => {
     {
       label: `Add animated page transition support`,
       value: `animated-page-transitions.mdx`,
+    },
+    {
+      label: `Add React Helmet`,
+      value: `gatsby-plugin-react-helmet.mdx`,
     },
     // TODO remaining recipes
   ]
@@ -137,7 +161,7 @@ const Div = props => {
 }
 
 // Markdown ignores new lines and so do we.
-function elimiateNewLines(children) {
+function eliminateNewLines(children) {
   return React.Children.map(children, child => {
     if (!React.isValidElement(child)) {
       return child.replace(/(\r\n|\n|\r)/gm, ` `)
@@ -145,7 +169,7 @@ function elimiateNewLines(children) {
 
     if (child.props.children) {
       child = React.cloneElement(child, {
-        children: elimiateNewLines(child.props.children),
+        children: eliminateNewLines(child.props.children),
       })
     }
 
@@ -189,7 +213,7 @@ const components = {
   strong: props => <Text bold {...props} />,
   em: props => <Text italic {...props} />,
   p: props => {
-    const children = elimiateNewLines(props.children)
+    const children = eliminateNewLines(props.children)
     return (
       <Div marginBottom={1}>
         <Text>{children}</Text>
@@ -445,6 +469,10 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
                 <Text>
                   {` `}
                   <Spinner /> {p.describe}
+                  {` `}
+                  {state.context.elapsed > 0 && (
+                    <Text>({state.context.elapsed / 1000}s elapsed)</Text>
+                  )}
                 </Text>
               </Div>
             ))}
