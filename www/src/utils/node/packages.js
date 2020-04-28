@@ -49,7 +49,7 @@ exports.onCreateNode = ({ node, actions }) => {
     createNodeField({
       node,
       name: `featured`,
-      value: featuredPlugins.inclues(node.name),
+      value: featuredPlugins.includes(node.name),
     })
 
     createNodeField({

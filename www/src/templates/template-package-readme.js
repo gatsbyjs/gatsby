@@ -10,7 +10,6 @@ import { FaUsers as CommunityIcon } from "react-icons/fa"
 import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import Link from "../components/localized-link"
 import Container from "../components/container"
-import MarkdownPageFooter from "../components/markdown-page-footer"
 import FooterLinks from "../components/shared/footer-links"
 import GatsbyIcon from "../components/gatsby-monogram"
 
@@ -124,7 +123,6 @@ export default function PackageReadmeTemplate({
           css={{ position: `relative` }}
           dangerouslySetInnerHTML={{ __html: readmePage.html }}
         />
-        {isOfficial && <MarkdownPageFooter page={readmePage} packagePage />}
       </Container>
       <FooterLinks />
     </PageWithPluginSearchBar>
@@ -152,7 +150,6 @@ export const pageQuery = graphql`
           html
           excerpt
           timeToRead
-          ...MarkdownPageFooter
         }
       }
     }
