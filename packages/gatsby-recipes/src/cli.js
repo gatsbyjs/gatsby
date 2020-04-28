@@ -122,8 +122,8 @@ const RecipesList = ({ setRecipe }) => {
       value: `animated-page-transitions.mdx`,
     },
     {
-      label: `Add React Helmet`,
-      value: `gatsby-plugin-react-helmet.mdx`,
+      label: `Add plugins to make site a PWA`,
+      value: `pwa.mdx`,
     },
     // TODO remaining recipes
   ]
