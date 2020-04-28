@@ -1,14 +1,11 @@
-import { Machine, assign, DoneInvokeEvent } from "xstate"
-import { initialize } from "../services/initialize"
+import { Machine, assign, DoneInvokeEvent, Actor, AnyEventObject } from "xstate"
 import { Express } from "express"
 import { startWebpackServer } from "../services/start-webpack-server"
 import { WebsocketManager } from "../utils/websocket-manager"
 import { Store } from "redux"
 import { Compiler } from "webpack"
-import { dataLayerStates } from "./data-layer"
 import { Span } from "opentracing"
 import GraphQLRunner from "../query/graphql-runner"
-import { queryStates } from "./queries"
 import { idleStates } from "./waiting"
 import {
   ADD_NODE_MUTATION,
@@ -16,8 +13,11 @@ import {
 } from "./shared-transition-configs"
 import { IProgram } from "../commands/types"
 import { IGroupedQueryIds } from "../services/calculate-dirty-queries"
-import { machineActions } from "./actions"
+import { buildActions } from "./actions"
 import { IGatsbyState } from "../redux/types"
+import { runningStates } from "./running"
+import JestWorker from "jest-worker"
+import { buildServices } from "../services"
 
 export interface IMutationAction {
   type: string
@@ -42,6 +42,10 @@ export interface IBuildContext {
   refresh?: boolean
   webhookBody?: Record<string, unknown>
   queryIds?: IGroupedQueryIds
+  workerPool?: JestWorker
+  pagesToBuild?: string[]
+  pagesToDelete?: string[]
+  mutationListener?: Actor<any, AnyEventObject>
 }
 
 export const INITIAL_CONTEXT: IBuildContext = {
@@ -56,51 +60,30 @@ export const INITIAL_CONTEXT: IBuildContext = {
 export const developMachine = Machine<IBuildContext>(
   {
     id: `build`,
-    initial: `initializing`,
+    initial: `setup`,
     context: INITIAL_CONTEXT,
     states: {
-      initializing: {
+      setup: {
         on: {
-          ADD_NODE_MUTATION: {
-            actions: `callApi`,
-          },
-        },
-        invoke: {
-          src: initialize,
-          onDone: {
-            target: `initializingDataLayer`,
-            actions: assign<
-              IBuildContext,
-              DoneInvokeEvent<{ store: Store; bootstrapSpan: Span }>
-            >((_context, event) => {
-              const { store, bootstrapSpan } = event.data
-              return {
-                store,
-                parentSpan: bootstrapSpan,
-              }
-            }),
-          },
-          onError: {
-            target: `failed`,
+          "": {
+            actions: `spawnMutationListener`,
+            target: `running`,
           },
         },
       },
-      initializingDataLayer: {
-        on: {
-          ADD_NODE_MUTATION: {
-            actions: `callApi`,
+      running: {
+        ...runningStates,
+        onDone: [
+          {
+            target: `runningWebpack`,
+            cond: (ctx): boolean => ctx.firstRun,
           },
-        },
-        ...dataLayerStates,
+          {
+            target: `waiting`,
+            actions: (ctx): void => console.log(ctx.queryIds),
+          },
+        ],
       },
-      extractingAndRunningQueries: {
-        on: {
-          ADD_NODE_MUTATION,
-          SOURCE_FILE_CHANGED,
-        },
-        ...queryStates,
-      },
-
       runningWebpack: {
         on: {
           ADD_NODE_MUTATION,
@@ -111,12 +94,17 @@ export const developMachine = Machine<IBuildContext>(
           id: `running-webpack`,
           onDone: {
             target: `waiting`,
-            actions: assign((_context, { data }) => {
-              const { compiler, websocketManager } = data
+            actions: assign<
+              IBuildContext,
+              DoneInvokeEvent<{
+                compiler: Compiler
+                websocketManager: WebsocketManager
+                workerPool: JestWorker
+              }>
+            >((_context, { data }) => {
               return {
-                compiler,
+                ...data,
                 firstRun: false,
-                websocketManager,
               }
             }),
           },
@@ -142,32 +130,7 @@ export const developMachine = Machine<IBuildContext>(
     },
   },
   {
-    actions: machineActions,
+    actions: buildActions,
+    services: buildServices,
   }
 )
-
-// writingArtifacts: {
-//   invoke: {
-//     src: writingArtifacts,
-//     id: `writing-artifacts`,
-//     onDone: {
-//       target: `idle`,
-//     },
-//     onError: {
-//       target: `idle`,
-//     },
-//   },
-// },
-
-// batchingPageMutations: {
-//   invoke: {
-//     src: batchingPageMutations,
-//     id: `batchingPageMutations`,
-//     onDone: {
-//       target: `runningStaticQueries`,
-//     },
-//     onError: {
-//       target: `idle`,
-//     },
-//   },
-// },

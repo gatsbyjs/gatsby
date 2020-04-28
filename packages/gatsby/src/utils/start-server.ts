@@ -29,6 +29,7 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { Express } from "express"
 
 import { BuildHTMLStage, IProgram } from "../commands/types"
+import JestWorker from "jest-worker"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -37,6 +38,7 @@ interface IServer {
   listener: http.Server | https.Server
   webpackActivity: ActivityTracker
   websocketManager: WebsocketManager
+  workerPool: JestWorker
 }
 
 export async function startServer(
@@ -260,5 +262,5 @@ export async function startServer(
     socket?.to(`clients`).emit(`reload`)
   })
 
-  return { compiler, listener, webpackActivity, websocketManager }
+  return { compiler, listener, webpackActivity, websocketManager, workerPool }
 }
