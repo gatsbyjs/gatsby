@@ -3,9 +3,8 @@ publish: app
 services:
   app:
     build: 
-        type: dockerfile
-        config: ./.runme/Dockerfile
+    - type: dockerfile
+      config: ./.runme/Dockerfile
     ports:
-        container: 80
-        public: 80
-    
+    - container: 80
+        public: 80  
