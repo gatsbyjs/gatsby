@@ -280,6 +280,9 @@ jobs:
       - run:
           command: touch yarn.lock
           working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # The 10.13 image uses a very old Yarn 1.x release
+          command: npm install -g yarn
+          working_directory: ~/project/e2e-tests/gatsby-pnp
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
           working_directory: ~/project/e2e-tests/gatsby-pnp
