@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.2.3...gatsby-plugin-flow@1.3.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
 ## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.2.2...gatsby-plugin-flow@1.2.3) (2020-04-24)
 
 **Note:** Version bump only for package gatsby-plugin-flow
