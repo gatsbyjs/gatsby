@@ -87,7 +87,18 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const wsServerPort = await getRandomPort()
 
-  await createServiceLock(program.directory, `ws`, wsServerPort.toString())
+  const success = await createServiceLock(
+    program.directory,
+    `ws`,
+    wsServerPort.toString()
+  )
+
+  if (!success) {
+    report.error(
+      `It looks like a develop process for this site is already running.`
+    )
+    process.exit(1)
+  }
 
   const wsServer = http.createServer().listen(wsServerPort)
   const io = socket(wsServer)

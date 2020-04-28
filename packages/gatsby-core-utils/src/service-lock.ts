@@ -25,7 +25,7 @@ export const createServiceLock = async (
   programPath: string,
   name: string,
   content: string
-): Promise<void> => {
+): Promise<boolean> => {
   const lockfileDir = getLockfileDir(programPath)
 
   await fse.ensureDir(lockfileDir)
@@ -33,12 +33,13 @@ export const createServiceLock = async (
   try {
     await lockfile.lock(lockfileDir)
   } catch (err) {
-    // TODO: Nice helpful error message
-    throw new Error(`The develop process is already running on another port.`)
+    return false
   }
 
   // Once the directory for this site is locked, we write a file to the dir with the service metadata
   await fse.writeFile(path.join(lockfileDir, `${name}.lock`), content)
+
+  return true
 }
 
 export const getService = (
