@@ -5,3 +5,6 @@ services:
     build: 
       type: dockerfile
       config: ./.runme/Dockerfile
+    ports:
+    - container: 80
+      public: 80
