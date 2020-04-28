@@ -2,9 +2,9 @@
 title: "Incredimental Builds"
 date: 2020-04-29
 author: "Josh Comeau"
-excerpt: "A look at what incremental builds means,"
-tags: ["netlify", "serverless", "lambda", "gatsby cloud"]
-canonicalLink: https://joshwcomeau.com/gatsby/netlify-functions-and-gatsby-cloud/
+excerpt: "A deeper look at Gatsby's recent announcement, how it changes the game for content editors, and what it means for the future."
+tags: ["incremental builds", "gatsby cloud", "builds"]
+canonicalLink: https://joshwcomeau.com/gatsby/incredimental-builds/
 ---
 
 A few weeks ago, I published [A Static Future]('/gatsby/a-static-future'), a post all about how sites that build at compile-time have bucketfuls of untapped potential.
