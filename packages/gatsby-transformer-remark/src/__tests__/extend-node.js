@@ -1248,6 +1248,7 @@ describe(`Headings are generated correctly from schema`, () => {
 ## second title
 `,
     `headings {
+      id
       value
       depth
     }`,
@@ -1255,10 +1256,12 @@ describe(`Headings are generated correctly from schema`, () => {
       expect(node).toMatchSnapshot()
       expect(node.headings).toEqual([
         {
+          id: null,
           value: `first title`,
           depth: 1,
         },
         {
+          id: null,
           value: `second title`,
           depth: 2,
         },

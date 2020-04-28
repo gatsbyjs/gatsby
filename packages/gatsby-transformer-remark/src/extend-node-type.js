@@ -275,9 +275,13 @@ module.exports = (
             if (data.htmlAttributes && data.htmlAttributes.id) {
               return data.htmlAttributes.id
             }
+
+            if (data.hProperties && data.hProperties.id) {
+              return data.hProperties.id
+            }
           }
 
-          return ``
+          return null
         }
 
         const ast = await getAST(markdownNode)
