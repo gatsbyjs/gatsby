@@ -71,7 +71,9 @@ export const getService = (
   const lockfileDir = getLockfileDir(programPath)
 
   try {
-    return fs.readFile(getDataFilePath(lockfileDir, name), `utf8`)
+    return fs
+      .readFile(getDataFilePath(lockfileDir, name), `utf8`)
+      .catch(() => null)
   } catch (err) {
     return Promise.resolve(null)
   }

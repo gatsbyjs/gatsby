@@ -6,21 +6,13 @@ export async function recipesHandler(
 ): Promise<void> {
   trackCli(`RECIPE_RUN`, { name: recipe })
 
-  const graphql = await startGraphQLServer()
+  const projectRoot = process.cwd()
+  const graphql = await startGraphQLServer(projectRoot)
 
-  let started = false
-  // eslint-disable-next-line no-unused-expressions
-  graphql.process.stdout?.on(`data`, () => {
-    if (!started) {
-      const runRecipe = require(`gatsby-recipes/dist/index.js`)
-      runRecipe({
-        recipe,
-        graphqlPort: graphql.port,
-        projectRoot: process.cwd(),
-      })
-      started = true
-    }
+  const runRecipe = require(`gatsby-recipes/dist/index.js`)
+  return runRecipe({
+    recipe,
+    graphqlPort: graphql.port,
+    projectRoot,
   })
-
-  return graphql.process.then(() => {})
 }
