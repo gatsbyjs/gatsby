@@ -7,6 +7,15 @@ executors:
     parameters:
       image:
         type: string
+        # First 10.x LTS release, but old Yarn
+        default: "10.13"
+    docker:
+      - image: circleci/node:<< parameters.image >>
+  node:
+    parameters:
+      image:
+        type: string
+        # More recent Yarn binary
         default: "10.19"
     docker:
       - image: circleci/node:<< parameters.image >>
@@ -271,7 +280,7 @@ jobs:
           test_path: e2e-tests/path-prefix
 
   e2e_tests_pnp:
-    executor: node
+    executor: node_10_19
     steps:
       - <<: *attach_to_bootstrap
       - run:
