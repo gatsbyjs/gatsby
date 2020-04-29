@@ -122,15 +122,22 @@ To run a remote recipe, just paste in the path to the recipe e.g. `gatsby recipe
 
 Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
-Soon will support options.
-
 ```jsx
-<GatsbyPlugin name="gatsby-plugin-emotion" />
+<GatsbyPlugin
+  name="gatsby-source-filesystem"
+  key="src/pages"
+  options={{
+    name="src pages directory"
+    path="src/pages"
+  }}
+/>
 ```
 
 ##### props
 
 - **name** name of the plugin
+- **options** object with options to be added to the plugin declaration in `gatsby-config.js`. JavaScript code is not _yet_ supported in options e.g. `process.env.API_TOKEN`. This is being worked on. For now only simple values like strings and numbers are supported.
+- **key** string used to distinguish between multiple plugin instances
 
 #### `<GatsbyShadowFile>`
 
