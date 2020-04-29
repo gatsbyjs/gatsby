@@ -27,16 +27,6 @@ it("sets canonical url and og:url correctly", () => {
   })
 })
 
-it("sets the lang and og:locale attribute correctly", () => {
-  render(<SiteMetadata locale="es" />)
-  const content = Helmet.peek()
-  expect(content.htmlAttributes).toMatchObject({ lang: "es" })
-  expect(content.metaTags).toContainEqual({
-    property: "og:locale",
-    content: "es",
-  })
-})
-
 it("sets twitter defaults", () => {
   render(<SiteMetadata />)
   const content = Helmet.peek()

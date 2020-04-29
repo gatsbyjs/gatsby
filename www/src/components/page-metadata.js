@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import useSiteMetadata from "../hooks/use-site-metadata"
 
 export default function PageMetadata({
