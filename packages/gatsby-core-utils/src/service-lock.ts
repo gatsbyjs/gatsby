@@ -5,18 +5,15 @@
  */
 import path from "path"
 import os from "os"
-import crypto from "crypto"
 import lockfile from "proper-lockfile"
-import fse from "fs-extra"
+import fs from "fs-extra"
+import { createContentDigest } from "./create-content-digest"
 
 const globalConfigPath =
   process.env.XDG_CONFIG_HOME || path.join(os.homedir(), `.config`)
 
-const hashString = (str: string): string =>
-  crypto.createHash(`md5`).update(str).digest(`hex`)
-
 const getLockfileDir = (programPath: string): string => {
-  const hash = hashString(programPath)
+  const hash = createContentDigest(programPath)
 
   return path.join(globalConfigPath, `gatsby`, `sites`, `${hash}.lock`)
 }
@@ -28,7 +25,7 @@ export const createServiceLock = async (
 ): Promise<boolean> => {
   const lockfileDir = getLockfileDir(programPath)
 
-  await fse.ensureDir(lockfileDir)
+  await fs.ensureDir(lockfileDir)
 
   try {
     await lockfile.lock(lockfileDir)
@@ -37,7 +34,7 @@ export const createServiceLock = async (
   }
 
   // Once the directory for this site is locked, we write a file to the dir with the service metadata
-  await fse.writeFile(path.join(lockfileDir, `${name}.lock`), content)
+  await fs.writeFile(path.join(lockfileDir, `${name}.lock`), content)
 
   return true
 }
@@ -50,7 +47,7 @@ export const getService = (
   const lockfilePath = path.join(lockfileDir, `${name}.lock`)
 
   try {
-    return fse.readFile(lockfilePath, `utf8`)
+    return fs.readFile(lockfilePath, `utf8`)
   } catch (err) {
     return Promise.resolve(null)
   }
@@ -59,7 +56,7 @@ export const getService = (
 export const getServices = async (programPath: string): Promise<any> => {
   const lockfileDir = getLockfileDir(programPath)
 
-  const files = await fse.readdir(lockfileDir)
+  const files = await fs.readdir(lockfileDir)
   const services = {}
 
   await Promise.all(
