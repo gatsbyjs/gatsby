@@ -24,6 +24,7 @@ Object {
   "pageDataStats": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
+    "PLUGINS_HASH": "",
     "plugins": Object {},
   },
   "webpackCompilationHash": "",
@@ -86,6 +87,7 @@ Object {
   "pageDataStats": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
+    "PLUGINS_HASH": "",
     "plugins": Object {},
   },
   "webpackCompilationHash": "",
