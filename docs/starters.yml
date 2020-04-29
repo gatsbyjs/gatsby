@@ -6020,6 +6020,19 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://dlford.github.io/gatsby-typescript-starter-minimalist/
+  repo: https://github.com/dlford/gatsby-typescript-starter-minimalist
+  description: A minimalist Gatsby Typescript starter, because less is more
+  tags:
+    - Language:TypeScript
+    - Linting
+    - Styling:Other
+  features:
+    - Don't use `React.FC` (See `https://github.com/facebook/create-react-app/pull/8177`)
+    - Minimalist
+    - Prettier / ESLint pre-configured
+    - CSS Reset / CSS Modules
+    - Style Builder page for adjusting global styles
 - url: https://flotiq-starter-products.herokuapp.com/
   repo: https://github.com/flotiq/gatsby-starter-products
   description: A Gatsby e-commerce starter with products sourced from Flotiq.
