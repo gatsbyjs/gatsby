@@ -6020,6 +6020,22 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://gatsby-typescript-tailwind-twin-styled-component-starter.netlify.app/
+  repo: https://github.com/DevHausStudio/Gatsby-Typescript-Tailwind-Twin-Styled-Component-Starter
+  description: Barebones and lightweight starter with TypeScript, Styled-Components, TailwindCSS, Twin Macro.
+  tags:
+    - Language:TypeScript
+    - Styling:Tailwind
+    - Styling:CSS-in-JS
+    - Netlify
+  features:
+    - GatsbyJS v2
+    - Typescript
+    - Tailwindcss
+    - Style-Components
+    - CSS-in-JS
+    - Code Readability
+    - Barebones
 - url: https://dlford.github.io/gatsby-typescript-starter-minimalist/
   repo: https://github.com/dlford/gatsby-typescript-starter-minimalist
   description: A minimalist Gatsby Typescript starter, because less is more
