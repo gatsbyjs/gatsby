@@ -11,6 +11,7 @@ import {
   ExecutionResult,
 } from "graphql"
 import { debounce } from "lodash"
+import { IActivityArgs } from "gatsby-cli/lib/reporter"
 import * as nodeStore from "../db/nodes"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
@@ -18,36 +19,10 @@ import withResolverContext from "../schema/context"
 import { LocalNodeModel } from "../schema/node-model"
 import { Store } from "redux"
 import { IGatsbyState } from "../redux/types"
+import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
+import GraphQLSpanTracer from "./graphql-span-tracer"
 
 type Query = string | Source
-
-interface IGraphQLRunnerStats {
-  totalQueries: number
-  uniqueOperations: Set<string>
-  uniqueQueries: Set<string>
-  totalRunQuery: number
-  totalPluralRunQuery: number
-  totalIndexHits: number
-  totalSiftHits: number
-  totalNonSingleFilters: number
-  comparatorsUsed: Map<string, number>
-  uniqueFilterPaths: Set<string>
-  uniqueSorts: Set<string>
-}
-
-interface IGraphQLRunnerStatResults {
-  totalQueries: number
-  uniqueOperations: number
-  uniqueQueries: number
-  totalRunQuery: number
-  totalPluralRunQuery: number
-  totalIndexHits: number
-  totalSiftHits: number
-  totalNonSingleFilters: number
-  comparatorsUsed: Array<{ comparator: string; amount: number }>
-  uniqueFilterPaths: number
-  uniqueSorts: number
-}
 
 export default class GraphQLRunner {
   parseCache: Map<Query, DocumentNode>
@@ -156,7 +131,11 @@ export default class GraphQLRunner {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  query(query: Query, context: Record<string, any>): Promise<ExecutionResult> {
+  query(
+    query: Query,
+    context: Record<string, any>,
+    { parentSpan, queryName }: IActivityArgs & { queryName: string }
+  ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
     if (this.schema !== schema) {
@@ -186,28 +165,45 @@ export default class GraphQLRunner {
     const document = this.parse(query)
     const errors = this.validate(schema, document)
 
-    const result =
-      errors.length > 0
-        ? { errors }
-        : execute({
-            schema,
-            document,
-            rootValue: context,
-            contextValue: withResolverContext({
-              schema,
-              schemaComposer: schemaCustomization.composer,
-              context,
-              customContext: schemaCustomization.context,
-              nodeModel: this.nodeModel,
-              stats: this.stats,
-            }),
-            variableValues: context,
-          })
+    let tracer
+    if (parentSpan) {
+      tracer = new GraphQLSpanTracer(`GraphQL Query ${queryName}`, {
+        parentSpan,
+      })
 
-    // Queries are usually executed in batch. But after the batch is finished
-    // cache just wastes memory without much benefits.
-    // TODO: consider a better strategy for cache purging/invalidation
-    this.scheduleClearCache()
-    return Promise.resolve(result)
+      tracer.start()
+    }
+
+    try {
+      const result =
+        errors.length > 0
+          ? { errors }
+          : execute({
+              schema,
+              document,
+              rootValue: context,
+              contextValue: withResolverContext({
+                schema,
+                schemaComposer: schemaCustomization.composer,
+                context,
+                customContext: schemaCustomization.context,
+                nodeModel: this.nodeModel,
+                stats: this.stats,
+                tracer,
+              }),
+              variableValues: context,
+            })
+
+      // Queries are usually executed in batch. But after the batch is finished
+      // cache just wastes memory without much benefits.
+      // TODO: consider a better strategy for cache purging/invalidation
+      this.scheduleClearCache()
+
+      return Promise.resolve(result)
+    } finally {
+      if (tracer) {
+        tracer.end()
+      }
+    }
   }
 }

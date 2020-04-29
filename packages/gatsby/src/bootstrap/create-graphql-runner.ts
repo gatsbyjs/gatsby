@@ -16,7 +16,8 @@ type Runner = (
 
 export const createGraphQLRunner = (
   store: Store<IGatsbyState>,
-  reporter: Reporter
+  reporter: Reporter,
+  { parentSpan } = { parentSpan: null }
 ): Runner => {
   // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
   let runner = new GraphQLRunner(store)
@@ -39,43 +40,48 @@ export const createGraphQLRunner = (
   })
 
   return (query, context): ReturnType<Runner> =>
-    runner.query(query, context).then(result => {
-      if (result.errors) {
-        const structuredErrors = result.errors
-          .map(e => {
-            // Find the file where graphql was called.
-            const file = stackTrace
-              .parse(e)
-              .find(file => /createPages/.test(file.getFunctionName()))
+    runner
+      .query(query, context, {
+        queryName: `gatsby-node query`,
+        parentSpan,
+      })
+      .then(result => {
+        if (result.errors) {
+          const structuredErrors = result.errors
+            .map(e => {
+              // Find the file where graphql was called.
+              const file = stackTrace
+                .parse(e)
+                .find(file => /createPages/.test(file.getFunctionName()))
 
-            if (file) {
-              const structuredError = errorParser({
-                message: e.message,
-                location: {
-                  start: {
-                    line: file.getLineNumber(),
-                    column: file.getColumnNumber(),
+              if (file) {
+                const structuredError = errorParser({
+                  message: e.message,
+                  location: {
+                    start: {
+                      line: file.getLineNumber(),
+                      column: file.getColumnNumber(),
+                    },
                   },
-                },
-                filePath: file.getFileName(),
-              })
-              structuredError.context = {
-                ...structuredError.context,
-                fromGraphQLFunction: true,
+                  filePath: file.getFileName(),
+                })
+                structuredError.context = {
+                  ...structuredError.context,
+                  fromGraphQLFunction: true,
+                }
+                return structuredError
               }
-              return structuredError
-            }
 
-            return null
-          })
-          .filter(Boolean)
+              return null
+            })
+            .filter(Boolean)
 
-        if (structuredErrors.length) {
-          // panic on build exits the process
-          reporter.panicOnBuild(structuredErrors)
+          if (structuredErrors.length) {
+            // panic on build exits the process
+            reporter.panicOnBuild(structuredErrors)
+          }
         }
-      }
 
-      return result
-    })
+        return result
+      })
 }

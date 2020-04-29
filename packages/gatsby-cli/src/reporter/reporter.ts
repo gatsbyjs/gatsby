@@ -17,7 +17,7 @@ import { ErrorMeta, CreateLogAction } from "./types"
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
 
-interface IActivityArgs {
+export interface IActivityArgs {
   id?: string
   parentSpan?: Span
 }
