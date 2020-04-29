@@ -47,7 +47,7 @@ Using the power and flexibility of React, you can create a React component to po
 ```jsx:title=src/components/seo.js
 import React from "react"
 // highlight-start
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 // highlight-end
 
@@ -82,7 +82,7 @@ This component doesn't _do_ anything yet, but it's the foundation for a useful, 
 
 ```jsx:title=src/components/seo.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 function SEO({ description, lang, meta }) {
@@ -117,7 +117,7 @@ function SEO({ description, lang, meta }) {
         // highlight-start
         {
           name: "keywords",
-          content: data.site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(","),
         },
         // highlight-end
       ]}
@@ -151,7 +151,7 @@ In addition to SEO for actual _search_ engines you also want those pretty cards 
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types" // highlight-line
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
@@ -176,7 +176,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
   // highlight-start
   const image =
     metaImage && metaImage.src
-      ? `${data.site.siteMetadata.siteUrl}${metaImage.src}`
+      ? `${site.siteMetadata.siteUrl}${metaImage.src}`
       : null
   // highlight-end
 
@@ -194,7 +194,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
         },
         {
           name: "keywords",
-          content: data.site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(","),
         },
         {
           property: `og:title`,
@@ -269,8 +269,8 @@ SEO.propTypes = {
   // highlight-start
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,
-    height: PropTypes.string.isRequired,
-    width: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
   }),
   // highlight-end
 }
@@ -294,7 +294,7 @@ To implement this functionality, you need to do the following:
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
@@ -318,12 +318,10 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
   const metaDescription = description || site.siteMetadata.description
   const image =
     metaImage && metaImage.src
-      ? `${data.site.siteMetadata.siteUrl}${metaImage.src}`
+      ? `${site.siteMetadata.siteUrl}${metaImage.src}`
       : null
   // highlight-start
-  const canonical = pathname
-    ? `${data.site.siteMetadata.siteUrl}${pathname}`
-    : null
+  const canonical = pathname ? `${site.siteMetadata.siteUrl}${pathname}` : null
   // highlight-end
 
   return (
@@ -352,7 +350,7 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
         },
         {
           name: "keywords",
-          content: data.site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(","),
         },
         {
           property: `og:title`,
@@ -424,8 +422,8 @@ SEO.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,
-    height: PropTypes.string.isRequired,
-    width: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
   }),
   // highlight-next-line
   pathname: PropTypes.string,
@@ -511,7 +509,6 @@ class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark
     const siteTitle = this.props.data.site.siteMetadata.title
-    const { previous, next } = this.props.pageContext
     const image = post.frontmatter.image
       ? post.frontmatter.image.childImageSharp.resize
       : null // highlight-line

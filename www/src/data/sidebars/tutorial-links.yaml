@@ -130,8 +130,10 @@
           link: /tutorial/gatsby-image-tutorial/
         - title: Making a Site with User Authentication
           link: /tutorial/authentication-tutorial/
-        - title: Making an e-commerce Gatsby Site with Stripe
+        - title: Making an E-commerce Gatsby Site with Stripe
           link: /tutorial/ecommerce-tutorial/
+        - title: Building an E-commerce Site with Gatsby, DatoCMS, and Snipcart
+          link: /tutorial/e-commerce-with-datocms-and-snipcart/
         - title: Using the WordPress Source Plugin
           link: /tutorial/wordpress-source-plugin-tutorial/
         - title: Adding Images to a WordPress Site

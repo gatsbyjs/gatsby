@@ -69,8 +69,8 @@ exports.sourceNodes = async (
       }
     })
 
-    console.log(`Using Contentful Offline cache ⚠️`)
-    console.log(
+    reporter.info(`Using Contentful Offline cache ⚠️`)
+    reporter.info(
       `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
     )
 
@@ -152,10 +152,10 @@ exports.sourceNodes = async (
 
   const assets = currentSyncData.assets
 
-  console.log(`Updated entries `, currentSyncData.entries.length)
-  console.log(`Deleted entries `, currentSyncData.deletedEntries.length)
-  console.log(`Updated assets `, currentSyncData.assets.length)
-  console.log(`Deleted assets `, currentSyncData.deletedAssets.length)
+  reporter.info(`Updated entries ${currentSyncData.entries.length}`)
+  reporter.info(`Deleted entries ${currentSyncData.deletedEntries.length}`)
+  reporter.info(`Updated assets ${currentSyncData.assets.length}`)
+  reporter.info(`Deleted assets ${currentSyncData.deletedAssets.length}`)
   console.timeEnd(`Fetch Contentful data`)
 
   // Update syncToken
@@ -216,35 +216,45 @@ exports.sourceNodes = async (
       }
     })
 
-  contentTypeItems.forEach((contentTypeItem, i) => {
-    normalize.createNodesForContentType({
-      contentTypeItem,
-      contentTypeItems,
-      restrictedNodeFields,
-      conflictFieldPrefix,
-      entries: entryList[i],
-      createNode,
-      createNodeId,
-      resolvable,
-      foreignReferenceMap,
-      defaultLocale,
-      locales,
-      space,
-      useNameForId: pluginConfig.get(`useNameForId`),
-      richTextOptions: pluginConfig.get(`richText`),
-    })
-  })
+  for (let i = 0; i < contentTypeItems.length; i++) {
+    const contentTypeItem = contentTypeItems[i]
 
-  assets.forEach(assetItem => {
-    normalize.createAssetNodes({
-      assetItem,
-      createNode,
-      createNodeId,
-      defaultLocale,
-      locales,
-      space,
-    })
-  })
+    // A contentType can hold lots of entries which create nodes
+    // We wait until all nodes are created and processed until we handle the next one
+    // TODO add batching in gatsby-core
+    await Promise.all(
+      normalize.createNodesForContentType({
+        contentTypeItem,
+        contentTypeItems,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i],
+        createNode,
+        createNodeId,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        space,
+        useNameForId: pluginConfig.get(`useNameForId`),
+        richTextOptions: pluginConfig.get(`richText`),
+      })
+    )
+  }
+
+  for (let i = 0; i < assets.length; i++) {
+    // We wait for each asset to be process until handling the next one.
+    await Promise.all(
+      normalize.createAssetNodes({
+        assetItem: assets[i],
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+        space,
+      })
+    )
+  }
 
   if (pluginConfig.get(`downloadLocal`)) {
     await downloadContentfulAssets({

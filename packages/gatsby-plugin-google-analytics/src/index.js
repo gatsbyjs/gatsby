@@ -43,7 +43,7 @@ function OutboundLink(props) {
             eventLabel: eventLabel || props.href,
             eventValue,
             transport: redirect ? `beacon` : ``,
-            hitCallback: function() {
+            hitCallback: function () {
               if (redirect) {
                 document.location = props.href
               }
@@ -82,7 +82,7 @@ function trackCustomEvent({
   action,
   label,
   value,
-  nonInteraction = true,
+  nonInteraction = false,
   transport,
   hitCallback,
   callbackTimeout = 1000,

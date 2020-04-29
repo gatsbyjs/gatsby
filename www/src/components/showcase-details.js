@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
+import Link from "./localized-link"
 import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
@@ -16,6 +17,7 @@ import Screenshot from "../views/shared/screenshot"
 import FeaturedIcon from "../assets/icons/featured-sites-icons"
 import { MdArrowUpward, MdLink } from "react-icons/md"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import { filterByCategories } from "../views/showcase/filtered-showcase"
 
 const gutter = 6
 const gutterDesktop = 8
@@ -90,7 +92,7 @@ const SourceLink = ({ ...props }) => (
   </a>
 )
 
-function usePrevAndNextSite(item) {
+function usePrevAndNextSite(item, filters = []) {
   const { allSitesYaml } = useStaticQuery(graphql`
     query {
       allSitesYaml(
@@ -101,6 +103,7 @@ function usePrevAndNextSite(item) {
       ) {
         nodes {
           title
+          categories
           fields {
             slug
           }
@@ -118,7 +121,7 @@ function usePrevAndNextSite(item) {
     }
   `)
 
-  const sites = allSitesYaml.nodes
+  const sites = filterByCategories(allSitesYaml.nodes, filters)
   const currentIndex = sites.findIndex(node => node.fields.slug === item)
   const nextSite = sites[(currentIndex + 1) % sites.length]
   const previousSite =
@@ -140,8 +143,11 @@ function getExitLocation(filters = {}) {
 
 function ShowcaseModal({ children, location, isModal }) {
   if (!isModal) return children
-  const { previousSite, nextSite } = usePrevAndNextSite(location.pathname)
   const { filters } = location.state || {}
+  const { previousSite, nextSite } = usePrevAndNextSite(
+    location.pathname,
+    filters
+  )
   return (
     <Modal
       modalBackgroundPath={getExitLocation(filters)}
