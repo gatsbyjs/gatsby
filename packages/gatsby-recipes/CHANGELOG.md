@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.1...gatsby-recipes@0.1.2) (2020-04-29)
+
+### Features
+
+- **gatsby-recipes:** Add PWA recipe + improving diffing for binary files ([#23563](https://github.com/gatsbyjs/gatsby/issues/23563)) ([c36b394](https://github.com/gatsbyjs/gatsby/commit/c36b394))
+- **gatsby-recipes:** Add PWA recipe to menu ([#23574](https://github.com/gatsbyjs/gatsby/issues/23574)) ([e76e39e](https://github.com/gatsbyjs/gatsby/commit/e76e39e))
+
 ## [0.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.0...gatsby-recipes@0.1.1) (2020-04-28)
 
 ### Bug Fixes
