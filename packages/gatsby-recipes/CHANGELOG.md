@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.4...gatsby-recipes@0.1.5) (2020-04-29)
+
+### Features
+
+- **gatsby-recipes:** Add React Helmet recipe to menu ([#23594](https://github.com/gatsbyjs/gatsby/issues/23594)) ([8249526](https://github.com/gatsbyjs/gatsby/commit/8249526e2a197967f7396ca77cfe2c847effa796))
+
 ## [0.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.2...gatsby-recipes@0.1.4) (2020-04-29)
 
 **Note:** Version bump only for package gatsby-recipes
