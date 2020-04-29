@@ -5986,6 +5986,15 @@
     - Beautifully designed landing page.
     - First project in the starters list to use ant design.
     - Supports SSR and is also a PWA.
+- url: https://gatsby-antd-starter.netlify.app/
+  repo: https://github.com/alienCY/gatsby-antd-starter
+  description: Gatsby starter with ant design (antd)
+  tags:
+    - Styling:Ant Design
+    - SEO
+  features:
+    - Ant Design components
+    - A really nice header.
 - url: https://gatsby-starter-typescript.surge.sh
   repo: https://github.com/kurttomlinson/gatsby-starter-typescript
   description: A TypeScript starter with auto-generated GraphQL types, TS errors in the develop console, and gatsby-node.ts support!
