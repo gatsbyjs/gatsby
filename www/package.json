@@ -34,7 +34,7 @@
     "gatsby-plugin-layout": "^1.3.0",
     "gatsby-plugin-mailchimp": "^2.2.3",
     "gatsby-plugin-manifest": "^2.4.0",
-    "gatsby-plugin-mdx": "^1.2.0",
+    "gatsby-plugin-mdx": "1.2.1",
     "gatsby-plugin-netlify": "^2.3.0",
     "gatsby-plugin-netlify-cache": "^0.1.0",
     "gatsby-plugin-nprogress": "^2.3.0",
