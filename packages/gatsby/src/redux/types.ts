@@ -130,7 +130,7 @@ export interface IGatsbyState {
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   status: {
-    plugins: {}
+    plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
   }
   componentDataDependencies: {
@@ -208,23 +208,27 @@ export interface ICachedReduxState {
 }
 
 export type ActionsUnion =
+  | IAddThirdPartySchema
+  | ICreateFieldExtension
   | ICreatePageDependencyAction
+  | ICreateTypes
   | IDeleteCacheAction
   | IDeleteComponentDependenciesAction
-  | IReplaceComponentQueryAction
-  | IReplaceStaticQueryAction
+  | IPageQueryRunAction
+  | IPrintTypeDefinitions
   | IQueryExtractedAction
-  | IQueryExtractionGraphQLErrorAction
   | IQueryExtractedBabelSuccessAction
   | IQueryExtractionBabelErrorAction
-  | ISetProgramStatusAction
-  | IPageQueryRunAction
-  | IAddThirdPartySchema
-  | ICreateTypes
-  | ICreateFieldExtension
-  | IPrintTypeDefinitions
+  | IQueryExtractionGraphQLErrorAction
   | IRemoveStaticQuery
+  | IReplaceComponentQueryAction
+  | IReplaceStaticQueryAction
+  | IReplaceWebpackConfigAction
+  | ISetPluginStatusAction
+  | ISetProgramStatusAction
   | ISetWebpackCompilationHashAction
+  | ISetWebpackConfigAction
+  | IUpdatePluginsHashAction
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
@@ -382,4 +386,28 @@ export interface IRemoveStaticQuery {
 export interface ISetWebpackCompilationHashAction {
   type: `SET_WEBPACK_COMPILATION_HASH`
   payload: IGatsbyState["webpackCompilationHash"]
+}
+
+export interface IUpdatePluginsHashAction {
+  type: `UPDATE_PLUGINS_HASH`
+  payload: Identifier
+}
+
+export interface ISetPluginStatusAction {
+  type: `SET_PLUGIN_STATUS`
+  plugin: IGatsbyPlugin
+  payload: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any
+  }
+}
+
+export interface IReplaceWebpackConfigAction {
+  type: `REPLACE_WEBPACK_CONFIG`
+  payload: IGatsbyState["webpack"]
+}
+
+export interface ISetWebpackConfigAction {
+  type: `SET_WEBPACK_CONFIG`
+  payload: Partial<IGatsbyState["webpack"]>
 }
