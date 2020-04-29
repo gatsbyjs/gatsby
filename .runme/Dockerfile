@@ -1,6 +1,7 @@
 FROM node:12
 
 WORKDIR /app
+COPY . .
 RUN npm install -g gatsby-cli && \
     gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
 
