@@ -6069,3 +6069,24 @@
     - Snipcart e-commerce starter
     - Flotiq CMS as a product source
     - Deploy to Heroku
+- url: https://gatsby-markdown-personal-website.netlify.app/
+  repo: https://github.com/SaimirKapaj/gatsby-markdown-personal-website
+  description: Gatsby Markdown Personal Website Starter, using Styled Components, Tailwindcss and Framer Motion.
+  tags:
+    - Blog
+    - Portfolio
+    - Markdown
+    - Styling:Tailwind
+  features:
+    - Markdown
+    - Framer Motion
+    - Page Transition
+    - Styled Components
+    - Tailwind CSS
+    - Removes unused CSS with Purgecss
+    - Font Awesome Icons
+    - Responsive Design
+    - SEO
+    - React Helmet
+    - Offline Support
+    - Gatsby Image
