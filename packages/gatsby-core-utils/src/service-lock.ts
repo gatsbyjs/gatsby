@@ -2,6 +2,8 @@
  * Service lock: handles service discovery for Gatsby develop processes
  * The problem:  the develop process starts a proxy server, the actual develop process and a websocket server for communication. The two latter ones have random ports that need to be discovered. We also cannot run multiple of the same site at the same time.
  * The solution: lockfiles! We create a lockfolder in `.config/gatsby/sites/${sitePathHash} and then write a file to that lockfolder for every service with its port.
+ *
+ * NOTE(@mxstbr): This is NOT EXPORTED from the main index.ts due to this relying on Node.js-specific APIs but core-utils also being used in browser environments. See https://github.com/jprichardson/node-fs-extra/issues/743
  */
 import path from "path"
 import os from "os"

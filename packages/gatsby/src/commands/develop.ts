@@ -8,7 +8,7 @@ import getRandomPort from "get-port"
 import report from "gatsby-cli/lib/reporter"
 import socket from "socket.io"
 import fs from "fs-extra"
-import { createServiceLock } from "gatsby-core-utils"
+import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
 

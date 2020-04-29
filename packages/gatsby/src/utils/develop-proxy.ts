@@ -1,7 +1,7 @@
 import { createServer } from "http"
 import httpProxy from "http-proxy"
 import fs from "fs-extra"
-import { getServices } from "gatsby-core-utils"
+import { getServices } from "gatsby-core-utils/dist/service-lock"
 import restartingScreen from "./restarting-screen"
 
 interface IProxyControls {
