@@ -4,7 +4,7 @@ title: Creating a Source Plugin
 
 Source plugins are essentially out of the box integrations between Gatsby and various third-party systems.
 
-These systems can be CMSs like Contentful or WordPress, other cloud services like Lever and Strava, or your local filesystem -- literally anything that has an API. Currently, Gatsby has [over 400 source plugins](/plugins/?=gatsby-source).
+These systems can be CMSs like Contentful or WordPress, other cloud services like Lever and Strava, or your local filesystem -- literally anything that has an API. Currently, Gatsby has [over 500 source plugins](/plugins/?=gatsby-source).
 
 Once a source plugin brings data into Gatsby's system, it can be transformed further with **transformer plugins**. For step-by-step examples of how to create source and transformer plugins, check out the Gatsby [tutorials section](/tutorial/plugin-and-theme-tutorials/).
 

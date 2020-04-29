@@ -121,6 +121,10 @@ And then in the Gatsby config you can reference it like so:
 
 If you need the full address elsewhere in your config, you can access it via `siteAddress.href`.
 
+<CloudCallout>
+  For automatic setup of builds that are deployed straight to S3:
+</CloudCallout>
+
 ## References:
 
 - [Gatsby on AWS, the right way](https://blog.joshwalsh.me/aws-gatsby/)
