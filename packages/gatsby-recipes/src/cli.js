@@ -121,6 +121,10 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add animated page transition support`,
       value: `animated-page-transitions.mdx`,
     },
+    {
+      label: `Add plugins to make site a PWA`,
+      value: `pwa.mdx`,
+    },
     // TODO remaining recipes
   ]
 

@@ -6,8 +6,10 @@
   "author": "PvdZ <pvdz@github>",
   "dependencies": {
     "del-cli": "^3.0.0",
+    "faker": "^4.1.0",
     "gatsby": "^2.19.5",
     "gatsby-image": "^2.2.39",
+    "gatsby-plugin-benchmark-reporting": "*",
     "gatsby-plugin-feed": "^2.3.26",
     "gatsby-plugin-google-analytics": "^2.1.34",
     "gatsby-plugin-manifest": "^2.2.38",
@@ -34,10 +36,6 @@
     "typescript": "^3.8.3",
     "typography": "^0.16.19",
     "typography-theme-wordpress-2016": "^0.16.19"
-  },
-  "devDependencies": {
-    "faker": "^4.1.0",
-    "gatsby-plugin-benchmark-reporting": "*"
   },
   "keywords": [
     "gatsby"
