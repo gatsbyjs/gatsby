@@ -12,9 +12,7 @@ const pathIsCCollectionBuilder = path => {
   return js.includes(`createPagesFromData`)
 }
 
-const pathIsClientOnlyRoute = path => {
-  return /\[.*\]/.test(path)
-}
+const pathIsClientOnlyRoute = path => /\[.*\]/.test(path)
 
 exports.createPage = (filePath, pagesDirectory, actions, ignore, graphql) => {
   // Filter out special components that shouldn't be made into

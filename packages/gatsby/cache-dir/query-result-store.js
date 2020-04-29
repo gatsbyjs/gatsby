@@ -7,9 +7,7 @@ import {
   getStaticQueryData,
 } from "./socketIo"
 import PageRenderer from "./page-renderer"
-import matchPathWrapper from "./match-path-wrapper-component"
 import normalizePagePath from "./normalize-page-path"
-import { runInThisContext } from "vm"
 
 if (process.env.NODE_ENV === `production`) {
   throw new Error(

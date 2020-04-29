@@ -5,15 +5,15 @@ const { createPath } = require(`gatsby-page-utils`)
 // to
 //   `/foo/:id`
 function translateInterpolationToMatchPath(createdPath) {
-  const [, path] = createdPath.split("src/pages")
-  return path.replace("[", ":").replace("]", "").replace(/\/$/, "")
+  const [, path] = createdPath.split(`src/pages`)
+  return path.replace(`[`, `:`).replace(`]`, ``).replace(/\/$/, ``)
 }
 
 exports.createClientOnlyPage = function createClientOnlyPage(
   absolutePath,
   actions
 ) {
-  console.log("client only", absolutePath)
+  console.log(`client only`, absolutePath)
 
   // Create page object
   const createdPath = createPath(absolutePath)

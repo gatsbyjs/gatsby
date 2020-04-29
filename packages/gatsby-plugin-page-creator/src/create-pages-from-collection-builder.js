@@ -16,8 +16,8 @@ const systemPath = require(`path`)
 // to
 //   `/foo/:id`
 function translateInterpolationToMatchPath(createdPath) {
-  const [, path] = createdPath.split("src/pages")
-  return path.replace("[", ":").replace("]", "").replace(/\/$/, "")
+  const [, path] = createdPath.split(`src/pages`)
+  return path.replace(`[`, `:`).replace(`]`, ``).replace(/\/$/, ``)
 }
 
 function isCreatePagesFromData(path) {
@@ -103,7 +103,7 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
 
   // -- Get the data, and create a page for each node
   // Not sure this is enough. Seems really brittle way of getting the array out of the query
-  const { data, error } = await graphql(queryString)
+  const { data /*, error*/ } = await graphql(queryString)
 
   // console.log({ data, error, queryString })
   // TODO: Will this fail on circular dependencies???
