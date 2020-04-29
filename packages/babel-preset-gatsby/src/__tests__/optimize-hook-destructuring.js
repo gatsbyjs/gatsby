@@ -36,4 +36,16 @@ describe(`optimize-hook-destructuring`, () => {
       `"\\"use strict\\";var _react=require(\\"react\\");const{0:count,1:setCount}=(0,_react.useState)(0);"`
     )
   })
+
+  it(`should handle skipped items`, () => {
+    const input = trim`
+      import { useState } from 'react';
+      const [, setCount] = useState(0);
+    `
+
+    expect(() => babel(input)).not.toThrow()
+    expect(babel(input)).toMatchInlineSnapshot(
+      `"\\"use strict\\";var _react=require(\\"react\\");const{1:setCount}=(0,_react.useState)(0);"`
+    )
+  })
 })

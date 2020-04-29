@@ -683,6 +683,15 @@ Object {
 }
 `;
 
+exports[`Wordcount and timeToRead are generated correctly from schema correctly uses a custom value for timeToRead 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "timeToRead": 9,
+}
+`;
+
 exports[`Wordcount and timeToRead are generated correctly from schema correctly uses a default value for timeToRead 1`] = `
 Object {
   "frontmatter": Object {
