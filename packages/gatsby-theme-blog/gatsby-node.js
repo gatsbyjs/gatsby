@@ -3,7 +3,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
   createTypes(`
     type BlogThemeConfig implements Node {
-    disableThemeUiStyling: Boolean
+      disableThemeUiStyling: Boolean
     }
   `)
 }
