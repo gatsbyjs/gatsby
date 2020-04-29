@@ -5,7 +5,5 @@ RUN apk update && apk add build-base autoconf automake libtool pkgconfig nasm gi
 # Add the package.json file and build the node_modules folder
 RUN yarn global add gatsby-cli && gatsby telemetry --disable
 RUN gatsby new blog https://github.com/gatsbyjs/gatsby-starter-blog
-COPY ./*.sh .
-RUN chmod +x ./entrypoint.sh
-CMD ./entrypoint.sh
+CMD ["/bin/ash", "-c", "cd blog && gatsby develop -H 0.0.0.0 -p 80"]
 EXPOSE 80
