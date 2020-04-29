@@ -151,7 +151,7 @@ Now you can import the `<Helmet>` component to the `index.js` file and place `<h
 
 ```jsx:title=/gatsby-site/src/pages/index.js
 import React from "react"
-import Helmet from "react-helmet" // highlight-line
+import { Helmet } from "react-helmet" // highlight-line
 
 import "../styles/normalize.css"
 import "../styles/style.css"
@@ -182,7 +182,7 @@ Copy over the `<header>` element contents, changing `<a>` elements to `<Link>` c
 
 ```jsx:title=/gatsby-site/src/pages/index.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { Link } from "gatsby" // highlight-line
 
 import "../styles/normalize.css"
@@ -289,7 +289,7 @@ Like in `/src/pages/index.js` the file exports a JavaScript function that return
 
 ```jsx:title=/gatsby-site/src/components/Layout.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 export default ({ children }) => (
   <>
@@ -304,7 +304,7 @@ The common elements between the `/index.html` and `/who/index.html` files can no
 
 ```jsx:title=/gatsby-site/src/components/Layout.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { Link } from "gatsby"
 
 import "../styles/normalize.css"

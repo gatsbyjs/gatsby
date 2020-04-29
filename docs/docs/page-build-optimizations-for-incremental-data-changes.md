@@ -4,11 +4,13 @@ title: Experimental Page Build Optimizations for Incremental Data Changes
 
 Building sites with large amounts of content (10,000s nodes upwards) is relatively fast with Gatsby. However, some projects might start to experience issues when adopting CI/CD principles - continuously building and deploying. Gatsby rebuilds the complete app on each `gatsby build` which means the complete app also needs to be deployed. Doing this each time a small data change occurs unnecessarily increases demand on CPU, memory, and bandwidth.
 
-One solution to these problems might be to use [Gatsby Cloud's Build features](https://www.gatsbyjs.com/cloud/).
+[Incremental Builds](/blog/2020-04-22-announcing-incremental-builds/) provides Gatsby Cloud users with support for incremental data changes to Gatsby sites. Incremental Builds only rebuilds the data that has changed, reliably reducing build times to under 10 seconds.
 
-For projects that require self-hosted environments, where Gatsby Cloud would not be an option, deploying only the content that has changed or is new (incremental data changes, you might say) can help reduce build times, deployment times and demand on resources.
+For projects that require self-hosted environments, where Gatsby Cloud is not an option, the experimental page build optimizations for incremental data changes documented below can help reduce build times, deployment times, and demand on resources.
 
-For more info on the standard build process please see [overview of the gatsby build process](/docs/overview-of-the-gatsby-build-process/)
+For more info on the standard build process, please see the [overview of the gatsby build process](/docs/overview-of-the-gatsby-build-process/).
+
+For more info on Incremental Builds in Gatsby Cloud, please see [Incremental Builds in Gatsby Cloud](https://www.gatsbyjs.com/docs/incremental-builds/).
 
 ## How to use
 
