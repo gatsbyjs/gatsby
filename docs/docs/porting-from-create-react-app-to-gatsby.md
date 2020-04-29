@@ -290,9 +290,24 @@ function App() {
 export default App
 ```
 
-In Gatsby, if you want your providers to be global across pages you would move those providers to `gatsby-browser.js`:
+In Gatsby, if you want your providers to be global across pages you would move those providers to `gatsby-browser.js` and `gatsby-ssr.js` :
 
 ```jsx:title=gatsby/gatsby-browser.js
+import React from "react"
+
+const defaultTheme = "light"
+export const ThemeContext = React.createContext(defaultTheme)
+
+export const wrapRootElement = ({ element }) => {
+  return (
+    <ThemeContext.Provider value={defaultTheme}>
+      {element}
+    </ThemeContext.Provider>
+  )
+}
+```
+
+```jsx:title=gatsby/gatsby-ssr.js
 import React from "react"
 
 const defaultTheme = "light"

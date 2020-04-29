@@ -20,9 +20,7 @@ function maybeRedirect(pathname) {
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      const pageResources = loader.loadPageSync(pathname)
-
-      if (pageResources != null) {
+      if (!loader.isPageNotFound(pathname)) {
         console.error(
           `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
         )
@@ -171,9 +169,7 @@ class RouteAnnouncer extends React.Component {
       if (document.title) {
         pageName = document.title
       }
-      const pageHeadings = document
-        .getElementById(`gatsby-focus-wrapper`)
-        .getElementsByTagName(`h1`)
+      const pageHeadings = document.querySelectorAll(`#gatsby-focus-wrapper h1`)
       if (pageHeadings && pageHeadings.length) {
         pageName = pageHeadings[0].textContent
       }

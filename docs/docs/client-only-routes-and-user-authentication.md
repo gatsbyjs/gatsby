@@ -18,9 +18,9 @@ Gatsby converts components in the `pages` folder into static HTML files for the 
 
 ## Handling client-only routes with Gatsby
 
-Gatsby uses [@reach/router](https://reach.tech/router/) under the hood, and it is the recommended approach to create client-only routes.
+Gatsby uses [@reach/router](https://reach.tech/router/) under the hood. This means you don't need to install it separately and it is the recommended approach to create client-only routes.
 
-You first need to set up routes on a page that is built by Gatsby:
+You first need to set up routes on a page that is built by Gatsby. You can see the routes added to `src/pages/app.js` in the code example below:
 
 ```jsx:title=src/pages/app.js
 import React from "react"
@@ -49,7 +49,7 @@ const App = () => {
 export default App
 ```
 
-With routes nested under the `<Router />` from Reach Router, it will [render the component from the route that corresponds to the `location`](https://reach.tech/router/api/Router). In the case of the `/app/profile` path, the `Profile` component will be rendered, as its prefix matches the base path of `/app`, and the remaining part is identical to the child's path.
+Briefly, when a page loads, Reach Router looks at the `path` prop of each component nested under `<Router />`, and chooses _one_ to render that best matches `window.location` (you can learn more about how routing works from the [@reach/router documentation](https://reach.tech/router/api/Router). In the case of the `/app/profile` path, the `Profile` component will be rendered, as its prefix matches the base path of `/app`, and the remaining part is identical to the child's path.
 
 ### Adjusting routes to account for authenticated users
 

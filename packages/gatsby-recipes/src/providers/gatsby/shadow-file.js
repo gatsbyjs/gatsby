@@ -2,34 +2,60 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const Joi = require(`@hapi/joi`)
 
+const { slash } = require(`gatsby-core-utils`)
+
 const resourceSchema = require(`../resource-schema`)
 const getDiff = require(`../utils/get-diff`)
 const fileExists = filePath => fs.existsSync(filePath)
 
 const relativePathForShadowedFile = ({ theme, filePath }) => {
   // eslint-disable-next-line
-  const [_src, ...filePathParts] = filePath.split(path.sep)
+  const [_src, ...filePathParts] = filePath.split(`/`)
   const relativePath = path.join(`src`, theme, path.join(...filePathParts))
-  return relativePath
+  return slash(relativePath)
 }
+
+exports.relativePathForShadowedFile = relativePathForShadowedFile
+
+const createPathToThemeFile = ({ root, theme, filePath }) => {
+  // eslint-disable-next-line
+  const fullPath = path.join(root, `node_modules`, theme, filePath)
+  return slash(fullPath)
+}
+exports.createPathToThemeFile = createPathToThemeFile
+
+const splitId = id => {
+  // Remove src
+  // eslint-disable-next-line
+  const [_src, ...filePathParts] = id.split(`/`)
+  let theme
+  let filePath
+  // Check if npm package is scoped
+  if (filePathParts[0][0] === `@`) {
+    theme = path.join(filePathParts[0], filePathParts[1])
+    filePath = path.join(...filePathParts.slice(2))
+  } else {
+    theme = filePathParts[0]
+    filePath = path.join(...filePathParts.slice(1))
+  }
+  return {
+    theme: slash(theme),
+    filePath: slash(filePath),
+  }
+}
+exports.splitId = splitId
 
 const create = async ({ root }, { theme, path: filePath }) => {
   const id = relativePathForShadowedFile({ filePath, theme })
 
-  const relativePathInTheme = filePath.replace(theme + path.sep, ``)
-  const fullFilePathToShadow = path.join(
-    root,
-    `node_modules`,
-    theme,
-    relativePathInTheme
-  )
+  const fullFilePathToShadow = createPathToThemeFile({ root, theme, filePath })
 
   const contents = await fs.readFile(fullFilePathToShadow, `utf8`)
 
-  const fullPath = path.join(root, id)
+  const shadowedFilePath = path.join(root, id)
 
-  await fs.ensureFile(fullPath)
-  await fs.writeFile(fullPath, contents)
+  await fs.ensureFile(shadowedFilePath)
+  await fs.writeFile(shadowedFilePath, contents)
 
   const result = await read({ root }, id)
   return result
@@ -37,15 +63,15 @@ const create = async ({ root }, { theme, path: filePath }) => {
 
 const read = async ({ root }, id) => {
   // eslint-disable-next-line
-  const [_src, theme, ..._filePathParts] = id.split(path.sep)
+  const { theme, filePath } = splitId(id)
 
-  const fullPath = path.join(root, id)
+  const shadowedFilePath = path.join(root, id)
 
-  if (!fileExists(fullPath)) {
+  if (!fileExists(shadowedFilePath)) {
     return undefined
   }
 
-  const contents = await fs.readFile(fullPath, `utf8`)
+  const contents = await fs.readFile(shadowedFilePath, `utf8`)
 
   const resource = {
     id,
@@ -87,21 +113,13 @@ module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
   let currentResource = ``
   if (!id) {
     // eslint-disable-next-line
-    const [_src, ...filePathParts] = filePath.split(path.sep)
-    id = path.join(`src`, theme, path.join(...filePathParts))
+    id = relativePathForShadowedFile({ theme, filePath })
   }
 
   currentResource = (await read({ root }, id)) || {}
 
   // eslint-disable-next-line
-  const [_src, _theme, ...shadowPathParts] = id.split(path.sep)
-  const fullFilePathToShadow = path.join(
-    root,
-    `node_modules`,
-    theme,
-    `src`,
-    path.join(...shadowPathParts)
-  )
+  const fullFilePathToShadow = path.join(root, `node_modules`, theme, filePath)
 
   const newContents = await fs.readFile(fullFilePathToShadow, `utf8`)
   const newResource = {
