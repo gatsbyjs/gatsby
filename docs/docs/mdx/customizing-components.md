@@ -46,8 +46,8 @@ The following components can be customized with the MDXProvider:
 | `ul`            | [List](https://github.com/syntax-tree/mdast#list)                    | `-`                                               |
 | `ol`            | [Ordered list](https://github.com/syntax-tree/mdast#list)            | `1.`                                              |
 | `li`            | [List item](https://github.com/syntax-tree/mdast#listitem)           |                                                   |
-| `table`         | [Table](https://github.com/syntax-tree/mdast#table)                  | `--- \| --- \| --- \| ---`                        |
-| `tr`            | [Table row](https://github.com/syntax-tree/mdast#tablerow)           | `This \| is \| a \| table row`                    |
+| `table`         | [Table](https://github.com/syntax-tree/mdast#table)                  | `--- | --- | --- | ---`                           |
+| `tr`            | [Table row](https://github.com/syntax-tree/mdast#tablerow)           | `This | is | a | table row`                       |
 | `td`/`th`       | [Table cell](https://github.com/syntax-tree/mdast#tablecell)         |                                                   |
 | `pre`           | [Pre](https://github.com/syntax-tree/mdast#code)                     | ` ```js console.log()``` `                        |
 | `code`          | [Code](https://github.com/syntax-tree/mdast#code)                    | `` `console.log()` ``                             |
