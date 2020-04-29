@@ -11,7 +11,7 @@ tags:
 
 Back before the world changed so suddenly, our quarterly Gatsby Days was an in-person gathering: A way to assemble the Gatsby community, guest presenters, and Gatsby team for a day long conference and celebration-slash-deep-dive into all things Gatsby. Obviously we can't do things the same way right now, but that's not going to stop us!
 
-Join us for Virtual Gatsby Days, June 2nd and 3rd: Registration is now open at https://www.gatsbyjs.com/virtual-gatsby-days.
+Join us for Virtual Gatsby Days, June 2nd and 3rd: Registration is now open at https://www.gatsbyjs.com/resources/gatsby-days/.
 
 ![Gatsby logo transposed on binary background receding into distance](./virutalGatsbyDays.jpg "Gatsby logo on futuristic binary background")
 

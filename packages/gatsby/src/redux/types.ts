@@ -81,6 +81,14 @@ export interface IGatsbyPluginContext {
   [key: string]: (...args: any[]) => any
 }
 
+export interface IGatsbyStaticQueryComponents {
+  name: string
+  componentPath: SystemPath
+  id: Identifier
+  query: string
+  hash: string
+}
+
 type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyState {
@@ -122,7 +130,7 @@ export interface IGatsbyState {
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   status: {
-    plugins: {}
+    plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
   }
   componentDataDependencies: {
@@ -139,14 +147,8 @@ export interface IGatsbyState {
     }
   >
   staticQueryComponents: Map<
-    number,
-    {
-      name: string
-      componentPath: SystemPath
-      id: Identifier
-      query: string
-      hash: string
-    }
+    IGatsbyStaticQueryComponents["id"],
+    IGatsbyStaticQueryComponents
   >
   // @deprecated
   jobs: {
@@ -206,20 +208,25 @@ export interface ICachedReduxState {
 }
 
 export type ActionsUnion =
+  | IAddThirdPartySchema
+  | ICreateFieldExtension
   | ICreatePageDependencyAction
+  | ICreateTypes
+  | IDeleteCacheAction
   | IDeleteComponentDependenciesAction
-  | IReplaceComponentQueryAction
-  | IReplaceStaticQueryAction
+  | IPageQueryRunAction
+  | IPrintTypeDefinitions
   | IQueryExtractedAction
-  | IQueryExtractionGraphQLErrorAction
   | IQueryExtractedBabelSuccessAction
   | IQueryExtractionBabelErrorAction
+  | IQueryExtractionGraphQLErrorAction
+  | IRemoveStaticQuery
+  | IReplaceComponentQueryAction
+  | IReplaceStaticQueryAction
+  | ISetPluginStatusAction
   | ISetProgramStatusAction
-  | IPageQueryRunAction
-  | IAddThirdPartySchema
-  | ICreateTypes
-  | ICreateFieldExtension
-  | IPrintTypeDefinitions
+  | ISetWebpackCompilationHashAction
+  | IUpdatePluginsHashAction
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
@@ -358,4 +365,37 @@ export interface ICreateResolverContext {
 export interface ICreateRedirectAction {
   type: `CREATE_REDIRECT`
   payload: IRedirect
+}
+
+export interface IDeleteCacheAction {
+  type: `DELETE_CACHE`
+}
+
+export interface IReplaceStaticQueryAction {
+  type: `REPLACE_STATIC_QUERY`
+  payload: IGatsbyStaticQueryComponents
+}
+
+export interface IRemoveStaticQuery {
+  type: `REMOVE_STATIC_QUERY`
+  payload: IGatsbyStaticQueryComponents["id"]
+}
+
+export interface ISetWebpackCompilationHashAction {
+  type: `SET_WEBPACK_COMPILATION_HASH`
+  payload: IGatsbyState["webpackCompilationHash"]
+}
+
+export interface IUpdatePluginsHashAction {
+  type: `UPDATE_PLUGINS_HASH`
+  payload: Identifier
+}
+
+export interface ISetPluginStatusAction {
+  type: `SET_PLUGIN_STATUS`
+  plugin: IGatsbyPlugin
+  payload: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any
+  }
 }
