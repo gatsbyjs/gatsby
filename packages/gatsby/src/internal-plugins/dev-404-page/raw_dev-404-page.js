@@ -1,6 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql, Link } from "gatsby"
+import queryString from "query-string"
+
 
 class Dev404Page extends React.Component {
   static propTypes = {
@@ -11,13 +13,16 @@ class Dev404Page extends React.Component {
 
   constructor(props) {
     super(props)
-    const { data } = this.props
+    const { data, location } = this.props
     const pagePaths = data.allSitePage.nodes.map(node => node.path)
+    const urlState = queryString.parse(location.search)
+
+    const initialPagePathSearchTerms = `urlState.q ? urlState.q : `
     this.state = {
       showCustom404: false,
       initPagePaths: pagePaths,
       pagePaths: pagePaths,
-      pagePathSearchTerms: ``,
+      pagePathSearchTerms: initialPagePathSearchTerms,
     }
     this.showCustom404 = this.showCustom404.bind(this)
     this.handlePagePathSearch = this.handlePagePathSearch.bind(this)
