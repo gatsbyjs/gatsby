@@ -42,7 +42,7 @@ On the highlighted lines, the data is being supplied to the page template, where
 
 ```jsx:title=/src/templates/pokemon.js
 // highlight-next-line
-export default ({ pageContext: { pokemon } }) => (
+export default function Pokemon({ pageContext: { pokemon } }) (
   <div style={{ width: 960, margin: "4rem auto" }}>
     {/* highlight-start */}
     <h1>{pokemon.name}</h1>

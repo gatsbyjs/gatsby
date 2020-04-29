@@ -158,7 +158,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   //highlight-line
   return (
     <Layout>
@@ -256,7 +256,7 @@ import React from "react"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   const post = data.allWordpressPost.edges[0].node
   console.log(post)
   return (
@@ -340,7 +340,7 @@ import { Link, graphql } from "gatsby" //highlight-line
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <Layout>
       <SEO title="home" />

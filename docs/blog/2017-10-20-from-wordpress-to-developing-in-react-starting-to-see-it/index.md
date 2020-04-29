@@ -55,7 +55,7 @@ the folder structure, without duplication.
 ```js
 import React from "react"
 // Template for blog page
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   const post = data.markdownRemark
   return (
     <div>

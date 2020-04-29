@@ -110,7 +110,7 @@ import Layout from "../components/layout"
 // highlight-next-line
 import Img from "gatsby-image"
 
-export default () => {
+export default function Home() {
   const data = useStaticQuery(graphql`
     query {
      file(relativePath: { eq: "corgi.jpg" }) {

@@ -226,7 +226,7 @@ Since the images are stored as part of an array, they can be accessed using the 
 If your query is part of a reusable component you may want to use a Static Query hook. The code necessary to do this is almost the same as the single image use case above.
 
 ```jsx:title=src/components/header-image.js
-export default () => {
+export default function HeaderImage() {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "headers/default.jpg" }) {

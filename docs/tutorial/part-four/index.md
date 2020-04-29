@@ -109,7 +109,7 @@ import { Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
-export default ({ children }) => (
+export default function Layout({ children }) (
   <div
     css={css`
       margin: 0 auto;
@@ -146,7 +146,7 @@ export default ({ children }) => (
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => (
+export default function Home() (
   <Layout>
     <h1>Amazing Pandas Eating Things</h1>
     <div>
@@ -163,7 +163,7 @@ export default () => (
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => (
+export default function About() (
   <Layout>
     <h1>About Pandas Eating Lots</h1>
     <p>
@@ -247,7 +247,7 @@ import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
 // highlight-next-line
-export default ({ data }) => (
+export default function About({ data }) (
   <Layout>
     <h1>About {data.site.siteMetadata.title}</h1> {/* highlight-line */}
     <p>
@@ -305,7 +305,7 @@ import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 // highlight-start
-export default ({ children }) => {
+export default function Layout({ children }) {
   const data = useStaticQuery(
     graphql`
       query {

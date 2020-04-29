@@ -302,7 +302,7 @@ import Layout from "../components/layout"
 // highlight-next-line
 import SEO from "../components/seo"
 
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   const post = data.markdownRemark
   return (
     <Layout>

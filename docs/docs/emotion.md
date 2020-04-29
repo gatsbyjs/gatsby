@@ -96,7 +96,7 @@ const User = props => (
   </UserWrapper>
 )
 
-export default () => (
+export default function UsersList() (
   <Container>
     <h1 css={underline}>About Emotion</h1>
     <p>Emotion is uber cool</p>
@@ -144,7 +144,7 @@ const Wrapper = styled("div")`
   padding: 10px;
 `
 
-export default ({ children }) => (
+export default function Layout({ children }) (
   <Wrapper>
     <Global
       styles={css`
@@ -165,7 +165,9 @@ Then, update `src/pages/index.js` to use the layout:
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => <Layout>Hello world!</Layout>
+export default function Home() {
+  return <Layout>Hello world!</Layout>
+}
 ```
 
 Run `npm run build`, and you can see in `public/index.html` that the styles have been inlined globally.

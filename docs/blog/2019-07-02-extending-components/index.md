@@ -28,7 +28,7 @@ import React from "react"
 import { Avatar, MediaObject, Icon } from "gatsby-theme-blog"
 import Card from "../components/card"
 
-export default ({ name, bio, avatar, twitterUrl, githubUrl }) => (
+export default function Author({ name, bio, avatar, twitterUrl, githubUrl }) (
   <Card>
     <MediaObject>
       <Avatar {...avatar} />
@@ -65,11 +65,13 @@ import React from "react"
 import { Author } from "gatsby-theme-blog/src/components/author"
 import Card from "../components/card"
 
-export default props => (
-  <Card>
-    <Author {...props} />
-  </Card>
-)
+export default function Author(props) {
+  return (
+    <Card>
+      <Author {...props} />
+    </Card>
+  )
+}
 ```
 
 This is a quick and efficient way to customize rendering
@@ -94,7 +96,9 @@ default value.
 ```jsx:title=src/gatsby-theme-blog/components/newsletter/button.js
 import { NewsletterButton } from "gatsby-theme-blog/src/components/newsletter"
 
-export default props => <NewsletterButton {...props} variant="link" />
+export default function Button(props) {
+  return <NewsletterButton {...props} variant="link" />
+}
 ```
 
 ## Using the CSS Prop
@@ -107,16 +111,18 @@ changing any of its functionality.
 ```jsx:title=src/gatsby-theme-blog/components/newsletter/button.js
 import { NewsletterButton } from "gatsby-theme-blog/src/components/newsletter"
 
-export default props => (
-  <NewsletterButton
-    css={{
-      backgroundColor: "rebeccapurple",
-      color: "white",
-      boxShadow: "none",
-    }}
-    {...props}
-  />
-)
+export default function Button(props) {
+  return (
+    <NewsletterButton
+      css={{
+        backgroundColor: "rebeccapurple",
+        color: "white",
+        boxShadow: "none",
+      }}
+      {...props}
+    />
+  )
+}
 ```
 
 **Note:** For this approach to work `NewsletterButton` has to accept a

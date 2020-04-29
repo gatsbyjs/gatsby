@@ -24,7 +24,7 @@ using it would look like this:
 import React from "react"
 import Headroom from "react-headroom"
 
-export default () => (
+export default function Header() (
   <Headroom>
     <h1>You can put anything you'd like inside the Headroom Component</h1>
   </Headroom>
@@ -204,7 +204,7 @@ like:
 import React from "react"
 import Img from "gatsby-image"
 
-export default ({ data }) => (
+export default function Page({ data }) (
   <div>
     <h1>Hello gatsby-image</h1>
     <Img fixed={data.file.childImageSharp.fixed} />
@@ -250,7 +250,7 @@ would look like:
 import React from "react"
 import Img from "gatsby-image"
 
-export default ({ data }) => (
+export default function Image({ data }) (
   <div>
     <h1>Hello gatsby-image</h1>
     <Img fixed={data.file.childImageSharp.fixed} />

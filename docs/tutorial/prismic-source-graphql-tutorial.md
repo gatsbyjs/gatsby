@@ -115,7 +115,7 @@ export const query = graphql`
 In order to render this data, replace the `export default IndexPage` line in the original `index.js` file with the following:
 
 ```jsx:title=src/pages/index.js
-export default ({ data }) => {
+export default function Home({ data }) {
   const doc = data.prismic.allBlog_homes.edges.slice(0, 1).pop()
   const posts = data.prismic.allPosts.edges
 
@@ -160,7 +160,7 @@ const BlogPosts = ({ posts }) => {
 }
 //highlight-end
 
-export default ({ data }) => {
+export default function Home({ data }) {
   const doc = data.prismic.allBlog_homes.edges.slice(0, 1).pop()
   const posts = data.prismic.allPosts.edges
 
@@ -258,7 +258,7 @@ export const query = graphql`
   }
 `
 
-export default ({ data }) => {
+export default function Post({ data }) {
   const doc = data.prismic.allPosts.edges.slice(0, 1).pop()
   if (!doc) return null
 

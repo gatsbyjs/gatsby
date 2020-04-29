@@ -21,7 +21,7 @@ Here is an example of a very basic layout component at `src/components/layout.js
 ```jsx:title=src/components/layout.js
 import React from "react"
 
-export default ({ children }) => (
+export default function Layout({ children }) (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
     {children}
   </div>
@@ -36,7 +36,7 @@ If you want to apply a layout to a page, you will need to include the `Layout` c
 import React from "react"
 import Layout from "../components/layout" // highlight-line
 
-export default () => (
+export default function Home() (
   <Layout> {/* highlight-line */}
     <h1>I’m in a layout!</h1>
   </Layout> {/* highlight-line */}
