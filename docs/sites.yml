@@ -10366,6 +10366,26 @@
   built_by: Marzee Labs
   built_by_url: https://marzeelabs.org
   featured: false
+- title: Inventia
+  main_url: https://inventia.life/
+  url: https://inventia.life/
+  description: >
+    We have developed unique digital bioprinting technology and unleashed it in a complete platform designed to make complex 3D cell biology simple.
+  categories:
+    - Business
+    - Science
+  built_by: Jellypepper
+  built_by_url: https://jellypepper.com/
+- title: Futrli
+  main_url: https://www.futrli.com/
+  url: https://www.futrli.com/
+  description: >
+    Keep and find more cash. Grow your business. Futrli is your artificial intelligence small business accountant.
+  categories:
+    - Business
+    - Finance
+  built_by: Jellypepper
+  built_by_url: https://jellypepper.com/
 - title: Hasura
   url: https://hasura.io
   main_url: https://hasura.io
