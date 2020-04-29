@@ -416,7 +416,7 @@ exports.createNodesForContentType = ({
               entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
                 space.sys.id,
                 entryItemFieldValue.sys.id,
-                entryItemFieldValue.sys.type
+                entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type
               )
             }
             delete entryItemFields[entryItemFieldKey]

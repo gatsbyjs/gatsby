@@ -7,7 +7,8 @@ import * as Gatsby from 'gatsby';
 export default (() => {
   const query = \\"2626356014\\";
   const siteTitle = staticQueryData.data;
-  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+  return (/*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title)
+  );
 });"
 `;
 
@@ -52,7 +53,8 @@ exports[`Only runs transforms if useStaticQuery is imported from gatsby 1`] = `
 export default (() => {
   const query = \\"2626356014\\";
   const siteTitle = useStaticQuery(query);
-  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+  return (/*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title)
+  );
 });"
 `;
 
@@ -73,7 +75,8 @@ const useSiteMetadata = () => {
 
 export default (() => {
   const siteMetadata = useSiteMetadata();
-  return /*#__PURE__*/React.createElement(\\"h1\\", null, site.siteMetadata.title);
+  return (/*#__PURE__*/React.createElement(\\"h1\\", null, site.siteMetadata.title)
+  );
 });"
 `;
 
@@ -82,7 +85,8 @@ exports[`Transforms exported queries in useStaticQuery 1`] = `
 import * as React from 'react';
 export default (() => {
   const data = staticQueryData.data;
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, data.site.siteMetadata.title), /*#__PURE__*/React.createElement(\\"p\\", null, data.site.siteMetadata.description));
+  return (/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, data.site.siteMetadata.title), /*#__PURE__*/React.createElement(\\"p\\", null, data.site.siteMetadata.description))
+  );
 });
 export const query = \\"2626356014\\";"
 `;
@@ -97,7 +101,8 @@ const useSiteMetadata = () => {
 
 export default (() => {
   const siteMetadata = useSiteMetadata();
-  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteMetadata.title);
+  return (/*#__PURE__*/React.createElement(\\"h1\\", null, siteMetadata.title)
+  );
 });"
 `;
 
@@ -109,7 +114,8 @@ export default (() => {
   const {
     site
   } = staticQueryData.data;
-  return /*#__PURE__*/React.createElement(\\"h1\\", null, site.siteMetadata.title);
+  return (/*#__PURE__*/React.createElement(\\"h1\\", null, site.siteMetadata.title)
+  );
 });"
 `;
 
@@ -121,7 +127,8 @@ export default (() => {
   let {
     site
   } = staticQueryData.data;
-  return /*#__PURE__*/React.createElement(\\"h1\\", null, site.siteMetadata.title);
+  return (/*#__PURE__*/React.createElement(\\"h1\\", null, site.siteMetadata.title)
+  );
 });"
 `;
 
@@ -143,7 +150,8 @@ import * as React from 'react';
 export default (() => {
   const query = \\"2626356014\\";
   const siteTitle = staticQueryData.data;
-  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+  return (/*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title)
+  );
 });"
 `;
 
@@ -165,7 +173,8 @@ exports[`Transforms queries in useStaticQuery 1`] = `
 import * as React from 'react';
 export default (() => {
   const siteTitle = staticQueryData.data;
-  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+  return (/*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title)
+  );
 });"
 `;
 

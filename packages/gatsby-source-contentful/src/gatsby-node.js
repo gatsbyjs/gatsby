@@ -127,9 +127,9 @@ exports.sourceNodes = async (
           normalize.makeId({
             spaceId: space.sys.id,
             id: node.sys.id,
+            type: node.sys.type,
             currentLocale: locale.code,
             defaultLocale,
-            type: node.sys.type,
           })
         )
         return getNode(nodeId)
