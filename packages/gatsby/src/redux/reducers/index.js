@@ -1,6 +1,9 @@
 const reduxNodes = require(`./nodes`)
 const lokiNodes = require(`../../db/loki/nodes`).reducer
 import { redirectsReducer } from "./redirects"
+import { staticQueryComponentsReducer } from "./static-query-components"
+import { statusReducer } from "./status"
+import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 
 const backend = process.env.GATSBY_DB_NODES || `redux`
@@ -53,14 +56,14 @@ module.exports = {
   config: require(`./config`),
   pages: require(`./pages`),
   schema: require(`./schema`),
-  status: require(`./status`),
+  status: statusReducer,
   componentDataDependencies: require(`./component-data-dependencies`),
   components: require(`./components`),
-  staticQueryComponents: require(`./static-query-components`),
+  staticQueryComponents: staticQueryComponentsReducer,
   jobs: require(`./jobs`),
   jobsV2: require(`./jobsv2`),
   webpack: require(`./webpack`),
-  webpackCompilationHash: require(`./webpack-compilation-hash`),
+  webpackCompilationHash: webpackCompilationHashReducer,
   redirects: redirectsReducer,
   babelrc: require(`./babelrc`),
   schemaCustomization: require(`./schema-customization`),
