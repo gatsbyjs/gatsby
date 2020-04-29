@@ -1,4 +1,5 @@
 const { createPath, validatePath, ignorePath } = require(`gatsby-page-utils`)
+const { createClientOnlyPage } = require(`./create-client-only-page`)
 const {
   createPagesFromCollectionBuilder,
 } = require(`./create-pages-from-collection-builder`)
@@ -9,6 +10,10 @@ const pathIsCCollectionBuilder = path => {
   if (fs.existsSync(path) === false) return false
   const js = fs.readFileSync(path).toString()
   return js.includes(`createPagesFromData`)
+}
+
+const pathIsClientOnlyRoute = path => {
+  return /\[.*\]/.test(path)
 }
 
 exports.createPage = (filePath, pagesDirectory, actions, ignore, graphql) => {
@@ -27,6 +32,11 @@ exports.createPage = (filePath, pagesDirectory, actions, ignore, graphql) => {
 
   if (pathIsCCollectionBuilder(absolutePath)) {
     createPagesFromCollectionBuilder(absolutePath, actions, graphql)
+    return
+  }
+
+  if (pathIsClientOnlyRoute(absolutePath)) {
+    createClientOnlyPage(absolutePath, actions)
     return
   }
 

@@ -7,7 +7,9 @@ import {
   getStaticQueryData,
 } from "./socketIo"
 import PageRenderer from "./page-renderer"
+import matchPathWrapper from "./match-path-wrapper-component"
 import normalizePagePath from "./normalize-page-path"
+import { runInThisContext } from "vm"
 
 if (process.env.NODE_ENV === `production`) {
   throw new Error(
@@ -76,14 +78,27 @@ export class PageQueryStore extends React.Component {
     )
   }
 
+  getParams() {
+    const parts = /:[a-z]+/g.exec(this.props.path) || []
+    const params = {}
+
+    // only supports keys that are [adjfiasjf].js (which by now is translated into :asdfajsdif)
+    parts.forEach(colonPart => {
+      const [, ...part] = colonPart
+      params[part] = this.props[part]
+    })
+    return params
+  }
+
   render() {
     const data = this.state.pageQueryData[getPathFromProps(this.props)]
+    const params = this.getParams()
     // eslint-disable-next-line
     if (!data) {
       return <div />
     }
 
-    return <PageRenderer {...this.props} {...data} />
+    return <PageRenderer {...this.props} {...data} params={params} />
   }
 }
 

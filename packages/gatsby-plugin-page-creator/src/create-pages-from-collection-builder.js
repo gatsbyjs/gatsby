@@ -1,5 +1,6 @@
 // Move this to gatsby-core-utils?
 
+const { createPath } = require(`gatsby-page-utils`)
 const { babelParseToAst } = require(`gatsby/dist/utils/babel-parse-to-ast`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const { derivePath } = require(`./derive-path`)
@@ -9,6 +10,15 @@ const traverse = require(`@babel/traverse`).default
 const generate = require(`@babel/generator`).default
 const t = require(`@babel/types`)
 const systemPath = require(`path`)
+
+// Changes something like
+//   `/Users/site/src/pages/foo/[id]/`
+// to
+//   `/foo/:id`
+function translateInterpolationToMatchPath(createdPath) {
+  const [, path] = createdPath.split("src/pages")
+  return path.replace("[", ":").replace("]", "").replace(/\/$/, "")
+}
 
 function isCreatePagesFromData(path) {
   return (
@@ -98,9 +108,13 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
   // console.log({ data, error, queryString })
   // TODO: Will this fail on circular dependencies???
   eval(`(${transformer})(${JSON.stringify(data)})`).forEach(node => {
-    console.log(`path!!!`, derivePath(absolutePath, node))
+    const matchPath = translateInterpolationToMatchPath(
+      createPath(absolutePath)
+    )
+
     actions.createPage({
       path: derivePath(absolutePath, node),
+      matchPath: matchPath,
       component: tempPath,
       context: node,
     })
