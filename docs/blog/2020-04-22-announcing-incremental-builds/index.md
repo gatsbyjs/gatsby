@@ -10,7 +10,7 @@ tags:
   - wordpress
 ---
 
-Today I’m thrilled to announce the release of Incremental Builds on Gatsby Cloud. In January we announced Gatsby Builds, bringing you up to 60x faster builds for Gatsby sites compared to other solutions. Now Incremental Builds reliably brings build times on data changes to _under 10 seconds_.
+Today I’m thrilled to announce the release of Incremental Builds on Gatsby Cloud. In January we announced Gatsby Builds, bringing you up to 60x faster builds for Gatsby sites compared to other solutions. Now, when you make a data change in a CMS, the Gatsby Cloud Incremental Builds feature will rebuild only what’s necessary—giving you up to 1000x faster builds. **That is an average build time of < 10 seconds!**
 
 I’m excited about what this means for the Gatsby community and the use cases it unlocks—and even more excited for what this means for the future of the web.
 
@@ -43,7 +43,7 @@ Until now.
 
 ## Introducing Incremental Builds for Gatsby
 
-Starting today, Incremental Builds is available in public beta on [Gatsby Cloud](http://gatsbyjs.com). It’s the fastest way yet for building true JAMstack pre-rendered websites—making real-time deployments a possibility.
+Starting today, Incremental Builds is available in public beta on [Gatsby Cloud](http://gatsbyjs.com). It’s the fastest way yet for building pre-rendered websites—making real-time deployments a possibility.
 
 **Using Incremental Builds on Gatsby Cloud, we are showing build speeds of under 10 seconds for data edits.** This is oftentimes a 1000x improvement over existing build solutions, where the entire site must be re-built for even the smallest data change.
 
@@ -83,7 +83,7 @@ Now, with no extra work for developers and content authors, changes can be appli
 
 People have been asking us for incremental builds all along—it just makes sense: “When I change one thing, I only want that part rebuilt and not the whole thing, and I want it to happen immediately.” And now we can finally just be like, “Yeah, that's exactly what we're doing.”
 
-## Get stared with Incremental Builds
+## Get started with Incremental Builds
 
 Incremental Builds is now available in public beta on [Gatsby Cloud](http://gatsbyjs.com). All Gatsby Cloud users get a free 14 day trial, with full availability on all Professional, Business, and Enterprise plans. Incremental Builds works with Gatsby 2.20.4 and higher.
 

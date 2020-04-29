@@ -12,4 +12,4 @@ Object {
 
 exports[`Status actions/reducer throws an error if status isn't an object 1`] = `"You must pass an object into setPluginStatus. What was passed in was \\"test job\\""`;
 
-exports[`Status actions/reducer throws an error if the plugin name isn't set 1`] = `"Cannot read property 'name' of undefined"`;
+exports[`Status actions/reducer throws an error if the plugin name isn't set 1`] = `"You can't set plugin status without a plugin"`;
