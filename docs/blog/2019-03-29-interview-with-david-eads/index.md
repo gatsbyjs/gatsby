@@ -14,7 +14,7 @@ I recently sat down with David Eads, who recently wrote a [fascinating deep dive
 
 **Sam:** You've used Gatsby extensively to create a number of data visualization projects that are really interesting from both a technical and a journalistic perspective. Could you talk a little about what you've built with Gatsby and what you're most proud of.
 
-**David:** Everything I've made since 2018 has been in Gatsby. https://projects.propublica.org/graphics/il/stuck-kids/> is one example, <https://projects.propublica.org/chicago-tickets/> is another. I've also done embedded graphics with Gatsby, like the one seen here <https://features.propublica.org/the-bad-bet/how-illinois-bet-on-video-gambling-and-lost/
+**David:** Everything I've made since 2018 has been in Gatsby. https://projects.propublica.org/graphics/il/stuck-kids/ is one example, https://projects.propublica.org/chicago-tickets/ is another. I've also done embedded graphics with Gatsby, like the one seen here https://features.propublica.org/the-bad-bet/how-illinois-bet-on-video-gambling-and-lost/
 
 <Pullquote citation="ProPublica">
   Every day, a child is held beyond medical necessity in Illinois. They've been

@@ -180,7 +180,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
   - At the top of the file
   - Valid YAML
   - Between triple dashed lines
-  ```md
+  ```markdown
   ---
   title: My Frontmatter Title
   example_boolean: true
