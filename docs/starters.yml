@@ -5986,6 +5986,17 @@
     - Beautifully designed landing page.
     - First project in the starters list to use ant design.
     - Supports SSR and is also a PWA.
+- url: https://gatsby-starter-typescript.surge.sh
+  repo: https://github.com/kurttomlinson/gatsby-starter-typescript
+  description: A TypeScript starter with auto-generated GraphQL types, TS errors in the develop console, and gatsby-node.ts support!
+  tags:
+    - Language:TypeScript
+  features:
+    - TypeScript
+    - Auto-generated types from GraphQL queries
+    - TypeScript errors in the develop console
+    - Support for typed GraphQL queries in gatsby-node.ts
+    - Based on gatsby-starter-default
 - url: https://www.dyuzz.club/
   repo: https://github.com/Dyuzz/Gatsby-Blog-Starter-Dyuzz
   description: A Gatsby starter for creating blogs.
