@@ -90,7 +90,9 @@ export default html`
           fetch("/___services")
             .then(res => res.json())
             .then(services => {
-              const socket = io("http://localhost:" + services.ws)
+              const socket = io(
+                "http://localhost:" + services.developstatusserver
+              )
               socket.on("develop:started", () => {
                 window.location.reload()
               })

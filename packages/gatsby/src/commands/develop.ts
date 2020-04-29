@@ -1,17 +1,16 @@
 import path from "path"
 import http from "http"
+import tmp from "tmp"
 import respawn from "respawn"
 import chokidar from "chokidar"
 import resolveCwd from "resolve-cwd"
 import getRandomPort from "get-port"
 import report from "gatsby-cli/lib/reporter"
 import socket from "socket.io"
+import fs from "fs-extra"
 import { createServiceLock } from "gatsby-core-utils"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
-
-const rootFile = (filePath: string): string =>
-  path.join(process.cwd(), filePath)
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -51,8 +50,8 @@ interface IRespawnMonitor {
 }
 
 const createControllableScript = (script: string): IRespawnMonitor => {
-  const tmpFile = require(`tmp`).fileSync()
-  require(`fs`).writeFileSync(tmpFile.name, script)
+  const tmpFile = tmp.fileSync()
+  fs.writeFileSync(tmpFile.name, script)
 
   return respawn([`node`, tmpFile.name], {
     env: process.env,
@@ -85,12 +84,12 @@ module.exports = async (program: IProgram): Promise<void> => {
     programPath: program.directory,
   })
 
-  const wsServerPort = await getRandomPort()
+  const statusServerPort = await getRandomPort()
 
   const success = await createServiceLock(
     program.directory,
-    `ws`,
-    wsServerPort.toString()
+    `developstatusserver`,
+    statusServerPort.toString()
   )
 
   if (!success) {
@@ -100,8 +99,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     process.exit(1)
   }
 
-  const wsServer = http.createServer().listen(wsServerPort)
-  const io = socket(wsServer)
+  const statusServer = http.createServer().listen(statusServerPort)
+  const io = socket(statusServer)
 
   io.on(`connection`, socket => {
     socket.on(`develop:restart`, () => {
@@ -134,6 +133,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   })
   script.start()
+
+  const rootFile = (file: string): string => path.join(program.directory, file)
 
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
   let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
