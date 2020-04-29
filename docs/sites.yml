@@ -10366,6 +10366,26 @@
   built_by: Marzee Labs
   built_by_url: https://marzeelabs.org
   featured: false
+- title: Inventia
+  main_url: https://inventia.life/
+  url: https://inventia.life/
+  description: >
+    We have developed unique digital bioprinting technology and unleashed it in a complete platform designed to make complex 3D cell biology simple.
+  categories:
+    - Business
+    - Science
+  built_by: Jellypepper
+  built_by_url: https://jellypepper.com/
+- title: Futrli
+  main_url: https://www.futrli.com/
+  url: https://www.futrli.com/
+  description: >
+    Keep and find more cash. Grow your business. Futrli is your artificial intelligence small business accountant.
+  categories:
+    - Business
+    - Finance
+  built_by: Jellypepper
+  built_by_url: https://jellypepper.com/
 - title: Hasura
   url: https://hasura.io
   main_url: https://hasura.io
@@ -10445,6 +10465,15 @@
     - Healthcare
   built_by: Albert Chen
   built_by_url: https://github.com/mralbertchen
+- title: theAnubhav.com
+  main_url: https://theanubhav.com/
+  url: https://theanubhav.com/
+  categories:
+    - Web Development
+    - Blog
+    - Portfolio
+  built_by: Anubhav Srivastava
+  built_by_url: https://theanubhav.com
 - title: WatchKeeper
   url: https://www.watchkeeperintl.com
   main_url: https://www.watchkeeperintl.com
@@ -10481,5 +10510,23 @@
     - Travel
   description: >
     Rivers Casino offers the very best in casinos, hotels, restaurants, concerts, and entertainment. Visit us in Des Plaines, IL, Philadelphia, PA, Pittsburgh, PA and Schenectady, NY.
+  featured: false
   main_url: https://www.riverscasino.com
   url: https://www.riverscasino.com
+- title: Mishal Shah
+  built_by: Mishal Shah
+  built_by_url: https://mishal23.github.io
+  categories:
+    - Blog
+    - Portfolio
+    - Open Source
+    - Web Development
+  description: >
+    Hey, I'm Mishal Shah, a passionate developer with interests in Networks, 
+    Databases and Web Security. This website is my personal portfolio and blog 
+    with the Fresh theme. I love reading engineering articles, contributing to 
+    open-source and interacting with communities. Feel free to get in touch if 
+    you have an interesting project that you want to collaborate on.
+  featured: false
+  main_url: https://mishal23.github.io/
+  url: https://mishal23.github.io/
