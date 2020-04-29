@@ -22,6 +22,8 @@ plugins: [
       pedantic: true,
       // GitHub Flavored Markdown mode (default: true)
       gfm: true,
+      // Calculate timeToRead in minutes using word count, sanitized html, and raw Markdown content. (default: wordCount / 265)
+      timeToRead: (wordCount, html, rawMD) => wordCount / 42
       // Plugins configs
       plugins: [],
     },

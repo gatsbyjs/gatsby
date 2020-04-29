@@ -30,8 +30,9 @@ Like Nathan, Tiffany appreciated the familiarity of the stack: JavaScript, React
 
 ## Not just easy, but eye-catching
 
-Tiffany is now using her newly rebuilt (and eye-catching) site to network with other developers and also as part of her job search. Ultimately, she says, "The Gatsby starter kit and Contentful were the easiest and quickest way to showcase the work that I've already done—freeing up more time to focus on my current main projects.”  
-![Tiffany White professional developer portfolio](./Portfolio_site_Tiffany_White.png “Screen shot of TIffany White’s portfolio website”)
+Tiffany is now using her newly rebuilt (and eye-catching) site to network with other developers and also as part of her job search. Ultimately, she says, "The Gatsby starter kit and Contentful were the easiest and quickest way to showcase the work that I've already done—freeing up more time to focus on my current main projects.”
+
+![Tiffany White developer portfolio landing page](./Portfolio_site_Tiffany_White.png)
 
 Still enthralled with how fast Gatsby websites load, Nathan used the webinar to showcase his portfolio’s speedy performance. He ran two real-time audits on his portfolio site using a simulated fast 3G network: a [Lighthouse](https://developers.google.com/web/tools/lighthouse) audit that returned a 97 in performance, and an Applied audit that returned a 94. “These speeds are incredible,” Nathan says.
 

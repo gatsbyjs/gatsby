@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.0...gatsby-theme-notes@1.3.1) (2020-04-28)
+
+### Bug Fixes
+
+- update packages ([#23525](https://github.com/gatsbyjs/gatsby/issues/23525)) ([e65dd1e](https://github.com/gatsbyjs/gatsby/commit/e65dd1e))
+
+# [1.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.2.37...gatsby-theme-notes@1.3.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.2.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.2.36...gatsby-theme-notes@1.2.37) (2020-04-27)
+
+### Bug Fixes
+
+- **gatsby-theme-notes:** remove ogImage from query ([#23488](https://github.com/gatsbyjs/gatsby/issues/23488)) ([4e18e5a](https://github.com/gatsbyjs/gatsby/commit/4e18e5a))
+
+## [1.2.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.2.35...gatsby-theme-notes@1.2.36) (2020-04-25)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.2.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.2.34...gatsby-theme-notes@1.2.35) (2020-04-25)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.2.33...gatsby-theme-notes@1.2.34) (2020-04-25)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.2.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.2.32...gatsby-theme-notes@1.2.33) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
 ## [1.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.2.31...gatsby-theme-notes@1.2.32) (2020-04-24)
 
 **Note:** Version bump only for package gatsby-theme-notes
