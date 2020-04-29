@@ -13,7 +13,7 @@ tags: ["gatsby-inc"]
 >
 > On the flip side, a few mediocre or unmotivated people at the beginning of the startup generally spell doom before the first product is released. There is always talk of startup culture, but it is the founders and their first round of hires that define that culture."
 >
-> \-- Vinod Khosla, [Gene Pool Engineering for Startups](https://www.khoslaventures.com/gene-pool-engineering-for-entrepreneurs#section2)
+> -- Vinod Khosla, [Gene Pool Engineering for Startups](https://www.khoslaventures.com/gene-pool-engineering-for-entrepreneurs#section2)
 
 ## Introduction
 
