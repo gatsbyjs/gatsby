@@ -293,7 +293,13 @@ jobs:
           command: yarn install
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run:
-          command: yarn test
+          command: yarn add start-server-and-test@^1.11.0
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run:
+          command: yarn build
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run:
+          command: yarn start-server-and-test "yarn start > log.txt 2>&1" :9000 "! cat log.txt | grep 'ERROR #'"
           working_directory: ~/project/e2e-tests/gatsby-pnp
 
   e2e_tests_gatsby-image:
