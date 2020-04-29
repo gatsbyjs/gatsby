@@ -452,8 +452,8 @@ function addNodeToBucketWithElemMatch(
   }
 }
 
-const binarySearch = (
-  values: Array<FilterValue>,
+const binarySearchAsc = (
+  values: Array<FilterValue>, // Assume ordered asc
   needle: FilterValue
 ): [number, number] | undefined => {
   let min = 0
@@ -469,6 +469,41 @@ const binarySearch = (
       // Move pivot to middle of nodes right of current pivot
       // assert pivot > min
       min = pivot
+    } else {
+      // This means needle === value
+      // TODO: except for NaN ... and potentially certain type casting cases
+      return [pivot, pivot]
+    }
+
+    if (max - min <= 1) {
+      // End of search. Needle not found (as expected). Use pivot as index.
+      // If the needle was not found, max-min==1 and max is returned.
+      return [min, max]
+    }
+
+    pivot = Math.floor((max - min) / 2)
+  }
+
+  // Shouldn't be reachable, but just in case, fall back to Sift if so.
+  return undefined
+}
+const binarySearchDesc = (
+  values: Array<FilterValue>, // Assume ordered desc
+  needle: FilterValue
+): [number, number] | undefined => {
+  let min = 0
+  let max = values.length - 1
+  let pivot = Math.floor(values.length / 2)
+  while (min <= max) {
+    const value = values[pivot]
+    if (needle < value) {
+      // Move pivot to middle of nodes right of current pivot
+      // assert pivot < min
+      min = pivot
+    } else if (needle > value) {
+      // Move pivot to middle of nodes left of current pivot
+      // assert pivot > max
+      max = pivot
     } else {
       // This means needle === value
       // TODO: except for NaN ... and potentially certain type casting cases
@@ -548,11 +583,12 @@ export const getNodesFromCacheByValue = (
     const values = filterCache.meta.valuesAsc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
     // the two value between which targetValue sits, or first/last element.
-    const point = binarySearch(values, filterValue)
+    const point = binarySearchAsc(values, filterValue)
     if (!point) {
       return undefined
     }
     const [pivotMin, pivotMax] = point
+
     // Each pivot index must have a value and a range
     // The returned min/max index may include the lower/upper bound, so we still
     // have to do lte checks for both values.
@@ -593,11 +629,12 @@ export const getNodesFromCacheByValue = (
     const values = filterCache.meta.valuesDesc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
     // the two value between which targetValue sits, or first/last element.
-    const point = binarySearch(values, filterValue)
+    const point = binarySearchDesc(values, filterValue)
     if (!point) {
       return undefined
     }
     const [pivotMin, pivotMax] = point
+
     // Each pivot index must have a value and a range
     // The returned min/max index may include the lower/upper bound, so we still
     // have to do gte checks for both values.
