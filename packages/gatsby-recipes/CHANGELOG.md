@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.5...gatsby-recipes@0.1.6) (2020-04-29)
+
+### Features
+
+- **gatsby-recipes:** Create default gatsby-config.js when installing a plugin if one doesn't exist ([#23602](https://github.com/gatsbyjs/gatsby/issues/23602)) ([293e171](https://github.com/gatsbyjs/gatsby/commit/293e171))
+- **gatsby-recipes:** document option support for GatsbyPlugin ([#23599](https://github.com/gatsbyjs/gatsby/issues/23599)) ([c0c8875](https://github.com/gatsbyjs/gatsby/commit/c0c8875))
+
+## [0.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.4...gatsby-recipes@0.1.5) (2020-04-29)
+
+### Features
+
+- **gatsby-recipes:** Add React Helmet recipe to menu ([#23594](https://github.com/gatsbyjs/gatsby/issues/23594)) ([8249526](https://github.com/gatsbyjs/gatsby/commit/8249526e2a197967f7396ca77cfe2c847effa796))
+
+## [0.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.2...gatsby-recipes@0.1.4) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.1...gatsby-recipes@0.1.2) (2020-04-29)
+
+### Features
+
+- **gatsby-recipes:** Add PWA recipe + improving diffing for binary files ([#23563](https://github.com/gatsbyjs/gatsby/issues/23563)) ([c36b394](https://github.com/gatsbyjs/gatsby/commit/c36b394))
+- **gatsby-recipes:** Add PWA recipe to menu ([#23574](https://github.com/gatsbyjs/gatsby/issues/23574)) ([e76e39e](https://github.com/gatsbyjs/gatsby/commit/e76e39e))
+
+## [0.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.0...gatsby-recipes@0.1.1) (2020-04-28)
+
+### Bug Fixes
+
+- update packages ([#23525](https://github.com/gatsbyjs/gatsby/issues/23525)) ([e65dd1e](https://github.com/gatsbyjs/gatsby/commit/e65dd1e))
+- **gatsby-recipes:** remove gatsby-transformer-remark package from mdx-images recipe ([#23511](https://github.com/gatsbyjs/gatsby/issues/23511)) ([f261d6e](https://github.com/gatsbyjs/gatsby/commit/f261d6e))
+
+### Features
+
+- **gatsby-recipes:** Add Gatsby react helmet recipe ([#23495](https://github.com/gatsbyjs/gatsby/issues/23495)) ([9e72691](https://github.com/gatsbyjs/gatsby/commit/9e72691))
+
 # [0.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.0.19...gatsby-recipes@0.1.0) (2020-04-27)
 
 **Note:** Version bump only for package gatsby-recipes
