@@ -527,6 +527,7 @@ module.exports = async (
           },
           priority: 30,
           minChunks: 1,
+          reuseExistingChunk: true,
         },
         commons: {
           name: `commons`,
