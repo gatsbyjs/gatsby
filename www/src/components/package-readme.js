@@ -3,6 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
 
+import MarkdownPageFooter from "./markdown-page-footer"
 import PageMetadata from "./page-metadata"
 import Link from "./localized-link"
 import Container from "./container"
