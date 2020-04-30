@@ -44,7 +44,7 @@ import Header from "my-theme/src/components/header"
 export default props => <Header {...props} myProp={true} />
 ```
 
-# What is different?
+## What is different?
 
 The best API is no API, so we're getting rid of the `__experimentalThemes` key in `gatsby-config.js` and enabling any plugin to participate in composition or shadowing. Themes are now "part of how Gatsby works" instead of being a separate API. It looks like this:
 
@@ -61,7 +61,7 @@ module.exports = {
 
 note: `__experimentalThemes` is deprecated and we didn't remove it yet to allow time to migrate. Importantly there can be no `__experimentalThemes` usage if you want to use the new stable APIs in plugins. Migration is as easy as moving the theme declarations from `__experimentalThemes` to `plugins`.
 
-# What else is there?
+## What else is there?
 
 Over the course of the experimental life of themes we were often asked what themes are best to use. Until now we didn't have any officially supported themes to recommend. That changes today with the initial launch of two official themes: `gatsby-theme-blog` and `gatsby-theme-notes`.
 
@@ -69,7 +69,7 @@ The official themes are built with an opinionated approach that we've abstracted
 
 [Read more](/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui/) about how to take advantage of the official themes and Theme UI.
 
-# What's next?
+## What's next?
 
 In the future we'll work to make these features more accessible through tooling. Shadowing in particular is one area in which we are already experimenting with Gatsby CLI and GUI additions to display and eject shadowable components. While today you will have to rely on a theme's documentation, this additional tooling will make it easier to work with unfamiliar themes in the future.
 

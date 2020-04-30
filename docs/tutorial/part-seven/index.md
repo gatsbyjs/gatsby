@@ -30,8 +30,8 @@ It is also referred to as the ‘path’ but this tutorial will use the term ‘
 
 Creating new pages has two steps:
 
-1.  Generate the "path" or "slug" for the page.
-2.  Create the page.
+1. Generate the "path" or "slug" for the page.
+2. Create the page.
 
 _**Note**: Often data sources will directly provide a slug or pathname for content — when working with one of those systems (e.g. a CMS), you don't need to create the slugs yourself as you do with markdown files._
 
@@ -209,8 +209,8 @@ pages.
 
 As mentioned in the intro to this part of the tutorial, the steps to programmatically creating pages are:
 
-1.  Query data with GraphQL
-2.  Map the query results to pages
+1. Query data with GraphQL
+2. Map the query results to pages
 
 The above code is the first step for creating pages from your markdown as you're
 using the supplied `graphql` function to query the markdown slugs you created.

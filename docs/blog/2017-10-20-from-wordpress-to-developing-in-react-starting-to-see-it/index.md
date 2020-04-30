@@ -133,7 +133,7 @@ focus on context without having to grok SCSS again, reducing mental friction.
 Following the [tutorial on Gatsbyjs](/tutorial/) I built
 up my project from scratch, breaking things profusely at first, but it honestly
 didn’t take long to gain confidence enough so that I launched my first site at
-[https://freebabylon5.com](https://freebabylon5.com)
+https://freebabylon5.com
 recently.
 
 Be warned: the tutorial isn’t quite finished yet, you might be better off
@@ -154,7 +154,7 @@ and others) for a faster, more efficient development experience.
 I'm glad to say I'm sold on the idea and methods of developing with JavaScript,
 and React in particular. The site I've re-built from WordPress into Gatsby.js is
 now live at
-[https://freebabylon5.com](https://freebabylon5.com).
+https://freebabylon5.com.
 
 Together with my colleagues at
 [Indigo Tree](https://indigotree.co.uk)

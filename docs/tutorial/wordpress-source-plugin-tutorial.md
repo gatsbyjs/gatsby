@@ -211,7 +211,7 @@ To do this, you need to:
 
 If you haven't already, please read through [Part 7](/tutorial/part-seven/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
 
-### Creating pages for each blog post.
+### Creating pages for each blog post
 
 In Part 7 of the tutorial, the first step in creating pages is creating slugs for the markdown files. Since you are using WordPress and not Markdown files, you can grab the slugs that get returned from your API call to the WordPress source. You can skip creating slugs, since you already have them.
 
@@ -328,7 +328,7 @@ You will need to stop and start your environment again using `gatsby develop`. W
 
 But nobody likes to go to a 404 page to find a blog post! So, let's link these up from the home page.
 
-### Linking to posts from the homepage.
+### Linking to posts from the homepage
 
 Since you already have your structure and query done for the `index.js` page, all you need to do is use the `Link` component to wrap your titles and you should be good to go.
 
@@ -379,6 +379,6 @@ And that's it! When you wrap the title in the `Link` component and reference the
 
 ![Final product with links from the home page to the blog posts](./images/wordpress-source-plugin-home-to-post-links.gif)
 
-### Wrapping up.
+### Wrapping up
 
 You can apply the same procedure to calling and creating pages, custom post types, custom fields, taxonomies, and all the fun and flexible content WordPress is known for. This can be as simple or as complex as you would like it to be, so explore and have fun with it!

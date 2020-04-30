@@ -6,7 +6,7 @@ Part of what makes Gatsby sites so fast is its recommended approach to handling 
 
 > _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._
 
-Demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
+Demo: https://using-gatsby-image.gatsbyjs.org/
 
 ## Setting up Gatsby Image
 
@@ -165,7 +165,7 @@ In a query, you can specify options for fluid images.
 - `maxWidth` (int, default: 800)
 - `maxHeight`(int)
 - `quality` (int, default: 50)
-- `srcSetBreakpoints` (array of int, default: [])
+- `srcSetBreakpoints` (array of int, default: \[])
 - `background` (string, default: `rgba(0,0,0,1)`)
 
 #### Returns
@@ -331,7 +331,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-For more info on how these options work, check out the Gatsby Image demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
+For more info on how these options work, check out the Gatsby Image demo: https://using-gatsby-image.gatsbyjs.org/
 
 #### Additional plugin fragments
 

@@ -84,7 +84,7 @@ export const query = graphql`
  ],
 ```
 
-2.  Query your image using GraphQL and apply a grayscale transformation to the image inline. The `relativePath` should be relative to the path you configured in `gatsby-source-filesystem`.
+2. Query your image using GraphQL and apply a grayscale transformation to the image inline. The `relativePath` should be relative to the path you configured in `gatsby-source-filesystem`.
 
 ```graphql
   query {

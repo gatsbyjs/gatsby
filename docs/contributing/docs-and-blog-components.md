@@ -328,7 +328,7 @@ Code can be formatted using regular Markdown syntax, but the docs site has addit
 Code blocks are wrapped in 3 backticks. A language can be added immediately after the first set of back ticks to provide syntax highlighting for the language. A `title` of the file can be added after the language. Line highlighting can be included in the code block by commenting `highlight-line`, or `highlight-start` followed by a `highlight-end`.
 
 <!-- prettier-ignore -->
-````
+````markdown
 ```javascript:title=gatsby-config.js
 // In your gatsby-config.js
 plugins: [
@@ -346,7 +346,7 @@ plugins: [
 
 In order to demonstrate how to use code blocks in a doc without your triple backticks being styled and formatted automatically (just like the example above), you can wrap a set of triple backticks in quadruple backticks like this:
 
-`````
+`````markdown
 ````
 ```javascript:title=gatsby-config.js
 // In your gatsby-config.js

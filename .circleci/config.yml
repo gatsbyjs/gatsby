@@ -201,6 +201,7 @@ jobs:
             sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
       - <<: *install_node_modules
       - run: yarn lint:code
+      - run: yarn lint:docs
       - run: yarn lint:other
 
   typecheck:
