@@ -11,7 +11,7 @@ interface IPresetOptions {
 // via require.resolve
 // This function has a better inference than would be beneficial to type, and it's relatively easy to grok.
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export default (_, options: IPresetOptions = {}) => {
+export default (_?: unknown, options: IPresetOptions = {}) => {
   const absoluteRuntimePath = path.dirname(
     require.resolve(`@babel/runtime/package.json`)
   )
