@@ -270,7 +270,11 @@ export const ensureIndexByQuery = (
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
 
-  const filterCache: IFilterCache = { op, byValue: new Map(), meta: {} }
+  const filterCache: IFilterCache = {
+    op,
+    byValue: new Map<FilterValueNullable, Set<IGatsbyNode>>(),
+    meta: {},
+  } as IFilterCache
   filtersCache.set(filterCacheKey, filterCache)
 
   // We cache the subsets of nodes by type, but only one type. So if searching
@@ -361,7 +365,11 @@ export const ensureIndexByElemMatch = (
   const state = store.getState()
   const { resolvedNodesCache } = state
 
-  const filterCache: IFilterCache = { op, byValue: new Map(), meta: {} }
+  const filterCache: IFilterCache = {
+    op,
+    byValue: new Map<FilterValueNullable, Set<IGatsbyNode>>(),
+    meta: {},
+  } as IFilterCache
   filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {
@@ -423,7 +431,6 @@ function addNodeToBucketWithElemMatch(
   }
 
   // `v` should now be an elemMatch target, probably an array (but maybe not)
-
   if (Array.isArray(valueAtCurrentStep)) {
     // Note: We need to check all elements because the node may need to be added
     // to multiple buckets (`{a:[{b:3},{b:4}]}`, for `a.elemMatch.b/eq` that
