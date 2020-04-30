@@ -452,75 +452,31 @@ function addNodeToBucketWithElemMatch(
   }
 }
 
-const binarySearchAsc = (
-  values: Array<FilterValue>, // Assume ordered asc
-  needle: FilterValue
-): [number, number] | undefined => {
+// Returns the last index in `values` where `pred` is true, given that `pred`
+// returns `true` for some, possibly empty, prefix of `values` and returns
+// `false` for the remaining, possibly empty, portion of `values`. If `pred`
+// returns `true` for all `values`, returns `values.length-1`. If `pred`
+// returns `false` for all `values`, returns `-1`.
+function binarySearch<T>(values: Array<T>, pred: (cur: T) => boolean): number {
   let min = 0
   let max = values.length - 1
-  let pivot = Math.floor(values.length / 2)
   while (min <= max) {
+    const pivot = min + Math.floor((max - min) / 2)
     const value = values[pivot]
-    if (needle < value) {
-      // Move pivot to middle of nodes left of current pivot
-      // assert pivot < max
-      max = pivot
-    } else if (needle > value) {
-      // Move pivot to middle of nodes right of current pivot
-      // assert pivot > min
-      min = pivot
+    if (pred(value)) {
+      // The index where pred switches from true to false is above pivot.
+      min = pivot + 1
     } else {
-      // This means needle === value
-      // TODO: except for NaN ... and potentially certain type casting cases
-      return [pivot, pivot]
+      // The index where pred switches from true to false is below pivot.
+      max = pivot - 1
     }
-
-    if (max - min <= 1) {
-      // End of search. Needle not found (as expected). Use pivot as index.
-      // If the needle was not found, max-min==1 and max is returned.
-      return [min, max]
-    }
-
-    pivot = min + Math.floor((max - min) / 2)
   }
-
-  // Shouldn't be reachable, but just in case, fall back to Sift if so.
-  return undefined
-}
-const binarySearchDesc = (
-  values: Array<FilterValue>, // Assume ordered desc
-  needle: FilterValue
-): [number, number] | undefined => {
-  let min = 0
-  let max = values.length - 1
-  let pivot = Math.floor(values.length / 2)
-  while (min <= max) {
-    const value = values[pivot]
-    if (needle < value) {
-      // Move pivot to middle of nodes right of current pivot
-      // assert pivot < min
-      min = pivot
-    } else if (needle > value) {
-      // Move pivot to middle of nodes left of current pivot
-      // assert pivot > max
-      max = pivot
-    } else {
-      // This means needle === value
-      // TODO: except for NaN ... and potentially certain type casting cases
-      return [pivot, pivot]
-    }
-
-    if (max - min <= 1) {
-      // End of search. Needle not found (as expected). Use pivot as index.
-      // If the needle was not found, max-min==1 and max is returned.
-      return [min, max]
-    }
-
-    pivot = min + Math.floor((max - min) / 2)
-  }
-
-  // Shouldn't be reachable, but just in case, fall back to Sift if so.
-  return undefined
+  // At this point, min > max. min is greater than any index in the array where
+  // pred returned true. max is smaller than any index in the array where
+  // pred returned false. max is the last index where the predicate is true
+  // (possibly -1), and min is the first index where the predicate is false
+  // (possibly values.length).
+  return max
 }
 
 /**
@@ -581,32 +537,17 @@ export const getNodesFromCacheByValue = (
 
     // Note: for lte, the valueAsc array must be set at this point
     const values = filterCache.meta.valuesAsc as Array<FilterValue>
-    // It shouldn't find the targetValue (but it might) and return the index of
-    // the two value between which targetValue sits, or first/last element.
-    const point = binarySearchAsc(values, filterValue)
-    if (!point) {
-      return undefined
+
+    const idx = binarySearch(values, value => value <= filterValue)
+    if (idx < 0) {
+      // No elements in values match the predicate.
+      return new Set([])
+    } else {
+      // The element at idx is the last element in values that matches the
+      // predicate.
+      const rangeidx = ranges!.get(values[idx])![1]
+      return new Set(nodes!.slice(0, rangeidx))
     }
-    const [pivotMin, pivotMax] = point
-
-    // Each pivot index must have a value and a range
-    // The returned min/max index may include the lower/upper bound, so we still
-    // have to do lte checks for both values.
-    let pivotValue = values[pivotMax]
-    if (pivotValue > filterValue) {
-      pivotValue = values[pivotMin]
-    }
-
-    // Note: the pivot value _shouldnt_ match the filter value because that
-    // means the value was actually found, but those should have been indexed
-    // so should have yielded a result in the .get() above.
-
-    const [exclPivot, inclPivot] = ranges!.get(pivotValue) as [number, number]
-
-    // Note: technically, `5 <= "5" === true` but `5` would not be cached.
-    // So we have to consider weak comparison and may have to include the pivot
-    const until = pivotValue <= filterValue ? inclPivot : exclPivot
-    return new Set(nodes!.slice(0, until))
   }
 
   if (op === `$gte`) {
@@ -627,32 +568,17 @@ export const getNodesFromCacheByValue = (
 
     // Note: for gte, the valueDesc array must be set at this point
     const values = filterCache.meta.valuesDesc as Array<FilterValue>
-    // It shouldn't find the targetValue (but it might) and return the index of
-    // the two value between which targetValue sits, or first/last element.
-    const point = binarySearchDesc(values, filterValue)
-    if (!point) {
-      return undefined
+
+    const idx = binarySearch(values, value => value >= filterValue)
+    if (idx < 0) {
+      // No elements in values match the predicate.
+      return new Set([])
+    } else {
+      // The element at idx is the last element in values that matches the
+      // predicate.
+      const rangeidx = ranges!.get(values[idx])![1]
+      return new Set(nodes!.slice(0, rangeidx))
     }
-    const [pivotMin, pivotMax] = point
-
-    // Each pivot index must have a value and a range
-    // The returned min/max index may include the lower/upper bound, so we still
-    // have to do gte checks for both values.
-    let pivotValue = values[pivotMax]
-    if (pivotValue < filterValue) {
-      pivotValue = values[pivotMin]
-    }
-
-    // Note: the pivot value _shouldnt_ match the filter value because that
-    // means the value was actually found, but those should have been indexed
-    // so should have yielded a result in the .get() above.
-
-    const [exclPivot, inclPivot] = ranges!.get(pivotValue) as [number, number]
-
-    // Note: technically, `5 >= "5" === true` but `5` would not be cached.
-    // So we have to consider weak comparison and may have to include the pivot
-    const until = pivotValue >= filterValue ? inclPivot : exclPivot
-    return new Set(nodes!.slice(0, until))
   }
 
   // Unreachable because we checked all values of FilterOp (which op is)

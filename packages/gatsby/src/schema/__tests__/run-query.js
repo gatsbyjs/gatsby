@@ -233,6 +233,18 @@ function make100Nodes(even) {
   return arr
 }
 
+function makeNodesWithDuplicateValue(val) {
+  const nodes = make100Nodes(false)
+
+  nodes.forEach((n, i) => {
+    if (i % 2 === 1) {
+      n.exh = val
+    }
+  })
+
+  return nodes
+}
+
 function makeGqlType(nodes) {
   const { createSchemaComposer } = require(`../../schema/schema-composer`)
   const { addInferredFields } = require(`../infer/add-inferred-fields`)
@@ -722,19 +734,36 @@ it(`should use the cache argument`, async () => {
           })
         })
 
-        // Note: this test currently stackoverflows
-        it.skip(`should lte when type coercion fails direct value lookup`, async () => {
-          // Here 1.5 exists but only as number. However, `1.5 <= '1.5' === true`
-          // This test checks whether we don't incorrectly assume that if the
-          // value wasn't mapped, that it can't be found.
-          const needle = `1.5`
-          const [result, allNodes] = await runFilter({ float: { lte: needle } })
-
-          expect(result?.length).toEqual(
-            allNodes.filter(node => node.float <= needle).length
+        it(`should lte with duplicate values`, async () => {
+          const nodes = makeNodesWithDuplicateValue(2)
+          const needle = 3.1
+          const result = await runQuery(
+            { filter: { exh: { lte: needle } } },
+            createFiltersCache(),
+            nodes
           )
-          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
-          result.forEach(node => expect(node.float <= needle).toEqual(true))
+          expect(result?.length).toEqual(51)
+          result.forEach(node => expect(node.exh <= needle).toEqual(true))
+        })
+
+        it(`should lte when type coercion fails direct value lookup`, async () => {
+          if (IS_LOKI) return
+          const cache = createFiltersCache()
+          const nodes = makeNodesWithDuplicateValue(2)
+          const needle = `2`
+          const result = await runQuery(
+            { filter: { exh: { lte: needle } } },
+            cache,
+            nodes
+          )
+          // This test returns different results on sift vs. fast path.
+          // sift does not return the nodes in the type-coercion case.
+          if (cache) {
+            expect(result?.length).toEqual(50)
+            result.forEach(node => expect(node.exh <= needle).toEqual(true))
+          } else {
+            expect(result).toBeNull()
+          }
         })
 
         it(`handles lte operator with null`, async () => {
@@ -914,19 +943,35 @@ it(`should use the cache argument`, async () => {
           })
         })
 
-        // Note: this test currently stackoverflows
-        it.skip(`should gte when type coercion fails direct value lookup`, async () => {
-          // Here 1.5 exists but only as number. However, `1.5 < '1.5' === true`
-          // This test checks whether we don't incorrectly assume that if the
-          // value wasn't mapped, that it can't be found.
-          const needle = `1.5`
-          const [result, allNodes] = await runFilter({ float: { gte: needle } })
-
-          expect(result?.length).toEqual(
-            allNodes.filter(node => node.float >= needle).length
+        it(`should gte with duplicate values`, async () => {
+          const nodes = makeNodesWithDuplicateValue(98)
+          const needle = 96.9
+          const result = await runQuery(
+            { filter: { exh: { gte: needle } } },
+            createFiltersCache(),
+            nodes
           )
-          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
-          result.forEach(node => expect(node.float >= needle).toEqual(true))
+          expect(result?.length).toEqual(51)
+          result.forEach(node => expect(node.exh >= needle).toEqual(true))
+        })
+
+        it(`should gte when type coercion fails direct value lookup`, async () => {
+          const cache = createFiltersCache()
+          const nodes = makeNodesWithDuplicateValue(98)
+          const needle = `98`
+          const result = await runQuery(
+            { filter: { exh: { gte: needle } } },
+            cache,
+            nodes
+          )
+          // This test returns different results on sift vs. fast path.
+          // sift does not return the nodes in the type-coercion case.
+          if (cache) {
+            expect(result?.length).toEqual(50)
+            result.forEach(node => expect(node.exh >= needle).toEqual(true))
+          } else {
+            expect(result).toBeNull()
+          }
         })
 
         it(`handles gte operator with null`, async () => {
