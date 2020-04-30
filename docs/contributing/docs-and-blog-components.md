@@ -154,7 +154,27 @@ Rendered, the component looks like this:
 
 <CloudCallout>
   Connect your Gatsby site to Storage Provider for automatic deployments
-</CloudCallout>
+</CloudCallout>{" "}
+
+### Component Model
+
+The `<ComponentModel />` was made to help explain concepts of how Gatsby works at a high level. It conceptually breaks Gatsby into different layers and shows how data is pulled, aggregated, and eventually rendered as an app. It's used on docs pages to help explain how Gatsby works at different levels.
+
+#### Usage
+
+The Component Model component takes one prop:
+
+- `initialLayer` - defaults to `Content`, can be one of `Content`, `Build`, `Data`, `View`, `App` that correspond to the different layers
+
+```markdown
+---
+title: GraphQL Concepts in Gatsby
+---
+
+To help understand how GraphQL works in Gatsby...
+
+<ComponentModel initialLayer="Data" />
+```
 
 ## Importing other components
 
