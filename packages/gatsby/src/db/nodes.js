@@ -18,7 +18,8 @@ interface NodeStore {
   }) => any | undefined;
 }
 
-const backend = process.env.GATSBY_DB_NODES || `redux`
+// const backend = process.env.GATSBY_DB_NODES || `redux`
+const backend = `redux`
 let nodesDb: NodeStore
 let runQuery
 switch (backend) {

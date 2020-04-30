@@ -196,11 +196,11 @@ module.exports = class AnalyticsTracker {
   }
 
   getDbEngine() {
-    if (process.env.GATSBY_DB_NODES === `loki`) {
-      return `loki`
-    } else {
-      return `redux`
-    }
+    // if (process.env.GATSBY_DB_NODES === `loki`) {
+    //   return `loki`
+    // } else {
+    return `redux`
+    // }
   }
 
   getMachineId() {
