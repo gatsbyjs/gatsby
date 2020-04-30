@@ -7,7 +7,7 @@ tags: ["incremental builds", "gatsby cloud", "builds"]
 canonicalLink: https://joshwcomeau.com/gatsby/incredimental-builds/
 ---
 
-A few weeks ago, I published [A Static Future]('/gatsby/a-static-future'), a post all about how sites that build at compile-time have bucketfuls of untapped potential.
+A few weeks ago, I published [A Static Future](https://joshwcomeau.com/gatsby/a-static-future/), a post all about how sites that build at compile-time have bucketfuls of untapped potential.
 
 We pictured a world in which rich, dynamic web applications were built and served from static CDNs like Fastly and Cloudflare. Instead of a costly and error-prone database lookup on each request, we do the database lookups at compile-time, and re-build whenever the data changes. Instead of users pulling the latest data from our API, we push the data when it changes to the CDN.
 
@@ -43,7 +43,7 @@ This effectively turns an O(n) problem into an O(1) problem. It doesn't matter h
 
 # Just the beginning
 
-This launch is a monumental step: it takes us a lot closer to the magical future described in [A Static Future]('/gatsby/a-static-future'). But it's still just the beginning.
+This launch is a monumental step: it takes us a lot closer to the magical future described in [A Static Future](https://joshwcomeau.com/gatsby/a-static-future/). But it's still just the beginning.
 
 On Gatsby Cloud, we differentiate between _content_ changes and _code_ changes. When a content editor tweaks an article in a CMS, that triggers a content change. When a developer modifies a React component, that's a code change. What about [Markdown](https://en.wikipedia.org/wiki/Markdown) or [MDX](https://mdxjs.com/)? For our purposes, anything that gets committed to git is a code change.
 
