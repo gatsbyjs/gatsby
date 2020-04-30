@@ -149,6 +149,7 @@ export const fetchAndCreateAllNodes = async () => {
   // Create Gatsby nodes from WPGQL response
   const createdNodeIds = await createGatsbyNodesFromWPGQLContentNodes({
     wpgqlNodesByContentType,
+    createNodesActivity,
   })
 
   createNodesActivity.end()
