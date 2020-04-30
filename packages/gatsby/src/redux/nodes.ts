@@ -481,7 +481,7 @@ const binarySearchAsc = (
       return [min, max]
     }
 
-    pivot = Math.floor((max - min) / 2)
+    pivot = min + Math.floor((max - min) / 2)
   }
 
   // Shouldn't be reachable, but just in case, fall back to Sift if so.
@@ -516,7 +516,7 @@ const binarySearchDesc = (
       return [min, max]
     }
 
-    pivot = Math.floor((max - min) / 2)
+    pivot = min + Math.floor((max - min) / 2)
   }
 
   // Shouldn't be reachable, but just in case, fall back to Sift if so.
