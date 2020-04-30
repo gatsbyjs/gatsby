@@ -23,6 +23,13 @@ export const query = graphql`
       tags
       keywords
       date(formatString: "MMMM DD, YYYY")
+      image {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
     }
     previous: blogPost(id: { eq: $previousId }) {
       id

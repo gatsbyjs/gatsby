@@ -23,6 +23,13 @@ export const query = graphql`
           title
           date(formatString: "MMMM DD, YYYY")
           tags
+          image {
+            childImageSharp {
+              fluid {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
         }
       }
     }
