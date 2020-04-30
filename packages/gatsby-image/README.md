@@ -43,15 +43,15 @@ Large, unoptimized images dramatically slow down your site.
 But creating optimized images for websites has long been a thorny problem.
 Ideally you would:
 
-- Resize large images to the size needed by your design
+- Resize large images to the size needed by your design.
 - Generate multiple smaller images so smartphones and tablets don't download
-  desktop-sized images
-- Strip all unnecessary metadata and optimize JPEG and PNG compression
-- Efficiently lazy load images to speed initial page load and save bandwidth
+  desktop-sized images.
+- Strip all unnecessary metadata and optimize JPEG and PNG compression.
+- Efficiently lazy load images to speed initial page load and save bandwidth.
 - Use the "blur-up" technique or a
   "[traced placeholder](https://github.com/gatsbyjs/gatsby/issues/2435)" SVG to
-  show a preview of the image while it loads
-- Hold the image position so your page doesn't jump while images load
+  show a preview of the image while it loads.
+- Hold the image position so your page doesn't jump while images load.
 
 Doing this consistently across a site feels like sisyphean labor. You manually
 optimize your images and then… several images are swapped in at the last minute
@@ -70,7 +70,7 @@ With Gatsby, we can make images way _way_ better.
 processing capabilities powered by GraphQL and Sharp. To produce perfect images,
 you need only:
 
-1. Import `gatsby-image` and use it in place of the built-in `img`
+1. Import `gatsby-image` and use it in place of the built-in `img`.
 2. Write a GraphQL query using one of the included GraphQL "fragments"
    which specify the fields needed by `gatsby-image`.
 
@@ -176,8 +176,8 @@ Importing from `gatsby-image/withIEPolyfill` tells Gatsby to automatically apply
 
 There are two types of responsive images supported by gatsby-image.
 
-1. Images that have a _fixed_ width and height
-2. Images that stretch across a _fluid_ container
+1. Images that have a _fixed_ width and height.
+2. Images that stretch across a _fluid_ container.
 
 In the first scenario, you want to vary the image's size for different screen
 resolutions -- in other words, create retina images.
@@ -452,7 +452,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
   to final image will not occur until after the component is mounted.
 - gatsby-image is now backed by the newer `<picture>` tag. This newer standard allows for
   media types to be chosen by the browser without using JavaScript. It also is
-  backward compatible to older browsers (IE 11, etc)
+  backward compatible to older browsers (IE 11, etc).
 - Gifs can't be resized the same way as pngs and jpegs, unfortunately—if you try
   to use a gif with `gatsby-image`, it won't work. For now, the best workaround is
   to [import the gif directly](/docs/adding-images-fonts-files).
