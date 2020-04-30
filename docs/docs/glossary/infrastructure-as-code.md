@@ -33,7 +33,7 @@ You can see the list of available recipes by using `gatsby recipes`. Use your up
 
 ![A screenshot that contains a list of Gatsby recipes.](/static/abf1101318022126e896af6222fb1cb7/b04e4/recipes-screenshot.png)
 
-Gatsby Recipes use [MDX](/docs/glossary/mdx/). They're a readable mix of Markdown and React. MDX is an extension of [Markdown](/docs/glossary/markdown/) that lets you use [JSX](/docs/glossary#jsx) in Markdown-formatted documents. Here's the [Styled Components](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/recipes/styled-components.mdx) recipe.
+Gatsby Recipes use [MDX](/docs/glossary/mdx/). They're a readable mix of Markdown and React. MDX is an extension of [Markdown](/docs/glossary/markdown/) that lets you use [JSX](/docs/glossary#jsx) in Markdown-formatted documents. As an example, check out the [Styled Components](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/recipes/styled-components.mdx) recipe.
 
 ```markdown
 # Setup Styled Components
