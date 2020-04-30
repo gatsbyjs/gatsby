@@ -10,32 +10,17 @@ Install necessary NPM packages
 
 ---
 
-Install necessary Gatsby Plugins
-Configuration options are required for this plugin, but it is not supported by Gatsby Recipes api yet, so you will have to do this manually.
-
-<GatsbyPlugin name="gatsby-source-wordpress" options={{
-  baseUrl: `cms.learnjam.org`,
-  protocol: `https`,
-  hostingWPCOM: false,
-  useACF: true,
-  includedRoutes: [
-      "**/posts",
-      "**/pages",
-      "**/users",
-      "**/categories",
-      "**/tags",
-  ]
-}} />
-
----
-
 Setup necessary files
 
 <File
-  path="gatsby-node.example.js"
+  path="./plugins/gatsby-plugin-wordpress/gatsby-node.js"
   content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/gatsby-node.restapi.js"
 />
 
+<File
+  path="./plugins/gatsby-plugin-wordpress/package.json"
+  content="https://gist.githubusercontent.com/crock/8e310872e9b3dd6753ee4d63f33a05f8/raw/d9b5df87d7eb1f72e3724f9ba1ba4799210dabad/package.json"
+/>
 
 <File
   path="src/templates/post.js"
@@ -88,5 +73,24 @@ Setup necessary files
 
 ---
 
+Install necessary Gatsby Plugins
+
+<GatsbyPlugin name="gatsby-source-wordpress" options={{
+  baseUrl: `cms.learnjam.org`,
+  protocol: `https`,
+  hostingWPCOM: false,
+  useACF: true,
+  includedRoutes: [
+      "**/posts",
+      "**/pages",
+      "**/users",
+      "**/categories",
+      "**/tags",
+  ]
+}} />
+
+<GatsbyPlugin name="gatsby-plugin-wordpress" />
+
+---
+
 You are good to go!
-IMPORTANT: Be sure to rename gatsby-node.example.js to gatsby-node.js after copying over your existing code.
