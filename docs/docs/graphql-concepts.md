@@ -21,7 +21,7 @@ the browser when needed by your components.
 
 Data from any number of sources is made queryable in one unified layer, a key part of the Gatsby building process:
 
-<LayerModel initialLayer="Data" />
+<ComponentModel initialLayer="Data" />
 
 ## Why is GraphQL so cool?
 
@@ -363,7 +363,7 @@ export const query = graphql`
 ## Further reading
 
 - [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)
-- [The Anatomy of a GraphQL Query](https://blog.apollographql.com/the-anatomy-of-a-graphql-query-6dffa9e9e747)
+- [The Anatomy of a GraphQL Query](https://www.apollographql.com/blog/the-anatomy-of-a-graphql-query)
 
 ### Getting started with GraphQL
 

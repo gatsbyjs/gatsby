@@ -12,7 +12,7 @@ enables us to port our dozens of recipes from
 https://www.gatsbyjs.org/docs/recipes/ as well as in the future, entire
 tutorials.
 
-[Read more about Recipes on the RFC](https://github.com/gatsbyjs/gatsby/pull/22610)
+[Read more about Recipes on the launch blog post](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/)
 
 There's an umbrella issue for testing / using Recipes during its incubation stage.
 
@@ -106,6 +106,8 @@ Read more about Emotion on the official Emotion docs site:
 https://emotion.sh/docs/introduction
 ```
 
+You can browse the [source of the official recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes). The [recipes umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) also has a number of recipes posted by community members.
+
 ### How to run recipes
 
 You can run built-in recipes, ones you write locally, and ones people have posted online.
@@ -120,19 +122,28 @@ To run a remote recipe, just paste in the path to the recipe e.g. `gatsby recipe
 
 Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
-Soon will support options.
-
 ```jsx
-<GatsbyPlugin name="gatsby-plugin-emotion" />
+<GatsbyPlugin
+  name="gatsby-source-filesystem"
+  key="src/pages"
+  options={{
+    name="src pages directory"
+    path="src/pages"
+  }}
+/>
 ```
 
 ##### props
 
 - **name** name of the plugin
+- **options** object with options to be added to the plugin declaration in `gatsby-config.js`. JavaScript code is not _yet_ supported in options e.g. `process.env.API_TOKEN`. This is being worked on. For now only simple values like strings and numbers are supported.
+- **key** string used to distinguish between multiple plugin instances
 
 #### `<GatsbyShadowFile>`
 
+```jsx
 <GatsbyShadowFile theme="gatsby-theme-blog" path="src/components/seo.js" />
+```
 
 ##### props
 
@@ -165,9 +176,13 @@ Soon will support options.
 ##### props
 
 - **path** path to the file that should be created. The path is local to the root of the Node.js project (where the package.json is)
-- **content** URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixees to MDX.
+- **content** URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixes to MDX.
 
 > Note that this content is stored in a [GitHub gist](https://gist.github.com/). When linking to a gist you'll want to click on the "Raw" button and copy the URL from that page.
+
+## Resources
+
+- A free 6 min eggheadio [collection](https://egghead.io/playlists/getting-started-with-gatsbyjs-recipes-c79a) by [Khaled Garbaya](https://twitter.com/khaled_garbaya)
 
 ## FAQ / common issues
 
@@ -191,15 +206,16 @@ a step
 
 But this won't
 
+<!-- prettier-ignore-start -->
 ```mdx
 # Recipes
-
 ---
 
 a step
 
 <File src="something.txt" content="something" />
 ```
+<!-- prettier-ignore-end -->
 
 ### Q) What kind of recipe should I write?
 

@@ -8,6 +8,7 @@ describe(`validate module validates recipes with resource declarations`, () => {
       { File: [{ path: `super-duper.md`, contentz: `yo` }] },
     ]
     const validationResponse = validateRecipe(recipe)
+    expect(validationResponse[0].validationError).toBeTruthy()
     expect(validationResponse).toMatchSnapshot()
     expect(validationResponse[0].validationError).toMatchSnapshot()
   })
@@ -16,6 +17,14 @@ describe(`validate module validates recipes with resource declarations`, () => {
     const recipe = [{}, { NPMPackage: [{ namez: `wee-package` }] }]
     const validationResponse = validateRecipe(recipe)
     expect(validationResponse).toMatchSnapshot()
+  })
+
+  it(`returns errors for unknown resources`, () => {
+    const recipe = [{ Fake: [{}] }]
+
+    const result = validateRecipe(recipe)[0]
+
+    expect(result.validationError).toMatch(`Unknown resource Fake`)
   })
 
   it(`returns empty array if there's no errors`, () => {
