@@ -70,21 +70,24 @@ export function readFromCache(): ICachedReduxState {
   return obj
 }
 
-function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
+function guessSafeChunkSize(
+  nodesByType: Map<string, Map<string, IGatsbyNode>>
+): number {
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
   // This attempts to prevent small sites with very large pages from OOMing.
   // This heuristic could still fail if it randomly grabs the smallest nodes.
-  // TODO: test a few nodes per each type instead of from all nodes
 
-  const nodesToTest = 11 // Very arbitrary number
-  const valueCount = values.length
-  const step = Math.max(1, Math.ceil(valueCount / nodesToTest))
-  let maxSize = 0
-  for (let i = 0; i < valueCount; i += step) {
-    const size = v8.serialize(values[i]).length
-    maxSize = Math.max(size, maxSize)
-  }
+  const nodesToTest = 11 // Very arbitrary number. Count is per type.
+  let maxSize = 1
+  nodesByType.forEach(nodes => {
+    const valueCount = nodes.size
+    const step = Math.max(1, Math.ceil(valueCount / nodesToTest))
+    for (let i = 0; i < valueCount; i += step) {
+      const size = v8.serialize(nodes[i]).length
+      maxSize = Math.max(size, maxSize)
+    }
+  })
 
   // Max size of a Buffer is 2gb (yeah, we're assuming 64bit system)
   // https://stackoverflow.com/questions/8974375/whats-the-maximum-size-of-a-node-js-buffer
@@ -94,7 +97,8 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
 
 function prepareCacheFolder(
   targetDir: string,
-  contents: ICachedReduxState
+  contents: ICachedReduxState,
+  nodesByType: Map<string, Map<string, IGatsbyNode>>
 ): void {
   // Temporarily save the nodes and remove them from the main redux store
   // This prevents an OOM when the page nodes collectively contain to much data
@@ -108,7 +112,7 @@ function prepareCacheFolder(
   if (map) {
     // Now store the nodes separately, chunk size determined by a heuristic
     const values: [string, IGatsbyNode][] = [...map.entries()]
-    const chunkSize = guessSafeChunkSize(values)
+    const chunkSize = guessSafeChunkSize(nodesByType)
     const chunks = Math.ceil(values.length / chunkSize)
 
     for (let i = 0; i < chunks; ++i) {
@@ -136,13 +140,16 @@ function safelyRenameToBak(reduxCacheFolder: string): string {
   return bakName
 }
 
-export function writeToCache(contents: ICachedReduxState): void {
+export function writeToCache(
+  contents: ICachedReduxState,
+  nodesByType: Map<string, Map<string, IGatsbyNode>>
+): void {
   // Note: this should be a transactional operation. So work in a tmp dir and
   // make sure the cache cannot be left in a corruptable state due to errors.
 
   const tmpDir = mkdtempSync(path.join(os.tmpdir(), `reduxcache`)) // linux / windows
 
-  prepareCacheFolder(tmpDir, contents)
+  prepareCacheFolder(tmpDir, contents, nodesByType)
 
   // Replace old cache folder with new. If the first rename fails, the cache
   // is just stale. If the second rename fails, the cache is empty. In either

@@ -68,17 +68,20 @@ export const store: Store<IGatsbyState> = configureStore(readState())
 export const saveState = (): void => {
   const state = store.getState()
 
-  return writeToCache({
-    nodes: state.nodes,
-    status: state.status,
-    componentDataDependencies: state.componentDataDependencies,
-    components: state.components,
-    jobsV2: state.jobsV2,
-    staticQueryComponents: state.staticQueryComponents,
-    webpackCompilationHash: state.webpackCompilationHash,
-    pageDataStats: state.pageDataStats,
-    pageData: state.pageData,
-  })
+  return writeToCache(
+    {
+      nodes: state.nodes,
+      status: state.status,
+      componentDataDependencies: state.componentDataDependencies,
+      components: state.components,
+      jobsV2: state.jobsV2,
+      staticQueryComponents: state.staticQueryComponents,
+      webpackCompilationHash: state.webpackCompilationHash,
+      pageDataStats: state.pageDataStats,
+      pageData: state.pageData,
+    },
+    state.nodesByType
+  )
 }
 
 store.subscribe(() => {
