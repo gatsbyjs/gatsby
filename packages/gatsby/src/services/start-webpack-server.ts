@@ -15,25 +15,23 @@ import { prepareUrls } from "../utils/prepare-urls"
 import { startServer } from "../utils/start-server"
 import { WebsocketManager } from "../utils/websocket-manager"
 import { IBuildContext } from "../state-machines/develop"
-import JestWorker from "jest-worker"
 
 export async function startWebpackServer({
   program,
   app,
+  workerPool,
 }: IBuildContext): Promise<{
   compiler: Compiler
   websocketManager: WebsocketManager
-  workerPool: JestWorker
 }> {
   if (!program || !app) {
     throw new Error(`Missing required params`)
   }
-  let {
-    compiler,
-    webpackActivity,
-    websocketManager,
-    workerPool,
-  } = await startServer(program, app)
+  let { compiler, webpackActivity, websocketManager } = await startServer(
+    program,
+    app,
+    workerPool
+  )
 
   compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
@@ -101,7 +99,7 @@ export async function startWebpackServer({
       }
 
       done()
-      resolve({ compiler, websocketManager, workerPool })
+      resolve({ compiler, websocketManager })
     })
   })
   // "done" event fires when Webpack has finished recompiling the bundle.

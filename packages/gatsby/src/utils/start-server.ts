@@ -43,13 +43,13 @@ interface IServer {
 
 export async function startServer(
   program: IProgram,
-  app: Express
+  app: Express,
+  workerPool: JestWorker = WorkerPool.create()
 ): Promise<IServer> {
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
   const directoryPath = withBasePath(directory)
-  const workerPool = WorkerPool.create()
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
       await buildHTML({

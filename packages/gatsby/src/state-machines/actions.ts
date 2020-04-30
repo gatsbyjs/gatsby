@@ -1,4 +1,3 @@
-import { Store } from "../.."
 import {
   assign,
   AnyEventObject,
@@ -6,12 +5,16 @@ import {
   AssignAction,
   spawn,
   DoneInvokeEvent,
+  ActionFunctionMap,
 } from "xstate"
+import { Store } from "redux"
 import { IBuildContext, IMutationAction } from "./develop"
 import { actions } from "../redux/actions"
 import path from "path"
 import { write as writeAppData } from "../utils/app-data"
 import { listenForMutations } from "../services/listen-for-mutations"
+import { Span } from "opentracing"
+import JestWorker from "jest-worker"
 
 const concatUnique = <T>(array1?: T[], array2?: T[]): T[] =>
   Array.from(new Set((array1 || []).concat(array2 || [])))
@@ -114,7 +117,19 @@ export const writeCompilationHash: BuildMachineAction = async (
   }
 }
 
-export const buildActions = {
+export const assignBootstrap: BuildMachineAction = assign<
+  IBuildContext,
+  DoneInvokeEvent<{ store: Store; bootstrapSpan: Span; workerPool: JestWorker }>
+>((_context, event) => {
+  const { store, bootstrapSpan, workerPool } = event.data
+  return {
+    store,
+    parentSpan: bootstrapSpan,
+    workerPool,
+  }
+})
+
+export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   callApi,
   addNodeMutation,
   markFilesDirty,
@@ -122,6 +137,7 @@ export const buildActions = {
   writeCompilationHash,
   spawnMutationListener,
   assignChangedPages,
+  assignBootstrap,
 }
 
 // export const dummyActions = {

@@ -1,7 +1,6 @@
 import { IBuildContext } from "./develop"
-import { MachineConfig, DoneInvokeEvent, assign, spawn } from "xstate"
-import { Store } from "redux"
-import { Span } from "opentracing"
+import { MachineConfig, DoneInvokeEvent, assign } from "xstate"
+
 import { dataLayerStates } from "./data-layer"
 import { queryStates } from "./queries"
 import {
@@ -10,31 +9,8 @@ import {
 } from "./shared-transition-configs"
 
 export const runningStates: MachineConfig<IBuildContext, any, any> = {
-  initial: `initializing`,
+  initial: `initializingDataLayer`,
   states: {
-    initializing: {
-      on: {
-        ADD_NODE_MUTATION: {
-          actions: `callApi`,
-        },
-      },
-      invoke: {
-        src: `initialize`,
-        onDone: {
-          target: `initializingDataLayer`,
-          actions: assign<
-            IBuildContext,
-            DoneInvokeEvent<{ store: Store; bootstrapSpan: Span }>
-          >((_context, event) => {
-            const { store, bootstrapSpan } = event.data
-            return {
-              store,
-              parentSpan: bootstrapSpan,
-            }
-          }),
-        },
-      },
-    },
     initializingDataLayer: {
       id: `initializingDataLayer`,
       on: {

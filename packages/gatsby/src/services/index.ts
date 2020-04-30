@@ -10,10 +10,11 @@ import { runStaticQueries } from "./run-static-queries"
 import { runPageQueries } from "./run-page-queries"
 import { initialize } from "./initialize"
 import { writeHTML } from "./write-html"
-import { listenForMutations } from "./listen-for-mutations"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
+import { ServiceConfig } from "xstate"
+import { IBuildContext } from "../state-machines/develop"
 
-export const buildServices = {
+export const buildServices: Record<string, ServiceConfig<IBuildContext>> = {
   customizeSchema,
   sourceNodes,
   createPages,
@@ -26,6 +27,5 @@ export const buildServices = {
   runPageQueries,
   initialize,
   writeHTML,
-  listenForMutations,
   waitUntilAllJobsComplete,
 }

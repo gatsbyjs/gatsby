@@ -2,7 +2,6 @@ import { emitter } from "../redux"
 import { InvokeCallback, Sender } from "xstate"
 
 export const listenForMutations: InvokeCallback = (callback: Sender<any>) => {
-  console.log(`setting up emitter listener`)
   const emitMutation = (event: unknown): void => {
     callback({ type: `ADD_NODE_MUTATION`, payload: event })
   }

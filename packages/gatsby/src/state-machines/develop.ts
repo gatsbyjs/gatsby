@@ -1,4 +1,11 @@
-import { Machine, assign, DoneInvokeEvent, Actor, AnyEventObject } from "xstate"
+import {
+  Machine,
+  assign,
+  DoneInvokeEvent,
+  Actor,
+  AnyEventObject,
+  MachineConfig,
+} from "xstate"
 import { Express } from "express"
 import { startWebpackServer } from "../services/start-webpack-server"
 import { WebsocketManager } from "../utils/websocket-manager"
@@ -56,81 +63,89 @@ export const INITIAL_CONTEXT: IBuildContext = {
   runningBatch: [],
 }
 
-// eslint-disable-next-line new-cap
-export const developMachine = Machine<IBuildContext>(
-  {
-    id: `build`,
-    initial: `setup`,
-    context: INITIAL_CONTEXT,
-    states: {
-      setup: {
-        on: {
-          "": {
-            actions: `spawnMutationListener`,
-            target: `running`,
-          },
+const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
+  id: `build`,
+  initial: `setup`,
+  context: INITIAL_CONTEXT,
+  states: {
+    setup: {
+      on: {
+        "": {
+          actions: `spawnMutationListener`,
+        },
+        ADD_NODE_MUTATION: {
+          actions: `callApi`,
         },
       },
-      running: {
-        ...runningStates,
-        onDone: [
-          {
-            target: `runningWebpack`,
-            cond: (ctx): boolean => ctx.firstRun,
-          },
-          {
-            target: `waiting`,
-            actions: (ctx): void => console.log(ctx.queryIds),
-          },
-        ],
-      },
-      runningWebpack: {
-        on: {
-          ADD_NODE_MUTATION,
-          SOURCE_FILE_CHANGED,
-        },
-        invoke: {
-          src: startWebpackServer,
-          id: `running-webpack`,
-          onDone: {
-            target: `waiting`,
-            actions: assign<
-              IBuildContext,
-              DoneInvokeEvent<{
-                compiler: Compiler
-                websocketManager: WebsocketManager
-                workerPool: JestWorker
-              }>
-            >((_context, { data }) => {
-              return {
-                ...data,
-                firstRun: false,
-              }
-            }),
-          },
-          onError: {
-            target: `failed`,
-          },
+      invoke: {
+        src: `initialize`,
+        onDone: {
+          target: `running`,
+          actions: `assignBootstrap`,
         },
       },
+    },
+    running: {
+      ...runningStates,
+      onDone: [
+        {
+          target: `runningWebpack`,
+          cond: (ctx): boolean => ctx.firstRun,
+        },
+        {
+          target: `waiting`,
+          actions: (ctx): void => console.log(ctx.queryIds),
+        },
+      ],
+    },
+    runningWebpack: {
+      on: {
+        ADD_NODE_MUTATION,
+        SOURCE_FILE_CHANGED,
+      },
+      invoke: {
+        src: startWebpackServer,
+        id: `running-webpack`,
+        onDone: {
+          target: `waiting`,
+          actions: assign<
+            IBuildContext,
+            DoneInvokeEvent<{
+              compiler: Compiler
+              websocketManager: WebsocketManager
+              workerPool: JestWorker
+            }>
+          >((_context, { data }) => {
+            return {
+              ...data,
+              firstRun: false,
+            }
+          }),
+        },
+        onError: {
+          target: `failed`,
+        },
+      },
+    },
 
-      waiting: {
-        on: { ADD_NODE_MUTATION },
-        ...idleStates,
-      },
+    waiting: {
+      on: { ADD_NODE_MUTATION },
+      ...idleStates,
+    },
 
-      failed: {
-        type: `final`,
-        invoke: {
-          src: async (_context, event): Promise<void> => {
-            console.error(`I won't build what you tell me`, event)
-          },
+    failed: {
+      type: `final`,
+      invoke: {
+        src: async (_context, event): Promise<void> => {
+          console.error(`I won't build what you tell me`, event)
         },
       },
     },
   },
-  {
-    actions: buildActions,
-    services: buildServices,
-  }
-)
+}
+
+// eslint-disable-next-line new-cap
+export const developMachine = Machine<IBuildContext>(developConfig, {
+  actions: buildActions,
+  services: buildServices,
+})

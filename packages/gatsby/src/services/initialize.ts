@@ -12,6 +12,10 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store } from "../.."
 import { Span } from "opentracing"
+import * as WorkerPool from "../utils/worker/pool"
+import JestWorker from "jest-worker"
+import { startPluginRunner } from "../redux/plugin-runner"
+
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`../bootstrap/load-plugins`)
 const loadThemes = require(`../bootstrap/load-themes`)
@@ -33,7 +37,7 @@ process.on(`unhandledRejection`, reason => {
 
 export async function initialize(
   context
-): Promise<{ store: Store; bootstrapSpan: Span }> {
+): Promise<{ store: Store; bootstrapSpan: Span; workerPool: JestWorker }> {
   const args = context.program
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
@@ -57,7 +61,7 @@ export async function initialize(
 
   // Start plugin runner which listens to the store
   // and invokes Gatsby API based on actions.
-  require(`../redux/plugin-runner`)
+  startPluginRunner()
 
   const directory = slash(args.directory)
 
@@ -433,8 +437,11 @@ export async function initialize(
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
+  const workerPool = WorkerPool.create()
+
   return {
     store,
     bootstrapSpan,
+    workerPool,
   }
 }
