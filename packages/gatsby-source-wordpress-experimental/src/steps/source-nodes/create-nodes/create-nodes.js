@@ -1,3 +1,4 @@
+import stringify from "fast-json-stable-stringify"
 import execall from "execall"
 import fetchReferencedMediaItemsAndCreateNodes from "../fetch-nodes/fetch-referenced-media-items"
 import urlToPath from "~/utils/url-to-path"
@@ -37,7 +38,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
       // this is important not only for downloading only used images
       // but also for downloading images in post content
       if (wpgqlNodesGroup.plural !== `mediaItems`) {
-        const nodeString = JSON.stringify(node)
+        const nodeString = stringify(node)
 
         // const imageUrlMatches = execall(imgSrcRemoteFileRegex, nodeString)
 
