@@ -72,6 +72,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       on: {
         "": {
           actions: `spawnMutationListener`,
+          cond: (context): boolean => !context.mutationListener,
         },
         ADD_NODE_MUTATION: {
           actions: `callApi`,
