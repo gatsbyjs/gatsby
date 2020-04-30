@@ -1,0 +1,18 @@
+# Only the paths listed in the file will be downloaded when performing a
+# partial clone using `git clone --filter=sparse:oid=packages/.gitfilterspec`
+
+# Explicitly include filterspec needed to configure sparse checkout with
+# git config --local core.sparsecheckout true
+# git show master:packages/.gitfilterspec >> .git/info/sparse-checkout
+
+
+# careful looks like you need to enable Sparse checkout to prevent downloading more files when checking out different branches / PRs
+# read documentation here https://docs.gitlab.com/ee/topics/git/partial_clone.html
+
+
+packages/.gitfilterspec
+
+# packages folder
+packages/
+
+# Dependencies n/a
