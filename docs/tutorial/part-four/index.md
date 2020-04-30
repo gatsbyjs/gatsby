@@ -49,7 +49,7 @@ Data can also live in file types like Markdown, CSV, etc. as well as databases
 and APIs of all sorts.
 
 **Gatsby's data layer lets you pull data from these (and any other source)
-directly into your components**—in the shape and form you want.
+directly into your components** -- in the shape and form you want.
 
 ## Using Unstructured Data vs GraphQL
 

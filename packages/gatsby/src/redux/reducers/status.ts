@@ -1,16 +1,25 @@
-const _ = require(`lodash`)
+import _ from "lodash"
+import { ActionsUnion, IGatsbyState } from "../types"
 
-module.exports = (state = { plugins: {} }, action) => {
+const defaultState: IGatsbyState["status"] = {
+  PLUGINS_HASH: ``,
+  plugins: {},
+}
+
+export const statusReducer = (
+  state: IGatsbyState["status"] = defaultState,
+  action: ActionsUnion
+): IGatsbyState["status"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
-      return { plugins: {} }
+      return defaultState
     case `UPDATE_PLUGINS_HASH`:
       return {
         ...state,
         PLUGINS_HASH: action.payload,
       }
     case `SET_PLUGIN_STATUS`:
-      if (!action.plugin && !action.plugin.name) {
+      if (!action.plugin || !action.plugin?.name) {
         throw new Error(`You can't set plugin status without a plugin`)
       }
       if (!_.isObject(action.payload)) {
