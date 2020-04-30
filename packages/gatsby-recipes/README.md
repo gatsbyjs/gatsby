@@ -114,7 +114,9 @@ You can run built-in recipes, ones you write locally, and ones people have poste
 
 To run a local recipe, make sure to start the path to the recipe with a period like `gatsby recipes ./my-cool-recipe.mdx`
 
-To run a remote recipe, just paste in the path to the recipe e.g. `gatsby recipes https://example.com/sweet-recipe.mdx`
+To run a remote recipe, copy the path to the recipe and run it e.g. 
+```shell
+gatsby recipes https://example.com/sweet-recipe.mdx
 
 ## External learning resources
 
