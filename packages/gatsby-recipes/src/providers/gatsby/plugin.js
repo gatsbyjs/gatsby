@@ -119,24 +119,46 @@ const getPluginsFromConfig = src => {
   return getPlugins.state
 }
 
-const create = async ({ root }, { name, options, key }) => {
-  const configPath = path.join(root, `gatsby-config.js`)
-  const configSrc = await fs.readFile(configPath, `utf8`)
+const getConfigPath = root => path.join(root, `gatsby-config.js`)
 
+const readConfigFile = async root => {
+  let src
+  try {
+    src = await fs.readFile(getConfigPath(root), `utf8`)
+  } catch (e) {
+    if (e.code === `ENOENT`) {
+      src = `/**
+ * Configure your Gatsby site with this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ */
+
+module.exports = {
+  plugins: [],
+}`
+    } else {
+      throw e
+    }
+  }
+
+  return src
+}
+
+const create = async ({ root }, { name, options, key }) => {
+  const configSrc = await readConfigFile(root)
   const prettierConfig = await prettier.resolveConfig(root)
 
   let code = addPluginToConfig(configSrc, { name, options, key })
   code = prettier.format(code, { ...prettierConfig, parser: `babel` })
 
-  await fs.writeFile(configPath, code)
+  await fs.writeFile(getConfigPath(root), code)
 
   return await read({ root }, key || name)
 }
 
 const read = async ({ root }, id) => {
   try {
-    const configPath = path.join(root, `gatsby-config.js`)
-    const configSrc = await fs.readFile(configPath, `utf8`)
+    const configSrc = await readConfigFile(root)
 
     const plugin = getPluginsFromConfig(configSrc).find(
       plugin => plugin.key === id || plugin.name === id
@@ -154,8 +176,7 @@ const read = async ({ root }, id) => {
 }
 
 const destroy = async ({ root }, { id, name }) => {
-  const configPath = path.join(root, `gatsby-config.js`)
-  const configSrc = await fs.readFile(configPath, `utf8`)
+  const configSrc = await readConfigFile(root)
 
   const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
     pluginOrThemeName: name,
@@ -168,7 +189,7 @@ const destroy = async ({ root }, { id, name }) => {
     configFile: false,
   })
 
-  await fs.writeFile(configPath, code)
+  await fs.writeFile(getConfigPath(root), code)
 }
 
 class BabelPluginAddPluginsToGatsbyConfig {
@@ -289,9 +310,8 @@ module.exports.destroy = destroy
 module.exports.config = {}
 
 module.exports.all = async ({ root }) => {
-  const configPath = path.join(root, `gatsby-config.js`)
-  const src = await fs.readFile(configPath, `utf8`)
-  const plugins = getPluginsFromConfig(src)
+  const configSrc = await readConfigFile(root)
+  const plugins = getPluginsFromConfig(configSrc)
 
   // TODO: Consider mapping to read function
   return plugins.map(name => {
@@ -338,15 +358,14 @@ exports.validate = validate
 
 module.exports.plan = async ({ root }, { id, key, name, options }) => {
   const fullName = id || name
-  const configPath = path.join(root, `gatsby-config.js`)
   const prettierConfig = await prettier.resolveConfig(root)
-  let src = await fs.readFile(configPath, `utf8`)
-  src = prettier.format(src, {
+  let configSrc = await readConfigFile(root)
+  configSrc = prettier.format(configSrc, {
     ...prettierConfig,
     parser: `babel`,
   })
 
-  let newContents = addPluginToConfig(src, {
+  let newContents = addPluginToConfig(configSrc, {
     id,
     key: id || key,
     name: fullName,
@@ -356,13 +375,13 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     ...prettierConfig,
     parser: `babel`,
   })
-  const diff = await getDiff(src, newContents)
+  const diff = await getDiff(configSrc, newContents)
 
   return {
     id: fullName,
     name,
     diff,
-    currentState: src,
+    currentState: configSrc,
     newState: newContents,
     describe: `Install ${fullName} in gatsby-config.js`,
   }
