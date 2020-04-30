@@ -47,6 +47,9 @@ export interface IGatsbyConfig {
     title?: string
     author?: string
     description?: string
+    sireUrl?: string
+    // siteMetadata is free form
+    [key: string]: unknown
   }
   // @deprecated
   polyfill?: boolean
@@ -382,4 +385,9 @@ export interface IRemoveStaticQuery {
 export interface ISetWebpackCompilationHashAction {
   type: `SET_WEBPACK_COMPILATION_HASH`
   payload: IGatsbyState["webpackCompilationHash"]
+}
+
+export interface ISetSiteConfig {
+  type: `SET_SITE_CONFIG`
+  payload: IGatsbyState["config"]
 }
