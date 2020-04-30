@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`gatsby-plugin resource creates default gatsby-config.js if there isn't one already 1`] = `
+Object {
+  "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+  "options": undefined,
+}
+`;
+
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create 1`] = `
 Object {
   "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
