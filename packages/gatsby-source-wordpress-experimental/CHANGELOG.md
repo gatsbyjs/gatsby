@@ -1,5 +1,44 @@
 # Change Log
 
+## 0.1.4
+
+### Bug Fixes
+
+When fetching data for interface types, shared fields were being fetch on each inline fragment like so:
+
+```graphql
+{
+  contentNode {
+    title
+    ... on Post {
+      title
+      otherPostField
+    }
+    ... on Page {
+      title
+      otherPageField
+    }
+  }
+}
+```
+
+Normally that wasn't such a big deal since it just made the queries during node sourcing larger but didn't break anything. For interfaces with particularly deeply nested fields this was a huge problem (namely for Gutenberg).
+This release solves this by only fetching these shared fields directly on the interface field.
+
+```graphql
+{
+  contentNode {
+    title
+    ... on Post {
+      otherPostField
+    }
+    ... on Page {
+      otherPageField
+    }
+  }
+}
+```
+
 ## 0.1.3
 
 ### Bug fixes

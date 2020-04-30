@@ -9,6 +9,7 @@ const transformFragments = ({
   typeMap,
   depth,
   maxDepth,
+  parentType,
 }) =>
   possibleTypes && depth <= maxDepth
     ? possibleTypes
@@ -36,9 +37,21 @@ const transformFragments = ({
 
           const typeInfo = typeMap.get(possibleType.name)
 
+          let filteredFields = [...typeInfo.fields]
+
+          if (parentType?.kind === `INTERFACE`) {
+            // remove any fields from our fragment if the parent type already has them as shared fields
+            filteredFields = filteredFields.filter(
+              filteredField =>
+                !parentType.fields.find(
+                  parentField => parentField.name === filteredField.name
+                )
+            )
+          }
+
           if (typeInfo) {
             const fields = recursivelyTransformFields({
-              fields: typeInfo.fields,
+              fields: filteredFields,
               parentType: type,
               depth,
             })
@@ -138,17 +151,17 @@ function transformField({
       fieldType,
     }
   } else if (fieldType.kind === `LIST`) {
-    const listOfType =
-      typeMap.get(ofType.name) || typeMap.get(ofType.ofType.name)
+    const listOfType = typeMap.get(ofType.name || ofType.ofType.name)
 
     const transformedFields = recursivelyTransformFields({
       fields: listOfType.fields,
-      parentType: fieldType,
+      parentType: listOfType || fieldType,
       depth,
     })
 
     const transformedFragments = transformFragments({
       possibleTypes: listOfType.possibleTypes,
+      parentType: listOfType || fieldType,
       gatsbyNodesInfo,
       typeMap,
       depth,
