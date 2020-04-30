@@ -207,7 +207,7 @@ run by typing `gatsby`, you'll want to run the version copied over by `gatsby-de
 
 ### Official recipes
 
-MDX source for the official recipes are at https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes
+MDX source for the official recipes lives at [https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes).
 
 We welcome PRs for new recipes and fixes/improvements to existing recipes.
 
