@@ -14,9 +14,11 @@
     "start": "npm run develop"
   },
   "dependencies": {
+    "cross-env": "^7.0.0",
     "dotenv": "^8.2.0",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.40",
+    "gatsby-plugin-benchmark-reporting": "*",
     "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-source-datocms": "^2.1.27",
     "gatsby-source-filesystem": "^2.1.48",
@@ -28,8 +30,6 @@
     "typescript": "^3.8.3"
   },
   "devDependencies": {
-    "cross-env": "^7.0.0",
-    "gatsby-plugin-benchmark-reporting": "*",
     "prettier": "2.0.4"
   },
   "repository": {
