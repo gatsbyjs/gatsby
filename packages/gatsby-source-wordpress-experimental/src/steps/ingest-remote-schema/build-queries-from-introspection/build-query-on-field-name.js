@@ -46,10 +46,13 @@ const buildFragment = ({ name, fields }) => `
   }
 `
 
-const buildFragments = fragments => `
-  __typename
-  ${fragments.map(buildFragment).join(` `)}
-`
+const buildFragments = fragments =>
+  fragments
+    ? `
+      __typename
+      ${fragments.map(buildFragment).join(` `)}
+    `
+    : ``
 
 export const buildSelectionSet = fields => {
   if (!fields || !fields.length) {
@@ -73,18 +76,16 @@ export const buildSelectionSet = fields => {
         variables = `first: 100`
       }
 
-      if (fieldName && fragments) {
+      const selectionSet = buildSelectionSet(fields)
+      const inlineFragments = buildFragments(fragments)
+
+      if (fieldName && (inlineFragments !== `` || selectionSet !== ``)) {
         return `
-          ${fieldName} {
-            ${buildFragments(fragments)}
+          ${fieldName} ${buildVariables(variables)} {
+            ${selectionSet}
+            ${inlineFragments}
           }
         `
-      } else if (fieldName && fields) {
-        return `
-            ${fieldName} ${buildVariables(variables)} {
-              ${buildSelectionSet(fields)}
-            }
-          `
       } else if (fieldName) {
         return fieldName
       }
