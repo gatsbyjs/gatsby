@@ -28,7 +28,7 @@ The inclusive practice of removing barriers that prevent interaction with, or ac
 
 ### Babel
 
-A tool that lets you write the most modern [JavaScript](#javascript), and on [build](#build) it gets [compiled](#compiler) to code that most web browsers can understand.
+A tool that lets you write the most modern [JavaScript](#javascript), and during the [build](#build) process it gets [transpiled](#transpile) to code that most web browsers can understand.
 
 ### Backend
 
@@ -64,7 +64,7 @@ A text-based interface to run commands on your computer. The default Command Lin
 
 ### Compiler
 
-A compiler is a program that translates code written in one language to another language. For example [Gatsby](#gatsby) can compile [React](#react) applications into static [HTML](#html) files.
+A compiler is a program that translates code written in one language to another language. For example [Gatsby](#gatsby) can compile [React](#react) applications into static [HTML](#html) files. See also: [transpile](#transpile).
 
 ### Component
 
@@ -122,7 +122,7 @@ The Document Object Model, commonly referred to as "the DOM", is a standard brow
 
 ### ECMAScript
 
-ECMAScript (often referred to as ES) is a specification for scripting languages. [JavaScript](#javascript) is an implementation of ECMAScript. Often developers will use [Babel](#babel) to [compile](#compiler) the latest ECMAScript code into more widely supported JavaScript.
+ECMAScript (often referred to as ES) is a specification for scripting languages. [JavaScript](#javascript) is an implementation of ECMAScript. Often developers will use [Babel](#babel) to [transpile](#transpile) the latest ECMAScript code into more widely supported JavaScript.
 
 ### Environment
 
@@ -341,6 +341,10 @@ A Gatsby theme is like a WordPress theme that is composable (with other themes),
 ### Transformer
 
 A [plugin](#plugin) that transforms one type of data to another. For example you might transform a spreadsheet into a [JavaScript](#javascript) array.
+
+### Transpile
+
+The process of converting code from one syntax or format to another, such as TypeScript, a superset of JavaScript which provides custom type checking during development. [Babel](#babel) is another common example of transpilation that reformats newer JavaScript code following the [ECMAScript](#ecmascript) standard to be more backwards-compatible during the site [compilation](#compilation) process.
 
 ## U
 

@@ -362,7 +362,7 @@ Take a look at a list of the generated files by typing in the following terminal
 ls public
 ```
 
-Then finally deploy your site by publishing the generated files to surge.sh.
+Then finally deploy your site by publishing the generated files to surge.sh. For newly-created surge account, you need to verify your email with surge before publishing your site (check your inbox first and verify your email).
 
 ```shell
 surge public/

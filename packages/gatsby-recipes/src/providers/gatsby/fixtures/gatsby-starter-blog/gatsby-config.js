@@ -62,7 +62,7 @@ module.exports = {
         display: `minimal-ui`,
       },
     },
-    `gatsby-plugin-offline`, // `gatsby-plugin-preact`,
+    `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
   ],
 }
