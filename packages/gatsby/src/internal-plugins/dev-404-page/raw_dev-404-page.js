@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import { graphql, Link } from "gatsby"
 import queryString from "query-string"
 
-
 class Dev404Page extends React.Component {
   static propTypes = {
     data: PropTypes.object,
@@ -17,7 +16,7 @@ class Dev404Page extends React.Component {
     const pagePaths = data.allSitePage.nodes.map(node => node.path)
     const urlState = queryString.parse(location.search)
 
-    const initialPagePathSearchTerms = `urlState.q ? urlState.q : `
+    const initialPagePathSearchTerms = urlState.q ? urlState.q : ``
     this.state = {
       showCustom404: false,
       initPagePaths: pagePaths,
