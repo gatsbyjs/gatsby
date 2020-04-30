@@ -116,7 +116,9 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
       path: derivePath(absolutePath, node),
       matchPath: matchPath,
       component: tempPath,
-      context: node,
+      context: {
+        __collectionData: node,
+      },
     })
   })
 }

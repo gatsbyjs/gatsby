@@ -82,21 +82,37 @@ export class PageQueryStore extends React.Component {
 
     // only supports keys that are [adjfiasjf].js (which by now is translated into :asdfajsdif)
     parts.forEach(colonPart => {
+      // strips off the starting `:` in something like `:id`
       const [, ...part] = colonPart
       params[part] = this.props[part]
     })
+
     return params
   }
 
   render() {
-    const data = this.state.pageQueryData[getPathFromProps(this.props)]
+    let data = this.state.pageQueryData[getPathFromProps(this.props)]
+    console.log(`rendering`, data)
+
     const params = this.getParams()
     // eslint-disable-next-line
     if (!data) {
       return <div />
     }
 
-    return <PageRenderer {...this.props} {...data} params={params} />
+    const __collectionData = data.pageContext.__collectionData
+    delete data.pageContext.__collectionData // Bad. Should create a new object
+
+    const collectionData = __collectionData ? { data: __collectionData } : {}
+
+    return (
+      <PageRenderer
+        {...this.props}
+        {...data}
+        {...collectionData}
+        params={params}
+      />
+    )
   }
 }
 

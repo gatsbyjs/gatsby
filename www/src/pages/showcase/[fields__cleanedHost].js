@@ -1,11 +1,11 @@
-import Showcase from "../../templates/template-showcase-details"
+import Showcase from "../../../templates/template-showcase-details"
 import { createPagesFromData } from "gatsby"
 
 export default createPagesFromData(
   Showcase,
   graphql`
     {
-      allSitesYaml(filter: { main_url: { ne: null } }) {
+      allSitesYaml(filter: { main_url: { ne: null }, fields: { ne: null, slug: { ne: null }, hasScreenshot: { ne: null } } } {
         nodes {
           id
           title
@@ -40,17 +40,5 @@ export default createPagesFromData(
         }
       }
     }
-  `,
-  // So this API feels extremely fragile. Not sure it'll work.
-  // Since we are statically extracting all of this, if this function runs any thing from out of scope
-  // it'll immediately fail.
-  // maybe that's an OK limitation, or we need a fancier implementation, or we need a different API.
-  data => {
-    return data.allSitesYaml.nodes.filter(node => {
-      if (!node.fields) return false
-      if (!node.fields.slug) return false
-      if (!node.fields.hasScreenshot) return false
-      return true
-    })
-  }
+  `
 )
