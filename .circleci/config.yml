@@ -1,5 +1,5 @@
 orbs:
-  win: circleci/windows@1.0.0
+  win: circleci/windows@2.2.0
   slack: circleci/slack@3.4.1
 
 executors:
@@ -53,10 +53,10 @@ aliases:
 
   test_template: &test_template
     steps:
-      - <<: *attach_to_bootstrap
-      - <<: *install_node_modules
-      - run: yarn list react
+      - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *attach_to_bootstrap
+      - run: yarn list react
       - run: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
       - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
 
@@ -69,6 +69,7 @@ aliases:
           - /blog.+/
     requires:
       - lint
+      - typecheck
       - unit_tests_node10
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
@@ -147,7 +148,7 @@ commands:
         type: boolean
         default: false
     steps:
-      - <<: *attach_to_bootstrap
+      - checkout
       # In case of failure, add these steps again. Cache probably got deleted
       #- <<: *restore_cache
       #- <<: *install_node_modules
@@ -156,6 +157,8 @@ commands:
           condition: << parameters.skip_file_change_test >>
           steps:
             - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+
+      - <<: *attach_to_bootstrap
       - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
@@ -178,12 +181,6 @@ jobs:
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      # persist our git checkout and node_modules as the next step (assert-changed-files) might exit this step
-      # when no files have changed (master). We still need to have these files for jobs like lint & unit_tests_node10
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - "*"
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
@@ -194,12 +191,24 @@ jobs:
 
   lint:
     executor: node
-    parallelism: 2
     steps:
-      - <<: *attach_to_bootstrap
+      - checkout
+      # installation of dependencies takes a while because of the 100 packages we have inside the monorepo
+      # Linting only needs the root packages, we remove the workspace and only install root packages
+      - run:
+          name: "remove workspaces from package.json"
+          command: |
+            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
+      - <<: *install_node_modules
       - run: yarn lint:code
       - run: yarn lint:other
+
+  typecheck:
+    executor: node
+    steps:
+      - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *attach_to_bootstrap
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
@@ -247,10 +256,11 @@ jobs:
     <<: *e2e-executor
     executor: node
     steps:
-      - <<: *attach_to_bootstrap
+      - checkout
       - run:
           name: Assert Changed Files
           command: ./scripts/assert-changed-files.sh "packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*"
+      - <<: *attach_to_bootstrap
       - run:
           name: Run tests (using defaults)
           command: cd integration-tests/gatsby-cli && yarn && yarn test
@@ -362,21 +372,27 @@ jobs:
 
   windows_unit_tests:
     executor:
-      name: win/vs2019
+      name: win/default
       shell: powershell.exe
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - yarn-packages-v2-{{ checksum "yarn.lock" }}
-            - yarn-packages-v2-
+      # Restoring cache takes as long as installing node modules, so skipping
+      # - restore_cache:
+      #     keys:
+      #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
+      #       - yarn-packages-v2-
       - run:
-          name: "Install dependencies"
-          command: yarn bootstrap
-      - save_cache:
-          paths:
-            - C:\Users\circleci\AppData\Local\Yarn\Cache
-          key: yarn-packages-v2-{{ checksum "yarn.lock" }}
+          name: Install node modules
+          command: yarn --frozen-lockfile
+      # Caching is slow, so disabling
+      # - save_cache:
+      #     paths:
+      #       - C:\Users\circleci\AppData\Local\Yarn\Cache
+      #     key: yarn-packages-v2-{{ checksum "yarn.lock" }}
+      - run:
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+          shell: bash.exe
+      - run: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
       - run:
           name: "Run Tests"
           command: yarn jest -w 1 --ci
@@ -464,24 +480,30 @@ workflows:
   build-test:
     jobs:
       - bootstrap
-      - windows_unit_tests:
-          <<: *ignore_docs
-      - lint:
+      - lint
+      - typecheck:
           requires:
             - bootstrap
+      - windows_unit_tests:
+          <<: *ignore_docs
+          requires:
+            - lint
       - unit_tests_node10:
           <<: *ignore_docs
           requires:
             - lint
+            - typecheck
             - bootstrap
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
             - lint
+            - typecheck
             - bootstrap
       - unit_tests_www:
           requires:
             - lint
+            - typecheck
             - bootstrap
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow

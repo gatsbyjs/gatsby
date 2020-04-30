@@ -219,6 +219,20 @@ const makeNodesEven = () => [
   },
 ]
 
+function make100Nodes(even) {
+  const arr = []
+
+  for (let i = 0; i < (even ? 100 : 99); ++i) {
+    arr.push({
+      id: String(i),
+      internal: { type: `Test`, contentDigest: `a${i}b` },
+      exh: i + 1,
+    })
+  }
+
+  return arr
+}
+
 function makeGqlType(nodes) {
   const { createSchemaComposer } = require(`../../schema/schema-composer`)
   const { addInferredFields } = require(`../infer/add-inferred-fields`)
@@ -572,11 +586,12 @@ it(`should use the cache argument`, async () => {
           expect(result?.length ?? 0).toEqual(
             allNodes.filter(node => node.exh < needle).length
           )
+          if (result) result.forEach(node => expect(node.exh < needle))
         }
 
         ;[`uneven`, `even`].forEach(count => {
           describe(`positional checks for count=` + count, () => {
-            for (let i = 0; i < 5; i += 0.5) {
+            for (let i = 0; i <= 5; i += 0.5) {
               it(
                 `should be able to lt anywhere in an array i=` + i.toFixed(1),
                 async () => {
@@ -588,6 +603,25 @@ it(`should use the cache argument`, async () => {
                   )
                 }
               )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5,
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
             }
           })
         })
@@ -648,11 +682,12 @@ it(`should use the cache argument`, async () => {
           expect(result?.length ?? 0).toEqual(
             allNodes.filter(node => node.exh <= needle).length
           )
+          if (result) result.forEach(node => expect(node.exh <= needle))
         }
 
         ;[`uneven`, `even`].forEach(count => {
           describe(`positional checks for count=` + count, () => {
-            for (let i = 0; i < 5; i += 0.5) {
+            for (let i = 0; i <= 5; i += 0.5) {
               it(
                 `should be able to lte anywhere in an array i=` + i.toFixed(1),
                 async () => {
@@ -664,6 +699,25 @@ it(`should use the cache argument`, async () => {
                   )
                 }
               )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5,
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
             }
           })
         })
@@ -724,11 +778,12 @@ it(`should use the cache argument`, async () => {
           expect(result?.length ?? 0).toEqual(
             allNodes.filter(node => node.exh > needle).length
           )
+          if (result) result.forEach(node => expect(node.exh > needle))
         }
 
         ;[`uneven`, `even`].forEach(count => {
           describe(`positional checks for count=` + count, () => {
-            for (let i = 0; i < 5; i += 0.5) {
+            for (let i = 0; i <= 5; i += 0.5) {
               it(
                 `should be able to gt anywhere in an array i=` + i.toFixed(1),
                 async () => {
@@ -740,6 +795,25 @@ it(`should use the cache argument`, async () => {
                   )
                 }
               )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5,
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
             }
           })
         })
@@ -800,11 +874,12 @@ it(`should use the cache argument`, async () => {
           expect(result?.length ?? 0).toEqual(
             allNodes.filter(node => node.exh >= needle).length
           )
+          if (result) result.forEach(node => expect(node.exh >= needle))
         }
 
         ;[`uneven`, `even`].forEach(count => {
           describe(`positional checks for count=` + count, () => {
-            for (let i = 0; i < 5; i += 0.5) {
+            for (let i = 0; i <= 5; i += 0.5) {
               it(
                 `should be able to gte anywhere in an array i=` + i.toFixed(1),
                 async () => {
@@ -816,6 +891,25 @@ it(`should use the cache argument`, async () => {
                   )
                 }
               )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5,
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
             }
           })
         })
