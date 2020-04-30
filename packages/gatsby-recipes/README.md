@@ -198,7 +198,7 @@ If you want to fix a bug in a resource or extend it in some way, typically you'l
 
 In your terminal, start a jest watch process against the resource you're working on e.g. for GatsbyPlugin:
 
-```js
+```bash
 GATSBY_RECIPES_NO_COLOR=true jest --testPathPattern "src/.*plugin.test" --watch
 ```
 
