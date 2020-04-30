@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.6...gatsby@2.21.7) (2020-04-30)
+
+### Bug Fixes
+
+- **gatsby:** fix binary search incorrectly setting next pivot + tests ([#23637](https://github.com/gatsbyjs/gatsby/issues/23637)) ([867cb31](https://github.com/gatsbyjs/gatsby/commit/867cb31))
+
 ## [2.21.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.5...gatsby@2.21.6) (2020-04-30)
 
 ### Performance Improvements
