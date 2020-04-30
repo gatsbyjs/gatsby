@@ -54,9 +54,8 @@ export default function PackageReadmeTemplate({
   location,
   data: { npmPackage },
 }) {
-  const { childMarkdownRemark: readmePage } = npmPackage.readme
+  const readmePage = npmPackage.readme.childMarkdownRemark
   const isOfficial = npmPackage.fields.official
-
   const packageName = npmPackage.name
 
   const githubUrl = isOfficial
@@ -136,10 +135,6 @@ export const pageQuery = graphql`
       keywords
       fields {
         official
-      }
-      lastPublisher {
-        name
-        avatar
       }
       repository {
         url
