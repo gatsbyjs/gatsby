@@ -6029,6 +6029,18 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://gatsby-starter-takeshape-startup.netlify.app
+  repo: https://github.com/colbyfayock/gatsby-starter-takeshape-startup
+  description: Integrate TakeShape CMS using a ready to go TakeShape Startup project!
+  tags:
+    - Blog
+    - CMS:Other
+    - CMS:Headless
+    - Landing Page
+    - Styling:SCSS
+  features:
+    - Integrate TakeShape CMS
+    - Preconfigured to work with the TakeShape Startup project
 - url: https://gatsby-startbootstrap-agency.netlify.app/
   repo: https://github.com/thundermiracle/gatsby-startbootstrap-agency
   description: Gatsby version of startbootstrap-agency with i18n supported.
