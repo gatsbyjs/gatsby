@@ -4,6 +4,12 @@ exports[`babel-preset-gatsby should specify proper presets and plugins when stag
 Object {
   "plugins": Array [
     Array [
+      "<PROJECT_ROOT>/packages/babel-preset-gatsby/src/optimize-hook-destructuring.ts",
+      Object {
+        "lib": true,
+      },
+    ],
+    Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
       Object {
         "loose": true,
@@ -66,6 +72,12 @@ Object {
 exports[`babel-preset-gatsby should specify proper presets and plugins when stage is build-javascript 1`] = `
 Object {
   "plugins": Array [
+    Array [
+      "<PROJECT_ROOT>/packages/babel-preset-gatsby/src/optimize-hook-destructuring.ts",
+      Object {
+        "lib": true,
+      },
+    ],
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
       Object {
@@ -134,6 +146,12 @@ exports[`babel-preset-gatsby should specify proper presets and plugins when stag
 Object {
   "plugins": Array [
     Array [
+      "<PROJECT_ROOT>/packages/babel-preset-gatsby/src/optimize-hook-destructuring.ts",
+      Object {
+        "lib": true,
+      },
+    ],
+    Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
       Object {
         "loose": true,
@@ -194,6 +212,12 @@ Object {
 exports[`babel-preset-gatsby should specify proper presets and plugins when stage is develop 1`] = `
 Object {
   "plugins": Array [
+    Array [
+      "<PROJECT_ROOT>/packages/babel-preset-gatsby/src/optimize-hook-destructuring.ts",
+      Object {
+        "lib": true,
+      },
+    ],
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
       Object {

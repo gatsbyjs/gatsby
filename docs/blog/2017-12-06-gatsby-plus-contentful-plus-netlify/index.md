@@ -58,8 +58,6 @@ my own codebase. Static sites excel at these things.
 But while static sites give you lots of perks, they do create some extra hurdles
 over going the traditional route.
 
-https://giphy.com/gifs/jump-rabbit-mixed-LfjSCQ5ivKH3q
-
 While they’re generally fast out of the box, static sites don’t make their
 content easily editable. After all, a static site’s content is usually just that
 — static. That means, traditionally, you would have to edit the page code to

@@ -58,7 +58,7 @@ exports.createTransformObject = args => {
     jpegProgressive: args.jpegProgressive || generalArgs.jpegProgressive,
     grayscale: args.grayscale || generalArgs.grayscale,
     rotate: args.rotate,
-    trim: !!args.trim,
+    trim: args.trim ? args.trim : undefined,
     duotone: args.duotone ? args.duotone : null,
     fit: args.fit,
     background: args.background,

@@ -47,7 +47,7 @@ Using the power and flexibility of React, you can create a React component to po
 ```jsx:title=src/components/seo.js
 import React from "react"
 // highlight-start
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 // highlight-end
 
@@ -82,7 +82,7 @@ This component doesn't _do_ anything yet, but it's the foundation for a useful, 
 
 ```jsx:title=src/components/seo.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 function SEO({ description, lang, meta }) {
@@ -151,7 +151,7 @@ In addition to SEO for actual _search_ engines you also want those pretty cards 
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types" // highlight-line
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
@@ -294,7 +294,7 @@ To implement this functionality, you need to do the following:
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
