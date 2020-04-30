@@ -128,7 +128,6 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
           },
           {
             target: `checkingForMutatedNodes`,
-            actions: log(() => `checking mutatted`),
           },
         ],
         // onError,
@@ -141,7 +140,6 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
           {
             target: `waitingForJobs`,
             cond: (context): boolean => !context.nodesMutatedDuringQueryRun,
-            actions: log(() => `nothing mutated`),
           },
           // Nodes were mutated. Starting again.
           {

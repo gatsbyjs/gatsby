@@ -28,7 +28,6 @@ export const callRealApi = async (
     return null
   }
   const { type, payload } = event
-  console.log(`calling real api`, type, (payload as any[])?.[0]?.internal?.type)
   if (type in actions) {
     return actions[type](...payload)(store.dispatch.bind(store))
   }
