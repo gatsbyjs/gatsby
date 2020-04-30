@@ -6041,6 +6041,29 @@
   features:
     - Integrate TakeShape CMS
     - Preconfigured to work with the TakeShape Startup project
+- url: https://gatsby-startbootstrap-agency.netlify.app/
+  repo: https://github.com/thundermiracle/gatsby-startbootstrap-agency
+  description: Gatsby version of startbootstrap-agency with i18n supported.
+  tags:
+    - Portfolio
+    - PWA
+    - SEO
+    - Gallery
+    - Landing Page
+    - Onepage
+    - Markdown
+    - Netlify
+    - Styling:Bootstrap
+    - i18n
+    - Netlify
+    - Linting
+  features:
+    - Easily Configurable
+    - Different types of sections
+    - i18n
+    - SEO
+    - Google Analytics
+    - Prettier, ESLint
 - url: https://gatsby-typescript-tailwind-twin-styled-component-starter.netlify.app/
   repo: https://github.com/DevHausStudio/Gatsby-Typescript-Tailwind-Twin-Styled-Component-Starter
   description: Barebones and lightweight starter with TypeScript, Styled-Components, TailwindCSS, Twin Macro.
@@ -6081,3 +6104,24 @@
     - Snipcart e-commerce starter
     - Flotiq CMS as a product source
     - Deploy to Heroku
+- url: https://gatsby-markdown-personal-website.netlify.app/
+  repo: https://github.com/SaimirKapaj/gatsby-markdown-personal-website
+  description: Gatsby Markdown Personal Website Starter, using Styled Components, Tailwindcss and Framer Motion.
+  tags:
+    - Blog
+    - Portfolio
+    - Markdown
+    - Styling:Tailwind
+  features:
+    - Markdown
+    - Framer Motion
+    - Page Transition
+    - Styled Components
+    - Tailwind CSS
+    - Removes unused CSS with Purgecss
+    - Font Awesome Icons
+    - Responsive Design
+    - SEO
+    - React Helmet
+    - Offline Support
+    - Gatsby Image
