@@ -188,9 +188,11 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 ## How to set up your development environment to work on Gatsby Recipes core
 
-First [follow the instructions on setting up a local Gatsby dev environment](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/).
+The Gatsby recipes codebase consists of the core framework, code for each resource, and the MDX source.
 
-### Resources
+### Work on Resources & the core framework
+
+First [follow the instructions on setting up a local Gatsby dev environment](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/).
 
 If you want to fix a bug in a resource or extend it in some way, typically you'll be working against the tests for that resource.
 
