@@ -192,7 +192,7 @@ First [follow the instructions on setting up a local Gatsby dev environment](htt
 
 ### Resources
 
-If you want to fix a bug in a resource or extend it in some way, typically you'll be working against their tests.
+If you want to fix a bug in a resource or extend it in some way, typically you'll be working against the tests for that resource.
 
 Start in the terminal a jest watch process against the resource you're working on e.g. for GatsbyPlugin:
 
