@@ -71,6 +71,10 @@ export const introspectionQuery = gql`
           ofType {
             kind
             name
+            ofType {
+              kind
+              name
+            }
           }
         }
         fields {
@@ -90,6 +94,10 @@ export const introspectionQuery = gql`
               ofType {
                 kind
                 name
+                ofType {
+                  kind
+                  name
+                }
               }
             }
           }

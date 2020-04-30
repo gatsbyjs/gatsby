@@ -1,3 +1,5 @@
+import { findTypeName } from "~/steps/create-schema-customization/helpers"
+
 const remoteSchema = {
   state: {
     // @todo rename queries to nodeQueries
@@ -57,7 +59,7 @@ const remoteSchema = {
     },
 
     addFetchedType(state, type) {
-      const key = type.name || type.ofType.name || type.ofType?.ofType?.name
+      const key = findTypeName(type)
 
       if (!key) {
         return state

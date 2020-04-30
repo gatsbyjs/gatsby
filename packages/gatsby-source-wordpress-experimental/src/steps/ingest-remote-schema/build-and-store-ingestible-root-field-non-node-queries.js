@@ -1,7 +1,10 @@
 import store from "~/store"
 import recursivelyTransformFields from "~/steps/ingest-remote-schema/build-queries-from-introspection/recursively-transform-fields"
 import { buildSelectionSet } from "~/steps/ingest-remote-schema/build-queries-from-introspection/build-query-on-field-name"
-import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
+import {
+  getTypeSettingsByType,
+  findTypeName,
+} from "~/steps/create-schema-customization/helpers"
 
 const buildNonNodeQueries = async () => {
   const {
@@ -19,11 +22,7 @@ const buildNonNodeQueries = async () => {
       continue
     }
 
-    const type =
-      typeMap.get(field.type.name) ||
-      typeMap.get(field.type.ofType.name) ||
-      typeMap.get(field.type.ofType?.ofType?.name)
-
+    const type = typeMap.get(findTypeName(field.type))
     const typeSettings = type ? getTypeSettingsByType(type) : {}
 
     if (typeSettings.exclude) {

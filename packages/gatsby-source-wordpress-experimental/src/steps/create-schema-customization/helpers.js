@@ -22,22 +22,32 @@ export const buildTypeName = name => {
   return prefix + name
 }
 
+/**
+ * Find the first type name of a Type definition pulled via introspection
+ * @param {object} type
+ */
+export const findTypeName = type =>
+  type?.name ||
+  type?.ofType?.name ||
+  type?.ofType?.ofType?.name ||
+  type?.ofType?.ofType?.ofType?.name
+
+/**
+ * Find the first type kind of a Type definition pulled via introspection
+ * @param {object} type
+ */
+export const findTypeKind = type =>
+  type?.kind ||
+  type?.ofType?.kind ||
+  type?.ofType?.ofType?.kind ||
+  type?.ofType?.ofType?.ofType?.kind
+
 export const fieldOfTypeWasFetched = type => {
   const { fetchedTypes } = store.getState().remoteSchema
+  const typeName = findTypeName(type)
+  const typeWasFetched = !!fetchedTypes.get(typeName)
 
-  if (fetchedTypes.get(type.name)) {
-    return true
-  }
-
-  if (type.ofType && fetchedTypes.get(type.ofType.name)) {
-    return true
-  }
-
-  if (type?.ofType?.ofType && fetchedTypes.get(type.ofType.ofType.name)) {
-    return true
-  }
-
-  return false
+  return typeWasFetched
 }
 
 const supportedScalars = [
@@ -53,24 +63,16 @@ const supportedScalars = [
 export const typeIsABuiltInScalar = type =>
   // @todo the next function and this one are redundant.
   // see the next todo on how to fix the issue. If that todo is resolved, these functions will be identical. :(
-  supportedScalars.includes(
-    type.name || type.ofType.name || type.ofType?.ofType?.name
-  )
+  supportedScalars.includes(findTypeName(type))
 
 export const typeIsASupportedScalar = type => {
-  if (
-    type.kind !== `SCALAR` ||
-    type?.ofType?.kind !== `SCALAR` ||
-    type?.ofType?.ofType?.kind !== `SCALAR`
-  ) {
+  if (findTypeKind(type) !== `SCALAR`) {
     // @todo returning true here seems wrong since a type that is not a scalar can't be a supported scalar... so there is some other logic elsewhere that is wrong
     // making this return false causes errors in the schema
     return true
   }
 
-  return supportedScalars.includes(
-    type.name || type.ofType.name || type.ofType?.ofType?.name
-  )
+  return supportedScalars.includes(findTypeName(type))
 }
 
 // retrieves plugin settings for the provided type
@@ -80,16 +82,9 @@ export const getTypeSettingsByType = type => {
   }
 
   const typeSettings = store.getState().gatsbyApi.pluginOptions.type
+  const thisTypeSettings = typeSettings[findTypeName(type)] || {}
 
-  if (typeSettings[type.name]) {
-    return typeSettings[type.name]
-  }
-
-  if (type.ofType && typeSettings[type.ofType.name]) {
-    return typeSettings[type.ofType.name]
-  }
-
-  return {}
+  return thisTypeSettings
 }
 
 export const filterObjectType = (objectType, typeBuilderApi) => {

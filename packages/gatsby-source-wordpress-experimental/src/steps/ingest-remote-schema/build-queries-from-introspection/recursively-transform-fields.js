@@ -1,5 +1,8 @@
 import store from "~/store"
-import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
+import {
+  getTypeSettingsByType,
+  findTypeName,
+} from "~/steps/create-schema-customization/helpers"
 import { fieldIsExcludedOnParentType } from "~/steps/ingest-remote-schema/is-excluded"
 import { returnAliasedFieldName } from "~/steps/create-schema-customization/transform-fields"
 
@@ -151,7 +154,7 @@ function transformField({
       fieldType,
     }
   } else if (fieldType.kind === `LIST`) {
-    const listOfType = typeMap.get(ofType.name || ofType.ofType.name)
+    const listOfType = typeMap.get(findTypeName(fieldType))
 
     const transformedFields = recursivelyTransformFields({
       fields: listOfType.fields,
@@ -212,13 +215,14 @@ function transformField({
     }
   }
 
-  const typeInfo = typeMap.get(fieldType.name)
+  const typeInfo = typeMap.get(findTypeName(fieldType))
 
   const { fields } = typeInfo || {}
 
   if (fields) {
     const transformedFields = recursivelyTransformFields({
       parentType: fieldType,
+      parentFieldName: field.name,
       fields,
       depth,
     })
@@ -262,7 +266,12 @@ function transformField({
   return false
 }
 
-const recursivelyTransformFields = ({ fields, parentType, depth = 0 }) => {
+const recursivelyTransformFields = ({
+  fields,
+  parentType,
+  parentFieldName,
+  depth = 0,
+}) => {
   const {
     gatsbyApi: { pluginOptions },
     remoteSchema: { fieldBlacklist, fieldAliases, typeMap, gatsbyNodesInfo },
@@ -276,32 +285,32 @@ const recursivelyTransformFields = ({ fields, parentType, depth = 0 }) => {
     return null
   }
 
-  return fields
-    ? fields
-        .filter(
-          field =>
-            !fieldIsExcludedOnParentType({ pluginOptions, field, parentType })
-        )
-        .map(field => {
-          const transformedField = transformField({
-            maxDepth: queryDepth,
-            gatsbyNodesInfo,
-            fieldBlacklist,
-            fieldAliases,
-            typeMap,
-            field,
-            depth,
-          })
+  const recursivelyTransformedFields = fields
+    ?.filter(
+      field =>
+        !fieldIsExcludedOnParentType({ pluginOptions, field, parentType })
+    )
+    .map(field => {
+      const transformedField = transformField({
+        maxDepth: queryDepth,
+        gatsbyNodesInfo,
+        fieldBlacklist,
+        fieldAliases,
+        typeMap,
+        field,
+        depth,
+      })
 
-          if (transformedField) {
-            // save this type so we know to use it in schema customization
-            store.dispatch.remoteSchema.addFetchedType(field.type)
-          }
+      if (transformedField) {
+        // save this type so we know to use it in schema customization
+        store.dispatch.remoteSchema.addFetchedType(field.type)
+      }
 
-          return transformedField
-        })
-        .filter(Boolean)
-    : null
+      return transformedField
+    })
+    .filter(Boolean)
+
+  return fields ? recursivelyTransformedFields : null
 }
 
 export default recursivelyTransformFields
