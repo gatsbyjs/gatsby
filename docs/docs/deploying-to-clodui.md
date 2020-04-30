@@ -4,15 +4,19 @@ title: Deploying to Clodui
 
 [Clodui] is a static hosting service; Clodui automatically optimizes your website files for speed. This guide explains how to deploy your Gatsby website to Clodui.
 
-Below is the list of features Clodui support to improve your website speed and development efforts.
+Clodui supports the following features to improve your website speed and development efforts :
 
-- Your website served from a global CDN to reduce network latency.
-- Compress your files to Brotli or GZip and serve it based on the browser support.
+- Serves a website served from a global CDN to reduce network latency.
+- Compresses files to Brotli or GZip and serve it based on the browser support.
 - Minifies all your HTML, CSS and JavaScript files.
 - Generates [WebP](https://developers.google.com/speed/webp) version of all your images. Images then served based on browser support.
-- Dynamic image resizes support based on `Client-Hint` headers or query string parameters.
+- Handles dynamic image resizes based on `Client-Hint` headers or query string parameters.
 - Automatic form submission handling with support for webhook integration.
 - Deployments are atomic with support for instant rollback.
+
+**Prerequisites :**
+
+- Your Gatsby website is setup and ready to deploy
 
 ## Steps to get started
 
@@ -21,13 +25,27 @@ Follow these steps to deploy your website to Clodui.
 1. [Sign up](https://app.clodui.com/auth/signup) to create an account using your email and password.  
    _**Note :** Don't use social login like Google or Facebook to sign up because Clodui CLI doesn't support it yet._
 2. Install the [Clodui CLI]:
-   ```bash
+   ```shell
    npm install @clodui/cli -g
    ```
-3. Add environment variables `CLODUI_USERNAME`, `CLODUI_PASSWORD` and assign with Clodui username and password respectively.
+3. Set environment variables `CLODUI_USERNAME`, `CLODUI_PASSWORD` with Clodui username and password respectively.
+   In Linux/macOS terminal this can be done by:
+
+   ```shell
+   export CLODUI_USERNAME=<Clodui username>
+   export CLODUI_PASSWORD=<Clodui password>
+   ```
+
+   On Windows command prompt this can be done by:
+
+   ```batch
+   SET CLODUI_USERNAME=<Clodui username>
+   SET CLODUI_PASSWORD=<Clodui password>
+   ```
+
 4. To create your Clodui website from Gatsby output directory `public`; run this command from the root of your Gatsby project:
 
-   ```bash
+   ```shell
    clodui website create --source-dir public
    ```
 
@@ -35,13 +53,13 @@ Follow these steps to deploy your website to Clodui.
 
    If the deployment is in progress, wait for the deployment to finish. To check the latest website status, run the following command.
 
-   ```bash
+   ```shell
    clodui website status --website-id <Clodui website id>
    ```
 
 5. After your website created, to deploy new changes from `public` directory, run the following command.
 
-   ```bash
+   ```shell
    clodui deploy create --website-id <Clodui website id> --source-dir public --publish
    ```
 
@@ -54,7 +72,7 @@ Follow these steps to deploy your website to Clodui.
 
 To enable continuous deployment, add this to your GitHub workflow file as a next step after building the Gatsby website.
 
-```yml
+```yaml
 - name: Deploy to Clodui
   uses: clodui/actions-cli@v2.0
   with:
