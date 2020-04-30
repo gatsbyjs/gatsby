@@ -21,7 +21,7 @@ const {
   findLastTextNode,
 } = require(`./hast-processing`)
 const codeHandler = require(`./code-handler`)
-const { timeToRead } = require(`./utils/time-to-read`)
+const { calculateTimeToRead } = require(`./utils/time-to-read`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -112,6 +112,7 @@ module.exports = (
         heading: null,
         maxDepth: 6,
       },
+      timeToRead = null,
     } = pluginOptions
     const tocOptions = tableOfContents
     const remarkOptions = {
@@ -165,35 +166,21 @@ module.exports = (
       }
     }
 
-    async function getMarkdownAST(markdownNode) {
-      if (process.env.NODE_ENV !== `production` || !fileNodes) {
-        fileNodes = getNodesByType(`File`)
+    // Parse a markdown string and its AST representation,
+    // applying the remark plugins if necesserary
+    async function parseString(string, markdownNode) {
+      // compiler to inject in the remark plugins
+      // so that they can use our parser/generator
+      // with all the options and plugins from the user
+      const compiler = {
+        parseString: string => parseString(string, markdownNode),
+        generateHTML: ast =>
+          hastToHTML(markdownASTToHTMLAst(ast), {
+            allowDangerousHTML: true,
+          }),
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
-        const requiredPlugin = require(plugin.resolve)
-        if (_.isFunction(requiredPlugin.mutateSource)) {
-          return requiredPlugin.mutateSource(
-            {
-              markdownNode,
-              files: fileNodes,
-              getNode,
-              reporter,
-              cache: getCache(plugin.name),
-              getCache,
-              compiler: {
-                parseString: remark.parse.bind(remark),
-                generateHTML: getHTML,
-              },
-              ...rest,
-            },
-            plugin.pluginOptions
-          )
-        } else {
-          return Promise.resolve()
-        }
-      })
-      const markdownAST = remark.parse(markdownNode.internal.content)
+
+      const markdownAST = remark.parse(string)
 
       if (basePath) {
         // Ensure relative links include `pathPrefix`
@@ -232,10 +219,7 @@ module.exports = (
               reporter,
               cache: getCache(plugin.name),
               getCache,
-              compiler: {
-                parseString: remark.parse.bind(remark),
-                generateHTML: getHTML,
-              },
+              compiler,
               ...rest,
             },
             plugin.pluginOptions
@@ -246,6 +230,38 @@ module.exports = (
       })
 
       return markdownAST
+    }
+
+    async function getMarkdownAST(markdownNode) {
+      if (process.env.NODE_ENV !== `production` || !fileNodes) {
+        fileNodes = getNodesByType(`File`)
+      }
+
+      // Execute the remark plugins that can mutate the node
+      // before parsing its content
+      //
+      // Use Bluebird's Promise function "each" to run remark plugins serially.
+      await Promise.each(pluginOptions.plugins, plugin => {
+        const requiredPlugin = require(plugin.resolve)
+        if (_.isFunction(requiredPlugin.mutateSource)) {
+          return requiredPlugin.mutateSource(
+            {
+              markdownNode,
+              files: fileNodes,
+              getNode,
+              reporter,
+              cache: getCache(plugin.name),
+              getCache,
+              ...rest,
+            },
+            plugin.pluginOptions
+          )
+        } else {
+          return Promise.resolve()
+        }
+      })
+
+      return parseString(markdownNode.internal.content, markdownNode)
     }
 
     async function getHeadings(markdownNode) {
@@ -281,7 +297,7 @@ module.exports = (
 
         let toc
         if (tocAst.map) {
-          const addSlugToUrl = function(node) {
+          const addSlugToUrl = function (node) {
             if (node.url) {
               if (
                 _.get(markdownNode, appliedTocOptions.pathToSlugField) ===
@@ -323,16 +339,20 @@ module.exports = (
       }
     }
 
+    function markdownASTToHTMLAst(ast) {
+      return toHAST(ast, {
+        allowDangerousHTML: true,
+        handlers: { code: codeHandler },
+      })
+    }
+
     async function getHTMLAst(markdownNode) {
       const cachedAst = await cache.get(htmlAstCacheKey(markdownNode))
       if (cachedAst) {
         return cachedAst
       } else {
         const ast = await getAST(markdownNode)
-        const htmlAst = toHAST(ast, {
-          allowDangerousHTML: true,
-          handlers: { code: codeHandler },
-        })
+        const htmlAst = markdownASTToHTMLAst(ast)
 
         // Save new HTML AST to cache and return
         cache.set(htmlAstCacheKey(markdownNode), htmlAst)
@@ -341,9 +361,7 @@ module.exports = (
     }
 
     async function getHTML(markdownNode) {
-      const shouldCache = markdownNode && markdownNode.internal
-      const cachedHTML =
-        shouldCache && (await cache.get(htmlCacheKey(markdownNode)))
+      const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
       if (cachedHTML) {
         return cachedHTML
       } else {
@@ -353,10 +371,8 @@ module.exports = (
           allowDangerousHTML: true,
         })
 
-        if (shouldCache) {
-          // Save new HTML to cache
-          cache.set(htmlCacheKey(markdownNode), html)
-        }
+        // Save new HTML to cache
+        cache.set(htmlCacheKey(markdownNode), html)
 
         return html
       }
@@ -443,9 +459,7 @@ module.exports = (
         truncate,
         excerptSeparator,
       })
-      var excerptMarkdown = unified()
-        .use(stringify)
-        .stringify(excerptAST)
+      var excerptMarkdown = unified().use(stringify).stringify(excerptAST)
       return excerptMarkdown
     }
 
@@ -604,7 +618,9 @@ module.exports = (
       timeToRead: {
         type: `Int`,
         resolve(markdownNode) {
-          return getHTML(markdownNode).then(timeToRead)
+          return getHTML(markdownNode).then(html =>
+            calculateTimeToRead(markdownNode, html, timeToRead)
+          )
         },
       },
       tableOfContents: {
@@ -635,12 +651,7 @@ module.exports = (
 
           unified()
             .use(parse)
-            .use(
-              remark2retext,
-              unified()
-                .use(english)
-                .use(count)
-            )
+            .use(remark2retext, unified().use(english).use(count))
             .use(stringify)
             .processSync(markdownNode.internal.content)
 

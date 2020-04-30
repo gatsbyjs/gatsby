@@ -78,3 +78,5 @@ Using Gatsby together with Drupal offers a powerful, full-featured, open-source,
 - Take a [free course on building a Gatsby site with Drupal](https://gatsbyguides.com/).
 - Read [Gatsby blog posts on Gatsby + Drupal](/blog/tags/drupal/).
 - Watch a [video series on getting started with Gatsby and Drupal](https://www.youtube.com/playlist?list=PL-Ve2ZZ1kZNT9BhQMMI9jUySfdnQ8-S3n).
+
+<CloudCallout />

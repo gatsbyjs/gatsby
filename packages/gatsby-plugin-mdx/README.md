@@ -128,6 +128,7 @@ scope, and more.
 | [`rehypePlugins`](#rehype-plugins)                                        | `[]`                                   | Specify rehype plugins                                                |
 | [`mediaTypes`](#media-types)                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                      |
 | [`shouldBlockNodeFromTransformation`](#shouldblocknodefromtransformation) | `(node) => false`                      | Disable MDX transformation for nodes where this function returns true |
+| [`timeToRead`](#time-to-read)                                             | `wordCount => wordCount / 265`         | Calculate `timeToRead` from the word count, html, and raw MDX content |
 
 #### Extensions
 
@@ -456,6 +457,27 @@ module.exports = {
 }
 ```
 
+#### Time to read
+
+Calculating the time to read a Markdown document based on the word
+count or Markdown node. This is useful for customizing the time to
+read a document based on a faster or slower words per minute reading
+rate or by custom heuristics based on the markdown node.
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        timeToRead: (wordCount, html, rawMDX) => wordCount / 42,
+      },
+    },
+  ],
+}
+```
+
 ### Components
 
 MDX and `gatsby-plugin-mdx` use components for different things like rendering
@@ -560,6 +582,22 @@ export const pageQuery = graphql`
     }
   }
 `
+```
+
+## Troubleshooting
+
+### Excerpts for non-latin languages
+
+By default, `excerpt` uses `underscore.string/prune` which doesn't handle non-latin characters ([https://github.com/epeli/underscore.string/issues/418](https://github.com/epeli/underscore.string/issues/418)).
+
+If that is the case, you can set `truncate` option on `excerpt` field, like:
+
+```graphql
+{
+  markdownRemark {
+    excerpt(truncate: true)
+  }
+}
 ```
 
 ## License

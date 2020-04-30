@@ -1,11 +1,12 @@
 const log4js = require(`log4js`)
 const shell = require(`shelljs`)
-const { graphql } = require(`@octokit/graphql`)
+const { graphql: baseGraphql } = require(`@octokit/graphql`)
 let logger = log4js.getLogger(`sync`)
 
 require(`dotenv`).config()
 
-const host = `https://github.com`
+const token = process.env.GITHUB_API_TOKEN
+const host = `https://${token}@github.com`
 const cacheDir = `.cache`
 const owner = `gatsbyjs`
 const repoBase = `gatsby`
@@ -34,6 +35,21 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
   }
 }
 
+// Run the query and exit if there are errors
+async function graphql(query, params) {
+  const graphqlWithAuth = baseGraphql.defaults({
+    headers: {
+      authorization: `token ${token}`,
+    },
+  })
+  try {
+    return await graphqlWithAuth(query, params)
+  } catch (error) {
+    logger.error(error.message)
+    return process.exit(1)
+  }
+}
+
 async function getRepository(owner, name) {
   const { repository } = await graphql(
     `
@@ -52,9 +68,6 @@ async function getRepository(owner, name) {
       }
     `,
     {
-      headers: {
-        authorization: `token ${process.env.GITHUB_ADMIN_AUTH_TOKEN}`,
-      },
       owner,
       name,
       syncLabel: syncLabelName,
@@ -76,7 +89,6 @@ async function createLabel(input) {
     `,
     {
       headers: {
-        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
         accept: `application/vnd.github.bane-preview+json`,
       },
       input,
@@ -99,7 +111,6 @@ async function createPullRequest(input) {
     `,
     {
       headers: {
-        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
         accept: `application/vnd.github.shadow-cat-preview+json`,
       },
       input,
@@ -119,7 +130,6 @@ async function addLabelToPullRequest(pullRequest, label) {
     `,
     {
       headers: {
-        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
         accept: `application/vnd.github.bane-preview+json`,
       },
       input: {
@@ -232,7 +242,7 @@ async function syncTranslationRepo(code) {
   // Remove files that are deleted by upstream
   // https://stackoverflow.com/a/54232519
   shell.exec(`git diff --name-only --diff-filter=U | xargs git rm`)
-  shell.exec(`git ci --no-edit`)
+  shell.exec(`git commit --no-edit`)
 
   shell.exec(`git push -u origin ${syncBranch}`)
 
@@ -246,6 +256,7 @@ async function syncTranslationRepo(code) {
     body: syncPRBody(),
     maintainerCanModify: true,
   })
+  await addLabelToPullRequest(syncPR, syncLabel)
 
   // if we successfully publish the PR, pull again and create a new PR --
   shell.exec(`git checkout master`)
@@ -322,9 +333,6 @@ async function syncTranslationRepo(code) {
     maintainerCanModify: true,
     draft: true,
   })
-
-  logger.info(`Adding ${syncLabelName} labels to created pull requests...`)
-  await addLabelToPullRequest(syncPR, syncLabel)
   await addLabelToPullRequest(conflictsPR, syncLabel)
 }
 

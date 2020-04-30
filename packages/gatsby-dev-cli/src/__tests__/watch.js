@@ -183,6 +183,7 @@ describe(`watching`, () => {
 })
 
 const monoRepoPackages = [
+  `babel-plugin-optimize-hook-destructuring`,
   `babel-plugin-remove-graphql-queries`,
   `babel-preset-gatsby`,
   `babel-preset-gatsby-package`,

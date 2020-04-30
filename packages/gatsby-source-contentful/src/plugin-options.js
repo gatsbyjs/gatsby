@@ -25,12 +25,8 @@ const createPluginConfig = pluginOptions => {
 }
 
 const optionsSchema = Joi.object().keys({
-  accessToken: Joi.string()
-    .required()
-    .empty(),
-  spaceId: Joi.string()
-    .required()
-    .empty(),
+  accessToken: Joi.string().required().empty(),
+  spaceId: Joi.string().required().empty(),
   host: Joi.string().empty(),
   environment: Joi.string().empty(),
   downloadLocal: Joi.boolean(),
