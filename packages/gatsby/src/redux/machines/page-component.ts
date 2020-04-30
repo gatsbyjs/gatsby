@@ -137,7 +137,8 @@ const compoenentMachine = machine<IContext>(
         }
       }),
       setBootstrapFinished: assign({
-        isInBootstrap: false
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        isInBootstrap: (_ctx, _event): boolean => false
       })
     }
   }
