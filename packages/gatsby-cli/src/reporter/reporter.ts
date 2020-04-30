@@ -65,11 +65,11 @@ class Reporter {
   /**
    * Log arguments and exit process with status 1.
    */
-  panic = (errorMeta: ErrorMeta, error?: Error | Error[]): void => {
+  panic = (errorMeta: ErrorMeta, error?: Error | Error[]): never => {
     const reporterError = this.error(errorMeta, error)
     trackError(`GENERAL_PANIC`, { error: reporterError })
     prematureEnd()
-    process.exit(1)
+    return process.exit(1)
   }
 
   panicOnBuild = (
