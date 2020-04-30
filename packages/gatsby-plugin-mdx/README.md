@@ -369,14 +369,15 @@ processing pipeline](https://mdxjs.com/plugins). It enables the use of
 plugins](https://github.com/remarkjs/remark/blob/master/doc/plugins.md)
 for processing MDX content.
 
-**Warning:** Some remark plugins may not work as expected. Verify that the
-plugin works as expected, and if it doesn't, try searching for an alternative on
+**Warning:** If you're using MDX < v2, some remark plugins may not work as
+expected. Verify that the plugin works as expected, and if it doesn't, try
+searching for an alternative on
 [Gatsby Plugins](https://www.gatsbyjs.org/plugins/), using the remark plugin
 name as search terms.
 
 For example, consider `remark-external-links`. It is supposed to add a rel
 attribute on external links, but
-[using it with `gatsby-plugin-mdx` generates invalid rels](https://github.com/gatsbyjs/gatsby/issues/22719).
+[using it with `gatsby-plugin-mdx` with MDX v1 generates invalid rels](https://github.com/gatsbyjs/gatsby/issues/22719).
 Searching for a replacement leads to
 [`gatsby-remark-external-links`](https://www.gatsbyjs.org/packages/gatsby-remark-external-links/),
 which solves the issue.
