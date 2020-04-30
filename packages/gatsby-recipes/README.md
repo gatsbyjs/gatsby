@@ -22,7 +22,7 @@ https://github.com/gatsbyjs/gatsby/issues/22991
 
 ## Get set up for running Recipes
 
-Recipes is a new rapidly developing feature. To use it, upgrade the global gatsby-cli package to the latest.
+Recipes is a new rapidly developing feature. To use it, upgrade your global gatsby-cli package to the latest.
 
 ```shell
 npm install -g gatsby-cli@latest
