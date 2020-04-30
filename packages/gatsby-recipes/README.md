@@ -186,7 +186,7 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 > Note that this content is stored in a [GitHub gist](https://gist.github.com/). When linking to a gist you'll want to click on the "Raw" button and copy the URL from that page.
 
-## How to setup development environment to work on Gatsby Recipes core
+## How to set up your development environment to work on Gatsby Recipes core
 
 First [follow the instructions on setting up a local Gatsby dev environment](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/).
 
