@@ -6118,18 +6118,6 @@
     - Snipcart e-commerce starter
     - Flotiq CMS as a product source
     - Deploy to Heroku
-- url: https://flotiq-starter-recipes.herokuapp.com
-  repo: https://github.com/flotiq/gatsby-starter-recipes
-  description: A Gatsby culinary starter with recipes sourced from Flotiq.
-  tags:
-    - CMS:Headless
-    - Gallery
-    - Pagination
-    - CMS:Other
-  features:
-    - Recipes starter
-    - Culinary recipes
-    - Flotiq CMS as a recipe source
 - url: https://gatsby-markdown-personal-website.netlify.app/
   repo: https://github.com/SaimirKapaj/gatsby-markdown-personal-website
   description: Gatsby Markdown Personal Website Starter, using Styled Components, Tailwindcss and Framer Motion.
@@ -6151,3 +6139,15 @@
     - React Helmet
     - Offline Support
     - Gatsby Image
+- url: https://flotiq-starter-recipes.herokuapp.com
+  repo: https://github.com/flotiq/gatsby-starter-recipes
+  description: A Gatsby culinary starter with recipes sourced from Flotiq.
+  tags:
+    - CMS:Headless
+    - Gallery
+    - Pagination
+    - CMS:Other
+  features:
+    - Recipes starter
+    - Culinary recipes
+    - Flotiq CMS as a recipe source
