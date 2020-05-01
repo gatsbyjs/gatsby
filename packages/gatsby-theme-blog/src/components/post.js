@@ -7,6 +7,7 @@ import SEO from "./seo"
 import PostTitle from "./post-title"
 import PostDate from "./post-date"
 import PostFooter from "./post-footer"
+import PostHero from "./post-hero"
 
 const Post = ({
   data: {
@@ -27,6 +28,7 @@ const Post = ({
       keywords={post.keywords}
     />
     <main>
+      <PostHero post={post} />
       <PostTitle>{post.title}</PostTitle>
       <PostDate>{post.date}</PostDate>
       <MDXRenderer>{post.body}</MDXRenderer>
