@@ -55,7 +55,13 @@ export const fieldTransformers = [
 
       return {
         type: `[${normalizedType}!]!`,
-        resolve: source => source,
+        resolve: source => {
+          if (!source || !source.length) {
+            return []
+          }
+
+          return source
+        },
       }
     },
   },
