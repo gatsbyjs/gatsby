@@ -21,7 +21,9 @@ A simple layout would live at `src/layouts/index.js` and might contain the follo
 ```jsx
 import React from "react"
 
-export default ({ children }) => <div className="app-wrapper">{children()}</div>
+export default function Layout({ children }) {
+  return <div className="app-wrapper">{children()}</div>
+}
 ```
 
 Our app also might have a home page at `src/pages/index.js` that looks like this:
@@ -29,7 +31,9 @@ Our app also might have a home page at `src/pages/index.js` that looks like this
 ```jsx
 import React from "react"
 
-export default () => <h1>I’m in a layout?</h1>
+export default function Home() {
+  return <h1>I’m in a layout?</h1>
+}
 ```
 
 Once we start the app, we’ll see the following in the browser console:
@@ -55,7 +59,9 @@ If we upgrade our simplified app by running `yarn add gatsby react react-dom` (s
 ```jsx
 import React from "react"
 
-export default ({ children }) => <div className="app-wrapper">{children}</div>
+export default function Layout({ children }) {
+  return <div className="app-wrapper">{children}</div>
+}
 ```
 
 Next, in `src/pages/index.js` we need to explicitly include the `Layout` component and wrap our page in it:
@@ -64,7 +70,7 @@ Next, in `src/pages/index.js` we need to explicitly include the `Layout` compone
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => (
+export default function Home() (
   <Layout>
     <h1>I’m in a layout!</h1>
   </Layout>

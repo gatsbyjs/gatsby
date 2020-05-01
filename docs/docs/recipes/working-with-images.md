@@ -35,7 +35,7 @@ import FiestaImg from "../assets/fiesta.jpg" // highlight-line
 import React from "react"
 import FiestaImg from "../assets/fiesta.jpg"
 
-export default () => (
+export default function Home() (
   // The import result is the URL of your image
   <img src={FiestaImg} alt="A dog smiling in a party hat" /> // highlight-line
 )
@@ -83,7 +83,7 @@ This is an **escape route** for [specific use cases](/docs/static-folder/#when-t
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => (
+export default function Home() (
   <img src={`fiesta.jpg`} alt="A dog smiling in a party hat" /> // highlight-line
 )
 ```
@@ -353,7 +353,7 @@ import React from "react"
 import { graphql } from "gatsby" // highlight-line
 import Img from "gatsby-image" // highlight-line
 
-export default ({ children, data }) => (
+export default function Layout({ children, data }) (
   <main>
     // highlight-start
     <Img

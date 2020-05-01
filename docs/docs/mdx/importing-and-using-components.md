@@ -43,7 +43,7 @@ import { Message } from "theme-ui"
 
 const shortcodes = { Chart, Pullquote, Message } // highlight-line
 
-export default ({ children }) => (
+export default function Layout({ children }) (
   <MDXProvider components={shortcodes}>{children}</MDXProvider> // highlight-line
 )
 ```

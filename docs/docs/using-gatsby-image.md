@@ -92,7 +92,7 @@ import React from "react"
 import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function MyDogs({ data }) {
   return (
     <Layout>
       <h1>I love my corgi!</h1>
@@ -129,7 +129,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Img from "gatsby-image" // highlight-line
 
-export default ({ data }) => {
+export default function MyDogs({ data }) {
   return (
     <Layout>
       <h1>I love my corgi!</h1>

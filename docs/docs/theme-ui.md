@@ -135,19 +135,21 @@ The [`sx` prop][] is used to style elements by referencing values from the theme
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-export default props => (
-  <header
-    sx={{
-      // this uses the value from `theme.space[4]`
-      padding: 4,
-      // these use values from `theme.colors`
-      color: "background",
-      backgroundColor: "primary",
-    }}
-  >
-    {props.children}
-  </header>
-)
+export default function Header(props) {
+  return (
+    <header
+      sx={{
+        // this uses the value from `theme.space[4]`
+        padding: 4,
+        // these use values from `theme.colors`
+        color: "background",
+        backgroundColor: "primary",
+      }}
+    >
+      {props.children}
+    </header>
+  )
+}
 ```
 
 ## Using Theme UI in a Gatsby theme

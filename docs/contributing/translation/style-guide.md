@@ -49,7 +49,7 @@ Leave text in code blocks untranslated except for comments. You may optionally t
 ```jsx
 // Ejemplo
 import React from "react"
-export default () => (
+export default function HelloGatsby() (
   <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
 )
 ```
@@ -59,7 +59,7 @@ export default () => (
 ```jsx
 // Ejemplo
 import React from "react"
-export default () => (
+export default function HelloGatsby() (
   <div style={{ color: `purple`, fontSize: `72px` }}>¡Hola Gatsby!</div>
 )
 ```
@@ -69,7 +69,7 @@ export default () => (
 ```jsx
 // Ejemplo
 import React from "react"
-export default () => (
+export default HelloGatsby()(
   // 'purple' is a CSS keyword
   <div style={{ color: `morado`, fontSize: `72px` }}>¡Hola Gatsby!</div>
 )
@@ -79,7 +79,7 @@ export default () => (
 
 ```jsx
 importar Reaccionar desde "reaccionar"
-exportar defecto () => (
+exportar defecto funcion HelloGatsby() (
    <div estilo = {{color: `morado`, fontSize:` 72px`}}> ¡Hola Gatsby! </div>
 )
 ```

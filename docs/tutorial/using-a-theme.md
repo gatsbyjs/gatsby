@@ -96,7 +96,7 @@ Open up the `bio-content.js` file and make some content edits:
 ```jsx:title=bio-content.js
 import React, { Fragment } from "react"
 
-export default () => (
+export default function Bio() (
   {/* highlight-start */}
   <Fragment>
     This is my updated bio.

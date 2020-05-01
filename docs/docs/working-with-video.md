@@ -144,7 +144,7 @@ If you have a video called `dog.mp4` in your site under `src/assets/dog.mp4`, yo
 import React from "react"
 import DogVideo from "../assets/dog.mp4"
 
-export default () => (
+export default function Home() (
   <video controls>
     <source src={DogVideo} type="video/mp4" /> // highlight-line
   </video>
@@ -164,7 +164,7 @@ import React from "react"
 import DogMp4 from "../assets/dog.mp4"
 import DogOgg from "../assets/dog.ogg" // highlight-line
 
-export default () => (
+export default function Home() (
   <video controls>
     <source src={DogMp4} type="video/mp4" />
     <source src={DogOgg} type="video/ogg" /> // highlight-line
@@ -197,7 +197,7 @@ import React from "react"
 import DogMp4 from "../assets/dog.mp4"
 import Captions from "file-loader!../assets/captions.vtt" // highlight-line
 
-export default () => (
+export default function Home() (
   <video controls>
     <source src={DogMp4} type="video/mp4" />
     // highlight-start

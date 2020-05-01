@@ -54,7 +54,9 @@ Now, add some React code to your `index.js` file as a starting point for your pr
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => <h1>Hello Gatsby!</h1>
+export default function Home() {
+  return <h1>Hello Gatsby!</h1>
+}
 ```
 
 Finally, go back to the root of your project and run the `gatsby develop` command to start a development server and begin coding.
