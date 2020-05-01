@@ -41,9 +41,9 @@ _**Note:** if you wish to preview the pages of your Gatsby site from within the 
 To build a sample home page, perform the following steps in Contentstack:
 
 1. Create a ‘Home’ content type with ‘Title’ and ‘Body’ fields
-1. Create an entry for the ‘Home’ content type
-1. Create a development environment
-1. Publish the ‘Home’ entry to the development environment
+2. Create an entry for the ‘Home’ content type
+3. Create a development environment
+4. Publish the ‘Home’ entry to the development environment
 
 ### Step 4: Run Gatsby
 

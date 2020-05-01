@@ -46,9 +46,9 @@ In V2, layouts are no longer automatically applied to our pages (more on _why_ t
 
 This ultimately boils down to two breaking changes and one recommendation:
 
-1.  **BREAKING CHANGE:** Components at `src/layouts/` are no longer automagically wrapped around page components.
-2.  **BREAKING CHANGE:** The `children` prop in our layout components is no longer a function (unless you explicitly provide a function).
-3.  We now recommend moving your layout components alongside the rest of your components (e.g. into `src/components/`).
+1. **BREAKING CHANGE:** Components at `src/layouts/` are no longer automagically wrapped around page components.
+2. **BREAKING CHANGE:** The `children` prop in our layout components is no longer a function (unless you explicitly provide a function).
+3. We now recommend moving your layout components alongside the rest of your components (e.g. into `src/components/`).
 
 If we upgrade our simplified app by running `yarn add gatsby react react-dom` (see [the V1 => V2 migration guide](/docs/migrating-from-v1-to-v2/) for more information on why we need to install React here), we need to upgrade our layout by moving `src/layouts/index.js` to `src/components/layout.js` and changing `children` from a function to a regular prop:
 

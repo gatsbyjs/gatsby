@@ -35,7 +35,7 @@ This documentation page covers the _how_ of migrating from v1 to v2. Various blo
   - [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
   - [Move Babel configuration](#move-babel-configuration)
   - [Restore v1 PostCSS plugin setup](#restore-v1-postcss-plugin-setup)
-  - [Migrate from React Router` to @reach/router](#migrate-from-react-router-to-reachrouter)
+  - [Migrate from React Router to @reach/router](#migrate-from-react-router-to-reachrouter)
   - [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
   - [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
   - [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
@@ -137,6 +137,7 @@ You should search for the plugins that you use in the [plugin library](/plugins)
 There are some implications to this change:
 
 - Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
+
 - Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
 
 - To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).

@@ -205,7 +205,7 @@ export const pageQueryRun = (
  */
 export const removeStaleJob = (
   contentDigest: string,
-  plugin: IGatsbyPlugin,
+  plugin?: IGatsbyPlugin,
   traceId?: string
 ): IRemoveStaleJobAction => {
   return {

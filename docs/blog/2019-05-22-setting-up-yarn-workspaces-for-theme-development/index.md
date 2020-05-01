@@ -186,6 +186,5 @@ Be sure to look for more posts on developing Gatsby themes in the near future,
 and you can read more about themes here on the [blog][themes-tag].
 
 [themes-tag]: /blog/tags/themes
-[yarn]: https://yarnpkg.com
 [yarn workspaces]: https://yarnpkg.com/lang/en/docs/workspaces/
 [install yarn]: https://yarnpkg.com/en/docs/install

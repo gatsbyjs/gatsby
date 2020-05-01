@@ -16,10 +16,10 @@ We need tutorials to guide users of all skill levels through performing a series
 
 Topics should be chosen based on these priorities:
 
-1.  Tutorials related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708)
-2.  Tutorials listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
-3.  Tutorials with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
-4.  Tutorials that you or other community members would like to see
+1. Tutorials related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708)
+2. Tutorials listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
+3. Tutorials with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
+4. Tutorials that you or other community members would like to see
 
 ## Length of a tutorial
 
