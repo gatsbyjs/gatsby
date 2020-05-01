@@ -7,7 +7,8 @@ import { webpackReducer } from "./webpack"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 
-const backend = process.env.GATSBY_DB_NODES || `redux`
+// const backend = process.env.GATSBY_DB_NODES || `redux`
+const backend = `redux`
 
 function getNodesReducer() {
   let nodesReducer
