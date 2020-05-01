@@ -129,6 +129,10 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add React Helmet`,
       value: `gatsby-plugin-react-helmet.mdx`,
     },
+    {
+      label: `Add Github Pages deployment with Travis`,
+      value: `travis-deploy-github-pages.mdx`,
+    },
     // TODO remaining recipes
   ]
 
