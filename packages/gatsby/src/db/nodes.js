@@ -18,6 +18,12 @@ interface NodeStore {
   }) => any | undefined;
 }
 
+if (process.env.GATSBY_DB_NODES === `loki`) {
+  console.info(
+    `Please note that process.env.GATSBY_DB_NODES=loki has been removed. Falling back to redux. If this causes problems for you please file an issue on Github and tag @pvdz`
+  )
+}
+
 // const backend = process.env.GATSBY_DB_NODES || `redux`
 const backend = `redux`
 let nodesDb: NodeStore
