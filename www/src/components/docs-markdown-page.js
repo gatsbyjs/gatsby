@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Helmet } from "react-helmet"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 import PageWithSidebar from "../components/page-with-sidebar"
+import PageMetadata from "../components/page-metadata"
 import DocSearchContent from "../components/docsearch-content"
 import TableOfContents from "../components/docs-table-of-contents"
 import FooterLinks from "../components/shared/footer-links"
@@ -56,16 +56,12 @@ function DocsMarkdownPage({
 
   return (
     <PageWithSidebar location={location} {...others}>
-      <Helmet>
-        <title>{page.frontmatter.title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-        <meta property="og:title" content={page.frontmatter.title} />
-        <meta property="og:type" content="article" />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter.label1" content="Reading time" />
-        <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
-      </Helmet>
+      <PageMetadata
+        title={page.frontmatter.title}
+        description={description}
+        type="article"
+        timeToRead={page.timeToRead}
+      />
       <DocSearchContent>
         <Container
           overrideCSS={{
