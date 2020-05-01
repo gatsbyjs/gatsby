@@ -16,7 +16,7 @@ This tutorial will take about two hours to complete. If you're unfamiliar with L
 
 If you work alone or in a small team, you’re likely to have started working on small programs that slowly grow complex and convoluted. Shit happens and you’ll soon find that your perfectly balanced lasagna evolves into a heaped bowlful of spaghetti.
 
-The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of css style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be an headache to keep track of. These are some of the problems monorepos solve.
+The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of css style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be a headache to keep track of. These are some of the problems monorepos solve.
 
 ![Monorepo Diagram](./images/monorepo-diagram.jpeg)
 
@@ -442,7 +442,7 @@ There are two more sections we need to add to our `.travis.yml` file
 
 We won’t worry about the latter for now, but let’s deal with running scripts for different repos. Because we’re not going to be deploying our `shared-ui` we can skip it from our CI pipeline. We’ll run `yarn test` and `yarn build` for both the blog and the shop.
 
-We’ll do this by adding a `matrix` step right after the `install` step to the CI pipeline. This `matrix` step will let us specify which packages we want to run the CI pipeline on. We’ll name each matrix and set a environment variables for the package location. We’ll then change the `script` step so Travis moves into the correct directory and runs the `script` step. Delete everything after the `install` step and add the following:
+We’ll do this by adding a `matrix` step right after the `install` step to the CI pipeline. This `matrix` step will let us specify which packages we want to run the CI pipeline on. We’ll name each matrix and set an environment variables for the package location. We’ll then change the `script` step so Travis moves into the correct directory and runs the `script` step. Delete everything after the `install` step and add the following:
 
 ```yaml:title=.travis.yml
 matrix:

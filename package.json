@@ -73,6 +73,7 @@
     "retext": "^7.0.1",
     "retext-diacritics": "^3.0.0",
     "retext-english": "^3.0.4",
+    "retext-indefinite-article": "^2.0.1",
     "retext-redundant-acronyms": "^3.0.0",
     "retext-sentence-spacing": "^4.0.0",
     "rimraf": "^3.0.2",

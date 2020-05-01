@@ -67,4 +67,4 @@ The next post, [The Rise of Modern Web Development](/blog/2018-10-11-rise-of-mod
 
 After that, [Why Mobile Performance is Crucial](/blog/2018-10-16-why-mobile-performance-is-crucial) discusses the rise of e-commerce on smartphones, why the average site haven't been getting any faster on mobile, and existing technology that can make sites fast _by default_.
 
-Finally, in our conclusion, Creating Compelling Experiences, we’ll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy -- and most importantly, choosing an "content mesh" that makes all the other choices easy.
+Finally, in our conclusion, Creating Compelling Experiences, we’ll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy -- and most importantly, choosing a "content mesh" that makes all the other choices easy.

@@ -22,7 +22,7 @@ If you're finding a recipe is becoming too long to fit on the Docs Recipes page 
 
 ## Recipe categories
 
-Grouping recipes by topic will allow users to navigate and learn by subject matter. As recipes following the new format are introduced, you might find a section needs an h2 heading added for the group. The older-style recipes should be gradually replaced with actionable recipes following the template below.
+Grouping recipes by topic will allow users to navigate and learn by subject matter. As recipes following the new format are introduced, you might find a section needs an `h2` heading added for the group. The older-style recipes should be gradually replaced with actionable recipes following the template below.
 
 Recipes should fall into these categories to start (suggest your idea in a GitHub issue!):
 

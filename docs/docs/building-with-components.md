@@ -122,7 +122,7 @@ document and add external links.
 
 Typically you should omit this from your site as the default html.js file will
 suffice. If you need more control over server rendering, then it's valuable to
-have an html.js.
+have an `html.js`.
 
 Example:
 

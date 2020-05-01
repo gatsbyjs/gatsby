@@ -8,6 +8,7 @@ module.exports = {
       unified()
         .use(require("retext-english"))
         .use(require("retext-diacritics"))
+        .use(require("retext-indefinite-article"))
         .use(require("retext-redundant-acronyms"))
         .use(require("retext-sentence-spacing")),
     ],
