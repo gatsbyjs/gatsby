@@ -2,6 +2,7 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
+const isOfficialPackage = require(`../is-official-package`)
 const yaml = require(`js-yaml`)
 const { plugins: featuredPlugins } = yaml.load(
   fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
@@ -53,7 +54,7 @@ exports.onCreateNode = ({ node, actions }) => {
     createNodeField({
       node,
       name: `official`,
-      value: node.owner === `gatsbyjs`,
+      value: isOfficialPackage(node),
     })
   }
 }
