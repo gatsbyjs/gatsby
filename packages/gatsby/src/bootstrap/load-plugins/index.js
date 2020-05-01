@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 
 const { store } = require(`../../redux`)
-const nodeAPIs = require(`../../utils/api-node-docs`)
+import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 const ssrAPIs = require(`../../../cache-dir/api-ssr-docs`)
 const { loadPlugins } = require(`./load`)
