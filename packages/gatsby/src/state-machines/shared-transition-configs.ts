@@ -24,7 +24,7 @@ export const SOURCE_FILE_CHANGED: BuildTransition = {
  * want to re-run queries and schema inference
  */
 export const runMutationAndMarkDirty: BuildTransition = {
-  actions: [() => console.log(`marking dirty`), `markNodesDirty`, `callApi`],
+  actions: [`markNodesDirty`, `callApi`],
 }
 
 export const onError: TransitionConfig<IBuildContext, DoneInvokeEvent<any>> = {
