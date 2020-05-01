@@ -16,7 +16,7 @@ Configuration files, like other code files, are text. That means you can use ver
 - Creates consistent environments.
 - Saves time that would otherwise be spent setting up environments.
 - Reduces the risk of errors caused by mismatched environments.
-- Simplifies the automation of tasks.
+- Lays the groundwork for automation.
 
 ## Automating Gatsby site development with Gatsby Recipes
 
