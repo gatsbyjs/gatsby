@@ -65,7 +65,7 @@ The `package.json` in the root of the new project is primarily responsible for s
 }
 ```
 
-### `/gatsby-theme-minimal`
+## `/gatsby-theme-minimal`
 
 The `/gatsby-theme-minimal` directory is the starting point of the new theme you'll develop.
 
@@ -75,7 +75,7 @@ Inside it you'll find:
 - `index.js`: Since themes also function as plugins, this is an empty file that Gatsby requires in order to use this theme as a plugin.
 - `package.json`: A file listing the dependencies that your theme will pull in when people install it. Gatsby should be a peer dependency.
 
-### `/example`
+## `/example`
 
 The `/example` directory is an example Gatsby site that installs and uses the local theme, `gatsby-theme-minimal`.
 

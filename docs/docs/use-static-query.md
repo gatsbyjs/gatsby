@@ -90,7 +90,7 @@ export default () => {
 }
 ```
 
-## Known Limitations
+### Known Limitations
 
 - `useStaticQuery` does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
 - Because of how queries currently work in Gatsby, we support only a single instance of `useStaticQuery` in a file

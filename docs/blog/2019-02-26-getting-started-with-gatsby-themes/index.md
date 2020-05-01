@@ -15,7 +15,7 @@ tags: ["themes", "getting-started"]
   a package.
 </Pullquote>
 
-## Getting Started
+### Getting Started
 
 Create a new directory
 
@@ -89,9 +89,9 @@ You will want to make Gatsby, React, and ReactDom peer dependencies in the _them
   },
 ```
 
-## Installing MDX and gatsby-plugin-page-creator
+### Installing MDX and gatsby-plugin-page-creator
 
-### What is MDX?
+#### What is MDX?
 
 > MDX is markdown for the component era. It lets you write JSX embedded inside markdown. That's a great combination because it allows you to use markdown's often terse syntax (such as # heading) for the little things and JSX for more advanced components.
 
@@ -142,7 +142,7 @@ module.exports = {
 }
 ```
 
-### Setting up Site `package.json`
+#### Setting up Site `package.json`
 
 You will need to add `gatsby` CLI scripts and specify your newly created `theme` as a dependency.
 
@@ -193,7 +193,7 @@ Your workspace info should look similar to this:
 }
 ```
 
-### Run the Site
+#### Run the Site
 
 Now that we've set up the site's _package.json_ we can run the workspace:
 
@@ -201,7 +201,7 @@ Now that we've set up the site's _package.json_ we can run the workspace:
 yarn workspace site develop
 ```
 
-### Customizing the Index Page
+#### Customizing the Index Page
 
 You can override the index page from your theme by creating one in site. To do so, change directory into
 the _site_ directory, and create an _index.mdx_ file in the pages folder.
@@ -216,7 +216,7 @@ Now, rerun the development server and see your new content:
 yarn workspace site develop
 ```
 
-## Styling Layout and Components
+### Styling Layout and Components
 
 Next, you will navigate to the _theme_ directory. You will then create a _components_ folder under _src_, and in components you create a _layout.js_ file.
 
@@ -298,7 +298,7 @@ You can then use it to style specific things in your file.
 <Header>Header content goes here</Header>
 ```
 
-## Using Your Theme
+### Using Your Theme
 
 It's finally time to use and share your theme! You can push your whole directory (_gatsby-themes_) to GitHub.
 
@@ -314,7 +314,7 @@ If you want to check your progress, go to the _site_ directory and
 
 Once your server is up you should see your beautiful theme applied to your files!
 
-### Troubleshooting Plugin Errors
+#### Troubleshooting Plugin Errors
 
 If you run into an error that your theme plugin can't be found, try clearing your cache. You can either use `rm -rf .cache` in your terminal, or you can add:
 

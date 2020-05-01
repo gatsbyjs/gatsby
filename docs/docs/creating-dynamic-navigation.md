@@ -38,7 +38,7 @@ module.exports = {
 }
 ```
 
-### Viewing the `siteMetadata` in GraphQL
+## Viewing the `siteMetadata` in GraphQL
 
 GraphQL can be used to query for information contained in the `siteMetadata` object located in your project's `gatsby-config.js`. In order to test this out, you can start the `default-starter-project` in development mode by running `npm run develop`.
 
@@ -86,7 +86,7 @@ When executing this query within the GraphiQL editor you see output that looks s
 
 Perfect! You now have a way of obtaining data from the `gatsby-config.js` file. Continue by pulling this data into the layout using the query you just formed.
 
-### Pulling data inside the layout component
+## Pulling data inside the layout component
 
 Inside your project, locate the `src/components` folder and navigate to the `layout.js` file. Within this layout component, you should notice a component named `StaticQuery`.
 
@@ -185,7 +185,7 @@ const Layout = ({ children }) => (
 )
 ```
 
-### Using the header component to display the navigation
+## Using the header component to display the navigation
 
 Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to you when generating your project):
 
