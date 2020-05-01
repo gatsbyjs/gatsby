@@ -36,7 +36,7 @@ const { writeRedirects } = require(`./redirects-writer`)
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
 // Otherwise leave commented out.
-// require(`./log-line-function`)
+// import "./log-line-function"
 
 type BootstrapArgs = {
   directory: string,
