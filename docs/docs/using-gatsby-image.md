@@ -2,6 +2,8 @@
 title: Using Gatsby Image to Prevent Image Bloat
 ---
 
+import ImageModel from "@components/layer-model/image-model"
+
 Using images in Gatsby components and pages requires four steps to take advantage of performance benefits.
 
 <ImageModel initialLayer="Install" />
