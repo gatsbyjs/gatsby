@@ -18,7 +18,7 @@ Open a page component (e.g. `src/pages/index.js`) in your Gatsby site. Import th
 import React from "react"
 import { Link } from "gatsby"
 
-export default () => (
+export default function Home() (
   <div>
     <Link to="/contact/">Contact</Link>
   </div>
@@ -38,7 +38,7 @@ Additionally, if you wish to have an external link open in new window using the 
 ```jsx
 import React from "react"
 
-export default () => (
+export default function Home() (
   <div>
     <a href="https://example.com" target="_blank" rel="noopener noreferrer">
       External link

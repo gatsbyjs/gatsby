@@ -11,6 +11,7 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ignore-path .gitignore --ext .ts,.tsx,.js"
   },
+  "sideEffects": false,
   "dependencies": {
     "gatsby": "^2.21.0",
     "gatsby-plugin-typescript": "^2.4.0",

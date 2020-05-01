@@ -2,8 +2,10 @@
 
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
-
+import PageMetadata from "./page-metadata"
+import Link from "./localized-link"
+import Container from "./container"
+import FooterLinks from "./shared/footer-links"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import { FaUsers as CommunityIcon } from "react-icons/fa"
 
@@ -68,20 +70,13 @@ export default function PackageReadmeTemplate({
 
   return (
     <PageWithPluginSearchBar location={location}>
+      <PageMetadata
+        title={packageName}
+        description={metaExcerpt}
+        type="article"
+        timeToRead={timeToRead}
+      />
       <Container>
-        <Helmet>
-          <title>{packageName}</title>
-          <meta name="description" content={metaExcerpt} />
-          <meta property="og:description" content={metaExcerpt} />
-          <meta name="twitter:description" content={metaExcerpt} />
-          <meta property="og:title" content={packageName} />
-          <meta property="og:type" content="article" />
-          <meta name="twitter.label1" content="Reading time" />
-          <meta
-            name="twitter:data1"
-            content={`${readmePage.timeToRead} min read`}
-          />
-        </Helmet>
         <div
           sx={{
             display: `flex`,

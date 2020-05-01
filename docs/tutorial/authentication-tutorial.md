@@ -27,7 +27,7 @@ Create a new component to hold the links. For now, it will act as a placeholder:
 import React from "react"
 import { Link } from "gatsby"
 
-export default () => (
+export default function NavBar() (
   <div
     style={{
       display: "flex",
@@ -74,7 +74,7 @@ import React from "react"
 import Layout from "../components/layout" // highlight-line
 
 // highlight-start
-export default () => (
+export default function Home() (
   <Layout>
     <h1>Hello world!</h1>
   </Layout>
@@ -306,7 +306,7 @@ import { Link, navigate } from "gatsby" // highlight-line
 import { getUser, isLoggedIn, logout } from "../services/auth" // highlight-line
 
 // highlight-start
-export default () => {
+export default function NavBar() {
   let greetingMessage = ""
   if (isLoggedIn()) {
     greetingMessage = `Hello ${getUser().name}`
@@ -358,7 +358,7 @@ import { getUser, isLoggedIn } from "../services/auth" // highlight-line
 
 import Layout from "../components/layout"
 
-export default () => (
+export default function Home() (
   <Layout>
     {/* highlight-start */}
     <h1>Hello {isLoggedIn() ? getUser().name : "world"}!</h1>

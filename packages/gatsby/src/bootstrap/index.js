@@ -282,27 +282,27 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
-  if (process.env.GATSBY_DB_NODES === `loki`) {
-    const loki = require(`../db/loki`)
-    // Start the nodes database (in memory loki js with interval disk
-    // saves). If data was saved from a previous build, it will be
-    // loaded here
-    activity = report.activityTimer(`start nodes db`, {
-      parentSpan: bootstrapSpan,
-    })
-    activity.start()
-    const dbSaveFile = `${cacheDirectory}/loki/loki.db`
-    try {
-      await loki.start({
-        saveFile: dbSaveFile,
-      })
-    } catch (e) {
-      report.error(
-        `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
-      )
-    }
-    activity.end()
-  }
+  // if (process.env.GATSBY_DB_NODES === `loki`) {
+  //   const loki = require(`../db/loki`)
+  //   // Start the nodes database (in memory loki js with interval disk
+  //   // saves). If data was saved from a previous build, it will be
+  //   // loaded here
+  //   activity = report.activityTimer(`start nodes db`, {
+  //     parentSpan: bootstrapSpan,
+  //   })
+  //   activity.start()
+  //   const dbSaveFile = `${cacheDirectory}/loki/loki.db`
+  //   try {
+  //     await loki.start({
+  //       saveFile: dbSaveFile,
+  //     })
+  //   } catch (e) {
+  //     report.error(
+  //       `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
+  //     )
+  //   }
+  //   activity.end()
+  // }
 
   activity = report.activityTimer(`copy gatsby files`, {
     parentSpan: bootstrapSpan,

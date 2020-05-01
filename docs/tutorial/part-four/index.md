@@ -63,8 +63,8 @@ See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) guid
 
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
-1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
+1. Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
+2. If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
 
 ### How Gatsby's data layer uses GraphQL to pull data into components
 
@@ -109,7 +109,7 @@ import { Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
-export default ({ children }) => (
+export default function Layout({ children }) (
   <div
     css={css`
       margin: 0 auto;
@@ -146,7 +146,7 @@ export default ({ children }) => (
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => (
+export default function Home() (
   <Layout>
     <h1>Amazing Pandas Eating Things</h1>
     <div>
@@ -163,7 +163,7 @@ export default () => (
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => (
+export default function About() (
   <Layout>
     <h1>About Pandas Eating Lots</h1>
     <p>
@@ -247,7 +247,7 @@ import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
 // highlight-next-line
-export default ({ data }) => (
+export default function About({ data }) (
   <Layout>
     <h1>About {data.site.siteMetadata.title}</h1> {/* highlight-line */}
     <p>
@@ -305,7 +305,7 @@ import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 // highlight-start
-export default ({ children }) => {
+export default function Layout({ children }) {
   const data = useStaticQuery(
     graphql`
       query {

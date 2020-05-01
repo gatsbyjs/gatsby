@@ -100,7 +100,7 @@ When writing a recipe, try to include each of the below items wherever relevant.
 import React from "react"
 import { Link } from "gatsby"
 
-export default () => (
+export default function Home() (
   <div style={{ color: `purple` }}>
     <Link to="/contact/">Contact</Link>
     <p>What a world.</p>
