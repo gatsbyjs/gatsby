@@ -2,7 +2,7 @@
 
 Allows Gatsby to build TypeScript and TSX files. Does NOT run type checking during build (see Caveats).
 
-This plugin is automatically included in gatsby. The only reason you would need to explicitly use this plugin is if you need to configure it's options.
+This plugin is automatically included in Gatsby. The only reason you would need to explicitly use this plugin is if you need to configure its options.
 
 ## How to customize usage
 
