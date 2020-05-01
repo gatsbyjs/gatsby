@@ -145,11 +145,11 @@ With all of that said, this process has a few caveats related to working within 
 1. If you follow a folder structure enclosing an index.md file for your posts, you will need to add the new folder within the URL of the post
 2. Inserting an image adds extra markup which you will need to remove for an image to show up within your post. Prose will upload the image within the same directory as your index.md file.
 
-#### Default
+### Default
 
 ![Default Prose image path](before-post-title.png)
 
-#### After (this will work)
+### After (this will work)
 
 ![After image path change](after-post-title.png)
 

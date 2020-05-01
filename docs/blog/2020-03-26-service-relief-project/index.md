@@ -26,7 +26,7 @@ Wonderfully, though, fundraisers are popping up all over the place to provide so
 - [Building a prototype](#building-a-prototype)
 - [How to Get Involved](#how-to-get-involved)
 
-### About the project
+## About the project
 
 The Service Relief Project is a boilerplate for launching blazing-fast zero-cost directories of local fundraisers to help your local businesses affected by mandated shutdowns around the world.
 
@@ -123,7 +123,7 @@ What started as a project to help a friend help his community has turned into a 
 
 Here are a few ways that you can get involved:
 
-##### 1. Build your own Service Relief directory
+#### 1. Build your own Service Relief directory
 
 In less than 30 minutes you can launch a new site for your local community using the Service Relief Project. You'll need a few things to get started, including:
 
@@ -134,11 +134,11 @@ Detailed instructions are available at https://www.servicerelief.us/start/ and y
 
 I'll also be publishing my personal workflow for building and deploying your Service Relief Project website using Gatsby Cloud + Netlify soon.
 
-##### 2. Share this project with others
+#### 2. Share this project with others
 
 Getting the word out to your network is the best way to raise awareness of this project. We'll be listing all published Service Relief websites on https://www.servicerelief.us/.
 
-##### 3. Contribute to the project on GitHub
+#### 3. Contribute to the project on GitHub
 
 We've published this entire [project on GitHub](https://github.com/service-relief) to open it up for the world to contribute back. Here's what you'll see there:
 
