@@ -11,7 +11,6 @@ This quick start is intended for intermediate to advanced developers. For a gent
   lessonTitle="Quick Start with Gatsby: Create, Develop, and Build Gatsby Sites From the Command Line"
 />
 
-
 ### Install the Gatsby CLI
 
 ```shell
