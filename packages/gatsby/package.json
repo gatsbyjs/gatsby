@@ -177,7 +177,9 @@
     "graphql.js",
     "index.d.ts",
     "scripts/postinstall.js",
-    "utils.js"
+    "utils.js",
+    "machine.js",
+    "machine.d.ts"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby#readme",
   "keywords": [
