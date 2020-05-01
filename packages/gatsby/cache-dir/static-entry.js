@@ -204,12 +204,44 @@ export default (pagePath, callback) => {
   const { componentChunkName } = pageData
 
   class RouteHandler extends React.Component {
+    getParams(pageContext = {}) {
+      const parts = /:[a-z]+/g.exec(this.props.path) || []
+      const params = {}
+
+      // only supports keys that are [adjfiasjf].js (which by now is translated into :asdfajsdif)
+      parts.forEach(colonPart => {
+        // strips off the starting `:` in something like `:id`
+        const [, ...part] = colonPart
+        params[part] = this.props[part]
+      })
+
+      return {
+        ...params,
+        ...(pageContext.__params || {}),
+      }
+    }
     render() {
+      // This might be a bug, it might highjack the data key from query components.
+      // But I don't think they should both exist in a single component.
+      let pageContext = undefined
+      let collectionData = {}
+
+      if (pageData.result) {
+        pageContext = pageData.result.pageContext
+        console.debug({ pageData })
+        if (pageContext.__collectionData) {
+          collectionData = { data: pageContext.__collectionData }
+        }
+      }
+
       const props = {
         ...this.props,
         ...pageData.result,
+        ...collectionData,
+        params: this.getParams(pageContext),
+        // ...collectionData,
         // pathContext was deprecated in v2. Renamed to pageContext
-        pathContext: pageData.result ? pageData.result.pageContext : undefined,
+        pathContext: pageData.result ? pageData.result.pathContext : undefined,
       }
 
       const pageElement = createElement(
