@@ -34,19 +34,19 @@ export const menuBeforeChangeNode = async ({
   const selectionSet = wpStore.getState().remoteSchema.nodeQueries.menuItems
     .selectionSet
 
-  const query = `
-        fragment MENU_ITEM_FIELDS on MenuItem {
-          ${selectionSet}
-        }
+  const query = /* GraphQL */ `
+    fragment MENU_ITEM_FIELDS on MenuItem {
+      ${selectionSet}
+    }
 
-        query {
-            ${(remoteNode.menuItems || remoteNode.childItems).nodes
-              .map(
-                ({ id }, index) =>
-                  `id__${index}: menuItem(id: "${id}") { ...MENU_ITEM_FIELDS }`
-              )
-              .join(` `)}
-          }`
+    query {
+      ${(remoteNode.menuItems || remoteNode.childItems).nodes
+        .map(
+          ({ id }, index) =>
+            `id__${index}: menuItem(id: "${id}") { ...MENU_ITEM_FIELDS }`
+        )
+        .join(` `)}
+    }`
 
   const { data } = await fetchGraphql({
     query,
