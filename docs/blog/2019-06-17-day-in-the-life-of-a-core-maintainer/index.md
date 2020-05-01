@@ -116,7 +116,7 @@ _Play, experiment, learn, and apply._
 
 ## Step Away
 
-There is nary a programmer who doesn't have a story about working on a problem all day, hitting obstacle after obstacle and growing increasingly frustrated for lack of a solution. They step away for the day, revisit it the next morning, and et voila--the problem is clear and obvious and is solved in minutes. Always feel empowered to reserve the right to take some time to yourself and collect your thoughts, to do things like:
+There is nary a programmer who doesn't have a story about working on a problem all day, hitting obstacle after obstacle and growing increasingly frustrated for lack of a solution. They step away for the day, revisit it the next morning, and et voilà--the problem is clear and obvious and is solved in minutes. Always feel empowered to reserve the right to take some time to yourself and collect your thoughts, to do things like:
 
 - Go for a walk or a run
 - Head to a coffee shop and get a change of scenery

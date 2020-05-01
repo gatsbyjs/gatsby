@@ -7,6 +7,7 @@ module.exports = {
       "remark-retext",
       unified()
         .use(require("retext-english"))
+        .use(require("retext-diacritics"))
         .use(require("retext-redundant-acronyms"))
         .use(require("retext-sentence-spacing")),
     ],

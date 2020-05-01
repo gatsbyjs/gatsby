@@ -71,6 +71,7 @@
     "remark-preset-lint-recommended": "^4.0.0",
     "remark-retext": "^4.0.0",
     "retext": "^7.0.1",
+    "retext-diacritics": "^3.0.0",
     "retext-english": "^3.0.4",
     "retext-redundant-acronyms": "^3.0.0",
     "retext-sentence-spacing": "^4.0.0",
