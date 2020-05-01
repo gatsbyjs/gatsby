@@ -23,7 +23,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const { getConfigFile } = require(`../bootstrap/get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`../bootstrap/prefer-default`)
-const removeStaleJobs = require(`../bootstrap/remove-stale-jobs`)
+const { removeStaleJobs } = require(`../bootstrap/remove-stale-jobs`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, reason => {
