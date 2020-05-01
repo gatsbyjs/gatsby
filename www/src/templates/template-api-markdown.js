@@ -1,22 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
-import { MDXRenderer } from "gatsby-plugin-mdx"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-
-// API Rendering Stuff
 import { sortBy } from "lodash-es"
-
-import PageWithSidebar from "../components/page-with-sidebar"
-import MarkdownPageFooter from "../components/markdown-page-footer"
-import DocSearchContent from "../components/docsearch-content"
-import FooterLinks from "../components/shared/footer-links"
-import Breadcrumb from "../components/docs-breadcrumb"
-import Container from "../components/container"
-import PrevAndNext from "../components/prev-and-next"
 import APIReference from "../components/api-reference"
-import TableOfContents from "../components/docs-table-of-contents"
+import DocsMarkdownPage from "../components/docs-markdown-page"
 
 const normalizeGatsbyApiCall = array =>
   array.map(entry => {
@@ -75,134 +62,43 @@ const mergeFunctions = (data, context) => {
   return mergedFuncs
 }
 
-const containerStyles = {
-  maxWidth: t =>
-    `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${t.space[9]} + ${t.space[9]} + ${t.space[9]})`,
-  px: 9,
-}
-
 export default function APITemplate({ data, location, pageContext }) {
-  const { next, prev } = pageContext
+  const { prev, next } = pageContext
   const page = data.mdx
+  const heading = page.frontmatter.contentsHeading || "APIs"
+  const headingId = "apis"
+
+  const getAPIItems = (mergedFuncs) => {
+    return [{
+      title: heading,
+      url: `#${headingId}`,
+      items: mergedFuncs.map(mergedFunc => ({
+        url: `#${mergedFunc.name}`,
+        title: mergedFunc.name,
+      })),
+    }]
+  }
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
-  const description = page.frontmatter.description || page.excerpt
-
-  const getAPIItems = () => {
-    return {
-      title: "APIs",
-      url: '#APIs',
-      items: mergedFuncs.map(item => ({
-        url: `#${item.name}`,
-        title: item.name
-      }))
-    };
-  }
-
-  const getTOCItems = () => {
-    if (page.frontmatter.disableTableOfContents) {
-      return []
-    }
-
-    return [...page.tableOfContents.items, getAPIItems()]
-  }
-
-  const getTOCDepth = () => {
-    return Math.max(page.frontmatter.tableOfContentsDepth, 2)
-  }
-
-  const items = getTOCItems();
-  const depth = getTOCDepth();
-  const isTOCVisible = items.length > 0;
+  const items = getAPIItems(mergedFuncs)
+  const depth = Math.max(page.frontmatter.tableOfContentsDepth, 2)
 
   return (
-    <PageWithSidebar location={location}>
-      <Helmet>
-        <title>{page.frontmatter.title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-        <meta property="og:title" content={page.frontmatter.title} />
-        <meta property="og:type" content="article" />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter.label1" content="Reading time" />
-        <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
-      </Helmet>
-      <DocSearchContent>
-        <Container
-          overrideCSS={{
-            pb: 0,
-            [mediaQueries.lg]: {
-              pt: 9,
-            },
-            [isTOCVisible && mediaQueries.xl]: {
-              ...containerStyles,
-            },
-          }}
-        >
-          <Breadcrumb location={location} />
-          <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
-            {page.frontmatter.title}
-          </h1>
-        </Container>
-        <Container
-          overrideCSS={{
-            pt: 0,
-            position: `static`,
-            [mediaQueries.lg]: {
-              pb: 9,
-            },
-            [isTOCVisible && mediaQueries.xl]: {
-              ...containerStyles,
-              display: `flex`,
-              alignItems: `flex-start`,
-            },
-          }}
-        >
-          {isTOCVisible && (
-            <div
-              sx={{
-                order: 2,
-                [mediaQueries.xl]: {
-                  ml: 9,
-                  maxWidth: `tocWidth`,
-                  position: `sticky`,
-                  top: t =>
-                    `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + ${t.space[9]})`,
-                  maxHeight: t =>
-                    `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${t.space[9]} - ${t.space[9]})`,
-                  overflow: `auto`,
-                },
-              }}
-            >
-              <TableOfContents
-                items={items}
-                location={location}
-                depth={depth}
-              />
-            </div>
-          )}
-          <div
-            sx={{
-              [page.tableOfContents.items && mediaQueries.xl]: {
-                maxWidth: `mainContentWidth.withSidebar`,
-                minWidth: 0,
-              },
-            }}
-          >
-            <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
-            <h2 id="APIs">{page.frontmatter.contentsHeading || "APIs"}</h2>
-            <APIReference
-              docs={mergedFuncs}
-              showTopLevelSignatures={page.frontmatter.showTopLevelSignatures}
-            />
-            <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
-            <MarkdownPageFooter page={page} />
-          </div>
-        </Container>
-      </DocSearchContent>
-      <FooterLinks />
-    </PageWithSidebar>
+    <DocsMarkdownPage
+      page={page}
+      location={location}
+      prev={prev}
+      next={next}
+      depth={depth}
+      items={items}
+    >
+      <h2 id={headingId}>{heading}</h2>
+      <APIReference
+        docs={mergedFuncs}
+        showTopLevelSignatures={page.frontmatter.showTopLevelSignatures}
+      />
+    </DocsMarkdownPage>
   )
 }
 
