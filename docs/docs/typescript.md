@@ -4,7 +4,7 @@ title: TypeScript and Gatsby
 
 ## Introductory paragraph
 
-[TypeScript](https://www.typescriptlang.org/) is a JavaScript superset which extends the language to include type definitions allowing codebases to be statically checked for soundness. Gatsby provides an integrated experience out of the box, similar to an IDE.
+[TypeScript](https://www.typescriptlang.org/) is a JavaScript superset which extends the language to include type definitions allowing codebases to be statically checked for soundness. Gatsby provides an integrated experience out of the box, similar to an IDE. If you are new to TypeScript, adoption can _and should_ be incremental. Since Gatsby natively supports JavaScript and TypeScript, you can change files from .js to .tsx at any point to start adding types and gaining the benefits of a type system.
 
 ## Example
 
@@ -21,6 +21,8 @@ export default function IndexRoute(props: PageProps) {
   )
 }
 ```
+
+In this example, we are using the power of TypeScript, in combination with exported types from Gatsby (`PageProps`) to tell this code what props is. This can greatly improve your developer experience by letting your IDE show you what properties are injected by Gatsby. To see all of the types available look at our [TypeScript definition file](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/index.d.ts).
 
 ## Other resources
 
