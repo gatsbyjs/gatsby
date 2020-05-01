@@ -43,14 +43,14 @@ exports.downloadFile = async (
         // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
         fileUrl = node.uri.url
         // get file type from uri prefix ("S3:", "public:", etc.)
-        const uri_prefix = node.uri.value.match(/^\w*:/);
-        fileType = uri_prefix ? uri_prefix[0] : null;
+        const uri_prefix = node.uri.value.match(/^\w*:/)
+        fileType = uri_prefix ? uri_prefix[0] : null
       }
       // Resolve w/ baseUrl if node.uri isn't absolute.
       const url = new URL(fileUrl, baseUrl)
       // If we have basicAuth credentials, add them to the request.
       const auth =
-        (typeof basicAuth === `object` && fileType === 'public:')
+        typeof basicAuth === `object` && fileType === `public:`
           ? {
               htaccess_user: basicAuth.username,
               htaccess_pass: basicAuth.password,
