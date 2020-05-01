@@ -24,7 +24,7 @@ using it would look like this:
 import React from "react"
 import Headroom from "react-headroom"
 
-export default () => (
+export default function Header() (
   <Headroom>
     <h1>You can put anything you'd like inside the Headroom Component</h1>
   </Headroom>
@@ -204,7 +204,7 @@ like:
 import React from "react"
 import Img from "gatsby-image"
 
-export default ({ data }) => (
+export default function Page({ data }) (
   <div>
     <h1>Hello gatsby-image</h1>
     <Img fixed={data.file.childImageSharp.fixed} />
@@ -225,12 +225,12 @@ before we get to actually coding the frontend.
 
 For example, how does a single image typically get on a website?
 
-1.  A page is designed
-2.  Specific images are chosen
-3.  The images are resized (with ideally multiple thumbnails to fit different
-    devices)
-4.  And finally, the image(s) are included in the HTML/CSS/JS (or React
-    component) for the page.
+1. A page is designed
+2. Specific images are chosen
+3. The images are resized (with ideally multiple thumbnails to fit different
+   devices)
+4. And finally, the image(s) are included in the HTML/CSS/JS (or React
+   component) for the page.
 
 What makes gatsby-image really interesting is it's _seamlessly integrated into
 Gatsby's data layer_ which has native image processing capabilities.
@@ -250,7 +250,7 @@ would look like:
 import React from "react"
 import Img from "gatsby-image"
 
-export default ({ data }) => (
+export default function Image({ data }) (
   <div>
     <h1>Hello gatsby-image</h1>
     <Img fixed={data.file.childImageSharp.fixed} />
@@ -276,10 +276,10 @@ export const query = graphql`
 So instead of a long pipeline of tasks to setup optimized images for your site,
 the steps now are:
 
-1.  Install gatsby-image
-2.  Decide what size of image you need (125x125 in the example above)
-3.  Add your query and the gatsby-image component to your page
-4.  And… that's it!
+1. Install gatsby-image
+2. Decide what size of image you need (125x125 in the example above)
+3. Add your query and the gatsby-image component to your page
+4. And… that's it!
 
 Now playing with images is fun! Want to tweak your design? No problem, just
 change your query a bit and see how the page updates. By eliminating the

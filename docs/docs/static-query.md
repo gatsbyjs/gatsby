@@ -21,7 +21,7 @@ Here is an example of a `Header` component using `StaticQuery`:
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
-export default () => (
+export default function Header() (
   <StaticQuery
     query={graphql`
       query HeadingQuery {
@@ -62,20 +62,22 @@ const Header = ({ data }) => (
   </header>
 )
 
-export default props => (
-  <StaticQuery
-    query={graphql`
-      query {
-        site {
-          siteMetadata {
-            title
+export default function MyHeader(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+            }
           }
         }
-      }
-    `}
-    render={data => <Header data={data} {...props} />}
-  />
-)
+      `}
+      render={data => <Header data={data} {...props} />}
+    />
+  )
+}
 
 Header.propTypes = {
   data: PropTypes.shape({

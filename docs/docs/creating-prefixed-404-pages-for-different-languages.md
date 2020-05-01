@@ -10,7 +10,7 @@ Here is an example that shows you how to create an English 404 page at `src/page
 import React from "react"
 import Layout from "../../components/layout"
 
-export default () => (
+export default function NotFound() (
   <Layout>
     <h1>Page Not Found</h1>
     <p>Oops, we couldn't find this page!</p>
@@ -22,7 +22,7 @@ export default () => (
 import React from "react"
 import Layout from "../../components/layout"
 
-export default () => (
+export default function NotFound() (
   <Layout>
     <h1>Seite nicht gefunden</h1>
     <p>Ups, wir konnten diese Seite nicht finden!</p>

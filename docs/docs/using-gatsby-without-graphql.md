@@ -42,7 +42,7 @@ On the highlighted lines, the data is being supplied to the page template, where
 
 ```jsx:title=/src/templates/pokemon.js
 // highlight-next-line
-export default ({ pageContext: { pokemon } }) => (
+export default function Pokemon({ pageContext: { pokemon } }) (
   <div style={{ width: 960, margin: "4rem auto" }}>
     {/* highlight-start */}
     <h1>{pokemon.name}</h1>
@@ -99,8 +99,8 @@ Another difficulty added when working with unstructured data is that your data f
 
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
-1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
+1. Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
+2. If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
 
 ## Further reading
 

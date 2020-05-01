@@ -91,6 +91,17 @@ export interface IGatsbyStaticQueryComponents {
 
 type GatsbyNodes = Map<string, IGatsbyNode>
 
+export interface IGatsbyJobContent {
+  inputPaths: string[]
+  contentDigest: string
+}
+
+export interface IGatsbyJobV2 {
+  job: IGatsbyJobContent
+  plugin: IGatsbyPlugin
+  traceId?: string
+}
+
 export interface IGatsbyState {
   program: IProgram
   nodes: GatsbyNodes
@@ -130,7 +141,7 @@ export interface IGatsbyState {
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   status: {
-    plugins: {}
+    plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
   }
   componentDataDependencies: {
@@ -156,8 +167,8 @@ export interface IGatsbyState {
     done: any[] // TODO
   }
   jobsV2: {
-    incomplete: Map<any, any> // TODO
-    complete: Map<any, any>
+    incomplete: Map<Identifier, IGatsbyJobV2>
+    complete: Map<Identifier, IGatsbyJobV2>
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
@@ -208,22 +219,27 @@ export interface ICachedReduxState {
 }
 
 export type ActionsUnion =
+  | IAddThirdPartySchema
+  | ICreateFieldExtension
   | ICreatePageDependencyAction
+  | ICreateTypes
   | IDeleteCacheAction
   | IDeleteComponentDependenciesAction
-  | IReplaceComponentQueryAction
-  | IReplaceStaticQueryAction
+  | IPageQueryRunAction
+  | IPrintTypeDefinitions
   | IQueryExtractedAction
-  | IQueryExtractionGraphQLErrorAction
   | IQueryExtractedBabelSuccessAction
   | IQueryExtractionBabelErrorAction
-  | ISetProgramStatusAction
-  | IPageQueryRunAction
-  | IAddThirdPartySchema
-  | ICreateTypes
-  | ICreateFieldExtension
-  | IPrintTypeDefinitions
+  | IQueryExtractionGraphQLErrorAction
   | IRemoveStaticQuery
+  | IReplaceComponentQueryAction
+  | IReplaceStaticQueryAction
+  | IReplaceWebpackConfigAction
+  | ISetPluginStatusAction
+  | ISetProgramStatusAction
+  | ISetWebpackCompilationHashAction
+  | ISetWebpackConfigAction
+  | IUpdatePluginsHashAction
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
@@ -309,7 +325,7 @@ export interface IPageQueryRunAction {
 
 export interface IRemoveStaleJobAction {
   type: `REMOVE_STALE_JOB_V2`
-  plugin: IGatsbyPlugin
+  plugin: IGatsbyPlugin | undefined
   traceId?: string
   payload: { contentDigest: string }
 }
@@ -376,4 +392,33 @@ export interface IReplaceStaticQueryAction {
 export interface IRemoveStaticQuery {
   type: `REMOVE_STATIC_QUERY`
   payload: IGatsbyStaticQueryComponents["id"]
+}
+
+export interface ISetWebpackCompilationHashAction {
+  type: `SET_WEBPACK_COMPILATION_HASH`
+  payload: IGatsbyState["webpackCompilationHash"]
+}
+
+export interface IUpdatePluginsHashAction {
+  type: `UPDATE_PLUGINS_HASH`
+  payload: Identifier
+}
+
+export interface ISetPluginStatusAction {
+  type: `SET_PLUGIN_STATUS`
+  plugin: IGatsbyPlugin
+  payload: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any
+  }
+}
+
+export interface IReplaceWebpackConfigAction {
+  type: `REPLACE_WEBPACK_CONFIG`
+  payload: IGatsbyState["webpack"]
+}
+
+export interface ISetWebpackConfigAction {
+  type: `SET_WEBPACK_CONFIG`
+  payload: Partial<IGatsbyState["webpack"]>
 }

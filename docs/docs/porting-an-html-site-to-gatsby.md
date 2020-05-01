@@ -63,7 +63,9 @@ The `/src` folder contains most of the front-end code for the Gatsby site. In th
 ```jsx:title=/gatsby-site/src/pages/index.js
 import React from "react"
 
-export default () => <div>Hello world!</div>
+export default function Home() {
+  return <div>Hello world!</div>
+}
 ```
 
 [Run the development server](/docs/quick-start/#start-development-server) with `gatsby develop` in the command line to see the website in your browser.
@@ -122,7 +124,9 @@ import React from "react"
 import "../styles/normalize.css" // highlight-line
 import "../styles/style.css" // highlight-line
 
-export default () => <div>Hello world!</div>
+export default function Home() {
+  return <div>Hello world!</div>
+}
 ```
 
 ### Head elements
@@ -156,7 +160,7 @@ import { Helmet } from "react-helmet" // highlight-line
 import "../styles/normalize.css"
 import "../styles/style.css"
 
-export default () => (
+export default function Home() (
   <>
     <Helmet>
       {/* highlight-start */}
@@ -188,7 +192,7 @@ import { Link } from "gatsby" // highlight-line
 import "../styles/normalize.css"
 import "../styles/style.css"
 
-export default () => (
+export default function Home() (
   <>
     <Helmet>
       <title>Taylor's Tidy Trees</title>
@@ -291,7 +295,7 @@ Like in `/src/pages/index.js` the file exports a JavaScript function that return
 import React from "react"
 import { Helmet } from "react-helmet"
 
-export default ({ children }) => (
+export default function Layout({ children }) (
   <>
     <Helmet></Helmet>
     <header></header>
@@ -310,7 +314,7 @@ import { Link } from "gatsby"
 import "../styles/normalize.css"
 import "../styles/style.css"
 
-export default ({ children, breadcrumbs }) => (
+export default function Layout({ children, breadcrumbs }) (
   <>
     <Helmet>
       <title>
@@ -352,7 +356,7 @@ import React from "react"
 import Layout from "../components/Layout"
 import { Link } from "gatsby"
 
-export default () => (
+export default function Who() (
   <Layout breadcrumbs={["Who We Are"]}>
     <h1>Who We Are</h1>
     <h2>These are our staff:</h2>
@@ -377,7 +381,7 @@ The `Who We Are` link in `index.js` should now work! Now use the `<Layout>` comp
 import React from "react"
 import Layout from "../components/Layout" // highlight-line
 
-export default () => (
+export default function Home() (
   {/* highlight-start */}
   <Layout>
     <h1>Welcome To Taylor's Tidy Trees</h1>
@@ -398,7 +402,7 @@ import React from "react"
 import Layout from "../components/Layout"
 import { Link } from "gatsby"
 
-export default () => (
+export default function EllaArborist() (
   {/* highlight-start */}
   <Layout breadcrumbs={["Who We Are", "Ella"]}>
   {/* highlight-end */}

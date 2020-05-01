@@ -6,15 +6,15 @@ The best part of open source is the community, and every community is stronger w
 
 ## How community pair programming sessions work
 
-1.  Select or create [an issue](https://github.com/gatsbyjs/gatsby/issues) you would like to work on and work on it yourself.
-2.  [Create a pull request](https://www.gatsbyjs.org/contributing/how-to-open-a-pull-request/) when you encounter any problem.
-3.  Fill in your details in [the pair programming request form][form].
-4.  You’ll be paired with a Gatsby team member and we'll establish a good time to pair and stream on [Twitch](https://www.twitch.tv/gatsbyjs).
-5.  We'll meet 30 minutes before the actual session to make sure that everyone's audio and screen sharing is working and make sure our live captioner is set up.
-6.  We'll go live on Twitch!
-    Join the video meeting during your time slot (we use [Zoom](https://zoom.us) for meetings)
-7.  We'll help you with your pull request or issue!
-8.  The video of your pairing session will be available on [Twitch](https://www.twitch.tv/gatsbyjs) for 2 weeks and will also be saved on our [YouTube channel](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w/videos).
+1. Select or create [an issue](https://github.com/gatsbyjs/gatsby/issues) you would like to work on and work on it yourself.
+2. [Create a pull request](https://www.gatsbyjs.org/contributing/how-to-open-a-pull-request/) when you encounter any problem.
+3. Fill in your details in [the pair programming request form][form].
+4. You’ll be paired with a Gatsby team member and we'll establish a good time to pair and stream on [Twitch](https://www.twitch.tv/gatsbyjs).
+5. We'll meet 30 minutes before the actual session to make sure that everyone's audio and screen sharing is working and make sure our live captioner is set up.
+6. We'll go live on Twitch!
+   Join the video meeting during your time slot (we use [Zoom](https://zoom.us) for meetings)
+7. We'll help you with your pull request or issue!
+8. The video of your pairing session will be available on [Twitch](https://www.twitch.tv/gatsbyjs) for 2 weeks and will also be saved on our [YouTube channel](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w/videos).
 
 ### What we expect in pair programming sessions
 

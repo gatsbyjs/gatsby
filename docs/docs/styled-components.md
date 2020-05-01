@@ -94,7 +94,7 @@ const User = props => (
   </UserWrapper>
 )
 
-export default () => (
+export default function UsersList() (
   <Container>
     <h1>About Styled Components</h1>
     <p>Styled Components is cool</p>
@@ -127,7 +127,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => (props.theme === "purple" ? "purple" : "white")};
   }
 `
-export default ({ children }) => (
+export default function Layout({ children }) (
   <React.Fragment>
     <GlobalStyle theme="purple" />
   </React.Fragment>
@@ -149,9 +149,9 @@ const Section = styled.section`
   max-width: 600px;
 `
 
-export default ({ children }) => (
-  <Section className={`container`}>{children}</Section>
-)
+export default function Container({ children }) {
+  return <Section className={`container`}>{children}</Section>
+}
 ```
 
 An end user of your site could then [write their own CSS styles](https://mediatemple.net/blog/tips/bend-websites-css-will-stylish-stylebot/) matching HTML elements using a class name of `.container`. If your CSS-in-JS style changes, it will not affect the end user's stylesheet.

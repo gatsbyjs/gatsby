@@ -89,7 +89,7 @@ Routing for links internal to your Gatsby site relies on the `<Link />` componen
 import React from "react"
 import { Link } from "gatsby" // highlight-line
 
-export default () => (
+export default function Home() (
   <main>
     <h1>What a world.</h1>
     <p>
@@ -123,7 +123,7 @@ It's common to wrap pages with a React layout component, which makes it possible
 ```jsx:title=src/components/layout.js
 import React from "react"
 
-export default ({ children }) => (
+export default function Layout({ children }) (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
     {children}
   </div>
@@ -137,7 +137,7 @@ import React from "react"
 import { Link } from "gatsby"
 import Layout from "../components/layout"
 
-export default () => (
+export default function Home() (
   <Layout>
     <Link to="/contact/">Contact</Link>
     <p>What a world.</p>
@@ -225,7 +225,7 @@ exports.createPages = ({ actions }) => {
 ```jsx:title=src/templates/dog-template.js
 import React from "react"
 
-export default ({ pageContext: { dog } }) => (
+export default function DogTemplate({ pageContext: { dog } }) (
   <section>
     {dog.name} - {dog.breed}
   </section>
