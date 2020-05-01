@@ -27,9 +27,6 @@ Object.defineProperty(window, "localStorage", {
   writable: true,
 })
 
-// https://github.com/jsdom/jsdom/issues/1695
-window.HTMLElement.prototype.scrollIntoView = jest.fn()
-
 function extendItemList(itemList, parentTitle) {
   for (const item of itemList) {
     if (parentTitle) {
@@ -44,7 +41,15 @@ function extendItemList(itemList, parentTitle) {
 
 const itemList = [
   { title: "Plot Summary", link: "/plot-summary/" },
-  { title: "Themes", link: "/themes/" },
+  {
+    title: "Themes",
+    link: "/themes/",
+    ui: "steps",
+    items: [
+      { title: "The American Dream", link: "/themes/#the-american-dream" },
+      { title: "Class Inequality", link: "/themes/#class-inequality" },
+    ],
+  },
   {
     title: "Characters",
     link: "/characters/",
@@ -71,7 +76,7 @@ const itemList = [
   },
 ]
 
-function renderSidebar(pathname) {
+function renderSidebar(pathname, { activeItemHash } = {}) {
   return render(
     <ThemeProvider theme={theme}>
       <I18nProvider locale="en">
@@ -80,6 +85,7 @@ function renderSidebar(pathname) {
           sidebarKey="great-gatsby"
           itemList={extendItemList(itemList)}
           location={{ pathname }}
+          activeItemHash={activeItemHash}
         />
       </I18nProvider>
     </ThemeProvider>
@@ -87,8 +93,12 @@ function renderSidebar(pathname) {
 }
 
 describe("sidebar", () => {
+  let scrollIntoViewMock
   beforeEach(() => {
     localStorage.clear()
+    scrollIntoViewMock = jest.fn()
+    // https://github.com/jsdom/jsdom/issues/1695
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
   })
 
   describe("initialization", () => {
@@ -145,6 +155,21 @@ describe("sidebar", () => {
       expect(queryByText("The Buchanans")).toBeInTheDocument()
       expect(queryByText("Daisy Buchanan")).not.toBeInTheDocument()
       expect(queryByText("The Green Light")).not.toBeInTheDocument()
+    })
+  })
+
+  describe("scroll into view", () => {
+    it("scrolls the sidebar into view on load", () => {
+      renderSidebar("/characters/jay-gatsby/")
+      expect(scrollIntoViewMock).toHaveBeenCalled()
+    })
+
+    it("does not scroll into view when loaded with a hash", () => {
+      //
+      renderSidebar("/themes/", {
+        activeItemHash: "the-american-dream",
+      })
+      expect(scrollIntoViewMock).not.toHaveBeenCalled()
     })
   })
 })
