@@ -12,7 +12,7 @@ In case you haven’t heard about it, Gatsby is the latest hot thing in static s
 
 Having never used an SSG before (although I’ve read about them), and with very limited experience with React, what better way to dip my toe into the water than using Gatsby to publish my brand new blog [CSS {In Real Life}](https://css-irl.info/)?
 
-### Getting started
+## Getting started
 
 It turns out that getting started with Gatsby is pretty easy. The Gatsby site features a fantastic, step-by-step tutorial that walks you through getting your first site up and running (even down to deploying), and contains a wealth of resources for when you’ve mastered the basics. You don’t need any prior experience with React, although working with Gatsby definitely made me want to learn React to take full advantage of its power.
 

@@ -45,7 +45,7 @@ For Gatsby theme development, that means you can keep multiple themes and exampl
 
 > 💡 The starter takes care of all of the configuration for developing a theme using yarn workspaces. If you're interested in more detail on this setup, check out [this blog post](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
 
-### `package.json`
+## `package.json`
 
 The `package.json` in the root of the new project is primarily responsible for setting up the yarn workspaces. In this case, there are two workspaces, `gatsby-theme-minimal` and `example`.
 

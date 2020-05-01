@@ -12,7 +12,7 @@ _This article was originally posted on
 I'm reposting here in the hopes that it helps more people get started with
 Gatsby!_
 
-# Migrating a blog to Gatsby
+## Migrating a blog to Gatsby
 
 ---
 

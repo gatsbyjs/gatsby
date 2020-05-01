@@ -10,7 +10,7 @@ tags:
 
 I recently sat down with David Eads, who recently wrote a [fascinating deep dive](https://www.propublica.org/nerds/the-ticket-trap-news-app-front-to-back-david-eads-propublica-illinois) about how he used Gatsby for ProPublica's Ticket Trap data visualization. David and I talked about what he's used Gatsby for and why.
 
-### David's work with Gatsby
+## David's work with Gatsby
 
 **Sam:** You've used Gatsby extensively to create a number of data visualization projects that are really interesting from both a technical and a journalistic perspective. Could you talk a little about what you've built with Gatsby and what you're most proud of.
 

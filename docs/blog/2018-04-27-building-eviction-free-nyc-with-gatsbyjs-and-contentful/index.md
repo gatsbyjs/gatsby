@@ -12,7 +12,7 @@ On March 29th, we launched [Eviction Free NYC](http://www.evictionfreenyc.org/) 
 
 In order to build this new resource we applied a [human-centered design process](https://medium.com/@JustFixNYC/co-designing-eviction-free-nyc-b54570c69153) followed by specialized technical scoping in order to determine what was best for our users and build something for this unique context. **That process led us to using GatsbyJS, Contentful, and Netlify!** Below, we've written up how we mapped design to dev, approached different stakeholders, and utilized Gatsby's great flexibility & plugin library.
 
-#### **Mapping Design Considerations to Technical Scoping**
+## **Mapping Design Considerations to Technical Scoping**
 
 ![Design Mapping](design-mapping.jpeg)
 _Journey mapping for a tenant organizing process!_

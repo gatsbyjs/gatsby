@@ -25,7 +25,7 @@ Founding organizations have a responsibility to their projects and communities: 
 
 And when founding organizations aren’t able to build strong businesses, or then fail to invest adequately, and the project starts falling behind the times, the community should hold founding orgs accountable.
 
-### Open source has a sustainability problem
+## Open source has a sustainability problem
 
 A question that’s frequently discussed in the web development community is how to make open-source maintainable. Some examples:
 

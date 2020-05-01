@@ -10,7 +10,7 @@ title: Query Execution
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-### Query execution
+## Query execution
 
 Query execution is kicked off by bootstrap by calling [page-query-runner.js runInitialQuerys()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L29). The main files involved in this step are:
 

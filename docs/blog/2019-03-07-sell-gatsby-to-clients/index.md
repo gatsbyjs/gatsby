@@ -16,7 +16,7 @@ So how do you explain all the technical nuance to an audience that doesn’t wor
 
 I’ve worked at tech companies large and small over the past decade and one thing I’ve learned over the years is that highly skilled technical people can have a hard time explaining deep technical concepts to a not-as-technical audience. This makes sense because since there is so much to know about certain topics, it’s difficult to know where to start and how to simplify the concepts and still be accurate. To help, I’ve put together some thoughts on how to position Gatsby to your clients and team members.
 
-### **1. Know your audience**
+## **1. Know your audience**
 
 When talking to a client, marketer, or any team member, consider what they care about. Why do they need a website and what do they need it for? What are they trying to achieve?
 

@@ -6,7 +6,7 @@ tableOfContentsDepth: 1
 Continuous Integration works by pushing small code chunks to your application’s code base hosted in a Git repository, and, to every push, run a pipeline of scripts to build, test, and validate the code changes before merging them into the main branch.
 This recipe helps you set up CI/CD on Gitlab and automate your production build!.
 
-### Prerequisites
+## Prerequisites
 
 - Make sure you have the [Gatsby CLI](/docs/gatsby-cli) installed
 - A [Gitlab](https://gitlab.com/) account

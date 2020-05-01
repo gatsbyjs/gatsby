@@ -12,7 +12,7 @@ When [Design+Code](https://designcode.io/) needed to rebuild their website to fo
 
 Design+Code started in 2015 when Meng To began with a digital book on designing iOS apps and Sketch. With Swift, Design+Code taught how to build the real iOS app from the app itself. This would serve as the foundation for future Design+Code courses – teaching how to build real, live apps, but in a compelling and design-focused way. The Design+Code React course has become their most popular course by far, and teaches how to build a production website (designcode.io) for designers and beginners. It goes from basic React concepts all the way to adding content with Contentful, to deployment and accepting payments. There have been some beautiful sites from students who've taken the course (such as [Cyfa](https://cyfa.io/)).
 
-#### Example of a student-built website, Cyfa
+## Example of a student-built website, Cyfa
 
 ![](./images/cyfa.png)
 

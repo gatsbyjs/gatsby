@@ -18,7 +18,7 @@ Some of the things I worked on were implementing performance enhancements and SE
 
 I wanted to recreate the default advanced sitemap structure that we use for all Ghost publications on Gatsby, and since it’s an open source project, I was able to go ahead and build a [plugin](/packages/gatsby-plugin-advanced-sitemap/?=sitemap) which is now available for anyone to use!
 
-### Automatic, advanced sitemaps
+## Automatic, advanced sitemaps
 
 The plugin generates an organised sitemap that is accessible to both humans and robots and is also capable of generating single or multiple sitemaps with full XSL templates.
 

@@ -17,7 +17,7 @@ I looked at all the options, but I really didn't want to invest in setting up so
 
 Here's some pros and cons to rolling your own comment system:
 
-#### Pros
+## Pros
 
 - Free
 - No ads

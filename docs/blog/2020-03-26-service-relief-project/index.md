@@ -26,7 +26,7 @@ Wonderfully, though, fundraisers are popping up all over the place to provide so
 - [Building a prototype](#building-a-prototype)
 - [How to Get Involved](#how-to-get-involved)
 
-### About the project
+## About the project
 
 The Service Relief Project is a boilerplate for launching blazing-fast zero-cost directories of local fundraisers to help your local businesses affected by mandated shutdowns around the world.
 

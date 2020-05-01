@@ -11,7 +11,7 @@ _This article was originally published on
 [our company blog](https://blog.smartive.ch/smartive-ch-goes-gatsby-js-27a056b3b817)
 on September 27, 2017._
 
-# smartive.ch goes Gatsby
+## smartive.ch goes Gatsby
 
 At smartive, a Swiss-based web agency, we always saw the potential of static
 site generators. After using Wintersmith and Next.js we recently made the switch

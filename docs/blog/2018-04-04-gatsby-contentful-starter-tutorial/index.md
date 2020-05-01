@@ -26,7 +26,7 @@ Here’s an overview of what’s involved:
 - Preview a production build
 - Publish and go live
 
-### Getting started
+## Getting started
 
 This guide assumes that you have [GatsbyJS installed](/docs/) and, optionally, a [GitHub account](https://github.com/join). You will also need a free Contentful account - [creating one](https://www.contentful.com/sign-up/) only takes a moment.
 

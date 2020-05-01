@@ -12,7 +12,7 @@ Website teams adopting Gatsby report improved collaboration at each stage -- fro
 
 To fully take advantage of new, Gatsby-enabled workflows, consider adopting some of these techniques:
 
-### Architecture
+## Architecture
 
 _Take advantage of extended evaluation periods to build a component library_
 
