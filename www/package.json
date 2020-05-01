@@ -86,7 +86,7 @@
     "react": "^16.13.0",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.0",
-    "react-helmet": "^5.2.1",
+    "react-helmet": "^6.0.0",
     "react-highcharts": "^16.1.0",
     "react-icons": "^3.10.0",
     "react-instantsearch": "^5.7.0",
