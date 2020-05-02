@@ -12,10 +12,11 @@ import {
   getTypeSettingsByType,
 } from "~/steps/create-schema-customization/helpers"
 
-// we need this queue because sometimes there are async side effects while creating nodes
-const createNodeQueue = new PQueue({
-  concurrency: 3,
-  carryoverConcurrencyCount: true,
+// @todo concurrency is currently set so low because side effects can overwhelm
+// the remote server. A queue for the entire source plugin should be created so that
+// everything can share a queue and we can speed some of these things up
+const createNodesQueue = new PQueue({
+  concurrency: 2,
 })
 
 // const imgSrcRemoteFileRegex = /(?:src=\\")((?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])\.(?:jpeg|jpg|png|gif|ico|pdf|doc|docx|ppt|pptx|pps|ppsx|odt|xls|psd|mp3|m4a|ogg|wav|mp4|m4v|mov|wmv|avi|mpg|ogv|3gp|3g2|svg|bmp|tif|tiff|asf|asx|wm|wmx|divx|flv|qt|mpe|webm|mkv|txt|asc|c|cc|h|csv|tsv|ics|rtx|css|htm|html|m4b|ra|ram|mid|midi|wax|mka|rtf|js|swf|class|tar|zip|gz|gzip|rar|7z|exe|pot|wri|xla|xlt|xlw|mdb|mpp|docm|dotx|dotm|xlsm|xlsb|xltx|xltm|xlam|pptm|ppsm|potx|potm|ppam|sldx|sldm|onetoc|onetoc2|onetmp|onepkg|odp|ods|odg|odc|odb|odf|wp|wpd|key|numbers|pages))(?=\\"| |\.)/gim
@@ -124,7 +125,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
     const wpgqlNodes = wpgqlNodesGroup.allNodesOfContentType
 
     for (const node of wpgqlNodes.values()) {
-      createNodeQueue.add(
+      createNodesQueue.add(
         createNodeWithSideEffects({
           node,
           actions,
@@ -141,7 +142,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
     }
   }
 
-  await createNodeQueue.onIdle()
+  await createNodesQueue.onIdle()
 
   const referencedMediaItemNodeIdsArray = [...referencedMediaItemNodeIds]
 
