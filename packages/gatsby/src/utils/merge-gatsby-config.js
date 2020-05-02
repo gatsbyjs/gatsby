@@ -49,7 +49,7 @@ const howToMerge = {
   byDefault: (a, b) => b || a,
   siteMetadata: (objA, objB) => _.merge({}, objA, objB),
   // plugins are concatenated and uniq'd, so we don't get two of the same plugin value
-  plugins: (a = [], b = [], defaultDir) =>
+  plugins: (a = [], b = []) =>
     _.uniqWith(a.concat(b), (a, b) =>
       _.isEqual(
         _.omit(normalizePluginEntry(a), [`parentDir`]),
