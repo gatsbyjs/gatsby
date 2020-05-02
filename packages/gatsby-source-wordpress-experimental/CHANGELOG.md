@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.6
+
+Removed unecessary logic when fetching menu items that could prevent pulling some types of child items
+
 ## 0.1.5
 
 ### New Features

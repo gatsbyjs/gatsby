@@ -53,15 +53,13 @@ const fetchChildMenuItems = api => async () => {
 
   await Promise.all(
     remoteChildMenuItemNodes.map(async remoteMenuItemNode => {
-      if (remoteMenuItemNode?.childItems?.nodes?.length) {
-        // recursively fetch child menu items
-        menuItemFetchQueue.add(
-          fetchChildMenuItems({
-            ...api,
-            remoteNode: remoteMenuItemNode,
-          })
-        )
-      }
+      // recursively fetch child menu items
+      menuItemFetchQueue.add(
+        fetchChildMenuItems({
+          ...api,
+          remoteNode: remoteMenuItemNode,
+        })
+      )
 
       const type = buildTypeName(`MenuItem`)
 
