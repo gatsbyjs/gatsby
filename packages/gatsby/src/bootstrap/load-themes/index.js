@@ -21,9 +21,7 @@ const resolveTheme = async (
   const themeName = themeSpec.resolve || themeSpec
   let themeDir
   try {
-    const scopedRequire = isMainConfig
-      ? require
-      : createScopedRequire(`${rootDir}/:internal:`)
+    const scopedRequire = createScopedRequire(`${rootDir}/:internal:`)
     // theme is an node-resolvable module
     themeDir = path.dirname(scopedRequire.resolve(themeName))
   } catch (e) {
