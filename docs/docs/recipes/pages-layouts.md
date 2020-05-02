@@ -225,11 +225,13 @@ exports.createPages = ({ actions }) => {
 ```jsx:title=src/templates/dog-template.js
 import React from "react"
 
-export default function DogTemplate({ pageContext: { dog } }) (
-  <section>
-    {dog.name} - {dog.breed}
-  </section>
-)
+export default function DogTemplate({ pageContext: { dog } }) {
+  return (
+    <section>
+      {dog.name} - {dog.breed}
+    </section>
+  )
+}
 ```
 
 5. Run `gatsby develop` and navigate to the path of one of the pages you created (like at `http://localhost:8000/Fido`) to see the data you passed it displayed on the page
