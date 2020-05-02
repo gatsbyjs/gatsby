@@ -24,7 +24,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
       // our lazy types won't initially be fetched,
       // so we need to mark them as fetched here
       if (
-        typeSettings.lazyNodes &&
+        (typeSettings.lazyNodes || pluginOptions.type?.__all?.lazyNodes) &&
         !typeIsExcluded({ pluginOptions, typeName })
       ) {
         const lazyType = typeMap.get(typeName)
