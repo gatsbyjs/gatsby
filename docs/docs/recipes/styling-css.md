@@ -70,7 +70,9 @@ body {
 import React from "react"
 import "./layout.css"
 
-export default ({ children }) => <div>{children}</div>
+export default function Layout({ children }) {
+  return <div>{children}</div>
+}
 ```
 
 5. Now edit your site's homepage at `/src/pages/index.js` and use the new layout component:
@@ -79,7 +81,9 @@ export default ({ children }) => <div>{children}</div>
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => <Layout>Hello world!</Layout>
+export default function Home() {
+  return <Layout>Hello world!</Layout>
+}
 ```
 
 ### Additional resources
@@ -142,7 +146,7 @@ const User = props => (
   </>
 )
 
-export default () => (
+export default function UsersList() (
   <Container>
     <h1>About Styled Components</h1>
     <p>Styled Components is cool</p>
@@ -190,7 +194,7 @@ import React from "react"
 // highlight-start
 import style from "./index.module.css"
 
-export default () => (
+export default function Home() (
   <section className={style.feature}>
     <h1>Using CSS Modules</h1>
   </section>
@@ -232,7 +236,7 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 plugins: [`gatsby-plugin-sass`],
 ```
 
-3.  Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
+3. Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
 
 ```css:title=styles.scss
 $font-stack: Helvetica, sans-serif;
@@ -338,7 +342,7 @@ Import Emotion's `css` core package. You can then use the `css` prop to add [Emo
 import React from "react"
 import { css } from "@emotion/core"
 
-export default () => (
+export default function EmotionSample() (
   <div>
     <p
       css={{
@@ -366,7 +370,7 @@ const Content = styled.div`
   }
 `
 
-export default () => (
+export default function EmotionSample() (
   <Content>
     <p>This page is using Emotion.</p>
   </Content>

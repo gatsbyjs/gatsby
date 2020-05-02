@@ -225,7 +225,7 @@ Next, you will navigate to the _theme_ directory. You will then create a _compon
 Inside of your _layout.js_ file, you can add your styling.
 
 ```jsx:title=packages/theme/src/components/layout.js
-export default ({ children }) => (
+export default function Layout({ children }) (
   <div
     style={{
       // Layout styling
@@ -270,7 +270,7 @@ If you want to reuse a specific style, you can create styled components. In your
 Here is an example of how you can set-up your styled component in _header.js_. Please make sure you write css-in-javascript when styling your div.
 
 ```jsx:title=header.js
-export default ({ children }) => (
+export default function Header({ children }) (
   <section
     style={{
       // Header Specific Styling //

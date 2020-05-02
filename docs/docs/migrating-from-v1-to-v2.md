@@ -35,7 +35,7 @@ This documentation page covers the _how_ of migrating from v1 to v2. Various blo
   - [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
   - [Move Babel configuration](#move-babel-configuration)
   - [Restore v1 PostCSS plugin setup](#restore-v1-postcss-plugin-setup)
-  - [Migrate from React Router` to @reach/router](#migrate-from-react-router-to-reachrouter)
+  - [Migrate from React Router to @reach/router](#migrate-from-react-router-to-reachrouter)
   - [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
   - [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
   - [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
@@ -137,6 +137,7 @@ You should search for the plugins that you use in the [plugin library](/plugins)
 There are some implications to this change:
 
 - Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
+
 - Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
 
 - To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
@@ -150,7 +151,7 @@ In v1, the `children` prop passed to layout was a function (render prop) and nee
 ```diff
 import React from "react"
 
-export default ({ children }) => (
+export default function Layout({ children }) (
   <div>
 -    {children()}
 +    {children}
@@ -172,7 +173,7 @@ Adhering to the normal React composition model, import your layout component and
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => (
+export default function Home() (
   <Layout>
     <div>Hello World</div>
   </Layout>
@@ -188,7 +189,7 @@ In v1, the layout component had access to `history`, `location`, and `match` pro
 ```jsx:title=src/components/layout.js
 import React from "react"
 
-export default ({ children, location }) => (
+export default function Layout({ children, location }) (
   <div>
     <p>Path is {location.pathname}</p>
     {children}
@@ -200,11 +201,13 @@ export default ({ children, location }) => (
 import React from "react"
 import Layout from "../components/layout"
 
-export default props => (
-  <Layout location={props.location}>
-    <div>Hello World</div>
-  </Layout>
-)
+export default function Home(props) {
+  return (
+    <Layout location={props.location}>
+      <div>Hello World</div>
+    </Layout>
+  )
+}
 ```
 
 #### 5. Change query to use `StaticQuery`
@@ -218,7 +221,7 @@ import React, { Fragment } from "react"
 import { Helmet } from "react-helmet"
 + import { StaticQuery, graphql } from "gatsby"
 
-- export default ({ children, data }) => (
+- export default function Layout({ children, data }) (
 -   <>
 -     <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
 -     <div>
@@ -236,7 +239,7 @@ import { Helmet } from "react-helmet"
 -     }
 -   }
 - `
-+ export default ({ children }) => (
++ export default function Layout({ children }) (
 +   <StaticQuery
 +     query={graphql`
 +       query LayoutQuery {
@@ -272,10 +275,12 @@ import React from "react"
 
 // Don't use navigate with an onClick btw :-)
 // Generally use the `<Link>` component.
-export default props => (
--  <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
-+  <div onClick={() => navigate(`/`)}>Click to go to home</div>
-)
+export default function Page(props) {
+  return (
+-    <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
++    <div onClick={() => navigate(`/`)}>Click to go to home</div>
+  )
+}
 ```
 
 ### Convert to either pure CommonJS or pure ES6
@@ -482,7 +487,7 @@ A basic example of the `<Router>` component:
 import React from "react"
 import { Router } from "@reach/router"
 
-export default () => (
+export default function Routes() (
   <Router>
     <div path="/">I am the home!</div>
     <div path="/about">Here's a bit about me</div>
@@ -500,7 +505,7 @@ in store.gatsbyjs.org) from React Router to @reach/router.
 +import { Router, navigate } from '@reach/router';
  import { isAuthenticated } from '../../utils/auth';
 
--export default ({ component: Component, ...rest }) => (
+-export default function PrivateRoute({ component: Component, ...rest }) (
 -  <Route
 -    {...rest}
 -    render={props =>
@@ -513,7 +518,7 @@ in store.gatsbyjs.org) from React Router to @reach/router.
 -    }
 -  />
 -);
-+export default ({ component: Component, ...rest }) => {
++export default function PrivateRoute({ component: Component, ...rest }) {
 +  if (!isAuthenticated() && window.location.pathname !== `/login`) {
 +    // If we’re not logged in, redirect to the home page.
 +    navigate(`/app/login`);
@@ -665,7 +670,7 @@ Here's an example with a class named `.my-class-name`:
 import React from "react"
 import myStyles from "./my.module.css"
 
-export default ({ children }) => (
+export default function Component({ children }) (
 -  <div className={myStyles['my-class-name']}>
 +  <div className={myStyles.myClassName}>
     {children}
@@ -775,9 +780,11 @@ import React from "react"
 - import Link from "gatsby-link"
 + import { Link } from "gatsby"
 
-export default props => (
-  <Link to="/">Home</Link>
-)
+export default function Page(props) {
+  return (
+    <Link to="/">Home</Link>
+  );
+}
 ```
 
 Furthermore you can remove the package from the `package.json`.
@@ -799,7 +806,7 @@ The `graphql` tag function that Gatsby v1 auto-supports is deprecated in v2. Gat
 import React from "react"
 + import { graphql } from "gatsby"
 
-export default ({ data }) => (
+export default function Home({ data }) (
   <h1>{data.site.siteMetadata.title}</h1>
 )
 

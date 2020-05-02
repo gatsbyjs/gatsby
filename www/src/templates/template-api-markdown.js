@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -9,6 +8,7 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { sortBy } from "lodash-es"
 
 import PageWithSidebar from "../components/page-with-sidebar"
+import PageMetadata from "../components/page-metadata"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 import FooterLinks from "../components/shared/footer-links"
@@ -80,20 +80,15 @@ export default function APITemplate({ data, location, pageContext }) {
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
-  const description = page.frontmatter.description || page.excerpt
 
   return (
     <PageWithSidebar location={location}>
-      <Helmet>
-        <title>{page.frontmatter.title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-        <meta property="og:title" content={page.frontmatter.title} />
-        <meta property="og:type" content="article" />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter.label1" content="Reading time" />
-        <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
-      </Helmet>
+      <PageMetadata
+        title={page.frontmatter.title}
+        description={page.frontmatter.description || page.excerpt}
+        type="article"
+        timeToRead={page.timeToRead}
+      />
       <DocSearchContent>
         <Container
           overrideCSS={{

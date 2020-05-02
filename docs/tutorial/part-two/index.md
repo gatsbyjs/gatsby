@@ -156,7 +156,7 @@ First, create a new `Container` component.
 import React from "react"
 import containerStyles from "./container.module.css"
 
-export default ({ children }) => (
+export default function Container({ children }) (
   <div className={containerStyles.container}>{children}</div>
 )
 ```
@@ -182,7 +182,7 @@ import React from "react"
 
 import Container from "../components/container"
 
-export default () => (
+export default function About() (
   <Container>
     <h1>About CSS Modules</h1>
     <p>CSS Modules are cool</p>
@@ -276,7 +276,7 @@ const User = props => (
 )
 // highlight-end
 
-export default () => (
+export default function About() (
   <Container>
     <h1>About CSS Modules</h1>
     <p>CSS Modules are cool</p>
