@@ -164,7 +164,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
         }
       }
 
-      const info = resolvePlugin(plugin.resolve, rootDir)
+      const info = resolvePlugin(plugin.resolve, plugin.parentDir || rootDir)
 
       return {
         ...info,
