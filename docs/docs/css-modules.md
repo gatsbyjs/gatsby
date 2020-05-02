@@ -48,11 +48,13 @@ Here's an example where the class name `container` is added to the DOM along wit
 import React from "react"
 import containerStyles from "./container.module.css"
 
-export default function Container({ children }) (
-  <section className={`container ${containerStyles.container}`}>
-    {children}
-  </section>
-)
+export default function Container({ children }) {
+  return (
+    <section className={`container ${containerStyles.container}`}>
+      {children}
+    </section>
+  )
+}
 ```
 
 A site user could then write their own CSS styles matching HTML elements with a class name of `.container`, and it wouldn't be affected if the CSS module name or path changed.
