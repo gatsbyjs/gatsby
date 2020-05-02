@@ -46,6 +46,9 @@ async function onCreateNode(
 
   if (_.isArray(parsedContent)) {
     parsedContent.forEach((obj, i) => {
+      if (pluginOptions && _.isFunction(pluginOptions.onTransformObject)) {
+        pluginOptions.onTransformObject({ fileNode: node, object: obj })
+      }
       transformObject(
         obj,
         obj.id ? String(obj.id) : createNodeId(`${node.id} [${i}] >>> JSON`),
@@ -53,6 +56,9 @@ async function onCreateNode(
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
+    if (pluginOptions && _.isFunction(pluginOptions.onTransformObject)) {
+      pluginOptions.onTransformObject({ fileNode: node, object: parsedContent })
+    }
     transformObject(
       parsedContent,
       parsedContent.id
