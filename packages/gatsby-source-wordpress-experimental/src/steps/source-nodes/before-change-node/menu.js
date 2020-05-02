@@ -1,34 +1,27 @@
-export const menuBeforeChangeNode = async ({
-  remoteNode,
-  actionType,
-  wpStore,
-  fetchGraphql,
-  helpers,
-  actions,
-  buildTypeName,
-}) => {
-  if (
-    actionType !== `UPDATE` &&
-    actionType !== `CREATE_ALL` &&
-    actionType !== `CREATE`
-  ) {
-    // no need to update child MenuItems if we're not updating an existing menu
-    // if we're creating a new menu it will be empty initially.
-    // so we run this function when updating nodes or when initially
-    // creating all nodes
-    return null
-  }
+import PQueue from "p-queue"
+
+const menuItemFetchQueue = new PQueue({
+  concurrency: Number(process.env.GATSBY_CONCURRENT_DOWNLOAD ?? 200),
+  carryoverConcurrencyCount: true,
+})
+
+const fetchChildMenuItems = api => async () => {
+  const {
+    remoteNode,
+    wpStore,
+    fetchGraphql,
+    helpers,
+    actions,
+    buildTypeName,
+    additionalNodeIds,
+  } = api
 
   if (
-    (!remoteNode.menuItems ||
-      !remoteNode.menuItems.nodes ||
-      !remoteNode.menuItems.nodes.length) &&
-    (!remoteNode.childItems ||
-      !remoteNode.childItems.nodes ||
-      !remoteNode.childItems.nodes.length)
+    !remoteNode?.menuItems?.nodes?.length &&
+    !remoteNode?.childItems?.nodes?.length
   ) {
     // if we don't have any child menu items to fetch, skip out
-    return null
+    return
   }
 
   const selectionSet = wpStore.getState().remoteSchema.nodeQueries.menuItems
@@ -54,27 +47,20 @@ export const menuBeforeChangeNode = async ({
 
   const remoteChildMenuItemNodes = Object.values(data)
 
-  const additionalNodeIds = remoteChildMenuItemNodes.map(({ id } = {}) => id)
+  remoteChildMenuItemNodes.forEach(
+    ({ id } = {}) => id && additionalNodeIds.push(id)
+  )
 
   await Promise.all(
     remoteChildMenuItemNodes.map(async remoteMenuItemNode => {
-      if (
-        remoteMenuItemNode.childItems &&
-        remoteMenuItemNode.childItems.nodes &&
-        remoteMenuItemNode.childItems.nodes.length
-      ) {
+      if (remoteMenuItemNode?.childItems?.nodes?.length) {
         // recursively fetch child menu items
-        const { additionalNodeIds: childNodeIds } = await menuBeforeChangeNode({
-          remoteNode: remoteMenuItemNode,
-          actionType: `CREATE`,
-          wpStore,
-          fetchGraphql,
-          helpers,
-          actions,
-          buildTypeName,
-        })
-
-        childNodeIds.forEach(id => additionalNodeIds.push(id))
+        menuItemFetchQueue.add(
+          fetchChildMenuItems({
+            ...api,
+            remoteNode: remoteMenuItemNode,
+          })
+        )
       }
 
       const type = buildTypeName(`MenuItem`)
@@ -91,6 +77,26 @@ export const menuBeforeChangeNode = async ({
       })
     })
   )
+}
+
+export const menuBeforeChangeNode = async api => {
+  if (
+    api.actionType !== `UPDATE` &&
+    api.actionType !== `CREATE_ALL` &&
+    api.actionType !== `CREATE`
+  ) {
+    // no need to update child MenuItems if we're not updating an existing menu
+    // if we're creating a new menu it will be empty initially.
+    // so we run this function when updating nodes or when initially
+    // creating all nodes
+    return null
+  }
+
+  let additionalNodeIds = []
+
+  menuItemFetchQueue.add(fetchChildMenuItems({ ...api, additionalNodeIds }))
+
+  await menuItemFetchQueue.onIdle()
 
   return { additionalNodeIds }
 }
