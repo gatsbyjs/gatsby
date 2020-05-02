@@ -2,6 +2,7 @@ import {
   SchemaComposer,
   ObjectTypeComposer,
   InputTypeComposer,
+  InterfaceTypeComposer,
 } from "graphql-compose"
 
 import { getFieldsEnum } from "./sort"
@@ -29,7 +30,7 @@ const getEdge = ({
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<any>
-  typeComposer: ObjectTypeComposer
+  typeComposer: ObjectTypeComposer | InterfaceTypeComposer
 }): ObjectTypeComposer => {
   const typeName: string = typeComposer.getTypeName() + `Edge`
   addDerivedType({ typeComposer, derivedTypeName: typeName })
@@ -49,19 +50,23 @@ const createPagination = ({
   typeName,
 }: {
   schemaComposer: SchemaComposer<any>
-  typeComposer: ObjectTypeComposer
+  typeComposer: ObjectTypeComposer | InterfaceTypeComposer
+  // TODO: Define the interface for the 'fields' data structure
   fields: Record<string, any>
   typeName: string
 }): ObjectTypeComposer => {
-  const paginationTypeComposer = schemaComposer.getOrCreateOTC(typeName, tc => {
-    tc.addFields({
-      totalCount: `Int!`,
-      edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],
-      nodes: [typeComposer.getTypeNonNull()],
-      pageInfo: getPageInfo({ schemaComposer }).getTypeNonNull(),
-      ...fields,
-    })
-  })
+  const paginationTypeComposer: ObjectTypeComposer = schemaComposer.getOrCreateOTC(
+    typeName,
+    tc => {
+      tc.addFields({
+        totalCount: `Int!`,
+        edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],
+        nodes: [typeComposer.getTypeNonNull()],
+        pageInfo: getPageInfo({ schemaComposer }).getTypeNonNull(),
+        ...fields,
+      })
+    }
+  )
   paginationTypeComposer.makeFieldNonNull(`edges`)
   paginationTypeComposer.makeFieldNonNull(`nodes`)
   addDerivedType({ typeComposer, derivedTypeName: typeName })
@@ -73,7 +78,7 @@ const getGroup = ({
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<any>
-  typeComposer: ObjectTypeComposer
+  typeComposer: ObjectTypeComposer | InterfaceTypeComposer
 }): ObjectTypeComposer => {
   const typeName: string = typeComposer.getTypeName() + `GroupConnection`
   const fields = {
@@ -88,7 +93,7 @@ const getPagination = ({
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<any>
-  typeComposer: ObjectTypeComposer
+  typeComposer: ObjectTypeComposer | InterfaceTypeComposer
 }): ObjectTypeComposer => {
   const inputTypeComposer: InputTypeComposer = typeComposer.getInputTypeComposer()
   const typeName: string = typeComposer.getTypeName() + `Connection`
@@ -115,7 +120,7 @@ const getPagination = ({
       resolve: group,
     },
   }
-  const paginationTypeComposer = createPagination({
+  const paginationTypeComposer: ObjectTypeComposer = createPagination({
     schemaComposer,
     typeComposer,
     fields,
