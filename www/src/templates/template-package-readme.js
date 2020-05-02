@@ -60,21 +60,19 @@ export default function PackageReadmeTemplate({
   const isOfficial = npmPackage.fields.official
   const packageName = npmPackage.name
 
+  const excerpt = readmePage.excerpt ?? `Plugin information for ${packageName}`
   const githubUrl = isOfficial
     ? `https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`
     : npmPackage.repository?.url ??
       `https://github.com/search?q=${npmPackage.name}`
 
-  const metaExcerpt =
-    readmePage.excerpt ?? `Plugin information for ${packageName}`
-
   return (
     <PageWithPluginSearchBar location={location}>
       <PageMetadata
         title={packageName}
-        description={metaExcerpt}
+        description={excerpt}
         type="article"
-        timeToRead={timeToRead}
+        timeToRead={readmePage.timeToRead}
       />
       <Container>
         <div
