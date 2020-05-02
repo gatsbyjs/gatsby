@@ -24,6 +24,8 @@ export const removeStaleJobs = (
   // If any of our pending jobs do not have an existing inputPath or the inputPath changed
   // we remove it from the queue as they would fail anyway
   state.jobsV2.incomplete.forEach(({ job, plugin }: IGatsbyJobV2): void => {
+    if (!job) return
+
     if (isJobStale(job)) {
       actions.push(internalActions.removeStaleJob(job.contentDigest))
     } else {

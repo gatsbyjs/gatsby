@@ -6,6 +6,7 @@ import { statusReducer } from "./status"
 import { webpackReducer } from "./webpack"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
+import { jobsV2Reducer } from "./jobsv2"
 
 // const backend = process.env.GATSBY_DB_NODES || `redux`
 const backend = `redux`
@@ -63,7 +64,7 @@ module.exports = {
   components: require(`./components`),
   staticQueryComponents: staticQueryComponentsReducer,
   jobs: require(`./jobs`),
-  jobsV2: require(`./jobsv2`),
+  jobsV2: jobsV2Reducer,
   webpack: webpackReducer,
   webpackCompilationHash: webpackCompilationHashReducer,
   redirects: redirectsReducer,

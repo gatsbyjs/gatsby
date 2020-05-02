@@ -1,10 +1,17 @@
-module.exports = (
-  state = { incomplete: new Map(), complete: new Map() },
-  action
-) => {
+import { ActionsUnion, IGatsbyState, IGatsbyJobV2 } from "../types"
+
+export const jobsV2Reducer = (
+  state: IGatsbyState["jobsV2"] = {
+    incomplete: new Map(),
+    complete: new Map(),
+  },
+  action: ActionsUnion
+): IGatsbyState["jobsV2"] => {
   switch (action.type) {
     case `CREATE_JOB_V2`: {
       const { job, plugin } = action.payload
+
+      if (!job) return state
 
       state.incomplete.set(job.contentDigest, {
         job,
@@ -16,7 +23,9 @@ module.exports = (
 
     case `END_JOB_V2`: {
       const { jobContentDigest, result } = action.payload
-      const { job } = state.incomplete.get(jobContentDigest)
+      const { job } = state.incomplete.get(jobContentDigest) as IGatsbyJobV2
+
+      if (!job) return state
 
       state.incomplete.delete(job.contentDigest)
 

@@ -97,9 +97,11 @@ export interface IGatsbyJobContent {
 }
 
 export interface IGatsbyJobV2 {
-  job: IGatsbyJobContent
-  plugin: IGatsbyPlugin
+  job?: IGatsbyJobContent
+  plugin?: IGatsbyPlugin
   traceId?: string
+  result?: string[]
+  inputPaths?: string[]
 }
 
 export interface IGatsbyState {
@@ -240,6 +242,32 @@ export type ActionsUnion =
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
   | IUpdatePluginsHashAction
+  | ICreateJobV2Action
+  | IEndJobV2Action
+  | IRemoveStaleJobV2Action
+
+export interface ICreateJobV2Action {
+  type: `CREATE_JOB_V2`
+  payload: {
+    job: IGatsbyJobV2["job"]
+    plugin: IGatsbyJobV2["plugin"]
+  }
+}
+
+export interface IEndJobV2Action {
+  type: `END_JOB_V2`
+  payload: {
+    jobContentDigest: string
+    result: string[]
+  }
+}
+
+export interface IRemoveStaleJobV2Action {
+  type: `REMOVE_STALE_JOB_V2`
+  payload: {
+    contentDigest: string
+  }
+}
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
