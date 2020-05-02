@@ -6139,3 +6139,15 @@
     - React Helmet
     - Offline Support
     - Gatsby Image
+- url: https://thestartup.netlify.app/
+  repo: https://github.com/bagseye/startup
+  description: A startup template perfect for brochure sites and small businesses
+  tags:
+    - Landing Page
+    - Onepage
+    - Portfolio
+    - Styling:CSS-in-JS
+  features:
+    - Font Awesome Icons
+    - Responsive Design
+    - Style-Components
