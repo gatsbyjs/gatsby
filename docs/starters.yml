@@ -575,7 +575,7 @@
   repo: https://github.com/ohduran/gatsby-starter-hello-world-tailwind-css
   description: hello world + Tailwind CSS
   tags:
-    - TailwindCSS
+    - Styling:Tailwind
     - hello-world
   features:
     - One plugin, no boilerplate
