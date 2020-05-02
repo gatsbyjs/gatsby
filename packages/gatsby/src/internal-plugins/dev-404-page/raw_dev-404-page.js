@@ -14,7 +14,7 @@ class Dev404Page extends React.Component {
     super(props)
     const { data, location } = this.props
     const pagePaths = data.allSitePage.nodes.map(node => node.path)
-    const urlState = queryString.parse(location.search)
+    const urlState = queryString.parse(location.hash)
 
     const initialPagePathSearchTerms = urlState.q ? urlState.q : ``
     this.state = {
@@ -33,8 +33,12 @@ class Dev404Page extends React.Component {
   }
 
   handleSearchTermChange(event) {
+    const searchValue = event.target.value
+
+    this.setSearchUrl(searchValue)
+
     this.setState({
-      pagePathSearchTerms: event.target.value,
+      pagePathSearchTerms: searchValue,
     })
   }
 
@@ -45,6 +49,20 @@ class Dev404Page extends React.Component {
     this.setState({
       pagePaths: tempPagePaths.filter(pagePath => searchTerm.test(pagePath)),
     })
+  }
+
+  setSearchUrl(searchValue) {
+    const { location } = this.props
+
+    if (searchValue) {
+      const hash = queryString.parse(location.hash)
+      hash.q = searchValue
+
+      const newHash = queryString.stringify(hash)
+      location.hash = newHash
+    } else {
+      location.hash = ``
+    }
   }
 
   render() {
