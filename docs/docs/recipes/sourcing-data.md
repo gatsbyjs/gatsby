@@ -511,7 +511,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 ```jsx:title=src/templates/all-pokemon.js
 import React from "react"
 
-export default ({ pageContext: { allPokemon } }) => (
+export default function AllPokemon({ pageContext: { allPokemon } }) (
   <div>
     <h1>Behold, the Pokémon!</h1>
     <ul>

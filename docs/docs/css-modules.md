@@ -30,7 +30,7 @@ import React from "react"
 // highlight-next-line
 import containerStyles from "./container.module.css"
 
-export default ({ children }) => (
+export default function Container({ children }) (
   // highlight-next-line
   <section className={containerStyles.container}>{children}</section>
 )
@@ -48,7 +48,7 @@ Here's an example where the class name `container` is added to the DOM along wit
 import React from "react"
 import containerStyles from "./container.module.css"
 
-export default ({ children }) => (
+export default function Container({ children }) (
   <section className={`container ${containerStyles.container}`}>
     {children}
   </section>

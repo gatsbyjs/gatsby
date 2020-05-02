@@ -20,7 +20,7 @@ In Gatsby, when using React components, you can import and use them like you wou
 import React from "react"
 import { Link } from "gatsby"
 
-export default () => (
+export default function Contact() (
   <div>
     <Link to="/contact/">Contact</Link>
   </div>
@@ -57,7 +57,7 @@ import React from "react"
 // import my fancy third-party component
 import Button from "@material-ui/core/Button"
 
-export default () => (
+export default function Home() (
   <div>
     <p>This is my super awesome page made with Gatsby!</p>
 

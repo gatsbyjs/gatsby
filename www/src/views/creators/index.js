@@ -1,14 +1,15 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Component } from "react"
-import { Helmet } from "react-helmet"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import { navigate } from "gatsby"
+import qs from "qs"
+
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import PageMetadata from "../../components/page-metadata"
 import FooterLinks from "../../components/shared/footer-links"
 import CreatorsHeader from "./creators-header"
 import Badge from "./badge"
-import { GoMarkGithub as GithubIcon } from "react-icons/go"
-import { navigate } from "gatsby"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import qs from "qs"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import { meta, shortcutIcon } from "../shared/styles"
@@ -98,13 +99,10 @@ class CreatorsView extends Component {
 
     return (
       <>
-        <Helmet>
-          <title>{title}</title>
-          <meta
-            name="description"
-            content="Discover developers skilled in working on Gatsby applications available for hire"
-          />
-        </Helmet>
+        <PageMetadata
+          title={title}
+          description="Discover developers skilled in working on Gatsby applications available for hire"
+        />
         <CreatorsHeader
           applyFilter={filter => applyFilter(filter)}
           forHire={this.state.for_hire}

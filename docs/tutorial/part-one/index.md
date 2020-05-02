@@ -56,7 +56,7 @@ Open the file at `src/pages/index.js`. The code in this file creates a component
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => (
+export default function Home() (
   <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
 )
 ```
@@ -68,7 +68,7 @@ export default () => (
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => (
+export default function Home() (
   {/* highlight-start */}
   <div style={{ color: `purple` }}>
     <h1>Hello Gatsby!</h1>
@@ -85,7 +85,7 @@ export default () => (
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => (
+export default function Home() (
   <div style={{ color: `purple` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
@@ -106,7 +106,9 @@ Consider the original contents of the `src/pages/index.js` file:
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => <div>Hello world!</div>
+export default function Home() {
+  return <div>Hello world!</div>
+}
 ```
 
 In pure JavaScript, it looks more like this:
@@ -114,7 +116,9 @@ In pure JavaScript, it looks more like this:
 ```javascript:title=src/pages/index.js
 import React from "react"
 
-export default () => React.createElement("div", null, "Hello world!")
+export default function Home() {
+  return React.createElement("div", null, "Hello world!")
+}
 ```
 
 Now you can spot the use of the `'react'` import! But wait. You’re writing JSX, not pure HTML and JavaScript. How does the browser read that? The short answer: It doesn’t. Gatsby sites come with tooling already set up to convert your source code into something that browsers can interpret.
@@ -157,7 +161,7 @@ You already have a `src/pages/index.js` file that came with the “Hello World�
 ```jsx:title=src/pages/about.js
 import React from "react"
 
-export default () => (
+export default function About() (
   <div style={{ color: `teal` }}>
     <h1>About Gatsby</h1>
     <p>Such wow. Very React.</p>
@@ -181,7 +185,9 @@ Let’s say the homepage and the about page both got quite large and you were re
 ```jsx:title=src/components/header.js
 import React from "react"
 
-export default () => <h1>This is a header.</h1>
+export default function Header() {
+  return <h1>This is a header.</h1>
+}
 ```
 
 3. Modify the `about.js` file to import the `Header` component. Replace the `h1` markup with `<Header />`:
@@ -190,7 +196,7 @@ export default () => <h1>This is a header.</h1>
 import React from "react"
 import Header from "../components/header" // highlight-line
 
-export default () => (
+export default function About() (
   <div style={{ color: `teal` }}>
     <Header /> {/* highlight-line */}
     <p>Such wow. Very React.</p>
@@ -207,7 +213,12 @@ In the browser, the “About Gatsby” header text should now be replaced with �
 ```jsx:title=src/components/header.js
 import React from "react"
 
-export default props => <h1>{props.headerText}</h1> {/* highlight-line */}
+export default function Header(props) {
+  return <h1>{props.headerText}</h1>
+  {
+    /* highlight-line */
+  }
+}
 ```
 
 5. Head back to `src/pages/about.js` and make the following change:
@@ -216,7 +227,7 @@ export default props => <h1>{props.headerText}</h1> {/* highlight-line */}
 import React from "react"
 import Header from "../components/header"
 
-export default () => (
+export default function About() (
   <div style={{ color: `teal` }}>
     <Header headerText="About Gatsby" /> {/* highlight-line */}
     <p>Such wow. Very React.</p>
@@ -260,7 +271,7 @@ If you had passed another prop to your `<Header />` component, like so...
 import React from "react"
 import Header from "../components/header"
 
-export default () => (
+export default function About() (
   <div style={{ color: `teal` }}>
     <Header headerText="About Gatsby" />
     <Header headerText="It's pretty cool" /> {/* highlight-line */}
@@ -292,7 +303,7 @@ import React from "react"
 import { Link } from "gatsby" // highlight-line
 import Header from "../components/header"
 
-export default () => (
+export default function Home() (
   <div style={{ color: `purple` }}>
     <Link to="/contact/">Contact</Link> {/* highlight-line */}
     <Header headerText="Hello Gatsby!" />
@@ -315,7 +326,7 @@ import React from "react"
 import { Link } from "gatsby"
 import Header from "../components/header"
 
-export default () => (
+export default function Contact() (
   <div style={{ color: `teal` }}>
     <Link to="/">Home</Link>
     <Header headerText="Contact" />

@@ -229,7 +229,7 @@ Create a directory at `src/templates`, and then add the following in a file name
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => {
+export default function BlogPost() {
   return (
     <Layout>
       <div>Hello blog post</div>
@@ -308,7 +308,7 @@ import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
 // highlight-start
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   const post = data.markdownRemark
   // highlight-end
   return (
@@ -355,7 +355,7 @@ import { Link, graphql } from "gatsby" // highlight-line
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <Layout>
       <div>

@@ -1530,7 +1530,9 @@ For example, create a new file to override the layout component: `theme-test/src
 ```jsx:title=theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js
 import React from "react"
 
-export default ({ children }) => <>{children}</>
+export default function Layout({ children }) {
+  return <>{children}</>
+}
 ```
 
 If you restart the development server, you'll see all of the styles and structure from the theme have been stripped away, because the component has been completely overridden:
