@@ -30,10 +30,12 @@ import React from "react"
 // highlight-next-line
 import containerStyles from "./container.module.css"
 
-export default function Container({ children }) (
-  // highlight-next-line
-  <section className={containerStyles.container}>{children}</section>
-)
+export default function Container({ children }) {
+  return (
+    // highlight-next-line
+    <section className={containerStyles.container}>{children}</section>
+  );
+}
 ```
 
 In this example, a CSS module is imported and declared as a JavaScript object called `containerStyles`. Then, a CSS class from that object is referenced in the JSX `className` attribute with `containerStyles.container`, which renders into HTML with dynamic CSS class names like `container-module--container--3MbgH`.
@@ -58,6 +60,7 @@ export default function Container({ children }) {
 ```
 
 A site user could then write their own CSS styles matching HTML elements with a class name of `.container`, and it wouldn't be affected if the CSS module name or path changed.
+MX
 
 ## When to use CSS Modules
 
