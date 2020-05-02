@@ -87,6 +87,10 @@ const defaultPluginOptions = {
             }
           }
         }
+
+        return {
+          remoteNode,
+        }
       },
     },
     ContentNode: {
