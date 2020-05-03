@@ -156,9 +156,9 @@ First, create a new `Container` component.
 import React from "react"
 import containerStyles from "./container.module.css"
 
-export default function Container({ children }) (
-  <div className={containerStyles.container}>{children}</div>
-)
+export default function Container({ children }) {
+  return <div className={containerStyles.container}>{children}</div>
+}
 ```
 
 You'll notice you imported a CSS module file named `container.module.css`. Let's create that file now.
@@ -182,12 +182,14 @@ import React from "react"
 
 import Container from "../components/container"
 
-export default function About() (
-  <Container>
-    <h1>About CSS Modules</h1>
-    <p>CSS Modules are cool</p>
-  </Container>
-)
+export default function About() {
+  return (
+    <Container>
+      <h1>About CSS Modules</h1>
+      <p>CSS Modules are cool</p>
+    </Container>
+  )
+}
 ```
 
 Now, if you visit `http://localhost:8000/about-css-modules/`, your page should look something like this:
@@ -276,24 +278,26 @@ const User = props => (
 )
 // highlight-end
 
-export default function About() (
-  <Container>
-    <h1>About CSS Modules</h1>
-    <p>CSS Modules are cool</p>
-    {/* highlight-start */}
-    <User
-      username="Jane Doe"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-    <User
-      username="Bob Smith"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-      excerpt="I'm Bob Smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-    {/* highlight-end */}
-  </Container>
-)
+export default function About() {
+  return (
+    <Container>
+      <h1>About CSS Modules</h1>
+      <p>CSS Modules are cool</p>
+      {/* highlight-start */}
+      <User
+        username="Jane Doe"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+        excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      />
+      <User
+        username="Bob Smith"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+        excerpt="I'm Bob Smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      />
+      {/* highlight-end */}
+    </Container>
+  )
+}
 ```
 
 > Tip: Generally, if you use a component in multiple places on a site, it should be in its own module file in the `components` directory. But, if it's used only in one file, create it inline.

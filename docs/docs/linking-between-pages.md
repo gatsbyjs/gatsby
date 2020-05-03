@@ -18,11 +18,13 @@ Open a page component (e.g. `src/pages/index.js`) in your Gatsby site. Import th
 import React from "react"
 import { Link } from "gatsby"
 
-export default function Home() (
-  <div>
-    <Link to="/contact/">Contact</Link>
-  </div>
-)
+export default function Home() {
+  return (
+    <div>
+      <Link to="/contact/">Contact</Link>
+    </div>
+  )
+}
 ```
 
 The above code will add a link to the contact page, automatically rendered in HTML as `<a href="/contact/">` but with added performance benefits. The link's value is based off of the page's filename which in this case would be `contact.js`.
@@ -38,13 +40,15 @@ Additionally, if you wish to have an external link open in new window using the 
 ```jsx
 import React from "react"
 
-export default function Home() (
-  <div>
-    <a href="https://example.com" target="_blank" rel="noopener noreferrer">
-      External link
-    </a>
-  </div>
-)
+export default function Home() {
+  return (
+    <div>
+      <a href="https://example.com" target="_blank" rel="noopener noreferrer">
+        External link
+      </a>
+    </div>
+  )
+}
 ```
 
 It is also recommended to include a [visual icon](https://thenounproject.com/term/new-window/2864/) or some kind of indicator differentiating external links from internal ones.

@@ -89,14 +89,16 @@ Routing for links internal to your Gatsby site relies on the `<Link />` componen
 import React from "react"
 import { Link } from "gatsby" // highlight-line
 
-export default function Home() (
-  <main>
-    <h1>What a world.</h1>
-    <p>
-      <Link to="/contact/">Contact</Link> // highlight-line
-    </p>
-  </main>
-)
+export default function Home() {
+  return (
+    <main>
+      <h1>What a world.</h1>
+      <p>
+        <Link to="/contact/">Contact</Link> // highlight-line
+      </p>
+    </main>
+  )
+}
 ```
 
 2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
@@ -123,11 +125,13 @@ It's common to wrap pages with a React layout component, which makes it possible
 ```jsx:title=src/components/layout.js
 import React from "react"
 
-export default function Layout({ children }) (
-  <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
-    {children}
-  </div>
-)
+export default function Layout({ children }) {
+  return (
+    <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
+      {children}
+    </div>
+  )
+}
 ```
 
 2. Import and use the layout component in a page:
@@ -137,12 +141,14 @@ import React from "react"
 import { Link } from "gatsby"
 import Layout from "../components/layout"
 
-export default function Home() (
-  <Layout>
-    <Link to="/contact/">Contact</Link>
-    <p>What a world.</p>
-  </Layout>
-)
+export default function Home() {
+  return (
+    <Layout>
+      <Link to="/contact/">Contact</Link>
+      <p>What a world.</p>
+    </Layout>
+  )
+}
 ```
 
 ### Additional resources
@@ -225,11 +231,13 @@ exports.createPages = ({ actions }) => {
 ```jsx:title=src/templates/dog-template.js
 import React from "react"
 
-export default function DogTemplate({ pageContext: { dog } }) (
-  <section>
-    {dog.name} - {dog.breed}
-  </section>
-)
+export default function DogTemplate({ pageContext: { dog } }) {
+  return (
+    <section>
+      {dog.name} - {dog.breed}
+    </section>
+  )
+}
 ```
 
 5. Run `gatsby develop` and navigate to the path of one of the pages you created (like at `http://localhost:8000/Fido`) to see the data you passed it displayed on the page
