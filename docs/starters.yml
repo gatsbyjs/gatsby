@@ -576,7 +576,6 @@
   description: hello world + Tailwind CSS
   tags:
     - Styling:Tailwind
-    - hello-world
   features:
     - One plugin, no boilerplate
     - Great for advanced users
