@@ -34,7 +34,7 @@ export default function Container({ children }) {
   return (
     // highlight-next-line
     <section className={containerStyles.container}>{children}</section>
-  );
+  )
 }
 ```
 
