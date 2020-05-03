@@ -60,7 +60,6 @@ export default function Container({ children }) {
 ```
 
 A site user could then write their own CSS styles matching HTML elements with a class name of `.container`, and it wouldn't be affected if the CSS module name or path changed.
-MX
 
 ## When to use CSS Modules
 
