@@ -6,6 +6,16 @@ import styled from "@emotion/styled"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 import { Name } from "./homepage-section"
+import {
+  HorizontalScroller,
+  HorizontalScrollerContent,
+  HorizontalScrollerItem,
+} from "../shared/horizontal-scroller"
+import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
+
+const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
+  `div`
+)
 
 const Section = styled(`section`)`
   border-bottom: 1px solid ${p => p.theme.colors.ui.border};
@@ -63,6 +73,13 @@ const LogoGroup = styled(`div`)`
   }
 `
 
+const Logo =  styled(
+  HorizontalScrollerItem.withComponent(`div`)
+)`
+  width: auto;
+  box-shadow: none; 
+`
+
 const HomepageLogoBanner = () => {
   const data = useStaticQuery(graphql`
     query {
@@ -90,14 +107,22 @@ const HomepageLogoBanner = () => {
       <Title>
         <Name>Trusted by</Name>
       </Title>
-      <LogoGroup>
-        {data.allFile.nodes.map(image => (
-          <Img
-            alt={`${image.base.split(`.`)[0]}`}
-            fixed={image.childImageSharp.fixed}
-            key={image.base}
-          />
-        ))}
+      <LogoGroup 
+        className={SCROLLER_CLASSNAME}
+      >
+        <HorizontalScrollerContentAsDiv>
+          {data.allFile.nodes.map(image => (
+            <Logo  
+              key={image.base}
+              tabIndex={0}
+            >
+              <Img
+                alt={`${image.base.split(`.`)[0]}`}
+                fixed={image.childImageSharp.fixed}
+              />
+            </Logo>
+          ))}
+        </HorizontalScrollerContentAsDiv>
       </LogoGroup>
     </Section>
   )
