@@ -77,7 +77,7 @@ function deleteStaleNodes(state, nodes) {
 }
 
 module.exports = async ({
-  webhookBody = {},
+  webhookBody,
   parentSpan,
   deferNodeMutation = false,
 } = {}) => {
