@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-ui-preset",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A Gatsby theme for theme-ui styles",
   "main": "index.js",
   "keywords": [
