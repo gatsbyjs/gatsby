@@ -56,9 +56,9 @@ Open the file at `src/pages/index.js`. The code in this file creates a component
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default function Home() (
-  <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
-)
+export default function Home() {
+  return <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
+}
 ```
 
 > 💡 We’ll be covering more about styling in Gatsby in [**part two**](/tutorial/part-two/) of the tutorial.
@@ -68,14 +68,16 @@ export default function Home() (
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default function Home() (
-  {/* highlight-start */}
-  <div style={{ color: `purple` }}>
-    <h1>Hello Gatsby!</h1>
-    <p>What a world.</p>
-  {/* highlight-end */}
-  </div>
-)
+export default function Home() {
+  return (
+    {/* highlight-start */}
+    <div style={{ color: `purple` }}>
+      <h1>Hello Gatsby!</h1>
+      <p>What a world.</p>
+    {/* highlight-end */}
+    </div>
+  );
+}
 ```
 
 ![More changes with hot reloading](03-more-hot-reloading.png)
@@ -85,14 +87,16 @@ export default function Home() (
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default function Home() (
-  <div style={{ color: `purple` }}>
-    <h1>Hello Gatsby!</h1>
-    <p>What a world.</p>
-    {/* highlight-next-line */}
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
-  </div>
-)
+export default function Home() {
+  return (
+    <div style={{ color: `purple` }}>
+      <h1>Hello Gatsby!</h1>
+      <p>What a world.</p>
+      {/* highlight-next-line */}
+      <img src="https://source.unsplash.com/random/400x200" alt="" />
+    </div>
+  )
+}
 ```
 
 ![Add image](04-add-image.png)
@@ -161,12 +165,14 @@ You already have a `src/pages/index.js` file that came with the “Hello World�
 ```jsx:title=src/pages/about.js
 import React from "react"
 
-export default function About() (
-  <div style={{ color: `teal` }}>
-    <h1>About Gatsby</h1>
-    <p>Such wow. Very React.</p>
-  </div>
-)
+export default function About() {
+  return (
+    <div style={{ color: `teal` }}>
+      <h1>About Gatsby</h1>
+      <p>Such wow. Very React.</p>
+    </div>
+  )
+}
 ```
 
 2. Navigate to `http://localhost:8000/about/`
@@ -196,12 +202,14 @@ export default function Header() {
 import React from "react"
 import Header from "../components/header" // highlight-line
 
-export default function About() (
-  <div style={{ color: `teal` }}>
-    <Header /> {/* highlight-line */}
-    <p>Such wow. Very React.</p>
-  </div>
-)
+export default function About() {
+  return (
+    <div style={{ color: `teal` }}>
+      <Header /> {/* highlight-line */}
+      <p>Such wow. Very React.</p>
+    </div>
+  )
+}
 ```
 
 ![Adding Header component](06-header-component.png)
@@ -227,12 +235,14 @@ export default function Header(props) {
 import React from "react"
 import Header from "../components/header"
 
-export default function About() (
-  <div style={{ color: `teal` }}>
-    <Header headerText="About Gatsby" /> {/* highlight-line */}
-    <p>Such wow. Very React.</p>
-  </div>
-)
+export default function About() {
+  return (
+    <div style={{ color: `teal` }}>
+      <Header headerText="About Gatsby" /> {/* highlight-line */}
+      <p>Such wow. Very React.</p>
+    </div>
+  )
+}
 ```
 
 ![Passing data to header](07-pass-data-header.png)
@@ -271,13 +281,15 @@ If you had passed another prop to your `<Header />` component, like so...
 import React from "react"
 import Header from "../components/header"
 
-export default function About() (
-  <div style={{ color: `teal` }}>
-    <Header headerText="About Gatsby" />
-    <Header headerText="It's pretty cool" /> {/* highlight-line */}
-    <p>Such wow. Very React.</p>
-  </div>
-)
+export default function About() {
+  return (
+    <div style={{ color: `teal` }}>
+      <Header headerText="About Gatsby" />
+      <Header headerText="It's pretty cool" /> {/* highlight-line */}
+      <p>Such wow. Very React.</p>
+    </div>
+  )
+}
 ```
 
 ![Duplicate header to show reusability](08-duplicate-header.png)
@@ -303,14 +315,16 @@ import React from "react"
 import { Link } from "gatsby" // highlight-line
 import Header from "../components/header"
 
-export default function Home() (
-  <div style={{ color: `purple` }}>
-    <Link to="/contact/">Contact</Link> {/* highlight-line */}
-    <Header headerText="Hello Gatsby!" />
-    <p>What a world.</p>
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
-  </div>
-)
+export default function Home() {
+  return (
+    <div style={{ color: `purple` }}>
+      <Link to="/contact/">Contact</Link> {/* highlight-line */}
+      <Header headerText="Hello Gatsby!" />
+      <p>What a world.</p>
+      <img src="https://source.unsplash.com/random/400x200" alt="" />
+    </div>
+  )
+}
 ```
 
 When you click the new "Contact" link on the homepage, you should see...
@@ -326,13 +340,15 @@ import React from "react"
 import { Link } from "gatsby"
 import Header from "../components/header"
 
-export default function Contact() (
-  <div style={{ color: `teal` }}>
-    <Link to="/">Home</Link>
-    <Header headerText="Contact" />
-    <p>Send us a message!</p>
-  </div>
-)
+export default function Contact() {
+  return (
+    <div style={{ color: `teal` }}>
+      <Link to="/">Home</Link>
+      <Header headerText="Contact" />
+      <p>Send us a message!</p>
+    </div>
+  )
+}
 ```
 
 After you save the file, you should see the contact page and be able to follow the link to the homepage.

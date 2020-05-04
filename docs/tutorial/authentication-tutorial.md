@@ -27,26 +27,28 @@ Create a new component to hold the links. For now, it will act as a placeholder:
 import React from "react"
 import { Link } from "gatsby"
 
-export default function NavBar() (
-  <div
-    style={{
-      display: "flex",
-      flex: "1",
-      justifyContent: "space-between",
-      borderBottom: "1px solid #d1c1e0",
-    }}
-  >
-    <span>You are not logged in</span>
+export default function NavBar() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flex: "1",
+        justifyContent: "space-between",
+        borderBottom: "1px solid #d1c1e0",
+      }}
+    >
+      <span>You are not logged in</span>
 
-    <nav>
-      <Link to="/">Home</Link>
-      {` `}
-      <Link to="/">Profile</Link>
-      {` `}
-      <Link to="/">Logout</Link>
-    </nav>
-  </div>
-)
+      <nav>
+        <Link to="/">Home</Link>
+        {` `}
+        <Link to="/">Profile</Link>
+        {` `}
+        <Link to="/">Logout</Link>
+      </nav>
+    </div>
+  )
+}
 ```
 
 And create the layout component that will wrap all pages and display navigation bar:
@@ -74,11 +76,13 @@ import React from "react"
 import Layout from "../components/layout" // highlight-line
 
 // highlight-start
-export default function Home() (
-  <Layout>
-    <h1>Hello world!</h1>
-  </Layout>
-)
+export default function Home() {
+  return (
+    <Layout>
+      <h1>Hello world!</h1>
+    </Layout>
+  )
+}
 // highlight-end
 ```
 
@@ -358,26 +362,28 @@ import { getUser, isLoggedIn } from "../services/auth" // highlight-line
 
 import Layout from "../components/layout"
 
-export default function Home() (
-  <Layout>
-    {/* highlight-start */}
-    <h1>Hello {isLoggedIn() ? getUser().name : "world"}!</h1>
-    <p>
-      {isLoggedIn() ? (
-        <>
-          You are logged in, so check your{" "}
-          <Link to="/app/profile">profile</Link>
-        </>
-      ) : (
-        <>
-          You should <Link to="/app/login">log in</Link> to see restricted
-          content
-        </>
-      )}
-    </p>
-    {/* highlight-end */}
-  </Layout>
-)
+export default function Home() {
+  return (
+    <Layout>
+      {/* highlight-start */}
+      <h1>Hello {isLoggedIn() ? getUser().name : "world"}!</h1>
+      <p>
+        {isLoggedIn() ? (
+          <>
+            You are logged in, so check your{" "}
+            <Link to="/app/profile">profile</Link>
+          </>
+        ) : (
+          <>
+            You should <Link to="/app/login">log in</Link> to see restricted
+            content
+          </>
+        )}
+      </p>
+      {/* highlight-end */}
+    </Layout>
+  )
+}
 ```
 
 And the profile will show the user data:
