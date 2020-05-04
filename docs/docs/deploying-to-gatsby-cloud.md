@@ -52,9 +52,13 @@ Please refer to the [Gatsby Cloud Docs](https://www.gatsbyjs.com/docs/) for full
 ## Set up a new Gatsby site from scratch
 
 1. Head over to [Gatsby Cloud](https://www.gatsbyjs.com/get-started/) and sign-up/sign-in with your GitHub account if you haven't already.
+
 2. Click the **Create new site** button on your [Dashboard](https://www.gatsbyjs.com/dashboard/sites).
+
 3. Choose the **I don't have a Gatsby site yet** option.
+
 4. On _Tab 1_ choose from the Starter options and click **Next**.
+
 5. On _Tab 2_, enter a name for your new project and click **Next**. This will be the name of the project repo added to your GitHub account.
 
    > Note, you will need to set your [GitHub permissions](https://github.com/settings/installations) to enable "All Repositories" access in order to allow Gatsby Cloud to create a new repo.
@@ -64,6 +68,7 @@ Please refer to the [Gatsby Cloud Docs](https://www.gatsbyjs.com/docs/) for full
    > If you're looking for instructions on configuring Gatsby Cloud with a specific CMS, check out the [Gatsby Cloud Docs](https://www.gatsbyjs.com/docs/).
 
 7. Once you successfully configure your CMS, click **Start my site**, prompting Gatsby Cloud to provision your starter project.
+
 8. On _Tab 4_ click **Finish**. On your site's dashboard page, under the _Production_ tab, you'll see an in-progress build.
 
    > Once the build has finished, a URL will appear for you to view the live build of your site.
@@ -77,8 +82,11 @@ Please refer to the [Gatsby Cloud Docs](https://www.gatsbyjs.com/docs/) for full
 ## Set up an existing Gatsby site
 
 1. Head over to [Gatsby Cloud](https://www.gatsbyjs.com/get-started/) and sign-up/sign-in with your GitHub account if you haven't already.
+
 2. Click the **Create new site** button on your [Dashboard](https://www.gatsbyjs.com/dashboard/sites).
+
 3. Choose the **I already have a Gatsby site** option.
+
 4. On _Tab 1_, select your repo containing your Gatsby site from the list of options.
 
    > If you don't see your repo in the list, you can adjust your repository access by clicking the **Connect a new GitHub Organization** link or configuring the Gatsby Cloud app installation in your [GitHub settings](https://github.com/settings/installations).
@@ -88,6 +96,7 @@ Please refer to the [Gatsby Cloud Docs](https://www.gatsbyjs.com/docs/) for full
    > If you are setting up a monorepo, you will need to set the _Base Directory_ as the directory containing your Gatsby project. Gatsby Cloud supports `npm`, `yarn`, yarn workspaces and `lerna` with yarn workspaces or `npm`.
 
 6. Click the **Next** button. On _Tab 2_ you can choose from the automatic integration providers to connect one or more CMSs to provide data to your Gatsby Cloud preview instance.
+
 7. By clicking **Connect** next to any integration option, you will be prompted to authenticate with that CMS platform and choose your data source within that CMS.
 
    > If you're looking for instructions on configuring Gatsby Cloud with a specific CMS, check out the [Gatsby Cloud Docs](https://www.gatsbyjs.com/docs/).
@@ -95,6 +104,7 @@ Please refer to the [Gatsby Cloud Docs](https://www.gatsbyjs.com/docs/) for full
    > If your CMS provider isn't listed but supports webhooks, you can attempt to manually connect to it using the Gatsby Cloud POST endpoint. This will keep your Preview automatically updated when you make changes to your CMS.
 
 8. Once you have connected your desired integrations, click **Set up your site**. On _Tab 3_, you can configure any environment variables that you wish to set for your preview and build.
+
 9. Click **Create site**. You will be brought to the dashboard page for your site and under the _Production_ tab you will see that your build has been triggered and is underway.
 
    > Once the build has finished, a URL will appear for you to view the live build of your site.
@@ -108,7 +118,9 @@ Please refer to the [Gatsby Cloud Docs](https://www.gatsbyjs.com/docs/) for full
 ## Set up hosting for your site
 
 1. Navigate to your site in your Gatsby Cloud [Dashboard](https://www.gatsbyjs.com/dashboard/sites). Under the _Site Settings_ tab, navigate to the _Integrations_ > _Hosting_ subsection.
+
 2. To setup an integration, click **Connect** next to the hosting provider of your choice.
+
 3. Follow the prompts to authorize with your hosting provider.
 
    > The [Gatsby Cloud Docs](https://www.gatsbyjs.com/docs/) provide specific tutorials for each hosting provider.

@@ -27,13 +27,13 @@ Gatsby added this survey as a reliable way to query active Gatsby users about th
 
 Here are the questions we ask in each survey. (The questions will stay the same to measure change over time).
 
-1.  How disappointed would you be if you could no longer use Gatsby?
-    - very disappointed
-    - somewhat disappointed
-    - not disappointed
-2.  What type of people do you think would benefit the most from Gatsby?
-3.  What is the main benefit you receive from Gatsby?
-4.  How can we improve Gatsby for you?
+1. How disappointed would you be if you could no longer use Gatsby?
+   - very disappointed
+   - somewhat disappointed
+   - not disappointed
+2. What type of people do you think would benefit the most from Gatsby?
+3. What is the main benefit you receive from Gatsby?
+4. How can we improve Gatsby for you?
 
 ## And what did Gatsby users have to say???
 

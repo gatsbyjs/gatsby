@@ -29,15 +29,15 @@
   },
   "dependencies": {
     "dotenv": "^5.0.1",
-    "graphql-yoga": "^1.8.2",
+    "graphql-yoga": "^1.18.3",
     "uniqid": "^4.1.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-plugin-import": "^2.10.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-prettier": "^3.1.3",
-    "prettier": "2.0.4"
+    "prettier": "2.0.5"
   }
 }
