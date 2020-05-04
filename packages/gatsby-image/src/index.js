@@ -81,8 +81,8 @@ const getImageSrcKey = ({ fluid, fixed }) => {
 
 /**
  * Returns the current src - Preferably with art-direction support.
- * @param currentData  {{media?: string}[], maxWidth: Number, maxHeight: Number}   The fluid or fixed image array.
- * @return {{src: string, media?: string, maxWidth: Number, maxHeight: Number}}
+ * @param currentData  {{media?: string}[], maxWidth?: Number, maxHeight?: Number}   The fluid or fixed image array.
+ * @return {{src: string, media?: string, maxWidth?: Number, maxHeight?: Number}}
  */
 const getCurrentSrcData = currentData => {
   if (isBrowser && hasArtDirectionSupport(currentData)) {
@@ -490,7 +490,6 @@ class Image extends React.Component {
           {/* Preserve the aspect ratio. */}
           <Tag
             aria-hidden
-            title={title}
             style={{
               width: `100%`,
               paddingBottom: `${100 / image.aspectRatio}%`,
@@ -501,6 +500,7 @@ class Image extends React.Component {
           {bgColor && (
             <Tag
               aria-hidden
+              title={title}
               style={{
                 backgroundColor: bgColor,
                 position: `absolute`,

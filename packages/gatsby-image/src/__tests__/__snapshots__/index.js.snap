@@ -107,11 +107,11 @@ exports[`<Image /> should render fluid images 1`] = `
     <div
       aria-hidden="true"
       style="width: 100%; padding-bottom: 66.66666666666667%;"
-      title="Title for the image"
     />
     <div
       aria-hidden="true"
       style="background-color: lightgray; position: absolute; top: 0px; bottom: 0px; opacity: 1; right: 0px; left: 0px; transition-delay: 500ms;"
+      title="Title for the image"
     />
     <img
       alt=""
@@ -227,11 +227,11 @@ exports[`<Image /> should render multiple fluid image variants 1`] = `
     <div
       aria-hidden="true"
       style="width: 100%; padding-bottom: 50%;"
-      title="Title for the image"
     />
     <div
       aria-hidden="true"
       style="background-color: lightgray; position: absolute; top: 0px; bottom: 0px; opacity: 1; right: 0px; left: 0px; transition-delay: 500ms;"
+      title="Title for the image"
     />
     <picture>
       <source
