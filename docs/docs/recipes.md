@@ -29,6 +29,11 @@ A live example may not be possible depending on the nature of the recipe, in whi
 See [docs templates](/docs/docs-templates/) in the contributing docs for more help.
 -->
 
+## New automated recipes available!
+Some recipes are now available in a more automated form - you can run some steps of the recipes through the CLI! [See a list of these automated recipes here](/docs/automated-recipes.md).
+
+## What are recipes?
+
 Craving a happy medium between [full-length tutorials](/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
 
 ## [1. Pages and layouts](/docs/recipes/pages-layouts)
