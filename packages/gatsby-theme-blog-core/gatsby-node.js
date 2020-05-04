@@ -169,7 +169,7 @@ exports.onCreateNode = async (
       // image: node.frontmatter.image,
     }
 
-    if (validURL(node.frontmatter.image)) {
+    if (validURL(node.frontmatter.image)) { // create a file node for image URLs
       let fileNode = await createRemoteFileNode({
         url: node.frontmatter.image, 
         parentNodeId: node.id, 
@@ -182,14 +182,16 @@ exports.onCreateNode = async (
       if (fileNode) {
         fieldData.image = fileNode.id
       }
-    } else if (node.frontmatter.image) {
+    } 
+    else if (node.frontmatter.image) { // for relative paths, find the file node to assign it
       const fileNodes = getNodesByType(`File`)
+
       for (let file of fileNodes) {
-          const relativePathFile = file.relativePath.match('([^\/]+$)')[1]
-          const imagePath = node.frontmatter.image.match('([^\/]+$)')[1]
-          if (relativePathFile === imagePath) {
-            fieldData.image = file.id
-          }
+        const imagePath = node.frontmatter.image.match('([^\/]+$)')[1] // parse out the file path
+        if (file.absolutePath === path.join(fileNode.dir, imagePath)) {
+          fieldData.image = file.id
+          break
+        }
       }
     }
 
