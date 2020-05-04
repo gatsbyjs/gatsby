@@ -49,6 +49,7 @@ You can also host your own preview server or test it out locally by running `ENA
 ## Recommendations
 
 - For now I recommend hosting on WPEngine (or another mid-to-high-performance WP host) for your remote WP server, and using Local by Flywheel (upgrade to the latest version for ultra-speed) to do local development. You can use this with other setups, but it may be less enjoyable if your server is slower than the recommended setup. More work will be done in the future to ensure this works well on all types of hosts. If you use a slower setup, change GATSBY_CONCURRENT_DOWNLOADS to a lower number to prevent your server from getting overloaded.
+- If you have a large site, you may need to ask your hosting provider to remove rate limiting for your instance. Fetching many images may trigger rate limiting protections and fail your build.
 - Stick to WPGraphQL v0.6.x for now, as previous or future versions may not yet work with the new source plugin. There will be a compatibility API coming soon which will give you the proper download links for WPGatsby and WPGraphQL based on your version of `gatsby-source-worpress` if your WP install has the wrong version.
 
 ## Debugging Previews
