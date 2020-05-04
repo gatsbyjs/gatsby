@@ -101,7 +101,6 @@ exports[`<Image /> should render fixed size images 1`] = `
 exports[`<Image /> should render fluid images 1`] = `
 <div>
   <div
-    aria-hidden="true"
     class="fixedImage gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline;"
   >
@@ -113,7 +112,6 @@ exports[`<Image /> should render fluid images 1`] = `
     <div
       aria-hidden="true"
       style="background-color: lightgray; position: absolute; top: 0px; bottom: 0px; opacity: 1; right: 0px; left: 0px; transition-delay: 500ms;"
-      title="Title for the image"
     />
     <img
       alt=""
@@ -223,7 +221,6 @@ exports[`<Image /> should render multiple fixed image variants 1`] = `
 exports[`<Image /> should render multiple fluid image variants 1`] = `
 <div>
   <div
-    aria-hidden="true"
     class="fixedImage gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline;"
   >
@@ -235,7 +232,6 @@ exports[`<Image /> should render multiple fluid image variants 1`] = `
     <div
       aria-hidden="true"
       style="background-color: lightgray; position: absolute; top: 0px; bottom: 0px; opacity: 1; right: 0px; left: 0px; transition-delay: 500ms;"
-      title="Title for the image"
     />
     <picture>
       <source

@@ -615,18 +615,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   // when using maxHeight and/or maxWidth determine appropriate aspect ratios
-  let maxWidth
-  let maxHeight
   if (!options.aspectRatio) {
     options.aspectRatio = presentationWidth / presentationHeight
-  }
-  if (options.maxHeight || options.maxWidth) {
-    maxWidth = options.maxWidth
-      ? `${options.maxWidth}px`
-      : `${options.aspectRatio * options.maxHeight}px`
-    maxHeight = options.maxHeight
-      ? `${options.maxHeight}px`
-      : `${options.aspectRatio * options.maxWidth}px`
   }
 
   return {
@@ -636,13 +626,15 @@ async function fluid({ file, args = {}, reporter, cache }) {
     srcSet,
     srcSetType,
     sizes: options.sizes,
-    originalImg: originalImg,
-    originalName: originalName,
+    originalImg,
+    originalName,
     density,
     presentationWidth,
     presentationHeight,
-    maxHeight,
-    maxWidth,
+    // Only return maxWidth & maxHeight when maxHeight is being queried. This way we don't change behaviour
+    // TODO fix gatsby v3
+    maxWidth: fixedDimension === `maxHeight` ? presentationWidth : null,
+    maxHeight: fixedDimension === `maxHeight` ? presentationHeight : null,
     tracedSVG,
   }
 }

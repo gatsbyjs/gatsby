@@ -81,8 +81,8 @@ const getImageSrcKey = ({ fluid, fixed }) => {
 
 /**
  * Returns the current src - Preferably with art-direction support.
- * @param currentData  {{media?: string}[]}   The fluid or fixed image array.
- * @return {{src: string, media?: string}}
+ * @param currentData  {{media?: string}[], maxWidth: Number, maxHeight: Number}   The fluid or fixed image array.
+ * @return {{src: string, media?: string, maxWidth: Number, maxHeight: Number}}
  */
 const getCurrentSrcData = currentData => {
   if (isBrowser && hasArtDirectionSupport(currentData)) {
@@ -474,17 +474,14 @@ class Image extends React.Component {
       const imageVariants = fluid
       const image = getCurrentSrcData(fluid)
 
-      const { maxHeight, maxWidth } = image
-
       return (
         <Tag
-          aria-hidden
           className={`${className ? className : ``} gatsby-image-wrapper`}
           style={{
             position: `relative`,
             overflow: `hidden`,
-            maxWidth,
-            maxHeight,
+            maxWidth: image.maxWidth ? `${image.maxWidth}px` : null,
+            maxHeight: image.maxHeight ? `${image.maxHeight}px` : null,
             ...style,
           }}
           ref={this.handleRef}
@@ -504,7 +501,6 @@ class Image extends React.Component {
           {bgColor && (
             <Tag
               aria-hidden
-              title={title}
               style={{
                 backgroundColor: bgColor,
                 position: `absolute`,
@@ -723,6 +719,8 @@ const fluidObject = PropTypes.shape({
   srcWebp: PropTypes.string,
   srcSetWebp: PropTypes.string,
   media: PropTypes.string,
+  maxWidth: PropTypes.number,
+  maxHeight: PropTypes.number,
 })
 
 // If you modify these propTypes, please don't forget to update following files as well:
