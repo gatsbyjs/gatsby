@@ -379,6 +379,7 @@ jobs:
   starters_publish:
     executor: node
     steps:
+      - checkout
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: yarn markdown
