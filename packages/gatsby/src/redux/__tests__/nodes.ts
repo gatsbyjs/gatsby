@@ -1,18 +1,28 @@
-const { actions } = require(`../actions`)
-const nodeReducer = require(`../reducers/nodes`)
-const nodeTouchedReducer = require(`../reducers/nodes-touched`)
+import { actions } from "../actions"
+import { nodeReducer } from "../reducers/nodes"
+import nodeTouchedReducer from "../reducers/nodes-touched"
 
 jest.mock(`../../db/nodes`)
 jest.mock(`../nodes`)
 
 const dispatch = jest.fn()
 
-describe(`Create and update nodes`, () => {
-  beforeEach(() => {
+type MapObject = Record<string, Record<string, string | number | number[]>>
+
+const fromMapToObject = (map): MapObject => {
+  const obj: MapObject = {}
+  Array.from(map.entries()).forEach(([key, value]) => {
+    obj[key] = value
+  })
+  return obj
+}
+
+describe(`Create and update nodes`, (): void => {
+  beforeEach((): void => {
     dispatch.mockClear()
   })
 
-  it(`allows creating nodes`, () => {
+  it(`allows creating nodes`, (): void => {
     actions.createNode(
       {
         id: `hi`,
@@ -37,7 +47,7 @@ describe(`Create and update nodes`, () => {
     })
   })
 
-  it(`allows updating nodes`, () => {
+  it(`allows updating nodes`, (): void => {
     actions.createNode(
       {
         id: `hi`,
@@ -94,7 +104,7 @@ describe(`Create and update nodes`, () => {
     expect(state.get(`hi`).deep2.boom).toEqual(`foo`)
   })
 
-  it(`nodes that are added are also "touched"`, () => {
+  it(`nodes that are added are also "touched"`, (): void => {
     actions.createNode(
       {
         id: `hi`,
@@ -112,14 +122,14 @@ describe(`Create and update nodes`, () => {
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
 
-    let state = nodeTouchedReducer(undefined, action)
+    const state = nodeTouchedReducer(undefined, action)
 
     expect(state instanceof Set).toBe(true)
 
     expect(state.has(`hi`)).toBe(true)
   })
 
-  it(`allows adding fields to nodes`, () => {
+  it(`allows adding fields to nodes`, (): void => {
     actions.createNode(
       {
         id: `hi`,
@@ -155,7 +165,7 @@ describe(`Create and update nodes`, () => {
     })
   })
 
-  it(`throws error if a field is updated by a plugin not its owner`, () => {
+  it(`throws error if a field is updated by a plugin not its owner`, (): void => {
     actions.createNode(
       {
         id: `hi`,
@@ -186,7 +196,7 @@ describe(`Create and update nodes`, () => {
     )
     state = nodeReducer(state, addFieldAction)
 
-    function callActionCreator() {
+    function callActionCreator(): void {
       actions.createNodeField(
         {
           node: state.get(`hi`),
@@ -203,7 +213,7 @@ describe(`Create and update nodes`, () => {
     )
   })
 
-  it(`throws error if a node is created by a plugin not its owner`, () => {
+  it(`throws error if a node is created by a plugin not its owner`, (): void => {
     actions.createNode(
       {
         id: `hi`,
@@ -220,7 +230,7 @@ describe(`Create and update nodes`, () => {
       }
     )(dispatch)
 
-    function callActionCreator() {
+    function callActionCreator(): void {
       actions.createNode(
         {
           id: `hi2`,
@@ -243,8 +253,8 @@ describe(`Create and update nodes`, () => {
     )
   })
 
-  it(`throws error if a node sets a value on "fields"`, () => {
-    function callActionCreator() {
+  it(`throws error if a node sets a value on "fields"`, (): void => {
+    function callActionCreator(): void {
       actions.createNode(
         {
           id: `hi`,
@@ -271,11 +281,3 @@ describe(`Create and update nodes`, () => {
     )
   })
 })
-
-const fromMapToObject = map => {
-  const obj = {}
-  Array.from(map.entries()).forEach(([key, value]) => {
-    obj[key] = value
-  })
-  return obj
-}
