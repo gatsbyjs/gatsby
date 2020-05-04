@@ -15,7 +15,10 @@ exports.sourceNodes = async (
     createNodeId,
     createContentDigest,
     getCache,
+    getNode,
+    parentSpan,
     reporter,
+    webhookBody,
   },
   pluginOptions
 ) => {
@@ -30,6 +33,53 @@ exports.sourceNodes = async (
     disallowedLinkTypes,
   } = pluginOptions
   const { createNode } = actions
+
+  if (webhookBody && Object.keys(webhookBody).length) {
+    const changesActivity = reporter.activityTimer(
+      `loading Drupal content changes`,
+      {
+        parentSpan,
+      }
+    )
+    changesActivity.start()
+
+    const { secret, action, id, data } = webhookBody
+    if (pluginOptions.secret && pluginOptions.secret !== secret) {
+      return reporter.warn(
+        `The secret in this request did not match your plugin options secret.`
+      )
+    }
+    if (action === `delete`) {
+      actions.deleteNode({ node: getNode(createNodeId(id)) })
+      return reporter.log(`Deleted node: ${id}`)
+    }
+
+    let nodesToUpdate = data
+    if (!(data instanceof Array)) {
+      nodesToUpdate = [data]
+    }
+
+    for (const nodeToUpdate of nodesToUpdate) {
+      await handleWebhookUpdate(
+        {
+          nodeToUpdate,
+          actions,
+          cache,
+          createNodeId,
+          createContentDigest,
+          getCache,
+          getNode,
+          reporter,
+          store,
+        },
+        pluginOptions
+      )
+    }
+
+    changesActivity.end()
+    return reporter.info(`Processed Drupal content changes`)
+  }
+
   const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
 
   // Default apiBase to `jsonapi`
@@ -176,8 +226,11 @@ exports.sourceNodes = async (
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
   }
+
+  return reporter.info(`Processed Drupal data`)
 }
 
+// This is maintained for legacy reasons and will eventually be removed.
 exports.onCreateDevServer = (
   {
     app,
