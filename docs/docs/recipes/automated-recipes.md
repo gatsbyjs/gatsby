@@ -14,6 +14,13 @@ This is a new project announced in [this blogpost](/blog/2020-04-15-announcing-g
 [These are the MDX files for the official Recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes).
 
 ## Community Recipes
-When you add a new recipe, please also add it to the recipes list at [https://github.com/gatsbyjs/gatsby/blob/05151c006974b7636b00f0cd608fac89ddaa1c08/packages/gatsby-recipes/src/cli.js#L60](https://github.com/gatsbyjs/gatsby/blob/05151c006974b7636b00f0cd608fac89ddaa1c08/packages/gatsby-recipes/src/cli.js#L60).
+When you add a new recipe, please also add it to this page in this format:
+
+```md
+### [Name of recipe](URL)
+Recipe description. 
+
+`gatsby recipes https://example.com/recipe-url.mdx`
+```
 
 Note: GitHub doesn't yet support viewing MDX files. In order to view a recipe in the GitHub UI you'll want to click into the recipe file and click on the "Raw" button.
