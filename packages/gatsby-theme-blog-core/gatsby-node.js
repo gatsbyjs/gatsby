@@ -84,11 +84,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
         image: {
           type: `File`,
-          // extensions: {
-          //   link: {
-          //     from: `image`
-          //   }
-          // }
+          extensions: {
+            link: {}
+          }
         },
         imageAlt: {
           type: `String`,
@@ -99,6 +97,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
       },
       interfaces: [`Node`, `BlogPost`],
+      extensions: {
+        infer: false,
+      }
     })
   )
 }
@@ -117,6 +118,7 @@ function validURL(str) {
 // This will change with schema customization with work
 exports.onCreateNode = async (
   { node, actions, getNode, createNodeId,
+    getNodesByType,
     store,
     cache},
   themeOptions
@@ -162,9 +164,10 @@ exports.onCreateNode = async (
       slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
-      image: node.frontmatter.image,
+      // FIXME: This has to point to local file node
+      //   We can use getNodesByType(`File`) to find our local file similar to what gatsby-remark-images do
+      // image: node.frontmatter.image,
     }
-    console.log(fieldData.image)
 
     if (node.frontmatter.image !== null && validURL(node.frontmatter.image)){
       let fileNode = await createRemoteFileNode({
@@ -178,10 +181,7 @@ exports.onCreateNode = async (
       // if the file was created, attach the new node to the parent node
       if (fileNode) {
         fieldData.image = fileNode.id
-        console.log(fieldData.image)
-
       }
-
     }
 
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
