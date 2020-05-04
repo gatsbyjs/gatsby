@@ -10,7 +10,26 @@ Install necessary NPM packages
 
 ---
 
-Setup necessary files
+Install `gatsby-source-wordpress` to pull the WordPress data into Gatsby. Note, once this recipe finishes, you will need to update the config to point to your actual WordPress URL
+
+
+<GatsbyPlugin name="gatsby-source-wordpress" options={{
+  baseUrl: `cms.learnjam.org`,
+  protocol: `https`,
+  hostingWPCOM: false,
+  useACF: true,
+  includedRoutes: [
+      "**/posts",
+      "**/pages",
+      "**/users",
+      "**/categories",
+      "**/tags",
+  ]
+}} />
+
+---
+
+Create a local Gatsby plugin to create pages for the WordPress data
 
 <File
   path="./plugins/gatsby-plugin-wordpress/gatsby-node.js"
@@ -21,6 +40,16 @@ Setup necessary files
   path="./plugins/gatsby-plugin-wordpress/package.json"
   content="https://gist.githubusercontent.com/crock/8e310872e9b3dd6753ee4d63f33a05f8/raw/d9b5df87d7eb1f72e3724f9ba1ba4799210dabad/package.json"
 />
+
+---
+
+Install the local plugin
+
+<GatsbyPlugin name="gatsby-plugin-wordpress" />
+
+---
+
+Create basic post/page/category/tag/user templates
 
 <File
   path="src/templates/post.js"
@@ -71,26 +100,9 @@ Setup necessary files
   content="https://raw.githubusercontent.com/crock/gatsby-recipe-headless-wordpress/master/restapi-src/styles/user.css"
 />
 
----
-
-Install necessary Gatsby Plugins
-
-<GatsbyPlugin name="gatsby-source-wordpress" options={{
-  baseUrl: `cms.learnjam.org`,
-  protocol: `https`,
-  hostingWPCOM: false,
-  useACF: true,
-  includedRoutes: [
-      "**/posts",
-      "**/pages",
-      "**/users",
-      "**/categories",
-      "**/tags",
-  ]
-}} />
-
-<GatsbyPlugin name="gatsby-plugin-wordpress" />
 
 ---
 
-You are good to go!
+Recipe served!
+
+Update `gatsby-config.js` to point to your WordPress instance & then start Gatsby and check out your new pages powered by WordPress!
