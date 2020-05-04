@@ -1,6 +1,7 @@
 import _ from "lodash"
 import { Node } from "gatsby"
 import { store } from "../redux"
+import * as reduxNodes from "../redux/nodes"
 
 if (process.env.GATSBY_DB_NODES === `loki`) {
   console.info(
@@ -10,7 +11,7 @@ if (process.env.GATSBY_DB_NODES === `loki`) {
 
 // const backend = process.env.GATSBY_DB_NODES || `redux`
 const backend = `redux`
-let nodesDb
+let nodesDb: typeof reduxNodes
 let runQuery
 
 switch (backend) {
