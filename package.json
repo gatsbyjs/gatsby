@@ -85,7 +85,7 @@
   ],
   "private": true,
   "lint-staged": {
-    "*.{js,jsx}": [
+    "*.{js,jsx,ts,tsx}": [
       "eslint --cache --ext .js,.jsx,.ts,.tsx --fix",
       "git add"
     ],
