@@ -10474,6 +10474,15 @@
   featured: false
   main_url: https://mishal23.github.io/
   url: https://mishal23.github.io/
+- title: Resistbot
+  url: https://resist.bot
+  main_url: https://resist.bot
+  description: >
+    A chatbot that helps you contact your representatives, and be an informed citizen.
+  categories:
+    - Blog
+    - Government
+    - Nonprofit
 - title: SVG to PNG
   url: https://www.svgtopng.me/
   main_url: https://www.svgtopng.me/
