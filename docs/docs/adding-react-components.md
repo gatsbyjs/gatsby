@@ -20,11 +20,13 @@ In Gatsby, when using React components, you can import and use them like you wou
 import React from "react"
 import { Link } from "gatsby"
 
-export default function Contact() (
-  <div>
-    <Link to="/contact/">Contact</Link>
-  </div>
-)
+export default function Contact() {
+  return (
+    <div>
+      <Link to="/contact/">Contact</Link>
+    </div>
+  )
+}
 ```
 
 ### Importing third-party components
@@ -57,14 +59,16 @@ import React from "react"
 // import my fancy third-party component
 import Button from "@material-ui/core/Button"
 
-export default function Home() (
-  <div>
-    <p>This is my super awesome page made with Gatsby!</p>
+export default function Home() {
+  return (
+    <div>
+      <p>This is my super awesome page made with Gatsby!</p>
 
-    {/* use my fancy third-party component */}
-    <Button variant="contained">Fancy button!</Button>
-  </div>
-)
+      {/* use my fancy third-party component */}
+      <Button variant="contained">Fancy button!</Button>
+    </div>
+  )
+}
 ```
 
 ## Things to watch out for

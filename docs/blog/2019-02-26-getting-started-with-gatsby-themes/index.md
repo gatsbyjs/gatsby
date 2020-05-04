@@ -225,17 +225,19 @@ Next, you will navigate to the _theme_ directory. You will then create a _compon
 Inside of your _layout.js_ file, you can add your styling.
 
 ```jsx:title=packages/theme/src/components/layout.js
-export default function Layout({ children }) (
-  <div
-    style={{
-      // Layout styling
-      margin: `10%`,
-      backgroundColor: `#fafafa`,
-    }}
-  >
-    {children}
-  </div>
-)
+export default function Layout({ children }) {
+  return (
+    <div
+      style={{
+        // Layout styling
+        margin: `10%`,
+        backgroundColor: `#fafafa`,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
 ```
 
 To make sure your _layout.js_ file is connected to your theme you will navigate to your _gatsby-config.js_ file in your _theme_ directory. You will add defaultLayouts under options and make sure that the _layout.js_ is required.
@@ -270,17 +272,19 @@ If you want to reuse a specific style, you can create styled components. In your
 Here is an example of how you can set-up your styled component in _header.js_. Please make sure you write css-in-javascript when styling your div.
 
 ```jsx:title=header.js
-export default function Header({ children }) (
-  <section
-    style={{
-      // Header Specific Styling //
-      padding: "10px",
-      backgroundColor: "blue",
-    }}
-  >
-    {children}
-  </section>
-)
+export default function Header({ children }) {
+  return (
+    <section
+      style={{
+        // Header Specific Styling //
+        padding: "10px",
+        backgroundColor: "blue",
+      }}
+    >
+      {children}
+    </section>
+  )
+}
 ```
 
 To import your styled components, go to _index.js_ and export your component.
