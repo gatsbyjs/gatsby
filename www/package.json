@@ -8,7 +8,7 @@
     "@jamo/graphql-request": "2.0.2",
     "@lingui/react": "^2.9.1",
     "@loadable/component": "^5.12.0",
-    "@mdx-js/mdx": "^1.6.0",
+    "@mdx-js/mdx": "^1.6.1",
     "@reach/skip-nav": "^0.6.2",
     "@styled-system/prop-types": "^5.1.5",
     "@styled-system/should-forward-prop": "^5.1.5",
