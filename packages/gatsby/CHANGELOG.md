@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.10...gatsby@2.21.11) (2020-05-04)
+
+### Bug Fixes
+
+- **gatsby:** Fix dirty check for schema rebuilding ([#23658](https://github.com/gatsbyjs/gatsby/issues/23658)) ([fa50f3e](https://github.com/gatsbyjs/gatsby/commit/fa50f3e))
+
 ## [2.21.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.9...gatsby@2.21.10) (2020-05-04)
 
 **Note:** Version bump only for package gatsby
