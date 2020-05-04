@@ -380,6 +380,11 @@ export interface ICreateRedirectAction {
   payload: IRedirect
 }
 
+export interface ISetResolvedThemesAction {
+  type: `SET_RESOLVED_THEMES`
+  payload: IRedirect
+}
+
 export interface IDeleteCacheAction {
   type: `DELETE_CACHE`
 }
