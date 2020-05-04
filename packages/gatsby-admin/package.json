@@ -18,6 +18,7 @@
   },
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build --prefix-paths"
+    "build": "gatsby build --prefix-paths",
+    "watch": "nodemon --watch src --ext js,ts,tsx,json --exec \"yarn run build\""
   }
 }
