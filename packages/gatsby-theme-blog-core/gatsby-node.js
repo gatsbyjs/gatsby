@@ -91,6 +91,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         imageAlt: {
           type: `String`,
         },
+        imageAlt: {
+          type: `String`,
+        },
         body: {
           type: `String!`,
           resolve: mdxResolverPassthrough(`body`),
