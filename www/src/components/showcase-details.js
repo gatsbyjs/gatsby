@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Link from "./localized-link"
-import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
@@ -13,6 +12,7 @@ import Modal from "./modal"
 import ShareMenu from "./share-menu"
 import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
+import PageMetadata from "../components/site-metadata"
 
 import FeaturedIcon from "../assets/icons/featured-sites-icons"
 import { MdArrowUpward, MdLink } from "react-icons/md"
@@ -263,38 +263,12 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
         }}
       >
         <div css={{ width: `100%` }}>
-          <Helmet titleTemplate="%s | GatsbyJS">
-            <title>{`${site.title}: Showcase`}</title>
-            <meta
-              property="og:image"
-              content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
-            />
-            <meta
-              name="twitter:image"
-              content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
-            />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta
-              name="og:title"
-              value={`${site.title}: Showcase | GatsbyJS`}
-            />
-            <meta
-              property="og:image:width"
-              content={screenshotFile.resize.width}
-            />
-            <meta
-              property="og:image:height"
-              content={screenshotFile.resize.height}
-            />
-            <meta
-              property="og:description"
-              content={site.description || site.main_url}
-            />
-            <meta
-              name="twitter:description"
-              content={site.description || site.main_url}
-            />
-          </Helmet>
+          <PageMetadata
+            title={`${site.title}: Showcase`}
+            description={site.description || site.main_url}
+            image={screenshotFile.resize}
+            twitterCard="summary_large_image"
+          />
           <div
             sx={{
               p: gutter,
