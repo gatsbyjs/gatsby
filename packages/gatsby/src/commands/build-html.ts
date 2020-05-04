@@ -9,7 +9,7 @@ import webpack from "webpack"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
-import { BuildHTMLStage, IProgram, Stage } from "./types"
+import { IProgram, Stage } from "./types"
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
@@ -42,7 +42,7 @@ const doBuildRenderer = async (
 
 const buildRenderer = async (
   program: IProgram,
-  stage: BuildHTMLStage,
+  stage: Stage.BuildHTML,
   parentSpan: IActivity
 ): Promise<string> => {
   const { directory } = program
