@@ -10474,3 +10474,15 @@
   featured: false
   main_url: https://mishal23.github.io/
   url: https://mishal23.github.io/
+- title: St. Jude Cloud
+  url: https://www.stjude.cloud
+  main_url: https://www.stjude.cloud
+  description: >
+    Pediatric cancer data sharing ecosystem by St. Jude Children's Research Hospital.
+  categories:
+    - Science
+    - Technology
+    - Nonprofit
+    - Data
+    - Healthcare
+  featured: false
