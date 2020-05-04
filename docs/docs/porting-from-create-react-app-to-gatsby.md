@@ -53,7 +53,7 @@ After installation, the key things that need to change are:
 
 1. ensuring any calls to browser-based APIs still work (if there are any)
 
-1. converting routes into pages in the `/pages` directory
+2. converting routes into pages in the `/pages` directory
 
 The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with just the above steps.
 
@@ -290,9 +290,24 @@ function App() {
 export default App
 ```
 
-In Gatsby, if you want your providers to be global across pages you would move those providers to `gatsby-browser.js`:
+In Gatsby, if you want your providers to be global across pages you would move those providers to `gatsby-browser.js` and `gatsby-ssr.js` :
 
 ```jsx:title=gatsby/gatsby-browser.js
+import React from "react"
+
+const defaultTheme = "light"
+export const ThemeContext = React.createContext(defaultTheme)
+
+export const wrapRootElement = ({ element }) => {
+  return (
+    <ThemeContext.Provider value={defaultTheme}>
+      {element}
+    </ThemeContext.Provider>
+  )
+}
+```
+
+```jsx:title=gatsby/gatsby-ssr.js
 import React from "react"
 
 const defaultTheme = "light"

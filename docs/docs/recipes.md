@@ -125,3 +125,4 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 - [Deploying to Netlify](/docs/recipes/deploying-your-site#deploying-to-netlify)
 - [Deploying to ZEIT Now](/docs/recipes/deploying-your-site#deploying-to-zeit-now)
 - [Deploying to Cloudflare Workers](/docs/recipes/deploying-your-site#deploying-to-cloudflare-workers)
+- [Setting up Google Analytics](/docs/recipes/deploying-your-site#setting-up-google-analytics)

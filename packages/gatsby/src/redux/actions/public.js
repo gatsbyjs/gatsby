@@ -14,7 +14,7 @@ const { hasNodeChanged, getNode } = require(`../../db/nodes`)
 import { sanitizeNode } from "../../db/sanitize-node"
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
-const joiSchemas = require(`../../joi-schemas/joi`)
+import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const {
   getCommonDir,
@@ -563,10 +563,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
-    node &&
-    findChildren(node.children)
-      .map(getNode)
-      .map(createDeleteAction)
+    node && findChildren(node.children).map(getNode).map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
@@ -744,7 +741,7 @@ const createNode = (
 
   trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
-  const result = Joi.validate(node, joiSchemas.nodeSchema)
+  const result = Joi.validate(node, nodeSchema)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
       const errorObj = {

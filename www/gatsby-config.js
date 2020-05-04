@@ -2,7 +2,7 @@ const path = require(`path`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
-const { langCodes } = require(`./src/utils/i18n`)
+const { i18nEnabled, langCodes } = require(`./src/utils/i18n`)
 
 const GA = {
   identifier: `UA-93349937-5`,
@@ -53,12 +53,7 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
-// true if `env.LOCALES` has a defined list of languages
-if (langCodes.length > 0) {
-  const naughtyFiles = [
-    `docs/docs/graphql-api.md`,
-    `docs/docs/data-fetching.md`,
-  ]
+if (i18nEnabled) {
   dynamicPlugins.push(
     ...langCodes.map(code => ({
       resolve: `gatsby-source-git`,
@@ -66,7 +61,7 @@ if (langCodes.length > 0) {
         name: `docs-${code}`,
         remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
         branch: `master`,
-        patterns: [`docs/**`, ...naughtyFiles.map(file => `!${file}`)],
+        patterns: [`docs/**`],
       },
     })),
     {
@@ -91,6 +86,17 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-theme-ui`,
+    {
+      resolve: `gatsby-alias-imports`,
+      options: {
+        aliases: {
+          // Relative paths when importing components from MDX break translations of the docs,
+          // so use an alias instead inside MDX:
+          // https://www.gatsbyjs.org/contributing/docs-and-blog-components/#importing-other-components
+          "@components": "src/components",
+        },
+      },
+    },
     {
       resolve: `gatsby-transformer-gitinfo`,
       options: {

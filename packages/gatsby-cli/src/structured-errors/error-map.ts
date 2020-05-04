@@ -1,25 +1,5 @@
 import { stripIndent, stripIndents } from "common-tags"
-
-interface IOptionalGraphQLInfoContext {
-  codeFrame?: string
-  filePath?: string
-  urlPath?: string
-  plugin?: string
-}
-
-enum Level {
-  ERROR = `ERROR`,
-  WARNING = `WARNING`,
-  INFO = `INFO`,
-  DEBUG = `DEBUG`,
-}
-
-enum Type {
-  GRAPHQL = `GRAPHQL`,
-  CONFIG = `CONFIG`,
-  WEBPACK = `WEBPACK`,
-  PLUGIN = `PLUGIN`,
-}
+import { IOptionalGraphQLInfoContext, Level, Type } from "./types"
 
 const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
   `${context.codeFrame ? `\n\n${context.codeFrame}` : ``}${
@@ -264,6 +244,12 @@ const errors = {
     level: Level.ERROR,
   },
   // Config errors
+  "10122": {
+    text: (context): string =>
+      `The site's gatsby-config.js failed validation:\n\n${context.sourceMessage}`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+  },
   "10123": {
     text: (context): string =>
       `We encountered an error while trying to load your site's ${context.configName}. Please fix the error and try again.`,
@@ -312,8 +298,9 @@ const errors = {
     text: (context): string =>
       `"${context.pluginName}" threw an error while running the ${
         context.api
-      } lifecycle:\n\n${context.sourceMessage ??
-        context.message}${optionalGraphQLInfo(context)}`,
+      } lifecycle:\n\n${
+        context.sourceMessage ?? context.message
+      }${optionalGraphQLInfo(context)}`,
     type: Type.PLUGIN,
     level: Level.ERROR,
   },

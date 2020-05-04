@@ -8,13 +8,13 @@ PostCSS transforms extended syntaxes and features into modern, browser-friendly 
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [quick start guide](/docs/quick-start/), then come back.
 
-1.  Install the Gatsby plugin [gatsby-plugin-postcss](/packages/gatsby-plugin-postcss/).
+1. Install the Gatsby plugin [gatsby-plugin-postcss](/packages/gatsby-plugin-postcss/).
 
 ```shell
 npm install --save gatsby-plugin-postcss
 ```
 
-2.  Include the plugin in your `gatsby-config.js` file.
+2. Include the plugin in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 plugins: [`gatsby-plugin-postcss`],
@@ -22,7 +22,7 @@ plugins: [`gatsby-plugin-postcss`],
 
 > **Note**: If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader) for all available options.
 
-3.  Write your stylesheets using PostCSS (`.css` files) and require or import them as normal.
+3. Write your stylesheets using PostCSS (`.css` files) and require or import them as normal.
 
 ```css:title=styles.css
 @custom-media --med (width <= 50rem);

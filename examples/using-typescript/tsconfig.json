@@ -2,7 +2,7 @@
   "include": ["./src/**/*"],
   "compilerOptions": {
     "target": "esnext",
-    "module": "commonjs",
+    "module": "esnext",
     "lib": ["dom", "es2017"],
     // "allowJs": true,
     // "checkJs": true,

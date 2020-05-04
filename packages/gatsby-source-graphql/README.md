@@ -26,7 +26,7 @@ module.exports = {
         // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
         fieldName: "swapi",
         // Url to query from
-        url: "https://api.graphcms.com/simple/v1/swapi",
+        url: "https://swapi-graphql.netlify.com/.netlify/functions/index",
       },
     },
 
