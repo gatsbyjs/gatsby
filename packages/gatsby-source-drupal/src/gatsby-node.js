@@ -57,7 +57,7 @@ exports.sourceNodes = async (
     }
 
     let nodesToUpdate = data
-    if (!(data instanceof Array)) {
+    if (!Array.isArray(data)) {
       nodesToUpdate = [data]
     }
 
