@@ -1,7 +1,13 @@
-module.exports = (state = new Map(), action) => {
+import { ActionsUnion, IGatsbyState } from "../types"
+
+export const nodeReducer = (
+  state: IGatsbyState["nodes"] = new Map(),
+  action: ActionsUnion
+): IGatsbyState["nodes"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()
+
     case `CREATE_NODE`: {
       state.set(action.payload.id, action.payload)
       return state

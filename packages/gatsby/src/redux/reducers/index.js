@@ -1,4 +1,4 @@
-const reduxNodes = require(`./nodes`)
+import { nodeReducer } from "./nodes"
 const lokiNodes = require(`../../db/loki/nodes`).reducer
 import { redirectsReducer } from "./redirects"
 import { staticQueryComponentsReducer } from "./static-query-components"
@@ -14,7 +14,7 @@ function getNodesReducer() {
   let nodesReducer
   switch (backend) {
     case `redux`:
-      nodesReducer = reduxNodes
+      nodesReducer = nodeReducer
       break
     case `loki`:
       nodesReducer = lokiNodes
