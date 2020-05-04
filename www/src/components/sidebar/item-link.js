@@ -2,6 +2,7 @@
 import { jsx } from "theme-ui"
 import Link from "../localized-link"
 
+import { useSidebarContext } from "./sidebar"
 import indention from "../../utils/sidebar/indention"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
@@ -11,19 +12,15 @@ const bulletSize = 8
 const bulletSizeActive = 100
 const bulletOffsetTop = `1.3em`
 
-export default function ItemLink({
-  item,
-  onLinkClick,
-  isActive,
-  isParentOfActiveItem,
-  ui,
-  overrideCSS,
-}) {
+export default function ItemLink({ item, overrideCSS }) {
+  const { onLinkClick, getItemState } = useSidebarContext()
+  const { isActive, inActiveTree } = getItemState(item)
+
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
 
   const level = item.level
-  const indent = ui === `steps` ? indention(level + 1) : indention(level)
+  const indent = item.ui === `steps` ? indention(level + 1) : indention(level)
 
   return (
     <span
@@ -60,12 +57,7 @@ export default function ItemLink({
             ...(isDraft && {
               color: `textMuted`,
             }),
-            ...(isActive && {
-              color: `link.color`,
-              fontWeight: `semiBold`,
-            }),
-            ...(isParentOfActiveItem && {
-              bg: `sidebar.itemBackgroundActive`,
+            ...(inActiveTree && {
               color: `link.color`,
               fontWeight: `semiBold`,
             }),
@@ -82,7 +74,7 @@ export default function ItemLink({
           "&:before, &:after": {
             content: `''`,
             left: t =>
-              level === 0 || (level === 1 && ui !== `steps`)
+              level === 0 || (level === 1 && item.ui !== `steps`)
                 ? `calc(${indent} - ${t.space[4]})`
                 : `calc(${indent} - ${t.space[6]})`,
             top: bulletOffsetTop,
@@ -92,7 +84,7 @@ export default function ItemLink({
             width: bulletSize,
           },
           "&:before": {
-            bg: isActive ? `link.color` : false,
+            bg: isActive && `link.color`,
             borderRadius: 6,
             transform: isActive ? `scale(1)` : `scale(0.1)`,
           },
@@ -107,7 +99,7 @@ export default function ItemLink({
         onClick={onLinkClick}
         to={item.link}
       >
-        {ui === `steps` && (
+        {item.ui === `steps` && (
           <span
             sx={{
               bg: `white`,

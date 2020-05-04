@@ -129,6 +129,10 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add React Helmet`,
       value: `gatsby-plugin-react-helmet.mdx`,
     },
+    {
+      label: `Add Storybook - JavaScript`,
+      value: `storybook-js.mdx`,
+    },
     // TODO remaining recipes
   ]
 

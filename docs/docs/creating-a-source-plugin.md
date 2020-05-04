@@ -311,7 +311,7 @@ This can be achieved by the following steps:
 
 1. Install `gatsby-source-filesystem` as a dependency in your source plugin:
 
-```
+```shell
 npm install gatsby-source-filesystem
 ```
 
