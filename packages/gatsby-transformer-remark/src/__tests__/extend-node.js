@@ -916,6 +916,20 @@ date: "2017-09-18T23:19:51.246Z"
       expect(node.timeToRead).toBe(1)
     }
   )
+
+  bootstrapTest(
+    `correctly uses a custom value for timeToRead`,
+    `${content}\nWhere oh where is my little pony?\n`,
+    `timeToRead
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.timeToRead).toBe(9)
+    },
+    { pluginOptions: { timeToRead: wordCount => wordCount / 1 } }
+  )
 })
 
 describe(`Table of contents is generated correctly from schema`, () => {

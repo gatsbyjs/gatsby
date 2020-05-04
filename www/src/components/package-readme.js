@@ -2,11 +2,11 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
 
+import MarkdownPageFooter from "./markdown-page-footer"
+import PageMetadata from "./page-metadata"
 import Link from "./localized-link"
 import Container from "./container"
-import MarkdownPageFooter from "./markdown-page-footer"
 import FooterLinks from "./shared/footer-links"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import GatsbyIcon from "./gatsby-monogram"
@@ -58,17 +58,13 @@ const PackageReadMe = props => {
 
   return (
     <React.Fragment>
+      <PageMetadata
+        title={packageName}
+        description={metaExcerpt}
+        type="article"
+        timeToRead={timeToRead}
+      />
       <Container>
-        <Helmet>
-          <title>{packageName}</title>
-          <meta name="description" content={metaExcerpt} />
-          <meta property="og:description" content={metaExcerpt} />
-          <meta name="twitter:description" content={metaExcerpt} />
-          <meta property="og:title" content={packageName} />
-          <meta property="og:type" content="article" />
-          <meta name="twitter.label1" content="Reading time" />
-          <meta name="twitter:data1" content={`${timeToRead} min read`} />
-        </Helmet>
         <div
           sx={{
             display: `flex`,
