@@ -45,13 +45,15 @@ exports.sourceNodes = async (
 
     const { secret, action, id, data } = webhookBody
     if (pluginOptions.secret && pluginOptions.secret !== secret) {
-      return reporter.warn(
+      reporter.warn(
         `The secret in this request did not match your plugin options secret.`
       )
+      return
     }
     if (action === `delete`) {
       actions.deleteNode({ node: getNode(createNodeId(id)) })
-      return reporter.log(`Deleted node: ${id}`)
+      reporter.log(`Deleted node: ${id}`)
+      return
     }
 
     let nodesToUpdate = data
@@ -77,7 +79,7 @@ exports.sourceNodes = async (
     }
 
     changesActivity.end()
-    return reporter.info(`Processed Drupal content changes`)
+    return
   }
 
   const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
@@ -227,7 +229,7 @@ exports.sourceNodes = async (
     createNode(node)
   }
 
-  return reporter.info(`Processed Drupal data`)
+  return
 }
 
 // This is maintained for legacy reasons and will eventually be removed.
@@ -251,6 +253,9 @@ exports.onCreateDevServer = (
       type: `application/json`,
     }),
     async (req, res) => {
+      console.warn(
+        `The ___updatePreview callback is now deprecated and will be removed in the future. Please use the __refresh callback instead.`
+      )
       if (!_.isEmpty(req.body)) {
         const requestBody = JSON.parse(JSON.parse(req.body))
         const { secret, action, id } = requestBody
