@@ -3,6 +3,12 @@ import { basename } from "path"
 import { execSync } from "child_process"
 import gitUp from "git-up"
 
+// there are no types for git-up, so we create our own
+// based on https://github.com/IonicaBizau/git-up/blob/60e6a4ff93d50360bbb80953bfab2f82d3418900/lib/index.js#L8-L28
+const typedGitUp = gitUp as (
+  input: string
+) => { resource: string; pathname: string }
+
 interface IRepositoryData {
   provider: string
   owner?: string
@@ -20,7 +26,8 @@ const hash = (str: string): string =>
 export const getRepoMetadata = (url: string): IRepositoryData | null => {
   try {
     // This throws for invalid urls
-    const { resource: provider, pathname } = gitUp(url)
+    const { resource: provider, pathname } = typedGitUp(url)
+
     const res: IRepositoryData = { provider: hash(provider) }
 
     const userAndRepo = pathname.split(`/`)
