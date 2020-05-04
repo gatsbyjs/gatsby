@@ -1,8 +1,10 @@
-const { createHash } = require(`crypto`)
-jest.mock(`child_process`)
-const { getRepositoryId, getRepoMetadata } = require(`../repository-id`)
+import { createHash } from "crypto"
+import { getRepositoryId, getRepoMetadata } from "../repository-id"
 
-const hash = str => createHash(`sha256`).update(str).digest(`hex`)
+jest.mock(`child_process`)
+
+const hash = (str: string): string =>
+  createHash(`sha256`).update(str).digest(`hex`)
 
 describe(`Repository ID Helpers`, () => {
   it(`getRepositoryId from git`, () => {
@@ -60,7 +62,7 @@ describe(`Repository ID Helpers`, () => {
       throw new Error(`broken`)
     })
 
-    process.env.NETLIFY = 1
+    process.env.NETLIFY = `1`
     process.env.REPOSITORY_URL = `https://x-access-token:v1.6a60ab57393b6e8a11baf6435ae6f8097157033d@github.com/user/repo`
 
     //`https://x-access-token:v1.6xxxxxxxxxxxxxxxxx@github.com/user/repo`
