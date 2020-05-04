@@ -1,15 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 import { initTracer, JaegerTracer, TracingConfig } from "jaeger-client"
 
-// The close method is currently in review at DefinitelyTyped:
-// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44132
-// Once that's merged, we can remove this manual extension and use the base version.
-interface IJaegerTracerWithCLose extends JaegerTracer {
-  close(callback?: () => void): void
-}
-
-let tracer: IJaegerTracerWithCLose
+let tracer: JaegerTracer
 
 function create(): JaegerTracer {
   // See schema
@@ -33,7 +24,12 @@ function create(): JaegerTracer {
 
 function stop(): Promise<void> {
   return new Promise(resolve => {
-    tracer.close(resolve)
+    // The close method is currently in review at DefinitelyTyped:
+    // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44132
+    // Once that's merged, we can remove this manual extension and use the base version.
+    ;(tracer as JaegerTracer & { close(callback?: () => void): void }).close(
+      resolve
+    )
   })
 }
 
