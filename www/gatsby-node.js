@@ -5,6 +5,7 @@ const child_process = require(`child_process`)
 const startersRedirects = require(`./starter-redirects.json`)
 const yaml = require(`js-yaml`)
 const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
+const { i18nEnabled } = require(`./src/utils/i18n`)
 
 const docs = require(`./src/utils/node/docs.js`)
 const showcase = require(`./src/utils/node/showcase.js`)
@@ -40,7 +41,10 @@ exports.onCreateNode = helpers => {
 }
 
 exports.onPostBootstrap = () => {
-  child_process.execSync(`yarn lingui:build`)
+  // Compile language strings if locales are enabled
+  if (i18nEnabled) {
+    child_process.execSync(`yarn lingui:build`)
+  }
 }
 
 exports.onPostBuild = () => {

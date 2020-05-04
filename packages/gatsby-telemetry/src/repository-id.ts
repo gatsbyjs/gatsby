@@ -15,9 +15,7 @@ interface IRepositoryId {
 }
 
 const hash = (str: string): string =>
-  createHash(`sha256`)
-    .update(str)
-    .digest(`hex`)
+  createHash(`sha256`).update(str).digest(`hex`)
 
 export const getRepoMetadata = (url: string): IRepositoryData | null => {
   try {

@@ -3,7 +3,14 @@
   "overrides": [
     {
       "test": "**/*.ts",
-      "plugins": [["@babel/plugin-transform-typescript", { "isTSX": true }]]
+      "plugins": [
+        [
+          "@babel/plugin-transform-typescript",
+          {
+            "isTSX": true
+          }
+        ]
+      ]
     }
   ]
 }
