@@ -1,4 +1,4 @@
-const { createRequire, createRequireFromPath } = require(`module`)
+const { createRequireFromPath } = require(`gatsby-core-utils`)
 const path = require(`path`)
 const mergeGatsbyConfig = require(`../../utils/merge-gatsby-config`)
 const Promise = require(`bluebird`)
@@ -8,8 +8,6 @@ const preferDefault = require(`../prefer-default`)
 import { getConfigFile } from "../get-config-file"
 const { resolvePlugin } = require(`../load-plugins/load`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-
-const createScopedRequire = createRequire || createRequireFromPath
 
 // get the gatsby-config file for a theme
 const resolveTheme = async (
@@ -21,7 +19,7 @@ const resolveTheme = async (
   const themeName = themeSpec.resolve || themeSpec
   let themeDir
   try {
-    const scopedRequire = createScopedRequire(`${rootDir}/:internal:`)
+    const scopedRequire = createRequireFromPath(`${rootDir}/:internal:`)
     // theme is an node-resolvable module
     themeDir = path.dirname(scopedRequire.resolve(themeName))
   } catch (e) {
