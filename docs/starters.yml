@@ -6043,6 +6043,25 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://gatsby-material-typescript-starter.netlify.app
+  repo: https://github.com/Junscuzzy/gatsby-material-typescript-starter
+  description: A simple starter using Typescript, eslint, prettier & @Material-ui
+  tags:
+    - Language:TypeScript
+    - Linting
+    - Netlify
+    - SEO
+    - Styling:Material
+  features:
+    - Typescript in front-side & node-side
+    - Prettier, eslint and Type-check well configured together
+    - Material-ui SSR compatible with build-in light/dark theme
+    - Content sourcing free
+    - Functional react (Hooks & functions instead Class)
+    - Responsive design
+    - SEO optimized
+    - Styled 404 page
+    - Google Analytics support
 - url: https://gatsby-starter-takeshape-startup.netlify.app
   repo: https://github.com/colbyfayock/gatsby-starter-takeshape-startup
   description: Integrate TakeShape CMS using a ready to go TakeShape Startup project!
