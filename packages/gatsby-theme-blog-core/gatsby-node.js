@@ -164,9 +164,6 @@ exports.onCreateNode = async (
       slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
-      // FIXME: This has to point to local file node
-      //   We can use getNodesByType(`File`) to find our local file similar to what gatsby-remark-images do
-      // image: node.frontmatter.image,
     }
 
     if (validURL(node.frontmatter.image)) { // create a file node for image URLs
@@ -182,8 +179,7 @@ exports.onCreateNode = async (
       if (fileNode) {
         fieldData.image = fileNode.id
       }
-    } 
-    else if (node.frontmatter.image) { // for relative paths, find the file node to assign it
+    } else if (node.frontmatter.image) { // for relative paths, find the file node to assign it
       const fileNodes = getNodesByType(`File`)
 
       for (let file of fileNodes) {
