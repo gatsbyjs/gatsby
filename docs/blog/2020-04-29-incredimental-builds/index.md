@@ -1,5 +1,5 @@
 ---
-title: "Incredimental Builds"
+title: "Gatsby Cloud Incremental Builds: More like *Incredimental* Builds!"
 date: 2020-04-29
 author: "Josh Comeau"
 excerpt: "A deeper look at Gatsby's recent announcement, how it changes the game for content editors, and what it means for the future."
