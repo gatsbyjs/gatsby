@@ -187,10 +187,10 @@ jobs:
     executor: node
     steps:
       - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
@@ -379,7 +379,8 @@ jobs:
   starters_publish:
     executor: node
     steps:
-      - <<: *attach_to_bootstrap
+      - <<: *restore_cache
+      - <<: *install_node_modules
       - run: yarn markdown
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
@@ -575,8 +576,6 @@ workflows:
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
-          requires:
-            - bootstrap
           filters:
             branches:
               only:
