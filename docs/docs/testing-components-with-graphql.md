@@ -203,20 +203,22 @@ const Header = ({ data }) => (
   </header>
 )
 
-export default props => (
-  <StaticQuery
-    query={graphql`
-      query {
-        site {
-          siteMetadata {
-            title
+export default function MyHeader(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+            }
           }
         }
-      }
-    `}
-    render={data => <Header {...props} data={data} />}
-  />
-)
+      `}
+      render={data => <Header {...props} data={data} />}
+    />
+  )
+}
 ```
 
 This is almost ready: all you need to do is export the pure component that you

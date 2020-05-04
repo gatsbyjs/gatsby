@@ -338,7 +338,7 @@ module.exports = (
       }
     }
 
-    async function markdownASTToHTMLAst(ast) {
+    function markdownASTToHTMLAst(ast) {
       return toHAST(ast, {
         allowDangerousHTML: true,
         handlers: { code: codeHandler },
