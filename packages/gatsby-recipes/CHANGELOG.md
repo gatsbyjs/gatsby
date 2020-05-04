@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.8...gatsby-recipes@0.1.9) (2020-05-04)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.7...gatsby-recipes@0.1.8) (2020-05-01)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.6...gatsby-recipes@0.1.7) (2020-05-01)
+
+### Features
+
+- **gatsby-recipes:** add local dev instructions for gatsby-recipes ([#23613](https://github.com/gatsbyjs/gatsby/issues/23613)) ([0cab305](https://github.com/gatsbyjs/gatsby/commit/0cab305))
+
+## [0.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.5...gatsby-recipes@0.1.6) (2020-04-29)
+
+### Features
+
+- **gatsby-recipes:** Create default gatsby-config.js when installing a plugin if one doesn't exist ([#23602](https://github.com/gatsbyjs/gatsby/issues/23602)) ([293e171](https://github.com/gatsbyjs/gatsby/commit/293e171))
+- **gatsby-recipes:** document option support for GatsbyPlugin ([#23599](https://github.com/gatsbyjs/gatsby/issues/23599)) ([c0c8875](https://github.com/gatsbyjs/gatsby/commit/c0c8875))
+
 ## [0.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.4...gatsby-recipes@0.1.5) (2020-04-29)
 
 ### Features

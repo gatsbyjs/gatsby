@@ -13,7 +13,11 @@ const isParentActive = (sections, parentTitle) => {
 }
 
 // return items up the sidebar's hierarchy
-const getActiveItemParents = (itemList, activeItemLink, activeItemParents) => {
+const getActiveItemParents = (
+  itemList,
+  activeItemLink,
+  activeItemParents = []
+) => {
   if (activeItemLink.parentTitle) {
     const bar = isParentActive(itemList, activeItemLink.parentTitle)
     activeItemParents.push(bar)
