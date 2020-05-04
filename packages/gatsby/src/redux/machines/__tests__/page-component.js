@@ -12,7 +12,7 @@ const getService = (args = {}) =>
       query: ``,
       pages: new Set([`/`]),
       isInBootstrap: true,
-      ...args
+      ...args,
     })
   ).start()
 
