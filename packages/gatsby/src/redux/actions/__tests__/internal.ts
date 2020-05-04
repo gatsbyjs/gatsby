@@ -52,9 +52,9 @@ describe(`setSiteConfig`, () => {
     })
 
     expect(reporter.panic).toBeCalledWith({
-      id: "10122",
+      id: `10122`,
       context: {
-        sourceMessage: '"someRandomThing" is not allowed',
+        sourceMessage: `"someRandomThing" is not allowed`,
       },
     })
   })

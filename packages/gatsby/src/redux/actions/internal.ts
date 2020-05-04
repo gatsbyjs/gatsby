@@ -234,7 +234,7 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
 
   if (result.error) {
     reporter.panic({
-      id: "10122",
+      id: `10122`,
       context: {
         sourceMessage: result.error.message,
       },
