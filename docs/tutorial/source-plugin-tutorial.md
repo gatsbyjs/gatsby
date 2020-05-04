@@ -102,7 +102,7 @@ You need to install your plugin in the site to be able to test that your code is
 
 ```javascript:title=example-site/gatsby-config.js
 module.exports = {
-  plugins: [require.resolve(`../source-plugin`)]
+  plugins: [require.resolve(`../source-plugin`)],
 }
 ```
 
@@ -141,15 +141,15 @@ exports.sourceNodes = async ({
   actions,
   createContentDigest,
   createNodeId,
-  getNodesByType
+  getNodesByType,
 }) => {
   const { createNode } = actions
 
   const data = {
     posts: [
       { id: 1, description: `Hello world!` },
-      { id: 2, description: `Second post!` }
-    ]
+      { id: 2, description: `Second post!` },
+    ],
   }
 
   // loop through data and create Gatsby nodes
@@ -162,8 +162,8 @@ exports.sourceNodes = async ({
       internal: {
         type: POST_NODE_TYPE,
         content: JSON.stringify(post),
-        contentDigest: createContentDigest(post)
-      }
+        contentDigest: createContentDigest(post),
+      },
     })
   )
 
@@ -330,7 +330,7 @@ const { data } = await client.query({
       }
       // highlight-end
     }
-  `
+  `,
 })
 ```
 
@@ -344,7 +344,7 @@ exports.sourceNodes = async ({
   actions,
   createContentDigest,
   createNodeId,
-  getNodesByType
+  getNodesByType,
 }) => {
   const { createNode, touchNode, deleteNode } = actions
 
@@ -367,7 +367,7 @@ exports.sourceNodes = async ({
           name
         }
       }
-    `
+    `,
   })
 
   // loop through data returned from the api and create Gatsby nodes for them
@@ -380,8 +380,8 @@ exports.sourceNodes = async ({
       internal: {
         type: POST_NODE_TYPE,
         content: JSON.stringify(post),
-        contentDigest: createContentDigest(post)
-      }
+        contentDigest: createContentDigest(post),
+      },
     })
   )
   // highlight-start
@@ -394,8 +394,8 @@ exports.sourceNodes = async ({
       internal: {
         type: AUTHOR_NODE_TYPE,
         content: JSON.stringify(author),
-        contentDigest: createContentDigest(author)
-      }
+        contentDigest: createContentDigest(author),
+      },
     })
   )
   // highlight-end
@@ -467,7 +467,7 @@ exports.onCreateNode = async ({
   node, // the node that was just created
   actions: { createNode },
   createNodeId,
-  getCache
+  getCache,
 }) => {
   if (node.internal.type === POST_NODE_TYPE) {
     const fileNode = await createRemoteFileNode({
@@ -476,7 +476,7 @@ exports.onCreateNode = async ({
       parentNodeId: node.id,
       createNode,
       createNodeId,
-      getCache
+      getCache,
     })
 
     if (fileNode) {
@@ -543,9 +543,9 @@ module.exports = {
     require.resolve(`../source-plugin`),
     // highlight-start
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`
+    `gatsby-transformer-sharp`,
     // highlight-end
-  ]
+  ],
 }
 ```
 
@@ -652,7 +652,7 @@ export default ({ data }) => (
       style={{
         display: `grid`,
         gridTemplateColumns: `repeat( auto-fit, minmax(250px, 1fr) )`,
-        gridGap: 16
+        gridGap: 16,
       }}
     >
       {data.allPost.nodes.map(post => (
@@ -661,7 +661,7 @@ export default ({ data }) => (
             display: `flex`,
             flexDirection: `column`,
             padding: 16,
-            border: `1px solid #ccc`
+            border: `1px solid #ccc`,
           }}
         >
           <h2>{post.slug}</h2>
@@ -717,13 +717,13 @@ module.exports = {
     {
       resolve: require.resolve(`../source-plugin`),
       options: {
-        previewMode: true
-      }
+        previewMode: true,
+      },
     },
     // highlight-end
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`
-  ]
+    `gatsby-transformer-sharp`,
+  ],
 }
 ```
 
@@ -833,7 +833,7 @@ exports.sourceNodes = async (
             status
           }
         }
-      `
+      `,
     })
     // highlight-end
   }
@@ -875,7 +875,7 @@ exports.sourceNodes = async (
             status
           }
         }
-      `
+      `,
     })
     // highlight-start
     subscription.subscribe(({ data }) => {
@@ -886,7 +886,7 @@ exports.sourceNodes = async (
         switch (post.status) {
           case "deleted":
             deleteNode({
-              node: getNode(nodeId)
+              node: getNode(nodeId),
             })
             break
           case "created":
@@ -902,8 +902,8 @@ exports.sourceNodes = async (
               internal: {
                 type: POST_NODE_TYPE,
                 content: JSON.stringify(post),
-                contentDigest: createContentDigest(post)
-              }
+                contentDigest: createContentDigest(post),
+              },
             })
             break
         }
