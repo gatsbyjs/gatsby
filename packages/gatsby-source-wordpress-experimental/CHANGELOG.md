@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.8
+
+### New Features
+
+`MediaItem.remoteFile` was deprecated and renamed to `MediaItem.localFile`. This more closely aligns with other Gatsby source plugins schemas.
+
 ## 0.1.7
 
 The `User.description` field was mistakenly excluded by default, this release adds it back to the schema
