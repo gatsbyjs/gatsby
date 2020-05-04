@@ -84,6 +84,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
         image: {
           type: `File`,
+          // extensions: {
+          //   link: {
+          //     from: `image`
+          //   }
+          // }
         },
         imageAlt: {
           type: `String`,
@@ -111,7 +116,9 @@ function validURL(str) {
 // Create fields for post slugs and source
 // This will change with schema customization with work
 exports.onCreateNode = async (
-  { node, actions, getNode, createNodeId },
+  { node, actions, getNode, createNodeId,
+    store,
+    cache},
   themeOptions
 ) => {
   const { createNode, createParentChildLink } = actions
@@ -149,22 +156,6 @@ exports.onCreateNode = async (
     // normalize use of trailing slash
     slug = slug.replace(/\/*$/, `/`)
 
-    // console.log(node.frontmatter.image)
-    if (node.frontmatter.image !== null && validURL(node.frontmatter.image)){
-      let fileNode = await createRemoteFileNode({
-        url: node.frontmatter.image, // string that points to the URL of the image
-        parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
-        createNode, // helper function in gatsby-node to generate the node
-        createNodeId, // helper function in gatsby-node to generate the node id
-        cache, // Gatsby's cache
-        store, // Gatsby's redux store
-      })
-      // if the file was created, attach the new node to the parent node
-      if (fileNode) {
-        node.image___NODE = fileNode.id
-      }
-    }
-
     const fieldData = {
       title: node.frontmatter.title,
       tags: node.frontmatter.tags || [],
@@ -172,6 +163,25 @@ exports.onCreateNode = async (
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
       image: node.frontmatter.image,
+    }
+    console.log(fieldData.image)
+
+    if (node.frontmatter.image !== null && validURL(node.frontmatter.image)){
+      let fileNode = await createRemoteFileNode({
+        url: node.frontmatter.image, // string that points to the URL of the image
+        parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
+        createNode, // helper function in gatsby-node to generate the node
+        createNodeId, // helper function in gatsby-node to generate the node id
+        cache,
+        store
+      })
+      // if the file was created, attach the new node to the parent node
+      if (fileNode) {
+        fieldData.image = fileNode.id
+        console.log(fieldData.image)
+
+      }
+
     }
 
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
