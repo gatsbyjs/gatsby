@@ -167,8 +167,14 @@ function isUseStaticQuery(path) {
       path.get(`callee`).referencesImport(`gatsby`))
   )
 }
-
-function getGraphqlExpression(t, queryHash, source) {
+/**
+ * generateGraphqlExpression.
+ * @param {object} @{link https://babeljs.io/docs/en/babel-types|Babel-types} object for interacting with babel.
+ * @param {string} id hash of the query
+ * @param {string} graphql query text.
+ * @return {object} Ast-object expression with the values id (hash of the query), source (query text) and a toString method returns the id.
+ * */
+function generateGraphqlExpression(t, queryHash, source) {
   return t.objectExpression([
     t.objectProperty(t.identifier(`id`), t.stringLiteral(queryHash)),
     t.objectProperty(t.identifier(`source`), t.stringLiteral(source)),
@@ -257,7 +263,7 @@ export default function({ types: t }) {
 
               // Expose query source
               path2.replaceWith(
-                getGraphqlExpression(t, this.queryHash, this.query)
+                generateGraphqlExpression(t, this.queryHash, this.query)
               )
 
               // Add query
@@ -304,7 +310,9 @@ export default function({ types: t }) {
 
           // Replace the query with the hash of the query.
           // templatePath.replaceWith(t.StringLiteral(queryHash))
-          templatePath.replaceWith(getGraphqlExpression(t, queryHash, text))
+          templatePath.replaceWith(
+            generateGraphqlExpression(t, queryHash, text)
+          )
 
           // traverse upwards until we find top-level JSXOpeningElement or Program
           // this handles exported queries and variable queries
@@ -442,7 +450,7 @@ export default function({ types: t }) {
 
             // Replace the query with the hash of the query.
             // path2.replaceWith(t.StringLiteral(queryHash))
-            path2.replaceWith(getGraphqlExpression(t, queryHash, text))
+            path2.replaceWith(generateGraphqlExpression(t, queryHash, text))
             return null
           },
         })
