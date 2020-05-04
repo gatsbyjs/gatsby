@@ -385,7 +385,7 @@ export interface ICreateRedirectAction {
 
 export interface ISetResolvedThemesAction {
   type: `SET_RESOLVED_THEMES`
-  payload: IRedirect
+  payload: any // TODO
 }
 
 export interface IDeleteCacheAction {
