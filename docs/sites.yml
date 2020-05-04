@@ -544,21 +544,6 @@
   featured: false
   categories:
     - Marketing
-- title: Fabian Schultz' Portfolio
-  main_url: https://fabianschultz.com/
-  url: https://fabianschultz.com/
-  source_url: https://github.com/fabe/site
-  featured: false
-  description: >-
-    Hello, I’m Fabian — a product designer and developer based in Potsdam,
-    Germany. I’ve been working both as a product designer and frontend developer
-    for over 5 years now. I particularly enjoy working with companies that try
-    to meet broad and unique user needs.
-  categories:
-    - Portfolio
-    - Web Development
-  built_by: Fabian Schultz
-  built_by_url: https://fabianschultz.com/
 - title: CalState House Manager
   description: >
     Home service membership that offers proactive and on-demand maintenance for
@@ -1785,16 +1770,6 @@
   built_by: Mill3 Studio
   built_by_url: https://mill3.studio/en/
   featured: false
-- title: Bestvideogame.deals
-  main_url: https://bestvideogame.deals/
-  url: https://bestvideogame.deals/
-  description: |
-    Video game comparison website for the UK, build with GatsbyJS.
-  categories:
-    - E-commerce
-  built_by: Koen Kamphuis
-  built_by_url: https://koenkamphuis.com/
-  featured: false
 - title: Mahipat's Portfolio
   main_url: https://mojaave.com/
   url: https://mojaave.com
@@ -2761,16 +2736,6 @@
     - Web Development
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
-- title: BELLHOPS
-  main_url: https://www.getbellhops.com/
-  url: https://www.getbellhops.com/
-  description: >-
-    Whether you’re moving someplace new or just want to complete a few projects around your current home, BellHops can arrange the moving services you need—at simple, straightforward rates.
-  categories:
-    - Business
-  built_by: Bellhops, Inc.
-  built_by_url: https://www.getbellhops.com/
-  featured: false
 - title: Acclimate Consulting
   main_url: https://www.acclimate.io/
   url: https://www.acclimate.io/
