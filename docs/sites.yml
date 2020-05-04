@@ -10474,6 +10474,19 @@
   featured: false
   main_url: https://mishal23.github.io/
   url: https://mishal23.github.io/
+- title: SVG to PNG
+  url: https://www.svgtopng.me/
+  main_url: https://www.svgtopng.me/
+  description: >
+    Online SVG to PNG batch converter. Upload and convert your SVG files to PNG with the desired size and background color for free, fast and secure.
+  categories:
+    - App
+    - Technology
+    - Productivity
+    - Design
+    - Web Development
+  built_by: Illia Achour
+  built_by_url: https://github.com/dummyco
 - title: St. Jude Cloud
   url: https://www.stjude.cloud
   main_url: https://www.stjude.cloud
