@@ -34,7 +34,11 @@ const errors = {
   },
   "98123": {
     text: (context): string =>
-      `${context.stageLabel} failed\n\n${context.message}`,
+      `${context.stageLabel} failed\n\n${
+        context.message
+      }.\n\nPerhaps you need to install the package${
+        context.packageName ? ` '${context.packageName}'` : ``
+      }?`,
     type: Type.WEBPACK,
     level: Level.ERROR,
   },

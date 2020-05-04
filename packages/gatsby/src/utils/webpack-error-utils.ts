@@ -20,12 +20,17 @@ interface ITransformedWebpackError {
     stage: Stage
     stageLabel: StageLabel
     message?: string
+    [key: string]: unknown
   }
 }
 const transformWebpackError = (
   stage: keyof typeof stageCodeToReadableLabel,
   webpackError: any
 ): ITransformedWebpackError => {
+  const regex = `Can't resolve \\'(.*?)\\' in \\'(.*?)\\'`
+  const nativeWebpackMessage = webpackError?.error?.message
+  const packageName = nativeWebpackMessage?.match(regex)?.[1]
+
   return {
     id: `98123`,
     filePath: webpackError?.module?.resource,
@@ -38,7 +43,8 @@ const transformWebpackError = (
     context: {
       stage,
       stageLabel: stageCodeToReadableLabel[stage],
-      message: webpackError?.error?.message || webpackError?.message,
+      message: nativeWebpackMessage || webpackError?.message,
+      packageName,
     },
 
     // We use original error to display stack trace for the most part.
