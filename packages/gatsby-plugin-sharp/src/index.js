@@ -20,7 +20,7 @@ const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 
 const imageSizeCache = new Map()
-const getImageSize = file => {
+const getImageSize = (file) => {
   if (
     process.env.NODE_ENV !== `test` &&
     imageSizeCache.has(file.internal.contentDigest)
@@ -41,7 +41,7 @@ const getImageSize = file => {
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
 let boundActionCreators
-exports.setBoundActionCreators = actions => {
+exports.setBoundActionCreators = (actions) => {
   boundActionCreators = actions
 }
 
@@ -127,7 +127,7 @@ function createJob(job, { reporter }) {
     promise = scheduleJob(job, boundActionCreators, reporter)
   }
 
-  promise.catch(err => {
+  promise.catch((err) => {
     reporter.panic(err)
   })
 
@@ -181,7 +181,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
   const images = []
 
   // loop through all transforms to set correct variables
-  transforms.forEach(transform => {
+  transforms.forEach((transform) => {
     const {
       src,
       width,
@@ -227,7 +227,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
     { reporter }
   )
 
-  return images.map(image => {
+  return images.map((image) => {
     image.finishedPromise = finishedPromise
 
     return image
@@ -426,7 +426,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
     presentationWidth = Math.min(options.maxWidth, width)
     presentationHeight = Math.round(presentationWidth * (height / width))
     if (options.maxHeight !== undefined) {
-      presentationHeight = Math.round(presentationWidth * (options.maxHeight / options.maxWidth))
+      presentationHeight = Math.round(
+        presentationWidth * (options.maxHeight / options.maxWidth)
+      )
     }
   } else {
     presentationHeight = Math.min(options.maxHeight, height)
@@ -456,7 +458,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     fluidSizes.push(options[fixedDimension] * 1.5)
     fluidSizes.push(options[fixedDimension] * 2)
   } else {
-    options.srcSetBreakpoints.forEach(breakpoint => {
+    options.srcSetBreakpoints.forEach((breakpoint) => {
       if (breakpoint < 1) {
         throw new Error(
           `All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`
@@ -470,7 +472,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     })
   }
   const filteredSizes = fluidSizes.filter(
-    size => size < (fixedDimension === `maxWidth` ? width : height)
+    (size) => size < (fixedDimension === `maxWidth` ? width : height)
   )
 
   // Add the original image to ensure the largest image possible
@@ -483,7 +485,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const otherDimensionAttr = fixedDimension === `maxWidth` ? `height` : `width`
 
   // Sort sizes for prettiness.
-  const transforms = _.sortBy(filteredSizes).map(size => {
+  const transforms = _.sortBy(filteredSizes).map((size) => {
     const arrrgs = createTransformObject(options)
     if (arrrgs[otherDimensionAttr]) {
       arrrgs[otherDimensionAttr] = undefined
@@ -511,11 +513,15 @@ async function fluid({ file, args = {}, reporter, cache }) {
   let base64Image
   if (options.base64) {
     const base64Width = options.base64Width || defaultBase64Width()
-    const base64Height = Math.max(1, Math.round(base64Width * (
-       options.maxHeight && options.maxWidth 
-         ? options.maxHeight / options.maxWidth 
-         : height / width
-      )))
+    const base64Height = Math.max(
+      1,
+      Math.round(
+        base64Width *
+          (options.maxHeight && options.maxWidth
+            ? options.maxHeight / options.maxWidth
+            : height / width)
+      )
+    )
     const base64Args = {
       duotone: options.duotone,
       grayscale: options.grayscale,
@@ -533,12 +539,12 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const tracedSVG = await getTracedSVG({ options, file, cache, reporter })
 
   // Construct src and srcSet strings.
-  const originalImg = _.maxBy(images, image => image.width).src
-  const fallbackSrc = _.minBy(images, image =>
+  const originalImg = _.maxBy(images, (image) => image.width).src
+  const fallbackSrc = _.minBy(images, (image) =>
     Math.abs(options[fixedDimension] - image[dimensionAttr])
   ).src
   const srcSet = images
-    .map(image => `${image.src} ${Math.round(image.width)}w`)
+    .map((image) => `${image.src} ${Math.round(image.width)}w`)
     .join(`,\n`)
   const originalName = file.base
 
@@ -592,7 +598,9 @@ async function fixed({ file, args = {}, reporter, cache }) {
   sizes.push(options[fixedDimension] * 2)
   const dimensions = getImageSize(file)
 
-  const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
+  const filteredSizes = sizes.filter(
+    (size) => size <= dimensions[fixedDimension]
+  )
 
   // If there's no fluid images after filtering (e.g. image is smaller than what's
   // requested, add back the original so there's at least something)
@@ -609,7 +617,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
   }
 
   // Sort images for prettiness.
-  const transforms = _.sortBy(filteredSizes).map(size => {
+  const transforms = _.sortBy(filteredSizes).map((size) => {
     const arrrgs = createTransformObject(options)
     arrrgs[fixedDimension] = Math.round(size)
 
