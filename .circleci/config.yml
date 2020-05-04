@@ -67,7 +67,7 @@ aliases:
       - <<: *attach_to_bootstrap
       - run: yarn list react
       - run: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
-      - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+  #      - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
 
   e2e-test-workflow: &e2e-test-workflow
     filters:
@@ -249,12 +249,12 @@ jobs:
       - e2e-test:
           test_path: integration-tests/long-term-caching
 
-  integration_tests_cache_resilience:
-    executor: node
-    steps:
-      - e2e-test:
-          test_path: integration-tests/cache-resilience
-          run_loki: true
+  #  integration_tests_cache_resilience:
+  #    executor: node
+  #    steps:
+  #      - e2e-test:
+  #          test_path: integration-tests/cache-resilience
+  #          run_loki: true
 
   integration_tests_gatsby_pipeline:
     executor: node
@@ -549,8 +549,8 @@ workflows:
             - bootstrap
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
-      - integration_tests_cache_resilience:
-          <<: *e2e-test-workflow
+      #      - integration_tests_cache_resilience:
+      #          <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow
       - integration_tests_structured_logging:

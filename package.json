@@ -116,7 +116,6 @@
     "jest": "jest",
     "jest:inspect": "node --inspect node_modules/.bin/jest --runInBand",
     "jest:inspect-brk": "node --inspect-brk node_modules/.bin/jest --runInBand",
-    "jest:loki": "cross-env GATSBY_DB_NODES=loki jest",
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
     "lint": "npm-run-all --continue-on-error -p lint:code lint:docs lint:other",

@@ -5,6 +5,8 @@ author: "Hashim Warren"
 tags: ["learning-to-code", "contest", "100-Days-of-Gatsby"]
 ---
 
+import EmailCaptureForm from "@components/email-capture-form"
+
 ### If you're looking for a fun way to explore how to build blazing fast websites with Gatsby, our #100DaysOfGatsby challenge is for you!
 
 ![alt text](./100daysofgatsby.png "100 Days of Gatsby")
