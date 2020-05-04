@@ -9,7 +9,7 @@ import webpack from "webpack"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
-import { BuildHTMLStage, IProgram } from "./types"
+import { BuildHTMLStage, IProgram, Stage } from "./types"
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
@@ -122,7 +122,7 @@ export const buildHTML = async ({
   workerPool,
 }: {
   program: IProgram
-  stage: BuildHTMLStage
+  stage: Stage
   pagePaths: string[]
   activity: IActivity
   workerPool: IWorkerPool

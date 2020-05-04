@@ -24,7 +24,8 @@ import {
 import * as buildUtils from "./build-utils"
 import { boundActionCreators } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
-import { IProgram, BuildHTMLStage } from "./types"
+import { IProgram, Stage } from "./types"
+import { PackageJson } from "../.."
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -37,7 +38,7 @@ if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
 
 interface IBuildArgs extends IProgram {
   directory: string
-  sitePackageJson: object
+  sitePackageJson: PackageJson
   prefixPaths: boolean
   noUglify: boolean
   profile: boolean
@@ -99,7 +100,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     stats = await buildProductionBundle(program, activity.span)
   } catch (err) {
-    activity.panic(structureWebpackErrors(`build-javascript`, err))
+    activity.panic(structureWebpackErrors(Stage.BuildJavascript, err))
   } finally {
     activity.end()
   }
@@ -156,9 +157,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
 
-  require(`../redux/actions`).boundActionCreators.setProgramStatus(
-    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
-  )
+  boundActionCreators.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`)
 
   await db.saveState()
 
@@ -193,7 +192,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     await buildHTML({
       program,
-      stage: BuildHTMLStage.BuildHTML,
+      stage: Stage.BuildHTML,
       pagePaths,
       activity,
       workerPool,
