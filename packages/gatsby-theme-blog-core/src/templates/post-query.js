@@ -30,6 +30,7 @@ export const query = graphql`
           }
         }
       }
+      imageAlt
     }
     previous: blogPost(id: { eq: $previousId }) {
       id

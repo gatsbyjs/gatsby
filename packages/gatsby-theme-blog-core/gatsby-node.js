@@ -55,6 +55,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       keywords: [String]!
       excerpt: String!
       image: File
+      imageAlt: String
   }`)
 
   createTypes(
@@ -83,6 +84,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
         image: {
           type: 'File',
+        },
+        imageAlt: {
+          type: `String`,
         },
         body: {
           type: `String!`,
