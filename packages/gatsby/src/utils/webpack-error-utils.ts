@@ -20,7 +20,7 @@ interface ITransformedWebpackError {
     stage: Stage
     stageLabel: StageLabel
     message?: string
-    [key: string]: unknown
+    packageName?: string
   }
 }
 const transformWebpackError = (
