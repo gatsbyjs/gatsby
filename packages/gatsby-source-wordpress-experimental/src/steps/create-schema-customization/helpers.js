@@ -81,10 +81,20 @@ export const getTypeSettingsByType = type => {
     return {}
   }
 
-  const typeSettings = store.getState().gatsbyApi.pluginOptions.type
-  const thisTypeSettings = typeSettings[findTypeName(type)] || {}
+  // the plugin options object containing every type setting
+  const allTypeSettings = store.getState().gatsbyApi.pluginOptions.type
 
-  return thisTypeSettings
+  // the type.__all plugin option which is applied to every type setting
+  const __allTypeSetting = allTypeSettings.__all || {}
+
+  const typeName = findTypeName(type)
+  const typeSettings = allTypeSettings[typeName]
+
+  if (typeSettings) {
+    return { ...__allTypeSetting, ...typeSettings }
+  }
+
+  return __allTypeSetting
 }
 
 export const filterObjectType = (objectType, typeBuilderApi) => {

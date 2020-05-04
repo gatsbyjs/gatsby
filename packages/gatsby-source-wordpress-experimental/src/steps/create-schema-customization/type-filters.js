@@ -5,8 +5,10 @@ export const objectTypeFilters = [
   {
     typeName: `MediaItem`,
     typeDef: (objectType, { pluginOptions }) => {
+      // @todo: this field is deprecated as of 0.1.8, remove this when we get to beta
       objectType.fields.remoteFile = {
         type: `File`,
+        deprecationReason: `MediaItem.remoteFile was renamed to localFile`,
         resolve: (mediaItemNode, _, context) => {
           if (!mediaItemNode) {
             return null
@@ -20,6 +22,32 @@ export const objectTypeFilters = [
           if (remoteMediaNodeId) {
             const node = context.nodeModel.getNodeById({
               id: mediaItemNode.remoteFile.id,
+              type: `File`,
+            })
+
+            if (node) {
+              return node
+            }
+          }
+
+          return createRemoteMediaItemNode({
+            mediaItemNode,
+          })
+        },
+      }
+
+      objectType.fields.localFile = {
+        type: `File`,
+        resolve: (mediaItemNode, _, context) => {
+          if (!mediaItemNode) {
+            return null
+          }
+
+          const localMediaNodeId = mediaItemNode?.localFile?.id
+
+          if (localMediaNodeId) {
+            const node = context.nodeModel.getNodeById({
+              id: mediaItemNode.localFile.id,
               type: `File`,
             })
 

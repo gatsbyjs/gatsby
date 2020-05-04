@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the local Gatsby schema 1`] = `"a950ca03f958d8a67c8f1e15fdbaa093"`;
+exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the local Gatsby schema 1`] = `"6be4fd508916b33c4479fef7a986c920"`;
 
 exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the remote WPGraphQL schema 1`] = `"a1eb269a958ac32ca26ff45fc0212b44"`;
 

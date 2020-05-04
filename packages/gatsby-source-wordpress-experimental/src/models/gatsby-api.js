@@ -57,7 +57,6 @@ const defaultPluginOptions = {
       excludeFieldNames: [
         `extraCapabilities`,
         `capKey`,
-        `description`,
         `email`,
         `registeredDate`,
       ],
@@ -81,11 +80,18 @@ const defaultPluginOptions = {
             remoteNode.remoteFile = {
               id: createdMediaItem.id,
             }
+            remoteNode.localFile = {
+              id: createdMediaItem.id,
+            }
 
             return {
               remoteNode,
             }
           }
+        }
+
+        return {
+          remoteNode,
         }
       },
     },

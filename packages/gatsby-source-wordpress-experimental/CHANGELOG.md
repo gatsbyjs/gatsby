@@ -1,5 +1,35 @@
 # Change Log
 
+## 0.1.8
+
+### New Features
+
+`MediaItem.remoteFile` was deprecated and renamed to `MediaItem.localFile`. This more closely aligns with other Gatsby source plugins schemas.
+
+## 0.1.7
+
+The `User.description` field was mistakenly excluded by default, this release adds it back to the schema
+
+## 0.1.6
+
+Removed unecessary logic when fetching menu items that could prevent pulling some types of child items
+
+## 0.1.5
+
+### New Features
+
+1. There is now a `type.__all` option which allows you to pass options to all types instead of only to specific types.
+
+2. Because of the way menu items work in WPGraphQL, any child items in a menu need to be fetched recursively. Since this part of the build process didn't have any cli reporting the build appeared to hang for sites with a lot of menu items.
+   This release adds logging to that part of the build step, explicitly telling you if there are async side-effects happening with a readout of how many additional nodes were created.
+
+```
+success  gatsby-source-wordpress  creating nodes - 57.784s - awaiting async side effects - 710 additional nodes fetched
+```
+
+In addition, this release moves recursive menu item sourcing into an async queue so we can increase concurrency and speed this up a bit.
+In the future this will be less of an issue when WPGraphQL moves most node queries to a flat architecture.
+
 ## 0.1.4
 
 ### Bug Fixes

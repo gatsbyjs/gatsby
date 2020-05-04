@@ -186,7 +186,7 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
               retryKey,
               timesRetried,
             }) => {
-              let remoteFile = await createRemoteMediaItemNode({
+              let localFileNode = await createRemoteMediaItemNode({
                 mediaItemNode: node,
                 fixedBarTotal: referencedMediaItemNodeIds.length,
                 helpers,
@@ -198,14 +198,17 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
                 )
               }
 
-              if (!remoteFile) {
+              if (!localFileNode) {
                 return
               }
 
               node = {
                 ...node,
                 remoteFile: {
-                  id: remoteFile.id,
+                  id: localFileNode.id,
+                },
+                localFile: {
+                  id: localFileNode.id,
                 },
                 parent: null,
                 internal: {

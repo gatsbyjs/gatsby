@@ -131,61 +131,31 @@ export const fetchAndCreateAllNodes = async () => {
 
   //
   // fetch nodes from WPGQL
-  const activity = reporter.activityTimer(
-    formatLogMessage(`fetch and create nodes`)
-  )
+  const activity = reporter.activityTimer(formatLogMessage(`fetching nodes`))
   activity.start()
 
   store.subscribe(() => {
-    activity.setStatus(`created ${store.getState().logger.entityCount}`)
+    activity.setStatus(`${store.getState().logger.entityCount} total`)
   })
 
   const wpgqlNodesByContentType = await fetchWPGQLContentNodesByContentType()
+
+  const createNodesActivity = reporter.activityTimer(
+    formatLogMessage(`creating nodes`)
+  )
+  createNodesActivity.start()
 
   //
   // Create Gatsby nodes from WPGQL response
   const createdNodeIds = await createGatsbyNodesFromWPGQLContentNodes({
     wpgqlNodesByContentType,
+    createNodesActivity,
   })
+
+  createNodesActivity.end()
+  activity.end()
 
   // save the node id's so we can touch them on the next build
   // so that we don't have to refetch all nodes
   await cache.set(CREATED_NODE_IDS, createdNodeIds)
-
-  const downloadHtmlImages = false
-
-  // @todo download remote html images and transform html to use gatsby-image
-  if (downloadHtmlImages) {
-    // this downloads images in html.
-    // one problem is that we can't get media items by source url in WPGraphQL
-    // before doing this, we'll need something to change on the WPGQL side
-    //   // these are image urls that were used in other nodes we created
-    //   const fileUrls = Array.from(store.getState().imageNodes.urls)
-    //   // these are file metadata nodes we've already fetched
-    //   const mediaItemNodes = helpers.getNodesByType(`WpMediaItem`)
-    //   // build an object where the media item urls are properties,
-    //   // and media item nodes are values
-    //   // so we can check if the urls we regexed from our other nodes content
-    //   // are media item nodes
-    //   const mediaItemNodesKeyedByUrl = mediaItemNodes.reduce((acc, curr) => {
-    //     acc[curr.mediaItemUrl] = curr
-    //     return acc
-    //   }, {})
-    //   // const mediaItemNodesKeyedByUrl = store.getState().imageNodes.nodeMetaByUrl
-    //   await Promise.all(
-    //     fileUrls.map(async url => {
-    //       // check if we have a media item node for this regexed url
-    //       const mediaItemNode = mediaItemNodesKeyedByUrl[url]
-    //       if (mediaItemNode) {
-    //         // create remote file node from media node
-    //         await createRemoteMediaItemNode({
-    //           mediaItemNode,
-    //           helpers,
-    //         })
-    //       }
-    //     })
-    //   )
-  }
-
-  activity.end()
 }

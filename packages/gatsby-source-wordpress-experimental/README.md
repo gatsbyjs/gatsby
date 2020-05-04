@@ -12,7 +12,6 @@ You can find the changelog [here](https://github.com/TylerBarnes/gatsby/blob/fea
 - [WPGatsby](https://github.com/TylerBarnes/gatsby/tree/feat/source-wordpress-v4/packages/wp-gatsby)
 - [WPGraphQL](https://github.com/wp-graphql/wp-graphql)
 
-
 ## Installation
 
 - Install Gatsby and gatsby-cli
@@ -50,9 +49,21 @@ You can also host your own preview server or test it out locally by running `ENA
 ## Recommendations
 
 - For now I recommend hosting on WPEngine (or another mid-to-high-performance WP host) for your remote WP server, and using Local by Flywheel (upgrade to the latest version for ultra-speed) to do local development. You can use this with other setups, but it may be less enjoyable if your server is slower than the recommended setup. More work will be done in the future to ensure this works well on all types of hosts. If you use a slower setup, change GATSBY_CONCURRENT_DOWNLOADS to a lower number to prevent your server from getting overloaded.
+- If you have a large site, you may need to ask your hosting provider to remove rate limiting for your instance. Fetching many images may trigger rate limiting protections and fail your build.
 - Stick to WPGraphQL v0.6.x for now, as previous or future versions may not yet work with the new source plugin. There will be a compatibility API coming soon which will give you the proper download links for WPGatsby and WPGraphQL based on your version of `gatsby-source-worpress` if your WP install has the wrong version.
 
-## Debugging
+## Debugging Previews
+
+Since a Previewed post might have a lot less data attached to it than what you're testing with during development, you might get errors in previews when that data is missing. You can debug your previews by running Gatsby in preview mode locally.
+
+- Run Gatsby in refresh mode with `ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop`
+- Install ngrok with `npm i -g ngrok`
+- In a new terminal window run `ngrok http 8000`
+- In your WP instances GatsbyJS settings, set your Preview instance URL to `https://your-ngrok-url.ngrok.io/8000` and your preview refresh endpoint `https://your-ngrok-url.ngrok.io/8000/__refresh`
+
+Now when you click preview in `wp-admin` it will use your local instance of Gatsby. You can inspect the preview template to see which Gatsby path is being loaded in the preview iframe and open it directly to do further debugging.
+
+## Debugging node sourcing
 
 If you're getting errors while the nodes are being sourced, you can see which query had the error with the following options:
 
