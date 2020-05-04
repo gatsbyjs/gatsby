@@ -57,7 +57,6 @@ const defaultPluginOptions = {
       excludeFieldNames: [
         `extraCapabilities`,
         `capKey`,
-        `description`,
         `email`,
         `registeredDate`,
       ],

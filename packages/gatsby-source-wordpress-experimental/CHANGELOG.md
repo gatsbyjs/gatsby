@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.7
+
+The `User.description` field was mistakenly excluded by default, this release adds it back to the schema
+
 ## 0.1.6
 
 Removed unecessary logic when fetching menu items that could prevent pulling some types of child items

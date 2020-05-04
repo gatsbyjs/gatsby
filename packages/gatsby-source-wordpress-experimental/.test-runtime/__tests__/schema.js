@@ -78,13 +78,7 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
       },
       {
         typeName: `User`,
-        fieldNames: [
-          `extraCapabilities`,
-          `capKey`,
-          `description`,
-          `email`,
-          `registeredDate`,
-        ],
+        fieldNames: [`extraCapabilities`, `capKey`, `email`, `registeredDate`],
       },
     ]
 
