@@ -293,6 +293,8 @@ jobs:
   e2e_tests_pnp:
     executor: node_10_19
     steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run:
           command: cp -r ./starters/default ./e2e-tests/gatsby-pnp
