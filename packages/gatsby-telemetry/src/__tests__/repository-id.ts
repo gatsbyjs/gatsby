@@ -1,6 +1,7 @@
-const { createHash } = require(`crypto`)
+import { createHash } from "crypto"
+import { getRepositoryId, getRepoMetadata } from "../repository-id"
+
 jest.mock(`child_process`)
-const { getRepositoryId, getRepoMetadata } = require(`../repository-id`)
 
 const hash = (str: string): string =>
   createHash(`sha256`).update(str).digest(`hex`)
