@@ -28,7 +28,7 @@ const Post = ({
       keywords={post.keywords}
     />
     <main>
-      <Hero post={post}/>
+      <PostHero post={post} />
       <PostTitle>{post.title}</PostTitle>
       <PostDate>{post.date}</PostDate>
       <MDXRenderer>{post.body}</MDXRenderer>
