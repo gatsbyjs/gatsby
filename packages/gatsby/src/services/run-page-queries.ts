@@ -21,7 +21,7 @@ export async function runPageQueries({
     pageQueryIdsCount,
     0,
     {
-      id: `static-query-running`,
+      id: `page-query-running`,
       parentSpan,
     }
   )

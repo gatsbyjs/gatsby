@@ -13,9 +13,14 @@ export async function writeHTML({
   if (!program) {
     return
   }
-  const activity = reporter.activityTimer(`Building static HTML`, {
-    parentSpan,
-  })
+  const activity = reporter.createProgress(
+    `Building static HTML`,
+    pagesToBuild.length,
+    0,
+    {
+      parentSpan,
+    }
+  )
   activity.start()
   try {
     await buildHTML({
@@ -39,5 +44,5 @@ export async function writeHTML({
       },
     })
   }
-  activity.end()
+  activity.done()
 }
