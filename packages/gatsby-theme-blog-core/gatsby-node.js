@@ -169,18 +169,27 @@ exports.onCreateNode = async (
       // image: node.frontmatter.image,
     }
 
-    if (node.frontmatter.image !== null && validURL(node.frontmatter.image)){
+    if (validURL(node.frontmatter.image)) {
       let fileNode = await createRemoteFileNode({
-        url: node.frontmatter.image, // string that points to the URL of the image
-        parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
-        createNode, // helper function in gatsby-node to generate the node
-        createNodeId, // helper function in gatsby-node to generate the node id
+        url: node.frontmatter.image, 
+        parentNodeId: node.id, 
+        createNode, 
+        createNodeId, 
         cache,
         store
       })
       // if the file was created, attach the new node to the parent node
       if (fileNode) {
         fieldData.image = fileNode.id
+      }
+    } else if (node.frontmatter.image) {
+      const fileNodes = getNodesByType(`File`)
+      for (let file of fileNodes) {
+          const relativePathFile = file.relativePath.match('([^\/]+$)')[1]
+          const imagePath = node.frontmatter.image.match('([^\/]+$)')[1]
+          if (relativePathFile === imagePath) {
+            fieldData.image = file.id
+          }
       }
     }
 
