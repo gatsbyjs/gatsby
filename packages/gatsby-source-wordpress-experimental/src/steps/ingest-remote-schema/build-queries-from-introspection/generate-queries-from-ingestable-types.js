@@ -69,8 +69,8 @@ const recursivelyAliasFragments = field =>
     return fragment
   })
 
-const aliasConflictingFields = async ({ transformedFields }) => {
-  transformedFields = transformedFields.map(field => {
+const aliasConflictingFields = ({ transformedFields }) =>
+  transformedFields.map(field => {
     // we only have conflicting fields in fragments
     // if there are no fragments, do nothing
     if (!field.fragments) {
@@ -79,11 +79,14 @@ const aliasConflictingFields = async ({ transformedFields }) => {
 
     field.fragments = recursivelyAliasFragments(field)
 
+    if (field.fields) {
+      field.fields = aliasConflictingFields({
+        transformedFields: field.fields,
+      })
+    }
+
     return field
   })
-
-  return transformedFields
-}
 
 /**
  * generateNodeQueriesFromIngestibleFields
