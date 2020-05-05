@@ -2,17 +2,16 @@
 
 ## 0.1.9
 
-### Refactors
-
-- remove reliance on WPGatsby's postTypes field and use inputFields from introspection to determine which node list queries require the temporary `where: { parent: null }` input args to get a flat list of posts/pages
-
 ### Bug Fixes
 
 - Type.exclude was not removing types from inline fragments during node sourcing, that is now fixed.
+- Auto aliasing of conflicting field types in inline fragments is now recursive into nested fields.
 
 ### New Features
 
+- Added a new plugin option `schema.querySelfAncestorLimit` which is used to set a limit on how many times a field type can be an ancestor of itself during query generation for node sourcing. This should help prevent out of memory issues for gigantic schemas with fields that are potentially infinitely nested. The default limit is set to 2 but this can be increased.
 - exclude editLock and revisionOf fields by default as these fields require authentication.
+- remove reliance on WPGatsby's postTypes field and use inputFields from introspection to determine which node list queries require the temporary `where: { parent: null }` input args to get a flat list of posts/pages. This slightly speeds up the sourcing process.
 
 ## 0.1.8
 
