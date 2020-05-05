@@ -123,7 +123,7 @@
     - Password Reset
     - Multi-Factor Authentication
     - Styling with Bootstrap and Sass
-- url: https://gatsby-starter-blog-demo.netlify.com/
+- url: https://gatsby-starter-blog-demo.netlify.app/
   repo: https://github.com/gatsbyjs/gatsby-starter-blog
   description: official blog
   tags:
