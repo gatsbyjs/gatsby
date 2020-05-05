@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.11...gatsby@2.21.12) (2020-05-05)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** remove prop-types in production for dependencies ([#23609](https://github.com/gatsbyjs/gatsby/issues/23609)) ([a844157](https://github.com/gatsbyjs/gatsby/commit/a844157))
+- **gatsby:** log config validation errors ([#23620](https://github.com/gatsbyjs/gatsby/issues/23620)) ([62d6bb4](https://github.com/gatsbyjs/gatsby/commit/62d6bb4))
+
 ## [2.21.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.10...gatsby@2.21.11) (2020-05-04)
 
 ### Bug Fixes
