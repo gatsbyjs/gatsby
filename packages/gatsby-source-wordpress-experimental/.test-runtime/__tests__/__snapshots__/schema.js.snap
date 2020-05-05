@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the local Gatsby schema 1`] = `"6be4fd508916b33c4479fef7a986c920"`;
+exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the local Gatsby schema 1`] = `"70ebee22eef36da4937a6ec58c952a55"`;
 
-exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the remote WPGraphQL schema 1`] = `"a1eb269a958ac32ca26ff45fc0212b44"`;
+exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the remote WPGraphQL schema 1`] = `"aab143d4a6cdff297411e04dd6342e2d"`;
 
 exports[`[gatsby-source-wordpress-experimental] schema resolves menus 1`] = `
 Object {
