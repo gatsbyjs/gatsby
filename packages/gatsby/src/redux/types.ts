@@ -206,7 +206,7 @@ export interface IGatsbyState {
     }
   }
   pageDataStats: Map<SystemPath, number>
-  pageData: any
+  pageData: Map<Identifier, string>
 }
 
 export interface ICachedReduxState {
@@ -243,6 +243,8 @@ export type ActionsUnion =
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
   | IUpdatePluginsHashAction
+  | IRemovePageDataAction
+  | ISetPageDataAction
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
@@ -390,6 +392,21 @@ export interface ISetResolvedThemesAction {
 
 export interface IDeleteCacheAction {
   type: `DELETE_CACHE`
+}
+
+export interface IRemovePageDataAction {
+  type: `REMOVE_PAGE_DATA`
+  payload: {
+    id: Identifier
+  }
+}
+
+export interface ISetPageDataAction {
+  type: `SET_PAGE_DATA`
+  payload: {
+    id: Identifier
+    resultHash: string
+  }
 }
 
 export interface IReplaceStaticQueryAction {
