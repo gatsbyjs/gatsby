@@ -323,26 +323,6 @@ match the container's width and height. In the case where the image's width or h
 
 To counter this edge case one could use the `GatsbyImageSharpFluidLimitPresentationSize` fragment to ask for additional presentation size properties.
 
-```jsx
-const NonStretchedImage = props => {
-  let normalizedProps = props
-  if (props.fluid && props.fluid.presentationWidth) {
-    normalizedProps = {
-      ...props,
-      style: {
-        ...(props.style || {}),
-        margin: "0 auto", // Used to center the image
-      },
-    }
-  }
-
-  return <Img {...normalizedProps} />
-}
-```
-
-**Note:** The `GatsbyImageSharpFluid` fragment does not include `presentationWidth`.
-You will need to add it in your graphql query as is shown in the following snippet:
-
 ```graphql
 {
   childImageSharp {
