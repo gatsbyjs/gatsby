@@ -244,6 +244,12 @@ const errors = {
     level: Level.ERROR,
   },
   // Config errors
+  "10122": {
+    text: (context): string =>
+      `The site's gatsby-config.js failed validation:\n\n${context.sourceMessage}`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+  },
   "10123": {
     text: (context): string =>
       `We encountered an error while trying to load your site's ${context.configName}. Please fix the error and try again.`,
