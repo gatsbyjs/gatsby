@@ -133,6 +133,10 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add Storybook - JavaScript`,
       value: `storybook-js.mdx`,
     },
+    {
+      label: `Add Ava`,
+      value: `ava.mdx`,
+    },
     // TODO remaining recipes
   ]
 
