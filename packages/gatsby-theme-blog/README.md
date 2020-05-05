@@ -120,14 +120,15 @@ module.exports = {
 
 The following are the defined blog post fields based on the node interface in the schema
 
-| Field    | Type     |
-| -------- | -------- |
-| id       | String   |
-| title    | String   |
-| body     | String   |
-| slug     | String   |
-| date     | Date     |
-| tags     | String[] |
-| keywords | String[] |
-| excerpt  | String   |
-| image    | String   |
+| Field       | Type     |
+| ----------- | -------- |
+| id          | String   |
+| title       | String   |
+| body        | String   |
+| slug        | String   |
+| date        | Date     |
+| tags        | String[] |
+| keywords    | String[] |
+| excerpt     | String   |
+| image       | String   |
+| socialImage | String   |
