@@ -614,11 +614,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     }
   }
 
-  // when using maxHeight and/or maxWidth determine appropriate aspect ratios
-  if (!options.aspectRatio) {
-    options.aspectRatio = presentationWidth / presentationHeight
-  }
-
   return {
     base64: base64Image && base64Image.src,
     aspectRatio: images[0].aspectRatio,
