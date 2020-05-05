@@ -27,7 +27,7 @@ const defaultPluginOptions = {
     typePrefix: `Wp`,
     timeout: 30 * 1000, // 30 seconds
   },
-  excludeFields: [`editLock`, `revisionOf`],
+  excludeFields: [],
   type: {
     ActionMonitorAction: {
       exclude: true,
