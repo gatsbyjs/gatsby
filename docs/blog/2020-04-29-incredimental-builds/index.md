@@ -1,5 +1,5 @@
 ---
-title: "Incredimental Builds"
+title: "Gatsby Cloud Incremental Builds: More like *Incredimental* Builds!"
 date: 2020-04-29
 author: "Josh Comeau"
 excerpt: "A deeper look at Gatsby's recent announcement, how it changes the game for content editors, and what it means for the future."
@@ -7,7 +7,7 @@ tags: ["incremental builds", "gatsby cloud", "builds"]
 canonicalLink: https://joshwcomeau.com/gatsby/incredimental-builds/
 ---
 
-A few weeks ago, I published [A Static Future]('/gatsby/a-static-future'), a post all about how sites that build at compile-time have bucketfuls of untapped potential.
+A few weeks ago, I published [A Static Future](https://joshwcomeau.com/gatsby/a-static-future/), a post all about how sites that build at compile-time have bucketfuls of untapped potential.
 
 We pictured a world in which rich, dynamic web applications were built and served from static CDNs like Fastly and Cloudflare. Instead of a costly and error-prone database lookup on each request, we do the database lookups at compile-time, and re-build whenever the data changes. Instead of users pulling the latest data from our API, we push the data when it changes to the CDN.
 
@@ -15,7 +15,7 @@ This is a really exciting vision, but it only works if builds are lightning quic
 
 Happily, this vision has gotten significantly more tangible recently, with our [incremental builds launch](https://gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) last week 🎉
 
-# What are incremental builds?
+## What are incremental builds?
 
 I think it's best explained through an example.
 
@@ -41,9 +41,9 @@ Incremental builds allow for lightning-quick rebuilds. The fundamental concept i
 
 This effectively turns an O(n) problem into an O(1) problem. It doesn't matter how many pages our site has because we can ignore pages that haven't changed!
 
-# Just the beginning
+## Just the beginning
 
-This launch is a monumental step: it takes us a lot closer to the magical future described in [A Static Future]('/gatsby/a-static-future'). But it's still just the beginning.
+This launch is a monumental step: it takes us a lot closer to the magical future described in [A Static Future](https://joshwcomeau.com/gatsby/a-static-future/). But it's still just the beginning.
 
 On Gatsby Cloud, we differentiate between _content_ changes and _code_ changes. When a content editor tweaks an article in a CMS, that triggers a content change. When a developer modifies a React component, that's a code change. What about [Markdown](https://en.wikipedia.org/wiki/Markdown) or [MDX](https://mdxjs.com/)? For our purposes, anything that gets committed to git is a code change.
 
@@ -60,7 +60,7 @@ In order to build incrementally, we need tight integration with the CMS to be ab
 
 What if you're not using one of those CMS', or if your content is in Markdown? We hope to add full support soon, but there's a surprising benefit even today for _all_ gatsby sites.
 
-# The other half of the story
+## The other half of the story
 
 When you think about it, a sub-10-second build is wild. Have you ever heard of a Webpack app being built that fast?!
 
@@ -75,7 +75,7 @@ Either of these steps on their own is a massive boon, but their cumulative effec
 
 And that second half—intelligent caching and parallelization—works for **all Gatsby sites!** For example, my personal blog uses MDX for its content, which is not a supported data source. Before incremental builds, it took 3-5 minutes to build. That time has shrunk to 2-3 minutes!
 
-# Pipeline tweaks required
+## Pipeline tweaks required
 
 Incremental Builds, as defined by the two parts above, is a Gatsby Cloud exclusive feature. Reasonably, some folks were a bit disappointed by this.
 
@@ -87,7 +87,9 @@ That said, it's important to us that Gatsby builds quickly on all platforms! And
 
 We do believe that Gatsby Cloud should be the best place to build your Gatsby project, since we're able to make Gatsby-specific optimizations. But we also want Gatsby builds to be fast, no matter where they're built.
 
-# Bright days ahead
+<CloudCallout>To experience Incremental Builds for yourself:</CloudCallout>
+
+## Bright days ahead
 
 The biggest pitfall of building a static site has always been the build times.
 

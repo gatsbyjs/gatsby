@@ -239,7 +239,7 @@ import React from "react"
 import { Link, navigate } from "gatsby"
 import { getUser, isLoggedIn, logout } from "../services/auth"
 
-export default () => {
+export default function NavBar() {
   const content = { message: "", login: true }
   const user = getUser()
   if (isLoggedIn()) {

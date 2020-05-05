@@ -133,6 +133,10 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add Github Pages deployment with Travis`,
       value: `travis-deploy-github-pages.mdx`,
     },
+    {
+      label: `Add Storybook - JavaScript`,
+      value: `storybook-js.mdx`,
+    },
     // TODO remaining recipes
   ]
 
