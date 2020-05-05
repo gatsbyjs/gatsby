@@ -26,6 +26,8 @@ const remoteSchema = {
       `jwtAuthToken`,
       `jwtRefreshToken`,
       `jwtUserSecret`,
+      `editLock`,
+      `revisionOf`,
     ],
     // @todo make this a plugin option
     fieldAliases: {
