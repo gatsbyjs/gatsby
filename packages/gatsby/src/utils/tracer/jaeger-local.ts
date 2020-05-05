@@ -24,12 +24,7 @@ function create(): JaegerTracer {
 
 function stop(): Promise<void> {
   return new Promise(resolve => {
-    // The close method is currently in review at DefinitelyTyped:
-    // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44132
-    // Once that's merged, we can remove this manual extension and use the base version.
-    ;(tracer as JaegerTracer & { close(callback?: () => void): void }).close(
-      resolve
-    )
+    tracer.close(resolve)
   })
 }
 
