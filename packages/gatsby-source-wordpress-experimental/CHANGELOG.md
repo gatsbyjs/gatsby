@@ -6,6 +6,7 @@
 
 - Type.exclude was not removing types from inline fragments during node sourcing, that is now fixed.
 - Auto aliasing of conflicting field types in inline fragments is now recursive into nested fields.
+- Added proper field def to resolve non_null lists of non_null types. `[Type!]!`
 
 ### New Features
 
