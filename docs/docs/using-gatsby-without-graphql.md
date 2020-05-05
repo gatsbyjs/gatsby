@@ -42,27 +42,29 @@ On the highlighted lines, the data is being supplied to the page template, where
 
 ```jsx:title=/src/templates/pokemon.js
 // highlight-next-line
-export default function Pokemon({ pageContext: { pokemon } }) (
-  <div style={{ width: 960, margin: "4rem auto" }}>
-    {/* highlight-start */}
-    <h1>{pokemon.name}</h1>
-    <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-    {/* highlight-end */}
-    <h2>Abilities</h2>
-    <ul>
+export default function Pokemon({ pageContext: { pokemon } }) {
+  return (
+    <div style={{ width: 960, margin: "4rem auto" }}>
       {/* highlight-start */}
-      {pokemon.abilities.map(ability => (
-        <li key={ability.name}>
-          <Link to={`./pokemon/${pokemon.name}/ability/${ability.name}`}>
-            {ability.name}
-            {/* highlight-end */}
-          </Link>
-        </li>
-      ))}
-    </ul>
-    <Link to="/">Back to all Pokémon</Link>
-  </div>
-)
+      <h1>{pokemon.name}</h1>
+      <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+      {/* highlight-end */}
+      <h2>Abilities</h2>
+      <ul>
+        {/* highlight-start */}
+        {pokemon.abilities.map(ability => (
+          <li key={ability.name}>
+            <Link to={`./pokemon/${pokemon.name}/ability/${ability.name}`}>
+              {ability.name}
+              {/* highlight-end */}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <Link to="/">Back to all Pokémon</Link>
+    </div>
+  )
+}
 ```
 
 ## When might using "unstructured data" make sense?
