@@ -1,13 +1,14 @@
 import { actions } from "../actions"
 import { nodeReducer } from "../reducers/nodes"
 import nodeTouchedReducer from "../reducers/nodes-touched"
+import { IGatsbyNode } from "../types"
 
 jest.mock(`../../db/nodes`)
 jest.mock(`../nodes`)
 
 const dispatch = jest.fn()
 
-type MapObject = Record<string, Record<string, string | number | number[]>>
+type MapObject = Record<string, IGatsbyNode>
 
 const fromMapToObject = (map): MapObject => {
   const obj: MapObject = {}
