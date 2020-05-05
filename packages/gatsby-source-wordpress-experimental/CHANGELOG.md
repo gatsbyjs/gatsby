@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.9
+
+### Bug Fixes
+
+- Type.exclude was not removing types from inline fragments during node sourcing, that is now fixed.
+
 ## 0.1.8
 
 ### New Features

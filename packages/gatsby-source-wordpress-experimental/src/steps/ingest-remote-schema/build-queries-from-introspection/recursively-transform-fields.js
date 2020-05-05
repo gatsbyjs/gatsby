@@ -23,7 +23,13 @@ const transformFragments = ({
             return false
           }
 
-          possibleType.type = type
+          const typeSettings = getTypeSettingsByType(type)
+
+          if (typeSettings.exclude) {
+            return false
+          }
+
+          possibleType.type = { ...type }
 
           // save this type so we can use it in schema customization
           store.dispatch.remoteSchema.addFetchedType(type)
