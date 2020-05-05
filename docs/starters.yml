@@ -2060,7 +2060,6 @@
   repo: https://github.com/WebCu/gatsby-material-kit-react
   description: Adaptation of Material Kit React to Gatsby
   tags:
-    - Material Kit React
     - Styling:Material
   features:
     - 60 Handcrafted Components
