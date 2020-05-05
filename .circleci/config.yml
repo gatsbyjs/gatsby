@@ -7,7 +7,16 @@ executors:
     parameters:
       image:
         type: string
+        # First 10.x LTS release, but old Yarn
         default: "10.13"
+    docker:
+      - image: circleci/node:<< parameters.image >>
+  node_10_19:
+    parameters:
+      image:
+        type: string
+        # More recent Yarn binary
+        default: "10.19"
     docker:
       - image: circleci/node:<< parameters.image >>
 
@@ -58,7 +67,7 @@ aliases:
       - <<: *attach_to_bootstrap
       - run: yarn list react
       - run: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
-      - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+  #      - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
 
   e2e-test-workflow: &e2e-test-workflow
     filters:
@@ -178,10 +187,10 @@ jobs:
     executor: node
     steps:
       - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
@@ -201,6 +210,7 @@ jobs:
             sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
       - <<: *install_node_modules
       - run: yarn lint:code
+      - run: yarn lint:docs
       - run: yarn lint:other
 
   typecheck:
@@ -239,12 +249,12 @@ jobs:
       - e2e-test:
           test_path: integration-tests/long-term-caching
 
-  integration_tests_cache_resilience:
-    executor: node
-    steps:
-      - e2e-test:
-          test_path: integration-tests/cache-resilience
-          run_loki: true
+  #  integration_tests_cache_resilience:
+  #    executor: node
+  #    steps:
+  #      - e2e-test:
+  #          test_path: integration-tests/cache-resilience
+  #          run_loki: true
 
   integration_tests_gatsby_pipeline:
     executor: node
@@ -279,6 +289,40 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/path-prefix
+
+  e2e_tests_pnp:
+    executor: node_10_19
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *attach_to_bootstrap
+      - run:
+          command: cp -r ./starters/default ./e2e-tests/gatsby-pnp
+          working_directory: ~/project
+      - run:
+          command: touch yarn.lock
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # Quick upgrade to the v2 (any version, we just need the real set version)
+          command: yarn policies set-version berry
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # Pins the Yarn version
+          command: yarn set version 2.0.0-rc.32
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # Forces to use the local packages
+          command: yarn link --all --private ../..
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run:
+          command: yarn install
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run:
+          command: yarn add start-server-and-test@^1.11.0
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run:
+          command: yarn build
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run:
+          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep ''ERROR #''"'
+          working_directory: ~/project/e2e-tests/gatsby-pnp
 
   e2e_tests_gatsby-image:
     <<: *e2e_tests_gatsby-image_alias
@@ -337,7 +381,9 @@ jobs:
   starters_publish:
     executor: node
     steps:
-      - <<: *attach_to_bootstrap
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
       - run: yarn markdown
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
@@ -507,8 +553,8 @@ workflows:
             - bootstrap
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
-      - integration_tests_cache_resilience:
-          <<: *e2e-test-workflow
+      #      - integration_tests_cache_resilience:
+      #          <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow
       - integration_tests_structured_logging:
@@ -516,6 +562,8 @@ workflows:
       - integration_tests_gatsby_cli:
           requires:
             - bootstrap
+      - e2e_tests_pnp:
+          <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-image:
@@ -531,8 +579,6 @@ workflows:
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
-          requires:
-            - bootstrap
           filters:
             branches:
               only:

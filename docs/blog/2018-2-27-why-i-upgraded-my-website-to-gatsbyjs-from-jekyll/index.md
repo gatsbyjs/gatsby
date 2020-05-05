@@ -8,7 +8,7 @@ tags: ["jekyll", "plugins", "getting-started", "gatsby-apis"]
 
 _This article is the first of a two part series, on the engineering behind my [website](https://jiahao.codes). Originally published [here](https://jiahao.codes/blog/why-i-upgraded-my-website/)_
 
-For the past couple of weeks, I’ve been rebuilding my personal website from scratch, live at [https://jiahao.codes](https://jiahao.codes) with the source code on [GitHub](https://github.com/jiahaog/jiahao.codes). In this article, I'll tell the story of this long overdue rewrite and talk about the new static site framework I eventually settled on, Gatsby.
+For the past couple of weeks, I’ve been rebuilding my personal website from scratch, live at https://jiahao.codes with the source code on [GitHub](https://github.com/jiahaog/jiahao.codes). In this article, I'll tell the story of this long overdue rewrite and talk about the new static site framework I eventually settled on, Gatsby.
 
 ## Background
 

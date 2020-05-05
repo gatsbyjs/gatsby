@@ -23,10 +23,10 @@ This map reflects how it took most people a lot of time browsing through the plu
 
 With the empathy map and the interviews as our guide, we learned that most people want to:
 
-1.  Find the best, most recent, and relevant plugin, library, or component for their site.
-2.  Learn how to build a plugin.
-3.  Preview plugin functionality before installation.
-4.  Share plugins with others.
+1. Find the best, most recent, and relevant plugin, library, or component for their site.
+2. Learn how to build a plugin.
+3. Preview plugin functionality before installation.
+4. Share plugins with others.
 
 ## Learning from other plugin libraries
 

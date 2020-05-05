@@ -1,13 +1,17 @@
 const reduxNodes = require(`./nodes`)
 const lokiNodes = require(`../../db/loki/nodes`).reducer
 import { redirectsReducer } from "./redirects"
+import { schemaReducer } from "./schema"
 import { staticQueryComponentsReducer } from "./static-query-components"
 import { statusReducer } from "./status"
 import { webpackReducer } from "./webpack"
+import { pageDataReducer } from "./page-data"
+import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 
-const backend = process.env.GATSBY_DB_NODES || `redux`
+// const backend = process.env.GATSBY_DB_NODES || `redux`
+const backend = `redux`
 
 function getNodesReducer() {
   let nodesReducer
@@ -56,7 +60,7 @@ module.exports = {
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),
   pages: require(`./pages`),
-  schema: require(`./schema`),
+  schema: schemaReducer,
   status: statusReducer,
   componentDataDependencies: require(`./component-data-dependencies`),
   components: require(`./components`),
@@ -68,9 +72,9 @@ module.exports = {
   redirects: redirectsReducer,
   babelrc: require(`./babelrc`),
   schemaCustomization: require(`./schema-customization`),
-  themes: require(`./themes`),
+  themes: themesReducer,
   logs: logReducer,
   inferenceMetadata: require(`./inference-metadata`),
   pageDataStats: require(`./page-data-stats`),
-  pageData: require(`./page-data`),
+  pageData: pageDataReducer,
 }
