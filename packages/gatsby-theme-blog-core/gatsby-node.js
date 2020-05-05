@@ -44,7 +44,8 @@ const mdxResolverPassthrough = fieldName => async (
   return result
 }
 
-exports.createSchemaCustomization = ({ actions, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
+  const {excerptLength} = withDefaults(themeOptions)
   const { createTypes } = actions
   createTypes(`interface BlogPost @nodeInterface {
       id: ID!
@@ -57,6 +58,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       excerpt: String!
       image: File
       imageAlt: String
+      socialImage: File
   }`)
 
   createTypes(
@@ -78,7 +80,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           args: {
             pruneLength: {
               type: `Int`,
-              defaultValue: 140,
+              defaultValue: excerptLength,
             },
           },
           resolve: mdxResolverPassthrough(`excerpt`),
@@ -91,6 +93,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
         imageAlt: {
           type: `String`,
+        },
+        socialImage: {
+          type: 'File',
         },
         body: {
           type: `String!`,
@@ -164,6 +169,7 @@ exports.onCreateNode = async (
       slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
+      socialImage: node.frontmatter.socialImage
     }
 
     if (validURL(node.frontmatter.image)) { // create a file node for image URLs

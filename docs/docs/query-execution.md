@@ -122,8 +122,8 @@ This Query Job contains everything it needs to execute the query (and do things 
 Query execution involves calling the [graphql-js](https://graphql.org/graphql-js/) library with 3 pieces of information:
 
 1. The Gatsby schema that was inferred during [Schema Generation](/docs/schema-generation/).
-1. The raw query text. Obtained from the Query Job.
-1. The Context, also from the Query Job. Has the page's `path` amongst other things so that Gatsby can record [Page -> Node Dependencies](/docs/page-node-dependencies/).
+2. The raw query text. Obtained from the Query Job.
+3. The Context, also from the Query Job. Has the page's `path` amongst other things so that Gatsby can record [Page -> Node Dependencies](/docs/page-node-dependencies/).
 
 Graphql-js will parse the query, and executes the top level query. E.g. `allMarkdownRemark( limit: 10 )` or `file( relativePath: { eq: "blog/my-blog.md" } )`. These will invoke the resolvers defined in [Schema Connections](/docs/schema-connections/) or [GQL Type](/docs/schema-gql-type/), which both use sift to query over all nodes of the type in redux. The result will be passed through the inner part of the graphql query where each type's resolver will be invoked. The vast majority of these will be `identity` functions that just return the field value. Some however could call a [custom plugin field](/docs/schema-gql-type/#plugin-fields) resolver. These in turn might perform side effects such as generating images. This is why the query execution phase of bootstrap often takes the longest.
 

@@ -56,8 +56,8 @@ We held a workshop that involved organizing a group of people. Each person had a
 
 We gathered a couple engineers, a product manager, and a product designer and assigned a couple special roles:
 
-1.  Timer: someone to use a timer to make sure people move through the activities below.
-2.  Note taker: at the end, someone needs to take notes during the “final feedback” section.
+1. Timer: someone to use a timer to make sure people move through the activities below.
+2. Note taker: at the end, someone needs to take notes during the “final feedback” section.
 
 ### Review design requirements
 
@@ -141,5 +141,5 @@ We are also working on getting [this RFC](https://github.com/gatsbyjs/rfcs/pull/
 
 ## How you can participate
 
-1.  [Comment on the RFC](https://github.com/gatsbyjs/rfcs/pull/32) about redesigning the .org homepage
-2.  [Want to test new & existing @gatsbyjs products and features such as new designs for the .org homepage? Sign up to receive a newsletter whenever there is an upcoming test](https://airtable.com/shrKDSF2E7ljCaYCd).
+1. [Comment on the RFC](https://github.com/gatsbyjs/rfcs/pull/32) about redesigning the .org homepage
+2. [Want to test new & existing @gatsbyjs products and features such as new designs for the .org homepage? Sign up to receive a newsletter whenever there is an upcoming test](https://airtable.com/shrKDSF2E7ljCaYCd).
