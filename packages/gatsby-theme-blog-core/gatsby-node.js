@@ -57,7 +57,6 @@ exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
       excerpt: String!
       image: File
       imageAlt: String
-      socialImage: File
   }`)
 
   createTypes(
@@ -89,9 +88,6 @@ exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
         },
         imageAlt: {
           type: `String`,
-        },
-        socialImage: {
-          type: 'File',
         },
         body: {
           type: `String!`,
@@ -150,7 +146,6 @@ exports.onCreateNode = async (
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
       image: node.frontmatter.image,
-      socialImage: node.frontmatter.socialImage
     }
 
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
