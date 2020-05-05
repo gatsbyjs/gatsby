@@ -86,7 +86,8 @@ const transformInlineFragments = ({
     : null
 }
 
-const countSelfAncestors = ({ typeName, ancestorTypeNames }) =>
+// since we're counting circular types that may be on fields many levels up, incarnation felt like it works here ;) the types are born again in later generations
+const countIncarnations = ({ typeName, ancestorTypeNames }) =>
   ancestorTypeNames.length
     ? ancestorTypeNames.filter(
         ancestorTypeName => ancestorTypeName === typeName
@@ -102,7 +103,7 @@ function transformField({
   fieldBlacklist,
   fieldAliases,
   ancestorTypeNames: parentAncestorTypeNames,
-  querySelfAncestorLimit,
+  circularQueryLimit,
 } = {}) {
   const ancestorTypeNames = [...parentAncestorTypeNames]
   // we're potentially infinitely recursing when fields are connected to other types that have fields that are connections to other types
@@ -129,8 +130,7 @@ function transformField({
   const typeName = findTypeName(field.type)
 
   if (
-    countSelfAncestors({ typeName, ancestorTypeNames }) >=
-    querySelfAncestorLimit
+    countIncarnations({ typeName, ancestorTypeNames }) >= circularQueryLimit
   ) {
     return false
   }
@@ -347,7 +347,7 @@ const recursivelyTransformFields = ({
   } = store.getState()
 
   const {
-    schema: { queryDepth, querySelfAncestorLimit },
+    schema: { queryDepth, circularQueryLimit },
   } = pluginOptions
 
   if (depth >= queryDepth) {
@@ -357,8 +357,7 @@ const recursivelyTransformFields = ({
   const typeName = findTypeName(parentType)
 
   if (
-    countSelfAncestors({ typeName, ancestorTypeNames }) >=
-    querySelfAncestorLimit
+    countIncarnations({ typeName, ancestorTypeNames }) >= circularQueryLimit
   ) {
     return null
   }
@@ -385,7 +384,7 @@ const recursivelyTransformFields = ({
         field,
         depth,
         ancestorTypeNames,
-        querySelfAncestorLimit,
+        circularQueryLimit,
       })
 
       if (transformedField) {

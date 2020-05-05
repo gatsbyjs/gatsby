@@ -10,7 +10,7 @@
 
 ### New Features
 
-- Added a new plugin option `schema.querySelfAncestorLimit` which is used to set a limit on how many times a field type can be an ancestor of itself during query generation for node sourcing. This should help prevent out of memory issues for gigantic schemas with fields that are potentially infinitely nested. The default limit is set to 2 but this can be increased.
+- Added a new plugin option `schema.circularQueryLimit` which is used to set a limit on how many times a field type can be an ancestor of itself during query generation for node sourcing. This should help prevent out of memory issues for gigantic schemas with fields that are potentially infinitely nested. The default limit is set to 2 but this can be increased.
 - exclude editLock and revisionOf fields by default as these fields require authentication.
 - remove reliance on WPGatsby's postTypes field and use inputFields from introspection to determine which node list queries require the temporary `where: { parent: null }` input args to get a flat list of posts/pages. This slightly speeds up the sourcing process.
 - Added a plugin option for debugging node list query generation. `debug.graphql.copyNodeSourcingQueryAndExit` expects to be passed the type name of a WPGraphQL node such as `Page`. If the Gatsby site is in development mode and a valid type is passed to this option it will write the node list query to be used in node sourcing to the system clipboard and exit the build process.
