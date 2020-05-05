@@ -119,7 +119,7 @@ export const GatsbyImageSharpFluid = graphql`
  * Presentation sizes to make sure a fluid container does not overflow
  * @type {Fragment}
  */
-export const GatsbyImageSharpFluidLimitPresentationSize = `
+export const GatsbyImageSharpFluidLimitPresentationSize = graphql`
   fragment GatsbyImageSharpFluidLimitPresentationSize on ImageSharpFluid {
     maxHeight: presentationHeight
     maxWidth: presentationWidth
