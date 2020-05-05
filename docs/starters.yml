@@ -1,24 +1,35 @@
-- url: https://gatsby-ghost-balsa-starter.now.sh/
-  repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
-  description: A Gatsby starter for creating blogs from headless Ghost CMS.
+- url: https://gatsby-starter-default-demo.netlify.com/
+  repo: https://github.com/gatsbyjs/gatsby-starter-default
+  description: official default
   tags:
-    - Blog
-    - CMS:Headless
-    - SEO
-    - Styling:SCSS
+    - Official
   features:
-    - Balsa theme by Draftbox
-    - Data sourcing from headless Ghost
-    - Responsive design
-    - SEO optimized
-    - OpenGraph structured data
-    - Twitter Cards meta
-    - Sitemap Generation
-    - XML Sitemaps
-    - Progressive Web App
-    - Offline Support
-    - RSS Feed
-    - Composable and extensible
+    - Comes with React Helmet for adding site meta tags
+    - Includes plugins for offline support out of the box
+- url: https://gatsby-starter-blog-demo.netlify.com/
+  repo: https://github.com/gatsbyjs/gatsby-starter-blog
+  description: official blog
+  tags:
+    - Official
+    - Blog
+  features:
+    - Basic setup for a full-featured blog
+    - Support for an RSS feed
+    - Google Analytics support
+    - Automatic optimization of images in Markdown posts
+    - Support for code syntax highlighting
+    - Includes plugins for easy, beautiful typography
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
+- url: https://gatsby-starter-hello-world-demo.netlify.com/
+  repo: https://github.com/gatsbyjs/gatsby-starter-hello-world
+  description: official hello world
+  tags:
+    - Official
+  features:
+    - A no-frills Gatsby install
+    - No plugins, no boilerplate
+    - Great for advanced users
 - url: https://gatsby-starter-wordpress-twenty-twenty.netlify.app/
   repo: https://github.com/henrikwirth/gatsby-starter-wordpress-twenty-twenty
   description: A port of the WordPress Twenty Twenty theme to Gatsby.
@@ -123,29 +134,6 @@
     - Password Reset
     - Multi-Factor Authentication
     - Styling with Bootstrap and Sass
-- url: https://gatsby-starter-blog-demo.netlify.com/
-  repo: https://github.com/gatsbyjs/gatsby-starter-blog
-  description: official blog
-  tags:
-    - Official
-    - Blog
-  features:
-    - Basic setup for a full-featured blog
-    - Support for an RSS feed
-    - Google Analytics support
-    - Automatic optimization of images in Markdown posts
-    - Support for code syntax highlighting
-    - Includes plugins for easy, beautiful typography
-    - Includes React Helmet to allow editing site meta tags
-    - Includes plugins for offline support out of the box
-- url: https://gatsby-starter-default-demo.netlify.com/
-  repo: https://github.com/gatsbyjs/gatsby-starter-default
-  description: official default
-  tags:
-    - Official
-  features:
-    - Comes with React Helmet for adding site meta tags
-    - Includes plugins for offline support out of the box
 - url: https://gatsby-netlify-cms.netlify.com/
   repo: https://github.com/netlify-templates/gatsby-starter-netlify-cms
   description: n/a
@@ -583,15 +571,6 @@
   features:
     - Barebones configuration for using the Grommet design system
     - Uses Sass (with CSS modules support)
-- url: https://gatsby-starter-hello-world-demo.netlify.com/
-  repo: https://github.com/gatsbyjs/gatsby-starter-hello-world
-  description: official hello world
-  tags:
-    - Official
-  features:
-    - A no-frills Gatsby install
-    - No plugins, no boilerplate
-    - Great for advanced users
 - url: https://gatsby-starter-hero-blog.greglobinski.com/
   repo: https://github.com/greglobinski/gatsby-starter-hero-blog
   description: no description yet
@@ -6179,3 +6158,24 @@
     - React Helmet
     - Offline Support
     - Gatsby Image
+- url: https://gatsby-ghost-balsa-starter.now.sh/
+  repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
+  description: A Gatsby starter for creating blogs from headless Ghost CMS.
+  tags:
+    - Blog
+    - CMS:Headless
+    - SEO
+    - Styling:SCSS
+  features:
+    - Balsa theme by Draftbox
+    - Data sourcing from headless Ghost
+    - Responsive design
+    - SEO optimized
+    - OpenGraph structured data
+    - Twitter Cards meta
+    - Sitemap Generation
+    - XML Sitemaps
+    - Progressive Web App
+    - Offline Support
+    - RSS Feed
+    - Composable and extensible
