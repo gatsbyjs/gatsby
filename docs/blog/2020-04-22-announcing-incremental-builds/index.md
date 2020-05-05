@@ -51,7 +51,7 @@ This happens automatically with no configuration, with any data source, due to G
 
 I think it’s not an exaggeration to say that _this changes everything_.
 
-![Bar graph showing traditional build times of 20 minutes vs Gatsby Incremental Build times of 1 minute for initial build and ten seconds for subsequent builds. ](./incremental-builds-infographicV2.jpg "Bar graph showing traditional build times of 20 minutes vs Gatsby Incremental Build times of 1 minute for initial build and ten seconds for subsequent builds.")
+![Bar graph showing traditional build times of 20 minutes vs Gatsby Incremental Build times of 1 minute for initial build and ten seconds for subsequent builds.](./incremental-builds-infographicV2.jpg "Bar graph showing traditional build times of 20 minutes vs Gatsby Incremental Build times of 1 minute for initial build and ten seconds for subsequent builds.")
 
 ## Making developers and marketers _both_ happy
 

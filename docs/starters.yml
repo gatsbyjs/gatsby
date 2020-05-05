@@ -1,3 +1,38 @@
+- url: https://gatsby-ghost-balsa-starter.now.sh/
+  repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
+  description: A Gatsby starter for creating blogs from headless Ghost CMS.
+  tags:
+    - Blog
+    - CMS:Headless
+    - SEO
+    - Styling:SCSS
+  features:
+    - Balsa theme by Draftbox
+    - Data sourcing from headless Ghost
+    - Responsive design
+    - SEO optimized
+    - OpenGraph structured data
+    - Twitter Cards meta
+    - Sitemap Generation
+    - XML Sitemaps
+    - Progressive Web App
+    - Offline Support
+    - RSS Feed
+    - Composable and extensible
+- url: https://gatsby-starter-wordpress-twenty-twenty.netlify.app/
+  repo: https://github.com/henrikwirth/gatsby-starter-wordpress-twenty-twenty
+  description: A port of the WordPress Twenty Twenty theme to Gatsby.
+  tags:
+    - Blog
+    - CMS:WordPress
+    - Styling:Other
+    - Pagination
+  features:
+    - Data sourcing from WordPress
+    - Uses WPGraphQL as an API
+    - Using the new gatsby-wordpress-source@v4
+    - Responsive design
+    - Works well with Gatsby Cloud incremental updates
 - url: https://22boxes-gatsby-uno.netlify.com/
   repo: https://github.com/iamtherealgd/gatsby-starter-22boxes-uno
   description: A Gatsby starter for creating blogs and showcasing your work
@@ -5809,7 +5844,7 @@
   tags:
     - AWS
     - Onepage
-    - Styling:Milligram
+    - Styling:Other
   features:
     - Interactive SVG map using D3
     - Responsive design
@@ -6029,6 +6064,60 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://gatsby-material-typescript-starter.netlify.app
+  repo: https://github.com/Junscuzzy/gatsby-material-typescript-starter
+  description: A simple starter using Typescript, eslint, prettier & @Material-ui
+  tags:
+    - Language:TypeScript
+    - Linting
+    - Netlify
+    - SEO
+    - Styling:Material
+  features:
+    - Typescript in front-side & node-side
+    - Prettier, eslint and Type-check well configured together
+    - Material-ui SSR compatible with build-in light/dark theme
+    - Content sourcing free
+    - Functional react (Hooks & functions instead Class)
+    - Responsive design
+    - SEO optimized
+    - Styled 404 page
+    - Google Analytics support
+- url: https://gatsby-starter-takeshape-startup.netlify.app
+  repo: https://github.com/colbyfayock/gatsby-starter-takeshape-startup
+  description: Integrate TakeShape CMS using a ready to go TakeShape Startup project!
+  tags:
+    - Blog
+    - CMS:Other
+    - CMS:Headless
+    - Landing Page
+    - Styling:SCSS
+  features:
+    - Integrate TakeShape CMS
+    - Preconfigured to work with the TakeShape Startup project
+- url: https://gatsby-startbootstrap-agency.netlify.app/
+  repo: https://github.com/thundermiracle/gatsby-startbootstrap-agency
+  description: Gatsby version of startbootstrap-agency with i18n supported.
+  tags:
+    - Portfolio
+    - PWA
+    - SEO
+    - Gallery
+    - Landing Page
+    - Onepage
+    - Markdown
+    - Netlify
+    - Styling:Bootstrap
+    - i18n
+    - Netlify
+    - Linting
+  features:
+    - Easily Configurable
+    - Different types of sections
+    - i18n
+    - SEO
+    - Google Analytics
+    - Prettier, ESLint
 - url: https://gatsby-typescript-tailwind-twin-styled-component-starter.netlify.app/
   repo: https://github.com/DevHausStudio/Gatsby-Typescript-Tailwind-Twin-Styled-Component-Starter
   description: Barebones and lightweight starter with TypeScript, Styled-Components, TailwindCSS, Twin Macro.

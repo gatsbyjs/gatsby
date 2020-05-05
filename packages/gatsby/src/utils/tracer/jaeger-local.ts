@@ -1,11 +1,11 @@
-const initTracer = require(`jaeger-client`).initTracer
+import { initTracer, JaegerTracer, TracingConfig } from "jaeger-client"
 
-let tracer
+let tracer: JaegerTracer
 
-function create() {
+function create(): JaegerTracer {
   // See schema
   // https://github.com/jaegertracing/jaeger-client-node/blob/master/src/configuration.js#L37
-  var config = {
+  const config: TracingConfig = {
     serviceName: `gatsby`,
     reporter: {
       // Provide the traces endpoint; this forces the client to
@@ -17,18 +17,15 @@ function create() {
       param: 1,
     },
   }
-  var options = {}
+  const options = {}
   tracer = initTracer(config, options)
   return tracer
 }
 
-function stop() {
+function stop(): Promise<void> {
   return new Promise(resolve => {
     tracer.close(resolve)
   })
 }
 
-module.exports = {
-  create,
-  stop,
-}
+export { create, stop }

@@ -1,15 +1,16 @@
 import _ from "lodash"
 import crypto from "crypto"
 import fs from "fs-extra"
-import { store, emitter } from "../redux/"
+import { store, emitter } from "../redux"
 import { joinPath } from "gatsby-core-utils"
 
-let lastHash = null
+let lastHash: string | null = null
+let bootstrapFinished = false
 
-const writeRedirects = async () => {
+export const writeRedirects = async (): Promise<void> => {
   bootstrapFinished = true
 
-  let { program, redirects } = store.getState()
+  const { program, redirects } = store.getState()
 
   // Filter for redirects that are meant for the browser.
   const browserRedirects = redirects.filter(r => r.redirectInBrowser)
@@ -31,9 +32,6 @@ const writeRedirects = async () => {
   )
 }
 
-exports.writeRedirects = writeRedirects
-
-let bootstrapFinished = false
 const debouncedWriteRedirects = _.debounce(() => {
   // Don't write redirects again until bootstrap has finished.
   if (bootstrapFinished) {
@@ -41,6 +39,8 @@ const debouncedWriteRedirects = _.debounce(() => {
   }
 }, 250)
 
-emitter.on(`CREATE_REDIRECT`, () => {
-  debouncedWriteRedirects()
-})
+export const startRedirectListener = (): void => {
+  emitter.on(`CREATE_REDIRECT`, () => {
+    debouncedWriteRedirects()
+  })
+}

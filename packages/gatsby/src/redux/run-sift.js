@@ -26,7 +26,7 @@ const FAST_OPS = [
   // "$lt",
   `$lte`,
   // "$gt",
-  // "$gte"
+  `$gte`,
 ]
 
 /**
