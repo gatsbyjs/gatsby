@@ -378,6 +378,8 @@
               link: /docs/testing-react-components/
             - title: Visual Testing with Storybook
               link: /docs/visual-testing-with-storybook/
+        - title: TypeScript
+          link: /docs/typescript
         - title: Debugging Gatsby
           link: /docs/debugging/
           breadcrumbTitle: Debugging

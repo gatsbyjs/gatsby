@@ -14,7 +14,6 @@
   "sideEffects": false,
   "dependencies": {
     "gatsby": "^2.21.0",
-    "gatsby-plugin-typescript": "^2.4.0",
     "gatsby-plugin-typography": "^2.5.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
