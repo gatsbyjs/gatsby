@@ -631,10 +631,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     density,
     presentationWidth,
     presentationHeight,
-    // Only return maxWidth & maxHeight when maxHeight is being queried. This way we don't change behaviour
-    // TODO fix gatsby v3
-    maxWidth: fixedDimension === `maxHeight` ? presentationWidth : null,
-    maxHeight: fixedDimension === `maxHeight` ? presentationHeight : null,
     tracedSVG,
   }
 }

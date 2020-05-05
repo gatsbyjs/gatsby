@@ -109,11 +109,20 @@ export const GatsbyImageSharpFluid = graphql`
   fragment GatsbyImageSharpFluid on ImageSharpFluid {
     base64
     aspectRatio
-    maxHeight
-    maxWidth
     src
     srcSet
     sizes
+  }
+`
+
+/**
+ * Presentation sizes to make sure a fluid container does not overflow
+ * @type {Fragment}
+ */
+export const GatsbyImageSharpFluidLimitPresentationSize = `
+  fragment GatsbyImageSharpFluidLimitPresentationSize on ImageSharpFluid {
+    maxHeight: presentationHeight
+    maxWidth: presentationWidth
   }
 `
 
@@ -125,8 +134,6 @@ export const GatsbyImageSharpFluid_tracedSVG = graphql`
   fragment GatsbyImageSharpFluid_tracedSVG on ImageSharpFluid {
     tracedSVG
     aspectRatio
-    maxHeight
-    maxWidth
     src
     srcSet
     sizes
@@ -141,8 +148,6 @@ export const GatsbyImageSharpFluid_withWebp = graphql`
   fragment GatsbyImageSharpFluid_withWebp on ImageSharpFluid {
     base64
     aspectRatio
-    maxHeight
-    maxWidth
     src
     srcSet
     srcWebp
@@ -159,8 +164,6 @@ export const GatsbyImageSharpFluid_withWebp_tracedSVG = graphql`
   fragment GatsbyImageSharpFluid_withWebp_tracedSVG on ImageSharpFluid {
     tracedSVG
     aspectRatio
-    maxHeight
-    maxWidth
     src
     srcSet
     srcWebp
@@ -176,8 +179,6 @@ export const GatsbyImageSharpFluid_withWebp_tracedSVG = graphql`
 export const GatsbyImageSharpFluid_noBase64 = graphql`
   fragment GatsbyImageSharpFluid_noBase64 on ImageSharpFluid {
     aspectRatio
-    maxHeight
-    maxWidth
     src
     srcSet
     sizes
@@ -191,8 +192,6 @@ export const GatsbyImageSharpFluid_noBase64 = graphql`
 export const GatsbyImageSharpFluid_withWebp_noBase64 = graphql`
   fragment GatsbyImageSharpFluid_withWebp_noBase64 on ImageSharpFluid {
     aspectRatio
-    maxHeight
-    maxWidth
     src
     srcSet
     srcWebp

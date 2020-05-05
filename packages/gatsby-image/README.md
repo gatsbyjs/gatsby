@@ -225,6 +225,7 @@ Their fragments are:
 - `GatsbyImageSharpFluid_withWebp`
 - `GatsbyImageSharpFluid_withWebp_noBase64`
 - `GatsbyImageSharpFluid_withWebp_tracedSVG`
+- `GatsbyImageSharpFluidLimitPresentationSize`
 
 ### gatsby-source-contentful
 
@@ -318,9 +319,9 @@ prop. e.g. `<Img fluid={fluid} />`
 ### Avoiding stretched images using the fluid type
 
 As mentioned previously, images using the _fluid_ type are stretched to
-match the container's width. In the case where the image's width is smaller than the available viewport, the image will stretch to match the container, potentially leading to unwanted problems and worsened image quality.
+match the container's width and height. In the case where the image's width or height is smaller than the available viewport, the image will stretch to match the container, potentially leading to unwanted problems and worsened image quality.
 
-To counter this edge case one could wrap the _Img_ component in order to set a better, for that case, `maxWidth`:
+To counter this edge case one could use the `GatsbyImageSharpFluidLimitPresentationSize` fragment to ask for additional presentation size properties.
 
 ```jsx
 const NonStretchedImage = props => {
@@ -330,7 +331,6 @@ const NonStretchedImage = props => {
       ...props,
       style: {
         ...(props.style || {}),
-        maxWidth: props.fluid.presentationWidth,
         margin: "0 auto", // Used to center the image
       },
     }
@@ -348,7 +348,7 @@ You will need to add it in your graphql query as is shown in the following snipp
   childImageSharp {
     fluid(maxWidth: 500, quality: 100) {
       ...GatsbyImageSharpFluid
-      presentationWidth
+      ...GatsbyImageSharpFluidLimitPresentationSize
     }
   }
 }
