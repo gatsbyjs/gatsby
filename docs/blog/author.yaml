@@ -320,7 +320,7 @@
   avatar: avatars/thomas-wang.jpeg
   twitter: "@thomaswangio"
 - id: Hashim Warren
-  bio: Marketer turned Web Developer  - https://hashim.xyz
+  bio: Full Stack Marketer, writing copy and code - https://www.configmag.com
   avatar: avatars/hashim-warren.jpg
   twitter: "@hashim_warren"
 - id: Caitlin Cashin
@@ -400,3 +400,21 @@
   bio: Semi-stack developer with a design background. Senior Product Manager at Gatsby Cloud. I love to make things with my hands, travel, and tinker with new tech.
   avatar: avatars/bob-orchard.jpg
   twitter: "@boborchard"
+- id: Greg Thomas
+  bio: "Writer, musician, historian, and dedicated service provider for the dog."
+  avatar: avatars/greg-thomas.jpg
+- id: Laci Texter
+  bio: "Runner of rivers and city blocks, car-a-oke queen, and very fond of snail mail. Enjoys the art/science/sport of communication. Senior Brand Marketing Manager for Gatsby."
+  avatar: avatars/laci-texter.jpg
+  twitter: "@textercomm"
+- id: Debra Combs
+  bio: "Product Manager, Writer, Gamer, and lover of laughter."
+  avatar: avatars/debra-combs.png
+- id: Joel Varty
+  bio: "Dad to teens, HS football coach, president of Agility CMS."
+  avatar: avatars/joel-varty.jpg
+  twitter: "@joelvarty"
+- id: Paul Scanlon
+  bio: "Front End React UI Developer/UX Engineer based in Worthing, UK. After all is said and done, structure + order = fun."
+  avatar: avatars/paul-scanlon.jpg
+  twitter: "@PaulieScanlon"

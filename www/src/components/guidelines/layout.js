@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
 import { Global } from "@emotion/core"
 
 import { globalStyles } from "../../utils/styles/global"
 import { Box } from "./system"
 import Header from "./header"
+import PageMetadata from "../page-metadata"
 import Footer from "../shared/footer-links"
 
 const Layout = ({ children, background, pageTitle }) => (
@@ -29,9 +29,9 @@ const Layout = ({ children, background, pageTitle }) => (
       }}
     />
     <Global styles={globalStyles} />
-    <Helmet>
-      <title>{pageTitle ? `${pageTitle} | Guidelines` : `Guidelines`}</title>
-    </Helmet>
+    <PageMetadata
+      title={pageTitle ? `${pageTitle} | Guidelines` : `Guidelines`}
+    />
     {background && background}
     <Header />
     <Box as="main" className="main-body">

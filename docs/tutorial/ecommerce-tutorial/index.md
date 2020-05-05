@@ -278,33 +278,35 @@ In your components folder add a new `Products` folder. This folder will include 
 import React from "react"
 import { graphql, StaticQuery } from "gatsby"
 
-export default props => (
-  <StaticQuery
-    query={graphql`
-      query SkusForProduct {
-        skus: allStripeSku {
-          edges {
-            node {
-              id
-              currency
-              price
-              attributes {
-                name
+export default function Skus(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        query SkusForProduct {
+          skus: allStripeSku {
+            edges {
+              node {
+                id
+                currency
+                price
+                attributes {
+                  name
+                }
               }
             }
           }
         }
-      }
-    `}
-    render={({ skus }) => (
-      <div>
-        {skus.edges.map(({ node: sku }) => (
-          <p key={sku.id}>{sku.attributes.name}</p>
-        ))}
-      </div>
-    )}
-  />
-)
+      `}
+      render={({ skus }) => (
+        <div>
+          {skus.edges.map(({ node: sku }) => (
+            <p key={sku.id}>{sku.attributes.name}</p>
+          ))}
+        </div>
+      )}
+    />
+  )
+}
 ```
 
 You can validate your query and see what data is being returned in GraphiQL, which is available at `http://localhost:8000/___graphql` when running `gatsby develop`.

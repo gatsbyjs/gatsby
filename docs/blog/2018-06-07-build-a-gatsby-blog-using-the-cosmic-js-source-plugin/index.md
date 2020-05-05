@@ -108,9 +108,9 @@ module.exports = {
 
 ### A couple of notes on this config:
 
-1.  Notice `bucketSlug` is set to `gatsby-blog-cosmic-js`. This is a demo Bucket that includes pre-populated content, so when you [download the GitHub repo](https://github.com/cosmicjs/gatsby-blog-cosmicjs) and start the app, it will display demo content right out of the box. You can also import this demo content into your own Cosmic JS Bucket by going to `Your Cosmic JS Bucket Dashboard > Settings > Apps`, then find and install the Gatsby Blog.
-2.  The API read key is optional and can be set after you login to Cosmic JS at:
-    `Your Cosmic JS Bucket Dashboard > Settings > Basic Settings`
+1. Notice `bucketSlug` is set to `gatsby-blog-cosmic-js`. This is a demo Bucket that includes pre-populated content, so when you [download the GitHub repo](https://github.com/cosmicjs/gatsby-blog-cosmicjs) and start the app, it will display demo content right out of the box. You can also import this demo content into your own Cosmic JS Bucket by going to `Your Cosmic JS Bucket Dashboard > Settings > Apps`, then find and install the Gatsby Blog.
+2. The API read key is optional and can be set after you login to Cosmic JS at:
+   `Your Cosmic JS Bucket Dashboard > Settings > Basic Settings`
 
 Now restart the server to apply the updates.
 

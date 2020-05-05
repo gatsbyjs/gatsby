@@ -201,7 +201,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Gatsby Use Cases
 
 **Question:** To use gatsby for a blog - is this overengineering?
-**Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — [https://overreacted.io/](https://overreacted.io/)
+**Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — https://overreacted.io/
 
 **Question:** Is it overkill to build every site with Gatsby.js?
 **Answer:** We don't think so :)
@@ -256,7 +256,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is there a good upgrade path for new versions of Gatsby?
 **Answer:** Unless you're on v1, you won't need a migration. If you are on v1 and want to move to v2, check out [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/).
 
-**Question:** Following up on upgrade path question—how would you upgrade between version of 2.\~?
+**Question:** Following up on upgrade path question—how would you upgrade between version of 2.~?
 **Answer:** You can bump the version # in your package.json and then you're done.
 
 **Question:** If my .htaccess file is configured to read .html files without the extension in the url, can Gatsby compile the links to pages without the .html ending?
