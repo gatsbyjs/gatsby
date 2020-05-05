@@ -31,7 +31,7 @@ npm install gatsby@latest
 
 You can see the list of available recipes by using `gatsby recipes`. Use your up or down arrow keys to select a recipe, and press the _Enter_ or _Return_ key to run it.
 
-![A screenshot that contains a list of Gatsby recipes.](recipes-screenshot.png)
+![partial list of available Gatsby recipes](recipes-screenshot.png)
 
 Gatsby Recipes use [MDX](/docs/glossary/mdx/). They're a readable mix of Markdown and React. MDX is an extension of [Markdown](/docs/glossary/markdown/) that lets you use [JSX](/docs/glossary#jsx) in Markdown-formatted documents. As an example, check out the [Styled Components recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/recipes/styled-components.mdx).
 
