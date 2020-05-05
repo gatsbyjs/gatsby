@@ -165,12 +165,12 @@ exports.processFile = (file, transforms, options = {}) => {
       }
 
       if (options.useMozJpeg && transformArgs.toFormat === `jpg`) {
-        await compressJpg(clonedPipeline, outputPath, args)
+        await compressJpg(clonedPipeline, outputPath, transformArgs)
         return transform
       }
 
       if (transformArgs.toFormat === `webp`) {
-        await compressWebP(clonedPipeline, outputPath, args)
+        await compressWebP(clonedPipeline, outputPath, transformArgs)
         return transform
       }
 

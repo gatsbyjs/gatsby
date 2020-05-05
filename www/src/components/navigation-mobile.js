@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import Link from "./localized-link"
 import { t } from "@lingui/macro"
 import { withI18n } from "@lingui/react"
 
@@ -75,7 +75,7 @@ const MobileNavigation = ({ i18n }) => (
       <MobileNavItem
         linkTo={`/${id}/`}
         key={id}
-        text={i18n._(text)}
+        label={i18n._(text)}
         icon={icon}
       />
     ))}

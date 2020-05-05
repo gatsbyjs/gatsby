@@ -49,7 +49,7 @@ _The [`onPreInit` API](/docs/node-apis/#onPreInit) is the first Node API called 
 
 Then, when running your site in develop or build mode, you should see "Testing..." logged in your terminal:
 
-```sh
+```shell
 success open and validate gatsby-configs - 0.051s
 success load plugins - 1.047s
 Testing... // highlight-line
