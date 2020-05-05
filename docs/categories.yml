@@ -21,7 +21,7 @@ starter:
   - CMS:Other
   - Disqus
   - Documentation
-  - eCommerce
+  - E-commerce
   - Firebase
   - Gallery
   - Google Sheets
@@ -60,7 +60,6 @@ starter:
   - Styling:SCSS
   - Styling:Tailwind
   - Styling:Theme-UI
-  - Styling:Milligram
   - Styling:Other
   - Styling:None
   - Testing
@@ -80,6 +79,7 @@ site:
   - Design System
   - Directory
   - Documentation
+  - E-commerce
   - Education
   - Entertainment
   - Entrepreneurship
@@ -120,4 +120,3 @@ site:
   - Video
   - Web Development
   - WordPress
-  - eCommerce

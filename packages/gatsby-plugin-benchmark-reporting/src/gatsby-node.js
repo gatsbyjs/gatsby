@@ -157,11 +157,6 @@ class BenchMeta {
       `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`
     )
 
-    const pageCount = glob(`**/**.json`, {
-      cwd: `./public/page-data`,
-      nocase: true,
-    }).length
-
     const benchmarkMetadata = this.getMetadata()
 
     return {
@@ -181,7 +176,7 @@ class BenchMeta {
         webpack: webpackVersion,
       },
       counts: {
-        pages: pageCount,
+        pages: parseInt(process.env.NUM_PAGES),
         jpgs: jpgCount,
         pngs: pngCount,
         gifs: gifCount,
@@ -296,8 +291,9 @@ async function onPreInit(api) {
   lastApi = api
   // This should be set in the gatsby-config of the site when enabling this plugin
   reportInfo(
-    `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${BENCHMARK_REPORTING_URL ||
-      `the CLI`}`
+    `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${
+      BENCHMARK_REPORTING_URL || `the CLI`
+    }`
   )
 
   benchMeta.markStart()

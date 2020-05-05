@@ -20,7 +20,7 @@ const args = yargs
   .option(`fileContent`, {
     default: JSON.stringify(
       `
-    import React from 'react';
+    import * as React from 'react';
     
     import Layout from '../components/layout';
     

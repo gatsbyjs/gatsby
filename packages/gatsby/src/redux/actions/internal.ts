@@ -1,4 +1,8 @@
+import reporter from "gatsby-cli/lib/reporter"
+
 import {
+  IGatsbyConfig,
+  IGatsbyPlugin,
   ProgramStatus,
   ICreatePageDependencyAction,
   IDeleteComponentDependenciesAction,
@@ -11,7 +15,10 @@ import {
   ISetProgramStatusAction,
   IPageQueryRunAction,
   IRemoveStaleJobAction,
+  ISetSiteConfig,
 } from "../types"
+
+import { gatsbyConfigSchema } from "../../joi-schemas/joi"
 
 /**
  * Create a dependency between a page and data. Probably for
@@ -81,7 +88,7 @@ export const replaceComponentQuery = ({
  */
 export const replaceStaticQuery = (
   args: any,
-  plugin: Plugin | null | undefined = null
+  plugin: IGatsbyPlugin | null | undefined = null
 ): IReplaceStaticQueryAction => {
   return {
     type: `REPLACE_STATIC_QUERY`,
@@ -98,7 +105,7 @@ export const replaceStaticQuery = (
  */
 export const queryExtracted = (
   { componentPath, query }: { componentPath: string; query: string },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractedAction => {
   return {
@@ -116,7 +123,7 @@ export const queryExtracted = (
  */
 export const queryExtractionGraphQLError = (
   { componentPath, error }: { componentPath: string; error: string },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractionGraphQLErrorAction => {
   return {
@@ -135,7 +142,7 @@ export const queryExtractionGraphQLError = (
  */
 export const queryExtractedBabelSuccess = (
   { componentPath },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractedBabelSuccessAction => {
   return {
@@ -153,7 +160,7 @@ export const queryExtractedBabelSuccess = (
  */
 export const queryExtractionBabelError = (
   { componentPath, error }: { componentPath: string; error: Error },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractionBabelErrorAction => {
   return {
@@ -170,7 +177,7 @@ export const queryExtractionBabelError = (
  */
 export const setProgramStatus = (
   status: ProgramStatus,
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): ISetProgramStatusAction => {
   return {
@@ -187,7 +194,7 @@ export const setProgramStatus = (
  */
 export const pageQueryRun = (
   { path, componentPath, isPage },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IPageQueryRunAction => {
   return {
@@ -204,7 +211,7 @@ export const pageQueryRun = (
  */
 export const removeStaleJob = (
   contentDigest: string,
-  plugin: Plugin,
+  plugin?: IGatsbyPlugin,
   traceId?: string
 ): IRemoveStaleJobAction => {
   return {
@@ -214,5 +221,28 @@ export const removeStaleJob = (
     payload: {
       contentDigest,
     },
+  }
+}
+
+/**
+ * Set gatsby config
+ * @private
+ */
+export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
+  const result = gatsbyConfigSchema.validate(config || {})
+  const normalizedPayload: IGatsbyConfig = result.value
+
+  if (result.error) {
+    reporter.panic({
+      id: `10122`,
+      context: {
+        sourceMessage: result.error.message,
+      },
+    })
+  }
+
+  return {
+    type: `SET_SITE_CONFIG`,
+    payload: normalizedPayload,
   }
 }

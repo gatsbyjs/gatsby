@@ -7,7 +7,7 @@ A [Gatsby plugin](/docs/what-is-a-plugin/) abstracts Gatsby APIs into an install
 
 ## Using a plugin
 
-Found a plugin you'd like to use in your project? Awesome! You can configure it for use by following the steps below. This recipe uses the [`gatsby-source-filesystem` plugin](/plugins/gatsby-source-filesystem) as an example.
+Found a plugin you'd like to use in your project? Awesome! You can configure it for use by following the steps below. This recipe uses the [`gatsby-source-filesystem` plugin](/packages/gatsby-source-filesystem/) as an example.
 
 > If you'd like to take a look at available plugins, check out the [plugin library](/plugins).
 
@@ -28,7 +28,7 @@ Found a plugin you'd like to use in your project? Awesome! You can configure it 
 npm install gatsby-source-filesystem
 ```
 
-2. Add the plugin to your `gatsby.config.js`, and set any options it needs, the filesystem source plugin takes a `name` and `path` as options:
+2. Add the plugin to your `gatsby-config.js`, and set any options it needs, the filesystem source plugin takes a `name` and `path` as options:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -59,6 +59,11 @@ _The instructions found in the README of the plugin you're using can you help yo
 
 If you want to create your own plugin you can get started with the Gatsby plugin starter.
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-get-started-writing-a-gatsby-plugin-using-the-plugin-starter"
+  lessonTitle="Get started writing a Gatsby plugin using the plugin starter"
+/>
+
 ### Prerequisites
 
 - An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` file
@@ -73,7 +78,7 @@ gatsby new my-plugin https://github.com/gatsbyjs/gatsby-starter-plugin
 
 The directory structure should look something like this:
 
-```
+```text
 gatsby-site
 └── gatsby-config.js
 └── src
@@ -92,12 +97,21 @@ my-plugin
 ```javascript:title=gatsby-site/gatsby-config.js
 module.exports = {
   plugins: [
-    require.resolve(`../my-plugin), // highlight-line
+    require.resolve(`../my-plugin`), // highlight-line
   ],
 }
 ```
 
-3. Run `gatsby develop`. To verify the plugin starter loaded correctly in your site it will log a message to the console saying it "Loaded" before the `onPreInit` step finishes.
+3. Run `gatsby develop`. To verify the plugin starter loaded correctly in your site it will log a message to the console saying it "Loaded" before the `onPreInit` step finishes:
+
+```shell
+$ gatsby develop
+success open and validate gatsby-configs - 0.033s
+success load plugins - 0.074s
+Loaded gatsby-starter-plugin
+success onPreInit - 0.016s
+...
+```
 
 4. Now you can implement [browser](/docs/browser-apis/), [server-side rendering](/docs/ssr-apis/), or [node APIs](/docs/node-apis/) and your site will run them each time it loads your plugin!
 

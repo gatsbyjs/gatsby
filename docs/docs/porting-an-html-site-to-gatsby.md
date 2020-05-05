@@ -63,7 +63,9 @@ The `/src` folder contains most of the front-end code for the Gatsby site. In th
 ```jsx:title=/gatsby-site/src/pages/index.js
 import React from "react"
 
-export default () => <div>Hello world!</div>
+export default function Home() {
+  return <div>Hello world!</div>
+}
 ```
 
 [Run the development server](/docs/quick-start/#start-development-server) with `gatsby develop` in the command line to see the website in your browser.
@@ -122,7 +124,9 @@ import React from "react"
 import "../styles/normalize.css" // highlight-line
 import "../styles/style.css" // highlight-line
 
-export default () => <div>Hello world!</div>
+export default function Home() {
+  return <div>Hello world!</div>
+}
 ```
 
 ### Head elements
@@ -151,25 +155,27 @@ Now you can import the `<Helmet>` component to the `index.js` file and place `<h
 
 ```jsx:title=/gatsby-site/src/pages/index.js
 import React from "react"
-import Helmet from "react-helmet" // highlight-line
+import { Helmet } from "react-helmet" // highlight-line
 
 import "../styles/normalize.css"
 import "../styles/style.css"
 
-export default () => (
-  <>
-    <Helmet>
-      {/* highlight-start */}
-      <title>Taylor's Tidy Trees</title>
-      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-      {/* highlight-end */}
-    </Helmet>
-    <header></header>
-    <main>
-      <div>Hello world!</div>
-    </main>
-  </>
-)
+export default function Home() {
+  return (
+    <>
+      <Helmet>
+        {/* highlight-start */}
+        <title>Taylor's Tidy Trees</title>
+        <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        {/* highlight-end */}
+      </Helmet>
+      <header></header>
+      <main>
+        <div>Hello world!</div>
+      </main>
+    </>
+  )
+}
 ```
 
 Note the mix of components and native HTML elements in the React markup here: this is the [JSX](https://reactjs.org/docs/introducing-jsx.html) templating language, which Gatsby compiles into HTML that browsers can parse and render to users. Further sections of this guide will explain it even more.
@@ -182,48 +188,50 @@ Copy over the `<header>` element contents, changing `<a>` elements to `<Link>` c
 
 ```jsx:title=/gatsby-site/src/pages/index.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { Link } from "gatsby" // highlight-line
 
 import "../styles/normalize.css"
 import "../styles/style.css"
 
-export default () => (
-  <>
-    <Helmet>
-      <title>Taylor's Tidy Trees</title>
-      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-      <link rel="stylesheet" type="text/css" href="/assets/normalize.css" />
-      <link rel="stylesheet" type="text/css" href="/assets/style.css" />
-    </Helmet>
-    <header>
-      {/* highlight-start */}
-      <Link to="/" className="brand-color logo-text">
-        Taylor's Tidy Trees
-      </Link>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/services">Services</Link>
-          </li>
-          <li>
-            <Link to="/who">Who We Are</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-        </ul>
-      </nav>
-      {/* highlight-end */}
-    </header>
-    <main>
-      <div>Hello world!</div>
-    </main>
-  </>
-)
+export default function Home() {
+  return (
+    <>
+      <Helmet>
+        <title>Taylor's Tidy Trees</title>
+        <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="/assets/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/style.css" />
+      </Helmet>
+      <header>
+        {/* highlight-start */}
+        <Link to="/" className="brand-color logo-text">
+          Taylor's Tidy Trees
+        </Link>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/services">Services</Link>
+            </li>
+            <li>
+              <Link to="/who">Who We Are</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
+          </ul>
+        </nav>
+        {/* highlight-end */}
+      </header>
+      <main>
+        <div>Hello world!</div>
+      </main>
+    </>
+  )
+}
 ```
 
 ### Page content
@@ -289,60 +297,64 @@ Like in `/src/pages/index.js` the file exports a JavaScript function that return
 
 ```jsx:title=/gatsby-site/src/components/Layout.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
-export default ({ children }) => (
-  <>
-    <Helmet></Helmet>
-    <header></header>
-    <main>{children}</main>
-  </>
-)
+export default function Layout({ children }) {
+  return (
+    <>
+      <Helmet></Helmet>
+      <header></header>
+      <main>{children}</main>
+    </>
+  )
+}
 ```
 
 The common elements between the `/index.html` and `/who/index.html` files can now copied from `/src/index.js` into the `<Layout>` component. A second prop is also added here and used in a JavaScript expression in the `<title>` element. The new expression results in a dynamic version of the title, depending on what is passed as the `breadcrumbs` prop. If the `breadcrumbs` prop is provided, it is joined and added to the end of the base title, `Taylor's Tidy Trees`. You'll see the prop in use later on when porting the `/who/index.html` page.
 
 ```jsx:title=/gatsby-site/src/components/Layout.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { Link } from "gatsby"
 
 import "../styles/normalize.css"
 import "../styles/style.css"
 
-export default ({ children, breadcrumbs }) => (
-  <>
-    <Helmet>
-      <title>
-        Taylor's Tidy Trees
-        {breadcrumbs ? ` - ${breadcrumbs.join(" - ")}` : ``}
-      </title>
-      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    </Helmet>
-    <header>
-      <Link to="/" className="brand-color logo-text">
-        Taylor's Tidy Trees
-      </Link>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/about.html">About</Link>
-          </li>
-          <li>
-            <Link to="/services/index.html">Services</Link>
-          </li>
-          <li>
-            <Link to="/who/index.html">Who We Are</Link>
-          </li>
-          <li>
-            <Link to="/contact.html">Contact</Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
-    <main>{children}</main>
-  </>
-)
+export default function Layout({ children, breadcrumbs }) {
+  return (
+    <>
+      <Helmet>
+        <title>
+          Taylor's Tidy Trees
+          {breadcrumbs ? ` - ${breadcrumbs.join(" - ")}` : ``}
+        </title>
+        <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+      </Helmet>
+      <header>
+        <Link to="/" className="brand-color logo-text">
+          Taylor's Tidy Trees
+        </Link>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/about.html">About</Link>
+            </li>
+            <li>
+              <Link to="/services/index.html">Services</Link>
+            </li>
+            <li>
+              <Link to="/who/index.html">Who We Are</Link>
+            </li>
+            <li>
+              <Link to="/contact.html">Contact</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main>{children}</main>
+    </>
+  )
+}
 ```
 
 You can now use the `<Layout>` component to create a `/src/who/index.js` page file:
@@ -352,23 +364,25 @@ import React from "react"
 import Layout from "../components/Layout"
 import { Link } from "gatsby"
 
-export default () => (
-  <Layout breadcrumbs={["Who We Are"]}>
-    <h1>Who We Are</h1>
-    <h2>These are our staff:</h2>
-    <ul>
-      <li>
-        <Link to="/who/ella-arborist">Ella (Arborist)</Link>
-      </li>
-      <li>
-        <Link to="/who/sam-surgeon">Sam (Tree Surgeon)</Link>
-      </li>
-      <li>
-        <Link to="/who/marin-leafer">Marin (Leafer)</Link>
-      </li>
-    </ul>
-  </Layout>
-)
+export default function Who() {
+  return (
+    <Layout breadcrumbs={["Who We Are"]}>
+      <h1>Who We Are</h1>
+      <h2>These are our staff:</h2>
+      <ul>
+        <li>
+          <Link to="/who/ella-arborist">Ella (Arborist)</Link>
+        </li>
+        <li>
+          <Link to="/who/sam-surgeon">Sam (Tree Surgeon)</Link>
+        </li>
+        <li>
+          <Link to="/who/marin-leafer">Marin (Leafer)</Link>
+        </li>
+      </ul>
+    </Layout>
+  )
+}
 ```
 
 The `Who We Are` link in `index.js` should now work! Now use the `<Layout>` component in the `index.js` page file too:
@@ -377,14 +391,16 @@ The `Who We Are` link in `index.js` should now work! Now use the `<Layout>` comp
 import React from "react"
 import Layout from "../components/Layout" // highlight-line
 
-export default () => (
-  {/* highlight-start */}
-  <Layout>
-    <h1>Welcome To Taylor's Tidy Trees</h1>
-    <h2>We care about trees of all kinds!</h2>
-  </Layout>
-  {/* highlight-end */}
-)
+export default function Home() {
+  return (
+    {/* highlight-start */}
+    <Layout>
+      <h1>Welcome To Taylor's Tidy Trees</h1>
+      <h2>We care about trees of all kinds!</h2>
+    </Layout>
+    {/* highlight-end */}
+  );
+}
 ```
 
 Have a check that the `Who We Are` link is still working. If not, check that the content is wrapped correctly with the `<Layout>` component as shown above.
@@ -398,21 +414,23 @@ import React from "react"
 import Layout from "../components/Layout"
 import { Link } from "gatsby"
 
-export default () => (
-  {/* highlight-start */}
-  <Layout breadcrumbs={["Who We Are", "Ella"]}>
-  {/* highlight-end */}
-    <h1>Ella - Arborist</h1>
-    <h2>Ella is an excellent Arborist. We guarantee it.</h2>
-    <div className="bio-card">
-      <img
-        alt="Comically crude stick person sketch"
-        src="/person.png"
-      />
-      <p>Ella</p>
-    </div>
-  </Layout>
-)
+export default function EllaArborist() {
+  return (
+    {/* highlight-start */}
+    <Layout breadcrumbs={["Who We Are", "Ella"]}>
+    {/* highlight-end */}
+      <h1>Ella - Arborist</h1>
+      <h2>Ella is an excellent Arborist. We guarantee it.</h2>
+      <div className="bio-card">
+        <img
+          alt="Comically crude stick person sketch"
+          src="/person.png"
+        />
+        <p>Ella</p>
+      </div>
+    </Layout>
+  );
+}
 ```
 
 The other 2 `Who We Are` pages for Marin and Sam can now be made with a similar structure. Maybe you are even thinking about another component for the Bio Card!

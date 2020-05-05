@@ -159,13 +159,15 @@ Feel free to make the text of your bio anything you like, but the component will
 import React, { Fragment } from "react"
 import { Styled } from "theme-ui"
 
-export default () => (
-  <Fragment>
-    Words by <Styled.a href="http://example.com/">Your Name</Styled.a>.
-    <br />
-    Change me. Your awesome bio, about how great you are!
-  </Fragment>
-)
+export default function BioContent() {
+  return (
+    <Fragment>
+      Words by <Styled.a href="http://example.com/">Your Name</Styled.a>.
+      <br />
+      Change me. Your awesome bio, about how great you are!
+    </Fragment>
+  )
+}
 ```
 
 ### Shadow Theme-UI
@@ -293,7 +295,7 @@ import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { Styled, css } from "theme-ui"
 
-export default () => {
+export default function Navigation() {
   const data = useStaticQuery(
     graphql`
       query SiteMetaData {
@@ -373,19 +375,25 @@ Your file structure should look like this:
 
 ```jsx:title=src/gatsby-theme-blog/components/header.js
 import React from "react"
+import { css } from "theme-ui"
 import Navigation from "../../components/navigation" // highlight-line
-;<header>
-  <div
-    css={css({
-      maxWidth: `container`,
-      mx: `auto`,
-      px: 3,
-      pt: 4,
-    })}
-  >
-    <Navigation /> // highlight-line
-  </div>
-</header>
+
+export default function Header() {
+  return (
+    <header>
+      <div
+        css={css({
+          maxWidth: `container`,
+          mx: `auto`,
+          px: 3,
+          pt: 4,
+        })}
+      >
+        <Navigation /> // highlight-line
+      </div>
+    </header>
+  )
+}
 ```
 
 5. Run `gatsby develop` and test the new navigation component.

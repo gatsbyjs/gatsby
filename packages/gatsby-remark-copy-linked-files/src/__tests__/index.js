@@ -39,10 +39,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     {
       absolutePath: path.posix.normalize(filePath),
       internal: {},
-      extension: filePath
-        .split(`.`)
-        .pop()
-        .trim(),
+      extension: filePath.split(`.`).pop().trim(),
     },
   ]
 
@@ -126,9 +123,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     const mdx = require(`remark-mdx`)
     const path = `images/sample-image.gif`
 
-    const markdownAST = remark()
-      .use(mdx)
-      .parse(`<img src="${path}" />`)
+    const markdownAST = remark().use(mdx).parse(`<img src="${path}" />`)
 
     await plugin({
       files: getFiles(path),

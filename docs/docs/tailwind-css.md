@@ -36,13 +36,13 @@ npx tailwindcss init
 
 ### Option #1: PostCSS
 
-1.  Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss).
+1. Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss).
 
 ```shell
 npm install --save gatsby-plugin-postcss
 ```
 
-2.  Include the plugin in your `gatsby-config.js` file.
+2. Include the plugin in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 plugins: [`gatsby-plugin-postcss`],
@@ -66,7 +66,7 @@ To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documen
 
 ### Option #2: CSS-in-JS
 
-These steps assume you have a CSS-in-JS library already installed, and the examples are based on Styled Components.
+These steps assume you have a CSS-in-JS library already installed, and the examples are based on Emotion.
 
 1. Install Tailwind Babel Macro
 
@@ -108,7 +108,7 @@ npm install tailwind.macro
 2. Use the Babel Macro (`tailwind.macro`) in your styled component
 
 ```javascript
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import tw from "tailwind.macro"
 
 // All versions
