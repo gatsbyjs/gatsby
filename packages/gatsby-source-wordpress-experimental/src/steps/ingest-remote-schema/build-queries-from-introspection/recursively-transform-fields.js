@@ -13,9 +13,12 @@ const transformFragments = ({
   depth,
   maxDepth,
   parentType,
-  ancestorTypeNames,
-}) =>
-  possibleTypes && depth <= maxDepth
+  parentField,
+  ancestorTypeNames: parentAncestorTypeNames,
+}) => {
+  const ancestorTypeNames = [...parentAncestorTypeNames]
+
+  return possibleTypes && depth <= maxDepth
     ? possibleTypes
         .map(possibleType => {
           possibleType = { ...possibleType }
@@ -81,6 +84,7 @@ const transformFragments = ({
         })
         .filter(Boolean)
     : null
+}
 
 const countSelfAncestors = ({ typeName, ancestorTypeNames }) =>
   ancestorTypeNames.length
@@ -97,9 +101,10 @@ function transformField({
   depth,
   fieldBlacklist,
   fieldAliases,
-  ancestorTypeNames,
+  ancestorTypeNames: parentAncestorTypeNames,
   querySelfAncestorLimit,
 } = {}) {
+  const ancestorTypeNames = [...parentAncestorTypeNames]
   // we're potentially infinitely recursing when fields are connected to other types that have fields that are connections to other types
   //  so we need a maximum limit for that
   if (depth >= maxDepth) {
@@ -195,6 +200,7 @@ function transformField({
     const transformedFragments = transformFragments({
       possibleTypes: listOfType.possibleTypes,
       parentType: listOfType || fieldType,
+      parentField: field,
       gatsbyNodesInfo,
       typeMap,
       depth,
@@ -250,22 +256,39 @@ function transformField({
 
   const { fields } = typeInfo || {}
 
-  if (fields) {
+  let transformedFragments
+
+  if (typeInfo.possibleTypes) {
+    transformedFragments = transformFragments({
+      possibleTypes: typeInfo.possibleTypes,
+      parentType: typeInfo,
+      parentField: field,
+      gatsbyNodesInfo,
+      typeMap,
+      depth,
+      maxDepth,
+      ancestorTypeNames,
+    })
+  }
+
+  if (fields || transformedFragments) {
     const transformedFields = recursivelyTransformFields({
-      parentType: fieldType,
+      parentType: typeInfo,
       parentFieldName: field.name,
       fields,
       depth,
       ancestorTypeNames,
+      parentField: field,
     })
 
-    if (!transformedFields || !transformedFields.length) {
+    if (!transformedFields?.length && !transformedFragments?.length) {
       return false
     }
 
     return {
       fieldName: fieldName,
       fields: transformedFields,
+      fragments: transformedFragments,
       fieldType,
     }
   }
@@ -287,6 +310,7 @@ function transformField({
       depth,
       maxDepth,
       ancestorTypeNames,
+      parentField: field,
     })
 
     return {
@@ -303,12 +327,19 @@ function transformField({
 const recursivelyTransformFields = ({
   fields,
   parentType,
-  ancestorTypeNames = [],
+  parentField = {},
+  ancestorTypeNames: parentAncestorTypeNames,
   depth = 0,
 }) => {
   if (!fields || !fields.length) {
     return null
   }
+
+  if (!parentAncestorTypeNames) {
+    parentAncestorTypeNames = []
+  }
+
+  const ancestorTypeNames = [...parentAncestorTypeNames]
 
   const {
     gatsbyApi: { pluginOptions },
@@ -337,7 +368,12 @@ const recursivelyTransformFields = ({
   const recursivelyTransformedFields = fields
     ?.filter(
       field =>
-        !fieldIsExcludedOnParentType({ pluginOptions, field, parentType })
+        !fieldIsExcludedOnParentType({
+          pluginOptions,
+          field,
+          parentType,
+          parentField,
+        })
     )
     .map(field => {
       const transformedField = transformField({
