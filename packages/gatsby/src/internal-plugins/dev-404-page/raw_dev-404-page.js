@@ -14,7 +14,7 @@ class Dev404Page extends React.Component {
     super(props)
     const { data, location } = this.props
     const pagePaths = data.allSitePage.nodes.map(node => node.path)
-    const urlState = queryString.parse(location.hash)
+    const urlState = queryString.parse(location.search)
 
     const initialPagePathSearchTerms = urlState.q ? urlState.q : ``
     this.state = {
