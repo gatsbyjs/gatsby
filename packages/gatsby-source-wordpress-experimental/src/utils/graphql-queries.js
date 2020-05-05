@@ -38,6 +38,7 @@ export const introspectionQuery = gql`
         kind
         name
         description
+
         possibleTypes {
           kind
           name
@@ -65,8 +66,12 @@ export const introspectionQuery = gql`
           name
           description
           args {
+            name
             type {
               kind
+              inputFields {
+                name
+              }
             }
           }
           type {
