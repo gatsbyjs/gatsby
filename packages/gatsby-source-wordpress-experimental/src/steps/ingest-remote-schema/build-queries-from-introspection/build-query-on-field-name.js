@@ -3,7 +3,6 @@ import compress from "graphql-query-compress"
 export const buildNodesQueryOnFieldName = ({
   fields,
   fieldName,
-  settings,
   queryVariables = ``,
   fieldVariables = ``,
 }) =>
