@@ -72,6 +72,8 @@ const transformWebpackError = (
           stageLabel: stageCodeToReadableLabel[stage],
         },
       }
+
+      break
     }
   }
 
