@@ -23,18 +23,22 @@ const ingestRemoteSchema = async (helpers, pluginOptions) => {
 
   activity.start()
 
-  await runSteps(
-    [
-      checkIfSchemaHasChanged,
-      introspectAndStoreRemoteSchema,
-      identifyAndStoreIngestableFieldsAndTypes,
-      buildNodeQueries,
-      buildNonNodeQueries,
-      cacheFetchedTypes,
-    ],
-    helpers,
-    pluginOptions
-  )
+  try {
+    await runSteps(
+      [
+        checkIfSchemaHasChanged,
+        introspectAndStoreRemoteSchema,
+        identifyAndStoreIngestableFieldsAndTypes,
+        buildNodeQueries,
+        buildNonNodeQueries,
+        cacheFetchedTypes,
+      ],
+      helpers,
+      pluginOptions
+    )
+  } catch (e) {
+    helpers.reporter.panic(e)
+  }
 
   activity.end()
 }

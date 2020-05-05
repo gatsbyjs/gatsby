@@ -9,7 +9,7 @@ import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 /**
  * createSchemaCustomization
  */
-const createSchemaCustomization = async ({ actions, schema }) => {
+const customizeSchema = async ({ actions, schema }) => {
   const state = store.getState()
 
   const {
@@ -79,6 +79,14 @@ const createSchemaCustomization = async ({ actions, schema }) => {
   })
 
   actions.createTypes(typeDefs)
+}
+
+const createSchemaCustomization = async api => {
+  try {
+    await customizeSchema(api)
+  } catch (e) {
+    api.reporter.panic(e)
+  }
 }
 
 export { createSchemaCustomization }
