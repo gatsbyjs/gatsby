@@ -3,16 +3,16 @@ import {
   ObjectTypeComposer,
   InputTypeComposer,
   InterfaceTypeComposer,
+  ComposeFieldConfigMap,
 } from "graphql-compose"
-
 import { getFieldsEnum } from "./sort"
 import { addDerivedType } from "./derived-types"
 import { distinct, group } from "../resolvers"
 
-const getPageInfo = ({
+export const getPageInfo = <TContext = any>({
   schemaComposer,
 }: {
-  schemaComposer: SchemaComposer<any>
+  schemaComposer: SchemaComposer<TContext>
 }): ObjectTypeComposer =>
   schemaComposer.getOrCreateOTC(`PageInfo`, tc => {
     tc.addFields({
@@ -25,14 +25,14 @@ const getPageInfo = ({
     })
   })
 
-const getEdge = ({
+export const getEdge = <TContext = any>({
   schemaComposer,
   typeComposer,
 }: {
-  schemaComposer: SchemaComposer<any>
+  schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
 }): ObjectTypeComposer => {
-  const typeName: string = typeComposer.getTypeName() + `Edge`
+  const typeName = `${typeComposer.getTypeName()}Edge`
   addDerivedType({ typeComposer, derivedTypeName: typeName })
   return schemaComposer.getOrCreateOTC(typeName, tc => {
     tc.addFields({
@@ -43,16 +43,15 @@ const getEdge = ({
   })
 }
 
-const createPagination = ({
+const createPagination = <TSource = any, TContext = any>({
   schemaComposer,
   typeComposer,
   fields,
   typeName,
 }: {
-  schemaComposer: SchemaComposer<any>
+  schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
-  // TODO: Define the interface for the 'fields' data structure
-  fields: Record<string, any>
+  fields: ComposeFieldConfigMap<TSource, TContext>
   typeName: string
 }): ObjectTypeComposer => {
   const paginationTypeComposer: ObjectTypeComposer = schemaComposer.getOrCreateOTC(
@@ -73,14 +72,14 @@ const createPagination = ({
   return paginationTypeComposer
 }
 
-const getGroup = ({
+export const getGroup = <TContext = any>({
   schemaComposer,
   typeComposer,
 }: {
-  schemaComposer: SchemaComposer<any>
+  schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
 }): ObjectTypeComposer => {
-  const typeName: string = typeComposer.getTypeName() + `GroupConnection`
+  const typeName = `${typeComposer.getTypeName()}GroupConnection`
   const fields = {
     field: `String!`,
     fieldValue: `String`,
@@ -88,15 +87,15 @@ const getGroup = ({
   return createPagination({ schemaComposer, typeComposer, fields, typeName })
 }
 
-const getPagination = ({
+export const getPagination = <TContext = any>({
   schemaComposer,
   typeComposer,
 }: {
-  schemaComposer: SchemaComposer<any>
+  schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
 }): ObjectTypeComposer => {
   const inputTypeComposer: InputTypeComposer = typeComposer.getInputTypeComposer()
-  const typeName: string = typeComposer.getTypeName() + `Connection`
+  const typeName = `${typeComposer.getTypeName()}Connection`
   const fieldsEnumTC = getFieldsEnum({
     schemaComposer,
     typeComposer,
@@ -130,5 +129,3 @@ const getPagination = ({
   paginationTypeComposer.makeFieldNonNull(`group`)
   return paginationTypeComposer
 }
-
-export { getPageInfo, getEdge, getGroup, getPagination }
