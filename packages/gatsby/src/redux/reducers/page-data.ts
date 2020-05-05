@@ -1,4 +1,9 @@
-module.exports = (state = new Map(), action) => {
+import { ActionsUnion, IGatsbyState } from "../types"
+
+export const pageDataReducer = (
+  state: IGatsbyState["pageData"] = new Map(),
+  action: ActionsUnion
+): IGatsbyState["pageData"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()

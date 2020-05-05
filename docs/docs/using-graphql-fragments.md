@@ -29,7 +29,7 @@ A fragment can be created inside any GraphQL query, but it's good practice to cr
 import React from "react"
 import { graphql } from "gatsby"
 
-export default ( props ) => {
+export default function IndexPost( props ) {
   return (...)
 }
 
@@ -50,7 +50,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import IndexPost from "../components/IndexPost"
 
-export default ({ data }) => {
+export default function Main({ data }) {
   return (
     <div>
       <h1>{data.site.siteMetadata.title}</h1>
