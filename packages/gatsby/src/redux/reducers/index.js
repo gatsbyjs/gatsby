@@ -1,5 +1,6 @@
 const reduxNodes = require(`./nodes`)
 const lokiNodes = require(`../../db/loki/nodes`).reducer
+import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
 import { staticQueryComponentsReducer } from "./static-query-components"
@@ -59,8 +60,8 @@ module.exports = {
   lastAction: require(`./last-action`),
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),
-  pages: require(`./pages`),
   schema: schemaReducer,
+  pages: pagesReducer,
   status: statusReducer,
   componentDataDependencies: require(`./component-data-dependencies`),
   components: require(`./components`),
