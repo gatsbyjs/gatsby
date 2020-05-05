@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { graphql, Link } from "gatsby"
+import { graphql, Link, navigate } from "gatsby"
 import queryString from "query-string"
 
 class Dev404Page extends React.Component {
@@ -52,16 +52,17 @@ class Dev404Page extends React.Component {
   }
 
   setSearchUrl(searchValue) {
-    const { location } = this.props
+    const {
+      location: { pathname, search },
+    } = this.props
 
-    if (searchValue) {
-      const hash = queryString.parse(location.hash)
-      hash.q = searchValue
+    const searchMap = queryString.parse(search)
+    searchMap.q = searchValue
 
-      const newHash = queryString.stringify(hash)
-      location.hash = newHash
-    } else {
-      location.hash = ``
+    const newSearch = queryString.stringify(searchMap)
+
+    if (search !== `?${newSearch}`) {
+      navigate(`${pathname}?${newSearch}`, { replace: true })
     }
   }
 
