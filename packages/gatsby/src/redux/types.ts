@@ -47,6 +47,9 @@ export interface IGatsbyConfig {
     title?: string
     author?: string
     description?: string
+    sireUrl?: string
+    // siteMetadata is free form
+    [key: string]: unknown
   }
   // @deprecated
   polyfill?: boolean
@@ -90,6 +93,17 @@ export interface IGatsbyStaticQueryComponents {
 }
 
 type GatsbyNodes = Map<string, IGatsbyNode>
+
+export interface IGatsbyJobContent {
+  inputPaths: string[]
+  contentDigest: string
+}
+
+export interface IGatsbyJobV2 {
+  job: IGatsbyJobContent
+  plugin: IGatsbyPlugin
+  traceId?: string
+}
 
 export interface IGatsbyState {
   program: IProgram
@@ -156,8 +170,8 @@ export interface IGatsbyState {
     done: any[] // TODO
   }
   jobsV2: {
-    incomplete: Map<any, any> // TODO
-    complete: Map<any, any>
+    incomplete: Map<Identifier, IGatsbyJobV2>
+    complete: Map<Identifier, IGatsbyJobV2>
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
@@ -314,7 +328,7 @@ export interface IPageQueryRunAction {
 
 export interface IRemoveStaleJobAction {
   type: `REMOVE_STALE_JOB_V2`
-  plugin: IGatsbyPlugin
+  plugin: IGatsbyPlugin | undefined
   traceId?: string
   payload: { contentDigest: string }
 }
@@ -369,6 +383,11 @@ export interface ICreateRedirectAction {
   payload: IRedirect
 }
 
+export interface ISetResolvedThemesAction {
+  type: `SET_RESOLVED_THEMES`
+  payload: any // TODO
+}
+
 export interface IDeleteCacheAction {
   type: `DELETE_CACHE`
 }
@@ -410,4 +429,9 @@ export interface IReplaceWebpackConfigAction {
 export interface ISetWebpackConfigAction {
   type: `SET_WEBPACK_CONFIG`
   payload: Partial<IGatsbyState["webpack"]>
+}
+
+export interface ISetSiteConfig {
+  type: `SET_SITE_CONFIG`
+  payload: IGatsbyState["config"]
 }

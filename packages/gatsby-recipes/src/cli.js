@@ -125,6 +125,14 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add plugins to make site a PWA`,
       value: `pwa.mdx`,
     },
+    {
+      label: `Add React Helmet`,
+      value: `gatsby-plugin-react-helmet.mdx`,
+    },
+    {
+      label: `Add Storybook - JavaScript`,
+      value: `storybook-js.mdx`,
+    },
     // TODO remaining recipes
   ]
 

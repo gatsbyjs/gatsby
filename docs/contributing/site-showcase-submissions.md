@@ -8,11 +8,11 @@ Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructi
 
 There are three major steps:
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
+1. If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
 
-2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
+2. If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
-3.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
+3. Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
 ```yaml:title=docs/sites.yml
 - title: Title of the Site
@@ -128,9 +128,9 @@ _Note: the Gatsby team will choose featured sites, leave as `featured: false` wh
 
 If your site is chosen as featured, here's what to do next:
 
-1.  Change `featured: false` to `featured: true`
+1. Change `featured: false` to `featured: true`
 
-2.  Add `featured` as a category:
+2. Add `featured` as a category:
 
 ```yaml
 categories:

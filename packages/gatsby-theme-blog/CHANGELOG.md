@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.10...gatsby-theme-blog@1.5.11) (2020-05-04)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.9...gatsby-theme-blog@1.5.10) (2020-05-04)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.8...gatsby-theme-blog@1.5.9) (2020-05-01)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.7...gatsby-theme-blog@1.5.8) (2020-05-01)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.6...gatsby-theme-blog@1.5.7) (2020-04-30)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.5...gatsby-theme-blog@1.5.6) (2020-04-30)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.4...gatsby-theme-blog@1.5.5) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.3...gatsby-theme-blog@1.5.4) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.2...gatsby-theme-blog@1.5.3) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.1...gatsby-theme-blog@1.5.2) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
 ## [1.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.0...gatsby-theme-blog@1.5.1) (2020-04-28)
 
 ### Bug Fixes
