@@ -8,6 +8,7 @@ import { pageDataReducer } from "./page-data"
 import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
+import { lastAction } from "./last-action"
 
 // const backend = process.env.GATSBY_DB_NODES || `redux`
 const backend = `redux`
@@ -55,7 +56,7 @@ module.exports = {
   nodesByType: getNodesByTypeReducer(),
   resolvedNodesCache: require(`./resolved-nodes`),
   nodesTouched: require(`./nodes-touched`),
-  lastAction: require(`./last-action`).lastAction,
+  lastAction: lastAction,
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),
   pages: require(`./pages`),
