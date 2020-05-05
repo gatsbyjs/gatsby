@@ -10517,3 +10517,17 @@
     - Technology
     - Blog
   featured: false
+- title: Sam Larsen-Disney
+  url: https://sld.codes
+  main_url: https://sld.codes
+  source_url: https://github.com/slarsendisney/personal-site
+  description: >
+    Personal website and portfolio of Sam Larsen-Disney built with GatsbyJS. Contains presentations, projects, articles, boilerplates and photography.
+  categories:
+    - Portfolio
+    - Blog
+    - Photography
+    - Education
+  built_by: Sam Larsen-Disney
+  built_by_url: https://github.com/slarsendisney
+  featured: false
