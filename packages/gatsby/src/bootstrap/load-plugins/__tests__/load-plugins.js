@@ -71,4 +71,97 @@ describe(`Load plugins`, () => {
 
     expect(plugins).toMatchSnapshot()
   })
+
+  describe(`TypeScript support`, () => {
+    it(`loads gatsby-plugin-typescript if not provided`, async () => {
+      const config = {
+        plugins: [],
+      }
+
+      let plugins = await loadPlugins(config)
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(plugins).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            browserAPIs: [],
+            id: ``,
+            name: `gatsby-plugin-typescript`,
+            nodeAPIs: [
+              `resolvableExtensions`,
+              `onCreateBabelConfig`,
+              `onCreateWebpackConfig`,
+            ],
+            pluginOptions: {
+              plugins: [],
+            },
+            resolve: ``,
+            ssrAPIs: [],
+            version: `1.0.0`,
+          }),
+        ])
+      )
+    })
+
+    it(`uses the user provided plugin-typescript if provided`, async () => {
+      const config = {
+        plugins: [
+          {
+            resolve: `gatsby-plugin-typescript`,
+            options: {
+              jsxPragma: `h`,
+            },
+          },
+        ],
+      }
+
+      let plugins = await loadPlugins(config)
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(plugins).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            browserAPIs: [],
+            id: ``,
+            name: `gatsby-plugin-typescript`,
+            nodeAPIs: [
+              `resolvableExtensions`,
+              `onCreateBabelConfig`,
+              `onCreateWebpackConfig`,
+            ],
+            pluginOptions: {
+              plugins: [],
+              jsxPragma: `h`,
+            },
+            resolve: ``,
+            ssrAPIs: [],
+            version: `1.0.0`,
+          }),
+        ])
+      )
+    })
+
+    it(`does not add gatsby-plugin-typescript if it exists in config.plugins`, async () => {
+      const config = {
+        plugins: [
+          `gatsby-plugin-typescript`,
+          { resolve: `gatsby-plugin-typescript` },
+        ],
+      }
+
+      let plugins = await loadPlugins(config)
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      const tsplugins = plugins.filter(
+        plugin => plugin.name === `gatsby-plugin-typescript`
+      )
+
+      // TODO: I think we should probably be de-duping, so this should be 1.
+      // But this test is mostly here to ensure we don't add an _additional_ gatsby-plugin-typescript
+      expect(tsplugins.length).toEqual(2)
+    })
+  })
 })

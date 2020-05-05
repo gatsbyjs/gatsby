@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.9...gatsby-cli@2.12.10) (2020-05-05)
+
+### Bug Fixes
+
+- Add 98124 error to better help with "Can't resolve [...]" errors ([#23741](https://github.com/gatsbyjs/gatsby/issues/23741)) ([9970faf](https://github.com/gatsbyjs/gatsby/commit/9970faf))
+
+## [2.12.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.8...gatsby-cli@2.12.9) (2020-05-05)
+
+### Bug Fixes
+
+- **gatsby:** log config validation errors ([#23620](https://github.com/gatsbyjs/gatsby/issues/23620)) ([62d6bb4](https://github.com/gatsbyjs/gatsby/commit/62d6bb4))
+
+## [2.12.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.7...gatsby-cli@2.12.8) (2020-05-04)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.12.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.6...gatsby-cli@2.12.7) (2020-05-01)
 
 **Note:** Version bump only for package gatsby-cli

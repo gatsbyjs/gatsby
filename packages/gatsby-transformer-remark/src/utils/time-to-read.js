@@ -39,7 +39,8 @@ function isCjChar(char) {
   return cjRanges.some(([from, to]) => charCode >= from && charCode < to)
 }
 
-export const calculateTimeToRead = (mdNode, html, calcTimeToRead) => {
+export const timeToRead = html => {
+  let timeToRead = 0
   const pureText = sanitizeHTML(html, { allowTags: [] })
   const avgWPM = 265
 
@@ -58,13 +59,9 @@ export const calculateTimeToRead = (mdNode, html, calcTimeToRead) => {
   // on average one word consists of 2 characters in both Chinese and Japanese
   const wordCount = _.words(latinChars.join(``)).length + cjChars.length * 0.56
 
-  const timeToReadInMinutes = Math.max(
-    1,
-    Math.round(
-      _.isFunction(calcTimeToRead)
-        ? calcTimeToRead(wordCount, pureText, mdNode.rawMarkdownBody)
-        : wordCount / avgWPM
-    )
-  )
-  return timeToReadInMinutes
+  timeToRead = Math.round(wordCount / avgWPM)
+  if (timeToRead === 0) {
+    timeToRead = 1
+  }
+  return timeToRead
 }

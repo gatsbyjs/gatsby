@@ -15,8 +15,8 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.5.7",
-    "@mdx-js/react": "^1.5.7",
+    "@mdx-js/mdx": "^1.6.1",
+    "@mdx-js/react": "^1.6.1",
     "cross-env": "^7.0.0",
     "del-cli": "^3.0.0",
     "dotenv": "^8.2.0",
