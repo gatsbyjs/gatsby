@@ -40,7 +40,7 @@ const debouncedWriteRedirects = _.debounce(() => {
     !_.isEqual(oldRedirects, store.getState().redirects)
   ) {
     writeRedirects()
-    oldRedirects = store.getState().Redirects
+    oldRedirects = store.getState().redirects
   }
 }, 250)
 
