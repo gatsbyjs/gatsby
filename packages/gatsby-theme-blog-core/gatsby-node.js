@@ -4,6 +4,7 @@ const mkdirp = require(`mkdirp`)
 const Debug = require(`debug`)
 const { createFilePath, createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { urlResolve, createContentDigest } = require(`gatsby-core-utils`)
+const url = require('url');
 
 const debug = Debug(`gatsby-theme-blog-core`)
 const withDefaults = require(`./utils/default-options`)
@@ -105,13 +106,12 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 }
 
 function validURL(str) {
-  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-  return !!pattern.test(str);
+  try {
+    url.parse(str)
+    return true
+  } catch {
+    return false
+  }
 }
 
 // Create fields for post slugs and source
