@@ -13,6 +13,7 @@ const transformFragments = ({
   depth,
   maxDepth,
   parentType,
+  ancestorTypeNames,
 }) =>
   possibleTypes && depth <= maxDepth
     ? possibleTypes
@@ -65,6 +66,7 @@ const transformFragments = ({
               fields: filteredFields,
               parentType: type,
               depth,
+              ancestorTypeNames,
             })
 
             if (!fields || !fields.length) {
@@ -80,6 +82,13 @@ const transformFragments = ({
         .filter(Boolean)
     : null
 
+const countSelfAncestors = ({ typeName, ancestorTypeNames }) =>
+  ancestorTypeNames.length
+    ? ancestorTypeNames.filter(
+        ancestorTypeName => ancestorTypeName === typeName
+      )?.length
+    : 0
+
 function transformField({
   field,
   gatsbyNodesInfo,
@@ -88,6 +97,8 @@ function transformField({
   depth,
   fieldBlacklist,
   fieldAliases,
+  ancestorTypeNames,
+  querySelfAncestorLimit,
 } = {}) {
   // we're potentially infinitely recursing when fields are connected to other types that have fields that are connections to other types
   //  so we need a maximum limit for that
@@ -105,6 +116,17 @@ function transformField({
   const typeSettings = getTypeSettingsByType(field.type)
 
   if (typeSettings.exclude || typeSettings.nodeInterface) {
+    return false
+  }
+
+  // count the number of times this type has appeared as an ancestor of itself
+  // somewhere up the tree
+  const typeName = findTypeName(field.type)
+
+  if (
+    countSelfAncestors({ typeName, ancestorTypeNames }) >=
+    querySelfAncestorLimit
+  ) {
     return false
   }
 
@@ -144,10 +166,9 @@ function transformField({
   }
 
   const isListOfGatsbyNodes =
-    ofType && gatsbyNodesInfo.typeNames.includes(ofType.name)
-  const isListOfMediaItems =
-    (ofType && ofType.name === `MediaItem`) ??
-    (ofType?.ofType && ofType.ofType.name === `MediaItem`)
+    ofType && gatsbyNodesInfo.typeNames.includes(typeName)
+
+  const isListOfMediaItems = ofType && typeName === `MediaItem`
 
   if (fieldType.kind === `LIST` && isListOfGatsbyNodes && !isListOfMediaItems) {
     return {
@@ -168,6 +189,7 @@ function transformField({
       fields: listOfType.fields,
       parentType: listOfType || fieldType,
       depth,
+      ancestorTypeNames,
     })
 
     const transformedFragments = transformFragments({
@@ -177,6 +199,7 @@ function transformField({
       typeMap,
       depth,
       maxDepth,
+      ancestorTypeNames,
     })
 
     if (
@@ -204,8 +227,8 @@ function transformField({
     }
   }
 
-  const isAGatsbyNode = gatsbyNodesInfo.typeNames.includes(fieldType.name)
-  const isAMediaItemNode = isAGatsbyNode && fieldType.name === `MediaItem`
+  const isAGatsbyNode = gatsbyNodesInfo.typeNames.includes(typeName)
+  const isAMediaItemNode = isAGatsbyNode && typeName === `MediaItem`
 
   // pull the id and sourceUrl for connections to media item gatsby nodes
   if (isAMediaItemNode) {
@@ -233,6 +256,7 @@ function transformField({
       parentFieldName: field.name,
       fields,
       depth,
+      ancestorTypeNames,
     })
 
     if (!transformedFields || !transformedFields.length) {
@@ -253,6 +277,7 @@ function transformField({
       fields: typeInfo.fields,
       parentType: fieldType,
       depth,
+      ancestorTypeNames,
     })
 
     const fragments = transformFragments({
@@ -261,6 +286,7 @@ function transformField({
       typeMap,
       depth,
       maxDepth,
+      ancestorTypeNames,
     })
 
     return {
@@ -277,21 +303,36 @@ function transformField({
 const recursivelyTransformFields = ({
   fields,
   parentType,
-  parentFieldName,
+  ancestorTypeNames = [],
   depth = 0,
 }) => {
+  if (!fields || !fields.length) {
+    return null
+  }
+
   const {
     gatsbyApi: { pluginOptions },
     remoteSchema: { fieldBlacklist, fieldAliases, typeMap, gatsbyNodesInfo },
   } = store.getState()
 
   const {
-    schema: { queryDepth },
+    schema: { queryDepth, querySelfAncestorLimit },
   } = pluginOptions
 
   if (depth >= queryDepth) {
     return null
   }
+
+  const typeName = findTypeName(parentType)
+
+  if (
+    countSelfAncestors({ typeName, ancestorTypeNames }) >=
+    querySelfAncestorLimit
+  ) {
+    return null
+  }
+
+  ancestorTypeNames.push(typeName)
 
   const recursivelyTransformedFields = fields
     ?.filter(
@@ -307,6 +348,8 @@ const recursivelyTransformFields = ({
         typeMap,
         field,
         depth,
+        ancestorTypeNames,
+        querySelfAncestorLimit,
       })
 
       if (transformedField) {
@@ -318,7 +361,9 @@ const recursivelyTransformFields = ({
     })
     .filter(Boolean)
 
-  return fields ? recursivelyTransformedFields : null
+  return recursivelyTransformedFields.length
+    ? recursivelyTransformedFields
+    : null
 }
 
 export default recursivelyTransformFields
