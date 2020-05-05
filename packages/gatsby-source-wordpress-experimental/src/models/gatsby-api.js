@@ -25,7 +25,7 @@ const defaultPluginOptions = {
   },
   schema: {
     queryDepth: 15,
-    querySelfAncestorLimit: 2,
+    querySelfAncestorLimit: 3,
     typePrefix: `Wp`,
     timeout: 30 * 1000, // 30 seconds
   },
