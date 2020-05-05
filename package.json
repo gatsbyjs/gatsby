@@ -14,6 +14,7 @@
     "@types/fast-levenshtein": "^0.0.1",
     "@types/fs-extra": "^8.1.0",
     "@types/got": "^9.6.9",
+    "@types/jaeger-client": "^3.15.4",
     "@types/jest": "^24.9.1",
     "@types/joi": "^14.3.4",
     "@types/lodash": "^4.14.149",
