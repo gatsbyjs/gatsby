@@ -31,22 +31,6 @@ export const actionMonitorQuery = gql`
   }
 `
 
-/**
- * Returns a list of post types and some info about
- * their root field names and type names
- */
-export const availablePostTypesQuery = gql`
-  {
-    postTypes {
-      fieldNames {
-        plural
-        singular
-      }
-      typeName
-    }
-  }
-`
-
 export const introspectionQuery = gql`
   {
     __schema {

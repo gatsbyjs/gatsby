@@ -10,7 +10,6 @@ class Schema {
 	 *
 	 */
 	function __construct() {
-		new PostTypes();
 		new SiteMeta();
 	}
 }

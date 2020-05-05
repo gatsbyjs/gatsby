@@ -1,6 +1,3 @@
-import { availablePostTypesQuery } from "~/utils/graphql-queries"
-import fetchGraphql from "~/utils/fetch-graphql"
-
 import recursivelyTransformFields from "./recursively-transform-fields"
 import {
   buildNodesQueryOnFieldName,
@@ -109,19 +106,9 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
   const rootFields = typeMap.get(`RootQuery`).fields
 
-  // @todo This is temporary. We need a list of post types so we
-  // can add field arguments just to post type fields so we can
-  // get a flat list of posts and pages, instead of having them
-  // nested as children
-  // for example we need to do posts(where: { parent: null }) { nodes { ... }}
-  // https://github.com/wp-graphql/wp-graphql/issues/928
-  const {
-    data: { postTypes },
-  } = await fetchGraphql({ query: availablePostTypesQuery })
-
   let nodeQueries = {}
 
-  for (const { type, name } of nodeListRootFields) {
+  for (const { type, name, args } of nodeListRootFields) {
     if (fieldBlacklist.includes(name)) {
       continue
     }
@@ -184,7 +171,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       const queries = settings.nodeListQueries({
         name,
         fields,
-        postTypes,
         selectionSet,
         singleFieldName,
         singleTypeInfo,
@@ -203,11 +189,23 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       }
     }
 
+    const whereArgs = args.find(arg => arg.name === `where`)
+
+    const needsNullParent = whereArgs
+      ? !!whereArgs.type.inputFields.find(
+          inputField => inputField.name === `parent`
+        )
+      : false
+
+    const fieldVariables = needsNullParent
+      ? `where: { parent: null ${settings.where || ``} }`
+      : settings.where || ``
+
     if (!nodeListQueries || !nodeListQueries.length) {
       const nodeListQuery = buildNodesQueryOnFieldName({
         fields: transformedFields,
         fieldName: name,
-        postTypes,
+        fieldVariables,
         settings,
       })
 
