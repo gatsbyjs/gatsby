@@ -10508,3 +10508,12 @@
     - Data
     - Healthcare
   featured: false
+- title: Philip Domingo
+  url: https://www.prtdomingo.com
+  main_url: https://www.prtdomingo.com
+  description: >
+    Personal website built on top of GatsbyJS, Ghost, and Azure.
+  categories:
+    - Technology
+    - Blog
+  featured: false
