@@ -32,7 +32,7 @@ process.on(`unhandledRejection`, (reason, p) => {
 import { createGraphQLRunner } from "./create-graphql-runner"
 const { extractQueries } = require(`../query/query-watcher`)
 const requiresWriter = require(`./requires-writer`)
-const { writeRedirects } = require(`./redirects-writer`)
+import { writeRedirects, startRedirectListener } from "./redirects-writer"
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -69,6 +69,8 @@ module.exports = async (args: BootstrapArgs) => {
   // Start plugin runner which listens to the store
   // and invokes Gatsby API based on actions.
   startPluginRunner()
+
+  startRedirectListener()
 
   const directory = slash(args.directory)
 
