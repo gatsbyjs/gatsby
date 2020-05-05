@@ -1,5 +1,6 @@
-const reporter = require(`gatsby-cli/lib/reporter`)
+import reporter from "gatsby-cli/lib/reporter"
 import { Stats } from "webpack"
+import { IMatch } from "../types"
 
 const stageCodeToReadableLabel = {
   "build-javascript": `Generating JavaScript bundles`,
@@ -11,7 +12,7 @@ type Stage = keyof typeof stageCodeToReadableLabel
 type StageLabel = typeof stageCodeToReadableLabel[Stage]
 
 interface ITransformedWebpackError {
-  id: "98123"
+  id: string
   filePath?: string
   location?: {
     start: string
@@ -19,40 +20,81 @@ interface ITransformedWebpackError {
   context: {
     stage: Stage
     stageLabel: StageLabel
-    message?: string
-    packageName?: string
+    sourceMessage?: string
+    [key: string]: string | boolean | undefined
   }
 }
 const transformWebpackError = (
   stage: keyof typeof stageCodeToReadableLabel,
   webpackError: any
 ): ITransformedWebpackError => {
-  const regex = `Can't resolve \\'(.*?)\\' in \\'(.*?)\\'`
-  const nativeWebpackMessage = webpackError?.error?.message
-  const packageName = nativeWebpackMessage?.match(regex)?.[1]
-
-  return {
-    id: `98123`,
-    filePath: webpackError?.module?.resource,
-    location:
-      webpackError?.module?.resource && webpackError?.error?.loc
-        ? {
-            start: webpackError.error.loc,
-          }
-        : undefined,
-    context: {
-      stage,
-      stageLabel: stageCodeToReadableLabel[stage],
-      message: nativeWebpackMessage || webpackError?.message,
-      packageName,
+  const handlers = [
+    {
+      regex: /Can't resolve '(.*?)' in '(.*?)'/m,
+      cb: (match): IMatch => {
+        return {
+          id: `98124`,
+          context: {
+            sourceMessage: match[0],
+            packageName: match[1],
+          },
+        }
+      },
     },
+  ]
 
-    // We use original error to display stack trace for the most part.
-    // In case of webpack error stack will include internals of webpack
-    // or one of loaders (for example babel-loader) and doesn't provide
-    // much value to user, so it's purposely omitted.
-    // error: webpackError?.error || webpackError,
+  // We use original error to display stack trace for the most part.
+  // In case of webpack error stack will include internals of webpack
+  // or one of loaders (for example babel-loader) and doesn't provide
+  // much value to user, so it's purposely omitted.
+  // error: webpackError?.error || webpackError,
+  const webpackMessage = webpackError?.error?.message || webpackError?.message
+
+  let structured: ITransformedWebpackError | undefined
+
+  for (const { regex, cb } of handlers) {
+    const matched = webpackMessage?.match(regex)
+    if (matched) {
+      const match = cb(matched)
+      structured = {
+        id: match.id,
+        filePath: webpackError?.module?.resource,
+        location:
+          webpackError?.module?.resource && webpackError?.error?.loc
+            ? {
+                start: webpackError.error.loc,
+              }
+            : undefined,
+        context: {
+          sourceMessage: match.context.sourceMessage,
+          packageName: match.context.packageName,
+          stage,
+          stageLabel: stageCodeToReadableLabel[stage],
+        },
+      }
+    }
   }
+
+  // If we haven't found any known error
+  if (!structured) {
+    return {
+      id: `98123`,
+      filePath: webpackError?.module?.resource,
+      location:
+        webpackError?.module?.resource && webpackError?.error?.loc
+          ? {
+              start: webpackError.error.loc,
+            }
+          : undefined,
+      context: {
+        stage,
+        stageLabel: stageCodeToReadableLabel[stage],
+        sourceMessage: webpackMessage,
+      },
+    }
+  }
+
+  return structured
 }
 
 export const structureWebpackErrors = (
