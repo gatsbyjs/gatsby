@@ -7,6 +7,8 @@ import {
 
 import store from "~/store"
 import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
+import gqlPrettier from "graphql-prettier"
+import { formatLogMessage } from "~/utils/format-log-message"
 
 const recursivelyAliasFragments = field =>
   field.fragments.map(fragment => {
@@ -98,7 +100,17 @@ const aliasConflictingFields = ({ transformedFields }) =>
  * @returns {Object} GraphQL query info including gql query strings
  */
 const generateNodeQueriesFromIngestibleFields = async () => {
-  const { remoteSchema } = store.getState()
+  const {
+    remoteSchema,
+    gatsbyApi: {
+      helpers: { reporter },
+      pluginOptions: {
+        debug: {
+          graphql: { copyNodeSourcingQueryAndExit },
+        },
+      },
+    },
+  } = store.getState()
 
   const {
     fieldBlacklist,
@@ -216,6 +228,30 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       nodeListQueries = [nodeListQuery]
     }
 
+    if (
+      process.env.NODE_ENV === `development` &&
+      nodesType.name === copyNodeSourcingQueryAndExit
+    ) {
+      try {
+        reporter.log(``)
+        reporter.warn(
+          formatLogMessage(
+            `Query debug mode. Writing node list query for the ${nodesType.name} node type to the system clipboard and exiting\n\n`
+          )
+        )
+        await clipboardy.write(gqlPrettier(nodeListQueries[0]))
+        process.exit()
+      } catch (e) {
+        reporter.log(``)
+        reporter.warn(
+          formatLogMessage(
+            `Query debug mode failed. There was a failed attempt to copy the query for the ${nodesType.name} node type to your clipboard.\n\n`
+          )
+        )
+        reporter.error(e)
+      }
+    }
+
     // build a query info object containing gql query strings for fetching
     // node lists or single nodes, as well as type info and plugin
     // settings for this type
@@ -230,11 +266,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       previewQuery,
       selectionSet,
       settings,
-    }
-
-    if (name === `posts`) {
-      await clipboardy.write(JSON.stringify(nodeListQueries[0]))
-      // dd(nodeListQueries)
     }
   }
 

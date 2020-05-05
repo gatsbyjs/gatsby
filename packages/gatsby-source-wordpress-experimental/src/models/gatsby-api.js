@@ -13,6 +13,7 @@ const defaultPluginOptions = {
       copyQueryOnError: false,
       panicOnError: false,
       onlyReportCriticalErrors: true,
+      copyNodeSourcingQueryAndExit: false,
     },
   },
   develop: {
