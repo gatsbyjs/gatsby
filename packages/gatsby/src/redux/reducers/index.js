@@ -53,7 +53,7 @@ module.exports = {
   nodesByType: getNodesByTypeReducer(),
   resolvedNodesCache: require(`./resolved-nodes`),
   nodesTouched: require(`./nodes-touched`),
-  lastAction: require(`./last-action`),
+  lastAction: require(`./last-action`).lastAction,
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),
   pages: require(`./pages`),
