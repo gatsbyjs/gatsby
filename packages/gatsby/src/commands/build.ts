@@ -1,20 +1,19 @@
-/* @flow */
+import path from "path"
+import report from "gatsby-cli/lib/reporter"
+import signalExit from "signal-exit"
+import fs from "fs-extra"
+import telemetry from "gatsby-telemetry"
 
-const path = require(`path`)
-const report = require(`gatsby-cli/lib/reporter`)
-const fs = require(`fs-extra`)
 import { buildHTML } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
-const bootstrap = require(`../bootstrap`)
-const apiRunnerNode = require(`../utils/api-runner-node`)
-const GraphQLRunner = require(`../query/graphql-runner`).default
-const { copyStaticDirs } = require(`../utils/get-static-dir`)
+import bootstrap from "../bootstrap"
+import apiRunnerNode from "../utils/api-runner-node"
+import GraphQLRunner from "../query/graphql-runner"
+import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
-const db = require(`../db`)
-const signalExit = require(`signal-exit`)
-const telemetry = require(`gatsby-telemetry`)
-const { store, readState } = require(`../redux`)
-const queryUtil = require(`../query`)
+import db from "../db"
+import { store, readState } from "../redux"
+import queryUtil from "../query"
 import * as appDataUtil from "../utils/app-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
@@ -23,8 +22,10 @@ import {
   showFeedbackRequest,
 } from "../utils/feedback"
 import * as buildUtils from "./build-utils"
-const { boundActionCreators } = require(`../redux/actions`)
+import { boundActionCreators } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
+import { IProgram, Stage } from "./types"
+import { PackageJson } from "../.."
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -35,16 +36,16 @@ if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
   cachedWebpackCompilationHash = webpackCompilationHash
 }
 
-type BuildArgs = {
-  directory: string,
-  sitePackageJson: object,
-  prefixPaths: boolean,
-  noUglify: boolean,
-  profile: boolean,
-  openTracingConfigFile: string,
+interface IBuildArgs extends IProgram {
+  directory: string
+  sitePackageJson: PackageJson
+  prefixPaths: boolean
+  noUglify: boolean
+  profile: boolean
+  openTracingConfigFile: string
 }
 
-module.exports = async function build(program: BuildArgs) {
+module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (program.profile) {
     report.warn(
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
@@ -95,12 +96,14 @@ module.exports = async function build(program: BuildArgs) {
     { parentSpan: buildSpan }
   )
   activity.start()
-  const stats = await buildProductionBundle(program, activity.span).catch(
-    err => {
-      activity.panic(structureWebpackErrors(`build-javascript`, err))
-    }
-  )
-  activity.end()
+  let stats
+  try {
+    stats = await buildProductionBundle(program, activity.span)
+  } catch (err) {
+    activity.panic(structureWebpackErrors(Stage.BuildJavascript, err))
+  } finally {
+    activity.end()
+  }
 
   const workerPool = WorkerPool.create()
 
@@ -154,9 +157,7 @@ module.exports = async function build(program: BuildArgs) {
     })
   }
 
-  require(`../redux/actions`).boundActionCreators.setProgramStatus(
-    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
-  )
+  boundActionCreators.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`)
 
   await db.saveState()
 
@@ -191,7 +192,7 @@ module.exports = async function build(program: BuildArgs) {
   try {
     await buildHTML({
       program,
-      stage: `build-html`,
+      stage: Stage.BuildHTML,
       pagePaths,
       activity,
       workerPool,
@@ -200,6 +201,7 @@ module.exports = async function build(program: BuildArgs) {
     let id = `95313` // TODO: verify error IDs exist
     const context = {
       errorPath: err.context && err.context.path,
+      ref: ``,
     }
 
     const match = err.message.match(
@@ -218,7 +220,7 @@ module.exports = async function build(program: BuildArgs) {
   }
   activity.done()
 
-  let deletedPageKeys = []
+  let deletedPageKeys: string[] = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     activity = report.activityTimer(`Delete previous page data`)
     activity.start()
