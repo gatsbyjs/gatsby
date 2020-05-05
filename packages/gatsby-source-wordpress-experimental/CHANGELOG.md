@@ -2,6 +2,10 @@
 
 ## 0.1.9
 
+### Refactors
+
+- remove reliance on WPGatsby's postTypes field and use inputFields from introspection to determine which node list queries require the temporary `where: { parent: null }` input args to get a flat list of posts/pages
+
 ### Bug Fixes
 
 - Type.exclude was not removing types from inline fragments during node sourcing, that is now fixed.
