@@ -43,12 +43,28 @@ const transformWebpackError = (
     },
   ]
 
-  // We use original error to display stack trace for the most part.
-  // In case of webpack error stack will include internals of webpack
-  // or one of loaders (for example babel-loader) and doesn't provide
-  // much value to user, so it's purposely omitted.
-  // error: webpackError?.error || webpackError,
   const webpackMessage = webpackError?.error?.message || webpackError?.message
+
+  const shared = {
+    filePath: webpackError?.module?.resource,
+    location:
+      webpackError?.module?.resource && webpackError?.error?.loc
+        ? {
+            start: webpackError.error.loc,
+          }
+        : undefined,
+    context: {
+      stage,
+      stageLabel: stageCodeToReadableLabel[stage],
+      sourceMessage: webpackMessage,
+    },
+    // We use original error to display stack trace for the most part.
+    // In case of webpack error stack will include internals of webpack
+    // or one of loaders (for example babel-loader) and doesn't provide
+    // much value to user, so it's purposely omitted.
+
+    // error: webpackError?.error || webpackError,
+  }
 
   let structured: ITransformedWebpackError | undefined
 
@@ -56,20 +72,14 @@ const transformWebpackError = (
     const matched = webpackMessage?.match(regex)
     if (matched) {
       const match = cb(matched)
+
       structured = {
         id: match.id,
-        filePath: webpackError?.module?.resource,
-        location:
-          webpackError?.module?.resource && webpackError?.error?.loc
-            ? {
-                start: webpackError.error.loc,
-              }
-            : undefined,
+        ...shared,
         context: {
-          sourceMessage: match.context.sourceMessage,
+          ...shared.context,
           packageName: match.context.packageName,
-          stage,
-          stageLabel: stageCodeToReadableLabel[stage],
+          sourceMessage: match.context.sourceMessage,
         },
       }
 
@@ -81,18 +91,7 @@ const transformWebpackError = (
   if (!structured) {
     return {
       id: `98123`,
-      filePath: webpackError?.module?.resource,
-      location:
-        webpackError?.module?.resource && webpackError?.error?.loc
-          ? {
-              start: webpackError.error.loc,
-            }
-          : undefined,
-      context: {
-        stage,
-        stageLabel: stageCodeToReadableLabel[stage],
-        sourceMessage: webpackMessage,
-      },
+      ...shared,
     }
   }
 
