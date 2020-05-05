@@ -23,7 +23,7 @@ const defaultPluginOptions = {
     hardCacheMediaFiles: false,
   },
   schema: {
-    queryDepth: 10,
+    queryDepth: 20,
     querySelfAncestorLimit: 5,
     typePrefix: `Wp`,
     timeout: 30 * 1000, // 30 seconds
