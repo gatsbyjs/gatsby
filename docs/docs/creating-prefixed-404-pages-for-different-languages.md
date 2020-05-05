@@ -56,6 +56,25 @@ exports.onCreatePage = async ({ page, actions }) => {
 }
 ```
 
+Another way to achieve the same goal. Using the [`createPages`](/docs/node-apis/#createPages) API in your project's `gatsby-node.js` file to generate 404 pages dynamically and pass `langCode` to `matchPath`.
+
+```javascript:title=gatsby-node.js
+exports.createPages = ({ actions: { createPage } }) => {
+  const page404 = path.resolve("./src/templates/page-404.js");
+
+  ["en", "de"].forEach((langCode) => {
+    createPage({
+      path: `/${langCode}/404/`,
+      matchPath: `/${langCode}/*`,
+      component: page404,
+      context: {
+        langCode,
+      },
+    });
+  });
+};
+```
+
 Now, whenever Gatsby creates a page, it will check if the page is a localized 404 with a path in the format of `/XX/404/`. If this is the case, then it will get the language code, and match all paths starting with this code, apart from other valid paths. This means that whenever you visit a non-existent page on your site, whose path starts with `/en/` or `/de/` (e.g. `/en/this-does-not-exist`), your localized 404 page will be displayed instead.
 
 For best results, you should configure your server to serve these 404 pages in the same manner - i.e. for `/en/<non existent path>`, your server should serve the page `/en/404/`. Otherwise, you'll briefly see the default 404 page until the Gatsby runtime loads. If you're using Netlify, you can use [`gatsby-plugin-netlify`](/packages/gatsby-plugin-netlify/) to do this automatically. Note that you should still create a default 404 page (usually at `src/pages/404.js`) to handle non-prefixed paths, e.g. `https://example.com/this-does-not-exist`.
