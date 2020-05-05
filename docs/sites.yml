@@ -89,14 +89,6 @@
     - Technology
     - App
     - Featured
-- title: GM Capital One
-  description: |
-    Introducing the new online experience for your GM Rewards Credit Card
-  main_url: https://gm.capitalone.com/
-  url: https://gm.capitalone.com/
-  categories:
-    - Featured
-  featured: true
 - title: Theodora Warre
   main_url: https://theodorawarre.eu
   url: https://theodorawarre.eu
@@ -269,14 +261,6 @@
   categories:
     - Marketing
     - Technology
-- title: Hack Club
-  main_url: https://hackclub.com/
-  url: https://hackclub.com/
-  source_url: https://github.com/hackclub/site
-  featured: false
-  categories:
-    - Education
-    - Web Development
 - title: Matthias Jordan Portfolio
   main_url: https://iammatthias.com/
   url: https://iammatthias.com/
@@ -560,21 +544,6 @@
   featured: false
   categories:
     - Marketing
-- title: Fabian Schultz' Portfolio
-  main_url: https://fabianschultz.com/
-  url: https://fabianschultz.com/
-  source_url: https://github.com/fabe/site
-  featured: false
-  description: >-
-    Hello, I’m Fabian — a product designer and developer based in Potsdam,
-    Germany. I’ve been working both as a product designer and frontend developer
-    for over 5 years now. I particularly enjoy working with companies that try
-    to meet broad and unique user needs.
-  categories:
-    - Portfolio
-    - Web Development
-  built_by: Fabian Schultz
-  built_by_url: https://fabianschultz.com/
 - title: CalState House Manager
   description: >
     Home service membership that offers proactive and on-demand maintenance for
@@ -1180,20 +1149,6 @@
     - Education
   built_by: Stephanie Langers (content), Adrian Wenke (development)
   built_by_url: https://twitter.com/AdrianWenke
-- title: Zensum
-  main_url: https://zensum.se/
-  url: https://zensum.se/
-  featured: false
-  description: >-
-    Borrow money quickly and safely through Zensum. We compare Sweden's leading
-    banks and credit institutions. Choose from multiple offers and lower your
-    monthly cost. [Translated from Swedish]
-  categories:
-    - Technology
-    - Finance
-    - Marketing
-  built_by: Bejamas
-  built_by_url: https://bejamas.io/
 - title: StatusHub - Easy to use Hosted Status Page Service
   main_url: https://statushub.com/
   url: https://statushub.com/
@@ -1452,14 +1407,6 @@
   url: https://www.kalixhealth.com/
   categories:
     - Healthcare
-  featured: false
-- title: HyperPlay
-  description: |
-    In Asean's 1st Ever LOL Esports X Music Festival
-  main_url: https://hyperplay.leagueoflegends.com/
-  url: https://hyperplay.leagueoflegends.com/
-  categories:
-    - Music
   featured: false
 - title: Bad Credit Loans
   description: |
@@ -1822,16 +1769,6 @@
     - Gallery
   built_by: Mill3 Studio
   built_by_url: https://mill3.studio/en/
-  featured: false
-- title: Bestvideogame.deals
-  main_url: https://bestvideogame.deals/
-  url: https://bestvideogame.deals/
-  description: |
-    Video game comparison website for the UK, build with GatsbyJS.
-  categories:
-    - E-commerce
-  built_by: Koen Kamphuis
-  built_by_url: https://koenkamphuis.com/
   featured: false
 - title: Mahipat's Portfolio
   main_url: https://mojaave.com/
@@ -2799,16 +2736,6 @@
     - Web Development
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
-- title: BELLHOPS
-  main_url: https://www.getbellhops.com/
-  url: https://www.getbellhops.com/
-  description: >-
-    Whether you’re moving someplace new or just want to complete a few projects around your current home, BellHops can arrange the moving services you need—at simple, straightforward rates.
-  categories:
-    - Business
-  built_by: Bellhops, Inc.
-  built_by_url: https://www.getbellhops.com/
-  featured: false
 - title: Acclimate Consulting
   main_url: https://www.acclimate.io/
   url: https://www.acclimate.io/
@@ -7765,17 +7692,6 @@
   built_by: Musthaq Ahamad
   built_by_url: https://haxzie.com
   featured: false
-- title: GBT
-  url: https://yangmuzi.com/
-  main_url: https://yangmuzi.com/
-  source_url: https://github.com/yangnianbing/blog-by-gatsby
-  description: >
-    It is a basic Gatsby site project
-  categories:
-    - Blog
-    - Portfolio
-  built_by: yangnianbing
-  featured: false
 - title: Robin Wieruch's Blog
   url: https://www.robinwieruch.de/
   main_url: https://www.robinwieruch.de/
@@ -7900,16 +7816,6 @@
   built_by: The Couch
   built_by_url: https://thecouch.nyc
   featured: false
-- title: Bululu Eventos
-  url: https://bululueventos.cl/
-  main_url: https://bululueventos.cl/
-  source_url: https://github.com/enBonnet/bululu-front
-  description: >
-    Sitio de organizadores de eventos
-  categories:
-    - Marketing
-  built_by: Ender Bonnet
-  built_by_url: https://enbonnet.me/
 - title: MyPrograming Steps
   main_url: https://mysteps.netlify.com/
   url: https://mysteps.netlify.com/
@@ -8928,18 +8834,6 @@
   categories:
     - Blog
     - Web Development
-- title: Engleezi
-  main_url: https://www.myengleezi.com
-  url: https://myengleezi.com/teachers/
-  description: >-
-    Affordable, accessible and fun, Engleezi is an English tutoring service that aims to make your child a better and more fluent English speaker. Our unique online approach gets your children learning English one-on-one from a native English teacher from the comfort of your home.
-  built_by: Suleiman Mayow
-  built_by_url: https://github.com/sullom101
-  featured: false
-  categories:
-    - Education
-    - Learning
-    - Technology
 - title: The Rebigulator
   main_url: https://www.rebigulator.org/
   source_url: https://github.com/Me4502/Rebigulator/
@@ -9061,8 +8955,8 @@
   built_by: Shayan Javadi
   built_by_url: https://www.instagram.com/shawnjavadi/
 - title: a+ Saúde
-  url: https://www.amaissaude.com.br/
-  main_url: https://www.amaissaude.com.br/
+  url: https://www.amaissaude.com.br/sp/
+  main_url: https://www.amaissaude.com.br/sp/
   description: >
     An even better experience in using health services.
   categories:
@@ -9121,17 +9015,6 @@
     - Technology
   built_by: Max Dietrich
   built_by_url: https://www.gis-netzwerk.com/
-  featured: false
-- title: Hand in Hand Preschool
-  url: https://handinhand-preschool.com/
-  main_url: https://handinhand-preschool.com/
-  description: >
-    Hand in Hand Preschool is a preschool located in Geneva, IL.
-  categories:
-    - Education
-    - Business
-  built_by: ccalamos
-  built_by_url: https://github.com/ccalamos
   featured: false
 - title: Krishna Gopinath
   main_url: https://krishnagopinath.me
@@ -10426,7 +10309,40 @@
     - Technology
   built_by: SofaScore
   built_by_url: https://www.sofascore.com
+- title: "#compraaospequenos: buy local during Covid-19"
+  url: https://compraaospequenos.pt/
+  main_url: https://compraaospequenos.pt/
+  source_url: https://github.com/marzeelabs/compraaospequenos
+  description: >
+    Helping local stores survive and thrive during the Covid-19 crisis (Portugal).
+  categories:
+    - Community
+    - Food
+    - Data
+    - Directory
+  built_by: Marzee Labs
+  built_by_url: https://marzeelabs.org
   featured: false
+- title: Inventia
+  main_url: https://inventia.life/
+  url: https://inventia.life/
+  description: >
+    We have developed unique digital bioprinting technology and unleashed it in a complete platform designed to make complex 3D cell biology simple.
+  categories:
+    - Business
+    - Science
+  built_by: Jellypepper
+  built_by_url: https://jellypepper.com/
+- title: Futrli
+  main_url: https://www.futrli.com/
+  url: https://www.futrli.com/
+  description: >
+    Keep and find more cash. Grow your business. Futrli is your artificial intelligence small business accountant.
+  categories:
+    - Business
+    - Finance
+  built_by: Jellypepper
+  built_by_url: https://jellypepper.com/
 - title: Hasura
   url: https://hasura.io
   main_url: https://hasura.io
@@ -10472,6 +10388,20 @@
   built_by: Amruth Pillai
   built_by_url: https://amruthpillai.com
   featured: false
+- title: Landmarks.ro
+  main_url: https://landmarks.ro/
+  url: https://landmarks.ro/
+  description: >
+    Lead generation technology for real estate developers
+  categories:
+    - Real Estate
+    - Marketing
+    - Technology
+    - Web Development
+    - Landing Page
+  built_by: Horia Miron
+  built_by_url: https://github.com/ancashoria
+  featured: false
 - title: GeneOS
   url: https://geneos.me/
   main_url: https://geneos.me/
@@ -10492,3 +10422,98 @@
     - Healthcare
   built_by: Albert Chen
   built_by_url: https://github.com/mralbertchen
+- title: theAnubhav.com
+  main_url: https://theanubhav.com/
+  url: https://theanubhav.com/
+  categories:
+    - Web Development
+    - Blog
+    - Portfolio
+  built_by: Anubhav Srivastava
+  built_by_url: https://theanubhav.com
+- title: WatchKeeper
+  url: https://www.watchkeeperintl.com
+  main_url: https://www.watchkeeperintl.com
+  description: >
+    WatchKeeper helps organisations to manage global security risks such as natural disasters, extreme weather and violent incidents.
+  categories:
+    - Data
+    - Business
+    - Technology
+    - Consulting
+    - Security
+  built_by: WatchKeeper Engineering
+  built_by_url: https://twitter.com/watchkeeper
+  featured: false
+- title: Sztuka Programowania
+  built_by: Piotr Fedorczyk
+  built_by_url: https://piotrf.pl
+  categories:
+    - Event
+    - Learning
+    - Web Development
+  description: >
+    Landing page of a series of web development workshops held in Gdańsk, Poland.
+  featured: false
+  main_url: https://sztuka-programowania.pl/
+  url: https://sztuka-programowania.pl/
+- title: Mishal Shah
+  built_by: Mishal Shah
+  built_by_url: https://mishal23.github.io
+  categories:
+    - Blog
+    - Portfolio
+    - Open Source
+    - Web Development
+  description: >
+    Hey, I'm Mishal Shah, a passionate developer with interests in Networks, 
+    Databases and Web Security. This website is my personal portfolio and blog 
+    with the Fresh theme. I love reading engineering articles, contributing to 
+    open-source and interacting with communities. Feel free to get in touch if 
+    you have an interesting project that you want to collaborate on.
+  featured: false
+  main_url: https://mishal23.github.io/
+  url: https://mishal23.github.io/
+- title: Resistbot
+  url: https://resist.bot
+  main_url: https://resist.bot
+  description: >
+    A chatbot that helps you contact your representatives, and be an informed citizen.
+  categories:
+    - Blog
+    - Government
+    - Nonprofit
+- title: SVG to PNG
+  url: https://www.svgtopng.me/
+  main_url: https://www.svgtopng.me/
+  description: >
+    Online SVG to PNG batch converter. Upload and convert your SVG files to PNG with the desired size and background color for free, fast and secure.
+  categories:
+    - App
+    - Technology
+    - Productivity
+    - Design
+    - Web Development
+  built_by: Illia Achour
+  built_by_url: https://github.com/dummyco
+- title: St. Jude Cloud
+  url: https://www.stjude.cloud
+  main_url: https://www.stjude.cloud
+  description: >
+    Pediatric cancer data sharing ecosystem by St. Jude Children's Research Hospital.
+  categories:
+    - Science
+    - Technology
+    - Nonprofit
+    - Data
+    - Healthcare
+  featured: false
+- title: Philip Domingo
+  url: https://www.prtdomingo.com
+  main_url: https://www.prtdomingo.com
+  description: >
+    Personal website built on top of GatsbyJS, Ghost, and Azure.
+  categories:
+    - Technology
+    - Blog
+  featured: false

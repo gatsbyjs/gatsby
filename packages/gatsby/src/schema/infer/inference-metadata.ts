@@ -352,8 +352,8 @@ const updateValueDescriptor = (
 }
 
 const mergeObjectKeys = (
-  dpropsKeysA: ITypeInfoObject["dprops"] = {},
-  dpropsKeysB: ITypeInfoObject["dprops"] = {}
+  dpropsKeysA: object = {},
+  dpropsKeysB: object = {}
 ): string[] => {
   const dprops = Object.keys(dpropsKeysA)
   const otherProps = Object.keys(dpropsKeysB)
@@ -386,12 +386,29 @@ const descriptorsAreEqual = (
           )
         )
       }
-      case `relatedNode`:
+      case `relatedNode`: {
+        const nodeIds = mergeObjectKeys(
+          descriptor?.relatedNode?.nodes,
+          otherDescriptor?.relatedNode?.nodes
+        )
+        // Must be present in both descriptors or absent in both
+        // in order to be considered equal
+        return nodeIds.every(
+          id =>
+            Boolean(descriptor?.relatedNode?.nodes[id]) ===
+            Boolean(otherDescriptor?.relatedNode?.nodes[id])
+        )
+      }
       case `relatedNodeList`: {
-        // eslint-disable-next-line
-        // @ts-ignore
-        // FIXME See comment: https://github.com/gatsbyjs/gatsby/pull/23264#discussion_r410908538
-        return isEqual(descriptor?.nodes, otherDescriptor?.nodes)
+        const nodeIds = mergeObjectKeys(
+          descriptor?.relatedNodeList?.nodes,
+          otherDescriptor?.relatedNodeList?.nodes
+        )
+        return nodeIds.every(
+          id =>
+            Boolean(descriptor?.relatedNodeList?.nodes[id]) ===
+            Boolean(otherDescriptor?.relatedNodeList?.nodes[id])
+        )
       }
       default:
         return true
