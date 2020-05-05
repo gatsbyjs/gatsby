@@ -1,8 +1,8 @@
 ---
-title: "Faster, Easier and Also in French: Butter CMS is the power behind Car Loans Canada"
+title: "Faster, Easier and Also in French: Butter CMS + Gatsby drives Car Loans Canada"
 author: Jake Lumetta
 date: 2020-05-05
-excerpt: "CarLoansCanada.com’s growing marketplace team wanted to make their content marketing leaner and meaner. They tuned up their performance with a new website built on Gatsby paired with supremely easy content management from headless ButterCMS."
+excerpt: "CarLoansCanada.com’s growing marketplace team needed to make their content marketing leaner and meaner. They tuned up their performance with a new website built on Gatsby paired with supremely easy content management from headless ButterCMS."
 tags:
   - case-studies
   - performance
@@ -42,7 +42,7 @@ While they initially intended to use Butter only for content management for thei
 
 In addition, the team could address special content needs. For example, the team has a different page for every city in Ontario (more than thirty cities, at least). Using Butter, Josh created a collection, all the content for those pages, and iterates them through Gatsby to create a new page for every single collection item.
 
-> Pretty much everything that I can put in Butter, I will. Anything touched by any kind of content creator, I just put that on Butter so they can edit it and then just create a front viewport in my web stack. It’s working out very well.
+> _Pretty much everything that I can put in Butter, I will. Anything touched by any kind of content creator, I just put that on Butter so they can edit it and then just create a front viewport in my web stack. It’s working out very well._
 
 Today, content on the Canada Car Loans website loads significantly faster than it did before moving to Gatsby and ButterCMS. And it’s not just optimization: the content itself has been upgraded, including structure and visuals, to create better and richer content experiences. All of which could be done fearlessly thanks to Gatsby’s best-practice front end development patterns like route-based code splitting, PRPL, service workers, and offline support with dynamic data integrations.
 
