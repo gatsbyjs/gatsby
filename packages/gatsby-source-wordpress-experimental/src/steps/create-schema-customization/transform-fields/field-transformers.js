@@ -44,7 +44,7 @@ export const fieldTransformers = [
       field.type.ofType.kind === `LIST` &&
       field.type.ofType?.ofType?.kind === `NON_NULL`,
 
-    transform: ({ field }) => {
+    transform: ({ field, fieldName }) => {
       const originalTypeName = findTypeName(field.type)
       const typeKind = findTypeKind(field.type)
 
@@ -56,11 +56,17 @@ export const fieldTransformers = [
       return {
         type: `[${normalizedType}!]!`,
         resolve: source => {
-          if (!source || !source.length) {
-            return []
+          const resolvedField = source[fieldName]
+
+          if (typeof resolvedField !== `undefined`) {
+            return resolvedField ?? []
           }
 
-          return source
+          const autoAliasedFieldPropertyName = `${fieldName}__typename_${field?.type?.name}`
+
+          const aliasedField = source[autoAliasedFieldPropertyName]
+
+          return aliasedField ?? []
         },
       }
     },
