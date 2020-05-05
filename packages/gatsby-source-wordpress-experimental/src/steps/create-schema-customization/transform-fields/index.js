@@ -146,13 +146,7 @@ export const transformFields = ({
           resolve: source => {
             const resolvedField = source[fieldName]
 
-            if (
-              resolvedField ||
-              // account for falsy values
-              resolvedField === false ||
-              resolvedField === `` ||
-              resolvedField === 0
-            ) {
+            if (typeof resolvedField !== `undefined`) {
               return resolvedField
             }
 
