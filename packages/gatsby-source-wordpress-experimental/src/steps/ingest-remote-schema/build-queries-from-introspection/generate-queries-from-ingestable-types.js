@@ -164,6 +164,18 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       settings,
     })
 
+    const whereArgs = args.find(arg => arg.name === `where`)
+
+    const needsNullParent = whereArgs
+      ? !!whereArgs.type.inputFields.find(
+          inputField => inputField.name === `parent`
+        )
+      : false
+
+    const fieldVariables = needsNullParent
+      ? `where: { parent: null ${settings.where || ``} }`
+      : settings.where || ``
+
     if (
       settings.nodeListQueries &&
       typeof settings.nodeListQueries === `function`
@@ -176,6 +188,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
         singleTypeInfo,
         settings,
         store,
+        fieldVariables,
         remoteSchema,
         transformedFields,
         helpers: {
@@ -188,18 +201,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
         nodeListQueries = queries
       }
     }
-
-    const whereArgs = args.find(arg => arg.name === `where`)
-
-    const needsNullParent = whereArgs
-      ? !!whereArgs.type.inputFields.find(
-          inputField => inputField.name === `parent`
-        )
-      : false
-
-    const fieldVariables = needsNullParent
-      ? `where: { parent: null ${settings.where || ``} }`
-      : settings.where || ``
 
     if (!nodeListQueries || !nodeListQueries.length) {
       const nodeListQuery = buildNodesQueryOnFieldName({
