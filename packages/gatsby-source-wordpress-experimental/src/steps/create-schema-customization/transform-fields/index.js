@@ -140,7 +140,7 @@ export const transformFields = ({
         // and check for aliased fields
         // fields are aliased automatically if they have conflicting types
         // with other fields of the same name when placed in side-by-side
-        // fragments on the same union or interface type.
+        // inlineFragments on the same union or interface type.
         transformedField = {
           type: transformedField,
           resolve: source => {

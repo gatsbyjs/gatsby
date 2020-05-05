@@ -34,11 +34,11 @@ const buildFragment = ({ name, fields }) => `
   }
 `
 
-const buildFragments = fragments =>
-  fragments
+const buildFragments = inlineFragments =>
+  inlineFragments
     ? `
       __typename
-      ${fragments.map(buildFragment).join(` `)}
+      ${inlineFragments.map(buildFragment).join(` `)}
     `
     : ``
 
@@ -53,7 +53,7 @@ export const buildSelectionSet = fields => {
         return field
       }
 
-      let { fieldName, variables, fields, fragments } = field
+      let { fieldName, variables, fields, inlineFragments } = field
 
       // @todo instead of checking for a nodes field, include the field type here
       // and check for input args instead. Maybe some kind of input args API or something would be helpful
@@ -65,13 +65,13 @@ export const buildSelectionSet = fields => {
       }
 
       const selectionSet = buildSelectionSet(fields)
-      const inlineFragments = buildFragments(fragments)
+      const builtInlineFragments = buildFragments(inlineFragments)
 
-      if (fieldName && (inlineFragments !== `` || selectionSet !== ``)) {
+      if (fieldName && (builtInlineFragments !== `` || selectionSet !== ``)) {
         return `
           ${fieldName} ${buildVariables(variables)} {
             ${selectionSet}
-            ${inlineFragments}
+            ${builtInlineFragments}
           }
         `
       } else if (fieldName) {

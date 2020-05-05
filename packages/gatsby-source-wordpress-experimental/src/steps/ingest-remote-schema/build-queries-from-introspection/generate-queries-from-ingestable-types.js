@@ -11,8 +11,8 @@ import gqlPrettier from "graphql-prettier"
 import { formatLogMessage } from "~/utils/format-log-message"
 
 const recursivelyAliasFragments = field =>
-  field.fragments.map(fragment => {
-    // for each of this fragments fields
+  field.inlineFragments.map(fragment => {
+    // for each of this inlineFragments fields
     fragment.fields = fragment.fields.map(fragmentField => {
       if (typeof fragmentField === `string`) {
         return fragmentField
@@ -21,7 +21,7 @@ const recursivelyAliasFragments = field =>
       // compare it against each field of each other fragment
       let updatedFragmentField = fragmentField
 
-      field.fragments.forEach(possiblyConflictingFragment => {
+      field.inlineFragments.forEach(possiblyConflictingFragment => {
         // don't compare this fragment against itself
         if (possiblyConflictingFragment.name === fragment.name) {
           return
@@ -59,8 +59,8 @@ const recursivelyAliasFragments = field =>
       // if the fields have the same name but a different type AND the field has sub fields, compare those sub fields against any fragment fields subfields where the field name matches
       // if any subfields have conflicting types, alias them
 
-      if (updatedFragmentField.fragments) {
-        updatedFragmentField.fragments = recursivelyAliasFragments(
+      if (updatedFragmentField.inlineFragments) {
+        updatedFragmentField.inlineFragments = recursivelyAliasFragments(
           updatedFragmentField
         )
       }
@@ -73,13 +73,13 @@ const recursivelyAliasFragments = field =>
 
 const aliasConflictingFields = ({ transformedFields }) =>
   transformedFields.map(field => {
-    // we only have conflicting fields in fragments
-    // if there are no fragments, do nothing
-    if (!field.fragments) {
+    // we only have conflicting fields in inlineFragments
+    // if there are no inlineFragments, do nothing
+    if (!field.inlineFragments) {
       return field
     }
 
-    field.fragments = recursivelyAliasFragments(field)
+    field.inlineFragments = recursivelyAliasFragments(field)
 
     if (field.fields) {
       field.fields = aliasConflictingFields({
@@ -163,7 +163,9 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       parentType: type,
     })
 
-    const selectionSet = buildSelectionSet(aliasedTransformedFields)
+    const selectionSet = buildSelectionSet(aliasedTransformedFields, {
+      fieldPath: name,
+    })
 
     const nodeQuery = buildNodeQueryOnFieldName({
       fields: transformedFields,

@@ -6,7 +6,7 @@ import {
 import { fieldIsExcludedOnParentType } from "~/steps/ingest-remote-schema/is-excluded"
 import { returnAliasedFieldName } from "~/steps/create-schema-customization/transform-fields"
 
-const transformFragments = ({
+const transformInlineFragments = ({
   possibleTypes,
   gatsbyNodesInfo,
   typeMap,
@@ -197,7 +197,7 @@ function transformField({
       ancestorTypeNames,
     })
 
-    const transformedFragments = transformFragments({
+    const transformedInlineFragments = transformInlineFragments({
       possibleTypes: listOfType.possibleTypes,
       parentType: listOfType || fieldType,
       parentField: field,
@@ -210,25 +210,25 @@ function transformField({
 
     if (
       !transformedFields &&
-      transformedFragments &&
-      !transformedFragments.length
+      transformedInlineFragments &&
+      !transformedInlineFragments.length
     ) {
       return false
     }
 
     if (
-      !transformedFragments &&
+      !transformedInlineFragments &&
       transformedFields &&
       !transformedFields.length
     ) {
       return false
     }
 
-    // if we have either fragments or fields
+    // if we have either inlineFragments or fields
     return {
       fieldName: fieldName,
       fields: transformedFields,
-      fragments: transformedFragments,
+      inlineFragments: transformedInlineFragments,
       fieldType,
     }
   }
@@ -256,10 +256,10 @@ function transformField({
 
   const { fields } = typeInfo || {}
 
-  let transformedFragments
+  let transformedInlineFragments
 
   if (typeInfo.possibleTypes) {
-    transformedFragments = transformFragments({
+    transformedInlineFragments = transformInlineFragments({
       possibleTypes: typeInfo.possibleTypes,
       parentType: typeInfo,
       parentField: field,
@@ -271,7 +271,7 @@ function transformField({
     })
   }
 
-  if (fields || transformedFragments) {
+  if (fields || transformedInlineFragments) {
     const transformedFields = recursivelyTransformFields({
       parentType: typeInfo,
       parentFieldName: field.name,
@@ -281,14 +281,14 @@ function transformField({
       parentField: field,
     })
 
-    if (!transformedFields?.length && !transformedFragments?.length) {
+    if (!transformedFields?.length && !transformedInlineFragments?.length) {
       return false
     }
 
     return {
       fieldName: fieldName,
       fields: transformedFields,
-      fragments: transformedFragments,
+      inlineFragments: transformedInlineFragments,
       fieldType,
     }
   }
@@ -303,7 +303,7 @@ function transformField({
       ancestorTypeNames,
     })
 
-    const fragments = transformFragments({
+    const inlineFragments = transformInlineFragments({
       possibleTypes: typeInfo.possibleTypes,
       gatsbyNodesInfo,
       typeMap,
@@ -316,7 +316,7 @@ function transformField({
     return {
       fieldName: fieldName,
       fields: transformedFields,
-      fragments,
+      inlineFragments,
       fieldType,
     }
   }
