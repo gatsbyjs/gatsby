@@ -240,6 +240,7 @@ export type ActionsUnion =
   | IReplaceWebpackConfigAction
   | ISetPluginStatusAction
   | ISetProgramStatusAction
+  | ISetSchemaAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
   | IUpdatePluginsHashAction
@@ -446,6 +447,11 @@ export interface IReplaceWebpackConfigAction {
 export interface ISetWebpackConfigAction {
   type: `SET_WEBPACK_CONFIG`
   payload: Partial<IGatsbyState["webpack"]>
+}
+
+export interface ISetSchemaAction {
+  type: `SET_SCHEMA`
+  payload: IGatsbyState["schema"]
 }
 
 export interface ISetSiteConfig {
