@@ -6,6 +6,10 @@
 
 - Type.exclude was not removing types from inline fragments during node sourcing, that is now fixed.
 
+### New Features
+
+- exclude editLock and revisionOf fields by default as these fields require authentication.
+
 ## 0.1.8
 
 ### New Features
