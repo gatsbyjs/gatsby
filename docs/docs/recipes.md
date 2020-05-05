@@ -31,7 +31,7 @@ See [docs templates](/docs/docs-templates/) in the contributing docs for more he
 
 ## New automated recipes available!
 
-Some recipes are now available in a more automated form - you can run some steps of the recipes through the CLI! [See a list of these automated recipes here](/docs/automated-recipes.md).
+You may have found this page when searching for the new automated Gatsby recipes! Note that they are experimental. [See a list of these automated recipes here](/docs/automated-recipes.md).
 
 ## What are recipes?
 
