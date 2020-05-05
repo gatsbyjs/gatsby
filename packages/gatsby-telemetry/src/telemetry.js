@@ -7,7 +7,7 @@ const { join, sep } = require(`path`)
 const isDocker = require(`is-docker`)
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 const lodash = require(`lodash`)
-const { getRepositoryId: _getRepositoryId } = require(`./repository-id`)
+import { getRepositoryId as _getRepositoryId } from "./repository-id"
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()

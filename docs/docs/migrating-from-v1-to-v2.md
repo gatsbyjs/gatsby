@@ -151,12 +151,14 @@ In v1, the `children` prop passed to layout was a function (render prop) and nee
 ```diff
 import React from "react"
 
-export default function Layout({ children }) (
-  <div>
+export default function Layout({ children }) {
+  return (
+    <div>
 -    {children()}
 +    {children}
-  </div>
-)
+    </div>
+  );
+}
 ```
 
 #### 2. Move `layouts/index.js` to `src/components/layout.js` (optional, but recommended)
@@ -173,11 +175,13 @@ Adhering to the normal React composition model, import your layout component and
 import React from "react"
 import Layout from "../components/layout"
 
-export default function Home() (
-  <Layout>
-    <div>Hello World</div>
-  </Layout>
-)
+export default function Home() {
+  return (
+    <Layout>
+      <div>Hello World</div>
+    </Layout>
+  )
+}
 ```
 
 Repeat for every page and template that needs this layout.
@@ -189,12 +193,14 @@ In v1, the layout component had access to `history`, `location`, and `match` pro
 ```jsx:title=src/components/layout.js
 import React from "react"
 
-export default function Layout({ children, location }) (
-  <div>
-    <p>Path is {location.pathname}</p>
-    {children}
-  </div>
-)
+export default function Layout({ children, location }) {
+  return (
+    <div>
+      <p>Path is {location.pathname}</p>
+      {children}
+    </div>
+  )
+}
 ```
 
 ```jsx:title=src/pages/index.js
@@ -221,14 +227,16 @@ import React, { Fragment } from "react"
 import { Helmet } from "react-helmet"
 + import { StaticQuery, graphql } from "gatsby"
 
-- export default function Layout({ children, data }) (
--   <>
--     <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
--     <div>
--       {children()}
--     </div>
--   </>
-- )
+- export default function Layout({ children, data }) {
+-   return (
+-     <>
+-       <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
+-       <div>
+-         {children()}
+-       </div>
+-     </>
+-   );
+- }
 -
 - export const query = graphql`
 -   query LayoutQuery {
@@ -239,27 +247,29 @@ import { Helmet } from "react-helmet"
 -     }
 -   }
 - `
-+ export default function Layout({ children }) (
-+   <StaticQuery
-+     query={graphql`
-+       query LayoutQuery {
-+         site {
-+           siteMetadata {
-+             title
++ export default function Layout({ children }) {
++   return (
++     <StaticQuery
++       query={graphql`
++         query LayoutQuery {
++           site {
++             siteMetadata {
++               title
++             }
 +           }
 +         }
-+       }
-+     `}
-+     render={data => (
-+       <>
-+         <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
-+         <div>
-+           {children}
-+         </div>
-+       </>
-+     )}
-+   />
-+ )
++       `}
++       render={data => (
++         <>
++           <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
++           <div>
++             {children}
++           </div>
++         </>
++       )}
++     />
++   );
++ }
 ```
 
 ### Change `navigateTo` to `navigate`
@@ -487,13 +497,15 @@ A basic example of the `<Router>` component:
 import React from "react"
 import { Router } from "@reach/router"
 
-export default function Routes() (
-  <Router>
-    <div path="/">I am the home!</div>
-    <div path="/about">Here's a bit about me</div>
-    <div path="/store">Buy my t-shirts!</div>
-  </Router>
-)
+export default function Routes() {
+  return (
+    <Router>
+      <div path="/">I am the home!</div>
+      <div path="/about">Here's a bit about me</div>
+      <div path="/store">Buy my t-shirts!</div>
+    </Router>
+  )
+}
 ```
 
 Here's a more complex example of migrating a `<PrivateRoute>` component (used
@@ -505,19 +517,21 @@ in store.gatsbyjs.org) from React Router to @reach/router.
 +import { Router, navigate } from '@reach/router';
  import { isAuthenticated } from '../../utils/auth';
 
--export default function PrivateRoute({ component: Component, ...rest }) (
--  <Route
--    {...rest}
--    render={props =>
--      !isAuthenticated() ? (
--        // If we’re not logged in, redirect to the home page.
--        <Redirect to={{ pathname: '/login' }} />
--      ) : (
--        <Component {...props} />
--      )
--    }
--  />
--);
+-export default function PrivateRoute({ component: Component, ...rest }) {
+-  return (
+-    <Route
+-      {...rest}
+-      render={props =>
+-        !isAuthenticated() ? (
+-          // If we’re not logged in, redirect to the home page.
+-          <Redirect to={{ pathname: '/login' }} />
+-        ) : (
+-          <Component {...props} />
+-        )
+-      }
+-    />
+-  );
+-}
 +export default function PrivateRoute({ component: Component, ...rest }) {
 +  if (!isAuthenticated() && window.location.pathname !== `/login`) {
 +    // If we’re not logged in, redirect to the home page.
@@ -806,9 +820,11 @@ The `graphql` tag function that Gatsby v1 auto-supports is deprecated in v2. Gat
 import React from "react"
 + import { graphql } from "gatsby"
 
-export default function Home({ data }) (
-  <h1>{data.site.siteMetadata.title}</h1>
-)
+export default function Home({ data }) {
+  return (
+    <h1>{data.site.siteMetadata.title}</h1>
+  );
+}
 
 export const query = graphql`
   query HomeQuery {

@@ -1,0 +1,46 @@
+{
+  "name": "gatsby-theme-ui-preset",
+  "version": "0.0.1",
+  "description": "A Gatsby theme for theme-ui styles",
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "gatsby-theme",
+    "gatsby-plugin",
+    "react"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-theme-ui-preset"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-ui-preset#readme",
+  "dependencies": {
+    "@emotion/core": "^10.0.28",
+    "@mdx-js/react": "^1.5.7",
+    "@theme-ui/prism": "^0.2.50",
+    "@theme-ui/typography": "^0.2.46",
+    "deepmerge": "^4.2.2",
+    "gatsby-plugin-emotion": "^4.2.1",
+    "gatsby-plugin-theme-ui": "^0.2.53",
+    "theme-ui": "^0.2.52",
+    "typeface-merriweather": "0.0.72",
+    "typeface-montserrat": "0.0.75",
+    "typography-theme-wordpress-2016": "^0.16.19"
+  },
+  "devDependencies": {
+    "gatsby": "^2.20.22",
+    "prettier": "2.0.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.13.13",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "engines": {
+    "node": ">=10.13.0"
+  }
+}

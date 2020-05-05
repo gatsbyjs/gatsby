@@ -15,6 +15,7 @@ import { getBrowsersList } from "../utils/browserslist"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
 import { startPluginRunner } from "../redux/plugin-runner"
 const { store, emitter } = require(`../redux`)
+import { internalActions } from "../redux/actions"
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -154,10 +155,7 @@ module.exports = async (args: BootstrapArgs) => {
     )
   }
 
-  store.dispatch({
-    type: `SET_SITE_CONFIG`,
-    payload: config,
-  })
+  store.dispatch(internalActions.setSiteConfig(config))
 
   activity.end()
 

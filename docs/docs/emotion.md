@@ -96,22 +96,24 @@ const User = props => (
   </UserWrapper>
 )
 
-export default function UsersList() (
-  <Container>
-    <h1 css={underline}>About Emotion</h1>
-    <p>Emotion is uber cool</p>
-    <User
-      username="Jane Doe"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-    <User
-      username="Bob Smith"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-      excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-  </Container>
-)
+export default function UsersList() {
+  return (
+    <Container>
+      <h1 css={underline}>About Emotion</h1>
+      <p>Emotion is uber cool</p>
+      <User
+        username="Jane Doe"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+        excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      />
+      <User
+        username="Bob Smith"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+        excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      />
+    </Container>
+  )
+}
 ```
 
 ## Adding global styles in Gatsby with Emotion
@@ -144,19 +146,21 @@ const Wrapper = styled("div")`
   padding: 10px;
 `
 
-export default function Layout({ children }) (
-  <Wrapper>
-    <Global
-      styles={css`
-        div {
-          background: red;
-          color: white;
-        }
-      `}
-    />
-    {children}
-  </Wrapper>
-)
+export default function Layout({ children }) {
+  return (
+    <Wrapper>
+      <Global
+        styles={css`
+          div {
+            background: red;
+            color: white;
+          }
+        `}
+      />
+      {children}
+    </Wrapper>
+  )
+}
 ```
 
 Then, update `src/pages/index.js` to use the layout:

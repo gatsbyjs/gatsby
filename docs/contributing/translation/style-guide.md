@@ -49,9 +49,9 @@ Leave text in code blocks untranslated except for comments. You may optionally t
 ```jsx
 // Ejemplo
 import React from "react"
-export default function HelloGatsby() (
-  <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
-)
+export default function HelloGatsby() {
+  return <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
+}
 ```
 
 ✅ ALSO OKAY:
@@ -59,9 +59,9 @@ export default function HelloGatsby() (
 ```jsx
 // Ejemplo
 import React from "react"
-export default function HelloGatsby() (
-  <div style={{ color: `purple`, fontSize: `72px` }}>¡Hola Gatsby!</div>
-)
+export default function HelloGatsby() {
+  return <div style={{ color: `purple`, fontSize: `72px` }}>¡Hola Gatsby!</div>
+}
 ```
 
 ❌ DON'T:
@@ -69,19 +69,23 @@ export default function HelloGatsby() (
 ```jsx
 // Ejemplo
 import React from "react"
-export default HelloGatsby()(
-  // 'purple' is a CSS keyword
-  <div style={{ color: `morado`, fontSize: `72px` }}>¡Hola Gatsby!</div>
-)
+export default function HelloGatsby() {
+  return (
+    // 'purple' is a CSS keyword
+    <div style={{ color: `morado`, fontSize: `72px` }}>¡Hola Gatsby!</div>
+  )
+}
 ```
 
 ❌ DEFINITELY DON'T:
 
 ```jsx
 importar Reaccionar desde "reaccionar"
-exportar defecto funcion HelloGatsby() (
-   <div estilo = {{color: `morado`, fontSize:` 72px`}}> ¡Hola Gatsby! </div>
-)
+exportar defecto funcion HelloGatsby() {
+  retornar (
+     <div estilo = {{color: `morado`, fontSize:` 72px`}}> ¡Hola Gatsby! </div>
+  );
+}
 ```
 
 ### Internal links
