@@ -19,7 +19,7 @@ class ContributorPageTemplate extends React.Component {
     )
 
     return (
-      <main>
+      <main id={`reach-skip-nav`}>
         <PageMetadata
           title={`${contributor.id} - Contributor`}
           description={contributor.bio}

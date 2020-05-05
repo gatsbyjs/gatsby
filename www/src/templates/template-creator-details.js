@@ -90,7 +90,8 @@ class CreatorTemplate extends Component {
               alignItems: `flex-start`,
             },
           }}
-        >
+          id={`reach-skip-nav`}
+          >
           <div
             sx={{
               m: 6,

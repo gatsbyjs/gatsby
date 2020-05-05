@@ -46,19 +46,21 @@ class EcosystemPage extends Component {
     const boardIcons = { plugins: PluginsIcon, starters: StartersIcon }
 
     return (
-      <Layout
-        location={location}
-        pageTitle={pageTitle}
-        pageIcon={EcosystemIcon}
-      >
-        <PageMetadata title="Ecosystem" />
-        <EcosystemBoard
-          icons={boardIcons}
-          starters={starters}
-          plugins={plugins}
-        />
-        <FooterLinks />
-      </Layout>
+       <main id={`reach-skip-nav`}>
+        <Layout
+          location={location}
+          pageTitle={pageTitle}
+          pageIcon={EcosystemIcon}
+        >
+          <PageMetadata title="Ecosystem" />
+          <EcosystemBoard
+            icons={boardIcons}
+            starters={starters}
+            plugins={plugins}
+          />
+          <FooterLinks />
+        </Layout>
+      </main>
     )
   }
 }

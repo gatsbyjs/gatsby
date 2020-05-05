@@ -35,7 +35,7 @@ class FeatureComparison extends Component {
       <PageWithSidebar location={location}>
         <PageMetadata title={titleString} />
         <Container>
-          <main>
+          <main id={`reach-skip-nav`}>
             <Breadcrumb location={location} />
             <h1>{titleString}</h1>
             {options.map(o => (

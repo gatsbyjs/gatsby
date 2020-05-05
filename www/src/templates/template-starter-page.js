@@ -47,55 +47,57 @@ class StarterTemplate extends React.Component {
     // TODO enable modal view
     const repoName = starterShowcase.name
     return (
-      <div
-        css={{
-          alignItems: `center`,
-          display: `flex`,
-          flexDirection: `column`,
-          margin: `0 auto`,
-          maxWidth: 1080,
-        }}
-      >
-        <PageMetadata
-          title={`${repoName}: Gatsby Starter`}
-          description={`Gatsby Starters: ${repoName}`}
-          image={screenshot.childImageSharp.fluid}
-        />
-        <div css={{ width: `100%` }}>
-          <StarterHeader stub={starterShowcase.stub} />
-          <div
-            sx={{
-              display: `flex`,
-              flexDirection: [`column-reverse`, `column`],
-            }}
-          >
-            <StarterMeta
+      <main id={`reach-skip-nav`}>
+        <div
+          css={{
+            alignItems: `center`,
+            display: `flex`,
+            flexDirection: `column`,
+            margin: `0 auto`,
+            maxWidth: 1080,
+          }}
+        >
+          <PageMetadata
+            title={`${repoName}: Gatsby Starter`}
+            description={`Gatsby Starters: ${repoName}`}
+            image={screenshot.childImageSharp.fluid}
+          />
+          <div css={{ width: `100%` }}>
+            <StarterHeader stub={starterShowcase.stub} />
+            <div
+              sx={{
+                display: `flex`,
+                flexDirection: [`column-reverse`, `column`],
+              }}
+            >
+              <StarterMeta
+                starter={starterShowcase}
+                repoName={repoName}
+                imageSharp={screenshot}
+                demo={demoUrl}
+              />
+              <Screenshot
+                imageSharp={screenshot.childImageSharp.fluid}
+                alt={`Screenshot of ${repoName}`}
+              />
+            </div>
+            <StarterSource
+              repoUrl={repoUrl}
+              startersYaml={startersYaml}
               starter={starterShowcase}
-              repoName={repoName}
-              imageSharp={screenshot}
-              demo={demoUrl}
             />
-            <Screenshot
-              imageSharp={screenshot.childImageSharp.fluid}
-              alt={`Screenshot of ${repoName}`}
+            <StarterInstallation repoName={repoName} repoUrl={repoUrl} />
+            <StarterDetails
+              startersYaml={startersYaml}
+              allDeps={allDeps}
+              shownDeps={shownDeps}
+              showMore={showMore}
+              showAllDeps={this.showAllDeps}
             />
+            <FooterLinks />
           </div>
-          <StarterSource
-            repoUrl={repoUrl}
-            startersYaml={startersYaml}
-            starter={starterShowcase}
-          />
-          <StarterInstallation repoName={repoName} repoUrl={repoUrl} />
-          <StarterDetails
-            startersYaml={startersYaml}
-            allDeps={allDeps}
-            shownDeps={shownDeps}
-            showMore={showMore}
-            showAllDeps={this.showAllDeps}
-          />
-          <FooterLinks />
         </div>
-      </div>
+      </main>
     )
   }
 

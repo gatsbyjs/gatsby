@@ -6,6 +6,7 @@ import FooterLinks from "../components/shared/footer-links"
 export default function FourOhFour() {
   return (
     <>
+    <main id={`reach-skip-nav`}>
       <Container>
         <h1>Page not found</h1>
         <p>Oops! The page you are looking for has been removed or relocated.</p>
@@ -14,6 +15,7 @@ export default function FourOhFour() {
         </Link>
       </Container>
       <FooterLinks />
+      </main>
     </>
   )
 }

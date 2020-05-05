@@ -32,43 +32,45 @@ const Tags = ({ pageContext, data }) => {
   const doc = TAGS_AND_DOCS.get(tags[0])
 
   return (
-    <Container>
-      <PageMetadata
-        title={`${preferSpacedTag(tags)} Tag`}
-        description={`Case studies, tutorials, and other posts about Gatsby related to ${preferSpacedTag(
-          tags
-        )}`}
-      />
-      <h1>{tagHeader}</h1>
-      <Button
-        variant="small"
-        key="blog-post-view-all-tags-button"
-        to="/blog/tags"
-      >
-        View all tags <TagsIcon />
-      </Button>
-      {doc ? (
-        <React.Fragment>
-          <span css={{ margin: 5 }} />
-          <Button
-            variant="small"
-            secondary
-            key={`view-tag-docs-button`}
-            to={doc}
-          >
-            Read the documentation <TiArrowRight />
-          </Button>
-        </React.Fragment>
-      ) : null}
-      {nodes.map(node => (
-        <BlogPostPreviewItem
-          post={node}
-          key={node.fields.slug}
-          sx={{ my: 9 }}
+    <main id={`reach-skip-nav`}>
+      <Container>
+        <PageMetadata
+          title={`${preferSpacedTag(tags)} Tag`}
+          description={`Case studies, tutorials, and other posts about Gatsby related to ${preferSpacedTag(
+            tags
+          )}`}
         />
-      ))}
-      <FooterLinks />
-    </Container>
+        <h1>{tagHeader}</h1>
+        <Button
+          variant="small"
+          key="blog-post-view-all-tags-button"
+          to="/blog/tags"
+        >
+          View all tags <TagsIcon />
+        </Button>
+        {doc ? (
+          <React.Fragment>
+            <span css={{ margin: 5 }} />
+            <Button
+              variant="small"
+              secondary
+              key={`view-tag-docs-button`}
+              to={doc}
+            >
+              Read the documentation <TiArrowRight />
+            </Button>
+          </React.Fragment>
+        ) : null}
+        {nodes.map(node => (
+          <BlogPostPreviewItem
+            post={node}
+            key={node.fields.slug}
+            sx={{ my: 9 }}
+          />
+        ))}
+        <FooterLinks />
+      </Container>
+    </main>
   )
 }
 

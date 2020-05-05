@@ -101,157 +101,159 @@ export default class FilteredStarterLibrary extends Component {
     }
 
     return (
-      <section className="showcase" css={{ display: `flex` }}>
-        <SidebarContainer css={{ overflowY: `auto` }}>
-          <SidebarHeader />
-          <SidebarBody>
-            <div sx={{ height: t => t.space[10] }}>
-              {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
-                <ResetFilters onClick={resetFilters} />
-              )}
-            </div>
-            <LHSFilter
-              fixed={150}
-              heading="Gatsby Version"
-              data={Array.from(
-                count(
-                  starterNodes.map(
-                    node =>
-                      node.fields &&
-                      node.fields.starterShowcase.gatsbyMajorVersion.map(
-                        str => str[1]
-                      )
+      <main id={`reach-skip-nav`}>
+        <section className="showcase" css={{ display: `flex` }}>
+          <SidebarContainer css={{ overflowY: `auto` }}>
+            <SidebarHeader />
+            <SidebarBody>
+              <div sx={{ height: t => t.space[10] }}>
+                {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
+                  <ResetFilters onClick={resetFilters} />
+                )}
+              </div>
+              <LHSFilter
+                fixed={150}
+                heading="Gatsby Version"
+                data={Array.from(
+                  count(
+                    starterNodes.map(
+                      node =>
+                        node.fields &&
+                        node.fields.starterShowcase.gatsbyMajorVersion.map(
+                          str => str[1]
+                        )
+                    )
                   )
-                )
-              )}
-              filters={filtersVersion}
-              setFilters={setFiltersVersion}
-            />
-            <LHSFilter
-              heading="Categories"
-              data={Array.from(
-                count(starterNodes.map(starter => starter.tags))
-              )}
-              filters={filtersCategory}
-              setFilters={setFiltersCategory}
-              sortRecent={urlState.sort === `recent`}
-            />
-            <LHSFilter
-              heading="Gatsby Dependencies"
-              data={Array.from(
-                count(
-                  starterNodes.map(
-                    starter =>
-                      starter.fields &&
-                      starter.fields.starterShowcase.gatsbyDependencies.map(
-                        str => str[0]
-                      )
+                )}
+                filters={filtersVersion}
+                setFilters={setFiltersVersion}
+              />
+              <LHSFilter
+                heading="Categories"
+                data={Array.from(
+                  count(starterNodes.map(starter => starter.tags))
+                )}
+                filters={filtersCategory}
+                setFilters={setFiltersCategory}
+                sortRecent={urlState.sort === `recent`}
+              />
+              <LHSFilter
+                heading="Gatsby Dependencies"
+                data={Array.from(
+                  count(
+                    starterNodes.map(
+                      starter =>
+                        starter.fields &&
+                        starter.fields.starterShowcase.gatsbyDependencies.map(
+                          str => str[0]
+                        )
+                    )
                   )
-                )
-              )}
-              filters={filtersDependency}
-              setFilters={setFiltersDependency}
-              sortRecent={urlState.sort === `recent`}
-            />
-          </SidebarBody>
-        </SidebarContainer>
-        <ContentContainer>
-          <ContentHeader
-            cssOverrides={{
-              height: `6rem`,
-              pt: 6,
-              [mediaQueries.sm]: {
-                height: `headerHeight`,
-                pt: 0,
-              },
-            }}
-          >
-            <ContentTitle
-              search={urlState.s}
-              filters={filters}
-              label="Gatsby Starter"
-              items={starterNodes}
-              nodes={starterNodes}
-              what="size"
-            />
-            <div
-              sx={{
-                display: `flex`,
-                justifyContent: `space-between`,
-                mb: 2,
-                width: `100%`,
+                )}
+                filters={filtersDependency}
+                setFilters={setFiltersDependency}
+                sortRecent={urlState.sort === `recent`}
+              />
+            </SidebarBody>
+          </SidebarContainer>
+          <ContentContainer>
+            <ContentHeader
+              cssOverrides={{
+                height: `6rem`,
+                pt: 6,
                 [mediaQueries.sm]: {
-                  justifyContent: `flex-end`,
-                  mb: 0,
-                  width: `50%`,
+                  height: `headerHeight`,
+                  pt: 0,
                 },
               }}
             >
-              {/* TODO add sorting. */}
-              <label
+              <ContentTitle
+                search={urlState.s}
+                filters={filters}
+                label="Gatsby Starter"
+                items={starterNodes}
+                nodes={starterNodes}
+                what="size"
+              />
+              <div
                 sx={{
-                  display: `none`,
-                  [mediaQueries.lg]: {
-                    border: 0,
-                    borderRadius: 2,
-                    color: `gatsby`,
-                    fontFamily: `heading`,
-                    py: 1,
-                    pr: 1,
-                    width: `10rem`,
+                  display: `flex`,
+                  justifyContent: `space-between`,
+                  mb: 2,
+                  width: `100%`,
+                  [mediaQueries.sm]: {
+                    justifyContent: `flex-end`,
+                    mb: 0,
+                    width: `50%`,
                   },
                 }}
-                onClick={toggleSort}
               >
-                <MdSort sx={{ mr: 2 }} />
-                {urlState.sort === `recent` ? `Most recent` : `Most stars`}
-              </label>
-              <label css={{ position: `relative` }}>
-                <DebounceInput
+                {/* TODO add sorting. */}
+                <label
                   sx={{
-                    ...themedInput,
-                    pl: 7,
+                    display: `none`,
+                    [mediaQueries.lg]: {
+                      border: 0,
+                      borderRadius: 2,
+                      color: `gatsby`,
+                      fontFamily: `heading`,
+                      py: 1,
+                      pr: 1,
+                      width: `10rem`,
+                    },
                   }}
-                  value={urlState.s}
-                  onChange={this.onChangeUrlWithText}
-                  placeholder="Search starters"
-                  aria-label="Search starters"
-                />
-                <SearchIcon />
-              </label>
+                  onClick={toggleSort}
+                >
+                  <MdSort sx={{ mr: 2 }} />
+                  {urlState.sort === `recent` ? `Most recent` : `Most stars`}
+                </label>
+                <label css={{ position: `relative` }}>
+                  <DebounceInput
+                    sx={{
+                      ...themedInput,
+                      pl: 7,
+                    }}
+                    value={urlState.s}
+                    onChange={this.onChangeUrlWithText}
+                    placeholder="Search starters"
+                    aria-label="Search starters"
+                  />
+                  <SearchIcon />
+                </label>
+                <Button
+                  to="https://gatsbyjs.org/contributing/submit-to-starter-library/"
+                  tag="href"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="small"
+                  icon={<ArrowForwardIcon />}
+                  overrideCSS={{ ml: 3 }}
+                >
+                  Submit a Starter
+                </Button>
+              </div>
+            </ContentHeader>
+            <StarterList
+              urlState={urlState}
+              sortRecent={urlState.sort === `recent`}
+              starters={starterNodes}
+              count={this.state.sitesToShow}
+            />
+            {this.state.sitesToShow < starterNodes.length && (
               <Button
-                to="https://gatsbyjs.org/contributing/submit-to-starter-library/"
-                tag="href"
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="small"
-                icon={<ArrowForwardIcon />}
-                overrideCSS={{ ml: 3 }}
+                variant="large"
+                tag="button"
+                overrideCSS={loadMoreButton}
+                onClick={() => this.showMoreSites(starterNodes)}
+                icon={<MdArrowDownward />}
               >
-                Submit a Starter
+                Load More
               </Button>
-            </div>
-          </ContentHeader>
-          <StarterList
-            urlState={urlState}
-            sortRecent={urlState.sort === `recent`}
-            starters={starterNodes}
-            count={this.state.sitesToShow}
-          />
-          {this.state.sitesToShow < starterNodes.length && (
-            <Button
-              variant="large"
-              tag="button"
-              overrideCSS={loadMoreButton}
-              onClick={() => this.showMoreSites(starterNodes)}
-              icon={<MdArrowDownward />}
-            >
-              Load More
-            </Button>
-          )}
-          <FooterLinks />
-        </ContentContainer>
-      </section>
+            )}
+            <FooterLinks />
+          </ContentContainer>
+        </section>
+      </main>
     )
   }
 }
