@@ -21,7 +21,7 @@ const loadThemes = require(`./load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
 import { getConfigFile } from "./get-config-file"
 const tracer = require(`opentracing`).globalTracer()
-const preferDefault = require(`./prefer-default`)
+import { preferDefault } from "./prefer-default"
 import { removeStaleJobs } from "./remove-stale-jobs"
 
 // Show stack trace on unhandled promises.
@@ -37,7 +37,7 @@ import { writeRedirects, startRedirectListener } from "./redirects-writer"
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
 // Otherwise leave commented out.
-// require(`./log-line-function`)
+// import "./log-line-function"
 
 type BootstrapArgs = {
   directory: string,
