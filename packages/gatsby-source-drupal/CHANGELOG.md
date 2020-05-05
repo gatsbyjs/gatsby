@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.0...gatsby-source-drupal@3.5.1) (2020-05-05)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** Add webhookBody support to gatsby-source-drupal for inc builds ([#23753](https://github.com/gatsbyjs/gatsby/issues/23753)) ([c244cd3](https://github.com/gatsbyjs/gatsby/commit/c244cd3))
+
 # [3.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.4.6...gatsby-source-drupal@3.5.0) (2020-04-27)
 
 **Note:** Version bump only for package gatsby-source-drupal

@@ -1,4 +1,7 @@
+import reporter from "gatsby-cli/lib/reporter"
+
 import {
+  IGatsbyConfig,
   IGatsbyPlugin,
   ProgramStatus,
   ICreatePageDependencyAction,
@@ -12,7 +15,10 @@ import {
   ISetProgramStatusAction,
   IPageQueryRunAction,
   IRemoveStaleJobAction,
+  ISetSiteConfig,
 } from "../types"
+
+import { gatsbyConfigSchema } from "../../joi-schemas/joi"
 
 /**
  * Create a dependency between a page and data. Probably for
@@ -215,5 +221,28 @@ export const removeStaleJob = (
     payload: {
       contentDigest,
     },
+  }
+}
+
+/**
+ * Set gatsby config
+ * @private
+ */
+export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
+  const result = gatsbyConfigSchema.validate(config || {})
+  const normalizedPayload: IGatsbyConfig = result.value
+
+  if (result.error) {
+    reporter.panic({
+      id: `10122`,
+      context: {
+        sourceMessage: result.error.message,
+      },
+    })
+  }
+
+  return {
+    type: `SET_SITE_CONFIG`,
+    payload: normalizedPayload,
   }
 }

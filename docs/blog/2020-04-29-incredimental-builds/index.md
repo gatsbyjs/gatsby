@@ -87,6 +87,8 @@ That said, it's important to us that Gatsby builds quickly on all platforms! And
 
 We do believe that Gatsby Cloud should be the best place to build your Gatsby project, since we're able to make Gatsby-specific optimizations. But we also want Gatsby builds to be fast, no matter where they're built.
 
+<CloudCallout>To experience Incremental Builds for yourself:</CloudCallout>
+
 ## Bright days ahead
 
 The biggest pitfall of building a static site has always been the build times.

@@ -63,7 +63,7 @@ import {
   showFeedbackRequest,
 } from "../utils/feedback"
 
-import { BuildHTMLStage, IProgram } from "./types"
+import { Stage, IProgram } from "./types"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
@@ -99,7 +99,7 @@ async function startServer(program: IProgram): Promise<IServer> {
     try {
       await buildHTML({
         program,
-        stage: BuildHTMLStage.DevelopHTML,
+        stage: Stage.DevelopHTML,
         pagePaths: [`/`],
         workerPool,
         activity,
