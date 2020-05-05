@@ -17,6 +17,8 @@ const transformFragments = ({
   possibleTypes && depth <= maxDepth
     ? possibleTypes
         .map(possibleType => {
+          possibleType = { ...possibleType }
+
           const type = typeMap.get(possibleType.name)
 
           if (!type) {
@@ -69,7 +71,7 @@ const transformFragments = ({
               return false
             }
 
-            possibleType.fields = fields
+            possibleType.fields = [...fields]
             return possibleType
           }
 
