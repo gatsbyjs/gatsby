@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.0...gatsby-link@2.4.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-link
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.5...gatsby-link@2.4.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.4...gatsby-link@2.3.5) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-link
+
 ## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.3...gatsby-link@2.3.4) (2020-04-17)
 
 ### Bug Fixes

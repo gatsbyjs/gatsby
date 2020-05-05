@@ -2,7 +2,7 @@
 title: Deploying to Microsoft Internet Information Server (IIS)
 ---
 
-Deploying to Microsoft IIS is mostly copy &amp; paste.
+Deploying to Microsoft IIS is mostly copy & paste.
 After `gatsby build` copy the contents of the `public` folder into the `wwwroot` folder of your IIS web.
 
 One important and sometimes overlooked aspect is to configure caching correctly.

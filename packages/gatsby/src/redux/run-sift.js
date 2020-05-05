@@ -26,7 +26,7 @@ const FAST_OPS = [
   // "$lt",
   `$lte`,
   // "$gt",
-  // "$gte"
+  `$gte`,
 ]
 
 /**
@@ -451,7 +451,20 @@ const applyFilters = (
     return result
   }
 
-  return filterWithSift(filters, firstOnly, nodeTypeNames, resolvedFields)
+  const siftResult = filterWithSift(
+    filters,
+    firstOnly,
+    nodeTypeNames,
+    resolvedFields
+  )
+
+  if (stats) {
+    if (!siftResult || siftResult.length === 0) {
+      stats.totalSiftHits++
+    }
+  }
+
+  return siftResult
 }
 
 const filterToStats = (
