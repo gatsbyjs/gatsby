@@ -31,13 +31,6 @@ export const query = graphql`
         }
       }
       imageAlt
-      socialImage {
-        childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
     }
     previous: blogPost(id: { eq: $previousId }) {
       id
