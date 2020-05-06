@@ -174,8 +174,8 @@ class RouteAnnouncer extends React.Component {
         pageName = pageHeadings[0].textContent
       }
       const newAnnouncement = `Navigated to ${pageName}`
-      const oldAnnouncement = this.announcementRef.current.innerText
-      if (oldAnnouncement !== newAnnouncement) {
+      const oldAnnouncement = this.announcementRef.current?.innerText
+      if (oldAnnouncement !== newAnnouncement && this.announcementRef.current) {
         this.announcementRef.current.innerText = newAnnouncement
       }
     })
