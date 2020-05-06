@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.10...gatsby-recipes@0.1.11) (2020-05-06)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Fix gatsby config all function ([#23811](https://github.com/gatsbyjs/gatsby/issues/23811)) ([c5b8aa5](https://github.com/gatsbyjs/gatsby/commit/c5b8aa5))
+
 ## [0.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.9...gatsby-recipes@0.1.10) (2020-05-05)
 
 **Note:** Version bump only for package gatsby-recipes

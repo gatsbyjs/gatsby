@@ -3,7 +3,7 @@
  * of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
  * @returns {Array<string>} array of extensions
  */
-exports.resolvableExtensions = true
+export const resolvableExtensions = true
 
 /**
  * Tell plugins to add pages. This extension point is called only after the initial
@@ -60,7 +60,7 @@ exports.resolvableExtensions = true
  * }
  */
 
-exports.createPages = true
+export const createPages = true
 
 /**
  * Like `createPages` but for plugins who want to manage creating and removing
@@ -76,7 +76,7 @@ exports.createPages = true
  * Gatsby, it needs to keep its own state about its world to know when to
  * add and remove pages.
  */
-exports.createPagesStatefully = true
+export const createPagesStatefully = true
 
 /**
  * Extension point to tell plugins to source nodes. This API is called during
@@ -116,7 +116,7 @@ exports.createPagesStatefully = true
  *   createNode(node)
  * }
  */
-exports.sourceNodes = true
+export const sourceNodes = true
 
 /**
  * Called when a new node is created. Plugins wishing to extend or
@@ -131,7 +131,7 @@ exports.sourceNodes = true
  *   // create a new node field.
  * }
  */
-exports.onCreateNode = true
+export const onCreateNode = true
 
 /**
  * Called when a new page is created. This extension API is useful
@@ -144,7 +144,7 @@ exports.onCreateNode = true
  * See the guide [Creating and Modifying Pages](/docs/creating-and-modifying-pages/)
  * for more on this API.
  */
-exports.onCreatePage = true
+export const onCreatePage = true
 
 /**
  * Called during the creation of the GraphQL schema. Allows plugins
@@ -196,7 +196,7 @@ exports.onCreatePage = true
  *   return {}
  * }
  */
-exports.setFieldsOnGraphQLNodeType = true
+export const setFieldsOnGraphQLNodeType = true
 
 /**
  * Customize Gatsby's GraphQL schema by creating type definitions, field
@@ -245,7 +245,7 @@ exports.setFieldsOnGraphQLNodeType = true
  *   createTypes(typeDefs)
  * }
  */
-exports.createSchemaCustomization = true
+export const createSchemaCustomization = true
 
 /**
  * Add custom field resolvers to the GraphQL schema.
@@ -316,27 +316,27 @@ exports.createSchemaCustomization = true
  *   createResolvers(resolvers)
  * }
  */
-exports.createResolvers = true
+export const createResolvers = true
 
 /**
  * Ask compile-to-js plugins to process source to JavaScript so the query
  * runner can extract out GraphQL queries for running.
  */
-exports.preprocessSource = true
+export const preprocessSource = true
 
 /**
  * Tell plugins with expensive "side effects" from queries to start running
  * those now. This is a soon-to-be-replaced API only currently in use by
  * `gatsby-plugin-sharp`.
  */
-exports.generateSideEffects = true
+export const generateSideEffects = true
 
 /**
  * Let plugins extend/mutate the site's Babel configuration.
  * This API will change before 2.0 as it needs still to be converted to use
  * Redux actions.
  */
-exports.onCreateBabelConfig = true
+export const onCreateBabelConfig = true
 
 /**
  * Let plugins extend/mutate the site's webpack configuration.
@@ -367,33 +367,33 @@ exports.onCreateBabelConfig = true
  *   });
  * }
  */
-exports.onCreateWebpackConfig = true
+export const onCreateWebpackConfig = true
 
 /**
  * The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation.
  */
-exports.onPreInit = true
+export const onPreInit = true
 
 /**
  * Called once Gatsby has initialized itself and is ready to bootstrap your site.
  */
-exports.onPreBootstrap = true
+export const onPreBootstrap = true
 
 /**
  * Called at the end of the bootstrap process after all other extension APIs have been called.
  */
-exports.onPostBootstrap = true
+export const onPostBootstrap = true
 
 /**
  * The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start.
  */
-exports.onPreBuild = true
+export const onPreBuild = true
 
 /**
  * The last extension point called after all other parts of the build process
  * are complete.
  */
-exports.onPostBuild = true
+export const onPostBuild = true
 
 /**
  * Run before GraphQL queries/fragments are extracted from JavaScript files. Useful for plugins
@@ -401,7 +401,7 @@ exports.onPostBuild = true
  *
  * See gatsby-transformer-sharp and gatsby-source-contentful for examples.
  */
-exports.onPreExtractQueries = true
+export const onPreExtractQueries = true
 
 /**
  * Run when gatsby develop server is started, its useful to add proxy and middleware
@@ -415,4 +415,4 @@ exports.onPreExtractQueries = true
  *   })
  * }
  */
-exports.onCreateDevServer = true
+export const onCreateDevServer = true

@@ -1,7 +1,6 @@
-import url from "url"
-
-import chalk from "chalk"
 import address from "address"
+import chalk from "chalk"
+import url from "url"
 
 export interface IPreparedUrls {
   lanUrlForConfig: string
