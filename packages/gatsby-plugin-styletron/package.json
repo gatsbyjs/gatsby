@@ -6,16 +6,14 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.9.6",
-    "styletron-engine-atomic": "^1.4.6",
-    "styletron-react": "^5.2.7"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
     "babel-preset-gatsby-package": "^0.4.1",
-    "cross-env": "^5.2.1"
+    "cross-env": "^5.2.1",
+    "styletron-engine-atomic": "^1.4.6",
+    "styletron-react": "^5.2.7"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron#readme",
   "keywords": [
@@ -25,7 +23,10 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^2.0.0",
+    "react": "^16.4.2",
+    "styletron-engine-atomic": "^1.4.6",
+    "styletron-react": "^5.2.7"
   },
   "repository": {
     "type": "git",
