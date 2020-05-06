@@ -72,7 +72,7 @@ Go to the pages folder inside the src folder, and create a home.js file. Add the
 import React from "react"
 import { graphql } from "gatsby"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <div>
       <h1>{data.contentstackHome.title}</h1>

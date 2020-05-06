@@ -6,6 +6,8 @@ excerpt: "A look at how the Gatsby Cloud team adopted a new workflow to achieve 
 tags: ["source control", "GitHub", "workflows"]
 ---
 
+import Breakout from "@components/breakout"
+import VisuallyHidden from "@components/visually-hidden"
 import baseGithub from "./base-github.png"
 import initialSvg from "./1-initial.svg"
 import additionalWorkSvg from "./2-additional-work.svg"

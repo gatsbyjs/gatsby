@@ -59,7 +59,7 @@ Once you've queried for a `fixed` image to retrieve its data, you can pass that 
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-export default () => {
+export default function Image() {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "images/default.jpg" }) {
@@ -130,7 +130,7 @@ Once you've queried for a `fluid` image to retrieve its data, you can pass that 
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-export default () => {
+export default function Image() {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "images/default.jpg" }) {

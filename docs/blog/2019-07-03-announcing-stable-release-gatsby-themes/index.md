@@ -41,7 +41,9 @@ Stability for shadowing means that creating a single file is all you need to sta
 ```jsx:title=my-site/src/my-theme/components/header.js
 import Header from "my-theme/src/components/header"
 
-export default props => <Header {...props} myProp={true} />
+export default function MyHeader(props) {
+  return <Header {...props} myProp={true} />
+}
 ```
 
 ## What is different?

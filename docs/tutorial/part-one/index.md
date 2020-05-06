@@ -56,9 +56,9 @@ Open the file at `src/pages/index.js`. The code in this file creates a component
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => (
-  <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
-)
+export default function Home() {
+  return <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
+}
 ```
 
 > 💡 We’ll be covering more about styling in Gatsby in [**part two**](/tutorial/part-two/) of the tutorial.
@@ -68,14 +68,16 @@ export default () => (
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => (
-  {/* highlight-start */}
-  <div style={{ color: `purple` }}>
-    <h1>Hello Gatsby!</h1>
-    <p>What a world.</p>
-  {/* highlight-end */}
-  </div>
-)
+export default function Home() {
+  return (
+    {/* highlight-start */}
+    <div style={{ color: `purple` }}>
+      <h1>Hello Gatsby!</h1>
+      <p>What a world.</p>
+    {/* highlight-end */}
+    </div>
+  );
+}
 ```
 
 ![More changes with hot reloading](03-more-hot-reloading.png)
@@ -85,14 +87,16 @@ export default () => (
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => (
-  <div style={{ color: `purple` }}>
-    <h1>Hello Gatsby!</h1>
-    <p>What a world.</p>
-    {/* highlight-next-line */}
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
-  </div>
-)
+export default function Home() {
+  return (
+    <div style={{ color: `purple` }}>
+      <h1>Hello Gatsby!</h1>
+      <p>What a world.</p>
+      {/* highlight-next-line */}
+      <img src="https://source.unsplash.com/random/400x200" alt="" />
+    </div>
+  )
+}
 ```
 
 ![Add image](04-add-image.png)
@@ -106,7 +110,9 @@ Consider the original contents of the `src/pages/index.js` file:
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => <div>Hello world!</div>
+export default function Home() {
+  return <div>Hello world!</div>
+}
 ```
 
 In pure JavaScript, it looks more like this:
@@ -114,7 +120,9 @@ In pure JavaScript, it looks more like this:
 ```javascript:title=src/pages/index.js
 import React from "react"
 
-export default () => React.createElement("div", null, "Hello world!")
+export default function Home() {
+  return React.createElement("div", null, "Hello world!")
+}
 ```
 
 Now you can spot the use of the `'react'` import! But wait. You’re writing JSX, not pure HTML and JavaScript. How does the browser read that? The short answer: It doesn’t. Gatsby sites come with tooling already set up to convert your source code into something that browsers can interpret.
@@ -157,12 +165,14 @@ You already have a `src/pages/index.js` file that came with the “Hello World�
 ```jsx:title=src/pages/about.js
 import React from "react"
 
-export default () => (
-  <div style={{ color: `teal` }}>
-    <h1>About Gatsby</h1>
-    <p>Such wow. Very React.</p>
-  </div>
-)
+export default function About() {
+  return (
+    <div style={{ color: `teal` }}>
+      <h1>About Gatsby</h1>
+      <p>Such wow. Very React.</p>
+    </div>
+  )
+}
 ```
 
 2. Navigate to `http://localhost:8000/about/`
@@ -181,7 +191,9 @@ Let’s say the homepage and the about page both got quite large and you were re
 ```jsx:title=src/components/header.js
 import React from "react"
 
-export default () => <h1>This is a header.</h1>
+export default function Header() {
+  return <h1>This is a header.</h1>
+}
 ```
 
 3. Modify the `about.js` file to import the `Header` component. Replace the `h1` markup with `<Header />`:
@@ -190,12 +202,14 @@ export default () => <h1>This is a header.</h1>
 import React from "react"
 import Header from "../components/header" // highlight-line
 
-export default () => (
-  <div style={{ color: `teal` }}>
-    <Header /> {/* highlight-line */}
-    <p>Such wow. Very React.</p>
-  </div>
-)
+export default function About() {
+  return (
+    <div style={{ color: `teal` }}>
+      <Header /> {/* highlight-line */}
+      <p>Such wow. Very React.</p>
+    </div>
+  )
+}
 ```
 
 ![Adding Header component](06-header-component.png)
@@ -207,7 +221,12 @@ In the browser, the “About Gatsby” header text should now be replaced with �
 ```jsx:title=src/components/header.js
 import React from "react"
 
-export default props => <h1>{props.headerText}</h1> {/* highlight-line */}
+export default function Header(props) {
+  return <h1>{props.headerText}</h1>
+  {
+    /* highlight-line */
+  }
+}
 ```
 
 5. Head back to `src/pages/about.js` and make the following change:
@@ -216,12 +235,14 @@ export default props => <h1>{props.headerText}</h1> {/* highlight-line */}
 import React from "react"
 import Header from "../components/header"
 
-export default () => (
-  <div style={{ color: `teal` }}>
-    <Header headerText="About Gatsby" /> {/* highlight-line */}
-    <p>Such wow. Very React.</p>
-  </div>
-)
+export default function About() {
+  return (
+    <div style={{ color: `teal` }}>
+      <Header headerText="About Gatsby" /> {/* highlight-line */}
+      <p>Such wow. Very React.</p>
+    </div>
+  )
+}
 ```
 
 ![Passing data to header](07-pass-data-header.png)
@@ -260,13 +281,15 @@ If you had passed another prop to your `<Header />` component, like so...
 import React from "react"
 import Header from "../components/header"
 
-export default () => (
-  <div style={{ color: `teal` }}>
-    <Header headerText="About Gatsby" />
-    <Header headerText="It's pretty cool" /> {/* highlight-line */}
-    <p>Such wow. Very React.</p>
-  </div>
-)
+export default function About() {
+  return (
+    <div style={{ color: `teal` }}>
+      <Header headerText="About Gatsby" />
+      <Header headerText="It's pretty cool" /> {/* highlight-line */}
+      <p>Such wow. Very React.</p>
+    </div>
+  )
+}
 ```
 
 ![Duplicate header to show reusability](08-duplicate-header.png)
@@ -292,14 +315,16 @@ import React from "react"
 import { Link } from "gatsby" // highlight-line
 import Header from "../components/header"
 
-export default () => (
-  <div style={{ color: `purple` }}>
-    <Link to="/contact/">Contact</Link> {/* highlight-line */}
-    <Header headerText="Hello Gatsby!" />
-    <p>What a world.</p>
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
-  </div>
-)
+export default function Home() {
+  return (
+    <div style={{ color: `purple` }}>
+      <Link to="/contact/">Contact</Link> {/* highlight-line */}
+      <Header headerText="Hello Gatsby!" />
+      <p>What a world.</p>
+      <img src="https://source.unsplash.com/random/400x200" alt="" />
+    </div>
+  )
+}
 ```
 
 When you click the new "Contact" link on the homepage, you should see...
@@ -315,13 +340,15 @@ import React from "react"
 import { Link } from "gatsby"
 import Header from "../components/header"
 
-export default () => (
-  <div style={{ color: `teal` }}>
-    <Link to="/">Home</Link>
-    <Header headerText="Contact" />
-    <p>Send us a message!</p>
-  </div>
-)
+export default function Contact() {
+  return (
+    <div style={{ color: `teal` }}>
+      <Link to="/">Home</Link>
+      <Header headerText="Contact" />
+      <p>Send us a message!</p>
+    </div>
+  )
+}
 ```
 
 After you save the file, you should see the contact page and be able to follow the link to the homepage.
