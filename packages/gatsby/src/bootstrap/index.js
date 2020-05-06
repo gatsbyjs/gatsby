@@ -444,7 +444,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../utils/source-nodes`)({ parentSpan: activity.span })
+  await require(`../utils/source-nodes`).default({ parentSpan: activity.span })
   activity.end()
 
   // Create Schema.
