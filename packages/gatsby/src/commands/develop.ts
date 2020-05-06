@@ -1,7 +1,7 @@
 import path from "path"
 import http from "http"
 import tmp from "tmp"
-import respawn from "respawn"
+import { spawn } from "child_process"
 import chokidar from "chokidar"
 import resolveCwd from "resolve-cwd"
 import getRandomPort from "get-port"
@@ -42,21 +42,30 @@ const doesConfigChangeRequireRestart = (
   return true
 }
 
-interface IRespawnMonitor {
-  start: () => void
-  stop: (callback: () => void) => void
-  status: "running" | "stopping" | "stopped" | "crashed" | "sleeping"
-  on: (type: string, callback: Function) => void
+class ControllableScript {
+  private process
+  private tmpFile
+  constructor(script) {
+    this.tmpFile = tmp.fileSync()
+    fs.writeFileSync(this.tmpFile.name, script)
+  }
+  start(): void {
+    this.process = spawn(`node`, [this.tmpFile.name], {
+      env: process.env,
+      stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
+    })
+  }
+  stop(): void {
+    this.process.kill()
+  }
+  on(type, callback): void {
+    this.process.on(type, callback)
+  }
 }
 
 const createControllableScript = (script: string): IRespawnMonitor => {
-  const tmpFile = tmp.fileSync()
-  fs.writeFileSync(tmpFile.name, script)
-
-  return respawn([`node`, tmpFile.name], {
-    env: process.env,
-    stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
-  })
+  const controllableScript = new ControllableScript(script)
+  return controllableScript
 }
 
 module.exports = async (program: IProgram): Promise<void> => {
@@ -113,6 +122,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   })
 
+  script.start()
+
   script.on(`message`, msg => {
     // Forward IPC
     if (process.send) process.send(msg)
@@ -135,7 +146,10 @@ module.exports = async (program: IProgram): Promise<void> => {
       io.emit(`develop:started`)
     }
   })
-  script.start()
+
+  process.on(`exit`, () => {
+    script.stop()
+  })
 
   const rootFile = (file: string): string => path.join(program.directory, file)
 
