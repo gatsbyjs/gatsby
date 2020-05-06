@@ -147,11 +147,16 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
     let nodeListQueries = []
 
-    const singleTypeInfo = rootFields.find(
+    const singleNodeRootFieldInfo = rootFields.find(
       field => field.type.name === nodesType.name
     )
 
-    const singleFieldName = singleTypeInfo.name
+    if (!singleNodeRootFieldInfo) {
+      // reporter.info(formatLogMessage(`Unable to find a root field to query single nodes of the type`))
+      continue
+    }
+
+    const singleFieldName = singleNodeRootFieldInfo?.name
 
     const transformedFields = recursivelyTransformFields({
       fields,
@@ -202,7 +207,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
         fields,
         selectionSet,
         singleFieldName,
-        singleTypeInfo,
+        singleNodeRootFieldInfo,
         settings,
         store,
         fieldVariables,
