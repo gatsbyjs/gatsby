@@ -1,13 +1,13 @@
 import { Machine as machine, assign } from "xstate"
 
-interface IContext {
+export interface IContext {
   isInBootstrap: boolean
   componentPath: string
   query: string
   pages: Set<string>
 }
 
-interface IState {
+export interface IState {
   states: {
     inactive: {}
     inactiveWhileBootstrapping: {}
@@ -30,11 +30,11 @@ type ActionTypes =
   | "QUERY_DID_NOT_CHANGE"
   | "QUERIES_COMPLETE"
 
-interface IEvent {
+export interface IEvent {
   type: ActionTypes
   path?: string
   query?: string
-  page: { path: string }
+  page?: { path: string }
 }
 
 const defaultContext: IContext = {
@@ -162,7 +162,9 @@ export const componentMachine = machine<IContext, IState, IEvent>(
       }),
       deletePage: assign({
         pages: (ctx, event) => {
-          ctx.pages.delete(event.page.path)
+          if (event.page) {
+            ctx.pages.delete(event.page.path)
+          }
           return ctx.pages
         }
       }),
