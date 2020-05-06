@@ -28,7 +28,7 @@
     "start": "npm run develop",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test:e2e": "start-server-and-test develop http://localhost:8002 cy:open"
+    "test:e2e": "start-server-and-test develop http://localhost:8001 cy:open"
   },
   "devDependencies": {
     "cypress": "^4.2.0",
