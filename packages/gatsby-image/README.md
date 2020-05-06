@@ -176,8 +176,8 @@ Importing from `gatsby-image/withIEPolyfill` tells Gatsby to automatically apply
 
 There are two types of responsive images supported by gatsby-image.
 
-1. Images that have a _fixed_ width and height.
-2. Images that stretch across a _fluid_ container.
+1. Images that have a _fixed_ width and height
+2. Images that stretch across a _fluid_ container
 
 In the first scenario, you want to vary the image's size for different screen
 resolutions -- in other words, create retina images.
