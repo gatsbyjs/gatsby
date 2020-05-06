@@ -72,15 +72,20 @@ export default function APITemplate({ data, location, pageContext }) {
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
-  const tableOfContentsItems = [...tableOfContents.items, {
-    title: heading,
-    url: `#${headingId}`,
-    items: mergedFuncs.map(mergedFunc => ({
-      url: `#${mergedFunc.name}`,
-      title: mergedFunc.name,
-    })),
-  }];
-  const tableOfContentsDepth = Math.max(frontmatter.tableOfContentsDepth, 2)
+  const items = tableOfContents.items || []
+  const tableOfContentsItems = [
+    ...items,
+    {
+      title: heading,
+      url: `#${headingId}`,
+      items: mergedFuncs.map(mergedFunc => ({
+        url: `#${mergedFunc.name}`,
+        title: mergedFunc.name,
+      })),
+    },
+  ]
+  const { tableOfContentsDepth: depth = 0 } = frontmatter
+  const tableOfContentsDepth = Math.max(depth, 2)
 
   return (
     <DocsMarkdownPage

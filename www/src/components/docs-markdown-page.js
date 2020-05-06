@@ -33,15 +33,18 @@ function DocsMarkdownPage({
   tableOfContentsItems = page.tableOfContents.items,
   tableOfContentsDepth = page.frontmatter.tableOfContentsDepth,
   children,
-  ...others
 }) {
   const { frontmatter, excerpt, timeToRead, fields, body } = page
+  const [urlSegment] = fields.slug.split(`/`).slice(1)
   const description = frontmatter.description || excerpt
   const isTOCVisible =
     !frontmatter.disableTableOfContents && tableOfContentsItems?.length > 0
 
   return (
-    <PageWithSidebar location={location} {...others}>
+    <PageWithSidebar
+      location={location}
+      enableScrollSync={urlSegment === "tutorial"}
+    >
       <PageMetadata
         title={frontmatter.title}
         description={description}
