@@ -4,8 +4,8 @@ const { murmurhash } = require(`./murmur`)
 const nodePath = require(`path`)
 
 class StringInterpolationNotAllowedError extends Error {
-  interpolationStart: Object
-  interpolationEnd: Object
+  interpolationStart: Record<string, any>
+  interpolationEnd: Record<string, any>
 
   constructor(interpolationStart: any, interpolationEnd: any) {
     super(
@@ -34,7 +34,11 @@ class GraphQLSyntaxError extends Error {
   originalError: Error
   templateLoc: any
 
-  constructor(documentText: string, originalError: Error, locationOfGraphqlString: any) {
+  constructor(
+    documentText: string,
+    originalError: Error,
+    locationOfGraphqlString: any
+  ) {
     super(
       `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${documentText}\n\nmessage:\n\n${originalError}`
     )
@@ -124,7 +128,7 @@ function removeImport(tag) {
   const importPath = getTagImport(identifier)
 
   const removeVariableDeclaration = statement => {
-    let declaration = statement.findParent(p => p.isVariableDeclaration())
+    const declaration = statement.findParent(p => p.isVariableDeclaration())
     if (declaration) {
       declaration.remove()
     }
@@ -390,7 +394,7 @@ export default function ({ types: t }) {
             ) {
               const [{ name: varName }] = hookPath.node.arguments
 
-              let binding = hookPath.scope.getBinding(varName)
+              const binding = hookPath.scope.getBinding(varName)
 
               if (binding) {
                 followVariableDeclarations(binding).path.traverse({
