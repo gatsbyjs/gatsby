@@ -49,22 +49,25 @@ Make sure to add your **API_TOKEN** from your dashboard. In this guide you will 
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-{
-      resolve: `gatsby-source-buttercms`,
-      options: {
-        authToken: `your_auth_token`,
-        // Optional. Returns values for the supplied content field keys.
-        contentFields: {
-          keys: [`faq_items`, `faq_headline`],
-          // Optional. Set to 1 to enable test mode for viewing draft content.
-          test: 0,
+  plugins: [
+     {
+        resolve: `gatsby-source-buttercms`,
+        options: {
+              authToken: `<API_TOKEN>`,
+              // Optional array of Collection key 
+              contentFields: {
+                keys: [`collection_key`],
+                // Optional. Set to 1 to enable test mode for viewing draft content.
+                test: 0,
+              },
+              // Optional array of page type keys
+              pageTypes: [`page_type_key`],
+              // Optional array of locales (if configured in your account)
+              locales: [`en`, `es`, `fr`],
+              preview: 1 // Return draft content
         },
-        // Optional. Array of page slugs.
-        pages: [`homepage`],
-        // Optional. Array of page types.
-        pageTypes: [`customer_case_study`],
-      },
-    },
+    }
+  ]
 }
 ```
 
