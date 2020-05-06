@@ -11,7 +11,6 @@ import fs from "fs-extra"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
-import { Signal } from "signal-exit"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
