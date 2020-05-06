@@ -38,34 +38,45 @@ const EnglishName = styled.p`
   font-size: ${p => p.theme.fontSizes[1]};
 `
 
-const LocalName = styled(Link)`
+const LocalName = styled.span`
   display: block;
   margin-bottom: ${p => p.theme.space[2]};
 
   font-size: ${p => p.theme.fontSizes[3]};
   font-weight: bold;
+
+  color: ${p => p.theme.colors.link.color};
+`
+
+const ContributionText = styled.span`
+  font-size: ${p => p.theme.fontSizes[0]};
+  color: ${p => p.theme.colors.grey[50]};
 `
 
 const ContributionLink = styled.a`
-  && {
-    font-size: ${p => p.theme.fontSizes[0]};
+  &&:not(:hover) {
     color: ${p => p.theme.colors.grey[50]};
+    border-bottom: ${p => p.theme.colors.grey[30]};
   }
 `
 
 const LanguageThumb = ({ lang, isCurrent }) => (
   <Container>
     <EnglishName>{lang.name}</EnglishName>
-    <LocalName to={localizedPath(lang.code, "/languages")}>
-      {lang.localName} {isCurrent && <CheckCircleIcon />}
+    <LocalName>
+      <Link to={localizedPath(lang.code, "/languages")}>{lang.localName}</Link>{" "}
+      {isCurrent && <CheckCircleIcon />}
     </LocalName>
-    <ContributionLink
-      href={`https://github.com/gatsbyjs/gatsby-${lang.code}`}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Contribute <LaunchIcon />
-    </ContributionLink>
+    <ContributionText>
+      <ContributionLink
+        href={`https://github.com/gatsbyjs/gatsby-${lang.code}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Contribute
+      </ContributionLink>{" "}
+      <LaunchIcon />
+    </ContributionText>
   </Container>
 )
 
