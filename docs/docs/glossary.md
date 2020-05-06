@@ -188,6 +188,10 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 
 As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
 
+### [Infrastructure As Code](/docs/glossary/infrastructure-as-code/)
+
+Infrastructure As Code is the practice of using configuration files and scripts to automate the process of setting up your development, testing, and production environments.
+
 ## J
 
 ### [JAMStack](/docs/glossary/jamstack)

@@ -21,24 +21,26 @@ Here is an example of a `Header` component using `StaticQuery`:
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
-export default function Header() (
-  <StaticQuery
-    query={graphql`
-      query HeadingQuery {
-        site {
-          siteMetadata {
-            title
+export default function Header() {
+  return (
+    <StaticQuery
+      query={graphql`
+        query HeadingQuery {
+          site {
+            siteMetadata {
+              title
+            }
           }
         }
-      }
-    `}
-    render={data => (
-      <header>
-        <h1>{data.site.siteMetadata.title}</h1>
-      </header>
-    )}
-  />
-)
+      `}
+      render={data => (
+        <header>
+          <h1>{data.site.siteMetadata.title}</h1>
+        </header>
+      )}
+    />
+  )
+}
 ```
 
 By using `StaticQuery`, you can colocate a component with its data. It is no longer required to, say, pass data down from `Layout` to `Header`.

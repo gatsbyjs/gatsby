@@ -35,10 +35,12 @@ import FiestaImg from "../assets/fiesta.jpg" // highlight-line
 import React from "react"
 import FiestaImg from "../assets/fiesta.jpg"
 
-export default function Home() (
-  // The import result is the URL of your image
-  <img src={FiestaImg} alt="A dog smiling in a party hat" /> // highlight-line
-)
+export default function Home() {
+  return (
+    // The import result is the URL of your image
+    <img src={FiestaImg} alt="A dog smiling in a party hat" /> // highlight-line
+  )
+}
 ```
 
 3. Run `gatsby develop` to start the development server.
@@ -83,9 +85,11 @@ This is an **escape route** for [specific use cases](/docs/static-folder/#when-t
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default function Home() (
-  <img src={`fiesta.jpg`} alt="A dog smiling in a party hat" /> // highlight-line
-)
+export default function Home() {
+  return (
+    <img src={`fiesta.jpg`} alt="A dog smiling in a party hat" /> // highlight-line
+  )
+}
 ```
 
 3. Run `gatsby develop` to start the development server.
@@ -353,17 +357,19 @@ import React from "react"
 import { graphql } from "gatsby" // highlight-line
 import Img from "gatsby-image" // highlight-line
 
-export default function Layout({ children, data }) (
-  <main>
-    // highlight-start
-    <Img
-      fluid={data.markdown.frontmatter.image.childImageSharp.fluid}
-      alt="A corgi smiling happily"
-    />
-    // highlight-end
-    {children}
-  </main>
-)
+export default function Layout({ children, data }) {
+  return (
+    <main>
+      // highlight-start
+      <Img
+        fluid={data.markdown.frontmatter.image.childImageSharp.fluid}
+        alt="A corgi smiling happily"
+      />
+      // highlight-end
+      {children}
+    </main>
+  )
+}
 
 // highlight-start
 export const pageQuery = graphql`
