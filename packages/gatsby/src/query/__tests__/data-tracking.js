@@ -68,7 +68,7 @@ jest.mock(`../../redux/persist`, () => {
   }
 })
 
-let mockedLokiFsAdapter = {
+const mockedLokiFsAdapter = {
   loadDatabase: (dbname, callback) => {
     callback(lokiStorage[dbname])
   },
@@ -79,7 +79,7 @@ let mockedLokiFsAdapter = {
   },
 }
 
-let pluginOptions = {}
+const pluginOptions = {}
 
 let mockAPIs = {}
 const setAPIhooks = hooks => (mockAPIs = { ...mockAPIs, ...hooks })
@@ -184,7 +184,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     },
   })
 
-  await require(`../../utils/source-nodes`)({})
+  await require(`../../utils/source-nodes`).default({})
   // trigger page-hot-reloader (if it was setup in previous test)
   emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
 

@@ -26,7 +26,7 @@ Gatsby Builds solves this problem by making our deployment process as fast as ou
 
 - [Third and Grove](https://www.thirdandgrove.com/) saw _60x_ build-time reductions from **60 minutes to 1 minute** for their large 15,000 page, image-heavy Gatsby/Drupal site.
 - [Gatsbyjs.org](https://gatsbyjs.org) saw _9x_ reduced build times from **45 minutes to 5 minutes**.
-- Our [image processing benchmark site](https://github.com/KyleAMathews/gatsby-image-processing-test) saw *5x *reduced build times from **200 seconds to 40 seconds.**
+- Our [image processing benchmark site](https://github.com/KyleAMathews/gatsby-image-processing-test) saw _5x_ reduced build times from **200 seconds to 40 seconds.**
 
 **All sites should see at least a 2-3x improvement in build speeds.**
 
@@ -194,7 +194,7 @@ Each successful build is counted as only one real-time edit—regardless of how 
 
 We have three pricing tiers:
 
-- **Free. **Designed for teams working on smaller sites. Includes 25 daily real-time edits (e.g. 25 builds).
+- **Free.** Designed for teams working on smaller sites. Includes 25 daily real-time edits (e.g. 25 builds).
 - **Professional**. \$99/month and includes 125 real-time daily edits
 - **Business**. \$249/month and includes 300 daily edits.
 

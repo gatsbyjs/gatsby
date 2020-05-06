@@ -28,7 +28,7 @@ const {
   processFieldExtensions,
   internalExtensionNames,
 } = require(`./extensions`)
-const { getPagination } = require(`./types/pagination`)
+import { getPagination } from "./types/pagination"
 const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
 const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
 const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
