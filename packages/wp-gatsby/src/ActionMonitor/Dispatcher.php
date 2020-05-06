@@ -27,10 +27,15 @@ class Dispatcher {
 	}
 
 	public function trigger_dispatch() {
-		$webhook_url = Settings::prefix_get_option( 'builds_api_webhook', 'wpgatsby_settings', false );
+    $webhook_field = Settings::prefix_get_option( 'builds_api_webhook', 'wpgatsby_settings', false );
 
-		if ( $webhook_url && $this->should_dispatch ) {
-			wp_safe_remote_post( $webhook_url );
+		if ( $webhook_field && $this->should_dispatch ) {
+
+      $webhooks = explode( ',', $webhook_field );
+
+      foreach ( $webhooks as $webhook ) {
+        wp_safe_remote_post( $webhook );
+      }
 		}
 	}
 }
