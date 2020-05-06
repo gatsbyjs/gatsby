@@ -2,6 +2,7 @@
 import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { graphql } from "gatsby"
+import { SkipNavContent } from "@reach/skip-nav"
 import Link from "../components/localized-link"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
@@ -10,6 +11,8 @@ import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
+
+
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 
@@ -90,8 +93,8 @@ class CreatorTemplate extends Component {
               alignItems: `flex-start`,
             },
           }}
-          id={`reach-skip-nav`}
           >
+          <SkipNavContent/>
           <div
             sx={{
               m: 6,

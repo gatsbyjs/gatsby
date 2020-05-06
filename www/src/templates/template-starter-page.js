@@ -11,6 +11,7 @@ import StarterSource from "../views/starter/source"
 import StarterInstallation from "../views/starter/installation"
 import StarterDetails from "../views/starter/details"
 import FooterLinks from "../components/shared/footer-links"
+import { SkipNavContent } from "@reach/skip-nav"
 
 const getScreenshot = (data, fallback) => {
   if (!data.screenshotFile || !data.screenshotFile.childImageSharp) {
@@ -47,7 +48,8 @@ class StarterTemplate extends React.Component {
     // TODO enable modal view
     const repoName = starterShowcase.name
     return (
-      <main id={`reach-skip-nav`}>
+      <main>
+        <SkipNavContent/>
         <div
           css={{
             alignItems: `center`,

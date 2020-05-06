@@ -6,6 +6,7 @@ import styled from "@emotion/styled"
 import PropTypes from "prop-types"
 import { kebabCase } from "lodash-es"
 import { TiArrowRight } from "react-icons/ti"
+import { SkipNavContent } from "@reach/skip-nav"
 
 import PageMetadata from "../../components/page-metadata"
 import Link from "../../components/localized-link"
@@ -116,7 +117,8 @@ class TagsPage extends React.Component {
     })
 
     return (
-    <main id={`reach-skip-nav`}>
+    <main>
+      <SkipNavContent/>
         <Container>
           <PageMetadata
             title="Tags"

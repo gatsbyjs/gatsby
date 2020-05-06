@@ -2,12 +2,12 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
-
 import Avatar from "../components/avatar"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FooterLinks from "../components/shared/footer-links"
 import PageMetadata from "../components/page-metadata"
+import { SkipNavContent } from "@reach/skip-nav"
 
 class ContributorPageTemplate extends React.Component {
   render() {
@@ -19,7 +19,8 @@ class ContributorPageTemplate extends React.Component {
     )
 
     return (
-      <main id={`reach-skip-nav`}>
+      <main>
+        <SkipNavContent/>
         <PageMetadata
           title={`${contributor.id} - Contributor`}
           description={contributor.bio}

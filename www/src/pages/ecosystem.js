@@ -5,6 +5,7 @@ import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
 import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
+import { SkipNavContent } from "@reach/skip-nav"
 
 import { EcosystemIcon } from "../assets/icons"
 import { PluginsIcon, StartersIcon } from "../assets/icons/ecosystem-icons"
@@ -46,7 +47,8 @@ class EcosystemPage extends Component {
     const boardIcons = { plugins: PluginsIcon, starters: StartersIcon }
 
     return (
-       <main id={`reach-skip-nav`}>
+       <main>
+        <SkipNavContent/>
         <Layout
           location={location}
           pageTitle={pageTitle}

@@ -7,7 +7,7 @@ import {
   MdArrowForward as ArrowForwardIcon,
   MdSort,
 } from "react-icons/md"
-
+import { SkipNavContent } from "@reach/skip-nav"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { loadMoreButton } from "../shared/styles"
 import LHSFilter from "./lhs-filter"
@@ -101,7 +101,8 @@ export default class FilteredStarterLibrary extends Component {
     }
 
     return (
-      <main id={`reach-skip-nav`}>
+      <main>
+        <SkipNavContent/>
         <section className="showcase" css={{ display: `flex` }}>
           <SidebarContainer css={{ overflowY: `auto` }}>
             <SidebarHeader />
