@@ -4,6 +4,7 @@ import ReactDOM from "react-dom"
 import { Router, navigate, Location, BaseContext } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "@mikaelkristiansson/domready"
+import { StaticQueryContext } from "gatsby"
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -65,35 +66,46 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       const { location } = this.props
       return (
         <EnsureResources location={location}>
-          {({ pageResources, location }) => (
-            <RouteUpdates location={location}>
-              <ScrollContext
-                location={location}
-                shouldUpdateScroll={shouldUpdateScroll}
+          {({ pageResources, location }) => {
+            console.log({
+              pageResources,
+              location,
+              staticQueryData: pageResources.staticQueryData,
+            })
+            return (
+              <StaticQueryContext.Provider
+                value={pageResources.staticQueryData}
               >
-                <Router
-                  basepath={__BASE_PATH__}
-                  location={location}
-                  id="gatsby-focus-wrapper"
-                >
-                  <RouteHandler
-                    path={
-                      pageResources.page.path === `/404.html`
-                        ? stripPrefix(location.pathname, __BASE_PATH__)
-                        : encodeURI(
-                            pageResources.page.matchPath ||
-                              pageResources.page.path
-                          )
-                    }
-                    {...this.props}
+                <RouteUpdates location={location}>
+                  <ScrollContext
                     location={location}
-                    pageResources={pageResources}
-                    {...pageResources.json}
-                  />
-                </Router>
-              </ScrollContext>
-            </RouteUpdates>
-          )}
+                    shouldUpdateScroll={shouldUpdateScroll}
+                  >
+                    <Router
+                      basepath={__BASE_PATH__}
+                      location={location}
+                      id="gatsby-focus-wrapper"
+                    >
+                      <RouteHandler
+                        path={
+                          pageResources.page.path === `/404.html`
+                            ? stripPrefix(location.pathname, __BASE_PATH__)
+                            : encodeURI(
+                                pageResources.page.matchPath ||
+                                  pageResources.page.path
+                              )
+                        }
+                        {...this.props}
+                        location={location}
+                        pageResources={pageResources}
+                        {...pageResources.json}
+                      />
+                    </Router>
+                  </ScrollContext>
+                </RouteUpdates>
+              </StaticQueryContext.Provider>
+            )
+          }}
         </EnsureResources>
       )
     }

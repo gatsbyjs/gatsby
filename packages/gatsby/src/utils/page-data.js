@@ -21,7 +21,7 @@ const remove = async ({ publicDir }, pagePath) => {
   return Promise.resolve()
 }
 
-const write = async ({ publicDir }, page, result) => {
+const writePageData = async ({ publicDir }, page, result) => {
   const filePath = getFilePath({ publicDir }, page.path)
   const body = {
     componentChunkName: page.componentChunkName,
@@ -44,9 +44,29 @@ const write = async ({ publicDir }, page, result) => {
   await fs.outputFile(filePath, bodyStr)
 }
 
+const write = async ({ publicDir }, pagePath, data) => {
+  const filePath = getFilePath({ publicDir }, pagePath)
+  console.log(filePath)
+
+  // TODO: Gracefully check if the file exists or not
+  // while we're pretty sure it does at the point in time where this fn is called
+
+  const fileContents = await fs.readJSON(filePath)
+
+  const body = {
+    ...data,
+    ...fileContents,
+  }
+
+  const bodyStr = JSON.stringify(body)
+
+  await fs.outputFile(filePath, bodyStr)
+}
+
 module.exports = {
   read,
   write,
+  writePageData,
   remove,
   fixedPagePath,
 }

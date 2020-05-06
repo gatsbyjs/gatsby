@@ -137,7 +137,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
       const publicDir = path.join(program.directory, `public`)
       const { pages } = store.getState()
       const page = pages.get(queryJob.id)
-      await pageDataUtil.write({ publicDir }, page, result)
+      await pageDataUtil.writePageData({ publicDir }, page, result)
     } else {
       // The babel plugin is hard-coded to load static queries from
       // public/static/d/

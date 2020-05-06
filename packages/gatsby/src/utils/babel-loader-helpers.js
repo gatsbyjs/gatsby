@@ -28,9 +28,12 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
 
   // Required plugins/presets
   const requiredPlugins = [
-    babel.createConfigItem([resolve(`babel-plugin-remove-graphql-queries`)], {
-      type: `plugin`,
-    }),
+    babel.createConfigItem(
+      [resolve(`babel-plugin-remove-graphql-queries`), { stage }],
+      {
+        type: `plugin`,
+      }
+    ),
   ]
   const requiredPresets = []
 
