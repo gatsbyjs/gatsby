@@ -68,7 +68,7 @@ aliases:
       - run: yarn list react
       - run:
           command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci --reporters=jest-junit
-          environnement:
+          environment:
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
