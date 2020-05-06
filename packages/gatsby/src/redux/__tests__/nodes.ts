@@ -101,9 +101,9 @@ describe(`Create and update nodes`, (): void => {
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
 
-    expect(state.get(`hi`)?.pickle).toEqual(false)
-    expect((state.get(`hi`)?.deep2 as any).array?.[0]).toEqual(1)
-    expect((state.get(`hi`)?.deep2 as any).boom).toEqual(`foo`)
+    expect(state.get(`hi`)!.pickle).toEqual(false)
+    expect((state.get(`hi`)!.deep as any).array![0]).toEqual(1)
+    expect((state.get(`hi`)!.deep2 as any).boom).toEqual(`foo`)
   })
 
   it(`nodes that are added are also "touched"`, (): void => {
