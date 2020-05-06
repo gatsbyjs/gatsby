@@ -4,7 +4,10 @@ const { murmurhash } = require(`./murmur`)
 const nodePath = require(`path`)
 
 class StringInterpolationNotAllowedError extends Error {
-  constructor(interpolationStart, interpolationEnd) {
+  interpolationStart: Object
+  interpolationEnd: Object
+
+  constructor(interpolationStart: any, interpolationEnd: any) {
     super(
       `BabelPluginRemoveGraphQLQueries: String interpolations are not allowed in graphql ` +
         `fragments. Included fragments should be referenced ` +
@@ -17,7 +20,9 @@ class StringInterpolationNotAllowedError extends Error {
 }
 
 class EmptyGraphQLTagError extends Error {
-  constructor(locationOfGraphqlString) {
+  templateLoc: any
+
+  constructor(locationOfGraphqlString: any) {
     super(`BabelPluginRemoveGraphQLQueries: Unexpected empty graphql tag.`)
     this.templateLoc = locationOfGraphqlString
     Error.captureStackTrace(this, EmptyGraphQLTagError)
@@ -25,7 +30,11 @@ class EmptyGraphQLTagError extends Error {
 }
 
 class GraphQLSyntaxError extends Error {
-  constructor(documentText, originalError, locationOfGraphqlString) {
+  documentText: string
+  originalError: Error
+  templateLoc: any
+
+  constructor(documentText: string, originalError: Error, locationOfGraphqlString: any) {
     super(
       `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${documentText}\n\nmessage:\n\n${originalError}`
     )
