@@ -116,6 +116,7 @@
     "postcss-loader": "^3.0.0",
     "prompts": "^2.3.2",
     "prop-types": "^15.7.2",
+    "query-string": "^6.12.1",
     "raw-loader": "^0.5.1",
     "react-dev-utils": "^4.2.3",
     "react-error-overlay": "^3.0.0",
