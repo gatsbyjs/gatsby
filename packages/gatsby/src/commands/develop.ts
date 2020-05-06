@@ -114,6 +114,9 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 
   script.on(`message`, msg => {
+    // Forward IPC
+    if (process.send) process.send(msg)
+
     if (
       msg.type === `LOG_ACTION` &&
       msg.action.type === `SET_STATUS` &&
