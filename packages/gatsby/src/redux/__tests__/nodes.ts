@@ -10,13 +10,7 @@ const dispatch = jest.fn()
 
 type MapObject = Record<string, IGatsbyNode>
 
-const fromMapToObject = (map): MapObject => {
-  const obj: MapObject = {}
-  Array.from(map.entries()).forEach(([key, value]) => {
-    obj[key] = value
-  })
-  return obj
-}
+const fromMapToObject = (map): MapObject => Object.fromEntries(map)
 
 describe(`Create and update nodes`, (): void => {
   beforeEach((): void => {
@@ -100,9 +94,13 @@ describe(`Create and update nodes`, (): void => {
 
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
-    expect(state.get(`hi`).pickle).toEqual(false)
-    expect(state.get(`hi`).deep.array[0]).toEqual(1)
-    expect(state.get(`hi`).deep2.boom).toEqual(`foo`)
+
+    const deep = state.get(`hi`)?.deep as any
+    const deep2 = state.get(`hi`)?.deep2 as any
+
+    expect(state.get(`hi`)?.pickle).toEqual(false)
+    expect(deep.array?.[0]).toEqual(1)
+    expect(deep2.boom).toEqual(`foo`)
   })
 
   it(`nodes that are added are also "touched"`, (): void => {
