@@ -3,6 +3,7 @@ import chalk from "chalk"
 import { forEach } from "p-iteration"
 import { printGraphQLError, queryAll, queryOnce } from "./lib"
 import { createClient } from "./create-client"
+import PluginOptions from './pluginOptions'
 
 import {
   ArticleNode,
@@ -53,8 +54,20 @@ export const sourceNodes = async (
     verbose = true,
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],
+    downloadImages,
+    defaultImageUrl,
   }
 ) => {
+  // sending options into PluginOptions Singleton Class
+  PluginOptions.setShopName(shopName)
+    .setAccessToken(accessToken)
+    .setApiVersion(apiVersion)
+    .setVerbose(verbose)
+    .setPaginationSize(paginationSize)
+    .setIncludeCollections(includeCollections)
+    .setDownloadImages(downloadImages)
+    .setDefaultImageUrl(defaultImageUrl);
+
   const client = createClient(shopName, accessToken, apiVersion)
 
   // Convenience function to namespace console messages.
