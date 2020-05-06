@@ -2,16 +2,13 @@
 
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
-import PageMetadata from "./page-metadata"
-import Link from "./localized-link"
-import Container from "./container"
-import FooterLinks from "./shared/footer-links"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import { FaUsers as CommunityIcon } from "react-icons/fa"
 
-import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
+import PageMetadata from "../components/page-metadata"
 import Link from "../components/localized-link"
 import Container from "../components/container"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import FooterLinks from "../components/shared/footer-links"
 import GatsbyIcon from "../components/gatsby-monogram"
 
