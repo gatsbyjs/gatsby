@@ -92,7 +92,7 @@ export default async ({
     traceId: `initial-sourceNodes`,
     waitForCascadingActions: true,
     parentSpan,
-    webhookBody,
+    webhookBody: webhookBody || {},
   })
 
   const state = store.getState()
