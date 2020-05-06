@@ -2,6 +2,7 @@
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
 import { sortBy } from "lodash-es"
+
 import APIReference from "../components/api-reference"
 import DocsMarkdownPage from "../components/docs-markdown-page"
 
@@ -65,24 +66,21 @@ const mergeFunctions = (data, context) => {
 export default function APITemplate({ data, location, pageContext }) {
   const { prev, next } = pageContext
   const page = data.mdx
-  const heading = page.frontmatter.contentsHeading || "APIs"
+  const { frontmatter, tableOfContents } = page
+  const heading = frontmatter.contentsHeading || "APIs"
   const headingId = "apis"
-
-  const getAPIItems = (mergedFuncs) => {
-    return [{
-      title: heading,
-      url: `#${headingId}`,
-      items: mergedFuncs.map(mergedFunc => ({
-        url: `#${mergedFunc.name}`,
-        title: mergedFunc.name,
-      })),
-    }]
-  }
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
-  const items = getAPIItems(mergedFuncs)
-  const depth = Math.max(page.frontmatter.tableOfContentsDepth, 2)
+  const tableOfContentsItems = [...tableOfContents.items, {
+    title: heading,
+    url: `#${headingId}`,
+    items: mergedFuncs.map(mergedFunc => ({
+      url: `#${mergedFunc.name}`,
+      title: mergedFunc.name,
+    })),
+  }];
+  const tableOfContentsDepth = Math.max(frontmatter.tableOfContentsDepth, 2)
 
   return (
     <DocsMarkdownPage
@@ -90,13 +88,13 @@ export default function APITemplate({ data, location, pageContext }) {
       location={location}
       prev={prev}
       next={next}
-      depth={depth}
-      items={items}
+      tableOfContentsItems={tableOfContentsItems}
+      tableOfContentsDepth={tableOfContentsDepth}
     >
       <h2 id={headingId}>{heading}</h2>
       <APIReference
         docs={mergedFuncs}
-        showTopLevelSignatures={page.frontmatter.showTopLevelSignatures}
+        showTopLevelSignatures={frontmatter.showTopLevelSignatures}
       />
     </DocsMarkdownPage>
   )

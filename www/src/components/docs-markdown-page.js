@@ -30,37 +30,23 @@ function DocsMarkdownPage({
   location,
   prev,
   next,
-  items: itemsProp = [],
-  depth: depthProp,
+  tableOfContentsItems = page.tableOfContents.items,
+  tableOfContentsDepth = page.frontmatter.tableOfContentsDepth,
   children,
   ...others
 }) {
-  const getTOCItems = () => {
-    if (page.frontmatter.disableTableOfContents) {
-      return []
-    }
-
-    const items = page.tableOfContents.items || [];
-
-    return [...items, ...itemsProp]
-  }
-
-  const getTOCDepth = () => {
-    return depthProp === undefined ? page.frontmatter.tableOfContentsDepth : depthProp
-  }
-
-  const description = page.frontmatter.description || page.excerpt
-  const items = getTOCItems()
-  const depth = getTOCDepth()
-  const isTOCVisible = items.length > 0
+  const { frontmatter, excerpt, timeToRead, fields, body } = page
+  const description = frontmatter.description || excerpt
+  const isTOCVisible =
+    !frontmatter.disableTableOfContents && tableOfContentsItems?.length > 0
 
   return (
     <PageWithSidebar location={location} {...others}>
       <PageMetadata
-        title={page.frontmatter.title}
+        title={frontmatter.title}
         description={description}
         type="article"
-        timeToRead={page.timeToRead}
+        timeToRead={timeToRead}
       />
       <DocSearchContent>
         <Container
@@ -75,8 +61,8 @@ function DocsMarkdownPage({
           }}
         >
           <Breadcrumb location={location} />
-          <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
-            {page.frontmatter.title}
+          <h1 id={fields.anchor} sx={{ mt: 0 }}>
+            {frontmatter.title}
           </h1>
         </Container>
         <Container
@@ -110,22 +96,22 @@ function DocsMarkdownPage({
               }}
             >
               <TableOfContents
-                items={items}
+                items={tableOfContentsItems}
+                depth={tableOfContentsDepth}
                 location={location}
-                depth={depth}
               />
             </div>
           )}
           <div
             sx={{
-              [page.tableOfContents.items && mediaQueries.xl]: {
+              [isTOCVisible && mediaQueries.xl]: {
                 maxWidth: `mainContentWidth.withSidebar`,
                 minWidth: 0,
               },
             }}
           >
             <div>
-              <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
+              <MDXRenderer slug={fields.slug}>{body}</MDXRenderer>
               {children}
               <MarkdownPageFooter page={page} />
               <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />

@@ -7,7 +7,8 @@ import DocsMarkdownPage from "../components/docs-markdown-page"
 
 function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const page = data.mdx
-  const [urlSegment] = page.fields.slug.split(`/`).slice(1)
+  const { frontmatter, fields } = page
+  const [urlSegment] = fields.slug.split(`/`).slice(1)
 
   return (
     <DocsMarkdownPage
@@ -17,7 +18,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
       next={next}
       enableScrollSync={urlSegment === "tutorial"}
     >
-      {page.frontmatter.issue && (
+      {frontmatter.issue && (
         <a
           href={page.frontmatter.issue}
           target="_blank"
