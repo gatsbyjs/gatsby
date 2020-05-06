@@ -1,6 +1,6 @@
-# MDX Benchmark
+# MD Benchmark
 
-Benchmark for MDX pages.
+Benchmark for MD pages.
 Mock data is generated during the dependency installation step.
 The number of pages generated is read from `NUM_PAGES=` (defaults to `512`).
 
