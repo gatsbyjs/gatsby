@@ -11,6 +11,7 @@ import fs from "fs-extra"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
+import { Signal } from "signal-exit"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -55,15 +56,15 @@ class ControllableScript {
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
   }
-  stop(): void {
-    this.process.kill()
+  stop(signal?: string): void {
+    this.process.kill(signal)
   }
   on(type, callback): void {
     this.process.on(type, callback)
   }
 }
 
-const createControllableScript = (script: string): IRespawnMonitor => {
+const createControllableScript = (script: string): ControllableScript => {
   const controllableScript = new ControllableScript(script)
   return controllableScript
 }
@@ -115,10 +116,9 @@ module.exports = async (program: IProgram): Promise<void> => {
     socket.on(`develop:restart`, () => {
       const activity = report.activityTimer(`Restarting develop process...`)
       activity.start()
-      script.stop(() => {
-        activity.end()
-        script.start()
-      })
+      script.stop()
+      activity.end()
+      script.start()
     })
   })
 
@@ -147,9 +147,10 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   })
 
-  process.on(`exit`, () => {
-    script.stop()
-  })
+  process.on(`exit`, () => script.stop())
+
+  process.on(`SIGINT`, () => script.stop(`SIGINT`))
+  process.on(`SIGTERM`, () => script.stop(`SIGTERM`))
 
   const rootFile = (file: string): string => path.join(program.directory, file)
 
