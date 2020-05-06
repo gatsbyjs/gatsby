@@ -1,6 +1,8 @@
 import fetchGraphql from "~/utils/fetch-graphql"
 import { formatLogMessage } from "~/utils/format-log-message"
 
+import { getPluginOptions } from "~/utils/get-gatsby-api"
+
 import {
   supportedWpPluginVersions,
   genericDownloadMessage,
@@ -101,8 +103,15 @@ const ensurePluginRequirementsAreMet = async (helpers, _pluginOptions) => {
     return
   }
 
+  const {
+    debug: { disableCompatibilityCheck },
+  } = getPluginOptions()
+
   await isWpGatsby()
-  await areRemotePluginVersionsSatisfied({ helpers })
+
+  if (!disableCompatibilityCheck) {
+    await areRemotePluginVersionsSatisfied({ helpers })
+  }
 }
 
 export { ensurePluginRequirementsAreMet }

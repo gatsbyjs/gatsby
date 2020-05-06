@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.10
+
+- Added plugin option `debug.disableCompatibilityCheck`. This is useful for testing the source plugin against versions of WPGraphQL outside the current accepted version range.
+
 ## 0.1.9
 
 ### Bug Fixes

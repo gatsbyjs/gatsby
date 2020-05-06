@@ -15,6 +15,7 @@ const defaultPluginOptions = {
       onlyReportCriticalErrors: true,
       copyNodeSourcingQueryAndExit: false,
     },
+    disableCompatibilityCheck: false,
   },
   develop: {
     nodeUpdateInterval: 300,
