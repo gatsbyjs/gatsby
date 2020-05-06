@@ -329,9 +329,9 @@ module.exports = (
     rawHTML = `
     <span
       class="${imageWrapperClass}"
-      style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: ${presentationWidth}px; ${
         imageCaption ? `` : wrapperStyle
-      } max-width: ${presentationWidth}px;"
+      }"
     >
       ${rawHTML}
     </span>
