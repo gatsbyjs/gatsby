@@ -26,7 +26,7 @@ export const query = graphql`
         siteTitle
       }
     }
-    articles: allMdx(limit: 100) {
+    articles: allMarkdownRemark(limit: 100) {
       nodes {
         frontmatter {
           title

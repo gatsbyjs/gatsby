@@ -12,7 +12,7 @@ interface IArticleAttributes {
 
 ;(async () => {
   // get the first article file
-  const [articleFilePath] = glob.sync(`./src/articles/**/*.mdx`)
+  const [articleFilePath] = glob.sync(`./src/articles/**/*.md`)
   const articleFileContents = await fs.readFile(articleFilePath, `utf8`)
 
   // parse the frontmatter
