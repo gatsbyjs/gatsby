@@ -46,7 +46,7 @@ class PluginOptions {
   }
 
   get defaultImageUrl() {
-    return this.#defaultImage;
+    return this.#defaultImageUrl;
   }
 
   setShopName(shopName) {
