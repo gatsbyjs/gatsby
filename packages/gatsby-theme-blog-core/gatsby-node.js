@@ -2,8 +2,9 @@ const fs = require(`fs`)
 const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const Debug = require(`debug`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const { createFilePath, createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { urlResolve, createContentDigest } = require(`gatsby-core-utils`)
+const url = require('url');
 
 const debug = Debug(`gatsby-theme-blog-core`)
 const withDefaults = require(`./utils/default-options`)
@@ -85,7 +86,10 @@ exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
           resolve: mdxResolverPassthrough(`excerpt`),
         },
         image: {
-          type: 'File',
+          type: `File`,
+          extensions: {
+            link: {}
+          }
         },
         imageAlt: {
           type: `String`,
@@ -99,14 +103,29 @@ exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
         },
       },
       interfaces: [`Node`, `BlogPost`],
+      extensions: {
+        infer: false,
+      }
     })
   )
+}
+
+function validURL(str) {
+  try {
+    url.parse(str)
+    return true
+  } catch {
+    return false
+  }
 }
 
 // Create fields for post slugs and source
 // This will change with schema customization with work
 exports.onCreateNode = async (
-  { node, actions, getNode, createNodeId },
+  { node, actions, getNode, createNodeId,
+    getNodesByType,
+    store,
+    cache},
   themeOptions
 ) => {
   const { createNode, createParentChildLink } = actions
@@ -143,14 +162,39 @@ exports.onCreateNode = async (
     }
     // normalize use of trailing slash
     slug = slug.replace(/\/*$/, `/`)
+
     const fieldData = {
       title: node.frontmatter.title,
       tags: node.frontmatter.tags || [],
       slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
-      image: node.frontmatter.image,
       socialImage: node.frontmatter.socialImage
+    }
+
+    if (validURL(node.frontmatter.image)) { // create a file node for image URLs
+      let fileNode = await createRemoteFileNode({
+        url: node.frontmatter.image, 
+        parentNodeId: node.id, 
+        createNode, 
+        createNodeId, 
+        cache,
+        store
+      })
+      // if the file was created, attach the new node to the parent node
+      if (fileNode) {
+        fieldData.image = fileNode.id
+      }
+    } else if (node.frontmatter.image) { // for relative paths, find the file node to assign it
+      const fileNodes = getNodesByType(`File`)
+
+      for (let file of fileNodes) {
+        const imagePath = node.frontmatter.image.match('([^\/]+$)')[1] // parse out the file path
+        if (file.absolutePath === path.join(fileNode.dir, imagePath)) {
+          fieldData.image = file.id
+          break
+        }
+      }
     }
 
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
