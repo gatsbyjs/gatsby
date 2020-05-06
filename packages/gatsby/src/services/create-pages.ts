@@ -5,19 +5,26 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { boundActionCreators } from "../redux/actions"
 const { deletePage, deleteComponentsDependencies } = boundActionCreators
 
-import { differenceWith, isEqualWith } from "lodash"
+import { differenceWith, isEqualWith, IsEqualCustomizer } from "lodash"
 
 export async function createPages({
   parentSpan,
   graphqlRunner,
   store,
 }: IBuildContext): Promise<{ changedPages: string[]; deletedPages: string[] }> {
+  if (!store) {
+    reporter.panic(`store not initialized`)
+    return {
+      changedPages: [],
+      deletedPages: [],
+    }
+  }
   const activity = reporter.activityTimer(`createPages`, {
     parentSpan,
   })
   activity.start()
   const timestamp = Date.now()
-  const currentPages = Array.from(store?.getState().pages.values() || [])
+  const currentPages = new Map(store.getState().pages)
 
   await apiRunnerNode(
     `createPages`,
@@ -34,8 +41,9 @@ export async function createPages({
   const deletedPages: string[] = []
   activity.end()
 
+  reporter.info(`Checking for deleted pages`)
   // Delete pages that weren't updated when running createPages.
-  Array.from(store?.getState().pages.values() || []).forEach(page => {
+  store.getState().pages.forEach(page => {
     if (
       !page.isCreatedByStatefulCreatePages &&
       page.updatedAt < timestamp &&
@@ -46,22 +54,31 @@ export async function createPages({
       deletedPages.push(page.path, `/page-data${page.path}`)
     }
   })
+  reporter.info(
+    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
+  )
 
-  const newPages = Array.from(store?.getState().pages.values() || [])
+  const tim = reporter.activityTimer(`Checking for changed pages`)
+  tim.start()
 
-  const changedPages = differenceWith(
-    newPages,
-    currentPages,
-    (newPage, oldPage) => {
-      if (newPage.path === oldPage.path) {
-        return isEqualWith(newPage, oldPage, (_left, _right, key) =>
-          key === `updatedAt` ? true : undefined
-        )
-      } else {
-        return false
-      }
+  const changedPages: string[] = []
+
+  const compareWithoutUpdated: IsEqualCustomizer = (_left, _right, key) =>
+    key === `updatedAt` || undefined
+
+  store.getState().pages.forEach((newPage, key) => {
+    const oldPage = currentPages.get(key)
+    if (!oldPage || !isEqualWith(newPage, oldPage, compareWithoutUpdated)) {
+      changedPages.push(key)
     }
-  ).map(page => page.path)
+  })
+
+  reporter.info(
+    `Found ${changedPages.length} changed page${
+      changedPages.length === 1 ? `` : `s`
+    }`
+  )
+  tim.end()
 
   return {
     changedPages,
