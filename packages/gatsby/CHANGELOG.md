@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.15...gatsby@2.21.16) (2020-05-06)
+
+### Features
+
+- **gatsby/dev-404-page:** support reading and writing filter to `?filter` query string ([#23618](https://github.com/gatsbyjs/gatsby/issues/23618)) ([8f4257a](https://github.com/gatsbyjs/gatsby/commit/8f4257a))
+
 ## [2.21.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.14...gatsby@2.21.15) (2020-05-06)
 
 **Note:** Version bump only for package gatsby
