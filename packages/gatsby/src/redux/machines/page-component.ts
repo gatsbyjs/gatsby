@@ -1,10 +1,40 @@
-import { Machine as machine, assign, AnyEventObject } from "xstate"
+import { Machine as machine, assign } from "xstate"
 
 interface IContext {
   isInBootstrap: boolean
   componentPath: string
   query: string
   pages: Set<string>
+}
+
+interface IState {
+  states: {
+    inactive: {}
+    inactiveWhileBootstrapping: {}
+    queryExtractionGraphQLError: {}
+    queryExtractionBabelError: {}
+    runningPageQueries: {}
+    idle: {}
+  }
+}
+
+type ActionTypes =
+  | "BOOTSTRAP_FINISHED"
+  | "DELETE_PAGE"
+  | "NEW_PAGE_CREATED"
+  | "PAGE_CONTEXT_MODIFIED"
+  | "QUERY_EXTRACTION_GRAPHQL_ERROR"
+  | "QUERY_EXTRACTION_BABEL_ERROR"
+  | "QUERY_EXTRACTION_BABEL_SUCCESS"
+  | "QUERY_CHANGED"
+  | "QUERY_DID_NOT_CHANGE"
+  | "QUERIES_COMPLETE"
+
+interface IEvent {
+  type: ActionTypes
+  path?: string
+  query?: string
+  page: { path: string }
 }
 
 const defaultContext: IContext = {
@@ -103,8 +133,8 @@ export const componentMachine = machine<IContext, IState, IEvent>(
         }, 0)
       },
       setQuery: assign({
-        query: (ctx, event: AnyEventObject) => {
-          if (typeof event.query !== `undefined` || event.query !== null) {
+        query: (ctx, event): string => {
+          if (typeof event.query !== `undefined` && event.query !== null) {
             return event.query
           } else {
             return ctx.query
@@ -112,7 +142,7 @@ export const componentMachine = machine<IContext, IState, IEvent>(
         }
       }),
       setPage: assign({
-        pages: (ctx, event: AnyEventObject) => {
+        pages: (ctx, event) => {
           if (event.path) {
             const queryUtil = require(`../../query`)
             // Wait a bit as calling this function immediately triggers
@@ -131,14 +161,14 @@ export const componentMachine = machine<IContext, IState, IEvent>(
         }
       }),
       deletePage: assign({
-        pages: (ctx, event: AnyEventObject) => {
+        pages: (ctx, event) => {
           ctx.pages.delete(event.page.path)
           return ctx.pages
         }
       }),
-      setBootstrapFinished: assign({
+      setBootstrapFinished: assign<IContext>({
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        isInBootstrap: (_ctx, _event): boolean => false
+        isInBootstrap: false
       })
     }
   }
