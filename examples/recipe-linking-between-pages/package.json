@@ -5,15 +5,15 @@
   "version": "0.1.0",
   "author": "@gatsbyjs",
   "dependencies": {
-    "gatsby": "^2.21.0",
+    "gatsby": "^2.21.13",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "cypress": "^4.4.1",
-    "gatsby-cypress": "^0.4.0",
+    "cypress": "^4.5.0",
+    "gatsby-cypress": "^0.4.1",
     "prettier": "2.0.5",
     "start-server-and-test": "^1.11.0"
   },

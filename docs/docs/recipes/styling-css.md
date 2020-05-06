@@ -146,20 +146,22 @@ const User = props => (
   </>
 )
 
-export default function UsersList() (
-  <Container>
-    <h1>About Styled Components</h1>
-    <p>Styled Components is cool</p>
-    <User
-      username="Jane Doe"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-    />
-    <User
-      username="Bob Smith"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-    />
-  </Container>
-)
+export default function UsersList() {
+  return (
+    <Container>
+      <h1>About Styled Components</h1>
+      <p>Styled Components is cool</p>
+      <User
+        username="Jane Doe"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+      />
+      <User
+        username="Bob Smith"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+      />
+    </Container>
+  )
+}
 ```
 
 4. Run `gatsby develop` to see the changes
@@ -194,11 +196,13 @@ import React from "react"
 // highlight-start
 import style from "./index.module.css"
 
-export default function Home() (
-  <section className={style.feature}>
-    <h1>Using CSS Modules</h1>
-  </section>
-)
+export default function Home() {
+  return (
+    <section className={style.feature}>
+      <h1>Using CSS Modules</h1>
+    </section>
+  )
+}
 // highlight-end
 ```
 
@@ -342,18 +346,20 @@ Import Emotion's `css` core package. You can then use the `css` prop to add [Emo
 import React from "react"
 import { css } from "@emotion/core"
 
-export default function EmotionSample() (
-  <div>
-    <p
-      css={{
-        background: "pink",
-        color: "blue",
-      }}
-    >
-      This page is using Emotion.
-    </p>
-  </div>
-)
+export default function EmotionSample() {
+  return (
+    <div>
+      <p
+        css={{
+          background: "pink",
+          color: "blue",
+        }}
+      >
+        This page is using Emotion.
+      </p>
+    </div>
+  )
+}
 ```
 
 4. To use Emotion's [styled components](https://emotion.sh/docs/styled), import the package and define them using the `styled` function.
@@ -370,11 +376,13 @@ const Content = styled.div`
   }
 `
 
-export default function EmotionSample() (
-  <Content>
-    <p>This page is using Emotion.</p>
-  </Content>
-)
+export default function EmotionSample() {
+  return (
+    <Content>
+      <p>This page is using Emotion.</p>
+    </Content>
+  )
+}
 ```
 
 ### Additional resources
