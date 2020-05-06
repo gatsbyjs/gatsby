@@ -55,7 +55,7 @@ export const sourceNodes = async (
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],
     downloadImages=true,
-    defaultImageUrl='https://raw.githubusercontent.com/lukebennett88/gatsby-transformer-shopify-images/topic/shopify-option-downloadImages/plugins/gatsby-source-shopify/src/default.png',
+    defaultImageUrl='https://raw.githubusercontent.com/mrhut10/gatsby/Feature/gatsby-source-shopify/downloadImagesOption/packages/gatsby-source-shopify/src/default.png',
   }
 ) => {
   // sending options into PluginOptions Singleton Class
