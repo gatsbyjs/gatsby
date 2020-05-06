@@ -16,7 +16,6 @@ export const jobsV2Reducer = (
     case `CREATE_JOB_V2`: {
       const { job, plugin } = action.payload
 
-
       state.incomplete.set(job.contentDigest, {
         job,
         plugin,
