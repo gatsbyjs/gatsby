@@ -25,9 +25,7 @@ describe(`navigate`, () => {
   })
 
   it(`can navigate to 404`, () => {
-    cy.getTestElement(`404-link`)
-      .click()
-      .waitForRouteChange()
+    cy.getTestElement(`404-link`).click().waitForRouteChange()
 
     cy.get(`h1`).contains(`NOT FOUND`)
   })

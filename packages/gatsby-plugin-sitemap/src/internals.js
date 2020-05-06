@@ -20,7 +20,9 @@ export function filterQuery(
     throw new Error(errors.join(`, `))
   }
 
-  let { allPages, originalType } = getNodes(data.allSitePage)
+  const { allSitePage, ...otherData } = data
+
+  let { allPages, originalType } = getNodes(allSitePage)
 
   // Removing excluded paths
   allPages = allPages.filter(
@@ -53,6 +55,7 @@ export function filterQuery(
   siteUrl = withoutTrailingSlash(siteUrl)
 
   return {
+    ...otherData,
     allSitePage: {
       [originalType]:
         originalType === `nodes`
@@ -115,6 +118,6 @@ function getNodes(results) {
     }
   }
   throw new Error(
-    `[gatsby-plugin-sitemap]: Plugin is unsure how to handle the results of your query, you'll need to write custom page filter and serilizer in your gatsby conig`
+    `[gatsby-plugin-sitemap]: Plugin is unsure how to handle the results of your query, you'll need to write custom page filter and serializer in your gatsby config`
   )
 }

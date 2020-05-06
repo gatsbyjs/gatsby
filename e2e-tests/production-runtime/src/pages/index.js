@@ -1,9 +1,9 @@
-import * as React from 'react'
-import { Link } from 'gatsby'
+import * as React from "react"
+import { Link } from "gatsby"
 
-import Bio from '../components/bio'
-import Layout from '../components/layout'
-import InstrumentPage from '../utils/instrument-page'
+import Bio from "../components/bio"
+import Layout from "../components/layout"
+import InstrumentPage from "../utils/instrument-page"
 
 const IndexPage = ({ pageContext }) => (
   <Layout>

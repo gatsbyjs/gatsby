@@ -6,9 +6,9 @@ const { emitter } = redux
 // Even if we are using loki, we still include redux in the list of
 // dbs since it still has pages, config, etc.
 const dbs = [redux]
-if (process.env.GATSBY_DB_NODES === `loki`) {
-  dbs.push(require(`./loki`))
-}
+// if (process.env.GATSBY_DB_NODES === `loki`) {
+//   dbs.push(require(`./loki`))
+// }
 
 // calls `saveState()` on all DBs
 let saveInProgress = false
