@@ -29,8 +29,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.9.6",
-    "axios": "^0.19.2"
+    "bluebird": "^3.7.2",
+    "node-fetch": "^2.6.0",
+    "query-string": "^6.12.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
