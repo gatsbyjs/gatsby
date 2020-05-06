@@ -56,7 +56,7 @@ individuals and companies.
 - [Guten Ye](https://github.com/gutenye)
 - [Rico Sta. Cruz](https://github.com/rstacruz)
 
-### Companies who sponsored time working on Gatsby v1.
+### Companies who sponsored time working on Gatsby v1
 
 - [Thinkmill](https://www.thinkmill.com.au/)
 - [Expo](https://expo.io/)

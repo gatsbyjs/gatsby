@@ -1,18 +1,16 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
 import { Global } from "@emotion/core"
 
-import BaseLayout from "../layout"
 import { globalStyles } from "../../utils/styles/global"
 import { Box } from "./system"
 import Header from "./header"
+import PageMetadata from "../page-metadata"
 import Footer from "../shared/footer-links"
 
-const Layout = ({ children, background, location, pageTitle }) => (
-  <BaseLayout location={location}>
+const Layout = ({ children, background, pageTitle }) => (
+  <Box bg="background" position="relative">
     <Global
       styles={{
         ".ReactModal__Overlay": {
@@ -31,18 +29,16 @@ const Layout = ({ children, background, location, pageTitle }) => (
       }}
     />
     <Global styles={globalStyles} />
-    <Helmet>
-      <title>{pageTitle ? `${pageTitle} | Guidelines` : `Guidelines`}</title>
-    </Helmet>
-    <Box bg="background" position="relative">
-      {background && background}
-      <Header />
-      <Box as="main" className="main-body">
-        {children}
-        <Footer />
-      </Box>
+    <PageMetadata
+      title={pageTitle ? `${pageTitle} | Guidelines` : `Guidelines`}
+    />
+    {background && background}
+    <Header />
+    <Box as="main" className="main-body">
+      {children}
+      <Footer />
     </Box>
-  </BaseLayout>
+  </Box>
 )
 
 Layout.propTypes = {

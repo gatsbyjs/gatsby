@@ -2,11 +2,10 @@
 import { jsx } from "theme-ui"
 import { Component } from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 
 import Button from "../components/button"
-import Layout from "../components/layout"
 import Container from "../components/container"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
@@ -105,37 +104,32 @@ const FeaturesHeader = () => (
 class FeaturesPage extends Component {
   render() {
     return (
-      <Layout location={this.props.location}>
-        <PageWithSidebar location={this.props.location}>
-          <Helmet>
-            <title>Features</title>
-            <meta
-              name="description"
-              content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+      <PageWithSidebar location={this.props.location}>
+        <PageMetadata
+          title="Features"
+          description="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+        />
+        <Container>
+          <main id={`reach-skip-nav`}>
+            <FeaturesHeader />
+            <SimpleEvaluationTable
+              title="Feature Comparison"
+              headers={[
+                { display: `Category`, nodeFieldProperty: `Category` },
+                { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
+                {
+                  display: `JAMstack frameworks`,
+                  nodeFieldProperty: `Jamstack`,
+                },
+                { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
+              ]}
+              data={this.props.data.allGatsbyFeaturesSpecsCsv.nodes}
             />
-          </Helmet>
-          <Container>
-            <main id={`reach-skip-nav`}>
-              <FeaturesHeader />
-              <SimpleEvaluationTable
-                title="Feature Comparison"
-                headers={[
-                  { display: `Category`, nodeFieldProperty: `Category` },
-                  { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
-                  {
-                    display: `JAMstack frameworks`,
-                    nodeFieldProperty: `Jamstack`,
-                  },
-                  { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
-                ]}
-                data={this.props.data.allGatsbyFeaturesSpecsCsv.edges}
-              />
-              <FeaturesFooter />
-            </main>
-            <FooterLinks />
-          </Container>
-        </PageWithSidebar>
-      </Layout>
+            <FeaturesFooter />
+          </main>
+          <FooterLinks />
+        </Container>
+      </PageWithSidebar>
     )
   }
 }
@@ -145,14 +139,12 @@ export default FeaturesPage
 export const pageQuery = graphql`
   query {
     allGatsbyFeaturesSpecsCsv {
-      edges {
-        node {
-          Category
-          Gatsby
-          Jamstack
-          Cms
-          Description
-        }
+      nodes {
+        Category
+        Gatsby
+        Jamstack
+        Cms
+        Description
       }
     }
   }

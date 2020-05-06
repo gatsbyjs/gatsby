@@ -23,10 +23,15 @@ Let's get started.
 
 ## Creating slugs for pages
 
+A ‘slug’ is the unique identifying part of a web address,
+such as the `/tutorial/part-seven` part of the page `https://www.gatsbyjs.org/tutorial/part-seven/`.
+
+It is also referred to as the ‘path’ but this tutorial will use the term ‘slug’ for consistency.
+
 Creating new pages has two steps:
 
-1.  Generate the "path" or "slug" for the page.
-2.  Create the page.
+1. Generate the "path" or "slug" for the page.
+2. Create the page.
 
 _**Note**: Often data sources will directly provide a slug or pathname for content — when working with one of those systems (e.g. a CMS), you don't need to create the slugs yourself as you do with markdown files._
 
@@ -71,7 +76,7 @@ You want to use each markdown file name to create the page slug. So
 `pandas-and-bananas.md` will become `/pandas-and-bananas/`. But how do you get
 the file name from the `MarkdownRemark` node? To get it, you need to _traverse_
 the "node graph" to its _parent_ `File` node, as `File` nodes contain data you
-need about files on disk. To do that, modify your function again:
+need about files on disk. To do that, you'll use the [`getNode()`](/docs/node-api-helpers/#getNode) helper. Add it to `onCreateNode`'s function parameters, and call it to get the file node:
 
 ```javascript:title=gatsby-node.js
 // highlight-next-line
@@ -204,8 +209,8 @@ pages.
 
 As mentioned in the intro to this part of the tutorial, the steps to programmatically creating pages are:
 
-1.  Query data with GraphQL
-2.  Map the query results to pages
+1. Query data with GraphQL
+2. Map the query results to pages
 
 The above code is the first step for creating pages from your markdown as you're
 using the supplied `graphql` function to query the markdown slugs you created.
@@ -224,7 +229,7 @@ Create a directory at `src/templates`, and then add the following in a file name
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => {
+export default function BlogPost() {
   return (
     <Layout>
       <div>Hello blog post</div>
@@ -303,7 +308,7 @@ import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
 // highlight-start
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   const post = data.markdownRemark
   // highlight-end
   return (
@@ -350,7 +355,7 @@ import { Link, graphql } from "gatsby" // highlight-line
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <Layout>
       <div>

@@ -18,7 +18,7 @@ You can access it when your site's development server is running—normally at
 `http://localhost:8000/___graphql`.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
+  <source type="video/mp4" src="/graphiql-explore.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
@@ -117,7 +117,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function MyFiles({ data }) {
   console.log(data) // highlight-line
   return (
     <Layout>
@@ -160,7 +160,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function MyFiles({ data }) {
   console.log(data)
   return (
     <Layout>

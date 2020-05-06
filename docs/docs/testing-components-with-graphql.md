@@ -109,29 +109,29 @@ you're using `gatsby-transformer-sharp` you'll find the fragments in
 So, for example if your query includes:
 
 ```graphql
-    image {
-        childImageSharp {
-            fluid(maxWidth: 1024) {
-                ...GatsbyImageSharpFluid
-            }
-        }
+image {
+  childImageSharp {
+    fluid(maxWidth: 1024) {
+      ...GatsbyImageSharpFluid
     }
+  }
+}
 ```
 
 ...it becomes:
 
 ```graphql
-    image {
-        childImageSharp {
-            fluid(maxWidth: 1024) {
-                base64
-                aspectRatio
-                src
-                srcSet
-                sizes
-            }
-        }
+image {
+  childImageSharp {
+    fluid(maxWidth: 1024) {
+      base64
+      aspectRatio
+      src
+      srcSet
+      sizes
     }
+  }
+}
 ```
 
 When you have the result, copy the `data` value from the output panel. Good
@@ -203,20 +203,22 @@ const Header = ({ data }) => (
   </header>
 )
 
-export default props => (
-  <StaticQuery
-    query={graphql`
-      query {
-        site {
-          siteMetadata {
-            title
+export default function MyHeader(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+            }
           }
         }
-      }
-    `}
-    render={data => <Header {...props} data={data} />}
-  />
-)
+      `}
+      render={data => <Header {...props} data={data} />}
+    />
+  )
+}
 ```
 
 This is almost ready: all you need to do is export the pure component that you

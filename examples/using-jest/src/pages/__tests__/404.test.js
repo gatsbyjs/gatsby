@@ -1,8 +1,8 @@
-import React from 'react'
-import { render } from '@testing-library/react'
-import { StaticQuery } from 'gatsby' // mocked
+import * as React from "react"
+import { render } from "@testing-library/react"
+import { StaticQuery } from "gatsby" // mocked
 
-import FourOhFour from '../404'
+import FourOhFour from "../404"
 
 beforeEach(() => {
   StaticQuery.mockImplementationOnce(({ render }) =>

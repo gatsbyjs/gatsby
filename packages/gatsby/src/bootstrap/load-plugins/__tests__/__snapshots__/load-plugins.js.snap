@@ -36,6 +36,8 @@ Array [
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
       "sourceNodes",
+      "createSchemaCustomization",
+      "createResolvers",
       "onCreatePage",
     ],
     "pluginOptions": Object {
@@ -168,6 +170,22 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "name": "gatsby-plugin-typescript",
+    "nodeAPIs": Array [
+      "resolvableExtensions",
+      "onCreateBabelConfig",
+      "onCreateWebpackConfig",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -220,6 +238,8 @@ Array [
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
       "sourceNodes",
+      "createSchemaCustomization",
+      "createResolvers",
       "onCreatePage",
     ],
     "pluginOptions": Object {
@@ -380,6 +400,22 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "name": "gatsby-plugin-typescript",
+    "nodeAPIs": Array [
+      "resolvableExtensions",
+      "onCreateBabelConfig",
+      "onCreateWebpackConfig",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -432,6 +468,8 @@ Array [
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
       "sourceNodes",
+      "createSchemaCustomization",
+      "createResolvers",
       "onCreatePage",
     ],
     "pluginOptions": Object {
@@ -588,6 +626,22 @@ Array [
     "id": "",
     "name": "default-site-plugin",
     "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-typescript",
+    "nodeAPIs": Array [
+      "resolvableExtensions",
+      "onCreateBabelConfig",
+      "onCreateWebpackConfig",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },

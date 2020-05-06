@@ -3,7 +3,9 @@ title: "Announcing Gatsby Cloud"
 date: 2019-11-14
 author: "Kyle Mathews"
 excerpt: "I'm excited to announce that we're launching our commercial platform, Gatsby Cloud, which will provide a growing suite of tools for web creators"
-tags: ["gatsby-inc"]
+tags: ["gatsby-inc", "releases", "gatsby-cloud"]
+---
+
 ---
 
 We're excited to announce the launch of [Gatsby Cloud](https://www.gatsbyjs.com/): a commercial platform of stable, trusted tools that enable web creators to build better websites.
@@ -28,13 +30,21 @@ We want Gatsby Cloud to be used by everyone. [Our pricing structure includes a f
 Jay Hostan, a senior product developer at global coffeehouse chain [Costa Coffee](https://www.costacoffee.com/), told us:
 
 <Pullquote>
-Deciding to use Gatsby Preview as a paid feature of Gatsby Cloud was a no brainer and has added a lot of value to our workflow. Before, we were building staging pipelines by hand. Preview allows our team to see content changes immediately, creating a tighter feedback loop so we can launch faster. It's enabled us to shift a lot of our focus to strategic projects and feature development.
+  Deciding to use Gatsby Preview as a paid feature of Gatsby Cloud was a no
+  brainer and has added a lot of value to our workflow. Before, we were building
+  staging pipelines by hand. Preview allows our team to see content changes
+  immediately, creating a tighter feedback loop so we can launch faster. It's
+  enabled us to shift a lot of our focus to strategic projects and feature
+  development.
 </Pullquote>
 
 Brian Webster, co-founder of the graphic and web design firm [Delicious Simplicity](https://www.delicious-simplicity.com/) with several clients on Gatsby Cloud said:
 
 <Pullquote>
-I love how Gatsby makes it possible to harness the power of React components, headless CMS architecture, and that it's a much more delightful workflow for developers. Now that we can use Gatsby Cloud features like Preview, our content-creator clients get an equally powerful yet simple workflow.
+  I love how Gatsby makes it possible to harness the power of React components,
+  headless CMS architecture, and that it's a much more delightful workflow for
+  developers. Now that we can use Gatsby Cloud features like Preview, our
+  content-creator clients get an equally powerful yet simple workflow.
 </Pullquote>
 
 ## Why Gatsby Cloud?
@@ -60,9 +70,9 @@ Gatsby meets the needs of the modern web and has become wildly popular with hund
 
 In our many conversations with Gatsby users & customers over the years, there are three common problems Gatsby users bring up:
 
-1. **Starting complex projects. **People love the flexibility of being able to bring your own backends, but choosing the right backends and configuring everything can be difficult.
+1. **Starting complex projects.** People love the flexibility of being able to bring your own backends, but choosing the right backends and configuring everything can be difficult.
 2. **Consistent & reliable workflows.** Delivering great websites requires collaboration between many stakeholders. People keep telling us about friction in workflows on their Gatsby projects compared to traditional CMSs.
-3. **Fast builds. **Gatsby sites have a build process to deploy new changes, and people wish incremental builds were faster. Ideally, there'd be no builds at all as they're confusing for non-technical collaborators who are used to seeing their changes go live immediately when they save with traditional CMSs.
+3. **Fast builds.** Gatsby sites have a build process to deploy new changes, and people wish incremental builds were faster. Ideally, there'd be no builds at all as they're confusing for non-technical collaborators who are used to seeing their changes go live immediately when they save with traditional CMSs.
 
 Today's launch of Gatsby Cloud addresses these concerns and lays the foundation for many exciting things to come.
 

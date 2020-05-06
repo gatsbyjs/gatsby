@@ -1,4 +1,4 @@
-- fromPath: /docs/themes/api-reference
+- fromPath: /docs/themes/api-reference/
   toPath: /docs/theme-api/
 - fromPath: /docs/component-css/ # Merged Component CSS and CSS Modules
   toPath: /docs/css-modules/
@@ -60,24 +60,28 @@
   toPath: /docs/adding-website-functionality/
 - fromPath: /docs/bound-action-creators/
   toPath: /docs/actions/
-- fromPath: /docs/bound-action-creators
-  toPath: /docs/actions
-- fromPath: /docs/adding-images-fonts-files
-  toPath: /docs/importing-assets-into-files
-- fromPath: /blog/2019-10-03-gatsby-perf
-  toPath: /blog/2018-10-03-gatsby-perf
-- fromPath: /docs/add-a-service-worker
-  toPath: /docs/add-offline-support-with-a-service-worker
-- fromPath: /docs/add-offline-support
-  toPath: /docs/add-offline-support-with-a-service-worker
+- fromPath: /docs/bound-action-creators/
+  toPath: /docs/actions/
+- fromPath: /docs/adding-images-fonts-files/
+  toPath: /docs/importing-assets-into-files/
+- fromPath: /blog/2019-10-03-gatsby-perf/
+  toPath: /blog/2018-10-03-gatsby-perf/
+- fromPath: /docs/add-a-service-worker/
+  toPath: /docs/add-offline-support-with-a-service-worker/
+- fromPath: /docs/add-offline-support/
+  toPath: /docs/add-offline-support-with-a-service-worker/
 - fromPath: /docs/create-source-plugin/
   toPath: /docs/creating-a-source-plugin/
 - fromPath: /docs/create-transformer-plugin/
   toPath: /docs/creating-a-transformer-plugin/
 - fromPath: /docs/plugin-authoring/
   toPath: /docs/how-plugins-work/
+- fromPath: /tutorial/theme-tutorials/
+  toPath: /tutorial/plugin-and-theme-tutorials/
+- fromPath: /docs/remark-plugin-tutorial/
+  toPath: /tutorial/remark-plugin-tutorial/
 - fromPath: /docs/source-plugin-tutorial/
-  toPath: /docs/pixabay-source-plugin-tutorial/
+  toPath: /tutorial/pixabay-source-plugin-tutorial/
 - fromPath: /docs/how-plugins-work/
   toPath: /docs/plugins/
 - fromPath: /blog/2018-2-16-how-to-build-a-website-with-react/
@@ -102,8 +106,8 @@
   toPath: /docs/gatsby-internals/
 - fromPath: /docs/behind-the-scenes-terminology/
   toPath: /docs/gatsby-internals-terminology/
-- fromPath: /docs/themes/introduction
-  toPath: /docs/themes/what-are-gatsby-themes
+- fromPath: /docs/themes/introduction/
+  toPath: /docs/themes/what-are-gatsby-themes/
 - fromPath: /docs/hosting-on-netlify/
   toPath: /docs/deploying-to-netlify/
 - fromPath: /docs/querying-with-graphql/
@@ -126,6 +130,8 @@
   toPath: /docs/data-fetching/
 - fromPath: /docs/centralizing-your-sites-navigation/
   toPath: /docs/creating-dynamic-navigation/
+- fromPath: /newsletter/
+  toPath: /contributing/community/
   # This redirects from a now removed stub that showed up in the first page of Google results.
   # Can be removed if SEO is no longer impacted.
 - fromPath: /docs/rendering-sidebar-navigation-dynamically/
@@ -138,3 +144,7 @@
   # redirecting gatsby-source-filesystem Programmatic Import to plugin README
 - fromPath: /docs/gatsby-source-filesystem-programmatic-import/
   toPath: /packages/gatsby-source-filesystem/
+- fromPath: /contributing/blog-and-website-contributions/
+  toPath: /contributing/blog-contributions/
+- fromPath: /contributing/docs-and-website-components/
+  toPath: /contributing/docs-and-blog-components/

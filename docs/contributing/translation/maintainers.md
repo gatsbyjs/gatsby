@@ -14,7 +14,7 @@ As repo maintainers and members of the Gatsby community, your responsibilities a
 - Act as point of contact for your language and answer questions from both contributors to your language and the core Gatsby team.
 - Set up a process in order to get your translation published. (details to come)
 
-As a maintainer, you are welcome to add a contributing doc written in your language to assist with the process. You can find an example in the [gatsby-es repo](https://github.com/gatsbyjs/gatsby-es/blob/master/CONTRIBUTING.MD). Translating [this page](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/gatsby-docs-translation-guide.md) and copying it into a `contributing.md` file would be an option as well.
+As a maintainer, you are welcome to add a contributing doc written in your language to assist with the process. You can find an example in the [gatsby-es repo](https://github.com/gatsbyjs/gatsby-es/blob/master/CONTRIBUTING.MD). Translating files from the folder [`docs/contributing/translation`](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing/translation) and copying it into a `contributing.md` file would be an option as well.
 
 ## Tips
 
@@ -34,13 +34,13 @@ The repo creation script will create a progress issue listing the list of [core 
 
 The Gatsby learning team is in charge of determining priorities for which docs should be translated. Refer to the [i18n page spreadsheet](https://docs.google.com/spreadsheets/d/1u2amGnqFLKxJuL5h9UrDblUueFgg0EBt7xbau4n8iTM/edit) to get the most up-to-date priority list, which includes frequently-visited pages in the Gatsby docs, tutorial, recipes, and other important pages.
 
-[Reference guide overview pages](/contributing/docs-templates/#reference-guide-overview) are also worth translating to establish a fully translated path to a frequently visited [reference guide](/contributing/docs-templates/#reference-guides), though they are listed at a lower priority.
+[Reference guide overview pages](/contributing/docs-templates/how-to-write-a-reference-guide/#what-are-reference-guide-overview-pages) are also worth translating to establish a fully translated path to a frequently visited [reference guide](/contributing/how-to-write-a-reference-guide/#what-are-reference-guide-articles), though overview pages are listed at a lower priority.
 
 ### Ask for help
 
 Don't be afraid to ask for help! If you're not sure about something, you can post in the `#localization` channel on the [Gatsby Discord](https://gatsby.dev/discord) or create an issue in the Gatsby repo.
 
-If it feels like there is too much work and you need help, you have the ability to to add more codeowners by editing the `CODEOWNERS` file in the repo. Are there any contributors who are making exceptional contributions? If so, consider making them a codeowner.
+If it feels like there is too much work and you need help, you have the ability to add more codeowners by editing the `CODEOWNERS` file in the repo. Are there any contributors who are making exceptional contributions? If so, consider making them a codeowner.
 
 We also understand that life sometimes gets in the way. If you find that you are no longer able to satisfy your codeowner duties, let the Gatsby team know so we can figure out the best path forward.
 

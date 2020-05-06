@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.4...gatsby-design-tokens@2.0.5) (2020-04-18)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.3...gatsby-design-tokens@2.0.4) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.2...gatsby-design-tokens@2.0.3) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.1...gatsby-design-tokens@2.0.2) (2020-02-20)
+
+### Features
+
+- **gatsby-design-tokens:** Add "Inter" font stack ([#21598](https://github.com/gatsbyjs/gatsby/issues/21598)) ([b870db9](https://github.com/gatsbyjs/gatsby/commit/b870db9))
+
+### BREAKING CHANGES
+
+- **gatsby-design-tokens:** `fonts.sans` now delivers the "Inter" font stack, not the `system` font stack anymore
+  fix: `fonts.sans` and `.brand` aliases
+
 ## [2.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.0...gatsby-design-tokens@2.0.1) (2020-02-11)
 
 **Note:** Version bump only for package gatsby-design-tokens
@@ -19,7 +42,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Tokens
 
-This update moves the rudimentary tokens even closer to our current sole target, CSS. This e.g. means that instead of exporting an array of integers for `fontSizes` or `space`, we now provide `rem` values instead (while still making the v1 variants available — but we do have "soft" preferences regarding default units for CSS, which are emphasized by these breaking changes).  
+This update moves the rudimentary tokens even closer to our current sole target, CSS. This e.g. means that instead of exporting an array of integers for `fontSizes` or `space`, we now provide `rem` values instead (while still making the v1 variants available — but we do have "soft" preferences regarding default units for CSS, which are emphasized by these breaking changes).
+
 We currently only consume these tokens in the context of CSS, so let's make things a bit easier there:
 
 - `fontsSizes` exports `rem` values now; old values available at `fontSizesRaw`

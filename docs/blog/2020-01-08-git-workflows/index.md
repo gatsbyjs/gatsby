@@ -6,6 +6,8 @@ excerpt: "A look at how the Gatsby Cloud team adopted a new workflow to achieve 
 tags: ["source control", "GitHub", "workflows"]
 ---
 
+import Breakout from "@components/breakout"
+import VisuallyHidden from "@components/visually-hidden"
 import baseGithub from "./base-github.png"
 import initialSvg from "./1-initial.svg"
 import additionalWorkSvg from "./2-additional-work.svg"
@@ -37,7 +39,10 @@ First, we create a new branch, `feat/headless-cms`. This will be our _root branc
 
 Right after creating that branch and pushing it to GitHub, we create another branch, `feat/headless-cms-pt1`. This will be an _incremental branch_, holding some of the changes needed for this feature. We get to work on the most fundamental parts of this change (for example, adding a source plugin and configuring it to pull data from our new CMS). Once we have a "hello world" based on this new architecture, we're ready to solicit some feedback. We push our branch to GitHub, and open a PR comparing our _incremental_ branch to our _root_ branch:
 
-<img src={baseGithub} alt="A screenshot from GitHub showing that the PR is opened against 'feat/headless-cms' instead of master." />
+<img
+  src={baseGithub}
+  alt="A screenshot from GitHub showing that the PR is opened against 'feat/headless-cms' instead of master."
+/>
 
 In a traditional workflow, opening a PR makes it hard for us to keep working on that feature; we'll bloat the PR if we keep committing to it, and it's not obvious how to manage "chained" PRs. This is a big part of why teams wind up with big PRs.
 
@@ -46,11 +51,14 @@ In this alternative workflow, we can keep working. We'll create a new _increment
 Here's a visualization of this setup:
 
 <Breakout>
-  <img src={initialSvg} aria-describedby="git-setup-description"/>
+  <img src={initialSvg} aria-describedby="git-setup-description" />
 </Breakout>
-
 <VisuallyHidden id="git-setup-description">
-  4 git branches are represented with parallel lines. Our root branch, feat/headless-cms, is forked from staging, and contains no commits. feat/headless-cms-pt1 is forked from our root branch, and includes two commits, A and B. Finally, a fourth branch, feat/headless-cms-pt2, is forked after commit B, and includes one commit, C.
+  4 git branches are represented with parallel lines. Our root branch,
+  feat/headless-cms, is forked from staging, and contains no commits.
+  feat/headless-cms-pt1 is forked from our root branch, and includes two
+  commits, A and B. Finally, a fourth branch, feat/headless-cms-pt2, is forked
+  after commit B, and includes one commit, C.
 </VisuallyHidden>
 
 Our first incremental branch has two commits, `A` and `B`. Our second branch is forked from that first branch, and adds a new commit `C`.
@@ -66,18 +74,21 @@ Let's say that we get feedback that fundamentally changes how we want to approac
 <Breakout>
   <img src={additionalWorkSvg} aria-describedby="git-additional-work" />
 </Breakout>
-
 <VisuallyHidden id="git-additional-work">
-  4 parallel lines are shown, representing different branches: staging, feat/headless-cms, feat/headless-cms-pt1, and feat/headless-cms-pt2. As it was before, commits A and B are on our "pt1" branch, and commit C is on our "pt2" branch. A newly-added commit, D, is on our "pt1" branch, but it occurs after the fork that leads to commit C on the later feature branch.
+  4 parallel lines are shown, representing different branches: staging,
+  feat/headless-cms, feat/headless-cms-pt1, and feat/headless-cms-pt2. As it was
+  before, commits A and B are on our "pt1" branch, and commit C is on our "pt2"
+  branch. A newly-added commit, D, is on our "pt1" branch, but it occurs after
+  the fork that leads to commit C on the later feature branch.
 </VisuallyHidden>
 
 Our `pt1` PR is approved (🎉), but now we have to reconcile our `pt2` branch. Given that it built on a now-outdated structure, there's a good chance we'll have some conflicts.
 
 We check out the `pt2` branch and rebase it onto the updated `pt1` branch:
 
-```bash
-$ git checkout feat/headless-cms-pt2
-$ git rebase feat/headless-cms-pt1
+```shell
+git checkout feat/headless-cms-pt2
+git rebase feat/headless-cms-pt1
 ```
 
 If you're not familiar with rebasing, it's an alternative to merging that involves "replaying" commits over a different branch. This can be a weird idea for folks who are used to merging, and it takes most people a bit of practice to get comfortable with it. You can learn more about rebasing in [this article from Algolia](https://blog.algolia.com/master-git-rebase/).
@@ -107,9 +118,11 @@ After rebasing, our Git branches look like this:
 <Breakout>
   <img src={rebasedSvg} aria-describedby="git-rebased" />
 </Breakout>
-
 <VisuallyHidden id="git-rebased">
-  4 parallel lines are shown, representing different branches: staging, feat/headless-cms, feat/headless-cms-pt1, and feat/headless-cms-pt2. Our "pt1" branch now holds commits A, B, D in series, with the split to "pt2" happening later. After the split, commit E is added on the "pt2" branch.
+  4 parallel lines are shown, representing different branches: staging,
+  feat/headless-cms, feat/headless-cms-pt1, and feat/headless-cms-pt2. Our "pt1"
+  branch now holds commits A, B, D in series, with the split to "pt2" happening
+  later. After the split, commit E is added on the "pt2" branch.
 </VisuallyHidden>
 
 You'll notice that our `C` commit—the only commit in our `pt2` branch—has been replaced with `E`. This is because it's no longer the same commit; it includes the changes that we dealt with in our rebase.
@@ -145,9 +158,11 @@ With our new base set, our tree looks like this:
 <Breakout>
   <img src={mergeCommitSvg} aria-describedby="git-merge-commit" />
 </Breakout>
-
 <VisuallyHidden id="git-merge-commit">
-  3 parallel lines are shown, representing different branches: staging, feat/headless-cms, and feat/headless-cms-pt2. Our "pt1" branch is not pictured. Our root branch, "feat/headless-cms", holds commits A, B, D, and M. After that last commit, the branch is split into "pt2", which holds commit E.
+  3 parallel lines are shown, representing different branches: staging,
+  feat/headless-cms, and feat/headless-cms-pt2. Our "pt1" branch is not
+  pictured. Our root branch, "feat/headless-cms", holds commits A, B, D, and M.
+  After that last commit, the branch is split into "pt2", which holds commit E.
 </VisuallyHidden>
 
 A new commit `M` was added, representing the merge.
@@ -165,9 +180,14 @@ A more accurate representation of our current state would look like this:
 <Breakout>
   <img src={actualGitSvg} alt="" aria-describedby="git-actual" />
 </Breakout>
-
 <VisuallyHidden id="git-actual">
-  Unlike the previous visualizations, which featured multiple parallel lines each holding commits, this new representation shows a single chain of commits: A, B, D, M, E. At the start of the chain, it points to the previous commits from the original branch (staging). Commit M is circled and is annotated with the branch name, feat/headless-cms. Commit E is also circled, with the annotation feat/headless-cms-pt2. In this representation, branches are simply labels applied to individual commits, which form a long, single chain.
+  Unlike the previous visualizations, which featured multiple parallel lines
+  each holding commits, this new representation shows a single chain of commits:
+  A, B, D, M, E. At the start of the chain, it points to the previous commits
+  from the original branch (staging). Commit M is circled and is annotated with
+  the branch name, feat/headless-cms. Commit E is also circled, with the
+  annotation feat/headless-cms-pt2. In this representation, branches are simply
+  labels applied to individual commits, which form a long, single chain.
 </VisuallyHidden>
 
 Every commit points to its parent, and branches are just references to a particular commit.
@@ -175,11 +195,19 @@ Every commit points to its parent, and branches are just references to a particu
 Let's say we had squash-merged our `pt1` branch into the root branch. We would wind up with two _parallel universes_. In our root branch, we'd have a brand new commit `S`, representing the squashed contents of `pt1`. Our `pt2` branch, meanwhile, doesn't know about any of this; the chain of commits still includes the "unsquashed" `pt1` work.
 
 <Breakout>
-  <img src={parallelUniversesSvg} alt="" aria-describedby="git-parallel-universes" />
+  <img
+    src={parallelUniversesSvg}
+    alt=""
+    aria-describedby="git-parallel-universes"
+  />
 </Breakout>
-
 <VisuallyHidden id="git-parallel-universes">
-  This image is split into two halves. The top half is labeled "Universe 1: feat/headless-cms-pt2", and it shows the string of commits that the feat/headless-cms-pt2 branch points to: A, B, D, M, E. This is the same chain as in the previous image. The second half shows a different chain. It's labeled "Universe 2: feat/headless-cms", and shows the chain of commits held by our root branch: S, E.
+  This image is split into two halves. The top half is labeled "Universe 1:
+  feat/headless-cms-pt2", and it shows the string of commits that the
+  feat/headless-cms-pt2 branch points to: A, B, D, M, E. This is the same chain
+  as in the previous image. The second half shows a different chain. It's
+  labeled "Universe 2: feat/headless-cms", and shows the chain of commits held
+  by our root branch: S, E.
 </VisuallyHidden>
 
 These universes collide when we try to change the base, to point `pt2` at the root branch:
@@ -187,8 +215,14 @@ These universes collide when we try to change the base, to point `pt2` at the ro
 <Breakout>
   <img src={doubleWorkSvg} alt="" aria-describedby="git-double-work" />
 </Breakout>
-
-<VisuallyHidden id="git-double-work">This image shows the string of commits that occurs when changing the base. The string of commits is: S, A, B, D, M, E. The first commit is circled with the label "Part 1", since it includes the work contained in the "pt1" branch. Commits A, B, D, and M are circled as well, with the label "Also Part 1". This image demonstrates the problem: that the same work is repeated twice in the history.</VisuallyHidden>
+<VisuallyHidden id="git-double-work">
+  This image shows the string of commits that occurs when changing the base. The
+  string of commits is: S, A, B, D, M, E. The first commit is circled with the
+  label "Part 1", since it includes the work contained in the "pt1" branch.
+  Commits A, B, D, and M are circled as well, with the label "Also Part 1". This
+  image demonstrates the problem: that the same work is repeated twice in the
+  history.
+</VisuallyHidden>
 
 The Git history pollution isn't a huge deal, since we'll have the chance to squash or clean this up before deploying, but it can lead to weird issues and nonsensical conflicts.
 
@@ -224,7 +258,7 @@ $ git rebase feat/headless-cms
 
 Essentially, we're scooting all of our changes to happen _after_ the most recent commit on master. It's important to rebase instead of merge so that we don't "interleave" the changes from other branches—we're keeping all of our work tightly clustered for now. This can be a bit tedious if you have lots of incremental branches, so you may wish to hold off on this until you've merged everything into the root branch.
 
-# And on and on
+## And on and on
 
 The neat thing about this flow is that it isn't limited to two incremental branches; we can keep going!
 
@@ -233,9 +267,13 @@ In this example, we could check out a new branch, `pt3`, based off of `pt2`. And
 <Breakout>
   <img src={moreIncrementalSvg} alt="" aria-describedby="git-on-and-on" />
 </Breakout>
-
 <VisuallyHidden id="git-on-and-on">
-  Back in the parallel tracks world-view, we now have 5 parallel lines, each representing different branches: staging, feat/headless-cms, feat/headless-cms-pt2, feat/headless-cms-pt3, and feat/headless-cms-pt4. The root branch holds A, B, D, and M, which is then split to "pt2", which holds E. Another split leads to branch "pt3, which holds the commit F, before finally splitting into "pt4", which holds the last commit in this image, G.
+  Back in the parallel tracks world-view, we now have 5 parallel lines, each
+  representing different branches: staging, feat/headless-cms,
+  feat/headless-cms-pt2, feat/headless-cms-pt3, and feat/headless-cms-pt4. The
+  root branch holds A, B, D, and M, which is then split to "pt2", which holds E.
+  Another split leads to branch "pt3, which holds the commit F, before finally
+  splitting into "pt4", which holds the last commit in this image, G.
 </VisuallyHidden>
 
 No matter how many branches we have, the process is always the same when we're ready to start merging:
@@ -243,7 +281,7 @@ No matter how many branches we have, the process is always the same when we're r
 - Merge the earliest open PR into the root branch, using the standard "merge" option.
 - _Change the base_ of the next branch to point at the root branch
 
-# Ship it
+## Ship it
 
 What about when all the work is done, and we're ready to release?
 
@@ -251,7 +289,7 @@ At this point, we'll have a string of commits on our root branch, `feat/headless
 
 At this point, we have the freedom to organize our commits however we want. We can squash it all into 1 commit, or combine them into logical chunks. It's up to us to decide how we want our work to be reflected in the history.
 
-# Drawbacks
+## Drawbacks
 
 No flow is without tradeoffs, and this one has a couple:
 
@@ -265,7 +303,7 @@ This also makes it harder to collaborate on a feature; you need to communicate c
 
 With 3-4 incremental branches, developers have to bounce between them and make sure they're kept in sync. This can be tedious.
 
-# When should I use this flow?
+## When should I use this flow?
 
 Given the drawbacks mentioned above, this is probably not something that should be adopted for _every_ change. It provides the most benefit for changes that are too big to fit into a single PR.
 
@@ -279,7 +317,7 @@ Feature flags are great because they allow developers to break monolithic change
 
 When using feature flags, a streamlined version of this flow can still be useful, to ensure that developers aren't blocked while waiting for feedback.
 
-# Conclusion
+## Conclusion
 
 We've been using this flow on the Cloud team for a few weeks now, and it's been a pretty big boon to our productivity! PRs are tailored to be easy to review, and developers don't have to switch tasks to avoid being blocked while awaiting feedback. It's pretty great.
 

@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
 import { createContentDigest } from "gatsby-core-utils"
@@ -28,6 +29,90 @@ export const useStaticQuery: <TData = any>(query: any) => TData
 export const parsePath: (path: string) => WindowLocation
 
 export const prefetchPathname: (path: string) => void
+
+/**
+ * A props object for adding type safety to your Gatsby pages, can be
+ * extended with both the query response shape, and the page context.
+ *
+ * @example
+ * // When typing a default page from the ./pages dir
+ *
+ * import {PageProps} from "gatsby"
+ * export default (props: PageProps) => {
+ *
+ * @example
+ * // When adding types for both pageContext and GraphQL query data
+ *
+ * import {PageProps} from "gatsby"
+ *
+ * type IndexQueryProps = { downloadCount: number }
+ * type LocaleLookUpInfo = { translationStrings: any } & { langKey: string, slug: string }
+ * type IndexPageProps = PageProps<IndexPageProps, LocaleLookUpInfo>
+ *
+ * export default (props: IndexProps) => {
+ *   ..
+ */
+export type PageProps<DataType = object, PageContextType = object> = {
+  /** The path for this current page */
+  path: string
+  /** The URI for the current page */
+  uri: string
+  /** An extended version of window.document which comes from @react/router */
+  location: WindowLocation
+  /** A way to handle programmatically controlling navigation */
+  navigate: NavigateFn
+  /** You can't get passed children as this is the root user-land component */
+  children: undefined
+  /** @deprecated use pageContext instead */
+  pathContext: object
+  /** Holds information about the build process for this component */
+  pageResources: {
+    component: React.Component
+    json: {
+      data: DataType
+      pageContext: PageContextType
+    }
+    page: {
+      componentChunkName: string
+      path: string
+      webpackCompilationHash: string
+      matchPath?: string
+    }
+  }
+  /**
+   * Data passed into the page via an exported GraphQL query. To set up this type
+   * you need to use [generics](https://www.typescriptlang.org/play/#example/generic-functions),
+   * see below for an example
+   *
+   * @example
+   *
+   * import {PageProps} from "gatsby"
+   *
+   * type IndexQueryProps = { downloadCount: number }
+   * type IndexPageProps = PageProps<IndexPageProps>
+   *
+   * export default (props: IndexProps) => {
+   *   ..
+   *
+   */
+  data: DataType
+  /**
+   * A context object which is passed in during the creation of the page. Can be extended if you are using
+   * `createPage` yourself using generics:
+   *
+   * @example
+   *
+   * import {PageProps} from "gatsby"
+   *
+   * type IndexQueryProps = { downloadCount: number }
+   * type LocaleLookUpInfo = { translationStrings: any } & { langKey: string, slug: string }
+   * type IndexPageProps = PageProps<IndexPageProps, LocaleLookUpInfo>
+   *
+   * export default (props: IndexProps) => {
+   *   ..
+   */
+  pageContext: PageContextType
+}
 
 export interface PageRendererProps {
   location: WindowLocation
@@ -92,6 +177,8 @@ export interface GatsbyConfig {
   >
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
+  /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
+  assetPrefix?: string
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
@@ -442,12 +529,19 @@ export interface GatsbyBrowser {
     args: ServiceWorkerArgs,
     options: PluginOptions
   ): any
+  onServiceWorkerUpdateReady?(
+    args: ServiceWorkerArgs,
+    options: PluginOptions
+  ): any
   registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
   replaceComponentRenderer?(
     args: ReplaceComponentRendererArgs,
     options: PluginOptions
   ): any
-  replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): any
+  replaceHydrateFunction?(
+    args: BrowserPluginArgs,
+    options: PluginOptions
+  ): Renderer
   shouldUpdateScroll?(args: ShouldUpdateScrollArgs, options: PluginOptions): any
   wrapPageElement?(
     args: WrapPageElementBrowserArgs,
@@ -805,9 +899,12 @@ export interface ReplaceRendererArgs extends NodePluginArgs {
   setBodyProps: Function
 }
 
-export interface WrapPageElementNodeArgs extends NodePluginArgs {
+export interface WrapPageElementNodeArgs<
+  DataType = object,
+  PageContextType = object
+> extends NodePluginArgs {
   element: object
-  props: object
+  props: PageProps<DataType, PageContextType>
   pathname: string
 }
 
@@ -869,7 +966,13 @@ interface ActionOptions {
 }
 
 export interface BuildArgs extends ParentSpanPluginArgs {
-  graphql: Function
+  graphql<TData, TVariables = any>(
+    query: string,
+    variables?: TVariables
+  ): Promise<{
+    errors?: any
+    data?: TData
+  }>
 }
 
 export interface Actions {
@@ -1012,7 +1115,7 @@ export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
   createFieldExtension(
     extension: object,
-    plugin: ActionPlugin,
+    plugin?: ActionPlugin,
     traceId?: string
   ): void
 }
@@ -1105,11 +1208,11 @@ export interface PackageJson {
         email: string
       }
   license?: string
-  dependencies?: Array<Record<string, string>>
-  devDependencies?: Array<Record<string, string>>
-  peerDependencies?: Array<Record<string, string>>
-  optionalDependecies?: Array<Record<string, string>>
-  bundledDependecies?: Array<Record<string, string>>
+  dependencies?: Record<string, string>
+  devDependencies?: Record<string, string>
+  peerDependencies?: Record<string, string>
+  optionalDependencies?: Record<string, string>
+  bundledDependencies?: Array<string>
   keywords?: string[]
 }
 
@@ -1206,18 +1309,7 @@ export interface RouteUpdateArgs extends BrowserPluginArgs {
 }
 
 export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
-  props: {
-    path: string
-    "*": string
-    uri: string
-    location: Location
-    navigate: NavigateFn
-    children: undefined
-    pageResources: object
-    data: object
-    pageContext: Record<string, unknown>
-    pathContext: Record<string, unknown>
-  }
+  props: PageProps
   loader: object
 }
 
@@ -1232,9 +1324,12 @@ export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
   getSavedScrollPosition: Function
 }
 
-export interface WrapPageElementBrowserArgs extends BrowserPluginArgs {
+export interface WrapPageElementBrowserArgs<
+  DataType = object,
+  PageContextType = object
+> extends BrowserPluginArgs {
   element: object
-  props: object
+  props: PageProps<DataType, PageContextType>
 }
 
 export interface WrapRootElementBrowserArgs extends BrowserPluginArgs {

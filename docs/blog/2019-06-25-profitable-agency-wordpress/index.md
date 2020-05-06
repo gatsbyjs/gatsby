@@ -9,7 +9,14 @@ tags:
   - aws
 ---
 
-import { Link } from "gatsby"
+<!--
+    Below this, Link has been imported as GatsbyLink to get around a bug in prettier v1.19.1
+    where case sensitivity is not respected for components in MDX. Link is treated as <link>
+    html head tag by prettier which leads to an error.
+    Issue Link - https://github.com/prettier/prettier/issues/7548
+-->
+
+import { Link as GatsbyLink } from "gatsby"
 
 Are you a WordPress Developer?
 
@@ -40,7 +47,11 @@ So if you're a WordPress Developer and you've dismissed Gatsby as this year's Ne
 I think you may be surprised. I was skeptical myself, but I found one real difference between WordPress and Gatsby, and it has a true impact on your business:
 
 <Pullquote>
-Gatsby sites have a dramatically lower <Link to="/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby/">"total cost of ownership"</Link> than comparable WordPress sites.
+  Gatsby sites have a dramatically lower{" "}
+  <GatsbyLink to="/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby/">
+    "total cost of ownership"
+  </GatsbyLink>{" "}
+  than comparable WordPress sites.
 </Pullquote>
 
 That means more money in your pocket. Or more value and services you can pass on to your clients.
@@ -51,15 +62,15 @@ However, if your job is to build custom WordPress solutions for large sites, the
 
 ## Hosting for Gatsby sites starts at \$0
 
-Last year I built a WordPress website for an event. I used a few popular membership and ecommerce plugins to get the job done. The price of hosting and plugins were all obscured from the client. I was paid a fee, and then I turned around and paid for hosting and plugins, and pocketed the margin.
+Last year I built a WordPress website for an event. I used a few popular membership and e-commerce plugins to get the job done. The price of hosting and plugins were all obscured from the client. I was paid a fee, and then I turned around and paid for hosting and plugins, and pocketed the margin.
 
 I even collected an affiliate fee from the server host. Again, if site maintenance is your bread-and-butter, then you know this model. Every nickel counts.
 
-After the event, my client no longer needed the membership and ecommerce features. And they weren't enthusiastic about paying me for ongoing support. So, instead of haggling over a price, or handing over the project and losing their business forever, I turned the WordPress project into a static site that I host on Netlify.
+After the event, my client no longer needed the membership and e-commerce features. And they weren't enthusiastic about paying me for ongoing support. So, instead of haggling over a price, or handing over the project and losing their business forever, I turned the WordPress project into a static site that I host on Netlify.
 
 The hosting cost? [Zero dollars and zero cents.](https://www.netlify.com/pricing/)
 
-That project opened my eyes. The client had a low traffic website, and they barely used the membership and ecommerce functionality I added. Yet, I signed them up with my favorite WordPress host, with pricing that started at \$115 a month, not including the cost of premium plugins. The next time I had a similar project, which was earlier this year, I grabbed Netlify from the beginning.
+That project opened my eyes. The client had a low traffic website, and they barely used the membership and e-commerce functionality I added. Yet, I signed them up with my favorite WordPress host, with pricing that started at \$115 a month, not including the cost of premium plugins. The next time I had a similar project, which was earlier this year, I grabbed Netlify from the beginning.
 
 The cheaper hosting for static sites, like the ones Gatsby can produce, can be a game changer for your business model. That's because the client is willing to pay for an all-inclusive package, and doesn't care if you use an inexpensive static site host, or a costly WordPress host. By making the right choice your profit can increase from day one, and accelerate if you keep the project over months or years.
 
@@ -83,12 +94,13 @@ Because WordPress plugins are writing to the same database, using the same platf
 
 Gatsby is different. Consider this example:
 
-If your client needs ecommerce features on their site, Gatsby can pull in the product data and shopping cart functionality from two different services, if you so choose. Those two services are not produced by the same server, or writing to the same database. So a problem with one may not affect the other.
+If your client needs e-commerce features on their site, Gatsby can pull in the product data and shopping cart functionality from two different services, if you so choose. Those two services are not produced by the same server, or writing to the same database. So a problem with one may not affect the other.
 
 In theory, break-fix for Gatsby should be easier to diagnose and solve. An issue with the build has nothing to do with a problem with the frontend, and vice versa. Gatsby's lower technical maintenance may be the difference between you taking on 5 client sites or 15.
 
 <Pullquote>
-Personally I keep forgetting about the static sites under my care because there's literally nothing to work on for them month-to-month.
+  Personally I keep forgetting about the static sites under my care because
+  there's literally nothing to work on for them month-to-month.
 </Pullquote>
 
 ## Freemium is cheaper than pay-per-year Plugins
@@ -110,7 +122,10 @@ Brian Webster of Delicious Simplicity shared that using Gatsby for client sites 
 [Says Brian](https://youtu.be/EfHPJK1TVmM):
 
 <Pullquote citation="Brian Webster">
-We're noticing an amazing thing happening when we're pitching clients and they hear about this tech stack. And as a result we're actually seeing our S.O.'s winning a lot more bids. There's a project I think we're going to move forward on and our budget came in significantly less than their three competing bids.
+  We're noticing an amazing thing happening when we're pitching clients and they
+  hear about this tech stack. And as a result we're actually seeing our S.O.'s
+  winning a lot more bids. There's a project I think we're going to move forward
+  on and our budget came in significantly less than their three competing bids.
 </Pullquote>
 
 Brian's prospective client even tried to ask his competition if they could match his approach. The competitors balked. If those shops don't adopt Gatsby, or something like it, they're going to lose a lot more business in the coming years.

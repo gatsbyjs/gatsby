@@ -8,7 +8,18 @@ const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
 
 exports.sourceNodes = async (
-  { actions, store, cache, createNodeId, createContentDigest, reporter },
+  {
+    actions,
+    store,
+    cache,
+    createNodeId,
+    createContentDigest,
+    getCache,
+    getNode,
+    parentSpan,
+    reporter,
+    webhookBody,
+  },
   pluginOptions
 ) => {
   let {
@@ -22,6 +33,55 @@ exports.sourceNodes = async (
     disallowedLinkTypes,
   } = pluginOptions
   const { createNode } = actions
+
+  if (webhookBody && Object.keys(webhookBody).length) {
+    const changesActivity = reporter.activityTimer(
+      `loading Drupal content changes`,
+      {
+        parentSpan,
+      }
+    )
+    changesActivity.start()
+
+    const { secret, action, id, data } = webhookBody
+    if (pluginOptions.secret && pluginOptions.secret !== secret) {
+      reporter.warn(
+        `The secret in this request did not match your plugin options secret.`
+      )
+      return
+    }
+    if (action === `delete`) {
+      actions.deleteNode({ node: getNode(createNodeId(id)) })
+      reporter.log(`Deleted node: ${id}`)
+      return
+    }
+
+    let nodesToUpdate = data
+    if (!Array.isArray(data)) {
+      nodesToUpdate = [data]
+    }
+
+    for (const nodeToUpdate of nodesToUpdate) {
+      await handleWebhookUpdate(
+        {
+          nodeToUpdate,
+          actions,
+          cache,
+          createNodeId,
+          createContentDigest,
+          getCache,
+          getNode,
+          reporter,
+          store,
+        },
+        pluginOptions
+      )
+    }
+
+    changesActivity.end()
+    return
+  }
+
   const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
 
   // Default apiBase to `jsonapi`
@@ -131,6 +191,7 @@ exports.sourceNodes = async (
   _.each(allData, contentType => {
     if (!contentType) return
     _.each(contentType.data, datum => {
+      if (!datum) return
       const node = nodeFromData(datum, createNodeId)
       nodes.set(node.id, node)
     })
@@ -155,7 +216,7 @@ exports.sourceNodes = async (
     downloadingFilesActivity.start()
     await asyncPool(concurrentFileRequests, fileNodes, async node => {
       await downloadFile(
-        { node, store, cache, createNode, createNodeId, reporter },
+        { node, store, cache, createNode, createNodeId, getCache, reporter },
         pluginOptions
       )
     })
@@ -167,8 +228,11 @@ exports.sourceNodes = async (
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
   }
+
+  return
 }
 
+// This is maintained for legacy reasons and will eventually be removed.
 exports.onCreateDevServer = (
   {
     app,
@@ -178,6 +242,7 @@ exports.onCreateDevServer = (
     store,
     cache,
     createContentDigest,
+    getCache,
     reporter,
   },
   pluginOptions
@@ -188,6 +253,9 @@ exports.onCreateDevServer = (
       type: `application/json`,
     }),
     async (req, res) => {
+      console.warn(
+        `The ___updatePreview callback is now deprecated and will be removed in the future. Please use the __refresh callback instead.`
+      )
       if (!_.isEmpty(req.body)) {
         const requestBody = JSON.parse(JSON.parse(req.body))
         const { secret, action, id } = requestBody
@@ -208,6 +276,7 @@ exports.onCreateDevServer = (
             cache,
             createNodeId,
             createContentDigest,
+            getCache,
             getNode,
             reporter,
             store,

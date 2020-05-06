@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import MdLink from "react-icons/lib/md/link"
-import MdStar from "react-icons/lib/md/star"
+import { MdLink, MdStar } from "react-icons/md"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import ShareMenu from "../../components/share-menu"

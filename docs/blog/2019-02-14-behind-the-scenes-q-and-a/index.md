@@ -179,7 +179,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ### Scaling Gatsby (Gatsby for Large Apps)
 
-**Question:** I'm working for a e-Commerce company. We have millions of products in our shop. The product detail site is somewhat the same but for the data. Is there a way to generate all those pages for each of those products in a feasible time?
+**Question:** I'm working for a e-commerce company. We have millions of products in our shop. The product detail site is somewhat the same but for the data. Is there a way to generate all those pages for each of those products in a feasible time?
 **Answer:** Gatsby generally maxes out at 50k pages or so (right now) but you could break up the page, check out [Building a large, internationalized e-commerce website with Gatsby at Daniel Wellington
 ](/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/)
 
@@ -201,7 +201,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Gatsby Use Cases
 
 **Question:** To use gatsby for a blog - is this overengineering?
-**Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — [https://overreacted.io/](https://overreacted.io/)
+**Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — https://overreacted.io/
 
 **Question:** Is it overkill to build every site with Gatsby.js?
 **Answer:** We don't think so :)
@@ -209,8 +209,8 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Do you think there will be a market for Gatsby premium themes (like for WordPress)?
 **Answer:** Yep :) it's on the roadmap!
 
-**Question:** Beyond blogs and ecommerce websites, what other use cases are you seeing people building with Gatsby?
-**Answer:** We see all use cases....dynamic apps, ecommerce, financial services, docs sites, portfolios, and company marketing sites are all very common!
+**Question:** Beyond blogs and e-commerce websites, what other use cases are you seeing people building with Gatsby?
+**Answer:** We see all use cases....dynamic apps, e-commerce, financial services, docs sites, portfolios, and company marketing sites are all very common!
 
 **Question:** Who does the Gatsby team consider its users? Content creators? Engineers? Other?
 **Answer:** All of the above!
@@ -256,7 +256,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is there a good upgrade path for new versions of Gatsby?
 **Answer:** Unless you're on v1, you won't need a migration. If you are on v1 and want to move to v2, check out [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/).
 
-**Question:** Following up on upgrade path question—how would you upgrade between version of 2.\~?
+**Question:** Following up on upgrade path question—how would you upgrade between version of 2.~?
 **Answer:** You can bump the version # in your package.json and then you're done.
 
 **Question:** If my .htaccess file is configured to read .html files without the extension in the url, can Gatsby compile the links to pages without the .html ending?

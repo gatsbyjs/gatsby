@@ -128,7 +128,7 @@ And if there's a change to the structure of that data, you only need to change t
 
 We're really excited about this pattern and everything it enables. With our upcoming [themes][themes] feature, a theme could even export custom hooks of its own. Users could access data using these without writing a single query.
 
-# Where can I get this?
+## Where can I get this?
 
 https://twitter.com/jacobimpson/status/1095930703504584706
 
@@ -140,13 +140,13 @@ To use `useStaticQuery`, update `gatsby` to v2.1.0 and `react` and `react-dom` t
 npm install gatsby react react-dom
 ```
 
-# Known Limitations
+## Known Limitations
 
 Because of the way queries are currently parsed in Gatsby, `useStaticQuery` has one small limitation at the moment. You can only use one instance of `useStaticQuery` in a file. That's it! This doesn't mean your app can't have multiple uses, but rather that a single JavaScript file can only have one instance of `useStaticQuery`.
 
 We're working on fixing this soon.
 
-# Next Steps
+## Next Steps
 
 - Check out the [documentation][use-static-query]
 - To see `useStaticQuery` in action (and for a really gentle introduction to Hooks in general), check out the [livestream][use-static-query-livestream] Jason Lengstorf and I did last week
@@ -157,6 +157,5 @@ We hope you enjoy using `useStaticQuery` in your Gatsby apps. Happy building!
 [use-static-query]: /docs/use-static-query/
 [use-static-query-livestream]: https://www.youtube.com/watch?v=asrdFuAxPaU&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
 [sidhartha-twitter]: https://twitter.com/chatsidhartha
-[rules-of-hooks]: https://reactjs.org/docs/hooks-rules.html
 [hooks-intro]: https://reactjs.org/docs/hooks-intro.html
 [themes]: /blog/2019-02-11-gatsby-themes-livestream-and-example/

@@ -1,14 +1,13 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 import Avatar from "../components/avatar"
-import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FooterLinks from "../components/shared/footer-links"
+import PageMetadata from "../components/page-metadata"
 
 class ContributorPageTemplate extends React.Component {
   render() {
@@ -20,69 +19,53 @@ class ContributorPageTemplate extends React.Component {
     )
 
     return (
-      <Layout location={this.props.location}>
-        <Helmet>
-          <title>{`${contributor.id} - Contributor`}</title>
-          <meta name="description" content={contributor.bio} />
-          <meta property="og:description" content={contributor.bio} />
-          <meta name="twitter:description" content={contributor.bio} />
-          <meta property="og:title" content={contributor.id} />
-          {contributor.avatar && (
-            <meta
-              property="og:image"
-              content={`https://gatsbyjs.org${contributor.avatar.childImageSharp.fixed.src}`}
-            />
-          )}
-          {contributor.avatar && (
-            <meta
-              name="twitter:image"
-              content={`https://gatsbyjs.org${contributor.avatar.childImageSharp.fixed.src}`}
-            />
-          )}
-        </Helmet>
-        <main>
-          <Container>
-            <div
-              sx={{
-                textAlign: `center`,
-                py: 7,
-                px: 6,
-              }}
-            >
-              <div>
-                <Avatar image={contributor.avatar.childImageSharp.fixed} />
-                <h1 sx={{ mt: 0, mb: 3 }}>{contributor.id}</h1>
-                <p
-                  sx={{
-                    fontFamily: `heading`,
-                    fontSize: 3,
-                    maxWidth: `28rem`,
-                    mx: `auto`,
-                  }}
-                >
-                  {contributor.bio}
-                </p>
-                {contributor.twitter && (
-                  <a href={`https://twitter.com/${contributor.twitter}`}>
-                    {` `}
-                    {contributor.twitter}
-                  </a>
-                )}
-              </div>
+      <main>
+        <PageMetadata
+          title={`${contributor.id} - Contributor`}
+          description={contributor.bio}
+          image={contributor.avatar?.childImageSharp.fixed}
+        />
+        <Container>
+          <div
+            sx={{
+              textAlign: `center`,
+              py: 7,
+              px: 6,
+            }}
+          >
+            <div>
+              <Avatar image={contributor.avatar.childImageSharp.fixed} />
+              <h1 sx={{ mt: 0, mb: 3 }}>{contributor.id}</h1>
+              <p
+                sx={{
+                  fontFamily: `heading`,
+                  fontSize: 3,
+                  maxWidth: `28rem`,
+                  mx: `auto`,
+                }}
+              >
+                {contributor.bio}
+              </p>
+              {contributor.twitter && (
+                <a href={`https://twitter.com/${contributor.twitter}`}>
+                  {` `}
+                  {contributor.twitter}
+                </a>
+              )}
             </div>
-            <div sx={{ py: 7, px: 6 }}>
-              {posts.map(node => (
-                <BlogPostPreviewItem
-                  post={node}
-                  key={node.fields.slug}
-                  sx={{ mb: 9 }}
-                />
-              ))}
-            </div>
-          </Container>
-          <FooterLinks />
-        </main>
-      </Layout>
+          </div>
+          <div sx={{ py: 7, px: 6 }}>
+            {posts.map(node => (
+              <BlogPostPreviewItem
+                post={node}
+                key={node.fields.slug}
+                sx={{ mb: 9 }}
+              />
+            ))}
+          </div>
+        </Container>
+        <FooterLinks />
+      </main>
     )
   }
 }

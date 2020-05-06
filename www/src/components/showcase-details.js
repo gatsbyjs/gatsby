@@ -1,23 +1,23 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
-import { Helmet } from "react-helmet"
+import { useStaticQuery, graphql } from "gatsby"
+import Link from "./localized-link"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import Layout from "../components/layout"
-import Modal from "../components/modal"
-import ShareMenu from "../components/share-menu"
-import Button from "../components/button"
+import Modal from "./modal"
+import ShareMenu from "./share-menu"
+import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
+import PageMetadata from "../components/site-metadata"
 
-import MdArrowUpward from "react-icons/lib/md/arrow-upward"
-import MdLink from "react-icons/lib/md/link"
 import FeaturedIcon from "../assets/icons/featured-sites-icons"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { MdArrowUpward, MdLink } from "react-icons/md"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import { filterByCategories } from "../views/showcase/filtered-showcase"
 
 const gutter = 6
 const gutterDesktop = 8
@@ -92,7 +92,7 @@ const SourceLink = ({ ...props }) => (
   </a>
 )
 
-function usePrevAndNextSite(item) {
+function usePrevAndNextSite(item, filters = []) {
   const { allSitesYaml } = useStaticQuery(graphql`
     query {
       allSitesYaml(
@@ -103,6 +103,7 @@ function usePrevAndNextSite(item) {
       ) {
         nodes {
           title
+          categories
           fields {
             slug
           }
@@ -120,7 +121,7 @@ function usePrevAndNextSite(item) {
     }
   `)
 
-  const sites = allSitesYaml.nodes
+  const sites = filterByCategories(allSitesYaml.nodes, filters)
   const currentIndex = sites.findIndex(node => node.fields.slug === item)
   const nextSite = sites[(currentIndex + 1) % sites.length]
   const previousSite =
@@ -140,9 +141,13 @@ function getExitLocation(filters = {}) {
   }
 }
 
-function ShowcaseModal({ children, location }) {
-  const { previousSite, nextSite } = usePrevAndNextSite(location.pathname)
+function ShowcaseModal({ children, location, isModal }) {
+  if (!isModal) return children
   const { filters } = location.state || {}
+  const { previousSite, nextSite } = usePrevAndNextSite(
+    location.pathname,
+    filters
+  )
   return (
     <Modal
       modalBackgroundPath={getExitLocation(filters)}
@@ -245,9 +250,8 @@ function ShowcaseModal({ children, location }) {
 const ShowcaseDetails = ({ location, site, isModal, categories }) => {
   const screenshotFile = site.childScreenshot.screenshotFile.childImageSharp
 
-  const PageLayout = isModal ? ShowcaseModal : Layout
   return (
-    <PageLayout location={location}>
+    <ShowcaseModal isModal={isModal} location={location}>
       <div
         sx={{
           display: `flex`,
@@ -259,38 +263,12 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
         }}
       >
         <div css={{ width: `100%` }}>
-          <Helmet titleTemplate="%s | GatsbyJS">
-            <title>{`${site.title}: Showcase`}</title>
-            <meta
-              property="og:image"
-              content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
-            />
-            <meta
-              name="twitter:image"
-              content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
-            />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta
-              name="og:title"
-              value={`${site.title}: Showcase | GatsbyJS`}
-            />
-            <meta
-              property="og:image:width"
-              content={screenshotFile.resize.width}
-            />
-            <meta
-              property="og:image:height"
-              content={screenshotFile.resize.height}
-            />
-            <meta
-              property="og:description"
-              content={site.description || site.main_url}
-            />
-            <meta
-              name="twitter:description"
-              content={site.description || site.main_url}
-            />
-          </Helmet>
+          <PageMetadata
+            title={`${site.title}: Showcase`}
+            description={site.description || site.main_url}
+            image={screenshotFile.resize}
+            twitterCard="summary_large_image"
+          />
           <div
             sx={{
               p: gutter,
@@ -395,7 +373,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </ShowcaseModal>
   )
 }
 

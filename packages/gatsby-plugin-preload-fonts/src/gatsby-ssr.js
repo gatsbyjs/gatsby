@@ -19,11 +19,13 @@ exports.onRenderBody = (
   { crossOrigin = `anonymous` } = {}
 ) => {
   const cache = loadCache()
-  if (!cache.assets[pathname]) return
+  // try to load assets from cache. Consider route with and without trailing slash as lookup key
+  const cacheEntry = cache.assets[pathname] || cache.assets[pathname + `/`]
+  if (!cacheEntry) return
 
   const props = getLinkProps({ crossOrigin, pathname })
 
-  const assets = Object.keys(cache.assets[pathname])
+  const assets = Object.keys(cacheEntry)
 
   setHeadComponents(
     assets.map(href => {

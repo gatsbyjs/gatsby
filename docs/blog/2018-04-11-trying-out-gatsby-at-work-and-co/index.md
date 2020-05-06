@@ -13,7 +13,7 @@ Most recently, I had the opportunity to lead the first Gatsby project at Work & 
 Our project was to build a new website for [Whittle School & Studios](https://www.whittleschool.org/en). Whittle is an innovative educator that will soon open campuses in the United States and China.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./whittle.mp4"></source>
+  <source type="video/mp4" src="./whittle.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
@@ -73,7 +73,7 @@ Here’s a `modules` field on a `ContentPage` currently in use on production:
 
 ![modules field](./modules.png)
 
-Figuring out how to set this up in GraphQL took some trial and error, but we settled on using [inline fragments](http://graphql.org/learn/queries/#inline-fragments).
+Figuring out how to set this up in GraphQL took some trial and error, but we settled on using [inline fragments](https://graphql.org/learn/queries/#inline-fragments).
 
 The GraphQL looks like this:
 
@@ -103,7 +103,7 @@ We ran into one schematic limitation working with Gatsby that’s helpful to be 
 
 The are some really promising discussions on the topic on GitHub, including an [RFC to refactor Gatsby’s schema generation](https://github.com/gatsbyjs/gatsby/issues/4261), but in the meantime, most users are getting around this issue by creating placeholder content on Contentful (or whatever their data source is) to guarantee a fully built-up schema.
 
-This got the job done in our case, and we augmented the approach by creating a `DummyContentIndex` model on Contentful linking to all placeholder content. (In retrospect, I wish I had picked the a more PC name, like ‘PlaceholderContentIndex` 😉.) Using this approach, we could inform our Contentful scripts to make sure placeholder content was copied to the production environment during deploys, so that new models would not break the build.
+This got the job done in our case, and we augmented the approach by creating a `DummyContentIndex` model on Contentful linking to all placeholder content. (In retrospect, I wish I had picked the a more PC name, like `PlaceholderContentIndex` 😉.) Using this approach, we could inform our Contentful scripts to make sure placeholder content was copied to the production environment during deploys, so that new models would not break the build.
 
 ### Netlify
 

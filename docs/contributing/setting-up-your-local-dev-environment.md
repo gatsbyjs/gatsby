@@ -2,7 +2,7 @@
 title: Setting Up Your Local Dev Environment
 ---
 
-This page outlines how to get set up to contribute to Gatsby core and its ecosystem. For instructions on working with docs, visit the [docs contributions](/contributing/docs-contributions/) page. For blog and website setup instructions, visit the [blog and website contributions](/contributing/blog-and-website-contributions/) page.
+This page outlines how to get set up to contribute to Gatsby core and its ecosystem. For instructions on working with docs, visit the [docs contributions](/contributing/docs-contributions/) page. For website setup instructions, visit the [website contributions](/contributing/website-contributions/) page.
 
 > Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
 > [Lerna](https://lerna.js.org/) and [Yarn](https://yarnpkg.com/en/) to configure the repository for both active development and documentation infrastructure changes.
@@ -44,18 +44,29 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 ### Gatsby functional changes
 
 - Install [gatsby-cli](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli):
+
   - Make sure you have the Gatsby CLI installed with `gatsby -v`,
   - if not, install globally: `yarn global add gatsby-cli`
+
 - Install [gatsby-dev-cli](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli):
+
   - Make sure you have the Gatsby Dev CLI installed with `gatsby-dev -v`
   - if not, install globally: `yarn global add gatsby-dev-cli`
+
 - Run `yarn install` in each of the sites you're testing.
+
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](https://www.npmjs.com/package/gatsby-dev-cli) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
 
   - Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
+
+- If you've recently run `gatsby-dev` your `node_modules` will be out of sync with current published packages. In order to undo this, you can remove the `node_modules` directory or run:
+
+```shell
+git checkout package.json; yarn --force
+```
 
 ### Add tests
 

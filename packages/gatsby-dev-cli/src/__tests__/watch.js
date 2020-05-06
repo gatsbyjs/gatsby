@@ -183,6 +183,7 @@ describe(`watching`, () => {
 })
 
 const monoRepoPackages = [
+  `babel-plugin-optimize-hook-destructuring`,
   `babel-plugin-remove-graphql-queries`,
   `babel-preset-gatsby`,
   `babel-preset-gatsby-package`,
@@ -262,6 +263,9 @@ const monoRepoPackages = [
   `gatsby-source-shopify`,
   `gatsby-source-wikipedia`,
   `gatsby-source-wordpress`,
+  `gatsby-theme-blog`,
+  `gatsby-theme-blog-core`,
+  `gatsby-theme-notes`,
   `gatsby-telemetry`,
   `gatsby-transformer-asciidoc`,
   `gatsby-transformer-csv`,
@@ -312,7 +316,7 @@ jest.mock(`../utils/promisified-spawn`, () => {
   }
 })
 
-describe(`dependency changs`, () => {
+describe(`dependency changes`, () => {
   const { publishPackage } = require(`../local-npm-registry/publish-package`)
   const { installPackages } = require(`../local-npm-registry/install-packages`)
   const { checkDepsChanges } = require(`../utils/check-deps-changes`)
