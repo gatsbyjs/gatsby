@@ -69,11 +69,10 @@ aliases:
       - run:
           command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci --reporters=jest-junit
           environnement:
-            JEST_SUITE_NAME: "Jest on Node ${$(node -v)}"
-            JEST_JUNIT_OUTPUT_DIR: "./test-results/jest-node-${$(node -v)}"
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
-          path: test-results
+          path: ./test-results/jest-node/
   #      - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
 
   e2e-test-workflow: &e2e-test-workflow
