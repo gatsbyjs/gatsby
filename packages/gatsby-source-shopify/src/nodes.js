@@ -1,6 +1,7 @@
 import createNodeHelpers from "gatsby-node-helpers"
 import { map } from "p-iteration"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
+import PluginOptions from "./pluginOptions"
 
 import {
   TYPE_PREFIX,
@@ -26,8 +27,9 @@ const downloadImageAndCreateFileNode = async (
   { createNode, createNodeId, touchNode, store, cache, getCache, reporter }
 ) => {
   let fileNodeID
-
-  const mediaDataCacheKey = `${TYPE_PREFIX}__Media__${url}`
+  
+  const effectiveUrl = PluginOptions.downloadImages ? url : PluginOptions.defaultImageUrl
+  const mediaDataCacheKey = `${TYPE_PREFIX}__Media__${effectiveUrl}`
   const cacheMediaData = await cache.get(mediaDataCacheKey)
 
   if (cacheMediaData) {
@@ -37,7 +39,7 @@ const downloadImageAndCreateFileNode = async (
   }
 
   const fileNode = await createRemoteFileNode({
-    url,
+    url: effectiveUrl,
     store,
     cache,
     createNode,
