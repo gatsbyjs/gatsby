@@ -1,5 +1,113 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`gatsby-plugin resource all returns plugins as array 1`] = `
+Array [
+  Object {
+    "id": "gatsby-source-filesystem",
+    "name": "gatsby-source-filesystem",
+    "options": Object {
+      "name": "pages",
+      "path": "\${__dirname}/src/pages",
+    },
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-transformer-sharp",
+    "name": "gatsby-transformer-sharp",
+    "options": undefined,
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-emotion",
+    "name": "gatsby-plugin-emotion",
+    "options": undefined,
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-typography",
+    "name": "gatsby-plugin-typography",
+    "options": Object {
+      "pathToConfigModule": "src/utils/typography",
+    },
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-transformer-remark",
+    "name": "gatsby-transformer-remark",
+    "options": Object {
+      "plugins": Array [
+        Object {
+          "options": Object {
+            "maxWidth": 590,
+          },
+          "resolve": "gatsby-remark-images",
+        },
+        Object {
+          "options": Object {
+            "wrapperStyle": "margin-bottom: 1.0725rem",
+          },
+          "resolve": "gatsby-remark-responsive-iframe",
+        },
+        "gatsby-remark-prismjs",
+        "gatsby-remark-copy-linked-files",
+        "gatsby-remark-smartypants",
+      ],
+    },
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-sharp",
+    "name": "gatsby-plugin-sharp",
+    "options": undefined,
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-google-analytics",
+    "name": "gatsby-plugin-google-analytics",
+    "options": Object {
+      "trackingId": "UA-774017-3",
+    },
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-manifest",
+    "name": "gatsby-plugin-manifest",
+    "options": Object {
+      "background_color": null,
+      "display": "minimal-ui",
+      "icon": "static/logo.png",
+      "name": "Bricolage",
+      "short_name": "Bricolage",
+      "start_url": "/",
+      "theme_color": null,
+    },
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-offline",
+    "name": "gatsby-plugin-offline",
+    "options": undefined,
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-react-helmet",
+    "name": "gatsby-plugin-react-helmet",
+    "options": undefined,
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+]
+`;
+
 exports[`gatsby-plugin resource creates default gatsby-config.js if there isn't one already 1`] = `
 Object {
   "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
