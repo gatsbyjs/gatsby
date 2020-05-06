@@ -25,7 +25,9 @@ export const jobsV2Reducer = (
       const { jobContentDigest, result } = action.payload
       const { job } = state.incomplete.get(jobContentDigest) as IGatsbyJobV2
 
-      if (!job) return state
+      if (!job) {
+        return state
+      }
 
       state.incomplete.delete(job.contentDigest)
 
