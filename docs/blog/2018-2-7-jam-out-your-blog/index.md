@@ -37,7 +37,7 @@ https://giphy.com/gifs/tom-cruise-top-gun-WDtCGLCXBAgow
 - **NO WordPress** - similarly, I don’t want to deal with updates, themes, hacks...etc
 - **Continuous Deployment** - the site needs to always be up and running and current
 
-For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at [http://jamstack.org/](http://jamstack.org/).
+For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at http://jamstack.org/.
 
 ## CMS-Induced Headaches
 
@@ -83,12 +83,12 @@ So, a service that works on top of GitHub where I, or anyone with a GitHub accou
 
 #### Follow these steps:
 
-1.  Set up a repository for the website.
-2.  Share access to the repo with anyone on your team.
-3.  Log in via [Prose.io](http://prose.io/).
-4.  Select your website's repo from the Prose interface.
-5.  Done. You can edit existing posts, preview posts, and commit any changes directly within the interface.
-    set up a repository for the website
+1. Set up a repository for the website.
+2. Share access to the repo with anyone on your team.
+3. Log in via [Prose.io](http://prose.io/).
+4. Select your website's repo from the Prose interface.
+5. Done. You can edit existing posts, preview posts, and commit any changes directly within the interface.
+   set up a repository for the website
 
 https://giphy.com/gifs/emmys-emmy-awards-emmys-2016-l0HlDtKDqfGGQtwic
 
@@ -126,11 +126,11 @@ When it comes to continuous deployment and inexpensive hosting, using Netlify is
 
 With streamlining in mind, a workflow doesn’t get any leaner than working within the confines of GitHub and Netlify. Think about the magic:
 
-1.  Use Gatsby to create your website.
-2.  Set up a GitHub repository to track changes and version history.
-3.  Once ready, deploy your repository to Netlify.
-4.  Use Prose (which accesses your GitHub), to create, edit and commit posts.
-5.  Netlify sees the update to the repository and re-renders the website.
+1. Use Gatsby to create your website.
+2. Set up a GitHub repository to track changes and version history.
+3. Once ready, deploy your repository to Netlify.
+4. Use Prose (which accesses your GitHub), to create, edit and commit posts.
+5. Netlify sees the update to the repository and re-renders the website.
 
 With this process in place, content creators do not need to understand Markdown, React, Git or Netlify. They can simply log into Prose and start writing. All the developer has to do is share the repository.
 
@@ -142,8 +142,8 @@ https://giphy.com/gifs/nba-celebrity-3oFzmqDNycyhUcrjTW
 
 With all of that said, this process has a few caveats related to working within Prose that I must address:
 
-1.  If you follow a folder structure enclosing an index.md file for your posts, you will need to add the new folder within the URL of the post
-2.  Inserting an image adds extra markup which you will need to remove for an image to show up within your post. Prose will upload the image within the same directory as your index.md file.
+1. If you follow a folder structure enclosing an index.md file for your posts, you will need to add the new folder within the URL of the post
+2. Inserting an image adds extra markup which you will need to remove for an image to show up within your post. Prose will upload the image within the same directory as your index.md file.
 
 #### Default
 
@@ -153,8 +153,8 @@ With all of that said, this process has a few caveats related to working within 
 
 ![After image path change](after-post-title.png)
 
-3.  You must commit a file by hitting the save icon or else the file is not saved. Posts cannot be saved as drafts in Prose. So, you will have to build the functionality within your headmatter and query posts based upon a draft/published state (if you need it).
-4.  Whoever will be posting will need to manually add headmatter to each .md file. Be warned that there is no specific area to do so. But after it's added, a fourth icon appears in the right pane where you can then edit and add other post details.
+3. You must commit a file by hitting the save icon or else the file is not saved. Posts cannot be saved as drafts in Prose. So, you will have to build the functionality within your headmatter and query posts based upon a draft/published state (if you need it).
+4. Whoever will be posting will need to manually add headmatter to each .md file. Be warned that there is no specific area to do so. But after it's added, a fourth icon appears in the right pane where you can then edit and add other post details.
 
 I hope you try playing around with this workflow yourself with a Gatsby starter and see if this works for you. Gatsby provides incredible tools that “just work” without sacrificing an exciting development environment. If you pair it with Netlify and Prose, you will cut overhead and manage content directly from a GitHub repository. Let this approach bring some order to the chaos.
 

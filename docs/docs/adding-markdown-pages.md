@@ -7,11 +7,11 @@ You add plugins to read and understand folders with Markdown files and from them
 
 Here are the steps Gatsby follows for making this happen.
 
-1.  Read files into Gatsby from the filesystem
-2.  Transform Markdown to HTML and [frontmatter](#frontmatter-for-metadata-in-markdown-files) to data
-3.  Add a Markdown file
-4.  Create a page component for the Markdown files
-5.  Create static pages using Gatsby's Node.js `createPage` API
+1. Read files into Gatsby from the filesystem
+2. Transform Markdown to HTML and [frontmatter](#frontmatter-for-metadata-in-markdown-files) to data
+3. Add a Markdown file
+4. Create a page component for the Markdown files
+5. Create static pages using Gatsby's Node.js `createPage` API
 
 ## Read files into Gatsby from the filesystem
 
@@ -129,11 +129,11 @@ export const pageQuery = graphql`
 
 Two things are important in the file above:
 
-1.  A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automagically given you all the Markdown metadata and HTML in this query's result.
+1. A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automagically given you all the Markdown metadata and HTML in this query's result.
 
-    **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
+   **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
 
-2.  The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that you'll find has all the details of the Markdown file. You can use that to construct a template for your blog post view. Since it's a React component, you could style it with any of the [recommended styling systems](/docs/styling/) in Gatsby.
+2. The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that you'll find has all the details of the Markdown file. You can use that to construct a template for your blog post view. Since it's a React component, you could style it with any of the [recommended styling systems](/docs/styling/) in Gatsby.
 
 ### Create static pages using Gatsby’s Node.js `createPage` API
 

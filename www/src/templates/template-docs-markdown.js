@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
+import PageMetadata from "../components/page-metadata"
 import PageWithSidebar from "../components/page-with-sidebar"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
@@ -32,23 +32,17 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const toc =
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
-  const description = page.frontmatter.description || page.excerpt
-
   return (
     <PageWithSidebar
       location={location}
       enableScrollSync={urlSegment === "tutorial"}
     >
-      <Helmet>
-        <title>{page.frontmatter.title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-        <meta property="og:title" content={page.frontmatter.title} />
-        <meta property="og:type" content="article" />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter.label1" content="Reading time" />
-        <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
-      </Helmet>
+      <PageMetadata
+        title={page.frontmatter.title}
+        description={page.frontmatter.description || page.excerpt}
+        type="article"
+        timeToRead={page.timeToRead}
+      />
       <DocSearchContent>
         <Container
           overrideCSS={{
