@@ -1,6 +1,6 @@
 import { IGatsbyState, ActionsUnion } from "../types"
 
 export const lastAction = (
-  state: IGatsbyState["lastAction"] = null,
+  _state: IGatsbyState["lastAction"],
   action: ActionsUnion
 ): IGatsbyState["lastAction"] => action
