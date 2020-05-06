@@ -22,7 +22,7 @@ export interface IStaticQueryResult {
 }
 
 type PageResultsMap = Map<string, IPageQueryResult>
-type QueryResultsMap = Map<number, IStaticQueryResult>
+type QueryResultsMap = Map<string, IStaticQueryResult>
 
 /**
  * Get cached page query result for given page path.

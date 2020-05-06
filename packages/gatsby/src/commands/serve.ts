@@ -12,7 +12,7 @@ import telemetry from "gatsby-telemetry"
 
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import { getConfigFile } from "../bootstrap/get-config-file"
-import preferDefault from "../bootstrap/prefer-default"
+import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
 
 interface IMatchPath {
