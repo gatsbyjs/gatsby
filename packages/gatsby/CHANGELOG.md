@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.13...gatsby@2.21.14) (2020-05-06)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.21.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.12...gatsby@2.21.13) (2020-05-05)
 
 ### Bug Fixes
