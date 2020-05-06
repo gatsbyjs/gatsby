@@ -1,13 +1,10 @@
 jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
-jest.mock(`coffeescript`)
 
 const {
   resolvableExtensions,
   onCreateWebpackConfig,
   preprocessSource,
 } = require(`../gatsby-node`)
-
-const { compile } = require(`coffeescript`)
 
 describe(`gatsby-plugin-coffeescript`, () => {
   it(`contains coffee script extensions`, () => {
@@ -39,10 +36,6 @@ describe(`gatsby-plugin-coffeescript`, () => {
   })
 
   describe(`pre processing`, () => {
-    beforeEach(() => {
-      compile.mockReturnValue(`complied-code`)
-    })
-
     it(`returns null if non-coffeescript file`, () => {
       expect(
         preprocessSource({
@@ -50,7 +43,6 @@ describe(`gatsby-plugin-coffeescript`, () => {
           contents: `alert('hello');`,
         })
       ).toBe(null)
-      expect(compile).not.toBeCalled()
     })
 
     it(`transforms .coffee files`, () => {
@@ -62,7 +54,7 @@ describe(`gatsby-plugin-coffeescript`, () => {
           },
           {}
         )
-      ).toEqual(`complied-code`)
+      ).toMatchSnapshot()
     })
   })
 })

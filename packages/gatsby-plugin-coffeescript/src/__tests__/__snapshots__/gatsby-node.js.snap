@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-coffeescript pre processing transforms .coffee files 1`] = `
+"(function() {
+  if (typeof elvis !== \\"undefined\\" && elvis !== null) {
+    alert(\\"I knew it!\\");
+  }
+
+}).call(this);
+"
+`;
