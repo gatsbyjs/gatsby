@@ -16,11 +16,6 @@ export const jobsV2Reducer = (
     case `CREATE_JOB_V2`: {
       const { job, plugin } = action.payload
 
-      if (!job) {
-        throw new Error(
-          `If you encounter this error, it's probably a Gatsby internal bug. Please open an issue reporting us this.`
-        )
-      }
 
       state.incomplete.set(job.contentDigest, {
         job,
