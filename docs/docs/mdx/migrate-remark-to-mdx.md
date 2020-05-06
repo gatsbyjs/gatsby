@@ -13,11 +13,11 @@ npm install @mdx-js/mdx @mdx-js/react gatsby-plugin-mdx
 npm remove gatsby-transformer-remark
 ```
 
-## Update gatsby-config.js
+## Replacing gatsby-transformer-remark with gatsby-plugin-mdx
 
-In your gatsby-config.js file, replace gatsby-transformer-remark with gatsby-plugin-mdx and update the plugins option with gatsbyRemarkPlugins:
+In your gatsby-config.js file, replace gatsby-transformer-remark with gatsby-plugin-mdx. All sub-plugins of gatsby-transformer-remark can still work with gatsby-plugin-mdx by updating the plugins option to gatsbyRemarkPlugins.
 
-```diff
+```diff:title=gatsby-config.js
 {
 - resolve: `gatsby-transformer-remark`
 + resolve: `gatsby-plugin-mdx`
@@ -30,7 +30,26 @@ In your gatsby-config.js file, replace gatsby-transformer-remark with gatsby-plu
 
 In the `createPages` API call, when you query for `allMarkdownRemark`, replace it with `allMdx`.
 
+```diff:title=gatsby-node.js
+const result = await graphql(
+  `
+    {
+-     allMarkdownRemark(
++     allMdx(
+        sort: { fields: [frontmatter___date], order: DESC }
+        limit: 1000
+      ) {
+```
+
 Also, update `onCreateNode` which creates the blog post slugs to watch for the node type of `Mdx` instead of `MarkdownRemark`.
+
+```diff:title=gatsby-node.js
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
+
+-  if (node.internal.type === `MarkdownRemark`) {
++  if (node.internal.type === `Mdx`) {
+```
 
 ## Update File Extension
 
@@ -38,7 +57,7 @@ Where your markdown files live, change the file extension to `.mdx`.
 
 Also, you can tell `gatsby-plugin-mdx` to accept both `md` and `mdx` files by adding the `extensions` option in your gatsby-config entry.
 
-```js
+```js:title=gatsby-config.js
   {
     resolve: `gatsby-plugin-mdx`,
     options: {
@@ -46,6 +65,8 @@ Also, you can tell `gatsby-plugin-mdx` to accept both `md` and `mdx` files by ad
     },
   },
 ```
+
+Now with this addition, gatsby-plugin-mdx will see files that end with both `.mdx` or `.md`.
 
 ## Update usage in pages
 
@@ -63,7 +84,7 @@ And in the graphql query, change the `html` field in `mdx` to `body`.
 mdx(fields: { slug: { eq: $slug } }) {
   id
   excerpt(pruneLength: 160)
-  body
+  body // highlight-line
   frontmatter {
     ...
   }
