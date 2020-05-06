@@ -28,7 +28,9 @@ export default Layout
 ```
 
 ### Focus your link on page navigation
+
 Hooking into Gatsby's onRouteUpdate API method will allow you to focus automatically on a skip link on page change, putting a user in a more appropriate spot to take action. More information about this method can be found the [browser API docs](https://www.gatsbyjs.org/docs/browser-apis/#onRouteUpdate).
+
 ```javascript:gatsby-browser.js
 export const onRouteUpdate = ({ location, prevLocation }) => {
   if (prevLocation !== null) {
