@@ -2,6 +2,7 @@ import faker from "faker"
 import frontMatter from "front-matter"
 import fs from "fs-extra"
 import glob from "glob"
+import fetch from "node-fetch"
 ;(async () => {
   // get the first article file
   const [articleFilePath] = glob.sync(`./src/articles/**/*.mdx`)
@@ -23,4 +24,17 @@ import glob from "glob"
   await fs.writeFile(articleFilePath, updatedArticleFile, `utf8`)
 
   console.log(`updated ${articleFilePath} with a new title`)
+
+  // call webhooks if they exist
+  if (
+    process.env.BENCHMARK_UPDATE_WEBHOOKS &&
+    typeof process.env.BENCHMARK_UPDATE_WEBHOOKS === `string`
+  ) {
+    const webhooks = process.env.BENCHMARK_UPDATE_WEBHOOKS.split(`,`)
+
+    for (const webhook of webhooks) {
+      await fetch(webhook, { method: `POST` })
+      console.log(`Sent a post request to ${webhook}`)
+    }
+  }
 })()
