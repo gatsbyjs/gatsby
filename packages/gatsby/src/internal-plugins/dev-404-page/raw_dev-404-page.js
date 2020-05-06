@@ -16,12 +16,16 @@ class Dev404Page extends React.Component {
     const pagePaths = data.allSitePage.nodes.map(node => node.path)
     const urlState = queryString.parse(location.search)
 
-    const initialPagePathSearchTerms = urlState.q ? urlState.q : ``
+    const initialPagePathSearchTerms = urlState.filter ? urlState.filter : ``
+
     this.state = {
       showCustom404: false,
       initPagePaths: pagePaths,
-      pagePaths: pagePaths,
       pagePathSearchTerms: initialPagePathSearchTerms,
+      pagePaths: this.getFilteredPagePaths(
+        pagePaths,
+        initialPagePathSearchTerms
+      ),
     }
     this.showCustom404 = this.showCustom404.bind(this)
     this.handlePagePathSearch = this.handlePagePathSearch.bind(this)
@@ -44,11 +48,18 @@ class Dev404Page extends React.Component {
 
   handlePagePathSearch(event) {
     event.preventDefault()
-    const tempPagePaths = [...this.state.initPagePaths]
-    const searchTerm = new RegExp(`${this.state.pagePathSearchTerms}`)
+    const allPagePaths = [...this.state.initPagePaths]
     this.setState({
-      pagePaths: tempPagePaths.filter(pagePath => searchTerm.test(pagePath)),
+      pagePaths: this.getFilteredPagePaths(
+        allPagePaths,
+        this.state.pagePathSearchTerms
+      ),
     })
+  }
+
+  getFilteredPagePaths(allPagePaths, pagePathSearchTerms) {
+    const searchTerm = new RegExp(`${pagePathSearchTerms}`)
+    return allPagePaths.filter(pagePath => searchTerm.test(pagePath))
   }
 
   setSearchUrl(searchValue) {
@@ -57,7 +68,7 @@ class Dev404Page extends React.Component {
     } = this.props
 
     const searchMap = queryString.parse(search)
-    searchMap.q = searchValue
+    searchMap.filter = searchValue
 
     const newSearch = queryString.stringify(searchMap)
 
