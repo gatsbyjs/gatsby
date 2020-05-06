@@ -101,7 +101,7 @@ module.exports = (language = `javascript`) => {
     }
   }
 
-  Prism.hooks.add(`before-highlight`, function(env) {
+  Prism.hooks.add(`before-highlight`, function (env) {
     addInvisibles(env.grammar)
   })
   // prism-show-invisibles.js:end

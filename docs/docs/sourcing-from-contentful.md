@@ -60,3 +60,7 @@ plugins: [
 ## Examples of Gatsby + Contentful websites
 
 The Gatsby blog has [several examples of individuals and companies](/blog/tags/contentful) that chose to build with Gatsby and Contentful.
+
+<CloudCallout>
+  For an automatic integration using Contentful with Gatsby:
+</CloudCallout>

@@ -2,7 +2,12 @@ import { slash } from "gatsby-core-utils"
 import path from "path"
 import { Tracer, initGlobalTracer } from "opentracing"
 
-let tracerProvider
+interface ITracerProvider {
+  create(): Tracer
+  stop(): Promise<void>
+}
+
+let tracerProvider: ITracerProvider | undefined
 
 /**
  * tracerFile should be a js file that exports two functions.
@@ -18,7 +23,7 @@ export const initTracer = (tracerFile: string): Tracer => {
   if (tracerFile) {
     const resolvedPath = slash(path.resolve(tracerFile))
     tracerProvider = require(resolvedPath)
-    tracer = tracerProvider.create()
+    tracer = tracerProvider!.create()
   } else {
     tracer = new Tracer() // Noop
   }
@@ -29,7 +34,7 @@ export const initTracer = (tracerFile: string): Tracer => {
 }
 
 export const stopTracer = async (): Promise<void> => {
-  if (tracerProvider && tracerProvider.stop) {
+  if (tracerProvider?.stop) {
     await tracerProvider.stop()
   }
 }

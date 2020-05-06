@@ -17,7 +17,7 @@ const parameters = {}
 window.location.search
   .substr(1)
   .split(`&`)
-  .forEach(function(entry) {
+  .forEach(function (entry) {
     var eq = entry.indexOf(`=`)
     if (eq >= 0) {
       parameters[decodeURIComponent(entry.slice(0, eq))] = decodeURIComponent(
@@ -30,7 +30,7 @@ function locationQuery(params) {
   return (
     `?` +
     Object.keys(params)
-      .map(function(key) {
+      .map(function (key) {
         return encodeURIComponent(key) + `=` + encodeURIComponent(params[key])
       })
       .join(`&`)
@@ -61,7 +61,7 @@ function graphQLFetcher(graphQLParams) {
     },
     body: JSON.stringify(graphQLParams),
     credentials: `include`,
-  }).then(function(response) {
+  }).then(function (response) {
     return response.json()
   })
 }

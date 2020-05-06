@@ -3,12 +3,12 @@ module.exports = {
   extends: [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
   ],
   plugins: ["@typescript-eslint", "prettier"],
   parserOptions: {
     ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module', // Allows for the use of imports
+    sourceType: "module", // Allows for the use of imports
   },
   env: {
     browser: true,
@@ -20,8 +20,8 @@ module.exports = {
       2,
       "backtick",
       {
-        "avoidEscape": true
-      }
+        avoidEscape: true,
+      },
     ],
     indent: ["error", 2, { SwitchCase: 1 }],
     "prettier/prettier": [
@@ -30,8 +30,8 @@ module.exports = {
         trailingComma: "es5",
         semi: false,
         singleQuote: false,
-        printWidth: 120
-      }
+        printWidth: 120,
+      },
     ],
-  }
+  },
 }

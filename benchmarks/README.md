@@ -10,7 +10,7 @@ The standard interface for running a benchmark is:
 cd {benchmark directory}
 export NUM_PAGES={n}
 npm install
-gatsby build
+npm run build / gatsby build
 ```
 
 If a specific benchmark needs to perform some code generation (e.g. `markdown_id`),
