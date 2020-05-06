@@ -1,13 +1,13 @@
 const { interpret } = require(`xstate`)
 
-import machine from "../page-component"
+import { componentMachine } from "../page-component"
 
 jest.mock(`../../../query`)
 const { enqueueExtractedQueryId, runQueuedQueries } = require(`../../../query`)
 
 const getService = (args = {}) =>
   interpret(
-    machine.withContext({
+    componentMachine.withContext({
       componentPath: `/a/path.js`,
       query: ``,
       pages: new Set([`/`]),

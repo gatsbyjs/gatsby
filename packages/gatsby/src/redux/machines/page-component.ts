@@ -14,7 +14,7 @@ const defaultContext: IContext = {
   pages: new Set(``)
 }
 
-const compoenentMachine = machine<IContext>(
+export const componentMachine = machine<IContext, IState, IEvent>(
   {
     id: `pageComponents`,
     initial: `inactive`,
@@ -143,5 +143,3 @@ const compoenentMachine = machine<IContext>(
     }
   }
 )
-
-export default compoenentMachine
