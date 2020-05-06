@@ -94,22 +94,24 @@ const User = props => (
   </UserWrapper>
 )
 
-export default function UsersList() (
-  <Container>
-    <h1>About Styled Components</h1>
-    <p>Styled Components is cool</p>
-    <User
-      username="Jane Doe"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-    <User
-      username="Bob Smith"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-      excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-  </Container>
-)
+export default function UsersList() {
+  return (
+    <Container>
+      <h1>About Styled Components</h1>
+      <p>Styled Components is cool</p>
+      <User
+        username="Jane Doe"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+        excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      />
+      <User
+        username="Bob Smith"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+        excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      />
+    </Container>
+  )
+}
 ```
 
 ## Creating Global Styles
@@ -127,11 +129,13 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => (props.theme === "purple" ? "purple" : "white")};
   }
 `
-export default function Layout({ children }) (
-  <React.Fragment>
-    <GlobalStyle theme="purple" />
-  </React.Fragment>
-)
+export default function Layout({ children }) {
+  return (
+    <React.Fragment>
+      <GlobalStyle theme="purple" />
+    </React.Fragment>
+  )
+}
 ```
 
 ## Enabling user stylesheets with a stable class name
