@@ -165,7 +165,10 @@ const copy = async (
 }
 
 // Clones starter from URI.
-const clone = async (hostInfo: any, rootPath: string): Promise<void> => {
+const clone = async (
+  hostInfo: hostedGitInfo,
+  rootPath: string
+): Promise<void> => {
   let url: string
   // Let people use private repos accessed over SSH.
   if (hostInfo.getDefaultRepresentation() === `sshurl`) {

@@ -2,7 +2,6 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 import { TiTags as TagsIcon } from "react-icons/ti"
 
 import Button from "../components/button"
@@ -11,6 +10,7 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
 import FooterLinks from "../components/shared/footer-links"
+import PageMetadata from "../components/page-metadata"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { pullIntoGutter, breakpointGutter } from "../utils/styles"
@@ -21,9 +21,9 @@ class BlogPostsIndex extends React.Component {
 
     return (
       <main id={`reach-skip-nav`}>
-        <Helmet>
-          <title>{`Blog | Page ${this.props.pageContext.currentPage}`}</title>
-        </Helmet>
+        <PageMetadata
+          title={`Blog | Page ${this.props.pageContext.currentPage}`}
+        />
         <Container>
           <div
             sx={{

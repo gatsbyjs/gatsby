@@ -3,7 +3,7 @@ const mergeGatsbyConfig = require(`../../utils/merge-gatsby-config`)
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const debug = require(`debug`)(`gatsby:load-themes`)
-const preferDefault = require(`../prefer-default`)
+import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"
 const { resolvePlugin } = require(`../load-plugins/load`)
 const reporter = require(`gatsby-cli/lib/reporter`)
