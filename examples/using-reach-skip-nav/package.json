@@ -7,12 +7,9 @@
   "dependencies": {
     "@reach/skip-nav": "^0.8.0",
     "gatsby": "^2.0.0",
-    "gatsby-image": "^2.2.40",
     "gatsby-plugin-manifest": "^2.2.41",
     "gatsby-plugin-react-helmet": "^3.1.22",
-    "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-source-filesystem": "^2.1.48",
-    "gatsby-transformer-sharp": "^2.3.14",
     "lodash": "^4.17.14",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
