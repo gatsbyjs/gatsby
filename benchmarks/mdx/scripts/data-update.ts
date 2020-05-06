@@ -3,13 +3,22 @@ import frontMatter from "front-matter"
 import fs from "fs-extra"
 import glob from "glob"
 import fetch from "node-fetch"
+
+interface IArticleAttributes {
+  articleNumber: Number
+  title: String
+  image: String
+}
+
 ;(async () => {
   // get the first article file
   const [articleFilePath] = glob.sync(`./src/articles/**/*.mdx`)
   const articleFileContents = await fs.readFile(articleFilePath, `utf8`)
 
   // parse the frontmatter
-  const { attributes }: any = frontMatter(articleFileContents)
+  const { attributes }: { attributes: IArticleAttributes } = frontMatter(
+    articleFileContents
+  )
 
   // generate a new title
   const title = faker.random.words(Math.floor(Math.random() * 5) + 3)
