@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.16...gatsby@2.21.17) (2020-05-07)
+
+### Bug Fixes
+
+- **gatsby:** print LAN url with serve (like gatsby develop) ([#23418](https://github.com/gatsbyjs/gatsby/issues/23418)) ([0dc20a3](https://github.com/gatsbyjs/gatsby/commit/0dc20a3))
+- **gatsby:** use scoped requires for theme plugins ([#23696](https://github.com/gatsbyjs/gatsby/issues/23696)) ([4430687](https://github.com/gatsbyjs/gatsby/commit/4430687))
+
+### Performance Improvements
+
+- **gatsby:** include node counts in output after sourcing steps ([#23671](https://github.com/gatsbyjs/gatsby/issues/23671)) ([192faf6](https://github.com/gatsbyjs/gatsby/commit/192faf6))
+
 ## [2.21.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.15...gatsby@2.21.16) (2020-05-06)
 
 ### Features
