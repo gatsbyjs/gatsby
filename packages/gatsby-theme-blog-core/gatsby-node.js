@@ -217,11 +217,6 @@ exports.onCreateNode = async (
         fieldData.image___NODE = remoteFileNode.id
       }
     } 
-    // else if (node.frontmatter.image) {
-    //   // for relative paths: just assign the path
-    //   //   (we'll find the actual node in the custom resolver)
-    //   fieldData.image = node.frontmatter.image
-    // }
 
     if (validURL(node.frontmatter.socialImage)) { // create a file node for image URLs
       const remoteFileNode = await createRemoteFileNode({
@@ -237,11 +232,6 @@ exports.onCreateNode = async (
         fieldData.socialImage___NODE = remoteFileNode.id
       }
     } 
-    // else if (node.frontmatter.socialImage) {
-    //   // for relative paths: just assign the path
-    //   //   (we'll find the actual node in the custom resolver)
-    //   fieldData.socialImage = node.frontmatter.socialImage
-    // }
 
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
     await createNode({
