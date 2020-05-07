@@ -1,5 +1,6 @@
 const reduxNodes = require(`./nodes`)
 const lokiNodes = require(`../../db/loki/nodes`).reducer
+import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
@@ -9,12 +10,27 @@ import { webpackReducer } from "./webpack"
 import { pageDataReducer } from "./page-data"
 import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
-import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
+import { configReducer } from "./config"
+import nodesByTypeReducer from "./nodes-by-type"
+import programReducer from "./program"
+import resolvedNodesReducer from "./resolved-nodes"
+import nodesTouchedReducer from "./nodes-touched"
+import lastActionReducer from "./last-action"
+import flattenedPluginsReducer from "./flattened-plugins"
+import componentDataDependenciesReducer from "./component-data-dependencies"
+import componentsReducer from "./components"
+import jobsReducer from "./jobs"
+import jobsv2Reducer from "./jobsv2"
+import babelrcReducer from "./babelrc"
+import schemaCustomizationReducer from "./schema-customization"
+import inferenceMetadataReducer from "./inference-metadata"
+import pageDataStatsReducer from "./page-data-stats"
+import { IGatsbyState } from "../types"
 
 // const backend = process.env.GATSBY_DB_NODES || `redux`
 const backend = `redux`
 
-function getNodesReducer() {
+function getNodesReducer(): IGatsbyState["nodes"] {
   let nodesReducer
   switch (backend) {
     case `redux`:
@@ -31,14 +47,14 @@ function getNodesReducer() {
   return nodesReducer
 }
 
-function getNodesByTypeReducer() {
+function getNodesByTypeReducer(): IGatsbyState["nodesByType"] {
   let nodesReducer
   switch (backend) {
     case `redux`:
-      nodesReducer = require(`./nodes-by-type`)
+      nodesReducer = nodesByTypeReducer
       break
     case `loki`:
-      nodesReducer = (state = null) => null
+      nodesReducer = (state = null): null => null
       break
     default:
       throw new Error(
@@ -51,31 +67,31 @@ function getNodesByTypeReducer() {
 /**
  * @property exports.nodesTouched Set<string>
  */
-module.exports = {
-  program: require(`./program`),
+export const reducers = {
+  program: programReducer,
   nodes: getNodesReducer(),
   nodesByType: getNodesByTypeReducer(),
-  resolvedNodesCache: require(`./resolved-nodes`),
-  nodesTouched: require(`./nodes-touched`),
-  lastAction: require(`./last-action`),
-  flattenedPlugins: require(`./flattened-plugins`),
-  config: require(`./config`),
+  resolvedNodesCache: resolvedNodesReducer,
+  nodesTouched: nodesTouchedReducer,
+  lastAction: lastActionReducer,
+  flattenedPlugins: flattenedPluginsReducer,
+  config: configReducer,
   schema: schemaReducer,
   pages: pagesReducer,
   status: statusReducer,
-  componentDataDependencies: require(`./component-data-dependencies`),
-  components: require(`./components`),
+  componentDataDependencies: componentDataDependenciesReducer,
+  components: componentsReducer,
   staticQueryComponents: staticQueryComponentsReducer,
-  jobs: require(`./jobs`),
-  jobsV2: require(`./jobsv2`),
+  jobs: jobsReducer,
+  jobsV2: jobsv2Reducer,
   webpack: webpackReducer,
   webpackCompilationHash: webpackCompilationHashReducer,
   redirects: redirectsReducer,
-  babelrc: require(`./babelrc`),
-  schemaCustomization: require(`./schema-customization`),
+  babelrc: babelrcReducer,
+  schemaCustomization: schemaCustomizationReducer,
   themes: themesReducer,
   logs: logReducer,
-  inferenceMetadata: require(`./inference-metadata`),
-  pageDataStats: require(`./page-data-stats`),
+  inferenceMetadata: inferenceMetadataReducer,
+  pageDataStats: pageDataStatsReducer,
   pageData: pageDataReducer,
 }
