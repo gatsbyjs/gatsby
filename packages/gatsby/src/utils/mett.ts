@@ -7,13 +7,16 @@ type MettHandler<EventName, Payload> = (
   eventName: EventName
 ) => void
 
-interface IMett<EventName, Payload> {
+interface IMett {
   on(eventName: EventName, callback: MettHandler<EventName, Payload>): void
   off(eventName: EventName, callback: MettHandler<EventName, Payload>): void
   emit(eventName: EventName, e: Payload): void
 }
 
-function mett<EventName = string, Payload = any>(): IMett<EventName, Payload> {
+type EventName = string
+type Payload = any
+
+function mett(): IMett {
   const mettEvents: Map<
     EventName,
     Set<MettHandler<EventName, Payload>>
@@ -41,10 +44,10 @@ function mett<EventName = string, Payload = any>(): IMett<EventName, Payload> {
           callback(e, eventName)
         })
       }
-      const setStar = mettEvents.get((`*` as unknown) as EventName)
+      const setStar = mettEvents.get(`*`)
       if (setStar) {
-        setStar.forEach(function mettEmitEachStar(n) {
-          n(e, eventName)
+        setStar.forEach(function mettEmitEachStar(callback) {
+          callback(e, eventName)
         })
       }
     },
