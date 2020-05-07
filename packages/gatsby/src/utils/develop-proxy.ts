@@ -7,6 +7,7 @@ import restartingScreen from "./restarting-screen"
 interface IProxyControls {
   serveRestartingScreen: () => void
   serveSite: () => void
+  server: any
 }
 
 const noop = (): void => {}
@@ -60,6 +61,7 @@ export const startDevelopProxy = (input: {
   server.listen(input.proxyPort)
 
   return {
+    server,
     serveRestartingScreen: (): void => {
       shouldServeRestartingScreen = true
     },

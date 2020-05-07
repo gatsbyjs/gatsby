@@ -295,16 +295,19 @@ describe(`develop`, () => {
     describe(`process.kill`, () => {
       let events = []
 
-      beforeAll(async () => {
+      beforeAll(done => {
         const { finishedPromise, gatsbyProcess } = collectEventsForDevelop(
           events
         )
 
         setTimeout(() => {
           gatsbyProcess.kill(`SIGTERM`)
-        }, 1000)
+          setTimeout(() => {
+            done()
+          }, 5000)
+        }, 5000)
 
-        await finishedPromise
+        finishedPromise.then(done)
       })
 
       commonAssertionsForFailure(events)

@@ -5,10 +5,9 @@ import { spawn } from "child_process"
 import chokidar from "chokidar"
 import resolveCwd from "resolve-cwd"
 import getRandomPort from "get-port"
-import report from "gatsby-cli/lib/reporter"
 import socket from "socket.io"
 import fs from "fs-extra"
-import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+// import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
 
@@ -45,27 +44,36 @@ const doesConfigChangeRequireRestart = (
 class ControllableScript {
   private process
   private tmpFile
+  public isRunning
   constructor(script) {
     this.tmpFile = tmp.fileSync()
     fs.writeFileSync(this.tmpFile.name, script)
   }
   start(): void {
+    this.isRunning = true
     this.process = spawn(`node`, [this.tmpFile.name], {
       env: process.env,
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
   }
-  stop(signal?: string): void {
-    this.process.kill(signal)
+  async stop(signal: string | null = null, code?: number): Promise<void> {
+    this.isRunning = false
+    if (signal) {
+      this.process.kill(signal)
+    } else {
+      this.process.exit(code)
+    }
+
+    return new Promise(resolve => {
+      this.process.on(`exit`, () => {
+        this.process.removeAllListeners()
+        resolve()
+      })
+    })
   }
   on(type, callback): void {
     this.process.on(type, callback)
   }
-}
-
-const createControllableScript = (script: string): ControllableScript => {
-  const controllableScript = new ControllableScript(script)
-  return controllableScript
 }
 
 module.exports = async (program: IProgram): Promise<void> => {
@@ -77,7 +85,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   const proxyPort = program.port
   const developPort = await getRandomPort()
 
-  const script = createControllableScript(report.stripIndent`
+  const script = new ControllableScript(`
     const cmd = require("${developProcessPath}");
     const args = ${JSON.stringify({
       ...program,
@@ -95,28 +103,25 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const statusServerPort = await getRandomPort()
 
-  const success = await createServiceLock(
-    program.directory,
-    `developstatusserver`,
-    statusServerPort.toString()
-  )
+  // const success = await createServiceLock(
+  //   program.directory,
+  //   `developstatusserver`,
+  //   statusServerPort.toString()
+  // )
 
-  if (!success) {
-    report.error(
-      `It looks like a develop process for this site is already running.`
-    )
-    process.exit(1)
-  }
+  // if (!success) {
+  //   report.error(
+  //     `It looks like a develop process for this site is already running.`
+  //   )
+  //   process.exit(1)
+  // }
 
   const statusServer = http.createServer().listen(statusServerPort)
   const io = socket(statusServer)
 
   io.on(`connection`, socket => {
     socket.on(`develop:restart`, () => {
-      const activity = report.activityTimer(`Restarting develop process...`)
-      activity.start()
       script.stop()
-      activity.end()
       script.start()
     })
   })
@@ -146,17 +151,16 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   })
 
-  process.on(`exit`, () => script.stop())
-
-  process.on(`SIGINT`, () => script.stop(`SIGINT`))
-  process.on(`SIGTERM`, () => script.stop(`SIGTERM`))
+  script.on(`exit`, code => {
+    process.exit(code)
+  })
 
   const rootFile = (file: string): string => path.join(program.directory, file)
 
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
   let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
 
-  chokidar.watch(files).on(`change`, filePath => {
+  const watcher = chokidar.watch(files).on(`change`, filePath => {
     const file = path.basename(filePath)
 
     if (file === `gatsby-config.js`) {
@@ -170,11 +174,26 @@ module.exports = async (program: IProgram): Promise<void> => {
       lastConfig = newConfig
     }
 
-    report.warn(
+    console.warn(
       `develop process needs to be restarted to apply the changes to ${file}`
     )
     io.emit(`develop:needs-restart`, {
       dirtyFile: file,
     })
+  })
+
+  process.on(`beforeExit`, async () => {
+    proxy.server.close()
+    await watcher.close()
+  })
+
+  process.on(`SIGINT`, async () => {
+    await script.stop(`SIGINT`)
+    process.exit()
+  })
+
+  process.on(`SIGTERM`, async () => {
+    await script.stop(`SIGTERM`)
+    process.exit()
   })
 }
